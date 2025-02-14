@@ -1,0 +1,141 @@
+2024-09-28 09:45:02 | Guillaume | @0137 | ufSaisieHeures | cmbProfessionnel_AfterUpdate | wshAdmin.Range("TEC_Date").value = '' | type = Empty
+2024-09-28 09:45:02 | Guillaume | @0171 | ufSaisieHeures | txtDate_BeforeUpdate | ufSaisieHeures.txtDate.value = '28/sept/2024' | type = String
+2024-09-28 09:45:03 | Guillaume | @0173 | ufSaisieHeures | txtDate_BeforeUpdate | fullDate = '28/sept/2024' | type = Date
+2024-09-28 09:45:03 | Guillaume | @0189 | ufSaisieHeures | txtDate_BeforeUpdate | fullDate = '28/sept/2024' | type = Date
+2024-09-28 09:45:03 | Guillaume | @0190 | ufSaisieHeures | txtDate_BeforeUpdate | DateSerial = '28/sept/2024' | Vrai
+2024-09-28 09:45:03 | Guillaume | @0214 | ufSaisieHeures | txtDate_AfterUpdate | ufSaisieHeures.txtDate.value = '28/sept/2024' | type = String
+2024-09-28 09:45:03 | Guillaume | @0222 | ufSaisieHeures | txtDate_AfterUpdate | dateStr = '28/sept/2024' | type = String
+2024-09-28 09:45:03 | Guillaume | @0224 | ufSaisieHeures | txtDate_AfterUpdate | dateFormated = '28/sept/2024' | type = Date
+2024-09-28 09:45:03 | Guillaume | @0226 | ufSaisieHeures | txtDate_AfterUpdate | wshAdmin.Range("TEC_Date").value = '28/sept/2024' | type = Date
+2024-09-28 09:45:03 | Guillaume | @0188 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshAdmin.Range("TEC_Date").value = '28/sept/2024' | type = Date
+2024-09-28 09:45:04 | Guillaume | @0190 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshTEC_Local.Range("S3").value = '28/sept/2024' | type = Date
+2024-09-28 10:21:22 | Guillaume | @0137 | ufSaisieHeures | cmbProfessionnel_AfterUpdate | wshAdmin.Range("TEC_Date").value = '' | type = Empty
+2024-09-28 10:21:23 | Guillaume | @0171 | ufSaisieHeures | txtDate_BeforeUpdate | ufSaisieHeures.txtDate.value = '28/sept/2024' | type = String
+2024-09-28 10:21:24 | Guillaume | @0173 | ufSaisieHeures | txtDate_BeforeUpdate | fullDate = '28/sept/2024' | type = Date
+2024-09-28 10:21:24 | Guillaume | @0189 | ufSaisieHeures | txtDate_BeforeUpdate | fullDate = '28/sept/2024' | type = Date
+2024-09-28 10:21:24 | Guillaume | @0190 | ufSaisieHeures | txtDate_BeforeUpdate | DateSerial = '28/sept/2024' | Vrai
+2024-09-28 10:21:24 | Guillaume | @0214 | ufSaisieHeures | txtDate_AfterUpdate | ufSaisieHeures.txtDate.value = '28/sept/2024' | type = String
+2024-09-28 10:21:24 | Guillaume | @0222 | ufSaisieHeures | txtDate_AfterUpdate | dateStr = '28/sept/2024' | type = String
+2024-09-28 10:21:24 | Guillaume | @0224 | ufSaisieHeures | txtDate_AfterUpdate | dateFormated = '28/sept/2024' | type = Date
+2024-09-28 10:21:24 | Guillaume | @0226 | ufSaisieHeures | txtDate_AfterUpdate | wshAdmin.Range("TEC_Date").value = '28/sept/2024' | type = Date
+2024-09-28 10:21:24 | Guillaume | @0188 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshAdmin.Range("TEC_Date").value = '28/sept/2024' | type = Date
+2024-09-28 10:21:25 | Guillaume | @0190 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshTEC_Local.Range("S3").value = '28/sept/2024' | type = Date
+2024-09-28 10:21:55 | Guillaume | @0029 | modTEC_Saisie | TEC_Ajoute_Ligne | ufSaisieHeures.txtDate.value = '28/sept/2024' | type = String
+2024-09-28 10:21:55 | Guillaume | @0033 | modTEC_Saisie | TEC_Ajoute_Ligne | ***** - y = 2024, m = 9, d = 28 | type = String
+2024-09-28 10:21:55 | Guillaume | @0042 | modTEC_Saisie | TEC_Ajoute_Ligne | ufSaisieHeures.txtDate.value = '28/sept/2024' | type = String
+2024-09-28 10:21:56 | Guillaume | @0319 | modTEC_Saisie | TEC_Record_Add_Or_Update_To_DB | dateValue = '28/sept/2024' | type = Date
+2024-09-28 10:21:57 | Guillaume | @0513 | modTEC_Saisie | TEC_Record_Add_Or_Update_Locally | dateValue = '28/sept/2024' | type = Date
+2024-09-28 10:21:58 | Guillaume | @0188 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshAdmin.Range("TEC_Date").value = '28/sept/2024' | type = Date
+2024-09-28 10:21:58 | Guillaume | @0190 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshTEC_Local.Range("S3").value = '28/sept/2024' | type = Date
+2024-09-28 10:27:55 | Guillaume | @0029 | modTEC_Saisie | TEC_Ajoute_Ligne | ufSaisieHeures.txtDate.value = '28/sept/2024' | type = String
+2024-09-28 10:27:55 | Guillaume | @0033 | modTEC_Saisie | TEC_Ajoute_Ligne | ***** - y = 2024, m = 9, d = 28 | type = String
+2024-09-28 10:27:55 | Guillaume | @0042 | modTEC_Saisie | TEC_Ajoute_Ligne | ufSaisieHeures.txtDate.value = '28/sept/2024' | type = String
+2024-09-28 10:27:56 | Guillaume | @0319 | modTEC_Saisie | TEC_Record_Add_Or_Update_To_DB | dateValue = '28/sept/2024' | type = Date
+2024-09-28 10:27:57 | Guillaume | @0513 | modTEC_Saisie | TEC_Record_Add_Or_Update_Locally | dateValue = '28/sept/2024' | type = Date
+2024-09-28 10:27:58 | Guillaume | @0188 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshAdmin.Range("TEC_Date").value = '28/sept/2024' | type = Date
+2024-09-28 10:27:58 | Guillaume | @0190 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshTEC_Local.Range("S3").value = '28/sept/2024' | type = Date
+2024-09-28 11:00:25 | Guillaume | @0029 | modTEC_Saisie | TEC_Ajoute_Ligne | ufSaisieHeures.txtDate.value = '28/sept/2024' | type = String
+2024-09-28 11:00:25 | Guillaume | @0033 | modTEC_Saisie | TEC_Ajoute_Ligne | ***** - y = 2024, m = 9, d = 28 | type = String
+2024-09-28 11:00:25 | Guillaume | @0042 | modTEC_Saisie | TEC_Ajoute_Ligne | ufSaisieHeures.txtDate.value = '28/sept/2024' | type = String
+2024-09-28 11:00:26 | Guillaume | @0319 | modTEC_Saisie | TEC_Record_Add_Or_Update_To_DB | dateValue = '28/sept/2024' | type = Date
+2024-09-28 11:00:27 | Guillaume | @0513 | modTEC_Saisie | TEC_Record_Add_Or_Update_Locally | dateValue = '28/sept/2024' | type = Date
+2024-09-28 11:00:28 | Guillaume | @0188 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshAdmin.Range("TEC_Date").value = '28/sept/2024' | type = Date
+2024-09-28 11:00:28 | Guillaume | @0190 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshTEC_Local.Range("S3").value = '28/sept/2024' | type = Date
+2024-09-28 12:03:51 | Guillaume | @0137 | ufSaisieHeures | cmbProfessionnel_AfterUpdate | wshAdmin.Range("TEC_Date").value = '' | type = Empty
+2024-09-28 12:03:52 | Guillaume | @0171 | ufSaisieHeures | txtDate_BeforeUpdate | ufSaisieHeures.txtDate.value = '28/sept/2024' | type = String
+2024-09-28 12:03:52 | Guillaume | @0173 | ufSaisieHeures | txtDate_BeforeUpdate | fullDate = '28/sept/2024' | type = Date
+2024-09-28 12:03:52 | Guillaume | @0189 | ufSaisieHeures | txtDate_BeforeUpdate | fullDate = '28/sept/2024' | type = Date
+2024-09-28 12:03:53 | Guillaume | @0190 | ufSaisieHeures | txtDate_BeforeUpdate | DateSerial = '28/sept/2024' | Vrai
+2024-09-28 12:03:53 | Guillaume | @0214 | ufSaisieHeures | txtDate_AfterUpdate | ufSaisieHeures.txtDate.value = '28/sept/2024' | type = String
+2024-09-28 12:03:53 | Guillaume | @0222 | ufSaisieHeures | txtDate_AfterUpdate | dateStr = '28/sept/2024' | type = String
+2024-09-28 12:03:53 | Guillaume | @0224 | ufSaisieHeures | txtDate_AfterUpdate | dateFormated = '28/sept/2024' | type = Date
+2024-09-28 12:03:53 | Guillaume | @0226 | ufSaisieHeures | txtDate_AfterUpdate | wshAdmin.Range("TEC_Date").value = '28/sept/2024' | type = Date
+2024-09-28 12:03:53 | Guillaume | @0188 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshAdmin.Range("TEC_Date").value = '28/sept/2024' | type = Date
+2024-09-28 12:03:53 | Guillaume | @0190 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshTEC_Local.Range("S3").value = '28/sept/2024' | type = Date
+2024-09-28 12:05:16 | Guillaume | @0029 | modTEC_Saisie | TEC_Ajoute_Ligne | ufSaisieHeures.txtDate.value = '28/sept/2024' | type = String
+2024-09-28 12:05:16 | Guillaume | @0033 | modTEC_Saisie | TEC_Ajoute_Ligne | ***** - y = 2024, m = 9, d = 28 | type = String
+2024-09-28 12:05:16 | Guillaume | @0042 | modTEC_Saisie | TEC_Ajoute_Ligne | ufSaisieHeures.txtDate.value = '28/sept/2024' | type = String
+2024-09-28 12:05:17 | Guillaume | @0319 | modTEC_Saisie | TEC_Record_Add_Or_Update_To_DB | dateValue = '28/sept/2024' | type = Date
+2024-09-28 12:05:18 | Guillaume | @0513 | modTEC_Saisie | TEC_Record_Add_Or_Update_Locally | dateValue = '28/sept/2024' | type = Date
+2024-09-28 12:05:18 | Guillaume | @0188 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshAdmin.Range("TEC_Date").value = '28/sept/2024' | type = Date
+2024-09-28 12:05:18 | Guillaume | @0190 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshTEC_Local.Range("S3").value = '28/sept/2024' | type = Date
+2024-09-28 12:05:29 | Guillaume | @0319 | modTEC_Saisie | TEC_Record_Add_Or_Update_To_DB | dateValue = '28/sept/2024' | type = Date
+2024-09-28 12:05:30 | Guillaume | @0513 | modTEC_Saisie | TEC_Record_Add_Or_Update_Locally | dateValue = '28/sept/2024' | type = Date
+2024-09-28 12:05:30 | Guillaume | @0188 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshAdmin.Range("TEC_Date").value = '28/sept/2024' | type = Date
+2024-09-28 12:05:30 | Guillaume | @0190 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshTEC_Local.Range("S3").value = '28/sept/2024' | type = Date
+2024-09-28 12:28:04 | Guillaume | @0137 | ufSaisieHeures | cmbProfessionnel_AfterUpdate | wshAdmin.Range("TEC_Date").value = '' | type = Empty
+2024-09-28 12:28:05 | Guillaume | @0171 | ufSaisieHeures | txtDate_BeforeUpdate | ufSaisieHeures.txtDate.value = '28/sept/2024' | type = String
+2024-09-28 12:28:05 | Guillaume | @0173 | ufSaisieHeures | txtDate_BeforeUpdate | fullDate = '28/sept/2024' | type = Date
+2024-09-28 12:28:05 | Guillaume | @0189 | ufSaisieHeures | txtDate_BeforeUpdate | fullDate = '28/sept/2024' | type = Date
+2024-09-28 12:28:06 | Guillaume | @0190 | ufSaisieHeures | txtDate_BeforeUpdate | DateSerial = '28/sept/2024' | Vrai
+2024-09-28 12:28:06 | Guillaume | @0214 | ufSaisieHeures | txtDate_AfterUpdate | ufSaisieHeures.txtDate.value = '28/sept/2024' | type = String
+2024-09-28 12:28:06 | Guillaume | @0222 | ufSaisieHeures | txtDate_AfterUpdate | dateStr = '28/sept/2024' | type = String
+2024-09-28 12:28:06 | Guillaume | @0224 | ufSaisieHeures | txtDate_AfterUpdate | dateFormated = '28/sept/2024' | type = Date
+2024-09-28 12:28:06 | Guillaume | @0226 | ufSaisieHeures | txtDate_AfterUpdate | wshAdmin.Range("TEC_Date").value = '28/sept/2024' | type = Date
+2024-09-28 12:28:06 | Guillaume | @0188 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshAdmin.Range("TEC_Date").value = '28/sept/2024' | type = Date
+2024-09-28 12:28:06 | Guillaume | @0190 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshTEC_Local.Range("S3").value = '28/sept/2024' | type = Date
+2024-09-28 12:40:47 | Guillaume | @0319 | modTEC_Saisie | TEC_Record_Add_Or_Update_To_DB | dateValue = '28/sept/2024' | type = Date
+2024-09-28 12:40:47 | Guillaume | @0513 | modTEC_Saisie | TEC_Record_Add_Or_Update_Locally | dateValue = '28/sept/2024' | type = Date
+2024-09-28 12:40:48 | Guillaume | @0188 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshAdmin.Range("TEC_Date").value = '28/sept/2024' | type = Date
+2024-09-28 12:40:48 | Guillaume | @0190 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshTEC_Local.Range("S3").value = '28/sept/2024' | type = Date
+2024-09-28 13:25:54 | Guillaume | @0029 | modTEC_Saisie | TEC_Ajoute_Ligne | ufSaisieHeures.txtDate.value = '28/09/2024' | type = String
+2024-09-28 13:25:54 | Guillaume | @0033 | modTEC_Saisie | TEC_Ajoute_Ligne | ***** - y = 2024, m = 9, d = 28 | type = String
+2024-09-28 13:25:54 | Guillaume | @0042 | modTEC_Saisie | TEC_Ajoute_Ligne | ufSaisieHeures.txtDate.value = '28/09/2024' | type = String
+2024-09-28 13:25:55 | Guillaume | @0319 | modTEC_Saisie | TEC_Record_Add_Or_Update_To_DB | dateValue = '28/sept/2024' | type = Date
+2024-09-28 13:25:56 | Guillaume | @0513 | modTEC_Saisie | TEC_Record_Add_Or_Update_Locally | dateValue = '28/sept/2024' | type = Date
+2024-09-28 13:25:57 | Guillaume | @0188 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshAdmin.Range("TEC_Date").value = '28/sept/2024' | type = Date
+2024-09-28 13:25:57 | Guillaume | @0190 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshTEC_Local.Range("S3").value = '28/sept/2024' | type = Date
+2024-09-28 16:16:56 | Guillaume | @0029 | modTEC_Saisie | TEC_Ajoute_Ligne | ufSaisieHeures.txtDate.value = '28/09/2024' | type = String
+2024-09-28 16:16:56 | Guillaume | @0033 | modTEC_Saisie | TEC_Ajoute_Ligne | ***** - y = 2024, m = 9, d = 28 | type = String
+2024-09-28 16:16:56 | Guillaume | @0042 | modTEC_Saisie | TEC_Ajoute_Ligne | ufSaisieHeures.txtDate.value = '28/09/2024' | type = String
+2024-09-28 16:16:57 | Guillaume | @0319 | modTEC_Saisie | TEC_Record_Add_Or_Update_To_DB | dateValue = '28/sept/2024' | type = Date
+2024-09-28 16:16:58 | Guillaume | @0513 | modTEC_Saisie | TEC_Record_Add_Or_Update_Locally | dateValue = '28/sept/2024' | type = Date
+2024-09-28 16:16:59 | Guillaume | @0188 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshAdmin.Range("TEC_Date").value = '28/sept/2024' | type = Date
+2024-09-28 16:16:59 | Guillaume | @0190 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshTEC_Local.Range("S3").value = '28/sept/2024' | type = Date
+2024-09-28 16:36:46 | Guillaume | @0319 | modTEC_Saisie | TEC_Record_Add_Or_Update_To_DB | dateValue = '28/sept/2024' | type = Date
+2024-09-28 16:36:47 | Guillaume | @0513 | modTEC_Saisie | TEC_Record_Add_Or_Update_Locally | dateValue = '28/sept/2024' | type = Date
+2024-09-28 16:36:47 | Guillaume | @0188 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshAdmin.Range("TEC_Date").value = '28/sept/2024' | type = Date
+2024-09-28 16:36:47 | Guillaume | @0190 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshTEC_Local.Range("S3").value = '28/sept/2024' | type = Date
+2024-09-28 16:36:55 | Guillaume | @0319 | modTEC_Saisie | TEC_Record_Add_Or_Update_To_DB | dateValue = '28/sept/2024' | type = Date
+2024-09-28 16:36:56 | Guillaume | @0513 | modTEC_Saisie | TEC_Record_Add_Or_Update_Locally | dateValue = '28/sept/2024' | type = Date
+2024-09-28 16:36:56 | Guillaume | @0188 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshAdmin.Range("TEC_Date").value = '28/sept/2024' | type = Date
+2024-09-28 16:36:57 | Guillaume | @0190 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshTEC_Local.Range("S3").value = '28/sept/2024' | type = Date
+2024-09-29 05:34:45 | Guillaume | @0137 | ufSaisieHeures | cmbProfessionnel_AfterUpdate | wshAdmin.Range("TEC_Date").value = '' | type = Empty
+2024-09-29 05:34:46 | Guillaume | @0171 | ufSaisieHeures | txtDate_BeforeUpdate | ufSaisieHeures.txtDate.value = '29/sept/2024' | type = String
+2024-09-29 05:34:46 | Guillaume | @0173 | ufSaisieHeures | txtDate_BeforeUpdate | fullDate = '29/sept/2024' | type = Date
+2024-09-29 05:34:46 | Guillaume | @0189 | ufSaisieHeures | txtDate_BeforeUpdate | fullDate = '29/sept/2024' | type = Date
+2024-09-29 05:34:46 | Guillaume | @0190 | ufSaisieHeures | txtDate_BeforeUpdate | DateSerial = '29/sept/2024' | Vrai
+2024-09-29 05:34:47 | Guillaume | @0214 | ufSaisieHeures | txtDate_AfterUpdate | ufSaisieHeures.txtDate.value = '29/sept/2024' | type = String
+2024-09-29 05:34:47 | Guillaume | @0222 | ufSaisieHeures | txtDate_AfterUpdate | dateStr = '29/sept/2024' | type = String
+2024-09-29 05:34:47 | Guillaume | @0224 | ufSaisieHeures | txtDate_AfterUpdate | dateFormated = '29/sept/2024' | type = Date
+2024-09-29 05:34:47 | Guillaume | @0226 | ufSaisieHeures | txtDate_AfterUpdate | wshAdmin.Range("TEC_Date").value = '29/sept/2024' | type = Date
+2024-09-29 05:34:47 | Guillaume | @0188 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshAdmin.Range("TEC_Date").value = '29/sept/2024' | type = Date
+2024-09-29 05:34:47 | Guillaume | @0190 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshTEC_Local.Range("S3").value = '29/sept/2024' | type = Date
+2024-09-29 05:35:17 | Guillaume | @0029 | modTEC_Saisie | TEC_Ajoute_Ligne | ufSaisieHeures.txtDate.value = '29/sept/2024' | type = String
+2024-09-29 05:35:17 | Guillaume | @0033 | modTEC_Saisie | TEC_Ajoute_Ligne | ***** - y = 2024, m = 9, d = 29 | type = String
+2024-09-29 05:35:17 | Guillaume | @0042 | modTEC_Saisie | TEC_Ajoute_Ligne | ufSaisieHeures.txtDate.value = '29/sept/2024' | type = String
+2024-09-29 05:35:18 | Guillaume | @0319 | modTEC_Saisie | TEC_Record_Add_Or_Update_To_DB | dateValue = '29/sept/2024' | type = Date
+2024-09-29 05:35:20 | Guillaume | @0513 | modTEC_Saisie | TEC_Record_Add_Or_Update_Locally | dateValue = '29/sept/2024' | type = Date
+2024-09-29 05:35:20 | Guillaume | @0188 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshAdmin.Range("TEC_Date").value = '29/sept/2024' | type = Date
+2024-09-29 05:35:20 | Guillaume | @0190 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshTEC_Local.Range("S3").value = '29/sept/2024' | type = Date
+2024-09-29 05:45:58 | Guillaume | @0029 | modTEC_Saisie | TEC_Ajoute_Ligne | ufSaisieHeures.txtDate.value = '29/sept/2024' | type = String
+2024-09-29 05:45:58 | Guillaume | @0033 | modTEC_Saisie | TEC_Ajoute_Ligne | ***** - y = 2024, m = 9, d = 29 | type = String
+2024-09-29 05:45:58 | Guillaume | @0042 | modTEC_Saisie | TEC_Ajoute_Ligne | ufSaisieHeures.txtDate.value = '29/sept/2024' | type = String
+2024-09-29 05:45:59 | Guillaume | @0319 | modTEC_Saisie | TEC_Record_Add_Or_Update_To_DB | dateValue = '29/sept/2024' | type = Date
+2024-09-29 05:46:00 | Guillaume | @0513 | modTEC_Saisie | TEC_Record_Add_Or_Update_Locally | dateValue = '29/sept/2024' | type = Date
+2024-09-29 05:46:00 | Guillaume | @0188 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshAdmin.Range("TEC_Date").value = '29/sept/2024' | type = Date
+2024-09-29 05:46:00 | Guillaume | @0190 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshTEC_Local.Range("S3").value = '29/sept/2024' | type = Date
+2024-09-29 06:21:18 | Guillaume | @0029 | modTEC_Saisie | TEC_Ajoute_Ligne | ufSaisieHeures.txtDate.value = '29/sept/2024' | type = String
+2024-09-29 06:21:18 | Guillaume | @0033 | modTEC_Saisie | TEC_Ajoute_Ligne | ***** - y = 2024, m = 9, d = 29 | type = String
+2024-09-29 06:21:18 | Guillaume | @0042 | modTEC_Saisie | TEC_Ajoute_Ligne | ufSaisieHeures.txtDate.value = '29/sept/2024' | type = String
+2024-09-29 06:21:19 | Guillaume | @0319 | modTEC_Saisie | TEC_Record_Add_Or_Update_To_DB | dateValue = '29/sept/2024' | type = Date
+2024-09-29 06:21:20 | Guillaume | @0513 | modTEC_Saisie | TEC_Record_Add_Or_Update_Locally | dateValue = '29/sept/2024' | type = Date
+2024-09-29 06:21:20 | Guillaume | @0188 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshAdmin.Range("TEC_Date").value = '29/sept/2024' | type = Date
+2024-09-29 06:21:20 | Guillaume | @0190 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshTEC_Local.Range("S3").value = '29/sept/2024' | type = Date
+2024-09-29 06:50:41 | Guillaume | @0029 | modTEC_Saisie | TEC_Ajoute_Ligne | ufSaisieHeures.txtDate.value = '29/sept/2024' | type = String
+2024-09-29 06:50:41 | Guillaume | @0033 | modTEC_Saisie | TEC_Ajoute_Ligne | ***** - y = 2024, m = 9, d = 29 | type = String
+2024-09-29 06:50:41 | Guillaume | @0042 | modTEC_Saisie | TEC_Ajoute_Ligne | ufSaisieHeures.txtDate.value = '29/sept/2024' | type = String
+2024-09-29 06:50:42 | Guillaume | @0319 | modTEC_Saisie | TEC_Record_Add_Or_Update_To_DB | dateValue = '29/sept/2024' | type = Date
+2024-09-29 06:50:43 | Guillaume | @0513 | modTEC_Saisie | TEC_Record_Add_Or_Update_Locally | dateValue = '29/sept/2024' | type = Date
+2024-09-29 06:50:43 | Guillaume | @0188 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshAdmin.Range("TEC_Date").value = '29/sept/2024' | type = Date
+2024-09-29 06:50:43 | Guillaume | @0190 | modTEC_Saisie | TEC_Get_All_TEC_AF | wshTEC_Local.Range("S3").value = '29/sept/2024' | type = Date

@@ -1454,3 +1454,63 @@ Function NumeroEnLettre(ByVal num As Long) As String
     
 End Function
 
+Sub ListerValidations()
+
+    Dim ws As Worksheet
+    Dim cell As Range
+    Dim rngDV As Range
+    Dim wsReport As Worksheet
+    Dim lastRow As Long
+    Dim rowIndex As Long
+    
+    ' Vérifie s'il existe déjà une feuille de rapport, sinon la crée
+    On Error Resume Next
+    Set wsReport = ThisWorkbook.Sheets("ListeValidations")
+    On Error GoTo 0
+    
+    If wsReport Is Nothing Then
+        Set wsReport = ThisWorkbook.Sheets.Add
+        wsReport.Name = "ListeValidations"
+    Else
+        ' Efface l'ancien contenu si la feuille existe déjà
+        wsReport.Cells.Clear
+    End If
+    
+    ' En-têtes de colonnes
+    wsReport.Cells(1, 1).Value = "Feuille"
+    wsReport.Cells(1, 2).Value = "Cellule"
+    wsReport.Cells(1, 3).Value = "Type de Validation"
+    wsReport.Cells(1, 4).Value = "Formule / Liste"
+    
+    rowIndex = 2
+
+    ' Parcourt toutes les feuilles
+    For Each ws In ThisWorkbook.Sheets
+        On Error Resume Next
+        ws.Unprotect
+        Set rngDV = ws.Cells.SpecialCells(xlCellTypeAllValidation)
+        On Error GoTo 0
+        
+        If Not rngDV Is Nothing Then
+            For Each cell In rngDV
+                With cell.Validation
+                    wsReport.Cells(rowIndex, 1).Value = ws.Name
+                    wsReport.Cells(rowIndex, 2).Value = cell.Address(False, False)
+                    wsReport.Cells(rowIndex, 3).Value = .Type
+                    If .Type = xlValidateList Then
+                        wsReport.Cells(rowIndex, 4).Value = .Formula1 ' Affiche la liste ou la formule utilisée
+                    Else
+                        wsReport.Cells(rowIndex, 4).Value = "Autre type"
+                    End If
+                    rowIndex = rowIndex + 1
+                End With
+            Next cell
+        End If
+        
+        Set rngDV = Nothing
+    Next ws
+    
+    MsgBox "Liste des validations générée dans la feuille 'ListeValidations'.", vbInformation
+    
+End Sub
+

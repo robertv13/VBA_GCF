@@ -1,0 +1,291 @@
+2024-11-20 09:15:59.69 | vgervais | APP_v5.D.1.xlsb | ufSaisieHeures:txtDate_BeforeUpdate |  | 31
+2024-11-20 09:15:59.73 | vgervais | APP_v5.D.1.xlsb | modFunctions:Fn_Complete_Date @00608   y = 2024   m = 11   d = 20 parsedDate='2024-11-20' |  | 31
+2024-11-20 09:15:59.76 | vgervais | APP_v5.D.1.xlsb | ufSaisieHeures:txtDate_BeforeUpdate | 0,0703 sec. | 31
+
+2024-11-20 09:15:59.78 | vgervais | APP_v5.D.1.xlsb | ufSaisieHeures:txtDate_AfterUpdate - 2024-11-20 |  | 31
+2024-11-20 09:15:59.81 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF - 2/2024-11-20 |  | 31
+2024-11-20 09:15:59.89 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 0,0820 sec. | 31
+
+2024-11-20 09:15:59.91 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours |  | 31
+2024-11-20 09:15:59.94 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Update_All |  | 31
+2024-11-20 09:15:59.97 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data |  | 31
+2024-11-20 09:16:00.18 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data | 0,2148 sec. | 31
+
+2024-11-20 09:16:00.21 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 31
+2024-11-20 09:16:00.36 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables | 0,1445 sec. | 31
+
+2024-11-20 09:16:00.38 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Update_All | 0,4414 sec. | 31
+
+2024-11-20 09:16:00.41 | vgervais | APP_v5.D.1.xlsb | modStatsHeures:StatsHeures_AdvancedFilters |  | 31
+2024-11-20 09:16:00.59 | vgervais | APP_v5.D.1.xlsb | modStatsHeures:StatsHeures_AdvancedFilters | 0,1836 sec. | 31
+
+2024-11-20 09:16:00.66 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 0,7539 sec. | 31
+
+2024-11-20 09:16:00.70 | vgervais | APP_v5.D.1.xlsb | ufSaisieHeures:txtDate_AfterUpdate | 0,9180 sec. | 31
+
+2024-11-20 09:16:04.10 | vgervais | APP_v5.D.1.xlsb | ufSaisieHeures:txtClient_AfterUpdate - autre |  | 31
+2024-11-20 09:16:04.13 | vgervais | APP_v5.D.1.xlsb | modFunctions:Fn_GetID_From_Client_Name - autre |  | 31
+2024-11-20 09:16:05.40 | vgervais | APP_v5.D.1.xlsb | modFunctions:Fn_GetID_From_Client_Name - Not Found | 1,2695 sec. | 31
+
+2024-11-20 09:16:05.43 | vgervais | APP_v5.D.1.xlsb |    ufSaisieHeures:txtClient_AfterUpdate -  |  | 31
+2024-11-20 09:16:05.46 | vgervais | APP_v5.D.1.xlsb | ufSaisieHeures:txtClient_AfterUpdate | 1,3633 sec. | 31
+
+2024-11-20 09:16:08.37 | vgervais | APP_v5.D.1.xlsb | ufSaisieHeures:lstboxNomClient_DblClick |  | 31
+2024-11-20 09:16:08.43 | vgervais | APP_v5.D.1.xlsb | modFunctions:Fn_GetID_From_Client_Name - z_Administratif_Autres non chargeables |  | 31
+2024-11-20 09:16:08.46 | vgervais | APP_v5.D.1.xlsb | modFunctions:Fn_GetID_From_Client_Name - 5 | 0,0352 sec. | 31
+
+2024-11-20 09:16:08.48 | vgervais | APP_v5.D.1.xlsb | ufSaisieHeures:lstboxNomClient_DblClick | 0,1211 sec. | 31
+
+2024-11-20 09:16:08.52 | vgervais | APP_v5.D.1.xlsb | ufSaisieHeures:txtClient_AfterUpdate - z_Administratif_Autres non chargeables |  | 31
+2024-11-20 09:16:08.54 | vgervais | APP_v5.D.1.xlsb | modFunctions:Fn_GetID_From_Client_Name - z_Administratif_Autres non chargeables |  | 31
+2024-11-20 09:16:08.57 | vgervais | APP_v5.D.1.xlsb | modFunctions:Fn_GetID_From_Client_Name - 5 | 0,0352 sec. | 31
+
+2024-11-20 09:16:08.61 | vgervais | APP_v5.D.1.xlsb |    ufSaisieHeures:txtClient_AfterUpdate - 5 |  | 31
+2024-11-20 09:16:08.63 | vgervais | APP_v5.D.1.xlsb | ufSaisieHeures:txtClient_AfterUpdate | 0,1211 sec. | 31
+
+2024-11-20 09:16:22.48 | vgervais | APP_v5.D.1.xlsb | ufSaisieHeures:txtActivite_AfterUpdate |  | 31
+2024-11-20 09:16:22.52 | vgervais | APP_v5.D.1.xlsb | ufSaisieHeures:txtActivite_AfterUpdate | 0,0430 sec. | 31
+
+2024-11-20 09:16:28.10 | vgervais | APP_v5.D.1.xlsb | ufSaisieHeures:txtHeures_AfterUpdate |  | 31
+2024-11-20 09:16:28.14 | vgervais | APP_v5.D.1.xlsb | ufSaisieHeures:txtHeures_AfterUpdate | 0,0391 sec. | 31
+
+2024-11-20 09:16:28.17 | vgervais | APP_v5.D.1.xlsb | ufSaisieHeures:txtHeures_Exit |  | 31
+2024-11-20 09:16:28.21 | vgervais | APP_v5.D.1.xlsb | ufSaisieHeures:txtHeures_AfterUpdate | 0,0430 sec. | 31
+
+2024-11-20 09:16:28.23 | vgervais | APP_v5.D.1.xlsb | ufSaisieHeures:chbFacturable_AfterUpdate |  | 31
+2024-11-20 09:16:28.27 | vgervais | APP_v5.D.1.xlsb | ufSaisieHeures:chbFacturable_AfterUpdate | 0,0352 sec. | 31
+
+2024-11-20 09:16:28.92 | vgervais | APP_v5.D.1.xlsb | ufSaisieHeures:cmdAdd_Click |  | 31
+2024-11-20 09:16:28.95 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne |  | 31
+2024-11-20 09:16:28.98 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '0' |  | 31
+2024-11-20 09:16:29.17 | vgervais | APP_v5.D.1.xlsb |      modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - AddingNewRecord - TECID = 0 |  | 31
+2024-11-20 09:16:29.28 | vgervais | APP_v5.D.1.xlsb |      modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Le nouvel enregistrement, TECID a été assigné à 2529 |  | 31
+2024-11-20 09:16:29.31 | vgervais | APP_v5.D.1.xlsb |      modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Création du RecordSet |  | 31
+2024-11-20 09:16:29.35 | vgervais | APP_v5.D.1.xlsb |      modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Le RecordSet a été ajouté pour le TECID = 2529 |  | 31
+2024-11-20 09:16:29.59 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 0,6133 sec. | 31
+
+2024-11-20 09:16:29.62 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally |  | 31
+2024-11-20 09:16:29.68 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 0,0664 sec. | 31
+
+2024-11-20 09:16:29.71 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF - 2/2024-11-20 |  | 31
+2024-11-20 09:16:29.79 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 0,0781 sec. | 31
+
+2024-11-20 09:16:29.82 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours |  | 31
+2024-11-20 09:16:29.85 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Update_All |  | 31
+2024-11-20 09:16:29.88 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data |  | 31
+2024-11-20 09:16:30.11 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data | 0,2383 sec. | 31
+
+2024-11-20 09:16:30.14 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 31
+2024-11-20 09:16:30.29 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables | 0,1484 sec. | 31
+
+2024-11-20 09:16:30.32 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Update_All | 0,4688 sec. | 31
+
+2024-11-20 09:16:30.34 | vgervais | APP_v5.D.1.xlsb | modStatsHeures:StatsHeures_AdvancedFilters |  | 31
+2024-11-20 09:16:30.52 | vgervais | APP_v5.D.1.xlsb | modStatsHeures:StatsHeures_AdvancedFilters | 0,1836 sec. | 31
+
+2024-11-20 09:16:30.61 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 0,7969 sec. | 31
+
+2024-11-20 09:16:30.64 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Update_All |  | 31
+2024-11-20 09:16:30.66 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data |  | 31
+2024-11-20 09:16:30.88 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data | 0,2227 sec. | 31
+
+2024-11-20 09:16:30.91 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 31
+2024-11-20 09:16:31.05 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables | 0,1445 sec. | 31
+
+2024-11-20 09:16:31.09 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Update_All | 0,4492 sec. | 31
+
+2024-11-20 09:16:31.11 | vgervais | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne | 2,1719 sec. | 31
+
+2024-11-20 09:16:31.14 | vgervais | APP_v5.D.1.xlsb | ufSaisieHeures:cmdAdd_Click | 2,2266 sec. | 31
+
+2024-11-20 17:00:16.72 | Annie | APP_v5.D.1.xlsb | ***** Début d'une nouvelle session (Workbook_Open) ***** |  | 31
+2024-11-20 17:00:16.81 | Annie | APP_v5.D.1.xlsb | ThisWorkbook:Create_User_Active_File |  | 31
+2024-11-20 17:00:16.95 | Annie | APP_v5.D.1.xlsb | ThisWorkbook:Create_User_Active_File | 0.1523 sec. | 31
+
+2024-11-20 17:00:17.07 | Annie | APP_v5.D.1.xlsb | ThisWorkbook:BackupMasterFile |  | 31
+2024-11-20 17:00:18.52 | Annie | APP_v5.D.1.xlsb |    ThisWorkbook:BackupMasterFile - La variable masterWorkbook est initialisée |  | 31
+2024-11-20 17:00:18.99 | Annie | APP_v5.D.1.xlsb |    ThisWorkbook:BackupMasterFile - La copie est réussie |  | 31
+2024-11-20 17:00:19.16 | Annie | APP_v5.D.1.xlsb |    ThisWorkbook:BackupMasterFile - Le fichier masterWorkbook est fermé |  | 31
+2024-11-20 17:00:19.23 | Annie | APP_v5.D.1.xlsb | ThisWorkbook:BackupMasterFile | 2.1797 sec. | 31
+
+2024-11-20 17:00:19.30 | Annie | APP_v5.D.1.xlsb | modMenu:Hide_Dev_Shapes_Based_On_Username |  | 31
+2024-11-20 17:00:19.38 | Annie | APP_v5.D.1.xlsb | modMenu:Hide_Dev_Shapes_Based_On_Username | 0.0938 sec. | 31
+
+2024-11-20 17:00:19.52 | Annie | APP_v5.D.1.xlsb | modAppli:Write_Info_On_Main_Menu |  | 31
+2024-11-20 17:00:19.66 | Annie | APP_v5.D.1.xlsb | modAppli:Write_Info_On_Main_Menu | 0.1641 sec. | 31
+
+2024-11-20 17:00:19.86 | Annie | APP_v5.D.1.xlsb | ThisWorkbook:Workbook_Open | 3.1562 sec. | 31
+
+2024-11-20 17:00:31.11 | Annie | APP_v5.D.1.xlsb | ufSaisieHeures:UserForm_Activate |  | 31
+2024-11-20 17:00:31.18 | Annie | APP_v5.D.1.xlsb | modImport:Client_List_Import_All |  | 31
+2024-11-20 17:00:32.61 | Annie | APP_v5.D.1.xlsb |      modImport:Client_List_Import_All - Le .CopyFromRecordSet est complétée |  | 31
+2024-11-20 17:00:32.96 | Annie | APP_v5.D.1.xlsb |      modImport:Client_List_Import_All - La mise en forme a été appliquée |  | 31
+2024-11-20 17:00:33.31 | Annie | APP_v5.D.1.xlsb | modImport:Client_List_Import_All | 2.2031 sec. | 31
+
+2024-11-20 17:00:33.60 | Annie | APP_v5.D.1.xlsb | modImport:TEC_Import_All |  | 31
+2024-11-20 17:00:35.90 | Annie | APP_v5.D.1.xlsb |      modImport:TEC_Import_All - Le .CopyFromRecordSet est complétée |  | 31
+2024-11-20 17:00:36.25 | Annie | APP_v5.D.1.xlsb |      modImport:TEC_Import_All - La mise en forme a été appliquée |  | 31
+2024-11-20 17:00:36.42 | Annie | APP_v5.D.1.xlsb | modImport:TEC_Import_All | 2.8320 sec. | 31
+
+2024-11-20 17:00:36.56 | Annie | APP_v5.D.1.xlsb | ufSaisieHeures:UserForm_Activate | 5.4688 sec. | 31
+
+2024-11-20 17:00:40.51 | Annie | APP_v5.D.1.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate |  | 31
+2024-11-20 17:00:40.60 | Annie | APP_v5.D.1.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate | 0.1055 sec. | 31
+
+2024-11-20 17:00:46.57 | Annie | APP_v5.D.1.xlsb | ufSaisieHeures:txtDate_BeforeUpdate |  | 31
+2024-11-20 17:00:46.65 | Annie | APP_v5.D.1.xlsb | modFunctions:Fn_Complete_Date @00608   y = 2024   m = 11   d = 20 parsedDate='2024-11-20' |  | 31
+2024-11-20 17:00:46.74 | Annie | APP_v5.D.1.xlsb | ufSaisieHeures:txtDate_BeforeUpdate | 0.1875 sec. | 31
+
+2024-11-20 17:00:46.82 | Annie | APP_v5.D.1.xlsb | ufSaisieHeures:txtDate_AfterUpdate - 2024-11-20 |  | 31
+2024-11-20 17:00:46.90 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF - 3/2024-11-20 |  | 31
+2024-11-20 17:00:47.08 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 0.1953 sec. | 31
+
+2024-11-20 17:00:47.17 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours |  | 31
+2024-11-20 17:00:47.27 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Update_All |  | 31
+2024-11-20 17:00:47.36 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data |  | 31
+2024-11-20 17:00:47.73 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data | 0.3906 sec. | 31
+
+2024-11-20 17:00:47.81 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 31
+2024-11-20 17:00:48.10 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables | 0.3008 sec. | 31
+
+2024-11-20 17:00:48.18 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Update_All | 0.9180 sec. | 31
+
+2024-11-20 17:00:48.26 | Annie | APP_v5.D.1.xlsb | modStatsHeures:StatsHeures_AdvancedFilters |  | 31
+2024-11-20 17:00:48.50 | Annie | APP_v5.D.1.xlsb | modStatsHeures:StatsHeures_AdvancedFilters | 0.2539 sec. | 31
+
+2024-11-20 17:00:48.78 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1.6328 sec. | 31
+
+2024-11-20 17:00:48.86 | Annie | APP_v5.D.1.xlsb | ufSaisieHeures:txtDate_AfterUpdate | 2.0586 sec. | 31
+
+2024-11-20 17:00:53.23 | Annie | APP_v5.D.1.xlsb | ufSaisieHeures:txtClient_AfterUpdate - Peinture Ex Aequo Inc. [Gabriel Léger] |  | 31
+2024-11-20 17:00:53.32 | Annie | APP_v5.D.1.xlsb | modFunctions:Fn_GetID_From_Client_Name - Peinture Ex Aequo Inc. [Gabriel Léger] |  | 31
+2024-11-20 17:00:53.39 | Annie | APP_v5.D.1.xlsb | modFunctions:Fn_GetID_From_Client_Name - 2000 | 0.0898 sec. | 31
+
+2024-11-20 17:00:53.47 | Annie | APP_v5.D.1.xlsb |    ufSaisieHeures:txtClient_AfterUpdate - 2000 |  | 31
+2024-11-20 17:00:53.56 | Annie | APP_v5.D.1.xlsb | ufSaisieHeures:txtClient_AfterUpdate | 0.3516 sec. | 31
+
+2024-11-20 17:01:06.47 | Annie | APP_v5.D.1.xlsb | ufSaisieHeures:txtActivite_AfterUpdate |  | 31
+2024-11-20 17:01:06.56 | Annie | APP_v5.D.1.xlsb | ufSaisieHeures:txtActivite_AfterUpdate | 0.1055 sec. | 31
+
+2024-11-20 17:01:08.14 | Annie | APP_v5.D.1.xlsb | ufSaisieHeures:txtHeures_AfterUpdate |  | 31
+2024-11-20 17:01:08.23 | Annie | APP_v5.D.1.xlsb | ufSaisieHeures:txtHeures_AfterUpdate | 0.1289 sec. | 31
+
+2024-11-20 17:01:08.40 | Annie | APP_v5.D.1.xlsb | ufSaisieHeures:txtHeures_Exit |  | 31
+2024-11-20 17:01:08.54 | Annie | APP_v5.D.1.xlsb | ufSaisieHeures:txtHeures_AfterUpdate | 0.2383 sec. | 31
+
+2024-11-20 17:01:09.25 | Annie | APP_v5.D.1.xlsb | ufSaisieHeures:cmdAdd_Click |  | 31
+2024-11-20 17:01:09.42 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne |  | 31
+2024-11-20 17:01:09.57 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '0' |  | 31
+2024-11-20 17:01:11.30 | Annie | APP_v5.D.1.xlsb |      modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - AddingNewRecord - TECID = 0 |  | 31
+2024-11-20 17:01:12.14 | Annie | APP_v5.D.1.xlsb |      modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Le nouvel enregistrement, TECID a été assigné à 2530 |  | 31
+2024-11-20 17:01:12.36 | Annie | APP_v5.D.1.xlsb |      modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Création du RecordSet |  | 31
+2024-11-20 17:01:12.47 | Annie | APP_v5.D.1.xlsb |      modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Le RecordSet a été ajouté pour le TECID = 2530 |  | 31
+2024-11-20 17:01:13.82 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 4.2539 sec. | 31
+
+2024-11-20 17:01:14.03 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally |  | 31
+2024-11-20 17:01:14.27 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 0.2500 sec. | 31
+
+2024-11-20 17:01:14.43 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF - 3/2024-11-20 |  | 31
+2024-11-20 17:01:14.70 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 0.2812 sec. | 31
+
+2024-11-20 17:01:14.83 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours |  | 31
+2024-11-20 17:01:14.00 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Update_All |  | 31
+2024-11-20 17:01:15.14 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data |  | 31
+2024-11-20 17:01:15.67 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data | 0.5469 sec. | 31
+
+2024-11-20 17:01:15.84 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 31
+2024-11-20 17:01:16.20 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables | 0.3828 sec. | 31
+
+2024-11-20 17:01:16.36 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Update_All | 1.3711 sec. | 31
+
+2024-11-20 17:01:16.50 | Annie | APP_v5.D.1.xlsb | modStatsHeures:StatsHeures_AdvancedFilters |  | 31
+2024-11-20 17:01:16.80 | Annie | APP_v5.D.1.xlsb | modStatsHeures:StatsHeures_AdvancedFilters | 0.3125 sec. | 31
+
+2024-11-20 17:01:17.09 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 2.2773 sec. | 31
+
+2024-11-20 17:01:17.27 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Update_All |  | 31
+2024-11-20 17:01:17.35 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data |  | 31
+2024-11-20 17:01:17.72 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data | 0.3828 sec. | 31
+
+2024-11-20 17:01:17.88 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 31
+2024-11-20 17:01:18.15 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables | 0.2891 sec. | 31
+
+2024-11-20 17:01:18.27 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Update_All | 1.0117 sec. | 31
+
+2024-11-20 17:01:18.40 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne | 8.9922 sec. | 31
+
+2024-11-20 17:01:18.48 | Annie | APP_v5.D.1.xlsb | ufSaisieHeures:cmdAdd_Click | 9.2383 sec. | 31
+
+2024-11-20 17:01:24.13 | Annie | APP_v5.D.1.xlsb | ufSaisieHeures:txtClient_AfterUpdate - Vignoble Kobloth et fils Inc. [Roxane Gauthier] |  | 31
+2024-11-20 17:01:24.21 | Annie | APP_v5.D.1.xlsb | modFunctions:Fn_GetID_From_Client_Name - Vignoble Kobloth et fils Inc. [Roxane Gauthier] |  | 31
+2024-11-20 17:01:24.29 | Annie | APP_v5.D.1.xlsb | modFunctions:Fn_GetID_From_Client_Name - 1112 | 0.1016 sec. | 31
+
+2024-11-20 17:01:24.37 | Annie | APP_v5.D.1.xlsb |    ufSaisieHeures:txtClient_AfterUpdate - 1112 |  | 31
+2024-11-20 17:01:24.55 | Annie | APP_v5.D.1.xlsb | ufSaisieHeures:txtClient_AfterUpdate | 0.4531 sec. | 31
+
+2024-11-20 17:01:38.80 | Annie | APP_v5.D.1.xlsb | ufSaisieHeures:txtActivite_AfterUpdate |  | 31
+2024-11-20 17:01:38.95 | Annie | APP_v5.D.1.xlsb | ufSaisieHeures:txtActivite_AfterUpdate | 0.1641 sec. | 31
+
+2024-11-20 17:01:41.49 | Annie | APP_v5.D.1.xlsb | ufSaisieHeures:txtHeures_AfterUpdate |  | 31
+2024-11-20 17:01:41.63 | Annie | APP_v5.D.1.xlsb | ufSaisieHeures:txtHeures_AfterUpdate | 0.1484 sec. | 31
+
+2024-11-20 17:01:41.76 | Annie | APP_v5.D.1.xlsb | ufSaisieHeures:txtHeures_Exit |  | 31
+2024-11-20 17:01:41.95 | Annie | APP_v5.D.1.xlsb | ufSaisieHeures:txtHeures_AfterUpdate | 0.2070 sec. | 31
+
+2024-11-20 17:01:42.72 | Annie | APP_v5.D.1.xlsb | ufSaisieHeures:cmdAdd_Click |  | 31
+2024-11-20 17:01:42.86 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne |  | 31
+2024-11-20 17:01:43.02 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - TECID = '0' |  | 31
+2024-11-20 17:01:44.78 | Annie | APP_v5.D.1.xlsb |      modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - AddingNewRecord - TECID = 0 |  | 31
+2024-11-20 17:01:45.48 | Annie | APP_v5.D.1.xlsb |      modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Le nouvel enregistrement, TECID a été assigné à 2531 |  | 31
+2024-11-20 17:01:45.63 | Annie | APP_v5.D.1.xlsb |      modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Création du RecordSet |  | 31
+2024-11-20 17:01:45.73 | Annie | APP_v5.D.1.xlsb |      modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - Le RecordSet a été ajouté pour le TECID = 2531 |  | 31
+2024-11-20 17:01:47.09 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB | 4.0938 sec. | 31
+
+2024-11-20 17:01:47.26 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally |  | 31
+2024-11-20 17:01:47.50 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally | 0.2695 sec. | 31
+
+2024-11-20 17:01:47.70 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF - 3/2024-11-20 |  | 31
+2024-11-20 17:01:47.94 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF | 0.2656 sec. | 31
+
+2024-11-20 17:01:48.08 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours |  | 31
+2024-11-20 17:01:48.22 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Update_All |  | 31
+2024-11-20 17:01:48.37 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data |  | 31
+2024-11-20 17:01:48.83 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data | 0.4766 sec. | 31
+
+2024-11-20 17:01:48.97 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 31
+2024-11-20 17:01:49.36 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables | 0.3984 sec. | 31
+
+2024-11-20 17:01:49.44 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Update_All | 1.2383 sec. | 31
+
+2024-11-20 17:01:49.54 | Annie | APP_v5.D.1.xlsb | modStatsHeures:StatsHeures_AdvancedFilters |  | 31
+2024-11-20 17:01:49.79 | Annie | APP_v5.D.1.xlsb | modStatsHeures:StatsHeures_AdvancedFilters | 0.2656 sec. | 31
+
+2024-11-20 17:01:50.06 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours | 1.9922 sec. | 31
+
+2024-11-20 17:01:50.13 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Update_All |  | 31
+2024-11-20 17:01:50.22 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data |  | 31
+2024-11-20 17:01:50.60 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data | 0.3906 sec. | 31
+
+2024-11-20 17:01:50.68 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 31
+2024-11-20 17:01:50.97 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables | 0.3047 sec. | 31
+
+2024-11-20 17:01:51.05 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_TdB_Update_All | 0.9297 sec. | 31
+
+2024-11-20 17:01:51.13 | Annie | APP_v5.D.1.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne | 8.2812 sec. | 31
+
+2024-11-20 17:01:51.22 | Annie | APP_v5.D.1.xlsb | ufSaisieHeures:cmdAdd_Click | 8.5234 sec. | 31
+
+2024-11-20 17:01:51.52 | Annie | APP_v5.D.1.xlsb | ufSaisieHeures:UserForm_Terminate |  | 31
+2024-11-20 17:01:51.68 | Annie | APP_v5.D.1.xlsb | ufSaisieHeures:UserForm_Terminate | 0.1719 sec. | 31
+
+2024-11-20 17:01:52.48 | Annie | APP_v5.D.1.xlsb | modAppli:Hide_All_Worksheets_Except_Menu |  | 31
+2024-11-20 17:01:52.65 | Annie | APP_v5.D.1.xlsb | modAppli:Hide_All_Worksheets_Except_Menu | 0.1875 sec. | 31
+
+2024-11-20 17:01:58.34 | Annie | APP_v5.D.1.xlsb | modAppli:Hide_All_Worksheets_Except_Menu |  | 31
+2024-11-20 17:01:58.54 | Annie | APP_v5.D.1.xlsb | modAppli:Hide_All_Worksheets_Except_Menu | 0.2188 sec. | 31
+
+2024-11-20 17:01:58.68 | Annie | APP_v5.D.1.xlsb | modMenu:Delete_User_Active_File |  | 31
+2024-11-20 17:01:59.03 | Annie | APP_v5.D.1.xlsb | modMenu:Delete_User_Active_File | 0.3555 sec. | 31
+
+2024-11-20 17:01:59.18 | Annie | APP_v5.D.1.xlsb | ***** Session terminée NORMALEMENT avec la procédure 'modMenu:Exit_After_Saving' ***** |  | 31
+

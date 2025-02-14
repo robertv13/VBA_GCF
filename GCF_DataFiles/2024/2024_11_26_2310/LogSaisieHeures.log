@@ -1,0 +1,20 @@
+2024-11-26 09:00:32.77 | User                | APP_v5.D.1.xlsb | ADD    2581 | ML | 2024-11-25 | 536 | Patricia Harbec | Discussion pour les terrains | 0,25 | VRAI |  | 31
+2024-11-26 09:00:55.87 | User                | APP_v5.D.1.xlsb | ADD    2582 | ML | 2024-11-25 | 1675 | Les entreprises Lanthier et Papineau Inc. [Alain Lanthier] | Montage de l'étape 26 du mémo (roulement) | 1,25 | VRAI |  | 31
+2024-11-26 09:01:13.29 | User                | APP_v5.D.1.xlsb | ADD    2583 | ML | 2024-11-25 | 1051 | Arthur Malouin Ltée [Yvan Malouin] | Consultation avec Joannie pour la comptabilité | 0,25 | VRAI |  | 31
+2024-11-26 09:01:33.79 | User                | APP_v5.D.1.xlsb | ADD    2584 | ML | 2024-11-25 | 5 | z_Administratif_Autres non chargeables | Recherche sur les logiciels de signature et de vidéo | 1,50 | VRAI |  | 31
+2024-11-26 09:01:54.67 | User                | APP_v5.D.1.xlsb | ADD    2585 | ML | 2024-11-25 | 156 | Laurent Harvey, CPA Inc. | T2 de la Société O.S.B.L. Plus Inc. | 1,00 | VRAI |  | 31
+2024-11-26 09:02:13.81 | User                | APP_v5.D.1.xlsb | ADD    2586 | ML | 2024-11-25 | 5 | z_Administratif_Autres non chargeables | Formation du Barreau | 2,50 | VRAI |  | 31
+2024-11-26 17:07:27.83 | Annie               | APP_v5.D.1.xlsb | ADD    2587 | AR | 2024-11-26 | 2000 | Peinture Ex Aequo Inc. [Gabriel Léger] | Fichier Excellence | 1.00 | VRAI |  | 31
+2024-11-26 17:08:05.90 | Annie               | APP_v5.D.1.xlsb | ADD    2588 | AR | 2024-11-26 | 5 | z_Administratif_Autres non chargeables | Conversion DTmax vs Taxprep | 5.50 | FAUX |  | 31
+2024-11-26 22:19:45.02 | vgervais            | APP_v5.D.1.xlsb | ADD    2589 | VG | 2024-11-26 | 1482 | H&L Média Inc. [Marc Ouimet] | Lecture mémo + révision t2  | 1,30 | VRAI |  | 31
+2024-11-26 22:21:11.93 | vgervais            | APP_v5.D.1.xlsb | ADD    2590 | VG | 2024-11-26 | 1506 | Bureau Vétérinaire Griffintown Inc. [Marie-Hélène Tétreault] | Voir documentation légake (mise à jour + correction) | 1,00 | VRAI |  | 31
+2024-11-26 22:22:00.41 | vgervais            | APP_v5.D.1.xlsb | ADD    2591 | VG | 2024-11-26 | 1739 | Groupe Coalitech Inc. [Techvac Équipement] | Analyse documentation pour actions "F" | 0,40 | VRAI |  | 31
+2024-11-26 22:25:39.80 | vgervais            | APP_v5.D.1.xlsb | ADD    2592 | VG | 2024-11-26 | 1541 | Groupe Teltech Inc. [François Tessier] | Révision documentation teltech + suivi roulement | 1,20 | VRAI |  | 31
+2024-11-26 22:26:27.29 | vgervais            | APP_v5.D.1.xlsb | ADD    2593 | VG | 2024-11-26 | 1775 | 9513-1926 Québec Inc. [Francis Desgagnés] | révision roulement gestion Francis Desgagnés | 0,60 | VRAI |  | 31
+2024-11-26 22:27:39.32 | vgervais            | APP_v5.D.1.xlsb | ADD    2594 | VG | 2024-11-26 | 1669 | Ventilabec Inc. [Lora Stoycheva] | révision documentation légale + suivi roulement | 0,80 | VRAI |  | 31
+2024-11-26 22:28:04.92 | vgervais            | APP_v5.D.1.xlsb | UPDATE 2575 | VG | 2024-11-25 | 1669 | Ventilabec Inc. [Lora Stoycheva] | Révision de la documentation légale | 0,90 | VRAI |  | 31
+2024-11-26 22:28:24.00 | vgervais            | APP_v5.D.1.xlsb | UPDATE 2594 | VG | 2024-11-26 | 1669 | Ventilabec Inc. [Lora Stoycheva] | révision documentation légale + suivi roulement | 1,20 | VRAI |  | 31
+2024-11-26 22:30:54.95 | vgervais            | APP_v5.D.1.xlsb | ADD    2595 | VG | 2024-11-26 | 1388 | 9307-2411 Québec Inc. [Capitaine Vap] | Suivi poiur écriture de journal dans le groupe | 0,40 | VRAI |  | 31
+2024-11-26 22:32:44.16 | vgervais            | APP_v5.D.1.xlsb | ADD    2596 | VG | 2024-11-26 | 1739 | Groupe Coalitech Inc. [Techvac Équipement] | discussion organigramme modification  | 0,30 | VRAI |  | 31
+2024-11-26 22:33:10.76 | vgervais            | APP_v5.D.1.xlsb | ADD    2597 | VG | 2024-11-26 | 1798 | Mylène Lapierre CPA Inc. | Suivi pour mise à jour | 0,20 | VRAI |  | 31
+2024-11-26 22:33:51.68 | vgervais            | APP_v5.D.1.xlsb | ADD    2598 | VG | 2024-11-26 | 5 | z_Administratif_Autres non chargeables | Suivi + Planning + enregistrementr de courriel | 1,50 | FAUX |  | 31

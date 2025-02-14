@@ -1,0 +1,1646 @@
+
+2024-10-11 05:44:44.660 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:UserForm_Initialize @00091 | 31
+
+2024-10-11 05:44:44.710 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:UserForm_Activate @00014 | 31
+
+2024-10-11 05:44:45.550 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 05:44:45.570 | GuillaumeCharron | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 05:44:47.300 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:cmbProfessionnel_AfterUpdate @00136 | 31
+
+2024-10-11 05:44:47.370 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtDate_Enter @00172 | 31
+2024-10-11 05:44:47.390 | GuillaumeCharron | info      | @00178 - .txtDate.value = 11/10/2024   y = 2024   m = 10   d = 11 | 31
+
+2024-10-11 05:44:47.770 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtDate_BeforeUpdate @00187 | 31
+2024-10-11 05:44:47.800 | GuillaumeCharron | info      | @00193 - .txtDate.value = 11/10/2024   y = 2024   m = 10   d = 11   type = String | 31
+2024-10-11 05:44:47.840 | GuillaumeCharron | info      | @00199 - fullDate = 11/10/24   y = 2024   m = 10   d = 11   type = Date | 31
+2024-10-11 05:44:47.860 | GuillaumeCharron | info      | @00223 - fullDate = 11/10/24   y = 2024   m = 10   d = 11   type = Date | 31
+2024-10-11 05:44:47.870 | GuillaumeCharron | info      | @00228 - DateSerial = 11/10/24   y = 2024   m = 10   d = 11   type = Date | 31
+
+2024-10-11 05:44:47.910 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtDate_AfterUpdate @00265 | 31
+2024-10-11 05:44:47.940 | GuillaumeCharron | event     | @00269 - .txtDate.value =  = 11/10/2024   y = 2024   m = 10   d = 11   type = String | 31
+2024-10-11 05:44:47.960 | GuillaumeCharron | info      | @00277 - dateStr =  = 11/10/2024   y = 2024   m = 10   d = 11   type = String   après assignation | 31
+2024-10-11 05:44:47.970 | GuillaumeCharron | info      | @00284 - dateFormated =  = 11/10/24   y = 2024   m = 10   d = 11   type = Date   après assignation | 31
+2024-10-11 05:44:47.000 | GuillaumeCharron | info      | @00291 - wshAdmin.Range('TEC_Date').value =  = 11/10/24   y = 2024   m = 10   d = 11   type = Date   après assignation | 31
+
+2024-10-11 05:44:48.010 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 05:44:48.050 | GuillaumeCharron | info      | @00203 - wshAdmin.Range('TEC_Date').value = 11/10/24   type = Date | 31
+2024-10-11 05:44:48.080 | GuillaumeCharron | info      | @00206 - wshTEC_Local.Range('S3').value = 11/10/24   type = Date après assignation | 31
+
+2024-10-11 05:44:48.210 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 05:44:48.260 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 05:44:51.360 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 05:44:51.390 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 05:44:51.410 | GuillaumeCharron | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 05:45:19.070 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtActivite_AfterUpdate @00351 | 31
+
+2024-10-11 05:45:19.120 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 05:45:19.130 | GuillaumeCharron | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 05:45:20.760 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369 | 31
+
+2024-10-11 05:45:20.830 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 05:45:20.850 | GuillaumeCharron | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Vrai | 31
+
+2024-10-11 05:45:21.800 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:cmdAdd_Click @00479 | 31
+
+2024-10-11 05:45:21.840 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Ajoute_Ligne @00018 | 31
+2024-10-11 05:45:21.900 | GuillaumeCharron | info      | @00031 - avant = 11/10/2024   type = String   après assignation | 31
+2024-10-11 05:45:21.920 | GuillaumeCharron | info      | @00036 - ufSaisieHeures.txtDate.value --->   y = 2024   m = 10   d = 11   type = String | 31
+2024-10-11 05:45:21.940 | GuillaumeCharron | info      | @00048 - ufSaisieHeures.txtDate.value = 2024-10-11   type = String   après assignation | 31
+2024-10-11 05:45:21.950 | GuillaumeCharron | adjust    | @00051 - La date a été changée pour corriger la date - 11/10/2024 ---> 2024-10-11 | 31
+
+2024-10-11 05:45:21.970 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB @00309 | 31
+2024-10-11 05:45:22.170 | GuillaumeCharron | ADD++++++ | 1684 | GC | 11/10/24 | 1768 | Les Éditions Reynald Goulet Inc. [Reynald Goulet] | révision du mémo modifié et modif et renvoi à tous suite aux commentaires de Michel Coté | 1,00 | VRAI |  | 2024-10-11 05:45:22 | 31
+
+2024-10-11 05:45:22.340 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_Locally @00536 | 31
+2024-10-11 05:45:22.370 | GuillaumeCharron | info      | @00550 - dateValue = 11/10/24   type = Date   après assignation | 31
+
+2024-10-11 05:45:22.540 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 05:45:22.570 | GuillaumeCharron | info      | @00203 - wshAdmin.Range('TEC_Date').value = 11/10/24   type = Date | 31
+2024-10-11 05:45:22.600 | GuillaumeCharron | info      | @00206 - wshTEC_Local.Range('S3').value = 11/10/24   type = Date après assignation | 31
+
+2024-10-11 05:45:22.730 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 05:45:22.800 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 05:45:22.820 | GuillaumeCharron | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 05:45:22.830 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 05:45:22.870 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Update_All @00726 | 31
+
+2024-10-11 05:45:22.900 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data @00686 | 31
+
+2024-10-11 05:45:23.130 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables @00739 | 31
+
+2024-10-11 05:45:23.330 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 05:45:23.350 | GuillaumeCharron | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 07:50:56.400 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:UserForm_Terminate @00099 | 31
+
+2024-10-11 08:24:29.270 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:UserForm_Initialize @00091 | 31
+
+2024-10-11 08:24:29.330 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:UserForm_Activate @00014 | 31
+
+2024-10-11 08:24:30.300 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:24:30.330 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 08:24:32.370 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:cmbProfessionnel_AfterUpdate @00136 | 31
+
+2024-10-11 08:24:32.490 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtDate_Enter @00172 | 31
+2024-10-11 08:24:32.520 | vgervais | info      | @00178 - .txtDate.value = 11-10-2024   y = 2024   m = 11   d = 10 | 31
+
+2024-10-11 08:24:38.360 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtDate_BeforeUpdate @00187 | 31
+2024-10-11 08:24:38.440 | vgervais | info      | @00193 - .txtDate.value = 2024-10-11   y = 2024   m = 10   d = 11   type = String | 31
+2024-10-11 08:24:38.500 | vgervais | info      | @00199 - fullDate = 2024-10-11   y = 2024   m = 10   d = 11   type = Date | 31
+2024-10-11 08:24:38.530 | vgervais | info      | @00223 - fullDate = 2024-10-11   y = 2024   m = 10   d = 11   type = Date | 31
+2024-10-11 08:24:38.560 | vgervais | info      | @00228 - DateSerial = 2024-10-11   y = 2024   m = 10   d = 11   type = Date | 31
+
+2024-10-11 08:24:38.630 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtDate_AfterUpdate @00265 | 31
+2024-10-11 08:24:38.690 | vgervais | event     | @00269 - .txtDate.value =  = 2024-10-11   y = 2024   m = 10   d = 11   type = String | 31
+2024-10-11 08:24:38.720 | vgervais | info      | @00277 - dateStr =  = 2024-10-11   y = 2024   m = 10   d = 11   type = String   après assignation | 31
+2024-10-11 08:24:38.750 | vgervais | info      | @00284 - dateFormated =  = 2024-10-11   y = 2024   m = 10   d = 11   type = Date   après assignation | 31
+2024-10-11 08:24:38.790 | vgervais | info      | @00291 - wshAdmin.Range('TEC_Date').value =  = 2024-10-11   y = 2024   m = 10   d = 11   type = Date   après assignation | 31
+
+2024-10-11 08:24:38.820 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 08:24:38.890 | vgervais | info      | @00203 - wshAdmin.Range('TEC_Date').value = 2024-10-11   type = Date | 31
+2024-10-11 08:24:38.920 | vgervais | info      | @00206 - wshTEC_Local.Range('S3').value = 2024-10-11   type = Date après assignation | 31
+
+2024-10-11 08:24:39.020 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 08:24:39.110 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 08:25:02.380 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 08:25:02.460 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:25:02.490 | vgervais | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 08:25:02.630 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:lstboxNomClient_DblClick @00068 | 31
+
+2024-10-11 08:25:02.780 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 08:25:02.810 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 08:25:02.870 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:25:02.900 | vgervais | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 08:25:06.000 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 08:25:09.380 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:chbFacturable_AfterUpdate @00424 | 31
+
+2024-10-11 08:25:09.450 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:25:09.480 | vgervais | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Vrai | 31
+
+2024-10-11 08:25:19.610 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369 | 31
+
+2024-10-11 08:25:19.750 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:25:19.780 | vgervais | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Vrai | 31
+
+2024-10-11 08:28:07.440 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtActivite_AfterUpdate @00351 | 31
+
+2024-10-11 08:28:07.510 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:28:07.550 | vgervais | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 08:28:07.610 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:cmdAdd_Click @00479 | 31
+
+2024-10-11 08:28:07.680 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Ajoute_Ligne @00018 | 31
+2024-10-11 08:28:07.780 | vgervais | info      | @00031 - avant = 2024-10-11   type = String   après assignation | 31
+2024-10-11 08:28:07.810 | vgervais | info      | @00036 - ufSaisieHeures.txtDate.value --->   y = 2024   m = 10   d = 11   type = String | 31
+2024-10-11 08:28:07.840 | vgervais | info      | @00048 - ufSaisieHeures.txtDate.value = 2024-10-11   type = String   après assignation | 31
+
+2024-10-11 08:28:07.870 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB @00309 | 31
+2024-10-11 08:28:08.300 | vgervais | ADD++++++ | 1685 | VG | 2024-10-11 | 5 | z_Administratif_Autres non chargeables | Autres suivis - Planning  | 0,70 | FAUX |  | 2024-10-11 08:28:08 | 31
+
+2024-10-11 08:28:08.520 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_Locally @00536 | 31
+2024-10-11 08:28:08.580 | vgervais | info      | @00550 - dateValue = 2024-10-11   type = Date   après assignation | 31
+
+2024-10-11 08:28:08.680 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 08:28:08.750 | vgervais | info      | @00203 - wshAdmin.Range('TEC_Date').value = 2024-10-11   type = Date | 31
+2024-10-11 08:28:08.780 | vgervais | info      | @00206 - wshTEC_Local.Range('S3').value = 2024-10-11   type = Date après assignation | 31
+
+2024-10-11 08:28:08.880 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 08:28:08.970 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:28:09.000 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 08:28:09.040 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 08:28:09.100 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Update_All @00726 | 31
+
+2024-10-11 08:28:09.160 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data @00686 | 31
+
+2024-10-11 08:28:09.380 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables @00739 | 31
+
+2024-10-11 08:28:09.610 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:28:09.640 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 08:28:15.390 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 08:28:15.460 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:28:15.490 | vgervais | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 08:28:15.570 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:lstboxNomClient_DblClick @00068 | 31
+
+2024-10-11 08:28:15.700 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 08:28:15.730 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 08:28:15.790 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:28:15.820 | vgervais | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 08:28:59.840 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtActivite_AfterUpdate @00351 | 31
+
+2024-10-11 08:28:59.910 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:28:59.940 | vgervais | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 08:29:11.540 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369 | 31
+
+2024-10-11 08:29:11.680 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:29:11.710 | vgervais | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Vrai | 31
+
+2024-10-11 08:29:15.460 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369 | 31
+
+2024-10-11 08:29:15.590 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:29:15.620 | vgervais | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Vrai | 31
+
+2024-10-11 08:29:16.390 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:cmdAdd_Click @00479 | 31
+
+2024-10-11 08:29:16.450 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Ajoute_Ligne @00018 | 31
+2024-10-11 08:29:16.560 | vgervais | info      | @00031 - avant = 2024-10-11   type = String   après assignation | 31
+2024-10-11 08:29:16.590 | vgervais | info      | @00036 - ufSaisieHeures.txtDate.value --->   y = 2024   m = 10   d = 11   type = String | 31
+2024-10-11 08:29:16.620 | vgervais | info      | @00048 - ufSaisieHeures.txtDate.value = 2024-10-11   type = String   après assignation | 31
+
+2024-10-11 08:29:16.650 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB @00309 | 31
+2024-10-11 08:29:17.060 | vgervais | ADD++++++ | 1686 | VG | 2024-10-11 | 1768 | Les Éditions Reynald Goulet Inc. [Reynald Goulet] | Répondre question de LAurent sur états financiers (modifier les placements à la JVM) | 0,20 | VRAI |  | 2024-10-11 08:29:17 | 31
+
+2024-10-11 08:29:17.290 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_Locally @00536 | 31
+2024-10-11 08:29:17.350 | vgervais | info      | @00550 - dateValue = 2024-10-11   type = Date   après assignation | 31
+
+2024-10-11 08:29:17.440 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 08:29:17.510 | vgervais | info      | @00203 - wshAdmin.Range('TEC_Date').value = 2024-10-11   type = Date | 31
+2024-10-11 08:29:17.550 | vgervais | info      | @00206 - wshTEC_Local.Range('S3').value = 2024-10-11   type = Date après assignation | 31
+
+2024-10-11 08:29:17.640 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 08:29:17.730 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:29:17.760 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 08:29:17.800 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 08:29:17.860 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Update_All @00726 | 31
+
+2024-10-11 08:29:17.930 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data @00686 | 31
+
+2024-10-11 08:29:18.140 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables @00739 | 31
+
+2024-10-11 08:29:18.350 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:29:18.390 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 08:35:05.660 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 08:35:05.740 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:35:05.770 | vgervais | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 08:35:05.850 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:lstboxNomClient_DblClick @00068 | 31
+
+2024-10-11 08:35:05.980 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 08:35:06.010 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 08:35:06.070 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:35:06.110 | vgervais | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 08:35:20.670 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtActivite_AfterUpdate @00351 | 31
+
+2024-10-11 08:35:20.740 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:35:20.770 | vgervais | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 08:35:26.050 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369 | 31
+
+2024-10-11 08:35:26.190 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:35:26.210 | vgervais | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Vrai | 31
+
+2024-10-11 08:35:27.480 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:cmdAdd_Click @00479 | 31
+
+2024-10-11 08:35:27.550 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Ajoute_Ligne @00018 | 31
+2024-10-11 08:35:27.660 | vgervais | info      | @00031 - avant = 2024-10-11   type = String   après assignation | 31
+2024-10-11 08:35:27.690 | vgervais | info      | @00036 - ufSaisieHeures.txtDate.value --->   y = 2024   m = 10   d = 11   type = String | 31
+2024-10-11 08:35:27.720 | vgervais | info      | @00048 - ufSaisieHeures.txtDate.value = 2024-10-11   type = String   après assignation | 31
+
+2024-10-11 08:35:27.760 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB @00309 | 31
+2024-10-11 08:35:28.190 | vgervais | ADD++++++ | 1687 | VG | 2024-10-11 | 1546 | Publipage Inc. [Mélissa Côté] | Regarder courriel + voir mémo | 0,60 | VRAI |  | 2024-10-11 08:35:28 | 31
+
+2024-10-11 08:35:28.400 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_Locally @00536 | 31
+2024-10-11 08:35:28.460 | vgervais | info      | @00550 - dateValue = 2024-10-11   type = Date   après assignation | 31
+
+2024-10-11 08:35:28.560 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 08:35:28.650 | vgervais | info      | @00203 - wshAdmin.Range('TEC_Date').value = 2024-10-11   type = Date | 31
+2024-10-11 08:35:28.700 | vgervais | info      | @00206 - wshTEC_Local.Range('S3').value = 2024-10-11   type = Date après assignation | 31
+
+2024-10-11 08:35:28.790 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 08:35:28.890 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:35:28.920 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 08:35:28.960 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 08:35:29.020 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Update_All @00726 | 31
+
+2024-10-11 08:35:29.100 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data @00686 | 31
+
+2024-10-11 08:35:29.330 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables @00739 | 31
+
+2024-10-11 08:35:29.530 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:35:29.560 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 08:46:37.510 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 08:46:37.550 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:46:37.560 | GuillaumeCharron | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 08:46:45.580 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtActivite_AfterUpdate @00351 | 31
+
+2024-10-11 08:46:45.620 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:46:45.640 | GuillaumeCharron | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 08:46:46.870 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369 | 31
+
+2024-10-11 08:46:46.930 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:46:46.950 | GuillaumeCharron | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Vrai | 31
+
+2024-10-11 08:46:52.100 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369 | 31
+
+2024-10-11 08:46:52.170 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:46:52.180 | GuillaumeCharron | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Vrai | 31
+
+2024-10-11 08:46:56.670 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtActivite_AfterUpdate @00351 | 31
+
+2024-10-11 08:46:56.700 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:46:56.720 | GuillaumeCharron | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 08:46:57.660 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:cmdAdd_Click @00479 | 31
+
+2024-10-11 08:46:57.700 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Ajoute_Ligne @00018 | 31
+2024-10-11 08:46:57.770 | GuillaumeCharron | info      | @00031 - avant = 2024-10-11   type = String   après assignation | 31
+2024-10-11 08:46:57.790 | GuillaumeCharron | info      | @00036 - ufSaisieHeures.txtDate.value --->   y = 2024   m = 10   d = 11   type = String | 31
+2024-10-11 08:46:57.800 | GuillaumeCharron | info      | @00048 - ufSaisieHeures.txtDate.value = 2024-10-11   type = String   après assignation | 31
+
+2024-10-11 08:46:57.820 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB @00309 | 31
+2024-10-11 08:46:58.020 | GuillaumeCharron | ADD++++++ | 1688 | GC | 11/10/24 | 1598 | Sphère DI Inc. [Guillaume Barrière Shooner] | tel de suivi avec Vlad sur réorg à faire | 0,50 | VRAI |  | 2024-10-11 08:46:58 | 31
+
+2024-10-11 08:46:58.200 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_Locally @00536 | 31
+2024-10-11 08:46:58.220 | GuillaumeCharron | info      | @00550 - dateValue = 11/10/24   type = Date   après assignation | 31
+
+2024-10-11 08:46:58.410 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 08:46:58.450 | GuillaumeCharron | info      | @00203 - wshAdmin.Range('TEC_Date').value = 11/10/24   type = Date | 31
+2024-10-11 08:46:58.480 | GuillaumeCharron | info      | @00206 - wshTEC_Local.Range('S3').value = 11/10/24   type = Date après assignation | 31
+
+2024-10-11 08:46:58.660 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 08:46:58.740 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:46:58.760 | GuillaumeCharron | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 08:46:58.790 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 08:46:58.820 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Update_All @00726 | 31
+
+2024-10-11 08:46:58.850 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data @00686 | 31
+
+2024-10-11 08:46:59.110 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables @00739 | 31
+
+2024-10-11 08:46:59.330 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:46:59.340 | GuillaumeCharron | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 08:50:23.080 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:cmbProfessionnel_AfterUpdate @00136 | 31
+2024-10-11 08:50:23.130 | GuillaumeCharron | event     | @00145 - wshAdmin.Range('TEC_Date').value = 11/10/24   y = 2024   m = 10   d = 11   type = Range | 31
+2024-10-11 08:50:23.150 | GuillaumeCharron | event     | @00151 - ufSaisieHeures.txtDate.value = 11/10/2024   y = 2024   m = 10   d = 11   type = String | 31
+
+2024-10-11 08:50:23.170 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 08:50:23.210 | GuillaumeCharron | info      | @00203 - wshAdmin.Range('TEC_Date').value = 11/10/24   type = Date | 31
+2024-10-11 08:50:23.230 | GuillaumeCharron | info      | @00206 - wshTEC_Local.Range('S3').value = 11/10/24   type = Date après assignation | 31
+
+2024-10-11 08:50:23.360 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 08:50:23.410 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtDate_Enter @00172 | 31
+2024-10-11 08:50:23.420 | GuillaumeCharron | info      | @00178 - .txtDate.value = 11/10/2024   y = 2024   m = 10   d = 11 | 31
+
+2024-10-11 08:50:23.440 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtDate_BeforeUpdate @00187 | 31
+2024-10-11 08:50:23.470 | GuillaumeCharron | info      | @00193 - .txtDate.value = 11/10/2024   y = 2024   m = 10   d = 11   type = String | 31
+2024-10-11 08:50:23.500 | GuillaumeCharron | info      | @00199 - fullDate = 11/10/24   y = 2024   m = 10   d = 11   type = Date | 31
+2024-10-11 08:50:23.510 | GuillaumeCharron | info      | @00223 - fullDate = 11/10/24   y = 2024   m = 10   d = 11   type = Date | 31
+2024-10-11 08:50:23.530 | GuillaumeCharron | info      | @00228 - DateSerial = 11/10/24   y = 2024   m = 10   d = 11   type = Date | 31
+
+2024-10-11 08:50:23.560 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtDate_AfterUpdate @00265 | 31
+2024-10-11 08:50:23.590 | GuillaumeCharron | event     | @00269 - .txtDate.value =  = 11/10/2024   y = 2024   m = 10   d = 11   type = String | 31
+2024-10-11 08:50:23.600 | GuillaumeCharron | info      | @00277 - dateStr =  = 11/10/2024   y = 2024   m = 10   d = 11   type = String   après assignation | 31
+2024-10-11 08:50:23.620 | GuillaumeCharron | info      | @00284 - dateFormated =  = 11/10/24   y = 2024   m = 10   d = 11   type = Date   après assignation | 31
+2024-10-11 08:50:23.640 | GuillaumeCharron | info      | @00291 - wshAdmin.Range('TEC_Date').value =  = 11/10/24   y = 2024   m = 10   d = 11   type = Date   après assignation | 31
+
+2024-10-11 08:50:23.650 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 08:50:23.690 | GuillaumeCharron | info      | @00203 - wshAdmin.Range('TEC_Date').value = 11/10/24   type = Date | 31
+2024-10-11 08:50:23.720 | GuillaumeCharron | info      | @00206 - wshTEC_Local.Range('S3').value = 11/10/24   type = Date après assignation | 31
+
+2024-10-11 08:50:23.850 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 08:50:26.490 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtDate_BeforeUpdate @00187 | 31
+2024-10-11 08:50:26.530 | GuillaumeCharron | info      | @00193 - .txtDate.value = 10/10/2024   y = 2024   m = 10   d = 10   type = String | 31
+2024-10-11 08:50:26.560 | GuillaumeCharron | info      | @00199 - fullDate = 10/10/24   y = 2024   m = 10   d = 10   type = Date | 31
+2024-10-11 08:50:26.580 | GuillaumeCharron | info      | @00223 - fullDate = 10/10/24   y = 2024   m = 10   d = 10   type = Date | 31
+2024-10-11 08:50:26.590 | GuillaumeCharron | info      | @00228 - DateSerial = 11/10/24   y = 2024   m = 10   d = 11   type = Date | 31
+
+2024-10-11 08:50:26.620 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtDate_AfterUpdate @00265 | 31
+2024-10-11 08:50:26.650 | GuillaumeCharron | event     | @00269 - .txtDate.value =  = 10/10/2024   y = 2024   m = 10   d = 10   type = String | 31
+2024-10-11 08:50:26.660 | GuillaumeCharron | info      | @00277 - dateStr =  = 10/10/2024   y = 2024   m = 10   d = 10   type = String   après assignation | 31
+2024-10-11 08:50:26.680 | GuillaumeCharron | info      | @00284 - dateFormated =  = 10/10/24   y = 2024   m = 10   d = 10   type = Date   après assignation | 31
+2024-10-11 08:50:26.700 | GuillaumeCharron | info      | @00291 - wshAdmin.Range('TEC_Date').value =  = 10/10/24   y = 2024   m = 10   d = 10   type = Date   après assignation | 31
+
+2024-10-11 08:50:26.720 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 08:50:26.760 | GuillaumeCharron | info      | @00203 - wshAdmin.Range('TEC_Date').value = 10/10/24   type = Date | 31
+2024-10-11 08:50:26.780 | GuillaumeCharron | info      | @00206 - wshTEC_Local.Range('S3').value = 10/10/24   type = Date après assignation | 31
+
+2024-10-11 08:50:26.930 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 08:50:27.010 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:50:27.030 | GuillaumeCharron | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 08:50:27.070 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 08:50:32.740 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:cmbProfessionnel_AfterUpdate @00136 | 31
+2024-10-11 08:50:32.800 | GuillaumeCharron | event     | @00145 - wshAdmin.Range('TEC_Date').value = 10/10/24   y = 2024   m = 10   d = 10   type = Range | 31
+2024-10-11 08:50:32.810 | GuillaumeCharron | event     | @00151 - ufSaisieHeures.txtDate.value = 10/10/2024   y = 2024   m = 10   d = 10   type = String | 31
+
+2024-10-11 08:50:32.830 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 08:50:32.870 | GuillaumeCharron | info      | @00203 - wshAdmin.Range('TEC_Date').value = 10/10/24   type = Date | 31
+2024-10-11 08:50:32.890 | GuillaumeCharron | info      | @00206 - wshTEC_Local.Range('S3').value = 10/10/24   type = Date après assignation | 31
+
+2024-10-11 08:50:33.020 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 08:50:33.120 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:50:33.130 | GuillaumeCharron | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 08:50:33.150 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 08:56:03.520 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtDate_Enter @00172 | 31
+2024-10-11 08:56:03.540 | GuillaumeCharron | info      | @00178 - .txtDate.value = 10/10/2024   y = 2024   m = 10   d = 10 | 31
+
+2024-10-11 08:56:06.420 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtDate_BeforeUpdate @00187 | 31
+2024-10-11 08:56:06.460 | GuillaumeCharron | info      | @00193 - .txtDate.value = 11/10/2024   y = 2024   m = 10   d = 11   type = String | 31
+2024-10-11 08:56:06.490 | GuillaumeCharron | info      | @00199 - fullDate = 11/10/24   y = 2024   m = 10   d = 11   type = Date | 31
+2024-10-11 08:56:06.510 | GuillaumeCharron | info      | @00223 - fullDate = 11/10/24   y = 2024   m = 10   d = 11   type = Date | 31
+2024-10-11 08:56:06.520 | GuillaumeCharron | info      | @00228 - DateSerial = 11/10/24   y = 2024   m = 10   d = 11   type = Date | 31
+
+2024-10-11 08:56:06.550 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtDate_AfterUpdate @00265 | 31
+2024-10-11 08:56:06.580 | GuillaumeCharron | event     | @00269 - .txtDate.value =  = 11/10/2024   y = 2024   m = 10   d = 11   type = String | 31
+2024-10-11 08:56:06.600 | GuillaumeCharron | info      | @00277 - dateStr =  = 11/10/2024   y = 2024   m = 10   d = 11   type = String   après assignation | 31
+2024-10-11 08:56:06.610 | GuillaumeCharron | info      | @00284 - dateFormated =  = 11/10/24   y = 2024   m = 10   d = 11   type = Date   après assignation | 31
+2024-10-11 08:56:06.640 | GuillaumeCharron | info      | @00291 - wshAdmin.Range('TEC_Date').value =  = 11/10/24   y = 2024   m = 10   d = 11   type = Date   après assignation | 31
+
+2024-10-11 08:56:06.650 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 08:56:06.690 | GuillaumeCharron | info      | @00203 - wshAdmin.Range('TEC_Date').value = 11/10/24   type = Date | 31
+2024-10-11 08:56:06.710 | GuillaumeCharron | info      | @00206 - wshTEC_Local.Range('S3').value = 11/10/24   type = Date après assignation | 31
+
+2024-10-11 08:56:06.880 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 08:56:06.960 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:56:06.970 | GuillaumeCharron | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 08:56:07.020 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 08:56:17.570 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 08:56:17.610 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:56:17.620 | GuillaumeCharron | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 08:57:20.040 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtActivite_AfterUpdate @00351 | 31
+
+2024-10-11 08:57:20.070 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:57:20.090 | GuillaumeCharron | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 08:57:23.800 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369 | 31
+
+2024-10-11 08:57:23.870 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:57:23.890 | GuillaumeCharron | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Vrai | 31
+
+2024-10-11 08:57:24.950 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:cmdAdd_Click @00479 | 31
+
+2024-10-11 08:57:24.990 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Ajoute_Ligne @00018 | 31
+2024-10-11 08:57:25.060 | GuillaumeCharron | info      | @00031 - avant = 11/10/2024   type = String   après assignation | 31
+2024-10-11 08:57:25.070 | GuillaumeCharron | info      | @00036 - ufSaisieHeures.txtDate.value --->   y = 2024   m = 10   d = 11   type = String | 31
+2024-10-11 08:57:25.090 | GuillaumeCharron | info      | @00048 - ufSaisieHeures.txtDate.value = 2024-10-11   type = String   après assignation | 31
+2024-10-11 08:57:25.110 | GuillaumeCharron | adjust    | @00051 - La date a été changée pour corriger la date - 11/10/2024 ---> 2024-10-11 | 31
+
+2024-10-11 08:57:25.130 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB @00309 | 31
+2024-10-11 08:57:25.350 | GuillaumeCharron | ADD++++++ | 1689 | GC | 11/10/24 | 1292 | Assurancia Inc. [François Hamel] | analyse de v finale de prix de vente de 360 | 0,50 | VRAI |  | 2024-10-11 08:57:25 | 31
+
+2024-10-11 08:57:25.530 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_Locally @00536 | 31
+2024-10-11 08:57:25.560 | GuillaumeCharron | info      | @00550 - dateValue = 11/10/24   type = Date   après assignation | 31
+
+2024-10-11 08:57:25.730 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 08:57:25.780 | GuillaumeCharron | info      | @00203 - wshAdmin.Range('TEC_Date').value = 11/10/24   type = Date | 31
+2024-10-11 08:57:25.800 | GuillaumeCharron | info      | @00206 - wshTEC_Local.Range('S3').value = 11/10/24   type = Date après assignation | 31
+
+2024-10-11 08:57:25.960 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 08:57:26.040 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:57:26.060 | GuillaumeCharron | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 08:57:26.090 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 08:57:26.120 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Update_All @00726 | 31
+
+2024-10-11 08:57:26.160 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data @00686 | 31
+
+2024-10-11 08:57:26.400 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables @00739 | 31
+
+2024-10-11 08:57:26.620 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 08:57:26.630 | GuillaumeCharron | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 09:15:02.640 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:UserForm_Activate @00014 | 31
+
+2024-10-11 09:15:04.330 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 09:15:04.350 | GuillaumeCharron | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 09:21:58.380 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:UserForm_Terminate @00099 | 31
+
+2024-10-11 09:22:56.270 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 09:22:56.340 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 09:22:56.380 | vgervais | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 09:22:56.460 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:lstboxNomClient_DblClick @00068 | 31
+
+2024-10-11 09:22:56.590 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 09:22:56.630 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 09:22:56.700 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 09:22:56.730 | vgervais | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 09:23:20.270 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtActivite_AfterUpdate @00351 | 31
+
+2024-10-11 09:23:20.340 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 09:23:20.380 | vgervais | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 09:23:23.550 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369 | 31
+
+2024-10-11 09:23:23.690 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 09:23:23.720 | vgervais | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Vrai | 31
+
+2024-10-11 09:26:06.750 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:cmdAdd_Click @00479 | 31
+
+2024-10-11 09:26:06.820 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Ajoute_Ligne @00018 | 31
+2024-10-11 09:26:06.940 | vgervais | info      | @00031 - avant = 2024-10-11   type = String   après assignation | 31
+2024-10-11 09:26:06.970 | vgervais | info      | @00036 - ufSaisieHeures.txtDate.value --->   y = 2024   m = 10   d = 11   type = String | 31
+2024-10-11 09:26:07.000 | vgervais | info      | @00048 - ufSaisieHeures.txtDate.value = 2024-10-11   type = String   après assignation | 31
+
+2024-10-11 09:26:07.030 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB @00309 | 31
+2024-10-11 09:26:07.460 | vgervais | ADD++++++ | 1690 | VG | 2024-10-11 | 1598 | Sphère DI Inc. [Guillaume Barrière Shooner] | Discussion avec Guillaume pour rérog | 0,20 | VRAI |  | 2024-10-11 09:26:07 | 31
+
+2024-10-11 09:26:07.680 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_Locally @00536 | 31
+2024-10-11 09:26:07.740 | vgervais | info      | @00550 - dateValue = 2024-10-11   type = Date   après assignation | 31
+
+2024-10-11 09:26:07.840 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 09:26:07.900 | vgervais | info      | @00203 - wshAdmin.Range('TEC_Date').value = 2024-10-11   type = Date | 31
+2024-10-11 09:26:07.940 | vgervais | info      | @00206 - wshTEC_Local.Range('S3').value = 2024-10-11   type = Date après assignation | 31
+
+2024-10-11 09:26:08.030 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 09:26:08.120 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 09:26:08.160 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 09:26:08.190 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 09:26:08.250 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Update_All @00726 | 31
+
+2024-10-11 09:26:08.320 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data @00686 | 31
+
+2024-10-11 09:26:08.540 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables @00739 | 31
+
+2024-10-11 09:26:08.750 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 09:26:08.790 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 09:26:11.830 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 09:26:11.890 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 09:26:11.930 | vgervais | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 09:26:12.210 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:lstboxNomClient_DblClick @00068 | 31
+
+2024-10-11 09:26:12.340 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 09:26:12.380 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 09:26:12.450 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 09:26:12.480 | vgervais | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 09:26:24.130 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtActivite_AfterUpdate @00351 | 31
+
+2024-10-11 09:26:24.210 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 09:26:24.240 | vgervais | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 09:26:26.360 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369 | 31
+
+2024-10-11 09:26:26.490 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 09:26:26.520 | vgervais | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Vrai | 31
+
+2024-10-11 09:26:27.140 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:cmdAdd_Click @00479 | 31
+
+2024-10-11 09:26:27.200 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Ajoute_Ligne @00018 | 31
+2024-10-11 09:26:27.320 | vgervais | info      | @00031 - avant = 2024-10-11   type = String   après assignation | 31
+2024-10-11 09:26:27.350 | vgervais | info      | @00036 - ufSaisieHeures.txtDate.value --->   y = 2024   m = 10   d = 11   type = String | 31
+2024-10-11 09:26:27.380 | vgervais | info      | @00048 - ufSaisieHeures.txtDate.value = 2024-10-11   type = String   après assignation | 31
+
+2024-10-11 09:26:27.410 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB @00309 | 31
+2024-10-11 09:26:27.820 | vgervais | ADD++++++ | 1691 | VG | 2024-10-11 | 1675 | Les entreprises Lanthier et Papineau Inc. [Alain Lanthier] | Discussion avec Guillaume pour réorg | 0,20 | VRAI |  | 2024-10-11 09:26:27 | 31
+
+2024-10-11 09:26:28.040 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_Locally @00536 | 31
+2024-10-11 09:26:28.100 | vgervais | info      | @00550 - dateValue = 2024-10-11   type = Date   après assignation | 31
+
+2024-10-11 09:26:28.200 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 09:26:28.270 | vgervais | info      | @00203 - wshAdmin.Range('TEC_Date').value = 2024-10-11   type = Date | 31
+2024-10-11 09:26:28.300 | vgervais | info      | @00206 - wshTEC_Local.Range('S3').value = 2024-10-11   type = Date après assignation | 31
+
+2024-10-11 09:26:28.390 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 09:26:28.480 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 09:26:28.540 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 09:26:28.570 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 09:26:28.630 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Update_All @00726 | 31
+
+2024-10-11 09:26:28.700 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data @00686 | 31
+
+2024-10-11 09:26:28.920 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables @00739 | 31
+
+2024-10-11 09:26:29.120 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 09:26:29.160 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 09:29:44.820 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:lsbHresJour_dblClick @00522 | 31
+
+2024-10-11 09:29:45.050 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 09:29:45.080 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Vrai  clear = Vrai | 31
+
+2024-10-11 09:29:46.090 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:lsbHresJour_dblClick @00522 | 31
+
+2024-10-11 09:29:46.290 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 09:29:46.330 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Vrai  clear = Vrai | 31
+
+2024-10-11 09:29:47.320 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 09:29:50.290 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369 | 31
+
+2024-10-11 09:29:50.430 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 09:29:50.460 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Vrai  delete = Faux  clear = Vrai | 31
+
+2024-10-11 09:29:52.610 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:cmdUpdate_Click @00489 | 31
+
+2024-10-11 09:29:52.670 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Modifie_Ligne @00086 | 31
+
+2024-10-11 09:29:52.730 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB @00309 | 31
+2024-10-11 09:29:53.050 | vgervais | UPDATE    | 1687 | VG | 2024-10-11 | 1546 | Publipage Inc. [Mélissa Côté] | Regarder courriel + voir mémo | 0,80 | VRAI |  | 2024-10-11 09:29:53 | 31
+
+2024-10-11 09:29:53.290 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_Locally @00536 | 31
+2024-10-11 09:29:53.350 | vgervais | info      | @00550 - dateValue = 2024-10-11   type = Date   après assignation | 31
+
+2024-10-11 09:29:53.560 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 09:29:53.630 | vgervais | info      | @00203 - wshAdmin.Range('TEC_Date').value = 2024-10-11   type = Date | 31
+2024-10-11 09:29:53.660 | vgervais | info      | @00206 - wshTEC_Local.Range('S3').value = 2024-10-11   type = Date après assignation | 31
+
+2024-10-11 09:29:53.770 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 09:29:53.870 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 09:29:53.900 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 09:29:53.930 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 09:29:59.370 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:lsbHresJour_dblClick @00522 | 31
+
+2024-10-11 09:29:59.590 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 09:29:59.630 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Vrai  clear = Vrai | 31
+
+2024-10-11 09:30:00.820 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 09:30:07.250 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369 | 31
+
+2024-10-11 09:30:07.380 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 09:30:07.420 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Vrai  delete = Faux  clear = Vrai | 31
+
+2024-10-11 09:30:08.400 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:cmdUpdate_Click @00489 | 31
+
+2024-10-11 09:30:08.480 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Modifie_Ligne @00086 | 31
+
+2024-10-11 09:30:08.540 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB @00309 | 31
+2024-10-11 09:30:08.860 | vgervais | UPDATE    | 1685 | VG | 2024-10-11 | 5 | z_Administratif_Autres non chargeables | Autres suivis - Planning  | 0,90 | FAUX |  | 2024-10-11 09:30:08 | 31
+
+2024-10-11 09:30:09.070 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_Locally @00536 | 31
+2024-10-11 09:30:09.140 | vgervais | info      | @00550 - dateValue = 2024-10-11   type = Date   après assignation | 31
+
+2024-10-11 09:30:09.380 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 09:30:09.450 | vgervais | info      | @00203 - wshAdmin.Range('TEC_Date').value = 2024-10-11   type = Date | 31
+2024-10-11 09:30:09.480 | vgervais | info      | @00206 - wshTEC_Local.Range('S3').value = 2024-10-11   type = Date après assignation | 31
+
+2024-10-11 09:30:09.580 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 09:30:09.670 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 09:30:09.700 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 09:30:09.740 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 10:43:07.400 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:UserForm_Initialize @00091 | 31
+
+2024-10-11 10:43:07.430 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:UserForm_Activate @00014 | 31
+
+2024-10-11 10:43:08.220 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 10:43:08.230 | GuillaumeCharron | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 10:43:12.770 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:cmbProfessionnel_AfterUpdate @00136 | 31
+
+2024-10-11 10:43:12.840 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtDate_Enter @00172 | 31
+2024-10-11 10:43:12.860 | GuillaumeCharron | info      | @00178 - .txtDate.value = 11/10/2024   y = 2024   m = 10   d = 11 | 31
+
+2024-10-11 10:43:13.200 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtDate_BeforeUpdate @00187 | 31
+2024-10-11 10:43:13.230 | GuillaumeCharron | info      | @00193 - .txtDate.value = 11/10/2024   y = 2024   m = 10   d = 11   type = String | 31
+2024-10-11 10:43:13.260 | GuillaumeCharron | info      | @00199 - fullDate = 11/10/24   y = 2024   m = 10   d = 11   type = Date | 31
+2024-10-11 10:43:13.280 | GuillaumeCharron | info      | @00223 - fullDate = 11/10/24   y = 2024   m = 10   d = 11   type = Date | 31
+2024-10-11 10:43:13.300 | GuillaumeCharron | info      | @00228 - DateSerial = 11/10/24   y = 2024   m = 10   d = 11   type = Date | 31
+
+2024-10-11 10:43:13.320 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtDate_AfterUpdate @00265 | 31
+2024-10-11 10:43:13.360 | GuillaumeCharron | event     | @00269 - .txtDate.value =  = 11/10/2024   y = 2024   m = 10   d = 11   type = String | 31
+2024-10-11 10:43:13.370 | GuillaumeCharron | info      | @00277 - dateStr =  = 11/10/2024   y = 2024   m = 10   d = 11   type = String   après assignation | 31
+2024-10-11 10:43:13.390 | GuillaumeCharron | info      | @00284 - dateFormated =  = 11/10/24   y = 2024   m = 10   d = 11   type = Date   après assignation | 31
+2024-10-11 10:43:13.410 | GuillaumeCharron | info      | @00291 - wshAdmin.Range('TEC_Date').value =  = 11/10/24   y = 2024   m = 10   d = 11   type = Date   après assignation | 31
+
+2024-10-11 10:43:13.430 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 10:43:13.470 | GuillaumeCharron | info      | @00203 - wshAdmin.Range('TEC_Date').value = 11/10/24   type = Date | 31
+2024-10-11 10:43:13.500 | GuillaumeCharron | info      | @00206 - wshTEC_Local.Range('S3').value = 11/10/24   type = Date après assignation | 31
+
+2024-10-11 10:43:13.650 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 10:43:13.730 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 10:43:13.750 | GuillaumeCharron | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 10:43:13.800 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 10:45:33.250 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:UserForm_Terminate @00099 | 31
+
+2024-10-11 10:52:36.110 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:UserForm_Initialize @00091 | 31
+
+2024-10-11 10:52:36.150 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:UserForm_Activate @00014 | 31
+
+2024-10-11 10:52:36.910 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 10:52:36.940 | GuillaumeCharron | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 10:52:40.430 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:cmbProfessionnel_AfterUpdate @00136 | 31
+
+2024-10-11 10:52:40.520 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtDate_Enter @00172 | 31
+2024-10-11 10:52:40.540 | GuillaumeCharron | info      | @00178 - .txtDate.value = 11/10/2024   y = 2024   m = 10   d = 11 | 31
+
+2024-10-11 10:52:41.170 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtDate_BeforeUpdate @00187 | 31
+2024-10-11 10:52:41.210 | GuillaumeCharron | info      | @00193 - .txtDate.value = 11/10/2024   y = 2024   m = 10   d = 11   type = String | 31
+2024-10-11 10:52:41.240 | GuillaumeCharron | info      | @00199 - fullDate = 11/10/24   y = 2024   m = 10   d = 11   type = Date | 31
+2024-10-11 10:52:41.270 | GuillaumeCharron | info      | @00223 - fullDate = 11/10/24   y = 2024   m = 10   d = 11   type = Date | 31
+2024-10-11 10:52:41.290 | GuillaumeCharron | info      | @00228 - DateSerial = 11/10/24   y = 2024   m = 10   d = 11   type = Date | 31
+
+2024-10-11 10:52:41.320 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtDate_AfterUpdate @00265 | 31
+2024-10-11 10:52:41.350 | GuillaumeCharron | event     | @00269 - .txtDate.value =  = 11/10/2024   y = 2024   m = 10   d = 11   type = String | 31
+2024-10-11 10:52:41.370 | GuillaumeCharron | info      | @00277 - dateStr =  = 11/10/2024   y = 2024   m = 10   d = 11   type = String   après assignation | 31
+2024-10-11 10:52:41.380 | GuillaumeCharron | info      | @00284 - dateFormated =  = 11/10/24   y = 2024   m = 10   d = 11   type = Date   après assignation | 31
+2024-10-11 10:52:41.420 | GuillaumeCharron | info      | @00291 - wshAdmin.Range('TEC_Date').value =  = 11/10/24   y = 2024   m = 10   d = 11   type = Date   après assignation | 31
+
+2024-10-11 10:52:41.440 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 10:52:41.480 | GuillaumeCharron | info      | @00203 - wshAdmin.Range('TEC_Date').value = 11/10/24   type = Date | 31
+2024-10-11 10:52:41.510 | GuillaumeCharron | info      | @00206 - wshTEC_Local.Range('S3').value = 11/10/24   type = Date après assignation | 31
+
+2024-10-11 10:52:41.650 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 10:52:41.730 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 10:52:41.750 | GuillaumeCharron | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 10:52:41.800 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 10:52:47.000 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 10:52:47.040 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 10:52:47.060 | GuillaumeCharron | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 10:53:19.960 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtActivite_AfterUpdate @00351 | 31
+
+2024-10-11 10:53:19.000 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 10:53:20.020 | GuillaumeCharron | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 10:53:20.830 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369 | 31
+
+2024-10-11 10:53:20.910 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 10:53:20.920 | GuillaumeCharron | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Vrai | 31
+
+2024-10-11 10:53:22.470 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:cmdAdd_Click @00479 | 31
+
+2024-10-11 10:53:22.510 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Ajoute_Ligne @00018 | 31
+2024-10-11 10:53:22.590 | GuillaumeCharron | info      | @00031 - avant = 11/10/2024   type = String   après assignation | 31
+2024-10-11 10:53:22.600 | GuillaumeCharron | info      | @00036 - ufSaisieHeures.txtDate.value --->   y = 2024   m = 10   d = 11   type = String | 31
+2024-10-11 10:53:22.620 | GuillaumeCharron | info      | @00048 - ufSaisieHeures.txtDate.value = 2024-10-11   type = String   après assignation | 31
+2024-10-11 10:53:22.640 | GuillaumeCharron | adjust    | @00051 - La date a été changée pour corriger la date - 11/10/2024 ---> 2024-10-11 | 31
+
+2024-10-11 10:53:22.650 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB @00309 | 31
+2024-10-11 10:53:22.860 | GuillaumeCharron | ADD++++++ | 1692 | GC | 11/10/24 | 143 | Lessard CPA Inc. [Isabelle Lessard] | tel avec isabelle sur ébénisterie | 0,40 | VRAI |  | 2024-10-11 10:53:22 | 31
+
+2024-10-11 10:53:23.040 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_Locally @00536 | 31
+2024-10-11 10:53:23.070 | GuillaumeCharron | info      | @00550 - dateValue = 11/10/24   type = Date   après assignation | 31
+
+2024-10-11 10:53:23.230 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 10:53:23.270 | GuillaumeCharron | info      | @00203 - wshAdmin.Range('TEC_Date').value = 11/10/24   type = Date | 31
+2024-10-11 10:53:23.300 | GuillaumeCharron | info      | @00206 - wshTEC_Local.Range('S3').value = 11/10/24   type = Date après assignation | 31
+
+2024-10-11 10:53:23.450 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 10:53:23.510 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 10:53:23.530 | GuillaumeCharron | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 10:53:23.550 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 10:53:23.590 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Update_All @00726 | 31
+
+2024-10-11 10:53:23.620 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data @00686 | 31
+
+2024-10-11 10:53:23.870 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables @00739 | 31
+
+2024-10-11 10:53:24.080 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 10:53:24.100 | GuillaumeCharron | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 11:01:01.240 | Annie | entering  | E n t e r i n g   ufSaisieHeures:UserForm_Initialize @00091 | 31
+
+2024-10-11 11:01:01.370 | Annie | entering  | E n t e r i n g   ufSaisieHeures:UserForm_Activate @00014 | 31
+
+2024-10-11 11:01:09.420 | Annie | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 11:01:09.510 | Annie | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 11:01:13.060 | Annie | entering  | E n t e r i n g   ufSaisieHeures:cmbProfessionnel_AfterUpdate @00136 | 31
+
+2024-10-11 11:01:17.350 | Annie | entering  | E n t e r i n g   ufSaisieHeures:txtDate_Enter @00172 | 31
+2024-10-11 11:01:17.430 | Annie | info      | @00178 - .txtDate.value = 11-10-2024   y = 2024   m = 11   d = 10 | 31
+
+2024-10-11 11:01:22.040 | Annie | entering  | E n t e r i n g   ufSaisieHeures:txtDate_BeforeUpdate @00187 | 31
+2024-10-11 11:01:22.230 | Annie | info      | @00193 - .txtDate.value = 10-10-2024   y = 2024   m = 10   d = 10   type = String | 31
+2024-10-11 11:01:22.420 | Annie | info      | @00199 - fullDate = 2024-10-10   y = 2024   m = 10   d = 10   type = Date | 31
+2024-10-11 11:01:22.520 | Annie | info      | @00223 - fullDate = 2024-10-10   y = 2024   m = 10   d = 10   type = Date | 31
+2024-10-11 11:01:22.610 | Annie | info      | @00228 - DateSerial = 2024-10-11   y = 2024   m = 10   d = 11   type = Date | 31
+
+2024-10-11 11:01:22.790 | Annie | entering  | E n t e r i n g   ufSaisieHeures:txtDate_AfterUpdate @00265 | 31
+2024-10-11 11:01:22.980 | Annie | event     | @00269 - .txtDate.value =  = 10/10/2024   y = 2024   m = 10   d = 10   type = String | 31
+2024-10-11 11:01:23.070 | Annie | info      | @00277 - dateStr =  = 10/10/2024   y = 2024   m = 10   d = 10   type = String   après assignation | 31
+2024-10-11 11:01:23.160 | Annie | info      | @00284 - dateFormated =  = 2024-10-10   y = 2024   m = 10   d = 10   type = Date   après assignation | 31
+2024-10-11 11:01:23.300 | Annie | info      | @00291 - wshAdmin.Range('TEC_Date').value =  = 2024-10-10   y = 2024   m = 10   d = 10   type = Date   après assignation | 31
+
+2024-10-11 11:01:23.390 | Annie | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 11:01:23.600 | Annie | info      | @00203 - wshAdmin.Range('TEC_Date').value = 2024-10-10   type = Date | 31
+2024-10-11 11:01:23.700 | Annie | info      | @00206 - wshTEC_Local.Range('S3').value = 2024-10-10   type = Date après assignation | 31
+
+2024-10-11 11:01:23.970 | Annie | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 11:01:24.260 | Annie | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 11:01:24.350 | Annie | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 11:01:24.630 | Annie | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 11:01:59.590 | Annie | entering  | E n t e r i n g   ufSaisieHeures:txtDate_Enter @00172 | 31
+2024-10-11 11:01:59.680 | Annie | info      | @00178 - .txtDate.value = 10/10/2024   y = 2024   m = 10   d = 10 | 31
+
+2024-10-11 11:02:02.370 | Annie | entering  | E n t e r i n g   ufSaisieHeures:txtDate_BeforeUpdate @00187 | 31
+2024-10-11 11:02:05.390 | Annie | info      | @00193 - .txtDate.value = 7/10/2024   y = 2024   m = 7   d = 10   type = String | 31
+2024-10-11 11:02:05.580 | Annie | info      | @00199 - fullDate = 2024-07-10   y = 2024   m = 7   d = 10   type = Date | 31
+2024-10-11 11:02:05.680 | Annie | info      | @00223 - fullDate = 2024-07-10   y = 2024   m = 7   d = 10   type = Date | 31
+2024-10-11 11:02:05.780 | Annie | info      | @00228 - DateSerial = 2024-10-11   y = 2024   m = 10   d = 11   type = Date | 31
+
+2024-10-11 11:02:05.980 | Annie | entering  | E n t e r i n g   ufSaisieHeures:txtDate_AfterUpdate @00265 | 31
+2024-10-11 11:02:06.160 | Annie | event     | @00269 - .txtDate.value =  = 10/07/2024   y = 2024   m = 10   d = 7   type = String | 31
+2024-10-11 11:02:06.260 | Annie | info      | @00277 - dateStr =  = 10/07/2024   y = 2024   m = 10   d = 7   type = String   après assignation | 31
+2024-10-11 11:02:06.360 | Annie | info      | @00284 - dateFormated =  = 2024-10-07   y = 2024   m = 10   d = 7   type = Date   après assignation | 31
+2024-10-11 11:02:06.450 | Annie | info      | @00291 - wshAdmin.Range('TEC_Date').value =  = 2024-10-07   y = 2024   m = 10   d = 7   type = Date   après assignation | 31
+
+2024-10-11 11:02:06.570 | Annie | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 11:02:06.760 | Annie | info      | @00203 - wshAdmin.Range('TEC_Date').value = 2024-10-07   type = Date | 31
+2024-10-11 11:02:06.840 | Annie | info      | @00206 - wshTEC_Local.Range('S3').value = 2024-10-07   type = Date après assignation | 31
+
+2024-10-11 11:02:07.080 | Annie | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 11:02:10.250 | Annie | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 11:02:10.330 | Annie | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 11:02:10.420 | Annie | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 11:02:18.000 | Annie | entering  | E n t e r i n g   ufSaisieHeures:txtDate_Enter @00172 | 31
+2024-10-11 11:02:18.090 | Annie | info      | @00178 - .txtDate.value = 10/07/2024   y = 2024   m = 10   d = 7 | 31
+
+2024-10-11 11:02:21.610 | Annie | entering  | E n t e r i n g   ufSaisieHeures:txtDate_BeforeUpdate @00187 | 31
+2024-10-11 11:02:21.780 | Annie | info      | @00193 - .txtDate.value = 10/08/2024   y = 2024   m = 10   d = 8   type = String | 31
+2024-10-11 11:02:21.960 | Annie | info      | @00199 - fullDate = 2024-10-08   y = 2024   m = 10   d = 8   type = Date | 31
+2024-10-11 11:02:22.060 | Annie | info      | @00223 - fullDate = 2024-10-08   y = 2024   m = 10   d = 8   type = Date | 31
+2024-10-11 11:02:22.140 | Annie | info      | @00228 - DateSerial = 2024-10-11   y = 2024   m = 10   d = 11   type = Date | 31
+
+2024-10-11 11:02:22.330 | Annie | entering  | E n t e r i n g   ufSaisieHeures:txtDate_AfterUpdate @00265 | 31
+2024-10-11 11:02:22.540 | Annie | event     | @00269 - .txtDate.value =  = 08/10/2024   y = 2024   m = 8   d = 10   type = String | 31
+2024-10-11 11:02:22.630 | Annie | info      | @00277 - dateStr =  = 08/10/2024   y = 2024   m = 8   d = 10   type = String   après assignation | 31
+2024-10-11 11:02:22.720 | Annie | info      | @00284 - dateFormated =  = 2024-08-10   y = 2024   m = 8   d = 10   type = Date   après assignation | 31
+2024-10-11 11:02:22.820 | Annie | info      | @00291 - wshAdmin.Range('TEC_Date').value =  = 2024-08-10   y = 2024   m = 8   d = 10   type = Date   après assignation | 31
+
+2024-10-11 11:02:22.910 | Annie | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 11:02:23.120 | Annie | info      | @00203 - wshAdmin.Range('TEC_Date').value = 2024-08-10   type = Date | 31
+2024-10-11 11:02:23.220 | Annie | info      | @00206 - wshTEC_Local.Range('S3').value = 2024-08-10   type = Date après assignation | 31
+
+2024-10-11 11:02:23.450 | Annie | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 11:02:27.750 | Annie | entering  | E n t e r i n g   ufSaisieHeures:txtDate_Enter @00172 | 31
+2024-10-11 11:02:27.840 | Annie | info      | @00178 - .txtDate.value = 08/10/2024   y = 2024   m = 8   d = 10 | 31
+
+2024-10-11 11:02:32.900 | Annie | entering  | E n t e r i n g   ufSaisieHeures:txtDate_BeforeUpdate @00187 | 31
+2024-10-11 11:02:33.070 | Annie | info      | @00193 - .txtDate.value = 2024-10-08   y = 2024   m = 10   d = 8   type = String | 31
+2024-10-11 11:02:33.260 | Annie | info      | @00199 - fullDate = 2024-10-08   y = 2024   m = 10   d = 8   type = Date | 31
+2024-10-11 11:02:33.360 | Annie | info      | @00223 - fullDate = 2024-10-08   y = 2024   m = 10   d = 8   type = Date | 31
+2024-10-11 11:02:33.460 | Annie | info      | @00228 - DateSerial = 2024-10-11   y = 2024   m = 10   d = 11   type = Date | 31
+
+2024-10-11 11:02:33.640 | Annie | entering  | E n t e r i n g   ufSaisieHeures:txtDate_AfterUpdate @00265 | 31
+2024-10-11 11:02:33.820 | Annie | event     | @00269 - .txtDate.value =  = 2024-10-08   y = 2024   m = 10   d = 8   type = String | 31
+2024-10-11 11:02:33.940 | Annie | info      | @00277 - dateStr =  = 2024-10-08   y = 2024   m = 10   d = 8   type = String   après assignation | 31
+2024-10-11 11:02:34.030 | Annie | info      | @00284 - dateFormated =  = 2024-10-08   y = 2024   m = 10   d = 8   type = Date   après assignation | 31
+2024-10-11 11:02:34.120 | Annie | info      | @00291 - wshAdmin.Range('TEC_Date').value =  = 2024-10-08   y = 2024   m = 10   d = 8   type = Date   après assignation | 31
+
+2024-10-11 11:02:34.200 | Annie | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 11:02:34.410 | Annie | info      | @00203 - wshAdmin.Range('TEC_Date').value = 2024-10-08   type = Date | 31
+2024-10-11 11:02:34.490 | Annie | info      | @00206 - wshTEC_Local.Range('S3').value = 2024-10-08   type = Date après assignation | 31
+
+2024-10-11 11:02:34.690 | Annie | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 11:02:34.000 | Annie | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 11:02:35.090 | Annie | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 11:02:35.350 | Annie | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 11:02:39.270 | Annie | entering  | E n t e r i n g   ufSaisieHeures:txtDate_Enter @00172 | 31
+2024-10-11 11:02:39.370 | Annie | info      | @00178 - .txtDate.value = 2024-10-08   y = 2024   m = 10   d = 8 | 31
+
+2024-10-11 11:02:44.620 | Annie | entering  | E n t e r i n g   ufSaisieHeures:txtDate_BeforeUpdate @00187 | 31
+2024-10-11 11:02:44.780 | Annie | info      | @00193 - .txtDate.value = 2024-10-09   y = 2024   m = 10   d = 9   type = String | 31
+2024-10-11 11:02:44.980 | Annie | info      | @00199 - fullDate = 2024-10-09   y = 2024   m = 10   d = 9   type = Date | 31
+2024-10-11 11:02:45.070 | Annie | info      | @00223 - fullDate = 2024-10-09   y = 2024   m = 10   d = 9   type = Date | 31
+2024-10-11 11:02:45.160 | Annie | info      | @00228 - DateSerial = 2024-10-11   y = 2024   m = 10   d = 11   type = Date | 31
+
+2024-10-11 11:02:45.340 | Annie | entering  | E n t e r i n g   ufSaisieHeures:txtDate_AfterUpdate @00265 | 31
+2024-10-11 11:02:45.520 | Annie | event     | @00269 - .txtDate.value =  = 2024-10-09   y = 2024   m = 10   d = 9   type = String | 31
+2024-10-11 11:02:45.630 | Annie | info      | @00277 - dateStr =  = 2024-10-09   y = 2024   m = 10   d = 9   type = String   après assignation | 31
+2024-10-11 11:02:45.720 | Annie | info      | @00284 - dateFormated =  = 2024-10-09   y = 2024   m = 10   d = 9   type = Date   après assignation | 31
+2024-10-11 11:02:45.820 | Annie | info      | @00291 - wshAdmin.Range('TEC_Date').value =  = 2024-10-09   y = 2024   m = 10   d = 9   type = Date   après assignation | 31
+
+2024-10-11 11:02:45.910 | Annie | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 11:02:46.120 | Annie | info      | @00203 - wshAdmin.Range('TEC_Date').value = 2024-10-09   type = Date | 31
+2024-10-11 11:02:46.220 | Annie | info      | @00206 - wshTEC_Local.Range('S3').value = 2024-10-09   type = Date après assignation | 31
+
+2024-10-11 11:02:46.480 | Annie | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 11:02:46.790 | Annie | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 11:02:46.870 | Annie | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 11:02:46.970 | Annie | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 11:02:49.670 | Annie | entering  | E n t e r i n g   ufSaisieHeures:txtDate_Enter @00172 | 31
+2024-10-11 11:02:49.770 | Annie | info      | @00178 - .txtDate.value = 2024-10-09   y = 2024   m = 10   d = 9 | 31
+
+2024-10-11 11:02:51.770 | Annie | entering  | E n t e r i n g   ufSaisieHeures:txtDate_BeforeUpdate @00187 | 31
+2024-10-11 11:03:01.500 | Annie | info      | @00193 - .txtDate.value = 2024-10-10   y = 2024   m = 10   d = 10   type = String | 31
+2024-10-11 11:03:01.670 | Annie | info      | @00199 - fullDate = 2024-10-10   y = 2024   m = 10   d = 10   type = Date | 31
+2024-10-11 11:03:01.750 | Annie | info      | @00223 - fullDate = 2024-10-10   y = 2024   m = 10   d = 10   type = Date | 31
+2024-10-11 11:03:01.840 | Annie | info      | @00228 - DateSerial = 2024-10-11   y = 2024   m = 10   d = 11   type = Date | 31
+
+2024-10-11 11:03:02.020 | Annie | entering  | E n t e r i n g   ufSaisieHeures:txtDate_AfterUpdate @00265 | 31
+2024-10-11 11:03:02.190 | Annie | event     | @00269 - .txtDate.value =  = 2024-10-10   y = 2024   m = 10   d = 10   type = String | 31
+2024-10-11 11:03:02.280 | Annie | info      | @00277 - dateStr =  = 2024-10-10   y = 2024   m = 10   d = 10   type = String   après assignation | 31
+2024-10-11 11:03:02.370 | Annie | info      | @00284 - dateFormated =  = 2024-10-10   y = 2024   m = 10   d = 10   type = Date   après assignation | 31
+2024-10-11 11:03:02.450 | Annie | info      | @00291 - wshAdmin.Range('TEC_Date').value =  = 2024-10-10   y = 2024   m = 10   d = 10   type = Date   après assignation | 31
+
+2024-10-11 11:03:02.540 | Annie | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 11:03:02.710 | Annie | info      | @00203 - wshAdmin.Range('TEC_Date').value = 2024-10-10   type = Date | 31
+2024-10-11 11:03:02.820 | Annie | info      | @00206 - wshTEC_Local.Range('S3').value = 2024-10-10   type = Date après assignation | 31
+
+2024-10-11 11:03:03.090 | Annie | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 11:03:03.380 | Annie | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 11:03:03.460 | Annie | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 11:03:03.560 | Annie | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 11:03:05.200 | Annie | entering  | E n t e r i n g   ufSaisieHeures:UserForm_Terminate @00099 | 31
+
+2024-10-11 11:12:11.470 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:UserForm_Terminate @00099 | 31
+
+2024-10-11 11:12:55.200 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:UserForm_Initialize @00091 | 31
+
+2024-10-11 11:12:55.230 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:UserForm_Activate @00014 | 31
+
+2024-10-11 11:12:56.000 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 11:12:56.020 | GuillaumeCharron | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 11:34:30.160 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:lsbHresJour_dblClick @00522 | 31
+
+2024-10-11 11:34:30.390 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 11:34:30.430 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Vrai  clear = Vrai | 31
+
+2024-10-11 11:34:37.510 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 11:34:40.230 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369 | 31
+
+2024-10-11 11:34:40.370 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 11:34:40.400 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Vrai  delete = Faux  clear = Vrai | 31
+
+2024-10-11 11:34:45.300 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtActivite_AfterUpdate @00351 | 31
+
+2024-10-11 11:34:45.370 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 11:34:45.410 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Vrai  delete = Faux  clear = Vrai | 31
+
+2024-10-11 11:34:47.950 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369 | 31
+
+2024-10-11 11:34:48.080 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 11:34:48.110 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Vrai  delete = Faux  clear = Vrai | 31
+
+2024-10-11 11:34:49.220 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:cmdUpdate_Click @00489 | 31
+
+2024-10-11 11:34:49.290 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Modifie_Ligne @00086 | 31
+
+2024-10-11 11:34:49.350 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB @00309 | 31
+2024-10-11 11:34:49.680 | vgervais | UPDATE    | 1687 | VG | 2024-10-11 | 1546 | Publipage Inc. [Mélissa Côté] | Regarder courriel + voir mémo + voir les T2 | 2,40 | VRAI |  | 2024-10-11 11:34:49 | 31
+
+2024-10-11 11:34:49.880 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_Locally @00536 | 31
+2024-10-11 11:34:49.950 | vgervais | info      | @00550 - dateValue = 2024-10-11   type = Date   après assignation | 31
+
+2024-10-11 11:34:50.170 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 11:34:50.240 | vgervais | info      | @00203 - wshAdmin.Range('TEC_Date').value = 2024-10-11   type = Date | 31
+2024-10-11 11:34:50.270 | vgervais | info      | @00206 - wshTEC_Local.Range('S3').value = 2024-10-11   type = Date après assignation | 31
+
+2024-10-11 11:34:50.380 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 11:34:50.490 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 11:34:50.520 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 11:34:50.550 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 11:34:53.770 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:lsbHresJour_dblClick @00522 | 31
+
+2024-10-11 11:34:53.980 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 11:34:54.010 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Vrai  clear = Vrai | 31
+
+2024-10-11 11:34:54.850 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 11:35:09.970 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtActivite_AfterUpdate @00351 | 31
+
+2024-10-11 11:35:10.050 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 11:35:10.080 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Vrai  delete = Faux  clear = Vrai | 31
+
+2024-10-11 11:35:13.360 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369 | 31
+
+2024-10-11 11:35:13.500 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 11:35:13.530 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Vrai  delete = Faux  clear = Vrai | 31
+
+2024-10-11 11:35:13.600 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:cmdUpdate_Click @00489 | 31
+
+2024-10-11 11:35:13.660 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Modifie_Ligne @00086 | 31
+
+2024-10-11 11:35:13.730 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB @00309 | 31
+2024-10-11 11:35:14.060 | vgervais | UPDATE    | 1685 | VG | 2024-10-11 | 5 | z_Administratif_Autres non chargeables | Autres suivis - Planning + Suivis Laurent chargeables | 1,20 | FAUX |  | 2024-10-11 11:35:14 | 31
+
+2024-10-11 11:35:14.280 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_Locally @00536 | 31
+2024-10-11 11:35:14.340 | vgervais | info      | @00550 - dateValue = 2024-10-11   type = Date   après assignation | 31
+
+2024-10-11 11:35:14.600 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 11:35:14.660 | vgervais | info      | @00203 - wshAdmin.Range('TEC_Date').value = 2024-10-11   type = Date | 31
+2024-10-11 11:35:14.700 | vgervais | info      | @00206 - wshTEC_Local.Range('S3').value = 2024-10-11   type = Date après assignation | 31
+
+2024-10-11 11:35:14.800 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 11:35:14.910 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 11:35:14.950 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 11:35:14.980 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 11:35:17.410 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:lsbHresJour_dblClick @00522 | 31
+
+2024-10-11 11:35:17.620 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 11:35:17.660 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Vrai  clear = Vrai | 31
+
+2024-10-11 11:35:18.770 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 11:35:21.220 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369 | 31
+
+2024-10-11 11:35:21.360 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 11:35:21.390 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Vrai  delete = Faux  clear = Vrai | 31
+
+2024-10-11 11:35:22.310 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:cmdUpdate_Click @00489 | 31
+
+2024-10-11 11:35:22.380 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Modifie_Ligne @00086 | 31
+
+2024-10-11 11:35:22.450 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB @00309 | 31
+2024-10-11 11:35:22.750 | vgervais | UPDATE    | 1686 | VG | 2024-10-11 | 1768 | Les Éditions Reynald Goulet Inc. [Reynald Goulet] | Répondre question de LAurent sur états financiers (modifier les placements à la JVM) | 0,30 | VRAI |  | 2024-10-11 11:35:22 | 31
+
+2024-10-11 11:35:22.980 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_Locally @00536 | 31
+2024-10-11 11:35:23.040 | vgervais | info      | @00550 - dateValue = 2024-10-11   type = Date   après assignation | 31
+
+2024-10-11 11:35:23.260 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 11:35:23.330 | vgervais | info      | @00203 - wshAdmin.Range('TEC_Date').value = 2024-10-11   type = Date | 31
+2024-10-11 11:35:23.360 | vgervais | info      | @00206 - wshTEC_Local.Range('S3').value = 2024-10-11   type = Date après assignation | 31
+
+2024-10-11 11:35:23.470 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 11:35:23.570 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 11:35:23.600 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 11:35:23.630 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 11:35:24.770 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:lsbHresJour_dblClick @00522 | 31
+
+2024-10-11 11:35:24.000 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 11:35:25.030 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Vrai  clear = Vrai | 31
+
+2024-10-11 11:35:26.080 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 11:35:32.190 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369 | 31
+
+2024-10-11 11:35:36.040 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369 | 31
+
+2024-10-11 11:35:36.180 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 11:35:36.220 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Vrai  delete = Faux  clear = Vrai | 31
+
+2024-10-11 11:35:37.840 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:cmdUpdate_Click @00489 | 31
+
+2024-10-11 11:35:37.910 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Modifie_Ligne @00086 | 31
+
+2024-10-11 11:35:37.970 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB @00309 | 31
+2024-10-11 11:35:38.320 | vgervais | UPDATE    | 1690 | VG | 2024-10-11 | 1598 | Sphère DI Inc. [Guillaume Barrière Shooner] | Discussion avec Guillaume pour rérog | 0,30 | VRAI |  | 2024-10-11 11:35:38 | 31
+
+2024-10-11 11:35:38.550 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_Locally @00536 | 31
+2024-10-11 11:35:38.610 | vgervais | info      | @00550 - dateValue = 2024-10-11   type = Date   après assignation | 31
+
+2024-10-11 11:35:38.860 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 11:35:38.930 | vgervais | info      | @00203 - wshAdmin.Range('TEC_Date').value = 2024-10-11   type = Date | 31
+2024-10-11 11:35:38.960 | vgervais | info      | @00206 - wshTEC_Local.Range('S3').value = 2024-10-11   type = Date après assignation | 31
+
+2024-10-11 11:35:39.070 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 11:35:39.170 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 11:35:39.200 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 11:35:39.230 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 11:35:40.450 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:lsbHresJour_dblClick @00522 | 31
+
+2024-10-11 11:35:40.670 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 11:35:40.710 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Vrai  clear = Vrai | 31
+
+2024-10-11 11:35:42.730 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 11:35:46.500 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369 | 31
+
+2024-10-11 11:35:46.640 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 11:35:46.670 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Vrai  delete = Faux  clear = Vrai | 31
+
+2024-10-11 11:35:47.300 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:cmdUpdate_Click @00489 | 31
+
+2024-10-11 11:35:47.370 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Modifie_Ligne @00086 | 31
+
+2024-10-11 11:35:47.430 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB @00309 | 31
+2024-10-11 11:35:47.740 | vgervais | UPDATE    | 1691 | VG | 2024-10-11 | 1675 | Les entreprises Lanthier et Papineau Inc. [Alain Lanthier] | Discussion avec Guillaume pour réorg | 0,30 | VRAI |  | 2024-10-11 11:35:47 | 31
+
+2024-10-11 11:35:47.950 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_Locally @00536 | 31
+2024-10-11 11:35:48.010 | vgervais | info      | @00550 - dateValue = 2024-10-11   type = Date   après assignation | 31
+
+2024-10-11 11:35:48.230 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 11:35:48.300 | vgervais | info      | @00203 - wshAdmin.Range('TEC_Date').value = 2024-10-11   type = Date | 31
+2024-10-11 11:35:48.340 | vgervais | info      | @00206 - wshTEC_Local.Range('S3').value = 2024-10-11   type = Date après assignation | 31
+
+2024-10-11 11:35:48.460 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 11:35:48.560 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 11:35:48.590 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 11:35:48.630 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 15:15:02.130 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:cmbProfessionnel_AfterUpdate @00136 | 31
+
+2024-10-11 15:15:02.310 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtDate_Enter @00172 | 31
+2024-10-11 15:15:02.320 | GuillaumeCharron | info      | @00178 - .txtDate.value = 11/10/2024   y = 2024   m = 10   d = 11 | 31
+
+2024-10-11 15:15:02.940 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtDate_BeforeUpdate @00187 | 31
+2024-10-11 15:15:02.970 | GuillaumeCharron | info      | @00193 - .txtDate.value = 11/10/2024   y = 2024   m = 10   d = 11   type = String | 31
+2024-10-11 15:15:03.010 | GuillaumeCharron | info      | @00199 - fullDate = 11/10/24   y = 2024   m = 10   d = 11   type = Date | 31
+2024-10-11 15:15:03.030 | GuillaumeCharron | info      | @00223 - fullDate = 11/10/24   y = 2024   m = 10   d = 11   type = Date | 31
+2024-10-11 15:15:03.040 | GuillaumeCharron | info      | @00228 - DateSerial = 11/10/24   y = 2024   m = 10   d = 11   type = Date | 31
+
+2024-10-11 15:15:03.080 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtDate_AfterUpdate @00265 | 31
+2024-10-11 15:15:03.110 | GuillaumeCharron | event     | @00269 - .txtDate.value =  = 11/10/2024   y = 2024   m = 10   d = 11   type = String | 31
+2024-10-11 15:15:03.130 | GuillaumeCharron | info      | @00277 - dateStr =  = 11/10/2024   y = 2024   m = 10   d = 11   type = String   après assignation | 31
+2024-10-11 15:15:03.150 | GuillaumeCharron | info      | @00284 - dateFormated =  = 11/10/24   y = 2024   m = 10   d = 11   type = Date   après assignation | 31
+2024-10-11 15:15:03.230 | GuillaumeCharron | info      | @00291 - wshAdmin.Range('TEC_Date').value =  = 11/10/24   y = 2024   m = 10   d = 11   type = Date   après assignation | 31
+
+2024-10-11 15:15:03.250 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 15:15:03.350 | GuillaumeCharron | info      | @00203 - wshAdmin.Range('TEC_Date').value = 11/10/24   type = Date | 31
+2024-10-11 15:15:03.430 | GuillaumeCharron | info      | @00206 - wshTEC_Local.Range('S3').value = 11/10/24   type = Date après assignation | 31
+
+2024-10-11 15:15:04.120 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 15:15:04.210 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 15:15:04.230 | GuillaumeCharron | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 15:15:04.280 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 15:15:10.000 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 15:15:10.040 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 15:15:10.050 | GuillaumeCharron | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 15:15:19.840 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtActivite_AfterUpdate @00351 | 31
+
+2024-10-11 15:15:19.880 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 15:15:19.890 | GuillaumeCharron | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 15:15:20.760 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369 | 31
+
+2024-10-11 15:15:20.830 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 15:15:20.850 | GuillaumeCharron | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Vrai | 31
+
+2024-10-11 15:15:21.770 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:cmdAdd_Click @00479 | 31
+
+2024-10-11 15:15:21.810 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Ajoute_Ligne @00018 | 31
+2024-10-11 15:15:21.950 | GuillaumeCharron | info      | @00031 - avant = 11/10/2024   type = String   après assignation | 31
+2024-10-11 15:15:21.960 | GuillaumeCharron | info      | @00036 - ufSaisieHeures.txtDate.value --->   y = 2024   m = 10   d = 11   type = String | 31
+2024-10-11 15:15:21.980 | GuillaumeCharron | info      | @00048 - ufSaisieHeures.txtDate.value = 2024-10-11   type = String   après assignation | 31
+2024-10-11 15:15:21.990 | GuillaumeCharron | adjust    | @00051 - La date a été changée pour corriger la date - 11/10/2024 ---> 2024-10-11 | 31
+
+2024-10-11 15:15:22.010 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB @00309 | 31
+2024-10-11 15:15:22.280 | GuillaumeCharron | ADD++++++ | 1693 | GC | 11/10/24 | 1802 | Martin Lavoie (compagnie à être créée) | tel avec Martin sur LOI et structure d'achat | 0,50 | VRAI |  | 2024-10-11 15:15:22 | 31
+
+2024-10-11 15:15:22.460 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_Locally @00536 | 31
+2024-10-11 15:15:22.500 | GuillaumeCharron | info      | @00550 - dateValue = 11/10/24   type = Date   après assignation | 31
+
+2024-10-11 15:15:23.670 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 15:15:23.780 | GuillaumeCharron | info      | @00203 - wshAdmin.Range('TEC_Date').value = 11/10/24   type = Date | 31
+2024-10-11 15:15:23.870 | GuillaumeCharron | info      | @00206 - wshTEC_Local.Range('S3').value = 11/10/24   type = Date après assignation | 31
+
+2024-10-11 15:15:24.710 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 15:15:24.800 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 15:15:24.820 | GuillaumeCharron | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 15:15:24.850 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 15:15:24.880 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Update_All @00726 | 31
+
+2024-10-11 15:15:24.910 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data @00686 | 31
+
+2024-10-11 15:15:25.210 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables @00739 | 31
+
+2024-10-11 15:15:25.680 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 15:15:25.700 | GuillaumeCharron | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 15:15:28.750 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 15:15:28.790 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 15:15:28.800 | GuillaumeCharron | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 15:16:25.610 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtActivite_AfterUpdate @00351 | 31
+
+2024-10-11 15:16:25.650 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 15:16:25.660 | GuillaumeCharron | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 15:16:29.650 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369 | 31
+
+2024-10-11 15:16:29.710 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 15:16:29.730 | GuillaumeCharron | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Vrai | 31
+
+2024-10-11 15:16:30.700 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:cmdAdd_Click @00479 | 31
+
+2024-10-11 15:16:30.730 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Ajoute_Ligne @00018 | 31
+2024-10-11 15:16:30.840 | GuillaumeCharron | info      | @00031 - avant = 2024-10-11   type = String   après assignation | 31
+2024-10-11 15:16:30.860 | GuillaumeCharron | info      | @00036 - ufSaisieHeures.txtDate.value --->   y = 2024   m = 10   d = 11   type = String | 31
+2024-10-11 15:16:30.880 | GuillaumeCharron | info      | @00048 - ufSaisieHeures.txtDate.value = 2024-10-11   type = String   après assignation | 31
+
+2024-10-11 15:16:30.890 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB @00309 | 31
+2024-10-11 15:16:31.120 | GuillaumeCharron | ADD++++++ | 1694 | GC | 11/10/24 | 1779 | 9098-2885 Québec Inc. [Denis Bisson] | analyse de toute l'historique pour m'assurer de ne rien oublier, analyse de tous les chiffres fournis, analyse de l'optimisation et rédaction du mémorandum fiscal + échanges de courriels, obtention d'infos add + tel avec Denis et Stéphane | 8,00 | VRAI |  | 2024-10-11 15:16:31 | 31
+
+2024-10-11 15:16:31.300 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_Locally @00536 | 31
+2024-10-11 15:16:31.340 | GuillaumeCharron | info      | @00550 - dateValue = 11/10/24   type = Date   après assignation | 31
+
+2024-10-11 15:16:32.280 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 15:16:32.370 | GuillaumeCharron | info      | @00203 - wshAdmin.Range('TEC_Date').value = 11/10/24   type = Date | 31
+2024-10-11 15:16:32.440 | GuillaumeCharron | info      | @00206 - wshTEC_Local.Range('S3').value = 11/10/24   type = Date après assignation | 31
+
+2024-10-11 15:16:33.110 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 15:16:33.190 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 15:16:33.210 | GuillaumeCharron | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 15:16:33.230 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 15:16:33.270 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Update_All @00726 | 31
+
+2024-10-11 15:16:33.300 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data @00686 | 31
+
+2024-10-11 15:16:33.590 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables @00739 | 31
+
+2024-10-11 15:16:34.090 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 15:16:34.110 | GuillaumeCharron | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 16:18:45.320 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 16:18:45.360 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 16:18:45.380 | GuillaumeCharron | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 16:19:01.730 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtActivite_AfterUpdate @00351 | 31
+
+2024-10-11 16:19:01.770 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 16:19:01.790 | GuillaumeCharron | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 16:19:02.910 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369 | 31
+
+2024-10-11 16:19:02.980 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 16:19:02.990 | GuillaumeCharron | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Vrai | 31
+
+2024-10-11 16:19:12.970 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtActivite_AfterUpdate @00351 | 31
+
+2024-10-11 16:19:13.010 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 16:19:13.030 | GuillaumeCharron | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 16:19:14.210 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369 | 31
+
+2024-10-11 16:19:14.280 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 16:19:14.300 | GuillaumeCharron | info      | @00835 - Paramètres : add = Vrai  update = Faux  delete = Faux  clear = Vrai | 31
+
+2024-10-11 16:19:14.330 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:cmdAdd_Click @00479 | 31
+
+2024-10-11 16:19:14.360 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Ajoute_Ligne @00018 | 31
+2024-10-11 16:19:14.440 | GuillaumeCharron | info      | @00031 - avant = 2024-10-11   type = String   après assignation | 31
+2024-10-11 16:19:14.450 | GuillaumeCharron | info      | @00036 - ufSaisieHeures.txtDate.value --->   y = 2024   m = 10   d = 11   type = String | 31
+2024-10-11 16:19:14.470 | GuillaumeCharron | info      | @00048 - ufSaisieHeures.txtDate.value = 2024-10-11   type = String   après assignation | 31
+
+2024-10-11 16:19:14.480 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB @00309 | 31
+2024-10-11 16:19:14.680 | GuillaumeCharron | ADD++++++ | 1695 | GC | 11/10/24 | 1669 | Ventilabec Inc. [Lora Stoycheva] | intervention pour stopper transfert d'immeuble vs mon mémo fiscal - tel Éric + courriel simon | 0,75 | VRAI |  | 2024-10-11 16:19:14 | 31
+
+2024-10-11 16:19:14.880 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_Locally @00536 | 31
+2024-10-11 16:19:14.910 | GuillaumeCharron | info      | @00550 - dateValue = 11/10/24   type = Date   après assignation | 31
+
+2024-10-11 16:19:15.170 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 16:19:15.220 | GuillaumeCharron | info      | @00203 - wshAdmin.Range('TEC_Date').value = 11/10/24   type = Date | 31
+2024-10-11 16:19:15.250 | GuillaumeCharron | info      | @00206 - wshTEC_Local.Range('S3').value = 11/10/24   type = Date après assignation | 31
+
+2024-10-11 16:19:15.520 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 16:19:15.720 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 16:19:15.730 | GuillaumeCharron | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 16:19:15.780 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 16:19:15.820 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Update_All @00726 | 31
+
+2024-10-11 16:19:15.850 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Push_TEC_Local_To_DB_Data @00686 | 31
+
+2024-10-11 16:19:16.130 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables @00739 | 31
+
+2024-10-11 16:19:16.360 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 16:19:16.380 | GuillaumeCharron | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 16:53:35.150 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:lsbHresJour_dblClick @00522 | 31
+
+2024-10-11 16:53:35.320 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 16:53:35.340 | GuillaumeCharron | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Vrai  clear = Vrai | 31
+
+2024-10-11 16:53:37.070 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 16:53:41.580 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369 | 31
+
+2024-10-11 16:53:41.660 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 16:53:41.680 | GuillaumeCharron | info      | @00835 - Paramètres : add = Faux  update = Vrai  delete = Faux  clear = Vrai | 31
+
+2024-10-11 16:53:42.900 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:cmdUpdate_Click @00489 | 31
+
+2024-10-11 16:53:42.940 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Modifie_Ligne @00086 | 31
+
+2024-10-11 16:53:42.980 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB @00309 | 31
+2024-10-11 16:53:43.110 | GuillaumeCharron | UPDATE    | 1694 | GC | 11/10/24 | 1779 | 9098-2885 Québec Inc. [Denis Bisson] | analyse de toute l'historique pour m'assurer de ne rien oublier, analyse de tous les chiffres fournis, analyse de l'optimisation et rédaction du mémorandum fiscal + échanges de courriels, obtention d'infos add + tel avec Denis et Stéphane | 12,00 | VRAI |  | 2024-10-11 16:53:43 | 31
+
+2024-10-11 16:53:43.290 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_Locally @00536 | 31
+2024-10-11 16:53:43.330 | GuillaumeCharron | info      | @00550 - dateValue = 11/10/24   type = Date   après assignation | 31
+
+2024-10-11 16:53:43.540 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 16:53:43.590 | GuillaumeCharron | info      | @00203 - wshAdmin.Range('TEC_Date').value = 11/10/24   type = Date | 31
+2024-10-11 16:53:43.610 | GuillaumeCharron | info      | @00206 - wshTEC_Local.Range('S3').value = 11/10/24   type = Date après assignation | 31
+
+2024-10-11 16:53:43.770 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 16:53:43.850 | GuillaumeCharron | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 16:53:43.870 | GuillaumeCharron | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 16:53:43.890 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 16:55:00.420 | GuillaumeCharron | entering  | E n t e r i n g   ufSaisieHeures:UserForm_Terminate @00099 | 31
+
+2024-10-11 17:18:11.280 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:lsbHresJour_dblClick @00522 | 31
+
+2024-10-11 17:18:11.530 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 17:18:11.570 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Vrai  clear = Vrai | 31
+
+2024-10-11 17:18:12.730 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 17:18:16.620 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:lsbHresJour_dblClick @00522 | 31
+
+2024-10-11 17:18:16.870 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 17:18:16.910 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Vrai  clear = Vrai | 31
+
+2024-10-11 17:18:18.340 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtActivite_AfterUpdate @00351 | 31
+
+2024-10-11 17:18:18.460 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 17:18:37.680 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtActivite_AfterUpdate @00351 | 31
+
+2024-10-11 17:18:37.760 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 17:18:37.790 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Vrai  delete = Faux  clear = Vrai | 31
+
+2024-10-11 17:18:41.460 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369 | 31
+
+2024-10-11 17:18:41.610 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 17:18:41.640 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Vrai  delete = Faux  clear = Vrai | 31
+
+2024-10-11 17:18:42.140 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:cmdUpdate_Click @00489 | 31
+
+2024-10-11 17:18:42.200 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Modifie_Ligne @00086 | 31
+
+2024-10-11 17:18:42.270 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB @00309 | 31
+2024-10-11 17:18:42.590 | vgervais | UPDATE    | 1686 | VG | 2024-10-11 | 1768 | Les Éditions Reynald Goulet Inc. [Reynald Goulet] | Répondre question de LAurent sur états financiers (modifier les placements à la JVM) + Répondre courriel pour édition livre à joindre | 0,50 | VRAI |  | 2024-10-11 17:18:42 | 31
+
+2024-10-11 17:18:42.820 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_Locally @00536 | 31
+2024-10-11 17:18:42.880 | vgervais | info      | @00550 - dateValue = 2024-10-11   type = Date   après assignation | 31
+
+2024-10-11 17:18:43.210 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 17:18:43.270 | vgervais | info      | @00203 - wshAdmin.Range('TEC_Date').value = 2024-10-11   type = Date | 31
+2024-10-11 17:18:43.320 | vgervais | info      | @00206 - wshTEC_Local.Range('S3').value = 2024-10-11   type = Date après assignation | 31
+
+2024-10-11 17:18:43.510 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 17:18:43.660 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 17:18:43.690 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 17:18:43.720 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 17:42:53.430 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:lsbHresJour_dblClick @00522 | 31
+
+2024-10-11 17:42:53.680 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 17:42:53.710 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Vrai  clear = Vrai | 31
+
+2024-10-11 17:42:55.060 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 17:42:59.300 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtActivite_AfterUpdate @00351 | 31
+
+2024-10-11 17:42:59.380 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 17:42:59.410 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Vrai  delete = Faux  clear = Vrai | 31
+
+2024-10-11 17:43:02.910 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369 | 31
+
+2024-10-11 17:43:03.060 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 17:43:03.100 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Vrai  delete = Faux  clear = Vrai | 31
+
+2024-10-11 17:43:03.320 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:cmdUpdate_Click @00489 | 31
+
+2024-10-11 17:43:03.390 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Modifie_Ligne @00086 | 31
+
+2024-10-11 17:43:03.460 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB @00309 | 31
+2024-10-11 17:43:03.800 | vgervais | UPDATE    | 1690 | VG | 2024-10-11 | 1598 | Sphère DI Inc. [Guillaume Barrière Shooner] | Discussion avec Guillaume pour rérog + mémo | 2,30 | VRAI |  | 2024-10-11 17:43:03 | 31
+
+2024-10-11 17:43:04.020 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_Locally @00536 | 31
+2024-10-11 17:43:04.100 | vgervais | info      | @00550 - dateValue = 2024-10-11   type = Date   après assignation | 31
+
+2024-10-11 17:43:04.360 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 17:43:04.430 | vgervais | info      | @00203 - wshAdmin.Range('TEC_Date').value = 2024-10-11   type = Date | 31
+2024-10-11 17:43:04.470 | vgervais | info      | @00206 - wshTEC_Local.Range('S3').value = 2024-10-11   type = Date après assignation | 31
+
+2024-10-11 17:43:04.580 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 17:43:04.680 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 17:43:04.710 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 17:43:04.750 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 17:43:21.460 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:lsbHresJour_dblClick @00522 | 31
+
+2024-10-11 17:43:21.700 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 17:43:21.730 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Vrai  clear = Vrai | 31
+
+2024-10-11 17:43:23.990 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 17:43:28.400 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369 | 31
+
+2024-10-11 17:43:28.560 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 17:43:28.590 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Vrai  delete = Faux  clear = Vrai | 31
+
+2024-10-11 17:43:29.410 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:cmdUpdate_Click @00489 | 31
+
+2024-10-11 17:43:29.480 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Modifie_Ligne @00086 | 31
+
+2024-10-11 17:43:29.550 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB @00309 | 31
+2024-10-11 17:43:29.860 | vgervais | UPDATE    | 1691 | VG | 2024-10-11 | 1675 | Les entreprises Lanthier et Papineau Inc. [Alain Lanthier] | Discussion avec Guillaume pour réorg | 2,10 | VRAI |  | 2024-10-11 17:43:29 | 31
+
+2024-10-11 17:43:30.090 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_Locally @00536 | 31
+2024-10-11 17:43:30.160 | vgervais | info      | @00550 - dateValue = 2024-10-11   type = Date   après assignation | 31
+
+2024-10-11 17:43:30.410 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 17:43:30.480 | vgervais | info      | @00203 - wshAdmin.Range('TEC_Date').value = 2024-10-11   type = Date | 31
+2024-10-11 17:43:30.520 | vgervais | info      | @00206 - wshTEC_Local.Range('S3').value = 2024-10-11   type = Date après assignation | 31
+
+2024-10-11 17:43:30.640 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 17:43:30.750 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 17:43:30.780 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 17:43:30.810 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 17:43:47.140 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:lsbHresJour_dblClick @00522 | 31
+
+2024-10-11 17:43:47.380 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 17:43:47.420 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Vrai  clear = Vrai | 31
+
+2024-10-11 17:43:48.080 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:lsbHresJour_dblClick @00522 | 31
+
+2024-10-11 17:43:48.310 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 17:43:48.350 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Vrai  clear = Vrai | 31
+
+2024-10-11 17:43:49.260 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 17:43:51.880 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369 | 31
+
+2024-10-11 17:43:52.030 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 17:43:52.060 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Vrai  delete = Faux  clear = Vrai | 31
+
+2024-10-11 17:43:53.160 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:cmdUpdate_Click @00489 | 31
+
+2024-10-11 17:43:53.230 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Modifie_Ligne @00086 | 31
+
+2024-10-11 17:43:53.300 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB @00309 | 31
+2024-10-11 17:43:53.640 | vgervais | UPDATE    | 1686 | VG | 2024-10-11 | 1768 | Les Éditions Reynald Goulet Inc. [Reynald Goulet] | Répondre question de LAurent sur états financiers (modifier les placements à la JVM) + Répondre courriel pour édition livre à joindre | 0,60 | VRAI |  | 2024-10-11 17:43:53 | 31
+
+2024-10-11 17:43:53.860 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_Locally @00536 | 31
+2024-10-11 17:43:53.930 | vgervais | info      | @00550 - dateValue = 2024-10-11   type = Date   après assignation | 31
+
+2024-10-11 17:43:54.170 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 17:43:54.240 | vgervais | info      | @00203 - wshAdmin.Range('TEC_Date').value = 2024-10-11   type = Date | 31
+2024-10-11 17:43:54.280 | vgervais | info      | @00206 - wshTEC_Local.Range('S3').value = 2024-10-11   type = Date après assignation | 31
+
+2024-10-11 17:43:54.390 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 17:43:54.500 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 17:43:54.540 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 17:43:54.580 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 17:44:07.570 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:lsbHresJour_dblClick @00522 | 31
+
+2024-10-11 17:44:07.810 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 17:44:07.880 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Vrai  clear = Vrai | 31
+
+2024-10-11 17:44:08.710 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 17:44:15.340 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtActivite_AfterUpdate @00351 | 31
+
+2024-10-11 17:44:15.430 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 17:44:15.460 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Vrai  delete = Faux  clear = Vrai | 31
+
+2024-10-11 17:44:16.220 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:cmdUpdate_Click @00489 | 31
+
+2024-10-11 17:44:16.290 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Modifie_Ligne @00086 | 31
+
+2024-10-11 17:44:16.370 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB @00309 | 31
+2024-10-11 17:44:16.690 | vgervais | UPDATE    | 1687 | VG | 2024-10-11 | 1546 | Publipage Inc. [Mélissa Côté] | Regarder courriel + voir mémo + voir les T2 + courriel info | 2,40 | VRAI |  | 2024-10-11 17:44:16 | 31
+
+2024-10-11 17:44:16.920 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_Locally @00536 | 31
+2024-10-11 17:44:16.000 | vgervais | info      | @00550 - dateValue = 2024-10-11   type = Date   après assignation | 31
+
+2024-10-11 17:44:17.260 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 17:44:17.340 | vgervais | info      | @00203 - wshAdmin.Range('TEC_Date').value = 2024-10-11   type = Date | 31
+2024-10-11 17:44:17.380 | vgervais | info      | @00206 - wshTEC_Local.Range('S3').value = 2024-10-11   type = Date après assignation | 31
+
+2024-10-11 17:44:17.480 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 17:44:17.600 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 17:44:17.640 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 17:44:17.670 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 17:44:23.280 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:lsbHresJour_dblClick @00522 | 31
+
+2024-10-11 17:44:23.510 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 17:44:23.540 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Vrai  clear = Vrai | 31
+
+2024-10-11 17:44:24.040 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:lsbHresJour_dblClick @00522 | 31
+
+2024-10-11 17:44:24.270 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 17:44:24.300 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Vrai  clear = Vrai | 31
+
+2024-10-11 17:44:25.660 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 17:44:31.390 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369 | 31
+
+2024-10-11 17:44:31.550 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 17:44:31.590 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Vrai  delete = Faux  clear = Vrai | 31
+
+2024-10-11 17:44:32.080 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:cmdUpdate_Click @00489 | 31
+
+2024-10-11 17:44:32.150 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Modifie_Ligne @00086 | 31
+
+2024-10-11 17:44:32.220 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB @00309 | 31
+2024-10-11 17:44:32.530 | vgervais | UPDATE    | 1690 | VG | 2024-10-11 | 1598 | Sphère DI Inc. [Guillaume Barrière Shooner] | Discussion avec Guillaume pour rérog + mémo | 2,70 | VRAI |  | 2024-10-11 17:44:32 | 31
+
+2024-10-11 17:44:32.760 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_Locally @00536 | 31
+2024-10-11 17:44:32.820 | vgervais | info      | @00550 - dateValue = 2024-10-11   type = Date   après assignation | 31
+
+2024-10-11 17:44:33.070 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 17:44:33.170 | vgervais | info      | @00203 - wshAdmin.Range('TEC_Date').value = 2024-10-11   type = Date | 31
+2024-10-11 17:44:33.200 | vgervais | info      | @00206 - wshTEC_Local.Range('S3').value = 2024-10-11   type = Date après assignation | 31
+
+2024-10-11 17:44:33.320 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 17:44:33.430 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 17:44:33.470 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 17:44:33.500 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 17:44:35.380 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:lsbHresJour_dblClick @00522 | 31
+
+2024-10-11 17:44:35.620 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 17:44:35.650 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Vrai  clear = Vrai | 31
+
+2024-10-11 17:44:36.740 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_AfterUpdate @00333 | 31
+
+2024-10-11 17:44:38.490 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtHeures_AfterUpdate @00369 | 31
+
+2024-10-11 17:44:38.630 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 17:44:38.670 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Vrai  delete = Faux  clear = Vrai | 31
+
+2024-10-11 17:44:39.700 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:cmdUpdate_Click @00489 | 31
+
+2024-10-11 17:44:39.770 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Modifie_Ligne @00086 | 31
+
+2024-10-11 17:44:39.830 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB @00309 | 31
+2024-10-11 17:44:40.140 | vgervais | UPDATE    | 1690 | VG | 2024-10-11 | 1598 | Sphère DI Inc. [Guillaume Barrière Shooner] | Discussion avec Guillaume pour rérog + mémo | 2,80 | VRAI |  | 2024-10-11 17:44:40 | 31
+
+2024-10-11 17:44:40.360 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Record_Add_Or_Update_Locally @00536 | 31
+2024-10-11 17:44:40.430 | vgervais | info      | @00550 - dateValue = 2024-10-11   type = Date   après assignation | 31
+
+2024-10-11 17:44:40.680 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Get_All_TEC_AF @00190 | 31
+2024-10-11 17:44:40.750 | vgervais | info      | @00203 - wshAdmin.Range('TEC_Date').value = 2024-10-11   type = Date | 31
+2024-10-11 17:44:40.790 | vgervais | info      | @00206 - wshTEC_Local.Range('S3').value = 2024-10-11   type = Date après assignation | 31
+
+2024-10-11 17:44:40.900 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours @00621 | 31
+
+2024-10-11 17:44:41.010 | vgervais | entering  | E n t e r i n g   modTEC_Saisie:Buttons_Enabled_True_Or_False @00833 | 31
+2024-10-11 17:44:41.050 | vgervais | info      | @00835 - Paramètres : add = Faux  update = Faux  delete = Faux  clear = Faux | 31
+
+2024-10-11 17:44:41.080 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:txtClient_Enter @00323 | 31
+
+2024-10-11 17:44:43.310 | vgervais | entering  | E n t e r i n g   ufSaisieHeures:UserForm_Terminate @00099 | 31

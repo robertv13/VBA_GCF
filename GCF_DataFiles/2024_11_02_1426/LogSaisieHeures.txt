@@ -1,2 +1,0 @@
-2024-11-02 06:36:25.81 | Guillaume | ADD    2137 | GC | 02/11/24 | 519 | Succession Éric Morais [Louise Morais] | révision et modifications au mémorandum + compléter questionnaire d'incorporation et demander autorisation et autre à Lousie | 1,50 | VRAI |  | 2024-11-02 06:36:25 | 31
-2024-11-02 09:48:39.53 | Guillaume | ADD    2138 | GC | 02/11/24 | 1779 | 9098-2885 Québec Inc. [Denis Bisson] | question du comptable sur étapes dans les états financiers | 0,50 | VRAI |  | 2024-11-02 09:48:39 | 31

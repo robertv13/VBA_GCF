@@ -1,0 +1,314 @@
+2024-12-22 11:09:34.28 | Guillaume | APP_v5.H.4.xlsb | ***** Début d'une nouvelle session (ThisWorkbook:Workbook_Open) *****
+2024-12-22 11:09:34.58 | Guillaume | APP_v5.H.4.xlsb | ThisWorkbook:Create_User_Active_File
+2024-12-22 11:09:35.12 | Guillaume | APP_v5.H.4.xlsb | ThisWorkbook:Create_User_Active_File = '0,7109 secondes'
+
+2024-12-22 11:09:35.45 | Guillaume | APP_v5.H.4.xlsb | ThisWorkbook:Setup_UserDateFormat
+2024-12-22 11:09:35.69 | Guillaume | APP_v5.H.4.xlsb | ThisWorkbook:Setup_UserDateFormat = '0,4102 secondes'
+
+2024-12-22 11:09:35.93 | Guillaume | APP_v5.H.4.xlsb | ThisWorkbook:BackupMasterFile
+2024-12-22 11:09:37.32 | Guillaume | APP_v5.H.4.xlsb | ThisWorkbook:BackupMasterFile = '1,6094 secondes'
+
+2024-12-22 11:09:37.64 | Guillaume | APP_v5.H.4.xlsb | modMenu:HideDevShapesBasedOnUsername
+2024-12-22 11:09:37.89 | Guillaume | APP_v5.H.4.xlsb | modMenu:HideDevShapesBasedOnUsername = '0,4453 secondes'
+
+2024-12-22 11:09:38.19 | Guillaume | APP_v5.H.4.xlsb | modAppli:WriteInfoOnMainMenu
+2024-12-22 11:09:38.47 | Guillaume | APP_v5.H.4.xlsb | modAppli:WriteInfoOnMainMenu = '0,4453 secondes'
+
+2024-12-22 11:09:38.82 | Guillaume | APP_v5.H.4.xlsb | ThisWorkbook:Workbook_Open = '4,6836 secondes'
+
+2024-12-22 11:09:58.32 | Guillaume | APP_v5.H.4.xlsb | modMenu:SortirApplicationAprèsSauvegarde
+2024-12-22 11:09:59.96 | Guillaume | APP_v5.H.4.xlsb | modMenu:Delete_User_Active_File
+2024-12-22 11:10:00.36 | Guillaume | APP_v5.H.4.xlsb | modMenu:Delete_User_Active_File = '0,5469 secondes'
+
+2024-12-22 11:10:00.59 | Guillaume | APP_v5.H.4.xlsb | modMenu:SortirApplicationAprèsSauvegarde = '2,4062 secondes'
+
+2024-12-22 11:10:00.80 | Guillaume | APP_v5.H.4.xlsb | ***** Session terminée NORMALEMENT (modMenu:SortirApplicationAprèsSauvegarde) *****
+
+2024-12-22 11:10:57.88 | Guillaume | APP_v5.H.4.xlsb | modMenu:menuComptabilite_Click
+2024-12-22 11:10:58.14 | Guillaume | APP_v5.H.4.xlsb | modMenu:menuComptabilite_Click = '0,4180 secondes'
+
+2024-12-22 11:11:00.87 | Guillaume | APP_v5.H.4.xlsb | modMenu:menuFacturation_Click
+2024-12-22 11:11:01.12 | Guillaume | APP_v5.H.4.xlsb | modMenu:menuFacturation_Click = '0,3789 secondes'
+
+2024-12-22 11:11:06.31 | Guillaume | APP_v5.H.4.xlsb | modCAR_Liste_Agée:CAR_CréerListeÂgée
+2024-12-22 17:12:56.58 | Guillaume | APP_v5.H.5.xlsb | ***** Début d'une nouvelle session (ThisWorkbook:Workbook_Open) *****
+2024-12-22 17:12:56.88 | Guillaume | APP_v5.H.5.xlsb | ThisWorkbook:Create_User_Active_File
+2024-12-22 17:12:57.39 | Guillaume | APP_v5.H.5.xlsb | ThisWorkbook:Create_User_Active_File = '0,7305 secondes'
+
+2024-12-22 17:12:57.71 | Guillaume | APP_v5.H.5.xlsb | ThisWorkbook:Setup_UserDateFormat
+2024-12-22 17:12:58.01 | Guillaume | APP_v5.H.5.xlsb | ThisWorkbook:Setup_UserDateFormat = '0,5078 secondes'
+
+2024-12-22 17:12:58.35 | Guillaume | APP_v5.H.5.xlsb | ThisWorkbook:BackupMasterFile
+2024-12-22 17:12:59.66 | Guillaume | APP_v5.H.5.xlsb | ThisWorkbook:BackupMasterFile = '1,4609 secondes'
+
+2024-12-22 17:12:59.89 | Guillaume | APP_v5.H.5.xlsb | modMenu:HideDevShapesBasedOnUsername
+2024-12-22 17:13:00.12 | Guillaume | APP_v5.H.5.xlsb | modMenu:HideDevShapesBasedOnUsername = '0,3711 secondes'
+
+2024-12-22 17:13:00.35 | Guillaume | APP_v5.H.5.xlsb | modAppli:WriteInfoOnMainMenu
+2024-12-22 17:13:00.60 | Guillaume | APP_v5.H.5.xlsb | modAppli:WriteInfoOnMainMenu = '0,3906 secondes'
+
+2024-12-22 17:13:00.91 | Guillaume | APP_v5.H.5.xlsb | ThisWorkbook:Workbook_Open = '4,4648 secondes'
+
+2024-12-22 17:13:02.05 | Guillaume | APP_v5.H.5.xlsb | modMenu:menuTEC_Click
+2024-12-22 17:13:02.31 | Guillaume | APP_v5.H.5.xlsb | modMenu:menuTEC_Click = '0,4336 secondes'
+
+2024-12-22 17:13:03.48 | Guillaume | APP_v5.H.5.xlsb | modMenu:Hide_All_Worksheets_Except_Menu
+2024-12-22 17:13:03.71 | Guillaume | APP_v5.H.5.xlsb | modMenu:Hide_All_Worksheets_Except_Menu = '0,3555 secondes'
+
+2024-12-22 17:13:04.66 | Guillaume | APP_v5.H.5.xlsb | modMenu:menuTEC_Click
+2024-12-22 17:13:04.86 | Guillaume | APP_v5.H.5.xlsb | modMenu:menuTEC_Click = '0,3320 secondes'
+
+2024-12-22 17:13:06.91 | Guillaume | APP_v5.H.5.xlsb | modMenu:Hide_All_Worksheets_Except_Menu
+2024-12-22 17:13:07.17 | Guillaume | APP_v5.H.5.xlsb | modMenu:Hide_All_Worksheets_Except_Menu = '0,3984 secondes'
+
+2024-12-22 17:13:12.46 | Guillaume | APP_v5.H.5.xlsb | modMenu:menuFacturation_Click
+2024-12-22 17:13:12.70 | Guillaume | APP_v5.H.5.xlsb | modMenu:menuFacturation_Click = '0,3633 secondes'
+
+2024-12-22 17:13:14.67 | Guillaume | APP_v5.H.5.xlsb | wshMenuFAC:FAC_Confirmation_Click
+2024-12-22 17:13:14.87 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Comptes_Clients_Import_All
+2024-12-22 17:13:16.25 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Comptes_Clients_Import_All = '1,5156 secondes'
+
+2024-12-22 17:13:16.48 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Entête_Import_All
+2024-12-22 17:13:17.66 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Entête_Import_All = '1,3086 secondes'
+
+2024-12-22 17:13:17.87 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Détails_Import_All
+2024-12-22 17:13:19.09 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Détails_Import_All = '1,3672 secondes'
+
+2024-12-22 17:13:19.33 | Guillaume | APP_v5.H.5.xlsb | wshFAC_Confirmation:Worksheet_Activate
+2024-12-22 17:13:19.55 | Guillaume | APP_v5.H.5.xlsb | modImport:TEC_Import_All
+2024-12-22 17:13:20.91 | Guillaume | APP_v5.H.5.xlsb | modImport:TEC_Import_All = '1,5000 secondes'
+
+2024-12-22 17:13:21.12 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Entête_Import_All
+2024-12-22 17:13:22.25 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Entête_Import_All = '1,2656 secondes'
+
+2024-12-22 17:13:22.46 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Détails_Import_All
+2024-12-22 17:13:23.66 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Détails_Import_All = '1,3359 secondes'
+
+2024-12-22 17:13:23.87 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Sommaire_Taux_Import_All
+2024-12-22 17:13:24.97 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Sommaire_Taux_Import_All = '1,2461 secondes'
+
+2024-12-22 17:13:25.20 | Guillaume | APP_v5.H.5.xlsb | modImport:GL_Trans_Import_All
+2024-12-22 17:13:26.48 | Guillaume | APP_v5.H.5.xlsb | modImport:GL_Trans_Import_All = '1,4102 secondes'
+
+2024-12-22 17:13:26.69 | Guillaume | APP_v5.H.5.xlsb | modDev_Utils:SetTabOrder(wshFAC_Confirmation)
+2024-12-22 17:13:26.93 | Guillaume | APP_v5.H.5.xlsb | modDev_Utils:SetTabOrder = '0,3672 secondes'
+
+2024-12-22 17:13:27.13 | Guillaume | APP_v5.H.5.xlsb | wshFAC_Confirmation:NettoyerCellulesEtIconesPDF
+2024-12-22 17:13:27.38 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:MontrerFacturesAConfirmer
+2024-12-22 17:13:27.58 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:ObtenirFactureAConfirmer
+2024-12-22 17:13:27.82 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:ObtenirFactureAConfirmer = '0,3672 secondes'
+
+2024-12-22 17:13:28.02 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:MontrerFacturesAConfirmer = '0,7695 secondes'
+
+2024-12-22 17:13:28.23 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:NettoyerCellulesEtIconesPDF = '1,2227 secondes'
+
+2024-12-22 17:13:28.43 | Guillaume | APP_v5.H.5.xlsb | wshFAC_Confirmation:Worksheet_Activate = '9,2305 secondes'
+
+2024-12-22 17:13:28.64 | Guillaume | APP_v5.H.5.xlsb | wshMenuFAC:FAC_Confirmation_Click = '14,1094 secondes'
+
+2024-12-22 17:13:59.64 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:ObtenirFactureInfos
+2024-12-22 17:13:59.86 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:AfficherInformationsFacture
+2024-12-22 17:14:00.08 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:AfficherFactureFormatPDF = '0,3438 secondes'
+
+2024-12-22 17:14:00.28 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:AfficherPDFetWIPicones
+2024-12-22 17:14:00.66 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:AfficherPDFetWIPicones = '0,5000 secondes'
+
+2024-12-22 17:14:00.88 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:ObtenirSommaireTEC
+2024-12-22 17:14:01.11 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:ObtenirSommaireTEC = '0,3633 secondes'
+
+2024-12-22 17:14:01.31 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:ObtenirSommaireDesTaux
+2024-12-22 17:14:01.59 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:ObtenirSommaireDesTaux = '0,4180 secondes'
+
+2024-12-22 17:14:01.81 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:ObtenirFactureInfos = '2,3008 secondes'
+
+2024-12-22 17:14:04.89 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:ObtenirListeTECFacturés
+2024-12-22 17:14:05.09 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:ObtenirListeTECFacturésFiltreAvancé
+2024-12-22 17:14:05.38 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:ObtenirListeTECFacturésFiltreAvancé = '0,4180 secondes'
+
+2024-12-22 17:14:08.73 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:ObtenirListeTECFacturés = '3,9570 secondes'
+
+2024-12-22 17:17:47.77 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:RetournerMenuFAC
+2024-12-22 17:17:48.00 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:RetournerMenuFAC = '0,3672 secondes'
+
+2024-12-22 17:17:49.36 | Guillaume | APP_v5.H.5.xlsb | modMenu:Hide_All_Worksheets_Except_Menu
+2024-12-22 17:17:49.58 | Guillaume | APP_v5.H.5.xlsb | modMenu:Hide_All_Worksheets_Except_Menu = '0,3438 secondes'
+
+2024-12-22 17:21:05.23 | Guillaume | APP_v5.H.5.xlsb | modMenu:menuFacturation_Click
+2024-12-22 17:21:05.52 | Guillaume | APP_v5.H.5.xlsb | modMenu:menuFacturation_Click = '0,4375 secondes'
+
+2024-12-22 17:21:06.41 | Guillaume | APP_v5.H.5.xlsb | wshMenuFAC:FAC_Confirmation_Click
+2024-12-22 17:21:06.63 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Comptes_Clients_Import_All
+2024-12-22 17:21:07.95 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Comptes_Clients_Import_All = '1,4609 secondes'
+
+2024-12-22 17:21:08.16 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Entête_Import_All
+2024-12-22 17:21:09.36 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Entête_Import_All = '1,3242 secondes'
+
+2024-12-22 17:21:09.57 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Détails_Import_All
+2024-12-22 17:21:10.75 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Détails_Import_All = '1,3125 secondes'
+
+2024-12-22 17:21:10.97 | Guillaume | APP_v5.H.5.xlsb | wshFAC_Confirmation:Worksheet_Activate
+2024-12-22 17:21:11.17 | Guillaume | APP_v5.H.5.xlsb | modImport:TEC_Import_All
+2024-12-22 17:21:12.54 | Guillaume | APP_v5.H.5.xlsb | modImport:TEC_Import_All = '1,5039 secondes'
+
+2024-12-22 17:21:12.75 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Entête_Import_All
+2024-12-22 17:21:13.95 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Entête_Import_All = '1,3320 secondes'
+
+2024-12-22 17:21:14.16 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Détails_Import_All
+2024-12-22 17:21:15.34 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Détails_Import_All = '1,3633 secondes'
+
+2024-12-22 17:21:15.60 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Sommaire_Taux_Import_All
+2024-12-22 17:21:16.66 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Sommaire_Taux_Import_All = '1,1953 secondes'
+
+2024-12-22 17:21:16.86 | Guillaume | APP_v5.H.5.xlsb | modImport:GL_Trans_Import_All
+2024-12-22 17:21:18.12 | Guillaume | APP_v5.H.5.xlsb | modImport:GL_Trans_Import_All = '1,3906 secondes'
+
+2024-12-22 17:21:18.37 | Guillaume | APP_v5.H.5.xlsb | modDev_Utils:SetTabOrder(wshFAC_Confirmation)
+2024-12-22 17:21:18.60 | Guillaume | APP_v5.H.5.xlsb | modDev_Utils:SetTabOrder = '0,3633 secondes'
+
+2024-12-22 17:21:18.81 | Guillaume | APP_v5.H.5.xlsb | wshFAC_Confirmation:NettoyerCellulesEtIconesPDF
+2024-12-22 17:21:19.04 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:MontrerFacturesAConfirmer
+2024-12-22 17:21:19.25 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:ObtenirFactureAConfirmer
+2024-12-22 17:21:19.51 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:ObtenirFactureAConfirmer = '0,3867 secondes'
+
+2024-12-22 17:21:19.71 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:MontrerFacturesAConfirmer = '0,8047 secondes'
+
+2024-12-22 17:21:19.91 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:NettoyerCellulesEtIconesPDF = '1,2344 secondes'
+
+2024-12-22 17:21:20.12 | Guillaume | APP_v5.H.5.xlsb | wshFAC_Confirmation:Worksheet_Activate = '9,2812 secondes'
+
+2024-12-22 17:21:20.37 | Guillaume | APP_v5.H.5.xlsb | wshMenuFAC:FAC_Confirmation_Click = '14,1211 secondes'
+
+2024-12-22 17:21:23.68 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:ObtenirFactureInfos
+2024-12-22 17:21:23.89 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:AfficherInformationsFacture
+2024-12-22 17:21:24.12 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:AfficherFactureFormatPDF = '0,3672 secondes'
+
+2024-12-22 17:21:24.33 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:AfficherPDFetWIPicones
+2024-12-22 17:21:24.67 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:AfficherPDFetWIPicones = '0,4727 secondes'
+
+2024-12-22 17:21:24.92 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:ObtenirSommaireTEC
+2024-12-22 17:21:25.14 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:ObtenirSommaireTEC = '0,3555 secondes'
+
+2024-12-22 17:21:25.35 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:ObtenirSommaireDesTaux
+2024-12-22 17:21:25.57 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:ObtenirSommaireDesTaux = '0,3750 secondes'
+
+2024-12-22 17:21:25.80 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:ObtenirFactureInfos = '2,2539 secondes'
+
+2024-12-22 17:21:26.67 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:RetournerMenuFAC
+2024-12-22 17:21:26.90 | Guillaume | APP_v5.H.5.xlsb | modFAC_Confirmation:RetournerMenuFAC = '0,3633 secondes'
+
+2024-12-22 17:21:28.57 | Guillaume | APP_v5.H.5.xlsb | modMenu:Hide_All_Worksheets_Except_Menu
+2024-12-22 17:21:28.81 | Guillaume | APP_v5.H.5.xlsb | modMenu:Hide_All_Worksheets_Except_Menu = '0,3750 secondes'
+
+2024-12-22 17:21:30.48 | Guillaume | APP_v5.H.5.xlsb | modMenu:menuComptabilite_Click
+2024-12-22 17:21:30.73 | Guillaume | APP_v5.H.5.xlsb | modMenu:menuComptabilite_Click = '0,3789 secondes'
+
+2024-12-22 17:21:31.45 | Guillaume | APP_v5.H.5.xlsb | wshENC_Saisie:Worksheet_Activate
+2024-12-22 17:21:31.66 | Guillaume | APP_v5.H.5.xlsb | modImport:Client_List_Import_All
+2024-12-22 17:21:32.63 | Guillaume | APP_v5.H.5.xlsb | modImport:ResizeTable
+2024-12-22 17:21:32.84 | Guillaume | APP_v5.H.5.xlsb | modImport:ResizeTable = '0,3516 secondes'
+
+2024-12-22 17:21:33.05 | Guillaume | APP_v5.H.5.xlsb | modImport:ApplyFormatting
+2024-12-22 17:21:33.26 | Guillaume | APP_v5.H.5.xlsb | modImport:ApplyFormatting = '0,3438 secondes'
+
+2024-12-22 17:21:33.52 | Guillaume | APP_v5.H.5.xlsb | modImport:Client_List_Import_All = '1,9961 secondes'
+
+2024-12-22 17:21:33.73 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Comptes_Clients_Import_All
+2024-12-22 17:21:34.94 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Comptes_Clients_Import_All = '1,3281 secondes'
+
+2024-12-22 17:21:35.14 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Détails_Import_All
+2024-12-22 17:21:36.35 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Détails_Import_All = '1,3398 secondes'
+
+2024-12-22 17:21:36.55 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Entête_Import_All
+2024-12-22 17:21:37.70 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Entête_Import_All = '1,2969 secondes'
+
+2024-12-22 17:21:37.94 | Guillaume | APP_v5.H.5.xlsb | modImport:ENC_Détails_Import_All
+2024-12-22 17:21:39.05 | Guillaume | APP_v5.H.5.xlsb | modImport:ENC_Détails_Import_All = '1,2578 secondes'
+
+2024-12-22 17:21:39.28 | Guillaume | APP_v5.H.5.xlsb | modImport:ENC_Entête_Import_All
+2024-12-22 17:21:40.42 | Guillaume | APP_v5.H.5.xlsb | modImport:ENC_Entête_Import_All = '1,2773 secondes'
+
+2024-12-22 17:21:40.63 | Guillaume | APP_v5.H.5.xlsb | modImport:GL_Trans_Import_All
+2024-12-22 17:21:41.96 | Guillaume | APP_v5.H.5.xlsb | modImport:GL_Trans_Import_All = '1,4570 secondes'
+
+2024-12-22 17:21:42.17 | Guillaume | APP_v5.H.5.xlsb | modDev_Utils:SetTabOrder(wshENC_Saisie)
+2024-12-22 17:21:42.39 | Guillaume | APP_v5.H.5.xlsb | modDev_Utils:SetTabOrder = '0,3398 secondes'
+
+2024-12-22 17:21:42.59 | Guillaume | APP_v5.H.5.xlsb | modENC_Saisie:ENC_Remove_Check_Boxes
+2024-12-22 17:21:42.82 | Guillaume | APP_v5.H.5.xlsb | modENC_Saisie:ENC_Remove_Check_Boxes = '0,3711 secondes'
+
+2024-12-22 17:21:43.08 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_Complete_Date(22/12/24, 30, 0)
+2024-12-22 17:21:43.32 | Guillaume | APP_v5.H.5.xlsb | modFunctions:Fn_Complete_Date = '0,3750 secondes'
+
+2024-12-22 17:21:43.55 | Guillaume | APP_v5.H.5.xlsb | wshDEB_Saisie:Worksheet_Activate = '12,2305 secondes'
+
+2024-12-22 17:21:44.42 | Guillaume | APP_v5.H.5.xlsb | modENC_Saisie:ENC_Back_To_FAC_Menu
+2024-12-22 17:21:44.62 | Guillaume | APP_v5.H.5.xlsb | modENC_Saisie:ENC_Clear_Cells
+2024-12-22 17:21:44.89 | Guillaume | APP_v5.H.5.xlsb | modENC_Saisie:ENC_Clear_Cells = '0,3945 secondes'
+
+2024-12-22 17:21:45.12 | Guillaume | APP_v5.H.5.xlsb | modENC_Saisie:ENC_Back_To_FAC_Menu = '0,8398 secondes'
+
+2024-12-22 17:21:46.61 | Guillaume | APP_v5.H.5.xlsb | modMenu:Hide_All_Worksheets_Except_Menu
+2024-12-22 17:21:46.86 | Guillaume | APP_v5.H.5.xlsb | modMenu:Hide_All_Worksheets_Except_Menu = '0,3828 secondes'
+
+2024-12-22 17:21:48.38 | Guillaume | APP_v5.H.5.xlsb | modMenu:menuFacturation_Click
+2024-12-22 17:21:48.60 | Guillaume | APP_v5.H.5.xlsb | modMenu:menuFacturation_Click = '0,3477 secondes'
+
+2024-12-22 17:21:51.03 | Guillaume | APP_v5.H.5.xlsb | wshCAR_Liste_Agée:Worksheet_Activate
+2024-12-22 17:21:51.24 | Guillaume | APP_v5.H.5.xlsb | modImport:Client_List_Import_All
+2024-12-22 17:21:52.28 | Guillaume | APP_v5.H.5.xlsb | modImport:ResizeTable
+2024-12-22 17:21:52.48 | Guillaume | APP_v5.H.5.xlsb | modImport:ResizeTable = '0,3633 secondes'
+
+2024-12-22 17:21:52.72 | Guillaume | APP_v5.H.5.xlsb | modImport:ApplyFormatting
+2024-12-22 17:21:52.92 | Guillaume | APP_v5.H.5.xlsb | modImport:ApplyFormatting = '0,3320 secondes'
+
+2024-12-22 17:21:53.18 | Guillaume | APP_v5.H.5.xlsb | modImport:Client_List_Import_All = '2,0742 secondes'
+
+2024-12-22 17:21:53.39 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Entête_Import_All
+2024-12-22 17:21:54.61 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Entête_Import_All = '1,3477 secondes'
+
+2024-12-22 17:21:54.81 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Comptes_Clients_Import_All
+2024-12-22 17:21:55.93 | Guillaume | APP_v5.H.5.xlsb | modImport:FAC_Comptes_Clients_Import_All = '1,2539 secondes'
+
+2024-12-22 17:21:56.15 | Guillaume | APP_v5.H.5.xlsb | modDev_Utils:SetTabOrder(wshCAR_Liste_Agée)
+2024-12-22 17:21:56.43 | Guillaume | APP_v5.H.5.xlsb | modDev_Utils:SetTabOrder = '0,4023 secondes'
+
+2024-12-22 17:21:56.65 | Guillaume | APP_v5.H.5.xlsb | wshCAR_Liste_Agée:Worksheet_Activate = '5,7656 secondes'
+
+2024-12-22 17:22:17.91 | Guillaume | APP_v5.H.5.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange - $D$4
+2024-12-22 17:22:18.20 | Guillaume | APP_v5.H.5.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange = '0,4258 secondes'
+
+2024-12-22 17:22:24.36 | Guillaume | APP_v5.H.5.xlsb | modCAR_Liste_Agée:CAR_CréerListeÂgée
+2024-12-22 17:22:41.83 | Guillaume | APP_v5.H.5.xlsb | modCAR_Liste_Agée:CAR_CréerListeÂgée = '17,6211 secondes'
+
+2024-12-22 17:23:10.82 | Guillaume | APP_v5.H.5.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange - $B$50:$B$101
+2024-12-22 17:23:11.06 | Guillaume | APP_v5.H.5.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange = '0,3789 secondes'
+
+2024-12-22 17:23:52.69 | Guillaume | APP_v5.H.5.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange - $B$77
+2024-12-22 17:23:53.21 | Guillaume | APP_v5.H.5.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange = '0,8438 secondes'
+
+2024-12-22 17:25:16.40 | Guillaume | APP_v5.H.5.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange - $E$50:$E$101
+2024-12-22 17:25:16.68 | Guillaume | APP_v5.H.5.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange = '0,4375 secondes'
+
+2024-12-22 17:26:44.09 | Guillaume | APP_v5.H.5.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange - $C$50:$C$101
+2024-12-22 17:26:44.38 | Guillaume | APP_v5.H.5.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange = '0,4258 secondes'
+
+2024-12-22 17:27:25.55 | Guillaume | APP_v5.H.5.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange - $B$54
+2024-12-22 17:27:25.85 | Guillaume | APP_v5.H.5.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange = '0,4492 secondes'
+
+2024-12-22 17:31:23.88 | Guillaume | APP_v5.H.5.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange - $B$79
+2024-12-22 17:31:24.16 | Guillaume | APP_v5.H.5.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange = '0,4258 secondes'
+
+2024-12-22 17:31:24.41 | Guillaume | APP_v5.H.5.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange - $B$80
+2024-12-22 17:31:24.65 | Guillaume | APP_v5.H.5.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange = '0,3906 secondes'
+
+2024-12-22 17:33:54.76 | Guillaume | APP_v5.H.5.xlsb | modMenu:Hide_All_Worksheets_Except_Menu
+2024-12-22 17:33:55.05 | Guillaume | APP_v5.H.5.xlsb | modMenu:Hide_All_Worksheets_Except_Menu = '0,4570 secondes'
+
+2024-12-22 17:34:13.52 | Guillaume | APP_v5.H.5.xlsb | modMenu:SortirApplicationAprèsSauvegarde
+2024-12-22 17:34:15.07 | Guillaume | APP_v5.H.5.xlsb | modMenu:Delete_User_Active_File
+2024-12-22 17:34:15.54 | Guillaume | APP_v5.H.5.xlsb | modMenu:Delete_User_Active_File = '0,5898 secondes'
+
+2024-12-22 17:34:15.78 | Guillaume | APP_v5.H.5.xlsb | modMenu:SortirApplicationAprèsSauvegarde = '2,3906 secondes'
+
+2024-12-22 17:34:15.98 | Guillaume | APP_v5.H.5.xlsb | ***** Session terminée NORMALEMENT (modMenu:SortirApplicationAprèsSauvegarde) *****
+

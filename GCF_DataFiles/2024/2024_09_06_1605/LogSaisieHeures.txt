@@ -1,0 +1,11 @@
+GuillaumeCharron|2024-09-06 12:54:37|Add|902|GC|06/09/24|104|Groupe Millénium Micro Inc. [Carl Paquin]|courriel directives de remboursement des avances et ajustement de prix de vente|1,00||VRAI
+Annie|2024-09-06 13:00:06|Add|903|AR|2024-06-09|2004|COD10 Agence Code Communications Inc [Pierre Yves Chapdelaine]|Fin d'année juillet 2024|2.00||VRAI
+GuillaumeCharron|2024-09-06 15:11:21|Add|904|GC|06/09/24|1709|Concept P.O.S. Inc. [Mathieu St-Germain]|tel avec vlad sur calcul du prix de vente|0,50||VRAI
+GuillaumeCharron|2024-09-06 15:11:43|Add|905|GC|06/09/24|1793|9063-6580 Québec Inc [Le Lunettier]|transférer à Vlad|0,40||VRAI
+GuillaumeCharron|2024-09-06 15:12:03|Add|906|GC|06/09/24|1739|Techvac Environnement Inc [Julien Michaud]|explication dossier à Vlad|0,50||VRAI
+GuillaumeCharron|2024-09-06 15:12:31|Add|907|GC|06/09/24|1757|Messier & Associé, SENCRL [Alain Bélanger]|suivi infos manquantes|0,40||VRAI
+GuillaumeCharron|2024-09-06 15:12:44|Add|908|GC|06/09/24|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|tel avec vlad du dossier|0,50||VRAI
+GuillaumeCharron|2024-09-06 15:13:00|Add|909|GC|06/09/24|1448|9055-4627 Québec Inc [Guillaume Bruneau-Côté]|tel avec vlad sur le dossier|0,40||VRAI
+Annie|2024-09-06 15:52:39|Add|910|AR|2024-06-09|2004|COD10 Agence Code Communications Inc [Pierre Yves Chapdelaine]|Fichier Excellence|2.00||VRAI
+vgervais|2024-09-06 16:04:30|UPDATE|893|VG|2024-06-09|1759|France Morin CPA|Suivi avant rencontre et rencontre et rencontre + vérifier choix tardif|1,30||VRAI
+vgervais|2024-09-06 16:05:00|UPDATE|884|VG|2024-06-09|5|z_Adiministratif_Autres non chargeables|Suivi de dossier + rencontre avec Robert pour feuille de temps + régler problème feuille de temps + |1,30||FAUX

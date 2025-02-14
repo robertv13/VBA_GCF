@@ -1,0 +1,71 @@
+2024-11-25_14:02:06|Clients_v4.1.xlsm|User|***** Début de session - Workbook_Open *****|||
+2024-11-25_14:02:06|Clients_v4.1.xlsm|User|modMain|CM_Client_List_Import_All||
+2024-11-25_14:02:06|Clients_v4.1.xlsm|User|modMain|CM_Apply_Worksheet_Format||
+2024-11-25_14:02:07|Clients_v4.1.xlsm|User|modMain|CM_Apply_Worksheet_Format (sortie)|Temps écoulé: 0,1367 secondes|1106
+
+2024-11-25_14:02:07|Clients_v4.1.xlsm|User|modMain|CM_Client_List_Import_All (sortie)|Temps écoulé: 0,6953 secondes|
+
+2024-11-25_14:02:07|Clients_v4.1.xlsm|User|ufClientMF|UserForm_Initialize||
+2024-11-25_14:02:07|Clients_v4.1.xlsm|User|modMain|CM_Reset_UserForm||
+2024-11-25_14:02:07|Clients_v4.1.xlsm|User|modMain|CM_Add_SearchColumn||
+2024-11-25_14:02:07|Clients_v4.1.xlsm|User|ufClientMF|cmbSearchColumn_Change||
+2024-11-25_14:02:07|Clients_v4.1.xlsm|User|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0586 secondes|Client_ID
+
+2024-11-25_14:02:07|Clients_v4.1.xlsm|User|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,1562 secondes|
+
+2024-11-25_14:02:07|Clients_v4.1.xlsm|User|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,4453 secondes| Row=1107
+
+2024-11-25_14:02:07|Clients_v4.1.xlsm|User|ufClientMF|UserForm_Initialize (sortie)|Temps écoulé: 0,5430 secondes|
+
+2024-11-25_14:02:12|Clients_v4.1.xlsm|User|ufClientMF|cmbSearchColumn_Change||
+2024-11-25_14:02:12|Clients_v4.1.xlsm|User|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0547 secondes|NomCLientSystème
+
+2024-11-25_14:02:31|Clients_v4.1.xlsm|User|ufClientMF|cmdSearch_Click||
+2024-11-25_14:02:31|Clients_v4.1.xlsm|User|modMain|CM_Build_Données_Recherche||
+2024-11-25_14:02:33|Clients_v4.1.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,8203 secondes|NomCLientSystème=9493-2647 Québec Inc. 0
+
+2024-11-25_14:02:33|Clients_v4.1.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,9375 secondes|
+
+2024-11-25_14:02:39|Clients_v4.1.xlsm|User|ufClientMF|cmbSearchColumn_Change||
+2024-11-25_14:02:39|Clients_v4.1.xlsm|User|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0508 secondes|Client_ID
+
+2024-11-25_14:02:43|Clients_v4.1.xlsm|User|ufClientMF|cmdSearch_Click||
+2024-11-25_14:02:43|Clients_v4.1.xlsm|User|modMain|CM_Build_Données_Recherche||
+2024-11-25_14:02:45|Clients_v4.1.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,6836 secondes|Client_ID=9493-2647 Québec Inc. 0
+
+2024-11-25_14:02:45|Clients_v4.1.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,8086 secondes|
+
+2024-11-25_14:03:50|Clients_v4.1.xlsm|User|modMain|CM_Client_List_Import_All||
+2024-11-25_14:03:50|Clients_v4.1.xlsm|User|modMain|CM_Apply_Worksheet_Format||
+2024-11-25_14:03:50|Clients_v4.1.xlsm|User|modMain|CM_Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0977 secondes|1106
+
+2024-11-25_14:03:50|Clients_v4.1.xlsm|User|modMain|CM_Client_List_Import_All (sortie)|Temps écoulé: 0,5664 secondes|
+
+2024-11-25_14:03:50|Clients_v4.1.xlsm|User|ufClientMF|UserForm_Initialize||
+2024-11-25_14:03:50|Clients_v4.1.xlsm|User|modMain|CM_Reset_UserForm||
+2024-11-25_14:03:50|Clients_v4.1.xlsm|User|modMain|CM_Add_SearchColumn||
+2024-11-25_14:03:50|Clients_v4.1.xlsm|User|ufClientMF|cmbSearchColumn_Change||
+2024-11-25_14:03:50|Clients_v4.1.xlsm|User|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0547 secondes|Client_ID
+
+2024-11-25_14:03:51|Clients_v4.1.xlsm|User|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,1562 secondes|
+
+2024-11-25_14:03:51|Clients_v4.1.xlsm|User|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,2891 secondes| Row=1107
+
+2024-11-25_14:03:51|Clients_v4.1.xlsm|User|ufClientMF|UserForm_Initialize (sortie)|Temps écoulé: 0,3789 secondes|
+
+2024-11-25_14:04:04|Clients_v4.1.xlsm|User|ufClientMF|cmdSearch_Click||
+2024-11-25_14:04:04|Clients_v4.1.xlsm|User|modMain|CM_Build_Données_Recherche||
+2024-11-25_14:04:06|Clients_v4.1.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,5703 secondes|Client_ID=Pierre-Alexandre Bélisle 0
+
+2024-11-25_14:04:06|Clients_v4.1.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,6875 secondes|
+
+2024-11-25_14:04:08|Clients_v4.1.xlsm|User|ufClientMF|cmbSearchColumn_Change||
+2024-11-25_14:04:08|Clients_v4.1.xlsm|User|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0742 secondes|NomCLientSystème
+
+2024-11-25_14:04:11|Clients_v4.1.xlsm|User|ufClientMF|cmdSearch_Click||
+2024-11-25_14:04:11|Clients_v4.1.xlsm|User|modMain|CM_Build_Données_Recherche||
+2024-11-25_14:04:13|Clients_v4.1.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,5195 secondes|NomCLientSystème=Pierre-Alexandre Bélisle 0
+
+2024-11-25_14:04:13|Clients_v4.1.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 1,6172 secondes|
+
+2024-11-25_14:04:17|Clients_v4.1.xlsm|User|***** Fin de session - Workbook_BeforeClose *****|||

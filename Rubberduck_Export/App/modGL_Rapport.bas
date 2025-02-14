@@ -154,7 +154,10 @@ Public Sub Print_Results_From_GL_Trans(compte As String, descGL As String, solde
             ws.Cells(lastRowUsed_AB, 4).Value = wshGL_Trans.Range("S" & i).Value
             ws.Cells(lastRowUsed_AB, 5).Value = wshGL_Trans.Range("P" & i).Value
             ws.Cells(lastRowUsed_AB, 6).Value = wshGL_Trans.Range("V" & i).Value
+            ws.Cells(lastRowUsed_AB, 6).NumberFormat = "###,###,##0.00 $"
             ws.Cells(lastRowUsed_AB, 7).Value = wshGL_Trans.Range("W" & i).Value
+            ws.Cells(lastRowUsed_AB, 7).NumberFormat = "###,###,##0.00 $"
+            
             solde = solde + CCur(wshGL_Trans.Range("V" & i).Value) - CCur(wshGL_Trans.Range("W" & i).Value)
             ws.Cells(lastRowUsed_AB, 8).Value = solde
             
@@ -192,7 +195,9 @@ No_Transaction:
     End With
     
     ws.Range("F" & lastRowUsed_AB).Value = sumDT
+    ws.Range("F" & lastRowUsed_AB).NumberFormat = "###,###,##0.00 $"
     ws.Range("G" & lastRowUsed_AB).Value = sumCT
+    ws.Range("G" & lastRowUsed_AB).NumberFormat = "###,###,##0.00 $"
     
     With ws.Range("A" & saveFirstRow & ":H" & lastRowUsed_AB).Font
         .Name = "Aptos Narrow"

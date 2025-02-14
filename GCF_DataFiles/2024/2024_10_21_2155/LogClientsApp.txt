@@ -1,0 +1,36 @@
+20241021_074651|Clients_v3.0.xlsm|User|***** Début de session - Workbook_Open *****|||
+20241021_074651|Clients_v3.0.xlsm|User|modMain|CM_Client_List_Import_All||
+20241021_074651|Clients_v3.0.xlsm|User|modMain|CM_Apply_Worksheet_Format||
+20241021_074652|Clients_v3.0.xlsm|User|modMain|CM_Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0977 secondes|1101
+20241021_074652|Clients_v3.0.xlsm|User|modMain|CM_Client_List_Import_All (sortie)|Temps écoulé: 0,7754 secondes|
+20241021_074652|Clients_v3.0.xlsm|User|ufClientMF|UserForm_Initialize||
+20241021_074652|Clients_v3.0.xlsm|User|modMain|CM_Reset_UserForm||
+20241021_074652|Clients_v3.0.xlsm|User|modMain|CM_Add_SearchColumn||
+20241021_074652|Clients_v3.0.xlsm|User|ufClientMF|cmbSearchColumn_Change||
+20241021_074652|Clients_v3.0.xlsm|User|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0488 secondes|Client_ID
+20241021_074652|Clients_v3.0.xlsm|User|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,1309 secondes|
+20241021_074652|Clients_v3.0.xlsm|User|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,2461 secondes|1102
+20241021_074652|Clients_v3.0.xlsm|User|ufClientMF|UserForm_Initialize (sortie)|Temps écoulé: 0,3379 secondes|
+20241021_074702|Clients_v3.0.xlsm|User|ufClientMF|cmdSearch_Click||
+20241021_074702|Clients_v3.0.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241021_074704|Clients_v3.0.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 1,8945 secondes|Client_ID:Paré assurances 0
+20241021_074704|Clients_v3.0.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 2,0195 secondes|
+20241021_074706|Clients_v3.0.xlsm|User|ufClientMF|cmbSearchColumn_Change||
+20241021_074706|Clients_v3.0.xlsm|User|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0605 secondes|ClientNom
+20241021_074712|Clients_v3.0.xlsm|User|ufClientMF|cmdSearch_Click||
+20241021_074712|Clients_v3.0.xlsm|User|modMain|CM_Build_Données_Recherche||
+20241021_074713|Clients_v3.0.xlsm|User|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0,1426 secondes|ClientNom:Paré Assurances 1
+20241021_074713|Clients_v3.0.xlsm|User|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0,2402 secondes|
+20241021_074901|Clients_v3.0.xlsm|User|***** Fin de session - Workbook_BeforeClose *****|||
+20241021_154841|Clients_v3.0.xlsm|vgervais|modMain|CM_Client_List_Import_All||
+20241021_154841|Clients_v3.0.xlsm|vgervais|modMain|CM_Apply_Worksheet_Format||
+20241021_154841|Clients_v3.0.xlsm|vgervais|modMain|CM_Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0664 secondes|1101
+20241021_154841|Clients_v3.0.xlsm|vgervais|modMain|CM_Client_List_Import_All (sortie)|Temps écoulé: 0,4023 secondes|
+20241021_154841|Clients_v3.0.xlsm|vgervais|ufClientMF|UserForm_Initialize||
+20241021_154841|Clients_v3.0.xlsm|vgervais|modMain|CM_Reset_UserForm||
+20241021_154841|Clients_v3.0.xlsm|vgervais|modMain|CM_Add_SearchColumn||
+20241021_154842|Clients_v3.0.xlsm|vgervais|ufClientMF|cmbSearchColumn_Change||
+20241021_154842|Clients_v3.0.xlsm|vgervais|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0312 secondes|Client_ID
+20241021_154842|Clients_v3.0.xlsm|vgervais|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,0898 secondes|
+20241021_154842|Clients_v3.0.xlsm|vgervais|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,1641 secondes|1102
+20241021_154842|Clients_v3.0.xlsm|vgervais|ufClientMF|UserForm_Initialize (sortie)|Temps écoulé: 0,2266 secondes|

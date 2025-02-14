@@ -511,19 +511,19 @@ Function Fn_Get_GL_Account_Balance(glCode As String, dateSolde As Date) As Doubl
 
 End Function
 
-Function Fn_Get_GL_Trans_Total(glCode As String, dateSolde As Date) As Double '2025-02-07 @ 13:46
+Function Fn_Get_GL_Month_Trans_Total(glCode As String, dateFinMois As Date) As Double '2025-02-07 @ 13:46
     
-    Fn_Get_GL_Trans_Total = 0
+    Fn_Get_GL_Month_Trans_Total = 0
     
     Dim dateDebutMois As Date
-    dateDebutMois = DateSerial(year(dateSolde), month(dateSolde), 1)
+    dateDebutMois = DateSerial(year(dateFinMois), month(dateFinMois), 1)
     
     'AdvancedFilter GL_Trans with FromDate to ToDate, returns rngResult
     Dim rngResult As Range
-    Call GL_Get_Account_Trans_AF(glCode, dateDebutMois, dateSolde, rngResult)
+    Call GL_Get_Account_Trans_AF(glCode, dateDebutMois, dateFinMois, rngResult)
     
     'Méthode plus rapide pour obtenir une somme
-    Fn_Get_GL_Trans_Total = Application.WorksheetFunction.Sum(rngResult.Columns(7)) _
+    Fn_Get_GL_Month_Trans_Total = Application.WorksheetFunction.Sum(rngResult.Columns(7)) _
                                            - Application.WorksheetFunction.Sum(rngResult.Columns(8))
 
 End Function
@@ -1759,14 +1759,13 @@ End Function
 
 Function ObtenirNoGlIndicateur(ByVal indic As Variant) As String
 
-    'Plage où sont situés les liens (indicateur/no Gl)
+    'Plage où sont situés les liens (indicateur/no de GL)
     Dim plage As Range
     Set plage = wshAdmin.Range("D44:F60")
     
     'Parcourir chaque cellule dans la première colonne de la plage
     Dim cellule As Range
     For Each cellule In plage.Columns(1).Cells
-        Debug.Print cellule.Value
         If cellule.Value = indic Then
             'Retourner la valeur de la troisième colonne pour la ligne correspondante
             ObtenirNoGlIndicateur = cellule.offset(0, 1).Value

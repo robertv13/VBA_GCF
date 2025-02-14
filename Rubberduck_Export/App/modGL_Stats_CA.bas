@@ -30,20 +30,27 @@ Sub Actualiser_Stats_CA()
     Dim moisFinAnnéeFinancière As Integer
     moisFinAnnéeFinancière = wshAdmin.Range("MoisFinAnnéeFinancière").Value
     
-    'Mémoriser les colonnes pour chacun des 12 mois de l'année financière
+    'Mémoriser les colonnes de la feuille pour chacun des 12 mois de l'année financière
     Dim colMois(1 To 12, 1 To 2) As String
-    Dim m As Integer, aaf As Integer, maf As Integer, col As Integer
-    aaf = ws.Range("C9").Value - 1
+    Dim annee As Integer, anneeMoisDebutAF As Integer, anneeMoisFinAF As Integer
+    
+    Dim m As Integer, noMois As Integer, col As Integer
+    anneeMoisDebutAF = ws.Range("C9").Value - 1
+    anneeMoisFinAF = ws.Range("C9").Value
+    'Le premier mois de l'année financière est en colonne 4
     col = 4
     For m = 1 To 12
-        maf = m + moisFinAnnéeFinancière
-        If maf > 12 Then
-            maf = maf - 12
-            aaf = aaf + 1
+        noMois = m + moisFinAnnéeFinancière
+        If noMois <= 12 Then
+            annee = anneeMoisDebutAF
+        Else
+            annee = anneeMoisFinAF
+            noMois = noMois - 12
         End If
         colMois(m, 1) = col
-        colMois(m, 2) = Format$(aaf, "0000") & "-" & Format$(maf, "00")
-        Debug.Print m, col, Format$(aaf, "0000") & "-" & Format$(maf, "00"), colMois(m, 2)
+        colMois(m, 2) = Format$(annee, "0000") & "-" & Format$(noMois, "00") & "-" & _
+                Format$(day(DateSerial(annee, noMois + 1, 0)), "00")
+        Debug.Print m, noMois, annee, colMois(m, 2)
         col = col + 1
     Next m
     
@@ -52,10 +59,10 @@ Sub Actualiser_Stats_CA()
     Dim r As Integer
     For m = 1 To 12
         col = colMois(m, 1)
-        dateFinMois = DateSerial(year(colMois(m, 2)), month(colMois(m, 2)) + 1, 0)
+        dateFinMois = colMois(m, 2)
         revenus = 0
         For r = 1 To UBound(glREV, 1)
-            revenus = revenus + Fn_Get_GL_Trans_Total(glREV(r), dateFinMois)
+            revenus = revenus - Fn_Get_GL_Month_Trans_Total(glREV(r), dateFinMois)
         Next r
         Debug.Print m, col, dateFinMois, revenus
         ws.Cells(9, col).Value = revenus

@@ -1,0 +1,25 @@
+GuillaumeCharron|2024-09-02 16:15:18|Add|801|GC|02-09-24|500|Succession Michel Gingras [Éric Gingras (Mécatec D.M. Inc.)]|répondre aux questions de éric courriel|0,50||VRAI
+GuillaumeCharron|2024-09-02 16:32:14|Update|801|GC|02-09-24|500|Succession Michel Gingras [Éric Gingras (Mécatec D.M. Inc.)]|répondre aux questions de éric courriel|0,49||VRAI
+GuillaumeCharron|2024-09-02 17:56:07|Update|801|GC|02-09-24|500|Succession Michel Gingras [Éric Gingras (Mécatec D.M. Inc.)]|répondre aux questions de éric courriel|0,75||VRAI
+GuillaumeCharron|2024-09-03 05:42:22|Add|802|GC|03-09-24|1013d|137888 Canada Inc. [Martine Lachance]|analyse des acomptes provisonnels à verser|0,50||VRAI
+GuillaumeCharron|2024-09-03 06:20:21|Add|803|GC|03-09-24|1798|Mylène Lapierre CPA Inc.|réception de réponses et répondre interrogations|0,50||VRAI
+GuillaumeCharron|2024-09-03 06:35:07|Add|804|GC|03-09-24|1779|9098-2885 Québec Inc. [Denis Bisson]|réception d'informations et courriels|0,75||VRAI
+vgervais|2024-09-03 08:36:49|Add|805|VG|2024-09-03|5|z_Adiministratif_Autres non chargeables|Suivis des divers courriels |0,60||VRAI
+vgervais|2024-09-03 08:37:23|Add|806|VG|2024-09-03|5|z_Adiministratif_Autres non chargeables|Suivis des divers courriels|0,60||FAUX
+vgervais|2024-09-03 08:57:10|Add|807|VG|2024-03-09|5|z_Adiministratif_Autres non chargeables|Suivis + Autres|0,60||VRAI
+GuillaumeCharron|2024-09-03 09:54:23|Add|808|GC|03-09-24|1793|9063-6580 Québec Inc [Le Lunettier]|réception des livres des minutes|0,40||VRAI
+GuillaumeCharron|2024-09-03 09:54:40|Add|809|GC|03-09-24|1546|Publipage Inc. [Mélissa Côté]|réception certificat de fusion|0,40||VRAI
+GuillaumeCharron|2024-09-03 09:58:12|Add|810|GC|03-09-24|1696|Photographie Benoit Blain Inc [Kelly Cochelin]|réception de EF de 9198 et validation de soldes|0,40||VRAI
+vgervais|2024-09-03 09:58:51|Add|811|VG|2024-03-09|1744|Centre Canin Laka Inc. [École du Bar] [Nicolas Desflammes]|Mise à jour mémorandum|0,80||VRAI
+vgervais|2024-09-03 10:46:48|Update|811|VG|2024-09-03|1744|Centre Canin Laka Inc. [École du Bar] [Nicolas Desflammes]|Mise à jour mémorandum|0,90||VRAI
+vgervais|2024-09-03 10:47:30|Update|807|VG|2024-09-03|5|z_Adiministratif_Autres non chargeables|Suivis + Autres + lecture mise à jour|0,90||VRAI
+vgervais|2024-09-03 10:52:28|Add|812|VG|2024-09-03|1759|France Morin CPA|Ramonage 4s |0,40||VRAI
+vgervais|2024-09-03 10:52:38|Update|807|VG|2024-09-03|5|z_Adiministratif_Autres non chargeables|Suivis + Autres + lecture mise à jour|0,90||FAUX
+vgervais|2024-09-03 10:53:18|Add|813|VG|2024-09-03|1759|France Morin CPA|Ramonage 4s (suivi révision des déclarations)|0,50||VRAI
+vgervais|2024-09-03 10:57:52|Add|814|VG|2024-09-03|1759|France Morin CPA|Ramonages |0,50||VRAI
+GuillaumeCharron|2024-09-03 12:57:39|Add|815|GC|03-09-24|1455|8802742 Canada Inc. [Concept Convoyeur Debien Inc.] [Mathieu Debien]|préparation à la rencontre et closing + déplacement|3,50||VRAI
+GuillaumeCharron|2024-09-03 14:02:39|Add|816|GC|03-09-24|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|réception de livre des minutes et courriels|0,75||VRAI
+GuillaumeCharron|2024-09-03 14:04:11|Add|817|GC|03-09-24|1624|Gestion Proped Inc. [Chaussures Villeneuves] [Louis Villeneuve]|réception certificat de modification|0,40||VRAI
+User|2024-09-03 14:23:20|Add|818|ML|2024-09-03|5|z_Adiministratif_Autres non chargeables|Montage de la stratégie pour obtenir les approbations des clients sur les T1 |1,75||VRAI
+GuillaumeCharron|2024-09-03 14:29:17|Add|819|GC|03-09-24|1013g|9199-5308 Québec Inc [Benoit Alary]|tel avec benoit sur la plan financier|0,40||VRAI
+Annie|2024-09-03 14:31:13|Add|820|AR|2024-09-03|2032|MOR11 Morin, Elliott Associés Ltée [Travis Budd]|Fichier Excellence et rapport de gestion d'août|2.25||VRAI

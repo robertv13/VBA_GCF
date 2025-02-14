@@ -1,0 +1,2060 @@
+User|20240924_133849|Clients_v2.5.xlsm|***** Début de session - Workbook_Open *****|||
+User|20240924_133849|Clients_v2.5.xlsm|modMain|CM_Client_List_Import_All||
+User|20240924_133850|Clients_v2.5.xlsm|modMain|CM_Apply_Worksheet_Format||
+User|20240924_133851|Clients_v2.5.xlsm|modMain|CM_Apply_Worksheet_Format (sortie)|Temps écoulé: 0,1562 secondes|1145
+User|20240924_133851|Clients_v2.5.xlsm|modMain|CM_Client_List_Import_All (sortie)|Temps écoulé: 1,2695 secondes|
+User|20240924_133851|Clients_v2.5.xlsm|ufClientMF|UserForm_Initialize||
+User|20240924_133851|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm||
+User|20240924_133851|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn||
+User|20240924_133851|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_133851|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1055 secondes|Client_ID
+User|20240924_133851|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,2812 secondes|
+User|20240924_133852|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,6094 secondes|1146
+User|20240924_133852|Clients_v2.5.xlsm|ufClientMF|UserForm_Initialize (sortie)|Temps écoulé: 0,7852 secondes|
+User|20240924_134415|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134415|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1406 secondes|
+User|20240924_134415|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_134415|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_134415|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_134415|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_134415|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_134415|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_134416|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,5156 secondes|Usinage de Précision JMR Inc. [David Brabant]
+User|20240924_134416|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,6992 secondes|
+User|20240924_134715|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134715|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1484 secondes|
+User|20240924_134715|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_134715|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_134715|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_134715|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_134716|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_134716|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_134716|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,5039 secondes|Serge Michaud Électricien Inc. [Serge Michaud]
+User|20240924_134716|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,6953 secondes|
+User|20240924_134717|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_134717|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_134717|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_134717|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_134717|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_134717|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_134718|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,4844 secondes|Serge Michaud Électricien Inc. [Serge Michaud]
+User|20240924_134718|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,6875 secondes|
+User|20240924_134904|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit||
+User|20240924_134905|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,1445 secondes|9455-3302 Québec Inc. [Serge Michaud Électricien]
+User|20240924_134906|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click||
+User|20240924_134906|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries||
+User|20240924_134906|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_134906|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields||
+User|20240924_134906|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_134908|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240924_134908|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist|checkPoint|Vrai
+User|20240924_134908|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2227 secondes|
+User|20240924_134908|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée||UPDATE
+User|20240924_134913|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée|checkPoint|DDM (0.0.0.3)
+User|20240924_134913|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 4,6367 secondes|UPDATE 1615
+User|20240924_134913|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée||
+User|20240924_134913|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134913|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_134914|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134914|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0977 secondes|
+User|20240924_134914|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134914|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_134914|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134914|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_134914|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134914|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_134914|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134914|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_134915|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134915|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_134915|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134915|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_134915|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134915|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_134915|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134915|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_134915|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134915|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_134916|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134916|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_134916|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134916|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_134916|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134916|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1016 secondes|
+User|20240924_134916|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134916|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_134916|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134917|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_134917|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134917|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_134917|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134917|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1914 secondes|
+User|20240924_134917|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134917|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0977 secondes|
+User|20240924_134917|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134917|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_134918|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134918|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_134918|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134918|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1016 secondes|
+User|20240924_134918|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134918|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1016 secondes|
+User|20240924_134918|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134918|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_134918|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134918|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1406 secondes|
+User|20240924_134919|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134919|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_134919|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134919|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_134919|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134919|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1484 secondes|
+User|20240924_134919|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134919|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_134920|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134920|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_134920|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 6,5625 secondes|UPDATE 1615
+User|20240924_134920|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm||
+User|20240924_134920|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn||
+User|20240924_134920|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_134920|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_134920|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_134920|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1094 secondes|Client_ID
+User|20240924_134920|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,4922 secondes|
+User|20240924_134921|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134921|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_134921|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,9453 secondes|1146
+User|20240924_134921|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 14,8555 secondes|6
+User|20240924_134957|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_134957|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1445 secondes|
+User|20240924_134957|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_134958|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_134958|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_134958|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_134958|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_134958|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_134958|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,5391 secondes|Usinage de Précision JMR Inc. [David Brabant]
+User|20240924_134958|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7383 secondes|
+User|20240924_135022|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit||
+User|20240924_135022|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,1328 secondes|Usinage de Précision J M R Inc. [David Brabant]
+User|20240924_135022|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click||
+User|20240924_135022|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries||
+User|20240924_135023|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1445 secondes|
+User|20240924_135023|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields||
+User|20240924_135023|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_135024|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240924_135024|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist|checkPoint|Vrai
+User|20240924_135025|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2461 secondes|
+User|20240924_135025|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée||UPDATE
+User|20240924_135029|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée|checkPoint|DDM (0.0.0.3)
+User|20240924_135029|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 4,8516 secondes|UPDATE 1441
+User|20240924_135030|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée||
+User|20240924_135030|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135030|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_135030|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135030|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_135030|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135030|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_135030|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135030|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1367 secondes|
+User|20240924_135031|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135031|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_135031|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135031|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1367 secondes|
+User|20240924_135031|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135031|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_135031|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135031|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1523 secondes|
+User|20240924_135031|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135032|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_135032|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135032|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1328 secondes|
+User|20240924_135032|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135032|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_135032|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135032|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_135032|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135032|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_135033|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135033|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_135033|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135033|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1367 secondes|
+User|20240924_135033|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135033|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_135033|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135033|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_135034|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135034|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_135034|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135034|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_135034|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135034|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_135034|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135034|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_135034|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135034|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_135035|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135035|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_135035|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135035|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_135035|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135035|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_135035|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135035|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_135035|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135036|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_135036|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135036|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_135036|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135036|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_135036|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135036|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_135036|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 6,7461 secondes|UPDATE 1441
+User|20240924_135036|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm||
+User|20240924_135037|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn||
+User|20240924_135037|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_135037|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1016 secondes|
+User|20240924_135037|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_135037|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1172 secondes|Client_ID
+User|20240924_135037|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,5039 secondes|
+User|20240924_135037|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135037|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_135037|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,9609 secondes|1146
+User|20240924_135037|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 15,1641 secondes|6
+User|20240924_135120|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135120|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1484 secondes|
+User|20240924_135120|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_135120|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_135121|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_135121|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_135121|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_135121|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_135121|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,4883 secondes|Sécure Auto Plus Inc. [Richard JR Loiseau]
+User|20240924_135121|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,6719 secondes|
+User|20240924_135333|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit||
+User|20240924_135333|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,1562 secondes|Sécurauto-Plus Inc. [Richard JR Loiseau]
+User|20240924_135333|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click||
+User|20240924_135333|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries||
+User|20240924_135333|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_135333|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields||
+User|20240924_135333|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_135335|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240924_135335|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist|checkPoint|Vrai
+User|20240924_135335|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2617 secondes|
+User|20240924_135335|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée||UPDATE
+User|20240924_135339|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée|checkPoint|DDM (0.0.0.1)
+User|20240924_135340|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 4,8477 secondes|UPDATE 1700
+User|20240924_135340|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée||
+User|20240924_135340|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135340|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_135340|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135341|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1328 secondes|
+User|20240924_135341|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135341|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_135341|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135341|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_135341|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135341|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_135341|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135341|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_135342|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135342|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_135342|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135342|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1016 secondes|
+User|20240924_135342|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135342|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_135342|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135342|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_135342|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135342|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_135343|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135343|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1523 secondes|
+User|20240924_135343|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135343|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_135343|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135343|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_135343|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135343|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_135343|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135344|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_135344|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135344|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_135344|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135344|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_135344|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135344|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_135344|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135344|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_135344|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135345|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_135345|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135345|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1445 secondes|
+User|20240924_135345|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135345|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_135345|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135345|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1016 secondes|
+User|20240924_135345|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135345|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_135346|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135346|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_135346|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135346|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1016 secondes|
+User|20240924_135346|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135346|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_135346|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135346|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_135346|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135346|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_135347|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 6,4609 secondes|UPDATE 1700
+User|20240924_135347|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm||
+User|20240924_135347|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn||
+User|20240924_135347|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_135347|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_135347|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_135347|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1250 secondes|Client_ID
+User|20240924_135347|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,5156 secondes|
+User|20240924_135347|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_135348|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_135348|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 1,0039 secondes|1146
+User|20240924_135348|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 14,7812 secondes|6
+User|20240924_135439|Clients_v2.5.xlsm|***** Fin de session - Workbook_BeforeClose *****|||
+User|20240924_144046|Clients_v2.5.xlsm|***** Début de session - Workbook_Open *****|||
+User|20240924_144046|Clients_v2.5.xlsm|modMain|CM_Client_List_Import_All||
+User|20240924_144047|Clients_v2.5.xlsm|modMain|CM_Apply_Worksheet_Format||
+User|20240924_144047|Clients_v2.5.xlsm|modMain|CM_Apply_Worksheet_Format (sortie)|Temps écoulé: 0,1719 secondes|1145
+User|20240924_144047|Clients_v2.5.xlsm|modMain|CM_Client_List_Import_All (sortie)|Temps écoulé: 1,2266 secondes|
+User|20240924_144047|Clients_v2.5.xlsm|ufClientMF|UserForm_Initialize||
+User|20240924_144047|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm||
+User|20240924_144047|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn||
+User|20240924_144048|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_144048|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1055 secondes|Client_ID
+User|20240924_144048|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,3086 secondes|
+User|20240924_144048|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,6211 secondes|1146
+User|20240924_144048|Clients_v2.5.xlsm|ufClientMF|UserForm_Initialize (sortie)|Temps écoulé: 0,8047 secondes|
+User|20240924_144057|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144058|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1836 secondes|
+User|20240924_144058|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_144058|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_144058|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_144058|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1328 secondes|
+User|20240924_144058|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_144058|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_144058|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,5430 secondes|Lacroix AV Inc. [Marc Lacroix]
+User|20240924_144058|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7422 secondes|
+User|20240924_144203|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit||
+User|20240924_144203|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,1484 secondes|Lacroix Audiovisuel Inc. [Marc Lacroix]
+User|20240924_144203|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click||
+User|20240924_144203|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries||
+User|20240924_144203|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1367 secondes|
+User|20240924_144203|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields||
+User|20240924_144203|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_144206|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240924_144206|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist|checkPoint|Vrai
+User|20240924_144206|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2461 secondes|
+User|20240924_144206|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée||UPDATE
+User|20240924_144210|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée|checkPoint|DDM (0.0.0.1)
+User|20240924_144210|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 4,4258 secondes|UPDATE 1701
+User|20240924_144211|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée||
+User|20240924_144211|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144211|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_144211|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144211|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1328 secondes|
+User|20240924_144211|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144211|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_144211|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144212|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_144212|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144212|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0977 secondes|
+User|20240924_144212|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144212|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1016 secondes|
+User|20240924_144212|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144212|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1016 secondes|
+User|20240924_144212|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144212|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_144212|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144212|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_144213|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144213|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_144213|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144213|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_144213|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144213|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_144213|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144213|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_144213|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144213|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1016 secondes|
+User|20240924_144214|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144214|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_144214|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144214|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_144214|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144214|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1328 secondes|
+User|20240924_144214|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144214|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_144215|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144215|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_144215|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144215|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_144215|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144215|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_144215|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144215|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_144215|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144215|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_144216|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144216|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_144216|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144216|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_144216|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144216|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1016 secondes|
+User|20240924_144216|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144216|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1016 secondes|
+User|20240924_144216|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144217|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_144217|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144217|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_144217|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144217|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_144217|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 6,5078 secondes|UPDATE 1701
+User|20240924_144217|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm||
+User|20240924_144217|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn||
+User|20240924_144217|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_144217|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_144218|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_144218|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1133 secondes|Client_ID
+User|20240924_144218|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,5000 secondes|
+User|20240924_144218|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144218|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_144218|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,9141 secondes|1146
+User|20240924_144218|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 15,3281 secondes|6
+User|20240924_144429|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_144429|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1445 secondes|
+User|20240924_144429|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_144429|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_144429|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_144429|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_144430|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_144430|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_144430|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,5312 secondes|TI Consultpro Inc. [Daniel Roux]
+User|20240924_144430|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7383 secondes|
+User|20240924_145011|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145011|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1719 secondes|
+User|20240924_145012|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_145012|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_145012|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_145012|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_145012|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_145012|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_145012|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,5039 secondes|Construction Chisolm et Fils Inc. [Bernard Chisolm]
+User|20240924_145012|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7031 secondes|
+User|20240924_145244|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145245|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,2578 secondes|
+User|20240924_145245|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_145245|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_145245|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_145245|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_145245|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_145245|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0977 secondes|
+User|20240924_145245|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,4883 secondes|LC Combustion Inc. [Christian Laroche]
+User|20240924_145245|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,6719 secondes|
+User|20240924_145359|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit||
+User|20240924_145359|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,1445 secondes|L C Combustion Inc. [Christian Laroche]
+User|20240924_145359|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click||
+User|20240924_145359|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries||
+User|20240924_145359|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_145359|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields||
+User|20240924_145359|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_145401|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240924_145401|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist|checkPoint|Vrai
+User|20240924_145401|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2539 secondes|
+User|20240924_145401|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée||UPDATE
+User|20240924_145406|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée|checkPoint|DDM (0.0.0.3)
+User|20240924_145406|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 4,9141 secondes|UPDATE 1771
+User|20240924_145406|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée||
+User|20240924_145406|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145406|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_145407|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145407|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_145407|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145407|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_145407|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145407|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_145407|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145407|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1016 secondes|
+User|20240924_145407|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145408|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_145408|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145408|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_145408|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145408|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_145408|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145408|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_145408|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145408|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_145409|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145409|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,2188 secondes|
+User|20240924_145409|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145409|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1016 secondes|
+User|20240924_145409|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145409|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_145409|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145409|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1016 secondes|
+User|20240924_145409|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145410|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0977 secondes|
+User|20240924_145410|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145410|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_145410|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145410|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_145410|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145410|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_145410|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145410|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_145410|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145411|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_145411|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145411|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1016 secondes|
+User|20240924_145411|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145411|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1016 secondes|
+User|20240924_145411|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145411|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_145411|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145411|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_145412|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145412|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_145412|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145412|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_145412|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145412|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_145412|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145412|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_145412|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145412|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_145413|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145413|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1016 secondes|
+User|20240924_145413|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 6,5234 secondes|UPDATE 1771
+User|20240924_145413|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm||
+User|20240924_145413|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn||
+User|20240924_145413|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_145413|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_145413|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_145413|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1094 secondes|Client_ID
+User|20240924_145414|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,5273 secondes|
+User|20240924_145414|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145414|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_145414|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,9375 secondes|1146
+User|20240924_145414|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 15,1953 secondes|6
+User|20240924_145428|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145428|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1328 secondes|
+User|20240924_145429|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_145429|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_145429|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_145429|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_145430|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_145430|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1016 secondes|
+User|20240924_145430|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,4766 secondes|Sans-çi Sans-ça Traiteurs [Isabelle Dubois]
+User|20240924_145430|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,6641 secondes|
+User|20240924_145441|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit||
+User|20240924_145441|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,1484 secondes|Sans-çi Sans-ça Traiteurs [Isabelle Dubois]
+User|20240924_145441|Clients_v2.5.xlsm|ufClientMF|cmdDelete_Click||
+User|20240924_145445|Clients_v2.5.xlsm|ufClientMF|cmdDelete_Click (sortie)|Temps écoulé: 4,4141 secondes|
+User|20240924_145545|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145545|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1562 secondes|
+User|20240924_145545|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_145545|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_145545|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_145546|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1367 secondes|
+User|20240924_145546|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_145546|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_145546|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,5547 secondes|9054-7555 Québec Inc. [Mikael Dallaire] [Catherine Blanchette]
+User|20240924_145546|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7812 secondes|
+User|20240924_145632|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit||
+User|20240924_145632|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,1406 secondes|9054-7555 Québec Inc. [Dissoute]
+User|20240924_145633|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click||
+User|20240924_145633|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries||
+User|20240924_145638|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 5,6055 secondes|
+User|20240924_145638|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 5,8320 secondes|
+User|20240924_145646|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click||
+User|20240924_145646|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries||
+User|20240924_145657|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 11,6445 secondes|
+User|20240924_145658|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields||
+User|20240924_145658|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_145659|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240924_145700|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist|checkPoint|Vrai
+User|20240924_145700|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2383 secondes|
+User|20240924_145700|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée||UPDATE
+User|20240924_145704|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée|checkPoint|DDM (0.0.0.1)
+User|20240924_145705|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 4,9102 secondes|UPDATE 1023
+User|20240924_145705|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée||
+User|20240924_145705|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145705|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_145705|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145705|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1328 secondes|
+User|20240924_145705|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145705|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_145706|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145706|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_145706|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145706|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_145706|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145706|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_145706|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145706|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_145706|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145707|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_145707|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145707|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_145707|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145707|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_145707|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145707|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_145707|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145707|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_145708|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145708|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_145708|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145708|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_145708|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145708|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_145708|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145708|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_145708|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145708|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_145709|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145709|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_145709|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145709|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_145709|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145709|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_145709|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145709|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_145710|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145710|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1328 secondes|
+User|20240924_145710|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145710|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_145710|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145710|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_145710|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145710|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_145710|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145710|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_145711|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145711|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_145711|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145711|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1016 secondes|
+User|20240924_145711|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145711|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_145711|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145711|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_145711|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 6,5859 secondes|UPDATE 1023
+User|20240924_145711|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm||
+User|20240924_145712|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn||
+User|20240924_145712|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_145712|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_145712|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_145712|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1172 secondes|Client_ID
+User|20240924_145712|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,5430 secondes|
+User|20240924_145712|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145712|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_145712|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,9648 secondes|1146
+User|20240924_145713|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 26,8320 secondes|6
+User|20240924_145718|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145718|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_145718|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_145718|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_145718|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_145718|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_145718|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_145718|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_145718|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,5625 secondes|9157-9623 Québec Inc. [Café Morgane] [François Prud'homme]
+User|20240924_145719|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7734 secondes|
+User|20240924_145733|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit||
+User|20240924_145733|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,1367 secondes|9157-9623 Québec Inc. [Café Morgane]
+User|20240924_145733|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click||
+User|20240924_145733|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries||
+User|20240924_145733|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1328 secondes|
+User|20240924_145733|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields||
+User|20240924_145733|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_145735|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240924_145735|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist|checkPoint|Vrai
+User|20240924_145735|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2461 secondes|
+User|20240924_145735|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée||UPDATE
+User|20240924_145739|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée|checkPoint|DDM (0.0.0.2)
+User|20240924_145740|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 4,8477 secondes|UPDATE 170
+User|20240924_145740|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée||
+User|20240924_145740|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145740|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_145740|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145740|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_145740|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145740|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_145741|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145741|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_145741|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145741|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_145741|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145741|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_145741|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145741|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_145741|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145741|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1406 secondes|
+User|20240924_145742|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145742|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_145742|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145742|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_145742|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145742|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_145742|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145742|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_145742|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145743|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_145743|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145743|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_145743|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145743|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_145743|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145743|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_145743|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145743|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_145744|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145744|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,2109 secondes|
+User|20240924_145744|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145744|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_145744|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145744|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_145744|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145744|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_145745|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145745|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_145745|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145745|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_145745|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145745|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_145745|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145745|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_145745|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145746|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_145746|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145746|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_145746|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145746|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_145746|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145746|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1523 secondes|
+User|20240924_145746|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145746|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_145747|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 6,8125 secondes|UPDATE 170
+User|20240924_145747|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm||
+User|20240924_145747|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn||
+User|20240924_145747|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_145747|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_145747|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_145747|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1367 secondes|Client_ID
+User|20240924_145747|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,5586 secondes|
+User|20240924_145747|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145748|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_145748|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 1,0117 secondes|1146
+User|20240924_145748|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 15,0820 secondes|6
+User|20240924_145803|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145803|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1523 secondes|
+User|20240924_145803|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_145804|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_145804|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_145804|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1328 secondes|
+User|20240924_145804|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_145804|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_145804|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,5352 secondes|Les Immeubles Vito Randazzo Inc. [Rita Randazzo]
+User|20240924_145804|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7578 secondes|
+User|20240924_145813|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit||
+User|20240924_145813|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,1133 secondes|Les Immeubles Vito Randazzo Inc. [Dissoute]
+User|20240924_145813|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click||
+User|20240924_145813|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries||
+User|20240924_145813|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_145814|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields||
+User|20240924_145814|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_145815|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240924_145816|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist|checkPoint|Vrai
+User|20240924_145816|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2305 secondes|
+User|20240924_145816|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée||UPDATE
+User|20240924_145820|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée|checkPoint|DDM (0.0.0.3)
+User|20240924_145821|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 4,9961 secondes|UPDATE 1196
+User|20240924_145821|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée||
+User|20240924_145821|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145821|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_145821|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145821|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_145821|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145822|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1016 secondes|
+User|20240924_145822|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145822|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_145822|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145822|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_145822|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145822|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_145822|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145822|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_145823|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145823|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_145823|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145823|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_145823|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145823|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_145823|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145823|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_145823|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145824|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_145824|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145824|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_145824|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145824|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_145824|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145824|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,2188 secondes|
+User|20240924_145824|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145824|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_145825|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145825|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_145825|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145825|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_145825|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145825|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_145825|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145825|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_145825|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145825|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_145826|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145826|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_145826|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145826|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_145826|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145826|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_145826|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145826|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_145826|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145827|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_145827|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145827|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1484 secondes|
+User|20240924_145827|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145827|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_145827|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145827|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_145827|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145828|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_145828|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 6,7344 secondes|UPDATE 1196
+User|20240924_145828|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm||
+User|20240924_145828|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn||
+User|20240924_145828|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_145828|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_145828|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_145828|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1133 secondes|Client_ID
+User|20240924_145828|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,5430 secondes|
+User|20240924_145828|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145829|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_145829|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,9805 secondes|1146
+User|20240924_145829|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 15,5625 secondes|6
+User|20240924_145843|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_145844|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1523 secondes|
+User|20240924_145844|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_145844|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_145844|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_145844|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_145844|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_145844|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_145844|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,5078 secondes|Groupe Financier Douville et Ass. Inc. [Éric Douville]
+User|20240924_145844|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,6992 secondes|
+User|20240924_145852|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit||
+User|20240924_145852|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,1172 secondes|Groupe Financier Douville et Ass. Inc. [Éric Douville]
+User|20240924_145852|Clients_v2.5.xlsm|ufClientMF|cmdDelete_Click||
+User|20240924_150008|Clients_v2.5.xlsm|ufClientMF|cmdDelete_Click (sortie)|Temps écoulé: 76,0977 secondes|
+User|20240924_150257|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150257|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1484 secondes|
+User|20240924_150257|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_150257|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_150257|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_150257|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150257|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_150257|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150257|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,5039 secondes|Groupe Latitude Inc. [Gaétan Breault]
+User|20240924_150258|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,6953 secondes|
+User|20240924_150311|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit||
+User|20240924_150311|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,1562 secondes|Groupe Latitude Inc. [Dissoute]
+User|20240924_150311|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click||
+User|20240924_150311|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries||
+User|20240924_150311|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_150311|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields||
+User|20240924_150311|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150313|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240924_150313|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist|checkPoint|Vrai
+User|20240924_150313|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2617 secondes|
+User|20240924_150313|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée||UPDATE
+User|20240924_150317|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée|checkPoint|DDM (0.0.0.2)
+User|20240924_150319|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 5,4180 secondes|UPDATE 1214
+User|20240924_150319|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée||
+User|20240924_150319|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150319|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1367 secondes|
+User|20240924_150319|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150319|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_150319|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150320|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1328 secondes|
+User|20240924_150320|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150320|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_150320|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150320|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1562 secondes|
+User|20240924_150320|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150320|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150320|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150320|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_150321|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150321|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150321|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150321|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1328 secondes|
+User|20240924_150321|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150321|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150321|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150321|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150321|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150322|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150322|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150322|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150322|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150322|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_150322|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150322|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,2148 secondes|
+User|20240924_150322|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150323|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1797 secondes|
+User|20240924_150323|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150323|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_150323|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150323|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150323|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150323|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150323|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150323|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150324|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150324|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150324|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150324|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150324|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150324|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150324|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150324|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150324|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150325|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_150325|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150325|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150325|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150325|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_150325|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150325|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150325|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150325|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150326|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150326|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_150326|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 6,9766 secondes|UPDATE 1214
+User|20240924_150326|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm||
+User|20240924_150326|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn||
+User|20240924_150326|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_150326|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_150326|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_150326|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1094 secondes|Client_ID
+User|20240924_150326|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,4805 secondes|
+User|20240924_150327|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150327|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_150327|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,9648 secondes|1146
+User|20240924_150327|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 16,0234 secondes|6
+User|20240924_150340|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150340|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1562 secondes|
+User|20240924_150340|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_150340|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_150340|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_150340|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150340|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_150341|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_150341|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,5312 secondes|9217-0083 Québec Inc. [Daniel Guilbaudeau]
+User|20240924_150341|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7305 secondes|
+User|20240924_150353|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit||
+User|20240924_150353|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,1523 secondes|9217-0083 Québec Inc. [Dissoute]
+User|20240924_150353|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click||
+User|20240924_150353|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries||
+User|20240924_150353|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1367 secondes|
+User|20240924_150353|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields||
+User|20240924_150353|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150355|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240924_150355|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist|checkPoint|Vrai
+User|20240924_150355|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2461 secondes|
+User|20240924_150355|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée||UPDATE
+User|20240924_150359|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée|checkPoint|DDM (0.0.0.1)
+User|20240924_150401|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 5,3867 secondes|UPDATE 1423
+User|20240924_150401|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée||
+User|20240924_150401|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150401|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150401|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150401|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1523 secondes|
+User|20240924_150401|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150401|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150402|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150402|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_150402|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150402|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150402|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150402|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_150402|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150402|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_150402|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150402|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150403|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150403|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1367 secondes|
+User|20240924_150403|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150403|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150403|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150403|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_150403|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150403|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150403|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150404|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_150404|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150404|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_150404|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150404|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_150404|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150404|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150404|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150404|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150404|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150405|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150405|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150405|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150405|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150405|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150405|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150405|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150405|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150406|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_150406|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150406|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1680 secondes|
+User|20240924_150406|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150406|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150407|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150407|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150407|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150407|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150407|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150407|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150407|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150407|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150407|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150407|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150408|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150408|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_150408|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 7,1211 secondes|UPDATE 1423
+User|20240924_150408|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm||
+User|20240924_150408|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn||
+User|20240924_150408|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_150408|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150408|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_150408|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1680 secondes|Client_ID
+User|20240924_150409|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,5703 secondes|
+User|20240924_150409|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150409|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150409|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 1,0039 secondes|1146
+User|20240924_150409|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 16,2227 secondes|6
+User|20240924_150425|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150425|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1562 secondes|
+User|20240924_150425|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_150425|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_150425|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_150425|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150426|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_150426|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150426|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,5508 secondes|Centre Nature du Lac Dori Inc. [Gina Dubé]
+User|20240924_150426|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7578 secondes|
+User|20240924_150437|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit||
+User|20240924_150437|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,1484 secondes|Centre Nature du Lac Dori Inc. [Dissoute]
+User|20240924_150437|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click||
+User|20240924_150437|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries||
+User|20240924_150437|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1328 secondes|
+User|20240924_150437|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields||
+User|20240924_150437|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_150439|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240924_150439|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist|checkPoint|Vrai
+User|20240924_150439|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2656 secondes|
+User|20240924_150439|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée||UPDATE
+User|20240924_150443|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée|checkPoint|DDM (0.0.0.1)
+User|20240924_150445|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 5,7383 secondes|UPDATE 1180
+User|20240924_150445|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée||
+User|20240924_150445|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150445|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_150445|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150445|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150446|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150446|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150446|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150446|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1016 secondes|
+User|20240924_150446|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150446|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150446|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150446|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150446|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150446|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_150447|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150447|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150447|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150447|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150447|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150447|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1328 secondes|
+User|20240924_150447|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150447|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_150447|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150448|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150448|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150448|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150448|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150448|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150448|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150448|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_150448|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150448|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150449|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150449|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150449|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150449|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_150449|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150449|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1328 secondes|
+User|20240924_150449|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150449|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1406 secondes|
+User|20240924_150450|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150450|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,2266 secondes|
+User|20240924_150450|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150450|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150450|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150450|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150450|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150450|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150451|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150451|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_150451|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150451|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150451|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150451|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150451|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150451|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150451|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150451|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150452|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150452|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_150452|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 6,8047 secondes|UPDATE 1180
+User|20240924_150452|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm||
+User|20240924_150452|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn||
+User|20240924_150452|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_150452|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150452|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_150452|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1016 secondes|Client_ID
+User|20240924_150453|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,4961 secondes|
+User|20240924_150453|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150453|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150453|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,9219 secondes|1146
+User|20240924_150453|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 16,0391 secondes|6
+User|20240924_150508|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150508|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1406 secondes|
+User|20240924_150511|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_150511|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_150511|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_150511|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_150511|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_150511|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1328 secondes|
+User|20240924_150511|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,5234 secondes|Gestion & Développement Bergeron Gagné Inc. [Michelle Bergeron]
+User|20240924_150511|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7344 secondes|
+User|20240924_150520|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit||
+User|20240924_150520|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,1484 secondes|Gestion & Développement Bergeron Gagné Inc. [Dissoute]
+User|20240924_150520|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click||
+User|20240924_150520|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries||
+User|20240924_150520|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150521|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields||
+User|20240924_150521|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_150522|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240924_150522|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist|checkPoint|Vrai
+User|20240924_150522|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2227 secondes|
+User|20240924_150522|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée||UPDATE
+User|20240924_150527|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée|checkPoint|DDM (0.0.0.2)
+User|20240924_150528|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 6,0195 secondes|UPDATE 1278
+User|20240924_150529|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée||
+User|20240924_150529|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150529|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1562 secondes|
+User|20240924_150529|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150529|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150529|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150529|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150529|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150529|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150530|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150530|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150530|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150530|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_150530|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150530|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_150530|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150530|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150530|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150531|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150531|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150531|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150531|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150531|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_150531|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150531|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150531|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150531|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1328 secondes|
+User|20240924_150532|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150532|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150532|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150532|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1328 secondes|
+User|20240924_150532|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150532|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_150532|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150532|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150533|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150533|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1797 secondes|
+User|20240924_150533|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150533|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_150533|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150533|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_150533|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150533|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1016 secondes|
+User|20240924_150533|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150533|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150534|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150534|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150534|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150534|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_150534|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150534|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_150534|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150534|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1328 secondes|
+User|20240924_150534|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150535|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150535|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150535|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150535|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150535|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1367 secondes|
+User|20240924_150535|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150535|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150535|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 6,8164 secondes|UPDATE 1278
+User|20240924_150535|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm||
+User|20240924_150536|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn||
+User|20240924_150536|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_150536|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150536|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_150536|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1094 secondes|Client_ID
+User|20240924_150536|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,4922 secondes|
+User|20240924_150536|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150536|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_150536|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,9180 secondes|1146
+User|20240924_150536|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 16,1797 secondes|6
+User|20240924_150549|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150549|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1523 secondes|
+User|20240924_150549|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_150549|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_150549|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_150549|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150549|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_150549|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150549|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,5898 secondes|Mélanie Bonhomme
+User|20240924_150550|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7930 secondes|
+User|20240924_150610|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150611|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1367 secondes|
+User|20240924_150611|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_150611|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_150611|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_150611|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_150611|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_150611|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150611|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,5195 secondes|Les Entreprises N.G.A. Inc. [Martin Joyal]
+User|20240924_150611|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7188 secondes|
+User|20240924_150620|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit||
+User|20240924_150620|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,1133 secondes|Les Entreprises N.G.A. Inc. [Dissoute]
+User|20240924_150620|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click||
+User|20240924_150620|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries||
+User|20240924_150620|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150620|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields||
+User|20240924_150620|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,0977 secondes|
+User|20240924_150621|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240924_150622|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist|checkPoint|Vrai
+User|20240924_150622|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2461 secondes|
+User|20240924_150622|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée||UPDATE
+User|20240924_150626|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée|checkPoint|DDM (0.0.0.2)
+User|20240924_150628|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 6,2773 secondes|UPDATE 1195
+User|20240924_150628|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée||
+User|20240924_150628|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150628|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_150628|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150629|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150629|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150629|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_150629|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150629|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150629|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150629|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150629|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150629|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150630|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150630|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150630|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150630|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_150630|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150630|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150630|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150630|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1484 secondes|
+User|20240924_150630|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150631|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150631|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150631|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150631|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150631|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150631|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150631|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150631|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150631|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150632|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150632|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150632|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150632|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150632|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150632|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150632|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150632|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_150632|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150632|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150633|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150633|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1875 secondes|
+User|20240924_150633|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150633|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150633|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150633|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150633|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150633|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150634|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150634|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150634|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150634|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_150634|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150634|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150634|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150634|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150634|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150635|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150635|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150635|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150635|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 6,7617 secondes|UPDATE 1195
+User|20240924_150635|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm||
+User|20240924_150635|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn||
+User|20240924_150635|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_150635|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1836 secondes|
+User|20240924_150635|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_150636|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1055 secondes|Client_ID
+User|20240924_150636|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,5586 secondes|
+User|20240924_150636|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150636|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150636|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,9922 secondes|1146
+User|20240924_150636|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 16,1836 secondes|6
+User|20240924_150651|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150651|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1445 secondes|
+User|20240924_150651|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_150651|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_150651|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_150652|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150652|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_150652|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150652|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,4727 secondes|PE Moreau avocat Inc. [Pierre Moreau]
+User|20240924_150652|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,6758 secondes|
+User|20240924_150703|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit||
+User|20240924_150703|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,1484 secondes|PE Moreau avocat Inc. [Dissoute]
+User|20240924_150703|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click||
+User|20240924_150703|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries||
+User|20240924_150703|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150703|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields||
+User|20240924_150704|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,1328 secondes|
+User|20240924_150705|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240924_150705|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist|checkPoint|Vrai
+User|20240924_150705|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2500 secondes|
+User|20240924_150705|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée||UPDATE
+User|20240924_150709|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée|checkPoint|DDM (0.0.0.1)
+User|20240924_150712|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 6,2891 secondes|UPDATE 1201
+User|20240924_150712|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée||
+User|20240924_150712|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150712|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,2734 secondes|
+User|20240924_150712|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150713|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150713|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150713|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1367 secondes|
+User|20240924_150713|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150713|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150713|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150713|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150713|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150713|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_150714|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150714|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1406 secondes|
+User|20240924_150714|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150714|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150714|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150714|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150714|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150714|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150714|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150715|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150715|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150715|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150715|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150715|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150715|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150715|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150715|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150715|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150716|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150716|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_150716|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150716|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150716|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150716|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150716|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150716|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_150716|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150717|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150717|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150717|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150717|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150717|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1367 secondes|
+User|20240924_150717|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150717|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150717|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150717|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150718|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150718|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150718|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150718|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150718|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150718|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150718|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150718|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150718|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150719|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150719|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150719|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_150719|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 7,0117 secondes|UPDATE 1201
+User|20240924_150719|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm||
+User|20240924_150719|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn||
+User|20240924_150719|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_150719|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150719|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_150719|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1133 secondes|Client_ID
+User|20240924_150720|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,4922 secondes|
+User|20240924_150720|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150720|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150720|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,9023 secondes|1146
+User|20240924_150720|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 16,8555 secondes|6
+User|20240924_150822|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150822|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1484 secondes|
+User|20240924_150822|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_150822|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_150823|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_150823|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150823|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_150823|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150823|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,5391 secondes|Marie-Ève Théorêt Optomométriste Inc.
+User|20240924_150823|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7500 secondes|
+User|20240924_150837|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150838|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1641 secondes|
+User|20240924_150908|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150908|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1445 secondes|
+User|20240924_150908|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_150909|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_150909|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_150909|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_150909|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_150909|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150909|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,5273 secondes|Apprentissage Andrago Inc. [Marc Lalande]
+User|20240924_150909|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7383 secondes|
+User|20240924_150920|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit||
+User|20240924_150920|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,1406 secondes|Apprentissage Andrago Inc. [Dissoute]
+User|20240924_150920|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click||
+User|20240924_150920|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries||
+User|20240924_150920|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150920|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields||
+User|20240924_150920|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150922|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240924_150922|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist|checkPoint|Vrai
+User|20240924_150922|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2617 secondes|
+User|20240924_150922|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée||UPDATE
+User|20240924_150926|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée|checkPoint|DDM (0.0.0.2)
+User|20240924_150929|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 6,9258 secondes|UPDATE 1364
+User|20240924_150929|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée||
+User|20240924_150929|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150929|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150929|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150929|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150929|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150930|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_150930|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150930|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_150930|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150930|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150930|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150930|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150930|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150930|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150931|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150931|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150931|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150931|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_150931|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150931|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150931|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150931|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150931|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150931|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150932|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150932|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_150932|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150932|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150932|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150932|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150932|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150932|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150932|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150933|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150933|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150933|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_150933|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150933|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150933|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150933|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150933|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150934|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1523 secondes|
+User|20240924_150934|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150934|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150934|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150934|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150934|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150934|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_150934|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150934|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150935|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150935|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150935|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150935|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_150935|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150935|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150935|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150935|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150935|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150935|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_150936|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 6,6367 secondes|UPDATE 1364
+User|20240924_150936|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm||
+User|20240924_150936|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn||
+User|20240924_150936|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_150936|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_150936|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_150936|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1211 secondes|Client_ID
+User|20240924_150936|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,5195 secondes|
+User|20240924_150936|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_150936|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_150937|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,9531 secondes|1146
+User|20240924_150937|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 16,7969 secondes|6
+User|20240924_151001|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151001|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1445 secondes|
+User|20240924_151001|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_151001|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_151001|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_151001|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_151001|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_151001|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_151002|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,5234 secondes|Les Produits Non Ferreux Gauthier Inc. [Robert Gauthier]
+User|20240924_151002|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7852 secondes|
+User|20240924_151156|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit||
+User|20240924_151156|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,1602 secondes|Les Produits Non Ferreux Gauthier Société à Responsabilité illimitée [Robert Gauthier]
+User|20240924_151156|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click||
+User|20240924_151156|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries||
+User|20240924_151156|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_151156|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields||
+User|20240924_151156|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,0977 secondes|
+User|20240924_151158|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240924_151158|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist|checkPoint|Vrai
+User|20240924_151158|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2500 secondes|
+User|20240924_151158|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée||UPDATE
+User|20240924_151202|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée|checkPoint|DDM (0.0.0.2)
+User|20240924_151205|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 6,8828 secondes|UPDATE 1499
+User|20240924_151205|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée||
+User|20240924_151205|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151205|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_151205|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151205|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_151206|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151206|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_151206|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151206|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_151206|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151206|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_151206|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151206|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_151206|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151206|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_151207|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151207|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_151207|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151207|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1406 secondes|
+User|20240924_151207|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151207|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_151207|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151207|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_151208|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151208|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_151208|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151208|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1406 secondes|
+User|20240924_151208|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151208|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_151208|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151208|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_151208|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151209|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_151209|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151209|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,2148 secondes|
+User|20240924_151209|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151209|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_151209|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151209|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_151210|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151210|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_151210|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151210|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_151210|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151210|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_151210|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151210|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_151210|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151210|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_151211|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151211|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1328 secondes|
+User|20240924_151211|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151211|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_151211|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151211|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_151211|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151211|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_151211|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151212|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_151212|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151212|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1328 secondes|
+User|20240924_151212|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 6,9336 secondes|UPDATE 1499
+User|20240924_151212|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm||
+User|20240924_151212|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn||
+User|20240924_151212|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_151212|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1523 secondes|
+User|20240924_151213|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_151213|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1328 secondes|Client_ID
+User|20240924_151213|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,6211 secondes|
+User|20240924_151213|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151213|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_151213|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 1,0703 secondes|1146
+User|20240924_151213|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 17,3711 secondes|6
+User|20240924_151243|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151243|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1406 secondes|
+User|20240924_151244|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_151244|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_151244|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_151244|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_151244|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_151244|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_151244|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,5625 secondes|Les entreprises de Rodage D.G.M. Inc. [Donald Gaudreault]
+User|20240924_151244|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7656 secondes|
+User|20240924_151327|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151327|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1484 secondes|
+User|20240924_151327|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_151327|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_151327|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_151327|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_151328|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_151328|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_151328|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,4961 secondes|Hopital vétérinaire Saint-Lambert Inc. [Jean Tremblay / Janique Arseneau]
+User|20240924_151328|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,6797 secondes|
+User|20240924_151604|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151604|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1406 secondes|
+User|20240924_151604|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_151604|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_151604|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_151604|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_151604|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_151605|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1016 secondes|
+User|20240924_151605|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,5039 secondes|Les réalisations conceptum international Inc. [Lyse Denommé / Annie Langelier]
+User|20240924_151605|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,6992 secondes|
+User|20240924_151640|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit||
+User|20240924_151640|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,1445 secondes|Les réalisations Conceptum International Inc. [Lyse Denommé / Annie Langelier]
+User|20240924_151640|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click||
+User|20240924_151640|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries||
+User|20240924_151641|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_151641|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields||
+User|20240924_151641|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,1328 secondes|
+User|20240924_151642|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240924_151643|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist|checkPoint|Vrai
+User|20240924_151643|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,2500 secondes|
+User|20240924_151643|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée||UPDATE
+User|20240924_151647|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée|checkPoint|DDM (0.0.0.2)
+User|20240924_151650|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 7,5117 secondes|UPDATE 1442
+User|20240924_151650|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée||
+User|20240924_151650|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151651|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1367 secondes|
+User|20240924_151651|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151651|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_151651|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151651|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1367 secondes|
+User|20240924_151651|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151651|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_151651|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151651|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_151652|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151652|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_151652|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151652|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_151652|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151652|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_151652|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151652|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_151652|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151653|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_151653|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151653|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_151653|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151653|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_151653|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151653|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_151653|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151653|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_151654|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151654|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_151654|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151654|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_151654|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151654|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_151654|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151654|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_151654|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151655|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1367 secondes|
+User|20240924_151655|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151655|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_151655|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151655|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_151655|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151655|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1523 secondes|
+User|20240924_151655|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151655|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_151656|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151656|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_151656|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151656|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1367 secondes|
+User|20240924_151656|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151656|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_151656|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151656|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_151656|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151657|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_151657|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151657|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_151657|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151657|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_151657|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 6,7734 secondes|UPDATE 1442
+User|20240924_151657|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm||
+User|20240924_151657|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn||
+User|20240924_151657|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_151657|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1016 secondes|
+User|20240924_151658|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_151658|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1094 secondes|Client_ID
+User|20240924_151658|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,5039 secondes|
+User|20240924_151658|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151658|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_151658|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,9414 secondes|1146
+User|20240924_151658|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 17,9414 secondes|6
+User|20240924_151709|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151709|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1680 secondes|
+User|20240924_151709|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_151709|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_151709|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_151710|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_151710|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_151710|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1367 secondes|
+User|20240924_151710|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,5664 secondes|9058-2982 Québec Inc. [Mario Buonanno]
+User|20240924_151710|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7656 secondes|
+User|20240924_151749|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151749|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1484 secondes|
+User|20240924_151750|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_151750|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_151750|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_151750|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_151750|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_151750|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_151750|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,5352 secondes|10345482 Canada Inc. [NVS Studio] [David Beaudoin]
+User|20240924_151750|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7500 secondes|
+User|20240924_151901|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_151901|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1523 secondes|
+User|20240924_151901|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_151901|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_151901|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_151901|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1016 secondes|
+User|20240924_151901|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_151901|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0977 secondes|
+User|20240924_151902|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,4492 secondes|Side-car Inc. [Paul Paré]
+User|20240924_151902|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,6602 secondes|
+User|20240924_152053|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152053|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1484 secondes|
+User|20240924_152053|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_152053|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_152053|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_152053|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_152053|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_152053|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_152053|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,4844 secondes|9163-2563 Québec Inc. [Micah Dass]
+User|20240924_152054|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,6953 secondes|
+User|20240924_152255|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick||
+User|20240924_152255|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click||
+User|20240924_152255|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_152255|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_152255|Clients_v2.5.xlsm|modMain|Fn_Selected_List||
+User|20240924_152255|Clients_v2.5.xlsm|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1523 secondes|
+User|20240924_152256|Clients_v2.5.xlsm|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,5586 secondes|9163-2563 Québec Inc. [Micah Dass]
+User|20240924_152256|Clients_v2.5.xlsm|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,8320 secondes|
+User|20240924_152304|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit||
+User|20240924_152304|Clients_v2.5.xlsm|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,1211 secondes|9163-2653 Québec Inc. [Micah Dass]
+User|20240924_152307|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click||
+User|20240924_152307|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries||
+User|20240924_152307|Clients_v2.5.xlsm|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_152308|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields||
+User|20240924_152308|Clients_v2.5.xlsm|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_152309|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist||
+User|20240924_152309|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist|checkPoint|Vrai
+User|20240924_152309|Clients_v2.5.xlsm|modMain|Fn_Does_Client_Code_Exist (sortie)|Temps écoulé: 0,4727 secondes|
+User|20240924_152310|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée||UPDATE
+User|20240924_152314|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée|checkPoint|DDM (0.0.0.3)
+User|20240924_152317|Clients_v2.5.xlsm|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 7,4180 secondes|UPDATE 1211
+User|20240924_152317|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée||
+User|20240924_152317|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152317|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1445 secondes|
+User|20240924_152317|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152318|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_152318|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152318|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,2148 secondes|
+User|20240924_152318|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152318|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_152318|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152318|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_152318|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152318|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_152319|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152319|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_152319|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152319|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_152319|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152319|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_152319|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152319|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_152319|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152319|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_152320|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152320|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_152320|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152320|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_152320|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152320|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_152320|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152320|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_152320|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152321|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_152321|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152321|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1406 secondes|
+User|20240924_152321|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152321|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1211 secondes|
+User|20240924_152321|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152321|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_152321|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152321|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_152322|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152322|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1172 secondes|
+User|20240924_152322|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152322|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_152322|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152322|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_152322|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152322|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1133 secondes|
+User|20240924_152322|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152323|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_152323|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152323|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1719 secondes|
+User|20240924_152323|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152323|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_152323|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152323|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1094 secondes|
+User|20240924_152323|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152323|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1289 secondes|
+User|20240924_152324|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152324|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1055 secondes|
+User|20240924_152324|Clients_v2.5.xlsm|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 6,7578 secondes|UPDATE 1211
+User|20240924_152324|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm||
+User|20240924_152324|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn||
+User|20240924_152324|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_152324|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1250 secondes|
+User|20240924_152324|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change||
+User|20240924_152324|Clients_v2.5.xlsm|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1094 secondes|Client_ID
+User|20240924_152324|Clients_v2.5.xlsm|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,5195 secondes|
+User|20240924_152325|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click||
+User|20240924_152325|Clients_v2.5.xlsm|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1719 secondes|
+User|20240924_152325|Clients_v2.5.xlsm|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 1,0195 secondes|1146
+User|20240924_152325|Clients_v2.5.xlsm|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 17,7891 secondes|6
+User|20240924_152416|Clients_v2.5.xlsm|***** Fin de session - Workbook_BeforeClose *****|||
+20240924_161758|Clients_v2.5.xlsm|User|***** Début de session - Workbook_Open *****|||
+20240924_161758|Clients_v2.5.xlsm|User|modMain|CM_Client_List_Import_All||
+20240924_161759|Clients_v2.5.xlsm|User|modMain|CM_Apply_Worksheet_Format||
+20240924_161759|Clients_v2.5.xlsm|User|modMain|CM_Apply_Worksheet_Format (sortie)|Temps écoulé: 0,1953 secondes|1145
+20240924_161800|Clients_v2.5.xlsm|User|modMain|CM_Client_List_Import_All (sortie)|Temps écoulé: 1,1914 secondes|
+20240924_161800|Clients_v2.5.xlsm|User|ufClientMF|UserForm_Initialize||
+20240924_161800|Clients_v2.5.xlsm|User|modMain|CM_Reset_UserForm||
+20240924_161800|Clients_v2.5.xlsm|User|modMain|CM_Add_SearchColumn||
+20240924_161800|Clients_v2.5.xlsm|User|ufClientMF|cmbSearchColumn_Change||
+20240924_161800|Clients_v2.5.xlsm|User|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,1328 secondes|Client_ID
+20240924_161800|Clients_v2.5.xlsm|User|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,3242 secondes|
+20240924_161800|Clients_v2.5.xlsm|User|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,5742 secondes|1146
+20240924_161800|Clients_v2.5.xlsm|User|ufClientMF|UserForm_Initialize (sortie)|Temps écoulé: 0,7773 secondes|
+20240924_161848|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click||
+20240924_161848|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,1602 secondes|
+20240924_161848|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_DblClick||
+20240924_161848|Clients_v2.5.xlsm|User|ufClientMF|cmdEdit_Click||
+20240924_161848|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List||
+20240924_161848|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1328 secondes|
+20240924_161848|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List||
+20240924_161849|Clients_v2.5.xlsm|User|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,1133 secondes|
+20240924_161849|Clients_v2.5.xlsm|User|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,5117 secondes|Sans-çi Sans-ça Traiteurs [Isabelle Dubois]
+20240924_161849|Clients_v2.5.xlsm|User|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,7969 secondes|
+20240924_161853|Clients_v2.5.xlsm|User|ufClientMF|txtNomClient_Exit||
+20240924_161853|Clients_v2.5.xlsm|User|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,1211 secondes|Sans-çi Sans-ça Traiteurs [Isabelle Dubois]
+20240924_161853|Clients_v2.5.xlsm|User|ufClientMF|cmdDelete_Click||
+20240924_161903|Clients_v2.5.xlsm|User|ufClientMF|cmdDelete_Click (sortie)|Temps écoulé: 10,0586 secondes|
+20240924_161908|Clients_v2.5.xlsm|User|ufClientMF|cmdDelete_Click||
+20240924_162022|Clients_v2.5.xlsm|User|ufClientMF|cmdDelete_Click (sortie)|Temps écoulé: 74,9453 secondes|
+20240924_162026|Clients_v2.5.xlsm|User|***** Fin de session - Workbook_BeforeClose *****|||
+20240924_171512|Clients_v2.5.xlsm|GuillaumeCharron|***** Début de session - Workbook_Open *****|||
+20240924_171512|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Client_List_Import_All||
+20240924_171512|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Apply_Worksheet_Format||
+20240924_171513|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0703 secondes|1145
+20240924_171513|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Client_List_Import_All (sortie)|Temps écoulé: 0,2773 secondes|
+20240924_171513|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|UserForm_Initialize||
+20240924_171513|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm||
+20240924_171513|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn||
+20240924_171513|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+20240924_171513|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0156 secondes|Client_ID
+20240924_171513|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,0469 secondes|
+20240924_171513|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,1055 secondes|1146
+20240924_171513|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|UserForm_Initialize (sortie)|Temps écoulé: 0,1328 secondes|
+20240924_171519|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit||
+20240924_171519|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,0195 secondes|
+20240924_171519|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdAddClient_Click||
+20240924_171519|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm||
+20240924_171519|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn||
+20240924_171519|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+20240924_171519|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0195 secondes|
+20240924_171519|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+20240924_171519|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0156 secondes|Client_ID
+20240924_171519|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,0781 secondes|
+20240924_171519|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,1328 secondes|1146
+20240924_171519|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdAddClient_Click (sortie)|Temps écoulé: 0,1680 secondes|
+20240924_171520|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtCodeClient_Exit||
+20240924_171520|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used||
+20240924_171520|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used (sortie)|Temps écoulé: 0,0156 secondes|
+20240924_171520|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtCodeClient_Exit (sortie)|Temps écoulé: 0,0430 secondes|
+20240924_171521|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit||
+20240924_171521|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,0195 secondes|
+20240924_171527|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtCodeClient_Exit||
+20240924_171527|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used||
+20240924_171527|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used|checkPoint|FAUX
+20240924_171527|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used (sortie)|Temps écoulé: 0,0391 secondes|
+20240924_171527|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtCodeClient_Exit (sortie)|Temps écoulé: 0,0742 secondes|1801
+20240924_171536|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit||
+20240924_171536|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,0195 secondes|Maçonnerie François Leclerc
+20240924_171641|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Fix_Txt_Fin_Annee||
+20240924_171641|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Fix_Txt_Fin_Annee (sortie)|Temps écoulé: 0,0234 secondes|
+20240924_171653|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdSave_Click||
+20240924_171653|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_ValidateEntries||
+20240924_171653|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0234 secondes|
+20240924_171653|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|Fix_Some_Fields||
+20240924_171653|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,0156 secondes|
+20240924_171655|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used||
+20240924_171655|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used|checkPoint|FAUX
+20240924_171655|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used (sortie)|Temps écoulé: 0,0391 secondes|
+20240924_171655|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée||NEW_RECORD
+20240924_171656|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée|checkPoint|DDM (0.0.0.0)
+20240924_171656|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 1,2188 secondes|NEW_RECORD 1801
+20240924_171656|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Update_Locally_GCF_BD_Entrée||
+20240924_171656|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 0,0234 secondes|NEW_RECORD 1801
+20240924_171656|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm||
+20240924_171656|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn||
+20240924_171656|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+20240924_171656|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0156 secondes|
+20240924_171656|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+20240924_171656|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0156 secondes|Client_ID
+20240924_171656|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,0820 secondes|
+20240924_171656|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,1445 secondes|1147
+20240924_171656|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240924_171656|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0195 secondes|
+20240924_171656|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 2,9688 secondes|6
+20240924_171700|Clients_v2.5.xlsm|GuillaumeCharron|***** Fin de session - Workbook_BeforeClose *****|||
+20240924_171841|Clients_v2.5.xlsm|GuillaumeCharron|***** Début de session - Workbook_Open *****|||
+20240924_171841|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Client_List_Import_All||
+20240924_171841|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Apply_Worksheet_Format||
+20240924_171841|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0586 secondes|1146
+20240924_171841|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Client_List_Import_All (sortie)|Temps écoulé: 0,2539 secondes|
+20240924_171841|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|UserForm_Initialize||
+20240924_171841|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm||
+20240924_171841|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn||
+20240924_171841|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+20240924_171841|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0156 secondes|Client_ID
+20240924_171841|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,0469 secondes|
+20240924_171841|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,0938 secondes|1147
+20240924_171841|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|UserForm_Initialize (sortie)|Temps écoulé: 0,1211 secondes|
+20240924_171844|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit||
+20240924_171844|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,0234 secondes|
+20240924_171844|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdAddClient_Click||
+20240924_171844|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm||
+20240924_171844|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn||
+20240924_171844|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+20240924_171844|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0156 secondes|
+20240924_171844|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+20240924_171844|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0195 secondes|Client_ID
+20240924_171844|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,0781 secondes|
+20240924_171845|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,1367 secondes|1147
+20240924_171845|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdAddClient_Click (sortie)|Temps écoulé: 0,1680 secondes|
+20240924_171853|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtCodeClient_Exit||
+20240924_171853|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used||
+20240924_171853|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used|checkPoint|FAUX
+20240924_171853|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used (sortie)|Temps écoulé: 0,0352 secondes|
+20240924_171853|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtCodeClient_Exit (sortie)|Temps écoulé: 0,0781 secondes|544
+20240924_171858|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit||
+20240924_171858|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,0234 secondes|Patrick Bertrand
+20240924_171909|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Fix_Txt_Fin_Annee||
+20240924_171909|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Fix_Txt_Fin_Annee (sortie)|Temps écoulé: 0,0234 secondes|
+20240924_171920|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdSave_Click||
+20240924_171920|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_ValidateEntries||
+20240924_171920|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0195 secondes|
+20240924_171920|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|Fix_Some_Fields||
+20240924_171920|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,0156 secondes|
+20240924_171921|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used||
+20240924_171921|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used|checkPoint|FAUX
+20240924_171921|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used (sortie)|Temps écoulé: 0,0391 secondes|
+20240924_171921|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée||NEW_RECORD
+20240924_171922|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée|checkPoint|DDM (0.0.0.0)
+20240924_171922|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 1,2422 secondes|NEW_RECORD 544
+20240924_171922|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Update_Locally_GCF_BD_Entrée||
+20240924_171923|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 0,0234 secondes|NEW_RECORD 544
+20240924_171923|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm||
+20240924_171923|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn||
+20240924_171923|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+20240924_171923|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0156 secondes|
+20240924_171923|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+20240924_171923|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0156 secondes|Client_ID
+20240924_171923|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,0781 secondes|
+20240924_171923|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,1328 secondes|1148
+20240924_171923|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240924_171923|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0195 secondes|
+20240924_171923|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 2,8281 secondes|6
+20240924_171926|Clients_v2.5.xlsm|GuillaumeCharron|***** Fin de session - Workbook_BeforeClose *****|||

@@ -1,0 +1,25 @@
+2024-09-24 12:17:25|GuillaumeCharron|UPDATE|1202|GC|24/09/24|1516|Les Industries Canplex Ltée [Marco Stocchero]|tel avec Marco sur condo dans le sud et autres + courriel avec Marie-Claude + tel Marie-Claude|1,25|VRAI||2024-09-24 12:17:25
+2024-09-24 12:22:19|GuillaumeCharron|Add|1204|GC|24/09/24|1675|Les entreprises Lanthier et Papineau Inc. [Alain Lanthier]|tel avec alain sur bail et autres|0,50|VRAI||2024-09-24 12:22:19
+2024-09-24 13:14:42|GuillaumeCharron|Add|1205|GC|24/09/24|1448|9055-4627 Québec Inc. [Guillaume Bruneau-Côté]|fournir ref pour révision contrat de financement|0,25|VRAI||2024-09-24 13:14:42
+2024-09-24 13:18:42|GuillaumeCharron|Add|1206|GC|24/09/24|1605|1508-5822 Québec Inc. [Maxime Laforest]|tel avec Maxime sur planification des ventes et impacts|0,50|VRAI||2024-09-24 13:18:42
+2024-09-24 13:27:54|GuillaumeCharron|Add|1207|GC|24/09/24|1430|Librairie Lu-Lu Inc. [Céline Camirand]|demande de NE|0,25|VRAI||2024-09-24 13:27:54
+2024-09-24 13:34:40|GuillaumeCharron|Add|1208|GC|24/09/24|104|Groupe Millénium Micro Inc. [Carl Paquin]|réception des avances et analyse pour comprendre s'il devrait y en avoir ou non|0,75|VRAI||2024-09-24 13:34:40
+2024-09-24 13:34:49|GuillaumeCharron|UPDATE|1208|GC|24/09/24|104|Groupe Millénium Micro Inc. [Carl Paquin]|réception des avances de Alain et analyse pour comprendre s'il devrait y en avoir ou non|0,75|VRAI||2024-09-24 13:34:49
+2024-09-24 16:21:07|GuillaumeCharron|UPDATE|1202|GC|24/09/24|1516|Les Industries Canplex Ltée [Marco Stocchero]|tel avec Marco sur condo dans le sud et autres + courriel avec Marie-Claude + tel Marie-Claude + rencontre avec Marco et agence immobilière pour condo au Mexique|4,00|VRAI||2024-09-24 16:21:07
+2024-09-24 16:22:26|GuillaumeCharron|Add|1209|GC|24/09/24|1751|Empire Pro Inc. [Carlos Luperdigas]|tel avec Marie-Claude sur suite du dossier|0,40|VRAI||2024-09-24 16:22:26
+2024-09-24 16:22:52|GuillaumeCharron|Add|1210|GC|24/09/24|1561|9382-1890 Québec Inc. [Diane Doutre]|tel avec Diane sur validation des EF à faire|0,40|VRAI||2024-09-24 16:22:52
+2024-09-24 16:24:09|User|Add|1211|ML|2024-09-24|1775|9513-1926 Québec Inc. [Francis Desgagnés]|Obtention des numéros pour la fiducie familiale|1,00|VRAI||2024-09-24 16:24:09
+2024-09-24 16:24:34|User|Add|1212|ML|2024-09-24|1051|Arthur Malouin Ltée [Yvan Malouin]|Discussion avec Revenu Canada, préparation d'une lettre et suivi du dossier|1,00|VRAI||2024-09-24 16:24:34
+2024-09-24 16:25:03|User|Add|1213|ML|2024-09-24|5|z_Adiministratif_Autres non chargeables|Montage d'une cédule de travail sur les travaux qu'on me donne|1,00|FAUX||2024-09-24 16:25:03
+2024-09-24 16:25:30|User|Add|1214|ML|2024-09-24|1051|Arthur Malouin Ltée [Yvan Malouin]|Répondre à des questions de Joannie pour le dossier Ducharme|0,25|VRAI||2024-09-24 16:25:30
+2024-09-24 16:26:00|User|Add|1215|ML|2024-09-24|1744|Centre Canin Laka Inc. [Nicolas Desflammes]|Recherche des numéros NE et NI avec Nicolas - téléphone et courriel|0,50|VRAI||2024-09-24 16:26:00
+2024-09-24 16:26:31|User|Add|1216|ML|2024-09-24|1430|Librairie Lu-Lu Inc. [Céline Camirand]|Recherche du NE et courriel|0,50|VRAI||2024-09-24 16:26:31
+2024-09-24 16:26:54|GuillaumeCharron|Add|1217|GC|24/09/24|1768|Les Éditions Reynald Goulet Inc. [Reynald Goulet]|courriels sur capital-actions manquant|0,40|VRAI||2024-09-24 16:26:54
+2024-09-24 16:26:57|User|Add|1218|ML|2024-09-24|1051|Arthur Malouin Ltée [Yvan Malouin]|Correction d'un fichier Excell pour Ducharme|0,75|VRAI||2024-09-24 16:26:57
+2024-09-24 16:27:22|User|Add|1219|ML|2024-09-24|5|z_Adiministratif_Autres non chargeables|Examen d'un dossier modèle et petite formation (15 minutes) avec Vladimir|0,75|FAUX||2024-09-24 16:27:22
+2024-09-24 16:27:50|User|Add|1220|ML|2024-09-24|5|z_Adiministratif_Autres non chargeables|Modification dans la liste des clients|2,00|FAUX||2024-09-24 16:27:50
+2024-09-24 16:30:25|GuillaumeCharron|Add|1221|GC|24/09/24|1350|Acier Altitube Inc. [Philippe Robillard]|courriel avec Kariane sur numéros d'entreprise de la nouvelle société|0,40|VRAI||2024-09-24 16:30:25
+2024-09-24 16:33:47|GuillaumeCharron|UPDATE|1221|GC|24/09/24|1350|Acier Altitube Inc. [Philippe Robillard]|courriel avec Kariane sur numéros d'entreprise de la nouvelle société + réception de projets d'états financiers|0,75|VRAI||2024-09-24 16:33:47
+2024-09-24 17:17:39|GuillaumeCharron|Add|1222|GC|24/09/24|1801|Maçonnerie François Leclerc|tel avec le client et demande d'infos de Laurent pour voir si vaut la peine|0,50|VRAI||2024-09-24 17:17:39
+2024-09-24 17:20:39|GuillaumeCharron|Add|1223|GC|24/09/24|544|Patrick Bertrand|tel avec le client pour contre-lettre|0,40|VRAI||2024-09-24 17:20:39
+2024-09-24 17:29:49|GuillaumeCharron|UPDATE|1195|GC|24/09/24|1663|Multi-Plis Inc. [Chantal Veillette]|répondre question de t4-R1 de chantal + courriels sur autres points légaux|1,00|VRAI||2024-09-24 17:29:49

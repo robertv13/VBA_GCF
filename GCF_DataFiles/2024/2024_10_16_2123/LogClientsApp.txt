@@ -1,0 +1,50 @@
+20241016_141732|Clients_v2.7.xlsm|Annie|modMain|CM_Client_List_Import_All||
+20241016_141733|Clients_v2.7.xlsm|Annie|modMain|CM_Apply_Worksheet_Format||
+20241016_141733|Clients_v2.7.xlsm|Annie|modMain|CM_Apply_Worksheet_Format (sortie)|Temps écoulé: 0.1406 secondes|1099
+20241016_141733|Clients_v2.7.xlsm|Annie|modMain|CM_Client_List_Import_All (sortie)|Temps écoulé: 0.9883 secondes|
+20241016_141733|Clients_v2.7.xlsm|Annie|ufClientMF|UserForm_Initialize||
+20241016_141733|Clients_v2.7.xlsm|Annie|modMain|CM_Reset_UserForm||
+20241016_141734|Clients_v2.7.xlsm|Annie|modMain|CM_Add_SearchColumn||
+20241016_141734|Clients_v2.7.xlsm|Annie|ufClientMF|cmbSearchColumn_Change||
+20241016_141734|Clients_v2.7.xlsm|Annie|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0977 secondes|Client_ID
+20241016_141734|Clients_v2.7.xlsm|Annie|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0.2500 secondes|
+20241016_141734|Clients_v2.7.xlsm|Annie|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0.4375 secondes|1100
+20241016_141734|Clients_v2.7.xlsm|Annie|ufClientMF|UserForm_Initialize (sortie)|Temps écoulé: 0.5898 secondes|
+20241016_141740|Clients_v2.7.xlsm|Annie|ufClientMF|cmbSearchColumn_Change||
+20241016_141740|Clients_v2.7.xlsm|Annie|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.1211 secondes|ClientNom
+20241016_141743|Clients_v2.7.xlsm|Annie|ufClientMF|cmdSearch_Click||
+20241016_141743|Clients_v2.7.xlsm|Annie|modMain|CM_Build_Données_Recherche||
+20241016_141743|Clients_v2.7.xlsm|Annie|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0.1562 secondes|ClientNom:paré 7
+20241016_141743|Clients_v2.7.xlsm|Annie|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0.3203 secondes|
+20241016_141753|Clients_v2.7.xlsm|Annie|ufClientMF|cmdSearch_Click||
+20241016_141754|Clients_v2.7.xlsm|Annie|modMain|CM_Build_Données_Recherche||
+20241016_141754|Clients_v2.7.xlsm|Annie|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0.1445 secondes|ClientNom:kobloth 2
+20241016_141754|Clients_v2.7.xlsm|Annie|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0.3203 secondes|
+20241016_141802|Clients_v2.7.xlsm|Annie|ufClientMF|cmbSearchColumn_Change||
+20241016_141802|Clients_v2.7.xlsm|Annie|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0977 secondes|Client_ID
+20241016_141806|Clients_v2.7.xlsm|Annie|ufClientMF|cmdSearch_Click||
+20241016_141806|Clients_v2.7.xlsm|Annie|modMain|CM_Build_Données_Recherche||
+20241016_141806|Clients_v2.7.xlsm|Annie|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0.1445 secondes|Client_ID:10 98
+20241016_141806|Clients_v2.7.xlsm|Annie|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0.3125 secondes|
+20241016_141820|Clients_v2.7.xlsm|Annie|ufClientMF|cmdSearch_Click||
+20241016_141820|Clients_v2.7.xlsm|Annie|modMain|CM_Build_Données_Recherche||
+20241016_141820|Clients_v2.7.xlsm|Annie|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0.1523 secondes|Client_ID:110 6
+20241016_141820|Clients_v2.7.xlsm|Annie|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0.3125 secondes|
+20241016_141828|Clients_v2.7.xlsm|Annie|ufClientMF|cmdSearch_Click||
+20241016_141828|Clients_v2.7.xlsm|Annie|modMain|CM_Build_Données_Recherche||
+20241016_141828|Clients_v2.7.xlsm|Annie|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0.1445 secondes|Client_ID:12 97
+20241016_141828|Clients_v2.7.xlsm|Annie|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0.3008 secondes|
+20241016_141846|Clients_v2.7.xlsm|Annie|***** Début de session - Workbook_Open *****|||
+20241016_141846|Clients_v2.7.xlsm|Annie|modMain|CM_Client_List_Import_All||
+20241016_141847|Clients_v2.7.xlsm|Annie|modMain|CM_Apply_Worksheet_Format||
+20241016_141847|Clients_v2.7.xlsm|Annie|modMain|CM_Apply_Worksheet_Format (sortie)|Temps écoulé: 0.2461 secondes|1099
+20241016_141847|Clients_v2.7.xlsm|Annie|modMain|CM_Client_List_Import_All (sortie)|Temps écoulé: 1.1133 secondes|
+20241016_141847|Clients_v2.7.xlsm|Annie|ufClientMF|UserForm_Initialize||
+20241016_141847|Clients_v2.7.xlsm|Annie|modMain|CM_Reset_UserForm||
+20241016_141848|Clients_v2.7.xlsm|Annie|modMain|CM_Add_SearchColumn||
+20241016_141848|Clients_v2.7.xlsm|Annie|ufClientMF|cmbSearchColumn_Change||
+20241016_141848|Clients_v2.7.xlsm|Annie|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0977 secondes|Client_ID
+20241016_141848|Clients_v2.7.xlsm|Annie|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0.2422 secondes|
+20241016_141848|Clients_v2.7.xlsm|Annie|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0.5156 secondes|1100
+20241016_141848|Clients_v2.7.xlsm|Annie|ufClientMF|UserForm_Initialize (sortie)|Temps écoulé: 0.6719 secondes|
+20241016_141855|Clients_v2.7.xlsm|Annie|***** Fin de session - Workbook_BeforeClose *****|||

@@ -1,0 +1,341 @@
+2024-12-11_10:03:05|Clients_v4.1.xlsm|GuillaumeCharron|***** Début de session - Workbook_Open *****|||
+2024-12-11_10:03:05|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Client_List_Import_All||
+2024-12-11_10:03:06|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Apply_Worksheet_Format||
+2024-12-11_10:03:06|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0703 secondes|1108
+
+2024-12-11_10:03:06|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Client_List_Import_All (sortie)|Temps écoulé: 0,2656 secondes|
+
+2024-12-11_10:03:06|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|UserForm_Initialize||
+2024-12-11_10:03:06|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm||
+2024-12-11_10:03:06|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn||
+2024-12-11_10:03:06|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+2024-12-11_10:03:06|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0195 secondes|Client_ID
+
+2024-12-11_10:03:06|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,0547 secondes|
+
+2024-12-11_10:03:06|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,1211 secondes| Row=1109
+
+2024-12-11_10:03:06|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|UserForm_Initialize (sortie)|Temps écoulé: 0,1602 secondes|
+
+2024-12-11_10:03:10|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit||
+2024-12-11_10:03:10|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,0273 secondes|
+
+2024-12-11_10:03:10|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdAddClient_Click||
+2024-12-11_10:03:10|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm||
+2024-12-11_10:03:10|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn||
+2024-12-11_10:03:10|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+2024-12-11_10:03:10|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0273 secondes|
+
+2024-12-11_10:03:10|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+2024-12-11_10:03:10|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0234 secondes|Client_ID
+
+2024-12-11_10:03:10|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,1055 secondes|
+
+2024-12-11_10:03:10|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,1797 secondes| Row=1109
+
+2024-12-11_10:03:13|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdAddClient_Click (sortie)|Temps écoulé: 2,5781 secondes|
+
+2024-12-11_10:03:18|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|txtCodeClient_Exit||
+2024-12-11_10:03:18|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used||
+2024-12-11_10:03:18|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used|checkPoint|FAUX
+2024-12-11_10:03:18|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used (sortie)|Temps écoulé: 0,0430 secondes|
+
+2024-12-11_10:03:18|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|txtCodeClient_Exit (sortie)|Temps écoulé: 0,0820 secondes|1812
+
+2024-12-11_10:03:46|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit||
+2024-12-11_10:03:46|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,0234 secondes|DCP Dermoscience Inc.
+
+2024-12-11_10:03:50|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit||
+2024-12-11_10:03:51|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,0273 secondes|DCP Dermoscience Inc.
+
+2024-12-11_10:05:25|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Fix_Txt_Fin_Annee||
+2024-12-11_10:05:25|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Fix_Txt_Fin_Annee (sortie)|Temps écoulé: 0,0312 secondes|
+
+2024-12-11_10:05:34|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSave_Click||
+2024-12-11_10:05:34|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_ValidateEntries||
+2024-12-11_10:05:34|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0312 secondes|
+
+2024-12-11_10:05:34|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|Fix_Some_Fields||
+2024-12-11_10:05:34|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,0234 secondes|
+
+2024-12-11_10:05:36|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used||
+2024-12-11_10:05:36|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used|checkPoint|FAUX
+2024-12-11_10:05:36|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used (sortie)|Temps écoulé: 0,0469 secondes|
+
+2024-12-11_10:05:36|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée||NEW_RECORD
+2024-12-11_10:05:37|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée|checkPoint|DDM (0.0.0.0)
+2024-12-11_10:05:37|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 1,0938 secondes|NEW_RECORD 1812
+
+2024-12-11_10:05:37|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_Locally_GCF_BD_Entrée||
+2024-12-11_10:05:37|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 0,0977 secondes|NEW_RECORD 1812
+
+2024-12-11_10:05:37|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm||
+2024-12-11_10:05:37|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn||
+2024-12-11_10:05:38|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+2024-12-11_10:05:38|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0195 secondes|
+
+2024-12-11_10:05:38|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+2024-12-11_10:05:38|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0234 secondes|Client_ID
+
+2024-12-11_10:05:38|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,0898 secondes|
+
+2024-12-11_10:05:38|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,1484 secondes| Row=1110
+
+2024-12-11_10:05:38|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:05:38|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+
+2024-12-11_10:05:38|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 3,2891 secondes|6
+
+2024-12-11_10:05:43|Clients_v4.1.xlsm|GuillaumeCharron|***** Fin de session - Workbook_BeforeClose *****|||
+2024-12-11_10:17:21|Clients_v4.1.xlsm|GuillaumeCharron|***** Début de session - Workbook_Open *****|||
+2024-12-11_10:17:21|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Client_List_Import_All||
+2024-12-11_10:17:21|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Apply_Worksheet_Format||
+2024-12-11_10:17:22|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0625 secondes|1109
+
+2024-12-11_10:17:22|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Client_List_Import_All (sortie)|Temps écoulé: 0,2773 secondes|
+
+2024-12-11_10:17:22|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|UserForm_Initialize||
+2024-12-11_10:17:22|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm||
+2024-12-11_10:17:22|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn||
+2024-12-11_10:17:22|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+2024-12-11_10:17:22|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0234 secondes|Client_ID
+
+2024-12-11_10:17:22|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,0547 secondes|
+
+2024-12-11_10:17:22|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,1094 secondes| Row=1110
+
+2024-12-11_10:17:22|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|UserForm_Initialize (sortie)|Temps écoulé: 0,1484 secondes|
+
+2024-12-11_10:17:27|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:27|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+
+2024-12-11_10:17:27|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick||
+2024-12-11_10:17:27|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click||
+2024-12-11_10:17:27|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+2024-12-11_10:17:27|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0234 secondes|
+
+2024-12-11_10:17:27|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+2024-12-11_10:17:27|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0234 secondes|
+
+2024-12-11_10:17:27|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,0938 secondes|DCP Dermoscience Inc. [Maude St-Pierre]
+
+2024-12-11_10:17:27|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,1328 secondes|
+
+2024-12-11_10:17:29|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit||
+2024-12-11_10:17:29|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,0234 secondes|DCP Dermoscience Inc. [Maude St-Pierre]
+
+2024-12-11_10:17:32|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSave_Click||
+2024-12-11_10:17:32|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_ValidateEntries||
+2024-12-11_10:17:32|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0234 secondes|
+
+2024-12-11_10:17:32|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|Fix_Some_Fields||
+2024-12-11_10:17:32|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,0195 secondes|
+
+2024-12-11_10:17:33|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used||
+2024-12-11_10:17:33|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used|checkPoint|VRAI
+2024-12-11_10:17:33|Clients_v4.1.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used (sortie)|Temps écoulé: 0,0508 secondes|
+
+2024-12-11_10:17:33|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée||UPDATE
+2024-12-11_10:17:34|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée|checkPoint|DDM (0.0.0.0)
+2024-12-11_10:17:34|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 1,1211 secondes|UPDATE 1812
+
+2024-12-11_10:17:34|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_Locally_GCF_BD_Entrée||
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0312 secondes|
+
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0312 secondes|
+
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0312 secondes|
+
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0312 secondes|
+
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0312 secondes|
+
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0234 secondes|
+
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0234 secondes|
+
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0312 secondes|
+
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0430 secondes|
+
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0352 secondes|
+
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+
+2024-12-11_10:17:35|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0312 secondes|
+
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0352 secondes|
+
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0312 secondes|
+
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0508 secondes|
+
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0234 secondes|
+
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:36|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+
+2024-12-11_10:17:37|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+2024-12-11_10:17:37|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+
+2024-12-11_10:17:37|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 2,0781 secondes|UPDATE 1812
+
+2024-12-11_10:17:37|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm||
+2024-12-11_10:17:37|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn||
+2024-12-11_10:17:37|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+2024-12-11_10:17:37|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0195 secondes|
+
+2024-12-11_10:17:37|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+2024-12-11_10:17:37|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0195 secondes|Client_ID
+
+2024-12-11_10:17:37|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,0898 secondes|
+
+2024-12-11_10:17:37|Clients_v4.1.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,1406 secondes| Row=1
+
+2024-12-11_10:17:37|Clients_v4.1.xlsm|GuillaumeCharron|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 5,0039 secondes|6
+
+2024-12-11_10:17:39|Clients_v4.1.xlsm|GuillaumeCharron|***** Fin de session - Workbook_BeforeClose *****|||
+2024-12-11_14:15:09|Clients_v4.1.xlsm|Annie|***** Début de session - Workbook_Open *****|||
+2024-12-11_14:15:09|Clients_v4.1.xlsm|Annie|modMain|CM_Client_List_Import_All||
+2024-12-11_14:15:09|Clients_v4.1.xlsm|Annie|modMain|CM_Apply_Worksheet_Format||
+2024-12-11_14:15:10|Clients_v4.1.xlsm|Annie|modMain|CM_Apply_Worksheet_Format (sortie)|Temps écoulé: 0.2266 secondes|1109
+
+2024-12-11_14:15:10|Clients_v4.1.xlsm|Annie|modMain|CM_Client_List_Import_All (sortie)|Temps écoulé: 1.2148 secondes|
+
+2024-12-11_14:15:10|Clients_v4.1.xlsm|Annie|ufClientMF|UserForm_Initialize||
+2024-12-11_14:15:10|Clients_v4.1.xlsm|Annie|modMain|CM_Reset_UserForm||
+2024-12-11_14:15:10|Clients_v4.1.xlsm|Annie|modMain|CM_Add_SearchColumn||
+2024-12-11_14:15:10|Clients_v4.1.xlsm|Annie|ufClientMF|cmbSearchColumn_Change||
+2024-12-11_14:15:10|Clients_v4.1.xlsm|Annie|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.1016 secondes|Client_ID
+
+2024-12-11_14:15:10|Clients_v4.1.xlsm|Annie|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0.2695 secondes|
+
+2024-12-11_14:15:11|Clients_v4.1.xlsm|Annie|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0.4961 secondes| Row=1110
+
+2024-12-11_14:15:11|Clients_v4.1.xlsm|Annie|ufClientMF|UserForm_Initialize (sortie)|Temps écoulé: 0.7031 secondes|
+
+2024-12-11_14:15:20|Clients_v4.1.xlsm|Annie|ufClientMF|txtNomClient_Exit||
+2024-12-11_14:15:20|Clients_v4.1.xlsm|Annie|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0.0977 secondes|137888
+
+2024-12-11_14:15:28|Clients_v4.1.xlsm|Annie|ufClientMF|cmbSearchColumn_Change||
+2024-12-11_14:15:28|Clients_v4.1.xlsm|Annie|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0938 secondes|NomCLientSystème
+
+2024-12-11_14:15:40|Clients_v4.1.xlsm|Annie|ufClientMF|cmdSearch_Click||
+2024-12-11_14:15:40|Clients_v4.1.xlsm|Annie|modMain|CM_Build_Données_Recherche||
+2024-12-11_14:15:40|Clients_v4.1.xlsm|Annie|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0.1641 secondes|NomCLientSystème=137888 3
+
+2024-12-11_14:15:40|Clients_v4.1.xlsm|Annie|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0.3164 secondes|
+
+2024-12-11_14:54:19|Clients_v4.1.xlsm|Annie|ufClientMF|cmdSearch_Click||
+2024-12-11_14:54:19|Clients_v4.1.xlsm|Annie|modMain|CM_Build_Données_Recherche||
+2024-12-11_14:54:21|Clients_v4.1.xlsm|Annie|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 2.3281 secondes|NomCLientSystème=acces habitation 0
+
+2024-12-11_14:54:21|Clients_v4.1.xlsm|Annie|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 2.5000 secondes|
+
+2024-12-11_14:54:27|Clients_v4.1.xlsm|Annie|ufClientMF|cmdSearch_Click||
+2024-12-11_14:54:27|Clients_v4.1.xlsm|Annie|modMain|CM_Build_Données_Recherche||
+2024-12-11_14:54:27|Clients_v4.1.xlsm|Annie|modMain|CM_Build_Données_Recherche (sortie)|Temps écoulé: 0.1562 secondes|NomCLientSystème=habitation 5
+
+2024-12-11_14:54:27|Clients_v4.1.xlsm|Annie|ufClientMF|cmdSearch_Click (sortie)|Temps écoulé: 0.3125 secondes|
+
+2024-12-11_14:54:32|Clients_v4.1.xlsm|Annie|ufClientMF|lstDonnées_Click||
+2024-12-11_14:54:32|Clients_v4.1.xlsm|Annie|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0.1094 secondes|
+
+2024-12-11_14:54:32|Clients_v4.1.xlsm|Annie|ufClientMF|lstDonnées_DblClick||
+2024-12-11_14:54:32|Clients_v4.1.xlsm|Annie|ufClientMF|cmdEdit_Click||
+2024-12-11_14:54:32|Clients_v4.1.xlsm|Annie|modMain|Fn_Selected_List||
+2024-12-11_14:54:32|Clients_v4.1.xlsm|Annie|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.0898 secondes|
+
+2024-12-11_14:54:32|Clients_v4.1.xlsm|Annie|modMain|Fn_Selected_List||
+2024-12-11_14:54:32|Clients_v4.1.xlsm|Annie|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0.1016 secondes|
+
+2024-12-11_14:54:32|Clients_v4.1.xlsm|Annie|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0.4258 secondes|Accès Habitation [9469-9675 Québec Inc.]
+
+2024-12-11_14:54:33|Clients_v4.1.xlsm|Annie|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0.5938 secondes|
+
+2024-12-11_15:13:59|Clients_v4.1.xlsm|Annie|ufClientMF|txtNomClient_Exit||
+2024-12-11_15:13:59|Clients_v4.1.xlsm|Annie|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0.1133 secondes|Accès Habitation [9469-9675 Québec Inc.]
+
+2024-12-11_15:49:39|Clients_v4.1.xlsm|Annie|modMain|CM_Client_List_Import_All||
+2024-12-11_15:49:40|Clients_v4.1.xlsm|Annie|modMain|CM_Apply_Worksheet_Format||
+2024-12-11_15:49:40|Clients_v4.1.xlsm|Annie|modMain|CM_Apply_Worksheet_Format (sortie)|Temps écoulé: 0.2031 secondes|1109
+
+2024-12-11_15:49:40|Clients_v4.1.xlsm|Annie|modMain|CM_Client_List_Import_All (sortie)|Temps écoulé: 1.1328 secondes|
+
+2024-12-11_15:49:40|Clients_v4.1.xlsm|Annie|ufClientMF|UserForm_Initialize||
+2024-12-11_15:49:40|Clients_v4.1.xlsm|Annie|modMain|CM_Reset_UserForm||
+2024-12-11_15:49:41|Clients_v4.1.xlsm|Annie|modMain|CM_Add_SearchColumn||
+2024-12-11_15:49:41|Clients_v4.1.xlsm|Annie|ufClientMF|cmbSearchColumn_Change||
+2024-12-11_15:49:41|Clients_v4.1.xlsm|Annie|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0.0898 secondes|Client_ID
+
+2024-12-11_15:49:41|Clients_v4.1.xlsm|Annie|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0.2578 secondes|
+
+2024-12-11_15:49:41|Clients_v4.1.xlsm|Annie|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0.4648 secondes| Row=1110
+
+2024-12-11_15:49:41|Clients_v4.1.xlsm|Annie|ufClientMF|UserForm_Initialize (sortie)|Temps écoulé: 0.6797 secondes|
+
+2024-12-11_15:49:42|Clients_v4.1.xlsm|Annie|***** Fin de session - Workbook_BeforeClose *****|||

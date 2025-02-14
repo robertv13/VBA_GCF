@@ -3128,8 +3128,8 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 4079 'What is the last TECID analyzed ?
-
+    lastTECIDReported = 4118 'What is the last TECID analyzed ?
+    
     'Feuille contenant les données à analyser
     Dim HeaderRow As Long: HeaderRow = 2
     Dim lastUsedRow As Long
@@ -3163,17 +3163,17 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Set rngClient = wshBD_Clients.Range("A1").CurrentRegion
     Set rngClient = rngClient.offset(1, 0).Resize(rngClient.Rows.count - 1, 2)
 
-    ' Charger les données dans un tableau (deux premières colonnes seulement)
+    'Charger les données dans un tableau (deux premières colonnes seulement)
     Dim arr As Variant
     arr = rngClient.Value 'Charger les colonnes 1 et 2
 
-    ' Créer un dictionnaire
+    'Créer un dictionnaire
     Set dictClient = CreateObject("Scripting.Dictionary")
 
-    ' Remplir le dictionnaire avec les données (clé = colonne 1, valeur = colonne 2)
+    'Remplir le dictionnaire avec les données (clé = colonne 1, valeur = colonne 2)
     Dim i As Long
     For i = 1 To UBound(arr, 1)
-        dictClient(arr(i, 2)) = arr(i, 1) ' Utilise la colonne 1 comme clé et la colonne 2 comme valeur
+        dictClient(arr(i, 2)) = arr(i, 1) 'Utilise la colonne 1 comme clé et la colonne 2 comme valeur
     Next i
     
     'Obtenir toutes les factures émises (wshFAC_Entête) et utiliser un dictionary pour les mémoriser
@@ -3185,11 +3185,10 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Dim lastRow As Long
     lastRow = rngFAC_EntêteData.Rows.count
 
-    ' Redimensionner le tableau pour contenir les données de 2 colonnes
-'    Dim arr() As Variant
+    'Redimensionner le tableau pour contenir les données de 2 colonnes
     ReDim arr(1 To lastRow, 1 To 2)
 
-    ' Remplir le tableau avec les valeurs des colonnes 1 et 3
+    'Remplir le tableau avec les valeurs des colonnes 1 et 3
     For i = 1 To lastRow
         arr(i, 1) = rngFAC_EntêteData.Cells(i, 1).Value
         arr(i, 2) = rngFAC_EntêteData.Cells(i, 3).Value
@@ -3211,7 +3210,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Dim minDate As Date, maxDate As Date
     Dim maxTECID As Long
     Dim d As Integer, m As Integer, y As Integer, p As Integer
-    Dim codeClient As String, nomClient As String
+    Dim codeClient As String, nomClient As String, nomClientFromMF As String
     Dim isClientValid As Boolean
     Dim hres As Double, testHres As Boolean, estFacturable As Boolean
     Dim estFacturee As Boolean, estDetruit As Boolean
@@ -3245,18 +3244,18 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
 
     'Lecture et analyse des TEC (TEC_Local)
     For i = LBound(arrTEC_Local_Data, 1) To UBound(arrTEC_Local_Data, 1)
-        tecID = arrTEC_Local_Data(i, 1)
+        tecID = arrTEC_Local_Data(i, fTECTECID)
         If tecID > maxTECID Then
             maxTECID = tecID
         End If
         'ProfessionnelID
-        profID = arrTEC_Local_Data(i, 2)
+        profID = arrTEC_Local_Data(i, fTECProfID)
         'Professionnel
-        prof = arrTEC_Local_Data(i, 3)
+        prof = arrTEC_Local_Data(i, fTECProf)
         'Date
-        dateTEC = arrTEC_Local_Data(i, 4)
+        dateTEC = arrTEC_Local_Data(i, fTECDate)
         testDate = IsDate(dateTEC)
-        If testDate = False Or arrTEC_Local_Data(i, 4) > Date Then
+        If testDate = False Or dateTEC > Date Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID =" & tecID & " a une date INVALIDE '" & dateTEC & " !!!")
             r = r + 1
             isTECValid = False
@@ -3278,14 +3277,23 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         End If
         
         'Validate clientCode
-        codeClient = Trim(arrTEC_Local_Data(i, 5))
+        codeClient = Trim(arrTEC_Local_Data(i, fTECClientID))
         If dictClient.Exists(codeClient) = False Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le code de client '" & codeClient & "' est INVALIDE !!!")
             r = r + 1
             isTECValid = False
         End If
-        nomClient = arrTEC_Local_Data(i, 6)
-        hres = arrTEC_Local_Data(i, 8)
+        
+        'Validate nomClient
+        nomClient = arrTEC_Local_Data(i, fTECClientNom)
+        If tecID > lastTECIDReported And dictClient.Exists(codeClient) = True Then
+            nomClientFromMF = dictClient(codeClient)
+            If nomClient <> nomClientFromMF Then
+                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID = " & tecID & ", CLIENT = " & codeClient & ", le nom du client (TEC) '" & nomClient & "' <> (MF) '" & nomClientFromMF & "'")
+                r = r + 1
+            End If
+        End If
+        hres = arrTEC_Local_Data(i, fTECHeures)
         testHres = IsNumeric(hres)
         If testHres = False Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID = " & tecID & " la valeur des heures est INVALIDE '" & hres & " !!!")
@@ -4470,3 +4478,74 @@ Sub ExempleUtilisation()
     
 End Sub
 
+Sub Vérifier_Mix_ClientID_ClientNom_TEC()
+
+    'Fichier maître des clients
+    Dim strFile As String
+    strFile = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx"
+    Dim wb As Workbook
+    Set wb = Workbooks.Open(strFile)
+    
+    'Feuille TEC_Local
+    Dim ws As Worksheet
+    Set ws = wshTEC_Local
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+    'Transfère la feuille en mémoire (matrice)
+    Dim m As Variant
+    m = ws.Range("A3:P" & lastUsedRow).Value
+    
+    'Feuille de travail (ouput)
+    Dim output As Worksheet
+    Set output = ThisWorkbook.Sheets("Feuil1")
+    Dim r As Integer
+    r = 1
+    output.Cells.Clear
+    output.Cells(r, 1) = "Ligne"
+    output.Cells(r, 2) = "TEC_ID"
+    output.Cells(r, 3) = "ClientID"
+    output.Cells(r, 4) = "ClientName"
+    output.Cells(r, 5) = "clientNameFromMF"
+    output.Cells(r, 6) = "Date"
+    output.Cells(r, 7) = "Prof"
+    output.Cells(r, 8) = "Description"
+    output.Cells(r, 9) = "Heures"
+    output.Cells(r, 10) = "estFacturée"
+    
+    Dim clientID As String, clientName As String, clientNameFromMF As String
+    Dim allCols As Variant
+    Dim i As Integer
+    For i = 1 To UBound(m, 1)
+        clientID = m(i, fTECClientID)
+        clientName = m(i, fTECClientNom)
+        
+        'Obtenir le nom du client associé à clientID
+        allCols = ObtenirToutesColonnesPourUneValeur("BD_Clients", clientID, fClntFMClientID)
+        'Vérifier le résultat retourné
+        If IsArray(allCols) Then
+            clientNameFromMF = allCols(1)
+        Else
+            MsgBox "Valeur non trouvée !!!", vbCritical
+        End If
+        
+        If clientName <> clientNameFromMF Then
+            r = r + 1
+            output.Cells(r, 1).Value = i + 2
+            output.Cells(r, 2).Value = m(i, fTECTECID)
+            output.Cells(r, 3).Value = clientID
+            output.Cells(r, 4).Value = clientName
+            output.Cells(r, 5).Value = clientNameFromMF
+            output.Cells(r, 6).Value = m(i, fTECDate)
+            output.Cells(r, 7).Value = m(i, fTECProf)
+            output.Cells(r, 8).Value = m(i, fTECDescription)
+            output.Cells(r, 9).Value = m(i, fTECHeures)
+            output.Cells(r, 10).Value = m(i, fTECEstFacturee)
+        End If
+        
+    Next i
+
+    Debug.Print lastUsedRow, UBound(m, 1)
+
+    wb.Close False
+    
+End Sub

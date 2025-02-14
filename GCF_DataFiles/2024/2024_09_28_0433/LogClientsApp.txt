@@ -1,0 +1,346 @@
+20240927_085234|Clients_v2.5.xlsm|GuillaumeCharron|***** Début de session - Workbook_Open *****|||
+20240927_085234|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Client_List_Import_All||
+20240927_085234|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Apply_Worksheet_Format||
+20240927_085234|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0664 secondes|1092
+20240927_085234|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Client_List_Import_All (sortie)|Temps écoulé: 0,2637 secondes|
+20240927_085234|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|UserForm_Initialize||
+20240927_085234|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm||
+20240927_085234|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn||
+20240927_085234|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+20240927_085234|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0137 secondes|Client_ID
+20240927_085234|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,0391 secondes|
+20240927_085234|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,0918 secondes|1093
+20240927_085234|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|UserForm_Initialize (sortie)|Temps écoulé: 0,1191 secondes|
+20240927_085244|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit||
+20240927_085245|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,0215 secondes|
+20240927_085245|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdAddClient_Click||
+20240927_085245|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm||
+20240927_085245|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn||
+20240927_085245|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+20240927_085245|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0137 secondes|
+20240927_085245|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+20240927_085245|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0156 secondes|Client_ID
+20240927_085245|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,0703 secondes|
+20240927_085245|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,1387 secondes|1093
+20240927_085245|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdAddClient_Click (sortie)|Temps écoulé: 0,1699 secondes|
+20240927_085251|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtCodeClient_Exit||
+20240927_085251|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used||
+20240927_085251|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used|checkPoint|FAUX
+20240927_085251|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used (sortie)|Temps écoulé: 0,0312 secondes|
+20240927_085251|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtCodeClient_Exit (sortie)|Temps écoulé: 0,0645 secondes|545
+20240927_085257|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit||
+20240927_085257|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,0195 secondes|Patrick Bertrand
+20240927_085354|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Fix_Txt_Fin_Annee||
+20240927_085354|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Fix_Txt_Fin_Annee (sortie)|Temps écoulé: 0,0254 secondes|
+20240927_085403|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdSave_Click||
+20240927_085403|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_ValidateEntries||
+20240927_085403|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0195 secondes|
+20240927_085403|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|Fix_Some_Fields||
+20240927_085403|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,0156 secondes|
+20240927_085404|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used||
+20240927_085404|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used|checkPoint|FAUX
+20240927_085404|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used (sortie)|Temps écoulé: 0,0430 secondes|
+20240927_085404|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée||NEW_RECORD
+20240927_085405|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée|checkPoint|DDM (0.0.0.0)
+20240927_085405|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 1,1855 secondes|NEW_RECORD 545
+20240927_085406|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Update_Locally_GCF_BD_Entrée||
+20240927_085406|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 0,0957 secondes|NEW_RECORD 545
+20240927_085406|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm||
+20240927_085406|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn||
+20240927_085406|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+20240927_085406|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0156 secondes|
+20240927_085406|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+20240927_085406|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0156 secondes|Client_ID
+20240927_085406|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,0723 secondes|
+20240927_085406|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,1348 secondes|1094
+20240927_085406|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085406|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0215 secondes|
+20240927_085406|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 2,7441 secondes|6
+20240927_085409|Clients_v2.5.xlsm|GuillaumeCharron|***** Fin de session - Workbook_BeforeClose *****|||
+20240927_085442|Clients_v2.5.xlsm|GuillaumeCharron|***** Début de session - Workbook_Open *****|||
+20240927_085442|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Client_List_Import_All||
+20240927_085443|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Apply_Worksheet_Format||
+20240927_085443|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Apply_Worksheet_Format (sortie)|Temps écoulé: 0,0625 secondes|1093
+20240927_085443|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Client_List_Import_All (sortie)|Temps écoulé: 0,2617 secondes|
+20240927_085443|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|UserForm_Initialize||
+20240927_085443|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm||
+20240927_085443|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn||
+20240927_085443|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+20240927_085443|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0176 secondes|Client_ID
+20240927_085443|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,0527 secondes|
+20240927_085443|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,0996 secondes|1094
+20240927_085443|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|UserForm_Initialize (sortie)|Temps écoulé: 0,1367 secondes|
+20240927_085447|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085448|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0371 secondes|
+20240927_085450|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick||
+20240927_085451|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click||
+20240927_085451|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+20240927_085451|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0215 secondes|
+20240927_085451|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+20240927_085451|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0234 secondes|
+20240927_085451|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,0996 secondes|Patrick Bertrand
+20240927_085451|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,1602 secondes|
+20240927_085453|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085453|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0430 secondes|
+20240927_085454|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick||
+20240927_085454|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click||
+20240927_085454|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+20240927_085454|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0176 secondes|
+20240927_085454|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+20240927_085454|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0176 secondes|
+20240927_085454|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,0918 secondes|Patrick Bertrand
+20240927_085454|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,1484 secondes|
+20240927_085455|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085455|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0371 secondes|
+20240927_085456|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick||
+20240927_085456|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click||
+20240927_085456|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+20240927_085456|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0176 secondes|
+20240927_085456|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+20240927_085456|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0176 secondes|
+20240927_085456|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,0957 secondes|Patrick Bertrand
+20240927_085456|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,1387 secondes|
+20240927_085457|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit||
+20240927_085457|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,0195 secondes|Patrick Bertrand
+20240927_085506|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085506|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0430 secondes|
+20240927_085506|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick||
+20240927_085506|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click||
+20240927_085506|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+20240927_085506|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0156 secondes|
+20240927_085506|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+20240927_085506|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0156 secondes|
+20240927_085506|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,0840 secondes|Patrick Bertrand
+20240927_085506|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,1270 secondes|
+20240927_085508|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit||
+20240927_085508|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,0215 secondes|Patrick Bertrand
+20240927_085514|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdSave_Click||
+20240927_085514|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_ValidateEntries||
+20240927_085514|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0215 secondes|
+20240927_085514|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|Fix_Some_Fields||
+20240927_085514|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,0156 secondes|
+20240927_085515|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used||
+20240927_085515|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used|checkPoint|VRAI
+20240927_085515|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used (sortie)|Temps écoulé: 0,0449 secondes|
+20240927_085515|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée||UPDATE
+20240927_085516|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée|checkPoint|DDM (0.0.0.0)
+20240927_085516|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 1,1992 secondes|UPDATE 544
+20240927_085516|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Update_Locally_GCF_BD_Entrée||
+20240927_085516|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085516|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0293 secondes|
+20240927_085516|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085516|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0234 secondes|
+20240927_085516|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085516|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0234 secondes|
+20240927_085516|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085516|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+20240927_085516|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085516|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0234 secondes|
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0254 secondes|
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0234 secondes|
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0215 secondes|
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0195 secondes|
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0234 secondes|
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0234 secondes|
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0391 secondes|
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0234 secondes|
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0234 secondes|
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0215 secondes|
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0234 secondes|
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0234 secondes|
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0215 secondes|
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0234 secondes|
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085517|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0254 secondes|
+20240927_085518|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085518|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0215 secondes|
+20240927_085518|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085518|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0254 secondes|
+20240927_085518|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085518|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0195 secondes|
+20240927_085518|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085518|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0391 secondes|
+20240927_085518|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085518|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0195 secondes|
+20240927_085518|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085518|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+20240927_085518|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085518|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0234 secondes|
+20240927_085518|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085518|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0195 secondes|
+20240927_085518|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 1,8027 secondes|UPDATE 544
+20240927_085518|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm||
+20240927_085518|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn||
+20240927_085518|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+20240927_085518|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0176 secondes|
+20240927_085518|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+20240927_085518|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0156 secondes|Client_ID
+20240927_085518|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,0840 secondes|
+20240927_085518|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085518|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0254 secondes|
+20240927_085518|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,2090 secondes|1094
+20240927_085518|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 4,4297 secondes|6
+20240927_085522|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick||
+20240927_085522|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click||
+20240927_085522|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+20240927_085522|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0195 secondes|
+20240927_085522|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+20240927_085522|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0176 secondes|
+20240927_085522|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,0957 secondes|Patrick Bertrand
+20240927_085522|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,1523 secondes|
+20240927_085523|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit||
+20240927_085523|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,0176 secondes|Patrick Bertrand
+20240927_085549|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit||
+20240927_085549|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,0234 secondes|Patrick Bertrand
+20240927_085602|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Fix_Txt_Fin_Annee||
+20240927_085602|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Fix_Txt_Fin_Annee (sortie)|Temps écoulé: 0,0215 secondes|
+20240927_085604|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdSave_Click||
+20240927_085604|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_ValidateEntries||
+20240927_085604|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,0215 secondes|
+20240927_085604|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|Fix_Some_Fields||
+20240927_085604|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,0195 secondes|
+20240927_085605|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used||
+20240927_085605|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used|checkPoint|VRAI
+20240927_085605|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Is_Client_Code_Already_Used (sortie)|Temps écoulé: 0,0430 secondes|
+20240927_085605|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée||UPDATE
+20240927_085606|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée|checkPoint|DDM (0.0.0.0)
+20240927_085606|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 1,3203 secondes|UPDATE 544
+20240927_085606|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Update_Locally_GCF_BD_Entrée||
+20240927_085606|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085606|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0254 secondes|
+20240927_085606|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085606|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0254 secondes|
+20240927_085606|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085606|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0234 secondes|
+20240927_085606|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085606|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+20240927_085606|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085606|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0195 secondes|
+20240927_085606|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085606|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+20240927_085606|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0215 secondes|
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0254 secondes|
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0215 secondes|
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0234 secondes|
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0391 secondes|
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0234 secondes|
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0234 secondes|
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0234 secondes|
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0215 secondes|
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0254 secondes|
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0234 secondes|
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0254 secondes|
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0234 secondes|
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085607|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0254 secondes|
+20240927_085608|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085608|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+20240927_085608|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085608|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0234 secondes|
+20240927_085608|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085608|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0371 secondes|
+20240927_085608|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085608|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0234 secondes|
+20240927_085608|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085608|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+20240927_085608|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085608|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0254 secondes|
+20240927_085608|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085608|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0254 secondes|
+20240927_085608|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 1,8340 secondes|UPDATE 544
+20240927_085608|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm||
+20240927_085608|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn||
+20240927_085608|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+20240927_085608|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0156 secondes|
+20240927_085608|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+20240927_085608|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0156 secondes|Client_ID
+20240927_085608|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,0801 secondes|
+20240927_085608|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085608|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0273 secondes|
+20240927_085608|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,1973 secondes|1094
+20240927_085608|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 4,6367 secondes|6
+20240927_085610|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085610|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0469 secondes|
+20240927_085612|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick||
+20240927_085612|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click||
+20240927_085612|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+20240927_085612|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0215 secondes|
+20240927_085612|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+20240927_085612|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0156 secondes|
+20240927_085612|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,0938 secondes|Patrick Bertrand
+20240927_085612|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,1504 secondes|
+20240927_085613|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit||
+20240927_085613|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,0176 secondes|Patrick Bertrand
+20240927_085613|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdDelete_Click||
+20240927_085620|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdDelete_Click (sortie)|Temps écoulé: 6,7754 secondes|
+20240927_085639|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick||
+20240927_085639|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click||
+20240927_085639|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+20240927_085639|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0195 secondes|
+20240927_085639|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Selected_List||
+20240927_085639|Clients_v2.5.xlsm|GuillaumeCharron|modMain|Fn_Selected_List (sortie)|Temps écoulé: 0,0215 secondes|
+20240927_085639|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdEdit_Click (sortie)|Temps écoulé: 0,0938 secondes|Patrick Bertrand
+20240927_085639|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_DblClick (sortie)|Temps écoulé: 0,1309 secondes|
+20240927_085640|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit||
+20240927_085640|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,0215 secondes|Patrick Bertrand
+20240927_085640|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdDelete_Click||
+20240927_085640|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|Delete_Client||
+20240927_085642|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085642|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0234 secondes|
+20240927_085646|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm||
+20240927_085646|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn||
+20240927_085646|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+20240927_085646|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0156 secondes|
+20240927_085646|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+20240927_085646|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0176 secondes|Client_ID
+20240927_085646|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,0801 secondes|
+20240927_085646|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,1641 secondes|1
+20240927_085646|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click||
+20240927_085646|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,0488 secondes|
+20240927_085646|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|Delete_Client (sortie)|Temps écoulé: 5,9551 secondes|
+20240927_085646|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm||
+20240927_085646|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn||
+20240927_085646|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+20240927_085646|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0176 secondes|
+20240927_085646|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change||
+20240927_085646|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,0176 secondes|Client_ID
+20240927_085646|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,0859 secondes|
+20240927_085647|Clients_v2.5.xlsm|GuillaumeCharron|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,1465 secondes|1093
+20240927_085647|Clients_v2.5.xlsm|GuillaumeCharron|ufClientMF|cmdDelete_Click (sortie)|Temps écoulé: 6,2949 secondes|

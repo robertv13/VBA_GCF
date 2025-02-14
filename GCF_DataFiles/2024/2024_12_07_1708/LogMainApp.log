@@ -1,0 +1,856 @@
+2024-12-07 10:48:14.19 | vgervais | APP_v5.G.0.xlsb | ***** Début d'une nouvelle session (ThisWorkbook:Workbook_Open) *****
+2024-12-07 10:48:14.22 | vgervais | APP_v5.G.0.xlsb | ThisWorkbook:Create_User_Active_File
+2024-12-07 10:48:14.29 | vgervais | APP_v5.G.0.xlsb | ThisWorkbook:Create_User_Active_File = 0,0625 sec.
+
+2024-12-07 10:48:15.13 | vgervais | APP_v5.G.0.xlsb | modAppli:Write_Info_On_Main_Menu
+2024-12-07 10:48:15.18 | vgervais | APP_v5.G.0.xlsb | modAppli:Write_Info_On_Main_Menu = 0,0547 sec.
+
+2024-12-07 10:48:15.25 | vgervais | APP_v5.G.0.xlsb | ThisWorkbook:Workbook_Open = 1,0625 sec.
+
+2024-12-07 10:48:16.47 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:UserForm_Activate
+2024-12-07 10:48:16.51 | vgervais | APP_v5.G.0.xlsb | modImport:Client_List_Import_All
+2024-12-07 10:48:16.81 | vgervais | APP_v5.G.0.xlsb | modImport:Client_List_Import_All = 0,3047 sec.
+
+2024-12-07 10:48:16.84 | vgervais | APP_v5.G.0.xlsb | modImport:TEC_Import_All
+2024-12-07 10:48:17.32 | vgervais | APP_v5.G.0.xlsb | modImport:TEC_Import_All = 0,4727 sec.
+
+2024-12-07 10:48:17.35 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:UserForm_Activate = 0,8828 sec.
+
+2024-12-07 10:48:18.81 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate
+2024-12-07 10:48:18.85 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate = 0,0469 sec.
+
+2024-12-07 10:48:24.93 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate[marc la]
+2024-12-07 10:48:24.96 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_GetID_From_Client_Name - marc la
+2024-12-07 10:48:24.99 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_GetID_From_Client_Name - 302 = 0,0312 sec.
+
+2024-12-07 10:48:25.02 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate = 0,0977 sec.
+
+2024-12-07 10:48:25.14 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:lstboxNomClient_DblClick
+2024-12-07 10:48:25.20 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_GetID_From_Client_Name - Explorance Inc. [Marc Lamy]
+2024-12-07 10:48:25.23 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_GetID_From_Client_Name - 1784 = 0,0312 sec.
+
+2024-12-07 10:48:25.25 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:lstboxNomClient_DblClick = 0,1172 sec.
+
+2024-12-07 10:48:25.29 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate[Explorance Inc. [Marc Lamy]]
+2024-12-07 10:48:25.32 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_GetID_From_Client_Name - Explorance Inc. [Marc Lamy]
+2024-12-07 10:48:25.35 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_GetID_From_Client_Name - 1784 = 0,0352 sec.
+
+2024-12-07 10:48:25.38 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate = 0,0977 sec.
+
+2024-12-07 10:48:30.83 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtDate_BeforeUpdate
+2024-12-07 10:48:30.87 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_Complete_Date(2024-12-07, 90, 15)
+2024-12-07 10:48:30.91 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_Complete_Date = 0,0352 sec.
+
+2024-12-07 10:48:30.94 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtDate_BeforeUpdate = 0,1094 sec.
+
+2024-12-07 10:48:30.97 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtDate_AfterUpdate
+2024-12-07 10:48:31.01 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF - 2/12-07-2024
+2024-12-07 10:48:31.07 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF = 0,0664 sec.
+
+2024-12-07 10:48:31.11 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 2/12-07-2024
+2024-12-07 10:48:31.14 | vgervais | APP_v5.G.0.xlsb | wshTEC_TDB_Data:Worksheet_Change($S$6 - VG)
+2024-12-07 10:48:31.18 | vgervais | APP_v5.G.0.xlsb | wshTEC_TDB_Data:Worksheet_Change = 0,0352 sec.
+
+2024-12-07 10:48:31.23 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 2/12-07-2024 = 0,1250 sec.
+
+2024-12-07 10:48:31.26 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtDate_AfterUpdate = 0,2891 sec.
+
+2024-12-07 10:48:35.23 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtHeures_Exit[]
+2024-12-07 10:48:53.40 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate[Regarder le dossier et donnes les intructions]
+2024-12-07 10:48:53.45 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate = 0,0547 sec.
+
+2024-12-07 10:48:55.02 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate[.4]
+2024-12-07 10:48:55.06 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate = 0,0391 sec.
+
+2024-12-07 10:48:55.10 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtHeures_Exit[0,40]
+2024-12-07 10:48:55.13 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtHeures_Exit = 0,0352 sec.
+
+2024-12-07 10:48:56.50 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:cmdAdd_Click
+2024-12-07 10:48:56.53 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne
+2024-12-07 10:48:56.57 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB(0)
+2024-12-07 10:48:57.02 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - 0 = 0,4531 sec.
+
+2024-12-07 10:48:57.05 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally(0)
+2024-12-07 10:48:57.11 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally - 0 = 0,0664 sec.
+
+2024-12-07 10:48:57.15 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF - 2/2024-12-07
+2024-12-07 10:48:57.22 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF = 0,0742 sec.
+
+2024-12-07 10:48:57.26 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 2/2024-12-07
+2024-12-07 10:48:57.29 | vgervais | APP_v5.G.0.xlsb | wshTEC_TDB_Data:Worksheet_Change($S$6 - VG)
+2024-12-07 10:48:57.32 | vgervais | APP_v5.G.0.xlsb | wshTEC_TDB_Data:Worksheet_Change = 0,0352 sec.
+
+2024-12-07 10:48:57.39 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 2/2024-12-07 = 0,1367 sec.
+
+2024-12-07 10:48:57.43 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne = 0,8984 sec.
+
+2024-12-07 10:48:57.46 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:cmdAdd_Click = 0,9688 sec.
+
+2024-12-07 10:49:01.89 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Update_All
+2024-12-07 10:49:01.93 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local
+2024-12-07 10:49:02.20 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local = 0,2695 sec.
+
+2024-12-07 10:49:02.23 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables
+2024-12-07 10:49:02.41 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables = 0,1797 sec.
+
+2024-12-07 10:49:02.44 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Update_All = 0,5508 sec.
+
+2024-12-07 10:49:02.48 | vgervais | APP_v5.G.0.xlsb | modStatsHeures:Stats_Heures_AF
+2024-12-07 10:49:02.57 | vgervais | APP_v5.G.0.xlsb | modStatsHeures:Stats_Heures_AF = 0,1016 sec.
+
+2024-12-07 10:49:02.61 | vgervais | APP_v5.G.0.xlsb | modAppli:UpdatePivotTables
+2024-12-07 10:49:02.66 | vgervais | APP_v5.G.0.xlsb | modAppli:UpdatePivotTables = 0,0625 sec.
+
+2024-12-07 10:49:02.74 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:UserForm_Initialize
+2024-12-07 10:49:02.77 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:ChargerListBoxAvec52DernieresSemaines
+2024-12-07 10:49:02.81 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:lbxDatesSemaines_Click(02-12-2024 au 08-12-2024)
+2024-12-07 10:49:02.84 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:lbxDatesSemaines_Click_or_DblClick(02-12-2024 au 08-12-2024)
+2024-12-07 10:49:02.88 | vgervais | APP_v5.G.0.xlsb | wshTEC_TDB_Data:Worksheet_Change($U$7 - 2024-08-12)
+2024-12-07 10:49:02.91 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Update_All
+2024-12-07 10:49:02.95 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local
+2024-12-07 10:49:03.21 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local = 0,2656 sec.
+
+2024-12-07 10:49:03.24 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables
+2024-12-07 10:49:03.37 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables = 0,1289 sec.
+
+2024-12-07 10:49:03.40 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Update_All = 0,5078 sec.
+
+2024-12-07 10:49:03.44 | vgervais | APP_v5.G.0.xlsb | modStatsHeures:Stats_Heures_AF
+2024-12-07 10:49:03.61 | vgervais | APP_v5.G.0.xlsb | modStatsHeures:Stats_Heures_AF = 0,1680 sec.
+
+2024-12-07 10:49:03.64 | vgervais | APP_v5.G.0.xlsb | modAppli:UpdatePivotTables
+2024-12-07 10:49:03.70 | vgervais | APP_v5.G.0.xlsb | modAppli:UpdatePivotTables = 0,0586 sec.
+
+2024-12-07 10:49:03.73 | vgervais | APP_v5.G.0.xlsb | wshTEC_TDB_Data:Worksheet_Change = 0,8594 sec.
+
+2024-12-07 10:49:03.79 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:AddColonnesSemaine
+2024-12-07 10:49:03.82 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:AddColonnesSemaine = 0,0391 sec.
+
+2024-12-07 10:49:03.86 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:lbxDatesSemaines_Click_or_DblClick = 1,0234 sec.
+
+2024-12-07 10:49:03.89 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:lbxDatesSemaines_Click = 1,0859 sec.
+
+2024-12-07 10:49:03.93 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:ChargerListBoxAvec52DernieresSemaines = 1,1523 sec.
+
+2024-12-07 10:49:03.95 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:AddColonnesSemaine
+2024-12-07 10:49:03.99 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:AddColonnesSemaine = 0,0391 sec.
+
+2024-12-07 10:49:04.02 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:AddColonnesMois
+2024-12-07 10:49:04.05 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:AddColonnesMois = 0,0352 sec.
+
+2024-12-07 10:49:04.08 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:AddColonnesTrimestre
+2024-12-07 10:49:04.11 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:AddColonnesTrimestre = 0,0391 sec.
+
+2024-12-07 10:49:04.14 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:AddColonnesAnneeFinanciere
+2024-12-07 10:49:04.19 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:AddColonnesAnneeFinanciere = 0,0469 sec.
+
+2024-12-07 10:49:04.22 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:UserForm_Initialize = 1,4805 sec.
+
+2024-12-07 10:53:14.28 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:UserForm_Terminate
+2024-12-07 10:53:14.34 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:UserForm_Terminate = 0,0586 sec.
+
+2024-12-07 13:21:30.02 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:UserForm_Activate
+2024-12-07 13:21:30.07 | vgervais | APP_v5.G.0.xlsb | modImport:Client_List_Import_All
+2024-12-07 13:21:30.36 | vgervais | APP_v5.G.0.xlsb | modImport:Client_List_Import_All = 0,3008 sec.
+
+2024-12-07 13:21:30.39 | vgervais | APP_v5.G.0.xlsb | modImport:TEC_Import_All
+2024-12-07 13:21:30.85 | vgervais | APP_v5.G.0.xlsb | modImport:TEC_Import_All = 0,4609 sec.
+
+2024-12-07 13:21:30.88 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:UserForm_Activate = 0,8711 sec.
+
+2024-12-07 13:21:32.70 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate
+2024-12-07 13:21:32.73 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate = 0,0352 sec.
+
+2024-12-07 13:21:33.24 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtDate_BeforeUpdate
+2024-12-07 13:21:33.27 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_Complete_Date(07-12-2024, 90, 15)
+2024-12-07 13:21:34.84 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_Complete_Date = 1,5664 sec.
+
+2024-12-07 13:21:39.02 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtDate_BeforeUpdate
+2024-12-07 13:21:39.05 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_Complete_Date(2024-12-07, 90, 15)
+2024-12-07 13:21:39.09 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_Complete_Date = 0,0312 sec.
+
+2024-12-07 13:21:39.12 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtDate_BeforeUpdate = 0,0977 sec.
+
+2024-12-07 13:21:39.14 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtDate_AfterUpdate
+2024-12-07 13:21:39.18 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF - 2/12-07-2024
+2024-12-07 13:21:39.24 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF = 0,0625 sec.
+
+2024-12-07 13:21:39.27 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 2/12-07-2024
+2024-12-07 13:21:39.30 | vgervais | APP_v5.G.0.xlsb | wshTEC_TDB_Data:Worksheet_Change($S$6 - VG)
+2024-12-07 13:21:39.34 | vgervais | APP_v5.G.0.xlsb | wshTEC_TDB_Data:Worksheet_Change = 0,0391 sec.
+
+2024-12-07 13:21:39.40 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 2/12-07-2024 = 0,1367 sec.
+
+2024-12-07 13:21:39.43 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtDate_AfterUpdate = 0,2930 sec.
+
+2024-12-07 13:21:58.35 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate[les entreprises l]
+2024-12-07 13:21:58.39 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_GetID_From_Client_Name - les entreprises l
+2024-12-07 13:21:58.42 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_GetID_From_Client_Name - 1675 = 0,0352 sec.
+
+2024-12-07 13:21:58.45 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate = 0,1055 sec.
+
+2024-12-07 13:21:58.61 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:lstboxNomClient_DblClick
+2024-12-07 13:21:58.68 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_GetID_From_Client_Name - Les entreprises Lanthier et Papineau Inc. [Alain Lanthier]
+2024-12-07 13:21:58.70 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_GetID_From_Client_Name - 1675 = 0,0312 sec.
+
+2024-12-07 13:21:58.73 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:lstboxNomClient_DblClick = 0,1211 sec.
+
+2024-12-07 13:21:58.77 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate[Les entreprises Lanthier et Papineau Inc. [Alain Lanthier]]
+2024-12-07 13:21:58.80 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_GetID_From_Client_Name - Les entreprises Lanthier et Papineau Inc. [Alain Lanthier]
+2024-12-07 13:21:58.82 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_GetID_From_Client_Name - 1675 = 0,0312 sec.
+
+2024-12-07 13:21:58.86 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate = 0,0938 sec.
+
+2024-12-07 13:22:07.43 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate[1.2]
+2024-12-07 13:22:07.46 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate = 0,0352 sec.
+
+2024-12-07 13:22:08.89 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate[1.2]
+2024-12-07 13:22:08.94 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate = 0,0547 sec.
+
+2024-12-07 13:22:08.97 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtHeures_Exit[1,20]
+2024-12-07 13:22:09.01 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtHeures_Exit = 0,0391 sec.
+
+2024-12-07 13:22:29.20 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate[Révision de documentation légale + révision CDC]
+2024-12-07 13:22:29.23 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate = 0,0391 sec.
+
+2024-12-07 13:22:30.58 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate[1,20]
+2024-12-07 13:22:30.62 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate = 0,0391 sec.
+
+2024-12-07 13:22:30.65 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtHeures_Exit[1,20]
+2024-12-07 13:22:30.68 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtHeures_Exit = 0,0352 sec.
+
+2024-12-07 13:22:32.30 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:cmdAdd_Click
+2024-12-07 13:22:32.34 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne
+2024-12-07 13:22:32.37 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB(0)
+2024-12-07 13:22:32.83 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - 0 = 0,4570 sec.
+
+2024-12-07 13:22:32.86 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally(0)
+2024-12-07 13:22:32.91 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally - 0 = 0,0508 sec.
+
+2024-12-07 13:22:32.95 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF - 2/2024-12-07
+2024-12-07 13:22:33.01 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF = 0,0664 sec.
+
+2024-12-07 13:22:33.04 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 2/2024-12-07
+2024-12-07 13:22:33.09 | vgervais | APP_v5.G.0.xlsb | wshTEC_TDB_Data:Worksheet_Change($S$6 - VG)
+2024-12-07 13:22:33.13 | vgervais | APP_v5.G.0.xlsb | wshTEC_TDB_Data:Worksheet_Change = 0,0391 sec.
+
+2024-12-07 13:22:33.18 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 2/2024-12-07 = 0,1406 sec.
+
+2024-12-07 13:22:33.21 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne = 0,8750 sec.
+
+2024-12-07 13:22:33.24 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:cmdAdd_Click = 0,9375 sec.
+
+2024-12-07 13:22:36.66 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Update_All
+2024-12-07 13:22:36.70 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local
+2024-12-07 13:22:36.97 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local = 0,2812 sec.
+
+2024-12-07 13:22:37.01 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables
+2024-12-07 13:22:37.18 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables = 0,1758 sec.
+
+2024-12-07 13:22:37.21 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Update_All = 0,5586 sec.
+
+2024-12-07 13:22:37.24 | vgervais | APP_v5.G.0.xlsb | modStatsHeures:Stats_Heures_AF
+2024-12-07 13:22:37.43 | vgervais | APP_v5.G.0.xlsb | modStatsHeures:Stats_Heures_AF = 0,1914 sec.
+
+2024-12-07 13:22:37.46 | vgervais | APP_v5.G.0.xlsb | modAppli:UpdatePivotTables
+2024-12-07 13:22:37.52 | vgervais | APP_v5.G.0.xlsb | modAppli:UpdatePivotTables = 0,0547 sec.
+
+2024-12-07 13:22:37.58 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:UserForm_Initialize
+2024-12-07 13:22:37.61 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:ChargerListBoxAvec52DernieresSemaines
+2024-12-07 13:22:37.64 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:lbxDatesSemaines_Click(02-12-2024 au 08-12-2024)
+2024-12-07 13:22:37.68 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:lbxDatesSemaines_Click_or_DblClick(02-12-2024 au 08-12-2024)
+2024-12-07 13:22:37.70 | vgervais | APP_v5.G.0.xlsb | wshTEC_TDB_Data:Worksheet_Change($U$7 - 2024-08-12)
+2024-12-07 13:22:37.73 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Update_All
+2024-12-07 13:22:37.76 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local
+2024-12-07 13:22:38.02 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local = 0,2578 sec.
+
+2024-12-07 13:22:38.05 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables
+2024-12-07 13:22:38.17 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables = 0,1250 sec.
+
+2024-12-07 13:22:38.20 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Update_All = 0,4766 sec.
+
+2024-12-07 13:22:38.23 | vgervais | APP_v5.G.0.xlsb | modStatsHeures:Stats_Heures_AF
+2024-12-07 13:22:38.39 | vgervais | APP_v5.G.0.xlsb | modStatsHeures:Stats_Heures_AF = 0,1641 sec.
+
+2024-12-07 13:22:38.42 | vgervais | APP_v5.G.0.xlsb | modAppli:UpdatePivotTables
+2024-12-07 13:22:38.48 | vgervais | APP_v5.G.0.xlsb | modAppli:UpdatePivotTables = 0,0586 sec.
+
+2024-12-07 13:22:38.50 | vgervais | APP_v5.G.0.xlsb | wshTEC_TDB_Data:Worksheet_Change = 0,8047 sec.
+
+2024-12-07 13:22:38.55 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Update_All
+2024-12-07 13:22:38.58 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local
+2024-12-07 13:22:38.83 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local = 0,2578 sec.
+
+2024-12-07 13:22:38.86 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables
+2024-12-07 13:22:38.00 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables = 0,1367 sec.
+
+2024-12-07 13:22:39.03 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Update_All = 0,4805 sec.
+
+2024-12-07 13:22:39.05 | vgervais | APP_v5.G.0.xlsb | modStatsHeures:Stats_Heures_AF
+2024-12-07 13:22:39.24 | vgervais | APP_v5.G.0.xlsb | modStatsHeures:Stats_Heures_AF = 0,1914 sec.
+
+2024-12-07 13:22:39.27 | vgervais | APP_v5.G.0.xlsb | modAppli:UpdatePivotTables
+2024-12-07 13:22:39.33 | vgervais | APP_v5.G.0.xlsb | modAppli:UpdatePivotTables = 0,0625 sec.
+
+2024-12-07 13:22:39.40 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:AddColonnesSemaine
+2024-12-07 13:22:39.43 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:AddColonnesSemaine = 0,0352 sec.
+
+2024-12-07 13:22:39.46 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:lbxDatesSemaines_Click_or_DblClick = 1,7930 sec.
+
+2024-12-07 13:22:39.49 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:lbxDatesSemaines_Click = 1,8516 sec.
+
+2024-12-07 13:22:39.52 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:ChargerListBoxAvec52DernieresSemaines = 1,9141 sec.
+
+2024-12-07 13:22:39.55 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:AddColonnesSemaine
+2024-12-07 13:22:39.59 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:AddColonnesSemaine = 0,0391 sec.
+
+2024-12-07 13:22:39.62 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:AddColonnesMois
+2024-12-07 13:22:39.65 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:AddColonnesMois = 0,0312 sec.
+
+2024-12-07 13:22:39.68 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:AddColonnesTrimestre
+2024-12-07 13:22:39.71 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:AddColonnesTrimestre = 0,0352 sec.
+
+2024-12-07 13:22:39.73 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:AddColonnesAnneeFinanciere
+2024-12-07 13:22:39.78 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:AddColonnesAnneeFinanciere = 0,0469 sec.
+
+2024-12-07 13:22:39.81 | vgervais | APP_v5.G.0.xlsb | ufStatsHeures:UserForm_Initialize = 2,2266 sec.
+
+2024-12-07 13:22:39.84 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:UserForm_Activate
+2024-12-07 13:22:39.87 | vgervais | APP_v5.G.0.xlsb | modImport:Client_List_Import_All
+2024-12-07 13:22:40.14 | vgervais | APP_v5.G.0.xlsb | modImport:Client_List_Import_All = 0,2695 sec.
+
+2024-12-07 13:22:40.17 | vgervais | APP_v5.G.0.xlsb | modImport:TEC_Import_All
+2024-12-07 13:22:40.63 | vgervais | APP_v5.G.0.xlsb | modImport:TEC_Import_All = 0,4570 sec.
+
+2024-12-07 13:22:40.66 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:UserForm_Activate = 0,8242 sec.
+
+2024-12-07 13:22:40.70 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Update_All
+2024-12-07 13:22:40.73 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local
+2024-12-07 13:22:40.99 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local = 0,2617 sec.
+
+2024-12-07 13:22:41.03 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables
+2024-12-07 13:22:41.21 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables = 0,1836 sec.
+
+2024-12-07 13:22:41.24 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Update_All = 0,5391 sec.
+
+2024-12-07 13:22:41.27 | vgervais | APP_v5.G.0.xlsb | modStatsHeures:Stats_Heures_AF
+2024-12-07 13:22:41.45 | vgervais | APP_v5.G.0.xlsb | modStatsHeures:Stats_Heures_AF = 0,1836 sec.
+
+2024-12-07 13:22:41.48 | vgervais | APP_v5.G.0.xlsb | modAppli:UpdatePivotTables
+2024-12-07 13:22:41.54 | vgervais | APP_v5.G.0.xlsb | modAppli:UpdatePivotTables = 0,0586 sec.
+
+2024-12-07 13:22:41.59 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:UserForm_Activate
+2024-12-07 13:22:41.61 | vgervais | APP_v5.G.0.xlsb | modImport:Client_List_Import_All
+2024-12-07 13:22:41.84 | vgervais | APP_v5.G.0.xlsb | modImport:Client_List_Import_All = 0,2344 sec.
+
+2024-12-07 13:22:41.88 | vgervais | APP_v5.G.0.xlsb | modImport:TEC_Import_All
+2024-12-07 13:22:42.30 | vgervais | APP_v5.G.0.xlsb | modImport:TEC_Import_All = 0,4219 sec.
+
+2024-12-07 13:22:42.33 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:UserForm_Activate = 0,7461 sec.
+
+2024-12-07 13:22:42.37 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Update_All
+2024-12-07 13:22:42.40 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local
+2024-12-07 13:22:42.65 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local = 0,2578 sec.
+
+2024-12-07 13:22:42.68 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables
+2024-12-07 13:22:42.88 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables = 0,1992 sec.
+
+2024-12-07 13:22:42.91 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Update_All = 0,5430 sec.
+
+2024-12-07 13:22:42.94 | vgervais | APP_v5.G.0.xlsb | modStatsHeures:Stats_Heures_AF
+2024-12-07 13:22:43.12 | vgervais | APP_v5.G.0.xlsb | modStatsHeures:Stats_Heures_AF = 0,1875 sec.
+
+2024-12-07 13:22:43.16 | vgervais | APP_v5.G.0.xlsb | modAppli:UpdatePivotTables
+2024-12-07 13:22:43.21 | vgervais | APP_v5.G.0.xlsb | modAppli:UpdatePivotTables = 0,0547 sec.
+
+2024-12-07 13:22:43.25 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:UserForm_Activate
+2024-12-07 13:22:43.28 | vgervais | APP_v5.G.0.xlsb | modImport:Client_List_Import_All
+2024-12-07 13:22:43.52 | vgervais | APP_v5.G.0.xlsb | modImport:Client_List_Import_All = 0,2383 sec.
+
+2024-12-07 13:22:43.55 | vgervais | APP_v5.G.0.xlsb | modImport:TEC_Import_All
+2024-12-07 13:22:43.97 | vgervais | APP_v5.G.0.xlsb | modImport:TEC_Import_All = 0,4258 sec.
+
+2024-12-07 13:22:44.00 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:UserForm_Activate = 0,7539 sec.
+
+2024-12-07 13:22:44.05 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Update_All
+2024-12-07 13:22:44.07 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local
+2024-12-07 13:22:44.33 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local = 0,2578 sec.
+
+2024-12-07 13:22:44.36 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables
+2024-12-07 13:22:44.54 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables = 0,1836 sec.
+
+2024-12-07 13:22:44.57 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Update_All = 0,5312 sec.
+
+2024-12-07 13:22:44.60 | vgervais | APP_v5.G.0.xlsb | modStatsHeures:Stats_Heures_AF
+2024-12-07 13:22:44.79 | vgervais | APP_v5.G.0.xlsb | modStatsHeures:Stats_Heures_AF = 0,1875 sec.
+
+2024-12-07 13:22:44.82 | vgervais | APP_v5.G.0.xlsb | modAppli:UpdatePivotTables
+2024-12-07 13:22:44.87 | vgervais | APP_v5.G.0.xlsb | modAppli:UpdatePivotTables = 0,0547 sec.
+
+2024-12-07 13:22:44.92 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:UserForm_Activate
+2024-12-07 13:22:44.95 | vgervais | APP_v5.G.0.xlsb | modImport:Client_List_Import_All
+2024-12-07 13:22:45.18 | vgervais | APP_v5.G.0.xlsb | modImport:Client_List_Import_All = 0,2305 sec.
+
+2024-12-07 13:22:45.21 | vgervais | APP_v5.G.0.xlsb | modImport:TEC_Import_All
+2024-12-07 13:22:45.63 | vgervais | APP_v5.G.0.xlsb | modImport:TEC_Import_All = 0,4219 sec.
+
+2024-12-07 13:22:45.66 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:UserForm_Activate = 0,7500 sec.
+
+2024-12-07 13:22:45.71 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Update_All
+2024-12-07 13:22:45.75 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local
+2024-12-07 13:22:46.00 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local = 0,2578 sec.
+
+2024-12-07 13:22:46.04 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables
+2024-12-07 13:22:46.22 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables = 0,1875 sec.
+
+2024-12-07 13:22:46.25 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Update_All = 0,5430 sec.
+
+2024-12-07 13:22:46.28 | vgervais | APP_v5.G.0.xlsb | modStatsHeures:Stats_Heures_AF
+2024-12-07 13:22:46.46 | vgervais | APP_v5.G.0.xlsb | modStatsHeures:Stats_Heures_AF = 0,1875 sec.
+
+2024-12-07 13:22:46.49 | vgervais | APP_v5.G.0.xlsb | modAppli:UpdatePivotTables
+2024-12-07 13:22:46.54 | vgervais | APP_v5.G.0.xlsb | modAppli:UpdatePivotTables = 0,0547 sec.
+
+2024-12-07 13:22:46.59 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:UserForm_Activate
+2024-12-07 13:22:46.62 | vgervais | APP_v5.G.0.xlsb | modImport:Client_List_Import_All
+2024-12-07 13:22:46.86 | vgervais | APP_v5.G.0.xlsb | modImport:Client_List_Import_All = 0,2461 sec.
+
+2024-12-07 13:22:46.90 | vgervais | APP_v5.G.0.xlsb | modImport:TEC_Import_All
+2024-12-07 13:22:47.33 | vgervais | APP_v5.G.0.xlsb | modImport:TEC_Import_All = 0,4375 sec.
+
+2024-12-07 13:22:47.37 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:UserForm_Activate = 0,7891 sec.
+
+2024-12-07 13:22:47.42 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Update_All
+2024-12-07 13:22:47.45 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local
+2024-12-07 13:22:47.70 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local = 0,2578 sec.
+
+2024-12-07 13:22:47.73 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables
+2024-12-07 13:22:47.92 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables = 0,1914 sec.
+
+2024-12-07 13:22:47.95 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Update_All = 0,5312 sec.
+
+2024-12-07 13:22:47.98 | vgervais | APP_v5.G.0.xlsb | modStatsHeures:Stats_Heures_AF
+2024-12-07 13:22:48.16 | vgervais | APP_v5.G.0.xlsb | modStatsHeures:Stats_Heures_AF = 0,1875 sec.
+
+2024-12-07 13:22:48.19 | vgervais | APP_v5.G.0.xlsb | modAppli:UpdatePivotTables
+2024-12-07 13:22:48.24 | vgervais | APP_v5.G.0.xlsb | modAppli:UpdatePivotTables = 0,0547 sec.
+
+2024-12-07 13:22:48.29 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:UserForm_Activate
+2024-12-07 13:22:48.33 | vgervais | APP_v5.G.0.xlsb | modImport:Client_List_Import_All
+2024-12-07 13:22:48.57 | vgervais | APP_v5.G.0.xlsb | modImport:Client_List_Import_All = 0,2461 sec.
+
+2024-12-07 13:22:48.60 | vgervais | APP_v5.G.0.xlsb | modImport:TEC_Import_All
+2024-12-07 13:22:49.02 | vgervais | APP_v5.G.0.xlsb | modImport:TEC_Import_All = 0,4258 sec.
+
+2024-12-07 13:22:49.05 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:UserForm_Activate = 0,7617 sec.
+
+2024-12-07 13:22:50.86 | vgervais | APP_v5.G.0.xlsb | modAppli:Hide_All_Worksheets_Except_Menu
+2024-12-07 13:22:50.91 | vgervais | APP_v5.G.0.xlsb | modAppli:Hide_All_Worksheets_Except_Menu = 0,0469 sec.
+
+2024-12-07 13:22:54.72 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Update_All
+2024-12-07 13:22:54.75 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local
+2024-12-07 13:22:55.01 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local = 0,2578 sec.
+
+2024-12-07 13:22:55.04 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables
+2024-12-07 13:22:55.22 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables = 0,1836 sec.
+
+2024-12-07 13:22:55.25 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_TdB_Update_All = 0,5312 sec.
+
+2024-12-07 13:22:55.28 | vgervais | APP_v5.G.0.xlsb | modStatsHeures:Stats_Heures_AF
+2024-12-07 13:22:55.46 | vgervais | APP_v5.G.0.xlsb | modStatsHeures:Stats_Heures_AF = 0,1836 sec.
+
+2024-12-07 13:22:55.49 | vgervais | APP_v5.G.0.xlsb | modAppli:UpdatePivotTables
+2024-12-07 13:22:55.55 | vgervais | APP_v5.G.0.xlsb | modAppli:UpdatePivotTables = 0,0547 sec.
+
+2024-12-07 13:23:13.27 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:UserForm_Terminate
+2024-12-07 13:23:13.32 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:UserForm_Terminate = 0,0508 sec.
+
+2024-12-07 13:52:44.84 | Guillaume | APP_v5.G.3.xlsb | ***** Début d'une nouvelle session (ThisWorkbook:Workbook_Open) *****
+2024-12-07 13:52:45.12 | Guillaume | APP_v5.G.3.xlsb | ThisWorkbook:Create_User_Active_File
+2024-12-07 13:52:45.63 | Guillaume | APP_v5.G.3.xlsb | ThisWorkbook:Create_User_Active_File = 0,6680 sec.
+
+2024-12-07 13:52:48.20 | Guillaume | APP_v5.G.3.xlsb | modAppli:Write_Info_On_Main_Menu
+2024-12-07 13:52:48.66 | Guillaume | APP_v5.G.3.xlsb | modAppli:Write_Info_On_Main_Menu = 0,6172 sec.
+
+2024-12-07 13:52:48.98 | Guillaume | APP_v5.G.3.xlsb | ThisWorkbook:Workbook_Open = 4,2773 sec.
+
+2024-12-07 13:52:53.48 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:UserForm_Activate
+2024-12-07 13:52:53.70 | Guillaume | APP_v5.G.3.xlsb | modImport:Client_List_Import_All
+2024-12-07 13:52:54.98 | Guillaume | APP_v5.G.3.xlsb | modImport:Client_List_Import_All = 1,4609 sec.
+
+2024-12-07 13:52:55.25 | Guillaume | APP_v5.G.3.xlsb | modImport:TEC_Import_All
+2024-12-07 13:52:57.14 | Guillaume | APP_v5.G.3.xlsb | modImport:TEC_Import_All = 2,0312 sec.
+
+2024-12-07 13:52:57.40 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:UserForm_Activate = 4,0586 sec.
+
+2024-12-07 13:53:01.34 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate
+2024-12-07 13:53:01.56 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate = 0,3633 sec.
+
+2024-12-07 13:53:03.04 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtDate_BeforeUpdate
+2024-12-07 13:53:03.26 | Guillaume | APP_v5.G.3.xlsb | modFunctions:Fn_Complete_Date(07/12/24, 90, 15)
+2024-12-07 13:53:03.48 | Guillaume | APP_v5.G.3.xlsb | modFunctions:Fn_Complete_Date = 0,3789 sec.
+
+2024-12-07 13:53:03.72 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtDate_BeforeUpdate = 0,8281 sec.
+
+2024-12-07 13:53:03.95 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtDate_AfterUpdate
+2024-12-07 13:53:04.18 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF - 1/07/12/24
+2024-12-07 13:53:04.66 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF = 0,6211 sec.
+
+2024-12-07 13:53:04.89 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 1/07/12/24
+2024-12-07 13:53:05.13 | Guillaume | APP_v5.G.3.xlsb | wshTEC_TDB_Data:Worksheet_Change($S$6)
+2024-12-07 13:53:05.36 | Guillaume | APP_v5.G.3.xlsb | wshTEC_TDB_Data:Worksheet_Change = 0,3750 sec.
+
+2024-12-07 13:53:05.68 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 1/07/12/24 = 0,9375 sec.
+
+2024-12-07 13:53:05.91 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtDate_AfterUpdate = 2,1055 sec.
+
+2024-12-07 13:53:10.62 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtClient_AfterUpdate[Les entreprises Lanthier et Papineau Inc. [Alain Lanthier]]
+2024-12-07 13:53:10.85 | Guillaume | APP_v5.G.3.xlsb | modFunctions:Fn_GetID_From_Client_Name - Les entreprises Lanthier et Papineau Inc. [Alain Lanthier]
+2024-12-07 13:53:11.09 | Guillaume | APP_v5.G.3.xlsb | modFunctions:Fn_GetID_From_Client_Name - 1675 = 0,3906 sec.
+
+2024-12-07 13:53:11.32 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtClient_AfterUpdate = 0,8555 sec.
+
+2024-12-07 13:53:30.38 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtActivite_AfterUpdate[tel avec Vlad sur révision légale]
+2024-12-07 13:53:30.63 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtActivite_AfterUpdate = 0,3906 sec.
+
+2024-12-07 13:53:33.15 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtHeures_AfterUpdate[0.5]
+2024-12-07 13:53:33.41 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtHeures_AfterUpdate = 0,4023 sec.
+
+2024-12-07 13:53:33.65 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtHeures_Exit[0,50]
+2024-12-07 13:53:33.88 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtHeures_Exit = 0,3711 sec.
+
+2024-12-07 13:53:35.98 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:cmdAdd_Click
+2024-12-07 13:53:36.20 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne
+2024-12-07 13:53:36.45 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB(0)
+2024-12-07 13:53:38.68 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - 0 = 2,3750 sec.
+
+2024-12-07 13:53:38.91 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally(0)
+2024-12-07 13:53:39.40 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally - 0 = 0,6289 sec.
+
+2024-12-07 13:53:39.63 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF - 1/2024-12-07
+2024-12-07 13:53:40.10 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF = 0,6172 sec.
+
+2024-12-07 13:53:40.32 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 1/2024-12-07
+2024-12-07 13:53:40.57 | Guillaume | APP_v5.G.3.xlsb | wshTEC_TDB_Data:Worksheet_Change($S$6)
+2024-12-07 13:53:40.81 | Guillaume | APP_v5.G.3.xlsb | wshTEC_TDB_Data:Worksheet_Change = 0,3906 sec.
+
+2024-12-07 13:53:41.14 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 1/2024-12-07 = 0,9922 sec.
+
+2024-12-07 13:53:41.43 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne = 5,4102 sec.
+
+2024-12-07 13:53:41.70 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:cmdAdd_Click = 5,8750 sec.
+
+2024-12-07 13:53:45.03 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:UserForm_Terminate
+2024-12-07 13:53:45.28 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:UserForm_Terminate = 0,3906 sec.
+
+2024-12-07 13:57:17.21 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:UserForm_Activate
+2024-12-07 13:57:17.48 | Guillaume | APP_v5.G.3.xlsb | modImport:Client_List_Import_All
+2024-12-07 13:57:18.81 | Guillaume | APP_v5.G.3.xlsb | modImport:Client_List_Import_All = 1,4805 sec.
+
+2024-12-07 13:57:19.05 | Guillaume | APP_v5.G.3.xlsb | modImport:TEC_Import_All
+2024-12-07 13:57:20.88 | Guillaume | APP_v5.G.3.xlsb | modImport:TEC_Import_All = 1,9727 sec.
+
+2024-12-07 13:57:21.11 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:UserForm_Activate = 4,0273 sec.
+
+2024-12-07 13:57:22.39 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate
+2024-12-07 13:57:22.63 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate = 0,3867 sec.
+
+2024-12-07 13:57:23.23 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtDate_BeforeUpdate
+2024-12-07 13:57:23.46 | Guillaume | APP_v5.G.3.xlsb | modFunctions:Fn_Complete_Date(07/12/24, 90, 15)
+2024-12-07 13:57:23.68 | Guillaume | APP_v5.G.3.xlsb | modFunctions:Fn_Complete_Date = 0,3594 sec.
+
+2024-12-07 13:57:23.91 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtDate_BeforeUpdate = 0,8125 sec.
+
+2024-12-07 13:57:24.14 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtDate_AfterUpdate
+2024-12-07 13:57:24.35 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF - 1/07/12/24
+2024-12-07 13:57:24.80 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF = 0,5938 sec.
+
+2024-12-07 13:57:25.02 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 1/07/12/24
+2024-12-07 13:57:25.25 | Guillaume | APP_v5.G.3.xlsb | wshTEC_TDB_Data:Worksheet_Change($S$6)
+2024-12-07 13:57:25.48 | Guillaume | APP_v5.G.3.xlsb | wshTEC_TDB_Data:Worksheet_Change = 0,3633 sec.
+
+2024-12-07 13:57:25.79 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 1/bé = 0,9023 sec.
+
+2024-12-07 13:57:26.01 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtDate_AfterUpdate = 2,0117 sec.
+
+2024-12-07 13:57:29.99 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtDate_BeforeUpdate
+2024-12-07 13:57:30.23 | Guillaume | APP_v5.G.3.xlsb | modFunctions:Fn_Complete_Date(, 90, 15)
+2024-12-07 13:57:30.46 | Guillaume | APP_v5.G.3.xlsb | modFunctions:Fn_Complete_Date = 0,3555 sec.
+
+2024-12-07 13:57:30.66 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtDate_BeforeUpdate = 0,8047 sec.
+
+2024-12-07 13:57:30.88 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtDate_AfterUpdate
+2024-12-07 13:57:31.09 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF - 1/07/12/24
+2024-12-07 13:57:31.57 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF = 0,6094 sec.
+
+2024-12-07 13:57:31.79 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 1/07/12/24
+2024-12-07 13:57:32.03 | Guillaume | APP_v5.G.3.xlsb | wshTEC_TDB_Data:Worksheet_Change($S$6)
+2024-12-07 13:57:32.25 | Guillaume | APP_v5.G.3.xlsb | wshTEC_TDB_Data:Worksheet_Change = 0,3711 sec.
+
+2024-12-07 13:57:32.57 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 1/07/12/24 = 0,9180 sec.
+
+2024-12-07 13:57:32.79 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtDate_AfterUpdate = 2,0508 sec.
+
+2024-12-07 13:57:37.68 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtClient_AfterUpdate[9514-1149 Québec Inc. [Bélanger Sauvé] [Alexandre Paris]]
+2024-12-07 13:57:37.90 | Guillaume | APP_v5.G.3.xlsb | modFunctions:Fn_GetID_From_Client_Name - 9514-1149 Québec Inc. [Bélanger Sauvé] [Alexandre Paris]
+2024-12-07 13:57:38.13 | Guillaume | APP_v5.G.3.xlsb | modFunctions:Fn_GetID_From_Client_Name - 1767 = 0,3594 sec.
+
+2024-12-07 13:57:38.38 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtClient_AfterUpdate = 0,8711 sec.
+
+2024-12-07 13:57:52.36 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtActivite_AfterUpdate[courriel avec alexandre sur nouvelle structure]
+2024-12-07 13:57:52.63 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtActivite_AfterUpdate = 0,4141 sec.
+
+2024-12-07 13:57:57.66 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtHeures_AfterUpdate[0.5]
+2024-12-07 13:57:57.89 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtHeures_AfterUpdate = 0,3672 sec.
+
+2024-12-07 13:57:58.11 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtHeures_Exit[0,50]
+2024-12-07 13:57:58.34 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtHeures_Exit = 0,3633 sec.
+
+2024-12-07 13:57:59.40 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:cmdAdd_Click
+2024-12-07 13:57:59.63 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne
+2024-12-07 13:57:59.85 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB(0)
+2024-12-07 13:58:01.96 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - 0 = 2,2539 sec.
+
+2024-12-07 13:58:02.18 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally(0)
+2024-12-07 13:58:02.68 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally - 0 = 0,6523 sec.
+
+2024-12-07 13:58:02.91 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF - 1/2024-12-07
+2024-12-07 13:58:03.39 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF = 0,6250 sec.
+
+2024-12-07 13:58:03.62 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 1/2024-12-07
+2024-12-07 13:58:03.88 | Guillaume | APP_v5.G.3.xlsb | wshTEC_TDB_Data:Worksheet_Change($S$6)
+2024-12-07 13:58:04.10 | Guillaume | APP_v5.G.3.xlsb | wshTEC_TDB_Data:Worksheet_Change = 0,3633 sec.
+
+2024-12-07 13:58:04.43 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 1/2024-12-07 = 0,9453 sec.
+
+2024-12-07 13:58:04.64 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne = 5,1562 sec.
+
+2024-12-07 13:58:04.86 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:cmdAdd_Click = 5,5938 sec.
+
+2024-12-07 13:58:08.60 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtClient_AfterUpdate[Construction Nelson Inc. [Nelson Massicotte]]
+2024-12-07 13:58:08.82 | Guillaume | APP_v5.G.3.xlsb | modFunctions:Fn_GetID_From_Client_Name - Construction Nelson Inc. [Nelson Massicotte]
+2024-12-07 13:58:09.05 | Guillaume | APP_v5.G.3.xlsb | modFunctions:Fn_GetID_From_Client_Name - 1803 = 0,3711 sec.
+
+2024-12-07 13:58:09.27 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtClient_AfterUpdate = 0,8164 sec.
+
+2024-12-07 13:58:32.30 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtActivite_AfterUpdate[avancer tableaux de capital-actions et jvm et organigramme et éléments manquants]
+2024-12-07 13:58:32.55 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtActivite_AfterUpdate = 0,3906 sec.
+
+2024-12-07 13:58:37.79 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtHeures_AfterUpdate[5]
+2024-12-07 13:58:38.03 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtHeures_AfterUpdate = 0,3867 sec.
+
+2024-12-07 13:58:38.26 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtHeures_Exit[5,00]
+2024-12-07 13:58:38.48 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtHeures_Exit = 0,3633 sec.
+
+2024-12-07 13:58:39.15 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:cmdAdd_Click
+2024-12-07 13:58:39.37 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne
+2024-12-07 13:58:39.58 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB(0)
+2024-12-07 13:58:41.73 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - 0 = 2,2891 sec.
+
+2024-12-07 13:58:41.95 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally(0)
+2024-12-07 13:58:42.42 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally - 0 = 0,6367 sec.
+
+2024-12-07 13:58:42.71 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF - 1/2024-12-07
+2024-12-07 13:58:43.21 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF = 0,6289 sec.
+
+2024-12-07 13:58:43.42 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 1/2024-12-07
+2024-12-07 13:58:43.66 | Guillaume | APP_v5.G.3.xlsb | wshTEC_TDB_Data:Worksheet_Change($S$6)
+2024-12-07 13:58:43.88 | Guillaume | APP_v5.G.3.xlsb | wshTEC_TDB_Data:Worksheet_Change = 0,3633 sec.
+
+2024-12-07 13:58:44.19 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 1/2024-12-07 = 0,9102 sec.
+
+2024-12-07 13:58:44.41 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Ajoute_Ligne = 5,1719 sec.
+
+2024-12-07 13:58:44.62 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:cmdAdd_Click = 5,6211 sec.
+
+2024-12-07 13:58:47.22 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:lsbHresJour_dblClick[2]
+2024-12-07 13:58:47.44 | Guillaume | APP_v5.G.3.xlsb | modFunctions:Fn_Find_Row_Number_TEC_ID
+2024-12-07 13:58:47.67 | Guillaume | APP_v5.G.3.xlsb | modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = 2886
+2024-12-07 13:58:47.89 | Guillaume | APP_v5.G.3.xlsb | modFunctions:Fn_Find_Row_Number_TEC_ID = 0,6016 sec.
+
+2024-12-07 13:58:48.19 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:lsbHresJour_dblClick[2887] = 1,1094 sec.
+
+2024-12-07 13:58:49.35 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtClient_AfterUpdate[Construction Nelson Inc. [Nelson Massicotte]]
+2024-12-07 13:58:49.57 | Guillaume | APP_v5.G.3.xlsb | modFunctions:Fn_GetID_From_Client_Name - Construction Nelson Inc. [Nelson Massicotte]
+2024-12-07 13:58:49.79 | Guillaume | APP_v5.G.3.xlsb | modFunctions:Fn_GetID_From_Client_Name - 1803 = 0,3594 sec.
+
+2024-12-07 13:58:50.01 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtClient_AfterUpdate = 0,8008 sec.
+
+2024-12-07 13:58:51.81 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtHeures_AfterUpdate[6,00]
+2024-12-07 13:58:52.04 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtHeures_AfterUpdate = 0,3711 sec.
+
+2024-12-07 13:58:52.27 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtHeures_Exit[6,00]
+2024-12-07 13:58:52.49 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:txtHeures_Exit = 0,3711 sec.
+
+2024-12-07 13:58:53.78 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:cmdUpdate_Click[2887]
+2024-12-07 13:58:54.01 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Modifie_Ligne
+2024-12-07 13:58:54.24 | Guillaume | APP_v5.G.3.xlsb | modFunctions:Fn_GetID_From_Client_Name - Construction Nelson Inc. [Nelson Massicotte]
+2024-12-07 13:58:54.46 | Guillaume | APP_v5.G.3.xlsb | modFunctions:Fn_GetID_From_Client_Name - 1803 = 0,3672 sec.
+
+2024-12-07 13:58:54.68 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB(2887)
+2024-12-07 13:58:56.69 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - 2887 = 2,1367 sec.
+
+2024-12-07 13:58:56.91 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally(2887)
+2024-12-07 13:58:57.13 | Guillaume | APP_v5.G.3.xlsb | modFunctions:Fn_Find_Row_Number_TEC_ID
+2024-12-07 13:58:57.40 | Guillaume | APP_v5.G.3.xlsb | modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = 2886
+2024-12-07 13:58:57.63 | Guillaume | APP_v5.G.3.xlsb | modFunctions:Fn_Find_Row_Number_TEC_ID = 0,6328 sec.
+
+2024-12-07 13:58:58.02 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally - 2887 = 1,2539 sec.
+
+2024-12-07 13:58:58.24 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF - 1/07/12/2024
+2024-12-07 13:58:58.76 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF = 0,6562 sec.
+
+2024-12-07 13:58:58.98 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 1/07/12/2024
+2024-12-07 13:58:59.23 | Guillaume | APP_v5.G.3.xlsb | wshTEC_TDB_Data:Worksheet_Change($S$6)
+2024-12-07 13:58:59.44 | Guillaume | APP_v5.G.3.xlsb | wshTEC_TDB_Data:Worksheet_Change = 0,3555 sec.
+
+2024-12-07 13:58:59.80 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 1/07/12/2024 = 0,9883 sec.
+
+2024-12-07 13:59:00.06 | Guillaume | APP_v5.G.3.xlsb | modTEC_Saisie:TEC_Modifie_Ligne = 6,1914 sec.
+
+2024-12-07 13:59:00.28 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:cmdUpdate_Click = 6,6328 sec.
+
+2024-12-07 13:59:00.82 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:UserForm_Terminate
+2024-12-07 13:59:01.07 | Guillaume | APP_v5.G.3.xlsb | ufSaisieHeures:UserForm_Terminate = 0,3789 sec.
+
+2024-12-07 13:59:02.85 | Guillaume | APP_v5.G.3.xlsb | modAppli:Hide_All_Worksheets_Except_Menu
+2024-12-07 13:59:03.10 | Guillaume | APP_v5.G.3.xlsb | modAppli:Hide_All_Worksheets_Except_Menu = 0,3945 sec.
+
+2024-12-07 13:59:05.15 | Guillaume | APP_v5.G.3.xlsb | modAppli:Hide_All_Worksheets_Except_Menu
+2024-12-07 13:59:05.38 | Guillaume | APP_v5.G.3.xlsb | modAppli:Hide_All_Worksheets_Except_Menu = 0,3555 sec.
+
+2024-12-07 13:59:05.59 | Guillaume | APP_v5.G.3.xlsb | modMenu:Delete_User_Active_File
+2024-12-07 13:59:05.99 | Guillaume | APP_v5.G.3.xlsb | modMenu:Delete_User_Active_File = 0,5391 sec.
+
+2024-12-07 13:59:06.26 | Guillaume | APP_v5.G.3.xlsb | ***** Session terminée NORMALEMENT (modMenu:Exit_After_Saving) *****
+
+2024-12-07 14:10:54.36 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:UserForm_Activate
+2024-12-07 14:10:54.40 | vgervais | APP_v5.G.0.xlsb | modImport:Client_List_Import_All
+2024-12-07 14:10:54.73 | vgervais | APP_v5.G.0.xlsb | modImport:Client_List_Import_All = 0,3281 sec.
+
+2024-12-07 14:10:54.76 | vgervais | APP_v5.G.0.xlsb | modImport:TEC_Import_All
+2024-12-07 14:10:55.29 | vgervais | APP_v5.G.0.xlsb | modImport:TEC_Import_All = 0,5352 sec.
+
+2024-12-07 14:10:55.33 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:UserForm_Activate = 0,9766 sec.
+
+2024-12-07 14:10:56.80 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate
+2024-12-07 14:10:56.84 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:cmbProfessionnel_AfterUpdate = 0,0430 sec.
+
+2024-12-07 14:11:00.75 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtDate_BeforeUpdate
+2024-12-07 14:11:00.78 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_Complete_Date(2024-12-07, 90, 15)
+2024-12-07 14:11:00.82 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_Complete_Date = 0,0430 sec.
+
+2024-12-07 14:11:00.85 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtDate_BeforeUpdate = 0,1055 sec.
+
+2024-12-07 14:11:00.88 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtDate_AfterUpdate
+2024-12-07 14:11:00.92 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF - 2/12-07-2024
+2024-12-07 14:11:00.99 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF = 0,0781 sec.
+
+2024-12-07 14:11:01.04 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 2/12-07-2024
+2024-12-07 14:11:01.07 | vgervais | APP_v5.G.0.xlsb | wshTEC_TDB_Data:Worksheet_Change($S$6 - VG)
+2024-12-07 14:11:01.11 | vgervais | APP_v5.G.0.xlsb | wshTEC_TDB_Data:Worksheet_Change = 0,0430 sec.
+
+2024-12-07 14:11:01.16 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 2/12-07-2024 = 0,1406 sec.
+
+2024-12-07 14:11:01.20 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtDate_AfterUpdate = 0,3203 sec.
+
+2024-12-07 14:11:07.25 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:chbFacturable_AfterUpdate
+2024-12-07 14:11:07.29 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:chbFacturable_AfterUpdate = 0,0430 sec.
+
+2024-12-07 14:11:11.74 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:lsbHresJour_dblClick[1]
+2024-12-07 14:11:11.77 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_Find_Row_Number_TEC_ID
+2024-12-07 14:11:11.82 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = 2883
+2024-12-07 14:11:11.86 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_Find_Row_Number_TEC_ID = 0,0859 sec.
+
+2024-12-07 14:11:11.91 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:lsbHresJour_dblClick[2884] = 0,1758 sec.
+
+2024-12-07 14:11:11.95 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:chbFacturable_AfterUpdate
+2024-12-07 14:11:11.99 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:chbFacturable_AfterUpdate = 0,0508 sec.
+
+2024-12-07 14:11:20.45 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtHeures_Exit[1,20]
+2024-12-07 14:11:20.49 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtHeures_Exit = 0,0547 sec.
+
+2024-12-07 14:11:38.01 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate[Révision de documentation légale + révision CDC + discussion Guillaume + Option d'achat des actions]
+2024-12-07 14:11:38.05 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtActivite_AfterUpdate = 0,0469 sec.
+
+2024-12-07 14:11:40.16 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate[1,6]
+2024-12-07 14:11:40.19 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate = 0,0391 sec.
+
+2024-12-07 14:11:40.23 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtHeures_Exit[1,60]
+2024-12-07 14:11:40.27 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtHeures_Exit = 0,0430 sec.
+
+2024-12-07 14:11:41.42 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:cmdUpdate_Click[2884]
+2024-12-07 14:11:41.46 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Modifie_Ligne
+2024-12-07 14:11:41.50 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_GetID_From_Client_Name - Les entreprises Lanthier et Papineau Inc. [Alain Lanthier]
+2024-12-07 14:11:41.54 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_GetID_From_Client_Name - 1675 = 0,0430 sec.
+
+2024-12-07 14:11:41.57 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB(2884)
+2024-12-07 14:11:42.04 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - 2884 = 0,4805 sec.
+
+2024-12-07 14:11:42.07 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally(2884)
+2024-12-07 14:11:42.11 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_Find_Row_Number_TEC_ID
+2024-12-07 14:11:42.14 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = 2883
+2024-12-07 14:11:42.18 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_Find_Row_Number_TEC_ID = 0,0742 sec.
+
+2024-12-07 14:11:42.22 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally - 2884 = 0,1523 sec.
+
+2024-12-07 14:11:42.26 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF - 2/12-07-2024
+2024-12-07 14:11:42.33 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF = 0,0781 sec.
+
+2024-12-07 14:11:42.36 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 2/12-07-2024
+2024-12-07 14:11:42.39 | vgervais | APP_v5.G.0.xlsb | wshTEC_TDB_Data:Worksheet_Change($S$6 - VG)
+2024-12-07 14:11:42.43 | vgervais | APP_v5.G.0.xlsb | wshTEC_TDB_Data:Worksheet_Change = 0,0391 sec.
+
+2024-12-07 14:11:42.49 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 2/12-07-2024 = 0,1289 sec.
+
+2024-12-07 14:11:42.52 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Modifie_Ligne = 1,0664 sec.
+
+2024-12-07 14:11:42.56 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:cmdUpdate_Click = 1,1367 sec.
+
+2024-12-07 14:24:54.20 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:lsbHresJour_dblClick[1]
+2024-12-07 14:24:54.24 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_Find_Row_Number_TEC_ID
+2024-12-07 14:24:54.28 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = 2883
+2024-12-07 14:24:54.32 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_Find_Row_Number_TEC_ID = 0,0859 sec.
+
+2024-12-07 14:24:54.39 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:lsbHresJour_dblClick[2884] = 0,1953 sec.
+
+2024-12-07 14:24:56.39 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate[Les entreprises Lanthier et Papineau Inc. [Alain Lanthier]]
+2024-12-07 14:24:56.44 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_GetID_From_Client_Name - Les entreprises Lanthier et Papineau Inc. [Alain Lanthier]
+2024-12-07 14:24:56.48 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_GetID_From_Client_Name - 1675 = 0,0430 sec.
+
+2024-12-07 14:24:56.52 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtClient_AfterUpdate = 0,1328 sec.
+
+2024-12-07 14:24:58.39 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate[1,8]
+2024-12-07 14:24:58.43 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtHeures_AfterUpdate = 0,0430 sec.
+
+2024-12-07 14:24:58.46 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtHeures_Exit[1,80]
+2024-12-07 14:24:58.52 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:txtHeures_Exit = 0,0508 sec.
+
+2024-12-07 14:24:59.75 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:cmdUpdate_Click[2884]
+2024-12-07 14:24:59.79 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Modifie_Ligne
+2024-12-07 14:24:59.83 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_GetID_From_Client_Name - Les entreprises Lanthier et Papineau Inc. [Alain Lanthier]
+2024-12-07 14:24:59.86 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_GetID_From_Client_Name - 1675 = 0,0391 sec.
+
+2024-12-07 14:24:59.89 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB(2884)
+2024-12-07 14:25:00.41 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB - 2884 = 0,5156 sec.
+
+2024-12-07 14:25:00.45 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally(2884)
+2024-12-07 14:25:00.50 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_Find_Row_Number_TEC_ID
+2024-12-07 14:25:00.54 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_Find_Row_Number_TEC_ID - Row # = 2883
+2024-12-07 14:25:00.57 | vgervais | APP_v5.G.0.xlsb | modFunctions:Fn_Find_Row_Number_TEC_ID = 0,0820 sec.
+
+2024-12-07 14:25:00.62 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Record_Add_Or_Update_Locally - 2884 = 0,1758 sec.
+
+2024-12-07 14:25:00.66 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF - 2/12-07-2024
+2024-12-07 14:25:00.72 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Get_All_TEC_AF = 0,0703 sec.
+
+2024-12-07 14:25:00.76 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 2/12-07-2024
+2024-12-07 14:25:00.79 | vgervais | APP_v5.G.0.xlsb | wshTEC_TDB_Data:Worksheet_Change($S$6 - VG)
+2024-12-07 14:25:00.83 | vgervais | APP_v5.G.0.xlsb | wshTEC_TDB_Data:Worksheet_Change = 0,0391 sec.
+
+2024-12-07 14:25:00.89 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours - 2/12-07-2024 = 0,1367 sec.
+
+2024-12-07 14:25:00.94 | vgervais | APP_v5.G.0.xlsb | modTEC_Saisie:TEC_Modifie_Ligne = 1,1523 sec.
+
+2024-12-07 14:25:00.97 | vgervais | APP_v5.G.0.xlsb | ufSaisieHeures:cmdUpdate_Click = 1,2188 sec.
+

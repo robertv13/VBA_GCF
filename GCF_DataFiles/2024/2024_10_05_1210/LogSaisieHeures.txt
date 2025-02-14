@@ -1,0 +1,6 @@
+2024-10-05 06:17:19.8300 | Guillaume | ADD    | 1527 | VG | 10/09/24 | 1709 | Concept P.O.S. Inc. [Mathieu St-Germain] | Suivi pour documentation légale | 0,30 | VRAI |  | 2024-10-05 06:17:19 | 31
+2024-10-05 06:24:40.1600 | Guillaume | ADD    | 1528 | VG | 08/06/26 | 1106 | Dr Frédéric Morin Optométriste Inc. | Suivi/courriel pour documentation légale dividende | 0,30 | VRAI |  | 2024-10-05 06:24:40 | 31
+2024-10-05 06:25:14.5300 | Guillaume | ADD    | 1529 | VG | 05/09/24 | 1106 | Dr Frédéric Morin Optométriste Inc. | Discussion avec Chantal Émond + Suivi pour extrait de résolution avec M. Provencher | 0,40 | VRAI |  | 2024-10-05 06:25:14 | 31
+2024-10-05 06:32:54.8100 | Guillaume | ADD    | 1530 | VG | 06/09/24 | 1775 | 9513-1926 Québec Inc. [Francis Desgagnés] | Révision roulement | 0,20 | VRAI |  | 2024-10-05 06:32:54 | 31
+2024-10-05 06:33:37.3000 | Guillaume | ADD    | 1531 | VG | 10/09/24 | 1775 | 9513-1926 Québec Inc. [Francis Desgagnés] | Révision + correction + suivi avec | 1,30 | VRAI |  | 2024-10-05 06:33:37 | 31
+2024-10-05 09:25:28.6900 | vgervais | UPDATE | 1506 | VG | 2024-10-04 | 1566b | Groupe Dezetech Inc. [Alexandra Morana] | Recherche pour perte | 0,70 | VRAI |  | 2024-10-05 09:25:28 | 31

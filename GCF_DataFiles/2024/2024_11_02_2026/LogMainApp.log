@@ -1,0 +1,490 @@
+2024-11-02 14:29:26.46 | Guillaume | APP_v5.D.0.xlsb | ***** Début d'une nouvelle session (Workbook_Open) ***** |  | 31
+2024-11-02 14:29:26.55 | Guillaume | APP_v5.D.0.xlsb | ThisWorkbook:Create_User_Active_File |  | 31
+2024-11-02 14:29:26.71 | Guillaume | APP_v5.D.0.xlsb | ThisWorkbook:Create_User_Active_File | 0,1641 sec. | 31
+
+2024-11-02 14:29:26.80 | Guillaume | APP_v5.D.0.xlsb | ThisWorkbook:BackupMasterFile |  | 31
+2024-11-02 14:29:28.59 | Guillaume | APP_v5.D.0.xlsb |    ThisWorkbook:BackupMasterFile - La variable masterWorkbook est initialisée |  | 31
+2024-11-02 14:29:29.42 | Guillaume | APP_v5.D.0.xlsb |    ThisWorkbook:BackupMasterFile - La copie est réussie |  | 31
+2024-11-02 14:29:29.63 | Guillaume | APP_v5.D.0.xlsb |    ThisWorkbook:BackupMasterFile - Le fichier masterWorkbook est fermé |  | 31
+2024-11-02 14:29:29.72 | Guillaume | APP_v5.D.0.xlsb | ThisWorkbook:BackupMasterFile | 2,9336 sec. | 31
+
+2024-11-02 14:29:29.80 | Guillaume | APP_v5.D.0.xlsb | modMenu:Hide_Dev_Shapes_Based_On_Username |  | 31
+2024-11-02 14:29:29.89 | Guillaume | APP_v5.D.0.xlsb | modMenu:Hide_Dev_Shapes_Based_On_Username | 0,0977 sec. | 31
+
+2024-11-02 14:29:30.11 | Guillaume | APP_v5.D.0.xlsb | modAppli:Write_Info_On_Main_Menu |  | 31
+2024-11-02 14:29:30.36 | Guillaume | APP_v5.D.0.xlsb | modAppli:Write_Info_On_Main_Menu | 0,2656 sec. | 31
+
+2024-11-02 14:29:30.51 | Guillaume | APP_v5.D.0.xlsb | ThisWorkbook:Workbook_Open | 4,0586 sec. | 31
+
+2024-11-02 14:29:39.78 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_Activate |  | 31
+2024-11-02 14:29:39.89 | Guillaume | APP_v5.D.0.xlsb | modImport:Client_List_Import_All |  | 31
+2024-11-02 14:29:40.81 | Guillaume | APP_v5.D.0.xlsb |      modImport:Client_List_Import_All - Le .CopyFromRecordSet est complétée |  | 31
+2024-11-02 14:29:40.96 | Guillaume | APP_v5.D.0.xlsb |      modImport:Client_List_Import_All - La mise en forme a été appliquée |  | 31
+2024-11-02 14:29:41.12 | Guillaume | APP_v5.D.0.xlsb | modImport:Client_List_Import_All | 1,2422 sec. | 31
+
+2024-11-02 14:29:41.20 | Guillaume | APP_v5.D.0.xlsb | modImport:FAC_Entête_Import_All |  | 31
+2024-11-02 14:29:42.12 | Guillaume | APP_v5.D.0.xlsb |      modImport:FAC_Entête_Import_All - Le .CopyFromRecordSet est complétée |  | 31
+2024-11-02 14:29:42.28 | Guillaume | APP_v5.D.0.xlsb |      modImport:FAC_Entête_Import_All - La mise en forme a été appliquée |  | 31
+2024-11-02 14:29:42.44 | Guillaume | APP_v5.D.0.xlsb | modImport:FAC_Entête_Import_All | 1,2500 sec. | 31
+
+2024-11-02 14:29:42.52 | Guillaume | APP_v5.D.0.xlsb | modImport:FAC_Détails_Import_All |  | 31
+2024-11-02 14:29:43.61 | Guillaume | APP_v5.D.0.xlsb | modImport:FAC_Détails_Import_All | 1,0977 sec. | 31
+
+2024-11-02 14:29:43.70 | Guillaume | APP_v5.D.0.xlsb | modImport:FAC_Comptes_Clients_Import_All |  | 31
+2024-11-02 14:29:44.57 | Guillaume | APP_v5.D.0.xlsb | modImport:FAC_Comptes_Clients_Import_All | 0,8828 sec. | 31
+
+2024-11-02 14:29:44.81 | Guillaume | APP_v5.D.0.xlsb | modDev_Utils:SetTabOrder(wshCAR_Liste_Agée) |  | 31
+2024-11-02 14:29:44.97 | Guillaume | APP_v5.D.0.xlsb | modDev_Utils:SetTabOrder | 0,1758 sec. | 31
+
+2024-11-02 14:29:45.10 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_Change |  | 31
+2024-11-02 14:29:45.18 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_Change | 0,1055 sec. | 31
+
+2024-11-02 14:29:45.30 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange - $B$4 |  | 31
+2024-11-02 14:29:45.40 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | 0,1055 sec. | 31
+
+2024-11-02 14:29:45.51 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_Activate | 5,7422 sec. | 31
+
+2024-11-02 14:33:10.59 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange - $E$40:$E$58 |  | 31
+2024-11-02 14:33:10.68 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | 0,1055 sec. | 31
+
+2024-11-02 14:33:37.58 | Guillaume | APP_v5.D.0.xlsb | wshMenuFAC:FAC_Confirmation_Click |  | 31
+2024-11-02 14:33:37.67 | Guillaume | APP_v5.D.0.xlsb | modImport:FAC_Comptes_Clients_Import_All |  | 31
+2024-11-02 14:33:38.82 | Guillaume | APP_v5.D.0.xlsb | modImport:FAC_Comptes_Clients_Import_All | 1,1602 sec. | 31
+
+2024-11-02 14:33:38.90 | Guillaume | APP_v5.D.0.xlsb | modImport:FAC_Entête_Import_All |  | 31
+2024-11-02 14:33:39.68 | Guillaume | APP_v5.D.0.xlsb |      modImport:FAC_Entête_Import_All - Le .CopyFromRecordSet est complétée |  | 31
+2024-11-02 14:33:39.83 | Guillaume | APP_v5.D.0.xlsb |      modImport:FAC_Entête_Import_All - La mise en forme a été appliquée |  | 31
+2024-11-02 14:33:39.99 | Guillaume | APP_v5.D.0.xlsb | modImport:FAC_Entête_Import_All | 1,1016 sec. | 31
+
+2024-11-02 14:33:40.07 | Guillaume | APP_v5.D.0.xlsb | modImport:FAC_Détails_Import_All |  | 31
+2024-11-02 14:33:41.12 | Guillaume | APP_v5.D.0.xlsb | modImport:FAC_Détails_Import_All | 1,0625 sec. | 31
+
+2024-11-02 14:33:41.24 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:Worksheet_Activate |  | 31
+2024-11-02 14:33:41.32 | Guillaume | APP_v5.D.0.xlsb | modImport:TEC_Import_All |  | 31
+2024-11-02 14:33:42.48 | Guillaume | APP_v5.D.0.xlsb |      modImport:TEC_Import_All - Le .CopyFromRecordSet est complétée |  | 31
+2024-11-02 14:33:42.75 | Guillaume | APP_v5.D.0.xlsb |      modImport:TEC_Import_All - La mise en forme a été appliquée |  | 31
+2024-11-02 14:33:42.91 | Guillaume | APP_v5.D.0.xlsb | modImport:TEC_Import_All | 1,6055 sec. | 31
+
+2024-11-02 14:33:42.00 | Guillaume | APP_v5.D.0.xlsb | modImport:FAC_Entête_Import_All |  | 31
+2024-11-02 14:33:44.02 | Guillaume | APP_v5.D.0.xlsb |      modImport:FAC_Entête_Import_All - Le .CopyFromRecordSet est complétée |  | 31
+2024-11-02 14:33:44.14 | Guillaume | APP_v5.D.0.xlsb |      modImport:FAC_Entête_Import_All - La mise en forme a été appliquée |  | 31
+2024-11-02 14:33:44.30 | Guillaume | APP_v5.D.0.xlsb | modImport:FAC_Entête_Import_All | 1,3203 sec. | 31
+
+2024-11-02 14:33:44.39 | Guillaume | APP_v5.D.0.xlsb | modImport:FAC_Détails_Import_All |  | 31
+2024-11-02 14:33:45.47 | Guillaume | APP_v5.D.0.xlsb | modImport:FAC_Détails_Import_All | 1,0938 sec. | 31
+
+2024-11-02 14:33:45.55 | Guillaume | APP_v5.D.0.xlsb | modImport:FAC_Sommaire_Taux_Import_All |  | 31
+2024-11-02 14:33:46.37 | Guillaume | APP_v5.D.0.xlsb | modImport:FAC_Sommaire_Taux_Import_All | 0,8281 sec. | 31
+
+2024-11-02 14:33:46.50 | Guillaume | APP_v5.D.0.xlsb | modDev_Utils:SetTabOrder(wshFAC_Confirmation) |  | 31
+2024-11-02 14:33:46.73 | Guillaume | APP_v5.D.0.xlsb | modDev_Utils:SetTabOrder | 0,2578 sec. | 31
+
+2024-11-02 14:33:46.82 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon |  | 31
+2024-11-02 14:33:50.43 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon | 3,6484 sec. | 31
+
+2024-11-02 14:33:50.54 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon |  | 31
+2024-11-02 14:33:54.05 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon | 3,5273 sec. | 31
+
+2024-11-02 14:33:54.18 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:Worksheet_Activate | 12,9492 sec. | 31
+
+2024-11-02 14:33:54.29 | Guillaume | APP_v5.D.0.xlsb | wshMenuFAC:FAC_Confirmation_Click | 16,7266 sec. | 31
+
+2024-11-02 14:34:01.61 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Button_Click |  | 31
+2024-11-02 14:34:03.09 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Facture(24-24598) |  | 31
+2024-11-02 14:34:03.17 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER(24-24598) |  | 31
+2024-11-02 14:34:04.63 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER | 1,4727 sec. | 31
+
+2024-11-02 14:34:04.72 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_Locally(24-24598) |  | 31
+2024-11-02 14:34:04.88 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_Locally | 0,1719 sec. | 31
+
+2024-11-02 14:34:04.96 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_GL_Posting(24-24598) |  | 31
+2024-11-02 14:34:05.07 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_To_DB |  | 31
+2024-11-02 14:34:06.30 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_To_DB | 1,2383 sec. | 31
+
+2024-11-02 14:34:06.63 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_Locally |  | 31
+2024-11-02 14:34:07.72 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_Locally | 1,1016 sec. | 31
+
+2024-11-02 14:34:07.82 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_GL_Posting | 2,8750 sec. | 31
+
+2024-11-02 14:34:09.58 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon |  | 31
+2024-11-02 14:34:12.91 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon | 3,3438 sec. | 31
+
+2024-11-02 14:34:13.00 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Facture | 9,9336 sec. | 31
+
+2024-11-02 14:34:13.09 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon |  | 31
+2024-11-02 14:34:16.44 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon | 3,3555 sec. | 31
+
+2024-11-02 14:34:16.52 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Button_Click | 14,9219 sec. | 31
+
+2024-11-02 14:34:23.50 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Button_Click |  | 31
+2024-11-02 14:34:24.82 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Facture(24-24599) |  | 31
+2024-11-02 14:34:24.91 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER(24-24599) |  | 31
+2024-11-02 14:34:26.11 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER | 1,2188 sec. | 31
+
+2024-11-02 14:34:26.20 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_Locally(24-24599) |  | 31
+2024-11-02 14:34:26.33 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_Locally | 0,1406 sec. | 31
+
+2024-11-02 14:34:26.42 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_GL_Posting(24-24599) |  | 31
+2024-11-02 14:34:26.52 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_To_DB |  | 31
+2024-11-02 14:34:27.83 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_To_DB | 1,3320 sec. | 31
+
+2024-11-02 14:34:27.92 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_Locally |  | 31
+2024-11-02 14:34:29.06 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_Locally | 1,1562 sec. | 31
+
+2024-11-02 14:34:29.14 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_GL_Posting | 2,7383 sec. | 31
+
+2024-11-02 14:34:30.50 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon |  | 31
+2024-11-02 14:34:33.57 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon | 3,0898 sec. | 31
+
+2024-11-02 14:34:33.65 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Facture | 8,8438 sec. | 31
+
+2024-11-02 14:34:33.73 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon |  | 31
+2024-11-02 14:34:36.76 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon | 3,0703 sec. | 31
+
+2024-11-02 14:34:36.88 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Button_Click | 13,3906 sec. | 31
+
+2024-11-02 14:34:41.23 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Button_Click |  | 31
+2024-11-02 14:34:42.63 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Facture(24-24600) |  | 31
+2024-11-02 14:34:42.71 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER(24-24600) |  | 31
+2024-11-02 14:34:43.77 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER | 1,0703 sec. | 31
+
+2024-11-02 14:34:43.86 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_Locally(24-24600) |  | 31
+2024-11-02 14:34:44.04 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_Locally | 0,2188 sec. | 31
+
+2024-11-02 14:34:44.14 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_GL_Posting(24-24600) |  | 31
+2024-11-02 14:34:44.22 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_To_DB |  | 31
+2024-11-02 14:34:45.48 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_To_DB | 1,2773 sec. | 31
+
+2024-11-02 14:34:45.57 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_Locally |  | 31
+2024-11-02 14:34:46.88 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_Locally | 1,3242 sec. | 31
+
+2024-11-02 14:34:46.96 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_GL_Posting | 2,8398 sec. | 31
+
+2024-11-02 14:34:48.29 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon |  | 31
+2024-11-02 14:34:51.11 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon | 2,8320 sec. | 31
+
+2024-11-02 14:34:51.20 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Facture | 8,5859 sec. | 31
+
+2024-11-02 14:34:51.28 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon |  | 31
+2024-11-02 14:34:53.99 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon | 2,7266 sec. | 31
+
+2024-11-02 14:34:54.08 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Button_Click | 12,8711 sec. | 31
+
+2024-11-02 14:34:58.01 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Button_Click |  | 31
+2024-11-02 14:34:59.41 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Facture(24-24601) |  | 31
+2024-11-02 14:34:59.54 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER(24-24601) |  | 31
+2024-11-02 14:35:00.64 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER | 1,1250 sec. | 31
+
+2024-11-02 14:35:00.73 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_Locally(24-24601) |  | 31
+2024-11-02 14:35:00.89 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_Locally | 0,1797 sec. | 31
+
+2024-11-02 14:35:00.97 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_GL_Posting(24-24601) |  | 31
+2024-11-02 14:35:01.06 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_To_DB |  | 31
+2024-11-02 14:35:02.38 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_To_DB | 1,3359 sec. | 31
+
+2024-11-02 14:35:02.47 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_Locally |  | 31
+2024-11-02 14:35:03.54 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_Locally | 1,0820 sec. | 31
+
+2024-11-02 14:35:03.63 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_GL_Posting | 2,6680 sec. | 31
+
+2024-11-02 14:35:04.00 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon |  | 31
+2024-11-02 14:35:07.45 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon | 2,4688 sec. | 31
+
+2024-11-02 14:35:07.53 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Facture | 8,1445 sec. | 31
+
+2024-11-02 14:35:07.63 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon |  | 31
+2024-11-02 14:35:10.12 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon | 2,5312 sec. | 31
+
+2024-11-02 14:35:10.23 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Button_Click | 12,2305 sec. | 31
+
+2024-11-02 14:35:14.08 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Button_Click |  | 31
+2024-11-02 14:35:16.13 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Facture(24-24602) |  | 31
+2024-11-02 14:35:16.25 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER(24-24602) |  | 31
+2024-11-02 14:35:17.52 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER | 1,2734 sec. | 31
+
+2024-11-02 14:35:17.59 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_Locally(24-24602) |  | 31
+2024-11-02 14:35:17.73 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_Locally | 0,1562 sec. | 31
+
+2024-11-02 14:35:17.82 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_GL_Posting(24-24602) |  | 31
+2024-11-02 14:35:18.14 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_To_DB |  | 31
+2024-11-02 14:35:19.38 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_To_DB | 1,2500 sec. | 31
+
+2024-11-02 14:35:19.70 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_Locally |  | 31
+2024-11-02 14:35:20.77 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_Locally | 1,0859 sec. | 31
+
+2024-11-02 14:35:20.86 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_GL_Posting | 3,0430 sec. | 31
+
+2024-11-02 14:35:22.38 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon |  | 31
+2024-11-02 14:35:24.57 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon | 2,2070 sec. | 31
+
+2024-11-02 14:35:24.66 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Facture | 8,5469 sec. | 31
+
+2024-11-02 14:35:24.75 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon |  | 31
+2024-11-02 14:35:26.88 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon | 2,1797 sec. | 31
+
+2024-11-02 14:35:27.00 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Button_Click | 12,9414 sec. | 31
+
+2024-11-02 14:35:31.18 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Button_Click |  | 31
+2024-11-02 14:35:32.33 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Facture(24-24603) |  | 31
+2024-11-02 14:35:32.43 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER(24-24603) |  | 31
+2024-11-02 14:35:33.65 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER | 1,2344 sec. | 31
+
+2024-11-02 14:35:33.73 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_Locally(24-24603) |  | 31
+2024-11-02 14:35:33.88 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_Locally | 0,1602 sec. | 31
+
+2024-11-02 14:35:33.96 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_GL_Posting(24-24603) |  | 31
+2024-11-02 14:35:34.06 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_To_DB |  | 31
+2024-11-02 14:35:35.04 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_To_DB | 0,9922 sec. | 31
+
+2024-11-02 14:35:35.12 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_Locally |  | 31
+2024-11-02 14:35:36.45 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_Locally | 1,3398 sec. | 31
+
+2024-11-02 14:35:36.53 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_GL_Posting | 2,5820 sec. | 31
+
+2024-11-02 14:35:38.00 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon |  | 31
+2024-11-02 14:35:40.09 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon | 2,1016 sec. | 31
+
+2024-11-02 14:35:40.17 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Facture | 7,8594 sec. | 31
+
+2024-11-02 14:35:40.26 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon |  | 31
+2024-11-02 14:35:42.22 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon | 1,9766 sec. | 31
+
+2024-11-02 14:35:42.31 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Button_Click | 11,1445 sec. | 31
+
+2024-11-02 14:35:47.01 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Button_Click |  | 31
+2024-11-02 14:35:48.52 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Facture(24-24604) |  | 31
+2024-11-02 14:35:48.61 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER(24-24604) |  | 31
+2024-11-02 14:35:49.69 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER | 1,0898 sec. | 31
+
+2024-11-02 14:35:49.77 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_Locally(24-24604) |  | 31
+2024-11-02 14:35:49.92 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_Locally | 0,1641 sec. | 31
+
+2024-11-02 14:35:49.00 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_GL_Posting(24-24604) |  | 31
+2024-11-02 14:35:50.09 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_To_DB |  | 31
+2024-11-02 14:35:51.13 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_To_DB | 1,0547 sec. | 31
+
+2024-11-02 14:35:51.21 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_Locally |  | 31
+2024-11-02 14:35:52.31 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_Locally | 1,1133 sec. | 31
+
+2024-11-02 14:35:52.39 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_GL_Posting | 2,4180 sec. | 31
+
+2024-11-02 14:35:53.86 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon |  | 31
+2024-11-02 14:35:55.50 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon | 1,6641 sec. | 31
+
+2024-11-02 14:35:55.59 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Facture | 7,0820 sec. | 31
+
+2024-11-02 14:35:55.68 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon |  | 31
+2024-11-02 14:35:57.33 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon | 1,6602 sec. | 31
+
+2024-11-02 14:35:57.41 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Button_Click | 10,4141 sec. | 31
+
+2024-11-02 14:36:01.71 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Button_Click |  | 31
+2024-11-02 14:36:02.75 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Facture(24-24605) |  | 31
+2024-11-02 14:36:02.84 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER(24-24605) |  | 31
+2024-11-02 14:36:04.11 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER | 1,2852 sec. | 31
+
+2024-11-02 14:36:04.20 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_Locally(24-24605) |  | 31
+2024-11-02 14:36:04.34 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_Locally | 0,1602 sec. | 31
+
+2024-11-02 14:36:04.43 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_GL_Posting(24-24605) |  | 31
+2024-11-02 14:36:04.52 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_To_DB |  | 31
+2024-11-02 14:36:05.92 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_To_DB | 1,4102 sec. | 31
+
+2024-11-02 14:36:06.00 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_Locally |  | 31
+2024-11-02 14:36:07.31 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_Locally | 1,3203 sec. | 31
+
+2024-11-02 14:36:07.40 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_GL_Posting | 2,9883 sec. | 31
+
+2024-11-02 14:36:08.79 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon |  | 31
+2024-11-02 14:36:10.11 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon | 1,3438 sec. | 31
+
+2024-11-02 14:36:10.20 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Facture | 7,4531 sec. | 31
+
+2024-11-02 14:36:10.28 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon |  | 31
+2024-11-02 14:36:11.72 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon | 1,4844 sec. | 31
+
+2024-11-02 14:36:11.84 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Button_Click | 10,1484 sec. | 31
+
+2024-11-02 14:36:16.07 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Button_Click |  | 31
+2024-11-02 14:36:17.14 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Facture(24-24606) |  | 31
+2024-11-02 14:36:17.24 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER(24-24606) |  | 31
+2024-11-02 14:36:18.43 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER | 1,2070 sec. | 31
+
+2024-11-02 14:36:18.52 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_Locally(24-24606) |  | 31
+2024-11-02 14:36:18.65 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_Locally | 0,1445 sec. | 31
+
+2024-11-02 14:36:18.97 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_GL_Posting(24-24606) |  | 31
+2024-11-02 14:36:19.07 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_To_DB |  | 31
+2024-11-02 14:36:20.24 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_To_DB | 1,1875 sec. | 31
+
+2024-11-02 14:36:20.32 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_Locally |  | 31
+2024-11-02 14:36:21.46 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_Locally | 1,1523 sec. | 31
+
+2024-11-02 14:36:21.55 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_GL_Posting | 2,5898 sec. | 31
+
+2024-11-02 14:36:23.13 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon |  | 31
+2024-11-02 14:36:24.17 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon | 1,0625 sec. | 31
+
+2024-11-02 14:36:24.29 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Facture | 7,1953 sec. | 31
+
+2024-11-02 14:36:24.42 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon |  | 31
+2024-11-02 14:36:25.46 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon | 1,0547 sec. | 31
+
+2024-11-02 14:36:25.56 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Button_Click | 9,5039 sec. | 31
+
+2024-11-02 14:36:29.60 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Button_Click |  | 31
+2024-11-02 14:36:30.59 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Facture(24-24607) |  | 31
+2024-11-02 14:36:30.70 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER(24-24607) |  | 31
+2024-11-02 14:36:31.96 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER | 1,2773 sec. | 31
+
+2024-11-02 14:36:32.05 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_Locally(24-24607) |  | 31
+2024-11-02 14:36:32.19 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_Locally | 0,1562 sec. | 31
+
+2024-11-02 14:36:32.29 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_GL_Posting(24-24607) |  | 31
+2024-11-02 14:36:32.38 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_To_DB |  | 31
+2024-11-02 14:36:33.52 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_To_DB | 1,1562 sec. | 31
+
+2024-11-02 14:36:33.61 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_Locally |  | 31
+2024-11-02 14:36:34.70 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_Locally | 1,1094 sec. | 31
+
+2024-11-02 14:36:34.79 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_GL_Posting | 2,5195 sec. | 31
+
+2024-11-02 14:36:36.12 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon |  | 31
+2024-11-02 14:36:36.95 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon | 0,8438 sec. | 31
+
+2024-11-02 14:36:37.06 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Facture | 6,5117 sec. | 31
+
+2024-11-02 14:36:37.16 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon |  | 31
+2024-11-02 14:36:37.87 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon | 0,7266 sec. | 31
+
+2024-11-02 14:36:37.97 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Button_Click | 8,3828 sec. | 31
+
+2024-11-02 14:36:41.84 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Button_Click |  | 31
+2024-11-02 14:36:43.09 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Facture(24-24608) |  | 31
+2024-11-02 14:36:43.18 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER(24-24608) |  | 31
+2024-11-02 14:36:44.29 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_BD_MASTER | 1,1250 sec. | 31
+
+2024-11-02 14:36:44.37 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_Locally(24-24608) |  | 31
+2024-11-02 14:36:44.52 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Update_Locally | 0,1641 sec. | 31
+
+2024-11-02 14:36:44.61 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_GL_Posting(24-24608) |  | 31
+2024-11-02 14:36:44.70 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_To_DB |  | 31
+2024-11-02 14:36:45.79 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_To_DB | 1,1094 sec. | 31
+
+2024-11-02 14:36:45.94 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_Locally |  | 31
+2024-11-02 14:36:47.01 | Guillaume | APP_v5.D.0.xlsb | modGL_Posting:GL_Posting_Locally | 1,0859 sec. | 31
+
+2024-11-02 14:36:47.10 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_GL_Posting | 2,5039 sec. | 31
+
+2024-11-02 14:36:49.01 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon |  | 31
+2024-11-02 14:36:49.41 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon | 0,4102 sec. | 31
+
+2024-11-02 14:36:49.49 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Facture | 6,4180 sec. | 31
+
+2024-11-02 14:36:49.57 | Guillaume | APP_v5.D.0.xlsb | wshFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon |  | 31
+2024-11-02 14:36:49.88 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Clear_Cells_And_PDF_Icon | 0,3281 sec. | 31
+
+2024-11-02 14:36:49.97 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:FAC_Confirmation_Button_Click | 8,1445 sec. | 31
+
+2024-11-02 14:36:51.30 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:Back_To_FAC_Menu |  | 31
+2024-11-02 14:36:51.48 | Guillaume | APP_v5.D.0.xlsb | modFAC_Confirmation:Back_To_FAC_Menu | 0,1875 sec. | 31
+
+2024-11-02 14:36:57.61 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_Activate |  | 31
+2024-11-02 14:36:57.97 | Guillaume | APP_v5.D.0.xlsb | modImport:Client_List_Import_All |  | 31
+2024-11-02 14:36:58.76 | Guillaume | APP_v5.D.0.xlsb |      modImport:Client_List_Import_All - Le .CopyFromRecordSet est complétée |  | 31
+2024-11-02 14:36:58.93 | Guillaume | APP_v5.D.0.xlsb |      modImport:Client_List_Import_All - La mise en forme a été appliquée |  | 31
+2024-11-02 14:36:59.13 | Guillaume | APP_v5.D.0.xlsb | modImport:Client_List_Import_All | 1,1719 sec. | 31
+
+2024-11-02 14:36:59.22 | Guillaume | APP_v5.D.0.xlsb | modImport:FAC_Entête_Import_All |  | 31
+2024-11-02 14:37:00.12 | Guillaume | APP_v5.D.0.xlsb |      modImport:FAC_Entête_Import_All - Le .CopyFromRecordSet est complétée |  | 31
+2024-11-02 14:37:00.27 | Guillaume | APP_v5.D.0.xlsb |      modImport:FAC_Entête_Import_All - La mise en forme a été appliquée |  | 31
+2024-11-02 14:37:00.45 | Guillaume | APP_v5.D.0.xlsb | modImport:FAC_Entête_Import_All | 1,2383 sec. | 31
+
+2024-11-02 14:37:00.53 | Guillaume | APP_v5.D.0.xlsb | modImport:FAC_Détails_Import_All |  | 31
+2024-11-02 14:37:01.72 | Guillaume | APP_v5.D.0.xlsb | modImport:FAC_Détails_Import_All | 1,2070 sec. | 31
+
+2024-11-02 14:37:01.81 | Guillaume | APP_v5.D.0.xlsb | modImport:FAC_Comptes_Clients_Import_All |  | 31
+2024-11-02 14:37:02.62 | Guillaume | APP_v5.D.0.xlsb | modImport:FAC_Comptes_Clients_Import_All | 0,8281 sec. | 31
+
+2024-11-02 14:37:02.86 | Guillaume | APP_v5.D.0.xlsb | modDev_Utils:SetTabOrder(wshCAR_Liste_Agée) |  | 31
+2024-11-02 14:37:02.00 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange - $B$4 |  | 31
+2024-11-02 14:37:03.09 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | 0,1055 sec. | 31
+
+2024-11-02 14:37:03.30 | Guillaume | APP_v5.D.0.xlsb | modDev_Utils:SetTabOrder | 0,4570 sec. | 31
+
+2024-11-02 14:37:03.46 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_Change |  | 31
+2024-11-02 14:37:03.55 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_Change | 0,1133 sec. | 31
+
+2024-11-02 14:37:03.68 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange - $B$4 |  | 31
+2024-11-02 14:37:03.80 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | 0,1445 sec. | 31
+
+2024-11-02 14:37:03.91 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_Activate | 6,3125 sec. | 31
+
+2024-11-02 14:37:39.77 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange - $F$59 |  | 31
+2024-11-02 14:37:39.90 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | 0,1523 sec. | 31
+
+2024-11-02 14:37:44.61 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange - $F$59:$F$69 |  | 31
+2024-11-02 14:37:44.72 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | 0,1250 sec. | 31
+
+2024-11-02 14:41:16.10 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange - $B$40 |  | 31
+2024-11-02 14:41:16.23 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | 0,1445 sec. | 31
+
+2024-11-02 14:44:56.76 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange - $B$41 |  | 31
+2024-11-02 14:44:56.89 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | 0,1445 sec. | 31
+
+2024-11-02 14:44:57.36 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange - $B$42 |  | 31
+2024-11-02 14:44:57.46 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | 0,1133 sec. | 31
+
+2024-11-02 14:44:59.16 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange - $B$43 |  | 31
+2024-11-02 14:44:59.26 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | 0,1133 sec. | 31
+
+2024-11-02 14:45:01.19 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange - $B$44 |  | 31
+2024-11-02 14:45:01.29 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | 0,1133 sec. | 31
+
+2024-11-02 14:45:04.01 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange - $B$45 |  | 31
+2024-11-02 14:45:04.11 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | 0,1094 sec. | 31
+
+2024-11-02 14:45:05.25 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange - $B$46 |  | 31
+2024-11-02 14:45:05.34 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | 0,1133 sec. | 31
+
+2024-11-02 14:45:08.50 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange - $B$47 |  | 31
+2024-11-02 14:45:08.63 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | 0,1406 sec. | 31
+
+2024-11-02 14:45:09.31 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange - $B$48 |  | 31
+2024-11-02 14:45:09.41 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | 0,1133 sec. | 31
+
+2024-11-02 14:45:10.48 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange - $B$49 |  | 31
+2024-11-02 14:45:10.61 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | 0,1680 sec. | 31
+
+2024-11-02 14:45:11.98 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange - $B$50 |  | 31
+2024-11-02 14:45:12.07 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | 0,1094 sec. | 31
+
+2024-11-02 14:45:12.79 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange - $B$51 |  | 31
+2024-11-02 14:45:12.89 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | 0,1211 sec. | 31
+
+2024-11-02 14:45:16.20 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange - $B$52 |  | 31
+2024-11-02 14:45:16.29 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | 0,1094 sec. | 31
+
+2024-11-02 14:45:17.70 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange - $B$53 |  | 31
+2024-11-02 14:45:17.80 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | 0,1250 sec. | 31
+
+2024-11-02 14:45:18.66 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange - $B$54 |  | 31
+2024-11-02 14:45:18.75 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | 0,1055 sec. | 31
+
+2024-11-02 14:45:20.14 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange - $B$55 |  | 31
+2024-11-02 14:45:20.23 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | 0,1016 sec. | 31
+
+2024-11-02 14:45:20.76 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange - $B$56 |  | 31
+2024-11-02 14:45:20.89 | Guillaume | APP_v5.D.0.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | 0,1484 sec. | 31
+
+2024-11-02 14:45:47.10 | Guillaume | APP_v5.D.0.xlsb | modAppli:Hide_All_Worksheets_Except_Menu |  | 31
+2024-11-02 14:45:47.27 | Guillaume | APP_v5.D.0.xlsb | modAppli:Hide_All_Worksheets_Except_Menu | 0,1914 sec. | 31
+
+2024-11-02 14:55:00.51 | Guillaume | APP_v5.D.0.xlsb | modAppli:Hide_All_Worksheets_Except_Menu |  | 31
+2024-11-02 14:55:00.60 | Guillaume | APP_v5.D.0.xlsb | modAppli:Hide_All_Worksheets_Except_Menu | 0,1055 sec. | 31
+
+2024-11-02 14:55:00.71 | Guillaume | APP_v5.D.0.xlsb | modMenu:Delete_User_Active_File |  | 31
+2024-11-02 14:55:00.98 | Guillaume | APP_v5.D.0.xlsb | modMenu:Delete_User_Active_File | 0,2852 sec. | 31
+
+2024-11-02 14:55:01.07 | Guillaume | APP_v5.D.0.xlsb | ***** Session terminée NORMALEMENT avec la procédure 'modMenu:Exit_After_Saving' ***** |  | 31
+

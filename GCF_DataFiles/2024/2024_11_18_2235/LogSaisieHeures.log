@@ -1,0 +1,28 @@
+2024-11-17 09:43:06.01 | GuillaumeCharron    | APP_v5.D.1.xlsb | ADD    2484 | GC | 17/11/24 | 1470 | 9103-5147 Québec Inc. [Voyage ALM] | répondre question sur cotisations REER | 0,25 | VRAI |  | 31
+2024-11-17 09:43:30.43 | GuillaumeCharron    | APP_v5.D.1.xlsb | ADD    2485 | GC | 17/11/24 | 104 | Groupe Millénium Micro Inc. [Carl Paquin] | courriels avec Alain sur révision T2 | 0,50 | VRAI |  | 31
+2024-11-17 09:53:59.07 | GuillaumeCharron    | APP_v5.D.1.xlsb | ADD    2486 | GC | 17/11/24 | 1782 | Les Placements Jean-Luc Roy Inc. | analyse de ce que Richard a préparé pour le CDC et commentaires | 0,50 | VRAI |  | 31
+2024-11-17 17:26:36.26 | GuillaumeCharron    | APP_v5.D.1.xlsb | ADD    2487 | GC | 17/11/24 | 1798 | Mylène Lapierre CPA Inc. | courriel sur infos manquantes | 0,25 | VRAI |  | 31
+2024-11-18 08:18:05.58 | User                | APP_v5.D.1.xlsb | ADD    2488 | ML | 2024-11-15 | 1803 | Construction Nelson Inc. [Nelson Massicotte] | Examen et correction du CA de VR Rive-Nord + courriel synthèse à Guillaume | 1,50 | VRAI |  | 31
+2024-11-18 08:18:33.31 | User                | APP_v5.D.1.xlsb | ADD    2489 | ML | 2024-11-15 | 1798 | Mylène Lapierre CPA Inc. | Montage des CA des sociétés  | 3,75 | VRAI |  | 31
+2024-11-18 08:19:00.53 | User                | APP_v5.D.1.xlsb | ADD    2490 | ML | 2024-11-15 | 5 | z_Administratif_Autres non chargeables | Installation de l'imprimante | 2,50 | FAUX |  | 31
+2024-11-18 10:12:58.61 | vgervais            | APP_v5.D.1.xlsb | ADD    2491 | VG | 2024-11-18 | 1506 | Bureau Vétérinaire Griffintown Inc. [Marie-Hélène Tétreault] | Courriel à Julie | 0,50 | VRAI |  | 31
+2024-11-18 10:13:41.40 | vgervais            | APP_v5.D.1.xlsb | ADD    2492 | VG | 2024-11-18 | 1798 | Mylène Lapierre CPA Inc. | Discussion avec Michel -fusion | 0,50 | VRAI |  | 31
+2024-11-18 10:15:12.26 | vgervais            | APP_v5.D.1.xlsb | UPDATE 2492 | VG | 2024-11-18 | 1798 | Mylène Lapierre CPA Inc. | Discussion avec Michel -fusion | 0,70 | VRAI |  | 31
+2024-11-18 10:16:59.12 | vgervais            | APP_v5.D.1.xlsb | ADD    2493 | VG | 2024-11-18 | 5 | z_Administratif_Autres non chargeables | Planning + Suivis dossiers | 0,70 | VRAI |  | 31
+2024-11-18 10:35:15.42 | vgervais            | APP_v5.D.1.xlsb | ADD    2494 | VG | 2024-11-18 | 1430 | Librairie Lu-Lu Inc. [Émilie Arcand-Dubois] | Envoi courriel Yvon Corriveau | 0,40 | VRAI |  | 31
+2024-11-18 10:35:24.31 | vgervais            | APP_v5.D.1.xlsb | UPDATE 2493 | VG | 2024-11-18 | 5 | z_Administratif_Autres non chargeables | Planning + Suivis dossiers | 0,70 | FAUX |  | 31
+2024-11-18 10:50:46.65 | vgervais            | APP_v5.D.1.xlsb | UPDATE 2494 | VG | 2024-11-18 | 1430 | Librairie Lu-Lu Inc. [Émilie Arcand-Dubois] | Envoi courriel Yvon Corriveau + convos téléphoniques | 0,40 | VRAI |  | 31
+2024-11-18 11:07:38.33 | vgervais            | APP_v5.D.1.xlsb | ADD    2495 | VG | 2024-11-18 | 1785 | 9172-2264 Québec Inc. [Technologies MFG] | Répondre couriel + discussion M. Normand | 0,20 | VRAI |  | 31
+2024-11-18 14:29:24.60 | vgervais            | APP_v5.D.1.xlsb | ADD    2496 | VG | 2024-11-18 | 1779 | 9098-2885 Québec Inc. [Denis Bisson] | Réviser BV avec mémorandum | 0,80 | VRAI |  | 31
+2024-11-18 14:30:24.61 | vgervais            | APP_v5.D.1.xlsb | ADD    2497 | VG | 2024-11-18 | 1739 | Groupe Coalitech Inc. [Techvac Équipement] | Revoir MÉMO | 0,50 | VRAI |  | 31
+2024-11-18 14:32:18.22 | GuillaumeCharron    | APP_v5.D.1.xlsb | ADD    2498 | GC | 18/11/24 | 1611 | Racine Petits Fruits 2014 Inc. [Annie Perrier / Daniel Racine] | échanges de courriels avec avocat | 0,75 | VRAI |  | 31
+2024-11-18 14:44:42.84 | GuillaumeCharron    | APP_v5.D.1.xlsb | ADD    2499 | GC | 18/11/24 | 1782 | Les Placements Jean-Luc Roy Inc. | révision de CDC et commentaires | 0,75 | VRAI |  | 31
+2024-11-18 15:46:27.45 | vgervais            | APP_v5.D.1.xlsb | ADD    2500 | VG | 2024-11-18 | 503 | Succession Jacques Raymond [Daniel Raymond] | Vérifier mes notes + courriel | 0,40 | VRAI |  | 31
+2024-11-18 15:51:45.50 | vgervais            | APP_v5.D.1.xlsb | UPDATE 2495 | VG | 2024-11-18 | 1785 | 9172-2264 Québec Inc. [Technologies MFG] | Répondre couriel + discussion M. Normand | 0,30 | VRAI |  | 31
+2024-11-18 16:08:47.11 | vgervais            | APP_v5.D.1.xlsb | UPDATE 2496 | VG | 2024-11-18 | 1779 | 9098-2885 Québec Inc. [Denis Bisson] | Réviser BV avec mémorandum + Convos téléphoniqie | 1,10 | VRAI |  | 31
+2024-11-18 16:17:13.95 | GuillaumeCharron    | APP_v5.D.1.xlsb | ADD    2501 | GC | 18/11/24 | 1721 | Les Systèmes Domotinc Inc. [Jean-Pier Talbot] | courriel sur non-production de T2 2023 et impacts de réorg | 0,40 | VRAI |  | 31
+2024-11-18 16:54:07.19 | vgervais            | APP_v5.D.1.xlsb | ADD    2502 | VG | 2024-11-18 | 537 | Succession Émile Fouarge [Michelle Fouarge] | Discussion avec Pierre-Luc Gagnon + Courriel Michel | 0,40 | VRAI |  | 31
+2024-11-18 18:48:50.87 | vgervais            | APP_v5.D.1.xlsb | ADD    2503 | VG | 2024-11-18 | 1798 | Mylène Lapierre CPA Inc. | Analyse livre des minutes  | 1,50 | VRAI |  | 31
+2024-11-18 19:02:02.33 | GuillaumeCharron    | APP_v5.D.1.xlsb | ADD    2504 | GC | 18/11/24 | 1779 | 9098-2885 Québec Inc. [Denis Bisson] | révision de contrat de vente et commentaires | 2,50 | VRAI |  | 31
+2024-11-18 21:42:58.63 | vgervais            | APP_v5.D.1.xlsb | UPDATE 2503 | VG | 2024-11-18 | 1798 | Mylène Lapierre CPA Inc. | Analyse livre des minutes  | 2,80 | VRAI |  | 31
+2024-11-18 21:43:12.68 | vgervais            | APP_v5.D.1.xlsb | UPDATE 2493 | VG | 2024-11-18 | 5 | z_Administratif_Autres non chargeables | Planning + Suivis dossiers | 1,10 | FAUX |  | 31

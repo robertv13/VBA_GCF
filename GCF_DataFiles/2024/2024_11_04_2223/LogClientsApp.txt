@@ -1,0 +1,86 @@
+2024-11-04_12:17:30|Clients_v4.1.xlsm|Guillaume|***** Début de session - Workbook_Open *****|||
+2024-11-04_12:17:30|Clients_v4.1.xlsm|Guillaume|modMain|CM_Client_List_Import_All||
+2024-11-04_12:17:31|Clients_v4.1.xlsm|Guillaume|modMain|CM_Apply_Worksheet_Format||
+2024-11-04_12:17:31|Clients_v4.1.xlsm|Guillaume|modMain|CM_Apply_Worksheet_Format (sortie)|Temps écoulé: 0,3281 secondes|1103
+
+2024-11-04_12:17:31|Clients_v4.1.xlsm|Guillaume|modMain|CM_Client_List_Import_All (sortie)|Temps écoulé: 1,5000 secondes|
+
+2024-11-04_12:17:31|Clients_v4.1.xlsm|Guillaume|ufClientMF|UserForm_Initialize||
+2024-11-04_12:17:32|Clients_v4.1.xlsm|Guillaume|modMain|CM_Reset_UserForm||
+2024-11-04_12:17:32|Clients_v4.1.xlsm|Guillaume|modMain|CM_Add_SearchColumn||
+2024-11-04_12:17:32|Clients_v4.1.xlsm|Guillaume|ufClientMF|cmbSearchColumn_Change||
+2024-11-04_12:17:32|Clients_v4.1.xlsm|Guillaume|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,2734 secondes|Client_ID
+
+2024-11-04_12:17:32|Clients_v4.1.xlsm|Guillaume|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,6211 secondes|
+
+2024-11-04_12:17:33|Clients_v4.1.xlsm|Guillaume|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 0,9922 secondes| Row=1104
+
+2024-11-04_12:17:33|Clients_v4.1.xlsm|Guillaume|ufClientMF|UserForm_Initialize (sortie)|Temps écoulé: 1,3477 secondes|
+
+2024-11-04_12:17:36|Clients_v4.1.xlsm|Guillaume|ufClientMF|txtNomClient_Exit||
+2024-11-04_12:17:36|Clients_v4.1.xlsm|Guillaume|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,2930 secondes|
+
+2024-11-04_12:17:36|Clients_v4.1.xlsm|Guillaume|ufClientMF|cmdAddClient_Click||
+2024-11-04_12:17:36|Clients_v4.1.xlsm|Guillaume|modMain|CM_Reset_UserForm||
+2024-11-04_12:17:37|Clients_v4.1.xlsm|Guillaume|modMain|CM_Add_SearchColumn||
+2024-11-04_12:17:37|Clients_v4.1.xlsm|Guillaume|ufClientMF|cmbSearchColumn_Change||
+2024-11-04_12:17:37|Clients_v4.1.xlsm|Guillaume|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,2930 secondes|
+
+2024-11-04_12:17:37|Clients_v4.1.xlsm|Guillaume|ufClientMF|cmbSearchColumn_Change||
+2024-11-04_12:17:37|Clients_v4.1.xlsm|Guillaume|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,2852 secondes|Client_ID
+
+2024-11-04_12:17:37|Clients_v4.1.xlsm|Guillaume|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 0,9883 secondes|
+
+2024-11-04_12:17:38|Clients_v4.1.xlsm|Guillaume|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 1,3984 secondes| Row=1104
+
+2024-11-04_12:17:40|Clients_v4.1.xlsm|Guillaume|ufClientMF|cmdAddClient_Click (sortie)|Temps écoulé: 3,7578 secondes|
+
+2024-11-04_12:17:43|Clients_v4.1.xlsm|Guillaume|ufClientMF|txtCodeClient_Exit||
+2024-11-04_12:17:43|Clients_v4.1.xlsm|Guillaume|modMain|Fn_Is_Client_Code_Already_Used||
+2024-11-04_12:17:43|Clients_v4.1.xlsm|Guillaume|modMain|Fn_Is_Client_Code_Already_Used|checkPoint|FAUX
+2024-11-04_12:17:43|Clients_v4.1.xlsm|Guillaume|modMain|Fn_Is_Client_Code_Already_Used (sortie)|Temps écoulé: 0,4609 secondes|
+
+2024-11-04_12:17:43|Clients_v4.1.xlsm|Guillaume|ufClientMF|txtCodeClient_Exit (sortie)|Temps écoulé: 0,8359 secondes|1811
+
+2024-11-04_12:18:00|Clients_v4.1.xlsm|Guillaume|ufClientMF|txtNomClient_Exit||
+2024-11-04_12:18:01|Clients_v4.1.xlsm|Guillaume|ufClientMF|txtNomClient_Exit (sortie)|Temps écoulé: 0,3438 secondes|Aymeric Bergeron (Garderie à venir)
+
+2024-11-04_12:19:08|Clients_v4.1.xlsm|Guillaume|modMain|Fn_Fix_Txt_Fin_Annee||
+2024-11-04_12:19:08|Clients_v4.1.xlsm|Guillaume|modMain|Fn_Fix_Txt_Fin_Annee (sortie)|Temps écoulé: 0,3281 secondes|
+
+2024-11-04_12:19:12|Clients_v4.1.xlsm|Guillaume|ufClientMF|cmdSave_Click||
+2024-11-04_12:19:12|Clients_v4.1.xlsm|Guillaume|modMain|Fn_ValidateEntries||
+2024-11-04_12:19:12|Clients_v4.1.xlsm|Guillaume|modMain|Fn_ValidateEntries (sortie)|Temps écoulé: 0,3203 secondes|
+
+2024-11-04_12:19:12|Clients_v4.1.xlsm|Guillaume|ufClientMF|Fix_Some_Fields||
+2024-11-04_12:19:12|Clients_v4.1.xlsm|Guillaume|ufClientMF|Fix_Some_Fields (sortie)|Temps écoulé: 0,2773 secondes|
+
+2024-11-04_12:19:14|Clients_v4.1.xlsm|Guillaume|modMain|Fn_Is_Client_Code_Already_Used||
+2024-11-04_12:19:15|Clients_v4.1.xlsm|Guillaume|modMain|Fn_Is_Client_Code_Already_Used|checkPoint|FAUX
+2024-11-04_12:19:15|Clients_v4.1.xlsm|Guillaume|modMain|Fn_Is_Client_Code_Already_Used (sortie)|Temps écoulé: 0,5703 secondes|
+
+2024-11-04_12:19:15|Clients_v4.1.xlsm|Guillaume|modMain|CM_Update_External_GCF_BD_Entrée||NEW_RECORD
+2024-11-04_12:19:18|Clients_v4.1.xlsm|Guillaume|modMain|CM_Update_External_GCF_BD_Entrée|checkPoint|DDM (0.0.0.1)
+2024-11-04_12:19:18|Clients_v4.1.xlsm|Guillaume|modMain|CM_Update_External_GCF_BD_Entrée (sortie)|Temps écoulé: 3,5586 secondes|NEW_RECORD 1811
+
+2024-11-04_12:19:19|Clients_v4.1.xlsm|Guillaume|modMain|CM_Update_Locally_GCF_BD_Entrée||
+2024-11-04_12:19:19|Clients_v4.1.xlsm|Guillaume|modMain|CM_Update_Locally_GCF_BD_Entrée (sortie)|Temps écoulé: 0,2969 secondes|NEW_RECORD 1811
+
+2024-11-04_12:19:19|Clients_v4.1.xlsm|Guillaume|modMain|CM_Reset_UserForm||
+2024-11-04_12:19:19|Clients_v4.1.xlsm|Guillaume|modMain|CM_Add_SearchColumn||
+2024-11-04_12:19:19|Clients_v4.1.xlsm|Guillaume|ufClientMF|cmbSearchColumn_Change||
+2024-11-04_12:19:19|Clients_v4.1.xlsm|Guillaume|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,2969 secondes|
+
+2024-11-04_12:19:20|Clients_v4.1.xlsm|Guillaume|ufClientMF|cmbSearchColumn_Change||
+2024-11-04_12:19:20|Clients_v4.1.xlsm|Guillaume|ufClientMF|cmbSearchColumn_Change (sortie)|Temps écoulé: 0,3008 secondes|Client_ID
+
+2024-11-04_12:19:20|Clients_v4.1.xlsm|Guillaume|modMain|CM_Add_SearchColumn (sortie)|Temps écoulé: 1,0312 secondes|
+
+2024-11-04_12:19:20|Clients_v4.1.xlsm|Guillaume|modMain|CM_Reset_UserForm (sortie)|Temps écoulé: 1,3984 secondes| Row=1105
+
+2024-11-04_12:19:20|Clients_v4.1.xlsm|Guillaume|ufClientMF|lstDonnées_Click||
+2024-11-04_12:19:21|Clients_v4.1.xlsm|Guillaume|ufClientMF|lstDonnées_Click (sortie)|Temps écoulé: 0,2930 secondes|
+
+2024-11-04_12:19:21|Clients_v4.1.xlsm|Guillaume|ufClientMF|cmdSave_Click (sortie)|Temps écoulé: 9,2734 secondes|6
+
+2024-11-04_12:19:22|Clients_v4.1.xlsm|Guillaume|***** Fin de session - Workbook_BeforeClose *****|||
