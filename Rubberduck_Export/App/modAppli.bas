@@ -461,7 +461,7 @@ Sub CreateUserActiveFile()
     Open traceFilePath For Output As FileNumber
     On Error GoTo 0
     
-    Print #FileNumber, "Utilisateur " & userName & " a ouvert l'application à " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    Print #FileNumber, "Utilisateur " & userName & " a ouvert l'application à " & Format$(Now(), "yyyy-mm-dd hh:mm:ss") & " - Version " & ThisWorkbook.Name
     Close FileNumber
     
     Call Log_Record("modAppli:CreateUserActiveFile", "", startTime)
@@ -482,7 +482,7 @@ Sub SetupUserDateFormat()
     Dim userDateFormat As String
     
     Select Case Fn_Get_Windows_Username
-        Case "GuillaumeCharron", "Guillaume"
+        Case "GuillaumeCharron", "Guillaume", "gchar"
             userDateFormat = "dd/mm/yy"
         Case "vgervais", "user"
             userDateFormat = "dd/mm/yyyy"

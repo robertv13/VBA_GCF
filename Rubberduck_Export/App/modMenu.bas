@@ -34,6 +34,7 @@ Sub menuFacturation()
     
     If userName = "Guillaume" Or _
             userName = "GuillaumeCharron" Or _
+            userName = "gchar" Or _
             userName = "Robert M. Vigneault" Or _
             userName = "robertmv" Or _
             userName = "User" Then
@@ -65,6 +66,7 @@ Sub menuComptabilité()
     
     If userName = "Guillaume" Or _
             userName = "GuillaumeCharron" Or _
+            userName = "gchar" Or _
             userName = "Robert M. Vigneault" Or _
             userName = "robertmv" Or _
             userName = "User" Then
@@ -96,6 +98,7 @@ Sub Parametres()
     
     If userName = "Guillaume" Or _
             userName = "GuillaumeCharron" Or _
+            userName = "gchar" Or _
             userName = "Robert M. Vigneault" Or _
             userName = "robertmv" Or _
             userName = "User" Then

@@ -37,7 +37,7 @@ Private Sub Worksheet_Activate()
     'Batir la liste des options valides en fonction de l'utilisateur
     Dim listeChoixValides As String
     Select Case Fn_Get_Windows_Username
-        Case "Guillaume", "GuillaumeCharron", "Robert M. Vigneault", "robertmv"
+        Case "Guillaume", "GuillaumeCharron", "gchar", "Robert M. Vigneault", "robertmv"
             listeChoixValides = "Tous,Guillaume,Vladimir,Michel,Annie"
         Case "vgervais"
             listeChoixValides = "Vladimir"
@@ -88,7 +88,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         
         'Changer la valeur sur la feuille TEC_TDB_Data pour les Advanced Filter
         Select Case Target.Value
-            Case "Guillaume"
+            Case "Guillaume", "GuillaumeCharron", "gchar"
                 wshTEC_TDB_Data.Range("S7").Value = "GC"
             Case "Vladimir"
                 wshTEC_TDB_Data.Range("S7").Value = "VG"

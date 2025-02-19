@@ -51,7 +51,7 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
 
     'Default Professionnal - 2024-08-19 @ 07:59
     Select Case Fn_Get_Windows_Username
-        Case "Guillaume", "GuillaumeCharron", "Robert M. Vigneault", "Robertmv"
+        Case "Guillaume", "GuillaumeCharron", "gchar", "Robert M. Vigneault", "Robertmv"
             cmbProfessionnel.Value = "GC"
         Case "vgervais"
             cmbProfessionnel.Value = "VG"
@@ -138,7 +138,7 @@ Public Sub cmbProfessionnel_AfterUpdate()
 
     'Restreindre l'accès au professionnel par défaut du code d'utilisateur
     Select Case Fn_Get_Windows_Username
-        Case "Guillaume", "GuillaumeCharron", "Robert M. Vigneault", "robertmv"
+        Case "Guillaume", "GuillaumeCharron", "gchar", "Robert M. Vigneault", "robertmv"
             'Accès à tous les utilisateurs
         Case "vgervais"
             If cmbProfessionnel.Value <> "VG" Then
