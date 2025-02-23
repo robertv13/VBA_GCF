@@ -1393,7 +1393,7 @@ End Sub
 Sub FAC_Finale_Creation_Courriel(noFacture As String, clientID As String) '2024-10-13 @ 11:33
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Creation_Courriel", _
-        noFacture & ", " & clientID, 0)
+        noFacture & "," & clientID, 0)
     
     Dim fileExists As Boolean
     
@@ -1433,46 +1433,35 @@ Sub FAC_Finale_Creation_Courriel(noFacture As String, clientID As String) '2024-
     On Error GoTo 0
 
     '4. Création de l'email à partir du template
-    Dim MailItem As Object
-    Set MailItem = OutlookApp.CreateItemFromTemplate(templateFullPathName)
+    Dim mailItem As Object
+    Set mailItem = OutlookApp.CreateItemFromTemplate(templateFullPathName)
 
     '5. Ajout de la pièce jointe
-    MailItem.Attachments.Add attachmentFullPathName
+    mailItem.Attachments.Add attachmentFullPathName
 
-'    'Obtenir la signature par défaut
-'    Dim signaturePath As String
-'    signaturePath = Fn_Get_Outlook_Signature_Path()
-'    Dim Signature As String
-'    Signature = Fn_Get_Outlook_Signature()
-'
-        
     '6. Obtenir l'adresse courriel pour le client
     Dim ws As Worksheet: Set ws = wshBD_Clients
     Dim eMailFacturation As String
     eMailFacturation = Fn_Get_Value_From_UniqueID(ws, clientID, 2, fClntFMCourrielFacturation)
     If eMailFacturation = "uniqueID introuvable" Then
-        MailItem.To = ""
+        mailItem.To = ""
     Else
         If Fn_Valider_Courriel(eMailFacturation) = True Then
-            MailItem.To = eMailFacturation
+            mailItem.To = eMailFacturation
         Else
             MsgBox "Je ne peux utiliser l'adresse courriel de ce client" & vbNewLine & vbNewLine & _
                     "soit '" & eMailFacturation & "' !", vbExclamation
-            MailItem.To = ""
+            mailItem.To = ""
         End If
     End If
     
-'    'Optionnel : Modifiez les éléments de l'email (comme les destinataires)
-'    MailItem.To = "robertv13@me.com"
-
-    'Afficher (.Display) ou envoyer (.Send) le courriel
-    MailItem.Display
+    mailItem.Display
     'MailItem.Send 'Pour envoyer directement l'email
 
 Exit_Sub:
 
     'Libérer la mémoire
-    Set MailItem = Nothing
+    Set mailItem = Nothing
     Set OutlookApp = Nothing
     Set ws = Nothing
     

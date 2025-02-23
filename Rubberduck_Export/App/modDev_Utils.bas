@@ -1916,11 +1916,11 @@ Sub LogMainApp_Analysis() '2025-01-10 @ 17:10
     
 End Sub
 
-Sub Test_ObtenirToutesColonnesPourUneValeur() '2025-01-13 @ 08:49
+Sub Test_Fn_Get_A_Row_From_A_Worksheet() '2025-01-13 @ 08:49
 
     Dim feuille As String
     Dim valeurRecherche As String
-    Dim colRecherche As Long
+    Dim colRecherche As Integer
     Dim resultat As Variant
     Dim i As Long
     
@@ -1930,7 +1930,7 @@ Sub Test_ObtenirToutesColonnesPourUneValeur() '2025-01-13 @ 08:49
     colRecherche = 17
     
     'Appeler la fonction de recherche
-    resultat = ObtenirToutesColonnesPourUneValeur(feuille, valeurRecherche, colRecherche)
+    resultat = Fn_Get_A_Row_From_A_Worksheet(feuille, valeurRecherche, fClntFMNomClientPlusNomClientSystème)
     
     'Vérifier le résultat
     If IsArray(resultat) Then

@@ -13,6 +13,9 @@ Sub CréerListeÂgée() '2024-09-08 @ 15:55
    
     Application.ScreenUpdating = False
     
+    'Débloque la feuille
+    ActiveSheet.Unprotect
+    
     'Initialiser les feuilles nécessaires
     Dim wsFactures As Worksheet: Set wsFactures = wshFAC_Comptes_Clients
     Dim wsPaiements As Worksheet: Set wsPaiements = wshENC_Détails
@@ -451,6 +454,219 @@ Next_Invoice:
     Set wsPaiements = Nothing
     
     Call Log_Record("modCAR_Liste_Agée:CréerListeÂgée", "", startTime)
+    
+End Sub
+
+Sub CAR_ListeAgee_AfficherMenuContextuel(ByVal target As Range) '2025-02-21 @ 19:10
+
+    Dim menu As CommandBar
+    Dim menuItem As CommandBarButton
+
+    'Supprimer le menu contextuel personnalisé s'il existe déjà
+    On Error Resume Next
+    Application.CommandBars("FactureMenu").Delete
+    On Error GoTo 0
+    
+    'Détermine les coordonnées de la colonne qui a été cliquée
+    Dim numeroLigne As Long, numeroColonne As Long
+    Call ExtraireLigneColonneCellule(target.Address, numeroLigne, numeroColonne)
+    
+    Dim numeroFacture As String
+    numeroFacture = ActiveSheet.Cells(numeroLigne, "C").Value
+    If Trim(numeroFacture) = "" Then
+        Exit Sub
+    End If
+    
+    'Créer un nouveau menu contextuel
+    Set menu = Application.CommandBars.Add(Name:="FactureMenu", position:=msoBarPopup, Temporary:=True)
+
+    'Ajout de l'option 1 au menu contextuel
+    Set menuItem = menu.Controls.Add(Type:=msoControlButton)
+        menuItem.Caption = "Visualiser la facture (format PDF)"
+        menuItem.OnAction = "'VisualiserFacturePDF """ & numeroFacture & """'"
+
+    'Ajout de l'option 2 au menu contextuel
+    Set menuItem = menu.Controls.Add(Type:=msoControlButton)
+        menuItem.Caption = "Envoi d'un rappel par courriel"
+        menuItem.OnAction = "'EnvoyerRappelParCourriel """ & numeroFacture & """'"
+
+'    'Ajout de l'option 3 au menu contextuel
+'    Set menuItem = menu.Controls.Add(Type:=msoControlButton)
+'        menuItem.Caption = "TEC détaillé pour la facture"
+'        menuItem.OnAction = "'ObtenirListeTECFactures """ & Target.Address & """'"
+'
+    'Afficher le menu contextuel
+    menu.ShowPopup
+
+End Sub
+
+Sub EnvoyerRappelParCourriel(noFact As String)
+
+    Dim montantDu As String
+    Dim message As String
+
+    'Retrouver le code du client
+    Dim codeClient As String
+    Dim dateFact As Date
+    Dim allCols As Variant
+    allCols = Fn_Get_A_Row_From_A_Worksheet("FAC_Entête", noFact, fFacEInvNo)
+    'Vérifier les résultats
+    If IsArray(allCols) Then
+        codeClient = allCols(fFacECustID)
+        dateFact = allCols(fFacEDateFacture)
+    Else
+        MsgBox "Enregistrement '" & noFact & "' non trouvée !!!", vbCritical
+        Exit Sub
+    End If
+    
+    If codeClient = "" Then
+        MsgBox "Le code client pour cette facture est INVALIDE", vbCritical, "Information erronée / manquante"
+        Exit Sub
+    End If
+    
+    'Retrouver le nom du client, le nom du contact et son adresse courriel
+    Dim clientNom As String
+    Dim clientContactFact As String
+    Dim prenomContact As String
+    Dim clientCourriel As String
+    allCols = Fn_Get_A_Row_From_A_Worksheet("BD_Clients", codeClient, fClntFMClientID)
+    'Vérifier les résultats
+    If IsArray(allCols) Then
+        clientNom = allCols(fClntFMClientNom)
+        'Élimine le ou les nom(s) de contact
+        clientNom = Fn_Strip_Contact_From_Client_Name(clientNom)
+        clientContactFact = Trim(allCols(fClntFMContactFacturation)) + " "
+        prenomContact = ""
+        If InStr(clientContactFact, " ") <> 0 Then
+            prenomContact = Left(clientContactFact, InStr(clientContactFact, " ") - 1)
+        End If
+        clientCourriel = allCols(fClntFMCourrielFacturation)
+    Else
+        MsgBox "Enregistrement '" & codeClient & "' non trouvée !!!", vbCritical
+        Exit Sub
+    End If
+    
+    'Retrouver le solde de la facture, le total des paiements & le total des régularisations
+    Dim factSolde As Currency
+    Dim factSommePmts As Currency
+    Dim factSommeRegul As Currency
+    allCols = Fn_Get_A_Row_From_A_Worksheet("FAC_Comptes_Clients", noFact, fFacCCInvNo)
+    'Vérifier les résultats
+    If IsArray(allCols) Then
+        factSolde = allCols(fFacCCBalance)
+        factSommePmts = allCols(fFacCCTotalPaid)
+        factSommeRegul = allCols(fFacCCTotalRegul)
+    Else
+        MsgBox "Enregistrement '" & noFact & "' non trouvée !!!", vbCritical
+        Exit Sub
+    End If
+    
+    'Vérification pour éviter d'envoyer un rappel pour une facture à 0 $ ou créditeur
+    If factSolde <= 0 Then
+        MsgBox "Il n'y a pas lieu d'envoyer un rappel" & vbNewLine & vbNewLine & _
+                "pour cette facture. Solde à " & Format$(factSolde, "#,##0.00 $"), vbCritical, "Solde à 0,00 $ ou créditeur"
+        Exit Sub
+    End If
+    
+    Debug.Print "111 - ", noFact, dateFact, codeClient, clientNom, clientCourriel, factSolde, factSommePmts, factSommeRegul
+    
+    'Vérifier si l'email est valide
+    If clientCourriel = "" Or InStr(clientCourriel, "@") = 0 Then
+        MsgBox "L'adresse courriel est vide OU invalide" & vbNewLine & vbNewLine & _
+                "pour ce client.", vbExclamation, "Impossible d'envoyer un rappel (Adresse courriel invalide)"
+        Exit Sub
+    End If
+
+    'Ajouter la copie de la facture (format PDF)
+    Dim attachmentFullPathName As String
+    attachmentFullPathName = wshAdmin.Range("F5").Value & FACT_PDF_PATH & Application.PathSeparator & _
+                     noFact & ".pdf"
+    
+    'Vérification de l'existence de la pièce jointe
+    Dim fileExists As Boolean
+    fileExists = Dir(attachmentFullPathName) <> ""
+    If Not fileExists Then
+        MsgBox "La pièce jointe (Facture en format PDF) n'existe pas à" & vbNewLine & _
+                    "l'emplacement spécifié, soit " & attachmentFullPathName, vbCritical
+        GoTo Exit_Sub
+    End If
+    
+    'Chemin du template (.oft) de courriel
+    Dim templateFullPathName As String
+    templateFullPathName = Environ("appdata") & "\Microsoft\Templates\GCF_Rappel.oft"
+
+    'Vérification de l'existence du template
+    fileExists = Dir(templateFullPathName) <> ""
+    If Not fileExists Then
+        MsgBox "Le gabarit 'GCF_Rappel.oft' est introuvable " & _
+                    "à l'emplacement spécifié, soit " & Environ("appdata") & "\Microsoft\Templates", _
+                    vbCritical
+        GoTo Exit_Sub
+    End If
+    
+    'Initialiser Outlook
+    On Error Resume Next
+    Dim OutlookApp As Object
+    Set OutlookApp = GetObject(, "Outlook.Application")
+    If OutlookApp Is Nothing Then
+        Set OutlookApp = CreateObject("Outlook.Application")
+    End If
+    
+    'Vérifier si Outlook est bien ouvert
+    If OutlookApp Is Nothing Then
+        MsgBox "Impossible d'ouvrir Outlook. Vérifiez votre installation.", vbCritical
+        Exit Sub
+    End If
+
+    Dim mailItem As Object
+    Set mailItem = OutlookApp.CreateItemFromTemplate(templateFullPathName)
+    On Error GoTo 0
+
+    mailItem.Attachments.Add attachmentFullPathName
+
+    Dim emailBody As String
+    emailBody = mailItem.Body
+    
+    'Remplace la salutation
+    Dim posSalutation As Integer
+    posSalutation = InStr(emailBody, "<<Salutation>>")
+    If posSalutation Then
+        Dim salutation As String
+        If Time < 12 Then
+            salutation = "Bon matin"
+        ElseIf Time < 18 Then
+            salutation = "Bon après-midi"
+        Else
+            salutation = "Bonsoir"
+        End If
+        emailBody = Replace(emailBody, "<<Salutation>>", salutation)
+    End If
+    
+    'Remplace le prénom
+    Dim posPrenom As Integer
+    posPrenom = InStr(emailBody, "<<Prénom>>")
+    If posPrenom Then
+        If Trim(prenomContact) <> "" Then
+            emailBody = Replace(emailBody, "<<Prénom>>", Trim(prenomContact))
+        End If
+    End If
+    
+    mailItem.Body = emailBody
+    
+'    clientCourriel = "robertv13@me.com"
+'    clientCourriel = "gcharron@groupegc.ca"
+    'Ajuster les derniers paramètres du courriel
+    With mailItem
+        .To = clientCourriel
+        .Subject = wshAdmin.Range("NomEntreprise") & " - Rappel pour facture impayée - " & clientNom & " - Facture # " & noFact
+        .Display  'Pour afficher le mail avant envoi (remplacez par .Send pour envoyer directement)
+    End With
+
+Exit_Sub:
+
+    ' Nettoyer les objets
+    Set mailItem = Nothing
+    Set OutlookApp = Nothing
     
 End Sub
 
