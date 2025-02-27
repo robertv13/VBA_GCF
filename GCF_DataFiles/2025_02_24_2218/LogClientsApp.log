@@ -1,0 +1,14 @@
+2025-02-24 13:21:09.42 | User | Clients_v5.2.xlsm | ***** Début de session - Workbook_Open ***** | 
+2025-02-24 13:21:09.50 | User | Clients_v5.2.xlsm | modMain:CM_Client_List_Import_All | 
+2025-02-24 13:21:10.05 | User | Clients_v5.2.xlsm | modMain:CM_Apply_Worksheet_Format | 
+2025-02-24 13:21:10.18 | User | Clients_v5.2.xlsm | modMain:CM_Apply_Worksheet_Format = '0,1289 secondes'
+2025-02-24 13:21:10.30 | User | Clients_v5.2.xlsm | modMain:CM_Client_List_Import_All = '0,8008 secondes'
+2025-02-24 13:21:10.43 | User | Clients_v5.2.xlsm | ufClientMF:UserForm_Initialize | 
+2025-02-24 13:21:10.47 | User | Clients_v5.2.xlsm | modMain:CM_Reset_UserForm | 
+2025-02-24 13:21:10.52 | User | Clients_v5.2.xlsm | modMain:CM_Add_SearchColumn | 
+2025-02-24 13:21:10.56 | User | Clients_v5.2.xlsm | ufClientMF:cmbSearchColumn_Change | 
+2025-02-24 13:21:10.60 | User | Clients_v5.2.xlsm | ufClientMF:cmbSearchColumn_Change = '0,0508 secondes'
+2025-02-24 13:21:10.64 | User | Clients_v5.2.xlsm | modMain:CM_Add_SearchColumn = '0,1289 secondes'
+2025-02-24 13:21:10.73 | User | Clients_v5.2.xlsm | modMain:CM_Reset_UserForm = '0,2734 secondes'
+2025-02-24 13:21:10.78 | User | Clients_v5.2.xlsm | ufClientMF:UserForm_Initialize = '0,3516 secondes'
+2025-02-24 13:21:14.94 | User | Clients_v5.2.xlsm | ***** Fin de session - Workbook_BeforeClose ***** | 

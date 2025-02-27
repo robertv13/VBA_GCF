@@ -18,11 +18,6 @@ Sub CM_Reset_UserForm()
     Dim iRow As Long, lastUsedRow As Long
     iRow = [Counta(Données!A:A)] 'Identifying the number of rows
     lastUsedRow = wshClients.Cells(wshClients.Rows.Count, "A").End(xlUp).Row
-    'Do we have the same number of used rows ?
-'    If iRow <> lastUsedRow Then
-'        MsgBox "Il semble y avoir une incongruité entre 2 pointeurs" & vbNewLine & vbNewLine & _
-'               "Pointeur iRow = " & iRow & " - pointeur lastUsedRow = " & lastUsedRow, vbInformation
-'    End If
     
     With ufClientMF
         'Empty all fields
@@ -62,6 +57,7 @@ Sub CM_Reset_UserForm()
         .txtFinAnnee.BackColor = vbWhite
         .txtComptable.BackColor = vbWhite
         .txtNotaireAvocat.BackColor = vbWhite
+        .txtNomClientPlusNomClientSystème.BackColor = vbWhite
         
         .txtRowNumber.Value = ""
         
@@ -135,7 +131,7 @@ Sub CM_Update_External_GCF_BD_Entrée(action As String)
     If action = "NEW_RECORD" Then
         'Ajouter un nouvel enregistrement à la première ligne vide (.Offset(1,0))
         Set foundCell = ws.Cells(ws.Rows.Count, 1).End(xlUp).Offset(1, 0)
-        'L'offset Row est toujours à 0, et l'Offset Col varie de 0 @ 14
+        'L'offset Row est toujours à 0, et l'Offset Col varie de 0 @ 17
         foundCell.Offset(0, 0).Value = ufClientMF.txtNomClient.Value
         foundCell.Offset(0, 1).Value = ufClientMF.txtCodeClient.Value
         foundCell.Offset(0, 2).Value = ufClientMF.txtNomClientSysteme.Value
@@ -210,129 +206,139 @@ ErrorHandler:
 End Sub
 
 'Procédure remplacée par CM_Update_External_GCF_BD_Entrée - 2024-08-23 - Problème avec ADO...
-'Sub Update_External_GCF_BD_Entree(action As String) 'Update/Write Client record to Clients' Master File
-'
-'    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("modMain:Update_External_GCF_BD_Entree", action, 0)
-'
-'    Application.ScreenUpdating = False
-'
-'    Dim destinationFileName As String, destinationTab As String
-'    If Not Fn_Get_Windows_Username = "Robert M. Vigneault" Then
-'        destinationFileName = "P:\Administration\APP\GCF\DataFiles\GCF_BD_Entrée.xlsx"
-'    Else
-'        destinationFileName = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx"
-'    End If
-'    destinationTab = "Clients"
-'
-'    'Initialize connection, connection string & open the connection
-'    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-'    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
-'        ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-'    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
-'
-'    If action = "NEW_RECORD" Then
-'        'Open an empty recordset
-'        rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE 1=0", conn, 2, 3
-'
-'        'Add fields to the recordset before updating it
-'        rs.AddNew
-'        rs.Fields("ClientNom").Value = ufClientMF.txtNomClient.Value
-'        rs.Fields("Client_ID").Value = ufClientMF.txtCodeClient.Value
-'        rs.Fields("ContactFacturation").Value = ufClientMF.txtContactFact.Value
-'        rs.Fields("TitreContactFacturation").Value = ufClientMF.txtTitreContact.Value
-'        rs.Fields("CourrielFacturation").Value = ufClientMF.txtCourrielFact.Value
-'        rs.Fields("Adresse_1").Value = ufClientMF.txtAdresse1.Value
-'        rs.Fields("Adresse_2").Value = ufClientMF.txtAdresse2.Value
-'        rs.Fields("Ville").Value = ufClientMF.txtVille.Value
-'        rs.Fields("Province").Value = ufClientMF.txtProvince.Value
-'        rs.Fields("CodePostal").Value = ufClientMF.txtCodePostal.Value
-'        rs.Fields("Pays").Value = ufClientMF.txtPays.Value
-'        rs.Fields("Référé par").Value = ufClientMF.txtReferePar.Value
-'        rs.Fields("Fin d'année").Value = ufClientMF.txtFinAnnee.Value
-'        rs.Fields("Comptable").Value = ufClientMF.txtComptable.Value
-'        rs.Fields("Notaire/Avocat").Value = ufClientMF.txtNotaireAvocat.Value
-'        rs.Update
-'        If Err.Number <> 0 Then
-'            MsgBox "Erreur lors de la mise à jour: " & Err.Description
-'        End If
-'        DoEvents
-'        Call CM_Log_Activities("modMain:Update_External_GCF_BD_Entree", action & " '" & ufClientMF.txtCodeClient.Value & "' was here", -1)
-'    Else 'Update an existing record
-'        'Open the recordset for the existing client
-'        rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE Client_ID='" & ufClientMF.txtCodeClient & "'", conn, 2, 3
-'        If Not rs.EOF Then
-'            'Update fields for the existing record
-'            rs.Fields("ClientNom").Value = ufClientMF.txtNomClient.Value
-'            rs.Fields("Client_ID").Value = ufClientMF.txtCodeClient.Value
-'            rs.Fields("ContactFacturation").Value = ufClientMF.txtContactFact.Value
-'            rs.Fields("TitreContactFacturation").Value = ufClientMF.txtTitreContact.Value
-'            rs.Fields("CourrielFacturation").Value = ufClientMF.txtCourrielFact.Value
-'            rs.Fields("Adresse_1").Value = ufClientMF.txtAdresse1.Value
-'            rs.Fields("Adresse_2").Value = ufClientMF.txtAdresse2.Value
-'            rs.Fields("Ville").Value = ufClientMF.txtVille.Value
-'            rs.Fields("Province").Value = ufClientMF.txtProvince.Value
-'            rs.Fields("CodePostal").Value = ufClientMF.txtCodePostal.Value
-'            rs.Fields("Pays").Value = ufClientMF.txtPays.Value
-'            rs.Fields("Référé par").Value = ufClientMF.txtReferePar.Value
-'            rs.Fields("Fin d'année").Value = ufClientMF.txtFinAnnee.Value
-'            rs.Fields("Comptable").Value = ufClientMF.txtComptable.Value
-'            rs.Fields("Notaire/Avocat").Value = ufClientMF.txtNotaireAvocat.Value
-'            rs.Update
-'            If Err.Number <> 0 Then
-'                MsgBox "Erreur lors de la mise à jour: " & Err.Description
-'            End If
-'           DoEvents
-'            Call CM_Log_Activities("modMain:Update_External_GCF_BD_Entree", action & " '" & ufClientMF.txtCodeClient.Value & "' was here", -1)
-'       Else
-'            'Handle the case where the specified ID is not found
-'            MsgBox "Le client '" & ufClientMF.txtCodeClient & "' n'a pas été ajouté au fichier!" & _
-'                    vbNewLine & vbNewLine & "Veuillez le saisir à nouveau", vbExclamation
-'            GoTo Clean_Exit
-'        End If
-'    End If
-'
-'Clean_Exit:
-'
-'    DoEvents
-'
-'    'Close recordset and connection
-'    rs.Close
-'    Set rs = Nothing
-'    conn.Close
-'    Set conn = Nothing
-'
-'    DoEvents
-'
+Sub CM_Update_External_GCF_Entrée_BD(action As String) 'Update/Write Client record to Clients' Master File
+
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("modMain:Update_External_GCF_BD_Entree", action, 0)
+
+    Application.ScreenUpdating = False
+
+    Dim destinationFileName As String, destinationTab As String
+    If Not Fn_Get_Windows_Username = "Robert M. Vigneault" Then
+        destinationFileName = "P:\Administration\APP\GCF\DataFiles\GCF_BD_Entrée.xlsx"
+    Else
+        destinationFileName = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx"
+    End If
+    destinationTab = "Clients$"
+
+    'Initialize connection, connection string & open the connection
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
+        ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+
+    If action = "NEW_RECORD" Then
+        'Open an empty recordset
+        rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
+
+        'Add fields to the recordset before updating it
+        rs.AddNew
+            rs.Fields("ClientNom").Value = ufClientMF.txtNomClient.Value
+            rs.Fields("ClientID").Value = ufClientMF.txtCodeClient.Value
+            rs.Fields("NomClientSystème").Value = ufClientMF.txtNomClientSysteme
+            rs.Fields("ContactFacturation").Value = ufClientMF.txtContactFact.Value
+            rs.Fields("TitreContactFacturation").Value = ufClientMF.txtTitreContact.Value
+            rs.Fields("CourrielFacturation").Value = ufClientMF.txtCourrielFact.Value
+            rs.Fields("Adresse1").Value = ufClientMF.txtAdresse1.Value
+            rs.Fields("Adresse2").Value = ufClientMF.txtAdresse2.Value
+            rs.Fields("Ville").Value = ufClientMF.txtVille.Value
+            rs.Fields("Province").Value = ufClientMF.txtProvince.Value
+            rs.Fields("CodePostal").Value = ufClientMF.txtCodePostal.Value
+            rs.Fields("Pays").Value = ufClientMF.txtPays.Value
+            rs.Fields("RéféréPar").Value = ufClientMF.txtReferePar.Value
+            rs.Fields("FinAnnée").Value = ufClientMF.txtFinAnnee.Value
+            rs.Fields("Comptable").Value = ufClientMF.txtComptable.Value
+            rs.Fields("NotaireAvocat").Value = ufClientMF.txtNotaireAvocat.Value
+            rs.Fields("NomClientPlusNomClientSystème").Value = ufClientMF.txtNomClientPlusNomClientSystème.Value
+        rs.Update
+        
+        If Err.Number <> 0 Then
+            MsgBox "Erreur lors de la mise à jour: " & Err.Description, vbCritical, "ERREUR dans la mise à jour du fichier client"
+        End If
+        
+        DoEvents
+        
+        Call CM_Log_Activities("modMain:Update_External_GCF_BD_Entree", action & " '" & ufClientMF.txtCodeClient.Value & "' was here", -1)
+    Else 'Update an existing record
+        'Open the recordset for the existing client
+        rs.Open "SELECT * FROM [" & destinationTab & "] WHERE ClientID='" & ufClientMF.txtCodeClient & "'", conn, 2, 3
+        If Not rs.EOF Then
+            'Update fields for the existing record
+            rs.Fields("ClientNom").Value = ufClientMF.txtNomClient.Value
+            rs.Fields("ClientID").Value = ufClientMF.txtCodeClient.Value
+            rs.Fields("NomClientSystème").Value = ufClientMF.txtNomClientSysteme
+            rs.Fields("ContactFacturation").Value = ufClientMF.txtContactFact.Value
+            rs.Fields("TitreContactFacturation").Value = ufClientMF.txtTitreContact.Value
+            rs.Fields("CourrielFacturation").Value = ufClientMF.txtCourrielFact.Value
+            rs.Fields("Adresse1").Value = ufClientMF.txtAdresse1.Value
+            rs.Fields("Adresse2").Value = ufClientMF.txtAdresse2.Value
+            rs.Fields("Ville").Value = ufClientMF.txtVille.Value
+            rs.Fields("Province").Value = ufClientMF.txtProvince.Value
+            rs.Fields("CodePostal").Value = ufClientMF.txtCodePostal.Value
+            rs.Fields("Pays").Value = ufClientMF.txtPays.Value
+            rs.Fields("RéféréPar").Value = ufClientMF.txtReferePar.Value
+            rs.Fields("FinAnnée").Value = ufClientMF.txtFinAnnee.Value
+            rs.Fields("Comptable").Value = ufClientMF.txtComptable.Value
+            rs.Fields("NotaireAvocat").Value = ufClientMF.txtNotaireAvocat.Value
+            rs.Fields("NomClientPlusNomClientSystème").Value = ufClientMF.txtNomClientPlusNomClientSystème.Value
+            rs.Update
+            
+            If Err.Number <> 0 Then
+            MsgBox "Erreur lors de la mise à jour: " & Err.Description, vbCritical, "ERREUR dans la mise à jour du fichier client"
+            End If
+            
+            DoEvents
+            
+            Call CM_Log_Activities("modMain:Update_External_GCF_BD_Entree", action & " '" & ufClientMF.txtCodeClient.Value & "' was here", -1)
+       Else
+            'Handle the case where the specified ID is not found
+            MsgBox "Le client '" & ufClientMF.txtCodeClient & "' n'a pas été ajouté au fichier!" & _
+                    vbNewLine & vbNewLine & "Veuillez le saisir à nouveau", vbCritical, "ERREUR dans la mise à jour du fichier client"
+            GoTo Clean_Exit
+        End If
+    End If
+
+Clean_Exit:
+
+    DoEvents
+
+    'Close recordset and connection
+    rs.Close
+    Set rs = Nothing
+    conn.Close
+    Set conn = Nothing
+
+    DoEvents
+
 '    'Trying to fix the fact that it does not write to the disk
 '    Set conn = CreateObject("ADODB.Connection")
 '    Set conn = CreateObject("ADODB.Connection")
 '    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
 '        ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
 '
-'    Application.Wait Now + TimeValue("00:00:01")
-'
-'    DoEvents
-'
-'    'Additional verification - ACtual file MUST have been modified (GCF_Entrée.xlsx)
-'    Dim ddm As Date, jours As Long, heures As Long, minutes As Long, secondes As Long
-'    Call CM_Get_Date_Derniere_Modification(destinationFileName, _
-'                                                ddm, jours, heures, minutes, secondes)
-'    'Record to the log the difference between NOW and the date of last modifcation
-'    Call CM_Log_Activities("modMain:Update_External_GCF_BD_Entree", "DDM (" & jours & "." & heures & "." & minutes & "." & secondes & ")", -1)
-'    If jours > 0 Or heures > 0 Or minutes > 0 Or secondes > 5 Then
-'        MsgBox "ATTENTION, le fichier MAÎTRE (GCF_Entrée.xlsx)" & vbNewLine & vbNewLine & _
-'               "n'a pas été modifié adéquatement sur disque..." & vbNewLine & vbNewLine & _
-'               "VEUILLEZ CONTACTER LE DÉVELOPPEUR SVP" & vbNewLine & vbNewLine & _
-'               "Code: (" & jours & "." & heures & "." & minutes & "." & secondes & ")", vbCritical, _
-'               "Le fichier n'est pas à jour sur disque"
-'    End If
-'
-'    Application.ScreenUpdating = True
-'
-'    Call CM_Log_Activities("modMain:Update_External_GCF_BD_Entree", action & " " & ufClientMF.txtCodeClient.Value, startTime)
-'
-'End Sub
-'
+    Application.Wait Now + TimeValue("00:00:01")
+    
+    DoEvents
+
+    'Additional verification - Actual file MUST have been modified (GCF_Entrée.xlsx)
+    Dim ddm As Date, jours As Long, heures As Long, minutes As Long, secondes As Long
+    Call CM_Get_Date_Derniere_Modification(destinationFileName, _
+                                                ddm, jours, heures, minutes, secondes)
+    'Record to the log the difference between NOW and the date of last modifcation
+    Call CM_Log_Activities("modMain:Update_External_GCF_BD_Entree", "DDM (" & jours & "." & heures & "." & minutes & "." & secondes & ")", -1)
+    If jours > 0 Or heures > 0 Or minutes > 0 Or secondes > 10 Then
+        MsgBox "ATTENTION, le fichier MAÎTRE (GCF_Entrée.xlsx)" & vbNewLine & vbNewLine & _
+               "n'a pas été modifié adéquatement sur disque..." & vbNewLine & vbNewLine & _
+               "VEUILLEZ CONTACTER LE DÉVELOPPEUR SVP" & vbNewLine & vbNewLine & _
+               "Code: (" & jours & "." & heures & "." & minutes & "." & secondes & ")", vbCritical, _
+               "Le fichier n'est pas à jour sur disque"
+    End If
+
+    Application.ScreenUpdating = True
+
+    Call CM_Log_Activities("modMain:Update_External_GCF_BD_Entree", action & " " & ufClientMF.txtCodeClient.Value, startTime)
+
+End Sub
+
 Sub CM_Update_Locally_GCF_BD_Entrée(action As String)
 
     Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("modMain:CM_Update_Locally_GCF_BD_Entrée", "", 0)

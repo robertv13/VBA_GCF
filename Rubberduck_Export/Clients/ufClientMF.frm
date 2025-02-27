@@ -1,6 +1,6 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufClientMF 
-   Caption         =   "Gestion du fichier Clients (version 4.3)"
+   Caption         =   "Gestion du fichier Clients (version 5.4)"
    ClientHeight    =   12030
    ClientLeft      =   6615
    ClientTop       =   2460
@@ -154,8 +154,14 @@ Clean_Exit:
 End Sub
 
 Private Sub cmdSave_Click()
+
+    Call MAJ_Fichier_Client
+
+End Sub
+
+Private Sub MAJ_Fichier_Client()
     
-    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("ufClientMF:cmdSave_Click", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("ufClientMF:MAJ_Fichier_Client", "", 0)
     
     If Fn_ValidateEntries() = False Then
         GoTo Clean_Exit
@@ -175,10 +181,10 @@ Private Sub cmdSave_Click()
     clientExists = Fn_Is_Client_Code_Already_Used
     
     If clientExists = True Then
-        Call CM_Update_External_GCF_BD_Entrée("UPDATE")
+        Call CM_Update_External_GCF_Entrée_BD("UPDATE")
         Call CM_Update_Locally_GCF_BD_Entrée("UPDATE")
     Else
-        Call CM_Update_External_GCF_BD_Entrée("NEW_RECORD")
+        Call CM_Update_External_GCF_Entrée_BD("NEW_RECORD")
         Call CM_Update_Locally_GCF_BD_Entrée("NEW_RECORD")
     End If
     
@@ -194,12 +200,10 @@ Private Sub cmdSave_Click()
                 ufClientMF.lstDonnées.TopIndex = wshMENU.Range("B4").Value - 8
             End If
     End If
-    
-'    Me.txtSearch.SetFocus
 
 Clean_Exit:
 
-    Call CM_Log_Activities("ufClientMF:cmdSave_Click", msgValueLog, startTime)
+    Call CM_Log_Activities("ufClientMF:MAJ_Fichier_Client", msgValueLog, startTime)
 
 End Sub
 
@@ -328,7 +332,7 @@ Private Sub Fix_Some_Fields()
     Dim mots() As String
     mots = Split(nomClientSystème, " ")
     
-    'S'il manque des mots dans NomClientPlusNomSystème, on ajoute ces mots un à un
+    'S'il manque des mots dans NomClientPlusNomClientSystème, on ajoute ces mots un à un
     Dim m As Integer
     If UBound(mots, 1) > 0 Then
         For m = 0 To UBound(mots, 1)

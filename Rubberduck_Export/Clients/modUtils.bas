@@ -28,15 +28,6 @@ Sub CM_Log_Activities(moduleProcName As String, param1 As String, Optional ByVal
     
     Open logFile For Append As #fileNum
     
-'    Dim moduleName As String, procName As String
-'    If InStr(moduleProcName, ":") Then
-'        moduleName = Left(moduleProcName, InStr(moduleProcName, ":") - 1)
-'        procName = Right(moduleProcName, Len(moduleProcName) - InStr(moduleProcName, ":"))
-'    Else
-'        moduleName = moduleProcName
-'        procName = ""
-'    End If
-'
     If startTime = 0 Then
         startTime = Timer 'Start timing
         Print #fileNum, currentTime & " | " & _
@@ -108,6 +99,7 @@ Sub CM_Verify_DDM(fullFileName As String)
                "VEUILLEZ CONTACTER LE DÉVELOPPEUR SVP" & vbNewLine & vbNewLine & _
                "Code: (" & jours & "." & heures & "." & minutes & "." & secondes & ")", vbCritical, _
                "Le fichier n'est pas à jour sur disque"
+        Exit Sub
     End If
 
 End Sub
@@ -169,10 +161,6 @@ Sub Max_Code_Values_From_GCF_Entree(ByRef maxSmallCodes As String, ByRef maxLarg
         maxLargeCodes = Fn_Incremente_Code(maxLargeCodes)
     End If
 
-'    'Afficher les résultats
-'    MsgBox "Valeur maximale pour les codes de 1 à 999: " & maxSmallCodes
-'    MsgBox "Valeur maximale pour les codes >= 1000: " & maxLargeCodes
-'
     'Nettoyer les objets
     Set rs = Nothing
     Set cn = Nothing
@@ -713,9 +701,6 @@ Sub Simple_Print_Setup(ws As Worksheet, rng As Range, header1 As String, _
 CleanUp:
     On Error Resume Next
     Application.PrintCommunication = True
-'    If Err.Number <> 0 Then
-'        MsgBox "Error setting PrintCommunication to True: " & Err.Description, vbCritical
-'    End If
     On Error GoTo 0
     
 End Sub
