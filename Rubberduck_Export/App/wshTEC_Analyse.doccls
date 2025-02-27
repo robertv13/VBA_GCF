@@ -54,10 +54,6 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
         Activate
     End With
     
-    'Désactive les événements pour éviter tout problème lors de la mise à jour
-'    ws.Range("H3").Value = Now()
-'    ws.Range("H3").Select
-    
     'Réapplique la position du volet inférieur pour maintenir l'affichage à la ligne 7
     ActiveWindow.Panes(2).ScrollRow = currentScrollRow
     

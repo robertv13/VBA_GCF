@@ -36,25 +36,25 @@ Sub CréerListeÂgée() '2024-09-08 @ 15:55
     
     'Niveau de détail
     Dim niveauDetail As String
-    niveauDetail = wshCAR_Liste_Agée.Range("B4").Value
+    niveauDetail = wshCAR_Liste_Agée.Range("B4").value
     
     Application.EnableEvents = False
     
     'Entêtes de colonnes en fonction du niveau de détail
     If LCase(niveauDetail) = "client" Then
-        wshCAR_Liste_Agée.Range("B8:G8").Value = Array("Client", "Solde", "- de 30 jours", "31 @ 60 jours", "61 @ 90 jours", "+ de 90 jours")
+        wshCAR_Liste_Agée.Range("B8:G8").value = Array("Client", "Solde", "- de 30 jours", "31 @ 60 jours", "61 @ 90 jours", "+ de 90 jours")
         Call Make_It_As_Header(wshCAR_Liste_Agée.Range("B8:G8"))
     End If
 
     'Entêtes de colonnes en fonction du niveau de détail (Facture)
     If LCase(niveauDetail) = "facture" Then
-        wshCAR_Liste_Agée.Range("B8:I8").Value = Array("Client", "No. Facture", "Date Facture", "Solde", "- de 30 jours", "31 @ 60 jours", "61 @ 90 jours", "+ de 90 jours")
+        wshCAR_Liste_Agée.Range("B8:I8").value = Array("Client", "No. Facture", "Date Facture", "Solde", "- de 30 jours", "31 @ 60 jours", "61 @ 90 jours", "+ de 90 jours")
         Call Make_It_As_Header(wshCAR_Liste_Agée.Range("B8:I8"))
     End If
 
     'Entêtes de colonnes en fonction du niveau de détail (Transaction)
     If LCase(niveauDetail) = "transaction" Then
-        wshCAR_Liste_Agée.Range("B8:J8").Value = Array("Client", "No. Facture", "Type", "Date", "Montant", "- de 30 jours", "31 @ 60 jours", "61 @ 90 jours", "+ de 90 jours")
+        wshCAR_Liste_Agée.Range("B8:J8").value = Array("Client", "No. Facture", "Type", "Date", "Montant", "- de 30 jours", "31 @ 60 jours", "61 @ 90 jours", "+ de 90 jours")
         Call Make_It_As_Header(wshCAR_Liste_Agée.Range("B8:J8"))
     End If
 
@@ -85,33 +85,33 @@ Sub CréerListeÂgée() '2024-09-08 @ 15:55
     r = 8
     For i = 1 To rngFactures.Rows.count
         'Récupérer les données de la facture directement du Range
-        numFacture = CStr(rngFactures.Cells(i, fFacCCInvNo).Value)
+        numFacture = CStr(rngFactures.Cells(i, fFacCCInvNo).value)
         'Do not process non Confirmed invoice
         If Fn_Get_Invoice_Type(numFacture) <> "C" Then
             GoTo Next_Invoice
         End If
         
         'Est-ce que la facture est à l'intérieur de la date limite ?
-        dateFacture = rngFactures.Cells(i, fFacCCInvoiceDate).Value
-        If rngFactures.Cells(i, fFacCCInvoiceDate).Value > CDate(wshCAR_Liste_Agée.Range("H4").Value) Then
-            Debug.Print "#022 - Comparaison de date - " & rngFactures.Cells(i, fFacCCInvoiceDate).Value & " .vs. " & wshCAR_Liste_Agée.Range("H4").Value
+        dateFacture = rngFactures.Cells(i, fFacCCInvoiceDate).value
+        If rngFactures.Cells(i, fFacCCInvoiceDate).value > CDate(wshCAR_Liste_Agée.Range("H4").value) Then
+            Debug.Print "#022 - Comparaison de date - " & rngFactures.Cells(i, fFacCCInvoiceDate).value & " .vs. " & wshCAR_Liste_Agée.Range("H4").value
             GoTo Next_Invoice
         End If
         
-        client = rngFactures.Cells(i, fFacCCCodeClient).Value
+        client = rngFactures.Cells(i, fFacCCCodeClient).value
         'Obtenir le nom du client (MF) pour trier par nom de client plutôt que par code de client
         client = Fn_Get_Client_Name(client)
-        dateDue = rngFactures.Cells(i, fFacCCDueDate).Value
-        montantFacture = CCur(rngFactures.Cells(i, fFacCCTotal).Value)
+        dateDue = rngFactures.Cells(i, fFacCCDueDate).value
+        montantFacture = CCur(rngFactures.Cells(i, fFacCCTotal).value)
         
         'Obtenir les paiements et régularisations pour cette facture
-        montantPaye = Fn_Obtenir_Paiements_Facture(numFacture, wshCAR_Liste_Agée.Range("H4").Value)
-        montantRegul = Fn_Obtenir_Régularisations_Facture(numFacture, wshCAR_Liste_Agée.Range("H4").Value)
+        montantPaye = Fn_Obtenir_Paiements_Facture(numFacture, wshCAR_Liste_Agée.Range("H4").value)
+        montantRegul = Fn_Obtenir_Régularisations_Facture(numFacture, wshCAR_Liste_Agée.Range("H4").value)
         
         montantRestant = montantFacture - montantPaye + montantRegul
         
         'Exclus les soldes de facture à 0,00 $ SI ET SEULMENT SI F4 = "NON"
-        If UCase(wshCAR_Liste_Agée.Range("F4").Value) = "NON" And montantRestant = 0 Then
+        If UCase(wshCAR_Liste_Agée.Range("F4").value) = "NON" And montantRestant = 0 Then
             GoTo Next_Invoice
         End If
         
@@ -162,40 +162,40 @@ Sub CréerListeÂgée() '2024-09-08 @ 15:55
             Case "facture"
                 'Ajouter chaque facture avec son montant restant dû
                 r = r + 1
-                wshCAR_Liste_Agée.Cells(r, 2).Value = client
-                wshCAR_Liste_Agée.Cells(r, 3).Value = numFacture
-                wshCAR_Liste_Agée.Cells(r, 4).Value = dateFacture
-                wshCAR_Liste_Agée.Cells(r, 4).NumberFormat = wshAdmin.Range("B1").Value
-                wshCAR_Liste_Agée.Cells(r, 5).Value = montantRestant
+                wshCAR_Liste_Agée.Cells(r, 2).value = client
+                wshCAR_Liste_Agée.Cells(r, 3).value = numFacture
+                wshCAR_Liste_Agée.Cells(r, 4).value = dateFacture
+                wshCAR_Liste_Agée.Cells(r, 4).NumberFormat = wshAdmin.Range("B1").value
+                wshCAR_Liste_Agée.Cells(r, 5).value = montantRestant
                 Select Case trancheAge
                     Case "- de 30 jours"
-                        wshCAR_Liste_Agée.Cells(r, 6).Value = montantRestant
+                        wshCAR_Liste_Agée.Cells(r, 6).value = montantRestant
                     Case "31 @ 60 jours"
-                        wshCAR_Liste_Agée.Cells(r, 7).Value = montantRestant
+                        wshCAR_Liste_Agée.Cells(r, 7).value = montantRestant
                     Case "61 @ 90 jours"
-                        wshCAR_Liste_Agée.Cells(r, 8).Value = montantRestant
+                        wshCAR_Liste_Agée.Cells(r, 8).value = montantRestant
                     Case "+ de 90 jours"
-                        wshCAR_Liste_Agée.Cells(r, 9).Value = montantRestant
+                        wshCAR_Liste_Agée.Cells(r, 9).value = montantRestant
                 End Select
                 
             Case "transaction"
                 'La facture en premier...
                 r = r + 1
-                wshCAR_Liste_Agée.Cells(r, 2).Value = client
-                wshCAR_Liste_Agée.Cells(r, 3).Value = numFacture
-                wshCAR_Liste_Agée.Cells(r, 4).Value = "Facture"
-                wshCAR_Liste_Agée.Cells(r, 5).Value = dateFacture
-                wshCAR_Liste_Agée.Cells(r, 5).NumberFormat = wshAdmin.Range("B1").Value
-                wshCAR_Liste_Agée.Cells(r, 6).Value = montantFacture
+                wshCAR_Liste_Agée.Cells(r, 2).value = client
+                wshCAR_Liste_Agée.Cells(r, 3).value = numFacture
+                wshCAR_Liste_Agée.Cells(r, 4).value = "Facture"
+                wshCAR_Liste_Agée.Cells(r, 5).value = dateFacture
+                wshCAR_Liste_Agée.Cells(r, 5).NumberFormat = wshAdmin.Range("B1").value
+                wshCAR_Liste_Agée.Cells(r, 6).value = montantFacture
                 Select Case trancheAge
                     Case "- de 30 jours"
-                        wshCAR_Liste_Agée.Cells(r, 7).Value = montantRestant
+                        wshCAR_Liste_Agée.Cells(r, 7).value = montantRestant
                     Case "31 @ 60 jours"
-                        wshCAR_Liste_Agée.Cells(r, 8).Value = montantRestant
+                        wshCAR_Liste_Agée.Cells(r, 8).value = montantRestant
                     Case "61 @ 90 jours"
-                        wshCAR_Liste_Agée.Cells(r, 9).Value = montantRestant
+                        wshCAR_Liste_Agée.Cells(r, 9).value = montantRestant
                     Case "+ de 90 jours"
-                        wshCAR_Liste_Agée.Cells(r, 10).Value = montantRestant
+                        wshCAR_Liste_Agée.Cells(r, 10).value = montantRestant
                 End Select
                 
                 'Transactions de paiements par la suite
@@ -206,13 +206,13 @@ Sub CréerListeÂgée() '2024-09-08 @ 15:55
                 If Not rngPaiementsAssoc Is Nothing Then
                     pmtFirstAddress = rngPaiementsAssoc.Address
                     Do
-                        If rngPaiementsAssoc.offset(0, 2).Value <= CDate(wshCAR_Liste_Agée.Range("H4").Value) Then
+                        If rngPaiementsAssoc.offset(0, 2).value <= CDate(wshCAR_Liste_Agée.Range("H4").value) Then
                             r = r + 1
-                            wshCAR_Liste_Agée.Cells(r, 2).Value = client
-                            wshCAR_Liste_Agée.Cells(r, 3).Value = numFacture
-                            wshCAR_Liste_Agée.Cells(r, 4).Value = "Paiement"
-                            wshCAR_Liste_Agée.Cells(r, 5).Value = rngPaiementsAssoc.offset(0, 2).Value
-                            wshCAR_Liste_Agée.Cells(r, 6).Value = -rngPaiementsAssoc.offset(0, 3).Value 'Montant du paiement
+                            wshCAR_Liste_Agée.Cells(r, 2).value = client
+                            wshCAR_Liste_Agée.Cells(r, 3).value = numFacture
+                            wshCAR_Liste_Agée.Cells(r, 4).value = "Paiement"
+                            wshCAR_Liste_Agée.Cells(r, 5).value = rngPaiementsAssoc.offset(0, 2).value
+                            wshCAR_Liste_Agée.Cells(r, 6).value = -rngPaiementsAssoc.offset(0, 3).value 'Montant du paiement
                         End If
                         Set rngPaiementsAssoc = wsPaiements.Columns("B:B").FindNext(rngPaiementsAssoc)
                     Loop While Not rngPaiementsAssoc Is Nothing And rngPaiementsAssoc.Address <> pmtFirstAddress
@@ -225,16 +225,16 @@ Sub CréerListeÂgée() '2024-09-08 @ 15:55
                 If Not rngRégularisationAssoc Is Nothing Then
                     regulFirstAddress = rngRégularisationAssoc.Address
                     Do
-                        If rngRégularisationAssoc.offset(0, 1).Value <= CDate(wshCAR_Liste_Agée.Range("H4").Value) Then
+                        If rngRégularisationAssoc.offset(0, 1).value <= CDate(wshCAR_Liste_Agée.Range("H4").value) Then
                             r = r + 1
-                            wshCAR_Liste_Agée.Cells(r, 2).Value = client
-                            wshCAR_Liste_Agée.Cells(r, 3).Value = numFacture
-                            wshCAR_Liste_Agée.Cells(r, 4).Value = "Régularisation"
-                            wshCAR_Liste_Agée.Cells(r, 5).Value = rngRégularisationAssoc.offset(0, 1).Value
-                            wshCAR_Liste_Agée.Cells(r, 6).Value = rngRégularisationAssoc.offset(0, 4).Value + _
-                                rngRégularisationAssoc.offset(0, 5).Value + _
-                                rngRégularisationAssoc.offset(0, 6).Value + _
-                                rngRégularisationAssoc.offset(0, 7).Value
+                            wshCAR_Liste_Agée.Cells(r, 2).value = client
+                            wshCAR_Liste_Agée.Cells(r, 3).value = numFacture
+                            wshCAR_Liste_Agée.Cells(r, 4).value = "Régularisation"
+                            wshCAR_Liste_Agée.Cells(r, 5).value = rngRégularisationAssoc.offset(0, 1).value
+                            wshCAR_Liste_Agée.Cells(r, 6).value = rngRégularisationAssoc.offset(0, 4).value + _
+                                rngRégularisationAssoc.offset(0, 5).value + _
+                                rngRégularisationAssoc.offset(0, 6).value + _
+                                rngRégularisationAssoc.offset(0, 7).value
                         End If
                         Set rngRégularisationAssoc = wsRégularisations.Columns("B:B").FindNext(rngRégularisationAssoc)
                     Loop While Not rngRégularisationAssoc Is Nothing And rngRégularisationAssoc.Address <> regulFirstAddress
@@ -255,12 +255,12 @@ Next_Invoice:
         
         For Each cle In dictClients.keys
             r = r + 1
-            wshCAR_Liste_Agée.Cells(r, 2).Value = cle ' Nom du client
-            wshCAR_Liste_Agée.Cells(r, 3).Value = dictClients(cle)(0) ' Total
-            wshCAR_Liste_Agée.Cells(r, 4).Value = dictClients(cle)(1) ' - de 30 jours
-            wshCAR_Liste_Agée.Cells(r, 5).Value = dictClients(cle)(2) ' 31 @ 60 jours
-            wshCAR_Liste_Agée.Cells(r, 6).Value = dictClients(cle)(3) ' 61 @ 90 jours
-            wshCAR_Liste_Agée.Cells(r, 7).Value = dictClients(cle)(4) ' + de 90 jours
+            wshCAR_Liste_Agée.Cells(r, 2).value = cle ' Nom du client
+            wshCAR_Liste_Agée.Cells(r, 3).value = dictClients(cle)(0) ' Total
+            wshCAR_Liste_Agée.Cells(r, 4).value = dictClients(cle)(1) ' - de 30 jours
+            wshCAR_Liste_Agée.Cells(r, 5).value = dictClients(cle)(2) ' 31 @ 60 jours
+            wshCAR_Liste_Agée.Cells(r, 6).value = dictClients(cle)(3) ' 61 @ 90 jours
+            wshCAR_Liste_Agée.Cells(r, 7).value = dictClients(cle)(4) ' + de 90 jours
         Next cle
         
         Application.EnableEvents = True
@@ -277,7 +277,7 @@ Next_Invoice:
     If DerniereLigne > 9 Then 'Le tri n'est peut-être pas nécessaire
         With wshCAR_Liste_Agée.Sort
             .SortFields.Clear
-            If wshCAR_Liste_Agée.Range("D4").Value = "Nom de client" Then
+            If wshCAR_Liste_Agée.Range("D4").value = "Nom de client" Then
                 .SortFields.Add _
                     key:=wshCAR_Liste_Agée.Range("B8"), _
                     SortOn:=xlSortOnValues, _
@@ -315,15 +315,15 @@ Next_Invoice:
                 .Range("C9:G" & DerniereLigne).NumberFormat = "#,##0.00 $"
                 .Range("C9:G" & DerniereLigne).HorizontalAlignment = xlRight
                 .Range("C" & DerniereLigne).formula = "=Sum(C9:C" & DerniereLigne - 2 & ")"
-                t(0) = .Range("C" & DerniereLigne).Value
+                t(0) = .Range("C" & DerniereLigne).value
                 .Range("D" & DerniereLigne).formula = "=Sum(D9:D" & DerniereLigne - 2 & ")"
-                t(1) = .Range("D" & DerniereLigne).Value
+                t(1) = .Range("D" & DerniereLigne).value
                 .Range("E" & DerniereLigne).formula = "=Sum(E9:E" & DerniereLigne - 2 & ")"
-                t(2) = .Range("E" & DerniereLigne).Value
+                t(2) = .Range("E" & DerniereLigne).value
                 .Range("F" & DerniereLigne).formula = "=Sum(F9:F" & DerniereLigne - 2 & ")"
-                t(3) = .Range("F" & DerniereLigne).Value
+                t(3) = .Range("F" & DerniereLigne).value
                 .Range("G" & DerniereLigne).formula = "=Sum(G9:G" & DerniereLigne - 2 & ")"
-                t(4) = .Range("G" & DerniereLigne).Value
+                t(4) = .Range("G" & DerniereLigne).value
                 .Range("C" & DerniereLigne & ":G" & DerniereLigne).Font.Bold = True
             Case "facture"
                 .Range("C9:C" & DerniereLigne).HorizontalAlignment = xlCenter
@@ -331,15 +331,15 @@ Next_Invoice:
                 .Range("E9:I" & DerniereLigne).NumberFormat = "#,##0.00 $"
                 .Range("E9:I" & DerniereLigne).HorizontalAlignment = xlRight
                 .Range("E" & DerniereLigne).formula = "=Sum(E9:E" & DerniereLigne - 2 & ")"
-                t(0) = .Range("E" & DerniereLigne).Value
+                t(0) = .Range("E" & DerniereLigne).value
                 .Range("F" & DerniereLigne).formula = "=Sum(F9:F" & DerniereLigne - 2 & ")"
-                t(1) = .Range("F" & DerniereLigne).Value
+                t(1) = .Range("F" & DerniereLigne).value
                 .Range("G" & DerniereLigne).formula = "=Sum(G9:G" & DerniereLigne - 2 & ")"
-                t(2) = .Range("G" & DerniereLigne).Value
+                t(2) = .Range("G" & DerniereLigne).value
                 .Range("H" & DerniereLigne).formula = "=Sum(H9:H" & DerniereLigne - 2 & ")"
-                t(3) = .Range("H" & DerniereLigne).Value
+                t(3) = .Range("H" & DerniereLigne).value
                 .Range("I" & DerniereLigne).formula = "=Sum(I9:I" & DerniereLigne - 2 & ")"
-                t(4) = .Range("I" & DerniereLigne).Value
+                t(4) = .Range("I" & DerniereLigne).value
                 .Range("E" & DerniereLigne & ":I" & DerniereLigne).Font.Bold = True
             Case "transaction"
                 .Columns("C:E").HorizontalAlignment = xlCenter
@@ -347,23 +347,23 @@ Next_Invoice:
                 .Range("F9:J" & DerniereLigne).NumberFormat = "#,##0.00 $"
                 .Range("F9:J" & DerniereLigne).HorizontalAlignment = xlRight
                 .Range("F" & DerniereLigne).formula = "=Sum(F9:F" & DerniereLigne - 2 & ")"
-                t(0) = .Range("F" & DerniereLigne).Value
+                t(0) = .Range("F" & DerniereLigne).value
                 .Range("G" & DerniereLigne).formula = "=Sum(G9:G" & DerniereLigne - 2 & ")"
-                t(1) = .Range("G" & DerniereLigne).Value
+                t(1) = .Range("G" & DerniereLigne).value
                 .Range("H" & DerniereLigne).formula = "=Sum(H9:H" & DerniereLigne - 2 & ")"
-                t(2) = .Range("H" & DerniereLigne).Value
+                t(2) = .Range("H" & DerniereLigne).value
                 .Range("I" & DerniereLigne).formula = "=Sum(I9:I" & DerniereLigne - 2 & ")"
-                t(3) = .Range("I" & DerniereLigne).Value
+                t(3) = .Range("I" & DerniereLigne).value
                 .Range("J" & DerniereLigne).formula = "=Sum(J9:J" & DerniereLigne - 2 & ")"
-                t(4) = .Range("J" & DerniereLigne).Value
+                t(4) = .Range("J" & DerniereLigne).value
                 .Range("F" & DerniereLigne & ":J" & DerniereLigne).Font.Bold = True
         End Select
-        .Range("B" & DerniereLigne).Value = "Totaux de la liste"
+        .Range("B" & DerniereLigne).value = "Totaux de la liste"
         .Range("B" & DerniereLigne).Font.Bold = True
         DerniereLigne = DerniereLigne + 1
         
         'Ligne de pourcentages
-        .Range("B" & DerniereLigne).Value = "Pourcentages"
+        .Range("B" & DerniereLigne).value = "Pourcentages"
         .Range("B" & DerniereLigne & ":J" & DerniereLigne).Font.Bold = True
         .Range("C" & DerniereLigne & ":J" & DerniereLigne).NumberFormat = "##0.00"
         .Range("C" & DerniereLigne & ":J" & DerniereLigne).HorizontalAlignment = xlRight
@@ -372,23 +372,23 @@ Next_Invoice:
         If totalListe <> 0 Then
             Select Case LCase(niveauDetail)
                 Case "client"
-                    .Range("C" & DerniereLigne).Value = Format$(Round(t(0) / totalListe, 4), "##0.00 %")
-                    .Range("D" & DerniereLigne).Value = Format$(Round(t(1) / totalListe, 4), "##0.00 %")
-                    .Range("E" & DerniereLigne).Value = Format$(Round(t(2) / totalListe, 4), "##0.00 %")
-                    .Range("F" & DerniereLigne).Value = Format$(Round(t(3) / totalListe, 4), "##0.00 %")
-                    .Range("G" & DerniereLigne).Value = Format$(Round(t(4) / totalListe, 4), "##0.00 %")
+                    .Range("C" & DerniereLigne).value = Format$(Round(t(0) / totalListe, 4), "##0.00 %")
+                    .Range("D" & DerniereLigne).value = Format$(Round(t(1) / totalListe, 4), "##0.00 %")
+                    .Range("E" & DerniereLigne).value = Format$(Round(t(2) / totalListe, 4), "##0.00 %")
+                    .Range("F" & DerniereLigne).value = Format$(Round(t(3) / totalListe, 4), "##0.00 %")
+                    .Range("G" & DerniereLigne).value = Format$(Round(t(4) / totalListe, 4), "##0.00 %")
                 Case "facture"
-                    .Range("E" & DerniereLigne).Value = Format$(Round(t(0) / totalListe, 4), "##0.00 %")
-                    .Range("F" & DerniereLigne).Value = Format$(Round(t(1) / totalListe, 4), "##0.00 %")
-                    .Range("G" & DerniereLigne).Value = Format$(Round(t(2) / totalListe, 4), "##0.00 %")
-                    .Range("H" & DerniereLigne).Value = Format$(Round(t(3) / totalListe, 4), "##0.00 %")
-                    .Range("I" & DerniereLigne).Value = Format$(Round(t(4) / totalListe, 4), "##0.00 %")
+                    .Range("E" & DerniereLigne).value = Format$(Round(t(0) / totalListe, 4), "##0.00 %")
+                    .Range("F" & DerniereLigne).value = Format$(Round(t(1) / totalListe, 4), "##0.00 %")
+                    .Range("G" & DerniereLigne).value = Format$(Round(t(2) / totalListe, 4), "##0.00 %")
+                    .Range("H" & DerniereLigne).value = Format$(Round(t(3) / totalListe, 4), "##0.00 %")
+                    .Range("I" & DerniereLigne).value = Format$(Round(t(4) / totalListe, 4), "##0.00 %")
                 Case "transaction"
-                    .Range("F" & DerniereLigne).Value = Format$(Round(t(0) / totalListe, 4), "##0.00 %")
-                    .Range("G" & DerniereLigne).Value = Format$(Round(t(1) / totalListe, 4), "##0.00 %")
-                    .Range("H" & DerniereLigne).Value = Format$(Round(t(2) / totalListe, 4), "##0.00 %")
-                    .Range("I" & DerniereLigne).Value = Format$(Round(t(3) / totalListe, 4), "##0.00 %")
-                    .Range("J" & DerniereLigne).Value = Format$(Round(t(4) / totalListe, 4), "##0.00 %")
+                    .Range("F" & DerniereLigne).value = Format$(Round(t(0) / totalListe, 4), "##0.00 %")
+                    .Range("G" & DerniereLigne).value = Format$(Round(t(1) / totalListe, 4), "##0.00 %")
+                    .Range("H" & DerniereLigne).value = Format$(Round(t(2) / totalListe, 4), "##0.00 %")
+                    .Range("I" & DerniereLigne).value = Format$(Round(t(3) / totalListe, 4), "##0.00 %")
+                    .Range("J" & DerniereLigne).value = Format$(Round(t(4) / totalListe, 4), "##0.00 %")
             End Select
         End If
     End With
@@ -424,7 +424,7 @@ Next_Invoice:
     
     DoEvents
 
-    Dim header1 As String: header1 = "Liste âgée des comptes clients au " & wshCAR_Liste_Agée.Range("H4").Value
+    Dim header1 As String: header1 = "Liste âgée des comptes clients au " & wshCAR_Liste_Agée.Range("H4").value
     Dim header2 As String
     If LCase(niveauDetail) = "client" Then
         header2 = "1 ligne par client"
@@ -472,7 +472,7 @@ Sub CAR_ListeAgee_AfficherMenuContextuel(ByVal target As Range) '2025-02-21 @ 19
     Call ExtraireLigneColonneCellule(target.Address, numeroLigne, numeroColonne)
     
     Dim numeroFacture As String
-    numeroFacture = ActiveSheet.Cells(numeroLigne, "C").Value
+    numeroFacture = ActiveSheet.Cells(numeroLigne, "C").value
     If Trim(numeroFacture) = "" Then
         Exit Sub
     End If
@@ -579,7 +579,7 @@ Sub EnvoyerRappelParCourriel(noFact As String)
 
     'Ajouter la copie de la facture (format PDF)
     Dim attachmentFullPathName As String
-    attachmentFullPathName = wshAdmin.Range("F5").Value & FACT_PDF_PATH & Application.PathSeparator & _
+    attachmentFullPathName = wshAdmin.Range("F5").value & FACT_PDF_PATH & Application.PathSeparator & _
                      noFact & ".pdf"
     
     'Vérification de l'existence de la pièce jointe

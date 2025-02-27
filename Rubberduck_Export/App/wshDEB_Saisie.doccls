@@ -264,7 +264,6 @@ Private Sub Process_Change(ByVal target As Range)
         'If the user changes the Amount cell
         Dim cell As Range
         For Each cell In target
-'            Debug.Print "#001 - cell.address = " & cell.Address & "   cell.Value = " & cell.value
             If cell.value = 0 Then
                 cell.offset(0, 1).value = "" 'Clear GST
                 cell.offset(0, 2).value = "" 'Clear PST
@@ -277,10 +276,6 @@ Private Sub Process_Change(ByVal target As Range)
                 End If
                 cell.offset(0, 5).Select 'Input NET amount
             Else
-'                Debug.Print "#002 - Total amount - " & wshDEB_Saisie.Range("O4").Value & " " & wshDEB_Saisie.Range("H" & target.row).Value & " " & _
-'                    target.value & " " & gst & " " & pst & " " & gstCredit & " " & pstCredit & " " & _
-'                    netAmount
-                'Calculate GST, PST, GST_Credit, PST_Credit based on the Amount
                 If wshDEB_Saisie.Range("H" & target.row).value <> "M" Then
                     Call Calculate_GST_PST_And_Credits(wshDEB_Saisie.Range("O4").value, _
                                                        wshDEB_Saisie.Range("H" & target.row).value, _

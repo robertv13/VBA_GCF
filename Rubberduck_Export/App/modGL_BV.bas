@@ -8,7 +8,7 @@ Sub shp_GL_BV_Actualiser_Click()
     Dim ws As Worksheet
     Set ws = wshGL_BV
     
-    Call GL_Trial_Balance_Build(ws, ws.Range("J1").Value)
+    Call GL_Trial_Balance_Build(ws, ws.Range("J1").value)
 
 End Sub
 
@@ -32,11 +32,11 @@ Sub GL_Trial_Balance_Build(ws As Worksheet, dateCutOff As Date) '2024-11-18 @ 07
     
     'Add the cut-off date in the header (printing purposes)
     Dim minDate As Date
-    ws.Range("C2").Value = "Au " & Format$(dateCutOff, wshAdmin.Range("B1").Value)
+    ws.Range("C2").value = "Au " & Format$(dateCutOff, wshAdmin.Range("B1").value)
 
     Application.EnableEvents = False
-    ws.Range("B2").Value = 3
-    ws.Range("B10").Value = 0
+    ws.Range("B2").value = 3
+    ws.Range("B10").value = 0
     Application.EnableEvents = True
     
     'Step # 1 - Use AdvancedFilter on GL_Trans for ALL accounts and transactions between the 2 dates
@@ -68,7 +68,7 @@ Sub GL_Trial_Balance_Build(ws As Worksheet, dateCutOff As Date) '2024-11-18 @ 07
         End If
         currRowID = dictSoldesParGL(glNo)
         'Update the summary array
-        arrSolde(currRowID, 2) = arrSolde(currRowID, 2) + rngResultAF.Cells(i, 7).Value - rngResultAF.Cells(i, 8).Value
+        arrSolde(currRowID, 2) = arrSolde(currRowID, 2) + rngResultAF.Cells(i, 7).value - rngResultAF.Cells(i, 8).value
     Next i
     
     t1 = Application.WorksheetFunction.Sum(rngResultAF.Columns(7))
@@ -85,13 +85,13 @@ Sub GL_Trial_Balance_Build(ws As Worksheet, dateCutOff As Date) '2024-11-18 @ 07
         If glNo <> "" Then
             r = dictSoldesParGL.item(glNo) 'Get the value of the item associated with GLNo
             If r <> 0 Then
-                ws.Range("D" & currRow).Value = glNo
-                ws.Range("E" & currRow).Value = arr(i, 2)
+                ws.Range("D" & currRow).value = glNo
+                ws.Range("E" & currRow).value = arr(i, 2)
                 If arrSolde(r, 2) >= 0 Then
-                    ws.Range("F" & currRow).Value = Format$(arrSolde(r, 2), "###,###,##0.00")
+                    ws.Range("F" & currRow).value = Format$(arrSolde(r, 2), "###,###,##0.00")
                     sumDT = sumDT + arrSolde(r, 2)
                 Else
-                    ws.Range("G" & currRow).Value = Format$(-arrSolde(r, 2), "###,###,##0.00")
+                    ws.Range("G" & currRow).value = Format$(-arrSolde(r, 2), "###,###,##0.00")
                     sumCT = sumCT - arrSolde(r, 2)
                 End If
                 currRow = currRow + 1
@@ -100,7 +100,7 @@ Sub GL_Trial_Balance_Build(ws As Worksheet, dateCutOff As Date) '2024-11-18 @ 07
     Next i
 
     currRow = currRow + 1
-    ws.Range("B2").Value = currRow
+    ws.Range("B2").value = currRow
     
     'Unprotect the active cells of the TB area
     With ws '2024-08-21 @ 07:10
@@ -166,7 +166,7 @@ Sub GL_BV_Display_TB_Totals(rng As Range, t As Currency) '2024-06-09 @ 07:45
             .TintAndShade = 0
             .Weight = xlThick
         End With
-        .Value = t
+        .value = t
         .Font.Bold = True
         .NumberFormat = "#,##0.00 $"
     End With
@@ -184,12 +184,12 @@ Sub GL_BV_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
     'Clear the display area & display the account number & description
     With ws
         .Range("L4:T99999").Clear '2024-06-08 @ 15:28
-        .Range("L2").Value = "Du " & Format$(minDate, wshAdmin.Range("B1").Value) & " au " & Format$(maxDate, wshAdmin.Range("B1").Value)
+        .Range("L2").value = "Du " & Format$(minDate, wshAdmin.Range("B1").value) & " au " & Format$(maxDate, wshAdmin.Range("B1").value)
     
         .Range("L4").Font.Bold = True
-        .Range("L4").Value = GLAcct & " - " & GLDesc
-        .Range("B6").Value = GLAcct
-        .Range("B7").Value = GLDesc
+        .Range("L4").value = GLAcct & " - " & GLDesc
+        .Range("B6").value = GLAcct
+        .Range("B7").value = GLDesc
     End With
     
     'Use the AdvancedFilter Result already prepared for TB
@@ -214,7 +214,7 @@ Sub GL_BV_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
     Dim rowGLDetail As Long
     rowGLDetail = 5
     With ws.Range("S4")
-        .Value = 0
+        .value = 0
         .Font.Bold = True
         .NumberFormat = "#,##0.00 $"
         With .Interior
@@ -232,21 +232,23 @@ Sub GL_BV_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
     
     With ws
         'On assume que les résultats de GL_Trans sont triés par numéro de compte, par date & par no écriture
-        Do Until wshGL_Trans.Range("T" & foundRow).Value <> GLAcct
+        Do Until wshGL_Trans.Range("T" & foundRow).value <> GLAcct
             'Traitement des transactions détaillées
-            d = Format$(wshGL_Trans.Range("Q" & foundRow).Value2, wshAdmin.Range("B1").Value)
+            d = Format$(wshGL_Trans.Range("Q" & foundRow).Value2, wshAdmin.Range("B1").value)
             If d >= minDate And d <= maxDate Then
-                .Range("M" & rowGLDetail).Value = wshGL_Trans.Range("Q" & foundRow).Value2
-                .Range("M" & rowGLDetail).NumberFormat = wshAdmin.Range("B1").Value
-                .Range("N" & rowGLDetail).Value = wshGL_Trans.Range("P" & foundRow).Value
+                .Range("M" & rowGLDetail).value = wshGL_Trans.Range("Q" & foundRow).Value2
+                .Range("M" & rowGLDetail).NumberFormat = wshAdmin.Range("B1").value
+                .Range("N" & rowGLDetail).value = wshGL_Trans.Range("P" & foundRow).value
                 .Range("N" & rowGLDetail).HorizontalAlignment = xlCenter
-                .Range("O" & rowGLDetail).Value = wshGL_Trans.Range("R" & foundRow).Value
-                .Range("P" & rowGLDetail).Value = wshGL_Trans.Range("S" & foundRow).Value
-                .Range("Q" & rowGLDetail).Value = wshGL_Trans.Range("V" & foundRow).Value
-                .Range("R" & rowGLDetail).Value = wshGL_Trans.Range("W" & foundRow).Value
-                .Range("S" & rowGLDetail).Value = ws.Range("S" & rowGLDetail - 1).Value + _
-                    wshGL_Trans.Range("V" & foundRow).Value - wshGL_Trans.Range("W" & foundRow).Value
-                .Range("T" & rowGLDetail).Value2 = wshGL_Trans.Range("X" & foundRow).Value
+                .Range("O" & rowGLDetail).value = wshGL_Trans.Range("R" & foundRow).value
+                .Range("P" & rowGLDetail).value = wshGL_Trans.Range("S" & foundRow).value
+                .Range("Q" & rowGLDetail).NumberFormat = "#,##0.00"
+                .Range("Q" & rowGLDetail).value = wshGL_Trans.Range("V" & foundRow).value
+                .Range("R" & rowGLDetail).NumberFormat = "#,##0.00"
+                .Range("R" & rowGLDetail).value = wshGL_Trans.Range("W" & foundRow).value
+                .Range("S" & rowGLDetail).value = ws.Range("S" & rowGLDetail - 1).value + _
+                    wshGL_Trans.Range("V" & foundRow).value - wshGL_Trans.Range("W" & foundRow).value
+                .Range("T" & rowGLDetail).Value2 = wshGL_Trans.Range("X" & foundRow).value
                 foundRow = foundRow + 1
                 rowGLDetail = rowGLDetail + 1
                 OK = OK + 1
@@ -345,16 +347,16 @@ Sub GL_BV_Sub_Totals(glNo As String, GLDesc As String, s As Currency)
 
     Dim r As Long
     With wshGL_BV
-        r = .Range("B2").Value + 1
+        r = .Range("B2").value + 1
         .Range("D" & r).HorizontalAlignment = xlCenter
-        .Range("D" & r).Value = glNo
-        .Range("E" & r).Value = GLDesc
+        .Range("D" & r).value = glNo
+        .Range("E" & r).value = GLDesc
         If s > 0 Then
-            .Range("F" & r).Value = s
+            .Range("F" & r).value = s
         ElseIf s < 0 Then
-            .Range("G" & r).Value = -s
+            .Range("G" & r).value = -s
         End If
-        .Range("B2").Value = wshGL_BV.Range("B2").Value + 1
+        .Range("B2").value = wshGL_BV.Range("B2").value + 1
     End With
     
     Call Log_Record("modGL_BV:GL_BV_Sub_Totals", "", startTime)
@@ -367,29 +369,29 @@ Sub GL_BV_Determine_From_And_To_Date(period As String)
 
     Select Case period
         Case "Mois"
-            wshGL_BV.Range("B8").Value = wshAdmin.Range("MoisDe").Value
-            wshGL_BV.Range("B9").Value = wshAdmin.Range("MoisA").Value
+            wshGL_BV.Range("B8").value = wshAdmin.Range("MoisDe").value
+            wshGL_BV.Range("B9").value = wshAdmin.Range("MoisA").value
         Case "Mois dernier"
-            wshGL_BV.Range("B8").Value = wshAdmin.Range("MoisPrecDe").Value
-            wshGL_BV.Range("B9").Value = wshAdmin.Range("MoisPrecA").Value
+            wshGL_BV.Range("B8").value = wshAdmin.Range("MoisPrecDe").value
+            wshGL_BV.Range("B9").value = wshAdmin.Range("MoisPrecA").value
         Case "Trimestre"
-            wshGL_BV.Range("B8").Value = wshAdmin.Range("TrimDe").Value
-            wshGL_BV.Range("B9").Value = wshAdmin.Range("TrimA").Value
+            wshGL_BV.Range("B8").value = wshAdmin.Range("TrimDe").value
+            wshGL_BV.Range("B9").value = wshAdmin.Range("TrimA").value
         Case "Trimestre dernier"
-            wshGL_BV.Range("B8").Value = wshAdmin.Range("TrimPrecDe").Value
-            wshGL_BV.Range("B9").Value = wshAdmin.Range("TrimPrecA").Value
+            wshGL_BV.Range("B8").value = wshAdmin.Range("TrimPrecDe").value
+            wshGL_BV.Range("B9").value = wshAdmin.Range("TrimPrecA").value
         Case "Année"
-            wshGL_BV.Range("B8").Value = wshAdmin.Range("AnneeDe").Value
-            wshGL_BV.Range("B9").Value = wshAdmin.Range("AnneeA").Value
+            wshGL_BV.Range("B8").value = wshAdmin.Range("AnneeDe").value
+            wshGL_BV.Range("B9").value = wshAdmin.Range("AnneeA").value
         Case "Année dernière"
-            wshGL_BV.Range("B8").Value = wshAdmin.Range("AnneePrecDe").Value
-            wshGL_BV.Range("B9").Value = wshAdmin.Range("AnneePrecA").Value
+            wshGL_BV.Range("B8").value = wshAdmin.Range("AnneePrecDe").value
+            wshGL_BV.Range("B9").value = wshAdmin.Range("AnneePrecA").value
         Case "Dates Manuelles"
-            wshGL_BV.Range("B8").Value = CDate(Format$("07-31-2024", "dd/mm/yyyy"))
-            wshGL_BV.Range("B9").Value = CDate(Format$("07-31-2025", "dd/mm/yyyy"))
+            wshGL_BV.Range("B8").value = CDate(Format$("07-31-2024", "dd/mm/yyyy"))
+            wshGL_BV.Range("B9").value = CDate(Format$("07-31-2025", "dd/mm/yyyy"))
         Case "Toutes les dates"
-            wshGL_BV.Range("B8").Value = CDate(Format$(wshGL_BV.Range("B3").Value, "dd/mm/yyyy"))
-            wshGL_BV.Range("B9").Value = CDate(Format$(wshGL_BV.Range("B4").Value, "dd/mm/yyyy"))
+            wshGL_BV.Range("B8").value = CDate(Format$(wshGL_BV.Range("B3").value, "dd/mm/yyyy"))
+            wshGL_BV.Range("B9").value = CDate(Format$(wshGL_BV.Range("B4").value, "dd/mm/yyyy"))
     End Select
     
     Call Log_Record("modGL_BV:GL_BV_Determine_From_And_To_Date", "", startTime)
@@ -490,7 +492,7 @@ Sub GL_BV_SetUp_And_Print_Document(myPrintRange As Range, pagesTall As Long)
         
         'Page Header & Footer
 '        .LeftHeader = ""
-        .CenterHeader = "&""Aptos Narrow,Gras""&18 " & wshAdmin.Range("NomEntreprise").Value
+        .CenterHeader = "&""Aptos Narrow,Gras""&18 " & wshAdmin.Range("NomEntreprise").value
         Call Log_Record("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 1.A is completed", -1)
         
 '        .RightHeader = ""
@@ -608,37 +610,34 @@ Sub wshGL_BV_Adjust_The_Shape()
     If lastResultRow < 2 Then Exit Sub
     
     Dim rowSelected As Long
-    rowSelected = wshGL_BV.Range("B10").Value
+    rowSelected = wshGL_BV.Range("B10").value
     
     Dim texteOneLine As String, texteFull As String
     
     Dim i As Long, maxLength As Long
     With wshGL_Trans
         For i = 2 To lastResultRow
-'                If Len(.Range("AD2").Value) > maxLength Then
-'                    maxLength = Len(.Range("AD2").Value)
-'                End If
             If i = 2 Then
-                texteFull = "Entrée #: " & .Range("AC2").Value & vbCrLf
-                texteFull = texteFull & "Desc    : " & .Range("AE2").Value & vbCrLf
-                If Trim(.Range("AF2").Value) <> "" Then
-                    texteFull = texteFull & "Source  : " & .Range("AF2").Value & vbCrLf & vbCrLf
+                texteFull = "Entrée #: " & .Range("AC2").value & vbCrLf
+                texteFull = texteFull & "Desc    : " & .Range("AE2").value & vbCrLf
+                If Trim(.Range("AF2").value) <> "" Then
+                    texteFull = texteFull & "Source  : " & .Range("AF2").value & vbCrLf & vbCrLf
                 Else
                     texteFull = texteFull & vbCrLf
                 End If
             End If
-            texteOneLine = Fn_Pad_A_String(.Range("AG" & i).Value, " ", 5, "R") & _
-                            " - " & Fn_Pad_A_String(.Range("AH" & i).Value, " ", 35, "R") & _
-                            "  " & Fn_Pad_A_String(Format$(.Range("AI" & i).Value, "#,##0.00 $"), " ", 14, "L") & _
-                            "  " & Fn_Pad_A_String(Format$(.Range("AJ" & i).Value, "#,##0.00 $"), " ", 14, "L")
-            If Trim(.Range("AF" & i).Value) = Trim(wshGL_BV.Range("B6").Value) Then
+            texteOneLine = Fn_Pad_A_String(.Range("AG" & i).value, " ", 5, "R") & _
+                            " - " & Fn_Pad_A_String(.Range("AH" & i).value, " ", 35, "R") & _
+                            "  " & Fn_Pad_A_String(Format$(.Range("AI" & i).value, "#,##0.00 $"), " ", 14, "L") & _
+                            "  " & Fn_Pad_A_String(Format$(.Range("AJ" & i).value, "#,##0.00 $"), " ", 14, "L")
+            If Trim(.Range("AF" & i).value) = Trim(wshGL_BV.Range("B6").value) Then
                 texteOneLine = " * " & texteOneLine
             Else
                 texteOneLine = "   " & texteOneLine
             End If
             texteOneLine = Fn_Pad_A_String(texteOneLine, " ", 79, "R")
-            If Trim(.Range("AK" & i).Value) <> "" Then
-                texteOneLine = texteOneLine & Trim(.Range("AK" & i).Value)
+            If Trim(.Range("AK" & i).value) <> "" Then
+                texteOneLine = texteOneLine & Trim(.Range("AK" & i).value)
             End If
             If Len(texteOneLine) > maxLength Then
                 maxLength = Len(texteOneLine)

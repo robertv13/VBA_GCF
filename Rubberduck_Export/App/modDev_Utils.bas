@@ -159,9 +159,9 @@ Sub Check_Invoice_Template()
     Call Erase_And_Create_Worksheet("Gabarits_Facture")
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Gabarits_Facture")
-    wsOutput.Range("A1").Value = "Gabarit"
-    wsOutput.Range("B1").Value = "Code"
-    wsOutput.Range("C1").Value = "Service"
+    wsOutput.Range("A1").value = "Gabarit"
+    wsOutput.Range("B1").value = "Code"
+    wsOutput.Range("C1").value = "Service"
     Dim outputRow As Long: outputRow = 1
     
     'Third - Build the list of services associated to each template (First Letter)
@@ -174,13 +174,13 @@ Sub Check_Invoice_Template()
                 template = Left(tt(i), 1)
                 If template <> oldTemplate Then
                     outputRow = outputRow + 2
-                    .Range("A" & outputRow).Value = "Gabarit '" & template & "'"
+                    .Range("A" & outputRow).value = "Gabarit '" & template & "'"
                     oldTemplate = template
                 End If
                 rowNo = Mid(tt(i), InStr(1, tt(i), "-") + 1)
                 outputRow = outputRow + 1
-                .Range("B" & outputRow).Value = tt(i)
-                .Range("C" & outputRow).Value = rng.Cells(rowNo, 1)
+                .Range("B" & outputRow).value = tt(i)
+                .Range("C" & outputRow).value = rng.Cells(rowNo, 1)
             End If
         Next i
         wsOutput.Range("A1").CurrentRegion.EntireColumn.AutoFit
@@ -220,14 +220,14 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
     Call Erase_And_Create_Worksheet("X_Feuilles_du_Classeur")
 
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Feuilles_du_Classeur")
-    wsOutput.Range("A1").Value = "Feuille"
-    wsOutput.Range("B1").Value = "CodeName"
-    wsOutput.Range("C1").Value = "TimeStamp"
+    wsOutput.Range("A1").value = "Feuille"
+    wsOutput.Range("B1").value = "CodeName"
+    wsOutput.Range("C1").value = "TimeStamp"
     Call Make_It_As_Header(wsOutput.Range("A1:C1"))
 
     'Specify the full path and name of the closed workbook
     Dim wbPath As String
-    wbPath = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    wbPath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx"
     
     'Open the workbook in read-only mode
@@ -270,7 +270,7 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
    'Result print setup - 2024-07-20 @ 14:31
     Dim lastUsedRow As Long
     lastUsedRow = r + 2
-    wsOutput.Range("A" & lastUsedRow).Value = "*** " & Format$(f, "###,##0") & _
+    wsOutput.Range("A" & lastUsedRow).value = "*** " & Format$(f, "###,##0") & _
                                     " feuilles pour le workbook '" & wbName & "' ***"
     
     lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "A").End(xlUp).row
@@ -417,7 +417,7 @@ Sub List_Conditional_Formatting_All() '2024-06-23 @ 18:37
     End If
     
     'Assign array to range
-    wsOutput.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2)).Value = arr
+    wsOutput.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2)).value = arr
     wsOutput.Range("A:A").EntireColumn.Hidden = True 'Do not show the SortKey
    
     MsgBox "J'ai trouvé " & i & " Conditional Formatting"
@@ -437,14 +437,14 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
     Call Erase_And_Create_Worksheet("Doc_Data_Validations")
 
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Doc_Data_Validations")
-    wsOutput.Cells(1, 1).Value = "SortKey"
-    wsOutput.Cells(1, 2).Value = "Worksheet"
-    wsOutput.Cells(1, 3).Value = "CellAddress"
-    wsOutput.Cells(1, 4).Value = "ValidationType"
-    wsOutput.Cells(1, 5).Value = "Formula1"
-    wsOutput.Cells(1, 6).Value = "Formula2"
-    wsOutput.Cells(1, 7).Value = "Operator"
-    wsOutput.Cells(1, 8).Value = "TimeStamp"
+    wsOutput.Cells(1, 1).value = "SortKey"
+    wsOutput.Cells(1, 2).value = "Worksheet"
+    wsOutput.Cells(1, 3).value = "CellAddress"
+    wsOutput.Cells(1, 4).value = "ValidationType"
+    wsOutput.Cells(1, 5).value = "Formula1"
+    wsOutput.Cells(1, 6).value = "Formula2"
+    wsOutput.Cells(1, 7).value = "Operator"
+    wsOutput.Cells(1, 8).value = "TimeStamp"
     
     Call Make_It_As_Header(wsOutput.Range("A1:H1"))
     
@@ -515,7 +515,7 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
         
         'Array to Worksheet
         Dim outputRow As Long: outputRow = 2
-        wsOutput.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2)).Value = arr
+        wsOutput.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2)).value = arr
         wsOutput.Range("A:A").EntireColumn.Hidden = True 'Do not show the sortKey
         wsOutput.Columns(4).HorizontalAlignment = xlCenter
         wsOutput.Columns(7).HorizontalAlignment = xlCenter
@@ -524,11 +524,11 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
         Dim lastUsedRow As Long
         lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "B").End(xlUp).row
         Dim j As Long, oldWorksheet As String
-        oldWorksheet = wsOutput.Range("B" & lastUsedRow).Value
+        oldWorksheet = wsOutput.Range("B" & lastUsedRow).value
         For j = lastUsedRow To 2 Step -1
-            If wsOutput.Range("B" & j).Value <> oldWorksheet Then
+            If wsOutput.Range("B" & j).value <> oldWorksheet Then
                 wsOutput.Rows(j + 1).Insert Shift:=xlDown, CopyOrigin:=xlFormatFromRightOrBelow
-                oldWorksheet = wsOutput.Range("B" & j).Value
+                oldWorksheet = wsOutput.Range("B" & j).value
             End If
         Next j
         
@@ -560,7 +560,7 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
     
     'Result print setup - 2024-07-15 @ 09:22
     lastUsedRow = lastUsedRow + 2
-    wsOutput.Range("B" & lastUsedRow).Value = "*** " & Format$(xAnalyzed, "###,##0") & _
+    wsOutput.Range("B" & lastUsedRow).value = "*** " & Format$(xAnalyzed, "###,##0") & _
                                     " cellules analysées dans l'application ***"
     Dim header1 As String: header1 = "Cells Data Validations"
     Dim header2 As String: header2 = "All worksheets"
@@ -659,7 +659,7 @@ nextIteration:
     Call Array_2D_Bubble_Sort(outputArray)
     
     'Transfer the array data to the worksheet
-    wshzDocFormulas.Range("A2").Resize(UBound(outputArray, 1), UBound(outputArray, 2)).Value = outputArray
+    wshzDocFormulas.Range("A2").Resize(UBound(outputArray, 1), UBound(outputArray, 2)).value = outputArray
     wshzDocFormulas.Range("A:A").EntireColumn.Hidden = True 'Do not show the outputArray
 
     MsgBox "J'ai trouvé " & Format$(i, "#,##0") & " formules"
@@ -727,25 +727,25 @@ Sub List_All_Shapes_Properties() '2024-08-07 @ 19:37
     
     Dim r As Long
     r = row
-    ws.Cells(r, col).Value = "Type"
-    ws.Cells(r, col + 1).Value = "Shape Name"
-    ws.Cells(r, col + 2).Value = "ZOrder"
-    ws.Cells(r, col + 3).Value = "Top"
-    ws.Cells(r, col + 4).Value = "Left"
-    ws.Cells(r, col + 5).Value = "Width"
-    ws.Cells(r, col + 6).Value = "Height"
+    ws.Cells(r, col).value = "Type"
+    ws.Cells(r, col + 1).value = "Shape Name"
+    ws.Cells(r, col + 2).value = "ZOrder"
+    ws.Cells(r, col + 3).value = "Top"
+    ws.Cells(r, col + 4).value = "Left"
+    ws.Cells(r, col + 5).value = "Width"
+    ws.Cells(r, col + 6).value = "Height"
     
     'Loop through all shapes on the worksheet
     Dim shp As Shape
     r = row + 1
     For Each shp In ws.Shapes
-        ws.Cells(r, col).Value = shp.Type
-        ws.Cells(r, col + 1).Value = shp.Name
-        ws.Cells(r, col + 2).Value = shp.ZOrderPosition
-        ws.Cells(r, col + 3).Value = shp.Top
-        ws.Cells(r, col + 4).Value = shp.Left
-        ws.Cells(r, col + 5).Value = shp.Width
-        ws.Cells(r, col + 6).Value = shp.Height
+        ws.Cells(r, col).value = shp.Type
+        ws.Cells(r, col + 1).value = shp.Name
+        ws.Cells(r, col + 2).value = shp.ZOrderPosition
+        ws.Cells(r, col + 3).value = shp.Top
+        ws.Cells(r, col + 4).value = shp.Left
+        ws.Cells(r, col + 5).value = shp.Width
+        ws.Cells(r, col + 6).value = shp.Height
         r = r + 1
     Next shp
     
@@ -821,7 +821,7 @@ Sub List_Named_Ranges_All() '2024-06-23 @ 07:40
     Call Array_2D_Bubble_Sort(arr)
     
     'Transfer the array data to the worksheet
-    wshzDocNamedRange.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2)).Value = arr
+    wshzDocNamedRange.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2)).value = arr
     wshzDocNamedRange.Range("A:A").EntireColumn.Hidden = True 'Do not show the outputArray
     
     'Result print setup - 2024-07-14 2 07:10
@@ -898,7 +898,7 @@ Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
 
     Application.EnableEvents = False
     
-    While ws.Range("D2").Value = "a"
+    While ws.Range("D2").value = "a"
         Set rowToMove = tbl.ListRows(1).Range
         lastRow = tbl.ListRows.count
         rowToMove.Cut Destination:=tbl.DataBodyRange.Rows(lastRow + 1)
@@ -988,13 +988,13 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
     Call Erase_And_Create_Worksheet("X_Doc_Search_Utility_Results")
 
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Doc_Search_Utility_Results")
-    wsOutput.Range("A1").Value = "SortKey"
-    wsOutput.Range("B1").Value = "Type"
-    wsOutput.Range("C1").Value = "ModuleName"
-    wsOutput.Range("D1").Value = "LineNo"
-    wsOutput.Range("E1").Value = "ProcedureName"
-    wsOutput.Range("F1").Value = "Code"
-    wsOutput.Range("G1").Value = "TimeStamp"
+    wsOutput.Range("A1").value = "SortKey"
+    wsOutput.Range("B1").value = "Type"
+    wsOutput.Range("C1").value = "ModuleName"
+    wsOutput.Range("D1").value = "LineNo"
+    wsOutput.Range("E1").value = "ProcedureName"
+    wsOutput.Range("F1").value = "Code"
+    wsOutput.Range("G1").value = "TimeStamp"
     
     Call Make_It_As_Header(wsOutput.Range("A1:G1"))
     
@@ -1010,7 +1010,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
         Call Array_2D_Bubble_Sort(arrResult)
     
         'Transfer the array to the worksheet
-        wsOutput.Range("A2").Resize(UBound(arrResult, 1), UBound(arrResult, 2)).Value = arrResult
+        wsOutput.Range("A2").Resize(UBound(arrResult, 1), UBound(arrResult, 2)).value = arrResult
         wsOutput.Range("A:A").EntireColumn.Hidden = True 'Do not show the sortKey
         wsOutput.Columns(4).HorizontalAlignment = xlCenter
         wsOutput.Columns(7).NumberFormat = "dd/mm/yyyy hh:mm:ss"
@@ -1018,11 +1018,11 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
         Dim lastUsedRow As Long
         lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "B").End(xlUp).row
         Dim j As Long, oldProcedure As String
-        oldProcedure = wsOutput.Range("C" & lastUsedRow).Value & wsOutput.Range("E" & lastUsedRow).Value
+        oldProcedure = wsOutput.Range("C" & lastUsedRow).value & wsOutput.Range("E" & lastUsedRow).value
         For j = lastUsedRow To 2 Step -1
-            If wsOutput.Range("C" & j).Value & wsOutput.Range("E" & j).Value <> oldProcedure Then
+            If wsOutput.Range("C" & j).value & wsOutput.Range("E" & j).value <> oldProcedure Then
                 wsOutput.Rows(j + 1).Insert Shift:=xlDown, CopyOrigin:=xlFormatFromRightOrBelow
-                oldProcedure = wsOutput.Range("C" & j).Value & wsOutput.Range("E" & j).Value
+                oldProcedure = wsOutput.Range("C" & j).value & wsOutput.Range("E" & j).value
             End If
         Next j
         
@@ -1049,7 +1049,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
     
     'Result print setup - 2024-07-14 2 06:24
     lastUsedRow = lastUsedRow + 2
-    wsOutput.Range("B" & lastUsedRow).Value = "*** " & Format$(x, "###,##0") & " lignes de code dans l'application ***"
+    wsOutput.Range("B" & lastUsedRow).value = "*** " & Format$(x, "###,##0") & " lignes de code dans l'application ***"
     Dim header1 As String: header1 = "Search Utility Results"
     Dim header2 As String
     header2 = "Searched strings '" & search1 & "'"
@@ -1087,12 +1087,12 @@ Sub List_All_Columns() '2024-08-09 @ 11:52
     
     'Add headers to the report
     With reportSheet
-        .Cells(1, 1).Value = "Nom de la feuille"
-        .Cells(1, 2).Value = "No. col."
-        .Cells(1, 3).Value = "Lettre col."
-        .Cells(1, 4).Value = "Nom Col."
-        .Cells(1, 5).Value = "Type données"
-        .Cells(1, 6).Value = "Largeur"
+        .Cells(1, 1).value = "Nom de la feuille"
+        .Cells(1, 2).value = "No. col."
+        .Cells(1, 3).value = "Lettre col."
+        .Cells(1, 4).value = "Nom Col."
+        .Cells(1, 5).value = "Type données"
+        .Cells(1, 6).value = "Largeur"
     End With
     
     Dim outputRow As Long
@@ -1109,15 +1109,14 @@ Sub List_All_Columns() '2024-08-09 @ 11:52
             
             colType = Fn_Get_Column_Type(col)
             
-            ' Output the information to the report
+            'Output the information to the report
             With reportSheet
-                .Cells(outputRow, 1).Value = ws.Name
-                .Cells(outputRow, 2).Value = i
-                .Cells(outputRow, 3).Value = Replace(col.Address(False, False), "1", "")
-'                .Cells(outputRow, 3).Value = col.address(False, False).Replace("1", "")
-                .Cells(outputRow, 4).Value = ws.Cells(1, i).Value
-                .Cells(outputRow, 5).Value = colType
-                .Cells(outputRow, 6).Value = col.ColumnWidth
+                .Cells(outputRow, 1).value = ws.Name
+                .Cells(outputRow, 2).value = i
+                .Cells(outputRow, 3).value = Replace(col.Address(False, False), "1", "")
+                .Cells(outputRow, 4).value = ws.Cells(1, i).value
+                .Cells(outputRow, 5).value = colType
+                .Cells(outputRow, 6).value = col.ColumnWidth
             End With
             
             outputRow = outputRow + 1
@@ -1151,10 +1150,10 @@ Sub List_All_Macros_Used_With_Objects() '2024-11-26 @ 20:14
     Dim wsOutputSheet As Worksheet
     Set wsOutputSheet = ThisWorkbook.Worksheets("Doc_All_Macros_Used_With_Object")
     
-    wsOutputSheet.Cells(1, 1).Value = "Worksheet"
-    wsOutputSheet.Cells(1, 2).Value = "Object Type"
-    wsOutputSheet.Cells(1, 3).Value = "Object Name"
-    wsOutputSheet.Cells(1, 4).Value = "Macro Name"
+    wsOutputSheet.Cells(1, 1).value = "Worksheet"
+    wsOutputSheet.Cells(1, 2).value = "Object Type"
+    wsOutputSheet.Cells(1, 3).value = "Object Name"
+    wsOutputSheet.Cells(1, 4).value = "Macro Name"
     
     Call Make_It_As_Header(wsOutputSheet.Range("A1:D1"))
 
@@ -1175,10 +1174,10 @@ Sub List_All_Macros_Used_With_Objects() '2024-11-26 @ 20:14
                 macroName = shp.OnAction
                 On Error GoTo 0
                 If macroName <> "" Then
-                    wsOutputSheet.Cells(outputRow, 1).Value = ws.Name
-                    wsOutputSheet.Cells(outputRow, 2).Value = "Shape"
-                    wsOutputSheet.Cells(outputRow, 3).Value = shp.Name
-                    wsOutputSheet.Cells(outputRow, 4).Value = macroName
+                    wsOutputSheet.Cells(outputRow, 1).value = ws.Name
+                    wsOutputSheet.Cells(outputRow, 2).value = "Shape"
+                    wsOutputSheet.Cells(outputRow, 3).value = shp.Name
+                    wsOutputSheet.Cells(outputRow, 4).value = macroName
                     outputRow = outputRow + 1
                 End If
             Next shp
@@ -1196,55 +1195,15 @@ Sub List_All_Macros_Used_With_Objects() '2024-11-26 @ 20:14
                 End If
                 On Error GoTo 0
                 If macroName <> "" Then
-                    wsOutputSheet.Cells(outputRow, 1).Value = ws.Name
-                    wsOutputSheet.Cells(outputRow, 2).Value = "ActiveX Control"
-                    wsOutputSheet.Cells(outputRow, 3).Value = obj.Name
-                    wsOutputSheet.Cells(outputRow, 4).Value = macroName
+                    wsOutputSheet.Cells(outputRow, 1).value = ws.Name
+                    wsOutputSheet.Cells(outputRow, 2).value = "ActiveX Control"
+                    wsOutputSheet.Cells(outputRow, 3).value = obj.Name
+                    wsOutputSheet.Cells(outputRow, 4).value = macroName
                     outputRow = outputRow + 1
                 End If
             Next obj
         End If
     Next ws
-
-'    'Part # 2 - Analyze the code itself
-'
-'    'Iterate through the VBA project to identify all callable subs/functions
-'    Dim lineNum As Long
-'    Dim procName As String
-'    Dim procType As VBIDE.vbext_ProcKind
-'    Dim lineText As String
-'    Dim oType As String
-'
-'    Dim vbComp As Object
-'    For Each vbComp In ThisWorkbook.VBProject.VBComponents
-'        Select Case vbComp.Type
-'            Case 1
-'                oType = "1_Module"
-'            Case 2
-'                oType = "2_Class"
-'            Case 3
-'                oType = "3_userForm"
-'            Case Else
-'                oType = oType & "_????"
-'        End Select
-'
-'       'Get the code module for the component
-'        Dim vbMod As Object: Set vbMod = vbComp.CodeModule
-'        lineNum = 1
-'
-'        'Loop through all lines in the code module to save all the lines in memory
-'        For lineNum = 1 To vbMod.CountOfLines
-'            lineText = Trim(vbMod.Lines(lineNum, 1))
-'            If Left(lineText, 1) <> "'" And Left(lineText, 3) <> "Rem" Then
-'                procName = vbMod.ProcOfLine(lineNum, procType)
-'                wsOutputSheet.Cells(outputRow, 1).Value = vbComp.Name
-'                wsOutputSheet.Cells(outputRow, 2).Value = "Procedure"
-'                wsOutputSheet.Cells(outputRow, 3).Value = procName
-'                wsOutputSheet.Cells(outputRow, 4).Value = "Called in code"
-'                outputRow = outputRow + 1
-'            End If
-'        Next lineNum
-'    Next vbComp
 
     'Autofit columns for better readability
     wsOutputSheet.Columns("A:D").AutoFit
@@ -1263,14 +1222,6 @@ Sub List_All_Macros_Used_With_Objects() '2024-11-26 @ 20:14
             .Header = xlYes
             .Apply
         End With
-        
-'        'Automatically insert a empty line between worksheet
-'        Dim i As Long
-'        For i = outputRow To 2 Step -1
-'            If wsOutputSheet.Cells(i, 1).Value <> wsOutputSheet.Cells(i + 1, 1).Value Then
-'                wsOutputSheet.Rows(i + 1).Insert Shift:=xlDown
-'            End If
-'        Next i
     End If
     
     'Set conditional formatting for the worksheet (alternate colors)
@@ -1418,7 +1369,7 @@ Sub List_Subs_And_Functions_All() '2024-11-26 @ 20:02
     Call Array_2D_Bubble_Sort(arr)
     
     'Transfer the array to the worksheet
-    ws.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2)).Value = arr
+    ws.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2)).value = arr
     ws.Range("A:A").EntireColumn.Hidden = True 'Do not show the sortKey
     
     ws.Activate
@@ -1448,7 +1399,7 @@ Sub Test_Array_To_Range() '2024-03-18 @ 17:34
         Next j
     Next i
     
-    ws.Range("A1").Resize(UBound(arr, 1), UBound(arr, 2)).Value = arr
+    ws.Range("A1").Resize(UBound(arr, 1), UBound(arr, 2)).value = arr
     
     'Libérer la mémoire
     Set ws = Nothing
@@ -1506,9 +1457,9 @@ Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
     Call Erase_And_Create_Worksheet("X_Feuilles_du_Classeur")
 
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Feuilles_du_Classeur")
-    wsOutput.Range("A1").Value = "Feuille"
-    wsOutput.Range("B1").Value = "CodeName"
-    wsOutput.Range("C1").Value = "TimeStamp"
+    wsOutput.Range("A1").value = "Feuille"
+    wsOutput.Range("B1").value = "CodeName"
+    wsOutput.Range("C1").value = "TimeStamp"
     Call Make_It_As_Header(wsOutput.Range("A1:C1"))
 
     'Loop through all worksheets in the active workbook
@@ -1543,7 +1494,7 @@ Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
    'Result print setup - 2024-07-20 @ 14:31
     Dim lastUsedRow As Long
     lastUsedRow = i + 2
-    wsOutput.Range("A" & lastUsedRow).Value = "*** " & Format$(f, "###,##0") & _
+    wsOutput.Range("A" & lastUsedRow).value = "*** " & Format$(f, "###,##0") & _
                                     " feuilles pour le workbook '" & ThisWorkbook.Name & "' ***"
     
     lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "A").End(xlUp).row
@@ -1625,7 +1576,7 @@ Sub Log_Record(ByVal procedureName As String, param As String, Optional ByVal st
     timeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & Right(Format$(Timer, "0.00"), 2)
     
     Dim logFile As String
-    logFile = wshAdmin.Range("F5").Value & DATA_PATH & _
+    logFile = wshAdmin.Range("F5").value & DATA_PATH & _
                                     Application.PathSeparator & "LogMainApp.log"
     
     Dim fileNum As Integer
@@ -1666,7 +1617,7 @@ Sub Log_Record(ByVal procedureName As String, param As String, Optional ByVal st
 ErrorHandler:
 
     MsgBox "Une erreur est survenue à l'ouverture du fichier 'LogMainApp.log' " & vbNewLine & vbNewLine & _
-                "Erreur : " & Err & " = " & Err.Description, vbCritical, "Répertoire utilisé '" & wshAdmin.Range("F5").Value & "'"
+                "Erreur : " & Err & " = " & Err.Description, vbCritical, "Répertoire utilisé '" & wshAdmin.Range("F5").value & "'"
     
     'Nettoyage : réactivation des événements, calculs, etc.
     Application.EnableEvents = True
@@ -1710,7 +1661,7 @@ Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boole
     
     'Path complet du fichier LogSaisieHeures.txt
     Dim logSaisieHeuresFile As String
-    logSaisieHeuresFile = wshAdmin.Range("F5").Value & DATA_PATH & _
+    logSaisieHeuresFile = wshAdmin.Range("F5").value & DATA_PATH & _
                                 Application.PathSeparator & "LogSaisieHeures.log"
     
     Dim fileNum As Integer
@@ -1752,7 +1703,7 @@ Sub Settrace(source As String, module As String, procedure As String, variable A
     Dim ms As String
     
     Dim settraceFile As String
-    settraceFile = wshAdmin.Range("F5").Value & DATA_PATH & _
+    settraceFile = wshAdmin.Range("F5").value & DATA_PATH & _
         Application.PathSeparator & "LogSettrace.txt"
     
     Dim fileNum As Integer
@@ -1825,7 +1776,7 @@ End Sub
 Sub LogMainApp_Analysis() '2025-01-10 @ 17:10
 
     Dim logFile As String
-    logFile = wshAdmin.Range("F5").Value & Application.PathSeparator & "LogMainApp.log"
+    logFile = wshAdmin.Range("F5").value & Application.PathSeparator & "LogMainApp.log"
     
     Dim fileNum As Integer
     fileNum = FreeFile
@@ -1985,7 +1936,7 @@ Sub GetLastCellUsedRangeInAllSheets() '2025-01-10 @ 12:18 Copilot - RMV
                                     SearchDirection:=xlPrevious, _
                                     MatchCase:=False).Column
                                     
-            Debug.Print "#082 - " & ws.Name; Tab(30); lastRow; Tab(40); lastCol; Tab(50); ws.Cells(lastRow, 1).Value
+            Debug.Print "#082 - " & ws.Name; Tab(30); lastRow; Tab(40); lastCol; Tab(50); ws.Cells(lastRow, 1).value
     '        ws.Range(ws.Cells(lastRow + 1, 1), ws.Cells(ws.Rows.count, ws.Columns.count)).Clear
     '        ws.Range(ws.Cells(1, lastCol + 1), ws.Cells(ws.Rows.count, ws.Columns.count)).Clear
     Next sheetName

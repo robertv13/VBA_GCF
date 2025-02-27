@@ -31,7 +31,7 @@ Private Sub ChargerDebDonnees()
     'Définir la feuille source et la plage des données
     Dim ws As Worksheet
     Set ws = wshDEB_Trans
-    dataArray = ws.Range("A2:S" & ws.Cells(Rows.count, 1).End(xlUp).row).Value
+    dataArray = ws.Range("A2:S" & ws.Cells(Rows.count, 1).End(xlUp).row).value
     
     'Définir la date limite (75 jours avant aujourd'hui)
     Dim dateLimite As Date
@@ -102,7 +102,7 @@ Private Sub ChargerDebDonnees()
     End If
     
     numeroDebourseARenverser = -1
-    wshDEB_Saisie.Range("B7").Value = False
+    wshDEB_Saisie.Range("B7").value = False
     
 End Sub
 
@@ -161,7 +161,7 @@ Private Sub UpdateFilteredArray(filtre As String)
     End If
     
     numeroDebourseARenverser = -1
-    wshDEB_Saisie.Range("B7").Value = False
+    wshDEB_Saisie.Range("B7").value = False
     
 End Sub
 
@@ -174,10 +174,10 @@ Private Sub lsbListeDebourse_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
         'Récupérer le numéro de déboursé à renverser
         selectedRow = lsbListeDebourse.ListIndex
         numeroDebourseARenverser = lsbListeDebourse.List(selectedRow, 10)
-        wshDEB_Saisie.Range("B7").Value = True
+        wshDEB_Saisie.Range("B7").value = True
     Else
         numeroDebourseARenverser = -1
-        wshDEB_Saisie.Range("B7").Value = False
+        wshDEB_Saisie.Range("B7").value = False
     End If
         
     Unload Me
@@ -190,7 +190,7 @@ Sub FormatArrayBeforeAddingToDebListBox(ByRef arrData As Variant)
     Dim i As Long, j As Long
     For i = 1 To UBound(arrData, 1)
         'Formater la première colonne comme date
-        arrData(i, 1) = Format(arrData(i, 1), wshAdmin.Range("B1").Value)
+        arrData(i, 1) = Format(arrData(i, 1), wshAdmin.Range("B1").value)
         'Formater les colonnes contenant des montants, alignées à droite avec espaces
         For j = 5 To 8
             arrData(i, j) = Format$(arrData(i, j), "#,##0.00;-#,##0.00;-")
@@ -204,7 +204,7 @@ Private Sub cmdFermer_Click()
 
     'Pas de rowNumber pour renverser
     numeroDebourseARenverser = -1
-    wshDEB_Saisie.Range("B7").Value = False
+    wshDEB_Saisie.Range("B7").value = False
     
     Unload Me
     

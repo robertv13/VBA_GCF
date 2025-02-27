@@ -173,7 +173,6 @@ Private Sub Worksheet_Change(ByVal target As Range) 'Worksheet wshBV - 2023-12-3
         End If
         
         Range("B9").value = Range("J1").value
-'        Range("L2").Value = ""
         
         Dim ws As Worksheet
         Set ws = wshGL_BV

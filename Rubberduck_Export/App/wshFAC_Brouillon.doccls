@@ -242,9 +242,6 @@ Private Sub Worksheet_Change(ByVal target As Range)
     'Miscellaneous Amounts
     If Not Intersect(target, Range("O48:O50")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
         With wshFAC_Finale
-            'Final Invoice - Sub-total
-'            wshFAC_Finale.Range("E69").Value = wshFAC_Brouillon.Range("O47").Value
-            'Final Invoice - Misc charges AND move on to next field
             If target.row = 48 Then
                 Call Log_Record("wshFAC_Brouillon:Worksheet_Change" & ":" & _
                     targetAddress & " - " & wshFAC_Brouillon.Range("O48").value, -1)
@@ -262,16 +259,6 @@ Private Sub Worksheet_Change(ByVal target As Range)
         End With
         GoTo ExitSub
     End If
-
-    'Deposit Amount
-'    If Not Intersect(Target, Range("O57")) Is Nothing Then
-'        With wshFAC_Finale
-'            'Final Invoice - Deposit
-'            wshFAC_Finale.Range("E79").Value = wshFAC_Brouillon.Range("O57").Value
-'            ActiveWindow.SmallScroll Up:=18
-'        End With
-'        GoTo ExitSub
-'    End If
     
 ExitSub:
 

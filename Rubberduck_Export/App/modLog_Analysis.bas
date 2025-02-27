@@ -343,7 +343,7 @@ Sub AjouterTableauClasseurFerme(ByVal tableau As Variant, ByVal cheminFichier As
 
     'Copier les données en une seule opération
     Application.EnableEvents = False
-    cible.Resize(UBound(tableau, 1), UBound(tableau, 2)).Value = tableau
+    cible.Resize(UBound(tableau, 1), UBound(tableau, 2)).value = tableau
     Application.EnableEvents = True
 
     'Sauvegarder et fermer le fichier Target
@@ -356,79 +356,5 @@ Sub AjouterTableauClasseurFerme(ByVal tableau As Variant, ByVal cheminFichier As
     
     Application.ScreenUpdating = True
     Application.DisplayAlerts = True
-
-'    MsgBox "Données copiées avec succès dans " & vbNewLine & vbNewLine & _
-'                    "'" & cheminFichier & "'", vbInformation
-'
-'    Dim cn As Object
-'    Dim rs As Object
-'    Dim strSQL As String
-'    Dim lastUsedRow As Long
-'    Dim i As Long, j As Long
-'
-'    'Est-ce bien un tableau ?
-'    If Not IsArray(tableau) Then
-'        MsgBox "Le paramètre 'tableau' doit être un tableau.", vbExclamation
-'        Exit Sub
-'    End If
-'
-'    'Initialiser la connexion ADO
-'    Set cn = CreateObject("ADODB.Connection")
-'    cn.ConnectionString = _
-'                    "Provider=Microsoft.ACE.OLEDB.12.0;" & _
-'                    "Data Source=" & cheminFichier & ";" & _
-'                    "Extended Properties=""Excel 12.0 Xml;HDR=Yes"";"
-'    cn.Open
-'
-'    'Obtenir la dernière ligne utilisée dans la feuille cible
-'    Set rs = cn.Execute("SELECT COUNT(*) AS NbLignes FROM [" & feuilleNom & "$]")
-'    lastUsedRow = rs.Fields("NbLignes").Value
-'    rs.Close
-'
-'    'Boucle pour insérer les lignes du tableau dans le fichier Excel fermé
-'    Dim valeur As Variant
-'    For i = LBound(tableau, 1) To UBound(tableau, 1)
-'        strSQL = "INSERT INTO [" & feuilleNom & "$] VALUES ("
-'        For j = LBound(tableau, 2) To UBound(tableau, 2)
-'            'Nettoyage de la valeur
-'            If Not IsEmpty(valeur) Then valeur = Trim(valeur)
-'
-'            'Tronque les données qui seraient trop longues
-'            valeur = tableau(i, j)
-'            If Len(valeur) > 197 Then
-'                valeur = Left(valeur, 197) & "..."
-'            End If
-'
-'            'Déterminer dynamiquement le type de valeur
-'            If IsEmpty(valeur) Or IsNull(valeur) Then
-'                'Valeur vide ou nulle, insérer une valeur par défaut
-'                strSQL = strSQL & "0, "
-'            ElseIf IsDate(valeur) Then
-'                'Date : Format SQL compatible
-'                strSQL = strSQL & "#" & Format(valeur, "yyyy-mm-dd hh:nn:ss") & "#, "
-'            ElseIf IsNumeric(valeur) Then
-'                If InStr(1, CStr(valeur), ".") > 0 Or InStr(1, CStr(valeur), ",") > 0 Then
-'                    'La valeur contient un séparateur décimal
-'                    strSQL = strSQL & Replace(CDbl(valeur), ",", ".") & ", "
-''                    strSQL = strSQL & Replace(Format(CDbl(valeur), "0.00"), ",", ".") & ", "
-'                Else
-'                    'La valeur est entière
-'                    strSQL = strSQL & CLng(valeur) & ", "
-'                End If
-'            Else
-'                'Texte : Protéger les apostrophes
-'                strSQL = strSQL & "'" & Replace(valeur, "'", "''") & "', "
-'            End If
-'        Next j
-'        strSQL = Replace(strSQL, " 00:00:00#", "#")
-'        strSQL = Left(strSQL, Len(strSQL) - 2) & ")" 'Supprime la dernière virgule
-'        cn.Execute strSQL
-'    Next i
-'
-'    'Fermer la connexion
-'    cn.Close
-'
-'    'Libérer la mémoire
-'    Set cn = Nothing
     
 End Sub

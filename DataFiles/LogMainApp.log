@@ -34262,3 +34262,906 @@
 
 2025-02-27 13:29:45.48 | Robert M. Vigneault | APP_v6.A.4.xlsb | ----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) ----- |  | 
 
+2025-02-27 13:30:30.04 | Robert M. Vigneault | APP_v6.A.4.xlsb | ----- Début d'une nouvelle session (modAppli:CodeEssentielDepart) ----- |  | 
+2025-02-27 13:30:30.04 | Robert M. Vigneault | APP_v6.A.4.xlsb | Validation d'accès serveur terminée |  | 0,0000 secondes
+
+2025-02-27 13:30:30.04 | Robert M. Vigneault | APP_v6.A.4.xlsb | modAppli:CreateUserActiveFile |  | 
+2025-02-27 13:30:30.05 | Robert M. Vigneault | APP_v6.A.4.xlsb | modAppli:CreateUserActiveFile |  | 0,0078 secondes
+
+2025-02-27 13:30:30.05 | Robert M. Vigneault | APP_v6.A.4.xlsb | modAppli:SetupUserDateFormat |  | 
+2025-02-27 13:30:30.05 | Robert M. Vigneault | APP_v6.A.4.xlsb | modAppli:SetupUserDateFormat |  | 0,0000 secondes
+
+2025-02-27 13:30:30.05 | Robert M. Vigneault | APP_v6.A.4.xlsb | modAppli:BackupMasterFile |  | 
+2025-02-27 13:30:30.26 | Robert M. Vigneault | APP_v6.A.4.xlsb | modAppli:BackupMasterFile |  | 0,2070 secondes
+
+2025-02-27 13:30:30.26 | Robert M. Vigneault | APP_v6.A.4.xlsb | modAppli:WriteInfoOnMainMenu |  | 
+2025-02-27 13:30:30.27 | Robert M. Vigneault | APP_v6.A.4.xlsb | modAppli:WriteInfoOnMainMenu |  | 0,0156 secondes
+
+2025-02-27 13:30:30.27 | Robert M. Vigneault | APP_v6.A.4.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 
+2025-02-27 13:30:30.27 | Robert M. Vigneault | APP_v6.A.4.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 0,0000 secondes
+
+2025-02-27 13:30:30.29 | Robert M. Vigneault | APP_v6.A.4.xlsb | modAppli:CodeEssentielDepart |  | 0,2422 secondes
+
+2025-02-27 13:30:56.07 | Robert M. Vigneault | APP_v6.A.4.xlsb | modMenu:menuComptabilité |  | 
+2025-02-27 13:30:56.11 | Robert M. Vigneault | APP_v6.A.4.xlsb | modMenu:menuComptabilité |  | 0,0547 secondes
+
+2025-02-27 13:30:57.01 | Robert M. Vigneault | APP_v6.A.4.xlsb | wshDEB_Saisie:Worksheet_Activate |  | 
+2025-02-27 13:30:57.03 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:Fournisseur_List_Import_All |  | 
+2025-02-27 13:30:57.21 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:Fournisseur_List_Import_All |  | 0,1797 secondes
+
+2025-02-27 13:30:57.21 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:DEB_Trans_Import_All |  | 
+2025-02-27 13:30:57.35 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:DEB_Trans_Import_All |  | 0,1445 secondes
+
+2025-02-27 13:30:57.35 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:GL_Trans_Import_All |  | 
+2025-02-27 13:30:57.61 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:GL_Trans_Import_All |  | 0,2578 secondes
+
+2025-02-27 13:30:57.63 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDev_Utils:SetTabOrder | wshDEB_Saisie | 
+2025-02-27 13:30:57.64 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDev_Utils:SetTabOrder |  | 0,0195 secondes
+
+2025-02-27 13:30:57.64 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Saisie_Clear_All_Cells |  | 
+2025-02-27 13:30:57.66 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Saisie_Clear_All_Cells |  | 0,0156 secondes
+
+2025-02-27 13:30:57.74 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_Complete_Date | 27/02/2025, 30, 15 | 
+2025-02-27 13:30:57.75 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_Complete_Date |  | 0,0039 secondes
+
+2025-02-27 13:30:57.77 | Robert M. Vigneault | APP_v6.A.4.xlsb | wshDEB_Saisie:Worksheet_Activate |  | 0,7539 secondes
+
+2025-02-27 13:31:11.31 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description | Matériel informatique | 
+2025-02-27 13:31:11.33 | Robert M. Vigneault | APP_v6.A.4.xlsb |      modFunctions:Fn_GetGL_Code_From_GL_Description - 1310 | -1 | 
+2025-02-27 13:31:11.33 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description |  | 0,0156 secondes
+
+2025-02-27 13:31:14.35 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Renversement_Update |  | 
+2025-02-27 13:31:14.35 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_GetID_From_Fourn_Name | Costco Wholesale | 
+2025-02-27 13:31:14.36 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_GetID_From_Fourn_Name |  | 0,0078 secondes
+
+2025-02-27 13:31:14.37 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Trans_Add_Record_To_DB |  | 
+2025-02-27 13:31:14.72 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Trans_Add_Record_To_DB |  | 0,3477 secondes
+
+2025-02-27 13:31:14.72 | Robert M. Vigneault | APP_v6.A.4.xlsb | *** modDEB_Saisie:DEB_Trans_Add_Record_Locally | 9 | 
+2025-02-27 13:31:14.80 | Robert M. Vigneault | APP_v6.A.4.xlsb |     modDEB_Saisie:DEB_Trans_Add_Record_Locally | -1 | 
+2025-02-27 13:31:14.82 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Trans_Add_Record_Locally |  | 0,0938 secondes
+
+2025-02-27 13:31:14.82 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_To_DB |  | 
+2025-02-27 13:31:15.15 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_To_DB |  | 0,3320 secondes
+
+2025-02-27 13:31:15.15 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_Locally |  | 
+2025-02-27 13:31:15.18 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_Locally |  | 0,0312 secondes
+
+2025-02-27 13:31:15.18 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation |  | 
+2025-02-27 13:31:15.20 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Posting_To_DB |  | 
+2025-02-27 13:31:15.59 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Posting_To_DB |  | 0,3945 secondes
+
+2025-02-27 13:31:15.59 | Robert M. Vigneault | APP_v6.A.4.xlsb | *** modGL_Stuff:GL_Posting_Locally |  | 
+2025-02-27 13:31:15.64 | Robert M. Vigneault | APP_v6.A.4.xlsb |    modGL_Stuff:GL_Posting_Locally | -1 | 
+2025-02-27 13:31:15.69 | Robert M. Vigneault | APP_v6.A.4.xlsb |    modGL_Stuff:GL_Posting_Locally | -1 | 
+2025-02-27 13:31:15.72 | Robert M. Vigneault | APP_v6.A.4.xlsb |    modGL_Stuff:GL_Posting_Locally | -1 | 
+2025-02-27 13:31:15.75 | Robert M. Vigneault | APP_v6.A.4.xlsb |    modGL_Stuff:GL_Posting_Locally | -1 | 
+2025-02-27 13:31:15.77 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Posting_Locally |  | 0,1758 secondes
+
+2025-02-27 13:31:15.77 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation |  | 0,5859 secondes
+
+2025-02-27 13:31:26.13 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Renversement_Update |  | 11,7852 secondes
+
+2025-02-27 13:31:40.63 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Saisie_Update |  | 
+2025-02-27 13:31:40.63 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_GetID_From_Fourn_Name | Costco Wholesale | 
+2025-02-27 13:31:40.63 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_GetID_From_Fourn_Name |  | 0,0000 secondes
+
+2025-02-27 13:31:40.64 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Trans_Add_Record_To_DB |  | 
+2025-02-27 13:31:40.00 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Trans_Add_Record_To_DB |  | 0,3555 secondes
+
+2025-02-27 13:31:40.00 | Robert M. Vigneault | APP_v6.A.4.xlsb | *** modDEB_Saisie:DEB_Trans_Add_Record_Locally | 9 | 
+2025-02-27 13:31:41.10 | Robert M. Vigneault | APP_v6.A.4.xlsb |     modDEB_Saisie:DEB_Trans_Add_Record_Locally | -1 | 
+2025-02-27 13:31:41.10 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Trans_Add_Record_Locally |  | 0,1055 secondes
+
+2025-02-27 13:31:41.10 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation |  | 
+2025-02-27 13:31:41.10 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Posting_To_DB |  | 
+2025-02-27 13:31:41.50 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Posting_To_DB |  | 0,3945 secondes
+
+2025-02-27 13:31:41.50 | Robert M. Vigneault | APP_v6.A.4.xlsb | *** modGL_Stuff:GL_Posting_Locally |  | 
+2025-02-27 13:31:41.54 | Robert M. Vigneault | APP_v6.A.4.xlsb |    modGL_Stuff:GL_Posting_Locally | -1 | 
+2025-02-27 13:31:41.59 | Robert M. Vigneault | APP_v6.A.4.xlsb |    modGL_Stuff:GL_Posting_Locally | -1 | 
+2025-02-27 13:31:41.62 | Robert M. Vigneault | APP_v6.A.4.xlsb |    modGL_Stuff:GL_Posting_Locally | -1 | 
+2025-02-27 13:31:41.65 | Robert M. Vigneault | APP_v6.A.4.xlsb |    modGL_Stuff:GL_Posting_Locally | -1 | 
+2025-02-27 13:31:41.67 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Posting_Locally |  | 0,1758 secondes
+
+2025-02-27 13:31:41.67 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation |  | 0,5703 secondes
+
+2025-02-27 13:31:43.50 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Saisie_Clear_All_Cells |  | 
+2025-02-27 13:31:43.52 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Saisie_Clear_All_Cells |  | 0,0195 secondes
+
+2025-02-27 13:31:43.54 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Saisie_Update |  | 2,9023 secondes
+
+2025-02-27 13:31:46.52 | Robert M. Vigneault | APP_v6.A.4.xlsb | wshDEB_Saisie:Worksheet_Activate |  | 
+2025-02-27 13:31:46.52 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:Fournisseur_List_Import_All |  | 
+2025-02-27 13:31:46.63 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:Fournisseur_List_Import_All |  | 0,1055 secondes
+
+2025-02-27 13:31:46.63 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:DEB_Trans_Import_All |  | 
+2025-02-27 13:31:46.76 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:DEB_Trans_Import_All |  | 0,1289 secondes
+
+2025-02-27 13:31:46.76 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:GL_Trans_Import_All |  | 
+2025-02-27 13:31:47.05 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:GL_Trans_Import_All |  | 0,2891 secondes
+
+2025-02-27 13:31:47.06 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDev_Utils:SetTabOrder | wshDEB_Saisie | 
+2025-02-27 13:31:47.08 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDev_Utils:SetTabOrder |  | 0,0156 secondes
+
+2025-02-27 13:31:47.08 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Saisie_Clear_All_Cells |  | 
+2025-02-27 13:31:47.11 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Saisie_Clear_All_Cells |  | 0,0273 secondes
+
+2025-02-27 13:31:47.13 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_Complete_Date | 27/02/2025, 30, 15 | 
+2025-02-27 13:31:47.13 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_Complete_Date |  | 0,0000 secondes
+
+2025-02-27 13:31:47.13 | Robert M. Vigneault | APP_v6.A.4.xlsb | wshDEB_Saisie:Worksheet_Activate |  | 0,6094 secondes
+
+2025-02-27 13:34:32.54 | Robert M. Vigneault | APP_v6.A.4.xlsb | wshGL_BV:Worksheet_Activate |  | 
+2025-02-27 13:34:32.54 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:GL_Trans_Import_All |  | 
+2025-02-27 13:34:32.84 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:GL_Trans_Import_All |  | 0,3008 secondes
+
+2025-02-27 13:34:32.89 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_Complete_Date | , 999, 15 | 
+2025-02-27 13:34:32.90 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_Complete_Date |  | 0,0039 secondes
+
+2025-02-27 13:34:32.91 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_Trial_Balance_Build | GL_BV 27/02/2025 | 
+2025-02-27 13:34:32.93 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  - De 31/07/2024 à 27/02/2025 | 
+2025-02-27 13:34:33.04 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,1094 secondes
+
+2025-02-27 13:34:33.23 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 
+2025-02-27 13:34:33.23 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 0,0039 secondes
+
+2025-02-27 13:34:33.23 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 
+2025-02-27 13:34:33.24 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 0,0039 secondes
+
+2025-02-27 13:34:34.42 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_Trial_Balance_Build |  | 1,5078 secondes
+
+2025-02-27 13:34:34.43 | Robert M. Vigneault | APP_v6.A.4.xlsb | wshGL_BV:Worksheet_Activate |  | 1,8867 secondes
+
+2025-02-27 13:34:37.31 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_BV_Effacer_Zone_Et_Shape |  | 
+2025-02-27 13:34:37.35 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_BV_Effacer_Zone_Et_Shape |  | 0,0430 secondes
+
+2025-02-27 13:34:37.36 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_BV_Display_Trans_For_Selected_Account | 1310 De 31/07/2024 à 27/02/2025 | 
+2025-02-27 13:34:37.95 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_BV_Ajouter_Shape_Retour |  | 
+2025-02-27 13:34:37.98 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_BV_Ajouter_Shape_Retour |  | 0,0312 secondes
+
+2025-02-27 13:34:38.02 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_BV_Display_Trans_For_Selected_Account |  | 0,6523 secondes
+
+2025-02-27 13:35:55.79 | Robert M. Vigneault | APP_v6.A.4.xlsb | wshGL_BV:Worksheet_Activate |  | 
+2025-02-27 13:35:55.79 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:GL_Trans_Import_All |  | 
+2025-02-27 13:35:56.05 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:GL_Trans_Import_All |  | 0,2617 secondes
+
+2025-02-27 13:35:56.07 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_Complete_Date | , 999, 15 | 
+2025-02-27 13:35:56.07 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_Complete_Date |  | 0,0000 secondes
+
+2025-02-27 13:35:56.08 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_Trial_Balance_Build | GL_BV 27/02/2025 | 
+2025-02-27 13:35:56.10 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  - De 31/07/2024 à 27/02/2025 | 
+2025-02-27 13:35:56.18 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0781 secondes
+
+2025-02-27 13:35:56.33 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 
+2025-02-27 13:35:56.35 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 0,0156 secondes
+
+2025-02-27 13:35:56.35 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 
+2025-02-27 13:35:56.35 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 0,0000 secondes
+
+2025-02-27 13:35:57.19 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_Trial_Balance_Build |  | 1,1094 secondes
+
+2025-02-27 13:35:57.19 | Robert M. Vigneault | APP_v6.A.4.xlsb | wshGL_BV:Worksheet_Activate |  | 1,4023 secondes
+
+2025-02-27 13:36:00.60 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_BV_Effacer_Zone_Et_Shape |  | 
+2025-02-27 13:36:00.63 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_BV_Effacer_Zone_Et_Shape |  | 0,0312 secondes
+
+2025-02-27 13:36:00.63 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_BV_Display_Trans_For_Selected_Account | 1310 De 31/07/2024 à 27/02/2025 | 
+2025-02-27 13:36:01.18 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_BV_Ajouter_Shape_Retour |  | 
+2025-02-27 13:36:01.20 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_BV_Ajouter_Shape_Retour |  | 0,0156 secondes
+
+2025-02-27 13:36:01.23 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_BV_Display_Trans_For_Selected_Account |  | 0,6016 secondes
+
+2025-02-27 13:36:25.29 | Robert M. Vigneault | APP_v6.A.4.xlsb | wshDEB_Saisie:Worksheet_Activate |  | 
+2025-02-27 13:36:25.29 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:Fournisseur_List_Import_All |  | 
+2025-02-27 13:36:25.41 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:Fournisseur_List_Import_All |  | 0,1172 secondes
+
+2025-02-27 13:36:25.41 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:DEB_Trans_Import_All |  | 
+2025-02-27 13:36:25.54 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:DEB_Trans_Import_All |  | 0,1289 secondes
+
+2025-02-27 13:36:25.54 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:GL_Trans_Import_All |  | 
+2025-02-27 13:36:25.82 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:GL_Trans_Import_All |  | 0,2773 secondes
+
+2025-02-27 13:36:25.83 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDev_Utils:SetTabOrder | wshDEB_Saisie | 
+2025-02-27 13:36:25.83 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDev_Utils:SetTabOrder |  | 0,0000 secondes
+
+2025-02-27 13:36:25.85 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Saisie_Clear_All_Cells |  | 
+2025-02-27 13:36:25.87 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Saisie_Clear_All_Cells |  | 0,0234 secondes
+
+2025-02-27 13:36:25.89 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_Complete_Date | 27/02/2025, 30, 15 | 
+2025-02-27 13:36:25.89 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_Complete_Date |  | 0,0000 secondes
+
+2025-02-27 13:36:25.89 | Robert M. Vigneault | APP_v6.A.4.xlsb | wshDEB_Saisie:Worksheet_Activate |  | 0,6055 secondes
+
+2025-02-27 13:36:38.03 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description | Frais de représentation | 
+2025-02-27 13:36:38.04 | Robert M. Vigneault | APP_v6.A.4.xlsb |      modFunctions:Fn_GetGL_Code_From_GL_Description - 5100 | -1 | 
+2025-02-27 13:36:38.04 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description |  | 0,0117 secondes
+
+2025-02-27 13:36:41.17 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Renversement_Update |  | 
+2025-02-27 13:36:41.17 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_GetID_From_Fourn_Name | Caisse Desjardins | 
+2025-02-27 13:36:41.17 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_GetID_From_Fourn_Name |  | 0,0000 secondes
+
+2025-02-27 13:36:41.20 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Trans_Add_Record_To_DB |  | 
+2025-02-27 13:36:41.55 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Trans_Add_Record_To_DB |  | 0,3516 secondes
+
+2025-02-27 13:36:41.55 | Robert M. Vigneault | APP_v6.A.4.xlsb | *** modDEB_Saisie:DEB_Trans_Add_Record_Locally | 9 | 
+2025-02-27 13:36:41.64 | Robert M. Vigneault | APP_v6.A.4.xlsb |     modDEB_Saisie:DEB_Trans_Add_Record_Locally | -1 | 
+2025-02-27 13:36:41.64 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Trans_Add_Record_Locally |  | 0,0898 secondes
+
+2025-02-27 13:36:41.64 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_To_DB |  | 
+2025-02-27 13:36:41.98 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_To_DB |  | 0,3398 secondes
+
+2025-02-27 13:36:41.98 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_Locally |  | 
+2025-02-27 13:36:41.99 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_Locally |  | 0,0117 secondes
+
+2025-02-27 13:36:41.99 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation |  | 
+2025-02-27 13:36:41.99 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Posting_To_DB |  | 
+2025-02-27 13:36:42.39 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Posting_To_DB |  | 0,3945 secondes
+
+2025-02-27 13:36:42.39 | Robert M. Vigneault | APP_v6.A.4.xlsb | *** modGL_Stuff:GL_Posting_Locally |  | 
+2025-02-27 13:36:42.44 | Robert M. Vigneault | APP_v6.A.4.xlsb |    modGL_Stuff:GL_Posting_Locally | -1 | 
+2025-02-27 13:36:42.47 | Robert M. Vigneault | APP_v6.A.4.xlsb |    modGL_Stuff:GL_Posting_Locally | -1 | 
+2025-02-27 13:36:42.49 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Posting_Locally |  | 0,0977 secondes
+
+2025-02-27 13:36:42.49 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation |  | 0,4961 secondes
+
+2025-02-27 13:36:44.53 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Renversement_Update |  | 3,3555 secondes
+
+2025-02-27 13:37:24.27 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Saisie_Update |  | 
+2025-02-27 13:37:24.27 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_GetID_From_Fourn_Name | Caisse Desjardins | 
+2025-02-27 13:37:24.27 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_GetID_From_Fourn_Name |  | 0,0039 secondes
+
+2025-02-27 13:37:24.29 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Trans_Add_Record_To_DB |  | 
+2025-02-27 13:37:24.63 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Trans_Add_Record_To_DB |  | 0,3438 secondes
+
+2025-02-27 13:37:24.63 | Robert M. Vigneault | APP_v6.A.4.xlsb | *** modDEB_Saisie:DEB_Trans_Add_Record_Locally | 9 | 
+2025-02-27 13:37:24.73 | Robert M. Vigneault | APP_v6.A.4.xlsb |     modDEB_Saisie:DEB_Trans_Add_Record_Locally | -1 | 
+2025-02-27 13:37:24.73 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Trans_Add_Record_Locally |  | 0,1016 secondes
+
+2025-02-27 13:37:24.73 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation |  | 
+2025-02-27 13:37:24.73 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Posting_To_DB |  | 
+2025-02-27 13:37:25.14 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Posting_To_DB |  | 0,4102 secondes
+
+2025-02-27 13:37:25.14 | Robert M. Vigneault | APP_v6.A.4.xlsb | *** modGL_Stuff:GL_Posting_Locally |  | 
+2025-02-27 13:37:25.20 | Robert M. Vigneault | APP_v6.A.4.xlsb |    modGL_Stuff:GL_Posting_Locally | -1 | 
+2025-02-27 13:37:25.23 | Robert M. Vigneault | APP_v6.A.4.xlsb |    modGL_Stuff:GL_Posting_Locally | -1 | 
+2025-02-27 13:37:25.28 | Robert M. Vigneault | APP_v6.A.4.xlsb |    modGL_Stuff:GL_Posting_Locally | -1 | 
+2025-02-27 13:37:25.31 | Robert M. Vigneault | APP_v6.A.4.xlsb |    modGL_Stuff:GL_Posting_Locally | -1 | 
+2025-02-27 13:37:25.31 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Posting_Locally |  | 0,1680 secondes
+
+2025-02-27 13:37:25.32 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation |  | 0,5938 secondes
+
+2025-02-27 13:37:27.31 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Saisie_Clear_All_Cells |  | 
+2025-02-27 13:37:27.32 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Saisie_Clear_All_Cells |  | 0,0156 secondes
+
+2025-02-27 13:37:27.34 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Saisie_Update |  | 3,0703 secondes
+
+2025-02-27 13:37:31.38 | Robert M. Vigneault | APP_v6.A.4.xlsb | wshGL_BV:Worksheet_Activate |  | 
+2025-02-27 13:37:31.38 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:GL_Trans_Import_All |  | 
+2025-02-27 13:37:31.67 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:GL_Trans_Import_All |  | 0,2891 secondes
+
+2025-02-27 13:37:31.69 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_Complete_Date | , 999, 15 | 
+2025-02-27 13:37:31.70 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_Complete_Date |  | 0,0039 secondes
+
+2025-02-27 13:37:31.70 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_Trial_Balance_Build | GL_BV 27/02/2025 | 
+2025-02-27 13:37:31.73 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  - De 31/07/2024 à 27/02/2025 | 
+2025-02-27 13:37:31.82 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0977 secondes
+
+2025-02-27 13:37:31.98 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 
+2025-02-27 13:37:32.00 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 0,0195 secondes
+
+2025-02-27 13:37:32.00 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 
+2025-02-27 13:37:32.00 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 0,0000 secondes
+
+2025-02-27 13:37:32.84 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_Trial_Balance_Build |  | 1,1445 secondes
+
+2025-02-27 13:37:32.84 | Robert M. Vigneault | APP_v6.A.4.xlsb | wshGL_BV:Worksheet_Activate |  | 1,4609 secondes
+
+2025-02-27 13:37:39.40 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_BV_Effacer_Zone_Et_Shape |  | 
+2025-02-27 13:37:39.42 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_BV_Effacer_Zone_Et_Shape |  | 0,0156 secondes
+
+2025-02-27 13:37:39.42 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_BV_Display_Trans_For_Selected_Account | 5100 De 31/07/2024 à 27/02/2025 | 
+2025-02-27 13:37:40.09 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_BV_Ajouter_Shape_Retour |  | 
+2025-02-27 13:37:40.10 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_BV_Ajouter_Shape_Retour |  | 0,0156 secondes
+
+2025-02-27 13:37:40.13 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_BV_Display_Trans_For_Selected_Account |  | 0,7148 secondes
+
+2025-02-27 13:40:47.45 | Robert M. Vigneault | APP_v6.A.4.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-27 13:40:47.47 | Robert M. Vigneault | APP_v6.A.4.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0273 secondes
+
+2025-02-27 13:40:48.69 | Robert M. Vigneault | APP_v6.A.4.xlsb | modMenu:menuComptabilité |  | 
+2025-02-27 13:40:48.70 | Robert M. Vigneault | APP_v6.A.4.xlsb | modMenu:menuComptabilité |  | 0,0195 secondes
+
+2025-02-27 13:40:50.77 | Robert M. Vigneault | APP_v6.A.4.xlsb | wshDEB_Saisie:Worksheet_Activate |  | 
+2025-02-27 13:40:50.77 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:Fournisseur_List_Import_All |  | 
+2025-02-27 13:40:50.85 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:Fournisseur_List_Import_All |  | 0,0859 secondes
+
+2025-02-27 13:40:50.85 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:DEB_Trans_Import_All |  | 
+2025-02-27 13:40:50.97 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:DEB_Trans_Import_All |  | 0,1172 secondes
+
+2025-02-27 13:40:50.97 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:GL_Trans_Import_All |  | 
+2025-02-27 13:40:51.22 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:GL_Trans_Import_All |  | 0,2461 secondes
+
+2025-02-27 13:40:51.24 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDev_Utils:SetTabOrder | wshDEB_Saisie | 
+2025-02-27 13:40:51.26 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDev_Utils:SetTabOrder |  | 0,0195 secondes
+
+2025-02-27 13:40:51.26 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Saisie_Clear_All_Cells |  | 
+2025-02-27 13:40:51.28 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Saisie_Clear_All_Cells |  | 0,0195 secondes
+
+2025-02-27 13:40:51.30 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_Complete_Date | 27/02/2025, 30, 15 | 
+2025-02-27 13:40:51.30 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_Complete_Date |  | 0,0000 secondes
+
+2025-02-27 13:40:51.31 | Robert M. Vigneault | APP_v6.A.4.xlsb | wshDEB_Saisie:Worksheet_Activate |  | 0,5469 secondes
+
+2025-02-27 13:41:10.50 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description | Frais de représentation | 
+2025-02-27 13:41:10.51 | Robert M. Vigneault | APP_v6.A.4.xlsb |      modFunctions:Fn_GetGL_Code_From_GL_Description - 5100 | -1 | 
+2025-02-27 13:41:10.51 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_GetGL_Code_From_GL_Description |  | 0,0156 secondes
+
+2025-02-27 13:41:13.77 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Renversement_Update |  | 
+2025-02-27 13:41:13.77 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_GetID_From_Fourn_Name | Caisse Desjardins | 
+2025-02-27 13:41:13.77 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_GetID_From_Fourn_Name |  | 0,0000 secondes
+
+2025-02-27 13:41:13.79 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Trans_Add_Record_To_DB |  | 
+2025-02-27 13:41:14.11 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Trans_Add_Record_To_DB |  | 0,3203 secondes
+
+2025-02-27 13:41:14.12 | Robert M. Vigneault | APP_v6.A.4.xlsb | *** modDEB_Saisie:DEB_Trans_Add_Record_Locally | 9 | 
+2025-02-27 13:41:14.21 | Robert M. Vigneault | APP_v6.A.4.xlsb |     modDEB_Saisie:DEB_Trans_Add_Record_Locally | -1 | 
+2025-02-27 13:41:14.22 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Trans_Add_Record_Locally |  | 0,1016 secondes
+
+2025-02-27 13:41:14.22 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_To_DB |  | 
+2025-02-27 13:41:14.52 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_To_DB |  | 0,3008 secondes
+
+2025-02-27 13:41:14.53 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_Locally |  | 
+2025-02-27 13:41:14.54 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_Locally |  | 0,0117 secondes
+
+2025-02-27 13:41:14.54 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation |  | 
+2025-02-27 13:41:14.55 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Posting_To_DB |  | 
+2025-02-27 13:41:14.93 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Posting_To_DB |  | 0,3750 secondes
+
+2025-02-27 13:41:14.93 | Robert M. Vigneault | APP_v6.A.4.xlsb | *** modGL_Stuff:GL_Posting_Locally |  | 
+2025-02-27 13:41:14.99 | Robert M. Vigneault | APP_v6.A.4.xlsb |    modGL_Stuff:GL_Posting_Locally | -1 | 
+2025-02-27 13:41:15.03 | Robert M. Vigneault | APP_v6.A.4.xlsb |    modGL_Stuff:GL_Posting_Locally | -1 | 
+2025-02-27 13:41:15.07 | Robert M. Vigneault | APP_v6.A.4.xlsb |    modGL_Stuff:GL_Posting_Locally | -1 | 
+2025-02-27 13:41:15.11 | Robert M. Vigneault | APP_v6.A.4.xlsb |    modGL_Stuff:GL_Posting_Locally | -1 | 
+2025-02-27 13:41:15.11 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Posting_Locally |  | 0,1836 secondes
+
+2025-02-27 13:41:15.12 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation |  | 0,5742 secondes
+
+2025-02-27 13:41:16.97 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Renversement_Update |  | 3,1992 secondes
+
+2025-02-27 13:41:21.22 | Robert M. Vigneault | APP_v6.A.4.xlsb | wshDEB_Saisie:Worksheet_Activate |  | 
+2025-02-27 13:41:21.22 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:Fournisseur_List_Import_All |  | 
+2025-02-27 13:41:21.30 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:Fournisseur_List_Import_All |  | 0,0781 secondes
+
+2025-02-27 13:41:21.30 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:DEB_Trans_Import_All |  | 
+2025-02-27 13:41:21.41 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:DEB_Trans_Import_All |  | 0,1133 secondes
+
+2025-02-27 13:41:21.42 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:GL_Trans_Import_All |  | 
+2025-02-27 13:41:21.70 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:GL_Trans_Import_All |  | 0,2773 secondes
+
+2025-02-27 13:41:21.71 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDev_Utils:SetTabOrder | wshDEB_Saisie | 
+2025-02-27 13:41:21.73 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDev_Utils:SetTabOrder |  | 0,0117 secondes
+
+2025-02-27 13:41:21.73 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Saisie_Clear_All_Cells |  | 
+2025-02-27 13:41:21.75 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDEB_Saisie:DEB_Saisie_Clear_All_Cells |  | 0,0234 secondes
+
+2025-02-27 13:41:21.78 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_Complete_Date | 27/02/2025, 30, 15 | 
+2025-02-27 13:41:21.78 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_Complete_Date |  | 0,0039 secondes
+
+2025-02-27 13:41:21.79 | Robert M. Vigneault | APP_v6.A.4.xlsb | wshDEB_Saisie:Worksheet_Activate |  | 0,5703 secondes
+
+2025-02-27 13:41:26.23 | Robert M. Vigneault | APP_v6.A.4.xlsb | wshGL_BV:Worksheet_Activate |  | 
+2025-02-27 13:41:26.23 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:GL_Trans_Import_All |  | 
+2025-02-27 13:41:26.50 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:GL_Trans_Import_All |  | 0,2734 secondes
+
+2025-02-27 13:41:26.53 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_Complete_Date | , 999, 15 | 
+2025-02-27 13:41:26.54 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_Complete_Date |  | 0,0039 secondes
+
+2025-02-27 13:41:26.54 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_Trial_Balance_Build | GL_BV 27/02/2025 | 
+2025-02-27 13:41:26.56 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  - De 31/07/2024 à 27/02/2025 | 
+2025-02-27 13:41:26.67 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,1094 secondes
+
+2025-02-27 13:41:26.82 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 
+2025-02-27 13:41:26.83 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 0,0039 secondes
+
+2025-02-27 13:41:26.83 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 
+2025-02-27 13:41:26.84 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 0,0078 secondes
+
+2025-02-27 13:41:27.69 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_Trial_Balance_Build |  | 1,1484 secondes
+
+2025-02-27 13:41:27.70 | Robert M. Vigneault | APP_v6.A.4.xlsb | wshGL_BV:Worksheet_Activate |  | 1,4688 secondes
+
+2025-02-27 13:41:32.26 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_BV_Effacer_Zone_Et_Shape |  | 
+2025-02-27 13:41:32.28 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_BV_Effacer_Zone_Et_Shape |  | 0,0234 secondes
+
+2025-02-27 13:41:32.29 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_BV_Display_Trans_For_Selected_Account | 5100 De 31/07/2024 à 27/02/2025 | 
+2025-02-27 13:41:32.96 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_BV_Ajouter_Shape_Retour |  | 
+2025-02-27 13:41:32.97 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_BV_Ajouter_Shape_Retour |  | 0,0078 secondes
+
+2025-02-27 13:41:32.00 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_BV_Display_Trans_For_Selected_Account |  | 0,7109 secondes
+
+2025-02-27 13:43:49.90 | Robert M. Vigneault | APP_v6.A.4.xlsb | wshGL_BV:Worksheet_Activate |  | 
+2025-02-27 13:43:49.90 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:GL_Trans_Import_All |  | 
+2025-02-27 13:43:50.14 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:GL_Trans_Import_All |  | 0,2422 secondes
+
+2025-02-27 13:43:50.18 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_Complete_Date | , 999, 15 | 
+2025-02-27 13:43:50.18 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_Complete_Date |  | 0,0039 secondes
+
+2025-02-27 13:43:50.19 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_Trial_Balance_Build | GL_BV 27/02/2025 | 
+2025-02-27 13:43:50.21 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  - De 31/07/2024 à 27/02/2025 | 
+2025-02-27 13:43:50.29 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0781 secondes
+
+2025-02-27 13:43:50.46 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 
+2025-02-27 13:43:50.46 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 0,0039 secondes
+
+2025-02-27 13:43:50.47 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 
+2025-02-27 13:43:50.47 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_BV_Display_TB_Totals |  | 0,0039 secondes
+
+2025-02-27 13:43:51.31 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_Trial_Balance_Build |  | 1,1172 secondes
+
+2025-02-27 13:43:51.31 | Robert M. Vigneault | APP_v6.A.4.xlsb | wshGL_BV:Worksheet_Activate |  | 1,4141 secondes
+
+2025-02-27 13:43:57.93 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_BV_Effacer_Zone_Et_Shape |  | 
+2025-02-27 13:43:57.95 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_BV_Effacer_Zone_Et_Shape |  | 0,0273 secondes
+
+2025-02-27 13:43:57.96 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_BV_Display_Trans_For_Selected_Account | 5100 De 31/07/2024 à 27/02/2025 | 
+2025-02-27 13:43:58.65 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_BV_Ajouter_Shape_Retour |  | 
+2025-02-27 13:43:58.66 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_BV_Ajouter_Shape_Retour |  | 0,0078 secondes
+
+2025-02-27 13:43:58.69 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_BV:GL_BV_Display_Trans_For_Selected_Account |  | 0,7266 secondes
+
+2025-02-27 13:44:26.73 | Robert M. Vigneault | APP_v6.A.4.xlsb | wshGL_Rapport:Worksheet_Activate |  | 
+2025-02-27 13:44:26.73 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:GL_Trans_Import_All |  | 
+2025-02-27 13:44:26.97 | Robert M. Vigneault | APP_v6.A.4.xlsb | modImport:GL_Trans_Import_All |  | 0,2344 secondes
+
+2025-02-27 13:44:27.02 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDev_Utils:SetTabOrder | wshGL_Rapport | 
+2025-02-27 13:44:27.04 | Robert M. Vigneault | APP_v6.A.4.xlsb | modDev_Utils:SetTabOrder |  | 0,0117 secondes
+
+2025-02-27 13:44:27.04 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Rapport:GL_Rapport_Clear_All_Cells |  | 
+2025-02-27 13:44:27.09 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_Complete_Date | , 999, 15 | 
+2025-02-27 13:44:27.10 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_Complete_Date |  | 0,0039 secondes
+
+2025-02-27 13:44:27.11 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_Complete_Date | , 999, 15 | 
+2025-02-27 13:44:27.11 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_Complete_Date |  | 0,0000 secondes
+
+2025-02-27 13:44:27.12 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Rapport:GL_Rapport_Clear_All_Cells |  | 0,0781 secondes
+
+2025-02-27 13:44:27.12 | Robert M. Vigneault | APP_v6.A.4.xlsb | wshGL_Rapport:Worksheet_Activate |  | 0,3906 secondes
+
+2025-02-27 13:44:33.12 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_Complete_Date | , 999, 15 | 
+2025-02-27 13:44:33.13 | Robert M. Vigneault | APP_v6.A.4.xlsb | modFunctions:Fn_Complete_Date |  | 0,0078 secondes
+
+2025-02-27 13:44:44.21 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Rapport:GL_Report_For_Selected_Accounts |  | 
+2025-02-27 13:44:44.21 | Robert M. Vigneault | APP_v6.A.4.xlsb | modAppli_Utils:CreateOrReplaceWorksheet |  | 
+2025-02-27 13:44:44.27 | Robert M. Vigneault | APP_v6.A.4.xlsb | modAppli_Utils:CreateOrReplaceWorksheet |  | 0,0625 secondes
+
+2025-02-27 13:44:44.36 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1000 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:44.42 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0625 secondes
+
+2025-02-27 13:44:44.43 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1000 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:44.46 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0352 secondes
+
+2025-02-27 13:44:44.66 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1100 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:44.69 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0352 secondes
+
+2025-02-27 13:44:44.70 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1100 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:44.73 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:44.82 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1101 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:44.86 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:44.86 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1101 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:44.89 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0234 secondes
+
+2025-02-27 13:44:44.89 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1200 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:44.93 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:44.93 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1200 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:44.96 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:45.15 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1201 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:45.18 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:45.19 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1201 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:45.22 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:45.40 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1202 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:45.44 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0352 secondes
+
+2025-02-27 13:44:45.44 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1202 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:45.47 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:45.51 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1203 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:45.54 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:45.55 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1203 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:45.57 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:45.61 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1204 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:45.64 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:45.64 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1204 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:45.67 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:45.68 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1205 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:45.71 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:45.71 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1205 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:45.74 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0234 secondes
+
+2025-02-27 13:44:45.75 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1210 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:45.77 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:45.78 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1210 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:45.81 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:45.82 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1220 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:45.84 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:45.85 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1220 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:45.88 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:45.88 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1300 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:45.91 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:45.91 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1300 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:45.94 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:45.95 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1301 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:45.98 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:45.99 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1301 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:46.02 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:46.02 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1310 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:46.05 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:46.06 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1310 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:46.09 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:46.13 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1311 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:46.16 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:46.17 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1311 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:46.20 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:46.20 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1320 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:46.23 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:46.24 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1320 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:46.27 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:46.27 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1321 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:46.30 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:46.31 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1321 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:46.34 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:46.34 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1330 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:46.37 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0234 secondes
+
+2025-02-27 13:44:46.38 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1330 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:46.40 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:46.41 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1331 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:46.44 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:46.44 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1331 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:46.47 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:46.48 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 2000 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:46.50 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:46.51 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 2000 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:46.54 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:46.54 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 2010 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:46.57 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:46.59 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 2010 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:46.61 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:46.79 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 2100 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:46.82 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:46.82 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 2100 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:46.85 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0234 secondes
+
+2025-02-27 13:44:46.86 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 2105 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:46.89 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:46.89 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 2105 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:46.92 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:46.93 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 2110 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:46.95 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:46.96 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 2110 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:46.98 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0234 secondes
+
+2025-02-27 13:44:46.99 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 2120 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:47.02 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:47.03 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 2120 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:47.06 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:47.07 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 2125 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:47.10 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:47.11 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 2125 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:47.14 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:47.16 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 2200 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:47.18 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:47.19 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 2200 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:47.23 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0430 secondes
+
+2025-02-27 13:44:47.30 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 2210 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:47.34 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:47.34 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 2210 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:47.37 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:47.39 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 2220 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:47.42 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:47.43 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 2220 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:47.45 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0234 secondes
+
+2025-02-27 13:44:47.46 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 2300 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:47.49 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:47.49 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 2300 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:47.52 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:47.53 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 2310 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:47.56 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:47.57 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 2310 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:47.59 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:47.60 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 2320 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:47.63 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:47.64 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 2320 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:47.66 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0234 secondes
+
+2025-02-27 13:44:47.67 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 2330 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:47.70 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:47.70 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 2330 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:47.73 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:47.74 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 2400 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:47.77 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:47.77 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 2400 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:47.80 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:47.81 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 3000 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:47.84 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:47.84 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 3000 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:47.87 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:47.88 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 3010 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:47.90 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0234 secondes
+
+2025-02-27 13:44:47.91 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 3010 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:47.94 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:47.95 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 3100 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:47.98 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:47.98 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 3100 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:48.01 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:48.02 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 3200 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:48.04 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:48.05 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 3200 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:48.08 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:48.09 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4000 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:48.12 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:48.13 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4000 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:48.15 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:48.19 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4001 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:48.22 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:48.23 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4001 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:48.25 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:48.26 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4003 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:48.29 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:48.30 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4003 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:48.32 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0234 secondes
+
+2025-02-27 13:44:48.33 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4010 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:48.36 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:48.37 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4010 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:48.39 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0234 secondes
+
+2025-02-27 13:44:48.40 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4015 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:48.43 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:48.44 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4015 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:48.46 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0234 secondes
+
+2025-02-27 13:44:48.47 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4020 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:48.50 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:48.50 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4020 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:48.53 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:48.54 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4100 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:48.57 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:48.57 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4100 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:48.60 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:48.61 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4110 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:48.63 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:48.64 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 4110 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:48.66 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0234 secondes
+
+2025-02-27 13:44:48.68 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5000 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:48.70 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:48.71 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5000 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:48.74 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:48.77 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5010 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:48.80 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:48.80 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5010 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:48.83 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:48.84 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5020 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:48.87 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:48.88 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5020 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:48.90 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:48.94 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5030 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:48.97 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:48.98 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5030 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:49.01 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:49.02 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5040 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:49.05 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:49.06 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5040 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:49.09 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:49.10 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5050 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:49.13 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:49.14 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5050 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:49.17 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:49.27 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5060 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:49.30 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:49.30 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5060 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:49.33 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:49.35 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5070 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:49.38 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:49.38 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5070 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:49.41 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:49.44 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5080 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:49.46 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:49.47 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5080 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:49.50 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0234 secondes
+
+2025-02-27 13:44:49.51 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5090 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:49.54 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:49.54 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5090 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:49.57 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:49.58 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5100 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:49.61 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:49.61 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5100 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:49.64 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:49.70 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5110 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:49.72 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:49.73 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5110 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:49.76 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:49.77 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5120 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:49.80 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:49.80 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5120 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:49.83 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:49.84 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5130 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:49.87 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:49.88 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5130 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:49.91 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0312 secondes
+
+2025-02-27 13:44:49.94 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5140 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:49.96 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:49.97 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5140 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:50.00 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:50.04 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5150 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:50.06 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:50.07 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5150 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:50.10 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:50.11 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5160 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:50.13 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:50.14 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 5160 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:50.16 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0234 secondes
+
+2025-02-27 13:44:50.18 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 9000 - De 31/07/2024 à 31/01/2025 | 
+2025-02-27 13:44:50.20 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0273 secondes
+
+2025-02-27 13:44:50.21 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 9000 - De 01/02/2025 à 28/02/2025 | 
+2025-02-27 13:44:50.23 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0234 secondes
+
+2025-02-27 13:44:52.79 | Robert M. Vigneault | APP_v6.A.4.xlsb | modGL_Rapport:GL_Report_For_Selected_Accounts |  | 8,5781 secondes
+
+2025-02-27 13:56:31.94 | Robert M. Vigneault | APP_v6.A.4.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-27 13:56:31.95 | Robert M. Vigneault | APP_v6.A.4.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0078 secondes
+
+2025-02-27 13:56:34.10 | Robert M. Vigneault | APP_v6.A.4.xlsb | modMenu:SauvegarderEtSortirApplication |  | 
+2025-02-27 13:56:35.31 | Robert M. Vigneault | APP_v6.A.4.xlsb | modMenu:Delete_User_Active_File |  | 
+2025-02-27 13:56:35.33 | Robert M. Vigneault | APP_v6.A.4.xlsb | modMenu:Delete_User_Active_File |  | 0,0195 secondes
+
+2025-02-27 13:56:35.33 | Robert M. Vigneault | APP_v6.A.4.xlsb | ----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) ----- |  | 
+
+2025-02-27 14:25:54.73 | Robert M. Vigneault | APP_v6.A.4.xlsb | ----- Début d'une nouvelle session (modAppli:CodeEssentielDepart) ----- |  | 
+2025-02-27 14:25:54.73 | Robert M. Vigneault | APP_v6.A.4.xlsb | Validation d'accès serveur terminée |  | 0,0000 secondes
+
+2025-02-27 14:25:54.73 | Robert M. Vigneault | APP_v6.A.4.xlsb | modAppli:CreateUserActiveFile |  | 
+2025-02-27 14:25:54.74 | Robert M. Vigneault | APP_v6.A.4.xlsb | modAppli:CreateUserActiveFile |  | 0,0078 secondes
+
+2025-02-27 14:25:54.74 | Robert M. Vigneault | APP_v6.A.4.xlsb | modAppli:SetupUserDateFormat |  | 
+2025-02-27 14:25:54.74 | Robert M. Vigneault | APP_v6.A.4.xlsb | modAppli:SetupUserDateFormat |  | 0,0000 secondes
+
+2025-02-27 14:25:54.74 | Robert M. Vigneault | APP_v6.A.4.xlsb | modAppli:BackupMasterFile |  | 
+2025-02-27 14:25:54.94 | Robert M. Vigneault | APP_v6.A.4.xlsb | modAppli:BackupMasterFile |  | 0,1992 secondes
+
+2025-02-27 14:25:54.94 | Robert M. Vigneault | APP_v6.A.4.xlsb | modAppli:WriteInfoOnMainMenu |  | 
+2025-02-27 14:25:54.96 | Robert M. Vigneault | APP_v6.A.4.xlsb | modAppli:WriteInfoOnMainMenu |  | 0,0195 secondes
+
+2025-02-27 14:25:54.96 | Robert M. Vigneault | APP_v6.A.4.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 
+2025-02-27 14:25:54.96 | Robert M. Vigneault | APP_v6.A.4.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 0,0000 secondes
+
+2025-02-27 14:25:55.03 | Robert M. Vigneault | APP_v6.A.4.xlsb | modAppli:CodeEssentielDepart |  | 0,3008 secondes
+
+2025-02-27 14:32:44.26 | Robert M. Vigneault | APP_v6.A.4.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-27 14:32:44.27 | Robert M. Vigneault | APP_v6.A.4.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0078 secondes
+
+2025-02-27 14:41:49.82 | Robert M. Vigneault | APP_v6.A.4.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-27 14:41:49.85 | Robert M. Vigneault | APP_v6.A.4.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0234 secondes
+
+2025-02-27 14:42:05.89 | Robert M. Vigneault | APP_v6.A.4.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-27 14:42:05.90 | Robert M. Vigneault | APP_v6.A.4.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0078 secondes
+
+2025-02-27 14:42:06.71 | Robert M. Vigneault | APP_v6.A.4.xlsb | modMenu:SauvegarderEtSortirApplication |  | 
+2025-02-27 14:42:07.91 | Robert M. Vigneault | APP_v6.A.4.xlsb | modMenu:Delete_User_Active_File |  | 
+2025-02-27 14:42:07.91 | Robert M. Vigneault | APP_v6.A.4.xlsb | modMenu:Delete_User_Active_File |  | 0,0000 secondes
+
+2025-02-27 14:42:07.93 | Robert M. Vigneault | APP_v6.A.4.xlsb | ----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) ----- |  | 
+

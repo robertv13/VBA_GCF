@@ -13,7 +13,7 @@ Sub DeleteAllRowsButKeepHeaders() '2024-07-30 @ 12:21
     
     'Define workbook path
     Dim sourcePath As String
-    sourcePath = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    sourcePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                 "GCF_BD_MASTER.xlsx" '2024-07-29 @ 18:17
 
     'Ouvrir le workbook
@@ -44,13 +44,13 @@ Sub DeleteAllRowsButKeepHeaders() '2024-07-30 @ 12:21
         ws.Range("A2").CurrentRegion.offset(1, 0).ClearContents
         
         'Requires a minimum of one line (values)
-        ws.Range("A2").Value = 0
-        ws.Range("B2").Value = ""
-        ws.Range("C2").Value = Format$(Date, wshAdmin.Range("B1").Value)
-        ws.Range("E2").Value = 0
-        ws.Range("F2").Value = "VRAI"
-        ws.Range("G2").Value = "FAUX"
-        ws.Range("H2").Value = "FAUX"
+        ws.Range("A2").value = 0
+        ws.Range("B2").value = ""
+        ws.Range("C2").value = Format$(Date, wshAdmin.Range("B1").value)
+        ws.Range("E2").value = 0
+        ws.Range("F2").value = "VRAI"
+        ws.Range("G2").value = "FAUX"
+        ws.Range("H2").value = "FAUX"
         'Formulas for other columns
         ws.Range("I2").formula = "=IF([@EstDetruite],E2,0)"
         ws.Range("J2").formula = "=[@[H_Saisies]]-[@[H_Détruites]]"
@@ -90,15 +90,15 @@ Sub DeleteAllRowsButKeepHeaders() '2024-07-30 @ 12:21
     Set ws = wshDEB_Saisie
     Application.EnableEvents = False
     ws.Unprotect
-    ws.Range("B1").Value = 0
-    ws.Range("B2").Value = 0
-    ws.Range("B3").Value = 0
+    ws.Range("B1").value = 0
+    ws.Range("B2").value = 0
+    ws.Range("B3").value = 0
     Application.EnableEvents = True
     
     Set ws = wshFAC_Brouillon
     Application.EnableEvents = False
     ws.Unprotect
-    ws.Range("B21").Value = 1
+    ws.Range("B21").value = 1
     ws.Range("B33:B49").ClearContents
     ws.Range("B51").ClearContents
     ws.Range("B52").ClearContents
@@ -109,13 +109,13 @@ Sub DeleteAllRowsButKeepHeaders() '2024-07-30 @ 12:21
     Set ws = wshGL_BV
     Application.EnableEvents = False
     ws.Unprotect
-    ws.Range("B3").Value = "31/07/2024"
+    ws.Range("B3").value = "31/07/2024"
     Application.EnableEvents = True
     
     Set ws = wshGL_EJ
     Application.EnableEvents = False
     ws.Unprotect
-    ws.Range("B1").Value = 1
+    ws.Range("B1").value = 1
     Application.EnableEvents = True
     
     'Libérer la mémoire
