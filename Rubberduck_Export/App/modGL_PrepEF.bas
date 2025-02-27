@@ -33,8 +33,8 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
     Dim cutOffAnPassé As Date
     cutOffAnPassé = dateCutOff
     cutOffAnPassé = DateAdd("yyyy", -1, cutOffAnPassé)
-    ws.Range("F5").Value = Format$(dateCutOff, wshAdmin.Range("B1").Value)
-    ws.Range("H5").Value = Format$(cutOffAnPassé, wshAdmin.Range("B1").Value)
+    ws.Range("F5").value = Format$(dateCutOff, wshAdmin.Range("B1").value)
+    ws.Range("H5").value = Format$(cutOffAnPassé, wshAdmin.Range("B1").value)
     
     'The Chart of Account will drive the results, so the sort order is determined by COA
     Dim arr As Variant
@@ -126,12 +126,12 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
         If r <> 0 Then 'r <> 0 indique qu'il y a un solde pour ce G/L
             If arrSoldesParGL(r, 2) <> 0 Or arrSoldesParGL(r, 3) <> 0 Then
                 currRow = currRow + 1
-                ws.Range("C" & currRow).Value = glNo
-                ws.Range("D" & currRow).Value = descGL
-                ws.Range("E" & currRow).Value = codeEF
+                ws.Range("C" & currRow).value = glNo
+                ws.Range("D" & currRow).value = descGL
+                ws.Range("E" & currRow).value = codeEF
                 If isDeveloppeur = True Then
-                    ws.Range("M" & currRow).Value = codeEF
-                    ws.Range("N" & currRow).Value = glNo
+                    ws.Range("M" & currRow).value = codeEF
+                    ws.Range("N" & currRow).value = glNo
                 End If
                 'Accumule les montants par ligne d'état financier (codeEF)
                 If Not dictSoldeCodeEF.Exists(codeEF) Then
@@ -141,10 +141,10 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
                 End If
                 currRowID = dictSoldeCodeEF(codeEF)
                 
-                ws.Range("F" & currRow).Value = arrSoldesParGL(r, 2)
+                ws.Range("F" & currRow).value = arrSoldesParGL(r, 2)
                 soldeCodeEF(currRowID, 2) = soldeCodeEF(currRowID, 2) + arrSoldesParGL(r, 2)
                 totalAC = totalAC + arrSoldesParGL(r, 2)
-                ws.Range("H" & currRow).Value = arrSoldesParGL(r, 3)
+                ws.Range("H" & currRow).value = arrSoldesParGL(r, 3)
                 soldeCodeEF(currRowID, 3) = soldeCodeEF(currRowID, 3) + arrSoldesParGL(r, 3)
                 totalAP = totalAP + CCur(arrSoldesParGL(r, 3))
                 
@@ -165,25 +165,25 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
         
         'Sauvegarde des BNR au début de l'année et Dividendes
         If glNo = "3100" Then
-            BNR_Début_Année_AC = ws.Range("F" & currRow).Value
-            BNR_Début_Année_AP = ws.Range("H" & currRow).Value
+            BNR_Début_Année_AC = ws.Range("F" & currRow).value
+            BNR_Début_Année_AP = ws.Range("H" & currRow).value
         ElseIf glNo = "3200" Then
-            Dividendes_Année_AC = ws.Range("F" & currRow).Value
-            Dividendes_Année_AP = ws.Range("H" & currRow).Value
+            Dividendes_Année_AC = ws.Range("F" & currRow).value
+            Dividendes_Année_AP = ws.Range("H" & currRow).value
         End If
     
         If isDeveloppeur = True Then
-            ws.Range("O" & currRow).Value = ws.Range("F" & currRow).Value
-            ws.Range("P" & currRow).Value = ws.Range("H" & currRow).Value
+            ws.Range("O" & currRow).value = ws.Range("F" & currRow).value
+            ws.Range("P" & currRow).value = ws.Range("H" & currRow).value
         End If
     Next i
 
     currRow = currRow + 2
     
     'Output GL totals
-    ws.Range("D" & currRow).Value = "Totaux"
-    ws.Range("F" & currRow).Value = totalAC
-    ws.Range("H" & currRow).Value = totalAP
+    ws.Range("D" & currRow).value = "Totaux"
+    ws.Range("F" & currRow).value = totalAC
+    ws.Range("H" & currRow).value = totalAP
     
     'Ajuste le format des montants
     ws.Range("F6:F" & currRow).NumberFormat = "###,###,##0.00 ;(###,###,##0.00);0.00"
@@ -237,8 +237,8 @@ Sub Assembler_États_Financiers()
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_États_Financiers", "", 0)
     
     Dim dateAC As Date, dateAP As Date
-    dateAC = wshGL_PrepEF.Range("F5").Value
-    dateAP = wshGL_PrepEF.Range("H5").Value
+    dateAC = wshGL_PrepEF.Range("F5").value
+    dateAP = wshGL_PrepEF.Range("H5").value
     
     Call CréerFeuillesEtFormat
     
@@ -520,19 +520,19 @@ Sub Assembler_TM_2_Lignes(ws As Worksheet)
     currRow = 15
     
     With ws
-        .Range("C" & currRow).Value = "Page"
+        .Range("C" & currRow).value = "Page"
         currRow = currRow + 3
         
-        .Range("B" & currRow).Value = "États des résultats"
-        .Range("C" & currRow).Value = "2"
+        .Range("B" & currRow).value = "États des résultats"
+        .Range("C" & currRow).value = "2"
         currRow = currRow + 2
         
-        .Range("B" & currRow).Value = "États des Bénéfices non répartis"
-        .Range("C" & currRow).Value = "3"
+        .Range("B" & currRow).value = "États des Bénéfices non répartis"
+        .Range("C" & currRow).value = "3"
         currRow = currRow + 2
         
-        .Range("B" & currRow).Value = "Bilan"
-        .Range("C" & currRow).Value = "4"
+        .Range("B" & currRow).value = "Bilan"
+        .Range("C" & currRow).value = "4"
         currRow = currRow + 2
         
         .Range("C:C").HorizontalAlignment = xlRight
@@ -613,10 +613,10 @@ Sub Assembler_ER_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateA
     Call PositionnerCellule(ws, UCase("État des Résultats"), 2, 2, 12, True, xlLeft)
     Call PositionnerCellule(ws, UCase(titre), 3, 2, 12, True, xlLeft)
     ws.Range("C5:E6").HorizontalAlignment = xlRight
-    ws.Range("C5").Value = year(dateAC)
+    ws.Range("C5").value = year(dateAC)
     ws.Range("C5").Font.Bold = True
 '    ws.Range("C6").Value = "$"
-    ws.Range("E5").Value = year(dateAP)
+    ws.Range("E5").value = year(dateAP)
     ws.Range("E5").Font.Bold = True
 '    ws.Range("E6").Value = "$"
     With ws.Range("B5:E5").Borders(xlEdgeBottom)
@@ -662,14 +662,14 @@ Sub Assembler_ER_2_Lignes(ws As Worksheet)
     currRow = 8
     Dim rngRow As ListRow
     For Each rngRow In tbl.ListRows
-        LigneEF = rngRow.Range.Cells(1, 1).Value
-        codeEF = UCase(rngRow.Range.Cells(1, 2).Value)
+        LigneEF = rngRow.Range.Cells(1, 1).value
+        codeEF = UCase(rngRow.Range.Cells(1, 2).value)
         'On ne traite que les lignes de l'État des résultats (R, D, X & I)
         If InStr("RDXI", Left(codeEF, 1)) <> 0 Then
-            typeLigne = UCase(rngRow.Range.Cells(1, 3).Value)
-            gras = UCase(rngRow.Range.Cells(1, 4).Value)
-            souligne = UCase(rngRow.Range.Cells(1, 5).Value)
-            size = rngRow.Range.Cells(1, 6).Value
+            typeLigne = UCase(rngRow.Range.Cells(1, 3).value)
+            gras = UCase(rngRow.Range.Cells(1, 4).value)
+            souligne = UCase(rngRow.Range.Cells(1, 5).value)
+            size = rngRow.Range.Cells(1, 6).value
             Call Imprime_Ligne_EF(ws, currRow, LigneEF, codeEF, typeLigne, gras, souligne, size)
         End If
         
@@ -685,9 +685,9 @@ Sub Assembler_ER_2_Lignes(ws As Worksheet)
     'Transfère les montants NON arrondis dans les cellules sans les cents
     Dim i As Integer
     For i = 7 To currRow
-        If ws.Range("G" & i).Value <> "" Then
-            ws.Range("C" & i).Value = ws.Range("G" & i).Value
-            ws.Range("E" & i).Value = ws.Range("I" & i).Value
+        If ws.Range("G" & i).value <> "" Then
+            ws.Range("C" & i).value = ws.Range("G" & i).value
+            ws.Range("E" & i).value = ws.Range("I" & i).value
         End If
     Next i
     ws.Range("G7:I45").Clear
@@ -744,9 +744,9 @@ Sub Assembler_Bilan_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, da
     Call PositionnerCellule(ws, UCase("Bilan"), 2, 2, 12, True, xlLeft)
     Call PositionnerCellule(ws, UCase("Au " & Format$(dateAC, "dd mmmm yyyy")), 3, 2, 12, True, xlLeft)
     ws.Range("C5:E6").HorizontalAlignment = xlRight
-    ws.Range("C5").Value = year(dateAC)
+    ws.Range("C5").value = year(dateAC)
     ws.Range("C5").Font.Bold = True
-    ws.Range("E5").Value = year(dateAP)
+    ws.Range("E5").value = year(dateAP)
     ws.Range("E5").Font.Bold = True
     With ws.Range("B5:E5").Borders(xlEdgeBottom)
         .LineStyle = xlContinuous
@@ -791,14 +791,14 @@ Sub Assembler_Bilan_2_Lignes(ws As Worksheet)
     currRow = 8
     Dim rngRow As ListRow
     For Each rngRow In tbl.ListRows
-        LigneEF = rngRow.Range.Cells(1, 1).Value
-        codeEF = rngRow.Range.Cells(1, 2).Value
+        LigneEF = rngRow.Range.Cells(1, 1).value
+        codeEF = rngRow.Range.Cells(1, 2).value
         'Ne traite que les lignes du bilan (A, P & E)
         If InStr("APE", Left(codeEF, 1)) <> 0 Then
-            typeLigne = rngRow.Range.Cells(1, 3).Value
-            gras = rngRow.Range.Cells(1, 4).Value
-            souligne = rngRow.Range.Cells(1, 5).Value
-            size = rngRow.Range.Cells(1, 6).Value
+            typeLigne = rngRow.Range.Cells(1, 3).value
+            gras = rngRow.Range.Cells(1, 4).value
+            souligne = rngRow.Range.Cells(1, 5).value
+            size = rngRow.Range.Cells(1, 6).value
             Call Imprime_Ligne_EF(ws, currRow, LigneEF, codeEF, typeLigne, gras, souligne, size)
         End If
         
@@ -814,9 +814,9 @@ Sub Assembler_Bilan_2_Lignes(ws As Worksheet)
     'Transfère les montants NON arrondis dans les cellules sans les cents
     Dim i As Integer
     For i = 7 To currRow
-        If ws.Range("G" & i).Value <> "" Then
-            ws.Range("C" & i).Value = ws.Range("G" & i).Value
-            ws.Range("E" & i).Value = ws.Range("I" & i).Value
+        If ws.Range("G" & i).value <> "" Then
+            ws.Range("C" & i).value = ws.Range("G" & i).value
+            ws.Range("E" & i).value = ws.Range("I" & i).value
         End If
     Next i
     ws.Range("G7:I38").Clear
@@ -879,9 +879,9 @@ Sub Assembler_BNR_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, date
     Call PositionnerCellule(ws, UCase("Bénéfices non répartis"), 2, 2, 12, True, xlLeft)
     Call PositionnerCellule(ws, UCase(titre), 3, 2, 12, True, xlLeft)
     ws.Range("C5:E6").HorizontalAlignment = xlRight
-    ws.Range("C5").Value = year(dateAC)
+    ws.Range("C5").value = year(dateAC)
     ws.Range("C5").Font.Bold = True
-    ws.Range("E5").Value = year(dateAP)
+    ws.Range("E5").value = year(dateAP)
     ws.Range("E5").Font.Bold = True
     With ws.Range("B5:E5").Borders(xlEdgeBottom)
         .LineStyle = xlContinuous
@@ -923,14 +923,14 @@ Sub Assembler_BNR_2_Lignes(ws As Worksheet)
     currRow = 8
     Dim rngRow As ListRow
     For Each rngRow In tbl.ListRows
-        LigneEF = rngRow.Range.Cells(1, 1).Value
-        codeEF = rngRow.Range.Cells(1, 2).Value
+        LigneEF = rngRow.Range.Cells(1, 1).value
+        codeEF = rngRow.Range.Cells(1, 2).value
         'Ne traite que les lignes du bilan (A, P & E)
         If InStr("B", Left(codeEF, 1)) <> 0 Then
-            typeLigne = rngRow.Range.Cells(1, 3).Value
-            gras = rngRow.Range.Cells(1, 4).Value
-            souligne = rngRow.Range.Cells(1, 5).Value
-            size = rngRow.Range.Cells(1, 6).Value
+            typeLigne = rngRow.Range.Cells(1, 3).value
+            gras = rngRow.Range.Cells(1, 4).value
+            souligne = rngRow.Range.Cells(1, 5).value
+            size = rngRow.Range.Cells(1, 6).value
             Call Imprime_Ligne_EF(ws, currRow, LigneEF, codeEF, typeLigne, gras, souligne, size)
         End If
         
@@ -947,9 +947,9 @@ Sub Assembler_BNR_2_Lignes(ws As Worksheet)
     'Transfère les montants NON arrondis dans les cellules sans les cents
     Dim i As Integer
     For i = 7 To currRow
-        If ws.Range("G" & i).Value <> "" Then
-            ws.Range("C" & i).Value = ws.Range("G" & i).Value
-            ws.Range("E" & i).Value = ws.Range("I" & i).Value
+        If ws.Range("G" & i).value <> "" Then
+            ws.Range("C" & i).value = ws.Range("G" & i).value
+            ws.Range("E" & i).value = ws.Range("I" & i).value
         End If
     Next i
     ws.Range("G7:I25").Clear
@@ -965,7 +965,7 @@ End Sub
 Sub PositionnerCellule(ws As Worksheet, cell As String, ligne As Integer, col As Integer, points As Integer, gras As Boolean, alignement As Long)
 
     With ws.Cells(ligne, col)
-        .Value = cell
+        .value = cell
         .Font.size = points
         .Font.Bold = gras
         .HorizontalAlignment = alignement
@@ -984,10 +984,10 @@ Sub AdditionnerSoldes(r1 As Range, r2 As Range, comptes As String)
     
     Dim i As Integer
     For i = 0 To UBound(compte, 1) - 1
-        r1.Value = r1.Value + ChercherSoldes(compte(i), 1)
+        r1.value = r1.value + ChercherSoldes(compte(i), 1)
     Next i
 
-    r1.Value = Round(r1.Value, 0)
+    r1.value = Round(r1.value, 0)
     
 End Sub
 
@@ -1000,7 +1000,7 @@ Function ChercherSoldes(valeur As String, colonne As Integer) As Currency
     Set r = ws.Range("C6:C" & ws.Cells(Rows.count, "C").End(xlUp).row).Find(valeur, LookAt:=xlWhole)
     
     If Not r Is Nothing Then
-        ChercherSoldes = r.offset(0, 3).Value
+        ChercherSoldes = r.offset(0, 3).value
     Else
         ChercherSoldes = 0
     End If
@@ -1025,8 +1025,8 @@ Sub Imprime_Ligne_EF(ws As Worksheet, ByRef currRow As Integer, LigneEF As Strin
                 currRow = currRow + 1
             End If
             If codeEF = "B00" Then
-                ws.Range("G" & currRow).Value = BNR_Début_Année_AC * correcteurSigne
-                ws.Range("I" & currRow).Value = BNR_Début_Année_AP * correcteurSigne
+                ws.Range("G" & currRow).value = BNR_Début_Année_AC * correcteurSigne
+                ws.Range("I" & currRow).value = BNR_Début_Année_AP * correcteurSigne
                 savePremiereLigne = currRow
             Else
                 savePremiereLigne = currRow + 1
@@ -1036,8 +1036,8 @@ Sub Imprime_Ligne_EF(ws As Worksheet, ByRef currRow As Integer, LigneEF As Strin
             index = dictSoldeCodeEF(codeEF)
             If index <> 0 Then
                 If Round(soldeCodeEF(index, 2), 2) <> 0 Or Round(soldeCodeEF(index, 3), 2) <> 0 Then
-                    ws.Range("G" & currRow).Value = soldeCodeEF(index, 2) * correcteurSigne
-                    ws.Range("I" & currRow).Value = soldeCodeEF(index, 3) * correcteurSigne
+                    ws.Range("G" & currRow).value = soldeCodeEF(index, 2) * correcteurSigne
+                    ws.Range("I" & currRow).value = soldeCodeEF(index, 3) * correcteurSigne
                 Else
                     doitImprimer = False
                 End If
@@ -1126,8 +1126,8 @@ Sub Imprime_Ligne_EF(ws As Worksheet, ByRef currRow As Integer, LigneEF As Strin
     End If
     
     If codeEF = "B01" Then 'Bénéfice net / Revenu net
-        ws.Range("G" & currRow).Value = totalRevenuNet_AC
-        ws.Range("I" & currRow).Value = totalRevenuNet_AP
+        ws.Range("G" & currRow).value = totalRevenuNet_AC
+        ws.Range("I" & currRow).value = totalRevenuNet_AP
         With ws.Range("C" & currRow).Borders(xlEdgeBottom)
             .LineStyle = xlContinuous
             .Color = -11511710
@@ -1141,8 +1141,8 @@ Sub Imprime_Ligne_EF(ws As Worksheet, ByRef currRow As Integer, LigneEF As Strin
     End If
     
     If codeEF = "B20" Then 'Dividendes
-        ws.Range("G" & currRow).Value = -Dividendes_Année_AC
-        ws.Range("I" & currRow).Value = -Dividendes_Année_AP
+        ws.Range("G" & currRow).value = -Dividendes_Année_AC
+        ws.Range("I" & currRow).value = -Dividendes_Année_AP
     End If
     
     If codeEF = "B50" Then 'Solde de fin (BNR)
@@ -1161,7 +1161,7 @@ Sub Imprime_Ligne_EF(ws As Worksheet, ByRef currRow As Integer, LigneEF As Strin
     End If
     
     If doitImprimer = True Then
-        ws.Range("B" & currRow).Value = LigneEF
+        ws.Range("B" & currRow).value = LigneEF
         currRow = currRow + 1
     End If
     

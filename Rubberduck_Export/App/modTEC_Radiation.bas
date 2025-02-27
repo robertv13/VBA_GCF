@@ -36,7 +36,7 @@ Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
     
     'Transfère la table en mémoire (arr)
     Dim arr As Variant
-    arr = wsSource.Range("AQ3:BF" & lastUsedRow).Value
+    arr = wsSource.Range("AQ3:BF" & lastUsedRow).value
     
     Dim i As Long
     Dim tecID As Long
@@ -49,19 +49,19 @@ Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
     For i = 1 To UBound(arr, 1)
         If currRow <= 30 Then
             tecID = CLng(arr(i, fTECTECID))
-            dateTEC = Format$(arr(i, fTECDate), wshAdmin.Range("B1").Value)
+            dateTEC = Format$(arr(i, fTECDate), wshAdmin.Range("B1").value)
             profInit = Format$(arr(i, fTECProfID), "000") & arr(i, fTECProf)
             descTEC = arr(i, fTECDescription)
             hresTEC = arr(i, fTECHeures)
             With ws
-                .Cells(currRow, 5).Value = tecID
-                .Cells(currRow, 6).Value = dateTEC
-                .Cells(currRow, 7).Value = Mid(profInit, 4)
-                .Cells(currRow, 8).Value = descTEC
-                .Cells(currRow, 10).Value = hresTEC
+                .Cells(currRow, 5).value = tecID
+                .Cells(currRow, 6).value = dateTEC
+                .Cells(currRow, 7).value = Mid(profInit, 4)
+                .Cells(currRow, 8).value = descTEC
+                .Cells(currRow, 10).value = hresTEC
                 tauxHoraire = Fn_Get_Hourly_Rate(CLng(Left(profInit, 3)), CDate(cutoffDate))
                 valeurTEC = hresTEC * tauxHoraire
-                .Cells(currRow, 11).Value = valeurTEC
+                .Cells(currRow, 11).value = valeurTEC
             End With
             activeRow = currRow
             totalHresTEC = totalHresTEC + hresTEC
@@ -78,7 +78,7 @@ Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
     
     'Affiche les totaux
     With ws
-        .Cells(currRow, 8).Value = "* TOTAUX *"
+        .Cells(currRow, 8).value = "* TOTAUX *"
         .Cells(currRow, 8).Font.Bold = True
         .Cells(currRow, 10).Font.Bold = True
         .Cells(currRow, 11).Font.Bold = True
@@ -168,7 +168,7 @@ Sub ToutCocherOuDecocher()
     allChecked = True
     For Each chkBox In ws.CheckBoxes
         If chkBox.Name <> "chk_header" Then
-            If chkBox.Value <> xlOn Then
+            If chkBox.value <> xlOn Then
                 allChecked = False
                 Exit For
             End If
@@ -182,13 +182,13 @@ Sub ToutCocherOuDecocher()
     Application.EnableEvents = False
 
     'Réinitialiser l'état de la case à cocher de l'en-tête pour être sûr qu'elle peut être modifiée
-    headerChkBox.Value = xlOff 'On s'assure que la case est décochée avant de basculer
-    headerChkBox.Value = IIf(newState, xlOn, xlOff) 'Appliquer l'état approprié
+    headerChkBox.value = xlOff 'On s'assure que la case est décochée avant de basculer
+    headerChkBox.value = IIf(newState, xlOn, xlOff) 'Appliquer l'état approprié
     
     'Parcourir toutes les cases à cocher et appliquer le nouvel état
     For Each chkBox In ws.CheckBoxes
         If chkBox.Name <> "chk_header" Then
-            chkBox.Value = IIf(newState, xlOn, xlOff)
+            chkBox.value = IIf(newState, xlOn, xlOff)
             chkBox.Characters.Text = ""
             chkBox.Characters.Caption = ""
         End If
@@ -221,10 +221,10 @@ Sub CalculerTotaux()
     For Each chkBox In ws.CheckBoxes
         If chkBox.Name <> "chk_header" Then
             'Vérifier si la case à cocher est cochée
-            If chkBox.Value = xlOn Then
+            If chkBox.value = xlOn Then
                 'Ajouter la valeur de la cellule correspondante à la somme totale
-                totalHres = totalHres + ws.Cells(rowNum, "J").Value
-                totalValeur = totalValeur + ws.Cells(rowNum, "K").Value
+                totalHres = totalHres + ws.Cells(rowNum, "J").value
+                totalValeur = totalValeur + ws.Cells(rowNum, "K").value
                 
             End If
             rowNum = rowNum + 1
@@ -232,8 +232,8 @@ Sub CalculerTotaux()
     Next chkBox
     
     ' Afficher le total dans une cellule spécifique (par exemple, cellule Z1)
-    ws.Cells(rowNum + 2, 10).Value = Format$(totalHres, "###,##0.00")
-    ws.Cells(rowNum + 2, 11).Value = Format$(totalValeur, "###,##0.00 $")
+    ws.Cells(rowNum + 2, 10).value = Format$(totalHres, "###,##0.00")
+    ws.Cells(rowNum + 2, 11).value = Format$(totalValeur, "###,##0.00 $")
     
 End Sub
 
@@ -269,7 +269,7 @@ Sub TEC_Radiation_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Upd
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "TEC_Local$"
     
@@ -284,17 +284,17 @@ Sub TEC_Radiation_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Upd
     Dim offset As Long
     offset = 3
     For r = firstRow To lastRow
-        If wshTEC_Radiation.Range("B" & r + offset).Value = True Then
-            tecID = wshTEC_Local.Range("AQ" & r).Value
+        If wshTEC_Radiation.Range("B" & r + offset).value = True Then
+            tecID = wshTEC_Local.Range("AQ" & r).value
             
             'Open the recordset for the specified ID
             strSQL = "SELECT * FROM [" & destinationTab & "] WHERE TECID=" & tecID
             rs.Open strSQL, conn, 2, 3
             If Not rs.EOF Then
                 'Update EstFacturee, DateFacturee & NoFacture
-                rs.Fields(fTECEstFacturee - 1).Value = "VRAI"
-                rs.Fields(fTECDateFacturee - 1).Value = Format$(Date, "yyyy-mm-dd")
-                rs.Fields(fTECNoFacture - 1).Value = "Radiation"
+                rs.Fields(fTECEstFacturee - 1).value = "VRAI"
+                rs.Fields(fTECDateFacturee - 1).value = Format$(Date, "yyyy-mm-dd")
+                rs.Fields(fTECNoFacture - 1).value = "Radiation"
                 rs.Update
             Else
                 'Handle the case where the specified ID is not found
@@ -339,12 +339,12 @@ Sub TEC_Radiation_Update_As_Billed_Locally(firstResultRow As Long, lastResultRow
     Dim offset As Long
     offset = 3
     For r = firstResultRow To lastResultRow
-        If wshTEC_Radiation.Range("B" & r + offset).Value = True Then
-            tecID = wshTEC_Local.Range("AQ" & r).Value
+        If wshTEC_Radiation.Range("B" & r + offset).value = True Then
+            tecID = wshTEC_Local.Range("AQ" & r).value
             rowToBeUpdated = Fn_Find_Row_Number_TECID(tecID, lookupRange)
-            wshTEC_Local.Cells(rowToBeUpdated, fTECEstFacturee).Value = "VRAI"
-            wshTEC_Local.Cells(rowToBeUpdated, fTECDateFacturee).Value = Format$(Date, "yyyy-mm-dd")
-            wshTEC_Local.Cells(rowToBeUpdated, fTECNoFacture).Value = "Radiation"
+            wshTEC_Local.Cells(rowToBeUpdated, fTECEstFacturee).value = "VRAI"
+            wshTEC_Local.Cells(rowToBeUpdated, fTECDateFacturee).value = Format$(Date, "yyyy-mm-dd")
+            wshTEC_Local.Cells(rowToBeUpdated, fTECNoFacture).value = "Radiation"
         End If
     Next r
     
@@ -380,8 +380,8 @@ Sub Radiation_Apercu_Avant_Impression()
     
     DoEvents
 
-    Dim header1 As String: header1 = "Radiation des TEC au  " & wshTEC_Radiation.Range("K3").Value
-    Dim header2 As String: header2 = wshTEC_Radiation.Range("F3").Value
+    Dim header1 As String: header1 = "Radiation des TEC au  " & wshTEC_Radiation.Range("K3").value
+    Dim header2 As String: header2 = wshTEC_Radiation.Range("F3").value
     
     Call Simple_Print_Setup(wshTEC_Radiation, rngToPrint, header1, header2, "$1:$1", "L")
 
@@ -420,14 +420,14 @@ Sub Prepare_Pour_Nouvelle_Radiation()
     Set ws = wshTEC_Radiation
     
     With ws
-        .Range("B6:B32").Value = ""
+        .Range("B6:B32").value = ""
         .Range("D6:K32").ClearContents
         .Range("D6:K32").Font.Bold = False
         .Shapes("Impression").Visible = False
         .Shapes("Radiation").Visible = False
         Application.EnableEvents = False
-            .Range("F3").Value = ""
-            .Range("K3").Value = ""
+            .Range("F3").value = ""
+            .Range("K3").value = ""
         Application.EnableEvents = True
         previousCellAddress = .Range("F3").Address
         .Range("F3").Select

@@ -1,0 +1,35 @@
+/Rubberduck_Export/5_Hacks
+/Rubberduck_Export/Constat
+/Rubberduck_Export/ContactManager
+/Rubberduck_Export/EJ
+/Rubberduck_Export/Email
+/Rubberduck_Export/ExcelForFreelancers
+/Rubberduck_Export/GC_App
+/Rubberduck_Export/Payments
+/Rubberduck_Export/RiskManagement
+/Rubberduck_Export/TEMP
+/Rubberduck_Export/Utils
+/z_Archives
+Rubberduck_Export/BillEntries.doccls
+Rubberduck_Export/BillingItem_Macros.bas
+Rubberduck_Export/CodeReset_Macs.bas
+# Ignorer les fichiers de données
+*.xlsx
+*.csv
+*.mdb
+*.accdb
+
+# Ignorer les fichiers temporaires de VBA
+*.frx
+*.suo
+*.log
+
+# Ignorer les fichiers exportés sauf ceux du code source
+!*.bas
+!*.cls
+!*.frm
+
+# Ignorer les fichiers de sauvegarde
+*.bak
+*.tmp
+~$*

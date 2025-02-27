@@ -35,7 +35,7 @@ Private Sub lsbEJ_AutoDesc_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     rowSelected = lsbEJ_AutoDesc.ListIndex
     DescEJAuto = lsbEJ_AutoDesc.List(rowSelected, 0)
     NoEJAuto = lsbEJ_AutoDesc.List(rowSelected, 1)
-    wshGL_EJ.Range("B2").Value = rowSelected '2024-01-08 @ 13:58
+    wshGL_EJ.Range("B2").value = rowSelected '2024-01-08 @ 13:58
     Unload ufListeEJAuto
     Call Load_JEAuto_Into_JE(DescEJAuto, NoEJAuto)
 
