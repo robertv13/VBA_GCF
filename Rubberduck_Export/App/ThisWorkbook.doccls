@@ -41,7 +41,7 @@ Private Sub Workbook_Open_OK_20241228()
     Call Log_Record("OK - rootPath défini '" & rootPath & "'", Timer)
 
     Application.EnableEvents = False
-    wshAdmin.Range("F5").Value = rootPath
+    wshAdmin.Range("F5").value = rootPath
     Application.EnableEvents = True
    
     'Vérification si le chemin est accessible
@@ -63,7 +63,7 @@ Private Sub Workbook_Open_OK_20241228()
     Call BackupMasterFile
     
     Call WriteInfoOnMainMenu
-    wshMenu.Range("A1").Value = wshAdmin.Range("NomEntreprise").Value
+    wshMenu.Range("A1").value = wshAdmin.Range("NomEntreprise").value
     
     Call HideDevShapesBasedOnUsername
     

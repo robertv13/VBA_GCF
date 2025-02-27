@@ -28,19 +28,19 @@ Sub CAR_Creer_Liste_Agee()
     
     'Entêtes de colonnes en fonction du niveau de détail
     If LCase(niveauDetail) = "client" Then
-        wsResultat.Range("A1:F1").value = Array("Client", "Solde", "0-30 jours", "31-60 jours", "61-90 jours", "90+ jours")
+        wsResultat.Range("A1:F1").Value = Array("Client", "Solde", "0-30 jours", "31-60 jours", "61-90 jours", "90+ jours")
         Call Make_It_As_Header(wsResultat.Range("A1:F1"))
     End If
 
     'Entêtes de colonnes en fonction du niveau de détail (Facture)
     If LCase(niveauDetail) = "facture" Then
-        wsResultat.Range("A1:H1").value = Array("Client", "No. Facture", "Date Facture", "Solde", "0-30 jours", "31-60 jours", "61-90 jours", "90+ jours")
+        wsResultat.Range("A1:H1").Value = Array("Client", "No. Facture", "Date Facture", "Solde", "0-30 jours", "31-60 jours", "61-90 jours", "90+ jours")
         Call Make_It_As_Header(wsResultat.Range("A1:H1"))
     End If
 
     'Entêtes de colonnes en fonction du niveau de détail (Transaction)
     If LCase(niveauDetail) = "transaction" Then
-        wsResultat.Range("A1:H1").value = Array("Client", "No. Facture", "Date", "Montant", "0-30 jours", "31-60 jours", "61-90 jours", "90+ jours")
+        wsResultat.Range("A1:H1").Value = Array("Client", "No. Facture", "Date", "Montant", "0-30 jours", "31-60 jours", "61-90 jours", "90+ jours")
         Call Make_It_As_Header(wsResultat.Range("A1:H1"))
     End If
 
@@ -72,13 +72,13 @@ Sub CAR_Creer_Liste_Agee()
     r = 1
     For i = 1 To rngFactures.rows.count
         'Récupérer les données de la facture directement du Range
-        client = rngFactures.Cells(i, 4).value
+        client = rngFactures.Cells(i, 4).Value
         'Obtenir le nom du client pour trier par nom de client plutôt que par code de client
         client = Fn_Get_Client_Name(client)
-        numFacture = rngFactures.Cells(i, 1).value
-        dateFacture = rngFactures.Cells(i, 2).value
-        dateDue = rngFactures.Cells(i, 7).value
-        montantFacture = CCur(rngFactures.Cells(i, 8).value)
+        numFacture = rngFactures.Cells(i, 1).Value
+        dateFacture = rngFactures.Cells(i, 2).Value
+        dateDue = rngFactures.Cells(i, 7).Value
+        montantFacture = CCur(rngFactures.Cells(i, 8).Value)
         
         'Obtenir les paiemnets pour cette facture
         montantPaye = CCur(Application.WorksheetFunction.SumIf(wsPaiements.Range("B:B"), numFacture, wsPaiements.Range("E:E")))
@@ -135,37 +135,37 @@ Sub CAR_Creer_Liste_Agee()
             Case "facture"
                 'Ajouter chaque facture avec son montant restant dû
                 r = r + 1
-                wsResultat.Cells(r, 1).value = client
-                wsResultat.Cells(r, 2).value = numFacture
-                wsResultat.Cells(r, 3).value = dateFacture
-                wsResultat.Cells(r, 4).value = montantRestant
+                wsResultat.Cells(r, 1).Value = client
+                wsResultat.Cells(r, 2).Value = numFacture
+                wsResultat.Cells(r, 3).Value = dateFacture
+                wsResultat.Cells(r, 4).Value = montantRestant
                 Select Case tranche
                     Case "0-30 jours"
-                        wsResultat.Cells(r, 5).value = montantRestant
+                        wsResultat.Cells(r, 5).Value = montantRestant
                     Case "31-60 jours"
-                        wsResultat.Cells(r, 6).value = montantRestant
+                        wsResultat.Cells(r, 6).Value = montantRestant
                     Case "61-90 jours"
-                        wsResultat.Cells(r, 7).value = montantRestant
+                        wsResultat.Cells(r, 7).Value = montantRestant
                     Case "90+ jours"
-                        wsResultat.Cells(r, 8).value = montantRestant
+                        wsResultat.Cells(r, 8).Value = montantRestant
                 End Select
                 
             Case "transaction"
                 'Type Facture
                 r = r + 1
-                wsResultat.Cells(r, 1).value = client
-                wsResultat.Cells(r, 2).value = numFacture
-                wsResultat.Cells(r, 3).value = dateFacture
-                wsResultat.Cells(r, 4).value = montantFacture
+                wsResultat.Cells(r, 1).Value = client
+                wsResultat.Cells(r, 2).Value = numFacture
+                wsResultat.Cells(r, 3).Value = dateFacture
+                wsResultat.Cells(r, 4).Value = montantFacture
                 Select Case tranche
                     Case "0-30 jours"
-                        wsResultat.Cells(r, 5).value = montantRestant
+                        wsResultat.Cells(r, 5).Value = montantRestant
                     Case "31-60 jours"
-                        wsResultat.Cells(r, 6).value = montantRestant
+                        wsResultat.Cells(r, 6).Value = montantRestant
                     Case "61-90 jours"
-                        wsResultat.Cells(r, 7).value = montantRestant
+                        wsResultat.Cells(r, 7).Value = montantRestant
                     Case "90+ jours"
-                        wsResultat.Cells(r, 8).value = montantRestant
+                        wsResultat.Cells(r, 8).Value = montantRestant
                 End Select
                 
                 'Transactions de type paiements
@@ -176,10 +176,10 @@ Sub CAR_Creer_Liste_Agee()
                     firstAddress = rngPaiementsAssoc.Address
                         Do
                         r = r + 1
-                        wsResultat.Cells(r, 1).value = client
-                        wsResultat.Cells(r, 2).value = numFacture
-                        wsResultat.Cells(r, 3).value = rngPaiementsAssoc.Offset(0, 2).value
-                        wsResultat.Cells(r, 4).value = -rngPaiementsAssoc.Offset(0, 3).value ' Montant du paiement
+                        wsResultat.Cells(r, 1).Value = client
+                        wsResultat.Cells(r, 2).Value = numFacture
+                        wsResultat.Cells(r, 3).Value = rngPaiementsAssoc.Offset(0, 2).Value
+                        wsResultat.Cells(r, 4).Value = -rngPaiementsAssoc.Offset(0, 3).Value ' Montant du paiement
                         Set rngPaiementsAssoc = wsPaiements.columns("B:B").FindNext(rngPaiementsAssoc)
                     Loop While Not rngPaiementsAssoc Is Nothing And rngPaiementsAssoc.Address <> firstAddress
                 End If
@@ -193,12 +193,12 @@ Next_Invoice:
         i = 2
         Dim cle As Variant
         For Each cle In dictClients.keys
-            wsResultat.Cells(i, 1).value = cle ' Nom du client
-            wsResultat.Cells(i, 2).value = dictClients(cle)(0) ' Total
-            wsResultat.Cells(i, 3).value = dictClients(cle)(1) ' 0-30 jours
-            wsResultat.Cells(i, 4).value = dictClients(cle)(2) ' 31-60 jours
-            wsResultat.Cells(i, 5).value = dictClients(cle)(3) ' 61-90 jours
-            wsResultat.Cells(i, 6).value = dictClients(cle)(4) ' 90+ jours
+            wsResultat.Cells(i, 1).Value = cle ' Nom du client
+            wsResultat.Cells(i, 2).Value = dictClients(cle)(0) ' Total
+            wsResultat.Cells(i, 3).Value = dictClients(cle)(1) ' 0-30 jours
+            wsResultat.Cells(i, 4).Value = dictClients(cle)(2) ' 31-60 jours
+            wsResultat.Cells(i, 5).Value = dictClients(cle)(3) ' 61-90 jours
+            wsResultat.Cells(i, 6).Value = dictClients(cle)(4) ' 90+ jours
             i = i + 1
         Next cle
     End If
@@ -313,7 +313,7 @@ Sub CAR_Sort_Group_And_Subtotal() '2024-08-29 @ 22:24
     Set dictClients = New Dictionary
     Dim i As Long
     For i = 2 To lastUsedRowClient
-        dictClients.add CStr(wsClientsMF.Cells(i, 2).value), wsClientsMF.Cells(i, 1).value
+        dictClients.add CStr(wsClientsMF.Cells(i, 2).Value), wsClientsMF.Cells(i, 1).Value
     Next i
 
     'Calculate the center of the used range
@@ -383,24 +383,24 @@ Sub CAR_Sort_Group_And_Subtotal() '2024-08-29 @ 22:24
     Application.EnableEvents = False
     For i = 3 To lastUsedRow
         'Conditions for exclusion (adjust as needed)
-        If wsSource.Cells(i, 14).value <> "VRAI" And _
-            wsSource.Cells(i, 12).value <> "VRAI" And _
-            wsSource.Cells(i, 10).value = "VRAI" Then
-                If wsSource.Cells(i, ftecDate).value <= wsDest.Range("H3").value Then
+        If wsSource.Cells(i, 14).Value <> "VRAI" And _
+            wsSource.Cells(i, 12).Value <> "VRAI" And _
+            wsSource.Cells(i, 10).Value = "VRAI" Then
+                If wsSource.Cells(i, ftecDate).Value <= wsDest.Range("H3").Value Then
                     'Get clients's name from MasterFile
                     Dim codeClient As String, nomClientFromMF As String
-                    codeClient = wsSource.Cells(i, ftecClient_ID).value
+                    codeClient = wsSource.Cells(i, ftecClient_ID).Value
                     nomClientFromMF = dictClients(codeClient)
                     
-                    wsDest.Cells(r, 1).value = wsSource.Cells(i, ftecCAR_ID).value
-                    wsDest.Cells(r, 2).value = wsSource.Cells(i, ftecProf_ID).value
-                    wsDest.Cells(r, 3).value = nomClientFromMF
-                    wsDest.Cells(r, 5).value = wsSource.Cells(i, ftecDate).value
-                    wsDest.Cells(r, 6).value = wsSource.Cells(i, ftecProf).value
-                    wsDest.Cells(r, 7).value = wsSource.Cells(i, ftecDescription).value
-                    wsDest.Cells(r, 8).value = wsSource.Cells(i, ftecHeures).value
+                    wsDest.Cells(r, 1).Value = wsSource.Cells(i, ftecCAR_ID).Value
+                    wsDest.Cells(r, 2).Value = wsSource.Cells(i, ftecProf_ID).Value
+                    wsDest.Cells(r, 3).Value = nomClientFromMF
+                    wsDest.Cells(r, 5).Value = wsSource.Cells(i, ftecDate).Value
+                    wsDest.Cells(r, 6).Value = wsSource.Cells(i, ftecProf).Value
+                    wsDest.Cells(r, 7).Value = wsSource.Cells(i, ftecDescription).Value
+                    wsDest.Cells(r, 8).Value = wsSource.Cells(i, ftecHeures).Value
                     wsDest.Cells(r, 8).NumberFormat = "#,##0.00"
-                    wsDest.Cells(r, 9).value = wsSource.Cells(i, ftecCommentaireNote).value
+                    wsDest.Cells(r, 9).Value = wsSource.Cells(i, ftecCommentaireNote).Value
                     r = r + 1
                 End If
         End If
@@ -507,7 +507,7 @@ Sub CAR_Sort_Group_And_Subtotal() '2024-08-29 @ 22:24
     
     'Change the format of all Client's Total rows
     For r = 6 To destLastUsedRow
-        If wsDest.Range("A" & r).value = "" Then
+        If wsDest.Range("A" & r).Value = "" Then
             With wsDest.Range("C" & r).Interior
                 .Pattern = xlSolid
                 .PatternColorIndex = xlAutomatic
@@ -520,11 +520,11 @@ Sub CAR_Sort_Group_And_Subtotal() '2024-08-29 @ 22:24
                 .TintAndShade = 0
             End With
             With wsDest.Range("C" & r)
-'                If InStr(.value, "Total ") = 1 Then
-'                    .value = Mid(.value, 7)
+'                If InStr(.Value, "Total ") = 1 Then
+'                    .Value = Mid(.Value, 7)
 '                End If
-                If .value = "Total général" Then
-                    .value = "G r a n d   T o t a l"
+                If .Value = "Total général" Then
+                    .Value = "G r a n d   T o t a l"
                 End If
             End With
         End If
@@ -604,7 +604,7 @@ Sub zApply_Conditional_Formatting_Alternate_On_Column_H(rng As Range, lastUsedRo
     'Loop each cell in column C to find Totals row
     Dim totalRange As Range, cell As Range
     For Each cell In rng
-        If InStr(1, cell.value, "Total ", vbTextCompare) > 0 Then
+        If InStr(1, cell.Value, "Total ", vbTextCompare) > 0 Then
             If totalRange Is Nothing Then
                 Set totalRange = ws.Cells(cell.Row, 8) 'Column H
             Else
@@ -671,11 +671,11 @@ Sub zBuild_Hours_Summary(rowSelected As Long)
     saveR = rowSelected
     i = rowSelected
     Do Until Cells(i, 5) = ""
-        If Cells(i, 6).value <> "" Then
-            If dictHours.Exists(Cells(i, 6).value) Then
-                dictHours(Cells(i, 6).value) = dictHours(Cells(i, 6).value) + Cells(i, 8).value
+        If Cells(i, 6).Value <> "" Then
+            If dictHours.Exists(Cells(i, 6).Value) Then
+                dictHours(Cells(i, 6).Value) = dictHours(Cells(i, 6).Value) + Cells(i, 8).Value
             Else
-                dictHours.add Cells(i, 6).value, Cells(i, 8).value
+                dictHours.add Cells(i, 6).Value, Cells(i, 8).Value
             End If
         End If
         i = i + 1
@@ -687,17 +687,17 @@ Sub zBuild_Hours_Summary(rowSelected As Long)
     
     Application.EnableEvents = False
     
-    ws.Range("O" & rowSelected).value = 0 'Reset the total WIP value
+    ws.Range("O" & rowSelected).Value = 0 'Reset the total WIP value
     For Each prof In Fn_Sort_Dictionary_By_Value(dictHours, True) ' Sort dictionary by hours in descending order
-        Cells(rowSelected, 10).value = prof
+        Cells(rowSelected, 10).Value = prof
         Dim strProf As String
         strProf = prof
         profID = Fn_GetID_From_Initials(strProf)
         Cells(rowSelected, 11).HorizontalAlignment = xlRight
         Cells(rowSelected, 11).NumberFormat = "#,##0.00"
-        Cells(rowSelected, 11).value = dictHours(prof)
-        tauxHoraire = Fn_Get_Hourly_Rate(profID, ws.Range("H3").value)
-        Cells(rowSelected, 12).value = tauxHoraire
+        Cells(rowSelected, 11).Value = dictHours(prof)
+        tauxHoraire = Fn_Get_Hourly_Rate(profID, ws.Range("H3").Value)
+        Cells(rowSelected, 12).Value = tauxHoraire
         Cells(rowSelected, 13).NumberFormat = "#,##0.00$"
         Cells(rowSelected, 13).FormulaR1C1 = "=RC[-2]*RC[-1]"
         Cells(rowSelected, 13).HorizontalAlignment = xlRight
@@ -717,14 +717,14 @@ Sub zBuild_Hours_Summary(rowSelected As Long)
     With Cells(rTotal, 11)
         .HorizontalAlignment = xlRight
         .FormulaR1C1 = "=SUM(R" & saveR & "C:R[-1]C)"
-'        .value = Format(t, "#,##0.00")
+'        .Value = Format(t, "#,##0.00")
         .Font.Bold = True
     End With
     
     'Fees Total
     With Cells(rowSelected, 13)
         .HorizontalAlignment = xlRight
-'        .value = Format(tdollars, "#,##0.00$")
+'        .Value = Format(tdollars, "#,##0.00$")
         .FormulaR1C1 = "=SUM(R" & saveR & "C:R[-1]C)"
         .Font.Bold = True
     End With
@@ -748,14 +748,14 @@ Sub zBuild_Hours_Summary(rowSelected As Long)
 
     'Save the TOTAL WIP value
     With ws.Range("N" & saveR)
-        .value = "Valeur TEC:"
+        .Value = "Valeur TEC:"
         .Font.Italic = True
         .Font.Bold = True
         .HorizontalAlignment = xlRight
     End With
     With ws.Range("O" & saveR)
         .NumberFormat = "#,##0.00 $"
-        .value = ws.Range("M" & rowSelected).value
+        .Value = ws.Range("M" & rowSelected).Value
         .Font.Bold = True
         .HorizontalAlignment = xlRight
     End With
@@ -798,10 +798,10 @@ Sub zBring_In_Existing_Invoice_Requests(activeLastUsedRow As Long)
     Dim result As Variant
     Dim i As Long, r As Long
     For i = 2 To sourceLastUsedRow
-        If wsSource.Cells(i, 26).value <> "True" Then
-            clientName = wsSource.Cells(i, 2).value
-            clientID = wsSource.Cells(i, 3).value
-            honoTotal = wsSource.Cells(i, 5).value
+        If wsSource.Cells(i, 26).Value <> "True" Then
+            clientName = wsSource.Cells(i, 2).Value
+            clientID = wsSource.Cells(i, 3).Value
+            honoTotal = wsSource.Cells(i, 5).Value
             'Using XLOOKUP to find the result directly
             result = Application.WorksheetFunction.XLookup("Total " & clientName, _
                                                            rngTotal, _
@@ -812,7 +812,7 @@ Sub zBring_In_Existing_Invoice_Requests(activeLastUsedRow As Long)
             
             If result <> "Not Found" Then
                 r = Application.WorksheetFunction.Match(result, rngTotal, 0)
-                wsActive.Cells(r, 4).value = honoTotal
+                wsActive.Cells(r, 4).Value = honoTotal
                 wsActive.Cells(r, 4).NumberFormat = "#,##0.00 $"
             End If
         End If
@@ -827,7 +827,7 @@ Sub zFAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As 
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Projets_Détails"
     
@@ -845,11 +845,11 @@ Sub zFAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As 
 
     'Get the maximum value
     Dim MaxValue As Long
-    If IsNull(rs.Fields("MaxValue").value) Then
+    If IsNull(rs.Fields("MaxValue").Value) Then
         'Handle empty table (assign a default value, e.g., 1)
         projetID = 1
     Else
-        projetID = rs.Fields("MaxValue").value + 1
+        projetID = rs.Fields("MaxValue").Value + 1
     End If
     
     'Close the previous recordset (no longer needed)
@@ -865,18 +865,18 @@ Sub zFAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As 
     For l = fr To lr
         rs.AddNew
             'Add fields to the recordset before updating it
-            rs.Fields("ProjetID").value = projetID
-            rs.Fields("NomClient").value = wshCAR_Liste_Agée.Range("C" & l).value
-            rs.Fields("ClientID").value = clientID
-            rs.Fields("TECID").value = wshCAR_Liste_Agée.Range("A" & l).value
-            rs.Fields("ProfID").value = wshCAR_Liste_Agée.Range("B" & l).value
-            dateTEC = Format$(wshCAR_Liste_Agée.Range("E" & l).value, "dd/mm/yyyy")
-            rs.Fields("Date").value = dateTEC
-            rs.Fields("Prof").value = wshCAR_Liste_Agée.Range("F" & l).value
+            rs.Fields("ProjetID").Value = projetID
+            rs.Fields("NomClient").Value = wshCAR_Liste_Agée.Range("C" & l).Value
+            rs.Fields("ClientID").Value = clientID
+            rs.Fields("TECID").Value = wshCAR_Liste_Agée.Range("A" & l).Value
+            rs.Fields("ProfID").Value = wshCAR_Liste_Agée.Range("B" & l).Value
+            dateTEC = Format$(wshCAR_Liste_Agée.Range("E" & l).Value, "dd/mm/yyyy")
+            rs.Fields("Date").Value = dateTEC
+            rs.Fields("Prof").Value = wshCAR_Liste_Agée.Range("F" & l).Value
             rs.Fields("estDetruite") = 0 'Faux
-            rs.Fields("Heures").value = CDbl(wshCAR_Liste_Agée.Range("H" & l).value)
+            rs.Fields("Heures").Value = CDbl(wshCAR_Liste_Agée.Range("H" & l).Value)
             TimeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
-            rs.Fields("TimeStamp").value = TimeStamp
+            rs.Fields("TimeStamp").Value = TimeStamp
         rs.update
     Next l
     
@@ -913,18 +913,18 @@ Sub zFAC_Projets_Détails_Add_Record_Locally(clientID As String, fr As Long, lr A
     Dim dateTEC As String, TimeStamp As String
     Dim i As Long
     For i = fr To lr
-        wshFAC_Projets_Détails.Range("A" & rn).value = projetID
-        wshFAC_Projets_Détails.Range("B" & rn).value = wshCAR_Liste_Agée.Range("C" & i).value
-        wshFAC_Projets_Détails.Range("C" & rn).value = clientID
-        wshFAC_Projets_Détails.Range("D" & rn).value = wshCAR_Liste_Agée.Range("A" & i).value
-        wshFAC_Projets_Détails.Range("E" & rn).value = wshCAR_Liste_Agée.Range("B" & i).value
-        dateTEC = Format$(wshCAR_Liste_Agée.Range("E" & i).value, "dd/mm/yyyy")
-        wshFAC_Projets_Détails.Range("F" & rn).value = dateTEC
-        wshFAC_Projets_Détails.Range("G" & rn).value = wshCAR_Liste_Agée.Range("F" & i).value
-        wshFAC_Projets_Détails.Range("H" & rn).value = wshCAR_Liste_Agée.Range("H" & i).value
-        wshFAC_Projets_Détails.Range("I" & rn).value = "FAUX"
+        wshFAC_Projets_Détails.Range("A" & rn).Value = projetID
+        wshFAC_Projets_Détails.Range("B" & rn).Value = wshCAR_Liste_Agée.Range("C" & i).Value
+        wshFAC_Projets_Détails.Range("C" & rn).Value = clientID
+        wshFAC_Projets_Détails.Range("D" & rn).Value = wshCAR_Liste_Agée.Range("A" & i).Value
+        wshFAC_Projets_Détails.Range("E" & rn).Value = wshCAR_Liste_Agée.Range("B" & i).Value
+        dateTEC = Format$(wshCAR_Liste_Agée.Range("E" & i).Value, "dd/mm/yyyy")
+        wshFAC_Projets_Détails.Range("F" & rn).Value = dateTEC
+        wshFAC_Projets_Détails.Range("G" & rn).Value = wshCAR_Liste_Agée.Range("F" & i).Value
+        wshFAC_Projets_Détails.Range("H" & rn).Value = wshCAR_Liste_Agée.Range("H" & i).Value
+        wshFAC_Projets_Détails.Range("I" & rn).Value = "FAUX"
         TimeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
-        wshFAC_Projets_Détails.Range("J" & rn).value = TimeStamp
+        wshFAC_Projets_Détails.Range("J" & rn).Value = TimeStamp
         rn = rn + 1
     Next i
     
@@ -966,7 +966,7 @@ Sub zFAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Projets_Entête"
     
@@ -985,20 +985,20 @@ Sub zFAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
     Dim l As Long
     rs.AddNew
         'Add fields to the recordset before updating it
-        rs.Fields("ProjetID").value = projetID
-        rs.Fields("NomClient").value = nomClient
-        rs.Fields("ClientID").value = clientID
-        rs.Fields("Date").value = dte
-        rs.Fields("HonoTotal").value = hono
+        rs.Fields("ProjetID").Value = projetID
+        rs.Fields("NomClient").Value = nomClient
+        rs.Fields("ClientID").Value = clientID
+        rs.Fields("Date").Value = dte
+        rs.Fields("HonoTotal").Value = hono
         For c = 1 To UBound(arr, 1)
-            rs.Fields("Prof" & c).value = arr(c, 1)
-            rs.Fields("Hres" & c).value = arr(c, 2)
-            rs.Fields("TauxH" & c).value = arr(c, 3)
-            rs.Fields("Hono" & c).value = arr(c, 4)
+            rs.Fields("Prof" & c).Value = arr(c, 1)
+            rs.Fields("Hres" & c).Value = arr(c, 2)
+            rs.Fields("TauxH" & c).Value = arr(c, 3)
+            rs.Fields("Hono" & c).Value = arr(c, 4)
         Next c
-        rs.Fields("estDétruite").value = 0 'Faux
+        rs.Fields("estDétruite").Value = 0 'Faux
         TimeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
-        rs.Fields("TimeStamp").value = TimeStamp
+        rs.Fields("TimeStamp").Value = TimeStamp
     rs.update
     
     'Close recordset and connection
@@ -1032,21 +1032,21 @@ Sub zFAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String
     rn = lastUsedRow + 1
     
     Dim dateTEC As String, TimeStamp As String
-    wshFAC_Projets_Entête.Range("A" & rn).value = projetID
-    wshFAC_Projets_Entête.Range("B" & rn).value = nomClient
-    wshFAC_Projets_Entête.Range("C" & rn).value = clientID
-    wshFAC_Projets_Entête.Range("D" & rn).value = dte
-    wshFAC_Projets_Entête.Range("E" & rn).value = hono
+    wshFAC_Projets_Entête.Range("A" & rn).Value = projetID
+    wshFAC_Projets_Entête.Range("B" & rn).Value = nomClient
+    wshFAC_Projets_Entête.Range("C" & rn).Value = clientID
+    wshFAC_Projets_Entête.Range("D" & rn).Value = dte
+    wshFAC_Projets_Entête.Range("E" & rn).Value = hono
     'Assign values from the array to the worksheet using .Cells
     Dim i As Long, j As Long
     For i = 1 To UBound(arr, 1)
         For j = 1 To UBound(arr, 2)
-            wshFAC_Projets_Entête.Cells(rn, 6 + (i - 1) * UBound(arr, 2) + j - 1).value = arr(i, j)
+            wshFAC_Projets_Entête.Cells(rn, 6 + (i - 1) * UBound(arr, 2) + j - 1).Value = arr(i, j)
         Next j
     Next i
-    wshFAC_Projets_Entête.Range("Z" & rn).value = "FAUX"
+    wshFAC_Projets_Entête.Range("Z" & rn).Value = "FAUX"
     TimeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
-    wshFAC_Projets_Entête.Range("AA" & rn).value = TimeStamp
+    wshFAC_Projets_Entête.Range("AA" & rn).Value = TimeStamp
     
     Call Log_Record("modCAR_Analyse:FAC_Projet_Entête_Add_Record_Locally()", startTime)
 
@@ -1125,7 +1125,7 @@ Sub zGroups_SubTotals_Collapse_A_Client(r As Long)
     'Loop through each row starting at row r
     Dim saveR As Long
     saveR = r
-    Do While wshCAR_Liste_Agée.Range("A" & r).value <> ""
+    Do While wshCAR_Liste_Agée.Range("A" & r).Value <> ""
         r = r + 1
     Loop
 

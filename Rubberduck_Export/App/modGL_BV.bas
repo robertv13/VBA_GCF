@@ -615,8 +615,8 @@ Sub wshGL_BV_Adjust_The_Shape()
     Dim i As Long, maxLength As Long
     With wshGL_Trans
         For i = 2 To lastResultRow
-'                If Len(.Range("AD2").value) > maxLength Then
-'                    maxLength = Len(.Range("AD2").value)
+'                If Len(.Range("AD2").Value) > maxLength Then
+'                    maxLength = Len(.Range("AD2").Value)
 '                End If
             If i = 2 Then
                 texteFull = "Entrée #: " & .Range("AC2").Value & vbCrLf

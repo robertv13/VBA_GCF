@@ -8,7 +8,6 @@ Public GLEntryNo As Long
 Private Sub Worksheet_Activate()
 
     If fromMenu = False Then
-        Debug.Print "#007 - wshENC_Saisie_Worksheet_Activate - Je ne viens pas du menu"
         Exit Sub
     End If
     
@@ -33,6 +32,7 @@ Private Sub Worksheet_Activate()
     
     Me.Application.Calculation = xlCalculationAutomatic
     
+    'S'assurer que les colonnes A & B sont masquées
     On Error Resume Next
     Me.Columns("A:B").Hidden = True
     On Error GoTo 0
@@ -69,7 +69,7 @@ Private Sub Worksheet_Activate()
     Call AjusteLibelléEncaissement("Banque")
     
     With ws
-        .Range("K5").Value = Format$(Date, wshAdmin.Range("B1").Value)
+        .Range("K5").value = Format$(Date, wshAdmin.Range("B1").value)
         .Range("B1").Select
     End With
 
@@ -146,15 +146,15 @@ Private Sub Worksheet_Change(ByVal target As Range)
     
     'On Customer Change and only on new payments
     If Not Intersect(target, Me.Range("F5")) Is Nothing And _
-        Me.Range("F5").Value <> Empty And _
-        Me.Range("B6").Value = "" Then
+        Me.Range("F5").value <> Empty And _
+        Me.Range("B6").value = "" Then
         'Aller chercher le vrai nom du client
         Dim allCols As Variant
-        allCols = Fn_Get_A_Row_From_A_Worksheet("BD_Clients", target.Value, fClntFMNomClientPlusNomClientSystème)
+        allCols = Fn_Get_A_Row_From_A_Worksheet("BD_Clients", target.value, fClntFMNomClientPlusNomClientSystème)
         'Vérifier les résultats
         If IsArray(allCols) Then
             Application.EnableEvents = False
-            target.Value = allCols(1)
+            target.value = allCols(1)
             Application.EnableEvents = True
         Else
             MsgBox "Valeur non trouvée !!!", vbCritical
@@ -171,7 +171,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
         Application.EnableEvents = False
         fullDate = Fn_Complete_Date(target.Text, 30, 0)
         If fullDate <> "Invalid Date" Then
-            target.Value = Format$(fullDate, wshAdmin.Range("B1").Value)
+            target.value = Format$(fullDate, wshAdmin.Range("B1").value)
         Else
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshENC_Saisie_115")
             target.ClearContents
@@ -184,7 +184,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
     
     'Type a changé
     If Not Intersect(target, Me.Range("F7")) Is Nothing Then
-        Call AjusteLibelléEncaissement(target.Value)
+        Call AjusteLibelléEncaissement(target.value)
     End If
     
 End Sub

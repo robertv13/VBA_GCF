@@ -2,14 +2,9 @@ Attribute VB_Name = "modAppli"
 Option Explicit
 
 #If VBA7 Then
-    'Déclaration pour les environnements 64 bits
-'    Private Declare PtrSafe Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
-'    Private Declare PtrSafe Function GetKeyboardState Lib "user32" (pbKeyState As Byte) As Long
-'    Private Declare PtrSafe Sub keybd_event Lib "user32" (ByVal bVk As Byte, ByVal bScan As Byte, ByVal dwFlags As Long, ByVal dwExtraInfo As Long)
+    Declare PtrSafe Function GetSystemMetrics Lib "user32" (ByVal nIndex As Long) As Long
 #Else
-    '32-bit Excel (anciennes versions)
-'    Private Declare Function GetKeyState Lib "user32" (ByVal nVirtKey As Long) As Integer
-'    Declare Sub keybd_event Lib "user32" (ByVal bVk As Byte, ByVal bScan As Byte, ByVal dwFlags As Long, ByVal dwExtraInfo As Long)
+    Declare Function GetSystemMetrics Lib "user32" (ByVal nIndex As Long) As Long
 #End If
 
 Public Const DATA_PATH As String = "\DataFiles"

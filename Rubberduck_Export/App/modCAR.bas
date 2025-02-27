@@ -31,24 +31,24 @@ Sub CAR_Update_TdB_Data()
     Dim i As Long
     For i = 3 To lastUsedRow
         With wsSource
-'            If .Range("J" & i).value <> 0 Then
-                arr(i - 2, 1) = .Range("A" & i).value 'Invoice_No
-                arr(i - 2, 2) = .Range("B" & i).value 'Invoice_Date
-                arr(i - 2, 3) = .Range("C" & i).value 'ClientsName
-                arr(i - 2, 4) = .Range("D" & i).value 'ClientsCode
-                arr(i - 2, 5) = .Range("G" & i).value 'DueDate
-                arr(i - 2, 6) = .Range("J" & i).value 'Balance
+'            If .Range("J" & i).Value <> 0 Then
+                arr(i - 2, 1) = .Range("A" & i).Value 'Invoice_No
+                arr(i - 2, 2) = .Range("B" & i).Value 'Invoice_Date
+                arr(i - 2, 3) = .Range("C" & i).Value 'ClientsName
+                arr(i - 2, 4) = .Range("D" & i).Value 'ClientsCode
+                arr(i - 2, 5) = .Range("G" & i).Value 'DueDate
+                arr(i - 2, 6) = .Range("J" & i).Value 'Balance
 '            End If
         End With
     Next i
 
     Dim rngTarget As Range: Set rngTarget = wshCAR_TDB_Data.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2))
-    rngTarget.value = arr
+    rngTarget.Value = arr
     
     'Remove rows, when Balance = 0 $
     lastUsedRowTarget = wsTarget.Cells(wsTarget.rows.count, "A").End(xlUp).Row
     For i = lastUsedRowTarget To 2 Step -1
-        If wsTarget.Cells(i, 6).value = 0 Then
+        If wsTarget.Cells(i, 6).Value = 0 Then
             wsTarget.rows(i).delete
         End If
     Next i

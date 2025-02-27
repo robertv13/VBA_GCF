@@ -186,8 +186,8 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
                 .TintAndShade = 0
             End With
             With wsDest.Range("C" & r)
-'                If InStr(.value, "Total ") = 1 Then
-'                    .value = Mid(.value, 7)
+'                If InStr(.Value, "Total ") = 1 Then
+'                    .Value = Mid(.Value, 7)
 '                End If
                 If .Value = "Total général" Then
                     .Value = "G r a n d   T o t a l"
@@ -367,14 +367,14 @@ Sub Build_Hours_Summary(rowSelected As Long)
     With Cells(rTotal, "K")
         .HorizontalAlignment = xlRight
         .FormulaR1C1 = "=SUM(R" & saveR & "C:R[-1]C)"
-'        .value = Format(t, "#,##0.00")
+'        .Value = Format(t, "#,##0.00")
         .Font.Bold = True
     End With
     
     'Fees Total
     With Cells(rowSelected, "M")
         .HorizontalAlignment = xlRight
-'        .value = Format(tdollars, "#,##0.00$")
+'        .Value = Format(tdollars, "#,##0.00$")
         .FormulaR1C1 = "=SUM(R" & saveR & "C:R[-1]C)"
         .Font.Bold = True
     End With

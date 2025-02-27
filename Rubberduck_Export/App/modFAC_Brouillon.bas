@@ -49,7 +49,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
             .Range("B20").Value = ""
             .Range("B24").Value = False
             .Range("B26").Value = False
-'            .Range("B27").value = True
+'            .Range("B27").Value = True
             .Range("B51, B52, B53, B54").Value = "" 'Requests for invoice
             .Range("R44:T48").ClearContents 'Hours & Fees summary from request for invoice
             Application.EnableEvents = True
@@ -175,7 +175,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
             
             'Utilisation de la date du projet de facture
             wshFAC_Brouillon.Range("O3").Value = Format$(Date, wshAdmin.Range("B1").Value)
-'            Debug.Print "#052 - FAC_Brouillon_New_Invoice_142   wshFAC_Brouillon.Range(""O3"").value = "; wshFAC_Brouillon.Range("O3").value; "   "; TypeName(wshFAC_Brouillon.Range("O3").value)
+'            Debug.Print "#052 - FAC_Brouillon_New_Invoice_142   wshFAC_Brouillon.Range(""O3"").Value = "; wshFAC_Brouillon.Range("O3").Value; "   "; TypeName(wshFAC_Brouillon.Range("O3").Value)
             Call FAC_Brouillon_Date_Change(wshFAC_Brouillon.Range("O3").Value)
             
             wshFAC_Brouillon.Range("O9").Select
@@ -771,11 +771,11 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.listBox1.Clear
+        ufFraisDivers.ListBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.listBox1.AddItem item
+            ufFraisDivers.ListBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless
@@ -1303,7 +1303,7 @@ End Sub
 '    MsgBox "Il y a un dépôt de client de disponible de " & Format$(soldeDisponible, "###,##0.00 $") & vbNewLine & vbNewLine & _
 '            "Le total de la facture est de " & Format$(soldeFacture, "###,##0.00 $"), vbInformation
 '
-'    wshFAC_Brouillon.Range("O57").value = WorksheetFunction.Min(soldeDisponible, soldeFacture)
+'    wshFAC_Brouillon.Range("O57").Value = WorksheetFunction.Min(soldeDisponible, soldeFacture)
 '
 ''    Application.EnableEvents = True
 '

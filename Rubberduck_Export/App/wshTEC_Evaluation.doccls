@@ -37,13 +37,13 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
     
     With ws
         .Range("A:B").EntireColumn.Hidden = True
-        .Range("D3").Value = ""
+        .Range("D3").value = ""
         .Range("D6:L28").Clear
         .Shapes("Impression").Visible = False
         .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
         Application.EnableEvents = False
-        .Range("L3").Value = ""
+        .Range("L3").value = ""
         With .Range("H6:H28").Interior
             .Pattern = xlNone
             .TintAndShade = 0
@@ -95,7 +95,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
         Application.EnableEvents = False
         fullDate = Fn_Complete_Date(target.Text, 99, 0)
         If fullDate <> "Invalid Date" Then
-            target.Value = Format$(fullDate, wshAdmin.Range("B1").Value)
+            target.value = Format$(fullDate, wshAdmin.Range("B1").value)
         Else
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshTEC_Evaluation_75")
             Application.EnableEvents = False
@@ -105,7 +105,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
         End If
        
         'Future date ?
-        If CDate(Range("L3").Value) > Format$(Date, "dd/mm/yyyy") Then
+        If CDate(Range("L3").value) > Format$(Date, "dd/mm/yyyy") Then
             If MsgBox("Il n'est pas permis d'utiliser une date dans le futur !", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
                 Application.EnableEvents = False
                 target.ClearContents
@@ -113,7 +113,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
                 Application.Goto Range(target.Address)
             End If
         Else
-            Call TEC_Evaluation_Procedure(target.Value)
+            Call TEC_Evaluation_Procedure(target.value)
         End If
         GoTo ExitSub
     End If

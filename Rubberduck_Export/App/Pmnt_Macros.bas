@@ -18,44 +18,44 @@ Sub Payment_CustomerPmntsRefresh()
             .Apply
         End With
 SkipSort:
-        Payments.Range("D13:G" & LastResultRow + 10).value = .Range("M3:P" & LastResultRow).value
+        Payments.Range("D13:G" & LastResultRow + 10).Value = .Range("M3:P" & LastResultRow).Value
     End With
 End Sub
 
 Sub Payment_SaveUpdate()
     With Payments
-        If .Range("B5").value = Empty Then       'Incorrect / Missing Invoice #
+        If .Range("B5").Value = Empty Then       'Incorrect / Missing Invoice #
             MsgBox "Please select a correct Invoice #"
             Exit Sub
         End If
-        InvRow = .Range("B5").value              'Invoice Row
-        If .Range("H3").value = Empty Or .Range("H7").value = Empty Then 'Empty Fields
+        InvRow = .Range("B5").Value              'Invoice Row
+        If .Range("H3").Value = Empty Or .Range("H7").Value = Empty Then 'Empty Fields
             MsgBox "Please make sure to add in a Payment Date and Payment Amount"
             Exit Sub
         End If
     
-        If .Range("H8").value < 0 Then
+        If .Range("H8").Value < 0 Then
             If MsgBox("The Payment Amount is above the Invoice Balance. Are you sure you want to continue?", vbYesNo, "Payment Amount Issue") = vbNo Then Exit Sub
         End If
     
-        If .Range("B3").value = Empty Then       'New Payment
+        If .Range("B3").Value = Empty Then       'New Payment
             PmntRow = PmntsDB.Range("A99999").End(xlUp).row + 1
-            .Range("B2").value = .Range("B4").value 'Next Pment ID
-            PmntsDB.Range("A" & PmntRow).value = .Range("B4").value 'Next Payment ID
+            .Range("B2").Value = .Range("B4").Value 'Next Pment ID
+            PmntsDB.Range("A" & PmntRow).Value = .Range("B4").Value 'Next Payment ID
         Else                                     'Existing Payment
-            PmntRow = .Range("B3").value         'Payment Row
+            PmntRow = .Range("B3").Value         'Payment Row
         End If
-        PmntsDB.Range("B" & PmntRow).value = .Range("H3").value 'Date
-        PmntsDB.Range("C" & PmntRow).value = .Range("D5").value 'Customer
-        PmntsDB.Range("D" & PmntRow).value = .Range("E3").value 'Invoice #
-        PmntsDB.Range("E" & PmntRow).value = .Range("H7").value 'Amount
-        PmntsDB.Range("F" & PmntRow).value = .Range("E9").value 'Notes
+        PmntsDB.Range("B" & PmntRow).Value = .Range("H3").Value 'Date
+        PmntsDB.Range("C" & PmntRow).Value = .Range("D5").Value 'Customer
+        PmntsDB.Range("D" & PmntRow).Value = .Range("E3").Value 'Invoice #
+        PmntsDB.Range("E" & PmntRow).Value = .Range("H7").Value 'Amount
+        PmntsDB.Range("F" & PmntRow).Value = .Range("E9").Value 'Notes
     
         'Update invoice Paid Status
-        If .Range("H8").value = 0 Then           'Paid
-            InvoiceList.Range("D" & InvRow).value = Admin.Range("C10").value 'Fully Paid
+        If .Range("H8").Value = 0 Then           'Paid
+            InvoiceList.Range("D" & InvRow).Value = Admin.Range("C10").Value 'Fully Paid
         Else                                     ' Partial Paid
-            InvoiceList.Range("D" & InvRow).value = Admin.Range("C9").value 'Partially Paid
+            InvoiceList.Range("D" & InvRow).Value = Admin.Range("C9").Value 'Partially Paid
         End If
     
     End With
@@ -87,29 +87,29 @@ End Sub
 Sub Payment_Load()
     With Payments
         .Range("E3,H7,D5:D7,E9:H9,D13:H999").ClearContents
-        If .Range("B3").value = Empty Then
+        If .Range("B3").Value = Empty Then
             MsgBox "Please select a correct payment"
             Exit Sub
         End If
-        PmntRow = .Range("B3").value             'Payment Row
-        .Range("H3").value = PmntsDB.Range("B" & PmntRow).value 'Date
-        .Range("D5").value = PmntsDB.Range("C" & PmntRow).value 'Customer
-        .Range("E3").value = PmntsDB.Range("D" & PmntRow).value 'Invoice #
-        .Range("H7").value = PmntsDB.Range("E" & PmntRow).value 'Amount
-        .Range("E9").value = PmntsDB.Range("F" & PmntRow).value 'Notes
-        If .Range("B6").value <> "" Then Payment_CustomerPmntsRefresh 'Load Previous Customer Payments
+        PmntRow = .Range("B3").Value             'Payment Row
+        .Range("H3").Value = PmntsDB.Range("B" & PmntRow).Value 'Date
+        .Range("D5").Value = PmntsDB.Range("C" & PmntRow).Value 'Customer
+        .Range("E3").Value = PmntsDB.Range("D" & PmntRow).Value 'Invoice #
+        .Range("H7").Value = PmntsDB.Range("E" & PmntRow).Value 'Amount
+        .Range("E9").Value = PmntsDB.Range("F" & PmntRow).Value 'Notes
+        If .Range("B6").Value <> "" Then Payment_CustomerPmntsRefresh 'Load Previous Customer Payments
     End With
 End Sub
 
 Sub Payment_Prev()
     With Payments
-        PmntID = .Range("B2").value              'Payment ID
+        PmntID = .Range("B2").Value              'Payment ID
         If PmntID = 0 Then                       'No Current ID
-            If .Range("B4").value = 1 Then       'No Saved Payments
+            If .Range("B4").Value = 1 Then       'No Saved Payments
                 MsgBox "Please save any Payments first before navigating to previously saved"
                 Exit Sub
             End If
-            .Range("B2").value = .Range("B4").value - 1 'Set Pmnt. ID to the last one created
+            .Range("B2").Value = .Range("B4").Value - 1 'Set Pmnt. ID to the last one created
             Payment_Load
             Exit Sub
         End If
@@ -117,28 +117,28 @@ Sub Payment_Prev()
             MsgBox "You are are already at the first Payment created"
             Exit Sub
         End If
-        .Range("B2").value = .Range("B2").value - 1 'Set Previous Payment ID
+        .Range("B2").Value = .Range("B2").Value - 1 'Set Previous Payment ID
         Payment_Load
     End With
 End Sub
 
 Sub Payment_Next()
     With Payments
-        PmntID = .Range("B2").value              'Payment ID
+        PmntID = .Range("B2").Value              'Payment ID
         If PmntID = 0 Then                       'No Current ID
-            If .Range("B4").value = 1 Then       'No Saved Payments
+            If .Range("B4").Value = 1 Then       'No Saved Payments
                 MsgBox "Please save any Payments first before navigating to previously saved"
                 Exit Sub
             End If
-            .Range("B2").value = 1               'Set Pmnt. ID to the first one created
+            .Range("B2").Value = 1               'Set Pmnt. ID to the first one created
             Payment_Load
             Exit Sub
         End If
-        If PmntID = .Range("B4").value - 1 Then
+        If PmntID = .Range("B4").Value - 1 Then
             MsgBox "You are are already at the last Payment created"
             Exit Sub
         End If
-        .Range("B2").value = .Range("B2").value + 1 'Set next Payment ID
+        .Range("B2").Value = .Range("B2").Value + 1 'Set next Payment ID
         Payment_Load
     End With
 End Sub
@@ -146,8 +146,8 @@ End Sub
 Sub Payment_Delete()
     If MsgBox("Are you sure you want to delete this Payment?", vbYesNo, "Delete Payment") = vbNo Then Exit Sub
     With Payments
-        If .Range("B3").value = Empty Then GoTo NotSaved
-        PmntRow = .Range("B3").value             'Payment Row
+        If .Range("B3").Value = Empty Then GoTo NotSaved
+        PmntRow = .Range("B3").Value             'Payment Row
         PmntsDB.Range(PmntRow & ":" & PmntRow).EntireRow.Delete 'Delete Payment Row
 NotSaved:
         Payment_New

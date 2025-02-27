@@ -5,8 +5,6 @@ Option Explicit
 Dim verificationIntegriteOK As Boolean
 Dim soldeComptesClients As Currency
 
-'@Folder("")
-
 Public Sub ConvertRangeBooleanToText(rng As Range)
 
     Dim cell As Range
@@ -1213,7 +1211,7 @@ Private Sub checkDEB_Trans(ByRef r As Long, ByRef readRows As Long)
             isDebTransValid = False
         End If
         
-        If IsDate(arr(i, 2)) = False Or arr(i, 2) <> Int(arr(i, 2)) Or arr(i, 2) > Date Then
+        If IsDate(arr(i, 2)) = False Or arr(i, 2) <> Int(arr(i, 2)) Or arr(i, 2) > Date + 10 Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la date '" & arr(i, 2) & "' est INVALIDE")
             r = r + 1
             isDebTransValid = False
@@ -2557,7 +2555,7 @@ Private Sub checkGL_Trans(ByRef r As Long, ByRef readRows As Long)
     arr = ws.Range("A1").CurrentRegion.offset(1, 0).Resize(numRows, ws.Range("A1").CurrentRegion.Columns.count).Value
     
     Dim dict_GL_Entry As New Dictionary
-    Dim sum_arr() As Double
+    Dim sum_arr() As Currency
     ReDim sum_arr(1 To 2500, 1 To 3)
     
     'Array pointer
@@ -2579,7 +2577,7 @@ Private Sub checkGL_Trans(ByRef r As Long, ByRef readRows As Long)
             sum_arr(row, 1) = GL_Entry_No
             row = row + 1
         End If
-        If IsDate(arr(i, 2)) = False Or arr(i, 2) > Date Then
+        If IsDate(arr(i, 2)) = False Or arr(i, 2) > Date + 10 Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** L'écriture #  " & GL_Entry_No & " ' à la ligne " & i & " a une date INVALIDE '" & arr(i, 2) & "'")
             r = r + 1
             isGLTransValid = False
@@ -2627,6 +2625,9 @@ Private Sub checkGL_Trans(ByRef r As Long, ByRef readRows As Long)
                 isGLTransValid = False
             End If
         End If
+'        If arr(i, 1) = 1028 Or arr(i, 1) = 1030 Then
+'            Debug.Print "#001 - ", arr(i, 1), arr(i, 2), arr(i, 7), arr(i, 8), sum_arr(currentRow, 2), sum_arr(currentRow, 3)
+'        End If
     Next i
     
     Dim sum_dt As Currency, sum_ct As Currency
@@ -2637,7 +2638,7 @@ Private Sub checkGL_Trans(ByRef r As Long, ByRef readRows As Long)
         dt = Round(sum_arr(v, 2), 2)
         ct = Round(sum_arr(v, 3), 2)
         If dt <> ct Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Écriture # " & v & " ne balance pas... Dt = " & Format$(dt, "###,###,##0.00") & " et Ct = " & Format$(ct, "###,###,##0.00"))
+            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Écriture # " & GL_Entry_No & " ne balance pas... Dt = " & Format$(dt, "###,###,##0.00") & " et Ct = " & Format$(ct, "###,###,##0.00"))
             r = r + 1
             isGLTransValid = False
             cas_hors_balance = cas_hors_balance + 1
@@ -2652,7 +2653,7 @@ Private Sub checkGL_Trans(ByRef r As Long, ByRef readRows As Long)
     'Add number of rows processed (read)
     readRows = readRows + UBound(arr, 1) - HeaderRow
     
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "       Un total de " & dict_GL_Entry.count & " écritures ont été analysées")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Un total de " & dict_GL_Entry.count & " écritures ont été analysées")
     r = r + 1
     
     If cas_hors_balance = 0 Then
@@ -3128,7 +3129,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 4303 'What is the last TECID analyzed ?
+    lastTECIDReported = 4453 'What is the last TECID analyzed ?
     
     'Feuille contenant les données à analyser
     Dim HeaderRow As Long: HeaderRow = 2
@@ -3844,13 +3845,14 @@ Sub ApplyWorksheetFormat(ws As Worksheet, rng As Range, HeaderRow As Long)
                         .Range(ws.Cells(2, fDebTAutreRemarque), ws.Cells(lastUsedRow, fDebTAutreRemarque)) _
                         )
                     If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlLeft
-                    .Range(.Cells(2, fDebTNoEntrée), .Cells(lastUsedRow, fDebTTimeStamp)).HorizontalAlignment = xlCenter
+                    .Range(.Cells(2, fDebTNoEntrée), .Cells(lastUsedRow, fDebTDate)).HorizontalAlignment = xlCenter
                     .Range(.Cells(2, fDebTDate), .Cells(lastUsedRow, fDebTDate)).NumberFormat = "yyyy-mm-dd"
                     'Appliquer l'alignement à gauche sur les plages combinées
                     With .Range(.Cells(2, fDebTTotal), .Cells(lastUsedRow, fDebTDépense))
                         .HorizontalAlignment = xlRight
                         .NumberFormat = "#,##0.00"
                     End With
+                    .Range(.Cells(2, fDebTTimeStamp), .Cells(lastUsedRow, fDebTTimeStamp)).HorizontalAlignment = xlCenter
                     .Range(.Cells(2, fDebTTimeStamp), .Cells(lastUsedRow, fDebTTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
                 End With
             
@@ -4276,10 +4278,10 @@ Sub Get_Date_Derniere_Modification(fileName As String, ByRef ddm As Date, _
                                     ByRef minutes As Long, ByRef secondes As Long)
     
     'Créer une instance de FileSystemObject
-    Dim FSO As Object: Set FSO = CreateObject("Scripting.FileSystemObject")
+    Dim fso As Object: Set fso = CreateObject("Scripting.FileSystemObject")
     
     'Obtenir le fichier
-    Dim fichier As Object: Set fichier = FSO.GetFile(fileName)
+    Dim fichier As Object: Set fichier = fso.GetFile(fileName)
     
     'Récupérer la date et l'heure de la dernière modification
     ddm = fichier.DateLastModified
@@ -4296,7 +4298,7 @@ Sub Get_Date_Derniere_Modification(fileName As String, ByRef ddm As Date, _
     
     ' Libérer les objets
     Set fichier = Nothing
-    Set FSO = Nothing
+    Set fso = Nothing
     
 End Sub
 
@@ -4333,12 +4335,12 @@ Sub Dynamic_Range_Redefine_Plan_Comptable() '2024-07-04 @ 10:39
 
 End Sub
 
-Sub Remplir_Plage_Avec_Couleur(ByVal plage As Range, ByVal couleurRVB As Long)
+Sub Remplir_Plage_Avec_Couleur(ByVal Plage As Range, ByVal couleurRVB As Long)
 
-    If Not plage Is Nothing Then
+    If Not Plage Is Nothing Then
         Dim cellule As Range
         'Parcourt toutes les cellules de la plage (contiguës ou non)
-        For Each cellule In plage
+        For Each cellule In Plage
             On Error Resume Next
             cellule.Interior.Color = couleurRVB
             On Error GoTo 0

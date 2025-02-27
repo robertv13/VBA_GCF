@@ -39,9 +39,9 @@ Attribute MyListBox.VB_VarHelpID = -1
 Private WithEvents myTextBox As MSForms.TextBox
 Attribute myTextBox.VB_VarHelpID = -1
 
-Public Property Let CompareMethod(ByVal Value As VbCompareMethod)
+Public Property Let CompareMethod(ByVal value As VbCompareMethod)
 
-    m_compareMethod = Value
+    m_compareMethod = value
     Call FilterListBox
 
 End Property
@@ -52,16 +52,16 @@ Public Property Get SelectedItem() As String
 
 End Property
 
-Public Property Let List(ByVal Value As Variant)
+Public Property Let List(ByVal value As Variant)
     
-    m_listOfItems = Value
+    m_listOfItems = value
 
 End Property
 
 'The number of rows that will be visible in the listbox
-Public Property Let MaxRows(ByVal Value As Long)
+Public Property Let MaxRows(ByVal value As Long)
     
-    m_maxRows = Value
+    m_maxRows = value
     Call FilterListBox
 
 End Property
@@ -174,7 +174,7 @@ Private Sub List_MoveDown()
 
 End Sub
 
-Private Sub UpdateListbox(items As Variant)
+Private Sub UpdateListBox(items As Variant)
  
     With MyListBox
         'Reload listbox
@@ -380,7 +380,7 @@ Public Sub FilterListBox() 'Filters the Listbox
     Dim items As Variant
     items = FilterData
       
-    Call UpdateListbox(items)
+    Call UpdateListBox(items)
       
     m_UpdateControl = False
     

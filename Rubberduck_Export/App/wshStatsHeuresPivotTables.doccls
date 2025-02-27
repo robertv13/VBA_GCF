@@ -29,7 +29,7 @@ Private Sub Worksheet_Activate()
     'Ensure all pending events are processed - 2024-10-12 @ 11:33
     DoEvents
     
-    Me.Range("B4").Value = ""
+    Me.Range("B4").value = ""
     
     Application.ScreenUpdating = True
     Application.EnableEvents = True
@@ -87,32 +87,32 @@ Private Sub Worksheet_Change(ByVal target As Range)
         ws.Unprotect
         
         'Changer la valeur sur la feuille TEC_TDB_Data pour les Advanced Filter
-        Select Case target.Value
+        Select Case target.value
             Case "Guillaume", "GuillaumeCharron", "gchar"
-                wshTEC_TDB_Data.Range("S7").Value = "GC"
+                wshTEC_TDB_Data.Range("S7").value = "GC"
             Case "Vladimir"
-                wshTEC_TDB_Data.Range("S7").Value = "VG"
+                wshTEC_TDB_Data.Range("S7").value = "VG"
             Case "Michel"
-                wshTEC_TDB_Data.Range("S7").Value = "ML"
+                wshTEC_TDB_Data.Range("S7").value = "ML"
             Case "Annie"
-                wshTEC_TDB_Data.Range("S7").Value = "AR"
+                wshTEC_TDB_Data.Range("S7").value = "AR"
             Case "Tous"
-                wshTEC_TDB_Data.Range("S7").Value = ""
+                wshTEC_TDB_Data.Range("S7").value = ""
         End Select
         
-        If wshTEC_TDB_Data.Range("BJ2").Value <> "" Then
+        If wshTEC_TDB_Data.Range("BJ2").value <> "" Then
             ws.Range("S:V").EntireColumn.Hidden = False
         End If
     
-        If wshTEC_TDB_Data.Range("AW2").Value <> "" Then
+        If wshTEC_TDB_Data.Range("AW2").value <> "" Then
             ws.Range("N:R").EntireColumn.Hidden = False
         End If
     
-        If wshTEC_TDB_Data.Range("AJ2").Value <> "" Then
+        If wshTEC_TDB_Data.Range("AJ2").value <> "" Then
             ws.Range("I:M").EntireColumn.Hidden = False
         End If
     
-        If wshTEC_TDB_Data.Range("W2").Value <> "" Then
+        If wshTEC_TDB_Data.Range("W2").value <> "" Then
             ws.Range("D:H").EntireColumn.Hidden = False
         End If
     

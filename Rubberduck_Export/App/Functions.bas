@@ -7,7 +7,7 @@ Function Fn_GetID_From_Initials(i As String)
     
     For Each cell In wshAdmin.Range("dnrProf_All")
         If cell.Value2 = i Then
-            Fn_GetID_From_Initials = cell.Offset(0, 1).value
+            Fn_GetID_From_Initials = cell.Offset(0, 1).Value
             Exit Function
         End If
     Next cell
@@ -65,7 +65,7 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
         'With the foundCell get the the address, the row number and the value
         foundInfo(1) = foundCell.Address
         foundInfo(2) = foundCell.row
-        foundInfo(3) = foundCell.Offset(0, cr - cs).value 'Return Column - Searching column
+        foundInfo(3) = foundCell.Offset(0, cr - cs).Value 'Return Column - Searching column
         Fn_Find_Data_In_A_Range = foundInfo 'foundInfo is an array
     Else
         Fn_Find_Data_In_A_Range = foundInfo 'foundInfo is an array
@@ -234,7 +234,7 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
     Fn_TEC_Is_Data_Valid = False
     
     'Validations first (one field at a time)
-    If ufSaisieHeures.cmbProfessionnel.value = "" Then
+    If ufSaisieHeures.cmbProfessionnel.Value = "" Then
         MsgBox Prompt:="Le professionnel est OBLIGATOIRE !", _
                Title:="Vérification", _
                Buttons:=vbCritical
@@ -242,7 +242,7 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
         Exit Function
     End If
 
-    If ufSaisieHeures.txtDate.value = "" Or IsDate(ufSaisieHeures.txtDate.value) = False Then
+    If ufSaisieHeures.txtDate.Value = "" Or IsDate(ufSaisieHeures.txtDate.Value) = False Then
         MsgBox Prompt:="La date est OBLIGATOIRE !", _
                Title:="Vérification", _
                Buttons:=vbCritical
@@ -250,7 +250,7 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
         Exit Function
     End If
 
-    If ufSaisieHeures.txtClient.value = "" Then
+    If ufSaisieHeures.txtClient.Value = "" Then
         MsgBox Prompt:="Le client est OBLIGATOIRE !", _
                Title:="Vérification", _
                Buttons:=vbCritical
@@ -258,7 +258,7 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
         Exit Function
     End If
     
-    If ufSaisieHeures.txtHeures.value = "" Or IsNumeric(ufSaisieHeures.txtHeures.value) = False Then
+    If ufSaisieHeures.txtHeures.Value = "" Or IsNumeric(ufSaisieHeures.txtHeures.Value) = False Then
         MsgBox Prompt:="Le nombre d'heures est OBLIGATOIRE !", _
                Title:="Vérification", _
                Buttons:=vbCritical
@@ -275,9 +275,9 @@ Public Function Fn_Get_Tax_Rate(d As Date, taxType As String) As Double
     Dim row As Integer
     With wshAdmin
         For row = 18 To 11 Step -1
-            If .Range("L" & row).value = taxType Then
-                If d >= .Range("M" & row).value Then
-                    Fn_Get_Tax_Rate = .Range("N" & row).value
+            If .Range("L" & row).Value = taxType Then
+                If d >= .Range("M" & row).Value Then
+                    Fn_Get_Tax_Rate = .Range("N" & row).Value
                     Exit For
                 End If
             End If
@@ -301,9 +301,9 @@ End Function
 Function Fn_Is_Ecriture_Balance() As Boolean
 
     Fn_Is_Ecriture_Balance = False
-    If wshGL_EJ.Range("H26").value <> wshGL_EJ.Range("I26").value Then
+    If wshGL_EJ.Range("H26").Value <> wshGL_EJ.Range("I26").Value Then
         MsgBox "Votre écriture ne balance pas." & vbNewLine & vbNewLine & _
-            "Débits = " & wshGL_EJ.Range("H26").value & " et Crédits = " & wshGL_EJ.Range("I26").value & vbNewLine & vbNewLine & _
+            "Débits = " & wshGL_EJ.Range("H26").Value & " et Crédits = " & wshGL_EJ.Range("I26").Value & vbNewLine & vbNewLine & _
             "Elle n'est donc pas reportée.", vbCritical, "Veuillez vérifier votre écriture!"
     Else
         Fn_Is_Ecriture_Balance = True
@@ -314,10 +314,10 @@ End Function
 Function Fn_Is_Debours_Balance() As Boolean
 
     Fn_Is_Debours_Balance = False
-    If wshDEB_Saisie.Range("O6").value <> wshDEB_Saisie.Range("I26").value Then
+    If wshDEB_Saisie.Range("O6").Value <> wshDEB_Saisie.Range("I26").Value Then
         MsgBox "Votre transaction ne balance pas." & vbNewLine & vbNewLine & _
-            "Total saisi = " & Format(wshDEB_Saisie.Range("O6").value, "#,##0.00 $") _
-            & " vs. Ventilation = " & Format(wshDEB_Saisie.Range("I26").value, "#,##0.00 $") _
+            "Total saisi = " & Format(wshDEB_Saisie.Range("O6").Value, "#,##0.00 $") _
+            & " vs. Ventilation = " & Format(wshDEB_Saisie.Range("I26").Value, "#,##0.00 $") _
             & vbNewLine & vbNewLine & "Elle n'est donc pas reportée.", _
             vbCritical, "Veuillez vérifier votre écriture!"
     Else
@@ -337,8 +337,8 @@ Function Fn_Is_JE_Valid(rmax As Long) As Boolean
     
     Dim i As Long
     For i = 9 To rmax
-        If wshGL_EJ.Range("E" & i).value <> "" Then
-            If wshGL_EJ.Range("H" & i).value = "" And wshGL_EJ.Range("I" & i).value = "" Then
+        If wshGL_EJ.Range("E" & i).Value <> "" Then
+            If wshGL_EJ.Range("H" & i).Value = "" And wshGL_EJ.Range("I" & i).Value = "" Then
                 MsgBox "Il existe une ligne avec un compte, sans montant !"
                 Fn_Is_JE_Valid = False
             End If
@@ -358,8 +358,8 @@ Function Fn_Is_Deb_Saisie_Valid(rmax As Long) As Boolean
     
     Dim i As Long
     For i = 9 To rmax
-        If wshDEB_Saisie.Range("E" & i).value <> "" Then
-            If wshDEB_Saisie.Range("N" & i).value = "" Then
+        If wshDEB_Saisie.Range("E" & i).Value <> "" Then
+            If wshDEB_Saisie.Range("N" & i).Value = "" Then
                 MsgBox "Il existe une ligne avec un compte, sans montant !"
                 Fn_Is_Deb_Saisie_Valid = False
             End If

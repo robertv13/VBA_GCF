@@ -31,10 +31,10 @@ Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
     Set cellsToColor = Union(ws.Range("B4"), ws.Range("D4"), ws.Range("F4"), ws.Range("H4"))
     Call Remplir_Plage_Avec_Couleur(cellsToColor, -4142)
     
-    wshCAR_Liste_Agée.Range("B4").Value = "Facture"
-    wshCAR_Liste_Agée.Range("D4").Value = "Numéro de facture"
-    wshCAR_Liste_Agée.Range("F4").Value = "Non"
-    wshCAR_Liste_Agée.Range("H4").Value = Format$(Date, wshAdmin.Range("B1").Value)
+    wshCAR_Liste_Agée.Range("B4").value = "Facture"
+    wshCAR_Liste_Agée.Range("D4").value = "Numéro de facture"
+    wshCAR_Liste_Agée.Range("F4").value = "Non"
+    wshCAR_Liste_Agée.Range("H4").value = Format$(Date, wshAdmin.Range("B1").value)
     
     'Efface la liste précédente
     Dim lastUsedRow As Long
@@ -77,8 +77,8 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
     
     'Is Ordre de tri been selected ?
     If Not Intersect(target, wshCAR_Liste_Agée.Range("D4")) Is Nothing Then
-        If wshCAR_Liste_Agée.Range("B4").Value = "Client" Then
-            wshCAR_Liste_Agée.Range("D4").Value = "Nom de client"
+        If wshCAR_Liste_Agée.Range("B4").value = "Client" Then
+            wshCAR_Liste_Agée.Range("D4").value = "Nom de client"
         End If
         target.Interior.Color = COULEUR_SAISIE
     End If
@@ -108,9 +108,9 @@ Private Sub Worksheet_Change(ByVal target As Range)
     
     'Critère de tri has changed
     If Not Intersect(target, Range("D4")) Is Nothing Then
-        If Range("B4").Value = "Client" Then
-            If target.Value = "Numéro de facture" Then
-                target.Value = "Nom de client"
+        If Range("B4").value = "Client" Then
+            If target.value = "Numéro de facture" Then
+                target.value = "Nom de client"
             End If
         End If
     End If
@@ -120,7 +120,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
         Application.EnableEvents = False
         fullDate = Fn_Complete_Date(target.Text, 365, 0)
         If fullDate <> "Invalid Date" Then
-            target.Value = Format$(fullDate, wshAdmin.Range("B1").Value)
+            target.value = Format$(fullDate, wshAdmin.Range("B1").value)
             Application.EnableEvents = True
         Else
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshCAR_Liste_Agée_125")
@@ -131,7 +131,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
         End If
        
         'Future date ?
-        If CDate(Range("H4").Value) > Date Then
+        If CDate(Range("H4").value) > Date Then
             If MsgBox("Il n'est pas permis d'utiliser une date dans le futur !", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
                 Application.EnableEvents = False
                 target.ClearContents

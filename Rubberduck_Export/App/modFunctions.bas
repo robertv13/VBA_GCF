@@ -902,18 +902,18 @@ Function Fn_Check_Server_Access(serverPath) As Boolean '2024-09-24 @ 17:14
     Fn_Check_Server_Access = False
     
     'Créer un FileSystemObject
-    Dim FSO As Object: Set FSO = CreateObject("Scripting.FileSystemObject")
+    Dim fso As Object: Set fso = CreateObject("Scripting.FileSystemObject")
     
     'Vérifier si le fichier existe
     Dim folderExists As Boolean
-    folderExists = FSO.folderExists(serverPath)
+    folderExists = fso.folderExists(serverPath)
     
     If folderExists Then
         Fn_Check_Server_Access = True
     End If
     
     'Libérer la mémoire
-    Set FSO = Nothing
+    Set fso = Nothing
     
 End Function
 
@@ -1794,12 +1794,12 @@ End Function
 Function ObtenirNoGlIndicateur(ByVal indic As Variant) As String
 
     'Plage où sont situés les liens (indicateur/no de GL)
-    Dim plage As Range
-    Set plage = wshAdmin.Range("D44:F60")
+    Dim Plage As Range
+    Set Plage = wshAdmin.Range("D44:F60")
     
     'Parcourir chaque cellule dans la première colonne de la plage
     Dim cellule As Range
-    For Each cellule In plage.Columns(1).Cells
+    For Each cellule In Plage.Columns(1).Cells
         If cellule.Value = indic Then
             'Retourner la valeur de la troisième colonne pour la ligne correspondante
             ObtenirNoGlIndicateur = cellule.offset(0, 1).Value
@@ -1952,4 +1952,44 @@ Function TrouverLigneFacture(ws As Worksheet, numFacture As String) As Long
     End If
     
 End Function
+
+Function RechercherLignesTableau(ws As Worksheet, noEntrée As Long) As Variant
+
+    'Définition de la feuille contenant les données
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
+    Dim plageRecherche As Range
+    Set plageRecherche = ws.Range("A2:A" & lastUsedRow)
+
+    'Recherche des lignes correspondantes
+    Dim plageResultat As Range
+    Dim cell As Range
+    For Each cell In plageRecherche
+        If cell.Value = noEntrée Then
+            If plageResultat Is Nothing Then
+                Set plageResultat = cell.EntireRow
+            Else
+                Set plageResultat = Union(plageResultat, cell.EntireRow)
+            End If
+        End If
+    Next cell
+
+    ' Vérifier si des résultats ont été trouvés
+    If plageResultat Is Nothing Then
+        RechercherLignesTableau = False ' Aucun résultat trouvé
+        Exit Function
+    End If
+
+    'Convertir la plage trouvée en tableau VBA
+    Dim nbLignes As Integer, nbColonnes As Integer
+    Dim data As Variant
+    nbLignes = plageResultat.Rows.count
+    nbColonnes = plageResultat.Columns.count
+    data = plageResultat.Value ' Stocker la plage dans un tableau Variant
+
+    ' Retourner le tableau des résultats
+    RechercherLignesTableau = data
+    
+End Function
+
 

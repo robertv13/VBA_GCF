@@ -5,7 +5,7 @@ Dim EntryRow As Long, EntryCol As Long, LastRow As Long, LastResultRow As Long, 
 Dim InvListRow As Long
 
 Sub BillingEntry_LoadList() 'Filter appropriate WIP lines
-    If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [BillingItem_Macros] - Sub BillingEntry_LoadList() @ " & Time
+    If wshFACPrep.Range("B28").Value Then Debug.Print "Now entering - [BillingItem_Macros] - Sub BillingEntry_LoadList() @ " & Time
     Dim LineFrom_Copy As Long
     Dim LineTo_Copy As Long
     Dim BilledCriteria As String
@@ -18,14 +18,14 @@ Sub BillingEntry_LoadList() 'Filter appropriate WIP lines
         'Copy line per line, cell per cell
         LineTo_Copy = 3
         For LineFrom_Copy = 4 To LastRow
-            If .Cells(LineFrom_Copy, 2).value = .Range("Q3").value Then
-                If .Range("R3").value = "<>" Or .Cells(LineFrom_Copy, 12) = "No" Then
-                    .Cells(LineTo_Copy, 21).value = .Cells(LineFrom_Copy, 1).value 'Bill Entry ID
-                    .Cells(LineTo_Copy, 22).value = .Cells(LineFrom_Copy, 8).value 'Date
-                    .Cells(LineTo_Copy, 23).value = .Cells(LineFrom_Copy, 10).value 'Description
-                    .Cells(LineTo_Copy, 24).value = .Cells(LineFrom_Copy, 9).value 'Hours
-                    .Cells(LineTo_Copy, 25).value = .Cells(LineFrom_Copy, 12).value 'Billed ?
-                    .Cells(LineTo_Copy, 26).value = .Cells(LineFrom_Copy, 13).value 'Hours
+            If .Cells(LineFrom_Copy, 2).Value = .Range("Q3").Value Then
+                If .Range("R3").Value = "<>" Or .Cells(LineFrom_Copy, 12) = "No" Then
+                    .Cells(LineTo_Copy, 21).Value = .Cells(LineFrom_Copy, 1).Value 'Bill Entry ID
+                    .Cells(LineTo_Copy, 22).Value = .Cells(LineFrom_Copy, 8).Value 'Date
+                    .Cells(LineTo_Copy, 23).Value = .Cells(LineFrom_Copy, 10).Value 'Description
+                    .Cells(LineTo_Copy, 24).Value = .Cells(LineFrom_Copy, 9).Value 'Hours
+                    .Cells(LineTo_Copy, 25).Value = .Cells(LineFrom_Copy, 12).Value 'Billed ?
+                    .Cells(LineTo_Copy, 26).Value = .Cells(LineFrom_Copy, 13).Value 'Hours
                     LineTo_Copy = LineTo_Copy + 1
                 End If
             End If
@@ -33,102 +33,102 @@ Sub BillingEntry_LoadList() 'Filter appropriate WIP lines
         '.Range("A3:M" & LastRow).AdvancedFilter xlFilterCopy, CriteriaRange:=.Range("Q2:R3"), CopyToRange:=.Range("U2:AA2"), Unique:=True
         LastResultRow = .Range("U99999").End(xlUp).row
         If LastResultRow < 3 Then Exit Sub
-        wshFACPrep.Range("C12:I" & LastResultRow + 9).value = .Range("U3:AA" & LastResultRow).value 'Bring Over Billing Item Results
+        wshFACPrep.Range("C12:I" & LastResultRow + 9).Value = .Range("U3:AA" & LastResultRow).Value 'Bring Over Billing Item Results
         On Error Resume Next
-        wshFACPrep.Range("B17").value = wshFACPrep.Range("C12:C9999").Find(wshFACPrep.Range("B2").value, , xlFormulas, xlWhole).row 'Set Selected Row (if applicable)
+        wshFACPrep.Range("B17").Value = wshFACPrep.Range("C12:C9999").Find(wshFACPrep.Range("B2").Value, , xlFormulas, xlWhole).row 'Set Selected Row (if applicable)
         On Error GoTo 0
     End With
-    If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [BillingItem_Macros] - Sub BillingEntry_LoadList()" & vbNewLine
+    If wshFACPrep.Range("B28").Value Then Debug.Print "Now exiting  - [BillingItem_Macros] - Sub BillingEntry_LoadList()" & vbNewLine
 End Sub
 
 Sub BillingEntry_New()
-    If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [BillingItem_Macros] - Sub BillingEntry_New() @ " & Time
+    If wshFACPrep.Range("B28").Value Then Debug.Print "Now entering - [BillingItem_Macros] - Sub BillingEntry_New() @ " & Time
     With wshFACPrep
         .Range("B2,B17,E4:F7,H4:H7").ClearContents
-        .Range("H4").value = Date 'Set Current Date as default
-        .Range("H7").value = "No" 'Set Default billed to No
+        .Range("H4").Value = Date 'Set Current Date as default
+        .Range("H7").Value = "No" 'Set Default billed to No
     End With
-    If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [BillingItem_Macros] - Sub BillingEntry_New()" & vbNewLine
+    If wshFACPrep.Range("B28").Value Then Debug.Print "Now exiting  - [BillingItem_Macros] - Sub BillingEntry_New()" & vbNewLine
 End Sub
 
 Sub BillingEntry_SaveUpdate()
-    If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [BillingItem_Macros] - Sub BillingEntry_SaveUpdate() @ " & Time
+    If wshFACPrep.Range("B28").Value Then Debug.Print "Now entering - [BillingItem_Macros] - Sub BillingEntry_SaveUpdate() @ " & Time
     With wshFACPrep
         'Check For Required Fields
-        If .Range("B14").value < 4 Then
+        If .Range("B14").Value < 4 Then
             MsgBox "Please make sure to enter a Customer, Project, Service & Date before saving"
             Exit Sub
         End If
-        If .Range("B3").value = Empty Then 'New Billing entry
-            .Range("B2").value = .Range("B4").value 'Set Entry ID
+        If .Range("B3").Value = Empty Then 'New Billing entry
+            .Range("B2").Value = .Range("B4").Value 'Set Entry ID
             EntryRow = shBillEntries.Range("A99999").End(xlUp).row + 1  'First avail row
-            shBillEntries.Range("A" & EntryRow).value = .Range("B2").value 'Set Billing entry ID
-            shBillEntries.Range("M" & EntryRow).value = "=Row()"
+            shBillEntries.Range("A" & EntryRow).Value = .Range("B2").Value 'Set Billing entry ID
+            shBillEntries.Range("M" & EntryRow).Value = "=Row()"
         Else 'Existing Entry
-            EntryRow = .Range("B3").value
+            EntryRow = .Range("B3").Value
         End If
         For EntryCol = 2 To 12
-            shBillEntries.Cells(EntryRow, EntryCol).value = .Range(shBillEntries.Cells(1, EntryCol).value).value 'Save Data
+            shBillEntries.Cells(EntryRow, EntryCol).Value = .Range(shBillEntries.Cells(1, EntryCol).Value).Value 'Save Data
         Next EntryCol
         BillingEntry_LoadList
         MsgBox "Billing Entry Saved"
     End With
-    If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [BillingItem_Macros] - Sub BillingEntry_SaveUpdate()" & vbNewLine
+    If wshFACPrep.Range("B28").Value Then Debug.Print "Now exiting  - [BillingItem_Macros] - Sub BillingEntry_SaveUpdate()" & vbNewLine
 End Sub
 
 Sub BillingEntry_Load()
-    If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [BillingItem_Macros] - Sub BillingEntry_Load() @ " & Time
+    If wshFACPrep.Range("B28").Value Then Debug.Print "Now entering - [BillingItem_Macros] - Sub BillingEntry_Load() @ " & Time
     With wshFACPrep
-        If .Range("B3").value = "" Then
+        If .Range("B3").Value = "" Then
             MsgBox "Veuillez sélectionner une charge valide"
             Exit Sub
         End If
-        .Range("B23").value = True 'Set Load To True
-        EntryRow = .Range("B3").value 'Set Entry Row
+        .Range("B23").Value = True 'Set Load To True
+        EntryRow = .Range("B3").Value 'Set Entry Row
         For EntryCol = 8 To 12 'Not On Project, Customer Or Service ID
             If EntryCol = 4 Or EntryCol = 5 Or EntryCol = 6 Or EntryCol = 7 Then GoTo NextCol
-            .Range(shBillEntries.Cells(1, EntryCol).value).value = shBillEntries.Cells(EntryRow, EntryCol).value 'Load Data
+            .Range(shBillEntries.Cells(1, EntryCol).Value).Value = shBillEntries.Cells(EntryRow, EntryCol).Value 'Load Data
 NextCol:
         Next EntryCol
-        .Range("B23").value = False 'Set Load to false
+        .Range("B23").Value = False 'Set Load to false
     End With
-    If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [BillingItem_Macros] - Sub BillingEntry_Load()" & vbNewLine
+    If wshFACPrep.Range("B28").Value Then Debug.Print "Now exiting  - [BillingItem_Macros] - Sub BillingEntry_Load()" & vbNewLine
 End Sub
 
 Sub BillingEntry_Delete()
-    If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - Sub BillingEntry_Delete() @ " & Time
+    If wshFACPrep.Range("B28").Value Then Debug.Print "Now entering - Sub BillingEntry_Delete() @ " & Time
     If MsgBox("Are you sure you want to delete this Billing Item?", vbYesNo, "Delete Billing Item") = vbNo Then Exit Sub
     With wshFACPrep
-        If .Range("B3").value = "" Then GoTo NotSaved
-        EntryRow = .Range("B3").value 'Entry Row
+        If .Range("B3").Value = "" Then GoTo NotSaved
+        EntryRow = .Range("B3").Value 'Entry Row
         shBillEntries.Range(EntryRow & ":" & EntryRow).EntireRow.Delete
 NotSaved:
         BillingEntry_New
         BillingEntry_LoadList
     End With
-    If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [BillingItem_Macros] - Sub BillingEntry_Delete()" & vbNewLine
+    If wshFACPrep.Range("B28").Value Then Debug.Print "Now entering - [BillingItem_Macros] - Sub BillingEntry_Delete()" & vbNewLine
 End Sub
 
 Sub BillingEntry_AddToInvoice()
-    If wshFACPrep.Range("B28").value Then Debug.Print "Now entering - [BillingItem_Macros] - Sub BillingEntry_AddToInvoice() @ " & Time
+    If wshFACPrep.Range("B28").Value Then Debug.Print "Now entering - [BillingItem_Macros] - Sub BillingEntry_AddToInvoice() @ " & Time
     With wshFACPrep
-        If .Range("B17").value = Empty Then
+        If .Range("B17").Value = Empty Then
             MsgBox "Vous devez sélectionner une charge pour l'ajouter à la facture"
         End If
-        If .Range("B20").value = Empty Then
+        If .Range("B20").Value = Empty Then
             MsgBox "Assurez-vous de sauvegarder la facture avant d'y ajouter des charges"
             Exit Sub
         End If
-        SelRow = .Range("B17").value 'Selected Row
-        If .Range("G" & SelRow).value = "Yes" Then
+        SelRow = .Range("B17").Value 'Selected Row
+        If .Range("G" & SelRow).Value = "Yes" Then
             If MsgBox("Cette charge a déjà été facturé. Êtes-vous certain de vouloir l'ajouter à nouveau ?", vbYesNo, "Charge déjà facturée") = vbNo Then Exit Sub
         End If
         
-        EntryRow = .Range("H" & SelRow).value 'Entry Database Row
-        ServItem = .Range("F" & SelRow).value 'Service Item Name
-        .Range("B25").value = True 'Set Item Load to True
+        EntryRow = .Range("H" & SelRow).Value 'Entry Database Row
+        ServItem = .Range("F" & SelRow).Value 'Service Item Name
+        .Range("B25").Value = True 'Set Item Load to True
         
-        .Range("B15").value = False 'RMV - 2023-09-29 - We dot not allow to add to an existing entry...
+        .Range("B15").Value = False 'RMV - 2023-09-29 - We dot not allow to add to an existing entry...
 '        If .Range("B15").Value = True Then ' Total Like Service Items
 '            InvRow = 0
 '            On Error Resume Next
@@ -151,20 +151,20 @@ NewRow:
             End If
         'End If
         
-        .Range("K" & InvRow).value = .Range("E" & SelRow).value 'Description
+        .Range("K" & InvRow).Value = .Range("E" & SelRow).Value 'Description
         '.Range("J" & InvRow).Value = .Range("D" & SelRow).Value 'Service Date
         '.Range("K" & InvRow).Value = .Range("F" & SelRow).Value 'Service
         '.Range("L" & InvRow).Value = shBillEntries.Range("J" & EntryRow).Value 'Saved Description
-        .Range("L" & InvRow).value = .Range("F" & SelRow).value ' Hours
+        .Range("L" & InvRow).Value = .Range("F" & SelRow).Value ' Hours
         '.Range("M" & InvRow).Value = shBillEntries.Range("K" & EntryRow).Value 'Billing Rate
-        .Range("M" & InvRow).value = BillingRate 'Billing Rate
+        .Range("M" & InvRow).Value = BillingRate 'Billing Rate
         '.Range("N" & InvRow).Value = shBillEntries.Range("K" & EntryRow).Value 'Billing Rate
 ItemAdded:
-        .Range("B25").value = False 'Set Item Load to false
-        shBillEntries.Range("L" & EntryRow).value = "Yes" 'Set Billed Status to Yes
+        .Range("B25").Value = False 'Set Item Load to false
+        shBillEntries.Range("L" & EntryRow).Value = "Yes" 'Set Billed Status to Yes
         .Shapes("AddItemBtn").Visible = msoFalse
         BillingEntry_LoadList 'Run Macro to Refresh list
     End With
-    If wshFACPrep.Range("B28").value Then Debug.Print "Now exiting  - [BillingItem_Macros] - Sub BillingEntry_AddToInvoice()" & vbNewLine
+    If wshFACPrep.Range("B28").Value Then Debug.Print "Now exiting  - [BillingItem_Macros] - Sub BillingEntry_AddToInvoice()" & vbNewLine
 End Sub
 

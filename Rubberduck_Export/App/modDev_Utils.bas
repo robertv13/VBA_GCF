@@ -1114,7 +1114,7 @@ Sub List_All_Columns() '2024-08-09 @ 11:52
                 .Cells(outputRow, 1).Value = ws.Name
                 .Cells(outputRow, 2).Value = i
                 .Cells(outputRow, 3).Value = Replace(col.Address(False, False), "1", "")
-'                .Cells(outputRow, 3).value = col.address(False, False).Replace("1", "")
+'                .Cells(outputRow, 3).Value = col.address(False, False).Replace("1", "")
                 .Cells(outputRow, 4).Value = ws.Cells(1, i).Value
                 .Cells(outputRow, 5).Value = colType
                 .Cells(outputRow, 6).Value = col.ColumnWidth
@@ -1237,10 +1237,10 @@ Sub List_All_Macros_Used_With_Objects() '2024-11-26 @ 20:14
 '            lineText = Trim(vbMod.Lines(lineNum, 1))
 '            If Left(lineText, 1) <> "'" And Left(lineText, 3) <> "Rem" Then
 '                procName = vbMod.ProcOfLine(lineNum, procType)
-'                wsOutputSheet.Cells(outputRow, 1).value = vbComp.Name
-'                wsOutputSheet.Cells(outputRow, 2).value = "Procedure"
-'                wsOutputSheet.Cells(outputRow, 3).value = procName
-'                wsOutputSheet.Cells(outputRow, 4).value = "Called in code"
+'                wsOutputSheet.Cells(outputRow, 1).Value = vbComp.Name
+'                wsOutputSheet.Cells(outputRow, 2).Value = "Procedure"
+'                wsOutputSheet.Cells(outputRow, 3).Value = procName
+'                wsOutputSheet.Cells(outputRow, 4).Value = "Called in code"
 '                outputRow = outputRow + 1
 '            End If
 '        Next lineNum
@@ -1267,7 +1267,7 @@ Sub List_All_Macros_Used_With_Objects() '2024-11-26 @ 20:14
 '        'Automatically insert a empty line between worksheet
 '        Dim i As Long
 '        For i = outputRow To 2 Step -1
-'            If wsOutputSheet.Cells(i, 1).value <> wsOutputSheet.Cells(i + 1, 1).value Then
+'            If wsOutputSheet.Cells(i, 1).Value <> wsOutputSheet.Cells(i + 1, 1).Value Then
 '                wsOutputSheet.Rows(i + 1).Insert Shift:=xlDown
 '            End If
 '        Next i

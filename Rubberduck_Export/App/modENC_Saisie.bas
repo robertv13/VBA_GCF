@@ -169,9 +169,6 @@ Sub MAJ_Encaissement() '2024-08-22 @ 09:46
         Call ENC_Add_DB_Entete
         Call ENC_Add_Locally_Entete
         
-'        Dim pmtNo As Long
-'        pmtNo = wshENC_Saisie.pmtNo
-        
         Dim lastOSRow As Integer
         lastOSRow = .Cells(.Rows.count, "F").End(xlUp).row 'Last applied Item
         

@@ -20,18 +20,18 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
 
     If Fn_TEC_Is_Data_Valid() = True Then
         'Get the Client_ID
-        wshAdmin.Range("TEC_Client_ID").value = Fn_GetID_From_Client_Name(ufSaisieHeures.txtClient.value)
+        wshAdmin.Range("TEC_Client_ID").Value = Fn_GetID_From_Client_Name(ufSaisieHeures.txtClient.Value)
         
         Call TEC_Record_Add_Or_Update_To_DB(0) 'Write to MASTER.xlsx file - 2023-12-23 @ 07:03
         Call TEC_Record_Add_Or_Update_Locally(0) 'Write to local worksheet - 2024-02-25 @ 10:34
         
         'Clear the fields after saving
         With ufSaisieHeures
-            .txtTEC_ID.value = ""
-            .txtClient.value = ""
-            .txtActivite.value = ""
-            .txtHeures.value = ""
-            .txtCommNote.value = ""
+            .txtTEC_ID.Value = ""
+            .txtClient.Value = ""
+            .txtActivite.Value = ""
+            .txtHeures.Value = ""
+            .txtCommNote.Value = ""
             .chbFacturable = True
         End With
         
@@ -59,18 +59,18 @@ Sub TEC_Modifie_Ligne() '2023-12-23 @ 07:04
 
     If Fn_TEC_Is_Data_Valid() = False Then Exit Sub
 
-    Call TEC_Record_Add_Or_Update_To_DB(wshAdmin.Range("TEC_Current_ID").value)  'Write to external XLSX file - 2023-12-16 @ 14:10
-    Call TEC_Record_Add_Or_Update_Locally(wshAdmin.Range("TEC_Current_ID").value)  'Write to local worksheet - 2024-02-25 @ 10:38
+    Call TEC_Record_Add_Or_Update_To_DB(wshAdmin.Range("TEC_Current_ID").Value)  'Write to external XLSX file - 2023-12-16 @ 14:10
+    Call TEC_Record_Add_Or_Update_Locally(wshAdmin.Range("TEC_Current_ID").Value)  'Write to local worksheet - 2024-02-25 @ 10:38
  
     'Initialize dynamic variables
     With ufSaisieHeures
-        .txtTEC_ID.value = ""
+        .txtTEC_ID.Value = ""
         .cmbProfessionnel.Enabled = True
         .txtDate.Enabled = True
-        .txtClient.value = ""
-        .txtActivite.value = ""
-        .txtHeures.value = ""
-        .txtCommNote.value = ""
+        .txtClient.Value = ""
+        .txtActivite.Value = ""
+        .txtHeures.Value = ""
+        .txtCommNote.Value = ""
         .chbFacturable = True
     End With
 
@@ -89,7 +89,7 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC:TEC_Efface_Ligne", 0)
 
-    If wshAdmin.Range("TEC_Current_ID").value = "" Then
+    If wshAdmin.Range("TEC_Current_ID").Value = "" Then
         MsgBox _
         Prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
         Buttons:=vbCritical
@@ -111,16 +111,16 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
     
     Dim TECID As Long
     'With a negative ID value, it means to soft delete this record
-    TECID = -wshAdmin.Range("TEC_Current_ID").value
+    TECID = -wshAdmin.Range("TEC_Current_ID").Value
     Call TEC_Record_Add_Or_Update_To_DB(TECID)  'Write to external XLSX file - 2023-12-23 @ 07:07
     Call TEC_Record_Add_Or_Update_Locally(TECID)  'Write to local worksheet - 2024-02-25 @ 10:40
     
     'Empty the dynamic fields after deleting
     With ufSaisieHeures
-        .txtClient.value = ""
-        .txtActivite.value = ""
-        .txtHeures.value = ""
-        .txtCommNote.value = ""
+        .txtClient.Value = ""
+        .txtActivite.Value = ""
+        .txtHeures.Value = ""
+        .txtCommNote.Value = ""
         .chbFacturable = True
     End With
     
@@ -138,7 +138,7 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
     
 Clean_Exit:
 
-    ufSaisieHeures.txtTEC_ID.value = ""
+    ufSaisieHeures.txtTEC_ID.Value = ""
     ufSaisieHeures.txtClient.SetFocus
 
     'Cleaning memory - 2024-07-01 @ 09:34
@@ -160,9 +160,9 @@ Sub TEC_AdvancedFilter_And_Sort() '2024-02-24 @ 09:15
     End If
     
     'Set criteria in worksheet
-    wshTEC_Local.Range("R3").value = wshAdmin.Range("TEC_Prof_ID")
-    wshTEC_Local.Range("S3").value = wshAdmin.Range("TEC_Date")
-    wshTEC_Local.Range("T3").value = "FAUX"
+    wshTEC_Local.Range("R3").Value = wshAdmin.Range("TEC_Prof_ID")
+    wshTEC_Local.Range("S3").Value = wshAdmin.Range("TEC_Date")
+    wshTEC_Local.Range("T3").Value = "FAUX"
     
     With wshTEC_Local
         Dim lastRow As Long, lastResultRow As Long, resultRow As Long
@@ -236,15 +236,15 @@ Sub Test_Advanced_Filter_1() '2024-06-19 @ 16:20
         
         'Data Source
         Dim sRng As Range: Set sRng = .Range("A2:P" & lastRow)
-        .Range("S10").value = sRng.Address
+        .Range("S10").Value = sRng.Address
         
         'Criteria
         Dim cRng As Range: Set cRng = .Range("R2:T3")
-        .Range("S11").value = cRng.Address
+        .Range("S11").Value = cRng.Address
         
         'Destination
         Dim dRng As Range: Set dRng = .Range("V2:AI2")
-        .Range("S12").value = dRng.Address
+        .Range("S12").Value = dRng.Address
         
         'Advanced Filter applied to BaseHours (Prof, Date and isDetruit)
         sRng.AdvancedFilter xlFilterCopy, cRng, dRng, False
@@ -282,8 +282,8 @@ No_Sort_Required:
         Call ConvertRangeBooleanToText(dRng)
     End If
     
-    wshTEC_Local.Range("S13").value = lastResultRow - 2 & " rows"
-    wshTEC_Local.Range("S14").value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
+    wshTEC_Local.Range("S13").Value = lastResultRow - 2 & " rows"
+    wshTEC_Local.Range("S14").Value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
     
     Application.ScreenUpdating = True
 
@@ -300,12 +300,12 @@ Sub TEC_Efface_Formulaire() 'Clear all fields on the userForm
 
     'Empty the dynamic fields after reseting the form
     With ufSaisieHeures
-        .txtTEC_ID.value = "" '2024-03-01 @ 09:56
-        .txtClient.value = ""
-        wshAdmin.Range("TEC_Client_ID").value = 0
-        .txtActivite.value = ""
-        .txtHeures.value = ""
-        .txtCommNote.value = ""
+        .txtTEC_ID.Value = "" '2024-03-01 @ 09:56
+        .txtClient.Value = ""
+        wshAdmin.Range("TEC_Client_ID").Value = 0
+        .txtActivite.Value = ""
+        .txtHeures.Value = ""
+        .txtCommNote.Value = ""
         .cmbProfessionnel.Enabled = True
         .txtDate.Enabled = True
     End With
@@ -328,7 +328,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "TEC_Local"
     
@@ -352,9 +352,9 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
         saveLogTEC_ID = TECID
         If Not rs.EOF Then
             'Update the "IsDeleted" field to mark the record as deleted
-            rs.Fields("DateSaisie").value = CDate(Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
-            rs.Fields("EstDetruit").value = ConvertValueBooleanToText(True)
-            rs.Fields("VersionApp").value = ThisWorkbook.name
+            rs.Fields("DateSaisie").Value = CDate(Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            rs.Fields("EstDetruit").Value = ConvertValueBooleanToText(True)
+            rs.Fields("VersionApp").Value = ThisWorkbook.name
             rs.update
             Call Log_Saisie_Heures("D", CStr(saveLogTEC_ID)) '2024-09-02 @ 10:35
         Else
@@ -378,17 +378,17 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             
             'Get the last used row
             Dim lastRow As Long
-            If IsNull(rs.Fields("MaxID").value) Then
+            If IsNull(rs.Fields("MaxID").Value) Then
                 'Handle empty table (assign a default value, e.g., 0)
                 lastRow = 0
             Else
-                lastRow = rs.Fields("MaxID").value
+                lastRow = rs.Fields("MaxID").Value
             End If
             
             'Calculate the new ID
             Dim nextID As Long
             nextID = lastRow + 1
-            wshAdmin.Range("TEC_Current_ID").value = nextID
+            wshAdmin.Range("TEC_Current_ID").Value = nextID
             saveLogTEC_ID = nextID
         
             'Close the previous recordset, no longer needed and open an empty recordset
@@ -397,58 +397,58 @@ Sub TEC_Record_Add_Or_Update_To_DB(TECID As Long) 'Write -OR- Update a record to
             
             'Add fields to the recordset before updating it
             rs.AddNew
-            rs.Fields("TEC_ID").value = nextID
-            rs.Fields("Prof_ID").value = wshAdmin.Range("TEC_Prof_ID")
-            rs.Fields("Prof").value = ufSaisieHeures.cmbProfessionnel.value
-            rs.Fields("Date").value = CDate(Format$(ufSaisieHeures.txtDate.value, "dd/mm/yyyy"))
-            rs.Fields("Client_ID").value = wshAdmin.Range("TEC_Client_ID")
-            rs.Fields("ClientNom").value = ufSaisieHeures.txtClient.value
-            If Len(ufSaisieHeures.txtActivite.value) > 255 Then
-                ufSaisieHeures.txtActivite.value = Left(ufSaisieHeures.txtActivite.value, 255)
+            rs.Fields("TEC_ID").Value = nextID
+            rs.Fields("Prof_ID").Value = wshAdmin.Range("TEC_Prof_ID")
+            rs.Fields("Prof").Value = ufSaisieHeures.cmbProfessionnel.Value
+            rs.Fields("Date").Value = CDate(Format$(ufSaisieHeures.txtDate.Value, "dd/mm/yyyy"))
+            rs.Fields("Client_ID").Value = wshAdmin.Range("TEC_Client_ID")
+            rs.Fields("ClientNom").Value = ufSaisieHeures.txtClient.Value
+            If Len(ufSaisieHeures.txtActivite.Value) > 255 Then
+                ufSaisieHeures.txtActivite.Value = Left(ufSaisieHeures.txtActivite.Value, 255)
             End If
-            rs.Fields("Description").value = ufSaisieHeures.txtActivite.value
-            rs.Fields("Heures").value = Format$(ufSaisieHeures.txtHeures.value, "#0.00")
-            rs.Fields("CommentaireNote").value = ufSaisieHeures.txtCommNote.value
-            rs.Fields("EstFacturable").value = ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value)
-            rs.Fields("DateSaisie").value = CDate(Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
-            rs.Fields("EstFacturee").value = ConvertValueBooleanToText(False)
-            rs.Fields("DateFacturee").value = Null
-            rs.Fields("EstDetruit").value = ConvertValueBooleanToText(False)
-            rs.Fields("VersionApp").value = ThisWorkbook.name
-            rs.Fields("NoFacture").value = ""
+            rs.Fields("Description").Value = ufSaisieHeures.txtActivite.Value
+            rs.Fields("Heures").Value = Format$(ufSaisieHeures.txtHeures.Value, "#0.00")
+            rs.Fields("CommentaireNote").Value = ufSaisieHeures.txtCommNote.Value
+            rs.Fields("EstFacturable").Value = ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.Value)
+            rs.Fields("DateSaisie").Value = CDate(Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            rs.Fields("EstFacturee").Value = ConvertValueBooleanToText(False)
+            rs.Fields("DateFacturee").Value = Null
+            rs.Fields("EstDetruit").Value = ConvertValueBooleanToText(False)
+            rs.Fields("VersionApp").Value = ThisWorkbook.name
+            rs.Fields("NoFacture").Value = ""
             'Nouveau log - 2024-09-02 @ 10:40
             Call Log_Saisie_Heures("Add", saveLogTEC_ID & "|" & _
-                ufSaisieHeures.cmbProfessionnel.value & "|" & _
-                CDate(Format$(ufSaisieHeures.txtDate.value, "dd/mm/yyyy")) & "|" & _
+                ufSaisieHeures.cmbProfessionnel.Value & "|" & _
+                CDate(Format$(ufSaisieHeures.txtDate.Value, "dd/mm/yyyy")) & "|" & _
                 wshAdmin.Range("TEC_Client_ID") & "|" & _
-                ufSaisieHeures.txtClient.value & "|" & _
-                ufSaisieHeures.txtActivite.value & "|" & _
-                Format$(ufSaisieHeures.txtHeures.value, "#0.00") & "|" & _
-                ufSaisieHeures.txtCommNote.value & "|" & _
-                ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value))
+                ufSaisieHeures.txtClient.Value & "|" & _
+                ufSaisieHeures.txtActivite.Value & "|" & _
+                Format$(ufSaisieHeures.txtHeures.Value, "#0.00") & "|" & _
+                ufSaisieHeures.txtCommNote.Value & "|" & _
+                ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.Value))
         Else 'Update an existing record
             'Open the recordset for the specified ID
             rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE TEC_ID=" & TECID, conn, 2, 3
             If Not rs.EOF Then
                 'Update fields for the existing record
-                rs.Fields("Client_ID").value = wshAdmin.Range("TEC_Client_ID")
-                rs.Fields("ClientNom").value = ufSaisieHeures.txtClient.value
-                rs.Fields("Description").value = ufSaisieHeures.txtActivite.value
-                rs.Fields("Heures").value = Format$(ufSaisieHeures.txtHeures.value, "#0.00")
-                rs.Fields("CommentaireNote").value = ufSaisieHeures.txtCommNote.value
-                rs.Fields("EstFacturable").value = ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value)
-                rs.Fields("DateSaisie").value = CDate(Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
-                rs.Fields("VersionApp").value = ThisWorkbook.name
+                rs.Fields("Client_ID").Value = wshAdmin.Range("TEC_Client_ID")
+                rs.Fields("ClientNom").Value = ufSaisieHeures.txtClient.Value
+                rs.Fields("Description").Value = ufSaisieHeures.txtActivite.Value
+                rs.Fields("Heures").Value = Format$(ufSaisieHeures.txtHeures.Value, "#0.00")
+                rs.Fields("CommentaireNote").Value = ufSaisieHeures.txtCommNote.Value
+                rs.Fields("EstFacturable").Value = ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.Value)
+                rs.Fields("DateSaisie").Value = CDate(Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+                rs.Fields("VersionApp").Value = ThisWorkbook.name
                 'Nouveau log - 2024-09-02 @ 10:40
                 Call Log_Saisie_Heures("Update", saveLogTEC_ID & "|" & _
-                    ufSaisieHeures.cmbProfessionnel.value & "|" & _
-                    CDate(Format$(ufSaisieHeures.txtDate.value, "dd/mm/yyyy")) & "|" & _
+                    ufSaisieHeures.cmbProfessionnel.Value & "|" & _
+                    CDate(Format$(ufSaisieHeures.txtDate.Value, "dd/mm/yyyy")) & "|" & _
                     wshAdmin.Range("TEC_Client_ID") & "|" & _
-                    ufSaisieHeures.txtClient.value & "|" & _
-                    ufSaisieHeures.txtActivite.value & "|" & _
-                    Format$(ufSaisieHeures.txtHeures.value, "#0.00") & "|" & _
-                    ufSaisieHeures.txtCommNote.value & "|" & _
-                    ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value))
+                    ufSaisieHeures.txtClient.Value & "|" & _
+                    ufSaisieHeures.txtActivite.Value & "|" & _
+                    Format$(ufSaisieHeures.txtHeures.Value, "#0.00") & "|" & _
+                    ufSaisieHeures.txtCommNote.Value & "|" & _
+                    ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.Value))
             Else
                 'Handle the case where the specified ID is not found
                 MsgBox "L'enregistrement avec le TEC_ID '" & TECID & "' ne peut être trouvé!", vbExclamation
@@ -499,29 +499,29 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
     Dim lastUsedRow As Long
     
     Dim hoursValue As Double '2024-03-01 @ 05:40
-    hoursValue = CDbl(ufSaisieHeures.txtHeures.value)
+    hoursValue = CDbl(ufSaisieHeures.txtHeures.Value)
     
     If TECID = 0 Then 'Add a new record
         'Get the next available row in TEC_Local
         Dim nextRowNumber As Long
         nextRowNumber = wshTEC_Local.Range("A9999").End(xlUp).Row + 1
         With wshTEC_Local
-            .Range("A" & nextRowNumber).value = wshAdmin.Range("TEC_Current_ID").value
-            .Range("B" & nextRowNumber).value = wshAdmin.Range("TEC_Prof_ID").value
-            .Range("C" & nextRowNumber).value = ufSaisieHeures.cmbProfessionnel.value
-            .Range("D" & nextRowNumber).value = CDate(Format$(ufSaisieHeures.txtDate.value, "dd/mm/yyyy"))
-            .Range("E" & nextRowNumber).value = wshAdmin.Range("TEC_Client_ID").value
-            .Range("F" & nextRowNumber).value = ufSaisieHeures.txtClient.value
-            .Range("G" & nextRowNumber).value = ufSaisieHeures.txtActivite.value
-            .Range("H" & nextRowNumber).value = hoursValue
-            .Range("I" & nextRowNumber).value = ufSaisieHeures.txtCommNote.value
-            .Range("J" & nextRowNumber).value = ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value)
-            .Range("K" & nextRowNumber).value = CDate(Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
-            .Range("L" & nextRowNumber).value = ConvertValueBooleanToText(False)
-            .Range("M" & nextRowNumber).value = ""
-            .Range("N" & nextRowNumber).value = ConvertValueBooleanToText(False)
-            .Range("O" & nextRowNumber).value = ThisWorkbook.name
-            .Range("P" & nextRowNumber).value = ""
+            .Range("A" & nextRowNumber).Value = wshAdmin.Range("TEC_Current_ID").Value
+            .Range("B" & nextRowNumber).Value = wshAdmin.Range("TEC_Prof_ID").Value
+            .Range("C" & nextRowNumber).Value = ufSaisieHeures.cmbProfessionnel.Value
+            .Range("D" & nextRowNumber).Value = CDate(Format$(ufSaisieHeures.txtDate.Value, "dd/mm/yyyy"))
+            .Range("E" & nextRowNumber).Value = wshAdmin.Range("TEC_Client_ID").Value
+            .Range("F" & nextRowNumber).Value = ufSaisieHeures.txtClient.Value
+            .Range("G" & nextRowNumber).Value = ufSaisieHeures.txtActivite.Value
+            .Range("H" & nextRowNumber).Value = hoursValue
+            .Range("I" & nextRowNumber).Value = ufSaisieHeures.txtCommNote.Value
+            .Range("J" & nextRowNumber).Value = ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.Value)
+            .Range("K" & nextRowNumber).Value = CDate(Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            .Range("L" & nextRowNumber).Value = ConvertValueBooleanToText(False)
+            .Range("M" & nextRowNumber).Value = ""
+            .Range("N" & nextRowNumber).Value = ConvertValueBooleanToText(False)
+            .Range("O" & nextRowNumber).Value = ThisWorkbook.name
+            .Range("P" & nextRowNumber).Value = ""
         End With
     Else
         'What is the row number for the TEC_ID
@@ -538,23 +538,23 @@ Sub TEC_Record_Add_Or_Update_Locally(TECID As Long) 'Write -OR- Update a record 
 
         If TECID > 0 Then 'Modify the record
             With wshTEC_Local
-                .Range("E" & rowToBeUpdated).value = wshAdmin.Range("TEC_Client_ID").value
-                .Range("F" & rowToBeUpdated).value = ufSaisieHeures.txtClient.value
-                .Range("G" & rowToBeUpdated).value = ufSaisieHeures.txtActivite.value
-                .Range("H" & rowToBeUpdated).value = hoursValue
-                .Range("I" & rowToBeUpdated).value = ufSaisieHeures.txtCommNote.value
-                .Range("J" & rowToBeUpdated).value = ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.value)
-                .Range("K" & rowToBeUpdated).value = CDate(Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
-                .Range("L" & rowToBeUpdated).value = ConvertValueBooleanToText(False)
-                .Range("M" & rowToBeUpdated).value = ""
-                .Range("N" & rowToBeUpdated).value = ConvertValueBooleanToText(False)
-                .Range("O" & rowToBeUpdated).value = ThisWorkbook.name
-                .Range("P" & rowToBeUpdated).value = ""
+                .Range("E" & rowToBeUpdated).Value = wshAdmin.Range("TEC_Client_ID").Value
+                .Range("F" & rowToBeUpdated).Value = ufSaisieHeures.txtClient.Value
+                .Range("G" & rowToBeUpdated).Value = ufSaisieHeures.txtActivite.Value
+                .Range("H" & rowToBeUpdated).Value = hoursValue
+                .Range("I" & rowToBeUpdated).Value = ufSaisieHeures.txtCommNote.Value
+                .Range("J" & rowToBeUpdated).Value = ConvertValueBooleanToText(ufSaisieHeures.chbFacturable.Value)
+                .Range("K" & rowToBeUpdated).Value = CDate(Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+                .Range("L" & rowToBeUpdated).Value = ConvertValueBooleanToText(False)
+                .Range("M" & rowToBeUpdated).Value = ""
+                .Range("N" & rowToBeUpdated).Value = ConvertValueBooleanToText(False)
+                .Range("O" & rowToBeUpdated).Value = ThisWorkbook.name
+                .Range("P" & rowToBeUpdated).Value = ""
             End With
         Else 'Soft delete the record
-            wshTEC_Local.Range("K" & rowToBeUpdated).value = CDate(Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
-            wshTEC_Local.Range("N" & rowToBeUpdated).value = ConvertValueBooleanToText(True)
-            wshTEC_Local.Range("O" & rowToBeUpdated).value = ThisWorkbook.name
+            wshTEC_Local.Range("K" & rowToBeUpdated).Value = CDate(Format$(Now(), "dd/mm/yyyy hh:mm:ss"))
+            wshTEC_Local.Range("N" & rowToBeUpdated).Value = ConvertValueBooleanToText(True)
+            wshTEC_Local.Range("O" & rowToBeUpdated).Value = ThisWorkbook.name
         End If
     End If
     
@@ -571,11 +571,11 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC:TEC_Refresh_ListBox_And_Add_Hours", 0)
 
-    If wshAdmin.Range("TEC_Prof_ID").value = "" Or wshAdmin.Range("TEC_Date").value = "" Then
+    If wshAdmin.Range("TEC_Prof_ID").Value = "" Or wshAdmin.Range("TEC_Date").Value = "" Then
         GoTo EndOfProcedure
     End If
     
-    ufSaisieHeures.txtTotalHeures.value = ""
+    ufSaisieHeures.txtTotalHeures.Value = ""
     ufSaisieHeures.lsbHresJour.RowSource = ""
     ufSaisieHeures.lsbHresJour.clear '2024-08-10 @ 05:59
     
@@ -600,21 +600,21 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     Dim totalHeures As Double
     Application.ScreenUpdating = True
     For i = 1 To rng.rows.count
-        ufSaisieHeures.lsbHresJour.AddItem rng.Cells(i, 1).value
-        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 1) = rng.Cells(i, 2).value
-        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 2) = Format$(rng.Cells(i, 3).value, "dd/mm/yyyy")
-        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 3) = rng.Cells(i, 4).value
-        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 4) = rng.Cells(i, 5).value
-        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 5) = Format$(rng.Cells(i, 6).value, "#,##0.00")
-        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 6) = rng.Cells(i, 7).value
-        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 7) = rng.Cells(i, 8).value
-        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 8) = Format$(rng.Cells(i, 9).value, "dd/mm/yyyy hh:nn:ss")
-        totalHeures = totalHeures + CCur(rng.Cells(i, 6).value)
+        ufSaisieHeures.lsbHresJour.AddItem rng.Cells(i, 1).Value
+        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 1) = rng.Cells(i, 2).Value
+        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 2) = Format$(rng.Cells(i, 3).Value, "dd/mm/yyyy")
+        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 3) = rng.Cells(i, 4).Value
+        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 4) = rng.Cells(i, 5).Value
+        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 5) = Format$(rng.Cells(i, 6).Value, "#,##0.00")
+        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 6) = rng.Cells(i, 7).Value
+        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 7) = rng.Cells(i, 8).Value
+        ufSaisieHeures.lsbHresJour.List(ufSaisieHeures.lsbHresJour.ListCount - 1, 8) = Format$(rng.Cells(i, 9).Value, "dd/mm/yyyy hh:nn:ss")
+        totalHeures = totalHeures + CCur(rng.Cells(i, 6).Value)
     Next i
          
     ufSaisieHeures.Repaint
     
-    ufSaisieHeures.txtTotalHeures.value = Format$(totalHeures, "#0.00")
+    ufSaisieHeures.txtTotalHeures.Value = Format$(totalHeures, "#0.00")
     
     DoEvents '2024-08-12 @ 10:31
     
@@ -645,19 +645,19 @@ Sub TEC_TdB_Push_TEC_Local_To_DB_Data()
     Dim i As Long
     For i = 3 To lastUsedRow
         With wsFrom
-            arr(i - 2, 1) = .Range("A" & i).value 'TEC_ID
-            arr(i - 2, 2) = .Range("C" & i).value 'Prof
-            arr(i - 2, 3) = .Range("D" & i).value 'Date
-            arr(i - 2, 4) = .Range("F" & i).value 'Client's Name
-            arr(i - 2, 5) = .Range("H" & i).value 'Hours
-            arr(i - 2, 6) = .Range("J" & i).value 'isBillable
-            arr(i - 2, 7) = .Range("L" & i).value 'isInvoiced
-            arr(i - 2, 8) = .Range("N" & i).value 'isDeleted
+            arr(i - 2, 1) = .Range("A" & i).Value 'TEC_ID
+            arr(i - 2, 2) = .Range("C" & i).Value 'Prof
+            arr(i - 2, 3) = .Range("D" & i).Value 'Date
+            arr(i - 2, 4) = .Range("F" & i).Value 'Client's Name
+            arr(i - 2, 5) = .Range("H" & i).Value 'Hours
+            arr(i - 2, 6) = .Range("J" & i).Value 'isBillable
+            arr(i - 2, 7) = .Range("L" & i).Value 'isInvoiced
+            arr(i - 2, 8) = .Range("N" & i).Value 'isDeleted
         End With
     Next i
 
     Dim rngTo As Range: Set rngTo = wshTEC_TDB_Data.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2))
-    rngTo.value = arr
+    rngTo.Value = arr
     
     'Cleaning memory - 2024-07-01 @ 09:34
     Set rngTo = Nothing
@@ -702,23 +702,23 @@ Sub TEC_Advanced_Filter_2() 'Advanced Filter for TEC records - 2024-06-19 @ 12:4
         Dim lastUsedRow As Long
         lastUsedRow = .Range("A99999").End(xlUp).Row
         Dim sRng As Range: Set sRng = .Range("A2:P" & lastUsedRow)
-        .Range("AL10").value = sRng.Address & " - " & _
+        .Range("AL10").Value = sRng.Address & " - " & _
             .Range("A2:P" & lastUsedRow).rows.count & " rows, " & _
             .Range("A2:P" & lastUsedRow).columns.count & " columns"
         
         Dim filterDate As Date
         filterDate = DateValue("02/09/2024")
-        .Range("AL3").value = "<=" & filterDate
+        .Range("AL3").Value = "<=" & filterDate
         .Range("AL3").NumberFormat = "dd/mm/yyyy"
         
-'        .Range("AL3").value = "<=" & Format(DateSerial(2024, 8, 23), "DD/mm/yyyy")
+'        .Range("AL3").Value = "<=" & Format(DateSerial(2024, 8, 23), "DD/mm/yyyy")
         Dim cRng As Range: Set cRng = .Range("AK2:AO3")
-        .Range("AL11").value = cRng.Address & " - " & .Range("AK2:AO3").columns.count & " columns"
+        .Range("AL11").Value = cRng.Address & " - " & .Range("AK2:AO3").columns.count & " columns"
         
         lastUsedRow = .Range("AQ99999").End(xlUp).Row
         Dim dRng As Range: Set dRng = .Range("AQ2:BE" & lastUsedRow)
         dRng.Offset(1, 0).ClearContents
-        .Range("AL12").value = dRng.Address & " - " & .Range("AQ2:BE" & lastUsedRow).columns.count & " columns"
+        .Range("AL12").Value = dRng.Address & " - " & .Range("AQ2:BE" & lastUsedRow).columns.count & " columns"
         
         On Error GoTo ErrorHandler
         sRng.AdvancedFilter action:=xlFilterCopy, _
@@ -749,8 +749,8 @@ Sub TEC_Advanced_Filter_2() 'Advanced Filter for TEC records - 2024-06-19 @ 12:4
              End With
     
 No_Sort_Required:
-        wshTEC_Local.Range("AL13").value = lastResultRow - 2 & " rows"
-        wshTEC_Local.Range("AL14").value = Format$(Now(), "mm/dd/yyyy hh:mm:ss")
+        wshTEC_Local.Range("AL13").Value = lastResultRow - 2 & " rows"
+        wshTEC_Local.Range("AL14").Value = Format$(Now(), "mm/dd/yyyy hh:mm:ss")
     End With
     
 Cleaning:

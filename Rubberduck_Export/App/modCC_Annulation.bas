@@ -71,7 +71,7 @@ Sub Insert_Big_PDF_Icon(tempSheet As Worksheet)
     
     Dim i As Long
     Dim iconPath As String
-    iconPath = wshAdmin.Range("F5").value & Application.PathSeparator & "Resources\AdobeAcrobatReader.png"
+    iconPath = wshAdmin.Range("F5").Value & Application.PathSeparator & "Resources\AdobeAcrobatReader.png"
     
     Dim pic As Picture
     Dim cell As Range
@@ -103,8 +103,8 @@ Sub CC_Annulation_Display_PDF_Invoice()
     
     'Assuming the invoice number is at 'F5'
     Dim fullPDFFileName As String
-    fullPDFFileName = wshAdmin.Range("F5").value & FACT_PDF_PATH & _
-        Application.PathSeparator & ws.Cells(5, 6).value & ".pdf"
+    fullPDFFileName = wshAdmin.Range("F5").Value & FACT_PDF_PATH & _
+        Application.PathSeparator & ws.Cells(5, 6).Value & ".pdf"
     
     'Open the invoice using Adobe Acrobat Reader
     If fullPDFFileName <> "" Then
@@ -122,25 +122,25 @@ Sub Display_Invoice_info(tempSheet As Worksheet, ws As String, r As Long)
 
         Application.EnableEvents = False
         'Display all fields from FAC_Entête
-        wshCC_Annulation.Range("L5").value = Format$(wshFAC_Entête.Cells(r, 2), "dd-mm-yyyy")
+        wshCC_Annulation.Range("L5").Value = Format$(wshFAC_Entête.Cells(r, 2), "dd-mm-yyyy")
         
-        wshCC_Annulation.Range("F7").value = wshFAC_Entête.Cells(r, 5)
-        wshCC_Annulation.Range("F8").value = wshFAC_Entête.Cells(r, 6)
-        wshCC_Annulation.Range("F9").value = wshFAC_Entête.Cells(r, 7)
-        wshCC_Annulation.Range("F10").value = wshFAC_Entête.Cells(r, 8)
-        wshCC_Annulation.Range("F11").value = wshFAC_Entête.Cells(r, 9)
+        wshCC_Annulation.Range("F7").Value = wshFAC_Entête.Cells(r, 5)
+        wshCC_Annulation.Range("F8").Value = wshFAC_Entête.Cells(r, 6)
+        wshCC_Annulation.Range("F9").Value = wshFAC_Entête.Cells(r, 7)
+        wshCC_Annulation.Range("F10").Value = wshFAC_Entête.Cells(r, 8)
+        wshCC_Annulation.Range("F11").Value = wshFAC_Entête.Cells(r, 9)
         
-        wshCC_Annulation.Range("L13").value = wshFAC_Entête.Cells(r, 10)
-        wshCC_Annulation.Range("L14").value = wshFAC_Entête.Cells(r, 12)
-        wshCC_Annulation.Range("L15").value = wshFAC_Entête.Cells(r, 14)
-        wshCC_Annulation.Range("L16").value = wshFAC_Entête.Cells(r, 16)
+        wshCC_Annulation.Range("L13").Value = wshFAC_Entête.Cells(r, 10)
+        wshCC_Annulation.Range("L14").Value = wshFAC_Entête.Cells(r, 12)
+        wshCC_Annulation.Range("L15").Value = wshFAC_Entête.Cells(r, 14)
+        wshCC_Annulation.Range("L16").Value = wshFAC_Entête.Cells(r, 16)
         wshCC_Annulation.Range("L17").formula = "=SUM(L13:L16)"
         
-        wshCC_Annulation.Range("L18").value = wshFAC_Entête.Cells(r, 18)
-        wshCC_Annulation.Range("L19").value = wshFAC_Entête.Cells(r, 20)
+        wshCC_Annulation.Range("L18").Value = wshFAC_Entête.Cells(r, 18)
+        wshCC_Annulation.Range("L19").Value = wshFAC_Entête.Cells(r, 20)
         wshCC_Annulation.Range("L21").formula = "=SUM(L17:L19)"
         
-        wshCC_Annulation.Range("L23").value = wshFAC_Entête.Cells(r, 22)
+        wshCC_Annulation.Range("L23").Value = wshFAC_Entête.Cells(r, 22)
         wshCC_Annulation.Range("L25").formula = "=L21 - L23"
         
         Application.EnableEvents = True
@@ -158,8 +158,8 @@ Sub Get_TEC_Summary_For_That_Invoice(tempSheet As Worksheet, arr As Variant, ByR
     Dim hres As Double
     Dim i As Long
     For i = 1 To UBound(arr, 1)
-        pro = wsTEC.Cells(arr(i), 3).value
-        hres = wsTEC.Cells(arr(i), 8).value
+        pro = wsTEC.Cells(arr(i), 3).Value
+        hres = wsTEC.Cells(arr(i), 8).Value
         If hres <> 0 Then
             If dictHours.Exists(pro) Then
                 dictHours(pro) = dictHours(pro) + hres
@@ -178,7 +178,7 @@ Sub Get_TEC_Summary_For_That_Invoice(tempSheet As Worksheet, arr As Variant, ByR
         profID = Fn_GetID_From_Initials(strProf)
         hres = dictHours(prof)
         Dim tauxHoraire As Currency
-        tauxHoraire = Fn_Get_Hourly_Rate(profID, wshCC_Annulation.Range("L5").value)
+        tauxHoraire = Fn_Get_Hourly_Rate(profID, wshCC_Annulation.Range("L5").Value)
         wshCC_Annulation.Cells(rowInWorksheet, 6) = strProf
         wshCC_Annulation.Cells(rowInWorksheet, 7) = hres
         wshCC_Annulation.Cells(rowInWorksheet, 8) = tauxHoraire
@@ -204,7 +204,7 @@ Sub Get_Fees_Summary_For_That_Invoice(tempSheet As Worksheet, arr As Variant, By
     
     'Get Invoice number
     Dim invNo As String
-    invNo = wshCC_Annulation.Range("F5").value
+    invNo = wshCC_Annulation.Range("F5").Value
     
     'Use Range.Find to locate the first cell with the InvoiceNo
     Dim cell As Range
@@ -218,9 +218,9 @@ Sub Get_Fees_Summary_For_That_Invoice(tempSheet As Worksheet, arr As Variant, By
         Application.EnableEvents = False
         Do
             'Display values in the worksheet
-            wshCC_Annulation.Range("F" & rowFeesSummary).value = wsFees.Cells(cell.row, 3).value
-            wshCC_Annulation.Range("G" & rowFeesSummary).value = wsFees.Cells(cell.row, 4).value
-            wshCC_Annulation.Range("H" & rowFeesSummary).value = wsFees.Cells(cell.row, 5).value
+            wshCC_Annulation.Range("F" & rowFeesSummary).Value = wsFees.Cells(cell.row, 3).Value
+            wshCC_Annulation.Range("G" & rowFeesSummary).Value = wsFees.Cells(cell.row, 4).Value
+            wshCC_Annulation.Range("H" & rowFeesSummary).Value = wsFees.Cells(cell.row, 5).Value
             Call AddRecordToTempSheet(tempSheet, wsFees.name, cell.row)
             rowFeesSummary = rowFeesSummary + 1
             'Find the next cell with the invNo
@@ -290,7 +290,7 @@ Sub CC_Annulation_Delete_Button_Click()
     Dim ws As Worksheet: Set ws = wshCC_Annulation
     
     Dim invNo As String
-    invNo = ws.Range("F5").value
+    invNo = ws.Range("F5").Value
     
     Call CC_Annulation_HideButtons
     
@@ -369,8 +369,8 @@ Sub AddRecordToTempSheet(tempSheet As Worksheet, worksheetData As String, s1 As 
         End If
         
         'Add the record to the next available row
-        .Cells(nextRow, 1).value = worksheetData
-        .Cells(nextRow, 2).value = s1
+        .Cells(nextRow, 1).Value = worksheetData
+        .Cells(nextRow, 2).Value = s1
     End With
     
 End Sub

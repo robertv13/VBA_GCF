@@ -27,7 +27,7 @@ Private Sub UserForm_Initialize()
 
     'MsgBox "frmExportHeures - UserForm_Initialize"
     
-    frmExportHeures.txtDateLimiteExport.value = _
+    frmExportHeures.txtDateLimiteExport.Value = _
                                               Format(ThisWorkbook.Worksheets("Menu").Range("F6"), "dd/mm/yyyy hh:MM:ss")
 
 End Sub
@@ -79,26 +79,26 @@ Private Sub cmdExport_Click()
     
     Dim r As Long
     For r = 2 To Rng.Rows.count
-        'Debug.Print r & " - " & Cells(r, 1).value & " - " & Cells(r, 2).value & _
-        " - " & Format(Cells(r, 3).value, "dd/mm/yyyy") & _
-        " - " & Cells(r, 4).value
-        ActiveSheet.Cells(currentRow, 1) = Rng.Cells(r, 3).value
-        ActiveSheet.Cells(currentRow, 2) = Rng.Cells(r, 4).value
-        ActiveSheet.Cells(currentRow, 3) = Rng.Cells(r, 5).value
-        ActiveSheet.Cells(currentRow, 4) = Rng.Cells(r, 6).value
-        ActiveSheet.Cells(currentRow, 5) = Rng.Cells(r, 7).value
-        ActiveSheet.Cells(currentRow, 6) = Rng.Cells(r, 1).value
+        'Debug.Print r & " - " & Cells(r, 1).Value & " - " & Cells(r, 2).Value & _
+        " - " & Format(Cells(r, 3).Value, "dd/mm/yyyy") & _
+        " - " & Cells(r, 4).Value
+        ActiveSheet.Cells(currentRow, 1) = Rng.Cells(r, 3).Value
+        ActiveSheet.Cells(currentRow, 2) = Rng.Cells(r, 4).Value
+        ActiveSheet.Cells(currentRow, 3) = Rng.Cells(r, 5).Value
+        ActiveSheet.Cells(currentRow, 4) = Rng.Cells(r, 6).Value
+        ActiveSheet.Cells(currentRow, 5) = Rng.Cells(r, 7).Value
+        ActiveSheet.Cells(currentRow, 6) = Rng.Cells(r, 1).Value
         
         currentRow = currentRow + 1
-        frmExportHeures.txtProgression.value = r - 1
+        frmExportHeures.txtProgression.Value = r - 1
     Next r
     
     'Save changes & Close the workbook
     wbGCF.Close SaveChanges:=True
     
     'Update Date of last export (frmExportHeures & wsMenu)
-    frmExportHeures.txtNextExportDate.value = Format(CDate(Now), "dd/mm/yyyy hh:MM:ss")
-    wshMenu.Range("F6").value = frmExportHeures.txtNextExportDate.value
+    frmExportHeures.txtNextExportDate.Value = Format(CDate(Now), "dd/mm/yyyy hh:MM:ss")
+    wshMenu.Range("F6").Value = frmExportHeures.txtNextExportDate.Value
 
     MsgBox "Félicitations - L'exportation des données s'est bien déroulée", vbInformation
     
@@ -131,7 +131,7 @@ Sub FilterTimeAndDate()
     Dim rowsToExport As Long
     rowsToExport = Rng.Columns(1).SpecialCells(xlCellTypeVisible).Cells.count - 1
     
-    frmExportHeures.txtNombreEnregistrements.value = rowsToExport
+    frmExportHeures.txtNombreEnregistrements.Value = rowsToExport
         
     If rowsToExport = 0 Then
         MsgBox "Il n'y a aucune donnée à exporter !", vbInformation

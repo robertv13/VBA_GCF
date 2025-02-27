@@ -248,13 +248,37 @@ Sub Assembler_États_Financiers()
     Call Assembler_BNR_0_Main(dateAC, dateAP)
     Call Assembler_Bilan_0_Main(dateAC, dateAP)
     
-    'Afficher les sous totaux par section
-    Debug.Print vbNewLine & "Sous-totaux par section"
-    Dim section As Variant
-    For Each section In dictSectionSub
-        Debug.Print "   Section: " & section & " - Le sous-total est:" & Format$(dictSectionSub(section), "###,###,##0.00 $")
-    Next section
+    Dim nomsFeuilles As Variant
+    nomsFeuilles = Array("Page titre", "Table des Matières", "État des Résultats", "BNR", "Bilan")
+    
+    Dim ws As Worksheet
+    Dim i As Integer
+    For i = UBound(nomsFeuilles) To LBound(nomsFeuilles) Step -1
+        Set ws = ThisWorkbook.Sheets(nomsFeuilles(i)) 'Vérifier si la feuille existe déjà
+        With ws
+            'Sélectionner la feuille
+            .Activate
+            .Visible = xlSheetVisible
+            'Affichage de la feuille à 87 %
+            ActiveWindow.Zoom = 87
+            'Afficher en mode aperçu des sauts de page
+            ActiveWindow.View = xlPageBreakPreview
+            'Remplir toutes les cellules avec la couleur blanche
+            .Cells.Interior.Color = RGB(255, 255, 255) 'Blanc
+'            .Cells.Interior.Color = RGB(255, 255, 204) ' Jaune pâle
+        End With
+    Next i
+    
+'    'Afficher les sous totaux par section
+'    Debug.Print vbNewLine & "Sous-totaux par section"
+'    Dim section As Variant
+'    For Each section In dictSectionSub
+'        Debug.Print "   Section: " & section & " - Le sous-total est:" & Format$(dictSectionSub(section), "###,###,##0.00 $")
+'    Next section
 
+    'On se déplace à la première page des états financiers
+    Sheets("Page Titre").Activate
+    
     MsgBox "Les états financiers ont été produits" & vbNewLine & vbNewLine & _
             "Voir les onglets respectifs au bas du classeur", vbOKOnly, "Fin de traitement"
     
@@ -269,10 +293,7 @@ Sub CréerFeuillesEtFormat()
     'Liste des feuilles à créer
     Dim nomsFeuilles As Variant
     nomsFeuilles = Array("Page titre", "Table des Matières", "État des Résultats", "BNR", "Bilan")
-'    nomsFeuilles = Array("Table des matières", "Bilan", "État des Résultats", "Flux de trésorerie", "Notes")
 
-    Application.StatusBar = "Création des " & UBound(nomsFeuilles) + 1 & " feuilles..."
-    
     Application.ScreenUpdating = False
     
     'Création des feuilles et application des formats
@@ -280,6 +301,7 @@ Sub CréerFeuillesEtFormat()
     Dim i As Integer
     For i = LBound(nomsFeuilles) To UBound(nomsFeuilles)
         On Error Resume Next
+        Application.StatusBar = "Création de " & nomsFeuilles(i)
         Set ws = ThisWorkbook.Sheets(nomsFeuilles(i)) 'Vérifier si la feuille existe déjà
         On Error GoTo 0
         
@@ -288,14 +310,10 @@ Sub CréerFeuillesEtFormat()
             ws.Name = nomsFeuilles(i)
         End If
         
-        'Réinitialiser la variable pour éviter les erreurs dans l'itération suivante
-        Set ws = Nothing
-        
         'Appliquer une mise en page standard pour toutes les feuilles
         With ThisWorkbook.Sheets(nomsFeuilles(i)).PageSetup
             .Orientation = xlPortrait
-            .Zoom = False
-            .FitToPagesWide = 1
+            .FitToPagesWide = False
             .FitToPagesTall = False
             .LeftMargin = Application.InchesToPoints(0.5)
             .RightMargin = Application.InchesToPoints(0.5)
@@ -303,6 +321,9 @@ Sub CréerFeuillesEtFormat()
             .BottomMargin = Application.InchesToPoints(0.75)
             .CenterHorizontally = False
         End With
+        
+        Set ws = Nothing
+        
     Next i
 
     Application.StatusBar = ""
@@ -313,6 +334,71 @@ Sub CréerFeuillesEtFormat()
     
 End Sub
 
+'Sub CréerFeuillesEtFormat_ACO()
+'
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:CréerFeuillesEtFormat", "", 0)
+'
+'    'Liste des feuilles à créer
+'    Dim nomsFeuilles As Variant
+'    nomsFeuilles = Array("Page titre", "Table des Matières", "État des Résultats", "BNR", "Bilan")
+'
+'    Application.ScreenUpdating = False
+'
+'    'Création des feuilles et application des formats
+'    Dim ws As Worksheet
+'    Dim i As Integer
+'    For i = LBound(nomsFeuilles) To UBound(nomsFeuilles)
+'        On Error Resume Next
+'        Application.StatusBar = "Création de " & nomsFeuilles(i)
+'        Set ws = ThisWorkbook.Sheets(nomsFeuilles(i)) 'Vérifier si la feuille existe déjà
+'        On Error GoTo 0
+'
+'        If ws Is Nothing Then ' Si la feuille n'existe pas, la créer
+'            Set ws = ThisWorkbook.Sheets.Add(After:=Sheets(Sheets.count))
+'            ws.Name = nomsFeuilles(i)
+'        End If
+'
+'        'Appliquer une mise en page standard pour toutes les feuilles
+'        With ThisWorkbook.Sheets(nomsFeuilles(i)).PageSetup
+'            .Orientation = xlPortrait
+'            .FitToPagesWide = False
+'            .FitToPagesTall = False
+'            .LeftMargin = Application.InchesToPoints(0.5)
+'            .RightMargin = Application.InchesToPoints(0.5)
+'            .TopMargin = Application.InchesToPoints(0.75)
+'            .BottomMargin = Application.InchesToPoints(0.75)
+'            .CenterHorizontally = False
+'        End With
+'
+'        Application.ScreenUpdating = True
+'
+'        'Appliquer l'aperçu des sauts de page à la feuille
+'        ws.Activate
+'        'Passer en mode Normal avant de modifier le remplissage
+'        ActiveWindow.View = xlNormalView
+'        'Appliquer le fond blanc à toute la feuille 2025-02-25 @ 07:45
+'        ws.usedRange.Interior.Pattern = xlSolid
+'        ws.usedRange.Interior.Color = RGB(220, 235, 255)
+'
+'        ActiveWindow.View = xlPageBreakPreview '2025-02-25 @ 07:44
+'        ActiveWindow.Zoom = 87
+'
+'        ws.Visible = xlSheetVisible
+'
+'        Application.ScreenUpdating = False
+'
+'        'Réinitialiser la variable pour éviter les erreurs dans l'itération suivante
+'        Set ws = Nothing
+'    Next i
+'
+'    Application.StatusBar = ""
+'
+'    Application.ScreenUpdating = True
+'
+'    Call Log_Record("modGL_PrepEF:CréerFeuillesEtFormat", "", startTime)
+'
+'End Sub
+'
 Sub Assembler_Page_Titre_0_Main(dateAC As Date, dateAP As Date)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_Page_Titre_0_Main", "", 0)
@@ -322,8 +408,8 @@ Sub Assembler_Page_Titre_0_Main(dateAC As Date, dateAP As Date)
     Dim ws As Worksheet
     Set ws = ThisWorkbook.Sheets("Page Titre")
     
-    Application.StatusBar = "Préparation de la page titre"
-    
+    Application.StatusBar = "Construction de la page titre"
+        
     Call Assembler_Page_Titre_1_Arrière_Plan_Et_Entête(ws, dateAC, dateAP)
     
     Application.StatusBar = ""
@@ -343,16 +429,15 @@ Sub Assembler_Page_Titre_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Dat
     ws.Cells.HorizontalAlignment = xlCenter
     ws.Cells.VerticalAlignment = xlCenter
     
-    Call PositionnerCellule(ws, UCase(wshAdmin.Range("NomEntreprise")), 7, 2, 20, True, xlCenter)
-    Call PositionnerCellule(ws, UCase("États Financiers"), 14, 2, 20, True, xlCenter)
-    Call PositionnerCellule(ws, UCase(Format$(dateAC, "dd mmmm yyyy")), 25, 2, 20, True, xlCenter)
+    Call PositionnerCellule(ws, UCase(wshAdmin.Range("NomEntreprise")), 8, 2, 20, True, xlCenter)
+    Call PositionnerCellule(ws, UCase("États Financiers"), 15, 2, 20, True, xlCenter)
+    Call PositionnerCellule(ws, UCase(Format$(dateAC, "dd mmmm yyyy")), 28, 2, 20, True, xlCenter)
     
-    'Ajuster la largeur des colonnes
-    ws.Columns("A").ColumnWidth = 5
-    ws.Columns("B").ColumnWidth = 83
-    ws.Columns("C").ColumnWidth = 5
-    
-    ws.Rows("1:25").RowHeight = 25
+    'Ajuster la largeur des colonnes et la hauteur de lignes
+    ws.Columns("A").ColumnWidth = 3
+    ws.Columns("B").ColumnWidth = 87
+    ws.Columns("C").ColumnWidth = 3
+    ws.Rows("1:28").RowHeight = 20
     
     'Ajuster la police pour la feuille
     With ws.Cells
@@ -361,6 +446,8 @@ Sub Assembler_Page_Titre_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Dat
         .Font.Color = RGB(98, 88, 80)
     End With
 
+    'Fixer le printArea selon le nombre de lignes ET 3 colonnes
+    ActiveSheet.PageSetup.PrintArea = "$A1:$C" & ws.Cells(ws.Rows.count, 2).End(xlUp).row + 3
 
     Call Log_Record("modGL_PrepEF:Assembler_Page_Titre_1_Arrière_Plan_Et_Entête", "", startTime)
 
@@ -375,7 +462,7 @@ Sub Assembler_TM_0_Main(dateAC As Date, dateAP As Date)
     Dim ws As Worksheet
     Set ws = ThisWorkbook.Sheets("Table des Matières")
     
-    Application.StatusBar = "Préparation de la table des matières"
+    Application.StatusBar = "Construction de la table des matières"
     
     Call Assembler_TM_1_Arrière_Plan_Et_Entête(ws, dateAC, dateAP)
     Call Assembler_TM_2_Lignes(ws)
@@ -399,10 +486,10 @@ Sub Assembler_TM_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateA
     'Appliquer le format d'en-tête
     Call PositionnerCellule(ws, UCase(wshAdmin.Range("NomEntreprise")), 1, 2, 12, True, xlLeft)
     Call PositionnerCellule(ws, UCase("Table des Matières"), 2, 2, 12, True, xlLeft)
-    Call PositionnerCellule(ws, UCase("États Financiers"), 2, 2, 12, True, xlLeft)
-    Call PositionnerCellule(ws, UCase("Au " & Format$(dateAC, "dd mmmm yyyy")), 3, 2, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase("États Financiers"), 3, 2, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase("Au " & Format$(dateAC, "dd mmmm yyyy")), 4, 2, 12, True, xlLeft)
     
-    With ws.Range("B5:E5").Borders(xlEdgeBottom)
+    With ws.Range("B5:C5").Borders(xlEdgeBottom)
 '    With ws.Range("B6:E6").Borders(xlEdgeBottom)
         .LineStyle = xlContinuous
         .ColorIndex = 0
@@ -410,16 +497,16 @@ Sub Assembler_TM_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateA
         .Weight = xlMedium
     End With
     
-    'Ajuster la largeur des colonnes
-    ws.Columns("A").ColumnWidth = 5
-    ws.Columns("B").ColumnWidth = 50
-    ws.Columns("C").ColumnWidth = 15
+    'Ajuster la largeur des colonnes et la hauteur des lignes
+    ws.Columns("A").ColumnWidth = 3
+    ws.Columns("B").ColumnWidth = 75
+    ws.Columns("C").ColumnWidth = 11
     ws.Columns("D").ColumnWidth = 3
-    ws.Columns("E").ColumnWidth = 15
-    ws.Columns("F").ColumnWidth = 5
+    ws.Rows("1:25").RowHeight = 15
     
-    ws.Rows("1:30").RowHeight = 15
-
+    'Fixer le printArea selon le nombre de lignes ET 3 colonnes
+    ActiveSheet.PageSetup.PrintArea = "$A1:$D" & ws.Cells(ws.Rows.count, "B").End(xlUp).row + 3
+    
     Call Log_Record("modGL_PrepEF:Assembler_TM_1_Arrière_Plan_Et_Entête", "", startTime)
 
 End Sub
@@ -428,36 +515,39 @@ Sub Assembler_TM_2_Lignes(ws As Worksheet)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_TM_2_Lignes", "", 0)
     
-    Dim wsAdmin As Worksheet
-    Set wsAdmin = wshAdmin
-    
     'Première ligne
     Dim currRow As Integer
     currRow = 15
     
-    ws.Range("E" & currRow).Value = "Page"
-    currRow = currRow + 3
+    With ws
+        .Range("C" & currRow).Value = "Page"
+        currRow = currRow + 3
+        
+        .Range("B" & currRow).Value = "États des résultats"
+        .Range("C" & currRow).Value = "2"
+        currRow = currRow + 2
+        
+        .Range("B" & currRow).Value = "États des Bénéfices non répartis"
+        .Range("C" & currRow).Value = "3"
+        currRow = currRow + 2
+        
+        .Range("B" & currRow).Value = "Bilan"
+        .Range("C" & currRow).Value = "4"
+        currRow = currRow + 2
+        
+        .Range("C:C").HorizontalAlignment = xlRight
+        
+       'Ajuster la police pour la feuille
+        With .Cells
+            .Font.Name = "Calibri"
+            .Font.size = 11
+            .Font.Color = RGB(98, 88, 80)
+        End With
     
-    ws.Range("B" & currRow).Value = "États des résultats"
-    ws.Range("E" & currRow).Value = "2"
-    currRow = currRow + 2
-    
-    ws.Range("B" & currRow).Value = "États des Bénéfices non répartis"
-    ws.Range("E" & currRow).Value = "3"
-    currRow = currRow + 2
-    
-    ws.Range("B" & currRow).Value = "Bilan"
-    ws.Range("E" & currRow).Value = "4"
-    currRow = currRow + 2
-    
-    'Ajuster la police pour la feuille
-    With ws.Cells
-        .Font.Name = "Calibri"
-        .Font.size = 11
-        .Font.Color = RGB(98, 88, 80)
     End With
     
-    ws.Range("E:E").HorizontalAlignment = xlRight
+    'Fixer le printArea selon le nombre de lignes ET 3 colonnes
+    ActiveSheet.PageSetup.PrintArea = "$A1:$D" & ws.Cells(ws.Rows.count, "B").End(xlUp).row
     
     Call Log_Record("modGL_PrepEF:Assembler_TM_2_Lignes", "", startTime)
 
@@ -472,7 +562,7 @@ Sub Assembler_ER_0_Main(dateAC As Date, dateAP As Date)
     Dim ws As Worksheet
     Set ws = ThisWorkbook.Sheets("État des résultats")
     
-    Application.StatusBar = "Préparation de l'état des résultats"
+    Application.StatusBar = "Construction de l'état des résultats"
     
     Call Assembler_ER_1_Arrière_Plan_Et_Entête(ws, dateAC, dateAP)
     Call Assembler_ER_2_Lignes(ws)
@@ -540,14 +630,13 @@ Sub Assembler_ER_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateA
     ws.Range("C7:C45").NumberFormat = "###,##0 $;(###,##0) $; 0 $"
     ws.Range("E7:E45").NumberFormat = "###,##0 $;(###,##0) $; 0 $"
 
-    'Ajuster la largeur des colonnes
-    ws.Columns("A").ColumnWidth = 5
-    ws.Columns("B").ColumnWidth = 50
+    'Ajuster la largeur des colonnes et la hauteur de lignes
+    ws.Columns("A").ColumnWidth = 3
+    ws.Columns("B").ColumnWidth = 52
     ws.Columns("C").ColumnWidth = 15
     ws.Columns("D").ColumnWidth = 3
     ws.Columns("E").ColumnWidth = 15
-    ws.Columns("F").ColumnWidth = 5
-    
+    ws.Columns("F").ColumnWidth = 3
     ws.Rows("1:45").RowHeight = 15
 
     ws.PageSetup.CenterFooter = 2
@@ -629,7 +718,7 @@ Sub Assembler_Bilan_0_Main(dateAC As Date, dateAP As Date)
     Dim ws As Worksheet
     Set ws = ThisWorkbook.Sheets("Bilan")
     
-    Application.StatusBar = "Préparation du bilan"
+    Application.StatusBar = "Construction du bilan"
     
     Call Assembler_Bilan_1_Arrière_Plan_Et_Entête(ws, dateAC, dateAP)
     Call Assembler_Bilan_2_Lignes(ws)
@@ -666,19 +755,18 @@ Sub Assembler_Bilan_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, da
     End With
     
     Dim currRow As Integer
-    currRow = 7
+    currRow = 8
 
-    ws.Range("C7:C38").NumberFormat = "#,##0 $;(#,##0) $; 0 $"
-    ws.Range("E7:E38").NumberFormat = "#,##0 $;(#,##0) $; 0 $"
+    ws.Range("C" & currRow & ":C40").NumberFormat = "#,##0 $;(#,##0) $; 0 $"
+    ws.Range("E" & currRow & ":E40").NumberFormat = "#,##0 $;(#,##0) $; 0 $"
 
-    'Ajuster la largeur des colonnes
-    ws.Columns("A").ColumnWidth = 5
-    ws.Columns("B").ColumnWidth = 50
+    'Ajuster la largeur des colonnes et la hauteur des lignes
+    ws.Columns("A").ColumnWidth = 3
+    ws.Columns("B").ColumnWidth = 52
     ws.Columns("C").ColumnWidth = 15
     ws.Columns("D").ColumnWidth = 3
     ws.Columns("E").ColumnWidth = 15
-    ws.Columns("F").ColumnWidth = 5
-     
+    ws.Columns("F").ColumnWidth = 3
     ws.Rows("1:40").RowHeight = 15
     
     ws.PageSetup.CenterFooter = 4
@@ -700,7 +788,7 @@ Sub Assembler_Bilan_2_Lignes(ws As Worksheet)
     Dim LigneEF As String, codeEF As String, typeLigne As String, gras As String, souligne As String
     Dim size As Long
     Dim currRow As Integer
-    currRow = 7
+    currRow = 8
     Dim rngRow As ListRow
     For Each rngRow In tbl.ListRows
         LigneEF = rngRow.Range.Cells(1, 1).Value
@@ -746,7 +834,7 @@ Sub Assembler_BNR_0_Main(dateAC As Date, dateAP As Date)
     Dim ws As Worksheet
     Set ws = ThisWorkbook.Sheets("BNR")
     
-    Application.StatusBar = "Préparation de l'état des bénéfices non répartis"
+    Application.StatusBar = "Construction de l'état des bénéfices non répartis"
     
     Call Assembler_BNR_1_Arrière_Plan_Et_Entête(ws, dateAC, dateAP)
     Call Assembler_BNR_2_Lignes(ws)
@@ -804,14 +892,13 @@ Sub Assembler_BNR_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, date
     ws.Range("C7:C20").NumberFormat = "#,##0 $;(#,##0) $; 0 $"
     ws.Range("E7:E20").NumberFormat = "#,##0 $;(#,##0) $; 0 $"
 
-    'Ajuster la largeur des colonnes
-    ws.Columns("A").ColumnWidth = 5
-    ws.Columns("B").ColumnWidth = 50
+    'Ajuster la largeur des colonnes et la hauteur des lignes
+    ws.Columns("A").ColumnWidth = 3
+    ws.Columns("B").ColumnWidth = 52
     ws.Columns("C").ColumnWidth = 15
     ws.Columns("D").ColumnWidth = 3
     ws.Columns("E").ColumnWidth = 15
-    ws.Columns("F").ColumnWidth = 5
-     
+    ws.Columns("F").ColumnWidth = 3
     ws.Rows("1:20").RowHeight = 15
     
     ws.PageSetup.CenterFooter = 3
@@ -1119,64 +1206,5 @@ Sub TrierDictionaryParCle(ByRef dict As Object)
     For i = LBound(keys) To UBound(keys)
         Debug.Print keys(i) & " - " & Format$(values(i), "###,##0.00")
     Next i
-End Sub
-
-Sub CreerSommaireAvecLiensEtTirets()
-
-    Dim ws As Worksheet
-    Dim lastRow As Long
-    Dim cell As Range
-    
-    'Vérifie si une feuille "Sommaire" existe déjà
-    Dim sommaire As Worksheet
-    On Error Resume Next
-    Set sommaire = ThisWorkbook.Worksheets("États Financiers")
-    On Error GoTo 0
-    
-    'Supprime l'ancienne feuille de sommaire si elle existe
-    If Not sommaire Is Nothing Then
-        Application.DisplayAlerts = False
-        sommaire.Delete
-        Application.DisplayAlerts = True
-    End If
-    
-    'Crée une nouvelle feuille de sommaire
-    Set sommaire = ThisWorkbook.Worksheets.Add
-    sommaire.Name = "États Financiers"
-    
-    ' Titre de la feuille
-    sommaire.Cells(1, 1).Value = "États Financiers"
-    sommaire.Cells(1, 1).Font.Bold = True
-    sommaire.Cells(1, 1).Font.size = 16
-    
-    Dim ligne As Integer
-    ligne = 3
-    
-    'Parcourt toutes les feuilles du classeur
-    For Each ws In ThisWorkbook.Worksheets
-        If ws.Name <> "États Financiers" Then
-            'Insère le nom de la feuille avec un lien
-            sommaire.Cells(ligne, 1).Value = ws.Name
-            sommaire.Hyperlinks.Add Anchor:=sommaire.Cells(ligne, 1), _
-                Address:="", SubAddress:="'" & ws.Name & "'!A1", _
-                TextToDisplay:=ws.Name
-            ligne = ligne + 1
-            
-            'Recherche des cellules non vides dans la colonne A
-            lastRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
-            For Each cell In ws.Range("A1:A" & lastRow)
-                If cell.Value <> "" Then
-                    sommaire.Cells(ligne, 1).Value = "- " & cell.Value
-                    sommaire.Hyperlinks.Add Anchor:=sommaire.Cells(ligne, 1), _
-                        Address:="", SubAddress:="'" & ws.Name & "'!" & cell.Address, _
-                        TextToDisplay:="- " & cell.Value
-                    ligne = ligne + 1
-                End If
-            Next cell
-        End If
-    Next ws
-    
-    MsgBox "Le sommaire a été créé avec succès !"
-    
 End Sub
 

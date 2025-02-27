@@ -22,7 +22,7 @@ Private Sub lsbDescEJAuto_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     RowSelected = lsbDescEJAuto.ListIndex
     DescEJAuto = lsbDescEJAuto.List(RowSelected, 0)
     NoEJAuto = lsbDescEJAuto.List(RowSelected, 1)
-    wshJE.Range("B2").value = RowSelected '2024-01-08 @ 13:58
+    wshJE.Range("B2").Value = RowSelected '2024-01-08 @ 13:58
     Unload usfListeEJAuto
     Call LoadJEAutoIntoJE(DescEJAuto, NoEJAuto)
 
@@ -40,8 +40,8 @@ Private Sub UserForm_Initialize()
     For r = 2 To rowJEAutoDesc
         With Me.lsbDescEJAuto
             .AddItem
-            .List((r - 2), 0) = wshEJRecurrente.Range("L" & r).value
-            .List((r - 2), 1) = wshEJRecurrente.Range("M" & r).value
+            .List((r - 2), 0) = wshEJRecurrente.Range("L" & r).Value
+            .List((r - 2), 1) = wshEJRecurrente.Range("M" & r).Value
         End With
     Next r
 

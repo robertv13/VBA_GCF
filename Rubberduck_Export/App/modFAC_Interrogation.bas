@@ -1015,10 +1015,10 @@ Sub BoutonImprimer_Stats()
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, "E").End(xlUp).row
     lastUsedRow = lastUsedRow + 6
-    Dim plage As Range
-    Set plage = ws.Range("B1:J" & lastUsedRow)
+    Dim Plage As Range
+    Set Plage = ws.Range("B1:J" & lastUsedRow)
     
-    Call ImprimerInfosTECetHonoraires(plage)
+    Call ImprimerInfosTECetHonoraires(Plage)
 
 End Sub
 
@@ -1030,17 +1030,17 @@ Sub BoutonImprimer_CC()
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, "C").End(xlUp).row
     lastUsedRow = lastUsedRow + 5
-    Dim plage As Range
-    Set plage = ws.Range("A1:K" & lastUsedRow)
+    Dim Plage As Range
+    Set Plage = ws.Range("A1:K" & lastUsedRow)
     
-    Call ImprimerTransCC(plage)
+    Call ImprimerTransCC(Plage)
 
 End Sub
 
-Sub ImprimerInfosTECetHonoraires(ByVal plage As Range)
+Sub ImprimerInfosTECetHonoraires(ByVal Plage As Range)
 
-    With plage.Worksheet.PageSetup
-        .PrintArea = plage.Address
+    With Plage.Worksheet.PageSetup
+        .PrintArea = Plage.Address
         .Orientation = xlPortrait
         .Zoom = False
         .FitToPagesWide = 1
@@ -1055,14 +1055,14 @@ Sub ImprimerInfosTECetHonoraires(ByVal plage As Range)
     End With
 
     'Afficher un aperçu avant impression
-    plage.Worksheet.PrintPreview
+    Plage.Worksheet.PrintPreview
     
 End Sub
 
-Sub ImprimerTransCC(ByVal plage As Range)
+Sub ImprimerTransCC(ByVal Plage As Range)
 
-    With plage.Worksheet.PageSetup
-        .PrintArea = plage.Address
+    With Plage.Worksheet.PageSetup
+        .PrintArea = Plage.Address
         .Orientation = xlLandscape
         .Zoom = False
         .FitToPagesWide = 1
@@ -1077,7 +1077,7 @@ Sub ImprimerTransCC(ByVal plage As Range)
     End With
 
     'Afficher un aperçu avant impression
-    plage.Worksheet.PrintPreview
+    Plage.Worksheet.PrintPreview
     
 End Sub
 

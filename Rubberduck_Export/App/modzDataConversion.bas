@@ -777,7 +777,7 @@ Sub AdjustClientNameInCAR()  '2024-08-07 @ 17:11
     Dim i As Long
     For i = 2 To lastUsedRowClient
         dictClients.Add CStr(referenceSheet.Cells(i, 2).Value), referenceSheet.Cells(i, 1).Value
-'        Debug.Print "#070 - " & referenceSheet.Cells(i, 2).value & " - " & referenceSheet.Cells(i, 1).value
+'        Debug.Print "#070 - " & referenceSheet.Cells(i, 2).Value & " - " & referenceSheet.Cells(i, 1).Value
     Next i
     
     Dim codeClient As String, nomClient As String, updatedNomClient As String

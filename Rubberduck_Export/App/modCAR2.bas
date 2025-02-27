@@ -28,19 +28,19 @@ Sub Generer_Liste_Agée_CAR()
     
     'Entêtes de colonnes en fonction du niveau de détail
     If LCase(niveauDetail) = "client" Then
-        wsResultat.Range("A1:F1").value = Array("Client", "Solde", "0-30 jours", "31-60 jours", "61-90 jours", "90+ jours")
+        wsResultat.Range("A1:F1").Value = Array("Client", "Solde", "0-30 jours", "31-60 jours", "61-90 jours", "90+ jours")
         Call Make_It_As_Header(wsResultat.Range("A1:F1"))
     End If
 
     'Entêtes de colonnes en fonction du niveau de détail (Facture)
     If LCase(niveauDetail) = "facture" Then
-        wsResultat.Range("A1:H1").value = Array("Client", "No. Facture", "Date Facture", "Solde", "0-30 jours", "31-60 jours", "61-90 jours", "90+ jours")
+        wsResultat.Range("A1:H1").Value = Array("Client", "No. Facture", "Date Facture", "Solde", "0-30 jours", "31-60 jours", "61-90 jours", "90+ jours")
         Call Make_It_As_Header(wsResultat.Range("A1:H1"))
     End If
 
     'Entêtes de colonnes en fonction du niveau de détail (Transaction)
     If LCase(niveauDetail) = "transaction" Then
-        wsResultat.Range("A1:H1").value = Array("Client", "No. Facture", "Date", "Montant", "0-30 jours", "31-60 jours", "61-90 jours", "90+ jours")
+        wsResultat.Range("A1:H1").Value = Array("Client", "No. Facture", "Date", "Montant", "0-30 jours", "31-60 jours", "61-90 jours", "90+ jours")
         Call Make_It_As_Header(wsResultat.Range("A1:H1"))
     End If
 
@@ -72,13 +72,13 @@ Sub Generer_Liste_Agée_CAR()
     r = 1
     For i = 1 To rngFactures.rows.count
         'Récupérer les données de la facture directement du Range
-        client = rngFactures.Cells(i, 4).value
+        client = rngFactures.Cells(i, 4).Value
         'Obtenir le nom du client pour trier par nom de client plutôt que par code de client
         client = Fn_Get_Client_Name(client)
-        numFacture = rngFactures.Cells(i, 1).value
-        dateFacture = rngFactures.Cells(i, 2).value
-        dateDue = rngFactures.Cells(i, 7).value
-        montantFacture = CCur(rngFactures.Cells(i, 8).value)
+        numFacture = rngFactures.Cells(i, 1).Value
+        dateFacture = rngFactures.Cells(i, 2).Value
+        dateDue = rngFactures.Cells(i, 7).Value
+        montantFacture = CCur(rngFactures.Cells(i, 8).Value)
         
         'Obtenir les paiemnets pour cette facture
         montantPaye = CCur(Application.WorksheetFunction.SumIf(wsPaiements.Range("B:B"), numFacture, wsPaiements.Range("E:E")))
@@ -135,37 +135,37 @@ Sub Generer_Liste_Agée_CAR()
             Case "facture"
                 'Ajouter chaque facture avec son montant restant dû
                 r = r + 1
-                wsResultat.Cells(r, 1).value = client
-                wsResultat.Cells(r, 2).value = numFacture
-                wsResultat.Cells(r, 3).value = dateFacture
-                wsResultat.Cells(r, 4).value = montantRestant
+                wsResultat.Cells(r, 1).Value = client
+                wsResultat.Cells(r, 2).Value = numFacture
+                wsResultat.Cells(r, 3).Value = dateFacture
+                wsResultat.Cells(r, 4).Value = montantRestant
                 Select Case tranche
                     Case "0-30 jours"
-                        wsResultat.Cells(r, 5).value = montantRestant
+                        wsResultat.Cells(r, 5).Value = montantRestant
                     Case "31-60 jours"
-                        wsResultat.Cells(r, 6).value = montantRestant
+                        wsResultat.Cells(r, 6).Value = montantRestant
                     Case "61-90 jours"
-                        wsResultat.Cells(r, 7).value = montantRestant
+                        wsResultat.Cells(r, 7).Value = montantRestant
                     Case "90+ jours"
-                        wsResultat.Cells(r, 8).value = montantRestant
+                        wsResultat.Cells(r, 8).Value = montantRestant
                 End Select
                 
             Case "transaction"
                 'Type Facture
                 r = r + 1
-                wsResultat.Cells(r, 1).value = client
-                wsResultat.Cells(r, 2).value = numFacture
-                wsResultat.Cells(r, 3).value = dateFacture
-                wsResultat.Cells(r, 4).value = montantFacture
+                wsResultat.Cells(r, 1).Value = client
+                wsResultat.Cells(r, 2).Value = numFacture
+                wsResultat.Cells(r, 3).Value = dateFacture
+                wsResultat.Cells(r, 4).Value = montantFacture
                 Select Case tranche
                     Case "0-30 jours"
-                        wsResultat.Cells(r, 5).value = montantRestant
+                        wsResultat.Cells(r, 5).Value = montantRestant
                     Case "31-60 jours"
-                        wsResultat.Cells(r, 6).value = montantRestant
+                        wsResultat.Cells(r, 6).Value = montantRestant
                     Case "61-90 jours"
-                        wsResultat.Cells(r, 7).value = montantRestant
+                        wsResultat.Cells(r, 7).Value = montantRestant
                     Case "90+ jours"
-                        wsResultat.Cells(r, 8).value = montantRestant
+                        wsResultat.Cells(r, 8).Value = montantRestant
                 End Select
                 
                 'Transactions de type paiements
@@ -176,10 +176,10 @@ Sub Generer_Liste_Agée_CAR()
                     firstAddress = rngPaiementsAssoc.Address
                         Do
                         r = r + 1
-                        wsResultat.Cells(r, 1).value = client
-                        wsResultat.Cells(r, 2).value = numFacture
-                        wsResultat.Cells(r, 3).value = rngPaiementsAssoc.Offset(0, 2).value
-                        wsResultat.Cells(r, 4).value = -rngPaiementsAssoc.Offset(0, 3).value ' Montant du paiement
+                        wsResultat.Cells(r, 1).Value = client
+                        wsResultat.Cells(r, 2).Value = numFacture
+                        wsResultat.Cells(r, 3).Value = rngPaiementsAssoc.Offset(0, 2).Value
+                        wsResultat.Cells(r, 4).Value = -rngPaiementsAssoc.Offset(0, 3).Value ' Montant du paiement
                         Set rngPaiementsAssoc = wsPaiements.columns("B:B").FindNext(rngPaiementsAssoc)
                     Loop While Not rngPaiementsAssoc Is Nothing And rngPaiementsAssoc.Address <> firstAddress
                 End If
@@ -193,12 +193,12 @@ Next_Invoice:
         i = 2
         Dim cle As Variant
         For Each cle In dictClients.keys
-            wsResultat.Cells(i, 1).value = cle ' Nom du client
-            wsResultat.Cells(i, 2).value = dictClients(cle)(0) ' Total
-            wsResultat.Cells(i, 3).value = dictClients(cle)(1) ' 0-30 jours
-            wsResultat.Cells(i, 4).value = dictClients(cle)(2) ' 31-60 jours
-            wsResultat.Cells(i, 5).value = dictClients(cle)(3) ' 61-90 jours
-            wsResultat.Cells(i, 6).value = dictClients(cle)(4) ' 90+ jours
+            wsResultat.Cells(i, 1).Value = cle ' Nom du client
+            wsResultat.Cells(i, 2).Value = dictClients(cle)(0) ' Total
+            wsResultat.Cells(i, 3).Value = dictClients(cle)(1) ' 0-30 jours
+            wsResultat.Cells(i, 4).Value = dictClients(cle)(2) ' 31-60 jours
+            wsResultat.Cells(i, 5).Value = dictClients(cle)(3) ' 61-90 jours
+            wsResultat.Cells(i, 6).Value = dictClients(cle)(4) ' 90+ jours
             i = i + 1
         Next cle
     End If

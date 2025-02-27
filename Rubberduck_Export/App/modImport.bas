@@ -197,7 +197,8 @@ Sub DEB_Trans_Import_All() '2024-06-26 @ 18:51
         .Open
     End With
     
-    'Copy to wshDEB_Trans workbook
+    'Copy to wshDEB_Trans workbook after erasing actual lines
+    wshDEB_Trans.Rows("2:" & wshDEB_Trans.Rows.count).ClearContents
     wshDEB_Trans.Range("A2").CopyFromRecordset recSet
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:32

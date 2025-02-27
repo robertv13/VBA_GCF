@@ -8,7 +8,7 @@ Option Explicit
 '    Application.ScreenUpdating = False
 '
 '    With wshCAR_Dashboard
-'        selCol = .Range("AA3").value 'Selected Column
+'        selCol = .Range("AA3").Value 'Selected Column
 '        'Hide All Shapes & Graphs
 '        .Range("4:1004").EntireRow.Hidden = True
 '        .Shapes("DashGrp").Visible = msoFalse       'Hide CAR_Dashboard Group
@@ -47,7 +47,7 @@ Option Explicit
 '        Dim sourceRange As Range: Set sourceRange = wshFAC_Comptes_Clients.Range("A3:J" & LastRow)
 '        Dim targetRange As Range: Set targetRange = wshFAC_Invoice_List.Range("A3:J" & LastRow)
 '        'Copy values from source range to target range
-'        targetRange.value = sourceRange.value
+'        targetRange.Value = sourceRange.Value
 '
 '        'Clear Prior Results
 '        .Range("AB3:AJ9999").ClearContents
@@ -88,7 +88,7 @@ Option Explicit
 '
 '    Dim detailNumb As String
 '    detailNumb = Replace(Application.Caller, "Aging", "")
-'    wshCAR_Dashboard.Range("AA504").value = detailNumb  'Set Detail level #
+'    wshCAR_Dashboard.Range("AA504").Value = detailNumb  'Set Detail level #
 '    wshCAR_Dashboard.Range("E2").Select                 'Select to trigger macro
 '
 'End Sub
@@ -107,7 +107,7 @@ Option Explicit
 '        lastResultRow = .Range("P99999").End(xlUp).row
 '        If lastResultRow < 3 Then Exit Sub
 '        .Range("Q3:V" & lastResultRow).formula = .Range("Q1:W1").formula
-'        wshCAR_Dashboard.Range("B35:H" & lastResultRow + 32).value = .Range("P3:V" & lastResultRow).value 'Bring over Aging Data
+'        wshCAR_Dashboard.Range("B35:H" & lastResultRow + 32).Value = .Range("P3:V" & lastResultRow).Value 'Bring over Aging Data
 '    End With
 '
 'End Sub
@@ -115,7 +115,7 @@ Option Explicit
 'Sub Aging_ShowCustDetail()
 '
 '    wshCAR_Dashboard.Range("J34:R499").ClearContents    'Clear Previous Results
-'    selRow = wshCAR_Dashboard.Range("AA1").value        'Set Selected Row
+'    selRow = wshCAR_Dashboard.Range("AA1").Value        'Set Selected Row
 '    With wshFAC_Invoice_List
 '        'Clear Prior Results
 '        LastRow = .Range("AB9999").End(xlUp).row + 1
@@ -129,7 +129,7 @@ Option Explicit
 '            Unique:=True
 '        lastResultRow = .Range("AB99999").End(xlUp).row
 '        If lastResultRow < 3 Then Exit Sub
-'        wshCAR_Dashboard.Range("J" & selRow & ":R" & selRow + lastResultRow - 1).value = .Range("AB1:AJ" & lastResultRow).value 'Bring over Customer Details
+'        wshCAR_Dashboard.Range("J" & selRow & ":R" & selRow + lastResultRow - 1).Value = .Range("AB1:AJ" & lastResultRow).Value 'Bring over Customer Details
 '            wshCAR_Dashboard.Range("J" & selRow & ":R" & selRow).HorizontalAlignment = xlCenterAcrossSelection
 '    End With
 '
@@ -150,7 +150,7 @@ Option Explicit
 '            Unique:=True
 '        lastResultRow = .Range("AB99999").End(xlUp).row
 '        If lastResultRow < 3 Then Exit Sub
-'        wshCAR_Dashboard.Range("B507:J" & lastResultRow + 504).value = .Range("AB3:AJ" & lastResultRow).value 'Bring over Aging Data
+'        wshCAR_Dashboard.Range("B507:J" & lastResultRow + 504).Value = .Range("AB3:AJ" & lastResultRow).Value 'Bring over Aging Data
 '    End With
 '
 'End Sub

@@ -92,7 +92,7 @@ Private Sub lsbProjetsFacture_DblClick(ByVal Cancel As MSForms.ReturnBoolean) '2
     wshFAC_Brouillon.Range("B52").Value = projetID
 '    Debug.Print "#018 - lsbProjetsFacture_DblClick_78   dte = "; dte; "   "; TypeName(dte)
     wshFAC_Brouillon.Range("B53").Value = dte
-'    Debug.Print "#019 - lsbProjetsFacture_DblClick_80   wshFAC_Brouillon.Range(""B53"").value = "; wshFAC_Brouillon.Range("B53").value; "   "; TypeName(wshFAC_Brouillon.Range("B53").value)
+'    Debug.Print "#019 - lsbProjetsFacture_DblClick_80   wshFAC_Brouillon.Range(""B53"").Value = "; wshFAC_Brouillon.Range("B53").Value; "   "; TypeName(wshFAC_Brouillon.Range("B53").Value)
     wshFAC_Brouillon.Range("B54").Value = honorairesTotal
     
     Application.EnableEvents = True

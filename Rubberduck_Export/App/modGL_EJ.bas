@@ -99,7 +99,7 @@ Sub JE_Renversement_Update()
     Application.ScreenUpdating = False
     Dim shp As Shape
     Set shp = wshGL_EJ.Shapes("btnUpdate")
-    Call Restaurer_Forme(shp)
+    Call GL_EJ_Forme_Restaurer(shp)
     
     'Renverser les montants (DT --> CT & CT ---> DT)
     For i = 9 To rowEJLast
@@ -445,7 +445,7 @@ Sub GL_EJ_Renverser_Ecriture()
     'Change le libellé du Bouton & caractéristiques
     Dim shp As Shape
     Set shp = wshGL_EJ.Shapes("btnUpdate")
-    Call Modifier_Forme(shp)
+    Call GL_EJ_Forme_Modifier(shp)
     
     'Libérer la mémoire
     Set ligne = Nothing
@@ -899,12 +899,13 @@ End Sub
 
 Sub GL_EJ_Back_To_Menu()
     
+    'Rétablir la forme du bouton (Mettre à jour / Renverser)
     Dim shp As Shape
     Set shp = wshGL_EJ.Shapes("btnUpdate")
-    Call Restaurer_Forme(shp)
+    Call GL_EJ_Forme_Restaurer(shp)
 
     'Nouvelle façon de faire
-    wshGL_EJ.Visible = xlSheetVeryHidden
+    wshGL_EJ.Visible = xlSheetHidden
     
     wshMenuGL.Activate
     wshMenuGL.Range("A1").Select
@@ -914,13 +915,10 @@ Sub GL_EJ_Back_To_Menu()
     
 End Sub
 
-Sub Sauvegarder_Forme(forme As Shape)
+Sub GL_EJ_Forme_Sauvegarder(forme As Shape)
 
     'Initialiser le Dictionary pour sauvegarder les caractéristiques
     Set sauvegardesCaracteristiquesForme = CreateObject("Scripting.Dictionary")
-
-    'Définir la feuille et la forme
-    Dim ws As Worksheet: Set ws = wshGL_EJ
 
     'Sauvegarder les caractéristiques originales de la forme
     sauvegardesCaracteristiquesForme("Left") = forme.Left
@@ -931,13 +929,9 @@ Sub Sauvegarder_Forme(forme As Shape)
     sauvegardesCaracteristiquesForme("Text") = forme.TextFrame2.TextRange.Text
     sauvegardesCaracteristiquesForme("TextColor") = forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB
     
-    'Libérer la mémoire
-'    Set sauvegardesCaracteristiquesForme = Nothing
-    Set ws = Nothing
-    
 End Sub
 
-Sub Modifier_Forme(forme As Shape)
+Sub GL_EJ_Forme_Modifier(forme As Shape)
 
     'Appliquer des modifications à la forme
     Application.ScreenUpdating = True
@@ -950,11 +944,12 @@ Sub Modifier_Forme(forme As Shape)
     forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB = RGB(255, 255, 255)
     
     DoEvents
+    
     Application.ScreenUpdating = False
     
 End Sub
 
-Sub Restaurer_Forme(forme As Shape)
+Sub GL_EJ_Forme_Restaurer(forme As Shape)
 
     'Vérifiez si les caractéristiques originales sont sauvegardées
     If sauvegardesCaracteristiquesForme Is Nothing Then

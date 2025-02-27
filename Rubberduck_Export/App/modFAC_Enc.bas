@@ -19,12 +19,12 @@ Sub Encaissement_Load_Open_Invoices() '2024-02-20 @ 14:09
             CopyToRange:=.Range("O2:S2")
         lastResultRow = .Range("O9999").End(xlUp).row
         If lastResultRow < 3 Then Exit Sub
-        wshENC_Saisie.Range("B2").value = True 'Set PaymentLoad to True
+        wshENC_Saisie.Range("B2").Value = True 'Set PaymentLoad to True
         .Range("R3:R" & lastResultRow).formula = .Range("R1").formula 'Total Payments Formula
         'Bring the Result data into our Payments List of Invoices
-        wshENC_Saisie.Range("E13:I" & lastResultRow + 10).value = .Range("O3:S" & lastResultRow).value
+        wshENC_Saisie.Range("E13:I" & lastResultRow + 10).Value = .Range("O3:S" & lastResultRow).Value
     End With
-    wshENC_Saisie.Range("B2").value = False 'Set PaymentLoad to False
+    wshENC_Saisie.Range("B2").Value = False 'Set PaymentLoad to False
     
     Call End_Timer("modFAC_Enc:Encaissement_Load_Open_Invoices()", timerStart)
 
@@ -36,9 +36,9 @@ Sub Encaissement_Save_Update() '2024-02-07 @ 12:27
     
     With wshENC_Saisie
         'Check for mandatory fields (4)
-        If .Range("F3").value = Empty Or _
-           .Range("J3").value = Empty Or _
-           .Range("J3").value = Empty Then
+        If .Range("F3").Value = Empty Or _
+           .Range("J3").Value = Empty Or _
+           .Range("J3").Value = Empty Then
             MsgBox "Assurez-vous d'avoir..." & vbNewLine & vbNewLine & _
                 "1. Un client" & vbNewLine & _
                 "2. Une date de paiement" & vbNewLine & _
@@ -48,39 +48,39 @@ Sub Encaissement_Save_Update() '2024-02-07 @ 12:27
             Exit Sub
         End If
         'Check to make sure Payment Amount = Applied Amount
-        If .Range("J5").value <> .Range("J10").value Then
+        If .Range("J5").Value <> .Range("J10").Value Then
             MsgBox "Assurez-vous que le montant du paiement soit ÉGAL" & vbNewLine & _
                 "à la somme des paiements appliqués", vbExclamation
             Exit Sub
         End If
         'New Payment -OR- Existing Payment ?
-        If .Range("B4").value = Empty Then 'New Payment
+        If .Range("B4").Value = Empty Then 'New Payment
             payRow = wshENC_Entête.Range("A999999").End(xlUp).row + 1 'First Available Row
-            .Range("B3").value = .Range("B5").value 'Next payment ID
-            'wshENC_Entête.Range("A" & payRow).value = .Range("B3").value 'PayID
+            .Range("B3").Value = .Range("B5").Value 'Next payment ID
+            'wshENC_Entête.Range("A" & payRow).Value = .Range("B3").Value 'PayID
             Call Add_Or_Update_Enc_Entete_Record_To_DB(0)
         Else 'Existing Payment
-            Call Add_Or_Update_Enc_Entete_Record_To_DB(.Range("B4").value)
+            Call Add_Or_Update_Enc_Entete_Record_To_DB(.Range("B4").Value)
         End If
         
         'Save Applied Invoices to Payment Detail
         lastPayItemRow = .Range("E999999").End(xlUp).row 'Last Pay Item
         
         For payItemRow = 13 To lastPayItemRow
-            If .Range("D" & payItemRow).value = Chr(252) Then 'The row has been applied
-                If .Range("K" & payItemRow).value = Empty Then 'New Pay Item row
+            If .Range("D" & payItemRow).Value = Chr(252) Then 'The row has been applied
+                If .Range("K" & payItemRow).Value = Empty Then 'New Pay Item row
                     payitemDBRow = wshENC_Détails.Range("A999999").End(xlUp).row + 1 'First Avail Pay Items Row
                     Call Add_Or_Update_Enc_Detail_Record_To_DB(0, payItemRow)
-                    'wshENC_Détails.Range("A" & payitemDBRow).value = .Range("B3").value 'Payment ID
-                    'wshENC_Détails.Range("F" & payitemDBRow).value = "=row()"
-                    .Range("K" & payItemRow).value = payitemDBRow 'Database Row
+                    'wshENC_Détails.Range("A" & payitemDBRow).Value = .Range("B3").Value 'Payment ID
+                    'wshENC_Détails.Range("F" & payitemDBRow).Value = "=row()"
+                    .Range("K" & payItemRow).Value = payitemDBRow 'Database Row
                 Else 'Existing Pay Item
-                    payitemDBRow = .Range("K" & payItemRow).value 'Existing Pay Item Row
+                    payitemDBRow = .Range("K" & payItemRow).Value 'Existing Pay Item Row
                 End If
-'                wshENC_Détails.Range("B" & payitemDBRow).value = .Range("F" & payItemRow).value 'Invoice ID
-'                wshENC_Détails.Range("C" & payitemDBRow).value = .Range("F3").value 'Customer
-'                wshENC_Détails.Range("D" & payitemDBRow).value = .Range("J3").value 'Pay Date
-'                wshENC_Détails.Range("E" & payitemDBRow).value = .Range("J" & payItemRow).value 'Amount paid
+'                wshENC_Détails.Range("B" & payitemDBRow).Value = .Range("F" & payItemRow).Value 'Invoice ID
+'                wshENC_Détails.Range("C" & payitemDBRow).Value = .Range("F3").Value 'Customer
+'                wshENC_Détails.Range("D" & payitemDBRow).Value = .Range("J3").Value 'Pay Date
+'                wshENC_Détails.Range("E" & payitemDBRow).Value = .Range("J" & payItemRow).Value 'Amount paid
             End If
         Next payItemRow
         
@@ -88,12 +88,12 @@ Sub Encaissement_Save_Update() '2024-02-07 @ 12:27
         Dim noEnc As String, nomClient As String, typeEnc As String, descEnc As String
         Dim dateEnc As Date
         Dim montantEnc As Currency
-        noEnc = wshENC_Saisie.Range("B5").value
-        dateEnc = wshENC_Saisie.Range("J3").value
-        nomClient = wshENC_Saisie.Range("F3").value
-        typeEnc = wshENC_Saisie.Range("F5").value
-        montantEnc = wshENC_Saisie.Range("J5").value
-        descEnc = wshENC_Saisie.Range("F7").value
+        noEnc = wshENC_Saisie.Range("B5").Value
+        dateEnc = wshENC_Saisie.Range("J3").Value
+        nomClient = wshENC_Saisie.Range("F3").Value
+        typeEnc = wshENC_Saisie.Range("F5").Value
+        montantEnc = wshENC_Saisie.Range("J5").Value
+        descEnc = wshENC_Saisie.Range("F7").Value
 
         Call Encaissement_GL_Posting(noEnc, dateEnc, nomClient, typeEnc, montantEnc, descEnc)  '2024-02-09 @ 08:17 - TODO
         
@@ -112,10 +112,10 @@ Sub Encaissement_Add_New() '2024-02-07 @ 12:39
 
     Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Enc:Encaissement_Add_New()")
 
-    wshENC_Saisie.Range("B2").value = False
+    wshENC_Saisie.Range("B2").Value = False
     wshENC_Saisie.Range("B3,F3:G3,J3,F5:G5,J5,F7:J8,D13:K42").ClearContents 'Clear Fields
-    wshENC_Saisie.Range("J3").value = Date 'Set Default Date
-    wshENC_Saisie.Range("F5").value = "Banque" ' Set Default type
+    wshENC_Saisie.Range("J3").Value = Date 'Set Default Date
+    wshENC_Saisie.Range("F5").Value = "Banque" ' Set Default type
     
     Call End_Timer("modFAC_Enc:Encaissement_Add_New()", timerStart)
     
@@ -134,17 +134,17 @@ Sub Encaissement_Previous() '2024-02-14 @ 11:04
             MsgBox "Vous devez avoir au minimum 1 paiement d'enregistré", vbExclamation
             Exit Sub
         End If
-        PayID = .Range("B3").value 'Payment ID
-        If PayID = 0 Or .Range("B4").value = Empty Then 'Load Last Payment Created
+        PayID = .Range("B3").Value 'Payment ID
+        If PayID = 0 Or .Range("B4").Value = Empty Then 'Load Last Payment Created
             payRow = wshENC_Entête.Range("A99999").End(xlUp).row 'Last Row
         Else
-            payRow = .Range("B4").value - 1 'Pay Row
+            payRow = .Range("B4").Value - 1 'Pay Row
         End If
-        If payRow = 3 Or MinPayID = .Range("B3").value Then 'First Payment
+        If payRow = 3 Or MinPayID = .Range("B3").Value Then 'First Payment
             MsgBox "Vous êtes au premier paiement", vbExclamation
             Exit Sub
         End If
-        .Range("B3").value = wshENC_Entête.Range("A" & payRow).value 'Set Payment ID
+        .Range("B3").Value = wshENC_Entête.Range("A" & payRow).Value 'Set Payment ID
         Call Encaissement_Load 'Load Payment
     End With
 
@@ -168,17 +168,17 @@ Sub Encaissement_Next() '2024-02-14 @ 11:04
             Exit Sub
         End If
         Dim PayID As Long
-        PayID = .Range("B3").value 'Payment ID
-        If PayID = 0 Or .Range("B4").value = Empty Then 'Load Last Payment Created
+        PayID = .Range("B3").Value 'Payment ID
+        If PayID = 0 Or .Range("B4").Value = Empty Then 'Load Last Payment Created
             payRow = 4 'On new Payment, GOTO first one created
         Else
-            payRow = .Range("B4").value + 1 'Pay Row
+            payRow = .Range("B4").Value + 1 'Pay Row
         End If
         If MaxPayID = PayID Then 'Last Payment
             MsgBox "Vous êtes au dernier paiement", vbExclamation
             Exit Sub
         End If
-        .Range("B3").value = wshENC_Entête.Range("A" & payRow).value 'Set PayID
+        .Range("B3").Value = wshENC_Entête.Range("A" & payRow).Value 'Set PayID
         Call Encaissement_Load 'Load Payment for the PayID
     End With
     
@@ -193,19 +193,19 @@ Sub Encaissement_Load() '2024-02-14 @ 11:04
     Dim timerStart As Double: timerStart = Timer: Call Start_Timer("modFAC_Enc:Encaissement_Load()")
 
     With wshENC_Saisie
-        If .Range("B4").value = Empty Then
+        If .Range("B4").Value = Empty Then
             MsgBox "Assurez vous de choisir un paiement valide", vbExclamation
             Exit Sub
         End If
-        payRow = .Range("B4").value 'Payment Row
-        .Range("B2").value = True
+        payRow = .Range("B4").Value 'Payment Row
+        .Range("B2").Value = True
         .Range("F3:G3,J3,F5:G5,J5,F7:J8,D13:K42").ClearContents
         'Update worksheet fields
-        .Range("J3").value = wshENC_Entête.Cells(payRow, 2).value
-        .Range("F3").value = wshENC_Entête.Cells(payRow, 3).value
-        .Range("F5").value = wshENC_Entête.Cells(payRow, 4).value
-        .Range("J5").value = wshENC_Entête.Cells(payRow, 5).value
-        .Range("F7").value = wshENC_Entête.Cells(payRow, 6).value
+        .Range("J3").Value = wshENC_Entête.Cells(payRow, 2).Value
+        .Range("F3").Value = wshENC_Entête.Cells(payRow, 3).Value
+        .Range("F5").Value = wshENC_Entête.Cells(payRow, 4).Value
+        .Range("J5").Value = wshENC_Entête.Cells(payRow, 5).Value
+        .Range("F7").Value = wshENC_Entête.Cells(payRow, 6).Value
         
         'Load Pay Items
         With wshENC_Détails
@@ -222,10 +222,10 @@ Sub Encaissement_Load() '2024-02-14 @ 11:04
             'Bring down the formulas into results
             .Range("M4:N" & lastResultRow).formula = .Range("M1:N1").formula 'Bring Apply and Invoice Date Formulas
             .Range("P4:R" & lastResultRow).formula = .Range("P1:R1").formula 'Inv. Amount, Prev. payments & Balance formulas
-            wshENC_Saisie.Range("D13:K" & lastResultRow + 9).value = .Range("M4:T" & lastResultRow).value 'Bring over Pay Items
+            wshENC_Saisie.Range("D13:K" & lastResultRow + 9).Value = .Range("M4:T" & lastResultRow).Value 'Bring over Pay Items
 NoData:
         End With
-        .Range("B2").value = False 'Payment Load to False
+        .Range("B2").Value = False 'Payment Load to False
     End With
     
     Call End_Timer("modFAC_Enc:Encaissement_Load()", timerStart)
@@ -256,7 +256,7 @@ End Sub
 '
 '    'Import AR_Summary from 'GCF_DB_Sortie.xlsx'
 '    Dim sourceWorkbook As String, sourceTab As String
-'    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+'    sourceWorkbook = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
 '                     "GCF_BD_MASTER.xlsx" '2024-02-14 @ 06:22
 '    sourceTab = "FAC_Comptes_Clients"
 '
@@ -321,7 +321,7 @@ Sub FAC_ENC_Entête_Import_All() '2024-02-14 @ 10:05
 
     'Import AR_Summary from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx" '2024-02-14 @ 06:22
     sourceTab = "FAC_ENC_Entête"
     
@@ -353,7 +353,7 @@ Sub FAC_ENC_Détails_Import_All() '2024-02-14 @ 10:14
 
     'Import AR_Summary from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx" '2024-02-14 @ 06:22
     sourceTab = "FAC_ENC_Détails"
     
@@ -383,7 +383,7 @@ Sub Add_Or_Update_Enc_Entete_Record_To_DB(r As Long) 'Write -OR- Update a record
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_ENC_Entête"
     
@@ -405,11 +405,11 @@ Sub Add_Or_Update_Enc_Entete_Record_To_DB(r As Long) 'Write -OR- Update a record
         
         'Get the last used row
         Dim LastRow As Long
-        If IsNull(rs.Fields("MaxID").value) Then
+        If IsNull(rs.Fields("MaxID").Value) Then
             ' Handle empty table (assign a default value, e.g., 1)
             LastRow = 1
         Else
-            LastRow = rs.Fields("MaxID").value
+            LastRow = rs.Fields("MaxID").Value
         End If
         
         'Calculate the new ID
@@ -422,22 +422,22 @@ Sub Add_Or_Update_Enc_Entete_Record_To_DB(r As Long) 'Write -OR- Update a record
         
         'Add fields to the recordset before updating it
         rs.AddNew
-            rs.Fields("Pay_ID").value = nextID
-            rs.Fields("Pay_Date").value = CDate(wshENC_Saisie.Range("J3").value)
-            rs.Fields("Customer").value = wshENC_Saisie.Range("F3").value
-            rs.Fields("Pay_Type").value = wshENC_Saisie.Range("F5").value
-            rs.Fields("Amount").value = Format$(wshENC_Saisie.Range("J5").value, "#,##0.00")
-            rs.Fields("Notes").value = wshENC_Saisie.Range("F7").value
+            rs.Fields("Pay_ID").Value = nextID
+            rs.Fields("Pay_Date").Value = CDate(wshENC_Saisie.Range("J3").Value)
+            rs.Fields("Customer").Value = wshENC_Saisie.Range("F3").Value
+            rs.Fields("Pay_Type").Value = wshENC_Saisie.Range("F5").Value
+            rs.Fields("Amount").Value = Format$(wshENC_Saisie.Range("J5").Value, "#,##0.00")
+            rs.Fields("Notes").Value = wshENC_Saisie.Range("F7").Value
     Else 'Update an existing record
         'Open the recordset for the specified ID
         rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE TEC_ID=" & r, conn, 2, 3
         If Not rs.EOF Then
             'Update fields for the existing record
-            rs.Fields("Pay_Date").value = CDate(wshENC_Saisie.Range("J3").value)
-            rs.Fields("Customer").value = wshENC_Saisie.Range("F3").value
-            rs.Fields("Pay_Type").value = wshENC_Saisie.Range("F5").value
-            rs.Fields("Amount").value = Format$(wshENC_Saisie.Range("J5").value, "#,##0.00")
-            rs.Fields("Notes").value = wshENC_Saisie.Range("F7").value
+            rs.Fields("Pay_Date").Value = CDate(wshENC_Saisie.Range("J3").Value)
+            rs.Fields("Customer").Value = wshENC_Saisie.Range("F3").Value
+            rs.Fields("Pay_Type").Value = wshENC_Saisie.Range("F5").Value
+            rs.Fields("Amount").Value = Format$(wshENC_Saisie.Range("J5").Value, "#,##0.00")
+            rs.Fields("Notes").Value = wshENC_Saisie.Range("F7").Value
         Else
             'Handle the case where the specified ID is not found
             MsgBox "L'enregistrement avec le Pay_ID '" & r & "' ne peut être trouvé!", vbExclamation
@@ -468,7 +468,7 @@ Sub Add_Or_Update_Enc_Detail_Record_To_DB(r As Long, encRow As Long) 'Write -OR-
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_ENC_Détails"
     
@@ -489,11 +489,11 @@ Sub Add_Or_Update_Enc_Detail_Record_To_DB(r As Long, encRow As Long) 'Write -OR-
         
         'Get the last used row
         Dim LastRow As Long
-        If IsNull(rs.Fields("MaxID").value) Then
+        If IsNull(rs.Fields("MaxID").Value) Then
             ' Handle empty table (assign a default value, e.g., 1)
             LastRow = 1
         Else
-            LastRow = rs.Fields("MaxID").value
+            LastRow = rs.Fields("MaxID").Value
         End If
         
         'Calculate the new ID
@@ -506,21 +506,21 @@ Sub Add_Or_Update_Enc_Detail_Record_To_DB(r As Long, encRow As Long) 'Write -OR-
         
         'Add fields to the recordset before updating it
         rs.AddNew
-            rs.Fields("Pay_ID").value = nextID
-            rs.Fields("Inv_No").value = wshENC_Saisie.Range("F" & encRow).value
-            rs.Fields("Customer").value = wshENC_Saisie.Range("F3").value
-            rs.Fields("Pay_Date").value = CDate(wshENC_Saisie.Range("J3").value)
-            rs.Fields("Pay_Amount").value = Format$(wshENC_Saisie.Range("J" & encRow).value, "#,##0.00")
+            rs.Fields("Pay_ID").Value = nextID
+            rs.Fields("Inv_No").Value = wshENC_Saisie.Range("F" & encRow).Value
+            rs.Fields("Customer").Value = wshENC_Saisie.Range("F3").Value
+            rs.Fields("Pay_Date").Value = CDate(wshENC_Saisie.Range("J3").Value)
+            rs.Fields("Pay_Amount").Value = Format$(wshENC_Saisie.Range("J" & encRow).Value, "#,##0.00")
     Else 'Update an existing record
         'Open the recordset for the specified ID
         rs.Open "SELECT * FROM [" & destinationTab & "$] WHERE TEC_ID=" & r, conn, 2, 3
         If Not rs.EOF Then
             'Update fields for the existing record
-            rs.Fields("Inv_No").value = wshENC_Saisie.Range("F" & encRow).value
-            rs.Fields("Customer").value = wshENC_Saisie.Range("F3").value
-            rs.Fields("Pay_Date").value = CDate(wshENC_Saisie.Range("J3").value)
-            rs.Fields("Amount").value = Format$(wshENC_Saisie.Range("J5").value, "#,##0.00")
-            rs.Fields("Notes").value = wshENC_Saisie.Range("F7").value
+            rs.Fields("Inv_No").Value = wshENC_Saisie.Range("F" & encRow).Value
+            rs.Fields("Customer").Value = wshENC_Saisie.Range("F3").Value
+            rs.Fields("Pay_Date").Value = CDate(wshENC_Saisie.Range("J3").Value)
+            rs.Fields("Amount").Value = Format$(wshENC_Saisie.Range("J5").Value, "#,##0.00")
+            rs.Fields("Notes").Value = wshENC_Saisie.Range("F7").Value
         Else
             'Handle the case where the specified ID is not found
             MsgBox "L'enregistrement avec le Pay_ID '" & r & "' ne peut être trouvé!", vbExclamation

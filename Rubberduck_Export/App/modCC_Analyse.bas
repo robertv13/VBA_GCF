@@ -63,7 +63,7 @@ Sub CC_Sort_Group_And_Subtotal()
     
     'Set the current worksheet as the result
     Dim wsDest As Worksheet: Set wsDest = wshCC_Analyse
-    wsDest.Range("J3").value = #7/24/2025#
+    wsDest.Range("J3").Value = #7/24/2025#
     'Remove existing subtotals in the destination worksheet
     On Error Resume Next
     wsDest.Cells.RemoveSubtotal
@@ -91,23 +91,23 @@ Sub CC_Sort_Group_And_Subtotal()
     Dim ageJours As Long
     For i = 3 To lastUsedRow
         'Conditions for exclusion (adjust as needed)
-        If wsSource.Cells(i, 9).value <> 0 Then
-            If wsSource.Cells(i, 2).value <= wsDest.Range("J3").value Then
-'                wsDest.Cells(r, 1).value = wsSource.Cells(i, ftecTEC_ID).value
-                wsDest.Cells(r, 1).value = wsSource.Cells(i, 3).value
-                wsDest.Cells(r, 2).value = wsSource.Cells(i, 1).value
-                wsDest.Cells(r, 3).value = wsSource.Cells(i, 2).value
-                wsDest.Cells(r, 4).value = wsSource.Cells(i, 6).value
-                ageJours = Round(Now() - wsSource.Cells(i, 6).value, 0)
+        If wsSource.Cells(i, 9).Value <> 0 Then
+            If wsSource.Cells(i, 2).Value <= wsDest.Range("J3").Value Then
+'                wsDest.Cells(r, 1).Value = wsSource.Cells(i, ftecTEC_ID).Value
+                wsDest.Cells(r, 1).Value = wsSource.Cells(i, 3).Value
+                wsDest.Cells(r, 2).Value = wsSource.Cells(i, 1).Value
+                wsDest.Cells(r, 3).Value = wsSource.Cells(i, 2).Value
+                wsDest.Cells(r, 4).Value = wsSource.Cells(i, 6).Value
+                ageJours = Round(Now() - wsSource.Cells(i, 6).Value, 0)
                 wsDest.Cells(r, 5).formula = ageJours
-                wsDest.Cells(r, 6).value = wsSource.Cells(i, 9).value
+                wsDest.Cells(r, 6).Value = wsSource.Cells(i, 9).Value
                 b = Fn_Get_Bucket_For_Aging(ageJours, _
-                                            wsDest.Range("M3").value, _
-                                            wsDest.Range("N3").value, _
-                                            wsDest.Range("O3").value, _
-                                            wsDest.Range("P3").value)
+                                            wsDest.Range("M3").Value, _
+                                            wsDest.Range("N3").Value, _
+                                            wsDest.Range("O3").Value, _
+                                            wsDest.Range("P3").Value)
                 If b < 0 Or b > 4 Then Stop
-                wsDest.Cells(r, 7 + b).value = wsSource.Cells(i, 9).value
+                wsDest.Cells(r, 7 + b).Value = wsSource.Cells(i, 9).Value
                 r = r + 1
             End If
         End If
@@ -193,7 +193,7 @@ Sub CC_Sort_Group_And_Subtotal()
     
     'Change the format of all Client's Total rows
     For r = 7 To destLastUsedRow
-        If InStr(wsDest.Range("A" & r).value, "Total ") = 1 Then
+        If InStr(wsDest.Range("A" & r).Value, "Total ") = 1 Then
             With wsDest.Range("A" & r & ":K" & r).Interior
                 .Pattern = xlSolid
                 .PatternColorIndex = xlAutomatic

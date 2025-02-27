@@ -897,10 +897,10 @@ Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
     nouveauDossier = cheminRacineDestination & dateHeure & "\"
     
     'Créer le répertoire s'il n'existe pas déjà (ne devrait pas exister)
-    Dim FSO As Object
-    Set FSO = CreateObject("Scripting.FileSystemObject")
-    If Not FSO.folderExists(nouveauDossier) Then
-        FSO.CreateFolder nouveauDossier
+    Dim fso As Object
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    If Not fso.folderExists(nouveauDossier) Then
+        fso.CreateFolder nouveauDossier
     End If
     
     'Noms des deux fichiers à copier (fixe)
@@ -909,15 +909,15 @@ Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
     nomFichier2 = "GCF_BD_Entrée.xlsx"
     
     'Copier le premier fichier
-    If FSO.fileExists(cheminSourcePROD & nomFichier1) Then
-        FSO.CopyFile source:=cheminSourcePROD & nomFichier1, Destination:=nouveauDossier, OverwriteFiles:=False
+    If fso.fileExists(cheminSourcePROD & nomFichier1) Then
+        fso.CopyFile source:=cheminSourcePROD & nomFichier1, Destination:=nouveauDossier, OverwriteFiles:=False
     Else
         MsgBox "Fichier non trouvé : " & cheminSourcePROD & nomFichier1, vbExclamation, "Erreur"
     End If
     
     'Copier le deuxième fichier
-    If FSO.fileExists(cheminSourcePROD & nomFichier2) Then
-        FSO.CopyFile source:=cheminSourcePROD & nomFichier2, Destination:=nouveauDossier, OverwriteFiles:=False
+    If fso.fileExists(cheminSourcePROD & nomFichier2) Then
+        fso.CopyFile source:=cheminSourcePROD & nomFichier2, Destination:=nouveauDossier, OverwriteFiles:=False
     Else
         MsgBox "Fichier non trouvé : " & cheminSourcePROD & nomFichier2, vbExclamation, "Erreur"
     End If
@@ -927,7 +927,7 @@ Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
     fichier = Dir(cheminSourcePROD & "*.log")
     Do While fichier <> ""
         'Copie du fichier PROD ---> Local
-        FSO.CopyFile source:=cheminSourcePROD & fichier, Destination:=nouveauDossier, OverwriteFiles:=False
+        fso.CopyFile source:=cheminSourcePROD & fichier, Destination:=nouveauDossier, OverwriteFiles:=False
         'Efface le fichier PROD (initialiation)
         Kill cheminSourcePROD & fichier
         'Fichier suivant à copier
@@ -940,15 +940,15 @@ Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
     dossierDEV = "C:\VBA\GC_FISCALITÉ\DataFiles\"
     
     'Copier le premier fichier
-    If FSO.fileExists(nouveauDossier & nomFichier1) Then
-        FSO.CopyFile source:=cheminSourcePROD & nomFichier1, Destination:=dossierDEV, OverwriteFiles:=True
+    If fso.fileExists(nouveauDossier & nomFichier1) Then
+        fso.CopyFile source:=cheminSourcePROD & nomFichier1, Destination:=dossierDEV, OverwriteFiles:=True
     Else
         MsgBox "Fichier non trouvé : " & nouveauDossier & nomFichier1, vbExclamation, "Erreur"
     End If
     
     'Copier le deuxième fichier
-    If FSO.fileExists(nouveauDossier & nomFichier2) Then
-        FSO.CopyFile source:=cheminSourcePROD & nomFichier2, Destination:=dossierDEV, OverwriteFiles:=True
+    If fso.fileExists(nouveauDossier & nomFichier2) Then
+        fso.CopyFile source:=cheminSourcePROD & nomFichier2, Destination:=dossierDEV, OverwriteFiles:=True
     Else
         MsgBox "Fichier non trouvé : " & nouveauDossier & nomFichier2, vbExclamation, "Erreur"
     End If
@@ -981,8 +981,8 @@ Sub AjusterTableauxDansMaster() '2024-12-07 @ 06:47
     Dim ws As Worksheet
     Dim listeObjets As ListObjects
     Dim tableau As ListObject
-    Dim derniereLigne As Long
-    Dim derniereColonne As Long
+    Dim DerniereLigne As Long
+    Dim DerniereColonne As Long
     Dim nouvellePlage As Range
     
     For Each ws In wb.Worksheets
@@ -990,12 +990,12 @@ Sub AjusterTableauxDansMaster() '2024-12-07 @ 06:47
         'Parcourir chaque tableau de la feuille
         For Each tableau In listeObjets
             'Trouver la dernière ligne avec des données
-            derniereLigne = ws.Cells(ws.Rows.count, tableau.Range.Column).End(xlUp).row
+            DerniereLigne = ws.Cells(ws.Rows.count, tableau.Range.Column).End(xlUp).row
             'Trouver la dernière colonne avec des données
-            derniereColonne = ws.Cells(tableau.HeaderRowRange.row, ws.Columns.count).End(xlToLeft).Column
+            DerniereColonne = ws.Cells(tableau.HeaderRowRange.row, ws.Columns.count).End(xlToLeft).Column
             'Redéfinir la plage du tableau
             Set nouvellePlage = ws.Range(ws.Cells(tableau.HeaderRowRange.row, tableau.Range.Column), _
-                                         ws.Cells(derniereLigne, derniereColonne))
+                                         ws.Cells(DerniereLigne, DerniereColonne))
             On Error Resume Next
             tableau.Resize nouvellePlage
             On Error GoTo 0
@@ -1512,5 +1512,93 @@ Sub ListerValidations()
     
     MsgBox "Liste des validations générée dans la feuille 'ListeValidations'.", vbInformation
     
+End Sub
+
+Sub AppliquerGrille(ws As Worksheet, plages As Variant)
+
+    'Appliquer le grillage à chaque plage spécifiée
+    Dim i As Integer
+    For i = LBound(plages) To UBound(plages)
+        Call CreerBorduresInterieures(ws.Range(plages(i)))
+    Next i
+    
+End Sub
+
+Sub CreerBorduresInterieures(rng As Variant) '2025-02-24 @ 16:40
+    
+    With rng.Borders
+        .LineStyle = xlContinuous
+        .Weight = xlThin
+        .ColorIndex = xlAutomatic
+    End With
+
+    'Appliquer les bordures intérieures (horizontales & verticales)
+    With rng.Borders(xlInsideHorizontal)
+        .LineStyle = xlContinuous
+        .Weight = xlHairline
+    End With
+
+    With rng.Borders(xlInsideVertical)
+        .LineStyle = xlContinuous
+        .Weight = xlHairline
+    End With
+            
+End Sub
+
+Sub UniformiserValeurVBA()
+
+    Dim fso As Object
+    Dim dossier As String
+    Dim fichier As Object
+    Dim fichierTexte As Object
+    Dim contenu As String
+    Dim toUpper As Boolean: toUpper = True ' True = mettre ".Value", False = mettre ".Value"
+    
+    ' Demander à l'utilisateur de sélectionner le dossier
+    With Application.fileDialog(msoFileDialogFolderPicker)
+        .Title = "Sélectionnez le dossier contenant les fichiers VBA"
+        If .show = -1 Then
+            dossier = .selectedItems(1)
+        Else
+            Exit Sub ' Annuler l'opération si aucun dossier sélectionné
+        End If
+    End With
+    
+    ' Vérifier si le dossier est valide
+    If Len(Dir(dossier, vbDirectory)) = 0 Then
+        MsgBox "Dossier invalide.", vbExclamation
+        Exit Sub
+    End If
+    
+    ' Initialiser FileSystemObject
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    
+    ' Parcourir tous les fichiers .bas, .cls, .frm du dossier
+    For Each fichier In fso.GetFolder(dossier).Files
+        If fichier.Name Like "*.bas" Or fichier.Name Like "*.cls" Or fichier.Name Like "*.frm" Then
+            ' Lire le contenu du fichier
+            Set fichierTexte = fso.OpenTextFile(fichier.path, 1) ' Mode lecture
+            contenu = fichierTexte.ReadAll
+            fichierTexte.Close
+            
+            ' Modifier le contenu
+            If toUpper Then
+                contenu = Replace(contenu, ".Value", ".Value")
+            Else
+                contenu = Replace(contenu, ".Value", ".Value")
+            End If
+            
+            ' Réécrire le fichier modifié
+            Set fichierTexte = fso.OpenTextFile(fichier.path, 2) ' Mode écriture
+            fichierTexte.Write contenu
+            fichierTexte.Close
+        End If
+    Next
+    
+    ' Nettoyage
+    Set fichierTexte = Nothing
+    Set fso = Nothing
+    
+    MsgBox "Correction terminée !", vbInformation
 End Sub
 

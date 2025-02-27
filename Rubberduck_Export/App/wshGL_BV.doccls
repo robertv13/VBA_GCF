@@ -31,7 +31,7 @@ Private Sub Worksheet_Activate()
         .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
         
-        .Range("B10").Value = 0
+        .Range("B10").value = 0
     End With
     
     Dim cbx As Shape
@@ -44,7 +44,7 @@ Private Sub Worksheet_Activate()
     Application.ScreenUpdating = True
     Application.EnableEvents = True
     
-    ws.Range("J1").Value = ""
+    ws.Range("J1").value = ""
     
     With ws
         .Range("J1").Select
@@ -62,9 +62,11 @@ End Sub
 Private Sub Worksheet_SelectionChange(ByVal target As Range)
 
     If Not dynamicShape Is Nothing Then
+        On Error Resume Next
         If dynamicShape.Visible = True Then
             dynamicShape.Visible = False
         End If
+        On Error GoTo 0
     End If
     
     If previousCellAddress <> "" Then
@@ -77,16 +79,16 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
     End If
     
     'An account has been selected from Trial Balance
-    If Not Intersect(target, wshGL_BV.Range("D4:G" & Range("B2").Value - 2)) Is Nothing Then
+    If Not Intersect(target, wshGL_BV.Range("D4:G" & Range("B2").value - 2)) Is Nothing Then
         If target.CountLarge > 1 Then Exit Sub
         Call GL_BV_Effacer_Zone_Et_Shape
         Application.EnableEvents = False
         Dim GLAcct As String, GLDescription As String, dateLimite As Date
-        GLAcct = CStr(Range("D" & target.row).Value)
-        GLDescription = Range("E" & target.row).Value
-        dateLimite = Format$(Range("J1").Value, wshAdmin.Range("B1").Value)
-        wshGL_BV.Range("B10").Value = 0
-        Range("T2").Value = "Toutes les dates"
+        GLAcct = CStr(Range("D" & target.row).value)
+        GLDescription = Range("E" & target.row).value
+        dateLimite = Format$(Range("J1").value, wshAdmin.Range("B1").value)
+        wshGL_BV.Range("B10").value = 0
+        Range("T2").value = "Toutes les dates"
         'Display all transactions for the selected G/L
         Call GL_BV_Display_Trans_For_Selected_Account(GLAcct, GLDescription, #7/31/2024#, dateLimite)
         Application.EnableEvents = True
@@ -97,15 +99,15 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
         target.Cells.count = 1 And _
         wshGL_BV.Range("M" & target.row) <> "" Then
             Dim noJE As Long
-            noJE = wshGL_BV.Range("N" & target.row).Value
+            noJE = wshGL_BV.Range("N" & target.row).value
             Application.EnableEvents = False
-            wshGL_BV.Range("B10").Value = target.row
+            wshGL_BV.Range("B10").value = target.row
             Application.EnableEvents = True
             Call GL_Get_JE_Detail_Trans_AF(noJE)
             Call wshGL_BV_Display_JE_Trans_With_Shape
     Else
         Application.EnableEvents = False
-        wshGL_BV.Range("B10").Value = 0
+        wshGL_BV.Range("B10").value = 0
         Application.EnableEvents = True
         Dim shp As Shape
         On Error Resume Next
@@ -157,11 +159,11 @@ Private Sub Worksheet_Change(ByVal target As Range) 'Worksheet wshBV - 2023-12-3
         Application.EnableEvents = False
         
        'Try to convert the input to a complete valid date
-        fullDate = Fn_Complete_Date(target.Value, 999, 15)
+        fullDate = Fn_Complete_Date(target.value, 999, 15)
        
         'Update the cell with the full date, if valid
         If fullDate <> "Invalid Date" Then
-            target.Value = Format$(fullDate, wshAdmin.Range("B1").Value)
+            target.value = Format$(fullDate, wshAdmin.Range("B1").value)
         Else
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshGL_BV_139")
             Application.EnableEvents = False
@@ -170,26 +172,26 @@ Private Sub Worksheet_Change(ByVal target As Range) 'Worksheet wshBV - 2023-12-3
             Application.Goto Range(target.Address)
         End If
         
-        Range("B9").Value = Range("J1").Value
-'        Range("L2").value = ""
+        Range("B9").value = Range("J1").value
+'        Range("L2").Value = ""
         
         Dim ws As Worksheet
         Set ws = wshGL_BV
-        Call GL_Trial_Balance_Build(ws, Range("J1").Value)
+        Call GL_Trial_Balance_Build(ws, Range("J1").value)
         
         Application.EnableEvents = True
     End If
 
     'Changement des dates (from/to) pour les transactions détaillées
     If Not Intersect(target, Range("T2")) Is Nothing Then 'Dates have changed
-        If Range("T2").Value <> "" Then
+        If Range("T2").value <> "" Then
             Application.EnableEvents = False
             
-            Call GL_BV_Determine_From_And_To_Date(Range("T2").Value)
+            Call GL_BV_Determine_From_And_To_Date(Range("T2").value)
                     
             'Force redisplay of GL Transactions details
-            Call GL_BV_Display_Trans_For_Selected_Account(Range("B6").Value, Range("B7").Value, _
-                Range("B8").Value, Range("B9").Value)
+            Call GL_BV_Display_Trans_For_Selected_Account(Range("B6").value, Range("B7").value, _
+                Range("B8").value, Range("B9").value)
         End If
     End If
     

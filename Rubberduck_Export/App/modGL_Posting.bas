@@ -6,7 +6,7 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant, ByRef glEntryNo) 'Generic
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Posting:GL_Posting_To_DB", 0)
 
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "GL_Trans"
     
@@ -24,11 +24,11 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant, ByRef glEntryNo) 'Generic
     
     'Get the last used row
     Dim lastJE As Long
-    If IsNull(rs.Fields("MaxEJNo").value) Then
+    If IsNull(rs.Fields("MaxEJNo").Value) Then
         ' Handle empty table (assign a default value, e.g., 1)
         lastJE = 0
     Else
-        lastJE = rs.Fields("MaxEJNo").value
+        lastJE = rs.Fields("MaxEJNo").Value
     End If
     
     'Calculate the new JE number
@@ -94,19 +94,19 @@ Sub GL_Posting_Locally(df, desc, source, arr As Variant, ByRef glEntryNo) 'Write
     With wshGL_Trans
         For i = LBound(arr, 1) To UBound(arr, 1)
             If arr(i, 1) <> "" Then
-                .Range("A" & rowToBeUsed).value = glEntryNo
-                .Range("B" & rowToBeUsed).value = CDate(df)
-                .Range("C" & rowToBeUsed).value = desc
-                .Range("D" & rowToBeUsed).value = source
-                .Range("E" & rowToBeUsed).value = arr(i, 1)
-                .Range("F" & rowToBeUsed).value = arr(i, 2)
+                .Range("A" & rowToBeUsed).Value = glEntryNo
+                .Range("B" & rowToBeUsed).Value = CDate(df)
+                .Range("C" & rowToBeUsed).Value = desc
+                .Range("D" & rowToBeUsed).Value = source
+                .Range("E" & rowToBeUsed).Value = arr(i, 1)
+                .Range("F" & rowToBeUsed).Value = arr(i, 2)
                 If arr(i, 3) > 0 Then
-                     .Range("G" & rowToBeUsed).value = CDbl(arr(i, 3))
+                     .Range("G" & rowToBeUsed).Value = CDbl(arr(i, 3))
                 Else
-                     .Range("H" & rowToBeUsed).value = -CDbl(arr(i, 3))
+                     .Range("H" & rowToBeUsed).Value = -CDbl(arr(i, 3))
                 End If
-                .Range("I" & rowToBeUsed).value = arr(i, 4)
-                .Range("J" & rowToBeUsed).value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
+                .Range("I" & rowToBeUsed).Value = arr(i, 4)
+                .Range("J" & rowToBeUsed).Value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
                 rowToBeUsed = rowToBeUsed + 1
             End If
         Next i

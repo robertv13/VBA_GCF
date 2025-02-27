@@ -37,7 +37,7 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
                 Call Log_Saisie_Heures("info     ", "@00045 - AJUSTEMENT (PLUG) --->   y = " & y & "   m = " & m & "   d = " & d & "   type = " & TypeName(ufSaisieHeures.txtDate.Value))
             End If
             ufSaisieHeures.txtDate.Value = Format$(DateSerial(y, m, d), "yyyy-mm-dd")
-            Call Log_Saisie_Heures("info     ", "@00048 - ufSaisieHeures.txtDate.value = " & ufSaisieHeures.txtDate.Value & "   type = " & TypeName(ufSaisieHeures.txtDate.Value) & "   après assignation")
+            Call Log_Saisie_Heures("info     ", "@00048 - ufSaisieHeures.txtDate.Value = " & ufSaisieHeures.txtDate.Value & "   type = " & TypeName(ufSaisieHeures.txtDate.Value) & "   après assignation")
             apres = ufSaisieHeures.txtDate.Value
             If apres <> avant Then
                 Call Log_Saisie_Heures("adjust   ", "@00051 - La date a été changée pour corriger la date - " & avant & " ---> " & apres)
@@ -734,7 +734,7 @@ End Sub
 '    End If
 '
 ''    'Modifie le critère pour forcer une execution du AdvancedFilter dans wshTEC_TDB_Data
-''    wshTEC_TDB_Data.Range("S7").value = ufSaisieHeures.cmbProfessionnel.value
+''    wshTEC_TDB_Data.Range("S7").Value = ufSaisieHeures.cmbProfessionnel.Value
 ''
 '    ufSaisieHeures.txtTotalHeures.Value = ""
 '    ufSaisieHeures.txtHresFact.Value = ""

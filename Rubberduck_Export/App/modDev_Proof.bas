@@ -201,11 +201,11 @@ Sub AnalyserFichiersLogSaisieHeures() '2024-12-15 @ 11:03
     cheminDossier = "C:\VBA\GC_FISCALITÉ\GCF_DataFiles\"
 
     'Initialiser FileSystemObject
-    Dim FSO As Object
-    Set FSO = CreateObject("Scripting.FileSystemObject")
+    Dim fso As Object
+    Set fso = CreateObject("Scripting.FileSystemObject")
     
     Dim dossier As Object
-    Set dossier = FSO.GetFolder(cheminDossier)
+    Set dossier = fso.GetFolder(cheminDossier)
     
     'Mettre en place le fichier de sortie
     Dim output As String
@@ -229,7 +229,7 @@ Sub AnalyserFichiersLogSaisieHeures() '2024-12-15 @ 11:03
     r = r + 1
 
     'Appeler la fonction récursive pour analyser tous les fichiers
-    Call AnalyserDossier(dossier, FSO, ws, r)
+    Call AnalyserDossier(dossier, fso, ws, r)
 
     'Tri des informations
     If r > 2 Then
@@ -259,7 +259,7 @@ Sub AnalyserFichiersLogSaisieHeures() '2024-12-15 @ 11:03
     
 End Sub
 
-Sub AnalyserDossier(dossier As Object, FSO As Object, ws As Worksheet, r As Long)
+Sub AnalyserDossier(dossier As Object, fso As Object, ws As Worksheet, r As Long)
 
     'Parcourir tous les fichiers de dossier
     Dim fichier As Object
@@ -277,7 +277,7 @@ Sub AnalyserDossier(dossier As Object, FSO As Object, ws As Worksheet, r As Long
 
             'Ouvrir le fichier pour lecture seulement
             Dim fichierSource As Object
-            Set fichierSource = FSO.OpenTextFile(cheminFichier, ForReading)
+            Set fichierSource = fso.OpenTextFile(cheminFichier, ForReading)
 
             'Parcourir les lignes du fichier
             Dim ligne As String, user As String, timeStamp As String, version As String, oper As String
@@ -339,7 +339,7 @@ Sub AnalyserDossier(dossier As Object, FSO As Object, ws As Worksheet, r As Long
     'Parcourir tous les sous-dossiers
     Dim sousDossier As Object
     For Each sousDossier In dossier.SubFolders
-        Call AnalyserDossier(sousDossier, FSO, ws, r)
+        Call AnalyserDossier(sousDossier, fso, ws, r)
     Next sousDossier
 
 End Sub

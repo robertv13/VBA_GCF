@@ -28,9 +28,6 @@ Private Sub Worksheet_Activate()
         ws.Range("C6:S" & lastUsedRow).ClearContents
     End If
     
-    'Date limite est vide
-    ws.Range("F3").Value = ""
-    
     Application.ScreenUpdating = True
     Application.EnableEvents = True
     
@@ -40,7 +37,9 @@ Private Sub Worksheet_Activate()
         .EnableSelection = xlUnlockedCells
     End With
     
+    'Date du jour par défaut
     previousCellAddress = ws.Range("F3").Address
+    ws.Range("F3").value = Format$(Date, wshAdmin.Range("B1").value)
     ws.Range("F3").Select
     
     'Libérer la mémoire
@@ -74,10 +73,10 @@ Private Sub Worksheet_Change(ByVal target As Range)
         Application.EnableEvents = False
         
         'Validation de la date
-        fullDate = Fn_Complete_Date(target.Value, 999, 15)
+        fullDate = Fn_Complete_Date(target.value, 999, 15)
         'Date est-elle valide ?
         If fullDate <> "Invalid Date" Then
-            target.Value = Format$(fullDate, wshAdmin.Range("B1").Value)
+            target.value = Format$(fullDate, wshAdmin.Range("B1").value)
         Else
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshGL_PrepEF_139")
             target.ClearContents
@@ -89,7 +88,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
         Dim ws As Worksheet
         Set ws = wshGL_PrepEF
         
-        Call Calculer_Soldes_Pour_EF(ws, Range("F3").Value)
+        Call Calculer_Soldes_Pour_EF(ws, Range("F3").value)
         
     End If
 

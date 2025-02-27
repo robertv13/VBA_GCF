@@ -69,10 +69,10 @@ Sub CréerListeÂgée() '2024-09-08 @ 15:55
     dateAujourdhui = Date
     
     'Boucle sur les factures
-    Dim derniereLigne As Long
-    derniereLigne = wsFactures.Cells(wsFactures.Rows.count, 1).End(xlUp).row
+    Dim DerniereLigne As Long
+    DerniereLigne = wsFactures.Cells(wsFactures.Rows.count, 1).End(xlUp).row
     Dim rngFactures As Range
-    Set rngFactures = wsFactures.Range("A3:A" & derniereLigne) '2 lignes d'entête
+    Set rngFactures = wsFactures.Range("A3:A" & DerniereLigne) '2 lignes d'entête
     
     Dim client As String, numFacture As String
     Dim dateFacture As Date, dateDue As Date
@@ -268,13 +268,13 @@ Next_Invoice:
     End If
     
     'Tri alphabétique par nom de client
-    derniereLigne = wshCAR_Liste_Agée.Cells(wshCAR_Liste_Agée.Rows.count, "B").End(xlUp).row
-    Set rngResultat = wshCAR_Liste_Agée.Range("B8:J" & derniereLigne)
+    DerniereLigne = wshCAR_Liste_Agée.Cells(wshCAR_Liste_Agée.Rows.count, "B").End(xlUp).row
+    Set rngResultat = wshCAR_Liste_Agée.Range("B8:J" & DerniereLigne)
     
     Application.EnableEvents = False
     
     Dim ordreTri As String
-    If derniereLigne > 9 Then 'Le tri n'est peut-être pas nécessaire
+    If DerniereLigne > 9 Then 'Le tri n'est peut-être pas nécessaire
         With wshCAR_Liste_Agée.Sort
             .SortFields.Clear
             If wshCAR_Liste_Agée.Range("D4").Value = "Nom de client" Then
@@ -303,7 +303,7 @@ Next_Invoice:
         End With
     End If
     
-    derniereLigne = derniereLigne + 2
+    DerniereLigne = DerniereLigne + 2
     
     Dim t(0 To 4) As Currency
     
@@ -312,83 +312,83 @@ Next_Invoice:
         .Columns("C:J").ColumnWidth = 13
         Select Case LCase(niveauDetail)
             Case "client"
-                .Range("C9:G" & derniereLigne).NumberFormat = "#,##0.00 $"
-                .Range("C9:G" & derniereLigne).HorizontalAlignment = xlRight
-                .Range("C" & derniereLigne).formula = "=Sum(C9:C" & derniereLigne - 2 & ")"
-                t(0) = .Range("C" & derniereLigne).Value
-                .Range("D" & derniereLigne).formula = "=Sum(D9:D" & derniereLigne - 2 & ")"
-                t(1) = .Range("D" & derniereLigne).Value
-                .Range("E" & derniereLigne).formula = "=Sum(E9:E" & derniereLigne - 2 & ")"
-                t(2) = .Range("E" & derniereLigne).Value
-                .Range("F" & derniereLigne).formula = "=Sum(F9:F" & derniereLigne - 2 & ")"
-                t(3) = .Range("F" & derniereLigne).Value
-                .Range("G" & derniereLigne).formula = "=Sum(G9:G" & derniereLigne - 2 & ")"
-                t(4) = .Range("G" & derniereLigne).Value
-                .Range("C" & derniereLigne & ":G" & derniereLigne).Font.Bold = True
+                .Range("C9:G" & DerniereLigne).NumberFormat = "#,##0.00 $"
+                .Range("C9:G" & DerniereLigne).HorizontalAlignment = xlRight
+                .Range("C" & DerniereLigne).formula = "=Sum(C9:C" & DerniereLigne - 2 & ")"
+                t(0) = .Range("C" & DerniereLigne).Value
+                .Range("D" & DerniereLigne).formula = "=Sum(D9:D" & DerniereLigne - 2 & ")"
+                t(1) = .Range("D" & DerniereLigne).Value
+                .Range("E" & DerniereLigne).formula = "=Sum(E9:E" & DerniereLigne - 2 & ")"
+                t(2) = .Range("E" & DerniereLigne).Value
+                .Range("F" & DerniereLigne).formula = "=Sum(F9:F" & DerniereLigne - 2 & ")"
+                t(3) = .Range("F" & DerniereLigne).Value
+                .Range("G" & DerniereLigne).formula = "=Sum(G9:G" & DerniereLigne - 2 & ")"
+                t(4) = .Range("G" & DerniereLigne).Value
+                .Range("C" & DerniereLigne & ":G" & DerniereLigne).Font.Bold = True
             Case "facture"
-                .Range("C9:C" & derniereLigne).HorizontalAlignment = xlCenter
-                .Range("D9:D" & derniereLigne).HorizontalAlignment = xlCenter
-                .Range("E9:I" & derniereLigne).NumberFormat = "#,##0.00 $"
-                .Range("E9:I" & derniereLigne).HorizontalAlignment = xlRight
-                .Range("E" & derniereLigne).formula = "=Sum(E9:E" & derniereLigne - 2 & ")"
-                t(0) = .Range("E" & derniereLigne).Value
-                .Range("F" & derniereLigne).formula = "=Sum(F9:F" & derniereLigne - 2 & ")"
-                t(1) = .Range("F" & derniereLigne).Value
-                .Range("G" & derniereLigne).formula = "=Sum(G9:G" & derniereLigne - 2 & ")"
-                t(2) = .Range("G" & derniereLigne).Value
-                .Range("H" & derniereLigne).formula = "=Sum(H9:H" & derniereLigne - 2 & ")"
-                t(3) = .Range("H" & derniereLigne).Value
-                .Range("I" & derniereLigne).formula = "=Sum(I9:I" & derniereLigne - 2 & ")"
-                t(4) = .Range("I" & derniereLigne).Value
-                .Range("E" & derniereLigne & ":I" & derniereLigne).Font.Bold = True
+                .Range("C9:C" & DerniereLigne).HorizontalAlignment = xlCenter
+                .Range("D9:D" & DerniereLigne).HorizontalAlignment = xlCenter
+                .Range("E9:I" & DerniereLigne).NumberFormat = "#,##0.00 $"
+                .Range("E9:I" & DerniereLigne).HorizontalAlignment = xlRight
+                .Range("E" & DerniereLigne).formula = "=Sum(E9:E" & DerniereLigne - 2 & ")"
+                t(0) = .Range("E" & DerniereLigne).Value
+                .Range("F" & DerniereLigne).formula = "=Sum(F9:F" & DerniereLigne - 2 & ")"
+                t(1) = .Range("F" & DerniereLigne).Value
+                .Range("G" & DerniereLigne).formula = "=Sum(G9:G" & DerniereLigne - 2 & ")"
+                t(2) = .Range("G" & DerniereLigne).Value
+                .Range("H" & DerniereLigne).formula = "=Sum(H9:H" & DerniereLigne - 2 & ")"
+                t(3) = .Range("H" & DerniereLigne).Value
+                .Range("I" & DerniereLigne).formula = "=Sum(I9:I" & DerniereLigne - 2 & ")"
+                t(4) = .Range("I" & DerniereLigne).Value
+                .Range("E" & DerniereLigne & ":I" & DerniereLigne).Font.Bold = True
             Case "transaction"
                 .Columns("C:E").HorizontalAlignment = xlCenter
                 .Columns("D").HorizontalAlignment = xlLeft
-                .Range("F9:J" & derniereLigne).NumberFormat = "#,##0.00 $"
-                .Range("F9:J" & derniereLigne).HorizontalAlignment = xlRight
-                .Range("F" & derniereLigne).formula = "=Sum(F9:F" & derniereLigne - 2 & ")"
-                t(0) = .Range("F" & derniereLigne).Value
-                .Range("G" & derniereLigne).formula = "=Sum(G9:G" & derniereLigne - 2 & ")"
-                t(1) = .Range("G" & derniereLigne).Value
-                .Range("H" & derniereLigne).formula = "=Sum(H9:H" & derniereLigne - 2 & ")"
-                t(2) = .Range("H" & derniereLigne).Value
-                .Range("I" & derniereLigne).formula = "=Sum(I9:I" & derniereLigne - 2 & ")"
-                t(3) = .Range("I" & derniereLigne).Value
-                .Range("J" & derniereLigne).formula = "=Sum(J9:J" & derniereLigne - 2 & ")"
-                t(4) = .Range("J" & derniereLigne).Value
-                .Range("F" & derniereLigne & ":J" & derniereLigne).Font.Bold = True
+                .Range("F9:J" & DerniereLigne).NumberFormat = "#,##0.00 $"
+                .Range("F9:J" & DerniereLigne).HorizontalAlignment = xlRight
+                .Range("F" & DerniereLigne).formula = "=Sum(F9:F" & DerniereLigne - 2 & ")"
+                t(0) = .Range("F" & DerniereLigne).Value
+                .Range("G" & DerniereLigne).formula = "=Sum(G9:G" & DerniereLigne - 2 & ")"
+                t(1) = .Range("G" & DerniereLigne).Value
+                .Range("H" & DerniereLigne).formula = "=Sum(H9:H" & DerniereLigne - 2 & ")"
+                t(2) = .Range("H" & DerniereLigne).Value
+                .Range("I" & DerniereLigne).formula = "=Sum(I9:I" & DerniereLigne - 2 & ")"
+                t(3) = .Range("I" & DerniereLigne).Value
+                .Range("J" & DerniereLigne).formula = "=Sum(J9:J" & DerniereLigne - 2 & ")"
+                t(4) = .Range("J" & DerniereLigne).Value
+                .Range("F" & DerniereLigne & ":J" & DerniereLigne).Font.Bold = True
         End Select
-        .Range("B" & derniereLigne).Value = "Totaux de la liste"
-        .Range("B" & derniereLigne).Font.Bold = True
-        derniereLigne = derniereLigne + 1
+        .Range("B" & DerniereLigne).Value = "Totaux de la liste"
+        .Range("B" & DerniereLigne).Font.Bold = True
+        DerniereLigne = DerniereLigne + 1
         
         'Ligne de pourcentages
-        .Range("B" & derniereLigne).Value = "Pourcentages"
-        .Range("B" & derniereLigne & ":J" & derniereLigne).Font.Bold = True
-        .Range("C" & derniereLigne & ":J" & derniereLigne).NumberFormat = "##0.00"
-        .Range("C" & derniereLigne & ":J" & derniereLigne).HorizontalAlignment = xlRight
+        .Range("B" & DerniereLigne).Value = "Pourcentages"
+        .Range("B" & DerniereLigne & ":J" & DerniereLigne).Font.Bold = True
+        .Range("C" & DerniereLigne & ":J" & DerniereLigne).NumberFormat = "##0.00"
+        .Range("C" & DerniereLigne & ":J" & DerniereLigne).HorizontalAlignment = xlRight
         Dim totalListe As Currency
         totalListe = t(0)
         If totalListe <> 0 Then
             Select Case LCase(niveauDetail)
                 Case "client"
-                    .Range("C" & derniereLigne).Value = Format$(Round(t(0) / totalListe, 4), "##0.00 %")
-                    .Range("D" & derniereLigne).Value = Format$(Round(t(1) / totalListe, 4), "##0.00 %")
-                    .Range("E" & derniereLigne).Value = Format$(Round(t(2) / totalListe, 4), "##0.00 %")
-                    .Range("F" & derniereLigne).Value = Format$(Round(t(3) / totalListe, 4), "##0.00 %")
-                    .Range("G" & derniereLigne).Value = Format$(Round(t(4) / totalListe, 4), "##0.00 %")
+                    .Range("C" & DerniereLigne).Value = Format$(Round(t(0) / totalListe, 4), "##0.00 %")
+                    .Range("D" & DerniereLigne).Value = Format$(Round(t(1) / totalListe, 4), "##0.00 %")
+                    .Range("E" & DerniereLigne).Value = Format$(Round(t(2) / totalListe, 4), "##0.00 %")
+                    .Range("F" & DerniereLigne).Value = Format$(Round(t(3) / totalListe, 4), "##0.00 %")
+                    .Range("G" & DerniereLigne).Value = Format$(Round(t(4) / totalListe, 4), "##0.00 %")
                 Case "facture"
-                    .Range("E" & derniereLigne).Value = Format$(Round(t(0) / totalListe, 4), "##0.00 %")
-                    .Range("F" & derniereLigne).Value = Format$(Round(t(1) / totalListe, 4), "##0.00 %")
-                    .Range("G" & derniereLigne).Value = Format$(Round(t(2) / totalListe, 4), "##0.00 %")
-                    .Range("H" & derniereLigne).Value = Format$(Round(t(3) / totalListe, 4), "##0.00 %")
-                    .Range("I" & derniereLigne).Value = Format$(Round(t(4) / totalListe, 4), "##0.00 %")
+                    .Range("E" & DerniereLigne).Value = Format$(Round(t(0) / totalListe, 4), "##0.00 %")
+                    .Range("F" & DerniereLigne).Value = Format$(Round(t(1) / totalListe, 4), "##0.00 %")
+                    .Range("G" & DerniereLigne).Value = Format$(Round(t(2) / totalListe, 4), "##0.00 %")
+                    .Range("H" & DerniereLigne).Value = Format$(Round(t(3) / totalListe, 4), "##0.00 %")
+                    .Range("I" & DerniereLigne).Value = Format$(Round(t(4) / totalListe, 4), "##0.00 %")
                 Case "transaction"
-                    .Range("F" & derniereLigne).Value = Format$(Round(t(0) / totalListe, 4), "##0.00 %")
-                    .Range("G" & derniereLigne).Value = Format$(Round(t(1) / totalListe, 4), "##0.00 %")
-                    .Range("H" & derniereLigne).Value = Format$(Round(t(2) / totalListe, 4), "##0.00 %")
-                    .Range("I" & derniereLigne).Value = Format$(Round(t(3) / totalListe, 4), "##0.00 %")
-                    .Range("J" & derniereLigne).Value = Format$(Round(t(4) / totalListe, 4), "##0.00 %")
+                    .Range("F" & DerniereLigne).Value = Format$(Round(t(0) / totalListe, 4), "##0.00 %")
+                    .Range("G" & DerniereLigne).Value = Format$(Round(t(1) / totalListe, 4), "##0.00 %")
+                    .Range("H" & DerniereLigne).Value = Format$(Round(t(2) / totalListe, 4), "##0.00 %")
+                    .Range("I" & DerniereLigne).Value = Format$(Round(t(3) / totalListe, 4), "##0.00 %")
+                    .Range("J" & DerniereLigne).Value = Format$(Round(t(4) / totalListe, 4), "##0.00 %")
             End Select
         End If
     End With
@@ -398,7 +398,7 @@ Next_Invoice:
     DoEvents
     
     'Result print setup - 2024-08-31 @ 12:19
-    lastUsedRow = derniereLigne
+    lastUsedRow = DerniereLigne
     
     Dim rngToPrint As Range:
     Select Case LCase(niveauDetail)

@@ -821,14 +821,14 @@ End Sub
 '    Dim startTime as Double: startTime = Timer: Call Log_Record("modFAC_Finale:Invoice_Load", 0)
 '
 '    With wshFAC_Brouillon
-'        If wshFAC_Brouillon.Range("B20").value = Empty Then
+'        If wshFAC_Brouillon.Range("B20").Value = Empty Then
 '            MsgBox "Impossible de retrouver cette facture. Veuillez saisir un numéro de facture VALIDE pour votre recherche"
 '            GoTo NoItems
 '        End If
 '        'Could that invoice been cancelled (more than 1 row) ?
-'        Call InvoiceGetAllTrans(wshFAC_Brouillon.Range("O6").value)
+'        Call InvoiceGetAllTrans(wshFAC_Brouillon.Range("O6").Value)
 '        Dim NbTrans As Long
-'        NbTrans = .Range("B31").value
+'        NbTrans = .Range("B31").Value
 '        If NbTrans = 0 Then
 '            MsgBox "Impossible de retrouver cette facture. Veuillez saisir un numéro de facture VALIDE pour votre recherche"
 '            GoTo NoItems
@@ -838,58 +838,58 @@ End Sub
 '                GoTo NoItems
 '            End If
 '        End If
-'        .Range("B24").value = True 'Set Invoice Load to true
+'        .Range("B24").Value = True 'Set Invoice Load to true
 '        .Range("S2,E4:F4,K4:L6,O3,K11:O45,Q11:Q45").ClearContents
 '        wshFAC_Finale.Range("B34:F68").ClearContents
 '        Dim InvListRow As Long
-'        InvListRow = wshFAC_Brouillon.Range("B20").value 'InvListRow = Row associated with the invoice
+'        InvListRow = wshFAC_Brouillon.Range("B20").Value 'InvListRow = Row associated with the invoice
 '        'Get values from wshFAC_Entête (header) and enter them in the wshFAC_Brouillon - 2023-12-19 @ 08:29
-'        .Range("O3").value = wshFAC_Entête.Range("B" & InvListRow).value
-'        .Range("K3").value = wshFAC_Entête.Range("D" & InvListRow).value
-'        .Range("K4").value = wshFAC_Entête.Range("E" & InvListRow).value
-'        .Range("K5").value = wshFAC_Entête.Range("F" & InvListRow).value
-'        .Range("K6").value = wshFAC_Entête.Range("G" & InvListRow).value
+'        .Range("O3").Value = wshFAC_Entête.Range("B" & InvListRow).Value
+'        .Range("K3").Value = wshFAC_Entête.Range("D" & InvListRow).Value
+'        .Range("K4").Value = wshFAC_Entête.Range("E" & InvListRow).Value
+'        .Range("K5").Value = wshFAC_Entête.Range("F" & InvListRow).Value
+'        .Range("K6").Value = wshFAC_Entête.Range("G" & InvListRow).Value
 '        'Get values from wshFAC_Entête (header) and enter them in the wshFAC_Brouillon - 2023-12-19 @ 08:29
 '        Dim dFact As Date
-'        dFact = wshFAC_Entête.Range("B" & InvListRow).value
-'        wshFAC_Finale.Range("B21").value = "Le " & Format$(dFact, "d") & " " & _
+'        dFact = wshFAC_Entête.Range("B" & InvListRow).Value
+'        wshFAC_Finale.Range("B21").Value = "Le " & Format$(dFact, "d") & " " & _
 '                                            UCase(Format$(dFact, "mmmm")) & " " & _
 '                                            Format$(dFact, "yyyy")
-'        wshFAC_Finale.Range("B23").value = wshFAC_Entête.Range("D" & InvListRow).value
-'        wshFAC_Finale.Range("B24").value = wshFAC_Entête.Range("E" & InvListRow).value
-'        wshFAC_Finale.Range("B25").value = wshFAC_Entête.Range("F" & InvListRow).value
-'        wshFAC_Finale.Range("B26").value = wshFAC_Entête.Range("G" & InvListRow).value
+'        wshFAC_Finale.Range("B23").Value = wshFAC_Entête.Range("D" & InvListRow).Value
+'        wshFAC_Finale.Range("B24").Value = wshFAC_Entête.Range("E" & InvListRow).Value
+'        wshFAC_Finale.Range("B25").Value = wshFAC_Entête.Range("F" & InvListRow).Value
+'        wshFAC_Finale.Range("B26").Value = wshFAC_Entête.Range("G" & InvListRow).Value
 '        'Load Invoice Detail Items
 '        With wshFAC_Détails
 '            Dim lastRow As Long, lastResultRow As Long
 '            lastRow = .Range("A999999").End(xlUp).row
 '            If lastRow < 4 Then Exit Sub 'No Item Lines
-'            .Range("I3").value = wshFAC_Brouillon.Range("O6").value
-'            wshFAC_Finale.Range("F28").value = wshFAC_Brouillon.Range("O6").value 'Invoice #
+'            .Range("I3").Value = wshFAC_Brouillon.Range("O6").Value
+'            wshFAC_Finale.Range("F28").Value = wshFAC_Brouillon.Range("O6").Value 'Invoice #
 '            'Advanced Filter to get items specific to ONE invoice
 '            .Range("A3:G" & lastRow).AdvancedFilter xlFilterCopy, criteriaRange:=.Range("I2:I3"), CopyToRange:=.Range("K2:P2"), Unique:=True
 '            lastResultRow = .Range("O999").End(xlUp).row
 '            If lastResultRow < 3 Then GoTo NoItems
 '            For resultRow = 3 To lastResultRow
-'                invitemRow = .Range("O" & resultRow).value
-'                wshFAC_Brouillon.Range("L" & invitemRow & ":O" & invitemRow).value = .Range("K" & resultRow & ":N" & resultRow).value 'Description, Hours, Rate & Value
-'                wshFAC_Brouillon.Range("Q" & invitemRow).value = .Range("P" & resultRow).value  'Set Item DB Row
-'                wshFAC_Finale.Range("C" & invitemRow + 23 & ":F" & invitemRow + 23).value = .Range("K" & resultRow & ":N" & resultRow).value 'Description, Hours, Rate & Value
+'                invitemRow = .Range("O" & resultRow).Value
+'                wshFAC_Brouillon.Range("L" & invitemRow & ":O" & invitemRow).Value = .Range("K" & resultRow & ":N" & resultRow).Value 'Description, Hours, Rate & Value
+'                wshFAC_Brouillon.Range("Q" & invitemRow).Value = .Range("P" & resultRow).Value  'Set Item DB Row
+'                wshFAC_Finale.Range("C" & invitemRow + 23 & ":F" & invitemRow + 23).Value = .Range("K" & resultRow & ":N" & resultRow).Value 'Description, Hours, Rate & Value
 '            Next resultRow
 '        End With
 '        'Proceed with trailer data (Misc. charges & Taxes)
-'        .Range("M48").value = wshFAC_Entête.Range("I" & InvListRow).value
-'        .Range("O48").value = wshFAC_Entête.Range("J" & InvListRow).value
-'        .Range("M49").value = wshFAC_Entête.Range("K" & InvListRow).value
-'        .Range("O49").value = wshFAC_Entête.Range("L" & InvListRow).value
-'        .Range("M50").value = wshFAC_Entête.Range("M" & InvListRow).value
-'        .Range("O50").value = wshFAC_Entête.Range("N" & InvListRow).value
-'        .Range("O52").value = wshFAC_Entête.Range("P" & InvListRow).value
-'        .Range("O53").value = wshFAC_Entête.Range("R" & InvListRow).value
-'        .Range("O57").value = wshFAC_Entête.Range("T" & InvListRow).value
+'        .Range("M48").Value = wshFAC_Entête.Range("I" & InvListRow).Value
+'        .Range("O48").Value = wshFAC_Entête.Range("J" & InvListRow).Value
+'        .Range("M49").Value = wshFAC_Entête.Range("K" & InvListRow).Value
+'        .Range("O49").Value = wshFAC_Entête.Range("L" & InvListRow).Value
+'        .Range("M50").Value = wshFAC_Entête.Range("M" & InvListRow).Value
+'        .Range("O50").Value = wshFAC_Entête.Range("N" & InvListRow).Value
+'        .Range("O52").Value = wshFAC_Entête.Range("P" & InvListRow).Value
+'        .Range("O53").Value = wshFAC_Entête.Range("R" & InvListRow).Value
+'        .Range("O57").Value = wshFAC_Entête.Range("T" & InvListRow).Value
 '
 'NoItems:
-'    .Range("B24").value = False 'Set Invoice Load To false
+'    .Range("B24").Value = False 'Set Invoice Load To false
 '    End With
 '
 '    Call Log_Record("modFAC_Finale:Invoice_Load","", startTime)
@@ -911,7 +911,7 @@ End Function
 '
 '    Application.ScreenUpdating = False
 '
-'    wshFAC_Brouillon.Range("B31").value = 0
+'    wshFAC_Brouillon.Range("B31").Value = 0
 '
 '    With wshFAC_Entête
 '        Dim lastRow As Long, lastResultRow As Long, resultRow As Long
@@ -920,7 +920,7 @@ End Function
 '        On Error Resume Next
 '        .Names("Criterial").Delete
 '        On Error GoTo 0
-'        .Range("V3").value = wshFAC_Brouillon.Range("O6").value
+'        .Range("V3").Value = wshFAC_Brouillon.Range("O6").Value
 '        'Advanced Filter setup
 '        .Range("A3:T" & lastRow).AdvancedFilter xlFilterCopy, _
 '            criteriaRange:=.Range("V2:V3"), _
@@ -943,7 +943,7 @@ End Function
 ''            .SetRange wshFAC_Entête.Range("X2:AQ" & lastResultRow) 'Set Range
 ''            .Apply 'Apply Sort
 ''         End With
-'         wshFAC_Brouillon.Range("B31").value = lastResultRow - 2 'Remove Header rows from row count
+'         wshFAC_Brouillon.Range("B31").Value = lastResultRow - 2 'Remove Header rows from row count
 'Done:
 '    End With
 '    Application.ScreenUpdating = True
@@ -969,8 +969,8 @@ Sub FAC_Finale_Setup_All_Cells()
         .Range("B23:B27").Value = ""
         .Range("E28").Value = "=" & wshFAC_Brouillon.Name & "!O6"    'Invoice number
         
-'        .Range("C65").value = "Heures"                               'Summary Heading
-'        .Range("D65").value = "Taux"                                 'Summary Heading
+'        .Range("C65").Value = "Heures"                               'Summary Heading
+'        .Range("D65").Value = "Taux"                                 'Summary Heading
 '        .Range("C66").formula = "=" & wshFAC_Brouillon.Name & "!M47" 'Hours summary
 '        .Range("D66").formula = "=" & wshFAC_Brouillon.Name & "!N47" 'Hourly Rate
 '

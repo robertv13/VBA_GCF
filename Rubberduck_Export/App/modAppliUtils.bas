@@ -5,15 +5,15 @@ Public Sub ConvertRangeBooleanToText(rng As Range)
 
     Dim cell As Range
     For Each cell In rng
-        Select Case cell.value
+        Select Case cell.Value
             Case 0, "False" 'False
-                cell.value = "FAUX"
+                cell.Value = "FAUX"
             Case -1, "True" 'True
-                cell.value = "VRAI"
+                cell.Value = "VRAI"
             Case "VRAI", "FAUX"
                 
             Case Else
-                MsgBox cell.value & " est une valeur INVALIDE pour la cellule " & cell.Address & " de la feuille TEC_Local"
+                MsgBox cell.Value & " est une valeur INVALIDE pour la cellule " & cell.Address & " de la feuille TEC_Local"
         End Select
     Next cell
 
@@ -60,8 +60,8 @@ Sub Start_Routine(subName As String) '2024-06-06 @ 10:12
             Dim lastUsedRow As Long
             lastUsedRow = .Range("A99999").End(xlUp).row
             lastUsedRow = lastUsedRow + 1 'Row to write a new record
-            .Range("A" & lastUsedRow).value = Format(Now(), "yyyy-mm-dd hh:mm:ss")
-            .Range("B" & lastUsedRow).value = subName & " - entering"
+            .Range("A" & lastUsedRow).Value = Format(Now(), "yyyy-mm-dd hh:mm:ss")
+            .Range("B" & lastUsedRow).Value = subName & " - entering"
         End With
     End If
 
@@ -93,10 +93,10 @@ Sub Output_Timer_Results(subName As String, t As Double)
             Dim lastUsedRow As Long
             lastUsedRow = .Range("A9999").End(xlUp).row
             lastUsedRow = lastUsedRow + 1 'Row to write a new record
-            .Range("A" & lastUsedRow).value = Format(Now(), "yyyy-mm-dd hh:mm:ss")
-            .Range("B" & lastUsedRow).value = subName
+            .Range("A" & lastUsedRow).Value = Format(Now(), "yyyy-mm-dd hh:mm:ss")
+            .Range("B" & lastUsedRow).Value = subName
             If t Then
-                .Range("C" & lastUsedRow).value = Format(Round(Timer - t, 4), "##0.0000")
+                .Range("C" & lastUsedRow).Value = Format(Round(Timer - t, 4), "##0.0000")
             End If
         End With
     End If
@@ -115,7 +115,7 @@ Public Sub ArrayToRange(ByRef data As Variant _
     Dim rows As Long, columns As Long
     rows = UBound(data, 1) - LBound(data, 1) + 1
     columns = UBound(data, 2) - LBound(data, 2) + 1
-    outRange.Resize(rows, columns).value = data
+    outRange.Resize(rows, columns).Value = data
     
 End Sub
 
@@ -167,7 +167,7 @@ Private Sub check_Clients()
     Debug.Print ws.name & " (wshBD_Clients)"
     
     Dim arr As Variant
-    arr = wshBD_Clients.Range("A1").CurrentRegion.value
+    arr = wshBD_Clients.Range("A1").CurrentRegion.Value
     Dim dict_code_client As New Dictionary
     Dim dict_nom_client As New Dictionary
     
@@ -213,7 +213,7 @@ Private Sub check_GL_Trans()
     Debug.Print ws.name & " (wshGL_Trans)"
     
     Dim arr As Variant
-    arr = wshGL_Trans.Range("A1").CurrentRegion.value
+    arr = wshGL_Trans.Range("A1").CurrentRegion.Value
     Dim dict_GL_Entry As New Dictionary
     Dim sum_arr() As Double
     ReDim sum_arr(1 To 5000, 1 To 3)

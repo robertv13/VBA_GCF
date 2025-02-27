@@ -21,10 +21,10 @@ Sub JE_Update()
     
     'Save Current JE number
     Dim strCurrentJE As String
-    strCurrentJE = wshJE.Range("B1").value
+    strCurrentJE = wshJE.Range("B1").Value
     
     'Increment Next JE number
-    wshJE.Range("B1").value = wshJE.Range("B1").value + 1
+    wshJE.Range("B1").Value = wshJE.Range("B1").Value + 1
         
     Call wshJE_Clear_All_Cells
         
@@ -59,16 +59,16 @@ Sub Load_JEAuto_Into_JE(EJAutoDesc As String, NoEJAuto As Long)
     
     Dim r As Long
     For r = 2 To rowJEAuto
-        If wshEJRecurrente.Range("C" & r).value = NoEJAuto And wshEJRecurrente.Range("E" & r).value <> "" Then
-            wshJE.Range("E" & rowJE).value = wshEJRecurrente.Range("F" & r).value
-            wshJE.Range("H" & rowJE).value = wshEJRecurrente.Range("G" & r).value
-            wshJE.Range("I" & rowJE).value = wshEJRecurrente.Range("H" & r).value
-            wshJE.Range("J" & rowJE).value = wshEJRecurrente.Range("I" & r).value
-            wshJE.Range("L" & rowJE).value = wshEJRecurrente.Range("E" & r).value
+        If wshEJRecurrente.Range("C" & r).Value = NoEJAuto And wshEJRecurrente.Range("E" & r).Value <> "" Then
+            wshJE.Range("E" & rowJE).Value = wshEJRecurrente.Range("F" & r).Value
+            wshJE.Range("H" & rowJE).Value = wshEJRecurrente.Range("G" & r).Value
+            wshJE.Range("I" & rowJE).Value = wshEJRecurrente.Range("H" & r).Value
+            wshJE.Range("J" & rowJE).Value = wshEJRecurrente.Range("I" & r).Value
+            wshJE.Range("L" & rowJE).Value = wshEJRecurrente.Range("E" & r).Value
             rowJE = rowJE + 1
         End If
     Next r
-    wshJE.Range("F6").value = "[Auto]-" & EJAutoDesc
+    wshJE.Range("F6").Value = "[Auto]-" & EJAutoDesc
     wshJE.Range("K4").Activate
 
 End Sub
@@ -90,7 +90,7 @@ End Sub
 Function IsDateValide() As Boolean
 
     IsDateValide = False
-    If wshJE.Range("K4").value = "" Or IsDate(wshJE.Range("K4").value) = False Then
+    If wshJE.Range("K4").Value = "" Or IsDate(wshJE.Range("K4").Value) = False Then
         MsgBox "Une date d'écriture est obligatoire." & vbNewLine & vbNewLine & _
             "Veuillez saisir une date valide!", vbCritical, "Date Invalide"
     Else
@@ -102,9 +102,9 @@ End Function
 Function IsEcritureBalance() As Boolean
 
     IsEcritureBalance = False
-    If wshJE.Range("H26").value <> wshJE.Range("I26").value Then
+    If wshJE.Range("H26").Value <> wshJE.Range("I26").Value Then
         MsgBox "Votre écriture ne balance pas." & vbNewLine & vbNewLine & _
-            "Débits = " & wshJE.Range("H26").value & " et Crédits = " & wshJE.Range("I26").value & vbNewLine & vbNewLine & _
+            "Débits = " & wshJE.Range("H26").Value & " et Crédits = " & wshJE.Range("I26").Value & vbNewLine & vbNewLine & _
             "Elle n'est donc pas reportée.", vbCritical, "Veuillez vérifier votre écriture!"
     Else
         IsEcritureBalance = True
@@ -123,8 +123,8 @@ Function IsEcritureValide(rmax As Long) As Boolean
     
     Dim i As Long
     For i = 9 To rmax
-        If wshJE.Range("E" & i).value <> "" Then
-            If wshJE.Range("H" & i).value = "" And wshJE.Range("I" & i).value = "" Then
+        If wshJE.Range("E" & i).Value <> "" Then
+            If wshJE.Range("H" & i).Value = "" And wshJE.Range("I" & i).Value = "" Then
                 MsgBox "Il existe une ligne avec un compte, sans montant !"
                 IsEcritureValide = False
             End If
@@ -140,7 +140,7 @@ Sub Add_GL_Trans_Record_To_DB(r As Long) 'Write/Update a record to external .xls
     Application.ScreenUpdating = False
     
     Dim fullFileName As String, sheetName As String
-    fullFileName = wshAdmin.Range("FolderSharedData").value & _
+    fullFileName = wshAdmin.Range("FolderSharedData").Value & _
                    Application.PathSeparator & "GCF_BD_Sortie.xlsx"
     sheetName = "GL_Trans"
     
@@ -162,17 +162,17 @@ Sub Add_GL_Trans_Record_To_DB(r As Long) 'Write/Update a record to external .xls
     
     'Get the last used row
     Dim maxEJNo As Long, lastJE As Long
-    If IsNull(rs.Fields("MaxEJNo").value) Then
+    If IsNull(rs.Fields("MaxEJNo").Value) Then
         ' Handle empty table (assign a default value, e.g., 1)
         lastJE = 1
     Else
-        lastJE = rs.Fields("MaxEJNo").value
+        lastJE = rs.Fields("MaxEJNo").Value
     End If
     
     'Calculate the new JE number
     Dim nextJENo As Long
     nextJENo = lastJE + 1
-    wshJE.Range("B1").value = nextJENo
+    wshJE.Range("B1").Value = nextJENo
     
     'Build formula
     Dim formula As String
@@ -187,16 +187,16 @@ Sub Add_GL_Trans_Record_To_DB(r As Long) 'Write/Update a record to external .xls
     For l = 9 To r
         rs.AddNew
             'Add fields to the recordset before updating it
-            rs.Fields("No_Entrée").value = nextJENo
-            rs.Fields("Date").value = CDate(wshJE.Range("K4").value)
-            rs.Fields("Description").value = wshJE.Range("F6").value
-            rs.Fields("Source").value = wshJE.Range("F4").value
-            rs.Fields("No_Compte").value = wshJE.Range("L" & l).value
-            rs.Fields("Compte").value = wshJE.Range("E" & l).value
-            rs.Fields("Débit").value = wshJE.Range("H" & l).value
-            rs.Fields("Crédit").value = wshJE.Range("I" & l).value
-            rs.Fields("AutreRemarque").value = wshJE.Range("J" & l).value
-            rs.Fields("TimeStamp").value = Format(Now(), "dd-mm-yyyy hh:mm:ss")
+            rs.Fields("No_Entrée").Value = nextJENo
+            rs.Fields("Date").Value = CDate(wshJE.Range("K4").Value)
+            rs.Fields("Description").Value = wshJE.Range("F6").Value
+            rs.Fields("Source").Value = wshJE.Range("F4").Value
+            rs.Fields("No_Compte").Value = wshJE.Range("L" & l).Value
+            rs.Fields("Compte").Value = wshJE.Range("E" & l).Value
+            rs.Fields("Débit").Value = wshJE.Range("H" & l).Value
+            rs.Fields("Crédit").Value = wshJE.Range("I" & l).Value
+            rs.Fields("AutreRemarque").Value = wshJE.Range("J" & l).Value
+            rs.Fields("TimeStamp").Value = Format(Now(), "dd-mm-yyyy hh:mm:ss")
         rs.update
     Next l
     
@@ -220,7 +220,7 @@ Sub Add_GL_Trans_Record_Locally(r As Long) 'Write records locally
     
     'Get the JE number
     Dim JENo As Long
-    JENo = wshJE.Range("B1").value
+    JENo = wshJE.Range("B1").Value
     
     'What is the last used row in GL_Trans ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
@@ -229,20 +229,20 @@ Sub Add_GL_Trans_Record_Locally(r As Long) 'Write records locally
     
     Dim i As Integer
     For i = 9 To r
-        wshGL_Trans.Range("A" & rowToBeUsed).value = JENo
-        wshGL_Trans.Range("B" & rowToBeUsed).value = CDate(wshJE.Range("K4").value)
-        wshGL_Trans.Range("C" & rowToBeUsed).value = wshJE.Range("F6").value
-        wshGL_Trans.Range("D" & rowToBeUsed).value = wshJE.Range("F4").value
-        wshGL_Trans.Range("E" & rowToBeUsed).value = wshJE.Range("L" & i).value
-        wshGL_Trans.Range("F" & rowToBeUsed).value = wshJE.Range("E" & i).value
-        If wshJE.Range("H" & i).value <> "" Then
-            wshGL_Trans.Range("G" & rowToBeUsed).value = wshJE.Range("H" & i).value
+        wshGL_Trans.Range("A" & rowToBeUsed).Value = JENo
+        wshGL_Trans.Range("B" & rowToBeUsed).Value = CDate(wshJE.Range("K4").Value)
+        wshGL_Trans.Range("C" & rowToBeUsed).Value = wshJE.Range("F6").Value
+        wshGL_Trans.Range("D" & rowToBeUsed).Value = wshJE.Range("F4").Value
+        wshGL_Trans.Range("E" & rowToBeUsed).Value = wshJE.Range("L" & i).Value
+        wshGL_Trans.Range("F" & rowToBeUsed).Value = wshJE.Range("E" & i).Value
+        If wshJE.Range("H" & i).Value <> "" Then
+            wshGL_Trans.Range("G" & rowToBeUsed).Value = wshJE.Range("H" & i).Value
         End If
-        If wshJE.Range("I" & i).value <> "" Then
-            wshGL_Trans.Range("H" & rowToBeUsed).value = wshJE.Range("I" & i).value
+        If wshJE.Range("I" & i).Value <> "" Then
+            wshGL_Trans.Range("H" & rowToBeUsed).Value = wshJE.Range("I" & i).Value
         End If
-        wshGL_Trans.Range("I" & rowToBeUsed).value = wshJE.Range("J" & i).value
-        wshGL_Trans.Range("J" & rowToBeUsed).value = CDate(Now())
+        wshGL_Trans.Range("I" & rowToBeUsed).Value = wshJE.Range("J" & i).Value
+        wshGL_Trans.Range("J" & rowToBeUsed).Value = CDate(Now())
         rowToBeUsed = rowToBeUsed + 1
     Next i
     
@@ -259,7 +259,7 @@ Sub Add_JE_Auto_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx
     Application.ScreenUpdating = False
     
     Dim fullFileName As String, sheetName As String
-    fullFileName = wshAdmin.Range("FolderSharedData").value & _
+    fullFileName = wshAdmin.Range("FolderSharedData").Value & _
                    Application.PathSeparator & "GCF_BD_Sortie.xlsx"
     sheetName = "EJ_Auto"
     
@@ -278,16 +278,16 @@ Sub Add_JE_Auto_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx
     
     'Get the last used row
     Dim lastEJA As Long, nextEJANo As Long
-    If IsNull(rs.Fields("MaxEJANo").value) Then
+    If IsNull(rs.Fields("MaxEJANo").Value) Then
         ' Handle empty table (assign a default value, e.g., 1)
         lastEJA = 1
     Else
-        lastEJA = rs.Fields("MaxEJANo").value
+        lastEJA = rs.Fields("MaxEJANo").Value
     End If
     
     'Calculate the new ID
     nextEJANo = lastEJA + 1
-    wshEJRecurrente.Range("B2").value = nextEJANo
+    wshEJRecurrente.Range("B2").Value = nextEJANo
 
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
@@ -297,13 +297,13 @@ Sub Add_JE_Auto_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx
     For l = 9 To r
         rs.AddNew
             'Add fields to the recordset before updating it
-            rs.Fields("No_EJA").value = nextEJANo
-            rs.Fields("Description").value = wshJE.Range("F6").value
-            rs.Fields("No_Compte").value = wshJE.Range("L" & l).value
-            rs.Fields("Compte").value = wshJE.Range("E" & l).value
-            rs.Fields("Débit").value = wshJE.Range("H" & l).value
-            rs.Fields("Crédit").value = wshJE.Range("I" & l).value
-            rs.Fields("AutreRemarque").value = wshJE.Range("J" & l).value
+            rs.Fields("No_EJA").Value = nextEJANo
+            rs.Fields("Description").Value = wshJE.Range("F6").Value
+            rs.Fields("No_Compte").Value = wshJE.Range("L" & l).Value
+            rs.Fields("Compte").Value = wshJE.Range("E" & l).Value
+            rs.Fields("Débit").Value = wshJE.Range("H" & l).Value
+            rs.Fields("Crédit").Value = wshJE.Range("I" & l).Value
+            rs.Fields("AutreRemarque").Value = wshJE.Range("J" & l).Value
         rs.update
     Next l
     
@@ -327,7 +327,7 @@ Sub Add_JE_Auto_Record_Locally(r As Long) 'Write records to local file
     
     'Get the JE number
     Dim JENo As Long
-    JENo = wshEJRecurrente.Range("B2").value
+    JENo = wshEJRecurrente.Range("B2").Value
     
     'What is the last used row in EJ_AUto ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
@@ -336,17 +336,17 @@ Sub Add_JE_Auto_Record_Locally(r As Long) 'Write records to local file
     
     Dim i As Integer
     For i = 9 To r
-        wshEJRecurrente.Range("C" & rowToBeUsed).value = JENo
-        wshEJRecurrente.Range("D" & rowToBeUsed).value = wshJE.Range("F6").value
-        wshEJRecurrente.Range("E" & rowToBeUsed).value = wshJE.Range("L" & i).value
-        wshEJRecurrente.Range("F" & rowToBeUsed).value = wshJE.Range("E" & i).value
-        If wshJE.Range("H" & i).value <> "" Then
-            wshEJRecurrente.Range("G" & rowToBeUsed).value = wshJE.Range("H" & i).value
+        wshEJRecurrente.Range("C" & rowToBeUsed).Value = JENo
+        wshEJRecurrente.Range("D" & rowToBeUsed).Value = wshJE.Range("F6").Value
+        wshEJRecurrente.Range("E" & rowToBeUsed).Value = wshJE.Range("L" & i).Value
+        wshEJRecurrente.Range("F" & rowToBeUsed).Value = wshJE.Range("E" & i).Value
+        If wshJE.Range("H" & i).Value <> "" Then
+            wshEJRecurrente.Range("G" & rowToBeUsed).Value = wshJE.Range("H" & i).Value
         End If
-        If wshJE.Range("I" & i).value <> "" Then
-            wshEJRecurrente.Range("H" & rowToBeUsed).value = wshJE.Range("I" & i).value
+        If wshJE.Range("I" & i).Value <> "" Then
+            wshEJRecurrente.Range("H" & rowToBeUsed).Value = wshJE.Range("I" & i).Value
         End If
-        wshEJRecurrente.Range("I" & rowToBeUsed).value = wshJE.Range("J" & i).value
+        wshEJRecurrente.Range("I" & rowToBeUsed).Value = wshJE.Range("J" & i).Value
         rowToBeUsed = rowToBeUsed + 1
     Next i
     
