@@ -48,7 +48,7 @@ End Property
 
 Public Property Get SelectedItem() As String
     
-    SelectedItem = IIf(m_textboxStartingState = True, "", myTextBox.value)
+    SelectedItem = IIf(m_textboxStartingState = True, "", myTextBox.Value)
 
 End Property
 
@@ -111,7 +111,7 @@ Private Sub myListBox_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     'If the user doubleclicks or presses enter, place the selected value in the textbox
     If m_UpdateControl = False Then
         Dim pureClientName As String
-        pureClientName = Fn_Cell_From_BD_Client(MyListBox.value, 17, 1)
+        pureClientName = Fn_Cell_From_BD_Client(MyListBox.Value, 17, 1)
         Call SetTextboxValue(pureClientName)
 '        Call SetTextboxValue(MyListBox.Value)
         MyListBox.Visible = False
@@ -133,9 +133,9 @@ Private Sub myListBox_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shif
     ElseIf KeyCode = vbKeyReturn Or KeyCode = vbKeyTab Then
         'Swallow the enter keycode as it passes on to the ok button
         KeyCode = 0
-        If MyListBox.value <> 0 Then
+        If MyListBox.Value <> 0 Then
             Dim pureClientName As String
-            pureClientName = Fn_Cell_From_BD_Client(MyListBox.value, 17, 1)
+            pureClientName = Fn_Cell_From_BD_Client(MyListBox.Value, 17, 1)
             Call SetTextboxValue(pureClientName)
         End If
         Call ShowListbox(False)
@@ -279,7 +279,7 @@ End Function
 Private Sub myTextBox_Change()
 
     If m_UpdateControl = False Then
-        If Trim(myTextBox.value) = "" Then
+        If Trim(myTextBox.Value) = "" Then
             Call InitializeTextBox
         Else
             If m_textboxStartingState = True Then
@@ -300,9 +300,9 @@ Private Sub myTextBox_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shif
     ElseIf KeyCode = vbKeyReturn Then
         'Swallow the enter keycode as it passes on to the ok button
         KeyCode = 0
-        If IsNull(MyListBox.value) = False And m_textboxStartingState = False Then
+        If IsNull(MyListBox.Value) = False And m_textboxStartingState = False Then
             Dim pureClientName As String
-            pureClientName = Fn_Cell_From_BD_Client(MyListBox.value, 17, 1)
+            pureClientName = Fn_Cell_From_BD_Client(MyListBox.Value, 17, 1)
             Call SetTextboxValue(pureClientName)
         End If
         Call ShowListbox(False)
@@ -321,7 +321,7 @@ Private Sub SetTextboxValue(ByVal Text As String)
             m_UpdateControl = True
             'Set the listbox selected value to the textbox and hide the listbox
             myTextBox.TextAlign = fmTextAlignLeft
-            myTextBox.value = Text
+            myTextBox.Value = Text
             
             Call SelectTextBox
             
@@ -353,7 +353,7 @@ Private Sub RemoveStartingText()
     m_UpdateControl = True
 
     With myTextBox
-        .Text = Mid(.value, .SelStart, 1)
+        .Text = Mid(.Value, .SelStart, 1)
 '        .ForeColor = rgbBlack
     End With
     
@@ -389,7 +389,7 @@ End Sub
 Private Function FilterData() As Variant
    
     Dim textPattern As String
-    textPattern = myTextBox.value
+    textPattern = myTextBox.Value
     If textPattern = "" Then
         Exit Function
     End If

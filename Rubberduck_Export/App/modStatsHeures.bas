@@ -266,15 +266,15 @@ Sub ExecuterAdvancedFilter(ws As Worksheet, criteriaRange As String, resultStart
     
     'Journaliser le temps de traitement
     ws.Range(logRange).ClearContents
-    ws.Range(logRange).Cells(1, 1).value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range(logRange).Cells(1, 1).Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
     'Définir le range source des données
     Set rngData = ws.Range("tblTEC_TDB_data[#All]")
-    ws.Range(logRange).Cells(2, 1).value = rngData.Address
+    ws.Range(logRange).Cells(2, 1).Value = rngData.Address
     
     'Définir les critères
     Set rngCriteria = ws.Range(criteriaRange)
-    ws.Range(logRange).Cells(3, 1).value = rngCriteria.Address
+    ws.Range(logRange).Cells(3, 1).Value = rngCriteria.Address
     
     'Effacer les résultats précédents
     Set rngResult = ws.Range(resultStartCell).CurrentRegion
@@ -282,7 +282,7 @@ Sub ExecuterAdvancedFilter(ws As Worksheet, criteriaRange As String, resultStart
         rngResult.offset(1, 0).Clear
     End If
     Set rngResult = ws.Range(resultStartCell).CurrentRegion
-    ws.Range(logRange).Cells(4, 1).value = rngResult.Address
+    ws.Range(logRange).Cells(4, 1).Value = rngResult.Address
     
     'Appliquer AdvancedFilter
     rngData.AdvancedFilter _
@@ -293,7 +293,7 @@ Sub ExecuterAdvancedFilter(ws As Worksheet, criteriaRange As String, resultStart
     
     'Compter les lignes
     lastResultRow = ws.Cells(ws.Rows.count, rngResult.Cells(1, 1).Column).End(xlUp).row
-    ws.Range(logRange).Cells(5, 1).value = lastResultRow - 1 & " lignes"
+    ws.Range(logRange).Cells(5, 1).Value = lastResultRow - 1 & " lignes"
     
     'Trier les résultats
     Dim i As Long

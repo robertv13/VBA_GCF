@@ -10,7 +10,7 @@ Function Fn_GetID_From_Initials(i As String)
     
     For Each cell In wshAdmin.Range("dnrProf_All")
         If cell.Value2 = i Then
-            Fn_GetID_From_Initials = cell.offset(0, 1).value
+            Fn_GetID_From_Initials = cell.offset(0, 1).Value
             Exit Function
         End If
     Next cell
@@ -26,7 +26,7 @@ Function Fn_Get_Prof_From_ProfID(i As Long)
     
     For Each cell In wshAdmin.Range("dnrProf_All")
         If cell.Value2 = i Then
-            Fn_Get_Prof_From_ProfID = cell.offset(0, -1).value
+            Fn_Get_Prof_From_ProfID = cell.offset(0, -1).Value
             Exit Function
         End If
     Next cell
@@ -44,7 +44,7 @@ Function Fn_Get_A_Row_From_A_Worksheet(feuille As String, cle As Variant, cleCol
     
     'Charger les données en mémoire
     Dim allData As Variant
-    allData = ws.usedRange.value
+    allData = ws.usedRange.Value
 
     'Parcourir les données pour trouver la valeur
     Dim resultArray() As Variant
@@ -115,7 +115,7 @@ Function Fn_GetID_From_Client_Name(nomClient As String) '2024-02-14 @ 06:07
                                                    1)
     If result <> "Not Found" Then
         Fn_GetID_From_Client_Name = result
-        ufSaisieHeures.txtClientID.value = result
+        ufSaisieHeures.txtClientID.Value = result
     Else
         MsgBox "Impossible de retrouver le nom du client dans la feuille" & vbNewLine & vbNewLine & _
                     "BD_Clients...", vbExclamation, "Recherche dans BD_Clients " & dynamicRange.Address
@@ -212,7 +212,7 @@ Function Fn_Get_Prenom_From_Initials(i As String)
     
     For Each cell In wshAdmin.Range("dnrProf_All")
         If cell.Value2 = i Then
-            Fn_Get_Prenom_From_Initials = cell.offset(0, 2).value
+            Fn_Get_Prenom_From_Initials = cell.offset(0, 2).Value
             Exit Function
         End If
     Next cell
@@ -228,7 +228,7 @@ Function Fn_Get_Nom_From_Initials(i As String)
     
     For Each cell In wshAdmin.Range("dnrProf_All")
         If cell.Value2 = i Then
-            Fn_Get_Nom_From_Initials = cell.offset(0, 3).value
+            Fn_Get_Nom_From_Initials = cell.offset(0, 3).Value
             Exit Function
         End If
     Next cell
@@ -254,7 +254,7 @@ Function Fn_Get_Value_From_UniqueID(ws As Worksheet, uniqueID As String, keyColu
     
     'Si on a trouvé 'uniqueID', retourner la valeur de la colonne de retour
     If Not foundCell Is Nothing Then
-        Fn_Get_Value_From_UniqueID = ws.Cells(foundCell.row, returnColumn).value
+        Fn_Get_Value_From_UniqueID = ws.Cells(foundCell.row, returnColumn).Value
     Else
         'Si l'on a pas trouvée, retourner une valeur d'erreur ou un message
         Fn_Get_Value_From_UniqueID = "uniqueID introuvable"
@@ -286,7 +286,7 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
         'With the foundCell get the the address, the row number and the value
         foundInfo(1) = foundCell.Address
         foundInfo(2) = foundCell.row
-        foundInfo(3) = foundCell.offset(0, cr - cs).value 'Return Column - Searching column
+        foundInfo(3) = foundCell.offset(0, cr - cs).Value 'Return Column - Searching column
         Fn_Find_Data_In_A_Range = foundInfo 'foundInfo is an array
     Else
         Fn_Find_Data_In_A_Range = foundInfo 'foundInfo is an array
@@ -385,7 +385,7 @@ Function Fn_Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hon
                 
                 'Update rows from MASTER file (details)
                 Dim destinationFileName As String, destinationTab As String
-                destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+                destinationFileName = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                                       "GCF_BD_MASTER.xlsx"
                 destinationTab = "FAC_Projets_Détails$"
                 
@@ -397,7 +397,7 @@ Function Fn_Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hon
                                                                      valueToFind)
                                                                      
                 'Update row from MASTER file (entête)
-                destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+                destinationFileName = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                                       "GCF_BD_MASTER.xlsx"
                 destinationTab = "FAC_Projets_Entête$"
                 Call Soft_Delete_If_Value_Is_Found_In_Master_Entete(destinationFileName, _
@@ -436,7 +436,7 @@ Function Fn_Get_Column_Type(col As Range) As String
     
     ' Loop through cells in the first few rows to determine the data type
     For Each cell In col.Cells
-        cellValue = cell.value
+        cellValue = cell.Value
         If Not IsEmpty(cellValue) Then
             If IsNumeric(cellValue) Then
                 If IsDate(cellValue) Then
@@ -554,7 +554,7 @@ Function Fn_ObtenirTECFacturésPourFacture(invNo As String) As Variant
     Dim rowCount As Long
     Dim i As Long
     For i = 3 To lastUsedRow
-        If wsTEC.Cells(i, 16).value = invNo And UCase(wsTEC.Cells(i, 14).value) <> "VRAI" Then
+        If wsTEC.Cells(i, 16).Value = invNo And UCase(wsTEC.Cells(i, 14).Value) <> "VRAI" Then
             rowCount = rowCount + 1
             resultArr(rowCount) = i
         End If
@@ -585,25 +585,25 @@ Function Fn_Get_TEC_Total_Invoice_AF(invNo As String, t As String) As Currency
     
     'Effacer les données de la dernière utilisation
     ws.Range("I6:I10").ClearContents
-    ws.Range("I6").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("I6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
     'Définir le range pour la source des données en utilisant un tableau
     Dim rngData As Range
     Set rngData = ws.Range("l_tbl_FAC_Détails[#All]")
-    ws.Range("I7").value = rngData.Address
+    ws.Range("I7").Value = rngData.Address
     
     'Définir le range des critères
     Dim rngCriteria As Range
     Set rngCriteria = ws.Range("I2:I3")
-    ws.Range("I3").value = invNo
-    ws.Range("I8").value = rngCriteria.Address
+    ws.Range("I3").Value = invNo
+    ws.Range("I8").Value = rngCriteria.Address
     
     'Définir le range des résultats et effacer avant le traitement
     Dim rngResult As Range
     Set rngResult = ws.Range("K1").CurrentRegion
     rngResult.offset(2, 0).Clear
     Set rngResult = ws.Range("K2:N2")
-    ws.Range("I9").value = rngResult.Address
+    ws.Range("I9").Value = rngResult.Address
     
     rngData.AdvancedFilter _
                 action:=xlFilterCopy, _
@@ -614,7 +614,7 @@ Function Fn_Get_TEC_Total_Invoice_AF(invNo As String, t As String) As Currency
     'Quels sont les résultats ?
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, "K").End(xlUp).row
-    ws.Range("I10").value = lastUsedRow - 2 & " lignes"
+    ws.Range("I10").Value = lastUsedRow - 2 & " lignes"
     
     'Aucun tri nécessaire (besoins)
     If lastUsedRow > 2 Then
@@ -689,25 +689,25 @@ Function Fn_Get_Invoice_Total_Payments_AF(invNo As String)
     
     'Effacer les données de la dernière utilisation
     ws.Range("H6:H10").ClearContents
-    ws.Range("H6").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("H6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
     'Définir le range pour la source des données en utilisant un tableau
     Dim rngData As Range
     Set rngData = ws.Range("l_tbl_ENC_Détails[#All]")
-    ws.Range("H7").value = rngData.Address
+    ws.Range("H7").Value = rngData.Address
     
     'Définir le range des critères
     Dim rngCriteria As Range
     Set rngCriteria = ws.Range("H2:H3")
-    ws.Range("H3").value = invNo
-    ws.Range("H8").value = rngCriteria.Address
+    ws.Range("H3").Value = invNo
+    ws.Range("H8").Value = rngCriteria.Address
     
     'Définir le range des résultats et effacer avant le traitement
     Dim rngResult As Range
     Set rngResult = ws.Range("J1").CurrentRegion
     rngResult.offset(3, 0).Clear
     Set rngResult = ws.Range("J3:N3")
-    ws.Range("H9").value = rngResult.Address
+    ws.Range("H9").Value = rngResult.Address
     
     rngData.AdvancedFilter _
                 action:=xlFilterCopy, _
@@ -718,7 +718,7 @@ Function Fn_Get_Invoice_Total_Payments_AF(invNo As String)
     'Quels sont les résultats ?
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, "J").End(xlUp).row
-    ws.Range("H10").value = lastUsedRow - 3 & " lignes"
+    ws.Range("H10").Value = lastUsedRow - 3 & " lignes"
     
     'Il n'est pas nécessaire de trier les résultats
     If lastUsedRow > 3 Then
@@ -902,18 +902,18 @@ Function Fn_Check_Server_Access(serverPath) As Boolean '2024-09-24 @ 17:14
     Fn_Check_Server_Access = False
     
     'Créer un FileSystemObject
-    Dim fso As Object: Set fso = CreateObject("Scripting.FileSystemObject")
+    Dim FSO As Object: Set FSO = CreateObject("Scripting.FileSystemObject")
     
     'Vérifier si le fichier existe
     Dim folderExists As Boolean
-    folderExists = fso.folderExists(serverPath)
+    folderExists = FSO.folderExists(serverPath)
     
     If folderExists Then
         Fn_Check_Server_Access = True
     End If
     
     'Libérer la mémoire
-    Set fso = Nothing
+    Set FSO = Nothing
     
 End Function
 
@@ -996,16 +996,16 @@ Function Fn_Complete_Date(dateInput As String, joursArriere As Integer, joursFut
     joursEcart = parsedDate - Date
     If joursEcart < 0 And Abs(joursEcart) > joursArriere Then
         MsgBox "Cette date NE RESPECTE PAS les paramètres de date établis" & vbNewLine & vbNewLine & _
-                    "La date minimale est '" & Format$(Date - joursArriere, wshAdmin.Range("B1").value) & "'", _
+                    "La date minimale est '" & Format$(Date - joursArriere, wshAdmin.Range("B1").Value) & "'", _
                     vbCritical, "La date saisie est hors-norme - (Du " & _
-                        Format$(Date - joursArriere, wshAdmin.Range("B1").value) & " au " & Format$(Date + joursFutur, wshAdmin.Range("B1").value) & ")"
+                        Format$(Date - joursArriere, wshAdmin.Range("B1").Value) & " au " & Format$(Date + joursFutur, wshAdmin.Range("B1").Value) & ")"
         GoTo Invalid_Date
     End If
     If joursEcart > 0 And joursEcart > joursFutur Then
         MsgBox "Cette date NE RESPECTE PAS les paramètres de date établis" & vbNewLine & vbNewLine & _
-                    "La date maximale est '" & Format$(Date + joursFutur, wshAdmin.Range("B1").value) & "'", _
+                    "La date maximale est '" & Format$(Date + joursFutur, wshAdmin.Range("B1").Value) & "'", _
                     vbCritical, "La date saisie est hors-norme - (Du " & _
-                    Format$(Date - joursArriere, wshAdmin.Range("B1").value) & " au " & Format$(Date + joursFutur, wshAdmin.Range("B1").value) & ")"
+                    Format$(Date - joursArriere, wshAdmin.Range("B1").Value) & " au " & Format$(Date + joursFutur, wshAdmin.Range("B1").Value) & ")"
         GoTo Invalid_Date
     End If
    
@@ -1140,7 +1140,7 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
     'Validations first (one field at a time)
     
     'Professionnel ?
-    If ufSaisieHeures.cmbProfessionnel.value = "" Then
+    If ufSaisieHeures.cmbProfessionnel.Value = "" Then
         MsgBox prompt:="Le professionnel est OBLIGATOIRE !", _
                Title:="Vérification", _
                Buttons:=vbCritical
@@ -1149,7 +1149,7 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
     End If
 
     'Date de la charge ?
-    If ufSaisieHeures.txtDate.value = "" Or IsDate(ufSaisieHeures.txtDate.value) = False Then
+    If ufSaisieHeures.txtDate.Value = "" Or IsDate(ufSaisieHeures.txtDate.Value) = False Then
         MsgBox prompt:="La date est OBLIGATOIRE !", _
                Title:="Vérification", _
                Buttons:=vbCritical
@@ -1158,10 +1158,10 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
     End If
 
     'Nom du client & code de client ?
-    If ufSaisieHeures.txtClient.value = "" Or ufSaisieHeures.txtClientID = "" Then
+    If ufSaisieHeures.txtClient.Value = "" Or ufSaisieHeures.txtClientID = "" Then
         MsgBox prompt:="Le client et son code sont OBLIGATOIRES !" & vbNewLine & vbNewLine & _
                        "Code de client = '" & ufSaisieHeures.txtClientID & "'" & vbNewLine & vbNewLine & _
-                       "Nom du client = '" & ufSaisieHeures.txtClient.value & "'", _
+                       "Nom du client = '" & ufSaisieHeures.txtClient.Value & "'", _
                Title:="Vérifications essentielles des données du client", _
                Buttons:=vbCritical
         ufSaisieHeures.txtClient.SetFocus
@@ -1169,7 +1169,7 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
     End If
     
     'Heures valides ?
-    If ufSaisieHeures.txtHeures.value = "" Or IsNumeric(ufSaisieHeures.txtHeures.value) = False Then
+    If ufSaisieHeures.txtHeures.Value = "" Or IsNumeric(ufSaisieHeures.txtHeures.Value) = False Then
         MsgBox prompt:="Le nombre d'heures est OBLIGATOIRE !", _
                Title:="Vérification", _
                Buttons:=vbCritical
@@ -1197,9 +1197,9 @@ Public Function Fn_Get_Hourly_Rate(profID As Long, dte As Date)
         For i = rng.Rows.count To 1 Step -1
             'Set the row range
             Set rowRange = rng.Rows(i)
-            If rowRange.Cells(1, 1).value = profID Then
-                If CDate(dte) >= CDate(rowRange.Cells(1, 2).value) Then
-                    Fn_Get_Hourly_Rate = rowRange.Cells(1, 3).value
+            If rowRange.Cells(1, 1).Value = profID Then
+                If CDate(dte) >= CDate(rowRange.Cells(1, 2).Value) Then
+                    Fn_Get_Hourly_Rate = rowRange.Cells(1, 3).Value
                     Exit Function
                 End If
             End If
@@ -1229,7 +1229,7 @@ Function Fn_Get_Invoice_Type(invNo As String) As String '2024-08-17 @ 06:55
     Set rngFound = rngToSearch.Find(What:=invNo, LookIn:=xlValues, LookAt:=xlWhole)
 
     If Not rngFound Is Nothing Then
-        Fn_Get_Invoice_Type = rngFound.offset(0, 2).value
+        Fn_Get_Invoice_Type = rngFound.offset(0, 2).Value
     Else
         Fn_Get_Invoice_Type = "C"
     End If
@@ -1246,9 +1246,9 @@ Public Function Fn_Get_Tax_Rate(d As Date, taxType As String) As Double
     Dim rate As Double
     With wshAdmin
         For row = 18 To 11 Step -1
-            If .Range("L" & row).value = taxType Then
-                If d >= .Range("M" & row).value Then
-                    rate = .Range("N" & row).value
+            If .Range("L" & row).Value = taxType Then
+                If d >= .Range("M" & row).Value Then
+                    rate = .Range("N" & row).Value
                     Exit For
                 End If
             End If
@@ -1306,7 +1306,7 @@ Function Fn_Invoice_Is_Confirmed(invNo As String) As Boolean
     Set foundCell = ws.Range("A:A").Find(What:=CStr(invNo), LookIn:=xlValues, LookAt:=xlWhole)
 
     If Not foundCell Is Nothing Then
-        If foundCell.offset(0, 2).value = "C" Then
+        If foundCell.offset(0, 2).Value = "C" Then
             Fn_Invoice_Is_Confirmed = True
         End If
     Else
@@ -1322,9 +1322,9 @@ End Function
 Function Fn_Is_Ecriture_Balance() As Boolean
 
     Fn_Is_Ecriture_Balance = False
-    If wshGL_EJ.Range("H26").value <> wshGL_EJ.Range("I26").value Then
+    If wshGL_EJ.Range("H26").Value <> wshGL_EJ.Range("I26").Value Then
         MsgBox "Votre écriture ne balance pas." & vbNewLine & vbNewLine & _
-            "Débits = " & wshGL_EJ.Range("H26").value & " et Crédits = " & wshGL_EJ.Range("I26").value & vbNewLine & vbNewLine & _
+            "Débits = " & wshGL_EJ.Range("H26").Value & " et Crédits = " & wshGL_EJ.Range("I26").Value & vbNewLine & vbNewLine & _
             "Elle n'est donc pas reportée.", vbCritical, "Veuillez vérifier votre écriture!"
     Else
         Fn_Is_Ecriture_Balance = True
@@ -1335,10 +1335,10 @@ End Function
 Function Fn_Is_Debours_Balance() As Boolean
 
     Fn_Is_Debours_Balance = False
-    If wshDEB_Saisie.Range("O6").value <> wshDEB_Saisie.Range("I26").value Then
+    If wshDEB_Saisie.Range("O6").Value <> wshDEB_Saisie.Range("I26").Value Then
         MsgBox "Votre transaction ne balance pas." & vbNewLine & vbNewLine & _
-            "Total saisi = " & Format$(wshDEB_Saisie.Range("O6").value, "#,##0.00 $") _
-            & " vs. Ventilation = " & Format$(wshDEB_Saisie.Range("I26").value, "#,##0.00 $") _
+            "Total saisi = " & Format$(wshDEB_Saisie.Range("O6").Value, "#,##0.00 $") _
+            & " vs. Ventilation = " & Format$(wshDEB_Saisie.Range("I26").Value, "#,##0.00 $") _
             & vbNewLine & vbNewLine & "Elle n'est donc pas reportée.", _
             vbCritical, "Veuillez vérifier votre écriture!"
     Else
@@ -1358,8 +1358,8 @@ Function Fn_Is_JE_Valid(rmax As Long) As Boolean
     
     Dim i As Long
     For i = 9 To rmax
-        If wshGL_EJ.Range("E" & i).value <> "" Then
-            If wshGL_EJ.Range("H" & i).value = "" And wshGL_EJ.Range("I" & i).value = "" Then
+        If wshGL_EJ.Range("E" & i).Value <> "" Then
+            If wshGL_EJ.Range("H" & i).Value = "" And wshGL_EJ.Range("I" & i).Value = "" Then
                 MsgBox "Il existe une ligne avec un compte, sans montant !"
                 Fn_Is_JE_Valid = False
             End If
@@ -1379,8 +1379,8 @@ Function Fn_Is_Deb_Saisie_Valid(rmax As Long) As Boolean
     
     Dim i As Long
     For i = 9 To rmax
-        If wshDEB_Saisie.Range("E" & i).value <> "" Then
-            If wshDEB_Saisie.Range("N" & i).value = "" Then
+        If wshDEB_Saisie.Range("E" & i).Value <> "" Then
+            If wshDEB_Saisie.Range("N" & i).Value = "" Then
                 MsgBox "Il existe une ligne avec un compte, sans montant !"
                 Fn_Is_Deb_Saisie_Valid = False
             End If
@@ -1418,7 +1418,7 @@ Function Fn_Get_Next_Invoice_Number() As String '2024-09-17 @ 14:00
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     
     Dim strLastInvoice As String
-    strLastInvoice = ws.Cells(lastUsedRow, 1).value
+    strLastInvoice = ws.Cells(lastUsedRow, 1).Value
     If strLastInvoice <> "" Then
         strLastInvoice = Right(strLastInvoice, Len(strLastInvoice) - 3)
     Else
@@ -1446,12 +1446,12 @@ Function Fn_Get_GL_Account_Opening_Balance_AF(glNo As String, d As Date) As Doub
     
     'Effacer les données de la dernière utilisation
     ws.Range("M6:M10").ClearContents
-    ws.Range("M6").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("M6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
     'Définir le range pour la source des données en utilisant un tableau
     Dim rngData As Range
     Set rngData = ws.Range("l_tbl_GL_Trans[#All]")
-    ws.Range("M7").value = rngData.Address
+    ws.Range("M7").Value = rngData.Address
     
     'Définir le range des critères
     Dim rngCriteria As Range
@@ -1459,14 +1459,14 @@ Function Fn_Get_GL_Account_Opening_Balance_AF(glNo As String, d As Date) As Doub
     ws.Range("L3").FormulaR1C1 = glNo
     ws.Range("M3").FormulaR1C1 = ">=" & CLng(#7/31/2024#)
     ws.Range("N3").FormulaR1C1 = "<" & CLng(d)
-    ws.Range("M8").value = rngCriteria.Address
+    ws.Range("M8").Value = rngCriteria.Address
     
     'Définir le range des résultats et effacer avant le traitement
     Dim rngResult As Range
     Set rngResult = ws.Range("P1").CurrentRegion
     rngResult.offset(1, 0).Clear
     Set rngResult = ws.Range("P1:Y1")
-    ws.Range("M9").value = rngResult.Address
+    ws.Range("M9").Value = rngResult.Address
     
     rngData.AdvancedFilter _
                 action:=xlFilterCopy, _
@@ -1477,7 +1477,7 @@ Function Fn_Get_GL_Account_Opening_Balance_AF(glNo As String, d As Date) As Doub
     'Quels sont les résultats ?
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, "P").End(xlUp).row
-    ws.Range("M10").value = lastUsedRow - 1 & " lignes"
+    ws.Range("M10").Value = lastUsedRow - 1 & " lignes"
     
     Application.EnableEvents = True
     
@@ -1557,7 +1557,7 @@ Function Fn_Get_Client_Name(cc As String) As String
     Set foundCell = ws.Columns("B").Find(What:=cc, LookIn:=xlValues, LookAt:=xlWhole)
     If Not foundCell Is Nothing Then
         'Si trouvé, retourner le nom du client correspondant, 1 colonne à gauche
-        Fn_Get_Client_Name = foundCell.offset(0, -1).value
+        Fn_Get_Client_Name = foundCell.offset(0, -1).Value
     Else
         Fn_Get_Client_Name = "Client non trouvé (invalide)"
     End If
@@ -1586,7 +1586,7 @@ Function Fn_Rechercher_Client_Par_ID(codeClient As String, ws As Worksheet) As V
         
         'Extraire toutes les données (colonnes) de la ligne trouvée
         Dim clientData As Variant
-        clientData = ws.Rows(ligneTrouvee).value
+        clientData = ws.Rows(ligneTrouvee).Value
         
         'Retourner les données du client (ligne entière)
         Fn_Rechercher_Client_Par_ID = clientData
@@ -1800,9 +1800,9 @@ Function ObtenirNoGlIndicateur(ByVal indic As Variant) As String
     'Parcourir chaque cellule dans la première colonne de la plage
     Dim cellule As Range
     For Each cellule In Plage.Columns(1).Cells
-        If cellule.value = indic Then
+        If cellule.Value = indic Then
             'Retourner la valeur de la troisième colonne pour la ligne correspondante
-            ObtenirNoGlIndicateur = cellule.offset(0, 1).value
+            ObtenirNoGlIndicateur = cellule.offset(0, 1).Value
             Exit Function
         End If
     Next cellule
@@ -1831,9 +1831,9 @@ Function Fn_Obtenir_Paiements_Facture(invNo As String, dateLimite As Date) As Cu
             'Obtenir la ligne correspondante
             ligne = celluleTrouvée.row
             'Vérifier la date dans la colonne appropriée
-            If IsDate(ws.Cells(ligne, 4).value) And ws.Cells(ligne, 4).value <= dateLimite Then
+            If IsDate(ws.Cells(ligne, 4).Value) And ws.Cells(ligne, 4).Value <= dateLimite Then
                 'Additionner le montant du paiement
-                Fn_Obtenir_Paiements_Facture = Fn_Obtenir_Paiements_Facture + ws.Cells(ligne, 5).value
+                Fn_Obtenir_Paiements_Facture = Fn_Obtenir_Paiements_Facture + ws.Cells(ligne, 5).Value
             End If
             'Rechercher la prochaine occurrence
             Set celluleTrouvée = ws.Columns(2).FindNext(celluleTrouvée)
@@ -1861,13 +1861,13 @@ Function Fn_Obtenir_Régularisations_Facture(invNo As String, dateLimite As Date)
             'Obtenir la ligne correspondante
             ligne = celluleTrouvée.row
             'Vérifier la date dans la colonne appropriée
-            If IsDate(ws.Cells(ligne, fREGULDate).value) And ws.Cells(ligne, fREGULDate).value <= dateLimite Then
+            If IsDate(ws.Cells(ligne, fREGULDate).Value) And ws.Cells(ligne, fREGULDate).Value <= dateLimite Then
                 'Additionner les cellules pertinentes
                 Fn_Obtenir_Régularisations_Facture = Fn_Obtenir_Régularisations_Facture + _
-                                                        ws.Cells(ligne, fREGULHono).value + _
-                                                        ws.Cells(ligne, fREGULFrais).value + _
-                                                        ws.Cells(ligne, fREGULTPS).value + _
-                                                        ws.Cells(ligne, fREGULTVQ).value
+                                                        ws.Cells(ligne, fREGULHono).Value + _
+                                                        ws.Cells(ligne, fREGULFrais).Value + _
+                                                        ws.Cells(ligne, fREGULTPS).Value + _
+                                                        ws.Cells(ligne, fREGULTVQ).Value
             End If
             'Rechercher la prochaine occurrence
             Set celluleTrouvée = ws.Columns(fREGULInvNo).FindNext(celluleTrouvée)
@@ -1931,10 +1931,10 @@ Function ConvertirEnNumerique(rng As Range)
 
     Dim cell As Range
     For Each cell In rng
-        If IsNumeric(cell.value) Then
-            cell.value = CCur(cell.value)
+        If IsNumeric(cell.Value) Then
+            cell.Value = CCur(cell.Value)
         Else
-            cell.value = CCur(Replace(cell.value, " ", ""))
+            cell.Value = CCur(Replace(cell.Value, " ", ""))
         End If
     Next cell
     
@@ -1965,7 +1965,7 @@ Function RechercherLignesTableau(ws As Worksheet, noEntrée As Long) As Variant
     Dim plageResultat As Range
     Dim cell As Range
     For Each cell In plageRecherche
-        If cell.value = noEntrée Then
+        If cell.Value = noEntrée Then
             If plageResultat Is Nothing Then
                 Set plageResultat = cell.EntireRow
             Else
@@ -1985,7 +1985,7 @@ Function RechercherLignesTableau(ws As Worksheet, noEntrée As Long) As Variant
     Dim data As Variant
     nbLignes = plageResultat.Rows.count
     nbColonnes = plageResultat.Columns.count
-    data = plageResultat.value ' Stocker la plage dans un tableau Variant
+    data = plageResultat.Value ' Stocker la plage dans un tableau Variant
 
     ' Retourner le tableau des résultats
     RechercherLignesTableau = data

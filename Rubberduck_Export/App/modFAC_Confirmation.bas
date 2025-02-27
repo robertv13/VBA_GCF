@@ -19,9 +19,9 @@ Sub Afficher_ufConfirmation() '2025-01-19 @ 08:42
         Load ufConfirmation
         ufConfirmation.show vbModeless
         
-        ufConfirmation.txtNbTotalFactures.value = Format$(Factures.count, "#,##0")
-        ufConfirmation.txtNbFacturesSélectionnées.value = 0
-        ufConfirmation.txtTotalFacturesSélectionnées.value = Format$(0, "###,##0.00 $")
+        ufConfirmation.txtNbTotalFactures.Value = Format$(Factures.count, "#,##0")
+        ufConfirmation.txtNbFacturesSélectionnées.Value = 0
+        ufConfirmation.txtTotalFacturesSélectionnées.Value = Format$(0, "###,##0.00 $")
     End If
 
 End Sub
@@ -42,10 +42,10 @@ Sub PrepareDonneesPourListView() '2025-01-19 @ 08:42
     Dim r As Long
     If lastUsedRow > 2 Then
         For r = 3 To lastUsedRow
-            invNo = " " & ws.Range("AZ" & r).value
-            dateFacture = " " & Format$(ws.Range("BA" & r), wshAdmin.Range("B1").value)
-            nomClient = ws.Range("BD" & r).value
-            totalFacture = Format$(ws.Range("BP" & r).value, "###,##0.00 $")
+            invNo = " " & ws.Range("AZ" & r).Value
+            dateFacture = " " & Format$(ws.Range("BA" & r), wshAdmin.Range("B1").Value)
+            nomClient = ws.Range("BD" & r).Value
+            totalFacture = Format$(ws.Range("BP" & r).Value, "###,##0.00 $")
             totalFacture = Space(13 - Len(totalFacture)) & totalFacture
             Factures.Add Array(invNo, dateFacture, nomClient, totalFacture)
         Next r
@@ -64,25 +64,25 @@ Sub ObtenirFactureAConfirmer(AC_OR_C As String) '2025-01-19 @ 08:42
     
     'Effacer les données de la dernière utilisation
     ws.Range("AX6:AX10").ClearContents
-    ws.Range("AX6").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("AX6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
     'Définir le range pour la source des données en utilisant un tableau
     Dim rngData As Range
     Set rngData = ws.Range("l_tbl_FAC_Entête[#All]")
-    ws.Range("AX7").value = rngData.Address
+    ws.Range("AX7").Value = rngData.Address
     
     'Définir le range des critères
     Dim rngCriteria As Range
     Set rngCriteria = ws.Range("AX2:AX3")
-    ws.Range("AX3").value = AC_OR_C
-    ws.Range("AX8").value = rngCriteria.Address
+    ws.Range("AX3").Value = AC_OR_C
+    ws.Range("AX8").Value = rngCriteria.Address
     
     'Définir le range des résultats et effacer avant le traitement
     Dim rngResult As Range
     Set rngResult = ws.Range("AZ1").CurrentRegion
     rngResult.offset(2, 0).Clear
     Set rngResult = ws.Range("AZ2:BQ2")
-    ws.Range("AX9").value = rngResult.Address
+    ws.Range("AX9").Value = rngResult.Address
         
     rngData.AdvancedFilter _
                 action:=xlFilterCopy, _
@@ -93,7 +93,7 @@ Sub ObtenirFactureAConfirmer(AC_OR_C As String) '2025-01-19 @ 08:42
     'Qu'avons-nous comme résultat ?
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, "AZ").End(xlUp).row
-    ws.Range("AX10").value = lastUsedRow - 2 & " lignes"
+    ws.Range("AX10").Value = lastUsedRow - 2 & " lignes"
     
     If lastUsedRow > 3 Then
         With ws.Sort 'Sort - Inv_No
@@ -120,8 +120,8 @@ End Sub
 Sub CocherToutesLesCases(listView As listView) '2025-01-19 @ 08:42
 
     'On s'assure de commencer avec aucune ligne de sélectionnée
-    ufConfirmation.txtNbFacturesSélectionnées.value = 0
-    ufConfirmation.txtTotalFacturesSélectionnées.value = 0
+    ufConfirmation.txtNbFacturesSélectionnées.Value = 0
+    ufConfirmation.txtTotalFacturesSélectionnées.Value = 0
     
     Dim valeur As Currency
     Dim i As Integer
@@ -129,17 +129,17 @@ Sub CocherToutesLesCases(listView As listView) '2025-01-19 @ 08:42
         listView.ListItems(i).Checked = True
         Call MarquerLigneSelectionnee(listView.ListItems(i))
         valeur = CCur(Trim(listView.ListItems(i).SubItems(4)))
-        ufConfirmation.txtTotalFacturesSélectionnées.value = _
-            Format$(ufConfirmation.txtTotalFacturesSélectionnées.value + valeur, "###,##0.00 $")
-        ufConfirmation.txtNbFacturesSélectionnées.value = _
-            ufConfirmation.txtNbFacturesSélectionnées.value + 1
+        ufConfirmation.txtTotalFacturesSélectionnées.Value = _
+            Format$(ufConfirmation.txtTotalFacturesSélectionnées.Value + valeur, "###,##0.00 $")
+        ufConfirmation.txtNbFacturesSélectionnées.Value = _
+            ufConfirmation.txtNbFacturesSélectionnées.Value + 1
     Next i
     
-    If ufConfirmation.txtNbFacturesSélectionnées.value = 1 Then
+    If ufConfirmation.txtNbFacturesSélectionnées.Value = 1 Then
         ufConfirmation.cmdConfirmation.Caption = "Confirmer cette facture"
     Else
         ufConfirmation.cmdConfirmation.Caption = "Confirmer les (" & _
-         ufConfirmation.txtNbFacturesSélectionnées.value & ") factures sélectionnées"
+         ufConfirmation.txtNbFacturesSélectionnées.Value & ") factures sélectionnées"
     End If
     ufConfirmation.cmdConfirmation.Visible = True
     
@@ -186,7 +186,7 @@ Sub Confirmation_Mise_À_Jour() '2025-01-19 @ 08:42
             Set ligne = .ListItems(i)
             If ligne.Checked Then
                 invNo = Trim(ligne.SubItems(1))
-                ufConfirmation.txtNoFactureEnConfirmation.value = invNo
+                ufConfirmation.txtNoFactureEnConfirmation.Value = invNo
                 DoEvents
                 Call MAJ_Statut_Facture_Entête_BD_MASTER(invNo)
                 Call MAJ_Statut_Facture_Entête_Local(invNo)
@@ -211,7 +211,7 @@ Sub MAJ_Statut_Facture_Entête_BD_MASTER(invoice As String) '2025-01-19 @ 08:42
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Entête$"
     
@@ -227,7 +227,7 @@ Sub MAJ_Statut_Facture_Entête_BD_MASTER(invoice As String) '2025-01-19 @ 08:42
     rs.Open SQL, conn, 2, 3
     If Not rs.EOF Then
         'Update AC_ouC with 'C'
-        rs.Fields(fFacEACouC - 1).value = "C"
+        rs.Fields(fFacEACouC - 1).Value = "C"
         rs.Update
     Else
         'Handle the case where the specified invoice is not found
@@ -265,7 +265,7 @@ Sub MAJ_Statut_Facture_Entête_Local(invoice As String) '2025-01-19 @ 08:42
     Dim r As Long, rowToBeUpdated As Long, tecID As Long
     If Not foundRange Is Nothing Then
         r = foundRange.row
-        ws.Cells(r, fFacEACouC).value = "C"
+        ws.Cells(r, fFacEACouC).Value = "C"
     Else
         MsgBox "La facture '" & invoice & "' n'existe pas dans FAC_Entête."
     End If
@@ -297,19 +297,19 @@ Sub Construire_GL_Posting_Confirmation(invoice As String) '2024-08-18 @17:15
     If Not foundRange Is Nothing Then
         r = foundRange.row
         Dim dateFact As Date
-        dateFact = Left(ws.Cells(r, fFacEDateFacture).value, 10)
+        dateFact = Left(ws.Cells(r, fFacEDateFacture).Value, 10)
         Dim hono As Currency
-        hono = ws.Cells(r, fFacEHonoraires).value
+        hono = ws.Cells(r, fFacEHonoraires).Value
         Dim misc1 As Currency, misc2 As Currency, misc3 As Currency
-        misc1 = ws.Cells(r, fFacEAutresFrais1).value
-        misc2 = ws.Cells(r, fFacEAutresFrais2).value
-        misc3 = ws.Cells(r, fFacEAutresFrais3).value
+        misc1 = ws.Cells(r, fFacEAutresFrais1).Value
+        misc2 = ws.Cells(r, fFacEAutresFrais2).Value
+        misc3 = ws.Cells(r, fFacEAutresFrais3).Value
         Dim tps As Currency, tvq As Currency
-        tps = ws.Cells(r, fFacEMntTPS).value
-        tvq = ws.Cells(r, fFacEMntTVQ).value
+        tps = ws.Cells(r, fFacEMntTPS).Value
+        tvq = ws.Cells(r, fFacEMntTVQ).Value
         
         Dim descGL_Trans As String, source As String
-        descGL_Trans = ws.Cells(r, fFacENomClient).value
+        descGL_Trans = ws.Cells(r, fFacENomClient).Value
         source = "FACTURE:" & invoice
         
         Dim MyArray(1 To 7, 1 To 4) As String
@@ -398,7 +398,7 @@ Sub AfficherPDFetWIPicones()
     
     Dim i As Long
     Dim iconPath As String
-    iconPath = wshAdmin.Range("F5").value & Application.PathSeparator & "Resources"
+    iconPath = wshAdmin.Range("F5").Value & Application.PathSeparator & "Resources"
     
     Dim pic As Picture
     Dim cell As Range
@@ -454,35 +454,35 @@ Sub AfficherInformationsFacture(wsF As Worksheet, r As Long)
     
     'Display all fields from FAC_Entête
     With ws
-        .Range("L5").value = wsF.Cells(r, 2).value
+        .Range("L5").Value = wsF.Cells(r, 2).Value
     
-        ws.Range("F7").value = wsF.Cells(r, 5).value
-        ws.Range("F8").value = wsF.Cells(r, 6).value
-        ws.Range("F9").value = wsF.Cells(r, 7).value
-        ws.Range("F10").value = wsF.Cells(r, 8).value
-        ws.Range("F11").value = wsF.Cells(r, 9).value
+        ws.Range("F7").Value = wsF.Cells(r, 5).Value
+        ws.Range("F8").Value = wsF.Cells(r, 6).Value
+        ws.Range("F9").Value = wsF.Cells(r, 7).Value
+        ws.Range("F10").Value = wsF.Cells(r, 8).Value
+        ws.Range("F11").Value = wsF.Cells(r, 9).Value
         
-        ws.Range("L13").value = wsF.Cells(r, 10).value
-        ws.Range("L14").value = wsF.Cells(r, 12).value
-        ws.Range("L15").value = wsF.Cells(r, 14).value
-        ws.Range("L16").value = wsF.Cells(r, 16).value
+        ws.Range("L13").Value = wsF.Cells(r, 10).Value
+        ws.Range("L14").Value = wsF.Cells(r, 12).Value
+        ws.Range("L15").Value = wsF.Cells(r, 14).Value
+        ws.Range("L16").Value = wsF.Cells(r, 16).Value
         ws.Range("L17").formula = "=SUM(L13:L16)"
         
-        ws.Range("L18").value = wsF.Cells(r, 18).value
-        ws.Range("L19").value = wsF.Cells(r, 20).value
+        ws.Range("L18").Value = wsF.Cells(r, 18).Value
+        ws.Range("L19").Value = wsF.Cells(r, 20).Value
         ws.Range("L21").formula = "=SUM(L17:L19)"
         
-        ws.Range("L23").value = wsF.Cells(r, 22).value
+        ws.Range("L23").Value = wsF.Cells(r, 22).Value
         ws.Range("L25").formula = "=L21 - L23"
         
     End With
     
     'Take care of invoice type (to be confirmed OR already confirmed)
-    If wsF.Cells(r, 3).value = "AC" Then
-        ws.Range("H5").value = "À CONFIRMER"
+    If wsF.Cells(r, 3).Value = "AC" Then
+        ws.Range("H5").Value = "À CONFIRMER"
         ws.Shapes("shpConfirmerFacture").Visible = True
     Else
-        ws.Range("H5").value = ""
+        ws.Range("H5").Value = ""
         ws.Shapes("shpConfirmerFacture").Visible = False
     End If
     
@@ -545,25 +545,25 @@ Sub ObtenirListeTECFacturésFiltreAvancé(noFact As String) '2024-10-20 @ 11:11
     
     'Effacer les données de la dernière utilisation
     ws.Range("BH6:BH10").ClearContents
-    ws.Range("BH6").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("BH6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
     'Définir le range pour la source des données en utilisant un tableau
     Dim rngData As Range
     Set rngData = ws.Range("l_tbl_TEC_Local[#All]")
-    ws.Range("BH7").value = rngData.Address
+    ws.Range("BH7").Value = rngData.Address
     
     'Définir le range des critères
     Dim rngCriteria As Range
     Set rngCriteria = ws.Range("BH2:BH3")
-    ws.Range("BH3").value = CStr(noFact)
-    ws.Range("BH8").value = rngCriteria.Address
+    ws.Range("BH3").Value = CStr(noFact)
+    ws.Range("BH8").Value = rngCriteria.Address
     
     'Définir le range des résultats et effacer avant le traitement
     Dim rngResult As Range
     Set rngResult = ws.Range("BJ1").CurrentRegion
     rngResult.offset(2, 0).Clear
     Set rngResult = ws.Range("BJ2:BY2")
-    ws.Range("BH9").value = rngResult.Address
+    ws.Range("BH9").Value = rngResult.Address
     
     rngData.AdvancedFilter _
                 action:=xlFilterCopy, _
@@ -574,7 +574,7 @@ Sub ObtenirListeTECFacturésFiltreAvancé(noFact As String) '2024-10-20 @ 11:11
     'Qu'avons-nous comme résultat ?
     Dim lastResultRow As Long
     lastResultRow = ws.Cells(ws.Rows.count, "BJ").End(xlUp).row
-    ws.Range("BH10").value = lastResultRow - 2 & " lignes"
+    ws.Range("BH10").Value = lastResultRow - 2 & " lignes"
     
     'Est-il nécessaire de trier les résultats ?
     If lastResultRow > 3 Then
@@ -626,8 +626,8 @@ Sub ObtenirSommaireTEC(arr As Variant, ByRef TECSummary As Variant)
     Dim hres As Double
     Dim i As Long
     For i = 1 To UBound(arr, 1)
-        pro = wsTEC.Cells(arr(i), 3).value
-        hres = wsTEC.Cells(arr(i), 8).value
+        pro = wsTEC.Cells(arr(i), 3).Value
+        hres = wsTEC.Cells(arr(i), 8).Value
         If hres <> 0 Then
             If dictHours.Exists(pro) Then
                 dictHours(pro) = dictHours(pro) + hres
@@ -648,7 +648,7 @@ Sub ObtenirSommaireTEC(arr As Variant, ByRef TECSummary As Variant)
             profID = Fn_GetID_From_Initials(strProf)
             hres = dictHours(prof)
             Dim tauxHoraire As Currency
-            tauxHoraire = Fn_Get_Hourly_Rate(profID, wshFAC_Confirmation.Range("L5").value)
+            tauxHoraire = Fn_Get_Hourly_Rate(profID, wshFAC_Confirmation.Range("L5").Value)
             wshFAC_Confirmation.Cells(rowInWorksheet, 6) = strProf
             wshFAC_Confirmation.Cells(rowInWorksheet, 7) = _
                     CDbl(Format$(hres, "0.00"))
@@ -684,8 +684,8 @@ Sub ObtenirTotalTEC(arr As Variant, ByRef TECTotal As Double)
     Dim hres As Double
     Dim i As Long
     For i = 1 To UBound(arr, 1)
-        pro = wsTEC.Cells(arr(i), 3).value
-        hres = wsTEC.Cells(arr(i), 8).value
+        pro = wsTEC.Cells(arr(i), 3).Value
+        hres = wsTEC.Cells(arr(i), 8).Value
         If hres <> 0 Then
             If dictHours.Exists(pro) Then
                 dictHours(pro) = dictHours(pro) + hres
@@ -706,7 +706,7 @@ Sub ObtenirTotalTEC(arr As Variant, ByRef TECTotal As Double)
             profID = Fn_GetID_From_Initials(strProf)
             hres = dictHours(prof)
             Dim tauxHoraire As Currency
-            tauxHoraire = Fn_Get_Hourly_Rate(profID, wshFAC_Confirmation.Range("L5").value)
+            tauxHoraire = Fn_Get_Hourly_Rate(profID, wshFAC_Confirmation.Range("L5").Value)
             wshFAC_Confirmation.Cells(rowInWorksheet, 6) = strProf
             wshFAC_Confirmation.Cells(rowInWorksheet, 7) = _
                     CDbl(Format$(hres, "0.00"))
@@ -741,7 +741,7 @@ Sub ObtenirSommaireDesTaux(arr As Variant, ByRef FeesSummary As Variant)
     
     'Get Invoice number
     Dim invNo As String
-    invNo = Trim(wshFAC_Confirmation.Range("L5").value)
+    invNo = Trim(wshFAC_Confirmation.Range("L5").Value)
     
     'Use Range.Find to locate the first cell with the InvoiceNo
     Dim cell As Range
@@ -755,12 +755,12 @@ Sub ObtenirSommaireDesTaux(arr As Variant, ByRef FeesSummary As Variant)
         Application.EnableEvents = False
         Do
             'Display values in the worksheet
-            If wsFees.Cells(cell.row, 4).value <> 0 Then
-                wshFAC_Confirmation.Range("F" & rowFeesSummary).value = wsFees.Cells(cell.row, 3).value
-                wshFAC_Confirmation.Range("G" & rowFeesSummary).value = _
-                            CCur(Format$(wsFees.Cells(cell.row, 4).value, "##0.00"))
-                wshFAC_Confirmation.Range("H" & rowFeesSummary).value = _
-                            CCur(Format$(wsFees.Cells(cell.row, 5).value, "##,##0.00 $"))
+            If wsFees.Cells(cell.row, 4).Value <> 0 Then
+                wshFAC_Confirmation.Range("F" & rowFeesSummary).Value = wsFees.Cells(cell.row, 3).Value
+                wshFAC_Confirmation.Range("G" & rowFeesSummary).Value = _
+                            CCur(Format$(wsFees.Cells(cell.row, 4).Value, "##0.00"))
+                wshFAC_Confirmation.Range("H" & rowFeesSummary).Value = _
+                            CCur(Format$(wsFees.Cells(cell.row, 5).Value, "##,##0.00 $"))
                 rowFeesSummary = rowFeesSummary + 1
             End If
             'Find the next cell with the invNo

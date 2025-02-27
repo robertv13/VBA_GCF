@@ -365,7 +365,7 @@ Sub CodeEssentielDepart()
     Call Set_Root_Path(rootPath)
 
     Application.EnableEvents = False
-    wshAdmin.Range("F5").value = rootPath
+    wshAdmin.Range("F5").Value = rootPath
     Application.EnableEvents = True
    
     'Vérification si le chemin est accessible
@@ -390,7 +390,7 @@ Sub CodeEssentielDepart()
     Call BackupMasterFile
     
     Call WriteInfoOnMainMenu
-    wshMenu.Range("A1").value = wshAdmin.Range("NomEntreprise").value
+    wshMenu.Range("A1").Value = wshAdmin.Range("NomEntreprise").Value
     
     Call HideDevShapesBasedOnUsername
     
@@ -447,7 +447,7 @@ Sub CreateUserActiveFile()
     userName = Fn_Get_Windows_Username
     
     Dim traceFilePath As String
-    traceFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
+    traceFilePath = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
     
     Dim FileNumber As Integer
     FileNumber = FreeFile
@@ -489,7 +489,7 @@ Sub SetupUserDateFormat()
             userDateFormat = "dd/mm/yyyy"
     End Select
 
-    wshAdmin.Range("B1").value = userDateFormat
+    wshAdmin.Range("B1").Value = userDateFormat
     
     Call Log_Record("modAppli:SetupUserDateFormat", "", startTime)
     
@@ -505,10 +505,10 @@ Sub BackupMasterFile()
     
     'Chemin source (fichier principal) et destination (sauvegarde)
     Dim masterFilePath As String
-    masterFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
+    masterFilePath = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
     
     Dim backupFilePath As String
-    backupFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    backupFilePath = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER_" & Format$(Now, "YYYYMMDD_HHMMSS") & ".xlsx"
     
     'Créer directement une copie du fichier sans ouvrir Excel
@@ -536,10 +536,10 @@ Sub WriteInfoOnMainMenu()
     Application.EnableEvents = False
     
     With wshMenu
-        .Range("A30").value = "Heure - " & Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss")
-        .Range("A31").value = "Version - " & ThisWorkbook.Name
-        .Range("A32").value = "Utilisateur - " & Fn_Get_Windows_Username
-        .Range("A33").value = "Environnement - " & wshAdmin.Range("F5").value
+        .Range("A30").Value = "Heure - " & Format$(Now(), wshAdmin.Range("B1").Value & " hh:mm:ss")
+        .Range("A31").Value = "Version - " & ThisWorkbook.Name
+        .Range("A32").Value = "Utilisateur - " & Fn_Get_Windows_Username
+        .Range("A33").Value = "Environnement - " & wshAdmin.Range("F5").Value
     End With
     
     Application.EnableEvents = True

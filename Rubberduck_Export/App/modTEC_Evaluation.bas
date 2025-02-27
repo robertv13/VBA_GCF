@@ -35,7 +35,7 @@ Sub TEC_Evaluation_Calcul(cutoffDate As String, ByRef maxDate As Date)
     
     'Transfère la table en mémoire (arr)
     Dim arr As Variant
-    arr = wsSource.Range("A3:P" & lastUsedRow).value
+    arr = wsSource.Range("A3:P" & lastUsedRow).Value
     
     'Grande section
     Dim offset As Long
@@ -168,11 +168,11 @@ Sub TEC_Evaluation_Affichage(cutoffDate As String, maxDate As Date)
     Dim i As Integer
     For i = 0 To 10 Step 5
         If i = 0 Then
-            ws.Range("D" & currentRow).value = "EXCLUANT les clients '2000' (mais INCLUANT les heures de GC & VG de tous les clients)"
+            ws.Range("D" & currentRow).Value = "EXCLUANT les clients '2000' (mais INCLUANT les heures de GC & VG de tous les clients)"
         ElseIf i = 5 Then
-            ws.Range("D" & currentRow).value = "SEULEMENT les clients '2000'"
+            ws.Range("D" & currentRow).Value = "SEULEMENT les clients '2000'"
         Else
-            ws.Range("D" & currentRow).value = "TOUS LES CLIENTS"
+            ws.Range("D" & currentRow).Value = "TOUS LES CLIENTS"
         End If
         ws.Range("D" & currentRow).Font.Bold = True
         Erase total
@@ -189,23 +189,23 @@ Sub TEC_Evaluation_Affichage(cutoffDate As String, maxDate As Date)
             nom = Fn_Get_Nom_From_Initials(strProf)
             prenom = prenom & " " & Left(nom, 1) & "."
             If gDictHours(prof)(i) <> 0 Then
-                tauxHoraire = Fn_Get_Hourly_Rate(profID, ws.Range("L3").value)
+                tauxHoraire = Fn_Get_Hourly_Rate(profID, ws.Range("L3").Value)
                 Debug.Print i, prof, gDictHours(prof)(i), tauxHoraire, gDictHours(prof)(i) * tauxHoraire
-                ws.Range("E" & currentRow).value = prenom
+                ws.Range("E" & currentRow).Value = prenom
                 ws.Range("F" & currentRow).HorizontalAlignment = xlRight
-                ws.Range("F" & currentRow).value = Format$(gDictHours(prof)(i), "#,##0.00")
+                ws.Range("F" & currentRow).Value = Format$(gDictHours(prof)(i), "#,##0.00")
                 ws.Range("G" & currentRow).HorizontalAlignment = xlRight
-                ws.Range("G" & currentRow).value = Format$(tauxHoraire, "#,##0.00 $")
+                ws.Range("G" & currentRow).Value = Format$(tauxHoraire, "#,##0.00 $")
                 ws.Range("H" & currentRow).HorizontalAlignment = xlRight
-                ws.Range("H" & currentRow).value = Format$(gDictHours(prof)(i) * tauxHoraire, "###,##0.00 $")
+                ws.Range("H" & currentRow).Value = Format$(gDictHours(prof)(i) * tauxHoraire, "###,##0.00 $")
                 ws.Range("I" & currentRow).HorizontalAlignment = xlRight
-                ws.Range("I" & currentRow).value = Format$(gDictHours(prof)(i + 1), "#,##0.00")
+                ws.Range("I" & currentRow).Value = Format$(gDictHours(prof)(i + 1), "#,##0.00")
                 ws.Range("J" & currentRow).HorizontalAlignment = xlRight
-                ws.Range("J" & currentRow).value = Format$(gDictHours(prof)(i + 2), "#,##0.00")
+                ws.Range("J" & currentRow).Value = Format$(gDictHours(prof)(i + 2), "#,##0.00")
                 ws.Range("K" & currentRow).HorizontalAlignment = xlRight
-                ws.Range("K" & currentRow).value = Format$(gDictHours(prof)(i + 3), "#,##0.00")
+                ws.Range("K" & currentRow).Value = Format$(gDictHours(prof)(i + 3), "#,##0.00")
                 ws.Range("L" & currentRow).HorizontalAlignment = xlRight
-                ws.Range("L" & currentRow).value = Format$(gDictHours(prof)(i + 4), "#,##0.00")
+                ws.Range("L" & currentRow).Value = Format$(gDictHours(prof)(i + 4), "#,##0.00")
                 currentRow = currentRow + 1
                 Dim ii As Integer
                 For ii = 0 To 4
@@ -223,9 +223,9 @@ Sub TEC_Evaluation_Affichage(cutoffDate As String, maxDate As Date)
         ws.Range("E" & currentRow & ":L" & currentRow).Font.Bold = True
         ws.Range("F" & currentRow & ":L" & currentRow).HorizontalAlignment = xlRight
 
-        ws.Range("E" & currentRow).value = "* Totaux *"
-        ws.Range("F" & currentRow).value = Format$(total(0), "#,##0.00")
-        ws.Range("H" & currentRow).value = Format$(totalValeurTEC, "###,##0.00 $")
+        ws.Range("E" & currentRow).Value = "* Totaux *"
+        ws.Range("F" & currentRow).Value = Format$(total(0), "#,##0.00")
+        ws.Range("H" & currentRow).Value = Format$(totalValeurTEC, "###,##0.00 $")
         If i = 0 Then
             With ws.Range("H" & currentRow).Interior
                 .Pattern = xlSolid
@@ -235,10 +235,10 @@ Sub TEC_Evaluation_Affichage(cutoffDate As String, maxDate As Date)
                 .PatternTintAndShade = 0
              End With
         End If
-        ws.Range("I" & currentRow).value = Format$(total(1), "#,##0.00")
-        ws.Range("J" & currentRow).value = Format$(total(2), "#,##0.00")
-        ws.Range("K" & currentRow).value = Format$(total(3), "#,##0.00")
-        ws.Range("L" & currentRow).value = Format$(total(4), "#,##0.00")
+        ws.Range("I" & currentRow).Value = Format$(total(1), "#,##0.00")
+        ws.Range("J" & currentRow).Value = Format$(total(2), "#,##0.00")
+        ws.Range("K" & currentRow).Value = Format$(total(3), "#,##0.00")
+        ws.Range("L" & currentRow).Value = Format$(total(4), "#,##0.00")
         currentRow = currentRow + 2
     Next i
 
@@ -259,7 +259,7 @@ Sub TEC_Evaluation_Affichage(cutoffDate As String, maxDate As Date)
     Else
         message = message & ", donc un Crédit de " & Format$(valeurTEC - solde, "###,##0.00 $")
     End If
-    ws.Range("D3").value = message
+    ws.Range("D3").Value = message
 
     Application.ScreenUpdating = True
     Application.EnableEvents = True
@@ -297,7 +297,7 @@ Sub TEC_Evaluation_Procedure_ACO(cutoffDate As String)
     
     'Transfère la table en mémoire (arr)
     Dim arr As Variant
-    arr = wsSource.Range("A3:P" & lastUsedRow).value
+    arr = wsSource.Range("A3:P" & lastUsedRow).Value
     
     'Grande section
     Dim offset As Long
@@ -418,11 +418,11 @@ Sub TEC_Evaluation_Procedure_ACO(cutoffDate As String)
     Dim valeurTEC As Currency
     For i = 0 To 10 Step 5
         If i = 0 Then
-            ws.Range("D" & currentRow).value = "EXCLUANT les clients '2000' (mais INCLUANT les heures de GC & VG de tous les clients)"
+            ws.Range("D" & currentRow).Value = "EXCLUANT les clients '2000' (mais INCLUANT les heures de GC & VG de tous les clients)"
         ElseIf i = 5 Then
-            ws.Range("D" & currentRow).value = "SEULEMENT les clients '2000'"
+            ws.Range("D" & currentRow).Value = "SEULEMENT les clients '2000'"
         Else
-            ws.Range("D" & currentRow).value = "TOUS LES CLIENTS"
+            ws.Range("D" & currentRow).Value = "TOUS LES CLIENTS"
         End If
         ws.Range("D" & currentRow).Font.Bold = True
         Erase total
@@ -439,22 +439,22 @@ Sub TEC_Evaluation_Procedure_ACO(cutoffDate As String)
             nom = Fn_Get_Nom_From_Initials(strProf)
             prenom = prenom & " " & Left(nom, 1) & "."
             If dictHours(prof)(i + 0) <> 0 Then
-                tauxHoraire = Fn_Get_Hourly_Rate(profID, ws.Range("L3").value)
-                ws.Range("E" & currentRow).value = prenom
+                tauxHoraire = Fn_Get_Hourly_Rate(profID, ws.Range("L3").Value)
+                ws.Range("E" & currentRow).Value = prenom
                 ws.Range("F" & currentRow).HorizontalAlignment = xlRight
-                ws.Range("F" & currentRow).value = Format$(dictHours(prof)(i + 0), "#,##0.00")
+                ws.Range("F" & currentRow).Value = Format$(dictHours(prof)(i + 0), "#,##0.00")
                 ws.Range("G" & currentRow).HorizontalAlignment = xlRight
-                ws.Range("G" & currentRow).value = Format$(tauxHoraire, "#,##0.00 $")
+                ws.Range("G" & currentRow).Value = Format$(tauxHoraire, "#,##0.00 $")
                 ws.Range("H" & currentRow).HorizontalAlignment = xlRight
-                ws.Range("H" & currentRow).value = Format$(dictHours(prof)(i + 0) * tauxHoraire, "###,##0.00 $")
+                ws.Range("H" & currentRow).Value = Format$(dictHours(prof)(i + 0) * tauxHoraire, "###,##0.00 $")
                 ws.Range("I" & currentRow).HorizontalAlignment = xlRight
-                ws.Range("I" & currentRow).value = Format$(dictHours(prof)(i + 1), "#,##0.00")
+                ws.Range("I" & currentRow).Value = Format$(dictHours(prof)(i + 1), "#,##0.00")
                 ws.Range("J" & currentRow).HorizontalAlignment = xlRight
-                ws.Range("J" & currentRow).value = Format$(dictHours(prof)(i + 2), "#,##0.00")
+                ws.Range("J" & currentRow).Value = Format$(dictHours(prof)(i + 2), "#,##0.00")
                 ws.Range("K" & currentRow).HorizontalAlignment = xlRight
-                ws.Range("K" & currentRow).value = Format$(dictHours(prof)(i + 3), "#,##0.00")
+                ws.Range("K" & currentRow).Value = Format$(dictHours(prof)(i + 3), "#,##0.00")
                 ws.Range("L" & currentRow).HorizontalAlignment = xlRight
-                ws.Range("L" & currentRow).value = Format$(dictHours(prof)(i + 4), "#,##0.00")
+                ws.Range("L" & currentRow).Value = Format$(dictHours(prof)(i + 4), "#,##0.00")
                 currentRow = currentRow + 1
                 Dim ii As Integer
                 For ii = 0 To 4
@@ -472,9 +472,9 @@ Sub TEC_Evaluation_Procedure_ACO(cutoffDate As String)
         ws.Range("E" & currentRow & ":L" & currentRow).Font.Bold = True
         ws.Range("F" & currentRow & ":L" & currentRow).HorizontalAlignment = xlRight
         
-        ws.Range("E" & currentRow).value = "* Totaux *"
-        ws.Range("F" & currentRow).value = Format$(total(0), "#,##0.00")
-        ws.Range("H" & currentRow).value = Format$(totalValeurTEC, "###,##0.00 $")
+        ws.Range("E" & currentRow).Value = "* Totaux *"
+        ws.Range("F" & currentRow).Value = Format$(total(0), "#,##0.00")
+        ws.Range("H" & currentRow).Value = Format$(totalValeurTEC, "###,##0.00 $")
         If i = 0 Then
             With ws.Range("H" & currentRow).Interior
                 .Pattern = xlSolid
@@ -484,10 +484,10 @@ Sub TEC_Evaluation_Procedure_ACO(cutoffDate As String)
                 .PatternTintAndShade = 0
              End With
         End If
-        ws.Range("I" & currentRow).value = Format$(total(1), "#,##0.00")
-        ws.Range("J" & currentRow).value = Format$(total(2), "#,##0.00")
-        ws.Range("K" & currentRow).value = Format$(total(3), "#,##0.00")
-        ws.Range("L" & currentRow).value = Format$(total(4), "#,##0.00")
+        ws.Range("I" & currentRow).Value = Format$(total(1), "#,##0.00")
+        ws.Range("J" & currentRow).Value = Format$(total(2), "#,##0.00")
+        ws.Range("K" & currentRow).Value = Format$(total(3), "#,##0.00")
+        ws.Range("L" & currentRow).Value = Format$(total(4), "#,##0.00")
         currentRow = currentRow + 2
     Next i
     
@@ -508,7 +508,7 @@ Sub TEC_Evaluation_Procedure_ACO(cutoffDate As String)
     Else
         message = message & ", donc un Crédit de " & Format$(valeurTEC - solde, "###,##0.00 $")
     End If
-    ws.Range("D3").value = message
+    ws.Range("D3").Value = message
     
     Application.ScreenUpdating = True
     Application.EnableEvents = True
@@ -549,7 +549,7 @@ Sub Evaluation_Apercu_Avant_Impression()
     
     DoEvents
 
-    Dim header1 As String: header1 = "Évaluation des TEC au  " & wshTEC_Evaluation.Range("L3").value
+    Dim header1 As String: header1 = "Évaluation des TEC au  " & wshTEC_Evaluation.Range("L3").Value
     Dim header2 As String
     
     Call Simple_Print_Setup(wshTEC_Evaluation, rngToPrint, header1, header2, "$1:$1", "P")

@@ -9,7 +9,7 @@ Public Sub Convertir_NF_en_Facturable_Dans_BD(tecID As Long) '2025-01-15 @ 09:44
     
     'Classeur & feuille à mettre à jour
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wshAdmin.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "TEC_Local$"
     
@@ -25,7 +25,7 @@ Public Sub Convertir_NF_en_Facturable_Dans_BD(tecID As Long) '2025-01-15 @ 09:44
     rs.Open strSQL, conn, 2, 3
     If Not rs.EOF Then
         'Update EstFacturee, DateFacturee & NoFacture
-        rs.Fields(fTECEstFacturable - 1).value = "VRAI"
+        rs.Fields(fTECEstFacturable - 1).Value = "VRAI"
     Else
         'On ne trouve pas le tecID - ANORMAL !!!
         MsgBox "L'enregistrement avec le TECID '" & tecID & "' ne peut être trouvé!", vbOK + vbCritical, "Problème avec la convertion (N/FACT ---> FACT)"
@@ -68,7 +68,7 @@ Public Sub Convertir_NF_en_Facturable_Locally(tecID As Long) '2025-01-15 @ 09:44
     rowToBeUpdated = Fn_Find_Row_Number_TECID(tecID, lookupRange)
     
     'Convertir à Facturable
-    ws.Cells(rowToBeUpdated, fTECEstFacturable).value = "VRAI"
+    ws.Cells(rowToBeUpdated, fTECEstFacturable).Value = "VRAI"
 
     Call Log_Record("modTEC_Stuff:Convertir_NF_en_Facturable_Locally", "", startTime)
 

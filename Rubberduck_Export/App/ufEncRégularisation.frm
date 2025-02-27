@@ -29,8 +29,8 @@ Private Sub UserForm_Initialize()
     'Parcourir la plage et charger les factures
     Dim row As Range
     For Each row In factureRange.Rows
-        If row.Cells(1, 1).value <> "" Then
-            ufEncRégularisation.cbbNoFacture.AddItem row.Cells(1, 1).value
+        If row.Cells(1, 1).Value <> "" Then
+            ufEncRégularisation.cbbNoFacture.AddItem row.Cells(1, 1).Value
         End If
     Next row
 
@@ -59,7 +59,7 @@ Private Sub cbbNoFacture_AfterUpdate()
     Set wsCC = wshFAC_Comptes_Clients
     
     Dim invNo As String
-    invNo = ufEncRégularisation.cbbNoFacture.value
+    invNo = ufEncRégularisation.cbbNoFacture.Value
     
     Dim rngTrouve As Range
     Set rngTrouve = wsCC.Columns(fFacCCInvNo).Find(What:=invNo, LookIn:=xlValues, LookAt:=xlWhole)
@@ -69,16 +69,16 @@ Private Sub cbbNoFacture_AfterUpdate()
     
     If Not rngTrouve Is Nothing Then
         'Si la valeur est trouvée, récupérer d'autres colonnes
-        soldeFacture = CCur(rngTrouve.offset(0, 10).value)
-        dateFacture = Format$(rngTrouve.offset(0, 1).value, wshAdmin.Range("B1").value)
+        soldeFacture = CCur(rngTrouve.offset(0, 10).Value)
+        dateFacture = Format$(rngTrouve.offset(0, 1).Value, wshAdmin.Range("B1").Value)
         ufEncRégularisation.lblDateFactureData.Caption = dateFacture
         ufEncRégularisation.lblTotalFactureValue.Caption = FormatCurrency(soldeFacture, 2)
         
-        ufEncRégularisation.txtTotalFacture.value = ""
-        ufEncRégularisation.txtHonoraires.value = ""
-        ufEncRégularisation.txtFraisDivers.value = ""
-        ufEncRégularisation.txtTPS.value = ""
-        ufEncRégularisation.txtTVQ.value = ""
+        ufEncRégularisation.txtTotalFacture.Value = ""
+        ufEncRégularisation.txtHonoraires.Value = ""
+        ufEncRégularisation.txtFraisDivers.Value = ""
+        ufEncRégularisation.txtTPS.Value = ""
+        ufEncRégularisation.txtTVQ.Value = ""
         
         ufEncRégularisation.lblTotalFactureAjuste.Caption = Format$(soldeFacture, "###,##0.00 $")
     Else
@@ -96,7 +96,7 @@ Private Sub txtTotalFacture_Exit(ByVal Cancel As MSForms.ReturnBoolean)
     Dim totalFacture As Currency
     ufEncRégularisation.txtTotalFacture.Text = Replace(ufEncRégularisation.txtTotalFacture.Text, ".", ",")
     
-    If ufEncRégularisation.txtTotalFacture.Text <> "" And IsNumeric(ufEncRégularisation.txtTotalFacture.value) = True Then
+    If ufEncRégularisation.txtTotalFacture.Text <> "" And IsNumeric(ufEncRégularisation.txtTotalFacture.Value) = True Then
         totalFacture = CCur(ufEncRégularisation.txtTotalFacture.Text)
         Debug.Print "#093 - totalFacture = " & totalFacture
     
@@ -119,12 +119,12 @@ Private Sub txtTotalFacture_Exit(ByVal Cancel As MSForms.ReturnBoolean)
             honoraires = honoraires + ecartArrondissement
         End If
         
-        ufEncRégularisation.txtTotalFacture.value = Format$(totalFacture, "###,##0.00 $")
+        ufEncRégularisation.txtTotalFacture.Value = Format$(totalFacture, "###,##0.00 $")
         ufEncRégularisation.lblTotalFactureAjuste.Caption = Format$(lblTotalFactureValue + totalFacture, "###,##0.00 $")
-        ufEncRégularisation.txtHonoraires.value = Format$(honoraires, "###,##0.00 $")
-        ufEncRégularisation.txtFraisDivers.value = Format$(fraisDivers, "###,##0.00 $")
-        ufEncRégularisation.txtTPS.value = Format$(tps, "###,##0.00 $")
-        ufEncRégularisation.txtTVQ.value = Format$(tvq, "###,##0.00 $")
+        ufEncRégularisation.txtHonoraires.Value = Format$(honoraires, "###,##0.00 $")
+        ufEncRégularisation.txtFraisDivers.Value = Format$(fraisDivers, "###,##0.00 $")
+        ufEncRégularisation.txtTPS.Value = Format$(tps, "###,##0.00 $")
+        ufEncRégularisation.txtTVQ.Value = Format$(tvq, "###,##0.00 $")
         
         ufEncRégularisation.cmbAccepte.Visible = True
         ufEncRégularisation.cmbRejete.Visible = True
@@ -216,11 +216,11 @@ Sub EffaceDonnéesRégularisation()
 '        .lblTotalFactureValue.Caption = ""
         
         'Montants de la régularisation
-        .txtTotalFacture.value = ""
-        .txtHonoraires.value = ""
-        .txtFraisDivers.value = ""
-        .txtTPS.value = ""
-        .txtTVQ.value = ""
+        .txtTotalFacture.Value = ""
+        .txtHonoraires.Value = ""
+        .txtFraisDivers.Value = ""
+        .txtTPS.Value = ""
+        .txtTVQ.Value = ""
         
 '        'Nouveau solde
 '        .lblTotalFactureAjuste.Caption = ""

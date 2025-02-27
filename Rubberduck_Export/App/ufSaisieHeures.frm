@@ -20,7 +20,7 @@ Private oEventHandler As New clsSearchableDropdown '2023-03-21 @ 09:16
 'Allows the calling code to set the data
 Public Property Let ListData(ByVal rg As Range)
 
-    oEventHandler.List = rg.value
+    oEventHandler.List = rg.Value
 
 End Property
 
@@ -52,18 +52,18 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
     'Default Professionnal - 2024-08-19 @ 07:59
     Select Case Fn_Get_Windows_Username
         Case "Guillaume", "GuillaumeCharron", "gchar", "Robert M. Vigneault", "Robertmv"
-            cmbProfessionnel.value = "GC"
+            cmbProfessionnel.Value = "GC"
         Case "vgervais"
-            cmbProfessionnel.value = "VG"
+            cmbProfessionnel.Value = "VG"
         Case "User"
-            cmbProfessionnel.value = "ML"
+            cmbProfessionnel.Value = "ML"
         Case "vgervais"
-            cmbProfessionnel.value = "AR"
+            cmbProfessionnel.Value = "AR"
         Case Else
-            cmbProfessionnel.value = ""
+            cmbProfessionnel.Value = ""
     End Select
     
-    ufSaisieHeures.txtDate.value = "" 'On vide la date pour forcer la saisie
+    ufSaisieHeures.txtDate.Value = "" 'On vide la date pour forcer la saisie
     
     On Error Resume Next
     ufSaisieHeures.cmbProfessionnel.SetFocus
@@ -83,9 +83,9 @@ Private Sub lstboxNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     With Me.lstboxNomClient
         For i = 0 To .ListCount - 1
             If .Selected(i) Then
-                Me.txtClient.value = .List(i, 0)
-                Me.txtClientID.value = Fn_Cell_From_BD_Client(Me.txtClient.value, 17, 2)
-                Me.txtClientRéel.value = Fn_Cell_From_BD_Client(Me.txtClientID.value, 2, 1)
+                Me.txtClient.Value = .List(i, 0)
+                Me.txtClientID.Value = Fn_Cell_From_BD_Client(Me.txtClient.Value, 17, 2)
+                Me.txtClientRéel.Value = Fn_Cell_From_BD_Client(Me.txtClientID.Value, 2, 1)
                 Exit For
             End If
         Next i
@@ -141,33 +141,33 @@ Public Sub cmbProfessionnel_AfterUpdate()
         Case "Guillaume", "GuillaumeCharron", "gchar", "Robert M. Vigneault", "robertmv"
             'Accès à tous les utilisateurs
         Case "vgervais"
-            If cmbProfessionnel.value <> "VG" Then
+            If cmbProfessionnel.Value <> "VG" Then
                 MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
                     "Vous devez obligatoirement utiliser le code 'VG'", _
                     vbInformation
             End If
-            cmbProfessionnel.value = "VG"
+            cmbProfessionnel.Value = "VG"
         Case "User"
-            If cmbProfessionnel.value <> "ML" Then
+            If cmbProfessionnel.Value <> "ML" Then
                 MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
                         "Vous devez obligatoirement utiliser le code 'ML'", _
                         vbInformation
             End If
-            cmbProfessionnel.value = "ML"
+            cmbProfessionnel.Value = "ML"
         Case "Annie"
-            If cmbProfessionnel.value <> "AR" Then
+            If cmbProfessionnel.Value <> "AR" Then
                 MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
                     "Vous devez obligatoirement utiliser le code 'AR'", _
                     vbInformation
             End If
-            cmbProfessionnel.value = "AR"
+            cmbProfessionnel.Value = "AR"
         Case Else
-            cmbProfessionnel.value = ""
+            cmbProfessionnel.Value = ""
     End Select
 
-    If ufSaisieHeures.cmbProfessionnel.value <> "" Then
-        ufSaisieHeures.txtProfID.value = Fn_GetID_From_Initials(ufSaisieHeures.cmbProfessionnel.value)
-        If ufSaisieHeures.txtDate.value <> "" Then '2024-09-05 @ 20:50
+    If ufSaisieHeures.cmbProfessionnel.Value <> "" Then
+        ufSaisieHeures.txtProfID.Value = Fn_GetID_From_Initials(ufSaisieHeures.cmbProfessionnel.Value)
+        If ufSaisieHeures.txtDate.Value <> "" Then '2024-09-05 @ 20:50
             Call TEC_Get_All_TEC_AF
             Call TEC_Refresh_ListBox_And_Add_Hours
         End If
@@ -179,10 +179,10 @@ End Sub
 
 Private Sub txtDate_Enter()
 
-    If ufSaisieHeures.txtDate.value = "" Then
-        ufSaisieHeures.txtDate.value = Format$(Date, wshAdmin.Range("B1").value)
+    If ufSaisieHeures.txtDate.Value = "" Then
+        ufSaisieHeures.txtDate.Value = Format$(Date, wshAdmin.Range("B1").Value)
     Else
-        ufSaisieHeures.txtDate.value = Format$(ufSaisieHeures.txtDate.value, wshAdmin.Range("B1").value)
+        ufSaisieHeures.txtDate.Value = Format$(ufSaisieHeures.txtDate.Value, wshAdmin.Range("B1").Value)
     End If
     
 End Sub
@@ -193,7 +193,7 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
     
     Dim fullDate As Variant
     
-    fullDate = Fn_Complete_Date(ufSaisieHeures.txtDate.value, 600, 15)
+    fullDate = Fn_Complete_Date(ufSaisieHeures.txtDate.Value, 600, 15)
     If fullDate <> "Invalid Date" Then
         Call Log_Saisie_Heures("info     ", "@00199 - fullDate = " & fullDate & _
                                 "   y = " & year(fullDate) & _
@@ -204,7 +204,7 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
     
     'Update the cell with the full date, if valid
     If fullDate <> "Invalid Date" Then
-        ufSaisieHeures.txtDate.value = Format$(fullDate, wshAdmin.Range("B1").value)
+        ufSaisieHeures.txtDate.Value = Format$(fullDate, wshAdmin.Range("B1").Value)
     Else
         Cancel = True
         With ufSaisieHeures.txtDate
@@ -233,10 +233,10 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
                                             "   d = " & day(fullDate) & _
                                             "   type = " & TypeName(fullDate))
         If MsgBox("En êtes-vous CERTAIN de vouloir cette date ?" & vbNewLine & vbNewLine & _
-                    "La date saisie est '" & Format$(fullDate, wshAdmin.Range("B1").value) & "'", vbYesNo + vbQuestion, _
+                    "La date saisie est '" & Format$(fullDate, wshAdmin.Range("B1").Value) & "'", vbYesNo + vbQuestion, _
                     "Utilisation d'une date FUTURE") = vbNo Then
             txtDate.SelStart = 0
-            txtDate.SelLength = Len(Me.txtDate.value)
+            txtDate.SelLength = Len(Me.txtDate.Value)
             txtDate.SetFocus
             Cancel = True
             Exit Sub
@@ -259,19 +259,19 @@ Private Sub txtDate_AfterUpdate()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtDate_AfterUpdate", "", 0)
     
-    If IsDate(ufSaisieHeures.txtDate.value) Then
+    If IsDate(ufSaisieHeures.txtDate.Value) Then
         Dim dateStr As String, dateFormated As Date
-        dateStr = ufSaisieHeures.txtDate.value
+        dateStr = ufSaisieHeures.txtDate.Value
         dateFormated = DateSerial(year(dateStr), month(dateStr), day(dateStr))
-        ufSaisieHeures.txtDate.value = Format$(dateFormated, wshAdmin.Range("B1").value)
+        ufSaisieHeures.txtDate.Value = Format$(dateFormated, wshAdmin.Range("B1").Value)
     Else
         ufSaisieHeures.txtDate.SetFocus
-        ufSaisieHeures.txtDate.SelLength = Len(ufSaisieHeures.txtDate.value)
+        ufSaisieHeures.txtDate.SelLength = Len(ufSaisieHeures.txtDate.Value)
         ufSaisieHeures.txtDate.SelStart = 0
         Exit Sub
     End If
 
-    If ufSaisieHeures.txtProfID.value <> "" Then
+    If ufSaisieHeures.txtProfID.Value <> "" Then
         Call TEC_Get_All_TEC_AF
         Call TEC_Refresh_ListBox_And_Add_Hours
     End If
@@ -290,11 +290,11 @@ End Sub
 
 Private Sub txtClient_AfterUpdate()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtClient_AfterUpdate", ufSaisieHeures.txtClient.value, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtClient_AfterUpdate", ufSaisieHeures.txtClient.Value, 0)
     
 '    Me.txtClientID.Value = Fn_Cell_From_BD_Client(Me.txtClient.Value, 1, 2)
     
-    If Me.txtClient.value <> Me.txtSavedClient.value Then
+    If Me.txtClient.Value <> Me.txtSavedClient.Value Then
         If Me.txtTECID = "" Then
             Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, False, False, True)
         Else
@@ -313,9 +313,9 @@ End Sub
 
 Private Sub txtActivite_AfterUpdate()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtActivite_AfterUpdate", Me.txtActivite.value, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtActivite_AfterUpdate", Me.txtActivite.Value, 0)
     
-    If Me.txtActivite.value <> Me.txtSavedActivite.value Then
+    If Me.txtActivite.Value <> Me.txtSavedActivite.Value Then
         If Me.txtTECID = "" Then
             Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, False, False, True)
         Else
@@ -323,9 +323,9 @@ Private Sub txtActivite_AfterUpdate()
         End If
     End If
     
-    If Me.txtActivite.value <> Me.txtSavedActivite.value Then '2025-01-16 @ 16:46
-        If Me.txtHeures.value <> "" Then
-            If CCur(Me.txtHeures.value) <> 0 Then
+    If Me.txtActivite.Value <> Me.txtSavedActivite.Value Then '2025-01-16 @ 16:46
+        If Me.txtHeures.Value <> "" Then
+            If CCur(Me.txtHeures.Value) <> 0 Then
                 Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True)
             Else
                 Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, True, False, True)
@@ -333,7 +333,7 @@ Private Sub txtActivite_AfterUpdate()
         End If
     End If
     
-    Me.txtActivite.value = Fn_Nettoyer_Fin_Chaine(Me.txtActivite.value)
+    Me.txtActivite.Value = Fn_Nettoyer_Fin_Chaine(Me.txtActivite.Value)
     
     Call Log_Record("ufSaisieHeures:txtActivite_AfterUpdate", "", startTime)
     
@@ -341,21 +341,21 @@ End Sub
 
 Private Sub txtHeures_Exit(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtHeures_Exit", Me.txtHeures.value, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtHeures_Exit", Me.txtHeures.Value, 0)
     
     Dim heure As Currency
     
     On Error Resume Next
-    heure = CCur(Me.txtHeures.value)
+    heure = CCur(Me.txtHeures.Value)
     On Error GoTo 0
     
-    If Not IsNumeric(Me.txtHeures.value) Then
+    If Not IsNumeric(Me.txtHeures.Value) Then
         MsgBox prompt:="La valeur saisie ne peut être utilisée comme valeur numérique!", _
                 Title:="Validation d'une valeur numérique", _
                 Buttons:=vbCritical
 '        Cancel = True
         Me.txtHeures.SelStart = 0
-        Me.txtHeures.SelLength = Len(Me.txtHeures.value)
+        Me.txtHeures.SelLength = Len(Me.txtHeures.Value)
         Me.txtHeures.SetFocus
         DoEvents
         Exit Sub
@@ -371,7 +371,7 @@ Private Sub txtHeures_Exit(ByVal Cancel As MSForms.ReturnBoolean)
         Me.txtHeures.SetFocus
         DoEvents
         Me.txtHeures.SelStart = 0
-        Me.txtHeures.SelLength = Len(Me.txtHeures.value)
+        Me.txtHeures.SelLength = Len(Me.txtHeures.Value)
         Exit Sub
     End If
     
@@ -383,7 +383,7 @@ Private Sub txtHeures_Exit(ByVal Cancel As MSForms.ReturnBoolean)
         Me.txtHeures.SetFocus
         DoEvents
         Me.txtHeures.SelStart = 0
-        Me.txtHeures.SelLength = Len(Me.txtHeures.value)
+        Me.txtHeures.SelLength = Len(Me.txtHeures.Value)
         Exit Sub
     End If
     
@@ -393,17 +393,17 @@ End Sub
 
 Sub txtHeures_AfterUpdate()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate", Me.txtHeures.value, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate", Me.txtHeures.Value, 0)
     
     'Validation des heures saisies
     Dim strHeures As String
-    strHeures = Me.txtHeures.value
+    strHeures = Me.txtHeures.Value
     
     strHeures = Replace(strHeures, ".", ",")
     
-    Me.txtHeures.value = Format$(strHeures, "#0.00")
+    Me.txtHeures.Value = Format$(strHeures, "#0.00")
     
-    If Me.txtHeures.value <> Me.txtSavedHeures.value Then
+    If Me.txtHeures.Value <> Me.txtSavedHeures.Value Then
         If Me.txtTECID = "" Then 'Création d'une nouvelle charge
             Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True)
         Else 'Modification d'une charge existante
@@ -419,7 +419,7 @@ Private Sub chbFacturable_AfterUpdate()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:chbFacturable_AfterUpdate", "", 0)
     
-    If Me.chbFacturable.value <> Me.txtSavedFacturable.value Then
+    If Me.chbFacturable.Value <> Me.txtSavedFacturable.Value Then
         If Me.txtTECID = "" Then
             Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True) '2024-10-06 @ 14:33
         Else
@@ -433,9 +433,9 @@ End Sub
 
 Private Sub txtCommNote_AfterUpdate()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtCommNote_AfterUpdate", Me.txtCommNote.value, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtCommNote_AfterUpdate", Me.txtCommNote.Value, 0)
     
-    If Me.txtCommNote.value <> Me.txtSavedCommNote.value Then
+    If Me.txtCommNote.Value <> Me.txtSavedCommNote.Value Then
         If Me.txtTECID = "" Then
             Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True) '2024-10-06 @ 14:33
         Else
@@ -470,9 +470,9 @@ End Sub
 
 Private Sub cmdUpdate_Click()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdUpdate_Click", ufSaisieHeures.txtTECID.value, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdUpdate_Click", ufSaisieHeures.txtTECID.Value, 0)
     
-    If ufSaisieHeures.txtTECID.value <> "" Then
+    If ufSaisieHeures.txtTECID.Value <> "" Then
         Call TEC_Modifie_Ligne
     Else
         MsgBox prompt:="Vous devez choisir un enregistrement à modifier !", _
@@ -486,9 +486,9 @@ End Sub
 
 Private Sub cmdDelete_Click()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdDelete_Click", ufSaisieHeures.txtTECID.value, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdDelete_Click", ufSaisieHeures.txtTECID.Value, 0)
     
-    If ufSaisieHeures.txtTECID.value <> "" Then
+    If ufSaisieHeures.txtTECID.Value <> "" Then
         Call TEC_Efface_Ligne
     Else
         MsgBox prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
@@ -510,7 +510,7 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
     With ufSaisieHeures
         Dim tecID As Long
         tecID = .lsbHresJour.List(.lsbHresJour.ListIndex, 0)
-        ufSaisieHeures.txtTECID.value = tecID
+        ufSaisieHeures.txtTECID.Value = tecID
         txtTECID = tecID
         
         'Retrieve the record in wshTEC_Local
@@ -520,37 +520,37 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
         rowTECID = Fn_Find_Row_Number_TECID(tecID, lookupRange)
         
         Dim isBilled As Boolean
-        isBilled = wshTEC_Local.Range("L" & rowTECID).value
+        isBilled = wshTEC_Local.Range("L" & rowTECID).Value
 
         'Remplir le userForm, si cette charge n'a pas été facturée
         If Not isBilled Then
             Application.EnableEvents = False
-            .cmbProfessionnel.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 1)
+            .cmbProfessionnel.Value = .lsbHresJour.List(.lsbHresJour.ListIndex, 1)
             .cmbProfessionnel.Enabled = False
     
-            .txtDate.value = Format$(.lsbHresJour.List(.lsbHresJour.ListIndex, 2), wshAdmin.Range("B1").value) '2025-01-31 @ 13:31
+            .txtDate.Value = Format$(.lsbHresJour.List(.lsbHresJour.ListIndex, 2), wshAdmin.Range("B1").Value) '2025-01-31 @ 13:31
             .txtDate.Enabled = False
     
-            .txtClient.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 3)
-            savedClient = .txtClient.value
-            .txtSavedClient.value = .txtClient.value
-            .txtClientID.value = wshTEC_Local.Range("E" & rowTECID).value
+            .txtClient.Value = .lsbHresJour.List(.lsbHresJour.ListIndex, 3)
+            savedClient = .txtClient.Value
+            .txtSavedClient.Value = .txtClient.Value
+            .txtClientID.Value = wshTEC_Local.Range("E" & rowTECID).Value
     
-            .txtActivite.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 4)
-            savedActivite = .txtActivite.value
-            .txtSavedActivite.value = .txtActivite.value
+            .txtActivite.Value = .lsbHresJour.List(.lsbHresJour.ListIndex, 4)
+            savedActivite = .txtActivite.Value
+            .txtSavedActivite.Value = .txtActivite.Value
     
-            .txtHeures.value = Format$(.lsbHresJour.List(.lsbHresJour.ListIndex, 5), "#0.00")
-            savedHeures = .txtHeures.value
-            .txtSavedHeures.value = .txtHeures.value
+            .txtHeures.Value = Format$(.lsbHresJour.List(.lsbHresJour.ListIndex, 5), "#0.00")
+            savedHeures = .txtHeures.Value
+            .txtSavedHeures.Value = .txtHeures.Value
     
-            .txtCommNote.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 6)
-            savedCommNote = .txtCommNote.value
-            .txtSavedCommNote.value = .txtCommNote.value
+            .txtCommNote.Value = .lsbHresJour.List(.lsbHresJour.ListIndex, 6)
+            savedCommNote = .txtCommNote.Value
+            .txtSavedCommNote.Value = .txtCommNote.Value
     
-            .chbFacturable.value = CBool(.lsbHresJour.List(.lsbHresJour.ListIndex, 7))
-            savedFacturable = .chbFacturable.value
-            .txtSavedFacturable.value = .chbFacturable.value
+            .chbFacturable.Value = CBool(.lsbHresJour.List(.lsbHresJour.ListIndex, 7))
+            savedFacturable = .chbFacturable.Value
+            .txtSavedFacturable.Value = .chbFacturable.Value
             Application.EnableEvents = True
 
         Else
@@ -573,10 +573,10 @@ End Sub
 
 Sub imgLogoGCF_Click()
 
-    If ufSaisieHeures.cmbProfessionnel.value <> "" Then
+    If ufSaisieHeures.cmbProfessionnel.Value <> "" Then
             Application.EnableEvents = False
             
-            wshTEC_TDB_Data.Range("S7").value = ufSaisieHeures.cmbProfessionnel.value
+            wshTEC_TDB_Data.Range("S7").Value = ufSaisieHeures.cmbProfessionnel.Value
         
             Call ActualiserTEC_TDB
             

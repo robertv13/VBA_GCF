@@ -29,12 +29,12 @@ Private Sub UserForm_Initialize()
     'Populate the array with non-contiguous columns
     Dim i As Long, nbRows As Long
     For i = 2 To lastUsedRow
-        If UCase(ws.Cells(i, 26).value) <> "VRAI" Then 'Exclude those projects with isDetruite set to True
+        If UCase(ws.Cells(i, 26).Value) <> "VRAI" Then 'Exclude those projects with isDetruite set to True
             nbRows = nbRows + 1
-            arr(nbRows, 1) = ws.Cells(i, 2).value 'nomClient
-            arr(nbRows, 2) = ws.Cells(i, 4).value 'date
-            arr(nbRows, 3) = Fn_Pad_A_String(Format$(ws.Cells(i, 5).value, "#,##0.00$"), " ", 11, "L") 'Honoraires
-            arr(nbRows, 4) = ws.Cells(i, 1).value 'ProjetID
+            arr(nbRows, 1) = ws.Cells(i, 2).Value 'nomClient
+            arr(nbRows, 2) = ws.Cells(i, 4).Value 'date
+            arr(nbRows, 3) = Fn_Pad_A_String(Format$(ws.Cells(i, 5).Value, "#,##0.00$"), " ", 11, "L") 'Honoraires
+            arr(nbRows, 4) = ws.Cells(i, 1).Value 'ProjetID
         End If
     Next i
     
@@ -88,12 +88,12 @@ Private Sub lsbProjetsFacture_DblClick(ByVal Cancel As MSForms.ReturnBoolean) '2
     
     Application.EnableEvents = False
     
-    wshFAC_Brouillon.Range("B51").value = nomClient
-    wshFAC_Brouillon.Range("B52").value = projetID
+    wshFAC_Brouillon.Range("B51").Value = nomClient
+    wshFAC_Brouillon.Range("B52").Value = projetID
 '    Debug.Print "#018 - lsbProjetsFacture_DblClick_78   dte = "; dte; "   "; TypeName(dte)
-    wshFAC_Brouillon.Range("B53").value = dte
+    wshFAC_Brouillon.Range("B53").Value = dte
 '    Debug.Print "#019 - lsbProjetsFacture_DblClick_80   wshFAC_Brouillon.Range(""B53"").Value = "; wshFAC_Brouillon.Range("B53").Value; "   "; TypeName(wshFAC_Brouillon.Range("B53").Value)
-    wshFAC_Brouillon.Range("B54").value = honorairesTotal
+    wshFAC_Brouillon.Range("B54").Value = honorairesTotal
     
     Application.EnableEvents = True
     

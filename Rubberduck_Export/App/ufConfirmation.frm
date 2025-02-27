@@ -77,7 +77,7 @@ Private Sub ListView1_ItemClick(ByVal item As MSComctlLib.listItem)
     noFacture = Trim(item.SubItems(1))
     
     Dim PDFInvoicePath As String
-    PDFInvoicePath = wshAdmin.Range("F5").value & FACT_PDF_PATH & _
+    PDFInvoicePath = wshAdmin.Range("F5").Value & FACT_PDF_PATH & _
                      Application.PathSeparator & noFacture & ".pdf"
                      
     'Open the invoice using Adobe Acrobat Reader
@@ -101,17 +101,17 @@ Private Sub ListView1_ItemCheck(ByVal item As MSComctlLib.listItem)
     'Ajouter ou soustraire la valeur en fonction de l'état de la case à cocher
     If item.Checked Then
         Call MarquerLigneSelectionnee(item)
-        ufConfirmation.txtTotalFacturesSélectionnées.value = _
-            Format$(ufConfirmation.txtTotalFacturesSélectionnées.value + valeur, "###,##0.00 $")
-        ufConfirmation.txtNbFacturesSélectionnées.value = _
-            ufConfirmation.txtNbFacturesSélectionnées.value + 1
-        If ufConfirmation.txtNbFacturesSélectionnées.value > 0 Then
+        ufConfirmation.txtTotalFacturesSélectionnées.Value = _
+            Format$(ufConfirmation.txtTotalFacturesSélectionnées.Value + valeur, "###,##0.00 $")
+        ufConfirmation.txtNbFacturesSélectionnées.Value = _
+            ufConfirmation.txtNbFacturesSélectionnées.Value + 1
+        If ufConfirmation.txtNbFacturesSélectionnées.Value > 0 Then
             ufConfirmation.cmdConfirmation.Visible = True
-            If ufConfirmation.txtNbFacturesSélectionnées.value = 1 Then
+            If ufConfirmation.txtNbFacturesSélectionnées.Value = 1 Then
                 ufConfirmation.cmdConfirmation.Caption = "Confirmer cette facture"
             Else
                 ufConfirmation.cmdConfirmation.Caption = "Confirmer les (" & _
-                 ufConfirmation.txtNbFacturesSélectionnées.value & ") factures sélectionnées"
+                 ufConfirmation.txtNbFacturesSélectionnées.Value & ") factures sélectionnées"
             End If
         End If
     Else
@@ -120,14 +120,14 @@ Private Sub ListView1_ItemCheck(ByVal item As MSComctlLib.listItem)
             Format$(ufConfirmation.txtTotalFacturesSélectionnées - valeur, "###,##0.00 $")
         ufConfirmation.txtNbFacturesSélectionnées = _
             ufConfirmation.txtNbFacturesSélectionnées - 1
-        If ufConfirmation.txtNbFacturesSélectionnées.value = 0 Then
+        If ufConfirmation.txtNbFacturesSélectionnées.Value = 0 Then
             ufConfirmation.cmdConfirmation.Visible = False
         Else
-            If ufConfirmation.txtNbFacturesSélectionnées.value = 1 Then
+            If ufConfirmation.txtNbFacturesSélectionnées.Value = 1 Then
                 ufConfirmation.cmdConfirmation.Caption = "Confirmer cette facture"
             Else
                 ufConfirmation.cmdConfirmation.Caption = "Confirmer les (" & _
-                 ufConfirmation.txtNbFacturesSélectionnées.value & ") factures sélectionnées"
+                 ufConfirmation.txtNbFacturesSélectionnées.Value & ") factures sélectionnées"
             End If
         End If
     End If
@@ -180,10 +180,10 @@ Private Sub cmdConfirmation_Click()
         Exit Sub
     Else
         Dim mess As String
-        If ufConfirmation.txtNbFacturesSélectionnées.value = 1 Then
-            mess = ufConfirmation.txtNbFacturesSélectionnées.value & " facture sélectionnée"
+        If ufConfirmation.txtNbFacturesSélectionnées.Value = 1 Then
+            mess = ufConfirmation.txtNbFacturesSélectionnées.Value & " facture sélectionnée"
         Else
-            mess = ufConfirmation.txtNbFacturesSélectionnées.value & " factures sélectionnées"
+            mess = ufConfirmation.txtNbFacturesSélectionnées.Value & " factures sélectionnées"
         End If
         Dim reponse As VbMsgBoxResult
         reponse = MsgBox("Êtes-vous certain de vouloir procéder à la confirmation de" & _
@@ -204,10 +204,10 @@ Private Sub UserForm_QueryClose(Cancel As Integer, CloseMode As Integer)
     If CloseMode = 0 And ufConfirmation.txtNbFacturesSélectionnées > 0 Then
         'Demande confirmation avant de fermer le UserForm
         Dim mess As String
-        If ufConfirmation.txtNbFacturesSélectionnées.value = 1 Then
-            mess = ufConfirmation.txtNbFacturesSélectionnées.value & " facture sélectionnée"
+        If ufConfirmation.txtNbFacturesSélectionnées.Value = 1 Then
+            mess = ufConfirmation.txtNbFacturesSélectionnées.Value & " facture sélectionnée"
         Else
-            mess = ufConfirmation.txtNbFacturesSélectionnées.value & " factures sélectionnées"
+            mess = ufConfirmation.txtNbFacturesSélectionnées.Value & " factures sélectionnées"
         End If
         Dim reponse As VbMsgBoxResult
         reponse = MsgBox("Êtes-vous certain de vouloir quitter la confirmation de" & _

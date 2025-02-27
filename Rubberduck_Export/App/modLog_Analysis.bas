@@ -343,7 +343,7 @@ Sub AjouterTableauClasseurFerme(ByVal tableau As Variant, ByVal cheminFichier As
 
     'Copier les données en une seule opération
     Application.EnableEvents = False
-    cible.Resize(UBound(tableau, 1), UBound(tableau, 2)).value = tableau
+    cible.Resize(UBound(tableau, 1), UBound(tableau, 2)).Value = tableau
     Application.EnableEvents = True
 
     'Sauvegarder et fermer le fichier Target

@@ -75,11 +75,11 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
     Dim wsDiff As Worksheet
     Call CreateOrReplaceWorksheet("Différences_Colonnes")
     Set wsDiff = ThisWorkbook.Worksheets("Différences_Colonnes")
-    wsDiff.Range("A1").value = "Worksheet"
-    wsDiff.Range("B1").value = "Nb. colonnes"
-    wsDiff.Range("C1").value = "Colonne"
-    wsDiff.Range("D1").value = "Valeur originale"
-    wsDiff.Range("E1").value = "Nouvelle valeur"
+    wsDiff.Range("A1").Value = "Worksheet"
+    wsDiff.Range("B1").Value = "Nb. colonnes"
+    wsDiff.Range("C1").Value = "Colonne"
+    wsDiff.Range("D1").Value = "Valeur originale"
+    wsDiff.Range("E1").Value = "Nouvelle valeur"
     Call Make_It_As_Header(wsDiff.Range("A1:E1"))
 
     'Set your workbooks and worksheets here
@@ -105,12 +105,12 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
         nbCol = 1
         Do
             nbCol = nbCol + 1
-        Loop Until wso.Cells(1, nbCol).value = ""
+        Loop Until wso.Cells(1, nbCol).Value = ""
         nbCol = nbCol - 1
         
         diffRow = diffRow + 1
-        wsDiff.Cells(diffRow, 1).value = wsName
-        wsDiff.Cells(diffRow, 2).value = nbCol
+        wsDiff.Cells(diffRow, 1).Value = wsName
+        wsDiff.Cells(diffRow, 2).Value = nbCol
         
         Dim i As Integer
         For i = 1 To nbCol
@@ -121,49 +121,49 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
             'Compare Font Name
             If col1.Font.Name <> col2.Font.Name Then
                 diffLog = diffLog & "Column " & i & " Font Name differs: " & col1.Font.Name & " vs " & col2.Font.Name & vbCrLf
-                wsDiff.Cells(diffRow, 3).value = i
-                wsDiff.Cells(diffRow, 4).value = col1.Font.Name
-                wsDiff.Cells(diffRow, 5).value = col2.Font.Name
+                wsDiff.Cells(diffRow, 3).Value = i
+                wsDiff.Cells(diffRow, 4).Value = col1.Font.Name
+                wsDiff.Cells(diffRow, 5).Value = col2.Font.Name
             End If
             
             'Compare Font Size
             If col1.Font.size <> col2.Font.size Then
                 diffLog = diffLog & "Column " & i & " Font Size differs: " & col1.Font.size & " vs " & col2.Font.size & vbCrLf
-                wsDiff.Cells(diffRow, 3).value = i
-                wsDiff.Cells(diffRow, 4).value = col1.Font.size
-                wsDiff.Cells(diffRow, 5).value = col2.Font.size
+                wsDiff.Cells(diffRow, 3).Value = i
+                wsDiff.Cells(diffRow, 4).Value = col1.Font.size
+                wsDiff.Cells(diffRow, 5).Value = col2.Font.size
             End If
             
             'Compare Column Width
             If col1.ColumnWidth <> col2.ColumnWidth Then
                 diffLog = diffLog & "Column " & i & " Width differs: " & col1.ColumnWidth & " vs " & col2.ColumnWidth & vbCrLf
-                wsDiff.Cells(diffRow, 3).value = i
-                wsDiff.Cells(diffRow, 4).value = col1.ColumnWidth
-                wsDiff.Cells(diffRow, 5).value = col2.ColumnWidth
+                wsDiff.Cells(diffRow, 3).Value = i
+                wsDiff.Cells(diffRow, 4).Value = col1.ColumnWidth
+                wsDiff.Cells(diffRow, 5).Value = col2.ColumnWidth
             End If
             
             'Compare Number Format
             If col1.NumberFormat <> col2.NumberFormat Then
                 diffLog = diffLog & "Column " & i & " Number Format differs: " & col1.NumberFormat & " vs " & col2.NumberFormat & vbCrLf
-                wsDiff.Cells(diffRow, 3).value = i
-                wsDiff.Cells(diffRow, 4).value = col1.NumberFormat
-                wsDiff.Cells(diffRow, 5).value = col2.NumberFormat
+                wsDiff.Cells(diffRow, 3).Value = i
+                wsDiff.Cells(diffRow, 4).Value = col1.NumberFormat
+                wsDiff.Cells(diffRow, 5).Value = col2.NumberFormat
             End If
             
             'Compare Horizontal Alignment
             If col1.HorizontalAlignment <> col2.HorizontalAlignment Then
                 diffLog = diffLog & "Column " & i & " Horizontal Alignment differs: " & col1.HorizontalAlignment & " vs " & col2.HorizontalAlignment & vbCrLf
-                wsDiff.Cells(diffRow, 3).value = i
-                wsDiff.Cells(diffRow, 4).value = col1.HorizontalAlignment
-                wsDiff.Cells(diffRow, 5).value = col2.HorizontalAlignment
+                wsDiff.Cells(diffRow, 3).Value = i
+                wsDiff.Cells(diffRow, 4).Value = col1.HorizontalAlignment
+                wsDiff.Cells(diffRow, 5).Value = col2.HorizontalAlignment
             End If
     
             'Compare Background Color
             If col1.Interior.Color <> col2.Interior.Color Then
                 diffLog = diffLog & "Column " & i & " Background Color differs: " & col1.Interior.Color & " vs " & col2.Interior.Color & vbCrLf
-                wsDiff.Cells(diffRow, 3).value = i
-                wsDiff.Cells(diffRow, 4).value = col1.Interior.Color
-                wsDiff.Cells(diffRow, 5).value = col2.Interior.Color
+                wsDiff.Cells(diffRow, 3).Value = i
+                wsDiff.Cells(diffRow, 4).Value = col1.Interior.Color
+                wsDiff.Cells(diffRow, 5).Value = col2.Interior.Color
             End If
     
         Next i
@@ -175,7 +175,7 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
     
     'Result print setup - 2024-08-05 @ 05:16
     diffRow = diffRow + 2
-    wsDiff.Range("A" & diffRow).value = "**** " & Format$(readColumns, "###,##0") & _
+    wsDiff.Range("A" & diffRow).Value = "**** " & Format$(readColumns, "###,##0") & _
                                         " colonnes analysées dans l'ensemble du fichier ***"
                                     
     'Set conditional formatting for the worksheet (alternate colors)
@@ -218,15 +218,15 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
     Dim wsDiff As Worksheet
     Call CreateOrReplaceWorksheet("Différences_Lignes")
     Set wsDiff = ThisWorkbook.Worksheets("Différences_Lignes")
-    wsDiff.Range("A1").value = "Worksheet"
-    wsDiff.Range("B1").value = "Prod_Cols"
-    wsDiff.Range("C1").value = "Dev_Cols"
-    wsDiff.Range("D1").value = "Prod_Rows"
-    wsDiff.Range("E1").value = "Dev_Rows"
-    wsDiff.Range("F1").value = "Ligne #"
-    wsDiff.Range("G1").value = "Colonne"
-    wsDiff.Range("H1").value = "Prod_Value"
-    wsDiff.Range("I1").value = "Dev_Value"
+    wsDiff.Range("A1").Value = "Worksheet"
+    wsDiff.Range("B1").Value = "Prod_Cols"
+    wsDiff.Range("C1").Value = "Dev_Cols"
+    wsDiff.Range("D1").Value = "Prod_Rows"
+    wsDiff.Range("E1").Value = "Dev_Rows"
+    wsDiff.Range("F1").Value = "Ligne #"
+    wsDiff.Range("G1").Value = "Colonne"
+    wsDiff.Range("H1").Value = "Prod_Value"
+    wsDiff.Range("I1").Value = "Dev_Value"
     Call Make_It_As_Header(wsDiff.Range("A1:I1"))
 
     'Set your workbooks and worksheets here
@@ -238,9 +238,9 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
     Dim diffRow As Long
     diffRow = 1
     diffRow = diffRow + 1
-    wsDiff.Cells(diffRow, 1).value = "Prod: " & wb1.Name
+    wsDiff.Cells(diffRow, 1).Value = "Prod: " & wb1.Name
     diffRow = diffRow + 1
-    wsDiff.Cells(diffRow, 1).value = "Dev : " & wb2.Name
+    wsDiff.Cells(diffRow, 1).Value = "Dev : " & wb2.Name
     
     Dim wsProd As Worksheet
     Dim wsDev As Worksheet
@@ -259,9 +259,9 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
         nbColProd = 0
         Do
             nbColProd = nbColProd + 1
-            arr(nbColProd) = wsProd.Cells(1, nbColProd).value
-            Debug.Print "#044 - " & wsProd.Name, " Prod: ", wsProd.Cells(1, nbColProd).value
-        Loop Until wsProd.Cells(1, nbColProd).value = ""
+            arr(nbColProd) = wsProd.Cells(1, nbColProd).Value
+            Debug.Print "#044 - " & wsProd.Name, " Prod: ", wsProd.Cells(1, nbColProd).Value
+        Loop Until wsProd.Cells(1, nbColProd).Value = ""
         nbColProd = nbColProd - 1
         nbRowProd = wsProd.Cells(wsProd.Rows.count, 1).End(xlUp).row
         
@@ -270,25 +270,25 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
         nbColDev = 0
         Do
             nbColDev = nbColDev + 1
-            Debug.Print "#045 - " & wsDev.Name, " Dev : ", wsDev.Cells(1, nbColDev).value
-        Loop Until wsProd.Cells(1, nbColDev).value = ""
+            Debug.Print "#045 - " & wsDev.Name, " Dev : ", wsDev.Cells(1, nbColDev).Value
+        Loop Until wsProd.Cells(1, nbColDev).Value = ""
         nbColDev = nbColDev - 1
         nbRowDev = wsDev.Cells(wsDev.Rows.count, 1).End(xlUp).row
         
         diffRow = diffRow + 2
-        wsDiff.Cells(diffRow, 1).value = wsName
-        wsDiff.Cells(diffRow, 2).value = nbColProd
-        wsDiff.Cells(diffRow, 3).value = nbColDev
-        wsDiff.Cells(diffRow, 4).value = nbRowProd
-        wsDiff.Cells(diffRow, 5).value = nbRowDev
+        wsDiff.Cells(diffRow, 1).Value = wsName
+        wsDiff.Cells(diffRow, 2).Value = nbColProd
+        wsDiff.Cells(diffRow, 3).Value = nbColDev
+        wsDiff.Cells(diffRow, 4).Value = nbRowProd
+        wsDiff.Cells(diffRow, 5).Value = nbRowDev
         
         Dim nbRow As Long
         If nbRowProd > nbRowDev Then
-            wsDiff.Cells(diffRow, 6).value = "Le client a ajouté " & nbRowProd - nbRowDev & " lignes dans la feuille"
+            wsDiff.Cells(diffRow, 6).Value = "Le client a ajouté " & nbRowProd - nbRowDev & " lignes dans la feuille"
             nbRow = nbRowProd
         End If
         If nbRowProd < nbRowDev Then
-            wsDiff.Cells(diffRow, 6).value = "Le dev a ajouté " & nbRowDev - nbRowProd & " lignes dans la feuille"
+            wsDiff.Cells(diffRow, 6).Value = "Le dev a ajouté " & nbRowDev - nbRowProd & " lignes dans la feuille"
             nbRow = nbRowDev
         End If
         
@@ -300,18 +300,18 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
             readRows = readRows + 1
             
             For j = 1 To nbColProd
-                If wsProd.Rows.Cells(i, j).value <> wsDev.Rows.Cells(i, j).value Then
+                If wsProd.Rows.Cells(i, j).Value <> wsDev.Rows.Cells(i, j).Value Then
                     diffLogMess = diffLogMess & "Cell(" & i & "," & j & ") was '" & _
-                                  wsProd.Rows.Cells(i, j).value & "' is now '" & _
-                                  wsDev.Rows.Cells(i, j).value & "'" & vbCrLf
+                                  wsProd.Rows.Cells(i, j).Value & "' is now '" & _
+                                  wsDev.Rows.Cells(i, j).Value & "'" & vbCrLf
                     diffRow = diffRow + 1
                     If i <> prevI Then
-                        wsDiff.Cells(diffRow, 6).value = "Ligne # " & i
+                        wsDiff.Cells(diffRow, 6).Value = "Ligne # " & i
                         prevI = i
                     End If
-                    wsDiff.Cells(diffRow, 7).value = j & "-" & arr(j)
-                    wsDiff.Cells(diffRow, 8).value = wsProd.Rows.Cells(i, j).value
-                    wsDiff.Cells(diffRow, 9).value = wsDev.Rows.Cells(i, j).value
+                    wsDiff.Cells(diffRow, 7).Value = j & "-" & arr(j)
+                    wsDiff.Cells(diffRow, 8).Value = wsProd.Rows.Cells(i, j).Value
+                    wsDiff.Cells(diffRow, 9).Value = wsDev.Rows.Cells(i, j).Value
                 End If
             Next j
             
@@ -325,7 +325,7 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
     
     'Result print setup - 2024-08-20 @ 05:48
     diffRow = diffRow + 2
-    wsDiff.Range("A" & diffRow).value = "**** " & Format$(readRows, "###,##0") & _
+    wsDiff.Range("A" & diffRow).Value = "**** " & Format$(readRows, "###,##0") & _
                                         " lignes analysées dans l'ensemble du Workbook ***"
                                     
     'Set conditional formatting for the worksheet (alternate colors)
@@ -404,7 +404,7 @@ Sub LireFichierLogSaisieHeuresTXT() '2024-10-17 @ 20:13
         
         'Insérer les champs dans les colonnes de la feuille Excel
         For j = LBound(champs) To UBound(champs)
-            Cells(ligneNum, j + 1).value = champs(j)
+            Cells(ligneNum, j + 1).Value = champs(j)
         Next j
         
         'Passer à la ligne suivante
@@ -493,13 +493,13 @@ Sub Fix_Date_Format()
                     'Parcourir chaque cellule de la colonne spécifiée
                     For Each cell In ws.Columns(col).SpecialCells(xlCellTypeConstants)
                         'Vérifier si la cellule contient une date avec une heure
-                        If IsDate(cell.value) Then
+                        If IsDate(cell.Value) Then
                             'Vérifier si la valeur contient des heures (fraction décimale)
-                            If cell.value <> Int(cell.value) Then
+                            If cell.Value <> Int(cell.Value) Then
                                 'Garde uniquement la partie date (sans heure)
-                                Debug.Print "#047 - ", wsName & " - " & col & " - " & cell.value
-                                dateOnly = Int(cell.value)
-                                cell.value = dateOnly
+                                Debug.Print "#047 - ", wsName & " - " & col & " - " & cell.Value
+                                dateOnly = Int(cell.Value)
+                                cell.Value = dateOnly
                             End If
                         End If
                     Next cell
@@ -541,10 +541,10 @@ Sub Debug_Écart_TEC_Local_vs_TEC_TDB_Data()
     lastUsed = wsOutput.Cells(wsOutput.Rows.count, 1).End(xlUp).row + 2
     wsOutput.Range("A2:D" & lastUsed).ClearContents
     
-    wsOutput.Cells(1, 1).value = "TECID"
-    wsOutput.Cells(1, 2).value = "TEC_Local"
-    wsOutput.Cells(1, 3).value = "TEC_TDB_Data"
-    wsOutput.Cells(1, 4).value = "Vérification"
+    wsOutput.Cells(1, 1).Value = "TECID"
+    wsOutput.Cells(1, 2).Value = "TEC_Local"
+    wsOutput.Cells(1, 3).Value = "TEC_TDB_Data"
+    wsOutput.Cells(1, 4).Value = "Vérification"
     
     Dim arr() As Variant
     ReDim arr(1 To 5000, 1 To 3)
@@ -559,18 +559,18 @@ Sub Debug_Écart_TEC_Local_vs_TEC_TDB_Data()
     Debug.Print "#048 - Mise en mémoire TEC_LOCAL"
     For i = 3 To lurTEC
         With wsTEC
-            If .Range("D" & i).value > dateCutOff Then Stop
-            tecID = CLng(.Range("A" & i).value)
+            If .Range("D" & i).Value > dateCutOff Then Stop
+            tecID = CLng(.Range("A" & i).Value)
             If arr(tecID, 1) <> "" Then Stop
             arr(tecID, 1) = tecID
-            h = .Range("H" & i).value
-            If UCase(.Range("N" & i).value) = "VRAI" Then
+            h = .Range("H" & i).Value
+            If UCase(.Range("N" & i).Value) = "VRAI" Then
                 h = 0
             End If
             If h <> 0 Then
-                If UCase(.Range("J" & i).value) = "VRAI" And Len(.Range("E" & i).value) > 2 Then
-                    If UCase(.Range("L" & i).value) = "FAUX" Then
-                        If .Range("M" & i).value <= dateCutOff Then
+                If UCase(.Range("J" & i).Value) = "VRAI" And Len(.Range("E" & i).Value) > 2 Then
+                    If UCase(.Range("L" & i).Value) = "FAUX" Then
+                        If .Range("M" & i).Value <= dateCutOff Then
                             arr(tecID, 2) = h
                         Else
                             Stop
@@ -586,10 +586,10 @@ Sub Debug_Écart_TEC_Local_vs_TEC_TDB_Data()
     Debug.Print "#049 - Mise en mémoire TEC_TDB"
     For i = 2 To lurTDB
         With wsTDB
-            If .Range("D" & i).value > dateCutOff Then Stop
-            tecID = CLng(.Range("A" & i).value)
+            If .Range("D" & i).Value > dateCutOff Then Stop
+            tecID = CLng(.Range("A" & i).Value)
             arr(tecID, 1) = tecID
-            arr(tecID, 3) = .Range("Q" & i).value
+            arr(tecID, 3) = .Range("Q" & i).Value
         End With
     Next i
     
@@ -605,18 +605,18 @@ Sub Debug_Écart_TEC_Local_vs_TEC_TDB_Data()
         tTEC = tTEC + arr(i, 2)
         tTDB = tTDB + arr(i, 3)
         If arr(i, 2) <> 0 Or arr(i, 3) <> 0 Then
-            wsOutput.Cells(r, 1).value = arr(i, 1)
-            wsOutput.Cells(r, 2).value = arr(i, 2)
-            wsOutput.Cells(r, 3).value = arr(i, 3)
+            wsOutput.Cells(r, 1).Value = arr(i, 1)
+            wsOutput.Cells(r, 2).Value = arr(i, 2)
+            wsOutput.Cells(r, 3).Value = arr(i, 3)
             If arr(i, 2) <> arr(i, 3) Then
-                wsOutput.Cells(r, 4).value = "Valeurs sont différentes"
+                wsOutput.Cells(r, 4).Value = "Valeurs sont différentes"
             End If
             r = r + 1
         End If
     Next i
     
-    wsOutput.Cells(r + 1, 2).value = Round(tTEC, 2)
-    wsOutput.Cells(r + 1, 3).value = Round(tTDB, 2)
+    wsOutput.Cells(r + 1, 2).Value = Round(tTEC, 2)
+    wsOutput.Cells(r + 1, 3).Value = Round(tTDB, 2)
     
     'Libérer la mémoire
     Set wsOutput = Nothing
@@ -644,19 +644,19 @@ Sub Analyse_Search_For_Memory_Management()
     Dim added As String, cleared As String
     Dim i As Long
     For i = 2 To lastUsedRow
-        If ws.Cells(i, 5).value = "" Then
+        If ws.Cells(i, 5).Value = "" Then
             Call SortDelimitedString(added, "|")
             Call SortDelimitedString(cleared, "|")
             If added <> cleared Then
-                wsOutput.Cells(r, 1).value = moduleName
-                wsOutput.Cells(r, 2).value = procName
-                wsOutput.Cells(r, 3).value = "'+ " & added
-                wsOutput.Cells(r + 1, 3).value = "'- " & cleared
+                wsOutput.Cells(r, 1).Value = moduleName
+                wsOutput.Cells(r, 2).Value = procName
+                wsOutput.Cells(r, 3).Value = "'+ " & added
+                wsOutput.Cells(r + 1, 3).Value = "'- " & cleared
                 r = r + 3
             End If
-            If ws.Cells(i + 1, 5).value <> "" Then
-                moduleName = ws.Cells(i + 1, 3).value
-                procName = ws.Cells(i + 1, 5).value
+            If ws.Cells(i + 1, 5).Value <> "" Then
+                moduleName = ws.Cells(i + 1, 3).Value
+                procName = ws.Cells(i + 1, 5).Value
             Else
                 procName = ""
             End If
@@ -739,7 +739,7 @@ Sub Sauvegarder_UserForms_Parameters() '2024-11-26 @ 07:42
     
     'En-têtes de colonnes
     ws.Cells.Clear
-    ws.Range("A1:D1").value = Array("Nom_UserForm", "Largeur", "Hauteur", "Position_Left", "Position_Top")
+    ws.Range("A1:D1").Value = Array("Nom_UserForm", "Largeur", "Hauteur", "Position_Left", "Position_Top")
     
     Dim i As Integer
     i = 2
@@ -756,11 +756,11 @@ Sub Sauvegarder_UserForms_Parameters() '2024-11-26 @ 07:42
             On Error GoTo 0
 
             If Not uf Is Nothing Then
-                ws.Cells(i, 1).value = userFormName
-                ws.Cells(i, 2).value = uf.Width
-                ws.Cells(i, 3).value = uf.Height
-                ws.Cells(i, 4).value = uf.Left
-                ws.Cells(i, 5).value = uf.Top
+                ws.Cells(i, 1).Value = userFormName
+                ws.Cells(i, 2).Value = uf.Width
+                ws.Cells(i, 3).Value = uf.Height
+                ws.Cells(i, 4).Value = uf.Left
+                ws.Cells(i, 5).Value = uf.Top
                 i = i + 1
                 ' Décharger le UserForm pour libérer la mémoire
                 Unload uf
@@ -794,18 +794,18 @@ Sub Restaurer_UserForms_Parameters()
 
     'Parcourir la liste des paramètres sauvegardés
     i = 2
-    Do While ws.Cells(i, 1).value <> ""
-        nomUF = ws.Cells(i, 1).value
+    Do While ws.Cells(i, 1).Value <> ""
+        nomUF = ws.Cells(i, 1).Value
         On Error Resume Next
         ' Charger dynamiquement le UserForm
         Set uf = VBA.UserForms.Add(nomUF)
         On Error GoTo 0
 
         If Not uf Is Nothing Then
-            uf.Width = ws.Cells(i, 2).value
-            uf.Height = ws.Cells(i, 3).value
-            uf.Left = ws.Cells(i, 4).value
-            uf.Top = ws.Cells(i, 5).value
+            uf.Width = ws.Cells(i, 2).Value
+            uf.Height = ws.Cells(i, 3).Value
+            uf.Left = ws.Cells(i, 4).Value
+            uf.Top = ws.Cells(i, 5).Value
             'Optionnel : afficher le UserForm pour vérifier
             'uf.Show
         End If
@@ -832,11 +832,11 @@ Sub Get_UsedRange_In_Active_Workbook()
     Dim wsOutput As Worksheet
     Set wsOutput = ThisWorkbook.Sheets(feuilleNom)
     Dim r As Long: r = 1
-    wsOutput.Cells(r, 1).value = "Feuille"
-    wsOutput.Cells(r, 2).value = "Plage utilisée"
-    wsOutput.Cells(r, 3).value = "Lignes utilisée"
-    wsOutput.Cells(r, 4).value = "Colonnes utilisée"
-    wsOutput.Cells(r, 5).value = "Nb. Cellules"
+    wsOutput.Cells(r, 1).Value = "Feuille"
+    wsOutput.Cells(r, 2).Value = "Plage utilisée"
+    wsOutput.Cells(r, 3).Value = "Lignes utilisée"
+    wsOutput.Cells(r, 4).Value = "Colonnes utilisée"
+    wsOutput.Cells(r, 5).Value = "Nb. Cellules"
     r = r + 1
     
     'Parcourir chaque feuille du classeur
@@ -851,15 +851,15 @@ Sub Get_UsedRange_In_Active_Workbook()
         
         If Not usedRange Is Nothing Then
             ' Ajouter les informations à la sortie
-            wsOutput.Cells(r, 1).value = ws.Name
-            wsOutput.Cells(r, 2).value = usedRange.Address
-            wsOutput.Cells(r, 3).value = usedRange.Rows.count
-            wsOutput.Cells(r, 4).value = usedRange.Columns.count
-            wsOutput.Cells(r, 5).value = usedRange.Cells.count
+            wsOutput.Cells(r, 1).Value = ws.Name
+            wsOutput.Cells(r, 2).Value = usedRange.Address
+            wsOutput.Cells(r, 3).Value = usedRange.Rows.count
+            wsOutput.Cells(r, 4).Value = usedRange.Columns.count
+            wsOutput.Cells(r, 5).Value = usedRange.Cells.count
         Else
             ' Si aucune cellule utilisée
-            wsOutput.Cells(r, 1).value = ws.Name
-            wsOutput.Cells(r, 2).value = "Aucune"
+            wsOutput.Cells(r, 1).Value = ws.Name
+            wsOutput.Cells(r, 2).Value = "Aucune"
         End If
         r = r + 1
     Next ws
@@ -897,10 +897,10 @@ Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
     nouveauDossier = cheminRacineDestination & dateHeure & "\"
     
     'Créer le répertoire s'il n'existe pas déjà (ne devrait pas exister)
-    Dim fso As Object
-    Set fso = CreateObject("Scripting.FileSystemObject")
-    If Not fso.folderExists(nouveauDossier) Then
-        fso.CreateFolder nouveauDossier
+    Dim FSO As Object
+    Set FSO = CreateObject("Scripting.FileSystemObject")
+    If Not FSO.folderExists(nouveauDossier) Then
+        FSO.CreateFolder nouveauDossier
     End If
     
     'Noms des deux fichiers à copier (fixe)
@@ -909,15 +909,15 @@ Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
     nomFichier2 = "GCF_BD_Entrée.xlsx"
     
     'Copier le premier fichier
-    If fso.fileExists(cheminSourcePROD & nomFichier1) Then
-        fso.CopyFile source:=cheminSourcePROD & nomFichier1, Destination:=nouveauDossier, OverwriteFiles:=False
+    If FSO.fileExists(cheminSourcePROD & nomFichier1) Then
+        FSO.CopyFile source:=cheminSourcePROD & nomFichier1, Destination:=nouveauDossier, OverwriteFiles:=False
     Else
         MsgBox "Fichier non trouvé : " & cheminSourcePROD & nomFichier1, vbExclamation, "Erreur"
     End If
     
     'Copier le deuxième fichier
-    If fso.fileExists(cheminSourcePROD & nomFichier2) Then
-        fso.CopyFile source:=cheminSourcePROD & nomFichier2, Destination:=nouveauDossier, OverwriteFiles:=False
+    If FSO.fileExists(cheminSourcePROD & nomFichier2) Then
+        FSO.CopyFile source:=cheminSourcePROD & nomFichier2, Destination:=nouveauDossier, OverwriteFiles:=False
     Else
         MsgBox "Fichier non trouvé : " & cheminSourcePROD & nomFichier2, vbExclamation, "Erreur"
     End If
@@ -927,7 +927,7 @@ Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
     fichier = Dir(cheminSourcePROD & "*.log")
     Do While fichier <> ""
         'Copie du fichier PROD ---> Local
-        fso.CopyFile source:=cheminSourcePROD & fichier, Destination:=nouveauDossier, OverwriteFiles:=False
+        FSO.CopyFile source:=cheminSourcePROD & fichier, Destination:=nouveauDossier, OverwriteFiles:=False
         'Efface le fichier PROD (initialiation)
         Kill cheminSourcePROD & fichier
         'Fichier suivant à copier
@@ -940,15 +940,15 @@ Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
     dossierDEV = "C:\VBA\GC_FISCALITÉ\DataFiles\"
     
     'Copier le premier fichier
-    If fso.fileExists(nouveauDossier & nomFichier1) Then
-        fso.CopyFile source:=cheminSourcePROD & nomFichier1, Destination:=dossierDEV, OverwriteFiles:=True
+    If FSO.fileExists(nouveauDossier & nomFichier1) Then
+        FSO.CopyFile source:=cheminSourcePROD & nomFichier1, Destination:=dossierDEV, OverwriteFiles:=True
     Else
         MsgBox "Fichier non trouvé : " & nouveauDossier & nomFichier1, vbExclamation, "Erreur"
     End If
     
     'Copier le deuxième fichier
-    If fso.fileExists(nouveauDossier & nomFichier2) Then
-        fso.CopyFile source:=cheminSourcePROD & nomFichier2, Destination:=dossierDEV, OverwriteFiles:=True
+    If FSO.fileExists(nouveauDossier & nomFichier2) Then
+        FSO.CopyFile source:=cheminSourcePROD & nomFichier2, Destination:=dossierDEV, OverwriteFiles:=True
     Else
         MsgBox "Fichier non trouvé : " & nouveauDossier & nomFichier2, vbExclamation, "Erreur"
     End If
@@ -1051,14 +1051,14 @@ Sub VerifierControlesAssociesToutesFeuilles()
                 
                 ' Résultat de la vérification
                 r = r + 1
-                wsOut.Cells(r, 1).value = ws.Name
-                wsOut.Cells(r, 2).value = shp.Name
-                wsOut.Cells(r, 3).value = macroName
-                wsOut.Cells(r, 4).value = "shape"
+                wsOut.Cells(r, 1).Value = ws.Name
+                wsOut.Cells(r, 2).Value = shp.Name
+                wsOut.Cells(r, 3).Value = macroName
+                wsOut.Cells(r, 4).Value = "shape"
                 If found Then
-                    wsOut.Cells(r, 5).value = "Valide"
+                    wsOut.Cells(r, 5).Value = "Valide"
                 Else
-                    wsOut.Cells(r, 5).value = "Manquante"
+                    wsOut.Cells(r, 5).Value = "Manquante"
                 End If
             End If
         Next shp
@@ -1074,14 +1074,14 @@ Sub VerifierControlesAssociesToutesFeuilles()
                 
                 ' Résultat de la vérification
                 r = r + 1
-                wsOut.Cells(r, 1).value = ws.Name
-                wsOut.Cells(r, 2).value = oleObj.Name
-                wsOut.Cells(r, 3).value = macroName
-                wsOut.Cells(r, 4).value = "CommandButton"
+                wsOut.Cells(r, 1).Value = ws.Name
+                wsOut.Cells(r, 2).Value = oleObj.Name
+                wsOut.Cells(r, 3).Value = macroName
+                wsOut.Cells(r, 4).Value = "CommandButton"
                 If found Then
-                    wsOut.Cells(r, 5).value = "Valide"
+                    wsOut.Cells(r, 5).Value = "Valide"
                 Else
-                    wsOut.Cells(r, 5).value = "Manquante"
+                    wsOut.Cells(r, 5).Value = "Manquante"
                 End If
             End If
         Next oleObj
@@ -1180,7 +1180,7 @@ Sub Main() '2024-12-25 @ 15:27
     'Écriture des résultats (tableau) dans la feuille
     With wsOut
         .Cells.Clear 'Efface tout le contenu de la feuille
-        .Range("A1").Resize(outputRow, UBound(outputArr, 2)).value = outputArr
+        .Range("A1").Resize(outputRow, UBound(outputArr, 2)).Value = outputArr
     End With
     
 End Sub
@@ -1221,18 +1221,18 @@ Sub ListeEnumsGenerique(ByVal tableName As String, ByVal HeaderRow As Integer, B
         arrArg(outputRow, 2) = NumeroEnLettre(col)
         arrArg(outputRow, 3) = arr(col, 2)
         'Nom de la colonne dans la table
-        arrArg(outputRow, 4) = ws.Cells(HeaderRow, col).value
-        If InStr(arr(col, 2), ws.Cells(HeaderRow, col).value) = 0 Then
+        arrArg(outputRow, 4) = ws.Cells(HeaderRow, col).Value
+        If InStr(arr(col, 2), ws.Cells(HeaderRow, col).Value) = 0 Then
             arrArg(outputRow, 5) = "*"
         End If
         If Not wsMaster Is Nothing Then
-            arrArg(outputRow, 6) = wsMaster.Cells(1, col).value
-            If InStr(arr(col, 2), wsMaster.Cells(1, col).value) = 0 Then
+            arrArg(outputRow, 6) = wsMaster.Cells(1, col).Value
+            If InStr(arr(col, 2), wsMaster.Cells(1, col).Value) = 0 Then
                 arrArg(outputRow, 7) = "*"
             End If
         End If
         'Valeurs des colonnes sur la première ligne de data
-        arrArg(outputRow, 8) = ws.Cells(HeaderRow + 1, col).value
+        arrArg(outputRow, 8) = ws.Cells(HeaderRow + 1, col).Value
         outputRow = outputRow + 1
     Next col
     
@@ -1410,11 +1410,11 @@ Sub ValideNomProcedureCallLog()
     Dim posPO As Integer, posPF As Integer, posCL As Integer
     Dim i As Integer
     For i = 2 To lastUsedRow
-        module = ws.Range("C" & i).value
+        module = ws.Range("C" & i).Value
         If module <> "" Then
-            lineNo = ws.Range("D" & i).value
+            lineNo = ws.Range("D" & i).Value
             If lineNo = 325 Then Stop
-            procedure = ws.Range("E" & i).value
+            procedure = ws.Range("E" & i).Value
             procedure = Replace(procedure, "Sub ", "")
             procedure = Replace(procedure, "Function ", "")
             posPO = InStr(procedure, "(")
@@ -1424,7 +1424,7 @@ Sub ValideNomProcedureCallLog()
                 procedure = Trim(Left(procedure, posPO - 1))
                 If InStr(procedure, "(") <> 0 Then Stop
             End If
-            code = ws.Range("F" & i).value
+            code = ws.Range("F" & i).Value
             posCL = InStr(code, "Call Log_Record")
             code = Mid(code, posCL + 17)
             If InStr(code, module & ":" & procedure) = 0 Then
@@ -1477,10 +1477,10 @@ Sub ListerValidations()
     End If
     
     ' En-têtes de colonnes
-    wsReport.Cells(1, 1).value = "Feuille"
-    wsReport.Cells(1, 2).value = "Cellule"
-    wsReport.Cells(1, 3).value = "Type de Validation"
-    wsReport.Cells(1, 4).value = "Formule / Liste"
+    wsReport.Cells(1, 1).Value = "Feuille"
+    wsReport.Cells(1, 2).Value = "Cellule"
+    wsReport.Cells(1, 3).Value = "Type de Validation"
+    wsReport.Cells(1, 4).Value = "Formule / Liste"
     
     rowIndex = 2
 
@@ -1494,13 +1494,13 @@ Sub ListerValidations()
         If Not rngDV Is Nothing Then
             For Each cell In rngDV
                 With cell.Validation
-                    wsReport.Cells(rowIndex, 1).value = ws.Name
-                    wsReport.Cells(rowIndex, 2).value = cell.Address(False, False)
-                    wsReport.Cells(rowIndex, 3).value = .Type
+                    wsReport.Cells(rowIndex, 1).Value = ws.Name
+                    wsReport.Cells(rowIndex, 2).Value = cell.Address(False, False)
+                    wsReport.Cells(rowIndex, 3).Value = .Type
                     If .Type = xlValidateList Then
-                        wsReport.Cells(rowIndex, 4).value = .Formula1 ' Affiche la liste ou la formule utilisée
+                        wsReport.Cells(rowIndex, 4).Value = .Formula1 ' Affiche la liste ou la formule utilisée
                     Else
-                        wsReport.Cells(rowIndex, 4).value = "Autre type"
+                        wsReport.Cells(rowIndex, 4).Value = "Autre type"
                     End If
                     rowIndex = rowIndex + 1
                 End With
@@ -1553,12 +1553,12 @@ End Sub
 
 Sub UniformiserValeurVBA() '2025-02-27 @ 10:56
 
-    Dim fso As Object
+    Dim FSO As Object
     Dim dossier As String
     Dim fichier As Object
     Dim fichierTexte As Object
     Dim contenu As String
-    Dim toUpper As Boolean: toUpper = True 'True = mettre ".Value", False = mettre ".value"
+    Dim toUpper As Boolean: toUpper = True 'True = mettre ".Value", False = mettre ".Value"
     
     'Demander à l'utilisateur de sélectionner le dossier
     With Application.fileDialog(msoFileDialogFolderPicker)
@@ -1577,27 +1577,27 @@ Sub UniformiserValeurVBA() '2025-02-27 @ 10:56
     End If
     
     'Initialiser FileSystemObject
-    Set fso = CreateObject("Scripting.FileSystemObject")
+    Set FSO = CreateObject("Scripting.FileSystemObject")
     
     'Parcourir tous les fichiers .bas, .cls, .frm du dossier
-    For Each fichier In fso.GetFolder(dossier).Files
+    For Each fichier In FSO.GetFolder(dossier).Files
         If fichier.Name Like "*.bas" Or fichier.Name Like "*.cls" Or fichier.Name Like "*.frm" Then
             'Lire le contenu du fichier
-            Set fichierTexte = fso.OpenTextFile(fichier.path, 1) 'Mode lecture
+            Set fichierTexte = FSO.OpenTextFile(fichier.path, 1) 'Mode lecture
             contenu = fichierTexte.ReadAll
             fichierTexte.Close
             
             'Modifier le contenu pour plusieurs chaines
             If toUpper Then
-                contenu = Replace(contenu, ".value", ".Value")
-                contenu = Replace(contenu, "fso", "FSO")
+                contenu = Replace(contenu, ".Value", ".Value")
+                contenu = Replace(contenu, "FSO", "FSO")
             Else
-                contenu = Replace(contenu, ".Value", ".value")
-                contenu = Replace(contenu, "FSO", "fso")
+                contenu = Replace(contenu, ".Value", ".Value")
+                contenu = Replace(contenu, "FSO", "FSO")
             End If
         
             'Réécrire le fichier modifié
-            Set fichierTexte = fso.OpenTextFile(fichier.path, 2) 'Mode écriture
+            Set fichierTexte = FSO.OpenTextFile(fichier.path, 2) 'Mode écriture
             fichierTexte.Write contenu
             fichierTexte.Close
         End If
@@ -1605,7 +1605,7 @@ Sub UniformiserValeurVBA() '2025-02-27 @ 10:56
     
     'Nettoyage
     Set fichierTexte = Nothing
-    Set fso = Nothing
+    Set FSO = Nothing
     
     MsgBox "Corrections terminées !", vbInformation
     

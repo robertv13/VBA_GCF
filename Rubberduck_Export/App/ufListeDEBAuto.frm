@@ -36,7 +36,7 @@ Private Sub lsbDEB_AutoDesc_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     rowSelected = lsbDEB_AutoDesc.ListIndex
     NoDEBAuto = lsbDEB_AutoDesc.List(rowSelected, 0)
     DescDEBAuto = lsbDEB_AutoDesc.List(rowSelected, 1)
-    wshDEB_Saisie.Range("B3").value = rowSelected '2024-06-14 @ 07:23
+    wshDEB_Saisie.Range("B3").Value = rowSelected '2024-06-14 @ 07:23
     Unload ufListeDEBAuto
     Call Load_DEB_Auto_Into_JE(DescDEBAuto, NoDEBAuto)
 
