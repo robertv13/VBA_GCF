@@ -1,0 +1,243 @@
+﻿Option Explicit
+
+Public previousCellAddress As Variant
+Public celluleSélectionnée As Range
+
+Private Sub Worksheet_Activate()
+
+    If fromMenu = False Then
+        Exit Sub
+    End If
+    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Interrogation:Worksheet_Activate", "", 0)
+    
+    Application.ScreenUpdating = False
+    Application.EnableEvents = False
+    
+    'Import transactions from MASTER file
+    Call FAC_Comptes_Clients_Import_All
+    Call FAC_Entête_Import_All
+    Call FAC_Détails_Import_All
+    
+    Call FAC_Historique_Clear_All_Cells
+    
+    'Cache les deux boutons
+    Dim shp As Shape
+    Set shp = wshFAC_Interrogation.Shapes("shpAfficheFactures")
+    shp.Visible = False
+    Set shp = wshFAC_Interrogation.Shapes("shpAutreClient")
+    shp.Visible = False
+    
+    'Set the zoom factor to 100% when this worksheet is activated
+    ActiveWindow.Zoom = 100
+
+    Dim ws As Worksheet: Set ws = wshFAC_Interrogation
+    
+    ws.Application.Calculation = xlCalculationAutomatic
+    
+    Call SetTabOrder(ws)
+    
+    With ws
+        .Range("D4").Select
+        previousCellAddress = .Range("D4").Address
+    End With
+    
+    Application.EnableEvents = True
+    
+    'Certaines cellules perdent la couleur du background
+    Dim cellsToColor As Range
+    Set cellsToColor = Union(ws.Range("I4"), ws.Range("F6"))
+    Call Remplir_Plage_Avec_Couleur(cellsToColor, COULEUR_BASE_FACTURATION)
+    
+    With ws
+        .Protect UserInterfaceOnly:=True
+    End With
+    
+    ws.PageSetup.PrintArea = ""
+    
+    'Pas de date pour commencer
+    Application.EnableEvents = False
+    ws.Range("G6,I6").ClearContents
+    Application.EnableEvents = True
+    
+    fromMenu = False
+    
+    'Libérer la mémoire
+    Set shp = Nothing
+    Set ws = Nothing
+    
+    Call Log_Record("wshFAC_Interrogation:Worksheet_Activate", "", startTime)
+
+End Sub
+
+Private Sub Worksheet_SelectionChange(ByVal target As Range)
+
+    If previousCellAddress <> "" Then
+        Range(previousCellAddress).Interior.Color = xlNone
+    End If
+
+    Set celluleSélectionnée = target
+    
+    'Client has been selected
+    If Not Intersect(target, wshFAC_Interrogation.Range("D4")) Is Nothing Then
+        target.Interior.Color = COULEUR_SAISIE
+    End If
+
+    'Dates period has been selected
+    If Not Intersect(target, wshFAC_Interrogation.Range("D6")) Is Nothing Then
+        target.Interior.Color = COULEUR_SAISIE
+    End If
+
+    'Dates from has been selected
+    If Not Intersect(target, wshFAC_Interrogation.Range("G6")) Is Nothing Then
+        target.Interior.Color = COULEUR_SAISIE
+    End If
+
+    'Dates to has been selected
+    If Not Intersect(target, wshFAC_Interrogation.Range("I6")) Is Nothing Then
+        target.Interior.Color = COULEUR_SAISIE
+    End If
+
+    'Save the current cell Address
+    previousCellAddress = target.Address
+
+End Sub
+
+Private Sub Worksheet_Change(ByVal target As Range)
+
+    Dim fullDate As Variant
+    
+    'Client name change
+     If Not Intersect(target, Range("D4")) Is Nothing Then
+        'Aller chercher le vrai nom du client
+        Dim allCols As Variant
+        allCols = Fn_Get_A_Row_From_A_Worksheet("BD_Clients", target.value, fClntFMNomClientPlusNomClientSystème)
+        'Vérifier les résultats
+        If IsArray(allCols) Then
+            Application.EnableEvents = False
+            target.value = allCols(1)
+            Application.EnableEvents = True
+        Else
+            MsgBox "Valeur non trouvée !!!", vbCritical
+        End If
+        
+        Call FAC_Historique_Montrer_Bouton_Afficher
+        Range(target.Address).Interior.Color = xlNone
+        Application.Goto Range("D6")
+     End If
+   
+    'Dates Period change
+    If Not Intersect(target, Range("D6")) Is Nothing Then
+        Application.EnableEvents = False
+        With wshFAC_Interrogation
+            Select Case Range("D6").value
+                Case "Aujourd'hui"
+                    .Range("G6").value = Format$(wshAdmin.Range("Aujourdhui"), wshAdmin.Range("B1").value)
+                    .Range("I6").value = Format$(wshAdmin.Range("Aujourdhui"), wshAdmin.Range("B1").value)
+                Case "Semaine"
+                    .Range("G6").value = Format$(wshAdmin.Range("DateDebutSemaine"), wshAdmin.Range("B1").value)
+                    .Range("I6").value = Format$(wshAdmin.Range("DateFinSemaine"), wshAdmin.Range("B1").value)
+                Case "7 derniers jours"
+                    .Range("G6").value = Format$(wshAdmin.Range("SeptJoursDe"), wshAdmin.Range("B1").value)
+                    .Range("I6").value = Format$(wshAdmin.Range("SeptJoursA"), wshAdmin.Range("B1").value)
+                Case "15 derniers jours"
+                    .Range("G6").value = Format$(wshAdmin.Range("QuinzeJoursDe"), wshAdmin.Range("B1").value)
+                    .Range("I6").value = Format$(wshAdmin.Range("QuinzeJoursA"), wshAdmin.Range("B1").value)
+                Case "Mois Courant"
+                    .Range("G6").value = Format$(wshAdmin.Range("MoisDe"), wshAdmin.Range("B1").value)
+                    .Range("I6").value = Format$(wshAdmin.Range("MoisA"), wshAdmin.Range("B1").value)
+                Case "Mois Dernier"
+                    .Range("G6").value = Format$(wshAdmin.Range("MoisPrecDe"), wshAdmin.Range("B1").value)
+                    .Range("I6").value = Format$(wshAdmin.Range("MoisPrecA"), wshAdmin.Range("B1").value)
+                Case "Trimestre courant"
+                    .Range("G6").value = Format$(wshAdmin.Range("TrimDe"), wshAdmin.Range("B1").value)
+                    .Range("I6").value = Format$(wshAdmin.Range("TrimA"), wshAdmin.Range("B1").value)
+                Case "Trimestre précédent"
+                    .Range("G6").value = Format$(wshAdmin.Range("TrimPrecDe"), wshAdmin.Range("B1").value)
+                    .Range("I6").value = Format$(wshAdmin.Range("TrimPrecA"), wshAdmin.Range("B1").value)
+                Case "Année courante"
+                    .Range("G6").value = Format$(wshAdmin.Range("AnneeDe"), wshAdmin.Range("B1").value)
+                    .Range("I6").value = Format$(wshAdmin.Range("AnneeA"), wshAdmin.Range("B1").value)
+                Case "Année précédente"
+                    .Range("G6").value = Format$(wshAdmin.Range("AnneePrecDe"), wshAdmin.Range("B1").value)
+                    .Range("I6").value = Format$(wshAdmin.Range("AnneePrecA"), wshAdmin.Range("B1").value)
+                Case "Toutes les dates"
+                    .Range("G6").value = Format$(#1/1/2024#, wshAdmin.Range("B1").value)
+                    .Range("I6").value = Format$(wshAdmin.Range("AnneeA"), wshAdmin.Range("B1").value)
+                Case Else
+                    .Range("G6").value = ""
+                    .Range("I6").value = ""
+            End Select
+        End With
+        Call FAC_Historique_Montrer_Bouton_Afficher
+        Application.EnableEvents = True
+    End If
+    
+    'From date has changed
+    If Not Intersect(target, Range("G6")) Is Nothing Then
+        Application.EnableEvents = False
+        fullDate = Fn_Complete_Date(target.Text, 999, 0)
+        
+        'Update the cell with the full date, if valid
+        If fullDate <> "Invalid Date" Then
+            target.value = Format$(fullDate, wshAdmin.Range("B1").value)
+            Call FAC_Historique_Montrer_Bouton_Afficher
+            Application.EnableEvents = True
+        Else
+            Call modTEC_Saisie.AfficherMessageDateInvalide("wshFAC_Interrogation_179")
+            Application.EnableEvents = False
+            target.ClearContents
+            Application.EnableEvents = True
+            Application.Goto Range(target.Address)
+        End If
+    End If
+    
+    'To date has changed
+    If Not Intersect(target, Range("I6")) Is Nothing Then
+        Application.EnableEvents = False
+        fullDate = Fn_Complete_Date(target.Text, 999, 366)
+        'Update the cell with the full date, if valid
+        If fullDate <> "Invalid Date" Then
+            target.value = Format$(fullDate, wshAdmin.Range("B1").value)
+            Call FAC_Historique_Montrer_Bouton_Afficher
+'            Call Remove_All_PDF_Icons
+            Application.EnableEvents = True
+        Else
+            Call modTEC_Saisie.AfficherMessageDateInvalide("wshFAC_Interrogation_199")
+            target.ClearContents
+            Application.EnableEvents = True
+            Application.Goto Range(target.Address)
+        End If
+    End If
+
+End Sub
+
+Private Sub Worksheet_BeforeRightClick(ByVal target As Range, Cancel As Boolean)
+
+    'Déprotéger temporairement la feuille pour autoriser le changement de sélection
+    Dim feuilleProtegee As Boolean
+    feuilleProtegee = ActiveSheet.ProtectContents
+    
+    If feuilleProtegee = True Then
+        ActiveSheet.Unprotect
+    End If
+
+    'Forcer Excel à mettre à jour la cellule active
+    target.Activate
+
+    ' Debugging
+    Debug.Print "Cellule Active AVANT clic : " & ActiveCell.Address
+    Debug.Print "Cellule cliquée (Target) : " & target.Address
+
+    ' Vérifier si la cellule cliquée est dans la plage
+    If Not Intersect(target, Me.Range("C9:O33")) Is Nothing Then
+        Cancel = True ' Annuler le menu contextuel par défaut
+        Call FAC_Interrogation_AfficherMenuContextuel(target)
+    End If
+
+    'Réactiver la protection de la feuille si elle l'était
+    If feuilleProtegee Then
+        ActiveSheet.Protect
+    End If
+    
+End Sub

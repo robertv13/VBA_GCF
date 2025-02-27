@@ -34109,3 +34109,32 @@
 
 2025-02-27 11:17:35.20 | Robert M. Vigneault | APP_v6.A.3.xlsb | ----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) ----- |  | 
 
+2025-02-27 11:18:36.73 | Robert M. Vigneault | APP_v6.A.3.xlsb | ----- Début d'une nouvelle session (modAppli:CodeEssentielDepart) ----- |  | 
+2025-02-27 11:18:36.73 | Robert M. Vigneault | APP_v6.A.3.xlsb | Validation d'accès serveur terminée |  | 0,0000 secondes
+
+2025-02-27 11:18:36.74 | Robert M. Vigneault | APP_v6.A.3.xlsb | modAppli:CreateUserActiveFile |  | 
+2025-02-27 11:18:36.74 | Robert M. Vigneault | APP_v6.A.3.xlsb | modAppli:CreateUserActiveFile |  | 0,0000 secondes
+
+2025-02-27 11:18:36.74 | Robert M. Vigneault | APP_v6.A.3.xlsb | modAppli:SetupUserDateFormat |  | 
+2025-02-27 11:18:36.74 | Robert M. Vigneault | APP_v6.A.3.xlsb | modAppli:SetupUserDateFormat |  | 0,0000 secondes
+
+2025-02-27 11:18:36.74 | Robert M. Vigneault | APP_v6.A.3.xlsb | modAppli:BackupMasterFile |  | 
+2025-02-27 11:18:36.96 | Robert M. Vigneault | APP_v6.A.3.xlsb | modAppli:BackupMasterFile |  | 0,2266 secondes
+
+2025-02-27 11:18:36.96 | Robert M. Vigneault | APP_v6.A.3.xlsb | modAppli:WriteInfoOnMainMenu |  | 
+2025-02-27 11:18:36.98 | Robert M. Vigneault | APP_v6.A.3.xlsb | modAppli:WriteInfoOnMainMenu |  | 0,0156 secondes
+
+2025-02-27 11:18:36.98 | Robert M. Vigneault | APP_v6.A.3.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 
+2025-02-27 11:18:36.98 | Robert M. Vigneault | APP_v6.A.3.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 0,0000 secondes
+
+2025-02-27 11:18:36.98 | Robert M. Vigneault | APP_v6.A.3.xlsb | modAppli:CodeEssentielDepart |  | 0,2500 secondes
+
+2025-02-27 11:26:28.84 | Robert M. Vigneault | APP_v6.A.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-02-27 11:26:28.86 | Robert M. Vigneault | APP_v6.A.3.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0195 secondes
+
+2025-02-27 11:26:40.75 | Robert M. Vigneault | APP_v6.A.3.xlsb | modMenu:SauvegarderEtSortirApplication |  | 
+2025-02-27 11:26:42.01 | Robert M. Vigneault | APP_v6.A.3.xlsb | modMenu:Delete_User_Active_File |  | 
+2025-02-27 11:26:42.02 | Robert M. Vigneault | APP_v6.A.3.xlsb | modMenu:Delete_User_Active_File |  | 0,0078 secondes
+
+2025-02-27 11:26:42.02 | Robert M. Vigneault | APP_v6.A.3.xlsb | ----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) ----- |  | 
+

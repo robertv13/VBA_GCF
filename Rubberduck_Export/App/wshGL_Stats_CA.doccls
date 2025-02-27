@@ -1,0 +1,9 @@
+﻿Option Explicit
+
+Private Sub Worksheet_Activate()
+
+    Call GL_Trans_Import_All
+    
+    Call Actualiser_Stats_CA
+    
+End Sub

@@ -1,0 +1,80 @@
+﻿Option Explicit
+
+Private Sub Worksheet_Activate()
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_TDB:Worksheet_Activate", "", 0)
+   
+    Application.ScreenUpdating = False
+    
+    Call ActualiserTEC_TDB
+    
+    Call AjusteBordurePivotTable
+    
+    'Set the zoom factor to 100% when this worksheet is activated
+    ActiveWindow.Zoom = 100
+    
+    
+    Application.ScreenUpdating = True
+
+    Call Log_Record("wshTEC_TDB:Worksheet_Activate", "", startTime)
+
+End Sub
+
+Sub AjusteBordurePivotTable() '2025-02-01 @ 05:49
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_TDB:AjusteBordurePivotTable", "", 0)
+    
+    Dim ws As Worksheet
+    Set ws = wshTEC_TDB
+    
+    Dim rng As Range
+    Set rng = ws.Range("A10:B39")
+    
+    With rng
+        'Bordures extérieures (4)
+        With .Borders(xlEdgeLeft)
+            .LineStyle = xlContinuous
+            .ColorIndex = 0
+            .TintAndShade = 0
+            .Weight = xlMedium
+        End With
+        With .Borders(xlEdgeTop)
+            .LineStyle = xlContinuous
+            .ColorIndex = xlAutomatic
+            .TintAndShade = 0
+            .Weight = xlMedium
+        End With
+        With .Borders(xlEdgeBottom)
+            .LineStyle = xlContinuous
+            .ColorIndex = 0
+            .TintAndShade = 0
+            .Weight = xlMedium
+        End With
+        With .Borders(xlEdgeRight)
+            .LineStyle = xlContinuous
+            .ColorIndex = 0
+            .TintAndShade = 0
+            .Weight = xlMedium
+        End With
+        'Bordures intérieures (2)
+        With .Borders(xlInsideVertical)
+            .LineStyle = xlContinuous
+            .ColorIndex = 0
+            .TintAndShade = 0
+            .Weight = xlHairline
+        End With
+        With .Borders(xlInsideHorizontal)
+            .LineStyle = xlContinuous
+            .ColorIndex = 0
+            .TintAndShade = 0
+            .Weight = xlHairline
+        End With
+    End With
+    
+    'Libérer la mémoire
+    Set rng = Nothing
+    Set ws = Nothing
+
+    Call Log_Record("wshTEC_TDB:AjusteBordurePivotTable", "", startTime)
+
+End Sub

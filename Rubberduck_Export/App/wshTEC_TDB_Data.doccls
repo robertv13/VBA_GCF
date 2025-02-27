@@ -1,0 +1,54 @@
+﻿Option Explicit
+
+Dim isProcessing As Boolean
+
+Private Sub Worksheet_Change(ByVal target As Range)
+    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_TDB_Data:Worksheet_Change", target.Address, 0)
+    
+    Dim ws As Worksheet: Set ws = wshTEC_TDB_Data
+    
+    'Si l'un des 12 cellules suivantes (Prof, DateDe, DateA pour les 4 AdvancedFilters)
+    Dim cellRange As Range
+'    Set cellRange = ws.Range("U7, AH7, AU7, DH7")
+    Set cellRange = ws.Range("S7, T7, U7, AF7, AG7, AH7, AS7, AT7, AU7, BF7, DG7, DH7")
+    
+    'On change le professionnel et/ou les dates pour un des quatre (4) Advanced Filter
+    Dim intersectRange As Range
+    Set intersectRange = Intersect(target, cellRange)
+    
+    If Not intersectRange Is Nothing Then
+    
+        If Not isProcessing Then
+        
+            'Marquer que le traitement commence
+            isProcessing = True
+            
+            Application.EnableEvents = False
+            
+            'Mettre à jour la feuille wshTEC_TDB_Data
+            Call ActualiserTEC_TDB
+            
+            'Appliquer les 4 Advanced Filters (Semaine, Mois, Trimestre & Année Financière)
+            Call Stats_Heures_AF
+            
+            'Mettre à jour les 4 tableaux croisés dynamiques (Semaine, Mois, Trimestre & Année Financière)
+            Call UpdatePivotTables
+            
+            Application.EnableEvents = True
+        
+            'Marquer que le traitement est complété
+            isProcessing = False
+            
+        End If
+        
+    End If
+    
+    'Libérer la mémoire
+    Set cellRange = Nothing
+    Set intersectRange = Nothing
+    Set ws = Nothing
+
+    Call Log_Record("wshTEC_TDB_Data:Worksheet_Change", "", startTime)
+
+End Sub
