@@ -3129,7 +3129,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 4453 'What is the last TECID analyzed ?
+    lastTECIDReported = 4534 'What is the last TECID analyzed ?
     
     'Feuille contenant les données à analyser
     Dim HeaderRow As Long: HeaderRow = 2
@@ -4335,12 +4335,12 @@ Sub Dynamic_Range_Redefine_Plan_Comptable() '2024-07-04 @ 10:39
 
 End Sub
 
-Sub Remplir_Plage_Avec_Couleur(ByVal Plage As Range, ByVal couleurRVB As Long)
+Sub Remplir_Plage_Avec_Couleur(ByVal plage As Range, ByVal couleurRVB As Long)
 
-    If Not Plage Is Nothing Then
+    If Not plage Is Nothing Then
         Dim cellule As Range
         'Parcourt toutes les cellules de la plage (contiguës ou non)
-        For Each cellule In Plage
+        For Each cellule In plage
             On Error Resume Next
             cellule.Interior.Color = couleurRVB
             On Error GoTo 0

@@ -614,19 +614,24 @@ Sub GL_Get_JE_Detail_Trans_AF(noEJ As Long) '2024-11-17 @ 12:08
 
     'On tri les résultats par noGL / par date?
     If lastUsedRow > 2 Then
-        With ws.Sort 'Sort - ID, Date, TecID
-            .SortFields.Clear
-            'First sort On noGL
-            .SortFields.Add key:=ws.Range("AG2"), _
+        With ws.Sort 'Sort - NoEntrée, Débit(D) et Crédit (D)
+        .SortFields.Clear
+            'First sort On NoEntrée
+            .SortFields.Add key:=ws.Range("AC2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
-            'Second, sort On Date
-            .SortFields.Add key:=ws.Range("AD2"), _
+            'Second, sort On Débit(D)
+            .SortFields.Add key:=ws.Range("AI2"), _
                 SortOn:=xlSortOnValues, _
-                Order:=xlAscending, _
+                Order:=xlDescending, _
                 DataOption:=xlSortNormal
-            .SetRange wshTEC_Local.Range("AC2:AK" & lastUsedRow)
+            'Third, sort On Crédit(D)
+            .SortFields.Add key:=ws.Range("AJ2"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlDescending, _
+                DataOption:=xlSortNormal
+            .SetRange wshGL_Trans.Range("AC2:AK" & lastUsedRow)
             .Apply 'Apply Sort
          End With
     End If

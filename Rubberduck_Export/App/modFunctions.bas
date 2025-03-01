@@ -1768,12 +1768,12 @@ End Function
 Function ObtenirNoGlIndicateur(ByVal indic As Variant) As String
 
     'Plage où sont situés les liens (indicateur/no de GL)
-    Dim Plage As Range
-    Set Plage = wshAdmin.Range("D44:F60")
+    Dim plage As Range
+    Set plage = wshAdmin.Range("D44:F60")
     
     'Parcourir chaque cellule dans la première colonne de la plage
     Dim cellule As Range
-    For Each cellule In Plage.Columns(1).Cells
+    For Each cellule In plage.Columns(1).Cells
         If cellule.value = indic Then
             'Retourner la valeur de la troisième colonne pour la ligne correspondante
             ObtenirNoGlIndicateur = cellule.offset(0, 1).value
@@ -1966,4 +1966,18 @@ Function RechercherLignesTableau(ws As Worksheet, noEntrée As Long) As Variant
     
 End Function
 
+Function EstLigneSelectionnee(ByVal lb As Object) As Boolean
+
+    Dim i As Integer
+    EstLigneSelectionnee = False 'Par défaut, aucune ligne n'est sélectionnée
+
+    'Vérifier toutes les lignes du ListBox
+    For i = 0 To lb.ListCount - 1
+        If lb.Selected(i) Then
+            EstLigneSelectionnee = True 'Si une ligne est sélectionnée
+            Exit Function 'Quitter dès qu'une sélection est trouvée
+        End If
+    Next i
+    
+End Function
 

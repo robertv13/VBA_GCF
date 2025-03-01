@@ -73,14 +73,16 @@ End Sub
 'Option # 5
 Sub Rapport_GL_Click()
 
-    Application.ScreenUpdating = False
-
-    With wshGL_Rapport
-        .Visible = xlSheetVisible
-        .Select
-    End With
-
-    Application.ScreenUpdating = True
+    ufGL_Rapport.show vbModal
+    
+'    Application.ScreenUpdating = False
+'
+'    With wshGL_Rapport
+'        .Visible = xlSheetVisible
+'        .Select
+'    End With
+'
+'    Application.ScreenUpdating = True
 
 End Sub
 

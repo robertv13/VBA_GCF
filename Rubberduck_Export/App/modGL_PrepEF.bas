@@ -334,71 +334,7 @@ Sub CréerFeuillesEtFormat()
     
 End Sub
 
-'Sub CréerFeuillesEtFormat_ACO()
-'
-'    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:CréerFeuillesEtFormat", "", 0)
-'
-'    'Liste des feuilles à créer
-'    Dim nomsFeuilles As Variant
-'    nomsFeuilles = Array("Page titre", "Table des Matières", "État des Résultats", "BNR", "Bilan")
-'
-'    Application.ScreenUpdating = False
-'
-'    'Création des feuilles et application des formats
-'    Dim ws As Worksheet
-'    Dim i As Integer
-'    For i = LBound(nomsFeuilles) To UBound(nomsFeuilles)
-'        On Error Resume Next
-'        Application.StatusBar = "Création de " & nomsFeuilles(i)
-'        Set ws = ThisWorkbook.Sheets(nomsFeuilles(i)) 'Vérifier si la feuille existe déjà
-'        On Error GoTo 0
-'
-'        If ws Is Nothing Then ' Si la feuille n'existe pas, la créer
-'            Set ws = ThisWorkbook.Sheets.Add(After:=Sheets(Sheets.count))
-'            ws.Name = nomsFeuilles(i)
-'        End If
-'
-'        'Appliquer une mise en page standard pour toutes les feuilles
-'        With ThisWorkbook.Sheets(nomsFeuilles(i)).PageSetup
-'            .Orientation = xlPortrait
-'            .FitToPagesWide = False
-'            .FitToPagesTall = False
-'            .LeftMargin = Application.InchesToPoints(0.5)
-'            .RightMargin = Application.InchesToPoints(0.5)
-'            .TopMargin = Application.InchesToPoints(0.75)
-'            .BottomMargin = Application.InchesToPoints(0.75)
-'            .CenterHorizontally = False
-'        End With
-'
-'        Application.ScreenUpdating = True
-'
-'        'Appliquer l'aperçu des sauts de page à la feuille
-'        ws.Activate
-'        'Passer en mode Normal avant de modifier le remplissage
-'        ActiveWindow.View = xlNormalView
-'        'Appliquer le fond blanc à toute la feuille 2025-02-25 @ 07:45
-'        ws.usedRange.Interior.Pattern = xlSolid
-'        ws.usedRange.Interior.Color = RGB(220, 235, 255)
-'
-'        ActiveWindow.View = xlPageBreakPreview '2025-02-25 @ 07:44
-'        ActiveWindow.Zoom = 87
-'
-'        ws.Visible = xlSheetVisible
-'
-'        Application.ScreenUpdating = False
-'
-'        'Réinitialiser la variable pour éviter les erreurs dans l'itération suivante
-'        Set ws = Nothing
-'    Next i
-'
-'    Application.StatusBar = ""
-'
-'    Application.ScreenUpdating = True
-'
-'    Call Log_Record("modGL_PrepEF:CréerFeuillesEtFormat", "", startTime)
-'
-'End Sub
-'
+
 Sub Assembler_Page_Titre_0_Main(dateAC As Date, dateAP As Date)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_Page_Titre_0_Main", "", 0)
