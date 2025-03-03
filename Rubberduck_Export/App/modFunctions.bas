@@ -74,7 +74,7 @@ Function Fn_GetID_From_Client_Name(nomClient As String) '2024-02-14 @ 06:07
     On Error GoTo 0
 
     If ws Is Nothing Or dynamicRange Is Nothing Then
-        MsgBox "La feuille 'Clients' ou le DynamicRange 'dnrClients_All' n'a pas été trouvé!", _
+        msgBox "La feuille 'Clients' ou le DynamicRange 'dnrClients_All' n'a pas été trouvé!", _
             vbExclamation
         Exit Function
     End If
@@ -91,7 +91,7 @@ Function Fn_GetID_From_Client_Name(nomClient As String) '2024-02-14 @ 06:07
         Fn_GetID_From_Client_Name = result
         ufSaisieHeures.txtClientID.value = result
     Else
-        MsgBox "Impossible de retrouver le nom du client dans la feuille" & vbNewLine & vbNewLine & _
+        msgBox "Impossible de retrouver le nom du client dans la feuille" & vbNewLine & vbNewLine & _
                     "BD_Clients...", vbExclamation, "Recherche dans BD_Clients " & dynamicRange.Address
     End If
     
@@ -114,7 +114,7 @@ Function Fn_Cell_From_BD_Client(nomClient As String, ByRef colNumberSearch As In
     On Error GoTo 0
 
     If ws Is Nothing Or dynamicRange Is Nothing Then
-        MsgBox "La feuille 'Clients' ou le DynamicRange 'dnrClients_All' n'a pas été trouvé!", _
+        msgBox "La feuille 'Clients' ou le DynamicRange 'dnrClients_All' n'a pas été trouvé!", _
             vbExclamation
         Exit Function
     End If
@@ -130,7 +130,7 @@ Function Fn_Cell_From_BD_Client(nomClient As String, ByRef colNumberSearch As In
     If result <> "Not Found" Then
         Fn_Cell_From_BD_Client = result
     Else
-        MsgBox "Impossible de retrouver le nom du client dans la feuille" & vbNewLine & vbNewLine & _
+        msgBox "Impossible de retrouver le nom du client dans la feuille" & vbNewLine & vbNewLine & _
                     "BD_Clients...", vbExclamation, "Fn_Cell_From_BD_Client"
     End If
     
@@ -153,7 +153,7 @@ Function Fn_GetID_From_Fourn_Name(nomFournisseur As String) '2024-07-03 @ 16:13
     On Error GoTo 0
 
     If ws Is Nothing Or dynamicRange Is Nothing Then
-        MsgBox "La feuille 'BD_Fournisseurs' ou le DynamicRange 'dnrSuppliers_All' n'a pas été trouvé!", _
+        msgBox "La feuille 'BD_Fournisseurs' ou le DynamicRange 'dnrSuppliers_All' n'a pas été trouvé!", _
             vbExclamation
         Exit Function
     End If
@@ -273,39 +273,43 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
 
 End Function
 
-Function Fn_Valider_Courriel(ByVal courriel As String) As Boolean
-    
-    Fn_Valider_Courriel = False
-    
-    Dim regex As Object
-    Set regex = CreateObject("VBScript.RegExp")
-    
-    'Définir le pattern pour l'expression régulière
-    regex.Pattern = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
-    regex.IgnoreCase = True
-    regex.Global = False
-    
-    'Last chance to accept a invalid email address...
-    If regex.Test(courriel) = False Then
-        Dim msgValue As VbMsgBoxResult
-        msgValue = MsgBox("'" & courriel & "'" & vbNewLine & vbNewLine & _
-                            "N'est pas structurée selon les standards..." & vbNewLine & vbNewLine & _
-                            "Désirez-vous quand même conserver cette adresse ?", _
-                            vbYesNo + vbInformation, "Struture de courriel non standard")
-        If msgValue = vbYes Then
-            Fn_Valider_Courriel = True
-        Else
-            Fn_Valider_Courriel = False
-        End If
-    Else
-        Fn_Valider_Courriel = True
-    End If
-    
-    'Libérer la mémoire
-    Set regex = Nothing
-    
-End Function
-
+'Function Fn_Valider_Courriel(ByVal courriel As String) As Boolean
+'
+'    Fn_Valider_Courriel = False
+'
+'    Dim regex As Object
+'    Set regex = CreateObject("VBScript.RegExp")
+'
+'    'Définir le pattern pour l'expression régulière
+'    regex.Pattern = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+'    regex.IgnoreCase = True
+'    regex.Global = False
+'
+'    'Possibilité qu'il y ait plus d'une adresse courriel
+'    Dim eMail() As Variant
+'
+'
+'    'Last chance to accept a invalid email address...
+'    If regex.Test(courriel) = False Then
+'        Dim msgValue As VbMsgBoxResult
+'        msgValue = MsgBox("'" & courriel & "'" & vbNewLine & vbNewLine & _
+'                            "N'est pas structurée selon les standards..." & vbNewLine & vbNewLine & _
+'                            "Désirez-vous quand même conserver cette adresse ?", _
+'                            vbYesNo + vbInformation, "Struture de courriel non standard")
+'        If msgValue = vbYes Then
+'            Fn_Valider_Courriel = True
+'        Else
+'            Fn_Valider_Courriel = False
+'        End If
+'    Else
+'        Fn_Valider_Courriel = True
+'    End If
+'
+'    'Libérer la mémoire
+'    Set regex = Nothing
+'
+'End Function
+'
 Function Fn_Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hono As Double) As String '2024-07-18 @ 16:32
     
     'Define the worksheet
@@ -336,7 +340,7 @@ Function Fn_Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hon
         
         'Confirm with the user
         Dim reponse As Long
-        reponse = MsgBox("Il existe déjà une demande de facture pour ce client" & _
+        reponse = msgBox("Il existe déjà une demande de facture pour ce client" & _
                   vbNewLine & "au montant de " & Format$(hono, "#,##0.00$") & _
                   vbNewLine & vbNewLine & "Désirez-vous..." & vbNewLine & vbNewLine & _
                   "   1) (OUI) REMPLACER cette demande" & vbNewLine & vbNewLine & _
@@ -457,7 +461,7 @@ Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 
     On Error GoTo 0
     
     If ws Is Nothing Or dynamicRange Is Nothing Then
-        MsgBox "La feuille 'Admin' ou le DynamicRange n'a pas été trouvé!", _
+        msgBox "La feuille 'Admin' ou le DynamicRange n'a pas été trouvé!", _
             vbExclamation
         Exit Function
     End If
@@ -473,7 +477,7 @@ Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 
     If result <> "Not Found" Then
         Fn_GetGL_Code_From_GL_Description = result
     Else
-        MsgBox "Impossible de retrouver la valeur dans la première colonne", vbExclamation
+        msgBox "Impossible de retrouver la valeur dans la première colonne", vbExclamation
     End If
 
     'Libérer la mémoire
@@ -803,7 +807,9 @@ End Function
 
 Function Fn_ValiderCourriel(ByVal adresses As String) As Boolean '2024-10-26 @ 14:30
     
-    'Validation de 0 à n adresses courriel
+    'Supporte de 0 à 2 courriels (séparés par '; ')
+    
+    Fn_ValiderCourriel = False
     
     Dim regex As Object
     Set regex = CreateObject("VBScript.RegExp")
@@ -816,12 +822,12 @@ Function Fn_ValiderCourriel(ByVal adresses As String) As Boolean '2024-10-26 @ 1
     End With
     
     'Diviser le paremètre (courriel) en adresses individuelles
-    Dim adressesArray() As String
-    adressesArray = Split(adresses, ";")
+    Dim arrAdresse() As String
+    arrAdresse = Split(adresses, "; ")
     
-    ' Vérifier chaque adresse
+    'Vérifier chaque adresse
     Dim adresse As Variant
-    For Each adresse In adressesArray
+    For Each adresse In arrAdresse
         adresse = Trim(adresse)
         'Passer si l'adresse est vide (Aucune adresse est aussi permis)
         If adresse <> "" Then
@@ -833,7 +839,7 @@ Function Fn_ValiderCourriel(ByVal adresses As String) As Boolean '2024-10-26 @ 1
         End If
     Next adresse
     
-    ' Toutes les adresses sont valides
+    'Toutes les adresses sont valides
     Fn_ValiderCourriel = True
     
     'Nettoyer la mémoire
@@ -969,14 +975,14 @@ Function Fn_Complete_Date(dateInput As String, joursArriere As Integer, joursFut
     Dim joursEcart As Integer
     joursEcart = parsedDate - Date
     If joursEcart < 0 And Abs(joursEcart) > joursArriere Then
-        MsgBox "Cette date NE RESPECTE PAS les paramètres de date établis" & vbNewLine & vbNewLine & _
+        msgBox "Cette date NE RESPECTE PAS les paramètres de date établis" & vbNewLine & vbNewLine & _
                     "La date minimale est '" & Format$(Date - joursArriere, wshAdmin.Range("B1").value) & "'", _
                     vbCritical, "La date saisie est hors-norme - (Du " & _
                         Format$(Date - joursArriere, wshAdmin.Range("B1").value) & " au " & Format$(Date + joursFutur, wshAdmin.Range("B1").value) & ")"
         GoTo Invalid_Date
     End If
     If joursEcart > 0 And joursEcart > joursFutur Then
-        MsgBox "Cette date NE RESPECTE PAS les paramètres de date établis" & vbNewLine & vbNewLine & _
+        msgBox "Cette date NE RESPECTE PAS les paramètres de date établis" & vbNewLine & vbNewLine & _
                     "La date maximale est '" & Format$(Date + joursFutur, wshAdmin.Range("B1").value) & "'", _
                     vbCritical, "La date saisie est hors-norme - (Du " & _
                     Format$(Date - joursArriere, wshAdmin.Range("B1").value) & " au " & Format$(Date + joursFutur, wshAdmin.Range("B1").value) & ")"
@@ -1115,7 +1121,7 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
     
     'Professionnel ?
     If ufSaisieHeures.cmbProfessionnel.value = "" Then
-        MsgBox prompt:="Le professionnel est OBLIGATOIRE !", _
+        msgBox prompt:="Le professionnel est OBLIGATOIRE !", _
                Title:="Vérification", _
                Buttons:=vbCritical
         ufSaisieHeures.cmbProfessionnel.SetFocus
@@ -1124,7 +1130,7 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
 
     'Date de la charge ?
     If ufSaisieHeures.txtDate.value = "" Or IsDate(ufSaisieHeures.txtDate.value) = False Then
-        MsgBox prompt:="La date est OBLIGATOIRE !", _
+        msgBox prompt:="La date est OBLIGATOIRE !", _
                Title:="Vérification", _
                Buttons:=vbCritical
         ufSaisieHeures.txtDate.SetFocus
@@ -1133,7 +1139,7 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
 
     'Nom du client & code de client ?
     If ufSaisieHeures.txtClient.value = "" Or ufSaisieHeures.txtClientID = "" Then
-        MsgBox prompt:="Le client et son code sont OBLIGATOIRES !" & vbNewLine & vbNewLine & _
+        msgBox prompt:="Le client et son code sont OBLIGATOIRES !" & vbNewLine & vbNewLine & _
                        "Code de client = '" & ufSaisieHeures.txtClientID & "'" & vbNewLine & vbNewLine & _
                        "Nom du client = '" & ufSaisieHeures.txtClient.value & "'", _
                Title:="Vérifications essentielles des données du client", _
@@ -1144,7 +1150,7 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
     
     'Heures valides ?
     If ufSaisieHeures.txtHeures.value = "" Or IsNumeric(ufSaisieHeures.txtHeures.value) = False Then
-        MsgBox prompt:="Le nombre d'heures est OBLIGATOIRE !", _
+        msgBox prompt:="Le nombre d'heures est OBLIGATOIRE !", _
                Title:="Vérification", _
                Buttons:=vbCritical
         ufSaisieHeures.txtHeures.SetFocus
@@ -1180,7 +1186,7 @@ Public Function Fn_Get_Hourly_Rate(profID As Long, dte As Date)
             'Loop through each cell in the row
         Next i
     Else
-        MsgBox "La plage nommée 'dnrTauxHoraire' n'a pas été trouvée!", vbExclamation
+        msgBox "La plage nommée 'dnrTauxHoraire' n'a pas été trouvée!", vbExclamation
     End If
 
     'Libérer la mémoire
@@ -1248,7 +1254,7 @@ Function Fn_Is_Date_Valide(d As String) As Boolean
 
     Fn_Is_Date_Valide = False
     If d = "" Or IsDate(d) = False Then
-        MsgBox "Une date d'écriture est obligatoire." & vbNewLine & vbNewLine & _
+        msgBox "Une date d'écriture est obligatoire." & vbNewLine & vbNewLine & _
             "Veuillez saisir une date valide!", vbCritical, "Date Invalide"
     Else
         Fn_Is_Date_Valide = True
@@ -1297,7 +1303,7 @@ Function Fn_Is_Ecriture_Balance() As Boolean
 
     Fn_Is_Ecriture_Balance = False
     If wshGL_EJ.Range("H26").value <> wshGL_EJ.Range("I26").value Then
-        MsgBox "Votre écriture ne balance pas." & vbNewLine & vbNewLine & _
+        msgBox "Votre écriture ne balance pas." & vbNewLine & vbNewLine & _
             "Débits = " & wshGL_EJ.Range("H26").value & " et Crédits = " & wshGL_EJ.Range("I26").value & vbNewLine & vbNewLine & _
             "Elle n'est donc pas reportée.", vbCritical, "Veuillez vérifier votre écriture!"
     Else
@@ -1310,7 +1316,7 @@ Function Fn_Is_Debours_Balance() As Boolean
 
     Fn_Is_Debours_Balance = False
     If wshDEB_Saisie.Range("O6").value <> wshDEB_Saisie.Range("I26").value Then
-        MsgBox "Votre transaction ne balance pas." & vbNewLine & vbNewLine & _
+        msgBox "Votre transaction ne balance pas." & vbNewLine & vbNewLine & _
             "Total saisi = " & Format$(wshDEB_Saisie.Range("O6").value, "#,##0.00 $") _
             & " vs. Ventilation = " & Format$(wshDEB_Saisie.Range("I26").value, "#,##0.00 $") _
             & vbNewLine & vbNewLine & "Elle n'est donc pas reportée.", _
@@ -1325,7 +1331,7 @@ Function Fn_Is_JE_Valid(rmax As Long) As Boolean
 
     Fn_Is_JE_Valid = True 'Optimist
     If rmax <= 9 Or rmax > 23 Then
-        MsgBox "L'écriture est invalide !" & vbNewLine & vbNewLine & _
+        msgBox "L'écriture est invalide !" & vbNewLine & vbNewLine & _
             "Elle n'est donc pas reportée!", vbCritical, "Vous devez vérifier l'écriture"
         Fn_Is_JE_Valid = False
     End If
@@ -1334,7 +1340,7 @@ Function Fn_Is_JE_Valid(rmax As Long) As Boolean
     For i = 9 To rmax
         If wshGL_EJ.Range("E" & i).value <> "" Then
             If wshGL_EJ.Range("H" & i).value = "" And wshGL_EJ.Range("I" & i).value = "" Then
-                MsgBox "Il existe une ligne avec un compte, sans montant !"
+                msgBox "Il existe une ligne avec un compte, sans montant !"
                 Fn_Is_JE_Valid = False
             End If
         End If
@@ -1346,7 +1352,7 @@ Function Fn_Is_Deb_Saisie_Valid(rmax As Long) As Boolean
 
     Fn_Is_Deb_Saisie_Valid = True 'Optimist
     If rmax < 9 Or rmax > 23 Then
-        MsgBox "L'écriture est invalide !" & vbNewLine & vbNewLine & _
+        msgBox "L'écriture est invalide !" & vbNewLine & vbNewLine & _
             "Elle n'est donc pas reportée!", vbCritical, "Vous devez vérifier l'écriture"
         Fn_Is_Deb_Saisie_Valid = False
     End If
@@ -1355,7 +1361,7 @@ Function Fn_Is_Deb_Saisie_Valid(rmax As Long) As Boolean
     For i = 9 To rmax
         If wshDEB_Saisie.Range("E" & i).value <> "" Then
             If wshDEB_Saisie.Range("N" & i).value = "" Then
-                MsgBox "Il existe une ligne avec un compte, sans montant !"
+                msgBox "Il existe une ligne avec un compte, sans montant !"
                 Fn_Is_Deb_Saisie_Valid = False
             End If
         End If
@@ -1396,7 +1402,7 @@ Function Fn_Get_Next_Invoice_Number() As String '2024-09-17 @ 14:00
     If strLastInvoice <> "" Then
         strLastInvoice = Right(strLastInvoice, Len(strLastInvoice) - 3)
     Else
-        MsgBox "Problème avec les dernières lignes de la" & _
+        msgBox "Problème avec les dernières lignes de la" & _
                 vbNewLine & vbNewLine & "feuille 'wshFAC_Entête'" & _
                 vbNewLine & vbNewLine & "Veuillez contacter le développeur", _
                 vbOKOnly, "Structure invalide dans 'wshFAC_Entête'"
@@ -1619,7 +1625,7 @@ Public Function Fn_Convert_Value_Boolean_To_Text(val As Boolean) As String
         Case "VRAI", "FAUX"
             
         Case Else
-            MsgBox val & " est une valeur INVALIDE !"
+            msgBox val & " est une valeur INVALIDE !"
     End Select
 
 End Function
@@ -1879,7 +1885,7 @@ Function AppMsgBox(message As String _
                  , Optional boutons As VbMsgBoxStyle = vbOKOnly _
                  , Optional titre As String = "") As VbMsgBoxResult
                  
-    AppMsgBox = MsgBox(message, boutons, titre)
+    AppMsgBox = msgBox(message, boutons, titre)
                  
 End Function
 
@@ -1978,6 +1984,102 @@ Function EstLigneSelectionnee(ByVal lb As Object) As Boolean
             Exit Function 'Quitter dès qu'une sélection est trouvée
         End If
     Next i
+    
+End Function
+
+Function ExtraireTransactionsPourUnCompte(rngResultAll As Range, compte As String) As Variant
+
+    Dim rFiltre As Range
+    Dim i As Long, j As Long
+    Dim count As Long
+    
+    'Déduire la feuille de travail à partir de rngResultAll
+    Dim ws As Worksheet
+    Set ws = rngResultAll.Parent
+    
+    'Définir une cellule pour le critère de filtrage temporaire
+    Dim Critere As Range
+    Set Critere = ws.Range("AM2:AM3") 'A/F # 3 dans Gl_Trans
+    'Nettoyer les anciennes valeurs du critère
+    Critere.Cells.ClearContents
+    Critere.Cells(1, 1).value = "NoCompte" 'Titre de la colonne à filtrer (Adapter si nécessaire)
+    Critere.Cells(2, 1).value = compte
+    
+    'Nettoyer la plage pour recevoir la copie
+    ws.Range("AO1").CurrentRegion.offset(1, 0).Clear
+    
+    'Appliquer AdvancedFilter pour obtenir uniquement les lignes correspondant au compte
+    rngResultAll.AdvancedFilter action:=xlFilterCopy, _
+                                criteriaRange:=Critere, _
+                                CopyToRange:=ws.Range("AO1:AW1"), _
+                                Unique:=False
+    
+    'Récupérer la plage filtrée
+    Set rFiltre = ws.Range("AO1").CurrentRegion
+    
+    'Vérifier qu'il y a des lignes filtrées
+    Dim LignesCorrespondantes() As Variant
+    If rFiltre.Rows.count > 1 Then 'Lignes après l'en-tête
+        'Initialiser le tableau pour contenir les lignes pertinentes
+        ReDim LignesCorrespondantes(1 To rFiltre.Rows.count - 1, 1 To rFiltre.Columns.count)
+        
+        'Remplir le tableau avec les données filtrées
+        count = 1
+        For i = 2 To rFiltre.Rows.count ' Ignorer l'en-tête
+            For j = 1 To rFiltre.Columns.count
+                LignesCorrespondantes(count, j) = rFiltre.Cells(i, j).value
+            Next j
+            count = count + 1
+        Next i
+    Else
+        LignesCorrespondantes = Array()
+    End If
+    
+    'Retourner le tableau contenant les lignes filtrées ou Vide (Array())
+    ExtraireTransactionsPourUnCompte = LignesCorrespondantes
+    
+    'Libérer la mémoire
+    Set rFiltre = Nothing
+    
+End Function
+
+Function EstBissextile(annee As Integer) As Boolean '2025-03-02 @ 10:21
+
+    ' Vérifie si l'année est bissextile
+    EstBissextile = ((annee Mod 4 = 0 And annee Mod 100 <> 0) Or annee Mod 400 = 0)
+    
+End Function
+
+Function ValiderDateDernierJourDuMois(y As Integer, m As Integer, d As Integer) As String '2025-03-02 @ 11:00
+
+    'Quel est le dernier jour de ce mois ?
+    Dim dernierJourDuMois As Integer
+    dernierJourDuMois = day(DateSerial(y, m + 1, 0))
+    
+    'Vérification additionnelle pour le mois de février (années bissextiles)
+    Dim isLeapYear As Boolean
+    isLeapYear = False
+    If m = 2 Then
+        isLeapYear = EstBissextile(y)
+        If isLeapYear Then
+            dernierJourDuMois = 29
+        End If
+    End If
+    
+    'Valider le jour
+    If d > dernierJourDuMois Then
+        Dim message As String, titre As String
+        message = "La combinaison jour (" & d & ") et mois (" & m & ") n'existe pas"
+        titre = "Date invalide"
+        If m = 2 Then
+            titre = titre & IIf(isLeapYear, "", " pour l'année " & y)
+        End If
+        msgBox message, vbExclamation, titre
+        ValiderDateDernierJourDuMois = "" 'Si le jour n'est pas valide, on retourne une chaîne vide
+        Exit Function
+    Else
+        ValiderDateDernierJourDuMois = DateSerial(y, m, d)
+    End If
     
 End Function
 

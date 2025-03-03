@@ -157,7 +157,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
             target.value = allCols(1)
             Application.EnableEvents = True
         Else
-            MsgBox "Valeur non trouvée !!!", vbCritical
+            msgBox "Valeur non trouvée !!!", vbCritical
         End If
         Application.EnableEvents = False
         clientCode = allCols(fClntFMClientID)

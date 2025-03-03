@@ -217,7 +217,7 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
         Application.EnableEvents = True
     Else
         wshFAC_Brouillon.Range("E3").value = ""
-        MsgBox "Valeur non trouvée !!!", vbCritical
+        msgBox "Valeur non trouvée !!!", vbCritical
         wshFAC_Brouillon.Range("E3").Select
     End If
     
@@ -437,7 +437,7 @@ Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
     Dim wsSource As Worksheet: Set wsSource = wbSource.Sheets(wbSource.Sheets.count) 'Position to the last worksheet
 
     'Step 2 - Let the user selects the cells to be copied
-    MsgBox "SVP, sélectionnez les cellules à copier," & vbNewLine & vbNewLine _
+    msgBox "SVP, sélectionnez les cellules à copier," & vbNewLine & vbNewLine _
          & "et par la suite, pesez sur <Enter>.", vbInformation
     On Error Resume Next
     Dim rngSource As Range
@@ -445,7 +445,7 @@ Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
     On Error GoTo 0
 
     If rngSource Is Nothing Then
-        MsgBox "Aucune cellule de sélectionnée. L'Opération est annulée.", vbExclamation
+        msgBox "Aucune cellule de sélectionnée. L'Opération est annulée.", vbExclamation
         wbSource.Close SaveChanges:=False
         GoTo Exit_Sub
     End If
@@ -504,12 +504,16 @@ Sub FAC_Brouillon_Clear_All_TEC_Displayed()
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed", "", 0)
     
     Dim lastRow As Long
-    lastRow = wshFAC_Brouillon.Cells(wshFAC_Brouillon.Rows.count, "D").End(xlUp).row 'First line of data is at row 7
+    lastRow = wshFAC_Brouillon.Cells(wshFAC_Brouillon.Rows.count, "F").End(xlUp).row 'First line of data is at row 7
     If lastRow > 6 Then
         Application.EnableEvents = False
+        'Verrouiller les cellules des descriptions des TEC - 2025-03-02 @ 21:53
+        wshFAC_Brouillon.Unprotect
+        wshFAC_Brouillon.Range("F7:F" & lastRow).Locked = True
+        wshFAC_Brouillon.Protect UserInterfaceOnly:=True
         wshFAC_Brouillon.Range("D7:I" & lastRow + 2).ClearContents
-        Application.EnableEvents = True
         Call FAC_Brouillon_TEC_Remove_Check_Boxes(lastRow - 2)
+        Application.EnableEvents = True
     End If
     
     Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed", "", startTime)
@@ -765,15 +769,20 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
         rng.value = arr 'RMV
     End With
     
+    'Déverrouiller les cellules des descriptions des TEC - 2025-03-02 @ 21:53
+    wshFAC_Brouillon.Unprotect
+    wshFAC_Brouillon.Range("F7:F" & lastUsedRow).Locked = False
+    wshFAC_Brouillon.Protect UserInterfaceOnly:=True
+    
     'Création du userForm s'il y a quelque chose à afficher
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.listBox1.Clear
+        ufFraisDivers.ListBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.listBox1.AddItem item
+            ufFraisDivers.ListBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless
@@ -843,7 +852,7 @@ Sub FAC_Brouillon_Goto_Onglet_FAC_Finale()
     Next i
     
     If soldeDepotClient > 0 Then
-        MsgBox "Il y a un dépôt de client de disponible de " & Format$(soldeDepotClient, "###,##0.00 $") & vbNewLine & vbNewLine & _
+        msgBox "Il y a un dépôt de client de disponible de " & Format$(soldeDepotClient, "###,##0.00 $") & vbNewLine & vbNewLine & _
             "Le total de la facture est de " & Format$(wshFAC_Brouillon.Range("O55").value, "###,##0.00 $"), vbInformation
 
         Application.EnableEvents = False
@@ -866,7 +875,7 @@ Sub FAC_Brouillon_Goto_Onglet_FAC_Finale()
             DoEvents
             'Si le montant a changé, demande confirmation
             If wshFAC_Brouillon.Range("O57").value <> montantInitial Then
-                reponse = MsgBox("Veuillez confirmer le montant du dépôt de client à appliquer" & vbNewLine & _
+                reponse = msgBox("Veuillez confirmer le montant du dépôt de client à appliquer" & vbNewLine & _
                                     "sur cette facture." & vbNewLine & vbNewLine & _
                                     "Appuyez sur OK pour accepter le montant suggéré," & vbNewLine & _
                                     "ou Annuler pour modifier le montant du dépôt.", _
@@ -1058,7 +1067,7 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(row As Long, dateCutOffProjet As Date)
     DoEvents
     
     If newTECapresProjet = True Then
-        MsgBox "ATTENTION - Des charges se sont ajoutées après le projet de facture" & vbNewLine & vbNewLine & _
+        msgBox "ATTENTION - Des charges se sont ajoutées après le projet de facture" & vbNewLine & vbNewLine & _
                 "VOUS DEVEZ EN TENIR COMPTE DANS VOTRE FACTURE", vbInformation + vbExclamation, _
                 "Le date limite du projet de facture < Date de la facture"
     End If
@@ -1240,7 +1249,7 @@ Sub Load_Invoice_Template(t As String)
     
     'Confirm use of Template
     Dim userResponse As String
-    userResponse = MsgBox("Êtes-vous CERTAIN de vouloir utiliser le gabarit '" & t & "'" & vbNewLine & "pour cette facture ?", vbYesNo + vbQuestion, "Confirmation d'utilisation de gabarit")
+    userResponse = msgBox("Êtes-vous CERTAIN de vouloir utiliser le gabarit '" & t & "'" & vbNewLine & "pour cette facture ?", vbYesNo + vbQuestion, "Confirmation d'utilisation de gabarit")
     'If user confirms, delete the worksheets
     If userResponse <> vbYes Then
         Exit Sub

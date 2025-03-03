@@ -32,7 +32,7 @@ Private Sub Workbook_Open_OK_20241228()
     'Le serveur est-il disponible ?
     If Fn_Is_Server_Available() = False Then
         Call Log_Record("Erreur : Serveur n'est pas disponible", Timer)
-        MsgBox "Le répertoire (P:\) ne semble pas accessible", vbCritical, "Le serveur n'est pas disponible"
+        msgBox "Le répertoire (P:\) ne semble pas accessible", vbCritical, "Le serveur n'est pas disponible"
         Application.Quit
     End If
     
@@ -47,7 +47,7 @@ Private Sub Workbook_Open_OK_20241228()
     'Vérification si le chemin est accessible
     If Fn_Check_Server_Access(rootPath) = False Then
         Call Log_Record("Erreur : Accès au répertoire principal (P:\) impossible", Timer)
-        MsgBox "Le répertoire principal (P:\) n'est pas accessible." & vbNewLine & vbNewLine & _
+        msgBox "Le répertoire principal (P:\) n'est pas accessible." & vbNewLine & vbNewLine & _
                "Veuillez vérifier votre connexion au serveur SVP", vbCritical, rootPath
         Exit Sub
     End If

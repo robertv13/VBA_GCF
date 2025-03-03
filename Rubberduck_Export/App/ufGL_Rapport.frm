@@ -56,7 +56,7 @@ Private Sub UserForm_Initialize()
             cmbPeriode.AddItem cellule.value
         Next cellule
     Else
-        MsgBox "La plage nommée 'dnrDateRange' est introuvable.", vbExclamation, "Contacter le développeur"
+        msgBox "La plage nommée 'dnrDateRange' est introuvable.", vbExclamation, "Contacter le développeur"
         Exit Sub
     End If
     
@@ -135,12 +135,52 @@ Private Sub cmbPeriode_Change()
 
 End Sub
 
+Private Sub txtDateDebut_Exit(ByVal Cancel As MSForms.ReturnBoolean)
+
+    Dim dateCorrigee As String
+    
+    If Trim(txtDateDebut.Text) <> "" Then
+        dateCorrigee = CorrigerDate(txtDateDebut.Text)
+        If dateCorrigee = "" Then
+            msgBox "La date saisie est invalide, veuillez saisir une date sous un" & vbNewLine & vbNewLine & _
+                    "format valide (jj ou jj/mm ou jj/mm/aaaa ou aaaa/mm/jj)" & vbNewLine & vbNewLine & _
+                    "Notez que le séparateur peut être '-' ou '/' ou ' '", vbExclamation, _
+                    "Impossible d'interpréter la date saisie"
+            Cancel = True
+            txtDateDebut.SelStart = 0
+            txtDateDebut.SelLength = Len(txtDateDebut.Text)
+        Else
+            txtDateDebut.Text = dateCorrigee
+        End If
+    End If
+End Sub
+
+Private Sub txtDateFin_Exit(ByVal Cancel As MSForms.ReturnBoolean)
+
+    Dim dateCorrigee As String
+    
+    If Trim(txtDateFin.Text) <> "" Then
+        dateCorrigee = CorrigerDate(txtDateFin.Text)
+        If dateCorrigee = "" Then
+            msgBox "La date saisie est invalide, veuillez saisir une date sous un" & vbNewLine & vbNewLine & _
+                    "format valide (jj ou jj/mm ou jj/mm/aaaa ou aaaa/mm/jj)" & vbNewLine & vbNewLine & _
+                    "Notez que le séparateur peut être '-' ou '/' ou ' '", vbExclamation, _
+                    "Impossible d'interpréter la date saisie"
+            Cancel = True
+            txtDateFin.SelStart = 0
+            txtDateFin.SelLength = Len(txtDateFin.Text)
+        Else
+            txtDateFin.Text = dateCorrigee
+        End If
+    End If
+End Sub
+
 Private Sub cmdGenerer_Click()
 
     'Vérification que le type de rapport est sélectionné
     Dim TypeRapport As String
     If Me.cmbTypeRapport.ListIndex = -1 Then
-        MsgBox "Veuillez sélectionner un type de rapport.", vbExclamation, "Erreur"
+        msgBox "Veuillez sélectionner un type de rapport.", vbExclamation, "Erreur"
         Exit Sub
     Else
         TypeRapport = Me.cmbTypeRapport.value
@@ -161,11 +201,11 @@ Private Sub cmdGenerer_Click()
             dateDebut = CDate(Me.txtDateDebut.value)
             dateFin = CDate(Me.txtDateFin.value)
             If dateDebut > dateFin Then
-                MsgBox "La date de début doit être antérieure ou égale à la date de fin.", vbExclamation, "Erreur dans les critères de date"
+                msgBox "La date de début doit être antérieure ou égale à la date de fin.", vbExclamation, "Erreur dans les critères de date"
                 Exit Sub
             End If
         Else
-            MsgBox "Veuillez entrer des dates valides.", vbExclamation, "Erreur dans les critères de date"
+            msgBox "Veuillez entrer des dates valides.", vbExclamation, "Erreur dans les critères de date"
             Exit Sub
         End If
         
@@ -173,7 +213,7 @@ Private Sub cmdGenerer_Click()
         Dim ligneSélectionnée As Boolean
         ligneSélectionnée = EstLigneSelectionnee(Me.lsbComptes)
         If ligneSélectionnée = False Then
-            MsgBox "Veuillez sélectionner au moins un numéro de compte.", vbExclamation, "Erreur"
+            msgBox "Veuillez sélectionner au moins un numéro de compte.", vbExclamation, "Erreur"
             Exit Sub
         End If
         
@@ -189,12 +229,12 @@ Private Sub cmdGenerer_Click()
             
             'Vérification de l'ordre des numéros d'écriture
             If noEcritureDebut > noEcritureFin Then
-                MsgBox "Le numéro d'écriture de début doit être inférieur ou égal au numéro de fin.", _
+                msgBox "Le numéro d'écriture de début doit être inférieur ou égal au numéro de fin.", _
                             vbExclamation, "Erreur dans les critères de numéro d'écriture"
                 Exit Sub
             End If
         Else
-            MsgBox "Veuillez entrer des numéros d'écriture valides.", vbExclamation, _
+            msgBox "Veuillez entrer des numéros d'écriture valides.", vbExclamation, _
                         "Erreur dans les critères de numéro d'écriture"
             Exit Sub
         End If
@@ -225,4 +265,91 @@ Private Sub cmdDeselectAll_Click()
 
 End Sub
 
+'Public Sub testValiderDateDernierJourDuMois()
+'
+'    Dim y As Integer, m As Integer, j As Integer
+'    y = 2025
+'    m = 6
+'    j = 31
+'
+'    Debug.Print ValiderDateDernierJourDuMois(y, m, j)
+'
+'End Sub
+'
+Function CorrigerDate(txtDate As String) As String
+
+    Dim d As Integer, m As Integer, y As Integer
+    Dim arr() As String
+    Dim dt As Date
+    Dim currentDate As Date
+    Dim maxDayInMonth As Integer
+    On Error GoTo ErrorHandler
+
+    ' Récupérer la date actuelle
+    currentDate = Date
+
+    ' Supprimer les espaces et remplacer les séparateurs
+    txtDate = Trim(txtDate)
+    txtDate = Replace(txtDate, "-", "/")
+    txtDate = Replace(txtDate, ".", "/")
+    txtDate = Replace(txtDate, " ", "/")
+
+    'Si la saisie est uniquement un jour (par exemple '5' ou '12'), on prend le mois et l'année actuels
+    If IsNumeric(txtDate) And Len(txtDate) <= 2 Then
+        'Si l'utilisateur entre un chiffre seul, c'est le jour du mois courant avec le mois et l'année courants
+        d = CInt(txtDate)
+        m = month(currentDate)
+        y = year(currentDate)
+        GoTo DerniereValidation
+    End If
+
+    'S'il y a un séparateur, on décompose la chaîne dans arr()
+    arr = Split(txtDate, "/")
+    
+    'Y a-t-il 3 parties dans la date (Unound(arr) = 2) ?
+    If UBound(arr) = 2 Then
+        'jj/mm/aaaa ou aaaa/mm/jj
+        If Len(arr(0)) = 4 Then
+            'Format aaaa/mm/jj
+            y = CInt(arr(0))
+            m = CInt(arr(1))
+            d = CInt(arr(2))
+        Else
+            'Format jj/mm/aaaa
+            d = CInt(arr(0))
+            m = CInt(arr(1))
+            y = CInt(arr(2))
+        End If
+        
+        GoTo DerniereValidation
+        
+    ElseIf UBound(arr) = 1 Then 'Deux parties dans la date saisie
+        'L'une des 2 parties est vide
+        If arr(0) = "" Or arr(1) = "" Then
+            CorrigerDate = ""
+            Exit Function
+        End If
+        
+        If IsNumeric(arr(0)) And IsNumeric(arr(1)) Then
+            'Format jj/mm
+            d = CInt(arr(0))
+            m = CInt(arr(1))
+            y = year(currentDate) ' L'année courante par défaut
+            GoTo DerniereValidation
+        End If
+    End If
+    
+DerniereValidation:
+    If ValiderDateDernierJourDuMois(y, m, d) <> "" Then
+        'Conversion en date (Toutes les validations sont terminées)
+        dt = DateSerial(y, m, d)
+        CorrigerDate = Format(dt, "dd/mm/yyyy")
+    Else
+        CorrigerDate = ""
+    End If
+    Exit Function
+
+ErrorHandler:
+    CorrigerDate = "" ' Retourne une chaîne vide si une erreur se produit
+End Function
 

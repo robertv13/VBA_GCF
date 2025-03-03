@@ -51,7 +51,7 @@ Sub CopieClientsEntreClasseursFermés() '2024-08-03 @ 09:40
     Set destinationSheet = Nothing
     Set destinationWorkbook = Nothing
     
-    MsgBox "Les données ont été copiées avec succès dans le fichier destination."
+    msgBox "Les données ont été copiées avec succès dans le fichier destination."
     
 End Sub
 
@@ -102,7 +102,7 @@ Sub AjusteNomClient()
     Set wb = Nothing
     Set ws = Nothing
     
-    MsgBox "Le traitement est complété sur " & i - 1 & " lignes"
+    msgBox "Le traitement est complété sur " & i - 1 & " lignes"
     
 End Sub
 
@@ -150,7 +150,7 @@ Sub AjouteContactDansNomClient()
     Set wb = Nothing
     Set ws = Nothing
     
-    MsgBox "Le traitement est complété sur " & i - 1 & " lignes"
+    msgBox "Le traitement est complété sur " & i - 1 & " lignes"
     
 End Sub
 
@@ -246,9 +246,9 @@ Sub ImporterDonnéesDeClasseursFermés_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 16
     Loop
     
     If errorMesg <> "" Then
-        MsgBox errorMesg
+        msgBox errorMesg
     Else
-        MsgBox "Tous les TEC ont été importés, pour un total de " & totHres & " heures"
+        msgBox "Tous les TEC ont été importés, pour un total de " & totHres & " heures"
     End If
     
     'Libérer la mémoire
@@ -330,7 +330,7 @@ Sub ImporterDonnéesDeClasseursFermésFournisseurs() '2024-08-03 @ 18:10
     Set destinationSheet = Nothing
     Set destinationWorkbook = Nothing
     
-    MsgBox "Les données (fournisseurs) ont été copiées avec succès dans" & vbNewLine & _
+    msgBox "Les données (fournisseurs) ont été copiées avec succès dans" & vbNewLine & _
             vbNewLine & "le fichier destination."
     
 End Sub
@@ -411,9 +411,9 @@ Sub ImporterDonnéesDeClasseursFermés_GL_BV() '2024-08-03 @ 18:20
     Loop
     
     If errorMesg <> "" Then
-        MsgBox errorMesg
+        msgBox errorMesg
     Else
-        MsgBox "Tous les soldes ont été importés, pour un total débit de " & totalDT & _
+        msgBox "Tous les soldes ont été importés, pour un total débit de " & totalDT & _
                 vbNewLine & vbNewLine & "un total crédit de " & totalCT
     End If
     
@@ -539,9 +539,9 @@ Sub ImporterDonnéesDeClasseursFermés_CAR() '2024-08-04 @ 07:31
     Loop
     
     If errorMesg <> "" Then
-        MsgBox errorMesg
+        msgBox errorMesg
     Else
-        MsgBox "Tous les CAR ont été importés, pour un total de " & Format$(totCAR, "#,##0.00$")
+        msgBox "Tous les CAR ont été importés, pour un total de " & Format$(totCAR, "#,##0.00$")
     End If
     
     'Libérer la mémoire
@@ -678,7 +678,7 @@ Sub Compare2ExcelFiles() '------------------------------------------ 2024-09-02 
     Set wsNow = Nothing
     Set wsDiff = Nothing
     
-    MsgBox "La comparaison est complétée." & vbNewLine & vbNewLine & _
+    msgBox "La comparaison est complétée." & vbNewLine & vbNewLine & _
            differences, vbInformation
            
 End Sub
@@ -739,7 +739,7 @@ Sub AdjustClientNameInTEC()  '2024-08-03 @ 09:40
     Set referenceSheet = Nothing
     Set referenceWorkbook = Nothing
     
-    MsgBox "Les données ont été copiées avec succès dans le fichier destination."
+    msgBox "Les données ont été copiées avec succès dans le fichier destination."
     
 End Sub
 
@@ -800,7 +800,7 @@ Sub AdjustClientNameInCAR()  '2024-08-07 @ 17:11
     Set referenceSheet = Nothing
     Set referenceWorkbook = Nothing
     
-    MsgBox "Les données ont été copiées avec succès dans le fichier destination."
+    msgBox "Les données ont été copiées avec succès dans le fichier destination."
     
 End Sub
 
@@ -837,7 +837,7 @@ Sub CheckClientName() '2024-08-10 @ 10:13
     Set sourceSheet = Nothing
     Set sourceWorkbook = Nothing
     
-    MsgBox "Les données ont été vérifiées avec succès dans le fichier Clients."
+    msgBox "Les données ont été vérifiées avec succès dans le fichier Clients."
     
 End Sub
 
@@ -901,7 +901,7 @@ Sub ConstruireSommaireHeures() '2024-08-12 @ 21:09
     Set sourceSheet = Nothing
     Set sourceWorkbook = Nothing
     
-    MsgBox "Sommaire des heures est complété."
+    msgBox "Sommaire des heures est complété."
     
 End Sub
 
@@ -1001,7 +1001,7 @@ Sub CorrigeNomClientInTEC()  '2024-08-23 @ 06:32
     Set wsMF = Nothing
     Set wbMF = Nothing
     
-    MsgBox "Il y a " & casDelta & " cas où le nom du client (TEC) diffère" & _
+    msgBox "Il y a " & casDelta & " cas où le nom du client (TEC) diffère" & _
             vbNewLine & vbNewLine & "du nom de client du Fichier MAÎTRE", vbInformation
     
 End Sub
@@ -1186,7 +1186,7 @@ Sub ImporterDonnéesManquantes_CAR() '2024-08-24 @ 15:58
     Set ws1 = Nothing
     Set ws2 = Nothing
     
-    MsgBox "Le traitement est complété", vbInformation
+    msgBox "Le traitement est complété", vbInformation
            
 End Sub
 
@@ -1238,19 +1238,19 @@ Sub FusionnerDonnéesManquantes_CAR() '2024-08-29 @ 07:29
         depot = ws1.Cells(i, 22).value
 
         If hono + af1 + af2 + af3 + tps + tvq <> arTotal Then
-            MsgBox "Une ligne (" & i & ") ne balance pas !!!", vbCritical
+            msgBox "Une ligne (" & i & ") ne balance pas !!!", vbCritical
         End If
         
         'Find the InvNo in wshFAC_Entête
         Set foundCells = rngTarget.Columns(1).Find(What:=invNo, LookIn:=xlValues, LookAt:=xlWhole)
         If foundCells Is Nothing Then
-            MsgBox "**** Je n'ai pas trouvé la facture '" & invNo & "' dans wshFAC_Entête", vbCritical
+            msgBox "**** Je n'ai pas trouvé la facture '" & invNo & "' dans wshFAC_Entête", vbCritical
         Else
             ii = foundCells.row
         End If
         
         If ws2.Cells(ii, 21).value <> arTotal Then
-            MsgBox "Problème d'intégrité pour la facture '" & invNo & "' au niveau de arTotal", vbCritical
+            msgBox "Problème d'intégrité pour la facture '" & invNo & "' au niveau de arTotal", vbCritical
         End If
         
         'Replace values in Target, with the Source info
@@ -1277,7 +1277,7 @@ Sub FusionnerDonnéesManquantes_CAR() '2024-08-29 @ 07:29
         
         If ws2.Cells(ii, 10) + ws2.Cells(ii, 12) + ws2.Cells(ii, 14) + ws2.Cells(ii, 16) + _
             ws2.Cells(ii, 18) + ws2.Cells(ii, 20) <> ws2.Cells(ii, 21).value Then
-            MsgBox "Problème avec les assignations...", vbCritical
+            msgBox "Problème avec les assignations...", vbCritical
         End If
         
         t(1) = t(1) + ws2.Cells(ii, 10)
@@ -1309,7 +1309,7 @@ Sub FusionnerDonnéesManquantes_CAR() '2024-08-29 @ 07:29
     Set ws1 = Nothing
     Set ws2 = Nothing
     
-    MsgBox "Le traitement est complété", vbInformation
+    msgBox "Le traitement est complété", vbInformation
            
 End Sub
 

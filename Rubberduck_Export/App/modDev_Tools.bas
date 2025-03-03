@@ -10,7 +10,7 @@ Sub Get_Range_From_Dynamic_Named_Range(dynamicRangeName As String, ByRef rng As 
     On Error GoTo 0
     
     If refersToFormula = "" Then
-        MsgBox "La plage nommée '" & dynamicRangeName & "' n'existe pas ou est invalide.", vbExclamation
+        msgBox "La plage nommée '" & dynamicRangeName & "' n'existe pas ou est invalide.", vbExclamation
         Exit Sub
     End If
     
@@ -20,7 +20,7 @@ Sub Get_Range_From_Dynamic_Named_Range(dynamicRangeName As String, ByRef rng As 
     On Error GoTo 0
     
     If rng Is Nothing Then
-        MsgBox "Impossible de résoudre la plage nommée dynamique '" & dynamicRangeName & "'. Vérifiez la définition.", vbExclamation
+        msgBox "Impossible de résoudre la plage nommée dynamique '" & dynamicRangeName & "'. Vérifiez la définition.", vbExclamation
         Exit Sub
     End If
     
@@ -57,9 +57,9 @@ Sub Detect_Circular_References_In_Workbook() '2024-07-24 @ 07:31
     Next ws
     
     If circRefCount > 0 Then
-        MsgBox "Il existe des références circulaires dans le Workbook dans les cellules suivantes:" & vbCrLf & circRef, vbExclamation
+        msgBox "Il existe des références circulaires dans le Workbook dans les cellules suivantes:" & vbCrLf & circRef, vbExclamation
     Else
-        MsgBox "Il n'existe aucune référence circulaire dans ce Workbook .", vbInformation
+        msgBox "Il n'existe aucune référence circulaire dans ce Workbook .", vbInformation
     End If
     
     'Libérer la mémoire
@@ -194,9 +194,9 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
     
     'Output differences
     If diffLog <> "" Then
-        MsgBox "Différences trouvées:" & vbCrLf & diffLog
+        msgBox "Différences trouvées:" & vbCrLf & diffLog
     Else
-        MsgBox "Aucune différence dans les colonnes."
+        msgBox "Aucune différence dans les colonnes."
     End If
     
     'Libérer la mémoire
@@ -344,9 +344,9 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
     
     'Output differences
     If diffLogMess <> "" Then
-        MsgBox "Différences trouvées:" & vbCrLf & diffLogMess
+        msgBox "Différences trouvées:" & vbCrLf & diffLogMess
     Else
-        MsgBox "Aucune différence dans les lignes."
+        msgBox "Aucune différence dans les lignes."
     End If
     
     'Libérer la mémoire
@@ -378,7 +378,7 @@ Sub LireFichierLogSaisieHeuresTXT() '2024-10-17 @ 20:13
     If fd.show = -1 Then
         filePath = fd.selectedItems(1)
     Else
-        MsgBox "Aucun fichier sélectionné.", vbExclamation
+        msgBox "Aucun fichier sélectionné.", vbExclamation
         Exit Sub
     End If
     
@@ -417,7 +417,7 @@ Sub LireFichierLogSaisieHeuresTXT() '2024-10-17 @ 20:13
     'Libérer la mémoire
     Set fd = Nothing
     
-    MsgBox "Le fichier a été importé avec succès.", vbInformation
+    msgBox "Le fichier a été importé avec succès.", vbInformation
     
 End Sub
 
@@ -439,7 +439,7 @@ Sub Fix_Date_Format()
         filePath = fd.selectedItems(1)
         fileSelected = True
     Else
-        MsgBox "Aucun fichier sélectionné.", vbExclamation
+        msgBox "Aucun fichier sélectionné.", vbExclamation
         fileSelected = False
     End If
     
@@ -522,7 +522,7 @@ Sub Fix_Date_Format()
     Set ws = Nothing
     Set wsName = Nothing
     
-    MsgBox "Les dates ont été corrigées pour les colonnes spécifiques.", vbInformation
+    msgBox "Les dates ont été corrigées pour les colonnes spécifiques.", vbInformation
 
 End Sub
 
@@ -772,7 +772,7 @@ Sub Sauvegarder_UserForms_Parameters() '2024-11-26 @ 07:42
     'Libérer la mémoire
     Set uf = Nothing
     
-    MsgBox "Paramètres des UserForms sauvegardés avec succès.", vbInformation
+    msgBox "Paramètres des UserForms sauvegardés avec succès.", vbInformation
 
 End Sub
 
@@ -787,7 +787,7 @@ Sub Restaurer_UserForms_Parameters()
     On Error Resume Next
     Set ws = wshUserFormParams
     If ws Is Nothing Then
-        MsgBox "La feuille 'UserForm_Params' n'existe pas. Sauvegardez d'abord les paramètres.", vbExclamation
+        msgBox "La feuille 'UserForm_Params' n'existe pas. Sauvegardez d'abord les paramètres.", vbExclamation
         Exit Sub
     End If
     On Error GoTo 0
@@ -817,7 +817,7 @@ Sub Restaurer_UserForms_Parameters()
     Set uf = Nothing
     Set ws = Nothing
     
-    MsgBox "Paramètres des UserForms restaurés avec succès.", vbInformation
+    msgBox "Paramètres des UserForms restaurés avec succès.", vbInformation
 
 End Sub
 
@@ -864,7 +864,7 @@ Sub Get_UsedRange_In_Active_Workbook()
         r = r + 1
     Next ws
     
-    MsgBox "Le traitement est complété. Voir la feuille '" & feuilleNom & "'", vbInformation
+    msgBox "Le traitement est complété. Voir la feuille '" & feuilleNom & "'", vbInformation
     
 End Sub
 
@@ -881,7 +881,7 @@ Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
     actifExists = (actifFile <> "")
     
     If actifExists Then
-        MsgBox "Un ou plusieurs utilisateurs utilisent encore l'application." & vbNewLine & vbNewLine & _
+        msgBox "Un ou plusieurs utilisateurs utilisent encore l'application." & vbNewLine & vbNewLine & _
                "La copie est annulée.", vbExclamation
         Exit Sub
     End If
@@ -912,14 +912,14 @@ Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
     If FSO.fileExists(cheminSourcePROD & nomFichier1) Then
         FSO.CopyFile source:=cheminSourcePROD & nomFichier1, Destination:=nouveauDossier, OverwriteFiles:=False
     Else
-        MsgBox "Fichier non trouvé : " & cheminSourcePROD & nomFichier1, vbExclamation, "Erreur"
+        msgBox "Fichier non trouvé : " & cheminSourcePROD & nomFichier1, vbExclamation, "Erreur"
     End If
     
     'Copier le deuxième fichier
     If FSO.fileExists(cheminSourcePROD & nomFichier2) Then
         FSO.CopyFile source:=cheminSourcePROD & nomFichier2, Destination:=nouveauDossier, OverwriteFiles:=False
     Else
-        MsgBox "Fichier non trouvé : " & cheminSourcePROD & nomFichier2, vbExclamation, "Erreur"
+        msgBox "Fichier non trouvé : " & cheminSourcePROD & nomFichier2, vbExclamation, "Erreur"
     End If
 
     'Copier les fichiers .log (variable)
@@ -943,17 +943,17 @@ Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
     If FSO.fileExists(nouveauDossier & nomFichier1) Then
         FSO.CopyFile source:=cheminSourcePROD & nomFichier1, Destination:=dossierDEV, OverwriteFiles:=True
     Else
-        MsgBox "Fichier non trouvé : " & nouveauDossier & nomFichier1, vbExclamation, "Erreur"
+        msgBox "Fichier non trouvé : " & nouveauDossier & nomFichier1, vbExclamation, "Erreur"
     End If
     
     'Copier le deuxième fichier
     If FSO.fileExists(nouveauDossier & nomFichier2) Then
         FSO.CopyFile source:=cheminSourcePROD & nomFichier2, Destination:=dossierDEV, OverwriteFiles:=True
     Else
-        MsgBox "Fichier non trouvé : " & nouveauDossier & nomFichier2, vbExclamation, "Erreur"
+        msgBox "Fichier non trouvé : " & nouveauDossier & nomFichier2, vbExclamation, "Erreur"
     End If
 
-    MsgBox "Fichiers copiés dans le dossier : " & nouveauDossier, vbInformation, "Terminé"
+    msgBox "Fichiers copiés dans le dossier : " & nouveauDossier, vbInformation, "Terminé"
 
 End Sub
 
@@ -972,7 +972,7 @@ Sub AjusterTableauxDansMaster() '2024-12-07 @ 06:47
     Dim wb As Workbook
     Set wb = Workbooks.Open(cheminClasseur, ReadOnly:=False)
     If wb Is Nothing Then
-        MsgBox "Impossible d'ouvrir le classeur 'GCF_BD_MASTER.xlsx'", vbExclamation, "Erreur"
+        msgBox "Impossible d'ouvrir le classeur 'GCF_BD_MASTER.xlsx'", vbExclamation, "Erreur"
         Exit Sub
     End If
     On Error GoTo 0
@@ -1006,7 +1006,7 @@ Sub AjusterTableauxDansMaster() '2024-12-07 @ 06:47
     wb.Save
     wb.Close
     
-    MsgBox "Tous les tableaux ont été ajustés avec succès.", vbInformation, "Terminé"
+    msgBox "Tous les tableaux ont été ajustés avec succès.", vbInformation, "Terminé"
     
 End Sub
 
@@ -1089,7 +1089,7 @@ Sub VerifierControlesAssociesToutesFeuilles()
 
     wsOut.Activate
     
-    MsgBox "Vérification terminée sur toutes les feuilles. Consultez la fenêtre Exécution pour les résultats.", vbInformation
+    msgBox "Vérification terminée sur toutes les feuilles. Consultez la fenêtre Exécution pour les résultats.", vbInformation
     
 End Sub
 
@@ -1345,7 +1345,7 @@ Sub test_CouleurEnRGBTableau()
     rgbArray = CouleurEnRGBTableau(couleur)
     
     'Afficher les composantes
-    MsgBox "Rouge: " & rgbArray(1) & ", Vert: " & rgbArray(2) & ", Bleu: " & rgbArray(3)
+    msgBox "Rouge: " & rgbArray(1) & ", Vert: " & rgbArray(2) & ", Bleu: " & rgbArray(3)
     
 End Sub
 
@@ -1361,7 +1361,7 @@ Sub Test_Convertir_Couleur_RGB_Hex()
     couleurHex = Convertir_Couleur_RGB_Hex(couleur)
     
     ' Afficher le résultat
-    MsgBox "La couleur HEX de la cellule A1 est : " & couleurHex
+    msgBox "La couleur HEX de la cellule A1 est : " & couleurHex
     
 End Sub
 
@@ -1393,7 +1393,7 @@ Sub Test_Convertir_Couleur_OLE()
     couleurOLE = Convertir_Couleur_OLE(couleur)
     
     ' Afficher la couleur en format OLE
-    MsgBox "La couleur OLE est : " & couleurOLE
+    msgBox "La couleur OLE est : " & couleurOLE
     
 End Sub
 
@@ -1433,7 +1433,7 @@ Sub ValideNomProcedureCallLog()
         End If
     Next i
     
-    MsgBox "Traitement terminé"
+    msgBox "Traitement terminé"
     
 End Sub
 
@@ -1510,7 +1510,7 @@ Sub ListerValidations()
         Set rngDV = Nothing
     Next ws
     
-    MsgBox "Liste des validations générée dans la feuille 'ListeValidations'.", vbInformation
+    msgBox "Liste des validations générée dans la feuille 'ListeValidations'.", vbInformation
     
 End Sub
 
@@ -1559,7 +1559,7 @@ Sub UniformiserValeurVBA() '2025-02-27 @ 10:56
     Dim fichierTexte As Object
     Dim contenu As String
     Dim toUpper As Boolean: toUpper = True 'True = mettre ".value", False = mettre ".value"
-'    toUpper = False
+    toUpper = False
     
     'Demander à l'utilisateur de sélectionner le dossier
     With Application.fileDialog(msoFileDialogFolderPicker)
@@ -1573,7 +1573,7 @@ Sub UniformiserValeurVBA() '2025-02-27 @ 10:56
     
     'Vérifier si le dossier est valide
     If Len(Dir(dossier, vbDirectory)) = 0 Then
-        MsgBox "Dossier invalide.", vbExclamation
+        msgBox "Dossier invalide.", vbExclamation
         Exit Sub
     End If
     
@@ -1593,7 +1593,7 @@ Sub UniformiserValeurVBA() '2025-02-27 @ 10:56
                 contenu = Replace(contenu, ".value", ".Value")
                 contenu = Replace(contenu, "FSO", "FSO")
             Else
-                contenu = Replace(contenu, ".Value", ".value")
+                contenu = Replace(contenu, ".Count", ".count")
                 contenu = Replace(contenu, "FSO", "FSO")
             End If
         
@@ -1608,6 +1608,6 @@ Sub UniformiserValeurVBA() '2025-02-27 @ 10:56
     Set fichierTexte = Nothing
     Set FSO = Nothing
     
-    MsgBox "Corrections terminées !", vbInformation
+    msgBox "Corrections terminées !", vbInformation
     
 End Sub

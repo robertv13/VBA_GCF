@@ -73,7 +73,7 @@ End Sub
 'Option # 5
 Sub Rapport_GL_Click()
 
-    ufGL_Rapport.show vbModal
+    ufGL_Rapport.show 'vbModal
     
 '    Application.ScreenUpdating = False
 '

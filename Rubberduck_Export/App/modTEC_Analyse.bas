@@ -874,7 +874,7 @@ Sub Get_CheckBox_Position(cb As OLEObject)
     Set checkBoxCell = checkBox.TopLeftCell
     
     ' Display the address of the cell
-    MsgBox "The CheckBox is located at cell: " & checkBoxCell.Address
+    msgBox "The CheckBox is located at cell: " & checkBoxCell.Address
     
     'Libérer la mémoire
     Set checkBox = Nothing

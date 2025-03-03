@@ -68,9 +68,6 @@ Public Sub GL_Get_Account_Trans_AF(glNo As String, dateDeb As Date, dateFin As D
     'Retourne le Range des résultats
     Set rResult = wshGL_Trans.Range("P1:Y" & lastUsedRow)
     
-    'Retourne la somme des débits et la somme des crédits
-    
-    
     'Libérer la mémoire
     Set rngCriteria = Nothing
     Set rngData = Nothing

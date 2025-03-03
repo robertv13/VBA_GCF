@@ -18,19 +18,19 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
     With wshFAC_Brouillon
         'Check For Mandatory Fields - Client
         If .Range("B18").value = Empty Then
-            MsgBox "Veuillez vous assurer d'avoir un client avant de sauvegarder la facture"
+            msgBox "Veuillez vous assurer d'avoir un client avant de sauvegarder la facture"
             GoTo Fast_Exit_Sub
         End If
         
         'Check For Mandatory Fields - Date de facture
         If .Range("O3").value = Empty Then
-            MsgBox "Veuillez vous assurer d'avoir saisi la date de facture AVANT de sauvegarder la facture"
+            msgBox "Veuillez vous assurer d'avoir saisi la date de facture AVANT de sauvegarder la facture"
             GoTo Fast_Exit_Sub
         End If
         
         'Check For Mandatory Fields - Date de facture
         If Len(Trim(.Range("O6").value)) <> 8 Then
-            MsgBox "Il faut corriger le numéro de facture AVANT de sauvegarder la facture"
+            msgBox "Il faut corriger le numéro de facture AVANT de sauvegarder la facture"
             GoTo Fast_Exit_Sub
         End If
     End With
@@ -84,7 +84,7 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
     
     Application.ScreenUpdating = True
     
-    MsgBox "La facture '" & wshFAC_Brouillon.Range("O6").value & "' est enregistrée." & _
+    msgBox "La facture '" & wshFAC_Brouillon.Range("O6").value & "' est enregistrée." & _
         vbNewLine & vbNewLine & "Le total de la facture est " & _
         Trim(Format$(invoice_Total, "### ##0.00 $")) & _
         " (avant les taxes)", vbOKOnly, "Confirmation d'enregistrement"
@@ -594,7 +594,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Up
             rs.Update
         Else
             'Handle the case where the specified ID is not found
-            MsgBox "L'enregistrement avec le TECID '" & r & "' ne peut être trouvé!", _
+            msgBox "L'enregistrement avec le TECID '" & r & "' ne peut être trouvé!", _
                 vbExclamation
             rs.Close
             conn.Close
@@ -768,7 +768,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID)
     Exit Sub
 
 eh:
-    MsgBox "An error occurred: " & Err.Description, vbCritical, "Error # APP-001"
+    msgBox "An error occurred: " & Err.Description, vbCritical, "Error # APP-001"
     If Not conn Is Nothing Then
         On Error Resume Next
         conn.Close
@@ -961,7 +961,7 @@ Sub FAC_Finale_Create_PDF(noFacture As String)
     result = FAC_Finale_Create_PDF_Func(noFacture, "SaveOnly")
     
     If result = False Then
-        MsgBox "ATTENTION... Impossible de sauvegarder la facture en format PDF", _
+        msgBox "ATTENTION... Impossible de sauvegarder la facture en format PDF", _
                 vbCritical, _
                 "Impossible de sauvegarder la facture en format PDF"
         flagEtapeFacture = -1
@@ -990,7 +990,7 @@ Function FAC_Finale_Create_PDF_Func(noFacture As String, Optional action As Stri
     'If the file exists, prompt the user for confirmation
     Dim reponse As VbMsgBoxResult
     If fileExists Then
-        reponse = MsgBox("La facture (PDF) numéro '" & noFacture & "' existe déja." & _
+        reponse = msgBox("La facture (PDF) numéro '" & noFacture & "' existe déja." & _
                           "Voulez-vous la remplacer ?", vbYesNo + vbQuestion, _
                           "Cette facture existe déjà en formt PDF")
         If reponse = vbNo Then
@@ -1024,7 +1024,7 @@ SaveOnly:
     GoTo EndMacro
     
 RefLibError:
-    MsgBox "Incapable de préparer le courriel. La librairie n'est pas disponible"
+    msgBox "Incapable de préparer le courriel. La librairie n'est pas disponible"
     FAC_Finale_Create_PDF_Func = False 'Function return value
 '    FAC_Finale_Create_Email = False 'Function return value
 
@@ -1099,7 +1099,7 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     Dim reponse As String
     
     If wsExist Then
-        reponse = MsgBox("La feuille '" & strNameBase & "' existe déjà dans ce fichier" & vbCrLf & vbCrLf & _
+        reponse = msgBox("La feuille '" & strNameBase & "' existe déjà dans ce fichier" & vbCrLf & vbCrLf & _
                          "Voulez-vous :" & vbCrLf & vbCrLf & _
                          "1. Remplacer l'onglet existant par la facture courante ?" & vbCrLf & vbCrLf & _
                          "2. Créer un nouvel onglet avec un suffixe ?" & vbCrLf & vbCrLf & _
@@ -1222,7 +1222,7 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     'Optionnel : Sauvegarder le workbook cible sous un nouveau nom si nécessaire
     If strCible = "" Then
         wbCible.SaveAs ExcelFilesFullPath & Application.PathSeparator & clientID & " - " & clientNamePurged & ".xlsx"
-        MsgBox "Un nouveau fichier Excel (" & clientID & " - " & clientNamePurged & ".xlsx" & ")" & vbNewLine & vbNewLine & _
+        msgBox "Un nouveau fichier Excel (" & clientID & " - " & clientNamePurged & ".xlsx" & ")" & vbNewLine & vbNewLine & _
                 "A été créé pour sauvegarder la facture", vbInformation
     End If
     
@@ -1262,7 +1262,7 @@ Sub FAC_Finale_Creation_Courriel(noFacture As String, clientID As String) '2024-
     '1b. Vérification de l'existence de la pièce jointe
     fileExists = Dir(attachmentFullPathName) <> ""
     If Not fileExists Then
-        MsgBox "La pièce jointe (Facture en format PDF) n'existe pas" & _
+        msgBox "La pièce jointe (Facture en format PDF) n'existe pas" & _
                     "à l'emplacement spécifié, soit " & attachmentFullPathName, vbCritical
         GoTo Exit_Sub
     End If
@@ -1274,7 +1274,7 @@ Sub FAC_Finale_Creation_Courriel(noFacture As String, clientID As String) '2024-
     '2b. Vérification de l'existence du template
     fileExists = Dir(templateFullPathName) <> ""
     If Not fileExists Then
-        MsgBox "Le gabarit 'GCF_Facturation.oft' est introuvable " & _
+        msgBox "Le gabarit 'GCF_Facturation.oft' est introuvable " & _
                     "à l'emplacement spécifié, soit " & Environ("appdata") & "\Microsoft\Templates", _
                     vbCritical
         GoTo Exit_Sub
@@ -1303,13 +1303,19 @@ Sub FAC_Finale_Creation_Courriel(noFacture As String, clientID As String) '2024-
     If eMailFacturation = "uniqueID introuvable" Then
         mailItem.To = ""
     Else
-        If Fn_Valider_Courriel(eMailFacturation) = True Then
-            mailItem.To = eMailFacturation
-        Else
-            MsgBox "Je ne peux utiliser l'adresse courriel de ce client" & vbNewLine & vbNewLine & _
-                    "soit '" & eMailFacturation & "' !", vbExclamation
-            mailItem.To = ""
-        End If
+        Dim adresseEmail  As Variant
+        adresseEmail = Split(eMailFacturation, "; ") '2025-03-02 @ 16:59
+        Dim nbAdresseCourriel As Integer
+        nbAdresseCourriel = UBound(adresseEmail)
+        
+        Select Case nbAdresseCourriel
+            Case 0
+                mailItem.To = adresseEmail(0)
+            Case Is > 0
+                mailItem.To = adresseEmail(0)
+                mailItem.cc = adresseEmail(1)
+            Case Else
+        End Select
     End If
     
     mailItem.Display

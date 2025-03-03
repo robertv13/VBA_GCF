@@ -122,7 +122,7 @@ Sub DeleteAllRowsButKeepHeaders() '2024-07-30 @ 12:21
     Set wb = Nothing
     Set ws = Nothing
     
-    MsgBox "Toutes les données ont été supprimées avec succès," & vbNewLine & vbNewLine & _
+    msgBox "Toutes les données ont été supprimées avec succès," & vbNewLine & vbNewLine & _
            "en gardant les en-têtes !"
     
 End Sub

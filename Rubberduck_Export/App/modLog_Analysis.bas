@@ -13,13 +13,13 @@ Sub Main_OuvrirRepertoireEtTraiterFichiers()
     If fileDialog.show = -1 Then
         folderPath = fileDialog.selectedItems(1)
     Else
-        MsgBox "Aucun répertoire sélectionné.", vbExclamation
+        msgBox "Aucun répertoire sélectionné.", vbExclamation
         Exit Sub
     End If
     
     'Vérification de l'existence du répertoire
     If Dir(folderPath, vbDirectory) = "" Then
-        MsgBox "Répertoire invalide.", vbCritical
+        msgBox "Répertoire invalide.", vbCritical
         Exit Sub
     End If
     
@@ -44,7 +44,7 @@ Sub Main_OuvrirRepertoireEtTraiterFichiers()
     Set fileDialog = Nothing
     Set fileSystem = Nothing
     
-    MsgBox "Le traitement des fichiers LOG est terminé !", vbInformation
+    msgBox "Le traitement des fichiers LOG est terminé !", vbInformation
     
 End Sub
 
@@ -125,7 +125,7 @@ Sub Lire_LogClientsApp(filePath As String)
     Application.StatusBar = ""
     
     'Afficher le nombre de lignes ajoutées au fichier LOG
-    MsgBox "Le fichier '" & ExtraireNomFichier(filePath) & "' a ajouté " & Format$(UBound(output, 1), "###,##0") & " lignes au fichier cumulatif", vbInformation
+    msgBox "Le fichier '" & ExtraireNomFichier(filePath) & "' a ajouté " & Format$(UBound(output, 1), "###,##0") & " lignes au fichier cumulatif", vbInformation
     
 End Sub
 
@@ -232,7 +232,7 @@ Sub Lire_LogMainApp(filePath As String)
     Application.StatusBar = ""
     
     'Afficher le nombre de lignes ajoutées au fichier LOG
-    MsgBox "Le fichier '" & ExtraireNomFichier(filePath) & "' a ajouté " & Format$(UBound(output, 1), "###,##0") & " lignes au fichier cumulatif", vbInformation
+    msgBox "Le fichier '" & ExtraireNomFichier(filePath) & "' a ajouté " & Format$(UBound(output, 1), "###,##0") & " lignes au fichier cumulatif", vbInformation
     
 End Sub
 
@@ -318,7 +318,7 @@ Sub Lire_LogSaisieHeures(filePath As String)
     Application.StatusBar = ""
     
     'Afficher le nombre de lignes ajoutées au fichier LOG
-    MsgBox "Le fichier '" & ExtraireNomFichier(filePath) & "' a ajouté " & Format$(UBound(output, 1), "###,##0") & " lignes au fichier cumulatif", vbInformation
+    msgBox "Le fichier '" & ExtraireNomFichier(filePath) & "' a ajouté " & Format$(UBound(output, 1), "###,##0") & " lignes au fichier cumulatif", vbInformation
     
 End Sub
 

@@ -77,7 +77,7 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
 
     'Ne pas permettre aucun changement à l'écriture originale, lors d'un renversement
     If wshGL_EJ.Range("F4").value = "Renversement" Then
-        MsgBox "Il n'est pas permis de modifier l'écriture à renverser", vbInformation, ""
+        msgBox "Il n'est pas permis de modifier l'écriture à renverser", vbInformation, ""
         Exit Sub
     End If
     
@@ -94,7 +94,7 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
     'Description has been selected
     If Not Intersect(target, wshGL_EJ.Range("F6")) Is Nothing Then
         If wshGL_EJ.Range("F4").value = "Dépôt de client" Then
-            MsgBox "Vous devez maintenant saisir le nom du client" & _
+            msgBox "Vous devez maintenant saisir le nom du client" & _
                 vbNewLine & vbNewLine & "qui effectue le dépôt de client (perçu d'avance)", _
                 vbOKOnly, "Enregistrement d'un dépôt de client"
         End If
@@ -173,7 +173,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
                 target.value = allCols(1) 'Ramener le nom du client - Colonne 1
                 Application.EnableEvents = True
             Else
-                MsgBox "Valeur non trouvée !!!", vbCritical
+                msgBox "Valeur non trouvée !!!", vbCritical
             End If
             Application.EnableEvents = False
             Dim clientCode As String
@@ -200,7 +200,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
         End If
         
         If CDate(Me.Range("K4").value) > Date Then
-            If MsgBox("En êtes-vous CERTAIN ?", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
+            If msgBox("En êtes-vous CERTAIN ?", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
                 target.value = ""
                 target.Activate
                 target.Select
@@ -239,7 +239,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
     'Validation du montant saisi (Débit ou Crédit), ne peut être négatif
     If Not Intersect(target, Range("H9:I23")) Is Nothing Then
         If (wshGL_EJ.Range("H" & target.row).value < 0 Or wshGL_EJ.Range("I" & target.row).value < 0) Then
-            MsgBox "Montant INVALIDE, ne peut être NÉGATIF", vbInformation, "Montant négatif saisi"
+            msgBox "Montant INVALIDE, ne peut être NÉGATIF", vbInformation, "Montant négatif saisi"
             Exit Sub
         End If
         If Range("H26").value <> Range("I26").value Then

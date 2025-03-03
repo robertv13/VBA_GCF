@@ -11,9 +11,9 @@ Sub Afficher_ufConfirmation() '2025-01-19 @ 08:42
     
     'Vérifiez si la collection de factures est vide
     If Factures Is Nothing Then
-        MsgBox "Il n'y a aucune facture à confirmer", vbInformation, "Toutes les factures ont été confirmées"
+        msgBox "Il n'y a aucune facture à confirmer", vbInformation, "Toutes les factures ont été confirmées"
     ElseIf Factures.count = 0 Then
-        MsgBox "Il n'y a aucune facture à confirmer", vbInformation, "Toutes les factures ont été confirmées"
+        msgBox "Il n'y a aucune facture à confirmer", vbInformation, "Toutes les factures ont été confirmées"
     Else
         'Charger le UserForm seulement avec une collection qui n'est pas vide
         Load ufConfirmation
@@ -197,7 +197,7 @@ Sub Confirmation_Mise_À_Jour() '2025-01-19 @ 08:42
         Next i
     End With
 
-    MsgBox "La confirmation des factures est complétée", vbOKOnly + vbInformation, "Confirmation de traitement"
+    msgBox "La confirmation des factures est complétée", vbOKOnly + vbInformation, "Confirmation de traitement"
 
     Unload ufConfirmation
     Call Afficher_ufConfirmation
@@ -231,7 +231,7 @@ Sub MAJ_Statut_Facture_Entête_BD_MASTER(invoice As String) '2025-01-19 @ 08:42
         rs.Update
     Else
         'Handle the case where the specified invoice is not found
-        MsgBox "La facture '" & invoice & "' n'existe pas!", vbCritical
+        msgBox "La facture '" & invoice & "' n'existe pas!", vbCritical
     End If
     
     'Close recordset and connection
@@ -267,7 +267,7 @@ Sub MAJ_Statut_Facture_Entête_Local(invoice As String) '2025-01-19 @ 08:42
         r = foundRange.row
         ws.Cells(r, fFacEACouC).value = "C"
     Else
-        MsgBox "La facture '" & invoice & "' n'existe pas dans FAC_Entête."
+        msgBox "La facture '" & invoice & "' n'existe pas dans FAC_Entête."
     End If
     
     'Libérer la mémoire
@@ -376,7 +376,7 @@ Sub Construire_GL_Posting_Confirmation(invoice As String) '2024-08-18 @17:15
         Call GL_Posting_Locally(dateFact, descGL_Trans, source, MyArray, GLEntryNo)
         
     Else
-        MsgBox "La facture '" & invoice & "' n'existe pas dans FAC_Entête.", vbCritical
+        msgBox "La facture '" & invoice & "' n'existe pas dans FAC_Entête.", vbCritical
     End If
     
     'Libérer la mémoire
@@ -517,7 +517,7 @@ Sub ObtenirListeTECFacturés()
     
     'Est-ce que nous avons des TEC pour cette facture ?
     If lastUsedRow < 3 Then
-        MsgBox "Il n'y a aucun TEC associé à la facture '" & invNo & "'"
+        msgBox "Il n'y a aucun TEC associé à la facture '" & invNo & "'"
     Else
         Call PreparerRapportTECFactures
     End If

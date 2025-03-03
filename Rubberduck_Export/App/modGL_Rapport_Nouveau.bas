@@ -19,33 +19,130 @@ Public Sub GenererRapportGL_Compte(wsRapport As Worksheet, dateDebut As Date, da
     
     'Setup report header
     Call SetUpGLReportHeadersAndColumns_Compte(wsRapport)
+    Dim rowRapport As Integer, saveFirstRow As Integer
+    rowRapport = 3
     
     Application.ScreenUpdating = False
-    Application.DisplayAlerts = False
+    
+    'Filter et trier toutes les transactions du G/L
+    Dim rngResultAll As Range
+    Call GL_Get_Account_Trans_AF("", #1/1/2024#, dateFin, rngResultAll)
     
     'Process one account at the time...
+    Dim GL As String, descGL As String
+    Dim soldeOuverture As Currency, solde As Currency
     Dim item As Variant
-    Dim compte As String
-    Dim descGL As String
-    Dim GL As String
     For Each item In collGL_Selectionnes
-        compte = item
-        GL = Left(compte, InStr(compte, " ") - 1)
-        descGL = Right(compte, Len(compte) - InStr(compte, " "))
+        GL = Left(item, InStr(item, " ") - 1)
+        descGL = Right(item, Len(item) - InStr(item, " "))
+        soldeOuverture = 0
         'Informe l'utilisateur de la progression
         Application.StatusBar = "Traitement du compte " & GL & " - " & descGL
-        'Obtenir le solde d'ouverture & les transactions
-        Dim soldeOuverture As Currency
-        soldeOuverture = Fn_Get_GL_Account_Balance(GL, dateDebut - 1)
         
-        'Impression des résultats
-        Call Print_Results_From_GL_Trans(wsRapport, GL, descGL, soldeOuverture, dateDebut, dateFin)
-    
+        'Extraire les lignes pertinentes pour un compte de GL - arr()
+        Dim arr() As Variant
+        arr = ExtraireTransactionsPourUnCompte(rngResultAll, GL)
+        Dim arrTrans() As Variant
+        arrTrans = Array()
+        If UBound(arr, 1) > 0 Then
+            'Traitement de toutes les lignes pertinentes
+            Dim j As Long, r As Long
+            r = 0
+            For i = 1 To UBound(arr, 1)
+                If arr(i, fGlTDate) < dateDebut Then
+                    soldeOuverture = soldeOuverture + arr(i, fGlTDébit) - arr(i, fGlTCrédit)
+                Else
+                    If r = 0 Then
+                        ReDim arrTrans(1 To UBound(arr, 1), 1 To UBound(arr, 2))
+                    End If
+                    r = r + 1
+                    For j = 1 To UBound(arr, 2)
+                        arrTrans(r, j) = arr(i, j)
+                    Next j
+                End If
+            Next i
+            
+            If r > 0 Then
+                Call Array_2D_Resizer(arrTrans, r, UBound(arrTrans, 2))
+            End If
+
+        End If
+        
+        'Solde d'ouverture
+        solde = soldeOuverture
+        wsRapport.Range("A" & rowRapport).value = GL & " - " & descGL
+        wsRapport.Range("A" & rowRapport).Font.Bold = True
+        wsRapport.Range("D" & rowRapport).value = "Solde d'ouverture"
+        wsRapport.Range("H" & rowRapport).value = solde
+        wsRapport.Range("H" & rowRapport).Font.Bold = True
+        rowRapport = rowRapport + 1
+        
+        'Impression des transactions pertinentes
+        Dim sumDT As Currency, sumCT As Currency
+        sumDT = 0
+        sumCT = 0
+        
+        If UBound(arrTrans, 1) > 0 Then
+            saveFirstRow = rowRapport
+            For i = 1 To UBound(arrTrans, 1)
+                wsRapport.Range("B" & rowRapport).value = arrTrans(i, 2)
+                wsRapport.Range("B" & rowRapport).NumberFormat = wshAdmin.Range("B1").value
+                wsRapport.Range("C" & rowRapport).value = arrTrans(i, 3)
+                wsRapport.Range("D" & rowRapport).value = arrTrans(i, 4)
+                wsRapport.Range("E" & rowRapport).value = arrTrans(i, 1)
+                wsRapport.Range("F" & rowRapport).value = arrTrans(i, 7)
+'                wsRapport.Range("F" & rowRapport).NumberFormat = "###,###,##0.00"
+                wsRapport.Range("G" & rowRapport).value = arrTrans(i, 8)
+'                wsRapport.Range("G" & rowRapport).NumberFormat = "###,###,##0.00"
+                
+                solde = solde + CCur(arrTrans(i, 7)) - CCur(arrTrans(i, 8))
+                wsRapport.Range("H" & rowRapport).value = solde
+                
+                sumDT = sumDT + arrTrans(i, 7)
+                sumCT = sumCT + arrTrans(i, 8)
+                rowRapport = rowRapport + 1
+            Next i
+        End If
+        
+        With wsRapport.Range("F" & rowRapport & ":G" & rowRapport)
+            With .Borders(xlEdgeTop)
+                .LineStyle = xlContinuous
+                .ColorIndex = 0
+                .TintAndShade = 0
+                .Weight = xlThin
+            End With
+        End With
+        wsRapport.Range("F" & rowRapport).value = sumDT
+        wsRapport.Range("G" & rowRapport).value = sumCT
+        
+        'Ajoute le formatage conditionnel pour les transactions
+        If saveFirstRow <> -1 Then
+            Dim isPair As Integer 'Touujours laisser la première ligne de détail sans surbrillance
+            isPair = IIf(saveFirstRow Mod 2 = 0, 1, 0)
+            With Range("B" & saveFirstRow & ":H" & rowRapport - 1)
+                .FormatConditions.Add Type:=xlExpression, Formula1:="=MOD(LIGNE();2)=" & isPair
+                .FormatConditions(Range("B" & saveFirstRow & ":H" & rowRapport - 1).FormatConditions.count).SetFirstPriority
+                With .FormatConditions(1).Interior
+                    .PatternColorIndex = xlAutomatic
+                    .ThemeColor = xlThemeColorDark1
+                    .TintAndShade = -0.14996795556505
+                End With
+                .FormatConditions(1).StopIfTrue = False
+            End With
+        End If
+        
+        rowRapport = rowRapport + 2
+        saveFirstRow = -1
+        
     Next item
+    
+    With wsRapport.Range("A3:H" & rowRapport).Font
+        .Name = "Aptos Narrow"
+        .size = 10
+    End With
     
     Application.StatusBar = ""
     
-    Application.DisplayAlerts = True
     Application.ScreenUpdating = True
     
     Dim h1 As String, h2 As String, h3 As String
@@ -54,14 +151,12 @@ Public Sub GenererRapportGL_Compte(wsRapport As Worksheet, dateDebut As Date, da
     h3 = "(Du " & dateDebut & " au " & dateFin & ")"
     Call GL_Rapport_Wrap_Up_Compte(wsRapport, h1, h2, h3)
     
-    Call Log_Record("modGL_Rapport_Nouveau:GenererRapportGL_Compte", "", startTime)
-    
-    ufGL_Rapport.lblProgressBar = ""
     Unload ufGL_Rapport
     
-    MsgBox "Le rapport a été généré avec succès", vbInformation, "Rapport des transactions du Grand Livre"
+    Call Log_Record("modGL_Rapport_Nouveau:GenererRapportGL_Compte", "", startTime)
+    
+    msgBox "Le rapport a été généré avec succès", vbInformation, "Rapport des transactions du Grand Livre"
 
-'    wshGL_Trans.Visible = xlSheetVisible
     wsRapport.Visible = xlSheetVisible
     wsRapport.Activate
     ActiveWindow.SplitRow = 2
@@ -84,6 +179,8 @@ Public Sub GenererRapportGL_Ecriture(wsRapport As Worksheet, noEcritureDebut As 
     
     'Setup report header
     Call SetUpGLReportHeadersAndColumns_Ecriture(wsRapport)
+    
+    Application.ScreenUpdating = False
     
     Dim rowRapport As Long
     rowRapport = 2 'Commencer à remplir les données à partir de la 2ème ligne
@@ -209,7 +306,6 @@ Public Sub GenererRapportGL_Ecriture(wsRapport As Worksheet, noEcritureDebut As 
     wsSource.AutoFilterMode = False
     DoEvents
     
-    Application.DisplayAlerts = True
     Application.ScreenUpdating = True
     
     Dim h1 As String, h2 As String, h3 As String
@@ -220,10 +316,9 @@ Public Sub GenererRapportGL_Ecriture(wsRapport As Worksheet, noEcritureDebut As 
     
     Call Log_Record("modGL_Rapport_Nouveau:GenererRapportGL_Ecriture", "", startTime)
     
-    ufGL_Rapport.lblProgressBar = "Traitement de l'écriture numéro '" & currentEcriture
     Unload ufGL_Rapport
     
-    MsgBox "Le rapport a été généré avec succès", vbInformation, "Rapport des transactions du Grand Livre"
+    msgBox "Le rapport a été généré avec succès", vbInformation, "Rapport des transactions du Grand Livre"
     
 '    wshGL_Trans.Visible = xlSheetVisible
     wsRapport.Visible = xlSheetVisible
@@ -292,10 +387,12 @@ Sub SetUpGLReportHeadersAndColumns_Compte(ws As Worksheet)
         
         With .Columns("F")
             .ColumnWidth = 15
+            .NumberFormat = "###,###,##0.00"
         End With
         
         With .Columns("G")
             .ColumnWidth = 15
+            .NumberFormat = "###,###,##0.00"
         End With
         
         With .Columns("H")
@@ -387,6 +484,8 @@ End Sub
 
 Sub GL_Rapport_Wrap_Up_Compte(ws As Worksheet, h1 As String, h2 As String, h3 As String)
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport_Nouveau:GL_Rapport_Wrap_Up_Compte", "", 0)
+    
     Application.PrintCommunication = False
     
     'Determine the active cells & setup Print Area
@@ -421,10 +520,14 @@ Sub GL_Rapport_Wrap_Up_Compte(ws As Worksheet, h1 As String, h2 As String, h3 As
     ActiveWindow.SplitRow = 2
     ws.Range("A" & lastUsedRow).Select
     
+    Call Log_Record("modGL_Rapport_Nouveau:GL_Rapport_Wrap_Up_Compte", "", startTime)
+
 End Sub
 
 Sub GL_Rapport_Wrap_Up_Ecriture(ws As Worksheet, h1 As String, h2 As String, h3 As String)
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport_Nouveau:GL_Rapport_Wrap_Up_Ecriture", "", 0)
+    
     Application.PrintCommunication = False
     
     'Determine the active cells & setup Print Area
@@ -463,108 +566,7 @@ Sub GL_Rapport_Wrap_Up_Ecriture(ws As Worksheet, h1 As String, h2 As String, h3 
 
     ws.Range("A" & lastUsedRow).Select
     
+    Call Log_Record("modGL_Rapport_Nouveau:GL_Rapport_Wrap_Up_Ecriture", "", startTime)
+
 End Sub
-
-Public Sub Print_Results_From_GL_Trans(ws As Worksheet, compte As String, descGL As String, soldeOuverture As Currency, dateDebut As Date, dateFin As Date)
-
-    Dim lastRowUsed_AB As Long, lastRowUsed_A As Long, lastRowUsed_B As Long
-    Dim saveFirstRow As Long
-    Dim solde As Currency
-    lastRowUsed_A = ws.Cells(ws.Rows.count, "A").End(xlUp).row
-    lastRowUsed_B = ws.Cells(ws.Rows.count, "B").End(xlUp).row
-    If lastRowUsed_A > lastRowUsed_B Then
-        lastRowUsed_AB = lastRowUsed_A
-    Else
-        lastRowUsed_AB = lastRowUsed_B
-    End If
-    
-    If lastRowUsed_AB <> 1 Then
-        lastRowUsed_AB = lastRowUsed_AB + 3
-    Else
-        lastRowUsed_AB = lastRowUsed_AB + 2
-    End If
-    ws.Range("A" & lastRowUsed_AB).value = compte & " - " & descGL
-    ws.Range("A" & lastRowUsed_AB).Font.Bold = True
-    
-    'Solde d'ouverture pour ce compte
-    Dim glNo As String
-    glNo = compte
-    solde = soldeOuverture
-    ws.Range("D" & lastRowUsed_AB).value = "Solde d'ouverture"
-    
-    ws.Range("H" & lastRowUsed_AB).value = solde
-    ws.Range("H" & lastRowUsed_AB).Font.Bold = True
-    lastRowUsed_AB = lastRowUsed_AB + 1
-    saveFirstRow = lastRowUsed_AB
-
-    Dim rngResult As Range
-    Call GL_Get_Account_Trans_AF(glNo, dateDebut, dateFin, rngResult)
-    
-    Dim lastUsedTrans As Long
-    lastUsedTrans = wshGL_Trans.Cells(wshGL_Trans.Rows.count, "P").End(xlUp).row '2024-11-08 @ 09:15
-    If lastUsedTrans > 1 Then
-        Dim i As Long, sumDT As Currency, sumCT As Currency
-        'Read thru the rows
-        For i = 2 To lastUsedTrans
-            ws.Cells(lastRowUsed_AB, 2).value = wshGL_Trans.Range("Q" & i).value
-            ws.Cells(lastRowUsed_AB, 2).NumberFormat = wshAdmin.Range("B1").value
-            ws.Cells(lastRowUsed_AB, 3).value = wshGL_Trans.Range("R" & i).value
-            ws.Cells(lastRowUsed_AB, 4).value = wshGL_Trans.Range("S" & i).value
-            ws.Cells(lastRowUsed_AB, 5).value = wshGL_Trans.Range("P" & i).value
-            ws.Cells(lastRowUsed_AB, 6).value = wshGL_Trans.Range("V" & i).value
-            ws.Cells(lastRowUsed_AB, 6).NumberFormat = "###,###,##0.00 $"
-            ws.Cells(lastRowUsed_AB, 7).value = wshGL_Trans.Range("W" & i).value
-            ws.Cells(lastRowUsed_AB, 7).NumberFormat = "###,###,##0.00 $"
-            
-            solde = solde + CCur(wshGL_Trans.Range("V" & i).value) - CCur(wshGL_Trans.Range("W" & i).value)
-            ws.Cells(lastRowUsed_AB, 8).value = solde
-            
-            sumDT = sumDT + wshGL_Trans.Range("V" & i).value
-            sumCT = sumCT + wshGL_Trans.Range("W" & i).value
-            
-            lastRowUsed_AB = lastRowUsed_AB + 1
-        Next i
-    Else
-        GoTo No_Transaction
-    End If
-    
-No_Transaction:
-
-    'Ajoute le formatage conditionnel pour les transactions
-    With Range("B" & saveFirstRow & ":H" & lastRowUsed_AB - 1)
-        .FormatConditions.Add Type:=xlExpression, Formula1:="=MOD(LIGNE();2)=1"
-        .FormatConditions(Range("B" & saveFirstRow & ":H" & lastRowUsed_AB - 1).FormatConditions.count).SetFirstPriority
-        With .FormatConditions(1).Interior
-            .PatternColorIndex = xlAutomatic
-            .ThemeColor = xlThemeColorDark1
-            .TintAndShade = -0.14996795556505
-        End With
-        .FormatConditions(1).StopIfTrue = False
-    End With
-    
-    ws.Range("H" & lastRowUsed_AB - 1).Font.Bold = True
-    With ws.Range("F" & lastRowUsed_AB, "G" & lastRowUsed_AB)
-        With .Borders(xlEdgeTop)
-            .LineStyle = xlContinuous
-            .ColorIndex = 0
-            .TintAndShade = 0
-            .Weight = xlThin
-        End With
-    End With
-    
-    ws.Range("F" & lastRowUsed_AB).value = sumDT
-    ws.Range("F" & lastRowUsed_AB).NumberFormat = "###,###,##0.00 $"
-    ws.Range("G" & lastRowUsed_AB).value = sumCT
-    ws.Range("G" & lastRowUsed_AB).NumberFormat = "###,###,##0.00 $"
-    
-    With ws.Range("A" & saveFirstRow - 1 & ":H" & lastRowUsed_AB).Font
-        .Name = "Aptos Narrow"
-        .size = 10
-    End With
-    
-    'Libérer la mémoire
-    Set rngResult = Nothing
-    
-End Sub
-
 

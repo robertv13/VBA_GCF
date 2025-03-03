@@ -101,14 +101,14 @@ Private Sub Worksheet_Change(ByVal target As Range)
             target.value = allCols(1)
             Application.EnableEvents = True
         Else
-            MsgBox "Valeur non trouvée !!!", vbCritical
+            msgBox "Valeur non trouvée !!!", vbCritical
         End If
         Application.EnableEvents = False
         target.Interior.Color = COULEUR_BASE_TEC
         clientCode = allCols(fClntFMClientID)
         Application.EnableEvents = True
         If Fn_Is_Client_Facturable(clientCode) = False Then
-            MsgBox "Ce client n'est pas un client facturable", vbInformation
+            msgBox "Ce client n'est pas un client facturable", vbInformation
             target.Activate
 '        Else
 '            wshTEC_Radiation.Range("K3").Select
@@ -133,7 +133,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
        
         'Future date ?
         If CDate(Range("L3").value) > Date Then
-            If MsgBox("Il n'est pas permis d'utiliser une date dans le futur !", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
+            If msgBox("Il n'est pas permis d'utiliser une date dans le futur !", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
                 Application.EnableEvents = False
                 target.ClearContents
                 Application.EnableEvents = True

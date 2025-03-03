@@ -156,7 +156,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
        
         'Future date ?
         If CDate(Range("H3").value) > Date Then
-            If MsgBox("Il n'est pas permis d'utiliser une date dans le futur !", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
+            If msgBox("Il n'est pas permis d'utiliser une date dans le futur !", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
                 Application.EnableEvents = False
                 target.ClearContents
                 Application.EnableEvents = True

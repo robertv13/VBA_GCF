@@ -38,7 +38,7 @@ Sub Affiche_Liste_Factures()
     Dim rng As Range: Set rng = wshBD_Clients.Range("dnrClients_Names_Only")
     myInfo = Fn_Find_Data_In_A_Range(rng, 1, clientName, fClntFMClientID)
     If myInfo(1) = "" Then
-        MsgBox "Je ne peux retrouver ce client dans ma liste de clients", vbCritical
+        msgBox "Je ne peux retrouver ce client dans ma liste de clients", vbCritical
         GoTo Clean_Exit
     End If
     
@@ -182,7 +182,7 @@ Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
     End With
     
     If r = 0 Then
-        MsgBox "Il n'y a aucune facture pour la période recherchée", vbExclamation
+        msgBox "Il n'y a aucune facture pour la période recherchée", vbExclamation
         GoTo Clean_Exit
     End If
     
@@ -380,7 +380,7 @@ Sub VisualiserFacturePDF(noFact As String)
         Shell "C:\Program Files\Adobe\Acrobat DC\Acrobat\Acrobat.exe " & Chr(34) & fullPDFFileName & Chr(34), vbNormalFocus
     Else
         'Le fichier n'existe pas, afficher un message d'erreur
-        MsgBox "La version PDF de cette facture n'existe pas" & vbNewLine & vbNewLine & _
+        msgBox "La version PDF de cette facture n'existe pas" & vbNewLine & vbNewLine & _
                                                         fullPDFFileName, vbExclamation, "Fichier PDF introuvable"
     End If
     
@@ -411,7 +411,7 @@ Sub StatistiquesHonoraires(adresse As String)
 
     Dim numeroLigne As Long, numeroColonne As Long
     Call ExtraireLigneColonneCellule(adresse, numeroLigne, numeroColonne)
-    MsgBox "Statistiques d'honoraires pour la cellule " & adresse & vbCrLf & "Ligne : " & numeroLigne & vbCrLf & "Colonne : " & numeroColonne
+    msgBox "Statistiques d'honoraires pour la cellule " & adresse & vbCrLf & "Ligne : " & numeroLigne & vbCrLf & "Colonne : " & numeroColonne
     ' Votre logique pour afficher les statistiques d'honoraires ici
 
 End Sub
@@ -441,7 +441,7 @@ Sub HistoriqueTransactions(adresse As String)
 
     Dim numeroLigne As Long, numeroColonne As Long
     Call ExtraireLigneColonneCellule(adresse, numeroLigne, numeroColonne)
-    MsgBox "Historique des transactions pour la cellule " & adresse & vbCrLf & "Ligne : " & numeroLigne & vbCrLf & "Colonne : " & numeroColonne
+    msgBox "Historique des transactions pour la cellule " & adresse & vbCrLf & "Ligne : " & numeroLigne & vbCrLf & "Colonne : " & numeroColonne
     ' Votre logique pour afficher l'historique des transactions ici
 
 End Sub
@@ -615,7 +615,7 @@ Sub AfficherNouvelleFeuille_Stats(invNo As String, nomClient As String, dateFact
         
         rOffset = lastRowUsed + 2
     Else
-        MsgBox "Je n'ai AUCUNE information sur les TEC" & _
+        msgBox "Je n'ai AUCUNE information sur les TEC" & _
                 vbNewLine & vbNewLine & "Pour cette facture", _
                 vbOKOnly, "Facture '" & "" & invNo & "'"
     End If
@@ -682,7 +682,7 @@ Sub AfficherNouvelleFeuille_Stats(invNo As String, nomClient As String, dateFact
         Set rng = ws.Range("H" & premiereLigne & ":H" & lastRowUsed)
         Call ConvertirEnNumerique(rng)
     Else
-        MsgBox "Je n'ai AUCUNE information sur les honoraires" & _
+        msgBox "Je n'ai AUCUNE information sur les honoraires" & _
         vbNewLine & vbNewLine & "Pour cette facture", _
         vbOKOnly, "Facture '" & "" & invNo & "'"
     End If
@@ -1155,7 +1155,7 @@ Sub ObtenirListeTECFactures(adresse As String)
     
     'Est-ce que nous avons des TEC pour cette facture ?
     If lastUsedRow < 3 Then
-        MsgBox "Il n'y a aucun TEC associé à la facture '" & invNo & "'"
+        msgBox "Il n'y a aucun TEC associé à la facture '" & invNo & "'"
     Else
         Call PreparerRapportTECFacturés(invNo)
     End If
@@ -1304,7 +1304,7 @@ Sub PreparerRapportTECFactures()
     wsRapport.Visible = xlSheetVisible
     wsRapport.Activate
     
-    MsgBox "Le rapport a été généré sur la feuille " & strRapport
+    msgBox "Le rapport a été généré sur la feuille " & strRapport
     
     'Libérer la mémoire
     Set rngResult = Nothing
@@ -1782,7 +1782,7 @@ Sub PreparerRapportTECFacturés(numeroFacture As String)
     wsRapport.Visible = xlSheetVisible
     wsRapport.Activate
     
-    MsgBox "Le rapport a été généré sur la feuille " & strRapport
+    msgBox "Le rapport a été généré sur la feuille " & strRapport
     
     'Libérer la mémoire
     Set rngResult = Nothing

@@ -34,7 +34,7 @@ Sub Import_CSV_File(ws As Worksheet, path As String, fn As String)
     Dim fullFileName As String
     fullFileName = path & Application.PathSeparator & fn
     If Dir(fullFileName) = "" Then
-        MsgBox "Le fichier n'a pas été trouvé", vbExclamation
+        msgBox "Le fichier n'a pas été trouvé", vbExclamation
         Exit Sub
     End If
     

@@ -420,7 +420,7 @@ Sub List_Conditional_Formatting_All() '2024-06-23 @ 18:37
     wsOutput.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2)).value = arr
     wsOutput.Range("A:A").EntireColumn.Hidden = True 'Do not show the SortKey
    
-    MsgBox "J'ai trouvé " & i & " Conditional Formatting"
+    msgBox "J'ai trouvé " & i & " Conditional Formatting"
     
     'Libérer la mémoire
     Set area = Nothing
@@ -575,7 +575,7 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
     Set ws = Nothing
     Set wsOutput = Nothing
     
-    MsgBox "Data validation list were created in worksheet: " & wsOutput.Name
+    msgBox "Data validation list were created in worksheet: " & wsOutput.Name
     
 End Sub
 
@@ -662,7 +662,7 @@ nextIteration:
     wshzDocFormulas.Range("A2").Resize(UBound(outputArray, 1), UBound(outputArray, 2)).value = outputArray
     wshzDocFormulas.Range("A:A").EntireColumn.Hidden = True 'Do not show the outputArray
 
-    MsgBox "J'ai trouvé " & Format$(i, "#,##0") & " formules"
+    msgBox "J'ai trouvé " & Format$(i, "#,##0") & " formules"
     
     'Libérer la mémoire
     Set cell = Nothing
@@ -835,7 +835,7 @@ Sub List_Named_Ranges_All() '2024-06-23 @ 07:40
                                "L")
     End If
    
-    MsgBox "J'ai trouvé " & i & " named ranges"
+    msgBox "J'ai trouvé " & i & " named ranges"
     
     'Libérer la mémoire
     Set nr = Nothing
@@ -1063,11 +1063,11 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
     
     'Display the final message
     If xr Then
-        MsgBox "J'ai trouvé " & xr & " lignes avec les chaines '" & search1 & "'" & vbNewLine & _
+        msgBox "J'ai trouvé " & xr & " lignes avec les chaines '" & search1 & "'" & vbNewLine & _
                 vbNewLine & "après avoir analysé un total de " & _
                 Format$(x, "#,##0") & " lignes de code"
     Else
-        MsgBox "Je n'ai trouvé aucune occurences avec les chaines '" & search1 & "'" & vbNewLine & _
+        msgBox "Je n'ai trouvé aucune occurences avec les chaines '" & search1 & "'" & vbNewLine & _
                 vbNewLine & "après avoir analysé un total de " & _
                 Format$(x, "#,##0") & " lignes de code"
     End If
@@ -1138,7 +1138,7 @@ Sub List_All_Columns() '2024-08-09 @ 11:52
     Set reportSheet = Nothing
     Set ws = Nothing
     
-    MsgBox "Le rapport des colonnes a été généré avec succès !", vbInformation
+    msgBox "Le rapport des colonnes a été généré avec succès !", vbInformation
     
 End Sub
 
@@ -1235,7 +1235,7 @@ Sub List_All_Macros_Used_With_Objects() '2024-11-26 @ 20:14
     Dim header2 As String: header2 = ThisWorkbook.Name
     Call Simple_Print_Setup(wsOutputSheet, rngToPrint, header1, header2, "$1:$1", "P")
     
-    MsgBox "La liste des macros assignées à des contrôles est dans " & _
+    msgBox "La liste des macros assignées à des contrôles est dans " & _
                 vbNewLine & vbNewLine & "la feuille 'Doc_All_Macros_Used_With_Object'.", vbInformation
                 
     'Libérer la mémoire
@@ -1374,7 +1374,7 @@ Sub List_Subs_And_Functions_All() '2024-11-26 @ 20:02
     
     ws.Activate
     
-    MsgBox "J'ai trouvé " & i & " lignes Sub or Function" & vbNewLine & _
+    msgBox "J'ai trouvé " & i & " lignes Sub or Function" & vbNewLine & _
                 vbNewLine & "après avoir analysé un total de " & _
                 Format$(lread, "#,##0") & " Lignes de code"
     
@@ -1544,15 +1544,6 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
 
         'Enable TAB through unprotected cells
         Application.EnableEvents = False
-'        Dim i As Long
-'        For i = 1 To sortedCells.count
-'            If i = sortedCells.count Then
-'                sortedCells.Cells(i).Next.Select
-'            Else
-'                sortedCells.Cells(i).Next.Select
-'                sortedCells.Cells(i + 1).Activate
-'            End If
-'        Next i
     End If
 
     Application.ScreenUpdating = True
@@ -1616,7 +1607,7 @@ Sub Log_Record(ByVal procedureName As String, param As String, Optional ByVal st
     
 ErrorHandler:
 
-    MsgBox "Une erreur est survenue à l'ouverture du fichier 'LogMainApp.log' " & vbNewLine & vbNewLine & _
+    msgBox "Une erreur est survenue à l'ouverture du fichier 'LogMainApp.log' " & vbNewLine & vbNewLine & _
                 "Erreur : " & Err & " = " & Err.Description, vbCritical, "Répertoire utilisé '" & wshAdmin.Range("F5").value & "'"
     
     'Nettoyage : réactivation des événements, calculs, etc.
@@ -1684,7 +1675,7 @@ Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boole
     
 Error_Handler:
 
-    MsgBox "Une erreur est survenue : " & Err.Description, vbCritical, "Log_Saisie_Heures"
+    msgBox "Une erreur est survenue : " & Err.Description, vbCritical, "Log_Saisie_Heures"
     'Sortir gracieusement de l'application
     Application.Quit 'No save...
     
@@ -1731,7 +1722,7 @@ Sub Settrace(source As String, module As String, procedure As String, variable A
     
 Error_Handler:
 
-    MsgBox "Une erreur est survenue : " & Err.Description, vbCritical, "Log_Settrace"
+    msgBox "Une erreur est survenue : " & Err.Description, vbCritical, "Log_Settrace"
     'Sortir gracieusement de l'application
     Application.Quit 'No save...
     
@@ -1857,10 +1848,10 @@ Sub LogMainApp_Analysis() '2025-01-10 @ 17:10
     Dim arrModule() As String
     arrModule = Split(strModule, "|")
     
-    MsgBox "Il y a " & UBound(arrUser, 1) + 1 & " utilisateurs dans le log", vbInformation
-    MsgBox "Il y a " & UBound(arrDate, 1) + 1 & " jours dans le log", vbInformation
-    MsgBox "Il y a " & UBound(arrVersion, 1) + 1 & " versions d'application dans le log", vbInformation
-    MsgBox "Il y a " & UBound(arrModule, 1) + 1 & " modules distincts dans le log", vbInformation
+    msgBox "Il y a " & UBound(arrUser, 1) + 1 & " utilisateurs dans le log", vbInformation
+    msgBox "Il y a " & UBound(arrDate, 1) + 1 & " jours dans le log", vbInformation
+    msgBox "Il y a " & UBound(arrVersion, 1) + 1 & " versions d'application dans le log", vbInformation
+    msgBox "Il y a " & UBound(arrModule, 1) + 1 & " modules distincts dans le log", vbInformation
     
     'Close the file
     Close #fileNum
@@ -1890,7 +1881,7 @@ Sub Test_Fn_Get_A_Row_From_A_Worksheet() '2025-01-13 @ 08:49
             Debug.Print "#081 - " & i; Tab(13); resultat(i)
         Next i
     Else
-        MsgBox "Valeur non trouvée", vbInformation
+        msgBox "Valeur non trouvée", vbInformation
     End If
     
 End Sub
@@ -1941,7 +1932,7 @@ Sub GetLastCellUsedRangeInAllSheets() '2025-01-10 @ 12:18 Copilot - RMV
     '        ws.Range(ws.Cells(1, lastCol + 1), ws.Cells(ws.Rows.count, ws.Columns.count)).Clear
     Next sheetName
 
-    MsgBox "Analyse terminé!" & vbNewLine & vbNewLine & _
+    msgBox "Analyse terminé!" & vbNewLine & vbNewLine & _
            "Voir fenêtre Exécution", vbOKOnly, _
            "Vérification des dernières lignes de tables"
     

@@ -41,7 +41,7 @@ Private Sub UserForm_Initialize()
         Me.cbbNoFacture.ListIndex = 0 'Sélectionne automatiquement le premier (et unique) élément
         Call cbbNoFacture_AfterUpdate ' Appelle explicitement l'événement AfterUpdate
     Else
-        MsgBox "Aucune facture, avec solde, n'existe pour ce client.", vbExclamation
+        msgBox "Aucune facture, avec solde, n'existe pour ce client.", vbExclamation
         Exit Sub
     End If
     
@@ -83,7 +83,7 @@ Private Sub cbbNoFacture_AfterUpdate()
         ufEncRégularisation.lblTotalFactureAjuste.Caption = Format$(soldeFacture, "###,##0.00 $")
     Else
         'Si la valeur n'est pas trouvée
-        MsgBox "La facture " & invNo & " n'a pas été trouvée.", vbExclamation
+        msgBox "La facture " & invNo & " n'a pas été trouvée.", vbExclamation
     End If
     
     ufEncRégularisation.cmbAccepte.Visible = False
@@ -198,7 +198,7 @@ Private Sub cmbAccepte_Click()
     Dim reponse As VbMsgBoxResult
 
     'Afficher une boîte de message avec les boutons Oui et Non
-    reponse = MsgBox("Toujours prêt à continuer le traitement ?", vbYesNo + vbQuestion, "Confirmation avant traitement")
+    reponse = msgBox("Toujours prêt à continuer le traitement ?", vbYesNo + vbQuestion, "Confirmation avant traitement")
     
     'Vérifie la réponse de l'utilisateur
     If reponse = vbYes Then

@@ -207,7 +207,7 @@ Sub GL_BV_Display_Trans_For_Selected_Account(GLAcct As String, GLDesc As String,
     
     'Check if the target value was found
     If foundRow = 0 Then
-        MsgBox "Il n'existe aucune transaction pour ce compte (période choisie)."
+        msgBox "Il n'existe aucune transaction pour ce compte (période choisie)."
         Exit Sub
     End If
     

@@ -55,7 +55,7 @@ Sub DEB_Saisie_Update()
     Dim CurrentDeboursNo As String
     CurrentDeboursNo = wshDEB_Saisie.Range("B1").value
     
-    MsgBox "Le déboursé, numéro '" & CurrentDeboursNo & "' a été reporté avec succès"
+    msgBox "Le déboursé, numéro '" & CurrentDeboursNo & "' a été reporté avec succès"
     
     'Get ready for a new one
     Call DEB_Saisie_Clear_All_Cells
@@ -78,7 +78,7 @@ Sub DEB_Renversement_Update()
     
     'Est-ce que la transaction balance ?
     If ws.Range("O6").value <> ws.Range("I26").value Then
-        MsgBox "Le déboursé à renverser ne balance pas !!!", vbCritical
+        msgBox "Le déboursé à renverser ne balance pas !!!", vbCritical
         Exit Sub
     End If
     
@@ -115,7 +115,7 @@ Sub DEB_Renversement_Update()
     'GL posting
     Call DEB_Saisie_GL_Posting_Preparation
     
-    MsgBox "Le déboursé a été RENVERSÉ avec succès", vbInformation, "Confirmation de traitement"
+    msgBox "Le déboursé a été RENVERSÉ avec succès", vbInformation, "Confirmation de traitement"
     
     Application.ScreenUpdating = True
     Application.EnableEvents = True
@@ -331,7 +331,7 @@ Sub DEB_Trans_MAJ_Debourse_Renverse_To_DB()
 
     'Vérifier si des enregistrements existent
     If rs.EOF Then
-        MsgBox "Aucun enregistrement trouvé.", vbCritical, "Impossible de mettre à jour les déboursés RENVERSÉS"
+        msgBox "Aucun enregistrement trouvé.", vbCritical, "Impossible de mettre à jour les déboursés RENVERSÉS"
     Else
         'Boucler à travers les enregistrements
         Do While Not rs.EOF
@@ -415,7 +415,7 @@ Sub DEB_Renverser_Ecriture() '2025-02-23 @ 16:56
     Call Preparer_Liste_Debourses_Pour_Afficher
     
     If numeroDebourseARenverser = -1 Then
-        MsgBox "Vous n'avez sélectionné aucun déboursé à renverser", vbInformation, "Sélection d'un déboursé à renverser"
+        msgBox "Vous n'avez sélectionné aucun déboursé à renverser", vbInformation, "Sélection d'un déboursé à renverser"
         Application.EnableEvents = True
         wshDEB_Saisie.Range("F4").value = ""
         wshDEB_Saisie.Range("F4").Select

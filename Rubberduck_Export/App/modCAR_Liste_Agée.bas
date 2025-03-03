@@ -439,7 +439,7 @@ Next_Invoice:
     
     Application.ScreenUpdating = True
     
-    MsgBox "La préparation de la liste âgée est terminée", vbInformation
+    msgBox "La préparation de la liste âgée est terminée", vbInformation
     
     Application.EnableEvents = True
     
@@ -515,12 +515,12 @@ Sub EnvoyerRappelParCourriel(noFact As String)
         codeClient = allCols(fFacECustID)
         dateFact = allCols(fFacEDateFacture)
     Else
-        MsgBox "Enregistrement '" & noFact & "' non trouvée !!!", vbCritical
+        msgBox "Enregistrement '" & noFact & "' non trouvée !!!", vbCritical
         Exit Sub
     End If
     
     If codeClient = "" Then
-        MsgBox "Le code client pour cette facture est INVALIDE", vbCritical, "Information erronée / manquante"
+        msgBox "Le code client pour cette facture est INVALIDE", vbCritical, "Information erronée / manquante"
         Exit Sub
     End If
     
@@ -540,9 +540,10 @@ Sub EnvoyerRappelParCourriel(noFact As String)
         If InStr(clientContactFact, " ") <> 0 Then
             prenomContact = Left(clientContactFact, InStr(clientContactFact, " ") - 1)
         End If
+        '0 à 2 adresses courriel
         clientCourriel = allCols(fClntFMCourrielFacturation)
     Else
-        MsgBox "Enregistrement '" & codeClient & "' non trouvée !!!", vbCritical
+        msgBox "Enregistrement '" & codeClient & "' non trouvée !!!", vbCritical
         Exit Sub
     End If
     
@@ -557,22 +558,20 @@ Sub EnvoyerRappelParCourriel(noFact As String)
         factSommePmts = allCols(fFacCCTotalPaid)
         factSommeRegul = allCols(fFacCCTotalRegul)
     Else
-        MsgBox "Enregistrement '" & noFact & "' non trouvée !!!", vbCritical
+        msgBox "Enregistrement '" & noFact & "' non trouvée !!!", vbCritical
         Exit Sub
     End If
     
     'Vérification pour éviter d'envoyer un rappel pour une facture à 0 $ ou créditeur
     If factSolde <= 0 Then
-        MsgBox "Il n'y a pas lieu d'envoyer un rappel" & vbNewLine & vbNewLine & _
+        msgBox "Il n'y a pas lieu d'envoyer un rappel" & vbNewLine & vbNewLine & _
                 "pour cette facture. Solde à " & Format$(factSolde, "#,##0.00 $"), vbCritical, "Solde à 0,00 $ ou créditeur"
         Exit Sub
     End If
     
-    Debug.Print "111 - ", noFact, dateFact, codeClient, clientNom, clientCourriel, factSolde, factSommePmts, factSommeRegul
-    
     'Vérifier si l'email est valide
-    If clientCourriel = "" Or InStr(clientCourriel, "@") = 0 Then
-        MsgBox "L'adresse courriel est vide OU invalide" & vbNewLine & vbNewLine & _
+    If Fn_ValiderCourriel(clientCourriel) = False Then
+        msgBox "L'adresse courriel est vide OU invalide" & vbNewLine & vbNewLine & _
                 "pour ce client.", vbExclamation, "Impossible d'envoyer un rappel (Adresse courriel invalide)"
         Exit Sub
     End If
@@ -586,7 +585,7 @@ Sub EnvoyerRappelParCourriel(noFact As String)
     Dim fileExists As Boolean
     fileExists = Dir(attachmentFullPathName) <> ""
     If Not fileExists Then
-        MsgBox "La pièce jointe (Facture en format PDF) n'existe pas à" & vbNewLine & _
+        msgBox "La pièce jointe (Facture en format PDF) n'existe pas à" & vbNewLine & _
                     "l'emplacement spécifié, soit " & attachmentFullPathName, vbCritical
         GoTo Exit_Sub
     End If
@@ -598,7 +597,7 @@ Sub EnvoyerRappelParCourriel(noFact As String)
     'Vérification de l'existence du template
     fileExists = Dir(templateFullPathName) <> ""
     If Not fileExists Then
-        MsgBox "Le gabarit 'GCF_Rappel.oft' est introuvable " & _
+        msgBox "Le gabarit 'GCF_Rappel.oft' est introuvable " & _
                     "à l'emplacement spécifié, soit " & Environ("appdata") & "\Microsoft\Templates", _
                     vbCritical
         GoTo Exit_Sub
@@ -614,7 +613,7 @@ Sub EnvoyerRappelParCourriel(noFact As String)
     
     'Vérifier si Outlook est bien ouvert
     If OutlookApp Is Nothing Then
-        MsgBox "Impossible d'ouvrir Outlook. Vérifiez votre installation.", vbCritical
+        msgBox "Impossible d'ouvrir Outlook. Vérifiez votre installation.", vbCritical
         Exit Sub
     End If
 
@@ -624,40 +623,22 @@ Sub EnvoyerRappelParCourriel(noFact As String)
 
     mailItem.Attachments.Add attachmentFullPathName
 
-    Dim emailBody As String
-    emailBody = mailItem.Body
-    
-    'Remplace la salutation
-    Dim posSalutation As Integer
-    posSalutation = InStr(emailBody, "<<Salutation>>")
-    If posSalutation Then
-        Dim salutation As String
-        If Time < 12 Then
-            salutation = "Bon matin"
-        ElseIf Time < 18 Then
-            salutation = "Bon après-midi"
-        Else
-            salutation = "Bonsoir"
-        End If
-        emailBody = Replace(emailBody, "<<Salutation>>", salutation)
-    End If
-    
-    'Remplace le prénom
-    Dim posPrenom As Integer
-    posPrenom = InStr(emailBody, "<<Prénom>>")
-    If posPrenom Then
-        If Trim(prenomContact) <> "" Then
-            emailBody = Replace(emailBody, "<<Prénom>>", Trim(prenomContact))
-        End If
-    End If
-    
-    mailItem.Body = emailBody
-    
-'    clientCourriel = "robertv13@me.com"
-'    clientCourriel = "gcharron@groupegc.ca"
     'Ajuster les derniers paramètres du courriel
+    Dim adresseEmail  As Variant
+    adresseEmail = Split(clientCourriel, "; ") '2025-03-02 @ 16:36
+    Dim nbAdresseCourriel As Integer
+    nbAdresseCourriel = UBound(adresseEmail)
+    
     With mailItem
-        .To = clientCourriel
+        Select Case nbAdresseCourriel
+            Case 0
+                .To = adresseEmail(0)
+            Case Is > 0
+                .To = adresseEmail(0)
+                .cc = adresseEmail(1)
+            Case Else
+        End Select
+        
         .Subject = wshAdmin.Range("NomEntreprise") & " - Rappel pour facture impayée - " & clientNom & " - Facture # " & noFact
         .Display  'Pour afficher le mail avant envoi (remplacez par .Send pour envoyer directement)
     End With

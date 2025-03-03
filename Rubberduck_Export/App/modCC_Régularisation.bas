@@ -15,7 +15,7 @@ Sub MAJ_Regularisation() '2025-01-14 @ 12:00
            .Range("K5").value = Empty Or _
            .Range("F7").value = Empty Or _
            .Range("K7").value = 0 Then
-            MsgBox "Assurez-vous d'avoir..." & vbNewLine & vbNewLine & _
+            msgBox "Assurez-vous d'avoir..." & vbNewLine & vbNewLine & _
                 "1. Un client valide" & vbNewLine & _
                 "2. Une date de régularisation" & vbNewLine & _
                 "3. Un type de transaction et" & vbNewLine & _
@@ -26,7 +26,7 @@ Sub MAJ_Regularisation() '2025-01-14 @ 12:00
         
         'Le montant de la régularisation doit être appliqué intégralement
         If .Range("K9").value <> CCur(ufEncRégularisation.txtTotalFacture) Then
-            MsgBox "Assurez-vous que le montant de la régularisation soit ÉGAL" & vbNewLine & _
+            msgBox "Assurez-vous que le montant de la régularisation soit ÉGAL" & vbNewLine & _
                 "a bel et bien été réparti", vbExclamation
             GoTo Clean_Exit
         End If
@@ -50,7 +50,7 @@ Sub MAJ_Regularisation() '2025-01-14 @ 12:00
         Call REGUL_GL_Posting_DB(regulNo, dateRegul, nomClient, descRegul)
         Call REGUL_GL_Posting_Locally(regulNo, dateRegul, nomClient, descRegul)
         
-        MsgBox "La régularisation '" & regulNo & "' a été enregistré avec succès", vbOKOnly + vbInformation, "Confirmation de traitement"
+        msgBox "La régularisation '" & regulNo & "' a été enregistré avec succès", vbOKOnly + vbInformation, "Confirmation de traitement"
         
         'Fermer le UserForm
         Unload ufEncRégularisation
@@ -230,7 +230,7 @@ Sub REGUL_Update_Comptes_Clients_DB() 'Write to MASTER.xlsx
         End If
         rs.Update
     Else
-        MsgBox "Problème avec la facture '" & Inv_No & "'" & vbNewLine & vbNewLine & _
+        msgBox "Problème avec la facture '" & Inv_No & "'" & vbNewLine & vbNewLine & _
                "Contactez le développeur SVP", vbCritical, "Impossible de trouver la facture dans Comptes_Clients"
     End If
     'Update the recordset (create the record)
@@ -286,7 +286,7 @@ Sub REGUL_Update_Comptes_Clients_Locally() '2024-08-22 @ 10:55
             ws.Cells(rowToBeUpdated, fFacCCStatus) = "Unpaid"
         End If
     Else
-        MsgBox "La facture '" & Inv_No & "' n'existe pas dans FAC_Comptes_Clients.", vbCritical
+        msgBox "La facture '" & Inv_No & "' n'existe pas dans FAC_Comptes_Clients.", vbCritical
     End If
     
     Application.ScreenUpdating = True

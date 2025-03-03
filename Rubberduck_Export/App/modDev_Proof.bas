@@ -190,7 +190,7 @@ Sub IdentifierÉcartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
     ' Ajuster la mise en forme
     wsRapport.Columns.AutoFit
     
-    MsgBox "La comparaison est terminée. Vérifiez l'onglet 'RapportÉcartsFactures'.", vbInformation
+    msgBox "La comparaison est terminée. Vérifiez l'onglet 'RapportÉcartsFactures'.", vbInformation
     
 End Sub
 
@@ -255,7 +255,7 @@ Sub AnalyserFichiersLogSaisieHeures() '2024-12-15 @ 11:03
          End With
     End If
     
-    MsgBox "L'analyse est terminée.", vbInformation
+    msgBox "L'analyse est terminée.", vbInformation
     
 End Sub
 

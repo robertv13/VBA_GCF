@@ -7,7 +7,6 @@ Private Sub Worksheet_Activate()
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_Activate", "", 0)
 
     If fromMenu = False Then
-        Debug.Print "#008 - wshFAC_Brouillon_Worksheet_Activate - Je ne viens pas du menu"
         Exit Sub
     End If
     
@@ -104,7 +103,7 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
             If Len(target.value) > 58 Then
                 If shapeTextBox Is Nothing Then
                     Set shapeTextBox = Me.Shapes.AddTextbox(msoTextOrientationHorizontal, _
-                                                            100, 100, 600, 100)
+                                                            100, 100, 650, 65)
                     shapeTextBox.Name = "shpTECInfo"
                 End If
                 
@@ -116,7 +115,7 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
                 With shapeTextBox
                     .TextFrame.Characters.Text = infoText
                     .Top = target.Top + target.Height
-                    .Left = target.Left
+                    .Left = target.Left + 25
                     .Visible = msoTrue
                     .Fill.ForeColor.RGB = RGB(255, 255, 204) ' Fond de couleur douce pour visibilité
                     .TextFrame.Characters.Font.size = 10
@@ -184,7 +183,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
        
         'Future date ?
         If CDate(Range("O3").value) > Date Then
-            If MsgBox("En êtes-vous CERTAIN ?", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
+            If msgBox("En êtes-vous CERTAIN ?", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
                 Application.EnableEvents = False
                 target.ClearContents
                 Application.EnableEvents = True

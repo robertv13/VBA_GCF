@@ -28,7 +28,7 @@ Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
     Dim lastUsedRow As Long
     lastUsedRow = wsSource.Cells(wsSource.Rows.count, "AQ").End(xlUp).row
     If lastUsedRow < 3 Then
-        MsgBox "Il n'y a aucune TEC pour ce client", vbInformation
+        msgBox "Il n'y a aucune TEC pour ce client", vbInformation
         Call Prepare_Pour_Nouvelle_Radiation
         wshTEC_Radiation.Range("F3").Activate
         GoTo ExitSub
@@ -160,7 +160,7 @@ Sub ToutCocherOuDecocher()
     On Error GoTo 0
     'Vérifier si la case de l'en-tête existe
     If headerChkBox Is Nothing Then
-        MsgBox "La case à cocher d'en-tête 'chk_header' n'existe pas.", vbExclamation
+        msgBox "La case à cocher d'en-tête 'chk_header' n'existe pas.", vbExclamation
         Exit Sub
     End If
     
@@ -258,7 +258,7 @@ Sub Radiation_Mise_À_Jour()
         Call TEC_Radiation_Update_As_Billed_Locally(3, lastUsedRow)
     End If
     
-    MsgBox "Les TEC sélectionnés ont été radié avec succès", vbOKOnly, "Confirmation de traitement"
+    msgBox "Les TEC sélectionnés ont été radié avec succès", vbOKOnly, "Confirmation de traitement"
     
 End Sub
 
@@ -298,7 +298,7 @@ Sub TEC_Radiation_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Upd
                 rs.Update
             Else
                 'Handle the case where the specified ID is not found
-                MsgBox "L'enregistrement avec le TECID '" & r & "' ne peut être trouvé!", _
+                msgBox "L'enregistrement avec le TECID '" & r & "' ne peut être trouvé!", _
                     vbExclamation
                 rs.Close
                 conn.Close

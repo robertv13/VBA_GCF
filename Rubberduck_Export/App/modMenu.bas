@@ -128,7 +128,7 @@ Sub SauvegarderEtSortirApplication() '2024-08-30 @ 07:37
     Application.ScreenUpdating = False
     
     Dim confirmation As VbMsgBoxResult
-    confirmation = MsgBox("Êtes-vous certain de vouloir quitter" & vbNewLine & vbNewLine & _
+    confirmation = msgBox("Êtes-vous certain de vouloir quitter" & vbNewLine & vbNewLine & _
                         "l'application de gestion (sauvegarde automatique) ?", vbYesNo + vbQuestion, "Confirmation de sortie")
     
     If confirmation = vbYes Then
@@ -201,6 +201,9 @@ Sub HideDevShapesBasedOnUsername()
     If userName = "Robert M. Vigneault" Or userName = "robertmv" Then
         ws.Shapes("shpImporterCorrigerMASTER").Visible = msoTrue
         ws.Shapes("shpVérificationIntégrité").Visible = msoTrue
+        ws.Shapes("shpTraitementFichiersLog").Visible = msoTrue
+        ws.Shapes("shpAjustementsCasse").Visible = msoTrue
+        ws.Shapes("shpVérifierDernièresLignes").Visible = msoTrue
         ws.Shapes("shpRechercherCode").Visible = msoTrue
         ws.Shapes("shpCorrigerNomClientTEC").Visible = msoTrue
         ws.Shapes("shpCorrigerNomClientCAR").Visible = msoTrue
@@ -208,12 +211,12 @@ Sub HideDevShapesBasedOnUsername()
         ws.Shapes("shpChangerReferenceSystem").Visible = msoTrue
         ws.Shapes("shpListerModulesEtRoutines").Visible = msoTrue
         ws.Shapes("shpVérificationMacrosContrôles").Visible = msoTrue
-        ws.Shapes("shpVérifierDernièresLignes").Visible = msoTrue
-        ws.Shapes("shpTraitementFichiersLog").Visible = msoTrue
-        ws.Shapes("shpAjustementsCasse").Visible = msoTrue
     Else
         ws.Shapes("shpImporterCorrigerMASTER").Visible = msoFalse
         ws.Shapes("shpVérificationIntégrité").Visible = msoFalse
+        ws.Shapes("shpTraitementFichiersLog").Visible = msoFalse
+        ws.Shapes("shpAjustementsCasse").Visible = msoFalse
+        ws.Shapes("shpVérifierDernièresLignes").Visible = msoFalse
         ws.Shapes("shpRechercherCode").Visible = msoFalse
         ws.Shapes("shpCorrigerNomClientTEC").Visible = msoFalse
         ws.Shapes("shpCorrigerNomClientCAR").Visible = msoFalse
@@ -221,9 +224,6 @@ Sub HideDevShapesBasedOnUsername()
         ws.Shapes("shpChangerReferenceSystem").Visible = msoFalse
         ws.Shapes("shpListerModulesEtRoutines").Visible = msoFalse
         ws.Shapes("shpVérificationMacrosContrôles").Visible = msoFalse
-        ws.Shapes("shpVérifierDernièresLignes").Visible = msoFalse
-        ws.Shapes("shpTraitementFichiersLog").Visible = msoTrue
-        ws.Shapes("shpAjustementsCasse").Visible = msoTrue
     End If
     
     'Libérer la mémoire

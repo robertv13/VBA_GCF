@@ -28,7 +28,7 @@ Public Sub Convertir_NF_en_Facturable_Dans_BD(tecID As Long) '2025-01-15 @ 09:44
         rs.Fields(fTECEstFacturable - 1).value = "VRAI"
     Else
         'On ne trouve pas le tecID - ANORMAL !!!
-        MsgBox "L'enregistrement avec le TECID '" & tecID & "' ne peut être trouvé!", vbOK + vbCritical, "Problème avec la convertion (N/FACT ---> FACT)"
+        msgBox "L'enregistrement avec le TECID '" & tecID & "' ne peut être trouvé!", vbOK + vbCritical, "Problème avec la convertion (N/FACT ---> FACT)"
         rs.Close
         conn.Close
         Exit Sub
