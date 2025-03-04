@@ -163,7 +163,7 @@ Private Sub txtDateDebut_Exit(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim dateCorrigee As String
     
-    If Trim(txtDateDebut.Text) <> "" Then
+    If Trim$(txtDateDebut.Text) <> "" Then
         dateCorrigee = CorrigerDate(txtDateDebut.Text)
         If dateCorrigee = "" Then
             msgBox "La date saisie est invalide, veuillez saisir une date sous un" & vbNewLine & vbNewLine & _
@@ -183,7 +183,7 @@ Private Sub txtDateFin_Exit(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim dateCorrigee As String
     
-    If Trim(txtDateFin.Text) <> "" Then
+    If Trim$(txtDateFin.Text) <> "" Then
         dateCorrigee = CorrigerDate(txtDateFin.Text)
         If dateCorrigee = "" Then
             msgBox "La date saisie est invalide, veuillez saisir une date sous un" & vbNewLine & vbNewLine & _
@@ -203,7 +203,7 @@ Private Sub txtDateSaisieDebut_Exit(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim dateCorrigee As String
     
-    If Trim(txtDateSaisieDebut.Text) <> "" Then
+    If Trim$(txtDateSaisieDebut.Text) <> "" Then
         dateCorrigee = CorrigerDate(txtDateSaisieDebut.Text)
         If dateCorrigee = "" Then
             msgBox "La date saisie est invalide, veuillez saisir une date sous un" & vbNewLine & vbNewLine & _
@@ -221,9 +221,11 @@ End Sub
 
 Private Sub txtDateSaisieFin_Exit(ByVal Cancel As MSForms.ReturnBoolean)
 
+    Debug.Print "DateSaisieFin_Exit déclenché"
+    
     Dim dateCorrigee As String
     
-    If Trim(txtDateSaisieFin.Text) <> "" Then
+    If Trim$(txtDateSaisieFin.Text) <> "" Then
         dateCorrigee = CorrigerDate(txtDateSaisieFin.Text)
         If dateCorrigee = "" Then
             msgBox "La date saisie est invalide, veuillez saisir une date sous un" & vbNewLine & vbNewLine & _
@@ -237,6 +239,12 @@ Private Sub txtDateSaisieFin_Exit(ByVal Cancel As MSForms.ReturnBoolean)
             txtDateSaisieFin.Text = dateCorrigee
         End If
     End If
+End Sub
+
+Private Sub txtBoxSuivant_GotFocus()
+
+    Debug.Print "Le focus est maintenant sur txtBoxSuivant"
+    
 End Sub
 
 Private Sub cmdGenerer_Click()
@@ -394,7 +402,7 @@ Function CorrigerDate(txtDate As String) As String
     currentDate = Date
 
     'Supprimer les espaces & n'accepter que les caractères valides
-    txtDate = Trim(txtDate)
+    txtDate = Trim$(txtDate)
     If Not EstDateCaractereValide(txtDate) Then
         CorrigerDate = ""
         Exit Function
@@ -416,11 +424,11 @@ Function CorrigerDate(txtDate As String) As String
     'Cas particulier 4, 6 ou 8 caractères sans séparateur
     If EstSeulementChiffres(txtDate) Then
         If Len(txtDate) = 4 Then
-            txtDate = Left(txtDate, 2) & "/" & Right(txtDate, 2)
+            txtDate = Left$(txtDate, 2) & "/" & Right$(txtDate, 2)
         ElseIf Len(txtDate) = 6 Then
-            txtDate = Left(txtDate, 2) & "/" & Mid(txtDate, 3, 2) & "/" & Right(txtDate, 2)
+            txtDate = Left$(txtDate, 2) & "/" & Mid$(txtDate, 3, 2) & "/" & Right$(txtDate, 2)
         Else
-            txtDate = Left(txtDate, 2) & "/" & Mid(txtDate, 3, 2) & "/" & Right(txtDate, 4)
+            txtDate = Left$(txtDate, 2) & "/" & Mid$(txtDate, 3, 2) & "/" & Right$(txtDate, 4)
         End If
     End If
     
@@ -429,7 +437,7 @@ Function CorrigerDate(txtDate As String) As String
     
     'S'il n'y a qu'une partie dans la date et que le nombre de caractères est de 4, on insère un séparateur
     If UBound(arr) = 0 And Len(arr(0)) = 4 Then
-        arr(0) = Left(arr(0), 2) & "/" & Right(arr(0), 2)
+        arr(0) = Left$(arr(0), 2) & "/" & Right$(arr(0), 2)
     End If
     
     'Y a-t-il 3 parties dans la date (Unound(arr) = 2) ?
@@ -469,7 +477,7 @@ DerniereValidation:
     If ValiderDateDernierJourDuMois(y, m, d) <> "" Then
         'Conversion en date (Toutes les validations sont terminées)
         dt = DateSerial(y, m, d)
-        CorrigerDate = Format(dt, "dd/mm/yyyy")
+        CorrigerDate = Format$(dt, "dd/mm/yyyy")
     Else
         CorrigerDate = ""
     End If

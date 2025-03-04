@@ -87,11 +87,11 @@ Sub Lire_LogClientsApp(filePath As String)
             'Insérer les données dans le tableau
             ligne = ligne + 1
             output(ligne, 1) = env
-            output(ligne, 2) = CStr(Left(Fields(0), 10))
-            output(ligne, 3) = CStr(Right(Fields(0), 11))
-            output(ligne, 4) = Trim(Fields(1))
-            output(ligne, 5) = Trim(Fields(2))
-            output(ligne, 6) = Trim(Fields(3))
+            output(ligne, 2) = CStr(Left$(Fields(0), 10))
+            output(ligne, 3) = CStr(Right$(Fields(0), 11))
+            output(ligne, 4) = Trim$(Fields(1))
+            output(ligne, 5) = Trim$(Fields(2))
+            output(ligne, 6) = Trim$(Fields(3))
             If InStr(Fields(3), " secondes'") <> 0 Then
                 duree = ExtraireSecondes(Fields(3))
                 duree = Replace(duree, ".", ",")
@@ -100,7 +100,7 @@ Sub Lire_LogClientsApp(filePath As String)
                 Else
                     output(ligne, 7) = 0
                 End If
-                output(ligne, 6) = Trim(Left(output(ligne, 6), InStr(output(ligne, 6), " = ") - 1)) & " (S)"
+                output(ligne, 6) = Trim$(Left$(output(ligne, 6), InStr(output(ligne, 6), " = ") - 1)) & " (S)"
             End If
             output(ligne, 8) = lineNo
             output(ligne, 9) = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
@@ -169,12 +169,12 @@ Sub Lire_LogMainApp(filePath As String)
             End If
             If UBound(Fields) = 5 Then
                 output(ligne, 1) = env
-                output(ligne, 2) = CStr(Left(Fields(0), 10))
-                output(ligne, 3) = CStr(Right(Fields(0), 11))
-                output(ligne, 4) = Trim(Fields(1))
-                output(ligne, 5) = Trim(Fields(2))
-                output(ligne, 6) = Trim(Fields(3))
-                output(ligne, 7) = Trim(Fields(4))
+                output(ligne, 2) = CStr(Left$(Fields(0), 10))
+                output(ligne, 3) = CStr(Right$(Fields(0), 11))
+                output(ligne, 4) = Trim$(Fields(1))
+                output(ligne, 5) = Trim$(Fields(2))
+                output(ligne, 6) = Trim$(Fields(3))
+                output(ligne, 7) = Trim$(Fields(4))
                 If InStr(Fields(5), " secondes") <> 0 Then
                     duree = ExtraireSecondes(Fields(5))
                     duree = Replace(duree, ".", ",")
@@ -190,22 +190,22 @@ Sub Lire_LogMainApp(filePath As String)
             End If
             If UBound(Fields) = 4 Then
                 output(ligne, 1) = env
-                output(ligne, 2) = CStr(Left(Fields(0), 10))
-                output(ligne, 3) = CStr(Right(Fields(0), 11))
-                output(ligne, 4) = Trim(Fields(1))
-                output(ligne, 5) = Trim(Fields(2))
-                output(ligne, 6) = Trim(Fields(3))
+                output(ligne, 2) = CStr(Left$(Fields(0), 10))
+                output(ligne, 3) = CStr(Right$(Fields(0), 11))
+                output(ligne, 4) = Trim$(Fields(1))
+                output(ligne, 5) = Trim$(Fields(2))
+                output(ligne, 6) = Trim$(Fields(3))
                 If InStr(Fields(3), " secondes'") <> 0 Then
                     duree = ExtraireSecondes(Fields(3))
                     duree = Replace(duree, ".", ",")
-    '                    duree = Mid(Fields(3), InStr(Fields(3), " *** = '") + 8)
-    '                    duree = Left(duree, InStr(duree, " ") - 1)
+    '                    duree = Mid$(Fields(3), InStr(Fields(3), " *** = '") + 8)
+    '                    duree = Left$(duree, InStr(duree, " ") - 1)
                     If duree <> 0 Then
                         output(ligne, 7) = CDbl(duree)
                     Else
                         output(ligne, 7) = 0
                     End If
-                    output(ligne, 6) = Trim(Left(Fields(3), InStr(Fields(3), " = ") - 1)) & " (S)"
+                    output(ligne, 6) = Trim$(Left$(Fields(3), InStr(Fields(3), " = ") - 1)) & " (S)"
                 End If
                 output(ligne, 8) = lineNo
                 output(ligne, 9) = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
@@ -275,15 +275,15 @@ Sub Lire_LogSaisieHeures(filePath As String)
             'Insérer les données dans le tableau
             ligne = ligne + 1
             output(ligne, 1) = env
-            output(ligne, 2) = CStr(Left(Fields(0), 10))
-            output(ligne, 3) = CStr(Right(Fields(0), 11))
-            output(ligne, 4) = Trim(Fields(1))
-            output(ligne, 5) = Trim(Fields(2))
+            output(ligne, 2) = CStr(Left$(Fields(0), 10))
+            output(ligne, 3) = CStr(Right$(Fields(0), 11))
+            output(ligne, 4) = Trim$(Fields(1))
+            output(ligne, 5) = Trim$(Fields(2))
             Dim oper As String
             Dim tecID As Long
-            oper = Trim(Fields(3))
-            tecID = Mid(oper, 8, Len(oper) - 7)
-            oper = Trim(Left(oper, 7))
+            oper = Trim$(Fields(3))
+            tecID = Mid$(oper, 8, Len(oper) - 7)
+            oper = Trim$(Left$(oper, 7))
             output(ligne, 6) = oper
             output(ligne, 7) = CStr(tecID)
             output(ligne, 8) = Fields(4)

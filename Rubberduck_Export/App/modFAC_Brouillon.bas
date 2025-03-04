@@ -94,7 +94,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         If lastUsedRow > 1 Then
             Dim i As Long
             For i = 2 To lastUsedRow
-                If UCase(wshFAC_Projets_Entête.Range("Z" & i).value) = "FAUX" Or _
+                If UCase$(wshFAC_Projets_Entête.Range("Z" & i).value) = "FAUX" Or _
                     wshFAC_Projets_Entête.Range("Z" & i).value = 0 Then
                         liveOne = liveOne + 1
                 End If
@@ -255,7 +255,7 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
         .Range("B23").value = allCols(fClntFMContactFacturation)
         .Range("B24").value = clientNamePurged
         .Range("B25").value = allCols(fClntFMAdresse1) 'Adresse1
-        If Trim(allCols(fClntFMAdresse2)) <> "" Then
+        If Trim$(allCols(fClntFMAdresse2)) <> "" Then
             .Range("B26").value = allCols(fClntFMAdresse2) 'Adresse2
             .Range("B27").value = allCols(fClntFMVille) & ", " & _
                                   allCols(fClntFMProvince) & ", " & _
@@ -266,10 +266,10 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
                                   allCols(fClntFMCodePostal) 'Ville, Province & Code postal
             .Range("B27").value = ""
         End If
-        If Trim(.Range("B26").value) = ", ," Then
+        If Trim$(.Range("B26").value) = ", ," Then
             .Range("B26").value = ""
         End If
-        If Trim(.Range("B27").value) = ", ," Then
+        If Trim$(.Range("B27").value) = ", ," Then
             .Range("B27").value = ""
         End If
         Application.EnableEvents = True
@@ -295,7 +295,7 @@ Sub FAC_Brouillon_Date_Change(d As String)
     
     If InStr(wshFAC_Brouillon.Range("O6").value, "-") = 0 Then
         Dim y As String
-        y = Right(year(d), 2)
+        y = Right$(year(d), 2)
         wshFAC_Brouillon.Range("O6").value = y & "-" & wshFAC_Brouillon.Range("O6").value
         wshFAC_Finale.Range("E28").value = wshFAC_Brouillon.Range("O6").value
     End If
@@ -599,7 +599,7 @@ Sub FAC_Brouillon_Load_Non_Billable_Into_Userform()
             arr(i - 2, 3) = .Range("AS" & i).value      'Prof
             arr(i - 2, 4) = .Range("AW" & i).value      'Description
             If Len(arr(i - 2, 4)) > 105 Then
-                arr(i - 2, 4) = Left(arr(i - 2, 4), 102) & "..."
+                arr(i - 2, 4) = Left$(arr(i - 2, 4), 102) & "..."
             End If
             arr(i - 2, 5) = Format$(.Range("AX" & i).value, "##0.00")     'Heures
             arr(i - 2, 5) = Space(7 - Len(arr(i - 2, 5))) & arr(i - 2, 5)
@@ -757,8 +757,8 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
             arr(i - 2, 5) = .Range("BB" & i).value 'Facturée ou pas
             arr(i - 2, 6) = .Range("AQ" & i).value 'TECID
             'Commentaires doivent être affichés
-            If Trim(.Range("AY" & i).value) <> "" Then
-                fraisDiversMsg = Trim(.Range("AY" & i).value)
+            If Trim$(.Range("AY" & i).value) <> "" Then
+                fraisDiversMsg = Trim$(.Range("AY" & i).value)
                 collFraisDivers.Add fraisDiversMsg
             End If
         Next i
@@ -778,11 +778,11 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.ListBox1.Clear
+        ufFraisDivers.listBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.ListBox1.AddItem item
+            ufFraisDivers.listBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless
@@ -1268,7 +1268,7 @@ Sub Load_Invoice_Template(t As String)
     For i = 12 To lastUsedRow
         If InStr(1, wshAdmin.Range("AA" & i), t) Then
             'Build a string with 2 digits + Service description
-            strServices = strServices & Right(wshAdmin.Range("AA" & i).value, 2) & wshAdmin.Range("Z" & i).value & "|"
+            strServices = strServices & Right$(wshAdmin.Range("AA" & i).value, 2) & wshAdmin.Range("Z" & i).value & "|"
         End If
     Next i
     
@@ -1286,8 +1286,8 @@ Sub Load_Invoice_Template(t As String)
     Dim facRow As Long
     facRow = 11
     For i = LBound(arr) + 1 To UBound(arr)
-        wshFAC_Brouillon.Range("L" & facRow).value = "'" & Mid(arr(i), 3)
-        wshFAC_Finale.Range("B" & facRow + 23).value = "' - " & Mid(arr(i), 3)
+        wshFAC_Brouillon.Range("L" & facRow).value = "'" & Mid$(arr(i), 3)
+        wshFAC_Finale.Range("B" & facRow + 23).value = "' - " & Mid$(arr(i), 3)
         facRow = facRow + 2
     Next i
         

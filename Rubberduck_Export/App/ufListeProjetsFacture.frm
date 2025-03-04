@@ -29,7 +29,7 @@ Private Sub UserForm_Initialize()
     'Populate the array with non-contiguous columns
     Dim i As Long, nbRows As Long
     For i = 2 To lastUsedRow
-        If UCase(ws.Cells(i, 26).value) <> "VRAI" Then 'Exclude those projects with isDetruite set to True
+        If UCase$(ws.Cells(i, 26).value) <> "VRAI" Then 'Exclude those projects with isDetruite set to True
             nbRows = nbRows + 1
             arr(nbRows, 1) = ws.Cells(i, 2).value 'nomClient
             arr(nbRows, 2) = ws.Cells(i, 4).value 'date

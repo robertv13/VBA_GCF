@@ -202,6 +202,10 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
     wshDEB_Saisie.Range("B1").value = currDebTransNo
     Application.EnableEvents = True
     
+    'timeStamp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
+    
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
     rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
@@ -232,7 +236,7 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
                                                   - .Range("L" & l).value _
                                                   - .Range("M" & l).value)
                 rs.Fields(fDebTAutreRemarque - 1).value = ""
-                rs.Fields(fDebTTimeStamp - 1).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+                rs.Fields(fDebTTimeStamp - 1).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
             End With
         rs.Update
     Next l
@@ -271,6 +275,10 @@ Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
     lastUsedRow = wshDEB_Trans.Cells(wshDEB_Trans.Rows.count, "A").End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
     
+    'timeStamp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
+    
     Dim i As Long
     For i = 9 To r
         With wshDEB_Saisie
@@ -294,7 +302,7 @@ Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
                                                           - .Range("L" & i).value _
                                                           - .Range("M" & i).value
             ws.Cells(rowToBeUsed, fDebTAutreRemarque).value = ""
-            ws.Cells(rowToBeUsed, fDebTTimeStamp).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+            ws.Cells(rowToBeUsed, fDebTTimeStamp).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
         End With
         rowToBeUsed = rowToBeUsed + 1
         Call Log_Record("    modDEB_Saisie:DEB_Trans_Add_Record_Locally", -1)
@@ -498,7 +506,7 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
     dateDebours = wshDEB_Saisie.Range("O4").value
     deboursType = wshDEB_Saisie.Range("F4").value
     descGL_Trans = deboursType & " - " & wshDEB_Saisie.Range("F6").value
-    If Trim(wshDEB_Saisie.Range("M6").value) <> "" Then
+    If Trim$(wshDEB_Saisie.Range("M6").value) <> "" Then
         descGL_Trans = descGL_Trans & " [" & wshDEB_Saisie.Range("M6").value & "]"
     End If
     If wshDEB_Saisie.Range("B7").value = False Then
@@ -675,6 +683,10 @@ Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external
     nextDRNo = lastDR + 1
     wshDEB_Saisie.Range("B2").value = nextDRNo
 
+    'timeStamp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
+    
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
     rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
@@ -697,7 +709,7 @@ Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external
                 rs.Fields(fDebRTVQ - 1).value .Range("K" & l).value
                 rs.Fields(fDebRCréditTPS - 1).value .Range("L" & l).value
                 rs.Fields(fDebRCréditTVQ - 1).value .Range("M" & l).value
-                rs.Fields(fDebRTimeStamp - 1).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+                rs.Fields(fDebRTimeStamp - 1).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
             End With
         rs.Update
     Next l
@@ -733,6 +745,10 @@ Sub DEB_Recurrent_Add_Record_Locally(r As Long) 'Write records to local file
     lastUsedRow = wshDEB_Récurrent.Cells(wshDEB_Récurrent.Rows.count, "C").End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
     
+    'timeStamp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
+    
     Dim i As Long
     For i = 9 To r
         With wshDEB_Saisie
@@ -750,7 +766,7 @@ Sub DEB_Recurrent_Add_Record_Locally(r As Long) 'Write records to local file
             wshDEB_Récurrent.Range("K" & rowToBeUsed).value = .Range("K" & i).value
             wshDEB_Récurrent.Range("L" & rowToBeUsed).value = .Range("L" & i).value
             wshDEB_Récurrent.Range("M" & rowToBeUsed).value = .Range("M" & i).value
-            wshDEB_Récurrent.Range("N" & rowToBeUsed).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+            wshDEB_Récurrent.Range("N" & rowToBeUsed).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
         End With
         rowToBeUsed = rowToBeUsed + 1
     Next i
@@ -965,6 +981,7 @@ Sub DEB_Forme_Sauvegarder(forme As Shape)
     sauvegardesCaracteristiquesForme("LineColor") = forme.Line.ForeColor.RGB
     sauvegardesCaracteristiquesForme("Text") = forme.TextFrame2.TextRange.Text
     sauvegardesCaracteristiquesForme("TextColor") = forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB
+    
 End Sub
 
 Sub DEB_Forme_Restaurer(forme As Shape)

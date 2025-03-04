@@ -128,7 +128,7 @@ Sub CocherToutesLesCases(listView As listView) '2025-01-19 @ 08:42
     For i = 1 To listView.ListItems.count
         listView.ListItems(i).Checked = True
         Call MarquerLigneSelectionnee(listView.ListItems(i))
-        valeur = CCur(Trim(listView.ListItems(i).SubItems(4)))
+        valeur = CCur(Trim$(listView.ListItems(i).SubItems(4)))
         ufConfirmation.txtTotalFacturesSélectionnées.value = _
             Format$(ufConfirmation.txtTotalFacturesSélectionnées.value + valeur, "###,##0.00 $")
         ufConfirmation.txtNbFacturesSélectionnées.value = _
@@ -163,9 +163,9 @@ Public Sub MarquerLigneSelectionnee(item As listItem)
 
     'Vérifie si l'élément n'a pas déjà la mention "   - Sélectionnée -"
     If InStr(item.SubItems(3), "   - Sélectionnée -") = 0 Then
-        item.SubItems(3) = Left(item.SubItems(3), 60) & "   - Sélectionnée -"
+        item.SubItems(3) = Left$(item.SubItems(3), 60) & "   - Sélectionnée -"
     Else
-        item.SubItems(3) = Left(item.SubItems(3), 60)
+        item.SubItems(3) = Left$(item.SubItems(3), 60)
     End If
     
 End Sub
@@ -185,7 +185,7 @@ Sub Confirmation_Mise_À_Jour() '2025-01-19 @ 08:42
         For i = 1 To .ListItems.count
             Set ligne = .ListItems(i)
             If ligne.Checked Then
-                invNo = Trim(ligne.SubItems(1))
+                invNo = Trim$(ligne.SubItems(1))
                 ufConfirmation.txtNoFactureEnConfirmation.value = invNo
                 DoEvents
                 Call MAJ_Statut_Facture_Entête_BD_MASTER(invNo)
@@ -297,7 +297,7 @@ Sub Construire_GL_Posting_Confirmation(invoice As String) '2024-08-18 @17:15
     If Not foundRange Is Nothing Then
         r = foundRange.row
         Dim dateFact As Date
-        dateFact = Left(ws.Cells(r, fFacEDateFacture).value, 10)
+        dateFact = Left$(ws.Cells(r, fFacEDateFacture).value, 10)
         Dim hono As Currency
         hono = ws.Cells(r, fFacEHonoraires).value
         Dim misc1 As Currency, misc2 As Currency, misc3 As Currency
@@ -741,7 +741,7 @@ Sub ObtenirSommaireDesTaux(arr As Variant, ByRef FeesSummary As Variant)
     
     'Get Invoice number
     Dim invNo As String
-    invNo = Trim(wshFAC_Confirmation.Range("L5").value)
+    invNo = Trim$(wshFAC_Confirmation.Range("L5").value)
     
     'Use Range.Find to locate the first cell with the InvoiceNo
     Dim cell As Range

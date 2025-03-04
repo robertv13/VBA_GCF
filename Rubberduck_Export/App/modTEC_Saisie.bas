@@ -324,6 +324,10 @@ Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to
     Dim saveLogTECID As Long
     saveLogTECID = tecID
     
+    'timeStamp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
+    
     Dim dateValue As Date '2024-09-04 @ 09:01
     dateValue = ufSaisieHeures.txtDate.value
     'Special log to debug Date Format issue... 2024-09-06 @ 16:32
@@ -341,7 +345,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to
         saveLogTECID = tecID
         If Not rs.EOF Then
             'Update the "IsDeleted" field to mark the record as deleted
-            rs.Fields(fTECDateSaisie - 1).value = CDate(Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+            rs.Fields(fTECDateSaisie - 1).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
             rs.Fields(fTECEstDetruit - 1).value = Fn_Convert_Value_Boolean_To_Text(True)
             rs.Fields(fTECVersionApp - 1).value = ThisWorkbook.Name
             rs.Update
@@ -406,13 +410,13 @@ Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to
             rs.Fields(fTECClientID - 1).value = ufSaisieHeures.txtClientID.value
             rs.Fields(fTECClientNom - 1).value = ufSaisieHeures.txtClient.value
             If Len(ufSaisieHeures.txtActivite.value) > 255 Then
-                ufSaisieHeures.txtActivite.value = Left(ufSaisieHeures.txtActivite.value, 255)
+                ufSaisieHeures.txtActivite.value = Left$(ufSaisieHeures.txtActivite.value, 255)
             End If
             rs.Fields(fTECDescription - 1).value = ufSaisieHeures.txtActivite.value
             rs.Fields(fTECHeures - 1).value = Format$(ufSaisieHeures.txtHeures.value, "#0.00")
             rs.Fields(fTECCommentaireNote - 1).value = ufSaisieHeures.txtCommNote.value
             rs.Fields(fTECEstFacturable - 1).value = Fn_Convert_Value_Boolean_To_Text(ufSaisieHeures.chbFacturable.value)
-            rs.Fields(fTECDateSaisie - 1).value = CDate(Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+            rs.Fields(fTECDateSaisie - 1).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
             rs.Fields(fTECEstFacturee - 1).value = Fn_Convert_Value_Boolean_To_Text(False)
             rs.Fields(fTECDateFacturee - 1).value = Null
             rs.Fields(fTECEstDetruit - 1).value = Fn_Convert_Value_Boolean_To_Text(False)
@@ -442,7 +446,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to
                 rs.Fields(fTECHeures - 1).value = Format$(ufSaisieHeures.txtHeures.value, "#0.00")
                 rs.Fields(fTECCommentaireNote - 1).value = ufSaisieHeures.txtCommNote.value
                 rs.Fields(fTECEstFacturable - 1).value = Fn_Convert_Value_Boolean_To_Text(ufSaisieHeures.chbFacturable.value)
-                rs.Fields(fTECDateSaisie - 1).value = CDate(Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+                rs.Fields(fTECDateSaisie - 1).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
                 rs.Fields(fTECVersionApp - 1).value = ThisWorkbook.Name
                 
                 Call Log_Saisie_Heures("UPDATE " & saveLogTECID, ufSaisieHeures.cmbProfessionnel.value & " | " & _
@@ -519,6 +523,10 @@ Sub TEC_Record_Add_Or_Update_Locally(tecID As Long) 'Write -OR- Update a record 
     Dim hoursValue As Double '2024-03-01 @ 05:40
     hoursValue = CDbl(ufSaisieHeures.txtHeures.value)
     
+    'timeStamp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
+    
     Dim dateValue As Date
     dateValue = ufSaisieHeures.txtDate.value
     
@@ -537,7 +545,7 @@ Sub TEC_Record_Add_Or_Update_Locally(tecID As Long) 'Write -OR- Update a record 
             .Range("H" & nextRowNumber).value = hoursValue
             .Range("I" & nextRowNumber).value = ufSaisieHeures.txtCommNote.value
             .Range("J" & nextRowNumber).value = Fn_Convert_Value_Boolean_To_Text(ufSaisieHeures.chbFacturable.value)
-            .Range("K" & nextRowNumber).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+            .Range("K" & nextRowNumber).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
             .Range("L" & nextRowNumber).value = Fn_Convert_Value_Boolean_To_Text(False)
             .Range("M" & nextRowNumber).value = ""
             .Range("N" & nextRowNumber).value = Fn_Convert_Value_Boolean_To_Text(False)
@@ -565,7 +573,7 @@ Sub TEC_Record_Add_Or_Update_Locally(tecID As Long) 'Write -OR- Update a record 
                 .Range("H" & rowToBeUpdated).value = hoursValue
                 .Range("I" & rowToBeUpdated).value = ufSaisieHeures.txtCommNote.value
                 .Range("J" & rowToBeUpdated).value = Fn_Convert_Value_Boolean_To_Text(ufSaisieHeures.chbFacturable.value)
-                .Range("K" & rowToBeUpdated).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+                .Range("K" & rowToBeUpdated).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
                 .Range("L" & rowToBeUpdated).value = Fn_Convert_Value_Boolean_To_Text(False)
                 .Range("M" & rowToBeUpdated).value = ""
                 .Range("N" & rowToBeUpdated).value = Fn_Convert_Value_Boolean_To_Text(False)
@@ -574,7 +582,7 @@ Sub TEC_Record_Add_Or_Update_Locally(tecID As Long) 'Write -OR- Update a record 
             End With
         Else 'Soft delete the record
             With wshTEC_Local
-                .Range("K" & rowToBeUpdated).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+                .Range("K" & rowToBeUpdated).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
                 .Range("N" & rowToBeUpdated).value = Fn_Convert_Value_Boolean_To_Text(True)
                 .Range("O" & rowToBeUpdated).value = ThisWorkbook.Name
             End With

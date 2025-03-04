@@ -41,19 +41,19 @@ Sub CréerListeÂgée() '2024-09-08 @ 15:55
     Application.EnableEvents = False
     
     'Entêtes de colonnes en fonction du niveau de détail
-    If LCase(niveauDetail) = "client" Then
+    If LCase$(niveauDetail) = "client" Then
         wshCAR_Liste_Agée.Range("B8:G8").value = Array("Client", "Solde", "- de 30 jours", "31 @ 60 jours", "61 @ 90 jours", "+ de 90 jours")
         Call Make_It_As_Header(wshCAR_Liste_Agée.Range("B8:G8"))
     End If
 
     'Entêtes de colonnes en fonction du niveau de détail (Facture)
-    If LCase(niveauDetail) = "facture" Then
+    If LCase$(niveauDetail) = "facture" Then
         wshCAR_Liste_Agée.Range("B8:I8").value = Array("Client", "No. Facture", "Date Facture", "Solde", "- de 30 jours", "31 @ 60 jours", "61 @ 90 jours", "+ de 90 jours")
         Call Make_It_As_Header(wshCAR_Liste_Agée.Range("B8:I8"))
     End If
 
     'Entêtes de colonnes en fonction du niveau de détail (Transaction)
-    If LCase(niveauDetail) = "transaction" Then
+    If LCase$(niveauDetail) = "transaction" Then
         wshCAR_Liste_Agée.Range("B8:J8").value = Array("Client", "No. Facture", "Type", "Date", "Montant", "- de 30 jours", "31 @ 60 jours", "61 @ 90 jours", "+ de 90 jours")
         Call Make_It_As_Header(wshCAR_Liste_Agée.Range("B8:J8"))
     End If
@@ -86,6 +86,7 @@ Sub CréerListeÂgée() '2024-09-08 @ 15:55
     For i = 1 To rngFactures.Rows.count
         'Récupérer les données de la facture directement du Range
         numFacture = CStr(rngFactures.Cells(i, fFacCCInvNo).value)
+        If numFacture = "24-24655" Or numFacture = "25-24745" Then Stop
         'Do not process non Confirmed invoice
         If Fn_Get_Invoice_Type(numFacture) <> "C" Then
             GoTo Next_Invoice
@@ -111,7 +112,7 @@ Sub CréerListeÂgée() '2024-09-08 @ 15:55
         montantRestant = montantFacture - montantPaye + montantRegul
         
         'Exclus les soldes de facture à 0,00 $ SI ET SEULMENT SI F4 = "NON"
-        If UCase(wshCAR_Liste_Agée.Range("F4").value) = "NON" And montantRestant = 0 Then
+        If UCase$(wshCAR_Liste_Agée.Range("F4").value) = "NON" And montantRestant = 0 Then
             GoTo Next_Invoice
         End If
         
@@ -136,7 +137,7 @@ Sub CréerListeÂgée() '2024-09-08 @ 15:55
         Dim RowOffset As Long
         Dim tableau As Variant
         'Ajouter les données au dictionnaire en fonction du niveau de détail
-        Select Case LCase(niveauDetail)
+        Select Case LCase$(niveauDetail)
             Case "client"
                 If Not dictClients.Exists(client) Then
                     dictClients.Add client, Array(CCur(0), CCur(0), CCur(0), CCur(0), CCur(0))
@@ -247,7 +248,7 @@ Next_Invoice:
     Application.EnableEvents = True
     
     'Si niveau de détail est "client", ajouter les soldes du client (dictionary) au tableau final
-    If LCase(niveauDetail) = "client" Then
+    If LCase$(niveauDetail) = "client" Then
         r = 8
         Dim cle As Variant
         
@@ -310,7 +311,7 @@ Next_Invoice:
     With wshCAR_Liste_Agée
         .Columns("B:B").ColumnWidth = 50
         .Columns("C:J").ColumnWidth = 13
-        Select Case LCase(niveauDetail)
+        Select Case LCase$(niveauDetail)
             Case "client"
                 .Range("C9:G" & DerniereLigne).NumberFormat = "#,##0.00 $"
                 .Range("C9:G" & DerniereLigne).HorizontalAlignment = xlRight
@@ -370,7 +371,7 @@ Next_Invoice:
         Dim totalListe As Currency
         totalListe = t(0)
         If totalListe <> 0 Then
-            Select Case LCase(niveauDetail)
+            Select Case LCase$(niveauDetail)
                 Case "client"
                     .Range("C" & DerniereLigne).value = Format$(Round(t(0) / totalListe, 4), "##0.00 %")
                     .Range("D" & DerniereLigne).value = Format$(Round(t(1) / totalListe, 4), "##0.00 %")
@@ -401,7 +402,7 @@ Next_Invoice:
     lastUsedRow = DerniereLigne
     
     Dim rngToPrint As Range:
-    Select Case LCase(niveauDetail)
+    Select Case LCase$(niveauDetail)
         Case "client"
             Set rngToPrint = wshCAR_Liste_Agée.Range("B9:G" & lastUsedRow)
         Case "facture"
@@ -426,9 +427,9 @@ Next_Invoice:
 
     Dim header1 As String: header1 = "Liste âgée des comptes clients au " & wshCAR_Liste_Agée.Range("H4").value
     Dim header2 As String
-    If LCase(niveauDetail) = "client" Then
+    If LCase$(niveauDetail) = "client" Then
         header2 = "1 ligne par client"
-    ElseIf LCase(niveauDetail) = "facture" Then
+    ElseIf LCase$(niveauDetail) = "facture" Then
         header2 = "1 ligne par Facture"
     Else
         header2 = "1 ligne par transaction"
@@ -473,7 +474,7 @@ Sub CAR_ListeAgee_AfficherMenuContextuel(ByVal target As Range) '2025-02-21 @ 19
     
     Dim numeroFacture As String
     numeroFacture = ActiveSheet.Cells(numeroLigne, "C").value
-    If Trim(numeroFacture) = "" Then
+    If Trim$(numeroFacture) = "" Then
         Exit Sub
     End If
     
@@ -490,11 +491,6 @@ Sub CAR_ListeAgee_AfficherMenuContextuel(ByVal target As Range) '2025-02-21 @ 19
         menuItem.Caption = "Envoi d'un rappel par courriel"
         menuItem.OnAction = "'EnvoyerRappelParCourriel """ & numeroFacture & """'"
 
-'    'Ajout de l'option 3 au menu contextuel
-'    Set menuItem = menu.Controls.Add(Type:=msoControlButton)
-'        menuItem.Caption = "TEC détaillé pour la facture"
-'        menuItem.OnAction = "'ObtenirListeTECFactures """ & Target.Address & """'"
-'
     'Afficher le menu contextuel
     menu.ShowPopup
 
@@ -535,10 +531,10 @@ Sub EnvoyerRappelParCourriel(noFact As String)
         clientNom = allCols(fClntFMClientNom)
         'Élimine le ou les nom(s) de contact
         clientNom = Fn_Strip_Contact_From_Client_Name(clientNom)
-        clientContactFact = Trim(allCols(fClntFMContactFacturation)) + " "
+        clientContactFact = Trim$(allCols(fClntFMContactFacturation)) + " "
         prenomContact = ""
         If InStr(clientContactFact, " ") <> 0 Then
-            prenomContact = Left(clientContactFact, InStr(clientContactFact, " ") - 1)
+            prenomContact = Left$(clientContactFact, InStr(clientContactFact, " ") - 1)
         End If
         '0 à 2 adresses courriel
         clientCourriel = allCols(fClntFMCourrielFacturation)
@@ -665,5 +661,4 @@ Sub RetourMenuFacturation()
     wshMenuFAC.Range("A1").Select
 
 End Sub
-
 

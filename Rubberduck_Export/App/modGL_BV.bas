@@ -615,7 +615,7 @@ Sub wshGL_BV_Adjust_The_Shape()
             If i = 2 Then
                 texteFull = "Entrée #: " & .Range("AC2").value & vbCrLf
                 texteFull = texteFull & "Desc    : " & .Range("AE2").value & vbCrLf
-                If Trim(.Range("AF2").value) <> "" Then
+                If Trim$(.Range("AF2").value) <> "" Then
                     texteFull = texteFull & "Source  : " & .Range("AF2").value & vbCrLf & vbCrLf
                 Else
                     texteFull = texteFull & vbCrLf
@@ -625,14 +625,14 @@ Sub wshGL_BV_Adjust_The_Shape()
                             " - " & Fn_Pad_A_String(.Range("AH" & i).value, " ", 35, "R") & _
                             "  " & Fn_Pad_A_String(Format$(.Range("AI" & i).value, "#,##0.00 $"), " ", 14, "L") & _
                             "  " & Fn_Pad_A_String(Format$(.Range("AJ" & i).value, "#,##0.00 $"), " ", 14, "L")
-            If Trim(.Range("AF" & i).value) = Trim(wshGL_BV.Range("B6").value) Then
+            If Trim$(.Range("AF" & i).value) = Trim$(wshGL_BV.Range("B6").value) Then
                 texteOneLine = " * " & texteOneLine
             Else
                 texteOneLine = "   " & texteOneLine
             End If
             texteOneLine = Fn_Pad_A_String(texteOneLine, " ", 79, "R")
-            If Trim(.Range("AK" & i).value) <> "" Then
-                texteOneLine = texteOneLine & Trim(.Range("AK" & i).value)
+            If Trim$(.Range("AK" & i).value) <> "" Then
+                texteOneLine = texteOneLine & Trim$(.Range("AK" & i).value)
             End If
             If Len(texteOneLine) > maxLength Then
                 maxLength = Len(texteOneLine)
@@ -640,8 +640,8 @@ Sub wshGL_BV_Adjust_The_Shape()
             texteFull = texteFull & texteOneLine & vbCrLf
         Next i
     End With
-    If Right(texteFull, Len(texteFull) - 1) = vbCrLf Then
-        texteFull = Left(texteFull, Len(texteFull) - 2)
+    If Right$(texteFull, Len(texteFull) - 1) = vbCrLf Then
+        texteFull = Left$(texteFull, Len(texteFull) - 2)
     End If
     
     Dim dynamicShape As Shape: Set dynamicShape = wshGL_BV.Shapes("JE_Detail_Trans")

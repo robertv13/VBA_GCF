@@ -29,7 +29,7 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
         End If
         
         'Check For Mandatory Fields - Date de facture
-        If Len(Trim(.Range("O6").value)) <> 8 Then
+        If Len(Trim$(.Range("O6").value)) <> 8 Then
             msgBox "Il faut corriger le numéro de facture AVANT de sauvegarder la facture"
             GoTo Fast_Exit_Sub
         End If
@@ -86,7 +86,7 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
     
     msgBox "La facture '" & wshFAC_Brouillon.Range("O6").value & "' est enregistrée." & _
         vbNewLine & vbNewLine & "Le total de la facture est " & _
-        Trim(Format$(invoice_Total, "### ##0.00 $")) & _
+        Trim$(Format$(invoice_Total, "### ##0.00 $")) & _
         " (avant les taxes)", vbOKOnly, "Confirmation d'enregistrement"
     
     wshFAC_Brouillon.Select
@@ -125,6 +125,10 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
 
     'Can only ADD to the file, no modification is allowed
     
+    'timeStamnp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
+    
     'Create an empty recordset
     rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
     
@@ -158,7 +162,7 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
         rs.Fields(fFacEARTotal - 1).value = Format$(.Range("E77").value, "0.00")
         
         rs.Fields(fFacEDépôt - 1).value = Format$(.Range("E79").value, "0.00")
-        rs.Fields(fFacETimeStamp - 1).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss") '2025-01-25 @ 15:01
+        rs.Fields(fFacETimeStamp - 1).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss") '2025-01-25 @ 15:01
     End With
     'Update the recordset (create the record)
     rs.Update
@@ -185,6 +189,10 @@ Sub FAC_Finale_Add_Invoice_Header_Locally() '2024-03-11 @ 08:19 - Write records 
         "# = " & wshFAC_Finale.Range("E28").value & " - Date = " & Format$(wshFAC_Brouillon.Range("O3").value, "dd/mm/yyyy"), 0)
     
     Application.ScreenUpdating = False
+    
+    'timeStamnp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
     
     'Get the first free row
     Dim firstFreeRow As Long
@@ -218,7 +226,7 @@ Sub FAC_Finale_Add_Invoice_Header_Locally() '2024-03-11 @ 08:19 - Write records 
         .Range("U" & firstFreeRow).value = Format$(wshFAC_Finale.Range("E77").value, "0.00")
         
         .Range("V" & firstFreeRow).value = Format$(wshFAC_Finale.Range("E79").value, "0.00")
-        .Range("W" & firstFreeRow).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss") '2025-01-25 @ 15:01
+        .Range("W" & firstFreeRow).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss") '2025-01-25 @ 15:01
     End With
     
     Application.EnableEvents = False
@@ -253,6 +261,10 @@ Sub FAC_Finale_Add_Invoice_Details_to_DB()
         ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
     Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
+    'timeStamnp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
+    
     'Create an empty recordset
     rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
     
@@ -273,7 +285,7 @@ Sub FAC_Finale_Add_Invoice_Details_to_DB()
                     rs.Fields(fFacDHonoraires - 1).value = Format$(.Range("E" & r).value, "0.00")
             End If
             rs.Fields(fFacDInvRow - 1).value = wshFAC_Brouillon.Range("B11").value
-            rs.Fields(fFacDTimeStamp - 1).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+            rs.Fields(fFacDTimeStamp - 1).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
             
         End With
     'Update the recordset (create the record)
@@ -330,6 +342,10 @@ Sub FAC_Finale_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records
     lastEnteredService = wshFAC_Finale.Range("B64").End(xlUp).row
     If lastEnteredService < 34 Then GoTo nothing_to_update
     
+    'timeStamnp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
+    
     'Get the first free row
     Dim firstFreeRow As Long
     firstFreeRow = wshFAC_Détails.Cells(wshFAC_Détails.Rows.count, "A").End(xlUp).row + 1
@@ -343,7 +359,7 @@ Sub FAC_Finale_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records
             .Range("D" & firstFreeRow).value = Format$(wshFAC_Finale.Range("D" & i).value, "0.00")
             .Range("E" & firstFreeRow).value = Format$(wshFAC_Finale.Range("E" & i).value, "0.00")
             .Range("F" & firstFreeRow).value = i
-            .Range("G" & firstFreeRow).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+            .Range("G" & firstFreeRow).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
             firstFreeRow = firstFreeRow + 1
         End With
     Next i
@@ -378,6 +394,10 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_to_DB()
         ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
     Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
+    'timeStamnp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
+    
     'Create an empty recordset
     rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
     
@@ -395,7 +415,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_to_DB()
                 rs.Fields(fFacSTProf - 1).value = wshFAC_Brouillon.Range("R" & r).value
                 rs.Fields(fFacSTHeures - 1).value = wshFAC_Brouillon.Range("S" & r).value
                 rs.Fields(fFacSTTaux - 1).value = wshFAC_Brouillon.Range("T" & r).value
-                rs.Fields(fFacSTTimeStamp - 1).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+                rs.Fields(fFacSTTimeStamp - 1).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
                 seq = seq + 1
             End With
             'Update the recordset (create the record)
@@ -482,6 +502,10 @@ Sub FAC_Finale_Add_Comptes_Clients_to_DB()
         ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
     Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
+    'timeStamnp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
+    
     'Create an empty recordset
     rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
     
@@ -500,7 +524,7 @@ Sub FAC_Finale_Add_Comptes_Clients_to_DB()
         rs.Fields(fFacCCTotalRegul - 1).value = 0
         rs.Fields(fFacCCBalance - 1).value = .Range("E77").value
         rs.Fields(fFacCCDaysOverdue - 1).value = 0
-        rs.Fields(fFacCCTimeStamp - 1).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+        rs.Fields(fFacCCTimeStamp - 1).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
     End With
     
     'Update the recordset (create the record)
@@ -529,6 +553,10 @@ Sub FAC_Finale_Add_Comptes_Clients_Locally() '2024-03-11 @ 08:49 - Write records
     
     Application.ScreenUpdating = False
     
+    'timeStamnp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
+    
     'Get the first free row
     Dim firstFreeRow As Long
     firstFreeRow = wshFAC_Comptes_Clients.Cells(wshFAC_Comptes_Clients.Rows.count, "A").End(xlUp).row + 1
@@ -546,7 +574,7 @@ Sub FAC_Finale_Add_Comptes_Clients_Locally() '2024-03-11 @ 08:49 - Write records
         .Cells(firstFreeRow, fFacCCTotalRegul).value = 0
         .Cells(firstFreeRow, fFacCCBalance).value = wshFAC_Finale.Range("E81").value
         .Cells(firstFreeRow, fFacCCDaysOverdue).value = 0
-        .Cells(firstFreeRow, fFacCCTimeStamp).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+        .Cells(firstFreeRow, fFacCCTimeStamp).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
     End With
 
 nothing_to_update:

@@ -33,8 +33,8 @@ Public Sub GenererRapportGL_Compte(wsRapport As Worksheet, dateDebut As Date, da
     Dim soldeOuverture As Currency, solde As Currency
     Dim item As Variant
     For Each item In collGL_Selectionnes
-        GL = Left(item, InStr(item, " ") - 1)
-        descGL = Right(item, Len(item) - InStr(item, " "))
+        GL = Left$(item, InStr(item, " ") - 1)
+        descGL = Right$(item, Len(item) - InStr(item, " "))
         soldeOuverture = 0
         'Informe l'utilisateur de la progression
         Application.StatusBar = "Traitement du compte " & GL & " - " & descGL

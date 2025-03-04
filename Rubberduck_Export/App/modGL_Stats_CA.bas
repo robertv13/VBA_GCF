@@ -92,7 +92,7 @@ Sub Actualiser_Stats_CA()
 
     'Parcourir chacun des professionnels à partir de gDictHours
     For Each prof In gDictHours
-        strProf = Mid(prof, 4)
+        strProf = Mid$(prof, 4)
         profID = Fn_GetID_From_Initials(strProf)
         'Heures pour chacun des professionnels
         If gDictHours(prof)(0) <> 0 Then

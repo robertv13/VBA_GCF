@@ -1,12 +1,12 @@
 Attribute VB_Name = "modAppli"
 Option Explicit
 
-#If VBA7 Then
-    Declare PtrSafe Function GetSystemMetrics Lib "user32" (ByVal nIndex As Long) As Long
-#Else
-    Declare Function GetSystemMetrics Lib "user32" (ByVal nIndex As Long) As Long
-#End If
-
+'#If VBA7 Then
+'    Declare PtrSafe Function GetSystemMetrics Lib "user32" (ByVal nIndex As Long) As Long
+'#Else
+'    Declare Function GetSystemMetrics Lib "user32" (ByVal nIndex As Long) As Long
+'#End If
+'
 Public Const DATA_PATH As String = "\DataFiles"
 Public Const FACT_PDF_PATH As String = "\Factures_PDF"
 Public Const FACT_EXCEL_PATH As String = "\Factures_Excel"
@@ -341,7 +341,7 @@ Public Enum TEC_TDB_Data
     [_Last]
 End Enum
 
-Sub Auto_Open() '2024-12-28 @ 11:09
+Private Sub Auto_Open() '2024-12-28 @ 11:09
 
     Call CodeEssentielDepart
     
@@ -473,9 +473,12 @@ Sub CreateUserActiveFile()
     Exit Sub
 
 Error_Handling:
-    msgBox "Erreur en tentant d'accéder le répertoire" & vbNewLine & vbNewLine & _
-            "'" & traceFilePath & "'" & vbNewLine & vbNewLine & _
-            "Erreur # " & Err.Number & " - " & Err.Description, vbCritical, "Accès à " & traceFilePath
+    msgBox _
+        Prompt:="Erreur en tentant d'accéder le répertoire" & vbNewLine & vbNewLine & _
+                    "'" & traceFilePath & "'" & vbNewLine & vbNewLine & _
+                    "Erreur # " & Err.Number & " - " & Err.Description, _
+        Title:="Accès à " & traceFilePath, _
+        Buttons:=vbCritical
 
 End Sub
 
@@ -510,8 +513,6 @@ Sub BackupMasterFile()
     
     On Error GoTo MASTER_NOT_AVAILABLE
     
-'    Application.ScreenUpdating = False
-    
     'Chemin source (fichier principal) et destination (sauvegarde)
     Dim masterFilePath As String
     masterFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
@@ -528,10 +529,15 @@ Sub BackupMasterFile()
     Exit Sub
     
 MASTER_NOT_AVAILABLE:
-    msgBox "Le fichier GCF_MASTER.xlsx ne peut être accédé..." & vbNewLine & vbNewLine & _
-            "Le fichier nécessite une réparation manuelle", _
-            vbCritical, _
-            "Situation anormale (" & Err.Number & " " & Err.Description & ")"
+    msgBox _
+        Prompt:="Le fichier GCF_MASTER.xlsx ne peut être accédé..." & vbNewLine & vbNewLine & _
+                    "Le fichier nécessite une réparation manuelle", _
+        Title:="Situation anormale (" & Err.Number & " " & Err.Description & ")", _
+        Buttons:=vbCritical
+'    msgBox "Le fichier GCF_MASTER.xlsx ne peut être accédé..." & vbNewLine & vbNewLine & _
+'            "Le fichier nécessite une réparation manuelle", _
+'            vbCritical, _
+'            "Situation anormale (" & Err.Number & " " & Err.Description & ")"
     Application.Quit
 
 End Sub

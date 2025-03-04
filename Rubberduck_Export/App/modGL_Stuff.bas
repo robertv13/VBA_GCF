@@ -111,11 +111,14 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant, ByRef GLEntryNo) 'Generic
     'Calculate the new JE number
     GLEntryNo = lastJE + 1
 
+    'timeStamp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
+    
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
     rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
     
-    Dim timeStamp As String
     Dim i As Long, j As Long
     'Loop through the array and post each row
     For i = LBound(arr, 1) To UBound(arr, 1)
@@ -134,8 +137,7 @@ Sub GL_Posting_To_DB(df, desc, source, arr As Variant, ByRef GLEntryNo) 'Generic
                     rs.Fields(fGlTCrédit - 1).value = -arr(i, 3)
                 End If
                 rs.Fields(fGlTAutreRemarque - 1).value = arr(i, 4)
-                timeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-                rs.Fields(fGlTTimeStamp - 1).value = timeStamp
+                rs.Fields(fGlTTimeStamp - 1).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
             rs.Update
 Nothing_to_Post:
     Next i
@@ -166,6 +168,10 @@ Sub GL_Posting_Locally(df, desc, source, arr As Variant, ByRef GLEntryNo) 'Write
     Dim rowToBeUsed As Long
     rowToBeUsed = wshGL_Trans.Cells(wshGL_Trans.Rows.count, 1).End(xlUp).row + 1
     
+    'timeStamp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
+    
     Dim i As Long, j As Long
     'Loop through the array and post each row
     With wshGL_Trans
@@ -183,7 +189,7 @@ Sub GL_Posting_Locally(df, desc, source, arr As Variant, ByRef GLEntryNo) 'Write
                      .Range("H" & rowToBeUsed).value = -CDbl(arr(i, 3))
                 End If
                 .Range("I" & rowToBeUsed).value = arr(i, 4)
-                .Range("J" & rowToBeUsed).value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
+                .Range("J" & rowToBeUsed).value = Format$(timeStamp, "dd/mm/yyyy hh:mm:ss")
                 rowToBeUsed = rowToBeUsed + 1
                 Call Log_Record("   modGL_Stuff:GL_Posting_Locally", -1)
             End If

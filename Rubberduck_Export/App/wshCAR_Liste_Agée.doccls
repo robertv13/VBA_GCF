@@ -18,6 +18,7 @@ Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
     Call FAC_Comptes_Clients_Import_All
     Call ENC_Détails_Import_All
     Call ENC_Entête_Import_All
+    Call CC_Régularisations_Import_All '2025-03-04 @ 14:53
     
     'Set the zoom factor to 100% when this worksheet is activated
     ActiveWindow.Zoom = 100

@@ -398,7 +398,7 @@ Sub GL_EJ_Renverser_Ecriture()
         InStr(rngResult.Cells(1, 4).value, "FACTURE:") <> 0 Or _
         InStr(rngResult.Cells(1, 4).value, "RENVERSEMENT:") <> 0 Then
         msgBox "Je ne peux renverser ce type d'écriture '" & _
-                Left(rngResult.Cells(1, 4).value, InStr(rngResult.Cells(1, 4).value, ":") - 1) & _
+                Left$(rngResult.Cells(1, 4).value, InStr(rngResult.Cells(1, 4).value, ":") - 1) & _
                 "'" & vbNewLine & vbNewLine & _
                 "Veuillez vérifier votre numéro et reessayez", _
                 vbInformation, "Type d'écriture impossible à renverser"
@@ -679,9 +679,12 @@ Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xls
     End If
     
     'Calculate the new JE number
-    Dim nextJENo As Long
-    nextJENo = lastJE + 1
-    wshGL_EJ.Range("B1").value = nextJENo
+    gNextJENo = lastJE + 1
+    wshGL_EJ.Range("B1").value = gNextJENo
+    
+    'timeStamp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
     
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
@@ -692,14 +695,14 @@ Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xls
     For l = 9 To r
         rs.AddNew
             'Add fields to the recordset before updating it
-            rs.Fields(fGlTNoEntrée - 1).value = nextJENo
+            rs.Fields(fGlTNoEntrée - 1).value = gNextJENo
             rs.Fields(fGlTDate - 1).value = Format$(CDate(wshGL_EJ.Range("K4").value), "yyyy-mm-dd")
             If wshGL_EJ.Range("F4").value <> "Dépôt de client" Then
                 rs.Fields(fGlTDescription - 1).value = wshGL_EJ.Range("F6").value
                 rs.Fields(fGlTSource - 1).value = wshGL_EJ.Range("F4").value
             Else
                 rs.Fields(fGlTDescription - 1).value = "Client:" & wshGL_EJ.Range("B6").value & " - " & wshGL_EJ.Range("F6").value
-                rs.Fields(fGlTSource - 1).value = UCase(wshGL_EJ.Range("F4").value)
+                rs.Fields(fGlTSource - 1).value = UCase$(wshGL_EJ.Range("F4").value)
             End If
             rs.Fields(fGlTNoCompte - 1).value = wshGL_EJ.Range("L" & l).value
             rs.Fields(fGlTCompte - 1).value = wshGL_EJ.Range("E" & l).value
@@ -710,7 +713,7 @@ Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xls
                 rs.Fields(fGlTCrédit - 1).value = CDbl(Replace(wshGL_EJ.Range("I" & l).value, ".", ","))
             End If
             rs.Fields(fGlTAutreRemarque - 1).value = wshGL_EJ.Range("J" & l).value
-            rs.Fields(fGlTTimeStamp - 1).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+            rs.Fields(fGlTTimeStamp - 1).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
         rs.Update
     Next l
     
@@ -740,6 +743,10 @@ Sub GL_Trans_Add_Record_Locally(r As Long) 'Write records locally
     Dim JENo As Long
     JENo = wshGL_EJ.Range("B1").value
     
+    'timeStamp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
+    
     'What is the last used row in GL_Trans ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
     lastUsedRow = wshGL_Trans.Cells(wshGL_Trans.Rows.count, "A").End(xlUp).row
@@ -756,7 +763,7 @@ Sub GL_Trans_Add_Record_Locally(r As Long) 'Write records locally
             wshGL_Trans.Range("D" & rowToBeUsed).value = wshGL_EJ.Range("F4").value
         Else
             wshGL_Trans.Range("C" & rowToBeUsed) = "Client:" & wshGL_EJ.Range("B6").value & " - " & wshGL_EJ.Range("F6").value
-            wshGL_Trans.Range("D" & rowToBeUsed).value = UCase(wshGL_EJ.Range("F4").value)
+            wshGL_Trans.Range("D" & rowToBeUsed).value = UCase$(wshGL_EJ.Range("F4").value)
         End If
         wshGL_Trans.Range("E" & rowToBeUsed).value = wshGL_EJ.Range("L" & i).value
         wshGL_Trans.Range("F" & rowToBeUsed).value = wshGL_EJ.Range("E" & i).value
@@ -767,7 +774,7 @@ Sub GL_Trans_Add_Record_Locally(r As Long) 'Write records locally
             wshGL_Trans.Range("H" & rowToBeUsed).value = wshGL_EJ.Range("I" & i).value
         End If
         wshGL_Trans.Range("I" & rowToBeUsed).value = wshGL_EJ.Range("J" & i).value
-        wshGL_Trans.Range("J" & rowToBeUsed).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+        wshGL_Trans.Range("J" & rowToBeUsed).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
         rowToBeUsed = rowToBeUsed + 1
         
         Call Log_Record("modGL_EJ:GL_Trans_Add_Record_Locally - i = " & i, -1)
@@ -816,6 +823,10 @@ Sub GL_EJ_Recurrente_Add_Record_To_DB(r As Long) 'Write/Update a record to exter
     nextEJANo = lastEJA + 1
     wshGL_EJ_Recurrente.Range("B2").value = nextEJANo
 
+    'timeStamp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
+    
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
     rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
@@ -835,7 +846,7 @@ Sub GL_EJ_Recurrente_Add_Record_To_DB(r As Long) 'Write/Update a record to exter
                 rs.Fields(fGlEjRCrédit - 1).value = CDbl(Replace(wshGL_EJ.Range("I" & l).value, ".", ","))
             End If
             rs.Fields(fGlEjRAutreRemarque - 1).value = wshGL_EJ.Range("J" & l).value
-            rs.Fields(fGlEjRTimeStamp - 1).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+            rs.Fields(fGlEjRTimeStamp - 1).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
         rs.Update
     Next l
     
@@ -865,6 +876,10 @@ Sub GL_EJ_Recurrente_Add_Record_Locally(r As Long) 'Write records to local file
     Dim JENo As Long
     JENo = wshGL_EJ_Recurrente.Range("B2").value
     
+    'timeStamp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
+    
     'What is the last used row in EJ_AUto ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
     lastUsedRow = wshGL_EJ_Recurrente.Cells(wshGL_EJ_Recurrente.Rows.count, "C").End(xlUp).row
@@ -883,7 +898,7 @@ Sub GL_EJ_Recurrente_Add_Record_Locally(r As Long) 'Write records to local file
             wshGL_EJ_Recurrente.Range("F" & rowToBeUsed).value = wshGL_EJ.Range("I" & i).value
         End If
         wshGL_EJ_Recurrente.Range("G" & rowToBeUsed).value = wshGL_EJ.Range("J" & i).value
-        wshGL_EJ_Recurrente.Range("H" & rowToBeUsed).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+        wshGL_EJ_Recurrente.Range("H" & rowToBeUsed).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
         
         rowToBeUsed = rowToBeUsed + 1
     Next i

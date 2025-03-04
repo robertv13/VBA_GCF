@@ -187,7 +187,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
             End With
             With wsDest.Range("C" & r)
 '                If InStr(.value, "Total ") = 1 Then
-'                    .value = Mid(.value, 7)
+'                    .value = Mid$(.value, 7)
 '                End If
                 If .value = "Total général" Then
                     .value = "G r a n d   T o t a l"
@@ -367,14 +367,14 @@ Sub Build_Hours_Summary(rowSelected As Long)
     With Cells(rTotal, "K")
         .HorizontalAlignment = xlRight
         .FormulaR1C1 = "=SUM(R" & saveR & "C:R[-1]C)"
-'        .value = Format(t, "#,##0.00")
+'        .value = Format$(t, "#,##0.00")
         .Font.Bold = True
     End With
     
     'Fees Total
     With Cells(rowSelected, "M")
         .HorizontalAlignment = xlRight
-'        .value = Format(tdollars, "#,##0.00$")
+'        .value = Format$(tdollars, "#,##0.00$")
         .FormulaR1C1 = "=SUM(R" & saveR & "C:R[-1]C)"
         .Font.Bold = True
     End With
@@ -508,6 +508,10 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As L
         projetID = rs.Fields("MaxValue").value + 1
     End If
     
+    'timeStamp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
+    
     'Close the previous recordset (no longer needed)
     rs.Close
     
@@ -516,7 +520,7 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As L
     rs.Open strSQL, conn, 2, 3
     
     'Read all line from TEC_Analyse
-    Dim dateTEC As String, timeStamp As String
+    Dim dateTEC As String
     Dim l As Long
     For l = fr To lr
         rs.AddNew
@@ -532,8 +536,7 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As L
             rs.Fields(fFacPDProf - 1).value = wshTEC_Analyse.Range("F" & l).value
             rs.Fields(fFacPDestDetruite - 1) = 0 'Faux
             rs.Fields(fFacPDHeures - 1).value = CDbl(wshTEC_Analyse.Range("H" & l).value)
-            timeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-            rs.Fields(fFacPDTimeStamp - 1).value = timeStamp
+            rs.Fields(fFacPDTimeStamp - 1).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
         rs.Update
     Next l
     
@@ -564,7 +567,11 @@ Sub FAC_Projets_Détails_Add_Record_Locally(clientID As String, fr As Long, lr As
     lastUsedRow = wshFAC_Projets_Détails.Cells(wshFAC_Projets_Détails.Rows.count, "A").End(xlUp).row
     rn = lastUsedRow + 1
     
-    Dim dateTEC As String, timeStamp As String
+    'timeStamp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
+    
+    Dim dateTEC As String
     Dim i As Long
     For i = fr To lr
         wshFAC_Projets_Détails.Range("A" & rn).value = projetID
@@ -577,8 +584,7 @@ Sub FAC_Projets_Détails_Add_Record_Locally(clientID As String, fr As Long, lr As
         wshFAC_Projets_Détails.Range("G" & rn).value = wshTEC_Analyse.Range("F" & i).value
         wshFAC_Projets_Détails.Range("H" & rn).value = wshTEC_Analyse.Range("H" & i).value
         wshFAC_Projets_Détails.Range("I" & rn).value = "FAUX"
-        timeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-        wshFAC_Projets_Détails.Range("J" & rn).value = timeStamp
+        wshFAC_Projets_Détails.Range("J" & rn).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
         rn = rn + 1
     Next i
     
@@ -628,13 +634,16 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
     conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
     
+    'timeStamp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
+    
     Dim strSQL As String
     strSQL = "SELECT * FROM [" & destinationTab & "] WHERE 1=0"
     
     Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
     rs.Open strSQL, conn, 2, 3
     
-    Dim timeStamp As String
     Dim c As Long
     Dim l As Long
     rs.AddNew
@@ -680,8 +689,7 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
         End If
         
         rs.Fields(fFacPEestDetruite - 1).value = 0 'Faux
-        timeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-        rs.Fields(fFacPETimeStamp - 1).value = timeStamp
+        rs.Fields(fFacPETimeStamp - 1).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
     rs.Update
     
     'Close recordset and connection
@@ -711,7 +719,11 @@ Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String,
     lastUsedRow = wshFAC_Projets_Entête.Cells(wshFAC_Projets_Entête.Rows.count, "A").End(xlUp).row
     rn = lastUsedRow + 1
     
-    Dim dateTEC As String, timeStamp As String
+    'timeStamp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
+    
+    Dim dateTEC As String
     wshFAC_Projets_Entête.Range("A" & rn).value = projetID
     wshFAC_Projets_Entête.Range("B" & rn).value = nomClient
     wshFAC_Projets_Entête.Range("C" & rn).value = clientID
@@ -725,8 +737,7 @@ Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String,
         Next j
     Next i
     wshFAC_Projets_Entête.Range("Z" & rn).value = "FAUX"
-    timeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-    wshFAC_Projets_Entête.Range("AA" & rn).value = timeStamp
+    wshFAC_Projets_Entête.Range("AA" & rn).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
     
     Application.ScreenUpdating = True
 

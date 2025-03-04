@@ -3,7 +3,7 @@ Option Explicit
 
 'Variables globales pour le module
 Public regulNo As Long
-Public nextJENo As Long
+Public gNextJENo As Long
 
 Sub MAJ_Regularisation() '2025-01-14 @ 12:00
     
@@ -119,6 +119,10 @@ Sub REGUL_Add_DB() 'Write to MASTER.xlsx
     'Calculate the new PmtNo
     regulNo = lr + 1
 
+    'timeStamp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
+    
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
     rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
@@ -135,7 +139,7 @@ Sub REGUL_Add_DB() 'Write to MASTER.xlsx
         rs.Fields(fREGULTPS - 1).value = CCur(ufEncRégularisation.txtTPS)
         rs.Fields(fREGULTVQ - 1).value = CCur(ufEncRégularisation.txtTVQ)
         rs.Fields(fREGULDescription - 1).value = wshENC_Saisie.Range("F9").value
-        rs.Fields(fREGULTimeStamp - 1).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+        rs.Fields(fREGULTimeStamp - 1).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
     'Update the recordset (create the record)
     rs.Update
     
@@ -167,6 +171,10 @@ Sub REGUL_Add_Locally() '2024-08-22 @ 10:38
     lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
     
+    'timeStamp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
+    
     ws.Range("A" & rowToBeUsed).value = regulNo
     ws.Range("B" & rowToBeUsed).value = ufEncRégularisation.cbbNoFacture
     ws.Range("C" & rowToBeUsed).value = CDate(wshENC_Saisie.Range("K5").value)
@@ -177,7 +185,7 @@ Sub REGUL_Add_Locally() '2024-08-22 @ 10:38
     ws.Range("H" & rowToBeUsed).value = CCur(ufEncRégularisation.txtTPS)
     ws.Range("I" & rowToBeUsed).value = CCur(ufEncRégularisation.txtTVQ)
     ws.Range("J" & rowToBeUsed).value = wshENC_Saisie.Range("F9").value
-    ws.Range("K" & rowToBeUsed).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("K" & rowToBeUsed).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
     
     Application.ScreenUpdating = True
 
@@ -333,18 +341,21 @@ Sub REGUL_GL_Posting_DB(no As Long, dt As Date, nom As String, desc As String)
     End If
     
     'Calculate the new ID
-'    Dim nextJENo As Long
-    nextJENo = lastJE + 1
+    gNextJENo = lastJE + 1
 
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
     rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
     
+    'timeStamp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
+    
     'Crédit - Honoraires
     If ufEncRégularisation.txtHonoraires.value <> 0 Then
         rs.AddNew
             'Cnstruction des champs
-            rs.Fields(fGlTNoEntrée - 1).value = nextJENo
+            rs.Fields(fGlTNoEntrée - 1).value = gNextJENo
             rs.Fields(fGlTDate - 1).value = Format$(dt, "yyyy-mm-dd")
             rs.Fields(fGlTDescription - 1).value = nom
             rs.Fields(fGlTSource - 1).value = "RÉGULARISATION:" & Format$(no, "00000")
@@ -352,7 +363,7 @@ Sub REGUL_GL_Posting_DB(no As Long, dt As Date, nom As String, desc As String)
             rs.Fields(fGlTCompte - 1).value = "Revenus de consultation"
             rs.Fields(fGlTDébit - 1).value = -CCur(ufEncRégularisation.txtHonoraires.value)
             rs.Fields(fGlTAutreRemarque - 1).value = desc
-            rs.Fields(fGlTTimeStamp - 1).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+            rs.Fields(fGlTTimeStamp - 1).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
         rs.Update
     End If
     
@@ -360,7 +371,7 @@ Sub REGUL_GL_Posting_DB(no As Long, dt As Date, nom As String, desc As String)
     If ufEncRégularisation.txtFraisDivers.value <> 0 Then
         rs.AddNew
             'Cnstruction des champs
-            rs.Fields(fGlTNoEntrée - 1).value = nextJENo
+            rs.Fields(fGlTNoEntrée - 1).value = gNextJENo
             rs.Fields(fGlTDate - 1).value = Format$(dt, "yyyy-mm-dd")
             rs.Fields(fGlTDescription - 1).value = nom
             rs.Fields(fGlTSource - 1).value = "RÉGULARISATION:" & Format$(no, "00000")
@@ -368,7 +379,7 @@ Sub REGUL_GL_Posting_DB(no As Long, dt As Date, nom As String, desc As String)
             rs.Fields(fGlTCompte - 1).value = "Revenus - Frais de poste"
             rs.Fields(fGlTDébit - 1).value = -CCur(ufEncRégularisation.txtFraisDivers.value)
             rs.Fields(fGlTAutreRemarque - 1).value = desc
-            rs.Fields(fGlTTimeStamp - 1).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+            rs.Fields(fGlTTimeStamp - 1).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
         rs.Update
     End If
     
@@ -376,7 +387,7 @@ Sub REGUL_GL_Posting_DB(no As Long, dt As Date, nom As String, desc As String)
     If ufEncRégularisation.txtTPS.value <> 0 Then
         rs.AddNew
             'Cnstruction des champs
-            rs.Fields(fGlTNoEntrée - 1).value = nextJENo
+            rs.Fields(fGlTNoEntrée - 1).value = gNextJENo
             rs.Fields(fGlTDate - 1).value = Format$(dt, "yyyy-mm-dd")
             rs.Fields(fGlTDescription - 1).value = nom
             rs.Fields(fGlTSource - 1).value = "RÉGULARISATION:" & Format$(no, "00000")
@@ -384,7 +395,7 @@ Sub REGUL_GL_Posting_DB(no As Long, dt As Date, nom As String, desc As String)
             rs.Fields(fGlTCompte - 1).value = "TPS percues"
             rs.Fields(fGlTDébit - 1).value = -CCur(ufEncRégularisation.txtTPS.value)
             rs.Fields(fGlTAutreRemarque - 1).value = desc
-            rs.Fields(fGlTTimeStamp - 1).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+            rs.Fields(fGlTTimeStamp - 1).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
         rs.Update
     End If
     
@@ -392,7 +403,7 @@ Sub REGUL_GL_Posting_DB(no As Long, dt As Date, nom As String, desc As String)
     If ufEncRégularisation.txtTVQ.value <> 0 Then
         rs.AddNew
             'Cnstruction des champs
-            rs.Fields(fGlTNoEntrée - 1).value = nextJENo
+            rs.Fields(fGlTNoEntrée - 1).value = gNextJENo
             rs.Fields(fGlTDate - 1).value = Format$(dt, "yyyy-mm-dd")
             rs.Fields(fGlTDescription - 1).value = nom
             rs.Fields(fGlTSource - 1).value = "RÉGULARISATION:" & Format$(no, "00000")
@@ -400,7 +411,7 @@ Sub REGUL_GL_Posting_DB(no As Long, dt As Date, nom As String, desc As String)
             rs.Fields(fGlTCompte - 1).value = "TVQ percues"
             rs.Fields(fGlTDébit - 1).value = -CCur(ufEncRégularisation.txtTVQ.value)
             rs.Fields(fGlTAutreRemarque - 1).value = desc
-            rs.Fields(fGlTTimeStamp - 1).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+            rs.Fields(fGlTTimeStamp - 1).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
         rs.Update
     End If
     
@@ -412,7 +423,7 @@ Sub REGUL_GL_Posting_DB(no As Long, dt As Date, nom As String, desc As String)
                     CCur(ufEncRégularisation.txtTVQ.value)
     rs.AddNew
         'Add fields to the recordset before updating it
-        rs.Fields(fGlTNoEntrée - 1).value = nextJENo
+        rs.Fields(fGlTNoEntrée - 1).value = gNextJENo
         rs.Fields(fGlTDate - 1).value = Format$(dt, "yyyy-mm-dd")
         rs.Fields(fGlTDescription - 1).value = nom
         rs.Fields(fGlTSource - 1).value = "RÉGULARISATION:" & Format$(no, "00000")
@@ -420,7 +431,7 @@ Sub REGUL_GL_Posting_DB(no As Long, dt As Date, nom As String, desc As String)
         rs.Fields(fGlTCompte - 1).value = "Comptes clients"
         rs.Fields(fGlTCrédit - 1).value = -regulTotal
         rs.Fields(fGlTAutreRemarque - 1).value = desc
-        rs.Fields(fGlTTimeStamp - 1).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+        rs.Fields(fGlTTimeStamp - 1).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
     rs.Update
     
     'Close recordset and connection
@@ -451,10 +462,14 @@ Sub REGUL_GL_Posting_Locally(no As Long, dt As Date, nom As String, desc As Stri
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
 
+    'timeStamp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
+    
     With ws
         'Credit side - Honoraires
         If ufEncRégularisation.txtHonoraires.value <> 0 Then
-            .Range("A" & rowToBeUsed).value = nextJENo
+            .Range("A" & rowToBeUsed).value = gNextJENo
             .Range("B" & rowToBeUsed).value = CDate(dt)
             .Range("C" & rowToBeUsed).value = nom
             .Range("D" & rowToBeUsed).value = "RÉGULARISATION:" & Format$(no, "00000")
@@ -462,13 +477,13 @@ Sub REGUL_GL_Posting_Locally(no As Long, dt As Date, nom As String, desc As Stri
             .Range("F" & rowToBeUsed).value = "Revenus de consultation"
             .Range("G" & rowToBeUsed).value = -CCur(ufEncRégularisation.txtHonoraires.value)
             .Range("I" & rowToBeUsed).value = desc
-            .Range("J" & rowToBeUsed).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+            .Range("J" & rowToBeUsed).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
              rowToBeUsed = rowToBeUsed + 1
        End If
         
         'Credit side - Frais divers
         If ufEncRégularisation.txtFraisDivers.value <> 0 Then
-            .Range("A" & rowToBeUsed).value = nextJENo
+            .Range("A" & rowToBeUsed).value = gNextJENo
             .Range("B" & rowToBeUsed).value = CDate(dt)
             .Range("C" & rowToBeUsed).value = nom
             .Range("D" & rowToBeUsed).value = "RÉGULARISATION:" & Format$(no, "00000")
@@ -476,13 +491,13 @@ Sub REGUL_GL_Posting_Locally(no As Long, dt As Date, nom As String, desc As Stri
             .Range("F" & rowToBeUsed).value = "Revenus - Frais de poste"
             .Range("G" & rowToBeUsed).value = -CCur(ufEncRégularisation.txtFraisDivers.value)
             .Range("I" & rowToBeUsed).value = desc
-            .Range("J" & rowToBeUsed).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+            .Range("J" & rowToBeUsed).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
             rowToBeUsed = rowToBeUsed + 1
         End If
     
         'Credit side - TPS
         If ufEncRégularisation.txtTPS.value <> 0 Then
-            .Range("A" & rowToBeUsed).value = nextJENo
+            .Range("A" & rowToBeUsed).value = gNextJENo
             .Range("B" & rowToBeUsed).value = CDate(dt)
             .Range("C" & rowToBeUsed).value = nom
             .Range("D" & rowToBeUsed).value = "RÉGULARISATION:" & Format$(no, "00000")
@@ -490,13 +505,13 @@ Sub REGUL_GL_Posting_Locally(no As Long, dt As Date, nom As String, desc As Stri
             .Range("F" & rowToBeUsed).value = "TPS percues"
             .Range("G" & rowToBeUsed).value = -CCur(ufEncRégularisation.txtTPS.value)
             .Range("I" & rowToBeUsed).value = desc
-            .Range("J" & rowToBeUsed).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+            .Range("J" & rowToBeUsed).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
             rowToBeUsed = rowToBeUsed + 1
         End If
     
         'Credit side - TVQ
         If ufEncRégularisation.txtTVQ.value <> 0 Then
-            .Range("A" & rowToBeUsed).value = nextJENo
+            .Range("A" & rowToBeUsed).value = gNextJENo
             .Range("B" & rowToBeUsed).value = CDate(dt)
             .Range("C" & rowToBeUsed).value = nom
             .Range("D" & rowToBeUsed).value = "RÉGULARISATION:" & Format$(no, "00000")
@@ -504,7 +519,7 @@ Sub REGUL_GL_Posting_Locally(no As Long, dt As Date, nom As String, desc As Stri
             .Range("F" & rowToBeUsed).value = "TVQ percues"
             .Range("G" & rowToBeUsed).value = -CCur(ufEncRégularisation.txtTVQ.value)
             .Range("I" & rowToBeUsed).value = desc
-            .Range("J" & rowToBeUsed).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+            .Range("J" & rowToBeUsed).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
             rowToBeUsed = rowToBeUsed + 1
         End If
         
@@ -516,7 +531,7 @@ Sub REGUL_GL_Posting_Locally(no As Long, dt As Date, nom As String, desc As Stri
                     CCur(ufEncRégularisation.txtTVQ.value)
     
         If regulTotal <> 0 Then
-            .Range("A" & rowToBeUsed).value = nextJENo
+            .Range("A" & rowToBeUsed).value = gNextJENo
             .Range("B" & rowToBeUsed).value = CDate(dt)
             .Range("C" & rowToBeUsed).value = nom
             .Range("D" & rowToBeUsed).value = "RÉGULARISATION:" & Format$(no, "00000")
@@ -524,7 +539,7 @@ Sub REGUL_GL_Posting_Locally(no As Long, dt As Date, nom As String, desc As Stri
             .Range("F" & rowToBeUsed).value = "Comptes clients"
             .Range("H" & rowToBeUsed).value = -regulTotal
             .Range("I" & rowToBeUsed).value = desc
-            .Range("J" & rowToBeUsed).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+            .Range("J" & rowToBeUsed).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
             rowToBeUsed = rowToBeUsed + 1
         End If
     End With

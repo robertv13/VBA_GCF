@@ -535,7 +535,7 @@ Function Fn_ObtenirTECFacturésPourFacture(invNo As String) As Variant
     Dim rowCount As Long
     Dim i As Long
     For i = 3 To lastUsedRow
-        If wsTEC.Cells(i, 16).value = invNo And UCase(wsTEC.Cells(i, 14).value) <> "VRAI" Then
+        If wsTEC.Cells(i, 16).value = invNo And UCase$(wsTEC.Cells(i, 14).value) <> "VRAI" Then
             rowCount = rowCount + 1
             resultArr(rowCount) = i
         End If
@@ -835,7 +835,7 @@ Function Fn_ValiderCourriel(ByVal adresses As String) As Boolean '2024-10-26 @ 1
     'Vérifier chaque adresse
     Dim adresse As Variant
     For Each adresse In arrAdresse
-        adresse = Trim(adresse)
+        adresse = Trim$(adresse)
         'Passer si l'adresse est vide (Aucune adresse est aussi permis)
         If adresse <> "" Then
             'Si l'adresse ne correspond pas au pattern, renvoyer Faux
@@ -1108,9 +1108,9 @@ Public Function Fn_Strip_Contact_From_Client_Name(cn As String) '2024-08-15 @ 07
     Dim cn_purged As String
     
     If posOSB > 1 Then
-        Fn_Strip_Contact_From_Client_Name = Trim(Left(cn, posOSB - 1) & Mid(cn, posCSB + 1))
+        Fn_Strip_Contact_From_Client_Name = Trim$(Left$(cn, posOSB - 1) & Mid$(cn, posCSB + 1))
     Else
-        Fn_Strip_Contact_From_Client_Name = Trim(Mid(cn, posCSB + 1))
+        Fn_Strip_Contact_From_Client_Name = Trim$(Mid$(cn, posCSB + 1))
     End If
     
     'Enlever les doubles espaces
@@ -1407,7 +1407,7 @@ Function Fn_Get_Next_Invoice_Number() As String '2024-09-17 @ 14:00
     Dim strLastInvoice As String
     strLastInvoice = ws.Cells(lastUsedRow, 1).value
     If strLastInvoice <> "" Then
-        strLastInvoice = Right(strLastInvoice, Len(strLastInvoice) - 3)
+        strLastInvoice = Right$(strLastInvoice, Len(strLastInvoice) - 3)
     Else
         msgBox "Problème avec les dernières lignes de la" & _
                 vbNewLine & vbNewLine & "feuille 'wshFAC_Entête'" & _
@@ -1599,7 +1599,7 @@ Function Fn_Remove_All_Accents(ByVal Text As String) As String
     'Remplacer les accents par des caractères non accentués
     Dim i As Long
     For i = 1 To Len(AccChars)
-        Text = Replace(Text, Mid(AccChars, i, 1), Mid(RegChars, i, 1))
+        Text = Replace(Text, Mid$(AccChars, i, 1), Mid$(RegChars, i, 1))
     Next i
 
     Fn_Remove_All_Accents = Text
@@ -1654,7 +1654,7 @@ Function Fn_Count_Char_Occurrences(ByVal inputString As String, ByVal charToCoun
     'Loop through each character in the string
     Dim i As Long, count As Long
     For i = 1 To Len(inputString)
-        If Mid(inputString, i, 1) = charToCount Then
+        If Mid$(inputString, i, 1) = charToCount Then
             count = count + 1
         End If
     Next i
@@ -1763,7 +1763,7 @@ Function Fn_Nettoyer_Fin_Chaine(s As String) '2024-11-07 @ 16:57
     Fn_Nettoyer_Fin_Chaine = s
     
     'Supprimer les retours à la ligne, les sauts de ligne et les espaces inutiles
-    Fn_Nettoyer_Fin_Chaine = Trim(Replace(Replace(Replace(s, vbCrLf, ""), vbCr, ""), vbLf, ""))
+    Fn_Nettoyer_Fin_Chaine = Trim$(Replace(Replace(Replace(s, vbCrLf, ""), vbCr, ""), vbLf, ""))
 
 End Function
 
@@ -1870,13 +1870,13 @@ Function ExtraireSecondes(chaine As String) As Double
     chaine = Replace(chaine, "'", "")
     
     If InStr(chaine, " = ") > 0 Then
-        chaine = Right(chaine, Len(chaine) - InStr(chaine, " = ") - 2)
+        chaine = Right$(chaine, Len(chaine) - InStr(chaine, " = ") - 2)
     End If
     
     'Trouve la position de " secondes"
     pos = InStr(chaine, " secondes")
     If pos > 0 Then
-        secondes = Left(chaine, pos - 1)
+        secondes = Left$(chaine, pos - 1)
         ExtraireSecondes = CStr(secondes)
     Else
         'Si " secondes" n'est pas trouvé, retourne une chaîne vide

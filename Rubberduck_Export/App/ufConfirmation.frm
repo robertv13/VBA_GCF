@@ -39,13 +39,13 @@ Private Sub UserForm_Initialize()
                     newItem.SubItems(1) = Facture(0)
                     newItem.SubItems(2) = Facture(1)
                     'Ajustement sur le nom du client
-                    nomClient = Trim(Facture(2))
+                    nomClient = Trim$(Facture(2))
                     If Len(nomClient) > 60 Then
-                        nomClient = Left(nomClient, 60)
+                        nomClient = Left$(nomClient, 60)
                     Else
                         nomClient = nomClient + Space(60 - Len(nomClient))
                     End If
-'                    nomClient = Left(nomClient, 55) & "   * Sélectionnée *"
+'                    nomClient = Left$(nomClient, 55) & "   * Sélectionnée *"
                     newItem.SubItems(3) = nomClient
                     newItem.SubItems(4) = Facture(3)
                 Else
@@ -74,7 +74,7 @@ Private Sub ListView1_ItemClick(ByVal item As MSComctlLib.listItem)
     Dim nomClient As String
     Dim totalFacture As String
     
-    noFacture = Trim(item.SubItems(1))
+    noFacture = Trim$(item.SubItems(1))
     
     Dim PDFInvoicePath As String
     PDFInvoicePath = wshAdmin.Range("F5").value & FACT_PDF_PATH & _
@@ -96,7 +96,7 @@ Private Sub ListView1_ItemCheck(ByVal item As MSComctlLib.listItem)
 
     'Récupérer la valeur de la quatrième colonne
     Dim valeur As Currency
-    valeur = CCur(Trim(item.SubItems(4)))
+    valeur = CCur(Trim$(item.SubItems(4)))
 
     'Ajouter ou soustraire la valeur en fonction de l'état de la case à cocher
     If item.Checked Then
@@ -138,9 +138,9 @@ Public Sub MarquerLigneSelectionnee(item As listItem)
 
     'Vérifie si l'élément n'a pas déjà la mention "   - Sélectionnée -"
     If InStr(item.SubItems(3), "   - Sélectionnée -") = 0 Then
-        item.SubItems(3) = Left(item.SubItems(3), 60) & "   - Sélectionnée -"
+        item.SubItems(3) = Left$(item.SubItems(3), 60) & "   - Sélectionnée -"
     Else
-        item.SubItems(3) = Left(item.SubItems(3), 60)
+        item.SubItems(3) = Left$(item.SubItems(3), 60)
     End If
     
 End Sub

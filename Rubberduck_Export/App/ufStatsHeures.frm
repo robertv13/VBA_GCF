@@ -61,8 +61,8 @@ Private Sub lbxDatesSemaines_Click_or_DblClick(ByVal valeur As Variant) '2024-12
         'Récupérer la semaine sélectionnée
         selectedWeek = lbxDatesSemaines.List(lbxDatesSemaines.ListIndex)
         Dim dateLundi As Date, dateDimanche As Date
-        dateLundi = Left(selectedWeek, InStr(selectedWeek, " au ") - 1)
-        dateDimanche = Right(selectedWeek, InStr(selectedWeek, " au ") - 1)
+        dateLundi = Left$(selectedWeek, InStr(selectedWeek, " au ") - 1)
+        dateDimanche = Right$(selectedWeek, InStr(selectedWeek, " au ") - 1)
         
         'Il doit y avoir un écart de 6 entre les deux dates (semaine)
         If dateDimanche - dateLundi <> 6 Then
@@ -73,9 +73,9 @@ Private Sub lbxDatesSemaines_Click_or_DblClick(ByVal valeur As Variant) '2024-12
         'Initialisation du listBox et des totaux
         ufStatsHeures.MultiPage1.Pages("pSemaine").lbxSemaine.RowSource = ""
         ufStatsHeures.MultiPage1.Pages("pSemaine").lbxSemaine.Clear
-        ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresNettes.value = Format(0, "##0.00") 'Formatage du total en deux décimales
-        ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresFact.value = Format(0, "##0.00") 'Formatage du total en deux décimales
-        ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresNF.value = Format(0, "##0.00") 'Formatage du total en deux décimales
+        ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresNettes.value = Format$(0, "##0.00") 'Formatage du total en deux décimales
+        ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresFact.value = Format$(0, "##0.00") 'Formatage du total en deux décimales
+        ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresNF.value = Format$(0, "##0.00") 'Formatage du total en deux décimales
 
         'Envoie les deux dates à wshTEC_TDB_Data pour les AdvancedFilters
         Dim rngCriteriaDate1 As Range
@@ -147,9 +147,9 @@ Sub AddColonnesSemaine()
         Format$(wshTEC_TDB_Data.Range("T7").value, wshAdmin.Range("B1").value) & " au " & _
         Format$(wshTEC_TDB_Data.Range("U7").value, wshAdmin.Range("B1").value) & ") *"
     
-    ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresNettes.value = Format(t1, "#,##0.00") 'Formatage du total en deux décimales
-    ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresFact.value = Format(t2, "#,##0.00") 'Formatage du total en deux décimales
-    ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresNF.value = Format(t3, "#,##0.00") 'Formatage du total en deux décimales
+    ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresNettes.value = Format$(t1, "#,##0.00") 'Formatage du total en deux décimales
+    ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresFact.value = Format$(t2, "#,##0.00") 'Formatage du total en deux décimales
+    ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresNF.value = Format$(t3, "#,##0.00") 'Formatage du total en deux décimales
 
     'Libérer la mémoire
     Set rngResult = Nothing
@@ -177,9 +177,9 @@ Sub AddColonnesMois()
     t3 = Application.WorksheetFunction.Sum(rngResult.Columns(8))
     
     'Affiche le total dans la TextBox
-    ufStatsHeures.MultiPage1.Pages("pMois").txtMoisHresNettes.value = Format(t1, "#,##0.00") 'Formatage du total en deux décimales
-    ufStatsHeures.MultiPage1.Pages("pMois").txtMoisHresFact.value = Format(t2, "#,##0.00") 'Formatage du total en deux décimales
-    ufStatsHeures.MultiPage1.Pages("pMois").txtMoisHresNF.value = Format(t3, "#,##0.00") 'Formatage du total en deux décimales
+    ufStatsHeures.MultiPage1.Pages("pMois").txtMoisHresNettes.value = Format$(t1, "#,##0.00") 'Formatage du total en deux décimales
+    ufStatsHeures.MultiPage1.Pages("pMois").txtMoisHresFact.value = Format$(t2, "#,##0.00") 'Formatage du total en deux décimales
+    ufStatsHeures.MultiPage1.Pages("pMois").txtMoisHresNF.value = Format$(t3, "#,##0.00") 'Formatage du total en deux décimales
 
     'Libérer la mémoire
     Set rngResult = Nothing
@@ -207,9 +207,9 @@ Sub AddColonnesTrimestre()
     t3 = Application.WorksheetFunction.Sum(rngResult.Columns(8))
     
     'Affiche le total dans la TextBox
-    ufStatsHeures.MultiPage1.Pages("pTrimestre").txtTrimHresNettes.value = Format(t1, "#,##0.00") 'Formatage du total en deux décimales
-    ufStatsHeures.MultiPage1.Pages("pTrimestre").txtTrimHresFact.value = Format(t2, "#,##0.00") 'Formatage du total en deux décimales
-    ufStatsHeures.MultiPage1.Pages("pTrimestre").txtTrimHresNF.value = Format(t3, "#,##0.00") 'Formatage du total en deux décimales
+    ufStatsHeures.MultiPage1.Pages("pTrimestre").txtTrimHresNettes.value = Format$(t1, "#,##0.00") 'Formatage du total en deux décimales
+    ufStatsHeures.MultiPage1.Pages("pTrimestre").txtTrimHresFact.value = Format$(t2, "#,##0.00") 'Formatage du total en deux décimales
+    ufStatsHeures.MultiPage1.Pages("pTrimestre").txtTrimHresNF.value = Format$(t3, "#,##0.00") 'Formatage du total en deux décimales
 
     'Libérer la mémoire
     Set rngResult = Nothing
@@ -237,9 +237,9 @@ Sub AddColonnesAnneeFinanciere()
     t3 = Application.WorksheetFunction.Sum(rngResult.Columns(8))
     
     'Affiche le total dans la TextBox
-    ufStatsHeures.MultiPage1.Pages("pAnneeFinanciere").txtAnneeFinanciereHresNettes.value = Format(t1, "#,##0.00") 'Formatage du total en deux décimales
-    ufStatsHeures.MultiPage1.Pages("pAnneeFinanciere").txtAnneeFinanciereHresFact.value = Format(t2, "#,##0.00") 'Formatage du total en deux décimales
-    ufStatsHeures.MultiPage1.Pages("pAnneeFinanciere").txtAnneeFinanciereHresNF.value = Format(t3, "#,##0.00") 'Formatage du total en deux décimales
+    ufStatsHeures.MultiPage1.Pages("pAnneeFinanciere").txtAnneeFinanciereHresNettes.value = Format$(t1, "#,##0.00") 'Formatage du total en deux décimales
+    ufStatsHeures.MultiPage1.Pages("pAnneeFinanciere").txtAnneeFinanciereHresFact.value = Format$(t2, "#,##0.00") 'Formatage du total en deux décimales
+    ufStatsHeures.MultiPage1.Pages("pAnneeFinanciere").txtAnneeFinanciereHresNF.value = Format$(t3, "#,##0.00") 'Formatage du total en deux décimales
 
     'Libérer la mémoire
     Set rngResult = Nothing

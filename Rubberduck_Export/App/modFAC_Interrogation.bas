@@ -285,7 +285,7 @@ Sub FAC_Historique_Montrer_Bouton_Afficher()
     
     If IsDate(wshFAC_Interrogation.Range("G6").value) And _
         IsDate(wshFAC_Interrogation.Range("I6").value) And _
-        Trim(wshFAC_Interrogation.Range("D4").value) <> "" Then
+        Trim$(wshFAC_Interrogation.Range("D4").value) <> "" Then
         shp.Top = 70
         shp.Visible = True
         Set shp = wshFAC_Interrogation.Shapes("shpAutreClient")
@@ -522,7 +522,7 @@ Sub AfficherNouvelleFeuille_Stats(invNo As String, nomClient As String, dateFact
     ws.Range("D6").Font.Italic = True
     ws.Range("D6").Font.size = 9
     
-    If Len(nomClient) > 59 Then nomClient = Left(nomClient, 59) & "..."
+    If Len(nomClient) > 59 Then nomClient = Left$(nomClient, 59) & "..."
     
     With ws.Range("E6")
         .value = nomClient
@@ -800,7 +800,7 @@ Function ObtenirTableauTEC(numeroFacture As String) As Variant
             If InStr(ws.Cells(r, 11).value, "*** - [Sommaire des TEC] pour la facture") = 1 Then
                 'Exemple de remplissage du tableau TEC avec des données en fonction du numéro de facture
                 indice = indice + 1
-                prof = Trim(Mid(ws.Cells(r, 11).value, 44))
+                prof = Trim$(Mid$(ws.Cells(r, 11).value, 44))
                 hres = ws.Cells(r, 12).value
                 taux = ws.Cells(r, 13).value
                 valeur = ws.Cells(r, 14).value
@@ -1106,7 +1106,7 @@ Sub SupprimerFeuillesFactureInfo()
     Dim ws As Worksheet
     Application.DisplayAlerts = False
     For Each ws In ThisWorkbook.Worksheets
-        If Left(ws.Name, 12) = "FactureInfo_" Then
+        If Left$(ws.Name, 12) = "FactureInfo_" Then
             ws.Delete
         End If
     Next ws
@@ -1119,7 +1119,7 @@ Sub SupprimerFeuillesFactureCC()
     Dim ws As Worksheet
     Application.DisplayAlerts = False
     For Each ws In ThisWorkbook.Worksheets
-        If Left(ws.Name, 10) = "FactureCC_" Then
+        If Left$(ws.Name, 10) = "FactureCC_" Then
             ws.Delete
         End If
     Next ws
@@ -1190,7 +1190,7 @@ Sub PreparerRapportTECFactures()
         .Range("A1").Font.size = 12
         
         'Ajouter une date de génération du rapport
-        .Range("A2").value = "Date de création : " & Format(Date, wshAdmin.Range("B1").value)
+        .Range("A2").value = "Date de création : " & Format$(Date, wshAdmin.Range("B1").value)
         .Range("A2").Font.Italic = True
         .Range("A2").Font.size = 10
         
@@ -1461,7 +1461,7 @@ Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture
     ws.Range("C6").Font.Italic = True
     ws.Range("C6").Font.size = 9
     
-    If Len(nomClient) > 59 Then nomClient = Left(nomClient, 59) & "..."
+    If Len(nomClient) > 59 Then nomClient = Left$(nomClient, 59) & "..."
     
     With ws.Range("D6")
         .value = nomClient
@@ -1668,7 +1668,7 @@ Sub PreparerRapportTECFacturés(numeroFacture As String)
         .Range("A1").Font.size = 12
         
         'Ajouter une date de génération du rapport
-        .Range("A2").value = "Date de création : " & Format(Date, "dd/mm/yyyy")
+        .Range("A2").value = "Date de création : " & Format$(Date, "dd/mm/yyyy")
         .Range("A2").Font.Italic = True
         .Range("A2").Font.size = 10
         

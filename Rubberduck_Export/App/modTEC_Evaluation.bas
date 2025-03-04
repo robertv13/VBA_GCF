@@ -60,7 +60,7 @@ Sub TEC_Evaluation_Calcul(cutoffDate As String, ByRef maxDate As Date)
             profInit = Format$(arr(i, fTECProfID), "000") & arr(i, fTECProf)
             
             'Cette charge a-t-elle été Détruite ?
-            If UCase(arr(i, fTECEstDetruit)) = "FAUX" Then
+            If UCase$(arr(i, fTECEstDetruit)) = "FAUX" Then
                 hresNettes = arr(i, fTECHeures)
             Else
                 hresNettes = 0
@@ -68,7 +68,7 @@ Sub TEC_Evaluation_Calcul(cutoffDate As String, ByRef maxDate As Date)
             
             'Détermine si la charge -OU- le client sont non-facturable ?
             codeClient = CStr(arr(i, fTECClientID))
-            If UCase(arr(i, fTECEstFacturable)) = "FAUX" Or Fn_Is_Client_Facturable(codeClient) = False Then
+            If UCase$(arr(i, fTECEstFacturable)) = "FAUX" Or Fn_Is_Client_Facturable(codeClient) = False Then
                 hresNFact = hresNettes
             Else
                 hresFact = hresNettes
@@ -77,7 +77,7 @@ Sub TEC_Evaluation_Calcul(cutoffDate As String, ByRef maxDate As Date)
             If hresNettes <> hresNFact + hresFact Then Stop
             
             'Cette charge a-t-elle été facturée -OU- Facturée après la date limite ?
-            If UCase(arr(i, fTECEstFacturee)) = "FAUX" Or CDate(arr(i, fTECDateFacturee)) > CDate(maxDate) Then
+            If UCase$(arr(i, fTECEstFacturee)) = "FAUX" Or CDate(arr(i, fTECDateFacturee)) > CDate(maxDate) Then
                 If hresFact > 0 Then
                     hresTEC = hresFact
                 Else
@@ -183,11 +183,11 @@ Sub TEC_Evaluation_Affichage(cutoffDate As String, maxDate As Date)
         Application.ScreenUpdating = False
 
         For Each prof In Fn_Sort_Dictionary_By_Keys(gDictHours) 'Sort dictionary by keys in ascending order
-            strProf = Mid(prof, 4)
+            strProf = Mid$(prof, 4)
             profID = Fn_GetID_From_Initials(strProf)
             prenom = Fn_Get_Prenom_From_Initials(strProf)
             nom = Fn_Get_Nom_From_Initials(strProf)
-            prenom = prenom & " " & Left(nom, 1) & "."
+            prenom = prenom & " " & Left$(nom, 1) & "."
             If gDictHours(prof)(i) <> 0 Then
                 tauxHoraire = Fn_Get_Hourly_Rate(profID, ws.Range("L3").value)
                 Debug.Print i, prof, gDictHours(prof)(i), tauxHoraire, gDictHours(prof)(i) * tauxHoraire
@@ -323,7 +323,7 @@ Sub TEC_Evaluation_Procedure_ACO(cutoffDate As String)
             profInit = Format$(arr(i, fTECProfID), "000") & arr(i, fTECProf)
             
             'Cette charge a-t-elle été Détruite ?
-            If UCase(arr(i, fTECEstDetruit)) = "FAUX" Then
+            If UCase$(arr(i, fTECEstDetruit)) = "FAUX" Then
                 hresNettes = arr(i, fTECHeures)
             Else
                 hresNettes = 0
@@ -331,7 +331,7 @@ Sub TEC_Evaluation_Procedure_ACO(cutoffDate As String)
             
             'Détermine si la charge -OU- le client sont non-facturable ?
             codeClient = CStr(arr(i, fTECClientID))
-            If UCase(arr(i, fTECEstFacturable)) = "FAUX" Or Fn_Is_Client_Facturable(codeClient) = False Then
+            If UCase$(arr(i, fTECEstFacturable)) = "FAUX" Or Fn_Is_Client_Facturable(codeClient) = False Then
                 hresNFact = hresNettes
             Else
                 hresFact = hresNettes
@@ -340,7 +340,7 @@ Sub TEC_Evaluation_Procedure_ACO(cutoffDate As String)
             If hresNettes <> hresNFact + hresFact Then Stop
             
             'Cette charge a-t-elle été facturée -OU- Facturée après la date limite ?
-            If UCase(arr(i, fTECEstFacturee)) = "FAUX" Or CDate(arr(i, fTECDateFacturee)) > CDate(maxDate) Then
+            If UCase$(arr(i, fTECEstFacturee)) = "FAUX" Or CDate(arr(i, fTECDateFacturee)) > CDate(maxDate) Then
                 If hresFact > 0 Then
                     hresTEC = hresFact
                 Else
@@ -400,7 +400,7 @@ Sub TEC_Evaluation_Procedure_ACO(cutoffDate As String)
                     End Select
                 dictHours(profInit) = tableau 'Replacer le tableau dans le dictionnaire
 '                If arr(i, fTECProfID) = 3 Then
-'                    Debug.Print "999 - " & arr(i, fTECTECID), arr(i, fTECProfID), CDate(arr(i, fTECDate)), arr(i, fTECHeures), UCase(arr(i, fTECEstFacturee)), arr(i, fTECDateFacturee), hresTEC
+'                    Debug.Print "999 - " & arr(i, fTECTECID), arr(i, fTECProfID), CDate(arr(i, fTECDate)), arr(i, fTECHeures), UCase$(arr(i, fTECEstFacturee)), arr(i, fTECDateFacturee), hresTEC
 '                End If
             End If
         End If
@@ -433,11 +433,11 @@ Sub TEC_Evaluation_Procedure_ACO(cutoffDate As String)
         Application.ScreenUpdating = False
         
         For Each prof In Fn_Sort_Dictionary_By_Keys(dictHours) 'Sort dictionary by keys in ascending order
-            strProf = Mid(prof, 4)
+            strProf = Mid$(prof, 4)
             profID = Fn_GetID_From_Initials(strProf)
             prenom = Fn_Get_Prenom_From_Initials(strProf)
             nom = Fn_Get_Nom_From_Initials(strProf)
-            prenom = prenom & " " & Left(nom, 1) & "."
+            prenom = prenom & " " & Left$(nom, 1) & "."
             If dictHours(prof)(i + 0) <> 0 Then
                 tauxHoraire = Fn_Get_Hourly_Rate(profID, ws.Range("L3").value)
                 ws.Range("E" & currentRow).value = prenom

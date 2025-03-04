@@ -128,7 +128,7 @@ Sub AjouteContactDansNomClient()
         'Load data into variables
         client = ws.Cells(i, fClntFMClientNom).value
         clientID = ws.Cells(i, fClntFMClientID).value
-        contactFacturation = Trim(ws.Cells(i, fClntFMContactFacturation).value)
+        contactFacturation = Trim$(ws.Cells(i, fClntFMContactFacturation).value)
         
         'Process the data and make adjustments if necessary
         posOpenSquareBracket = InStr(client, "[")
@@ -136,7 +136,7 @@ Sub AjouteContactDansNomClient()
         
         If posOpenSquareBracket = 0 And posCloseSquareBracket = 0 Then
             If contactFacturation <> "" And InStr(client, contactFacturation) = 0 Then
-                client = Trim(client) & " [" & contactFacturation & "]"
+                client = Trim$(client) & " [" & contactFacturation & "]"
                 ws.Cells(i, 1).value = client
                 Debug.Print "#065 - " & i & " - " & client
             End If
@@ -203,12 +203,12 @@ Sub ImporterDonnéesDeClasseursFermés_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 16
     Dim totHres As Double
     Do Until rst.EOF
         rowNum = rowNum + 1
-        prof = Trim(rst.Fields(0).value)
-        clientCode = Trim(rst.Fields(2).value)
-'        clientCode = Left(client, 10)
-'            clientCode = Left(clientCode, InStr(clientCode, " -") - 1)
-        client = Trim(rst.Fields(3).value)
-'        client = Mid(client, InStr(client, " - ") + 3, Len(client))
+        prof = Trim$(rst.Fields(0).value)
+        clientCode = Trim$(rst.Fields(2).value)
+'        clientCode = Left$(client, 10)
+'            clientCode = Left$(clientCode, InStr(clientCode, " -") - 1)
+        client = Trim$(rst.Fields(3).value)
+'        client = Mid$(client, InStr(client, " - ") + 3, Len(client))
         totHres = totHres + CDbl(rst.Fields(5).value)
         
         'Is this a Valid Client ?
@@ -498,9 +498,9 @@ Sub ImporterDonnéesDeClasseursFermés_CAR() '2024-08-04 @ 07:31
         End If
         solde = rst.Fields(6).value
         
-        clientCode = Left(client, 10)
-            clientCode = Left(clientCode, InStr(clientCode, " -") - 1)
-        client = Mid(client, InStr(client, " - ") + 3, Len(client))
+        clientCode = Left$(client, 10)
+            clientCode = Left$(clientCode, InStr(clientCode, " -") - 1)
+        client = Mid$(client, InStr(client, " - ") + 3, Len(client))
         totCAR = totCAR + solde
         
         'Is this a Valid Client ?
@@ -822,8 +822,8 @@ Sub CheckClientName() '2024-08-10 @ 10:13
     Dim i As Long
     For i = 2 To lastUsedRow
         codeClient = sourceSheet.Cells(i, fClntFMClientID).value
-        nomClient = Trim(sourceSheet.Cells(i, fClntFMClientNom).value)
-        contactFact = Trim(sourceSheet.Cells(i, fClntFMContactFacturation).value)
+        nomClient = Trim$(sourceSheet.Cells(i, fClntFMClientNom).value)
+        contactFact = Trim$(sourceSheet.Cells(i, fClntFMContactFacturation).value)
         If InStr(nomClient, contactFact) = 0 Then
             Debug.Print "#072 - " & i & " : " & codeClient & " - " & nomClient & " on ajoute '" & contactFact & "'"
         End If
@@ -867,8 +867,8 @@ Sub ConstruireSommaireHeures() '2024-08-12 @ 21:09
         prof = sourceSheet.Cells(i, 3).value
         dateServ = sourceSheet.Cells(i, 4).value
         codeClient = sourceSheet.Cells(i, 5).value
-        nomClient = Trim(sourceSheet.Cells(i, 6).value)
-        hresSaisies = Trim(sourceSheet.Cells(i, 8).value)
+        nomClient = Trim$(sourceSheet.Cells(i, 6).value)
+        hresSaisies = Trim$(sourceSheet.Cells(i, 8).value)
         estFacturable = sourceSheet.Cells(i, 10).value
         estFacturee = sourceSheet.Cells(i, 12).value
         estDetruit = sourceSheet.Cells(i, 14).value
@@ -1058,7 +1058,7 @@ Sub DetecterErreurCodeClientInTEC()  '2025-03-04 @ 05:53
         codeClientTEC = wsSource.Cells(i, fTECClientID).value
         nomClientTEC = wsSource.Cells(i, fTECTDBClientNom).value
         nomClientFromMF = dictClients(codeClientTEC)
-        If Trim(nomClientTEC) <> Trim(nomClientFromMF) Then
+        If Trim$(nomClientTEC) <> Trim$(nomClientFromMF) Then
             Debug.Print "#073 - " & i & " : " & codeClientTEC & " - " & nomClientTEC & " <---> " & nomClientFromMF
 '            wsSource.Cells(i, 6).value = nomClientFromMF
             wsOutput.Cells(rowOutput, 1).value = wsSource.Cells(i, fTECTECID).value
@@ -1166,11 +1166,11 @@ Public Sub CorrigeNomClientInCAR()  '2024-08-31 @ 06:52
     Dim casDelta As Long
     For Each ws In Array("FAC_Entête|4|6", "FAC_Comptes_Clients|4|3")
         Dim param As String
-        param = Mid(ws, InStr(ws, "|") + 1)
-        ws = Left(ws, InStr(ws, "|") - 1)
+        param = Mid$(ws, InStr(ws, "|") + 1)
+        ws = Left$(ws, InStr(ws, "|") - 1)
         Dim colClientID As Long, colClientName As Long
-        colClientID = Left(param, InStr(param, "|") - 1)
-        colClientName = Right(param, Len(param) - InStr(param, "|"))
+        colClientID = Left$(param, InStr(param, "|") - 1)
+        colClientName = Right$(param, Len(param) - InStr(param, "|"))
         'Set the worksheet Object
         Set wsSource = wbSource.Sheets(ws)
         'Détermine la dernière rangée utilisée dans la feuille
@@ -1395,7 +1395,7 @@ Sub FusionnerDonnéesManquantes_CAR() '2024-08-29 @ 07:29
         t(7) = t(7) + ws2.Cells(ii, 21)
         t(8) = t(8) + ws2.Cells(ii, 22)
         
-        Debug.Print "#075 - " & "x8", invNo, ii, Format(i / lastUsedRow, "##0.00 %")
+        Debug.Print "#075 - " & "x8", invNo, ii, Format$(i / lastUsedRow, "##0.00 %")
     
     Next i
     

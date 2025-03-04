@@ -1,8 +1,8 @@
 Attribute VB_Name = "modENC_Saisie"
 Option Explicit
 
-'Variables globales pour le module
-Public lastRow As Long, lastResultRow As Long
+'TODO Is this comment still valid? => Variables globales pour le module
+Public lastRow As Long
 Private payRow As Long
 
 Sub ENC_Get_OS_Invoices(cc As String) '2024-08-21 @ 15:18
@@ -98,6 +98,7 @@ Sub ENC_Get_OS_Invoices_With_AF(cc As String)
                                         
     'Est-ce que nous avons des résultats ?
 '    lastResultRow = ws.Cells(ws.Rows.count, "P").End(xlUp).row
+    Dim lastResultRow As Long
     lastResultRow = ws.Cells(ws.Rows.count, "R").End(xlUp).row
     ws.Range("O10").value = lastResultRow - 2 & " lignes"
     
@@ -275,6 +276,10 @@ Sub ENC_Add_DB_Entete() 'Write to MASTER.xlsx
     'Calculate the new PmtNo
     wshENC_Saisie.pmtNo = lr + 1
 
+    'timeStamnp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
+    
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
     rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
@@ -288,7 +293,7 @@ Sub ENC_Add_DB_Entete() 'Write to MASTER.xlsx
         rs.Fields(fEncEPayType - 1).value = wshENC_Saisie.Range("F7").value
         rs.Fields(fEncEAmount - 1).value = CDbl(Format$(wshENC_Saisie.Range("K7").value, "#,##0.00 $"))
         rs.Fields(fEncENotes - 1).value = wshENC_Saisie.Range("F9").value
-        rs.Fields(fEncETimeStamp - 1).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+        rs.Fields(fEncETimeStamp - 1).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
     'Update the recordset (create the record)
     rs.Update
     
@@ -314,6 +319,10 @@ Sub ENC_Add_Locally_Entete() '2024-08-22 @ 10:38
     Dim currentPmtNo As Long
     currentPmtNo = wshENC_Saisie.pmtNo
     
+    'timeStamnp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
+    
     'What is the last used row in DEB_Trans ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
     lastUsedRow = wshENC_Entête.Cells(wshENC_Entête.Rows.count, "A").End(xlUp).row
@@ -326,7 +335,7 @@ Sub ENC_Add_Locally_Entete() '2024-08-22 @ 10:38
     wshENC_Entête.Cells(rowToBeUsed, fEncEPayType).value = wshENC_Saisie.Range("F7").value
     wshENC_Entête.Cells(rowToBeUsed, fEncEAmount).value = CDbl(Format$(wshENC_Saisie.Range("K7").value, "#,##0.00"))
     wshENC_Entête.Cells(rowToBeUsed, fEncENotes).value = wshENC_Saisie.Range("F9").value
-    wshENC_Entête.Cells(rowToBeUsed, fEncETimeStamp).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    wshENC_Entête.Cells(rowToBeUsed, fEncETimeStamp).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
     
     Application.ScreenUpdating = True
 
@@ -351,6 +360,10 @@ Sub ENC_Add_DB_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow As Int
         ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
     Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
+    'timeStamnp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
+    
     rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
         
     'Build the recordSet
@@ -364,7 +377,7 @@ Sub ENC_Add_DB_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow As Int
                 rs.Fields(fEncDCustomer - 1).value = wshENC_Saisie.Range("F5").value
                 rs.Fields(fEncDPayDate - 1).value = wshENC_Saisie.Range("K5").value
                 rs.Fields(fEncDPayAmount - 1).value = CDbl(Format$(wshENC_Saisie.Range("K" & r).value, "#,##0.00 $"))
-                rs.Fields(fEncDTimeStamp - 1).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+                rs.Fields(fEncDTimeStamp - 1).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
             'Update the recordset (create the record)
             rs.Update
         End If
@@ -388,6 +401,10 @@ Sub ENC_Add_Locally_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow A
     
     Application.ScreenUpdating = False
     
+    'timeStamnp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
+    
     'What is the last used row in ENC_Détails ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
     lastUsedRow = wshENC_Détails.Cells(wshENC_Détails.Rows.count, 1).End(xlUp).row
@@ -402,7 +419,7 @@ Sub ENC_Add_Locally_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow A
             wshENC_Détails.Range("C" & rowToBeUsed).value = wshENC_Saisie.Range("F5").value
             wshENC_Détails.Range("D" & rowToBeUsed).value = wshENC_Saisie.Range("K5").value
             wshENC_Détails.Range("E" & rowToBeUsed).value = CDbl(Format$(wshENC_Saisie.Range("K" & r).value, "#,##0.00"))
-            wshENC_Détails.Range("F" & rowToBeUsed).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+            wshENC_Détails.Range("F" & rowToBeUsed).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
             rowToBeUsed = rowToBeUsed + 1
         End If
     Next r
@@ -436,7 +453,7 @@ Sub ENC_Update_DB_Comptes_Clients(firstRow As Integer, lastRow As Integer) 'Writ
             wshENC_Saisie.Range("K" & r).value <> 0 Then
             'Open the recordset for the specified invoice
             Dim Inv_No As String
-            Inv_No = CStr(Trim(wshENC_Saisie.Range("F" & r).value))
+            Inv_No = CStr(Trim$(wshENC_Saisie.Range("F" & r).value))
             
             Dim strSQL As String
             strSQL = "SELECT * FROM [" & destinationTab & "] WHERE InvNo = '" & Inv_No & "'"
@@ -564,21 +581,23 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
     End If
     
     'Calculate the new ID
-    Dim nextJENo As Long
-    nextJENo = lastJE + 1
+    gNextJENo = lastJE + 1
 
     'Close the previous recordset, no longer needed and open an empty recordset
     rs.Close
     rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
     
+    Dim timeStamp As Date
+    timeStamp = Now
+    
     'Debit side
     rs.AddNew
         'Add fields to the recordset before updating it
-        rs.Fields(fGlTNoEntrée - 1).value = nextJENo
+        rs.Fields(fGlTNoEntrée - 1).value = gNextJENo
         rs.Fields(fGlTDate - 1).value = Format$(dt, "yyyy-mm-dd")
         If wshENC_Saisie.Range("F7").value = "Dépôt de client" Then
             rs.Fields(fGlTDescription - 1).value = "Client:" & wshENC_Saisie.clientCode & " - " & nom
-            rs.Fields(fGlTSource - 1).value = UCase(wshENC_Saisie.Range("F7").value) & ":" & Format$(no, "00000")
+            rs.Fields(fGlTSource - 1).value = UCase$(wshENC_Saisie.Range("F7").value) & ":" & Format$(no, "00000")
             rs.Fields(fGlTNoCompte - 1).value = ObtenirNoGlIndicateur("Produit perçu d'avance")
             rs.Fields(fGlTCompte - 1).value = "Produit perçu d'avance" 'Hardcoded
         Else
@@ -589,17 +608,17 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
         End If
         rs.Fields(fGlTDébit - 1).value = montant
         rs.Fields(fGlTAutreRemarque - 1).value = desc
-        rs.Fields(fGlTTimeStamp - 1).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+        rs.Fields(fGlTTimeStamp - 1).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
     rs.Update
     
     'Credit side
     rs.AddNew
         'Add fields to the recordset before updating it
-        rs.Fields(fGlTNoEntrée - 1).value = nextJENo
+        rs.Fields(fGlTNoEntrée - 1).value = gNextJENo
         rs.Fields(fGlTDate - 1).value = Format$(dt, "yyyy-mm-dd")
         If wshENC_Saisie.Range("F7").value = "Dépôt de client" Then
             rs.Fields(fGlTDescription - 1).value = "Client:" & wshENC_Saisie.clientCode & " - " & nom
-            rs.Fields(fGlTSource - 1).value = UCase(wshENC_Saisie.Range("F7").value) & ":" & Format$(no, "00000")
+            rs.Fields(fGlTSource - 1).value = UCase$(wshENC_Saisie.Range("F7").value) & ":" & Format$(no, "00000")
         Else
             rs.Fields(fGlTDescription - 1).value = nom
             rs.Fields(fGlTSource - 1).value = "ENCAISSEMENT:" & Format$(no, "00000")
@@ -608,7 +627,7 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
         rs.Fields(fGlTCompte - 1).value = "Comptes clients" 'Hardcoded
         rs.Fields(fGlTCrédit - 1).value = montant
         rs.Fields(fGlTAutreRemarque - 1).value = desc
-        rs.Fields(fGlTTimeStamp - 1).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+        rs.Fields(fGlTTimeStamp - 1).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
     rs.Update
 
     'Close recordset and connection
@@ -638,16 +657,19 @@ Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As Str
     lastUsedRow = wshGL_Trans.Cells(wshGL_Trans.Rows.count, 1).End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
     
-    Dim nextJENo As Long
-    nextJENo = wshENC_Saisie.Range("B10").value
+    gNextJENo = wshENC_Saisie.Range("B10").value
+    
+    'timeStamnp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
     
     With wshGL_Trans
     'Debit side
-        .Range("A" & rowToBeUsed).value = nextJENo
+        .Range("A" & rowToBeUsed).value = gNextJENo
         .Range("B" & rowToBeUsed).value = CDate(dt)
         If wshENC_Saisie.Range("F7").value = "Dépôt de client" Then
             .Range("C" & rowToBeUsed).value = "Client:" & wshENC_Saisie.clientCode & " - " & nom
-            .Range("D" & rowToBeUsed).value = UCase(wshENC_Saisie.Range("F7").value) & ":" & Format$(no, "00000")
+            .Range("D" & rowToBeUsed).value = UCase$(wshENC_Saisie.Range("F7").value) & ":" & Format$(no, "00000")
             .Range("E" & rowToBeUsed).value = ObtenirNoGlIndicateur("Produit perçu d'avance")
             .Range("F" & rowToBeUsed).value = "Produit perçu d'avance" 'Hardcoded
         Else
@@ -658,15 +680,15 @@ Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As Str
         End If
         .Range("G" & rowToBeUsed).value = montant
         .Range("I" & rowToBeUsed).value = desc
-        .Range("J" & rowToBeUsed).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+        .Range("J" & rowToBeUsed).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
         rowToBeUsed = rowToBeUsed + 1
     
     'Credit side
-        .Range("A" & rowToBeUsed).value = nextJENo
+        .Range("A" & rowToBeUsed).value = gNextJENo
         .Range("B" & rowToBeUsed).value = CDate(dt)
         If wshENC_Saisie.Range("F7").value = "Dépôt de client" Then
             .Range("C" & rowToBeUsed).value = "Client:" & wshENC_Saisie.clientCode & " - " & nom
-            .Range("D" & rowToBeUsed).value = UCase(wshENC_Saisie.Range("F7").value) & ":" & Format$(no, "00000")
+            .Range("D" & rowToBeUsed).value = UCase$(wshENC_Saisie.Range("F7").value) & ":" & Format$(no, "00000")
         Else
             .Range("C" & rowToBeUsed).value = nom
             .Range("D" & rowToBeUsed).value = "ENCAISSEMENT:" & Format$(no, "00000")
@@ -675,7 +697,7 @@ Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As Str
         .Range("F" & rowToBeUsed).value = "Comptes clients" 'Hardcoded
         .Range("H" & rowToBeUsed).value = montant
         .Range("I" & rowToBeUsed).value = desc
-        .Range("J" & rowToBeUsed).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+        .Range("J" & rowToBeUsed).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
     End With
     
     Application.ScreenUpdating = True

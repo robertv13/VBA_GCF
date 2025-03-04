@@ -362,65 +362,6 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
     
 End Sub
 
-'Sub LireFichierLogSaisieHeuresTXT() '2024-10-17 @ 20:13
-'
-'    'Initialisation de la boîte de dialogue FileDialog pour choisir le fichier
-'    Dim fd As fileDialog
-'    Set fd = Application.fileDialog(msoFileDialogFilePicker)
-'
-'    'Configuration des filtres de fichiers (TXT uniquement)
-'    fd.Title = "Sélectionnez un fichier TXT"
-'    fd.Filters.Clear
-'    fd.Filters.Add "Fichiers Texte", "*.txt"
-'
-'    'Si l'utilisateur sélectionne un fichier, filePath contiendra son chemin
-'    Dim filePath As String
-'    If fd.show = -1 Then
-'        filePath = fd.selectedItems(1)
-'    Else
-'        msgBox "Aucun fichier sélectionné.", vbExclamation
-'        Exit Sub
-'    End If
-'
-'    'Ouvre le fichier en mode lecture
-'    Dim fileNum As Integer
-'    fileNum = FreeFile
-'    Open filePath For Input As fileNum
-'
-'    'Initialise la ligne de départ pour insérer les données dans Excel
-'    Dim ligneNum As Long
-'    ligneNum = 1
-'
-'    'Lire chaque ligne du fichier
-'    Dim ligne As String
-'    Dim champs() As String
-'    Dim j As Long
-'
-'    Do While Not EOF(fileNum)
-'        Line Input #fileNum, ligne
-'
-'        'Séparer les champs par le séparateur " | "
-'        champs = Split(ligne, " | ")
-'
-'        'Insérer les champs dans les colonnes de la feuille Excel
-'        For j = LBound(champs) To UBound(champs)
-'            Cells(ligneNum, j + 1).value = champs(j)
-'        Next j
-'
-'        'Passer à la ligne suivante
-'        ligneNum = ligneNum + 1
-'    Loop
-'
-'    'Fermer le fichier
-'    Close fileNum
-'
-'    'Libérer la mémoire
-'    Set fd = Nothing
-'
-'    msgBox "Le fichier a été importé avec succès.", vbInformation
-'
-'End Sub
-'
 Sub Fix_Date_Format()
     
     'Initialisation de la boîte de dialogue FileDialog pour choisir le fichier Excel
@@ -564,12 +505,12 @@ Sub Debug_Écart_TEC_Local_vs_TEC_TDB_Data()
             If arr(tecID, 1) <> "" Then Stop
             arr(tecID, 1) = tecID
             h = .Range("H" & i).value
-            If UCase(.Range("N" & i).value) = "VRAI" Then
+            If UCase$(.Range("N" & i).value) = "VRAI" Then
                 h = 0
             End If
             If h <> 0 Then
-                If UCase(.Range("J" & i).value) = "VRAI" And Len(.Range("E" & i).value) > 2 Then
-                    If UCase(.Range("L" & i).value) = "FAUX" Then
+                If UCase$(.Range("J" & i).value) = "VRAI" And Len(.Range("E" & i).value) > 2 Then
+                    If UCase$(.Range("L" & i).value) = "FAUX" Then
                         If .Range("M" & i).value <= dateCutOff Then
                             arr(tecID, 2) = h
                         Else
@@ -664,7 +605,7 @@ Sub Analyse_Search_For_Memory_Management()
             cleared = ""
             GoTo Next_For
         End If
-        ligneCode = Trim(ws.Cells(i, 6))
+        ligneCode = Trim$(ws.Cells(i, 6))
 '        If InStr(ligneCode, "= Nothing") Then
 '            If InStr(ligneCode, " recSet ") = 0 Then
 '                ligneCode = Replace(ligneCode, "Set", "set")
@@ -688,9 +629,9 @@ Sub Analyse_Search_For_Memory_Management()
         objetNothing = ""
         'Déclaration de l'objet avec Set...
         If InStr(ligneCode, "Set ") <> 0 Then
-            If Left(ligneCode, 4) = "Set " Or InStr(ligneCode, ": Set") <> 0 Then
-                objetSet = Mid(ligneCode, InStr(ligneCode, "Set ") + 4, Len(ligneCode))
-                objetSet = Left(objetSet, InStr(objetSet, " ") - 1)
+            If Left$(ligneCode, 4) = "Set " Or InStr(ligneCode, ": Set") <> 0 Then
+                objetSet = Mid$(ligneCode, InStr(ligneCode, "Set ") + 4, Len(ligneCode))
+                objetSet = Left$(objetSet, InStr(objetSet, " ") - 1)
                 If objetSet = "As" Then Stop
                 If InStr(added, objetSet & "|") = 0 Then
                     added = added + objetSet + "|"
@@ -701,8 +642,8 @@ Sub Analyse_Search_For_Memory_Management()
         End If
         'Déclaration de l'objet avec For Each...
         If InStr(ligneCode, "For Each ") <> 0 Then
-            objetForEach = Mid(ligneCode, InStr(ligneCode, "For Each ") + 9, Len(ligneCode))
-            objetForEach = Left(objetForEach, InStr(objetForEach, " ") - 1)
+            objetForEach = Mid$(ligneCode, InStr(ligneCode, "For Each ") + 9, Len(ligneCode))
+            objetForEach = Left$(objetForEach, InStr(objetForEach, " ") - 1)
             If objetForEach = "As" Then Stop
             If InStr(added, objetForEach & "|") = 0 Then
                 added = added + objetForEach + "|"
@@ -710,8 +651,8 @@ Sub Analyse_Search_For_Memory_Management()
         End If
         'Libération de l'objet avec = Nothing
         If InStr(ligneCode, " = Nothing") <> 0 Then
-            objetNothing = Mid(ligneCode, InStr(ligneCode, "Set") + 4, Len(ligneCode))
-            objetNothing = Left(objetNothing, InStr(objetNothing, " ") - 1)
+            objetNothing = Mid$(ligneCode, InStr(ligneCode, "Set") + 4, Len(ligneCode))
+            objetNothing = Left$(objetNothing, InStr(objetNothing, " ") - 1)
             If objetNothing = "" Then Stop
             cleared = cleared + objetNothing + "|"
         End If
@@ -893,7 +834,7 @@ Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
     'Construire le nom du répertoire basé sur la date et l'heure actuelle
     Dim dateHeure As String
     Dim nouveauDossier As String
-    dateHeure = Format(Now, "yyyy_mm_dd_hhnn")
+    dateHeure = Format$(Now, "yyyy_mm_dd_hhnn")
     nouveauDossier = cheminRacineDestination & dateHeure & "\"
     
     'Créer le répertoire s'il n'existe pas déjà (ne devrait pas exister)
@@ -1271,7 +1212,7 @@ Sub ExtractEnumDefinition(tableName As String, ByRef arr() As Variant)
         Set CodeMod = vbComp.codeModule
         'Parcourir chaque ligne de code
         For LineNum = 1 To CodeMod.CountOfLines
-            codeLine = Trim(CodeMod.Lines(LineNum, 1))
+            codeLine = Trim$(CodeMod.Lines(LineNum, 1))
             'Détection du début d'un Enum
             If InStr(1, codeLine, "Enum " & tableName, vbTextCompare) > 0 Then
                 InEnumBlock = True
@@ -1282,9 +1223,9 @@ Sub ExtractEnumDefinition(tableName As String, ByRef arr() As Variant)
                     Exit For 'Terminer après l'extraction
                 Else
                     'Ajouter les lignes à l'intérieur du Enum
-                    If Left(codeLine, 1) <> "[" Then
-                        If Right(codeLine, 11) = " = [_First]" Then
-                            codeLine = Left(codeLine, Len(codeLine) - 11)
+                    If Left$(codeLine, 1) <> "[" Then
+                        If Right$(codeLine, 11) = " = [_First]" Then
+                            codeLine = Left$(codeLine, Len(codeLine) - 11)
                         End If
                         e = e + 1
                         arr(e, 1) = e
@@ -1325,9 +1266,9 @@ Function Convertir_Couleur_RGB_Hex(ByVal couleur As Long) As String
     bleu = (couleur \ 65536) Mod 256
     
     'Construire la valeur HEX (en format #RRGGBB)
-    Convertir_Couleur_RGB_Hex = "#" & Right("00" & Hex(rouge), 2) & _
-                                        Right("00" & Hex(vert), 2) & _
-                                        Right("00" & Hex(bleu), 2)
+    Convertir_Couleur_RGB_Hex = "#" & Right$("00" & Hex(rouge), 2) & _
+                                        Right$("00" & Hex(vert), 2) & _
+                                        Right$("00" & Hex(bleu), 2)
     
 End Function
 
@@ -1375,9 +1316,9 @@ Function Convertir_Couleur_OLE(ByVal couleur As Long) As String
     bleu = (couleur \ 65536) Mod 256
     
     ' Construire le code OLE en inversant les composantes RGB en BGR
-    Convertir_Couleur_OLE = "&H00" & Right("00" & Hex(bleu), 2) & _
-                                        Right("00" & Hex(vert), 2) & _
-                                        Right("00" & Hex(rouge), 2) & "&"
+    Convertir_Couleur_OLE = "&H00" & Right$("00" & Hex(bleu), 2) & _
+                                        Right$("00" & Hex(vert), 2) & _
+                                        Right$("00" & Hex(rouge), 2) & "&"
                                         
 End Function
 
@@ -1421,12 +1362,12 @@ Sub ValideNomProcedureCallLog()
             posPF = InStr(procedure, ")")
             'Paramètres au complet sur la ligne -OU- Début seulement sur cette ligne
             If posPF > posPO Or (posPF = 0 And posPO <> 0) Then
-                procedure = Trim(Left(procedure, posPO - 1))
+                procedure = Trim$(Left$(procedure, posPO - 1))
                 If InStr(procedure, "(") <> 0 Then Stop
             End If
             code = ws.Range("F" & i).value
             posCL = InStr(code, "Call Log_Record")
-            code = Mid(code, posCL + 17)
+            code = Mid$(code, posCL + 17)
             If InStr(code, module & ":" & procedure) = 0 Then
                 Debug.Print i, module & ":" & procedure, code
             End If
@@ -1637,7 +1578,7 @@ Sub ExporterCodeVBA() '2025-03-03 @ 06:59
 
     'Définir le dossier où enregistrer les modules
     Dim dossierBackup As String
-    dossierBackup = "C:\Users\Robert M. Vigneault\OneDrive\_P E R S O N N E L\00_AU CAS OÙ\Backup_VBA\" & Format(Now, "yyyy-mm-dd_HHMMSS") & "\"
+    dossierBackup = "C:\Users\Robert M. Vigneault\OneDrive\_P E R S O N N E L\00_AU CAS OÙ\Backup_VBA\" & Format$(Now, "yyyy-mm-dd_HHMMSS") & "\"
     
     'Vérifier si le dossier existe, sinon le créer
     If Dir(dossierBackup, vbDirectory) = "" Then

@@ -276,7 +276,7 @@ End Function
 Private Sub myTextBox_Change()
 
     If m_UpdateControl = False Then
-        If Trim(myTextBox.value) = "" Then
+        If Trim$(myTextBox.value) = "" Then
             Call InitializeTextBox
         Else
             If m_textboxStartingState = True Then

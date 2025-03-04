@@ -142,7 +142,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
     If Not Intersect(target, Range("F4")) Is Nothing Then
         If target.CountLarge > 1 Then Exit Sub
         Application.EnableEvents = False
-            If UCase(Trim(Range("F4").value)) = "AUTO" Then
+            If UCase$(Trim$(Range("F4").value)) = "AUTO" Then
                 wshGL_EJ.Range("B2").value = -1
                 ufListeEJAuto.show
                 If wshGL_EJ.Range("B2").value >= 0 Then

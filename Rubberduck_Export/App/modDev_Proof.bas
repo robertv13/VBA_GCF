@@ -40,16 +40,16 @@ Sub ObtenirHeuresFacturéesParFacture()
     Dim r As Long: r = 1
     If dict.count <> 0 Then
         For Each key In Fn_Sort_Dictionary_By_Keys(dict, False) 'Sort dictionary by hours in ascending order
-            profID = Mid(key, 10, Len(key) - 2)
+            profID = Mid$(key, 10, Len(key) - 2)
             prof = Fn_Get_Prof_From_ProfID(profID)
-            If Left(key, 8) <> saveInvNo Then
+            If Left$(key, 8) <> saveInvNo Then
                 Call SoustotalHeures(wsOutput, saveInvNo, r, st)
             End If
             t = t + dict(key)
             st = st + dict(key)
-            saveInvNo = Left(key, 8)
+            saveInvNo = Left$(key, 8)
             r = r + 1
-            wsOutput.Cells(r, 1).value = Left(key, 8)
+            wsOutput.Cells(r, 1).value = Left$(key, 8)
             wsOutput.Cells(r, 2).value = prof
             wsOutput.Cells(r, 3).value = dict(key)
             wsOutput.Cells(r, 3).NumberFormat = "##0.00"
@@ -302,18 +302,18 @@ End Sub
 '                                                 oper, noTEC, prof, dateTEC, noClient, nomClient, desc, _
 '                                                 hres, comm, isFACT)
 '                'Ajustement de certaies variables
-'                oper = UCase(Trim(oper))
+'                oper = UCase$(Trim$(oper))
 '                If InStr(oper, "ADD ") = 1 Then
-'                    noTEC = Mid(oper, InStr(oper, " ") + 1)
-'                    oper = Left(oper, InStr(oper, " ") - 1)
+'                    noTEC = Mid$(oper, InStr(oper, " ") + 1)
+'                    oper = Left$(oper, InStr(oper, " ") - 1)
 '                End If
 '                If InStr(oper, "UPDATE ") = 1 Then
-'                    noTEC = Mid(oper, InStr(oper, " ") + 1)
-'                    oper = Left(oper, InStr(oper, " ") - 1)
+'                    noTEC = Mid$(oper, InStr(oper, " ") + 1)
+'                    oper = Left$(oper, InStr(oper, " ") - 1)
 '                End If
 '                If InStr(oper, "DELETE-") = 1 Then
-'                    noTEC = Mid(oper, InStr(oper, "-") + 1)
-'                    oper = Left(oper, InStr(oper, "-") - 1)
+'                    noTEC = Mid$(oper, InStr(oper, "-") + 1)
+'                    oper = Left$(oper, InStr(oper, "-") - 1)
 '                End If
 '
 '                ws.Cells(r, 1) = noTEC
@@ -372,8 +372,8 @@ End Function
 '
 '    Select Case nbrChamp
 '        Case 3
-'            user = Trim(arr(0))
-'            timeStamp = Trim(arr(1))
+'            user = Trim$(arr(0))
+'            timeStamp = Trim$(arr(1))
 '            If Len(timeStamp) <> 19 Then Stop
 '            oper = "Delete"
 '            noTEC = Abs(arr(3))
@@ -385,146 +385,146 @@ End Function
 '            hres = 0
 '            isFACT = False
 '        Case 11
-'            If InStr(arr(0), ".") Then arr(0) = Left(arr(0), InStr(arr(0), ".") - 1)
+'            If InStr(arr(0), ".") Then arr(0) = Left$(arr(0), InStr(arr(0), ".") - 1)
 '            If IsDate(arr(0)) = False Then
-'                user = Trim(arr(0))
-'                timeStamp = Trim(arr(1))
+'                user = Trim$(arr(0))
+'                timeStamp = Trim$(arr(1))
 '                If Len(timeStamp) <> 19 And Len(timeStamp) < 22 Then Stop
-'                oper = Trim(arr(2))
-'                noTEC = Trim(arr(3))
-'                prof = Trim(arr(4))
+'                oper = Trim$(arr(2))
+'                noTEC = Trim$(arr(3))
+'                prof = Trim$(arr(4))
 '                dateTEC = arr(5)
-'                noClient = Trim(arr(6))
-'                nomClient = Trim(arr(7))
-'                desc = Trim(arr(8))
-'                hres = Trim(Replace(arr(9), ".", ","))
-'                comm = Trim(arr(10))
+'                noClient = Trim$(arr(6))
+'                nomClient = Trim$(arr(7))
+'                desc = Trim$(arr(8))
+'                hres = Trim$(Replace(arr(9), ".", ","))
+'                comm = Trim$(arr(10))
 '                isFACT = arr(11)
 '            Else
-'                If InStr(Trim(arr(2)), "APP_") <> 1 Then
-'                    timeStamp = Trim(arr(0))
+'                If InStr(Trim$(arr(2)), "APP_") <> 1 Then
+'                    timeStamp = Trim$(arr(0))
 '                    If Len(timeStamp) <> 19 And Len(timeStamp) < 23 Then Stop
-'                    user = Trim(arr(1))
-'                    oper = Trim(arr(2))
-'                    noTEC = Trim(arr(3))
-'                    prof = Trim(arr(4))
+'                    user = Trim$(arr(1))
+'                    oper = Trim$(arr(2))
+'                    noTEC = Trim$(arr(3))
+'                    prof = Trim$(arr(4))
 '                    dateTEC = arr(5)
-'                    noClient = Trim(arr(6))
-'                    nomClient = Trim(arr(7))
-'                    desc = Trim(arr(8))
+'                    noClient = Trim$(arr(6))
+'                    nomClient = Trim$(arr(7))
+'                    desc = Trim$(arr(8))
 '                    isFACT = arr(9)
 '                    hres = 0
-'                    comm = Trim(arr(10))
+'                    comm = Trim$(arr(10))
 '                Else
-'                    timeStamp = Trim(arr(0))
+'                    timeStamp = Trim$(arr(0))
 '                    If Len(timeStamp) <> 19 And Len(timeStamp) < 23 Then Stop
-'                    user = Trim(arr(1))
-'                    version = Trim(arr(2))
-'                    oper = Trim(arr(3))
+'                    user = Trim$(arr(1))
+'                    version = Trim$(arr(2))
+'                    oper = Trim$(arr(3))
 '                    noTEC = 0
-'                    prof = Trim(arr(4))
+'                    prof = Trim$(arr(4))
 '                    dateTEC = arr(5)
-'                    noClient = Trim(arr(6))
-'                    nomClient = Trim(arr(7))
-'                    desc = Trim(arr(8))
-'                    hres = Trim(Replace(arr(9), ".", ","))
-'                    isFACT = Trim(arr(10))
-'                    comm = Trim(arr(11))
+'                    noClient = Trim$(arr(6))
+'                    nomClient = Trim$(arr(7))
+'                    desc = Trim$(arr(8))
+'                    hres = Trim$(Replace(arr(9), ".", ","))
+'                    isFACT = Trim$(arr(10))
+'                    comm = Trim$(arr(11))
 '                End If
 '            End If
 '        Case 12
-'            If InStr(arr(0), ".") Then arr(0) = Left(arr(0), InStr(arr(0), ".") - 1)
+'            If InStr(arr(0), ".") Then arr(0) = Left$(arr(0), InStr(arr(0), ".") - 1)
 '            If IsDate(arr(0)) = False Then
-'                user = Trim(arr(0))
-'                timeStamp = Trim(arr(1))
+'                user = Trim$(arr(0))
+'                timeStamp = Trim$(arr(1))
 '                If Len(timeStamp) <> 19 And Len(timeStamp) < 23 Then Stop
-'                oper = Trim(arr(2))
-'                noTEC = Trim(arr(3))
-'                prof = Trim(arr(4))
+'                oper = Trim$(arr(2))
+'                noTEC = Trim$(arr(3))
+'                prof = Trim$(arr(4))
 '                dateTEC = arr(5)
-'                noClient = Trim(arr(6))
-'                nomClient = Trim(arr(7))
-'                desc = Trim(arr(8))
-'                hres = Trim(Replace(arr(9), ".", ","))
+'                noClient = Trim$(arr(6))
+'                nomClient = Trim$(arr(7))
+'                desc = Trim$(arr(8))
+'                hres = Trim$(Replace(arr(9), ".", ","))
 '                isFACT = arr(10)
-'                comm = Trim(arr(12))
+'                comm = Trim$(arr(12))
 '            Else
 '                If IsDate(arr(4)) = False Then
-'                    If InStr(Trim(arr(2)), "APP_") <> 1 Then
-'                        timeStamp = Trim(arr(0))
+'                    If InStr(Trim$(arr(2)), "APP_") <> 1 Then
+'                        timeStamp = Trim$(arr(0))
 '                        If Len(timeStamp) <> 19 Then Stop
-'                        user = Trim(arr(1))
-'                        oper = Trim(arr(2))
-'                        noTEC = Trim(arr(3))
-'                        prof = Trim(arr(4))
+'                        user = Trim$(arr(1))
+'                        oper = Trim$(arr(2))
+'                        noTEC = Trim$(arr(3))
+'                        prof = Trim$(arr(4))
 '                        dateTEC = arr(5)
-'                        noClient = Trim(arr(6))
-'                        nomClient = Trim(arr(7))
-'                        desc = Trim(arr(8))
-'                        hres = Trim(Replace(arr(9), ".", ","))
-'                        isFACT = Trim(arr(10))
-'                        comm = Trim(arr(12))
+'                        noClient = Trim$(arr(6))
+'                        nomClient = Trim$(arr(7))
+'                        desc = Trim$(arr(8))
+'                        hres = Trim$(Replace(arr(9), ".", ","))
+'                        isFACT = Trim$(arr(10))
+'                        comm = Trim$(arr(12))
 '                    Else
-'                        timeStamp = Trim(arr(0))
+'                        timeStamp = Trim$(arr(0))
 '                        If Len(timeStamp) <> 19 Then Stop
-'                        user = Trim(arr(1))
-'                        version = Trim(arr(2))
-'                        oper = Trim(arr(3))
+'                        user = Trim$(arr(1))
+'                        version = Trim$(arr(2))
+'                        oper = Trim$(arr(3))
 '                        noTEC = 0
-'                        prof = Trim(arr(4))
+'                        prof = Trim$(arr(4))
 '                        dateTEC = arr(5)
-'                        noClient = Trim(arr(6))
-'                        nomClient = Trim(arr(7))
-'                        desc = Trim(arr(8))
-'                        hres = Trim(Replace(arr(9), ".", ","))
-'                        isFACT = Trim(arr(10))
-'                        comm = Trim(arr(11))
+'                        noClient = Trim$(arr(6))
+'                        nomClient = Trim$(arr(7))
+'                        desc = Trim$(arr(8))
+'                        hres = Trim$(Replace(arr(9), ".", ","))
+'                        isFACT = Trim$(arr(10))
+'                        comm = Trim$(arr(11))
 '                    End If
 '                Else
-'                    timeStamp = Trim(arr(0))
+'                    timeStamp = Trim$(arr(0))
 '                    If Len(timeStamp) <> 19 Then Stop
-'                    user = Trim(arr(1))
-'                    oper = Trim(arr(2))
+'                    user = Trim$(arr(1))
+'                    oper = Trim$(arr(2))
 '                    noTEC = 0
-'                    prof = Trim(arr(3))
+'                    prof = Trim$(arr(3))
 '                    dateTEC = arr(4)
-'                    noClient = Trim(arr(5))
-'                    nomClient = Trim(arr(6))
-'                    desc = Trim(arr(7))
-'                    hres = Trim(Replace(arr(8), ".", ","))
-'                    isFACT = Trim(arr(9))
-'                    comm = Trim(arr(10))
+'                    noClient = Trim$(arr(5))
+'                    nomClient = Trim$(arr(6))
+'                    desc = Trim$(arr(7))
+'                    hres = Trim$(Replace(arr(8), ".", ","))
+'                    isFACT = Trim$(arr(9))
+'                    comm = Trim$(arr(10))
 '                End If
 '            End If
 '        Case 13
 '            If IsNumeric(arr(10)) = True Then
-'                timeStamp = Trim(arr(0))
+'                timeStamp = Trim$(arr(0))
 '                If Len(timeStamp) <> 19 And Len(timeStamp) < 23 Then Stop
-'                user = Trim(arr(1))
-'                oper = Trim(arr(3))
-'                noTEC = Trim(arr(4))
-'                prof = Trim(arr(5))
+'                user = Trim$(arr(1))
+'                oper = Trim$(arr(3))
+'                noTEC = Trim$(arr(4))
+'                prof = Trim$(arr(5))
 '                dateTEC = arr(6)
-'                noClient = Trim(arr(7))
-'                nomClient = Trim(arr(8))
-'                desc = Trim(arr(9))
-'                hres = Trim(Replace(arr(10), ".", ","))
+'                noClient = Trim$(arr(7))
+'                nomClient = Trim$(arr(8))
+'                desc = Trim$(arr(9))
+'                hres = Trim$(Replace(arr(10), ".", ","))
 '                isFACT = arr(11)
-'                comm = Trim(arr(12))
+'                comm = Trim$(arr(12))
 '            Else
-'                timeStamp = Trim(arr(0))
+'                timeStamp = Trim$(arr(0))
 '                If Len(timeStamp) <> 19 And Len(timeStamp) < 23 Then Stop
-'                user = Trim(arr(1))
-'                oper = Trim(arr(2))
-'                noTEC = Trim(arr(3))
-'                prof = Trim(arr(4))
+'                user = Trim$(arr(1))
+'                oper = Trim$(arr(2))
+'                noTEC = Trim$(arr(3))
+'                prof = Trim$(arr(4))
 '                dateTEC = arr(5)
-'                noClient = Trim(arr(6))
-'                nomClient = Trim(arr(7))
-'                desc = Trim(arr(8))
-'                hres = Trim(Replace(arr(9), ".", ","))
-'                isFACT = Trim(arr(10))
-'                comm = Trim(arr(11))
+'                noClient = Trim$(arr(6))
+'                nomClient = Trim$(arr(7))
+'                desc = Trim$(arr(8))
+'                hres = Trim$(Replace(arr(9), ".", ","))
+'                isFACT = Trim$(arr(10))
+'                comm = Trim$(arr(11))
 '            End If
 '        Case Else
 '            Stop

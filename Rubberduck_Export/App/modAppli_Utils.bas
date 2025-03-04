@@ -323,7 +323,7 @@ Sub Simple_Print_Setup(ws As Worksheet, rng As Range, header1 As String, _
         .PrintTitleRows = titleRows
         .PrintTitleColumns = ""
         
-        .CenterHeader = "&""-,Gras""&12&K0070C0" & header1 & Chr(10) & "&11" & header2
+        .CenterHeader = "&""-,Gras""&12&K0070C0" & header1 & Chr$(10) & "&11" & header2
         
         .LeftFooter = "&8&D - &T"
         .CenterFooter = "&8&KFF0000&A"
@@ -549,7 +549,7 @@ Private Sub checkPlanComptable(ByRef r As Long, ByRef readRows As Long)
         
 '        GL_ID = arr(i, 3)
         typeGL = arr(i, 4)
-        If Len(typeGL) <> 3 Or InStr("A^P^E^R^D^B^I^X^", Left(typeGL, 1) & "^") = 0 Or IsNumeric(Right(typeGL, 2)) = False Then
+        If Len(typeGL) <> 3 Or InStr("A^P^E^R^D^B^I^X^", Left$(typeGL, 1) & "^") = 0 Or IsNumeric(Right$(typeGL, 2)) = False Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "Le type de compte '" & typeGL & "' est INVALIDE pour le code de G/L '" & codeGL & "'")
             r = r + 1
             cas_type = cas_type + 1
@@ -636,7 +636,7 @@ Private Sub checkClients(ByRef r As Long, ByRef readRows As Long)
     Dim cas_courriel_invalide As Long
     Dim ligneNonVides As Long
     For i = LBound(arr, 1) + 1 To UBound(arr, 1)
-        If Not Trim(arr(i, 2)) = "" Then
+        If Not Trim$(arr(i, 2)) = "" Then
         ligneNonVides = ligneNonVides + 1
             nom = arr(i, 1)
             code = arr(i, 2)
@@ -660,7 +660,7 @@ Private Sub checkClients(ByRef r As Long, ByRef readRows As Long)
                 cas_doublon_code = cas_doublon_code + 1
             End If
             
-            If Trim(arr(i, 6)) <> "" Then
+            If Trim$(arr(i, 6)) <> "" Then
                 If Fn_ValiderCourriel(arr(i, 6)) = False Then
                     Call AddMessageToWorkSheet(wsOutput, r, 2, "À la ligne " & i & ", le courriel '" & arr(i, 6) & "' est INVALIDE pour le code '" & code & "'")
                     r = r + 1
@@ -999,8 +999,8 @@ Private Sub checkCC_Régularisations(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Dim rng As Range: Set rng = wsOutput.Range("B" & r)
     rng.value = "Total des régularisations : " & Format$(totalRégularisations, "##,###,##0.00 $")
-    rng.Characters(InStr(rng.value, Left(totalRégularisations, 1)), 12).Font.Color = vbRed
-    rng.Characters(InStr(rng.value, Left(totalRégularisations, 1)), 12).Font.Bold = True
+    rng.Characters(InStr(rng.value, Left$(totalRégularisations, 1)), 12).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, Left$(totalRégularisations, 1)), 12).Font.Bold = True
     r = r + 2
     
     'Add number of rows processed (read)
@@ -1069,7 +1069,7 @@ Private Sub checkDEB_Récurrent(ByRef r As Long, ByRef readRows As Long)
     Dim strGL As String
     Dim ligne As Range
     For Each ligne In planComptable.Rows
-        strGL = strGL & "^C:" & Trim(ligne.Cells(1, 2).value) & "^D:" & Trim(ligne.Cells(1, 1).value) & " | "
+        strGL = strGL & "^C:" & Trim$(ligne.Cells(1, 2).value) & "^D:" & Trim$(ligne.Cells(1, 1).value) & " | "
     Next ligne
     
     'Copie les données vers un tableau
@@ -1107,9 +1107,9 @@ Private Sub checkDEB_Récurrent(ByRef r As Long, ByRef readRows As Long)
             isDebRécurrentValid = False
         End If
         If p > 0 Then
-            GL = Mid(strGL, p + 3)
-            descGL = Mid(GL, InStr(GL, "^D:") + 3, InStr(GL, " | ") - 8)
-            If descGL <> Trim(arr(i, 7)) Then
+            GL = Mid$(strGL, p + 3)
+            descGL = Mid$(GL, InStr(GL, "^D:") + 3, InStr(GL, " | ") - 8)
+            If descGL <> Trim$(arr(i, 7)) Then
                 Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la description du G/L '" & arr(i, 7) & "' est INVALIDE")
                 r = r + 1
                 isDebRécurrentValid = False
@@ -1214,7 +1214,7 @@ Private Sub checkDEB_Trans(ByRef r As Long, ByRef readRows As Long)
     Dim strGL As String
     Dim ligne As Range
     For Each ligne In planComptable.Rows
-        strGL = strGL & "^C:" & Trim(ligne.Cells(1, 2).value) & "^D:" & Trim(ligne.Cells(1, 1).value) & " | "
+        strGL = strGL & "^C:" & Trim$(ligne.Cells(1, 2).value) & "^D:" & Trim$(ligne.Cells(1, 1).value) & " | "
     Next ligne
     
     'Copie les données vers un tableau
@@ -1252,9 +1252,9 @@ Private Sub checkDEB_Trans(ByRef r As Long, ByRef readRows As Long)
             isDebTransValid = False
         End If
         If p > 0 Then
-            GL = Mid(strGL, p + 3)
-            descGL = Mid(GL, InStr(GL, "^D:") + 3, InStr(GL, " | ") - 8)
-            If descGL <> Trim(arr(i, 9)) Then
+            GL = Mid$(strGL, p + 3)
+            descGL = Mid$(GL, InStr(GL, "^D:") + 3, InStr(GL, " | ") - 8)
+            If descGL <> Trim$(arr(i, 9)) Then
                 Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la description du G/L '" & arr(i, 8) & "' est INVALIDE")
                 r = r + 1
                 isDebTransValid = False
@@ -1449,8 +1449,8 @@ Private Sub checkENC_Détails(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Dim rng As Range: Set rng = wsOutput.Range("B" & r)
     rng.value = "Total des encaissements : " & Format$(totalEncDetails, "##,###,##0.00 $")
-    rng.Characters(InStr(rng.value, Left(totalEncDetails, 1)), 12).Font.Color = vbRed
-    rng.Characters(InStr(rng.value, Left(totalEncDetails, 1)), 12).Font.Bold = True
+    rng.Characters(InStr(rng.value, Left$(totalEncDetails, 1)), 12).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, Left$(totalEncDetails, 1)), 12).Font.Bold = True
 
     r = r + 2
     
@@ -1563,8 +1563,8 @@ Private Sub checkENC_Entête(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Dim rng As Range: Set rng = wsOutput.Range("B" & r)
     rng.value = "Total des encaissements : " & Format$(totals, "##,###,##0.00 $")
-    rng.Characters(InStr(rng.value, Left(totals, 1)), 12).Font.Color = vbRed
-    rng.Characters(InStr(rng.value, Left(totals, 1)), 12).Font.Bold = True
+    rng.Characters(InStr(rng.value, Left$(totals, 1)), 12).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, Left$(totals, 1)), 12).Font.Bold = True
     r = r + 2
     
     'Add number of rows processed (read)
@@ -1826,8 +1826,8 @@ Private Sub checkFAC_Entête(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
     rng.value = "       Total Fact. : " & Fn_Pad_A_String(Format$(totals(7, 1), "##,###,##0.00 $"), " ", 15, "L")
-    rng.Characters(InStr(rng.value, Left(totals(7, 1), 1)), 15).Font.Color = vbRed
-    rng.Characters(InStr(rng.value, Left(totals(7, 1), 1)), 15).Font.Bold = True
+    rng.Characters(InStr(rng.value, Left$(totals(7, 1), 1)), 15).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, Left$(totals(7, 1), 1)), 15).Font.Bold = True
     r = r + 1
 
     Call AddMessageToWorkSheet(wsOutput, r, 2, "       Acompte payé: " & _
@@ -1863,8 +1863,8 @@ Private Sub checkFAC_Entête(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
     rng.value = "       Total Fact. : " & Fn_Pad_A_String(Format$(totals(7, 2), "##,###,##0.00 $"), " ", 15, "L")
-    rng.Characters(InStr(rng.value, Left(totals(7, 2), 1)), 15).Font.Color = vbRed
-    rng.Characters(InStr(rng.value, Left(totals(7, 2), 1)), 15).Font.Bold = True
+    rng.Characters(InStr(rng.value, Left$(totals(7, 2), 1)), 15).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, Left$(totals(7, 2), 1)), 15).Font.Bold = True
     r = r + 1
 
     Call AddMessageToWorkSheet(wsOutput, r, 2, "       Acompte payé: " & _
@@ -2061,29 +2061,29 @@ Private Sub checkFAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
     rng.value = "       Total des factures         : " & Fn_Pad_A_String(Format$(totals(1, 1), "##,###,##0.00 $"), " ", 15, "L")
-    rng.Characters(InStr(rng.value, Left(totals(1, 1), 1)), 15).Font.Color = vbRed
-    rng.Characters(InStr(rng.value, Left(totals(1, 1), 1)), 15).Font.Bold = True
+    rng.Characters(InStr(rng.value, Left$(totals(1, 1), 1)), 15).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, Left$(totals(1, 1), 1)), 15).Font.Bold = True
     r = r + 1
     
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
     rng.value = "       Montants encaissés à date  : " & Fn_Pad_A_String(Format$(totals(2, 1), "##,###,##0.00 $"), " ", 15, "L")
-    rng.Characters(InStr(rng.value, Left(totals(2, 1), 1)), 15).Font.Color = vbRed
-    rng.Characters(InStr(rng.value, Left(totals(2, 1), 1)), 15).Font.Bold = True
+    rng.Characters(InStr(rng.value, Left$(totals(2, 1), 1)), 15).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, Left$(totals(2, 1), 1)), 15).Font.Bold = True
     r = r + 1
     
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
     rng.value = "       Montant régularisé à date  : " & Fn_Pad_A_String(Format$(totals(3, 1), "##,###,##0.00 $"), " ", 15, "L")
-    rng.Characters(InStr(rng.value, Left(totals(3, 1), 1)), 15).Font.Color = vbRed
-    rng.Characters(InStr(rng.value, Left(totals(3, 1), 1)), 15).Font.Bold = True
+    rng.Characters(InStr(rng.value, Left$(totals(3, 1), 1)), 15).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, Left$(totals(3, 1), 1)), 15).Font.Bold = True
     r = r + 1
     
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
     rng.value = "       Solde à recevoir           : " & Fn_Pad_A_String(Format$(totals(4, 1), "##,###,##0.00 $"), " ", 15, "L")
-    rng.Characters(InStr(rng.value, Left(totals(4, 1), 1)), 15).Font.Color = vbRed
-    rng.Characters(InStr(rng.value, Left(totals(4, 1), 1)), 15).Font.Bold = True
+    rng.Characters(InStr(rng.value, Left$(totals(4, 1), 1)), 15).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, Left$(totals(4, 1), 1)), 15).Font.Bold = True
     r = r + 2
     soldeComptesClients = totals(4, 1)
     
@@ -2097,8 +2097,8 @@ Private Sub checkFAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
     rng.value = "       Total des factures        : " & Fn_Pad_A_String(Format$(totals(1, 2), "##,###,##0.00 $"), " ", 15, "L")
-    rng.Characters(InStr(rng.value, Left(totals(1, 2), 1)), 15).Font.Color = vbRed
-    rng.Characters(InStr(rng.value, Left(totals(1, 2), 1)), 15).Font.Bold = True
+    rng.Characters(InStr(rng.value, Left$(totals(1, 2), 1)), 15).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, Left$(totals(1, 2), 1)), 15).Font.Bold = True
     r = r + 2
     
     'Add number of rows processed (read)
@@ -2283,7 +2283,7 @@ Private Sub checkFAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
     For i = LBound(arr, 1) To UBound(arr, 1) 'One line of header !
         projetID = arr(i, 1)
         'Client valide ?
-        codeClient = Trim(arr(i, 3))
+        codeClient = Trim$(arr(i, 3))
         If Fn_Validate_Client_Number(codeClient) = False Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le Code de Client est INVALIDE '" & arr(i, 3) & "'")
             r = r + 1
@@ -2469,7 +2469,7 @@ Private Sub checkFAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
             r = r + 1
         End If
         'Client valide ?
-        codeClient = Trim(arr(i, 3))
+        codeClient = Trim$(arr(i, 3))
         If Fn_Validate_Client_Number(codeClient) = False Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le Code de Client est INVALIDE '" & arr(i, 3) & "'")
             r = r + 1
@@ -2714,8 +2714,8 @@ Private Sub checkGL_Trans(ByRef r As Long, ByRef readRows As Long)
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
     rng.value = "Au Grand Livre, le solde des Comptes-Clients est de : " & Format$(arTotal, "##,###,##0.00 $")
-    rng.Characters(InStr(rng.value, Left(arTotal, 1)), 15).Font.Color = vbRed
-    rng.Characters(InStr(rng.value, Left(arTotal, 1)), 15).Font.Bold = True
+    rng.Characters(InStr(rng.value, Left$(arTotal, 1)), 15).Font.Color = vbRed
+    rng.Characters(InStr(rng.value, Left$(arTotal, 1)), 15).Font.Bold = True
     r = r + 2
     If soldeComptesClients <> arTotal Then
         msgBox "ATTENTION, le solde des Comptes-Clients" & vbNewLine & vbNewLine & _
@@ -2789,7 +2789,7 @@ Private Sub checkGL_EJ_Recurrente(ByRef r As Long, ByRef readRows As Long)
     Dim strGL As String
     Dim ligne As Range
     For Each ligne In planComptable.Rows
-        strGL = strGL & Trim(ligne.Cells(1, 2).value) & "-" & Trim(ligne.Cells(1, 1).value) & " | "
+        strGL = strGL & Trim$(ligne.Cells(1, 2).value) & "-" & Trim$(ligne.Cells(1, 1).value) & " | "
     Next ligne
 
     'Copier les données vers un tableau
@@ -2810,16 +2810,16 @@ Private Sub checkGL_EJ_Recurrente(ByRef r As Long, ByRef readRows As Long)
             isGlEjRécurrenteValid = False
         End If
         
-        p = InStr(strGL, Trim(arr(i, 3)))
+        p = InStr(strGL, Trim$(arr(i, 3)))
         If p = 0 Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le poste de G/L '" & arr(i, 3) & "' est INVALIDE")
             r = r + 1
             isGlEjRécurrenteValid = False
         End If
         If p > 0 Then
-            GL = Mid(strGL, p)
-            descGL = Mid(GL, InStr(GL, "-") + 1, InStr(GL, " | ") - 6)
-            If descGL <> Trim(arr(i, 4)) Then
+            GL = Mid$(strGL, p)
+            descGL = Mid$(GL, InStr(GL, "-") + 1, InStr(GL, " | ") - 6)
+            If descGL <> Trim$(arr(i, 4)) Then
                 Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la description du G/L '" & arr(i, 4) & "' est INVALIDE")
                 r = r + 1
                 isGlEjRécurrenteValid = False
@@ -3306,7 +3306,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         End If
         
         'Validate clientCode
-        codeClient = Trim(arrTEC_Local_Data(i, fTECClientID))
+        codeClient = Trim$(arrTEC_Local_Data(i, fTECClientID))
         If dictClient.Exists(codeClient) = False Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le code de client '" & codeClient & "' est INVALIDE !!!")
             r = r + 1
@@ -3365,7 +3365,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
             End If
         End If
 
-        estFacturee = UCase(arrTEC_Local_Data(i, 12))
+        estFacturee = UCase$(arrTEC_Local_Data(i, 12))
         If InStr("Vrai^VRAI^Faux^FAUX^", estFacturee & "^") = 0 Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID = " & tecID & " la valeur de la colonne 'EstFacturee' est INVALIDE '" & estFacturee & "' !!!")
             r = r + 1
@@ -4177,12 +4177,12 @@ Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
     Dim clientData As Variant
     Dim i As Long
     For i = LBound(arr, 1) To UBound(arr, 1)
-        If arr(i, 3) = "GC" And UCase(arr(i, 14)) <> "VRAI" Then
+        If arr(i, 3) = "GC" And UCase$(arr(i, 14)) <> "VRAI" Then
             If arr(i, 4) >= CLng(dateFrom) And arr(i, 4) <= CLng(dateTo) Then
                 output(rowOutput, 1) = arr(i, 4)
                 output(rowOutput, 2) = arr(i, 4)
                 output(rowOutput, 4) = arr(i, 8)
-                clientData = Fn_Rechercher_Client_Par_ID(Trim(arr(i, 5)), wsMF)
+                clientData = Fn_Rechercher_Client_Par_ID(Trim$(arr(i, 5)), wsMF)
                 If IsArray(clientData) Then
                     output(rowOutput, 3) = clientData(1, fClntFMClientNom)
                     output(rowOutput, 5) = clientData(1, fClntFMAdresse1)
@@ -4229,7 +4229,7 @@ Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
     
     'Améliore le Look (saute 1 ligne entre chaque jour)
     For i = rowOutput To 3 Step -1
-        If Len(Trim(wsOutput.Cells(i, 3).value)) > 0 Then
+        If Len(Trim$(wsOutput.Cells(i, 3).value)) > 0 Then
             If wsOutput.Cells(i, 2).value <> wsOutput.Cells(i - 1, 2).value Then
                 wsOutput.Rows(i).Insert Shift:=xlDown
                 wsOutput.Cells(i, 1).value = wsOutput.Cells(i - 1, 2).value
@@ -4579,3 +4579,5 @@ Sub Vérifier_Mix_ClientID_ClientNom_TEC()
     wb.Close False
     
 End Sub
+
+

@@ -56,10 +56,10 @@ Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
             With ws
                 .Cells(currRow, 5).value = tecID
                 .Cells(currRow, 6).value = dateTEC
-                .Cells(currRow, 7).value = Mid(profInit, 4)
+                .Cells(currRow, 7).value = Mid$(profInit, 4)
                 .Cells(currRow, 8).value = descTEC
                 .Cells(currRow, 10).value = hresTEC
-                tauxHoraire = Fn_Get_Hourly_Rate(CLng(Left(profInit, 3)), CDate(cutoffDate))
+                tauxHoraire = Fn_Get_Hourly_Rate(CLng(Left$(profInit, 3)), CDate(cutoffDate))
                 valeurTEC = hresTEC * tauxHoraire
                 .Cells(currRow, 11).value = valeurTEC
             End With

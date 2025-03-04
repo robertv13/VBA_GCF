@@ -145,7 +145,7 @@ Sub Check_Invoice_Template()
         If Not rng.Cells(i, 2) = "" Then
             arr = Split(rng.Cells(i, 2), ",")
             For j = 0 To UBound(arr)
-                strTemplates = strTemplates & Trim(arr(j)) & "-" & i & "|"
+                strTemplates = strTemplates & Trim$(arr(j)) & "-" & i & "|"
             Next j
         End If
     Next i
@@ -171,13 +171,13 @@ Sub Check_Invoice_Template()
     With wsOutput
         For i = 0 To UBound(tt)
             If tt(i) <> "" Then
-                template = Left(tt(i), 1)
+                template = Left$(tt(i), 1)
                 If template <> oldTemplate Then
                     outputRow = outputRow + 2
                     .Range("A" & outputRow).value = "Gabarit '" & template & "'"
                     oldTemplate = template
                 End If
-                rowNo = Mid(tt(i), InStr(1, tt(i), "-") + 1)
+                rowNo = Mid$(tt(i), InStr(1, tt(i), "-") + 1)
                 outputRow = outputRow + 1
                 .Range("B" & outputRow).value = tt(i)
                 .Range("C" & outputRow).value = rng.Cells(rowNo, 1)
@@ -331,12 +331,12 @@ Sub Code_Search_Everywhere() '2024-10-26 @ 10:41
         
         'Loop through all lines in the code module to save all the lines in memory
         For LineNum = 1 To vbCodeMod.CountOfLines
-            If Trim(vbCodeMod.Lines(LineNum, 1)) <> "" Then
+            If Trim$(vbCodeMod.Lines(LineNum, 1)) <> "" Then
                 x = x + 1
                 allLinesOfCode(x, 1) = oType
                 allLinesOfCode(x, 2) = vbComp.Name
                 allLinesOfCode(x, 3) = LineNum
-                allLinesOfCode(x, 4) = Trim(vbCodeMod.Lines(LineNum, 1))
+                allLinesOfCode(x, 4) = Trim$(vbCodeMod.Lines(LineNum, 1))
             End If
         Next LineNum
     Next vbComp
@@ -639,7 +639,7 @@ Sub List_Formulas_All() '2024-06-22 @ 15:42
         Dim i As Long
         For Each cell In ws.usedRange
             'Does the cell contain a Formula
-            If Left(cell.formula, 1) = "=" Then
+            If Left$(cell.formula, 1) = "=" Then
                 'Write formula information to the destination worksheet
                 i = i + 1
                 outputArray(i, 1) = ws.CodeName & Chr(0) & cell.Address
@@ -648,7 +648,7 @@ Sub List_Formulas_All() '2024-06-22 @ 15:42
                 outputArray(i, 4) = usedRange
                 outputArray(i, 5) = cellsCount
                 outputArray(i, 6) = cell.Address
-                outputArray(i, 7) = "'=" & Mid(cell.formula, 2) 'Add ' to preserve formulas
+                outputArray(i, 7) = "'=" & Mid$(cell.formula, 2) 'Add ' to preserve formulas
                 outputArray(i, 8) = Format$(Now(), "yyyy-mm-dd hh:mm") 'TimeStamp
             End If
         Next cell
@@ -683,7 +683,7 @@ Function HandleComments(ByVal codeLine As String, action As String) As String '2
     
     Dim i As Long, char As String
     For i = 1 To Len(codeLine)
-        char = Mid(codeLine, i, 1)
+        char = Mid$(codeLine, i, 1)
         
         'Toggle inString flag if a double quote is encountered
         If char = """" Then
@@ -693,7 +693,7 @@ Function HandleComments(ByVal codeLine As String, action As String) As String '2
         'If the current character is ' and we are not within a string...
         If char = "'" Then
             If Not inString Then
-                commentPart = Mid(codeLine, i)
+                commentPart = Mid$(codeLine, i)
                 Exit For
             Else
                 codePart = codePart & char
@@ -707,7 +707,7 @@ Function HandleComments(ByVal codeLine As String, action As String) As String '2
     If action = "R" Then
         commentPart = ""
     Else
-        commentPart = Trim(UCase(commentPart))
+        commentPart = Trim$(UCase$(commentPart))
     End If
     
     HandleComments = codePart & commentPart
@@ -792,7 +792,7 @@ Sub List_Named_Ranges_All() '2024-06-23 @ 07:40
     Dim timeStamp As String
     For Each nr In ThisWorkbook.Names
         i = i + 1
-        arr(i, 1) = UCase(nr.Name) & Chr(0) & UCase(nr.RefersTo) 'Sort Key
+        arr(i, 1) = UCase$(nr.Name) & Chr(0) & UCase$(nr.RefersTo) 'Sort Key
         arr(i, 2) = nr.Name
         arr(i, 3) = "'" & nr.RefersTo
         If InStr(nr.RefersTo, "#REF!") Then
@@ -944,7 +944,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
                     InStr(trimmedLineOfCode, "Sub = ") = 0 And _
                     InStr(trimmedLineOfCode, "Sub As ") = 0 And _
                     InStr(trimmedLineOfCode, "Exit Sub") = 0 Then
-                        procedureName = Mid(saveLineOfCode, InStr(trimmedLineOfCode, "Sub "))
+                        procedureName = Mid$(saveLineOfCode, InStr(trimmedLineOfCode, "Sub "))
                 End If
             End If
             
@@ -958,7 +958,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
                     InStr(trimmedLineOfCode, "Function = ") = 0 And _
                     InStr(trimmedLineOfCode, "Function As ") = 0 And _
                     InStr(trimmedLineOfCode, "Exit Function") = 0 Then
-                        procedureName = Mid(saveLineOfCode, InStr(trimmedLineOfCode, "Function "))
+                        procedureName = Mid$(saveLineOfCode, InStr(trimmedLineOfCode, "Function "))
                 End If
             End If
             
@@ -979,7 +979,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
                 arrResult(xr, 6) = "'" & saveLineOfCode
                 timeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
                 arrResult(xr, 7) = timeStamp
-                arrResult(xr, 1) = UCase(arr(x, 1)) & Chr(0) & UCase(arr(x, 2)) & Chr(0) & Format$(arr(x, 3), "0000") & Chr(0) & procedureName 'Future sort key
+                arrResult(xr, 1) = UCase$(arr(x, 1)) & Chr(0) & UCase$(arr(x, 2)) & Chr(0) & Format$(arr(x, 3), "0000") & Chr(0) & procedureName 'Future sort key
             End If
         End If
     Next x
@@ -1287,8 +1287,8 @@ Sub List_Subs_And_Functions_All() '2024-11-26 @ 20:02
             For LineNum = 1 To vbCodeMod.CountOfLines
                 lread = lread + 1
                 'Check if the line contains 'Sub' or 'Function' without beeing a Remark line
-                savedLineOfCode = Trim(vbCodeMod.Lines(LineNum, 1))
-                trimmedLineOfCode = Trim(vbCodeMod.Lines(LineNum, 1))
+                savedLineOfCode = Trim$(vbCodeMod.Lines(LineNum, 1))
+                trimmedLineOfCode = Trim$(vbCodeMod.Lines(LineNum, 1))
                 'Remove comments
                 If InStr(1, trimmedLineOfCode, "'") Then
                     trimmedLineOfCode = HandleComments(trimmedLineOfCode, "U")
@@ -1316,38 +1316,38 @@ Sub List_Subs_And_Functions_All() '2024-11-26 @ 20:02
                     arr(i, 3) = vbComp.Name
                     arr(i, 4) = LineNum
                     'Goback to savedLineOfCode
-                    trimmedLineOfCode = Trim(vbCodeMod.Lines(LineNum, 1))
+                    trimmedLineOfCode = Trim$(vbCodeMod.Lines(LineNum, 1))
                     posREM = InStr(trimmedLineOfCode, ") '")
                     If posREM > 0 Then
-                        remarks = Trim(Mid(trimmedLineOfCode, posREM + 2))
-                        trimmedLineOfCode = Trim(Left(trimmedLineOfCode, posREM))
+                        remarks = Trim$(Mid$(trimmedLineOfCode, posREM + 2))
+                        trimmedLineOfCode = Trim$(Left$(trimmedLineOfCode, posREM))
                     End If
                     posParam = InStr(trimmedLineOfCode, "(")
                     If posParam > 0 Then
-                        params = Trim(Mid(trimmedLineOfCode, posParam))
-                        trimmedLineOfCode = Trim(Left(trimmedLineOfCode, posParam - 1))
+                        params = Trim$(Mid$(trimmedLineOfCode, posParam))
+                        trimmedLineOfCode = Trim$(Left$(trimmedLineOfCode, posParam - 1))
                     End If
                     
                     If InStr(trimmedLineOfCode, "Sub ") > 1 Or InStr(trimmedLineOfCode, "Function ") > 1 Then
                         posSpace = InStr(trimmedLineOfCode, " ")
-                        scope = Left(trimmedLineOfCode, posSpace - 1)
-                        trimmedLineOfCode = Trim(Mid(trimmedLineOfCode, posSpace + 1))
+                        scope = Left$(trimmedLineOfCode, posSpace - 1)
+                        trimmedLineOfCode = Trim$(Mid$(trimmedLineOfCode, posSpace + 1))
                     Else
                         scope = ""
                     End If
                     arr(i, 5) = scope
                     If InStr(trimmedLineOfCode, "Sub ") = 1 Then
                         sType = "Sub"
-                        trimmedLineOfCode = Trim(Mid(trimmedLineOfCode, 5))
+                        trimmedLineOfCode = Trim$(Mid$(trimmedLineOfCode, 5))
                     Else
                         If InStr(trimmedLineOfCode, "Function ") = 1 Then
                             sType = "Function"
-                            trimmedLineOfCode = Trim(Mid(trimmedLineOfCode, 10))
+                            trimmedLineOfCode = Trim$(Mid$(trimmedLineOfCode, 10))
                         End If
                     End If
                     arr(i, 6) = sType
                     arr(i, 7) = trimmedLineOfCode
-                    arr(i, 1) = UCase(oType) & Chr(0) & UCase(vbComp.Name) & Chr(0) & UCase(trimmedLineOfCode) 'Future sort key
+                    arr(i, 1) = UCase$(oType) & Chr(0) & UCase$(vbComp.Name) & Chr(0) & UCase$(trimmedLineOfCode) 'Future sort key
                     If params <> "()" Then arr(i, 8) = params
                     If remarks <> "" Then arr(i, 9) = remarks
                     arr(i, 10) = Format$(Now(), "yyyy-mm-dd hh:mm")
@@ -1564,7 +1564,7 @@ Sub Log_Record(ByVal procedureName As String, param As String, Optional ByVal st
     
     'TimeStamp avec centièmes de seconde
     Dim timeStamp As String
-    timeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & Right(Format$(Timer, "0.00"), 2)
+    timeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & Right$(Format$(Timer, "0.00"), 2)
     
     Dim logFile As String
     logFile = wshAdmin.Range("F5").value & DATA_PATH & _
@@ -1576,7 +1576,7 @@ Sub Log_Record(ByVal procedureName As String, param As String, Optional ByVal st
     Open logFile For Append As #fileNum
     
     'On laisse une ligne blanche dans le fichier Log
-    If Trim(procedureName) = "" Then
+    If Trim$(procedureName) = "" Then
         Print #fileNum, ""
     ElseIf startTime = 0 Then 'On marque le départ d'une procédure/fonction
         Print #fileNum, timeStamp & " | " & _
@@ -1598,7 +1598,7 @@ Sub Log_Record(ByVal procedureName As String, param As String, Optional ByVal st
                         ThisWorkbook.Name & " | " & _
                         procedureName & " | " & _
                         param & " | " & _
-                        Format(elapsedTime, "0.0000") & " secondes" & vbCrLf
+                        Format$(elapsedTime, "0.0000") & " secondes" & vbCrLf
     End If
     
     Close #fileNum
@@ -1648,7 +1648,7 @@ Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boole
     'TimeStamp avec les centièmes de secondes
     Dim ms As String
     Dim timeStamp As String
-    timeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & Right(Format$(Timer, "0.00"), 2)
+    timeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & Right$(Format$(Timer, "0.00"), 2)
     
     'Path complet du fichier LogSaisieHeures.txt
     Dim logSaisieHeuresFile As String
@@ -1665,7 +1665,7 @@ Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boole
     End If
     
     Print #fileNum, timeStamp & " | " & _
-                        Left(Fn_Get_Windows_Username & Space(19), 19) & " | " & _
+                        Left$(Fn_Get_Windows_Username & Space(19), 19) & " | " & _
                         ThisWorkbook.Name & " | " & _
                         oper & " | " & _
                         txt
@@ -1701,7 +1701,7 @@ Sub Settrace(source As String, module As String, procedure As String, variable A
     fileNum = FreeFile
     
     'Ajoute les millisecondes à la chaîne de temps
-    ms = Right(Format$(Timer, "0.00"), 2) 'Récupère les millisecondes sous forme de texte
+    ms = Right$(Format$(Timer, "0.00"), 2) 'Récupère les millisecondes sous forme de texte
     
     Dim timeStamp As String
     timeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & ms
@@ -1758,8 +1758,8 @@ Sub SortDelimitedString(ByRef inputString As String, delimiter As String)
     
     'Rejoin the sorted components into a single string
     inputString = Join(components, delimiter)
-    If Left(inputString, 1) = "|" Then
-        inputString = Right(inputString, Len(inputString) - 1)
+    If Left$(inputString, 1) = "|" Then
+        inputString = Right$(inputString, Len(inputString) - 1)
     End If
     
 End Sub
@@ -1790,8 +1790,8 @@ Sub LogMainApp_Analysis() '2025-01-10 @ 17:10
         If InStr(strUser, arr(0)) = 0 Then
             strUser = strUser + Fn_Pad_A_String(arr(0), " ", 15, "R") & "|"
         End If
-        If InStr(strDate, Left(arr(1), 10)) = 0 Then
-            strDate = strDate & Left(arr(1), 10) & "|"
+        If InStr(strDate, Left$(arr(1), 10)) = 0 Then
+            strDate = strDate & Left$(arr(1), 10) & "|"
         End If
         If InStr(strVersion, arr(2)) = 0 Then
             strVersion = strVersion & Fn_Pad_A_String(arr(2), " ", 10, "R") & "|"
@@ -1802,9 +1802,9 @@ Sub LogMainApp_Analysis() '2025-01-10 @ 17:10
         Dim subString As String
         Dim e As Double
         If InStr(arr(4), "Temps écoulé: ") > 0 Then
-            subString = Mid(arr(4), InStr(arr(4), "Temps écoulé: ") + 14)
+            subString = Mid$(arr(4), InStr(arr(4), "Temps écoulé: ") + 14)
             subString = Replace(subString, ".", ",")
-            e = Left(subString, InStr(subString, " ") - 1)
+            e = Left$(subString, InStr(subString, " ") - 1)
             If e <= 0.2 Then
                 arrTime(1) = arrTime(1) + 1
             ElseIf e <= 0.3 Then

@@ -2,9 +2,7 @@ Attribute VB_Name = "modGL_PrepEF"
 Option Explicit
 
 Public dictSoldeCodeEF As Object
-Public dictSectionSub As Object
 Public soldeCodeEF() As Variant
-Public savePremiereLigne As Integer
 Public ligneTotalPassif As Integer, ligneTotalADA As Integer
 Public ligneTotalRevenus As Integer, ligneTotalDépenses As Integer
 Public ligneAutresRevenus As Integer
@@ -104,6 +102,7 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
     Set dictPreuve = New Dictionary
     
     'Dictionary de type Global
+    Dim dictSectionSub As Object
     If Not dictSectionSub Is Nothing Then
         dictSectionSub.RemoveAll
     End If
@@ -155,7 +154,7 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
                 dictPreuve(codeEF & "-" & glNo) = dictPreuve(codeEF & "-" & glNo) + arrSoldesParGL(r, 2)
                 
                 'Preuve - Sous-total par section
-                section = Left(codeEF, 1)
+                section = Left$(codeEF, 1)
                 If Not dictSectionSub.Exists(section) Then
                     dictSectionSub.Add section, 0
                 End If
@@ -365,9 +364,9 @@ Sub Assembler_Page_Titre_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Dat
     ws.Cells.HorizontalAlignment = xlCenter
     ws.Cells.VerticalAlignment = xlCenter
     
-    Call PositionnerCellule(ws, UCase(wshAdmin.Range("NomEntreprise")), 8, 2, 20, True, xlCenter)
-    Call PositionnerCellule(ws, UCase("États Financiers"), 15, 2, 20, True, xlCenter)
-    Call PositionnerCellule(ws, UCase(Format$(dateAC, "dd mmmm yyyy")), 28, 2, 20, True, xlCenter)
+    Call PositionnerCellule(ws, UCase$(wshAdmin.Range("NomEntreprise")), 8, 2, 20, True, xlCenter)
+    Call PositionnerCellule(ws, UCase$("États Financiers"), 15, 2, 20, True, xlCenter)
+    Call PositionnerCellule(ws, UCase$(Format$(dateAC, "dd mmmm yyyy")), 28, 2, 20, True, xlCenter)
     
     'Ajuster la largeur des colonnes et la hauteur de lignes
     ws.Columns("A").ColumnWidth = 3
@@ -420,10 +419,10 @@ Sub Assembler_TM_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateA
     ws.Cells.VerticalAlignment = xlCenter
     
     'Appliquer le format d'en-tête
-    Call PositionnerCellule(ws, UCase(wshAdmin.Range("NomEntreprise")), 1, 2, 12, True, xlLeft)
-    Call PositionnerCellule(ws, UCase("Table des Matières"), 2, 2, 12, True, xlLeft)
-    Call PositionnerCellule(ws, UCase("États Financiers"), 3, 2, 12, True, xlLeft)
-    Call PositionnerCellule(ws, UCase("Au " & Format$(dateAC, "dd mmmm yyyy")), 4, 2, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$(wshAdmin.Range("NomEntreprise")), 1, 2, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$("Table des Matières"), 2, 2, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$("États Financiers"), 3, 2, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$("Au " & Format$(dateAC, "dd mmmm yyyy")), 4, 2, 12, True, xlLeft)
     
     With ws.Range("B5:C5").Borders(xlEdgeBottom)
 '    With ws.Range("B6:E6").Borders(xlEdgeBottom)
@@ -545,9 +544,9 @@ Sub Assembler_ER_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateA
     titre = titre & Format$(dateAC, "dd mmmm yyyy")
     
     'Appliquer le format d'en-tête
-    Call PositionnerCellule(ws, UCase(wshAdmin.Range("NomEntreprise")), 1, 2, 12, True, xlLeft)
-    Call PositionnerCellule(ws, UCase("État des Résultats"), 2, 2, 12, True, xlLeft)
-    Call PositionnerCellule(ws, UCase(titre), 3, 2, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$(wshAdmin.Range("NomEntreprise")), 1, 2, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$("État des Résultats"), 2, 2, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$(titre), 3, 2, 12, True, xlLeft)
     ws.Range("C5:E6").HorizontalAlignment = xlRight
     ws.Range("C5").value = year(dateAC)
     ws.Range("C5").Font.Bold = True
@@ -596,12 +595,12 @@ Sub Assembler_ER_2_Lignes(ws As Worksheet)
     Dim rngRow As ListRow
     For Each rngRow In tbl.ListRows
         LigneEF = rngRow.Range.Cells(1, 1).value
-        codeEF = UCase(rngRow.Range.Cells(1, 2).value)
+        codeEF = UCase$(rngRow.Range.Cells(1, 2).value)
         'On ne traite que les lignes de l'État des résultats (R, D, X & I)
-        If InStr("RDXI", Left(codeEF, 1)) <> 0 Then
-            typeLigne = UCase(rngRow.Range.Cells(1, 3).value)
-            gras = UCase(rngRow.Range.Cells(1, 4).value)
-            souligne = UCase(rngRow.Range.Cells(1, 5).value)
+        If InStr("RDXI", Left$(codeEF, 1)) <> 0 Then
+            typeLigne = UCase$(rngRow.Range.Cells(1, 3).value)
+            gras = UCase$(rngRow.Range.Cells(1, 4).value)
+            souligne = UCase$(rngRow.Range.Cells(1, 5).value)
             size = rngRow.Range.Cells(1, 6).value
             Call Imprime_Ligne_EF(ws, currRow, LigneEF, codeEF, typeLigne, gras, souligne, size)
         End If
@@ -673,9 +672,9 @@ Sub Assembler_Bilan_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, da
     ws.Cells.VerticalAlignment = xlCenter
     
     'Appliquer le format d'en-tête
-    Call PositionnerCellule(ws, UCase(wshAdmin.Range("NomEntreprise")), 1, 2, 12, True, xlLeft)
-    Call PositionnerCellule(ws, UCase("Bilan"), 2, 2, 12, True, xlLeft)
-    Call PositionnerCellule(ws, UCase("Au " & Format$(dateAC, "dd mmmm yyyy")), 3, 2, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$(wshAdmin.Range("NomEntreprise")), 1, 2, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$("Bilan"), 2, 2, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$("Au " & Format$(dateAC, "dd mmmm yyyy")), 3, 2, 12, True, xlLeft)
     ws.Range("C5:E6").HorizontalAlignment = xlRight
     ws.Range("C5").value = year(dateAC)
     ws.Range("C5").Font.Bold = True
@@ -727,7 +726,7 @@ Sub Assembler_Bilan_2_Lignes(ws As Worksheet)
         LigneEF = rngRow.Range.Cells(1, 1).value
         codeEF = rngRow.Range.Cells(1, 2).value
         'Ne traite que les lignes du bilan (A, P & E)
-        If InStr("APE", Left(codeEF, 1)) <> 0 Then
+        If InStr("APE", Left$(codeEF, 1)) <> 0 Then
             typeLigne = rngRow.Range.Cells(1, 3).value
             gras = rngRow.Range.Cells(1, 4).value
             souligne = rngRow.Range.Cells(1, 5).value
@@ -808,9 +807,9 @@ Sub Assembler_BNR_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, date
     titre = titre & Format$(dateAC, "dd mmmm yyyy")
     
     'Appliquer le format d'en-tête
-    Call PositionnerCellule(ws, UCase(wshAdmin.Range("NomEntreprise")), 1, 2, 12, True, xlLeft)
-    Call PositionnerCellule(ws, UCase("Bénéfices non répartis"), 2, 2, 12, True, xlLeft)
-    Call PositionnerCellule(ws, UCase(titre), 3, 2, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$(wshAdmin.Range("NomEntreprise")), 1, 2, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$("Bénéfices non répartis"), 2, 2, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$(titre), 3, 2, 12, True, xlLeft)
     ws.Range("C5:E6").HorizontalAlignment = xlRight
     ws.Range("C5").value = year(dateAC)
     ws.Range("C5").Font.Bold = True
@@ -859,7 +858,7 @@ Sub Assembler_BNR_2_Lignes(ws As Worksheet)
         LigneEF = rngRow.Range.Cells(1, 1).value
         codeEF = rngRow.Range.Cells(1, 2).value
         'Ne traite que les lignes du bilan (A, P & E)
-        If InStr("B", Left(codeEF, 1)) <> 0 Then
+        If InStr("B", Left$(codeEF, 1)) <> 0 Then
             typeLigne = rngRow.Range.Cells(1, 3).value
             gras = rngRow.Range.Cells(1, 4).value
             souligne = rngRow.Range.Cells(1, 5).value
@@ -941,7 +940,7 @@ Sub Imprime_Ligne_EF(ws As Worksheet, ByRef currRow As Integer, LigneEF As Strin
 '    Debug.Print "#7-"; currRow; Tab(10); codeEF; Tab(18); typeLigne; Tab(25); gras; Tab(33); souligne; Tab(41); size
     Dim correcteurSigne As Integer
     Dim section As String
-    section = Left(codeEF, 1)
+    section = Left$(codeEF, 1)
     correcteurSigne = IIf(InStr("PERIB", section), -1, 1)
     
     Dim doitImprimer As Boolean
@@ -956,6 +955,7 @@ Sub Imprime_Ligne_EF(ws As Worksheet, ByRef currRow As Integer, LigneEF As Strin
             If codeEF = "B00" Then
                 ws.Range("G" & currRow).value = BNR_Début_Année_AC * correcteurSigne
                 ws.Range("I" & currRow).value = BNR_Début_Année_AP * correcteurSigne
+                Dim savePremiereLigne As Integer
                 savePremiereLigne = currRow
             Else
                 savePremiereLigne = currRow + 1
@@ -1039,10 +1039,10 @@ Sub Imprime_Ligne_EF(ws As Worksheet, ByRef currRow As Integer, LigneEF As Strin
     End If
     
     With ws.Range("B" & currRow & ":E" & currRow).Font
-        If UCase(gras) = "VRAI" Then
+        If UCase$(gras) = "VRAI" Then
             .Bold = True
         End If
-        If UCase(souligne) = "VRAI" Then
+        If UCase$(souligne) = "VRAI" Then
             .underline = xlUnderlineStyleSingle
         End If
         If size <> 0 Then
@@ -1136,4 +1136,5 @@ Sub TrierDictionaryParCle(ByRef dict As Object)
         Debug.Print keys(i) & " - " & Format$(values(i), "###,##0.00")
     Next i
 End Sub
+
 
