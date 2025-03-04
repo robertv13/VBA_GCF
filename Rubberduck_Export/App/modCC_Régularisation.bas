@@ -2,8 +2,8 @@ Attribute VB_Name = "modCC_Régularisation"
 Option Explicit
 
 'Variables globales pour le module
-Dim regulNo As Long
-Dim nextJENo As Long
+Public regulNo As Long
+Public nextJENo As Long
 
 Sub MAJ_Regularisation() '2025-01-14 @ 12:00
     

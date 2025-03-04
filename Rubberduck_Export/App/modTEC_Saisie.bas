@@ -1,18 +1,18 @@
 Attribute VB_Name = "modTEC_Saisie"
 Option Explicit
 
-Global Const rmv_modeInitial As Long = 1
-Global Const rmv_modeCreation As Long = 2
-Global Const rmv_modeAffichage As Long = 3
-Global Const rmv_modeModification As Long = 4
+Public Const rmv_modeInitial As Long = 1
+Public Const rmv_modeCreation As Long = 2
+Public Const rmv_modeAffichage As Long = 3
+Public Const rmv_modeModification As Long = 4
 
-Global rmv_state As Long
+Public rmv_state As Long
 
-Global savedClient As String
-Global savedActivite As String
-Global savedHeures As String
-Global savedFacturable As String
-Global savedCommNote As String
+Public savedClient As String
+Public savedActivite As String
+Public savedHeures As String
+Public savedFacturable As String
+Public savedCommNote As String
 
 Sub TEC_Ajoute_Ligne() 'Add an entry to DB
 
@@ -23,25 +23,20 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
         
     If Fn_TEC_Is_Data_Valid() = True Then
         Dim y As Integer, m As Integer, d As Integer
-        Dim avant As String, apres As String
+        Dim avant As String
         On Error Resume Next
             avant = ufSaisieHeures.txtDate.value
             y = year(ufSaisieHeures.txtDate.value)
             m = month(ufSaisieHeures.txtDate.value)
             d = day(ufSaisieHeures.txtDate.value)
-            If y = 2024 And m < 9 Then 'Si mois < 9 alors, on prend pour acquis que le jour et le mois sont inversés...
-                Dim temp As Integer
-                temp = m
-                m = d
-                d = temp
-                Call Log_Saisie_Heures("info     ", "@00045 - AJUSTEMENT (PLUG) --->   y = " & y & "   m = " & m & "   d = " & d & "   type = " & TypeName(ufSaisieHeures.txtDate.value))
-            End If
+'            If y = 2024 And m < 9 Then 'Si mois < 9 alors, on prend pour acquis que le jour et le mois sont inversés...
+'                Dim temp As Integer
+'                temp = m
+'                m = d
+'                d = temp
+'                Call Log_Saisie_Heures("info     ", "@00045 - AJUSTEMENT (PLUG) --->   y = " & y & "   m = " & m & "   d = " & d & "   type = " & TypeName(ufSaisieHeures.txtDate.value))
+'            End If
             ufSaisieHeures.txtDate.value = Format$(DateSerial(y, m, d), "yyyy-mm-dd")
-            Call Log_Saisie_Heures("info     ", "@00048 - ufSaisieHeures.txtDate.value = " & ufSaisieHeures.txtDate.value & "   type = " & TypeName(ufSaisieHeures.txtDate.value) & "   après assignation")
-            apres = ufSaisieHeures.txtDate.value
-            If apres <> avant Then
-                Call Log_Saisie_Heures("adjust   ", "@00051 - La date a été changée pour corriger la date - " & avant & " ---> " & apres)
-            End If
         On Error GoTo 0
         
         Call TEC_Record_Add_Or_Update_To_DB(0)
@@ -81,6 +76,9 @@ Sub TEC_Modifie_Ligne() '2023-12-23 @ 07:04
 
     If Fn_TEC_Is_Data_Valid() = False Then Exit Sub
 
+    'Obtenir le ID du client pur (à partir de son nom pur) - 2025-03-04 @ 08:02
+    ufSaisieHeures.txtClientID.value = Fn_Cell_From_BD_Client(ufSaisieHeures.txtClient.value, 1, 2)
+        
     Call TEC_Record_Add_Or_Update_To_DB(ufSaisieHeures.txtTECID.value)
     Call TEC_Record_Add_Or_Update_Locally(ufSaisieHeures.txtTECID.value)
  
@@ -112,7 +110,7 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
     Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Efface_Ligne", "", 0)
 
     If ufSaisieHeures.txtTECID.value = "" Then
-        msgBox prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
+        msgBox Prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
             Buttons:=vbCritical
         GoTo Clean_Exit
     End If
@@ -122,7 +120,7 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
                          vbYesNo + vbQuestion, "Confirmation de DESTRUCTION")
     If answerYesNo = vbNo Then
         msgBox _
-        prompt:="Cet enregistrement ne sera PAS détruit ! ", _
+        Prompt:="Cet enregistrement ne sera PAS détruit ! ", _
         Title:="Confirmation", _
         Buttons:=vbCritical
         GoTo Clean_Exit
@@ -149,7 +147,7 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
     End With
     
     msgBox _
-        prompt:="L'enregistrement a été DÉTRUIT !", _
+        Prompt:="L'enregistrement a été DÉTRUIT !", _
         Title:="Confirmation", _
         Buttons:=vbCritical
         
@@ -833,4 +831,5 @@ Sub UpdatePivotTables()
     Call Log_Record("modTEC_Saisie:UpdatePivotTables", "", startTime)
     
 End Sub
+
 

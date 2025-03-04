@@ -2,20 +2,18 @@ Attribute VB_Name = "modAppli_Utils"
 Option Explicit
 
 'Variables globales pour le module
-Dim verificationIntegriteOK As Boolean
-Dim soldeComptesClients As Currency
+Private verificationIntegriteOK As Boolean
+Private soldeComptesClients As Currency
 
 Public Sub ConvertRangeBooleanToText(rng As Range)
 
     Dim cell As Range
     For Each cell In rng
         Select Case cell.value
-            Case 0, "False" 'False
+            Case 0, "False", "FAUX" 'False
                 cell.value = "FAUX"
-            Case -1, "True" 'True
+            Case -1, "True", "VRAI" 'True
                 cell.value = "VRAI"
-            Case "VRAI", "FAUX"
-                
             Case Else
                 msgBox cell.value & " est une valeur INVALIDE pour la cellule " & cell.Address & " de la feuille TEC_Local"
         End Select
@@ -442,31 +440,61 @@ Sub Tx_Range_2_2D_Array(ByVal rng As Range, ByRef arr As Variant, Optional ByVal
 End Sub
 
 Sub CreateOrReplaceWorksheet(wsName As String)
-    
+
     Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:CreateOrReplaceWorksheet", "", 0)
     
-    'Check if the worksheet exists
     Dim wsExists As Boolean
     wsExists = NomFeuilleExiste(wsName)
     
-    'If the worksheet exists, delete it
+    'Si la feuille existe, on la supprime
     If wsExists Then
         Application.DisplayAlerts = False
-        Worksheets(wsName).Delete
+        ThisWorkbook.Worksheets(wsName).Delete
         Application.DisplayAlerts = True
     End If
+
+    'Attendre un instant pour éviter les conflits éventuels
+    DoEvents
     
-    'Add the new worksheet
+    'Ajouter une nouvelle feuille et la renommer
     Dim ws As Worksheet
     Set ws = ThisWorkbook.Worksheets.Add(Before:=wshMenu)
     ws.Name = wsName
 
     'Libérer la mémoire
     Set ws = Nothing
-    
-    Call Log_Record("modAppli_Utils:CreateOrReplaceWorksheet", "", startTime)
 
+    Call Log_Record("modAppli_Utils:CreateOrReplaceWorksheet", "", startTime)
+    
 End Sub
+
+'Sub CreateOrReplaceWorksheet(wsName As String)
+'
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:CreateOrReplaceWorksheet", "", 0)
+'
+'    'Check if the worksheet exists
+'    Dim wsExists As Boolean
+'    wsExists = NomFeuilleExiste(wsName)
+'
+'    'If the worksheet exists, delete it
+'    If wsExists Then
+'        Application.DisplayAlerts = False
+'        ActiveWorkbook.Worksheets(wsName).Delete
+'        Application.DisplayAlerts = True
+'    End If
+'
+'    'Add the new worksheet
+'    Dim ws As Worksheet
+'    Set ws = ThisWorkbook.Worksheets.Add(Before:=wshMenu)
+'    ws.Name = wsName
+'
+'    'Libérer la mémoire
+'    Set ws = Nothing
+'
+'    Call Log_Record("modAppli_Utils:CreateOrReplaceWorksheet", "", startTime)
+'
+'End Sub
+'
 Private Sub checkPlanComptable(ByRef r As Long, ByRef readRows As Long)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkPlanComptable", "", 0)
@@ -839,7 +867,7 @@ Private Sub checkCC_Régularisations(ByRef r As Long, ByRef readRows As Long)
     r = r + 1
     
     'Array pointer
-    Dim row As Long: row = 1
+'    Dim row As Long: row = 1
     Dim currentRow As Long
         
     Dim regulNo As Long
@@ -1321,7 +1349,7 @@ Private Sub checkENC_Détails(ByRef r As Long, ByRef readRows As Long)
     Dim wsEntete As Worksheet: Set wsEntete = wshENC_Entête
     Dim lastUsedRowEntete As Long
     lastUsedRowEntete = wsEntete.Cells(wsEntete.Rows.count, 1).End(xlUp).row
-    Dim rngEntete As Range: Set rngEntete = wsEntete.Range("A2:A" & lastUsedRowEntete)
+'    Dim rngEntete As Range: Set rngEntete = wsEntete.Range("A2:A" & lastUsedRowEntete)
     Dim strPmtNo As String
     Dim i As Long
     For i = 2 To lastUsedRowEntete
@@ -1338,7 +1366,7 @@ Private Sub checkENC_Détails(ByRef r As Long, ByRef readRows As Long)
     r = r + 1
     
     'Array pointer
-    Dim row As Long: row = 1
+'    Dim row As Long: row = 1
     Dim currentRow As Long
         
     Dim pmtNo As Long, oldpmtNo As Long
@@ -1438,7 +1466,7 @@ Clean_Exit:
     'Libérer la mémoire
     Set dictENC = Nothing
     Set rng = Nothing
-    Set rngEntete = Nothing
+'    Set rngEntete = Nothing
     Set rngFACEntete = Nothing
     Set ws = Nothing
     Set wsComptes_Clients = Nothing
@@ -1494,7 +1522,7 @@ Private Sub checkENC_Entête(ByRef r As Long, ByRef readRows As Long)
               .Resize(lastUsedRow - HeaderRow, ws.Range("A1").CurrentRegion.Columns.count).value
     
     'Array pointer
-    Dim row As Long: row = 1
+'    Dim row As Long: row = 1
     Dim currentRow As Long
         
     Dim i As Long
@@ -1597,7 +1625,7 @@ Private Sub checkFAC_Détails(ByRef r As Long, ByRef readRows As Long)
     arr = wshFAC_Détails.Range("A1").CurrentRegion.offset(1, 0).value
     
     'Array pointer
-    Dim row As Long: row = 1
+'    Dim row As Long: row = 1
     Dim currentRow As Long
         
     Dim i As Long
@@ -1709,7 +1737,7 @@ Private Sub checkFAC_Entête(ByRef r As Long, ByRef readRows As Long)
     arr = rngData
     
     'Array pointer
-    Dim row As Long: row = 1
+'    Dim row As Long: row = 1
     Dim currentRow As Long
         
     Dim i As Long
@@ -1902,7 +1930,7 @@ Private Sub checkFAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
               .Resize(lastUsedRow - HeaderRow, ws.Range("A1").CurrentRegion.Columns.count).value
     
     'Array pointer
-    Dim row As Long: row = 1
+'    Dim row As Long: row = 1
     Dim currentRow As Long
         
     Dim i As Long
@@ -2242,7 +2270,7 @@ Private Sub checkFAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
     arr = ws.Range("A1").CurrentRegion.offset(1, 0).Resize(numRows - 1, ws.Range("A1").CurrentRegion.Columns.count).value
     
     'Array pointer
-    Dim row As Long: row = 1
+'    Dim row As Long: row = 1
     Dim currentRow As Long
         
     Dim i As Long
@@ -2412,7 +2440,7 @@ Private Sub checkFAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
     arr = ws.Range("A1").CurrentRegion.offset(1, 0).Resize(numRows, ws.Range("A1").CurrentRegion.Columns.count).value
     
     'Array pointer
-    Dim row As Long: row = 1
+'    Dim row As Long: row = 1
     Dim currentRow As Long
         
     Dim i As Long
@@ -3129,7 +3157,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 4536 'What is the last TECID analyzed ?
+    lastTECIDReported = 4572 'What is the last TECID analyzed ?
     
     'Feuille contenant les données à analyser
     Dim HeaderRow As Long: HeaderRow = 2
@@ -3806,10 +3834,10 @@ Sub ApplyWorksheetFormat(ws As Worksheet, rng As Range, HeaderRow As Long)
         firstDataRow = HeaderRow + 1
         
         Select Case rng.Worksheet.CodeName
-            Case "wshBD_Clients"
-                
-            Case "wshBD_Fournisseurs"
-                
+'            Case "wshBD_Clients"
+'
+'            Case "wshBD_Fournisseurs"
+'
             Case "wshCC_Régularisations" '2025-02-12 @ 07:58
                 With wshCC_Régularisations
                     .Range(.Cells(2, fREGULRegulID), .Cells(lastUsedRow, fREGULTimeStamp)).HorizontalAlignment = xlCenter

@@ -1,8 +1,8 @@
 Attribute VB_Name = "modFAC_Finale"
 Option Explicit
 
-Dim invRow As Long, itemDBRow As Long, invitemRow As Long, invNumb As Long
-Dim lastRow As Long, lastResultRow As Long, resultRow As Long
+Private invRow As Long, itemDBRow As Long, invitemRow As Long, invNumb As Long
+Private lastRow As Long, lastResultRow As Long, resultRow As Long
 
 Sub shp_FAC_Finale_Save_Click()
 
@@ -820,7 +820,7 @@ End Sub
 Function NomFeuilleExiste(nom As String) As Boolean
     
     On Error Resume Next
-    NomFeuilleExiste = Not Worksheets(nom) Is Nothing
+    NomFeuilleExiste = Not ActiveWorkbook.Worksheets(nom) Is Nothing
     On Error GoTo 0
     
 End Function
@@ -1518,4 +1518,5 @@ Sub FAC_Finale_Disable_Save_Button()
     Set shp = Nothing
     
 End Sub
+
 

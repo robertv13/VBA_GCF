@@ -122,7 +122,7 @@ Sub AjouteContactDansNomClient()
     'Loop through each row starting from row 2 (headers are 1 row)
     Dim client As String, clientID As String, contactFacturation As String
     Dim posOpenSquareBracket As Integer, posCloseSquareBracket As Integer
-    Dim numberOpenSquareBracket As Integer, numberCloseSquareBracket As Integer
+'    Dim numberOpenSquareBracket As Integer, numberCloseSquareBracket As Integer
     Dim i As Long
     For i = 2 To lastUsedRow
         'Load data into variables
@@ -134,7 +134,7 @@ Sub AjouteContactDansNomClient()
         posOpenSquareBracket = InStr(client, "[")
         posCloseSquareBracket = InStr(client, "]")
         
-        If numberOpenSquareBracket = 0 And numberCloseSquareBracket = 0 Then
+        If posOpenSquareBracket = 0 And posCloseSquareBracket = 0 Then
             If contactFacturation <> "" And InStr(client, contactFacturation) = 0 Then
                 client = Trim(client) & " [" & contactFacturation & "]"
                 ws.Cells(i, 1).value = client
@@ -905,7 +905,7 @@ Sub ConstruireSommaireHeures() '2024-08-12 @ 21:09
     
 End Sub
 
-Sub CorrigeNomClientInTEC()  '2024-08-23 @ 06:32
+Sub CorrigeNomClientInTEC()  '2025-03-04 @ 05:48
 
     'Source - Définir les chemins d'accès des fichiers, le Workbook, le Worksheet et le Range
     Dim sourceFilePath As String
@@ -924,8 +924,8 @@ Sub CorrigeNomClientInTEC()  '2024-08-23 @ 06:32
                      "GCF_BD_Entrée.xlsx"
     Dim wbMF As Workbook: Set wbMF = Workbooks.Open(clientMFPath)
     Dim wsMF As Worksheet: Set wsMF = wbMF.Worksheets("Clients")
-    Dim lastUsedRowTECClient As Long
-    lastUsedRowTECClient = wsMF.Cells(wsMF.Rows.count, 1).End(xlUp).row
+    Dim lastUsedRowClient As Long
+    lastUsedRowClient = wsMF.Cells(wsMF.Rows.count, 1).End(xlUp).row
     
     'Setup output file
     Dim strOutput As String
@@ -944,7 +944,7 @@ Sub CorrigeNomClientInTEC()  '2024-08-23 @ 06:32
     Dim dictClients As Dictionary
     Set dictClients = New Dictionary
     Dim i As Long
-    For i = 2 To lastUsedRowTECClient
+    For i = 2 To lastUsedRowClient
         dictClients.Add CStr(wsMF.Cells(i, 2).value), wsMF.Cells(i, 1).value
     Next i
     
@@ -988,7 +988,7 @@ Sub CorrigeNomClientInTEC()  '2024-08-23 @ 06:32
     Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
     
     'Close the 2 workbooks without saving anything
-    wbSource.Close SaveChanges:=True
+    wbSource.Close SaveChanges:=False
     wbMF.Close SaveChanges:=False
 
     'Libérer la mémoire
@@ -1003,6 +1003,112 @@ Sub CorrigeNomClientInTEC()  '2024-08-23 @ 06:32
     
     msgBox "Il y a " & casDelta & " cas où le nom du client (TEC) diffère" & _
             vbNewLine & vbNewLine & "du nom de client du Fichier MAÎTRE", vbInformation
+    
+End Sub
+
+Sub DetecterErreurCodeClientInTEC()  '2025-03-04 @ 05:53
+
+    'Source - Définir les chemins d'accès des fichiers, le Workbook et le Worksheet
+    Dim sourceFilePath As String
+    sourceFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+                     "GCF_BD_Master.xlsx"
+    Dim wbSource As Workbook: Set wbSource = Workbooks.Open(sourceFilePath)
+    Dim wsSource As Worksheet: Set wsSource = wbSource.Worksheets("TEC_Local")
+    
+    'Détermine la dernière rangée et dernière colonne utilisées dans wshTEC_Local
+    Dim lastUsedRowTEC As Long
+    lastUsedRowTEC = wsSource.Cells(wsSource.Rows.count, 1).End(xlUp).row
+    
+    'Open the Master File Workbook
+    Dim clientMFPath As String
+    clientMFPath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+                     "GCF_BD_Entrée.xlsx"
+    Dim wbMF As Workbook: Set wbMF = Workbooks.Open(clientMFPath)
+    Dim wsMF As Worksheet: Set wsMF = wbMF.Worksheets("Clients")
+    Dim lastUsedRowClient As Long
+    lastUsedRowClient = wsMF.Cells(wsMF.Rows.count, 1).End(xlUp).row
+    
+    'Setup output file
+    Dim strOutput As String
+    strOutput = "X_Détection_Cas_Erreur_Code_TEC"
+    Call CreateOrReplaceWorksheet(strOutput)
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets(strOutput)
+    wsOutput.Range("A1").value = "TEC_ID"
+    wsOutput.Range("B1").value = "Date"
+    wsOutput.Range("C1").value = "Prof"
+    wsOutput.Range("D1").value = "NomClientTEC"
+    wsOutput.Range("E1").value = "CodeClient"
+    wsOutput.Range("F1").value = "NomClientFM"
+    wsOutput.Range("G1").value = "DateSaisie"
+    Call Make_It_As_Header(wsOutput.Range("A1:G1"))
+    
+    'Build the dictionnary (Code, Nom du client) from Client's Master File
+    Dim dictClients As Dictionary
+    Set dictClients = New Dictionary
+    Dim i As Long
+    For i = 2 To lastUsedRowClient
+        dictClients.Add CStr(wsMF.Cells(i, fClntFMClientID).value), wsMF.Cells(i, fClntFMClientNom).value
+    Next i
+    
+    'Parse TEC_Local to verify TEC's clientName vs. MasterFile's clientName
+    Dim codeClientTEC As String, nomClientTEC As String, nomClientFromMF As String
+    Dim casDelta As Long, rowOutput As Long
+    rowOutput = 2
+    For i = 2 To lastUsedRowTEC
+        codeClientTEC = wsSource.Cells(i, fTECClientID).value
+        nomClientTEC = wsSource.Cells(i, fTECTDBClientNom).value
+        nomClientFromMF = dictClients(codeClientTEC)
+        If Trim(nomClientTEC) <> Trim(nomClientFromMF) Then
+            Debug.Print "#073 - " & i & " : " & codeClientTEC & " - " & nomClientTEC & " <---> " & nomClientFromMF
+'            wsSource.Cells(i, 6).value = nomClientFromMF
+            wsOutput.Cells(rowOutput, 1).value = wsSource.Cells(i, fTECTECID).value
+            wsOutput.Cells(rowOutput, 2).value = wsSource.Cells(i, fTECDate).value
+            wsOutput.Cells(rowOutput, 3).value = wsSource.Cells(i, fTECProf).value
+            wsOutput.Cells(rowOutput, 4).value = nomClientTEC
+            wsOutput.Cells(rowOutput, 5).value = codeClientTEC
+            wsOutput.Cells(rowOutput, 6).value = nomClientFromMF
+            wsOutput.Cells(rowOutput, 7).value = wsSource.Cells(i, fTECDateSaisie).value
+            rowOutput = rowOutput + 1
+            casDelta = casDelta + 1
+        End If
+    Next i
+    
+    wsOutput.Columns.AutoFit
+
+    'Result print setup
+    rowOutput = rowOutput + 1
+    wsOutput.Range("A" & rowOutput).value = "**** " & Format$(lastUsedRowTEC - 1, "###,##0") & _
+                                        " lignes analysées dans l'ensemble du fichier ***"
+                                    
+    'Set conditional formatting for the worksheet (alternate colors)
+    Dim rngArea As Range: Set rngArea = wsOutput.Range("A2:G" & rowOutput)
+    Call modAppli_Utils.ApplyConditionalFormatting(rngArea, 1, True)
+
+    'Setup print parameters
+    Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:G" & rowOutput)
+    Dim header1 As String: header1 = "Détection des codes de clients ERRONÉS dans TEC"
+    Dim header2 As String: header2 = ""
+    Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
+    
+    'Close the 2 workbooks without saving anything
+    wbSource.Close SaveChanges:=False
+    wbMF.Close SaveChanges:=False
+
+    'Libérer la mémoire
+    Set dictClients = Nothing
+    Set rngArea = Nothing
+    Set rngToPrint = Nothing
+    Set wbMF = Nothing
+    Set wbSource = Nothing
+    Set wsMF = Nothing
+    Set wsOutput = Nothing
+    Set wsSource = Nothing
+    
+    msgBox _
+        Prompt:="Il y a " & casDelta & " cas où le nom du client (TEC) diffère" & _
+            vbNewLine & vbNewLine & "du nom de client du Fichier MAÎTRE", _
+        Title:="Les données ne sont pas corrigées", _
+        Buttons:=vbInformation
     
 End Sub
 

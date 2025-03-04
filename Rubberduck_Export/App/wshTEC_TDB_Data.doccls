@@ -1,6 +1,6 @@
 ﻿Option Explicit
 
-Dim isProcessing As Boolean
+Private isProcessing As Boolean
 
 Private Sub Worksheet_Change(ByVal target As Range)
     

@@ -15,9 +15,9 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Dim dataArray() As Variant     'Tous les renregistrements DEB_Trans
-Dim recentArray() As Variant   'Enregistrements récents (< 75 jours)
-Dim filteredArray() As Variant 'Enregistrements filtrés (si filtre)
+Private dataArray() As Variant     'Tous les renregistrements DEB_Trans
+Private recentArray() As Variant   'Enregistrements récents (< 75 jours)
+Private filteredArray() As Variant 'Enregistrements filtrés (si filtre)
 '
 
 Private Sub UserForm_Initialize()
@@ -209,4 +209,5 @@ Private Sub cmdFermer_Click()
     Unload Me
     
 End Sub
+
 

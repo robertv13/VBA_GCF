@@ -152,6 +152,13 @@ Sub SauvegarderEtSortirApplication() '2024-08-30 @ 07:37
         ActiveWorkbook.Close SaveChanges:=True
         Application.EnableEvents = True
         
+        If Fn_Get_Windows_Username = "Robert M. Vigneault" Or Fn_Get_Windows_Username = "robertmv" Then
+            Call StopperSauvegardeAutomatique
+            Call ExporterCodeVBA 'Sauvegarde AUTOMATIQUE du code VBA
+        End If
+        
+        DoEvents
+        
         'On tente de quitter l'application EXCEL
         Application.Application.Quit
         

@@ -569,12 +569,7 @@ Sub Test_Get_All_Shapes() '2024-08-15 @ 14:42
 
     Dim ws As Worksheet: Set ws = wshGL_BV
     
-    Dim shp As Shape
-    For Each shp In ws.Shapes
-    Next shp
-
     'Libérer la mémoire
-    Set shp = Nothing
     Set ws = Nothing
     
 End Sub

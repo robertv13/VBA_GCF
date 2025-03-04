@@ -130,8 +130,11 @@ Function Fn_Cell_From_BD_Client(nomClient As String, ByRef colNumberSearch As In
     If result <> "Not Found" Then
         Fn_Cell_From_BD_Client = result
     Else
-        msgBox "Impossible de retrouver le nom du client dans la feuille" & vbNewLine & vbNewLine & _
-                    "BD_Clients...", vbExclamation, "Fn_Cell_From_BD_Client"
+        msgBox _
+            Prompt:="Impossible de retrouver le nom du client dans la feuille" & vbNewLine & vbNewLine & _
+                    "BD_Clients...", _
+            Title:="Erreur grave - Impossible de retrouver le nom du client - " & colNumberSearch & "-" & colNumberData, _
+            Buttons:=vbCritical
     End If
     
     'Libérer la mémoire
@@ -712,8 +715,10 @@ Function Fn_Get_Invoice_Total_Payments_AF(invNo As String)
     
 End Function
 
-Function Fn_Get_A_Cell_From_A_Worksheet(feuille, cle As String, cleCol As Integer, retourCol As Integer) As String '2025-02-22 @ 06:56
+Function Fn_Get_A_Cell_From_A_Worksheet(feuille As String, cle As String, cleCol As Integer, retourCol As Integer) As String '2025-03-04 @ 06:56
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Get_A_Cell_From_A_Worksheet", cle, 0)
+    
     'Définir la feuille pour la recherche
     Dim ws As Worksheet
     Set ws = ThisWorkbook.Worksheets(feuille)
@@ -733,6 +738,8 @@ Function Fn_Get_A_Cell_From_A_Worksheet(feuille, cle As String, cleCol As Intege
     'Libérer la mémoire
     Set resultat = Nothing
     Set ws = Nothing
+    
+    Call Log_Record("modFunctions:Fn_Get_A_Cell_From_A_Worksheet", "", startTime)
 
 End Function
 
@@ -1121,7 +1128,7 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
     
     'Professionnel ?
     If ufSaisieHeures.cmbProfessionnel.value = "" Then
-        msgBox prompt:="Le professionnel est OBLIGATOIRE !", _
+        msgBox Prompt:="Le professionnel est OBLIGATOIRE !", _
                Title:="Vérification", _
                Buttons:=vbCritical
         ufSaisieHeures.cmbProfessionnel.SetFocus
@@ -1130,7 +1137,7 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
 
     'Date de la charge ?
     If ufSaisieHeures.txtDate.value = "" Or IsDate(ufSaisieHeures.txtDate.value) = False Then
-        msgBox prompt:="La date est OBLIGATOIRE !", _
+        msgBox Prompt:="La date est OBLIGATOIRE !", _
                Title:="Vérification", _
                Buttons:=vbCritical
         ufSaisieHeures.txtDate.SetFocus
@@ -1139,7 +1146,7 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
 
     'Nom du client & code de client ?
     If ufSaisieHeures.txtClient.value = "" Or ufSaisieHeures.txtClientID = "" Then
-        msgBox prompt:="Le client et son code sont OBLIGATOIRES !" & vbNewLine & vbNewLine & _
+        msgBox Prompt:="Le client et son code sont OBLIGATOIRES !" & vbNewLine & vbNewLine & _
                        "Code de client = '" & ufSaisieHeures.txtClientID & "'" & vbNewLine & vbNewLine & _
                        "Nom du client = '" & ufSaisieHeures.txtClient.value & "'", _
                Title:="Vérifications essentielles des données du client", _
@@ -1150,7 +1157,7 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
     
     'Heures valides ?
     If ufSaisieHeures.txtHeures.value = "" Or IsNumeric(ufSaisieHeures.txtHeures.value) = False Then
-        msgBox prompt:="Le nombre d'heures est OBLIGATOIRE !", _
+        msgBox Prompt:="Le nombre d'heures est OBLIGATOIRE !", _
                Title:="Vérification", _
                Buttons:=vbCritical
         ufSaisieHeures.txtHeures.SetFocus
@@ -1618,12 +1625,10 @@ End Function
 Public Function Fn_Convert_Value_Boolean_To_Text(val As Boolean) As String
 
     Select Case val
-        Case 0, "False", "Faux" 'False
+        Case 0, "False", "Faux", "FAUX" 'False
             Fn_Convert_Value_Boolean_To_Text = "FAUX"
-        Case -1, "True", "Vrai" 'True"
+        Case -1, "True", "Vrai", "VRAI" 'True"
             Fn_Convert_Value_Boolean_To_Text = "VRAI"
-        Case "VRAI", "FAUX"
-            
         Case Else
             msgBox val & " est une valeur INVALIDE !"
     End Select
@@ -1907,7 +1912,7 @@ Function ExtraireNomFichier(path As String) As String
 
 End Function
 
-Function ConvertirEnNumerique(rng As Range)
+Sub ConvertirEnNumerique(rng As Range)
 
     Dim cell As Range
     For Each cell In rng
@@ -1918,7 +1923,7 @@ Function ConvertirEnNumerique(rng As Range)
         End If
     Next cell
     
-End Function
+End Sub
 
 Function TrouverLigneFacture(ws As Worksheet, numFacture As String) As Long
 
@@ -2052,6 +2057,11 @@ End Function
 
 Function ValiderDateDernierJourDuMois(y As Integer, m As Integer, d As Integer) As String '2025-03-02 @ 11:00
 
+    'Le mois est-il valide (max 12)
+    If m > 12 Then
+        ValiderDateDernierJourDuMois = ""
+        Exit Function
+    End If
     'Quel est le dernier jour de ce mois ?
     Dim dernierJourDuMois As Integer
     dernierJourDuMois = day(DateSerial(y, m + 1, 0))

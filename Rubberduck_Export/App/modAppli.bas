@@ -27,6 +27,10 @@ Public logSaisieHeuresVeryDetailed As Boolean
 'Pour assurer un contrôle dans Facture Finale
 Public flagEtapeFacture As Integer
 
+'Sauvegarde AUTOMATIQUE du code VBA - 2025-03-03 @ 07:18
+Public gNextBackupTime As Date
+Public Const INTERVALLE_MINUTES As Double = 10
+
 'Using Enum to specify the column number of worksheets (data)
 Public Enum BD_Clients '2024-10-26 @ 17:41
     [_First] = 1
@@ -362,7 +366,7 @@ Sub CodeEssentielDepart()
     End If
     
     Dim rootPath As String
-    Call Set_Root_Path(rootPath)
+    rootPath = FN_Get_Root_Path
 
     Application.EnableEvents = False
     wshAdmin.Range("F5").value = rootPath
@@ -418,6 +422,11 @@ Sub CodeEssentielDepart()
     Set wb = Nothing
     Set ws = Nothing
     
+    If Fn_Get_Windows_Username = "Robert M. Vigneault" Or Fn_Get_Windows_Username = "robertmv" Then
+        Call ExporterCodeVBA 'Sauvegarde AUTOMATIQUE du code VBA
+        Call DemarrerSauvegardeAutomatique
+    End If
+    
     Call Log_Record("modAppli:CodeEssentielDepart", "", startTime)
     
     Exit Sub
@@ -427,17 +436,17 @@ ErrorHandler:
 
 End Sub
 
-Sub Set_Root_Path(ByRef rootPath As String)
+Function FN_Get_Root_Path() As String '2025-03-03 @ 20:28
    
     DoEvents
     
     If Fn_Get_Windows_Username = "Robert M. Vigneault" Then
-        rootPath = "C:\VBA\GC_FISCALITÉ"
+        FN_Get_Root_Path = "C:\VBA\GC_FISCALITÉ"
     Else
-        rootPath = "P:\Administration\APP\GCF"
+        FN_Get_Root_Path = "P:\Administration\APP\GCF"
     End If
 
-End Sub
+End Function
 
 Sub CreateUserActiveFile()
 

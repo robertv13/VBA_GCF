@@ -484,7 +484,7 @@ Sub AfficherNouvelleFeuille_Stats(invNo As String, nomClient As String, dateFact
     'Vérifier si la feuille existe déjà
     Dim ws As Worksheet
     On Error Resume Next
-    Set ws = Worksheets(sheetName)
+    Set ws = ActiveWorkbook.Worksheets(sheetName)
     On Error GoTo 0
     
     'Si la feuille existe, la supprimer
@@ -495,7 +495,7 @@ Sub AfficherNouvelleFeuille_Stats(invNo As String, nomClient As String, dateFact
     End If
     
     ' Créer une nouvelle feuille
-    Set ws = Worksheets.Add
+    Set ws = ActiveWorkbook.Worksheets.Add
     ws.Name = sheetName
     
     'Entête de la feuille
@@ -1423,7 +1423,7 @@ Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture
     'Vérifier si la feuille existe déjà
     Dim ws As Worksheet
     On Error Resume Next
-    Set ws = Worksheets(sheetName)
+    Set ws = ActiveWorkbook.Worksheets(sheetName)
     On Error GoTo 0
     
     'Si la feuille existe, la supprimer
@@ -1434,7 +1434,7 @@ Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture
     End If
     
     ' Créer une nouvelle feuille
-    Set ws = Worksheets.Add
+    Set ws = ActiveWorkbook.Worksheets.Add
     ws.Name = sheetName
     
     'Entête de la feuille

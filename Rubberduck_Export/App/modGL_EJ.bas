@@ -1,7 +1,7 @@
 Attribute VB_Name = "modGL_EJ"
 Option Explicit
 
-Dim sauvegardesCaracteristiquesForme As Object
+Private sauvegardesCaracteristiquesForme As Object
 
 Sub shp_GL_EJ_Update_Click()
 
@@ -922,8 +922,10 @@ End Sub
 
 Sub GL_EJ_Forme_Sauvegarder(forme As Shape)
 
-    'Initialiser le Dictionary pour sauvegarder les caractéristiques
-    Set sauvegardesCaracteristiquesForme = CreateObject("Scripting.Dictionary")
+    'Vérifier si le Dictionary est déjà instancié, sinon le créer
+    If sauvegardesCaracteristiquesForme Is Nothing Then
+        Set sauvegardesCaracteristiquesForme = CreateObject("Scripting.Dictionary")
+    End If
 
     'Sauvegarder les caractéristiques originales de la forme
     sauvegardesCaracteristiquesForme("Left") = forme.Left
@@ -933,7 +935,6 @@ Sub GL_EJ_Forme_Sauvegarder(forme As Shape)
     sauvegardesCaracteristiquesForme("LineColor") = forme.Line.ForeColor.RGB
     sauvegardesCaracteristiquesForme("Text") = forme.TextFrame2.TextRange.Text
     sauvegardesCaracteristiquesForme("TextColor") = forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB
-    
 End Sub
 
 Sub GL_EJ_Forme_Modifier(forme As Shape)
@@ -1045,3 +1046,4 @@ Sub ckbRecurrente_Click()
     End If
 
 End Sub
+

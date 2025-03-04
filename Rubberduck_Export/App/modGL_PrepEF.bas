@@ -277,7 +277,7 @@ Sub Assembler_États_Financiers()
 '    Next section
 
     'On se déplace à la première page des états financiers
-    Sheets("Page Titre").Activate
+    ActiveWorkbook.Sheets("Page Titre").Activate
     
     msgBox "Les états financiers ont été produits" & vbNewLine & vbNewLine & _
             "Voir les onglets respectifs au bas du classeur", vbOKOnly, "Fin de traitement"
@@ -888,10 +888,6 @@ Sub Assembler_BNR_2_Lignes(ws As Worksheet)
     ws.Range("G7:I25").Clear
     
     Call Log_Record("modGL_PrepEF:Assembler_BNR_2_Lignes", "", startTime)
-
-End Sub
-
-Sub Assembler_Notes()
 
 End Sub
 

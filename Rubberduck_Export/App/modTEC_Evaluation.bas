@@ -550,7 +550,7 @@ Sub Evaluation_Apercu_Avant_Impression()
     DoEvents
 
     Dim header1 As String: header1 = "Évaluation des TEC au  " & wshTEC_Evaluation.Range("L3").value
-    Dim header2 As String
+    Dim header2 As String: header2 = ""
     
     Call Simple_Print_Setup(wshTEC_Evaluation, rngToPrint, header1, header2, "$1:$1", "P")
 

@@ -2,8 +2,8 @@ Attribute VB_Name = "modENC_Saisie"
 Option Explicit
 
 'Variables globales pour le module
-Dim lastRow As Long, lastResultRow As Long
-Dim payRow As Long
+Public lastRow As Long, lastResultRow As Long
+Private payRow As Long
 
 Sub ENC_Get_OS_Invoices(cc As String) '2024-08-21 @ 15:18
     
@@ -913,4 +913,5 @@ Sub ValiderEtLancerufEncRégularisation()
     End If
     
 End Sub
+
 

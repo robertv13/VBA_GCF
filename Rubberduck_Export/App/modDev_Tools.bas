@@ -362,65 +362,65 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
     
 End Sub
 
-Sub LireFichierLogSaisieHeuresTXT() '2024-10-17 @ 20:13
-    
-    'Initialisation de la boîte de dialogue FileDialog pour choisir le fichier
-    Dim fd As fileDialog
-    Set fd = Application.fileDialog(msoFileDialogFilePicker)
-    
-    'Configuration des filtres de fichiers (TXT uniquement)
-    fd.Title = "Sélectionnez un fichier TXT"
-    fd.Filters.Clear
-    fd.Filters.Add "Fichiers Texte", "*.txt"
-    
-    'Si l'utilisateur sélectionne un fichier, filePath contiendra son chemin
-    Dim filePath As String
-    If fd.show = -1 Then
-        filePath = fd.selectedItems(1)
-    Else
-        msgBox "Aucun fichier sélectionné.", vbExclamation
-        Exit Sub
-    End If
-    
-    'Ouvre le fichier en mode lecture
-    Dim fileNum As Integer
-    fileNum = FreeFile
-    Open filePath For Input As fileNum
-    
-    'Initialise la ligne de départ pour insérer les données dans Excel
-    Dim ligneNum As Long
-    ligneNum = 1
-    
-    'Lire chaque ligne du fichier
-    Dim ligne As String
-    Dim champs() As String
-    Dim j As Long
-
-    Do While Not EOF(fileNum)
-        Line Input #fileNum, ligne
-        
-        'Séparer les champs par le séparateur " | "
-        champs = Split(ligne, " | ")
-        
-        'Insérer les champs dans les colonnes de la feuille Excel
-        For j = LBound(champs) To UBound(champs)
-            Cells(ligneNum, j + 1).value = champs(j)
-        Next j
-        
-        'Passer à la ligne suivante
-        ligneNum = ligneNum + 1
-    Loop
-    
-    'Fermer le fichier
-    Close fileNum
-    
-    'Libérer la mémoire
-    Set fd = Nothing
-    
-    msgBox "Le fichier a été importé avec succès.", vbInformation
-    
-End Sub
-
+'Sub LireFichierLogSaisieHeuresTXT() '2024-10-17 @ 20:13
+'
+'    'Initialisation de la boîte de dialogue FileDialog pour choisir le fichier
+'    Dim fd As fileDialog
+'    Set fd = Application.fileDialog(msoFileDialogFilePicker)
+'
+'    'Configuration des filtres de fichiers (TXT uniquement)
+'    fd.Title = "Sélectionnez un fichier TXT"
+'    fd.Filters.Clear
+'    fd.Filters.Add "Fichiers Texte", "*.txt"
+'
+'    'Si l'utilisateur sélectionne un fichier, filePath contiendra son chemin
+'    Dim filePath As String
+'    If fd.show = -1 Then
+'        filePath = fd.selectedItems(1)
+'    Else
+'        msgBox "Aucun fichier sélectionné.", vbExclamation
+'        Exit Sub
+'    End If
+'
+'    'Ouvre le fichier en mode lecture
+'    Dim fileNum As Integer
+'    fileNum = FreeFile
+'    Open filePath For Input As fileNum
+'
+'    'Initialise la ligne de départ pour insérer les données dans Excel
+'    Dim ligneNum As Long
+'    ligneNum = 1
+'
+'    'Lire chaque ligne du fichier
+'    Dim ligne As String
+'    Dim champs() As String
+'    Dim j As Long
+'
+'    Do While Not EOF(fileNum)
+'        Line Input #fileNum, ligne
+'
+'        'Séparer les champs par le séparateur " | "
+'        champs = Split(ligne, " | ")
+'
+'        'Insérer les champs dans les colonnes de la feuille Excel
+'        For j = LBound(champs) To UBound(champs)
+'            Cells(ligneNum, j + 1).value = champs(j)
+'        Next j
+'
+'        'Passer à la ligne suivante
+'        ligneNum = ligneNum + 1
+'    Loop
+'
+'    'Fermer le fichier
+'    Close fileNum
+'
+'    'Libérer la mémoire
+'    Set fd = Nothing
+'
+'    msgBox "Le fichier a été importé avec succès.", vbInformation
+'
+'End Sub
+'
 Sub Fix_Date_Format()
     
     'Initialisation de la boîte de dialogue FileDialog pour choisir le fichier Excel
@@ -744,12 +744,12 @@ Sub Sauvegarder_UserForms_Parameters() '2024-11-26 @ 07:42
     Dim i As Integer
     i = 2
     'Parcourir tous les composants VBA pour trouver les UserForms
-    Dim VBComp As Object
+    Dim vbComp As Object
     Dim userFormName As String
     Dim uf As Object
-    For Each VBComp In ThisWorkbook.VBProject.VBComponents
-        If VBComp.Type = vbext_ct_MSForm Then
-            userFormName = VBComp.Name
+    For Each vbComp In ThisWorkbook.VBProject.VBComponents
+        If vbComp.Type = vbext_ct_MSForm Then
+            userFormName = vbComp.Name
             On Error Resume Next
             ' Charger dynamiquement le UserForm
             Set uf = VBA.UserForms.Add(userFormName)
@@ -767,7 +767,7 @@ Sub Sauvegarder_UserForms_Parameters() '2024-11-26 @ 07:42
                 Set uf = Nothing
             End If
         End If
-    Next VBComp
+    Next vbComp
     
     'Libérer la mémoire
     Set uf = Nothing
@@ -1022,7 +1022,7 @@ Sub VerifierControlesAssociesToutesFeuilles()
     Dim btn As Object
     Dim macroNameRaw As String
     Dim macroName As String
-    Dim VBComp As Object
+    Dim vbComp As Object
     Dim codeModule As Object
     Dim ligne As Long
     Dim found As Boolean
@@ -1099,16 +1099,16 @@ Function VerifierMacroExiste(macroName As String, Optional moduleName As String 
     VerifierMacroExiste = False
     
     'Si un module spécifique est fourni, vérifier uniquement dans ce module
-    Dim VBComp As Object
+    Dim vbComp As Object
     Dim codeModule As Object
     Dim ligne As Long
     
     If moduleName <> "" Then
         On Error Resume Next
-        Set VBComp = ThisWorkbook.VBProject.VBComponents(moduleName)
+        Set vbComp = ThisWorkbook.VBProject.VBComponents(moduleName)
         On Error GoTo 0
-        If Not VBComp Is Nothing Then
-            Set codeModule = VBComp.codeModule
+        If Not vbComp Is Nothing Then
+            Set codeModule = vbComp.codeModule
             For ligne = 1 To codeModule.CountOfLines
                 If codeModule.ProcOfLine(ligne, vbext_pk_Proc) = macroName Then
                     VerifierMacroExiste = True
@@ -1120,15 +1120,15 @@ Function VerifierMacroExiste(macroName As String, Optional moduleName As String 
     End If
     
     'Parcourir tous les modules si aucun module spécifique n'est fourni
-    For Each VBComp In ThisWorkbook.VBProject.VBComponents
-        Set codeModule = VBComp.codeModule
+    For Each vbComp In ThisWorkbook.VBProject.VBComponents
+        Set codeModule = vbComp.codeModule
         For ligne = 1 To codeModule.CountOfLines
             If codeModule.ProcOfLine(ligne, vbext_pk_Proc) = macroName Then
                 VerifierMacroExiste = True
                 Exit Function
             End If
         Next ligne
-    Next VBComp
+    Next vbComp
     
 End Function
 
@@ -1265,10 +1265,10 @@ Sub ExtractEnumDefinition(tableName As String, ByRef arr() As Variant)
     Set VBProj = ThisWorkbook.VBProject
 
     'Parcourir tous les composants VBA
-    Dim VBComp As VBIDE.VBComponent
+    Dim vbComp As VBIDE.VBComponent
     Dim CodeMod As VBIDE.codeModule
-    For Each VBComp In VBProj.VBComponents
-        Set CodeMod = VBComp.codeModule
+    For Each vbComp In VBProj.VBComponents
+        Set CodeMod = vbComp.codeModule
         'Parcourir chaque ligne de code
         For LineNum = 1 To CodeMod.CountOfLines
             codeLine = Trim(CodeMod.Lines(LineNum, 1))
@@ -1294,7 +1294,7 @@ Sub ExtractEnumDefinition(tableName As String, ByRef arr() As Variant)
                 End If
             End If
         Next LineNum
-    Next VBComp
+    Next vbComp
 
     'Redimension au minimum le tableau
     Call Array_2D_Resizer(arr, e, 2)
@@ -1611,3 +1611,67 @@ Sub UniformiserValeurVBA() '2025-02-27 @ 10:56
     msgBox "Corrections terminées !", vbInformation
     
 End Sub
+
+Sub DemarrerSauvegardeAutomatique() '2025-03-03 @ 07:19
+
+    'Lancer l'export des modules VBA
+    Call ExporterCodeVBA
+    
+    'Programmer la prochaine sauvegarde
+    gNextBackupTime = Now + TimeValue("00:" & INTERVALLE_MINUTES & ":00")
+    
+    Application.OnTime gNextBackupTime, "DemarrerSauvegardeAutomatique"
+    
+End Sub
+
+Sub StopperSauvegardeAutomatique()
+
+    'Annuler la prochaine exécution prévue
+    On Error Resume Next
+    Application.OnTime gNextBackupTime, "DemarrerSauvegardeAutomatique", , False
+    On Error GoTo 0
+    
+End Sub
+
+Sub ExporterCodeVBA() '2025-03-03 @ 06:59
+
+    'Définir le dossier où enregistrer les modules
+    Dim dossierBackup As String
+    dossierBackup = "C:\Users\Robert M. Vigneault\OneDrive\_P E R S O N N E L\00_AU CAS OÙ\Backup_VBA\" & Format(Now, "yyyy-mm-dd_HHMMSS") & "\"
+    
+    'Vérifier si le dossier existe, sinon le créer
+    If Dir(dossierBackup, vbDirectory) = "" Then
+        MkDir dossierBackup
+    End If
+
+    'Référence au projet VBA actif
+    Dim ws As Workbook
+    Set ws = ThisWorkbook
+
+    'Parcourir tous les modules
+    Dim vbComp As Object
+    Dim ext As String
+    For Each vbComp In ws.VBProject.VBComponents
+        Select Case vbComp.Type
+            Case 1: ext = ".bas" 'Module standard
+            Case 2: ext = ".cls" 'Classe
+            Case 3: ext = ".frm" 'UserForm
+            Case Else: ext = ""  'Autres (ignorés)
+        End Select
+        
+        If ext <> "" Then
+            vbComp.Export dossierBackup & vbComp.Name & ext
+        End If
+    Next vbComp
+
+'    msgBox _
+'        Prompt:="Export des modules VBA terminé.", _
+'        Title:="Sauvegarde automatique du code VBA", _
+'        Buttons:=vbInformation
+        
+    'Libérer la mémoire
+    Set vbComp = Nothing
+    Set ws = Nothing
+        
+End Sub
+

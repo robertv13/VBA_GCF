@@ -1,8 +1,8 @@
 Attribute VB_Name = "modFAC_Brouillon"
 Option Explicit
 
-Dim invRow As Long, itemDBRow As Long, invitemRow As Long, invNumb As Long
-Dim lastRow As Long, lastResultRow As Long, resultRow As Long
+Private invRow As Long, itemDBRow As Long, invitemRow As Long, invNumb As Long
+Private lastRow As Long, lastResultRow As Long, resultRow As Long
 
 Sub shp_FAC_Nouvelle_Facture_Click()
 
@@ -1302,3 +1302,5 @@ Sub test_fn_get_hourly_rate()
     Debug.Print "#053 - test_fn_get_hourly_rate() = " & hr
 
 End Sub
+
+

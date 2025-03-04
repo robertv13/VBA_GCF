@@ -85,7 +85,7 @@ Private Sub lstboxNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
             If .Selected(i) Then
                 Me.txtClient.value = .List(i, 0)
                 Me.txtClientID.value = Fn_Cell_From_BD_Client(Me.txtClient.value, 17, 2)
-                Me.txtClientRéel.value = Fn_Cell_From_BD_Client(Me.txtClientID.value, 2, 1)
+                Me.txtClientReel.value = Fn_Cell_From_BD_Client(Me.txtClientID.value, 2, 1)
                 Exit For
             End If
         Next i
@@ -139,7 +139,7 @@ Public Sub cmbProfessionnel_AfterUpdate()
     'Restreindre l'accès au professionnel par défaut du code d'utilisateur
     Select Case Fn_Get_Windows_Username
         Case "Guillaume", "GuillaumeCharron", "gchar", "Robert M. Vigneault", "robertmv"
-            'Accès à tous les utilisateurs
+            DoEvents
         Case "vgervais"
             If cmbProfessionnel.value <> "VG" Then
                 msgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
@@ -215,23 +215,7 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
         Exit Sub
     End If
     
-    Call Log_Saisie_Heures("info     ", "@00223 - fullDate = " & fullDate & _
-                                "   y = " & year(fullDate) & _
-                                "   m = " & month(fullDate) & _
-                                "   d = " & day(fullDate) & _
-                                "   type = " & TypeName(fullDate))
-    Call Log_Saisie_Heures("info     ", "@00228 - DateSerial = " & DateSerial(year(Date), month(Date), day(Date)) & _
-                                "   y = " & year(Date) & _
-                                "   m = " & month(Date) & _
-                                "   d = " & day(Date) & _
-                                "   type = " & TypeName(Date))
-                                
     If fullDate > DateSerial(year(Date), month(Date), day(Date)) Then
-        Call Log_Saisie_Heures("future  ", "@00230 - fullDate = " & fullDate & _
-                                            "   y = " & year(fullDate) & _
-                                            "   m = " & month(fullDate) & _
-                                            "   d = " & day(fullDate) & _
-                                            "   type = " & TypeName(fullDate))
         If msgBox("En êtes-vous CERTAIN de vouloir cette date ?" & vbNewLine & vbNewLine & _
                     "La date saisie est '" & Format$(fullDate, wshAdmin.Range("B1").value) & "'", vbYesNo + vbQuestion, _
                     "Utilisation d'une date FUTURE") = vbNo Then
@@ -240,12 +224,6 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
             txtDate.SetFocus
             Cancel = True
             Exit Sub
-        Else
-            Call Log_Saisie_Heures("FUTURE_OK", "@00249 - fullDate = " & fullDate & _
-                                                "   y = " & year(fullDate) & _
-                                                "   m = " & month(fullDate) & _
-                                                "   d = " & day(fullDate) & _
-                                                "   type = " & TypeName(fullDate))
         End If
     End If
     
@@ -348,7 +326,7 @@ Private Sub txtHeures_Exit(ByVal Cancel As MSForms.ReturnBoolean)
     On Error GoTo 0
     
     If Not IsNumeric(Me.txtHeures.value) Then
-        msgBox prompt:="La valeur saisie ne peut être utilisée comme valeur numérique!", _
+        msgBox Prompt:="La valeur saisie ne peut être utilisée comme valeur numérique!", _
                 Title:="Validation d'une valeur numérique", _
                 Buttons:=vbCritical
 '        Cancel = True
@@ -361,7 +339,7 @@ Private Sub txtHeures_Exit(ByVal Cancel As MSForms.ReturnBoolean)
 
     If heure < 0 Or heure > 24 Then
         msgBox _
-            prompt:="Le nombre d'heures ne peut être une valeur négative" & vbNewLine & vbNewLine & _
+            Prompt:="Le nombre d'heures ne peut être une valeur négative" & vbNewLine & vbNewLine & _
                     "ou dépasser 24 pour une charge", _
             Title:="Validation d'une valeur numérique", _
             Buttons:=vbCritical
@@ -473,7 +451,7 @@ Private Sub cmdUpdate_Click()
     If ufSaisieHeures.txtTECID.value <> "" Then
         Call TEC_Modifie_Ligne
     Else
-        msgBox prompt:="Vous devez choisir un enregistrement à modifier !", _
+        msgBox Prompt:="Vous devez choisir un enregistrement à modifier !", _
                Title:="", _
                Buttons:=vbCritical
     End If
@@ -489,7 +467,7 @@ Private Sub cmdDelete_Click()
     If ufSaisieHeures.txtTECID.value <> "" Then
         Call TEC_Efface_Ligne
     Else
-        msgBox prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
+        msgBox Prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
                Title:="", _
                Buttons:=vbCritical
     End If

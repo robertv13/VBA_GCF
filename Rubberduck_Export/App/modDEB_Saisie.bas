@@ -4,7 +4,6 @@ Option Explicit
 'Variables globales
 Public sauvegardesCaracteristiquesForme As Object
 Public numeroDebourseARenverser As Long
-'
 
 Sub shp_DEB_Saisie_Update_Click()
 
@@ -953,10 +952,12 @@ End Sub
 
 Sub DEB_Forme_Sauvegarder(forme As Shape)
 
-    'Initialiser le Dictionary pour sauvegarder les caractéristiques
-    Set sauvegardesCaracteristiquesForme = CreateObject("Scripting.Dictionary")
+    ' Vérifier si le Dictionary est déjà instancié, sinon le créer
+    If sauvegardesCaracteristiquesForme Is Nothing Then
+        Set sauvegardesCaracteristiquesForme = CreateObject("Scripting.Dictionary")
+    End If
 
-    'Sauvegarder les caractéristiques originales de la forme
+    ' Sauvegarder les caractéristiques originales de la forme
     sauvegardesCaracteristiquesForme("Left") = forme.Left
     sauvegardesCaracteristiquesForme("Width") = forme.Width
     sauvegardesCaracteristiquesForme("Height") = forme.Height
@@ -964,7 +965,6 @@ Sub DEB_Forme_Sauvegarder(forme As Shape)
     sauvegardesCaracteristiquesForme("LineColor") = forme.Line.ForeColor.RGB
     sauvegardesCaracteristiquesForme("Text") = forme.TextFrame2.TextRange.Text
     sauvegardesCaracteristiquesForme("TextColor") = forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB
-    
 End Sub
 
 Sub DEB_Forme_Restaurer(forme As Shape)
