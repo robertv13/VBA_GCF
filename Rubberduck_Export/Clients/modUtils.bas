@@ -1,4 +1,5 @@
 Attribute VB_Name = "modUtils"
+'@Folder("Gestion_Clients")
 Option Explicit
 
 Declare PtrSafe Function GetUserName Lib "advapi32.dll" Alias "GetUserNameA" (ByVal lpBuffer As String, nSize As Long) As Long
@@ -428,6 +429,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
     Call Erase_And_Create_Worksheet("X_Doc_Search_Utility_Results")
 
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Doc_Search_Utility_Results")
+    
     wsOutput.Range("A1").Value = "SortKey"
     wsOutput.Range("B1").Value = "Type"
     wsOutput.Range("C1").Value = "ModuleName"
@@ -442,7 +444,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
     If xr > 0 Then
     
         'Data starts at row 2
-        Dim r As Long: r = 2
+'        Dim r As Long: r = 2
 
         Call Array_2D_Resizer(arrResult, xr, UBound(arrResult, 2))
         
@@ -470,7 +472,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
         lastUsedRow = wsOutput.Range("B9999").End(xlUp).Row
         With wsOutput.Range("B2:G" & lastUsedRow)
             On Error Resume Next
-            Cells.FormatConditions.Delete
+            ActiveSheet.Cells.FormatConditions.Delete
             On Error GoTo 0
         
             .FormatConditions.Add Type:=xlExpression, Formula1:= _
@@ -704,6 +706,5 @@ CleanUp:
     On Error GoTo 0
     
 End Sub
-
 
 

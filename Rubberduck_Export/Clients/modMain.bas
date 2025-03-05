@@ -1,4 +1,6 @@
 Attribute VB_Name = "modMain"
+'@IgnoreModule ImplicitActiveWorkbookReference, HostSpecificExpression
+'@Folder("Gestion_Clients")
 Option Explicit
 
 Public Const DATA_PATH As String = "\DataFiles"
@@ -16,7 +18,8 @@ Sub CM_Reset_UserForm()
     Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("modMain:CM_Reset_UserForm", "", 0)
     
     Dim iRow As Long, lastUsedRow As Long
-    iRow = [Counta(Données!A:A)] 'Identifying the number of rows
+    iRow = Application.WorksheetFunction.CountA(Sheets("Données").Range("A:A"))
+'    iRow = [Counta(Données!A:A)] 'Identifying the number of rows
     lastUsedRow = wshClients.Cells(wshClients.Rows.Count, "A").End(xlUp).Row
     
     With ufClientMF
@@ -68,10 +71,10 @@ Sub CM_Reset_UserForm()
         End If
         Call CM_Add_SearchColumn
         'Worksheet - Données
-        ThisWorkbook.Sheets("Données").AutoFilterMode = False
+        wshClients.AutoFilterMode = False
         'Worksheet - CM_Build_Données_Recherche
-        ThisWorkbook.Sheets("DonnéesRecherche").AutoFilterMode = False
-        ThisWorkbook.Sheets("DonnéesRecherche").Cells.Clear
+        wshSearchData.AutoFilterMode = False
+        wshSearchData.Cells.Clear
         
         'ListBox parameters
         .lstDonnées.ColumnCount = 17
@@ -343,17 +346,17 @@ Sub CM_Update_Locally_GCF_BD_Entrée(action As String)
 
     Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("modMain:CM_Update_Locally_GCF_BD_Entrée", "", 0)
     
-    Dim sh As Worksheet
-    Set sh = ThisWorkbook.Sheets("Données")
+    
+    
     
     Dim iRow As Long
     If ufClientMF.txtRowNumber.Value = "" Then
-        iRow = [Counta(Données!A:A)] + 1
+        iRow = Application.WorksheetFunction.CountA(Sheets("Données").Range("A:A")) + 1
     Else
         iRow = ufClientMF.txtRowNumber.Value
     End If
     
-    With sh
+    With wshClients
         .Cells(iRow, 1) = ufClientMF.txtNomClient.Value
         .Cells(iRow, 2) = ufClientMF.txtCodeClient.Value
         .Cells(iRow, 3) = ufClientMF.txtNomClientSysteme.Value
@@ -431,34 +434,34 @@ Sub CM_Build_Données_Recherche()
     Dim sColumn As String 'To store the column selection
     Dim sValue As String 'To hold the search text value
     
-    Dim wshDonnées As Worksheet 'Données sheet
-    Set wshDonnées = ThisWorkbook.Sheets("Données")
-    Dim wshSearchData As Worksheet 'DonnéesRecherche sheet
-    Set wshSearchData = ThisWorkbook.Sheets("DonnéesRecherche")
+     'Données sheet
     
-    iDonnéesRow = ThisWorkbook.Sheets("Données").Range("A" & Application.Rows.Count).End(xlUp).Row
+     'DonnéesRecherche sheet
+    
+    
+    iDonnéesRow = wshClients.Range("A" & Application.Rows.Count).End(xlUp).Row
     sColumn = ufClientMF.cmbSearchColumn.Value
     sValue = ufClientMF.txtSearch.Value
-    iColumn = Application.WorksheetFunction.Match(sColumn, wshDonnées.Range("A1:R1"), 0)
+    iColumn = Application.WorksheetFunction.Match(sColumn, wshClients.Range("A1:R1"), 0)
     
     'Remove filter from Données worksheet
-    If wshDonnées.FilterMode = True Then
-        wshDonnées.AutoFilterMode = False
+    If wshClients.FilterMode = True Then
+        wshClients.AutoFilterMode = False
     End If
 
     'Apply filter on Données worksheet
     If ufClientMF.cmbSearchColumn.Value = "Code Client" Then
-        wshDonnées.Range("A1:R" & iDonnéesRow).AutoFilter Field:=iColumn, Criteria1:=sValue
+        wshClients.Range("A1:R" & iDonnéesRow).AutoFilter Field:=iColumn, Criteria1:=sValue
     Else
-        wshDonnées.Range("A1:R" & iDonnéesRow).AutoFilter Field:=iColumn, Criteria1:="*" & sValue & "*"
+        wshClients.Range("A1:R" & iDonnéesRow).AutoFilter Field:=iColumn, Criteria1:="*" & sValue & "*"
     End If
     
     Dim searchRowsFound As Long
-    searchRowsFound = Application.WorksheetFunction.Subtotal(3, wshDonnées.Range("A:A")) - 1 'Heading
+    searchRowsFound = Application.WorksheetFunction.Subtotal(3, wshClients.Range("A:A")) - 1 'Heading
     If searchRowsFound >= 1 Then
         'Code to remove the previous data from CM_Build_Données_Recherche worksheet
         wshSearchData.Cells.Clear
-        wshDonnées.AutoFilter.Range.Copy wshSearchData.Range("A1")
+        wshClients.AutoFilter.Range.Copy wshSearchData.Range("A1")
         Application.CutCopyMode = False
         iSearchRow = wshSearchData.Range("A" & Application.Rows.Count).End(xlUp).Row
         ufClientMF.lstDonnées.ColumnCount = 17
@@ -471,7 +474,7 @@ Sub CM_Build_Données_Recherche()
        MsgBox "Je n'ai trouvé AUCUN enregistrement avec ce critère."
     End If
 
-    wshDonnées.AutoFilterMode = False
+    wshClients.AutoFilterMode = False
     Application.ScreenUpdating = True
 
     Call CM_Log_Activities("modMain:CM_Build_Données_Recherche", ufClientMF.cmbSearchColumn.Value & "=" & sValue & " " & searchRowsFound, startTime)
@@ -575,4 +578,5 @@ Sub CM_Apply_Worksheet_Format(ws As Worksheet, rng As Range, headerRow As Long)
     Call CM_Log_Activities("modMain:CM_Apply_Worksheet_Format", CStr(numRows), startTime)
 
 End Sub
+
 

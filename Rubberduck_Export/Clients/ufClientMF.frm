@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufClientMF 
    Caption         =   "Gestion du fichier Clients (version 5.4)"
-   ClientHeight    =   12030
+   ClientHeight    =   12930
    ClientLeft      =   6615
    ClientTop       =   2460
-   ClientWidth     =   18270
+   ClientWidth     =   18060
    OleObjectBlob   =   "ufClientMF.frx":0000
 End
 Attribute VB_Name = "ufClientMF"
@@ -12,11 +12,36 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+'@Folder("Gestion_Clients")
 Option Explicit
 
-Public EnableEvents As Boolean
-Public nouveauClient As Boolean
-Public isActiveSearch As Boolean
+Private enableEvents1 As Boolean
+Private nouveauClient1 As Boolean
+Private isActiveSearch1 As Boolean
+
+Public Property Get EnableEvents() As Boolean
+    EnableEvents = enableEvents1
+End Property
+
+Public Property Let EnableEvents(ByVal RHS As Boolean)
+    enableEvents1 = RHS
+End Property
+
+Public Property Get NouveauClient() As Boolean
+    NouveauClient = nouveauClient1
+End Property
+
+Public Property Let NouveauClient(ByVal RHS As Boolean)
+    nouveauClient1 = RHS
+End Property
+
+Public Property Get IsActiveSearch() As Boolean
+    IsActiveSearch = isActiveSearch1
+End Property
+
+Public Property Let IsActiveSearch(ByVal RHS As Boolean)
+    isActiveSearch1 = RHS
+End Property
 
 Private Sub cmbSearchColumn_Change()
 
@@ -122,7 +147,7 @@ Private Sub cmdEdit_Click()
     
     'Code to update the value to respective controls - .ListIndex is based '0'
     Me.txtRowNumber.Value = Application.WorksheetFunction.Match(Me.lstDonnées.List(Me.lstDonnées.ListIndex, 0), _
-        ThisWorkbook.Sheets("Données").Range("A:A"), 0)
+        wshClients.Range("A:A"), 0)
     Me.txtNomClient.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 0)
     Me.txtCodeClient.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 1)
     Me.txtNomClientSysteme.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 2)
@@ -141,7 +166,7 @@ Private Sub cmdEdit_Click()
     Me.txtNotaireAvocat.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 15)
     Me.txtNomClientPlusNomClientSystème.Value = Me.lstDonnées.List(Me.lstDonnées.ListIndex, 16)
     
-    nouveauClient = False
+    NouveauClient = False
     
     ufClientMF.cmdEdit.Enabled = False
     ufClientMF.cmdSave.Enabled = True
@@ -207,7 +232,7 @@ Clean_Exit:
 
 End Sub
 
-Private Sub Delete_Client(clientID)
+Private Sub Delete_Client(clientID As String)
     
     Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("ufClientMF:Delete_Client", "", 0)
     
@@ -251,8 +276,6 @@ Private Sub Delete_Client(clientID)
         Set foundCell = ws.Cells.Find(What:=clientID, LookIn:=xlValues, LookAt:=xlWhole)
         If Not foundCell Is Nothing Then
             ws.Rows(foundCell.Row).Delete
-        Else
-            'Pas nécessairement dans l'onglet 'DonnéesRecherche'
         End If
         
         MsgBox "Le client '" & Me.txtCodeClient.Value & "' a été détruit" & vbNewLine & _
@@ -373,7 +396,7 @@ Private Sub lstDonnées_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     Me.cmdEdit.Enabled = False
     Me.cmdAddClient.Enabled = False
     
-    nouveauClient = False
+    NouveauClient = False
     
     wshMENU.Range("B4").Value = Me.lstDonnées.ListIndex
     
@@ -390,7 +413,7 @@ Private Sub txtCodeClient_Exit(ByVal Cancel As MSForms.ReturnBoolean)
     Dim clientExists As Boolean
     clientExists = Fn_Is_Client_Code_Already_Used
     
-    If clientExists = True And nouveauClient = True Then
+    If clientExists = True And NouveauClient = True Then
         ufClientMF.txtCodeClient.BackColor = vbRed
         MsgBox "Ce code de client '" & ufClientMF.txtCodeClient.Value & "' existe déjà en base de données." & vbNewLine & vbNewLine & _
                "Veuillez choisir un AUTRE code qui n'existe pas, SVP", vbCritical + vbOKOnly, "Doublon de code de client"
@@ -457,4 +480,5 @@ Private Sub UserForm_Initialize()
     Call CM_Log_Activities("ufClientMF:UserForm_Initialize", "", startTime)
 
 End Sub
+
 

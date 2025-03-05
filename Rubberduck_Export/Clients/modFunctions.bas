@@ -1,4 +1,6 @@
 Attribute VB_Name = "modFunctions"
+'@IgnoreModule UnassignedVariableUsage
+'@Folder("Gestion_Clients")
 Option Explicit
 
 Function Fn_Is_Client_Code_Already_Used() As Boolean
@@ -86,12 +88,10 @@ End Function
 
 Function Fn_Incremente_Code(c As String) As String
 
+    'Parcourir le code pour extraire la partie numérique
     Dim i As Integer
     Dim numericPart As String
     Dim suffix As String
-    Dim newCode As String
-    
-    'Parcourir le code pour extraire la partie numérique
     For i = 1 To Len(c)
         If IsNumeric(Mid(c, i, 1)) Then
             numericPart = numericPart & Mid(c, i, 1)
@@ -103,6 +103,7 @@ Function Fn_Incremente_Code(c As String) As String
     Next i
     
     'Si la partie numérique est valide, on ajoute 1
+    Dim newCode As String
     If Len(numericPart) > 0 Then
         newCode = CStr(CLng(numericPart) + 1) ' Convertir la partie numérique en nombre et ajouter 1
     Else
@@ -140,8 +141,8 @@ Function Fn_ValidateEntries() As Boolean
     
     Fn_ValidateEntries = True
     
-    Dim sh As Worksheet: Set sh = ThisWorkbook.Sheets("Données")
-
+    Dim sh As Worksheet: Set sh = ThisWorkbook.Worksheets("Données")
+    
     Dim iCodeClient As Variant
     iCodeClient = ufClientMF.txtCodeClient.Value
     
@@ -187,14 +188,18 @@ Function Fn_ValidateEntries() As Boolean
         'Validation de la structure de l'adresse courriel, si ce n'est pas inconnu
         If .txtCourrielFact.Value <> "" And .txtCourrielFact.Value <> "inconnu" Then
             If Fn_ValiderCourriel(.txtCourrielFact.Value) = False Then
-                MsgBox "SVP, saisir une adresse courriel valide.", vbOKOnly + vbInformation, "Structure d'adresse courriel non-respecté"
+                MsgBox _
+                    Prompt:="SVP, saisir une ou des adresses courriel valide(s).", _
+                    Title:="Structure d'adresse courriel non-respecté", _
+                    Buttons:=vbOKOnly + vbInformation
                 Fn_ValidateEntries = False
                 .txtCourrielFact.BackColor = vbRed
                 .txtCourrielFact.SetFocus
                 GoTo Clean_Exit
+            Else
+                .txtCourrielFact = Fn_NormaliserAdressesCourriel(.txtCourrielFact)
             End If
         End If
-        
     End With
 
 Clean_Exit:
@@ -205,33 +210,86 @@ Clean_Exit:
     
 End Function
 
-Function Fn_ValiderCourriel(ByVal courriel As String) As Boolean
+Function Fn_ValiderCourriel(courriel As String) As Boolean
+    
+    'Supporte de 0 à 2 courriels (séparés par '; ')
     
     Fn_ValiderCourriel = False
     
     Dim regex As Object
     Set regex = CreateObject("VBScript.RegExp")
     
-    'Définir le pattern pour l'expression régulière
-    regex.Pattern = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
-    regex.IgnoreCase = True
-    regex.Global = False
+    'Initialisation de l'expression régulière pour valider une adresse courriel
+    With regex
+        .Pattern = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+        .IgnoreCase = True
+        .Global = False
+    End With
     
-    'Last chance to accept a invalid email address...
-    If regex.Test(courriel) = False Then
-        Dim msgValue As VbMsgBoxResult
-        msgValue = MsgBox("'" & courriel & "'" & vbNewLine & vbNewLine & _
-                            "N'est pas structurée selon les standards..." & vbNewLine & vbNewLine & _
-                            "Désirez-vous quand même conserver cette adresse ?", _
-                            vbYesNo + vbInformation, "Struture de courriel non standard")
-        If msgValue = vbYes Then
-            Fn_ValiderCourriel = True
-        Else
-            Fn_ValiderCourriel = False
+'    'Normaliser le champs s'il contient plus d'une adresse courriel
+'    courriel = Fn_NormaliserAdressesCourriel(courriel)
+
+    'Diviser le paremètre (courriel) en adresses individuelles
+    Dim arrAdresse() As String
+    arrAdresse = Split(courriel, "; ")
+    
+    'Vérifier chaque adresse
+    Dim adresse As Variant
+    For Each adresse In arrAdresse
+        adresse = Trim(adresse)
+        'Passer si l'adresse est vide (Aucune adresse est aussi permis)
+        If adresse <> "" Then
+            'Si l'adresse ne correspond pas au pattern, renvoyer Faux
+            If Not regex.Test(adresse) Then
+                Dim msgValue As VbMsgBoxResult
+                msgValue = MsgBox("'" & courriel & "'" & vbNewLine & vbNewLine & _
+                                    "N'est pas structurée selon les standards..." & vbNewLine & vbNewLine & _
+                                    "Désirez-vous quand même conserver cette adresse ?", _
+                                    vbYesNo + vbInformation, "Structure de courriel non standard")
+                If msgValue = vbYes Then
+                    Fn_ValiderCourriel = True
+                Else
+                    Fn_ValiderCourriel = False
+                    Exit Function
+                End If
+            End If
         End If
-    Else
-        Fn_ValiderCourriel = True
-    End If
+    Next adresse
+    
+    'Toutes les adresses sont valides
+    Fn_ValiderCourriel = True
+
+    'Nettoyer la mémoire
+    Set adresse = Nothing
+    Set regex = Nothing
     
 End Function
+
+Function Fn_NormaliserAdressesCourriel(ByVal strEmails As String) As String
+
+    Dim regex As Object
+    Set regex = CreateObject("VBScript.RegExp")
+    
+    'Expression régulière pour capturer les adresses email
+    regex.Pattern = "[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}" ' Format d'une adresse courriel
+    regex.IgnoreCase = True
+    regex.Global = True
+    
+    Dim matches As Object
+    Set matches = regex.Execute(strEmails)
+    
+    'Construit la chaîne normalisée avec "; " comme séparateur
+    Dim resultat As String
+    Dim i As Integer
+    For i = 0 To matches.Count - 1
+        resultat = resultat & matches(i).Value & "; "
+    Next i
+    
+    'Supprime le dernier "; " s'il y a au moins une adresse
+    If Len(resultat) > 0 Then resultat = Left(resultat, Len(resultat) - 2)
+    
+    Fn_NormaliserAdressesCourriel = resultat
+    
+End Function
+
 

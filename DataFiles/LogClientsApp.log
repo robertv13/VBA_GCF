@@ -1303,3 +1303,654 @@
 2025-03-02 17:41:31.46 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm = '0,0352 secondes'
 2025-03-02 17:41:31.46 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:UserForm_Initialize = '0,0469 secondes'
 2025-03-02 17:41:47.92 | Robert M. Vigneault | Clients_v5.4.xlsm | ***** Fin de session - Workbook_BeforeClose ***** | 
+2025-03-05 05:58:50.88 | Robert M. Vigneault | Clients_v5.4.xlsm | ***** Début de session - Workbook_Open ***** | 
+2025-03-05 05:58:50.90 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Client_List_Import_All | 
+2025-03-05 05:58:51.14 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Apply_Worksheet_Format | 
+2025-03-05 05:58:51.20 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Apply_Worksheet_Format = '0,0547 secondes'
+2025-03-05 05:58:51.27 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Client_List_Import_All = '0,3770 secondes'
+2025-03-05 05:58:51.30 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:UserForm_Initialize | 
+2025-03-05 05:58:51.30 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm | 
+2025-03-05 05:58:51.30 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Add_SearchColumn | 
+2025-03-05 05:58:51.30 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmbSearchColumn_Change | 
+2025-03-05 05:58:51.31 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmbSearchColumn_Change = '0,0078 secondes'
+2025-03-05 05:58:51.31 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Add_SearchColumn = '0,0078 secondes'
+2025-03-05 05:58:51.35 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm = '0,0508 secondes'
+2025-03-05 05:58:51.35 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:UserForm_Initialize = '0,0566 secondes'
+2025-03-05 06:00:35.32 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdSearch_Click | 
+2025-03-05 06:00:35.34 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche | 
+2025-03-05 06:00:35.42 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche = '0,0840 secondes'
+2025-03-05 06:00:35.42 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdSearch_Click = '0,0996 secondes'
+2025-03-05 06:00:37.41 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:00:37.42 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0039 secondes'
+2025-03-05 06:00:37.65 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_DblClick | 
+2025-03-05 06:00:37.67 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdEdit_Click | 
+2025-03-05 06:00:37.67 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List | 
+2025-03-05 06:00:37.67 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List = '0,0000 secondes'
+2025-03-05 06:00:37.67 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List | 
+2025-03-05 06:00:37.67 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List = '0,0000 secondes'
+2025-03-05 06:00:37.67 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdEdit_Click = '0,0000 secondes'
+2025-03-05 06:00:37.67 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_DblClick = '0,0312 secondes'
+2025-03-05 06:00:39.33 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:txtNomClient_Exit | 
+2025-03-05 06:00:39.33 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:txtNomClient_Exit = '0,0000 secondes'
+2025-03-05 06:00:56.40 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:MAJ_Fichier_Client | 
+2025-03-05 06:00:56.40 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_ValidateEntries | 
+2025-03-05 06:00:56.43 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_ValidateEntries = '0,0312 secondes'
+2025-03-05 06:00:56.43 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:Fix_Some_Fields | 
+2025-03-05 06:00:56.45 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:Fix_Some_Fields = '0,0156 secondes'
+2025-03-05 06:00:58.66 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used | 
+2025-03-05 06:00:58.66 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used | checkPoint | VRAI
+2025-03-05 06:00:58.67 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used = '0,0117 secondes'
+2025-03-05 06:00:58.68 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | UPDATE
+2025-03-05 06:01:17.46 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | checkPoint | UPDATE '193r' was here
+2025-03-05 06:01:18.03 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | checkPoint | DDM (0.0.0.1)
+2025-03-05 06:01:18.03 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree = '19,3633 secondes'
+2025-03-05 06:01:18.04 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Update_Locally_GCF_BD_Entrée | 
+2025-03-05 06:01:18.04 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Update_Locally_GCF_BD_Entrée = '0,0098 secondes'
+2025-03-05 06:01:18.05 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm | 
+2025-03-05 06:01:18.05 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche | 
+2025-03-05 06:01:18.06 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:01:18.06 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0000 secondes'
+2025-03-05 06:01:18.11 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche = '0,0605 secondes'
+2025-03-05 06:01:18.12 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm = '0,0684 secondes'
+2025-03-05 06:01:18.12 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:01:18.12 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0000 secondes'
+2025-03-05 06:01:18.12 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:MAJ_Fichier_Client = '21,7148 secondes'
+2025-03-05 06:01:20.44 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdSearch_Click | 
+2025-03-05 06:01:20.44 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche | 
+2025-03-05 06:01:20.44 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:01:20.44 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0000 secondes'
+2025-03-05 06:01:20.50 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche = '0,0566 secondes'
+2025-03-05 06:01:20.50 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdSearch_Click = '0,0625 secondes'
+2025-03-05 06:01:22.73 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:01:22.73 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0020 secondes'
+2025-03-05 06:01:22.87 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_DblClick | 
+2025-03-05 06:01:22.87 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdEdit_Click | 
+2025-03-05 06:01:22.87 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List | 
+2025-03-05 06:01:22.88 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List = '0,0156 secondes'
+2025-03-05 06:01:22.88 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List | 
+2025-03-05 06:01:22.88 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List = '0,0000 secondes'
+2025-03-05 06:01:22.88 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdEdit_Click = '0,0195 secondes'
+2025-03-05 06:01:22.88 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_DblClick = '0,0195 secondes'
+2025-03-05 06:01:50.86 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:txtNomClient_Exit | 
+2025-03-05 06:01:50.86 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:txtNomClient_Exit = '0,0039 secondes'
+2025-03-05 06:01:50.95 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:MAJ_Fichier_Client | 
+2025-03-05 06:01:50.96 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_ValidateEntries | 
+2025-03-05 06:02:20.06 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_ValidateEntries = '29,0996 secondes'
+2025-03-05 06:02:20.06 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:Fix_Some_Fields | 
+2025-03-05 06:02:20.06 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:Fix_Some_Fields = '0,0020 secondes'
+2025-03-05 06:02:21.81 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used | 
+2025-03-05 06:02:21.81 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used | checkPoint | VRAI
+2025-03-05 06:02:21.81 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used = '0,0059 secondes'
+2025-03-05 06:02:21.82 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | UPDATE
+2025-03-05 06:02:36.24 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | checkPoint | UPDATE '193r' was here
+2025-03-05 06:02:37.01 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | checkPoint | DDM (0.0.0.1)
+2025-03-05 06:02:37.01 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree = '15,1953 secondes'
+2025-03-05 06:02:37.01 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Update_Locally_GCF_BD_Entrée | 
+2025-03-05 06:02:37.02 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Update_Locally_GCF_BD_Entrée = '0,0117 secondes'
+2025-03-05 06:02:37.02 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm | 
+2025-03-05 06:02:37.02 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche | 
+2025-03-05 06:02:37.04 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:02:37.04 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0000 secondes'
+2025-03-05 06:02:37.09 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche = '0,0625 secondes'
+2025-03-05 06:02:37.09 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm = '0,0625 secondes'
+2025-03-05 06:02:37.10 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:02:37.10 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0000 secondes'
+2025-03-05 06:02:37.10 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:MAJ_Fichier_Client = '46,1484 secondes'
+2025-03-05 06:02:38.93 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdSearch_Click | 
+2025-03-05 06:02:38.94 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche | 
+2025-03-05 06:02:38.94 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:02:38.94 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0000 secondes'
+2025-03-05 06:02:38.00 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche = '0,0547 secondes'
+2025-03-05 06:02:38.00 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdSearch_Click = '0,0703 secondes'
+2025-03-05 06:02:40.16 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:02:40.16 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0020 secondes'
+2025-03-05 06:02:40.36 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_DblClick | 
+2025-03-05 06:02:40.36 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdEdit_Click | 
+2025-03-05 06:02:40.36 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List | 
+2025-03-05 06:02:40.36 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List = '0,0000 secondes'
+2025-03-05 06:02:40.37 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List | 
+2025-03-05 06:02:40.37 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List = '0,0000 secondes'
+2025-03-05 06:02:40.37 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdEdit_Click = '0,0117 secondes'
+2025-03-05 06:02:40.37 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_DblClick = '0,0176 secondes'
+2025-03-05 06:06:32.31 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:txtNomClient_Exit | 
+2025-03-05 06:06:32.31 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:txtNomClient_Exit = '0,0020 secondes'
+2025-03-05 06:06:32.38 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:MAJ_Fichier_Client | 
+2025-03-05 06:06:32.38 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_ValidateEntries | 
+2025-03-05 06:13:45.35 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Client_List_Import_All | 
+2025-03-05 06:13:45.44 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Apply_Worksheet_Format | 
+2025-03-05 06:13:45.50 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Apply_Worksheet_Format = '0,0645 secondes'
+2025-03-05 06:13:45.56 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Client_List_Import_All = '0,2168 secondes'
+2025-03-05 06:13:45.59 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:UserForm_Initialize | 
+2025-03-05 06:13:45.59 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm | 
+2025-03-05 06:13:45.59 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Add_SearchColumn | 
+2025-03-05 06:13:45.59 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmbSearchColumn_Change | 
+2025-03-05 06:13:45.59 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmbSearchColumn_Change = '0,0000 secondes'
+2025-03-05 06:13:45.61 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Add_SearchColumn = '0,0156 secondes'
+2025-03-05 06:13:45.63 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm = '0,0410 secondes'
+2025-03-05 06:13:45.63 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:UserForm_Initialize = '0,0410 secondes'
+2025-03-05 06:13:49.94 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdSearch_Click | 
+2025-03-05 06:13:49.95 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche | 
+2025-03-05 06:13:50.03 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche = '0,0781 secondes'
+2025-03-05 06:13:50.03 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdSearch_Click = '0,0898 secondes'
+2025-03-05 06:13:51.75 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:13:51.77 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0117 secondes'
+2025-03-05 06:13:51.98 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_DblClick | 
+2025-03-05 06:13:51.99 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdEdit_Click | 
+2025-03-05 06:13:51.99 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List | 
+2025-03-05 06:13:51.99 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List = '0,0000 secondes'
+2025-03-05 06:13:51.99 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List | 
+2025-03-05 06:13:51.99 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List = '0,0000 secondes'
+2025-03-05 06:13:52.01 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdEdit_Click = '0,0176 secondes'
+2025-03-05 06:13:52.01 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_DblClick = '0,0332 secondes'
+2025-03-05 06:13:54.37 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:txtNomClient_Exit | 
+2025-03-05 06:13:54.37 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:txtNomClient_Exit = '0,0039 secondes'
+2025-03-05 06:13:54.46 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:MAJ_Fichier_Client | 
+2025-03-05 06:13:54.46 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_ValidateEntries | 
+2025-03-05 06:15:36.11 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_ValidateEntries = '101,6445 secondes'
+2025-03-05 06:15:36.11 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:Fix_Some_Fields | 
+2025-03-05 06:15:36.11 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:Fix_Some_Fields = '0,0000 secondes'
+2025-03-05 06:15:40.30 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used | 
+2025-03-05 06:15:40.30 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used | checkPoint | VRAI
+2025-03-05 06:15:40.31 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used = '0,0098 secondes'
+2025-03-05 06:15:40.31 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | UPDATE
+2025-03-05 06:15:50.84 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | checkPoint | UPDATE '193r' was here
+2025-03-05 06:15:52.00 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | checkPoint | DDM (0.0.0.1)
+2025-03-05 06:15:52.01 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree = '11,7031 secondes'
+2025-03-05 06:15:52.01 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Update_Locally_GCF_BD_Entrée | 
+2025-03-05 06:15:52.05 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Update_Locally_GCF_BD_Entrée = '0,0469 secondes'
+2025-03-05 06:15:52.06 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm | 
+2025-03-05 06:15:52.06 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche | 
+2025-03-05 06:15:52.07 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:15:52.07 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0000 secondes'
+2025-03-05 06:15:52.14 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche = '0,0723 secondes'
+2025-03-05 06:15:52.14 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm = '0,0742 secondes'
+2025-03-05 06:15:52.14 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:15:52.15 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0176 secondes'
+2025-03-05 06:15:52.15 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:MAJ_Fichier_Client = '117,6953 secondes'
+2025-03-05 06:15:56.37 | Robert M. Vigneault | Clients_v5.4.xlsm | ***** Fin de session - Workbook_BeforeClose ***** | 
+2025-03-05 06:16:52.92 | Robert M. Vigneault | Clients_v5.4.xlsm | ***** Début de session - Workbook_Open ***** | 
+2025-03-05 06:16:52.92 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Client_List_Import_All | 
+2025-03-05 06:16:53.05 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Apply_Worksheet_Format | 
+2025-03-05 06:16:53.11 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Apply_Worksheet_Format = '0,0566 secondes'
+2025-03-05 06:16:53.18 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Client_List_Import_All = '0,2598 secondes'
+2025-03-05 06:16:53.22 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:UserForm_Initialize | 
+2025-03-05 06:16:53.23 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm | 
+2025-03-05 06:16:53.23 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Add_SearchColumn | 
+2025-03-05 06:16:53.24 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmbSearchColumn_Change | 
+2025-03-05 06:16:53.24 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmbSearchColumn_Change = '0,0039 secondes'
+2025-03-05 06:16:53.24 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Add_SearchColumn = '0,0098 secondes'
+2025-03-05 06:16:53.28 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm = '0,0488 secondes'
+2025-03-05 06:16:53.28 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:UserForm_Initialize = '0,0566 secondes'
+2025-03-05 06:17:02.83 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdSearch_Click | 
+2025-03-05 06:17:02.84 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche | 
+2025-03-05 06:17:02.97 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche = '0,1289 secondes'
+2025-03-05 06:17:02.97 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdSearch_Click = '0,1426 secondes'
+2025-03-05 06:17:04.47 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:17:04.49 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0137 secondes'
+2025-03-05 06:17:04.72 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_DblClick | 
+2025-03-05 06:17:04.73 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdEdit_Click | 
+2025-03-05 06:17:04.74 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List | 
+2025-03-05 06:17:04.74 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List = '0,0059 secondes'
+2025-03-05 06:17:04.75 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List | 
+2025-03-05 06:17:04.76 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List = '0,0078 secondes'
+2025-03-05 06:17:04.76 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdEdit_Click = '0,0332 secondes'
+2025-03-05 06:17:04.78 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_DblClick = '0,0527 secondes'
+2025-03-05 06:17:07.75 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:txtNomClient_Exit | 
+2025-03-05 06:17:07.75 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:txtNomClient_Exit = '0,0039 secondes'
+2025-03-05 06:17:17.04 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:MAJ_Fichier_Client | 
+2025-03-05 06:17:17.05 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_ValidateEntries | 
+2025-03-05 06:17:17.05 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_ValidateEntries = '0,0039 secondes'
+2025-03-05 06:17:17.05 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:Fix_Some_Fields | 
+2025-03-05 06:17:17.10 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:Fix_Some_Fields = '0,0469 secondes'
+2025-03-05 06:17:18.70 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used | 
+2025-03-05 06:17:18.71 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used | checkPoint | VRAI
+2025-03-05 06:17:18.71 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used = '0,0137 secondes'
+2025-03-05 06:17:18.72 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | UPDATE
+2025-03-05 06:17:18.82 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | checkPoint | UPDATE '193r' was here
+2025-03-05 06:17:20.00 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | checkPoint | DDM (0.0.0.1)
+2025-03-05 06:17:20.02 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree = '1,2988 secondes'
+2025-03-05 06:17:20.02 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Update_Locally_GCF_BD_Entrée | 
+2025-03-05 06:17:20.02 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Update_Locally_GCF_BD_Entrée = '0,0059 secondes'
+2025-03-05 06:17:20.02 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm | 
+2025-03-05 06:17:20.04 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche | 
+2025-03-05 06:17:20.04 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:17:20.04 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0000 secondes'
+2025-03-05 06:17:20.10 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche = '0,0664 secondes'
+2025-03-05 06:17:20.10 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm = '0,0781 secondes'
+2025-03-05 06:17:20.11 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:17:20.11 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0000 secondes'
+2025-03-05 06:17:20.11 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:MAJ_Fichier_Client = '3,0684 secondes'
+2025-03-05 06:17:22.55 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdSearch_Click | 
+2025-03-05 06:17:22.56 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche | 
+2025-03-05 06:17:22.57 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:17:22.57 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0000 secondes'
+2025-03-05 06:17:22.63 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche = '0,0684 secondes'
+2025-03-05 06:17:22.63 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdSearch_Click = '0,0820 secondes'
+2025-03-05 06:17:24.95 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:17:24.95 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0020 secondes'
+2025-03-05 06:17:25.19 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_DblClick | 
+2025-03-05 06:17:25.20 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdEdit_Click | 
+2025-03-05 06:17:25.20 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List | 
+2025-03-05 06:17:25.20 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List = '0,0000 secondes'
+2025-03-05 06:17:25.20 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List | 
+2025-03-05 06:17:25.21 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List = '0,0078 secondes'
+2025-03-05 06:17:25.21 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdEdit_Click = '0,0137 secondes'
+2025-03-05 06:17:25.21 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_DblClick = '0,0176 secondes'
+2025-03-05 06:17:28.96 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:txtNomClient_Exit | 
+2025-03-05 06:17:28.96 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:txtNomClient_Exit = '0,0059 secondes'
+2025-03-05 06:17:34.88 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:MAJ_Fichier_Client | 
+2025-03-05 06:17:34.88 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_ValidateEntries | 
+2025-03-05 06:17:34.90 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_ValidateEntries = '0,0156 secondes'
+2025-03-05 06:17:34.90 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:Fix_Some_Fields | 
+2025-03-05 06:17:34.90 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:Fix_Some_Fields = '0,0000 secondes'
+2025-03-05 06:17:36.39 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used | 
+2025-03-05 06:17:36.39 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used | checkPoint | VRAI
+2025-03-05 06:17:36.39 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used = '0,0078 secondes'
+2025-03-05 06:17:36.40 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | UPDATE
+2025-03-05 06:17:36.50 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | checkPoint | UPDATE '193r' was here
+2025-03-05 06:17:37.00 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | checkPoint | DDM (0.0.0.1)
+2025-03-05 06:17:37.01 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree = '0,6133 secondes'
+2025-03-05 06:17:37.01 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Update_Locally_GCF_BD_Entrée | 
+2025-03-05 06:17:37.02 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Update_Locally_GCF_BD_Entrée = '0,0078 secondes'
+2025-03-05 06:17:37.02 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm | 
+2025-03-05 06:17:37.03 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche | 
+2025-03-05 06:17:37.03 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:17:37.04 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0059 secondes'
+2025-03-05 06:17:37.09 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche = '0,0625 secondes'
+2025-03-05 06:17:37.09 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm = '0,0723 secondes'
+2025-03-05 06:17:37.10 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:17:37.10 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0000 secondes'
+2025-03-05 06:17:37.11 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:MAJ_Fichier_Client = '2,2207 secondes'
+2025-03-05 06:17:39.79 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdSearch_Click | 
+2025-03-05 06:17:39.80 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche | 
+2025-03-05 06:17:39.80 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:17:39.80 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0000 secondes'
+2025-03-05 06:17:39.86 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche = '0,0605 secondes'
+2025-03-05 06:17:39.86 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdSearch_Click = '0,0781 secondes'
+2025-03-05 06:17:42.83 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:17:42.84 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0039 secondes'
+2025-03-05 06:17:43.01 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_DblClick | 
+2025-03-05 06:17:43.01 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdEdit_Click | 
+2025-03-05 06:17:43.01 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List | 
+2025-03-05 06:17:43.01 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List = '0,0000 secondes'
+2025-03-05 06:17:43.01 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List | 
+2025-03-05 06:17:43.02 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List = '0,0098 secondes'
+2025-03-05 06:17:43.03 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdEdit_Click = '0,0137 secondes'
+2025-03-05 06:17:43.03 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_DblClick = '0,0215 secondes'
+2025-03-05 06:17:44.24 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:txtNomClient_Exit | 
+2025-03-05 06:17:44.24 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:txtNomClient_Exit = '0,0020 secondes'
+2025-03-05 06:17:47.60 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:MAJ_Fichier_Client | 
+2025-03-05 06:17:47.60 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_ValidateEntries | 
+2025-03-05 06:17:47.60 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_ValidateEntries = '0,0000 secondes'
+2025-03-05 06:17:47.61 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:Fix_Some_Fields | 
+2025-03-05 06:17:47.62 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:Fix_Some_Fields = '0,0020 secondes'
+2025-03-05 06:17:49.25 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used | 
+2025-03-05 06:17:49.26 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used | checkPoint | VRAI
+2025-03-05 06:17:49.26 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used = '0,0098 secondes'
+2025-03-05 06:17:49.26 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | UPDATE
+2025-03-05 06:17:49.37 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | checkPoint | UPDATE '193r' was here
+2025-03-05 06:17:50.00 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | checkPoint | DDM (0.0.0.1)
+2025-03-05 06:17:50.02 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree = '0,7539 secondes'
+2025-03-05 06:17:50.02 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Update_Locally_GCF_BD_Entrée | 
+2025-03-05 06:17:50.02 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Update_Locally_GCF_BD_Entrée = '0,0039 secondes'
+2025-03-05 06:17:50.02 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm | 
+2025-03-05 06:17:50.03 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche | 
+2025-03-05 06:17:50.04 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:17:50.04 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0000 secondes'
+2025-03-05 06:17:50.09 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche = '0,0605 secondes'
+2025-03-05 06:17:50.09 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm = '0,0742 secondes'
+2025-03-05 06:17:50.09 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:17:50.10 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0059 secondes'
+2025-03-05 06:17:50.10 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:MAJ_Fichier_Client = '2,4980 secondes'
+2025-03-05 06:17:51.90 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_DblClick | 
+2025-03-05 06:17:51.92 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdEdit_Click | 
+2025-03-05 06:17:51.92 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List | 
+2025-03-05 06:17:51.92 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List = '0,0000 secondes'
+2025-03-05 06:17:51.92 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List | 
+2025-03-05 06:17:51.93 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List = '0,0078 secondes'
+2025-03-05 06:17:51.93 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdEdit_Click = '0,0117 secondes'
+2025-03-05 06:17:51.93 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_DblClick = '0,0273 secondes'
+2025-03-05 06:17:53.33 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:txtNomClient_Exit | 
+2025-03-05 06:17:53.33 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:txtNomClient_Exit = '0,0039 secondes'
+2025-03-05 06:18:06.26 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:MAJ_Fichier_Client | 
+2025-03-05 06:18:06.28 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_ValidateEntries | 
+2025-03-05 06:18:06.28 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_ValidateEntries = '0,0020 secondes'
+2025-03-05 06:18:06.28 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:Fix_Some_Fields | 
+2025-03-05 06:18:06.29 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:Fix_Some_Fields = '0,0078 secondes'
+2025-03-05 06:18:13.74 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used | 
+2025-03-05 06:18:13.74 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used | checkPoint | VRAI
+2025-03-05 06:18:13.74 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used = '0,0098 secondes'
+2025-03-05 06:18:13.75 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | UPDATE
+2025-03-05 06:18:13.82 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | checkPoint | UPDATE '193r' was here
+2025-03-05 06:18:15.02 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | checkPoint | DDM (0.0.0.1)
+2025-03-05 06:18:15.03 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree = '1,2832 secondes'
+2025-03-05 06:18:15.03 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Update_Locally_GCF_BD_Entrée | 
+2025-03-05 06:18:15.04 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Update_Locally_GCF_BD_Entrée = '0,0059 secondes'
+2025-03-05 06:18:15.04 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm | 
+2025-03-05 06:18:15.05 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche | 
+2025-03-05 06:18:15.05 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:18:15.05 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0000 secondes'
+2025-03-05 06:18:15.11 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche = '0,0566 secondes'
+2025-03-05 06:18:15.11 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm = '0,0781 secondes'
+2025-03-05 06:18:15.12 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:18:15.12 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0039 secondes'
+2025-03-05 06:18:15.13 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:MAJ_Fichier_Client = '8,8652 secondes'
+2025-03-05 06:19:18.51 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Client_List_Import_All | 
+2025-03-05 06:19:18.57 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Apply_Worksheet_Format | 
+2025-03-05 06:19:18.64 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Apply_Worksheet_Format = '0,0645 secondes'
+2025-03-05 06:19:18.70 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Client_List_Import_All = '0,1934 secondes'
+2025-03-05 06:19:18.73 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:UserForm_Initialize | 
+2025-03-05 06:19:18.73 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm | 
+2025-03-05 06:19:18.74 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Add_SearchColumn | 
+2025-03-05 06:19:18.74 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmbSearchColumn_Change | 
+2025-03-05 06:19:18.74 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmbSearchColumn_Change = '0,0000 secondes'
+2025-03-05 06:19:18.76 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Add_SearchColumn = '0,0156 secondes'
+2025-03-05 06:19:18.77 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm = '0,0391 secondes'
+2025-03-05 06:19:18.79 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:UserForm_Initialize = '0,0527 secondes'
+2025-03-05 06:19:23.73 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdSearch_Click | 
+2025-03-05 06:19:23.74 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche | 
+2025-03-05 06:19:23.81 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche = '0,0723 secondes'
+2025-03-05 06:19:23.81 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdSearch_Click = '0,0840 secondes'
+2025-03-05 06:19:25.37 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:19:25.37 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0020 secondes'
+2025-03-05 06:19:25.70 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_DblClick | 
+2025-03-05 06:19:25.71 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdEdit_Click | 
+2025-03-05 06:19:25.71 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List | 
+2025-03-05 06:19:25.71 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List = '0,0000 secondes'
+2025-03-05 06:19:25.71 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List | 
+2025-03-05 06:19:25.72 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List = '0,0020 secondes'
+2025-03-05 06:19:25.72 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdEdit_Click = '0,0117 secondes'
+2025-03-05 06:19:25.72 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_DblClick = '0,0137 secondes'
+2025-03-05 06:19:37.59 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:txtNomClient_Exit | 
+2025-03-05 06:19:37.59 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:txtNomClient_Exit = '0,0020 secondes'
+2025-03-05 06:19:41.19 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:MAJ_Fichier_Client | 
+2025-03-05 06:19:41.21 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_ValidateEntries | 
+2025-03-05 06:19:41.21 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_ValidateEntries = '0,0039 secondes'
+2025-03-05 06:19:41.21 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:Fix_Some_Fields | 
+2025-03-05 06:19:41.22 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:Fix_Some_Fields = '0,0078 secondes'
+2025-03-05 06:19:42.48 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used | 
+2025-03-05 06:19:42.49 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used | checkPoint | VRAI
+2025-03-05 06:19:42.49 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used = '0,0098 secondes'
+2025-03-05 06:19:42.49 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | UPDATE
+2025-03-05 06:19:42.58 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | checkPoint | UPDATE '193r' was here
+2025-03-05 06:19:43.00 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | checkPoint | DDM (0.0.0.1)
+2025-03-05 06:19:43.01 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree = '0,5215 secondes'
+2025-03-05 06:19:43.01 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Update_Locally_GCF_BD_Entrée | 
+2025-03-05 06:19:43.02 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Update_Locally_GCF_BD_Entrée = '0,0059 secondes'
+2025-03-05 06:19:43.02 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm | 
+2025-03-05 06:19:43.03 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche | 
+2025-03-05 06:19:43.03 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:19:43.04 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0078 secondes'
+2025-03-05 06:19:43.09 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche = '0,0645 secondes'
+2025-03-05 06:19:43.09 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm = '0,0703 secondes'
+2025-03-05 06:19:43.09 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:19:43.10 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0078 secondes'
+2025-03-05 06:19:43.10 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:MAJ_Fichier_Client = '1,9102 secondes'
+2025-03-05 06:19:45.78 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_DblClick | 
+2025-03-05 06:19:45.78 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdEdit_Click | 
+2025-03-05 06:19:45.78 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List | 
+2025-03-05 06:19:45.79 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List = '0,0059 secondes'
+2025-03-05 06:19:45.79 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List | 
+2025-03-05 06:19:45.79 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List = '0,0039 secondes'
+2025-03-05 06:19:45.80 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdEdit_Click = '0,0156 secondes'
+2025-03-05 06:19:45.80 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_DblClick = '0,0215 secondes'
+2025-03-05 06:19:52.31 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:txtNomClient_Exit | 
+2025-03-05 06:19:52.31 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:txtNomClient_Exit = '0,0039 secondes'
+2025-03-05 06:20:01.78 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:MAJ_Fichier_Client | 
+2025-03-05 06:20:01.79 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_ValidateEntries | 
+2025-03-05 06:20:01.79 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_ValidateEntries = '0,0000 secondes'
+2025-03-05 06:20:01.79 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:Fix_Some_Fields | 
+2025-03-05 06:20:01.80 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:Fix_Some_Fields = '0,0078 secondes'
+2025-03-05 06:20:03.65 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used | 
+2025-03-05 06:20:03.65 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used | checkPoint | VRAI
+2025-03-05 06:20:03.66 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used = '0,0059 secondes'
+2025-03-05 06:20:03.67 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | UPDATE
+2025-03-05 06:20:03.74 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | checkPoint | UPDATE '193r' was here
+2025-03-05 06:20:04.00 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | checkPoint | DDM (0.0.0.0)
+2025-03-05 06:20:04.02 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree = '0,3457 secondes'
+2025-03-05 06:20:04.02 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Update_Locally_GCF_BD_Entrée | 
+2025-03-05 06:20:04.02 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Update_Locally_GCF_BD_Entrée = '0,0020 secondes'
+2025-03-05 06:20:04.03 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm | 
+2025-03-05 06:20:04.03 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche | 
+2025-03-05 06:20:04.04 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:20:04.04 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0059 secondes'
+2025-03-05 06:20:04.11 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche = '0,0723 secondes'
+2025-03-05 06:20:04.11 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm = '0,0762 secondes'
+2025-03-05 06:20:04.12 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:20:04.12 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0039 secondes'
+2025-03-05 06:20:04.12 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:MAJ_Fichier_Client = '2,3379 secondes'
+2025-03-05 06:20:55.20 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_DblClick | 
+2025-03-05 06:20:55.21 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdEdit_Click | 
+2025-03-05 06:20:55.21 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List | 
+2025-03-05 06:20:55.23 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List = '0,0156 secondes'
+2025-03-05 06:20:55.23 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List | 
+2025-03-05 06:20:55.23 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List = '0,0020 secondes'
+2025-03-05 06:20:55.23 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdEdit_Click = '0,0195 secondes'
+2025-03-05 06:20:55.23 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_DblClick = '0,0352 secondes'
+2025-03-05 06:20:56.16 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:txtNomClient_Exit | 
+2025-03-05 06:20:56.17 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:txtNomClient_Exit = '0,0059 secondes'
+2025-03-05 06:21:02.38 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:MAJ_Fichier_Client | 
+2025-03-05 06:21:02.40 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_ValidateEntries | 
+2025-03-05 06:21:23.42 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_ValidateEntries = '21,0195 secondes'
+2025-03-05 06:21:23.42 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:Fix_Some_Fields | 
+2025-03-05 06:21:23.42 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:Fix_Some_Fields = '0,0020 secondes'
+2025-03-05 06:21:33.73 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used | 
+2025-03-05 06:21:33.73 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used | checkPoint | VRAI
+2025-03-05 06:21:33.73 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used = '0,0059 secondes'
+2025-03-05 06:21:33.74 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | UPDATE
+2025-03-05 06:21:33.81 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | checkPoint | UPDATE '193r' was here
+2025-03-05 06:21:35.01 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | checkPoint | DDM (0.0.0.1)
+2025-03-05 06:21:35.02 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree = '1,2871 secondes'
+2025-03-05 06:21:35.02 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Update_Locally_GCF_BD_Entrée | 
+2025-03-05 06:21:35.02 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Update_Locally_GCF_BD_Entrée = '0,0000 secondes'
+2025-03-05 06:21:35.02 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm | 
+2025-03-05 06:21:35.04 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche | 
+2025-03-05 06:21:35.04 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:21:35.04 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0000 secondes'
+2025-03-05 06:21:35.10 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche = '0,0586 secondes'
+2025-03-05 06:21:35.10 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm = '0,0801 secondes'
+2025-03-05 06:21:35.10 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:21:35.10 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0000 secondes'
+2025-03-05 06:21:35.10 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:MAJ_Fichier_Client = '32,7344 secondes'
+2025-03-05 06:21:36.14 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_DblClick | 
+2025-03-05 06:21:36.16 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdEdit_Click | 
+2025-03-05 06:21:36.16 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List | 
+2025-03-05 06:21:36.16 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List = '0,0000 secondes'
+2025-03-05 06:21:36.16 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List | 
+2025-03-05 06:21:36.17 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List = '0,0098 secondes'
+2025-03-05 06:21:36.17 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdEdit_Click = '0,0117 secondes'
+2025-03-05 06:21:36.17 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_DblClick = '0,0293 secondes'
+2025-03-05 06:21:37.11 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:txtNomClient_Exit | 
+2025-03-05 06:21:37.12 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:txtNomClient_Exit = '0,0059 secondes'
+2025-03-05 06:21:46.11 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:MAJ_Fichier_Client | 
+2025-03-05 06:21:46.11 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_ValidateEntries | 
+2025-03-05 06:21:59.82 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_ValidateEntries = '13,7129 secondes'
+2025-03-05 06:21:59.82 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:Fix_Some_Fields | 
+2025-03-05 06:21:59.83 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:Fix_Some_Fields = '0,0020 secondes'
+2025-03-05 06:22:04.07 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used | 
+2025-03-05 06:22:04.08 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used | checkPoint | VRAI
+2025-03-05 06:22:04.08 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used = '0,0078 secondes'
+2025-03-05 06:22:04.08 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | UPDATE
+2025-03-05 06:22:04.15 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | checkPoint | UPDATE '193r' was here
+2025-03-05 06:22:05.01 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | checkPoint | DDM (0.0.0.0)
+2025-03-05 06:22:05.02 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree = '0,9355 secondes'
+2025-03-05 06:22:05.02 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Update_Locally_GCF_BD_Entrée | 
+2025-03-05 06:22:05.03 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Update_Locally_GCF_BD_Entrée = '0,0078 secondes'
+2025-03-05 06:22:05.03 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm | 
+2025-03-05 06:22:05.03 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche | 
+2025-03-05 06:22:05.04 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:22:05.04 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0000 secondes'
+2025-03-05 06:22:05.10 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche = '0,0742 secondes'
+2025-03-05 06:22:05.10 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm = '0,0742 secondes'
+2025-03-05 06:22:05.10 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 06:22:05.10 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0000 secondes'
+2025-03-05 06:22:05.10 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:MAJ_Fichier_Client = '18,9941 secondes'
+2025-03-05 06:22:06.13 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_DblClick | 
+2025-03-05 06:22:06.15 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdEdit_Click | 
+2025-03-05 06:22:06.15 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List | 
+2025-03-05 06:22:06.15 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List = '0,0000 secondes'
+2025-03-05 06:22:06.15 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List | 
+2025-03-05 06:22:06.16 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List = '0,0117 secondes'
+2025-03-05 06:22:06.16 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdEdit_Click = '0,0117 secondes'
+2025-03-05 06:22:06.16 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_DblClick = '0,0332 secondes'
+2025-03-05 06:22:27.53 | Robert M. Vigneault | Clients_v5.4.xlsm | ***** Fin de session - Workbook_BeforeClose ***** | 
+2025-03-05 06:22:43.12 | Robert M. Vigneault | Clients_v5.4.xlsm | ***** Début de session - Workbook_Open ***** | 
+2025-03-05 06:22:43.12 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Client_List_Import_All | 
+2025-03-05 06:22:43.27 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Apply_Worksheet_Format | 
+2025-03-05 06:22:43.33 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Apply_Worksheet_Format = '0,0625 secondes'
+2025-03-05 06:22:43.39 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Client_List_Import_All = '0,2734 secondes'
+2025-03-05 06:22:43.42 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:UserForm_Initialize | 
+2025-03-05 06:22:43.42 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm | 
+2025-03-05 06:22:43.43 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Add_SearchColumn | 
+2025-03-05 06:22:43.43 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmbSearchColumn_Change | 
+2025-03-05 06:22:43.43 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmbSearchColumn_Change = '0,0039 secondes'
+2025-03-05 06:22:43.44 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Add_SearchColumn = '0,0098 secondes'
+2025-03-05 06:22:43.47 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm = '0,0430 secondes'
+2025-03-05 06:22:43.47 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:UserForm_Initialize = '0,0527 secondes'
+2025-03-05 06:39:45.13 | Robert M. Vigneault | Clients_v5.4.xlsm | ***** Début de session - Workbook_Open ***** | 
+2025-03-05 06:39:45.13 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Client_List_Import_All | 
+2025-03-05 06:39:45.39 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Apply_Worksheet_Format | 
+2025-03-05 06:39:45.51 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Apply_Worksheet_Format = '0,1191 secondes'
+2025-03-05 06:39:45.59 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Client_List_Import_All = '0,4590 secondes'
+2025-03-05 06:39:45.64 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:UserForm_Initialize | 
+2025-03-05 06:39:45.64 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm | 
+2025-03-05 06:39:45.65 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Add_SearchColumn | 
+2025-03-05 06:39:45.65 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmbSearchColumn_Change | 
+2025-03-05 06:39:45.65 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmbSearchColumn_Change = '0,0000 secondes'
+2025-03-05 06:39:45.65 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Add_SearchColumn = '0,0039 secondes'
+2025-03-05 06:39:45.69 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm = '0,0469 secondes'
+2025-03-05 06:39:45.69 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:UserForm_Initialize = '0,0508 secondes'
+2025-03-05 06:53:49.86 | Robert M. Vigneault | Clients_v5.4.xlsm | ***** Fin de session - Workbook_BeforeClose ***** | 
+2025-03-05 06:53:57.00 | Robert M. Vigneault | Clients_v5.4.xlsm | ***** Début de session - Workbook_Open ***** | 
+2025-03-05 06:53:57.00 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Client_List_Import_All | 
+2025-03-05 06:53:57.23 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Apply_Worksheet_Format | 
+2025-03-05 06:53:57.36 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Apply_Worksheet_Format = '0,1230 secondes'
+2025-03-05 06:53:57.43 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Client_List_Import_All = '0,4258 secondes'
+2025-03-05 06:53:57.47 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:UserForm_Initialize | 
+2025-03-05 06:53:57.47 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm | 
+2025-03-05 06:53:57.48 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Add_SearchColumn | 
+2025-03-05 06:53:57.48 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmbSearchColumn_Change | 
+2025-03-05 06:53:57.48 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmbSearchColumn_Change = '0,0000 secondes'
+2025-03-05 06:53:57.48 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Add_SearchColumn = '0,0039 secondes'
+2025-03-05 06:53:57.52 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm = '0,0508 secondes'
+2025-03-05 06:53:57.53 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:UserForm_Initialize = '0,0586 secondes'
+2025-03-05 07:09:56.65 | Robert M. Vigneault | Clients_v5.4.xlsm | ***** Fin de session - Workbook_BeforeClose ***** | 
+2025-03-05 07:10:22.09 | Robert M. Vigneault | Clients_v5.4.xlsm | ***** Début de session - Workbook_Open ***** | 
+2025-03-05 07:10:22.09 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Client_List_Import_All | 
+2025-03-05 07:10:22.23 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Apply_Worksheet_Format | 
+2025-03-05 07:10:22.34 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Apply_Worksheet_Format = '0,1113 secondes'
+2025-03-05 07:10:22.41 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Client_List_Import_All = '0,3164 secondes'
+2025-03-05 07:10:22.46 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:UserForm_Initialize | 
+2025-03-05 07:10:22.46 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm | 
+2025-03-05 07:10:22.46 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Add_SearchColumn | 
+2025-03-05 07:10:22.46 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmbSearchColumn_Change | 
+2025-03-05 07:10:22.46 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmbSearchColumn_Change = '0,0020 secondes'
+2025-03-05 07:10:22.46 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Add_SearchColumn = '0,0020 secondes'
+2025-03-05 07:10:22.49 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm = '0,0352 secondes'
+2025-03-05 07:10:22.49 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:UserForm_Initialize = '0,0371 secondes'
+2025-03-05 07:43:07.70 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Client_List_Import_All | 
+2025-03-05 07:43:07.79 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Apply_Worksheet_Format | 
+2025-03-05 07:43:07.86 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Apply_Worksheet_Format = '0,0684 secondes'
+2025-03-05 07:43:07.93 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Client_List_Import_All = '0,2324 secondes'
+2025-03-05 07:43:07.96 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:UserForm_Initialize | 
+2025-03-05 07:43:07.96 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm | 
+2025-03-05 07:43:07.96 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Add_SearchColumn | 
+2025-03-05 07:43:07.96 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmbSearchColumn_Change | 
+2025-03-05 07:43:07.96 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmbSearchColumn_Change = '0,0000 secondes'
+2025-03-05 07:43:07.98 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Add_SearchColumn = '0,0117 secondes'
+2025-03-05 07:43:08.01 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm = '0,0449 secondes'
+2025-03-05 07:43:08.01 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:UserForm_Initialize = '0,0508 secondes'
+2025-03-05 07:43:13.02 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdSearch_Click | 
+2025-03-05 07:43:13.03 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche | 
+2025-03-05 07:43:13.15 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche = '0,1211 secondes'
+2025-03-05 07:43:13.15 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdSearch_Click = '0,1289 secondes'
+2025-03-05 07:43:14.46 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 07:43:14.46 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0039 secondes'
+2025-03-05 07:43:14.75 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_DblClick | 
+2025-03-05 07:43:14.75 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdEdit_Click | 
+2025-03-05 07:43:14.77 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List | 
+2025-03-05 07:43:14.77 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List = '0,0000 secondes'
+2025-03-05 07:43:14.77 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List | 
+2025-03-05 07:43:14.77 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Selected_List = '0,0000 secondes'
+2025-03-05 07:43:14.77 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmdEdit_Click = '0,0156 secondes'
+2025-03-05 07:43:14.77 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_DblClick = '0,0156 secondes'
+2025-03-05 07:43:16.64 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:txtNomClient_Exit | 
+2025-03-05 07:43:16.64 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:txtNomClient_Exit = '0,0039 secondes'
+2025-03-05 07:43:16.72 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:MAJ_Fichier_Client | 
+2025-03-05 07:43:16.72 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_ValidateEntries | 
+2025-03-05 07:43:16.74 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_ValidateEntries = '0,0176 secondes'
+2025-03-05 07:43:16.74 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:Fix_Some_Fields | 
+2025-03-05 07:43:16.74 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:Fix_Some_Fields = '0,0000 secondes'
+2025-03-05 07:43:17.95 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used | 
+2025-03-05 07:43:17.97 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used | checkPoint | VRAI
+2025-03-05 07:43:17.97 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Fn_Is_Client_Code_Already_Used = '0,0176 secondes'
+2025-03-05 07:43:17.97 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | UPDATE
+2025-03-05 07:43:18.09 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | checkPoint | UPDATE '193r' was here
+2025-03-05 07:43:19.03 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree | checkPoint | DDM (0.0.0.1)
+2025-03-05 07:43:19.04 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:Update_External_GCF_BD_Entree = '1,0703 secondes'
+2025-03-05 07:43:19.05 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Update_Locally_GCF_BD_Entrée | 
+2025-03-05 07:43:19.05 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Update_Locally_GCF_BD_Entrée = '0,0039 secondes'
+2025-03-05 07:43:19.05 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm | 
+2025-03-05 07:43:19.05 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche | 
+2025-03-05 07:43:19.05 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 07:43:19.05 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0000 secondes'
+2025-03-05 07:43:19.12 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Build_Données_Recherche = '0,0703 secondes'
+2025-03-05 07:43:19.13 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm = '0,0742 secondes'
+2025-03-05 07:43:19.13 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click | 
+2025-03-05 07:43:19.14 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:lstDonnées_Click = '0,0039 secondes'
+2025-03-05 07:43:19.14 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:MAJ_Fichier_Client = '2,4199 secondes'
+2025-03-05 07:43:22.23 | Robert M. Vigneault | Clients_v5.4.xlsm | ***** Fin de session - Workbook_BeforeClose ***** | 
+2025-03-05 07:43:28.73 | Robert M. Vigneault | Clients_v5.4.xlsm | ***** Début de session - Workbook_Open ***** | 
+2025-03-05 07:43:28.73 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Client_List_Import_All | 
+2025-03-05 07:43:28.92 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Apply_Worksheet_Format | 
+2025-03-05 07:43:29.02 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Apply_Worksheet_Format = '0,0977 secondes'
+2025-03-05 07:43:29.09 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Client_List_Import_All = '0,3555 secondes'
+2025-03-05 07:43:29.13 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:UserForm_Initialize | 
+2025-03-05 07:43:29.13 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm | 
+2025-03-05 07:43:29.13 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Add_SearchColumn | 
+2025-03-05 07:43:29.13 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmbSearchColumn_Change | 
+2025-03-05 07:43:29.14 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmbSearchColumn_Change = '0,0059 secondes'
+2025-03-05 07:43:29.14 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Add_SearchColumn = '0,0059 secondes'
+2025-03-05 07:43:29.17 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm = '0,0430 secondes'
+2025-03-05 07:43:29.18 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:UserForm_Initialize = '0,0469 secondes'
+2025-03-05 07:45:24.68 | Robert M. Vigneault | Clients_v5.4.xlsm | ***** Fin de session - Workbook_BeforeClose ***** | 
+2025-03-05 07:48:00.43 | Robert M. Vigneault | Clients_v5.4.xlsm | ***** Début de session - Workbook_Open ***** | 
+2025-03-05 07:48:00.43 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Client_List_Import_All | 
+2025-03-05 07:48:00.61 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Apply_Worksheet_Format | 
+2025-03-05 07:48:00.69 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Apply_Worksheet_Format = '0,0840 secondes'
+2025-03-05 07:48:00.76 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Client_List_Import_All = '0,3301 secondes'
+2025-03-05 07:48:00.80 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:UserForm_Initialize | 
+2025-03-05 07:48:00.80 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm | 
+2025-03-05 07:48:00.80 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Add_SearchColumn | 
+2025-03-05 07:48:00.80 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmbSearchColumn_Change | 
+2025-03-05 07:48:00.80 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmbSearchColumn_Change = '0,0000 secondes'
+2025-03-05 07:48:00.80 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Add_SearchColumn = '0,0020 secondes'
+2025-03-05 07:48:00.84 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm = '0,0352 secondes'
+2025-03-05 07:48:00.84 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:UserForm_Initialize = '0,0371 secondes'
+2025-03-05 07:54:08.61 | Robert M. Vigneault | Clients_v5.4.xlsm | ***** Fin de session - Workbook_BeforeClose ***** | 
+2025-03-05 07:54:27.42 | Robert M. Vigneault | Clients_v5.4.xlsm | ***** Début de session - Workbook_Open ***** | 
+2025-03-05 07:54:27.42 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Client_List_Import_All | 
+2025-03-05 07:54:27.60 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Apply_Worksheet_Format | 
+2025-03-05 07:54:27.69 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Apply_Worksheet_Format = '0,0859 secondes'
+2025-03-05 07:54:27.77 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Client_List_Import_All = '0,3418 secondes'
+2025-03-05 07:54:27.80 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:UserForm_Initialize | 
+2025-03-05 07:54:27.80 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm | 
+2025-03-05 07:54:27.80 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Add_SearchColumn | 
+2025-03-05 07:54:27.81 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmbSearchColumn_Change | 
+2025-03-05 07:54:27.81 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmbSearchColumn_Change = '0,0000 secondes'
+2025-03-05 07:54:27.81 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Add_SearchColumn = '0,0020 secondes'
+2025-03-05 07:54:27.84 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm = '0,0391 secondes'
+2025-03-05 07:54:27.85 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:UserForm_Initialize = '0,0488 secondes'
+2025-03-05 07:57:01.97 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Client_List_Import_All | 
+2025-03-05 07:57:02.07 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Apply_Worksheet_Format | 
+2025-03-05 07:57:02.12 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Apply_Worksheet_Format = '0,0527 secondes'
+2025-03-05 07:57:02.20 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Client_List_Import_All = '0,2246 secondes'
+2025-03-05 07:57:02.21 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:UserForm_Initialize | 
+2025-03-05 07:57:02.21 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm | 
+2025-03-05 07:57:02.21 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Add_SearchColumn | 
+2025-03-05 07:57:02.21 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmbSearchColumn_Change | 
+2025-03-05 07:57:02.21 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:cmbSearchColumn_Change = '0,0000 secondes'
+2025-03-05 07:57:02.23 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Add_SearchColumn = '0,0156 secondes'
+2025-03-05 07:57:02.25 | Robert M. Vigneault | Clients_v5.4.xlsm | modMain:CM_Reset_UserForm = '0,0332 secondes'
+2025-03-05 07:57:02.26 | Robert M. Vigneault | Clients_v5.4.xlsm | ufClientMF:UserForm_Initialize = '0,0508 secondes'
+2025-03-05 07:57:08.92 | Robert M. Vigneault | Clients_v5.4.xlsm | ***** Fin de session - Workbook_BeforeClose ***** | 
