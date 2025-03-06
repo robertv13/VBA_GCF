@@ -169,7 +169,7 @@ Private Sub Worksheet_Change(ByVal target As Range) 'Worksheet wshBV - 2023-12-3
             Application.EnableEvents = False
             target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(target.Address)
+            Application.GoTo Range(target.Address)
         End If
         
         Range("B9").value = Range("J1").value

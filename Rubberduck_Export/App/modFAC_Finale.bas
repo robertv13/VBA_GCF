@@ -757,7 +757,7 @@ Sub FAC_Finale_Softdelete_Projets_Détails_Locally(projetID As Long)
 
 End Sub
 
-Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID)
+Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID As Long)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_To_DB", CStr(projetID), 0)
 
@@ -806,7 +806,7 @@ eh:
     
 End Sub
 
-Sub FAC_Finale_Softdelete_Projets_Entête_Locally(projetID)
+Sub FAC_Finale_Softdelete_Projets_Entête_Locally(projetID As Long)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally", CStr(projetID), 0)
     

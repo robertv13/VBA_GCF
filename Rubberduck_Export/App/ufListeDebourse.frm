@@ -31,7 +31,7 @@ Private Sub ChargerDebDonnees()
     'Définir la feuille source et la plage des données
     Dim ws As Worksheet
     Set ws = wshDEB_Trans
-    dataArray = ws.Range("A2:S" & ws.Cells(Rows.count, 1).End(xlUp).row).value
+    dataArray = ws.Range("A2:S" & ws.Cells(ws.Rows.count, 1).End(xlUp).row).value
     
     'Définir la date limite (75 jours avant aujourd'hui)
     Dim dateLimite As Date

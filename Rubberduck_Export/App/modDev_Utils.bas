@@ -536,7 +536,7 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
         lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "B").End(xlUp).row
         With wsOutput.Range("B2:H" & lastUsedRow)
             On Error Resume Next
-            Cells.FormatConditions.Delete
+            ActiveSheet.Cells.FormatConditions.Delete
             On Error GoTo 0
         
             .FormatConditions.Add Type:=xlExpression, Formula1:= _
@@ -863,22 +863,22 @@ Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
         Application.EnableEvents = False
         .SortFields.Clear
         .SortFields.Add2 _
-            key:=Range("tblTests_And_Todo[Statut]"), _
+            key:=ActiveSheet.Range("tblTests_And_Todo[Statut]"), _
             SortOn:=xlSortOnValues, _
             Order:=xlDescending, _
             DataOption:=xlSortNormal
         .SortFields.Add2 _
-            key:=Range("tblTests_And_Todo[Module]"), _
+            key:=ActiveSheet.Range("tblTests_And_Todo[Module]"), _
             SortOn:=xlSortOnValues, _
             Order:=xlAscending, _
             DataOption:=xlSortNormal
         .SortFields.Add2 _
-            key:=Range("tblTests_And_Todo[Priorité]"), _
+            key:=ActiveSheet.Range("tblTests_And_Todo[Priorité]"), _
             SortOn:=xlSortOnValues, _
             Order:=xlAscending, _
             DataOption:=xlSortNormal
         .SortFields.Add2 _
-            key:=Range("tblTests_And_Todo[TimeStamp]"), _
+            key:=ActiveSheet.Range("tblTests_And_Todo[TimeStamp]"), _
             SortOn:=xlSortOnValues, _
             Order:=xlAscending, _
             DataOption:=xlSortNormal
@@ -1030,7 +1030,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
         lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "B").End(xlUp).row
         With wsOutput.Range("B2:G" & lastUsedRow)
             On Error Resume Next
-            Cells.FormatConditions.Delete
+            ActiveSheet.Cells.FormatConditions.Delete
             On Error GoTo 0
         
             .FormatConditions.Add Type:=xlExpression, Formula1:= _
@@ -1126,9 +1126,9 @@ Sub List_All_Columns() '2024-08-09 @ 11:52
     'Sort the report by worksheet name and column number
     With reportSheet.Sort
         .SortFields.Clear
-        .SortFields.Add key:=Range("A2"), Order:=xlAscending ' Worksheet name
-        .SortFields.Add key:=Range("B2"), Order:=xlAscending ' Column number
-        .SetRange Range("A1:F" & outputRow - 1)
+        .SortFields.Add key:=ActiveSheet.Range("A2"), Order:=xlAscending ' Worksheet name
+        .SortFields.Add key:=ActiveSheet.Range("B2"), Order:=xlAscending ' Column number
+        .SetRange ActiveSheet.Range("A1:F" & outputRow - 1)
         .Header = xlYes
         .Apply
     End With

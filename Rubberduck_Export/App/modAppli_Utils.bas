@@ -1365,9 +1365,8 @@ Private Sub checkENC_Détails(ByRef r As Long, ByRef readRows As Long)
     Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshENC_Détails'")
     r = r + 1
     
-    'Array pointer
-'    Dim row As Long: row = 1
-    Dim currentRow As Long
+    'TODO Is this comment still valid? => Array pointer
+'TODO Is this comment still valid? =>     Dim row As Long: row = 1
         
     Dim pmtNo As Long, oldpmtNo As Long
     Dim result As Variant
@@ -3157,7 +3156,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 4572 'What is the last TECID analyzed ?
+    lastTECIDReported = 4636 'What is the last TECID analyzed ?
     
     'Feuille contenant les données à analyser
     Dim HeaderRow As Long: HeaderRow = 2

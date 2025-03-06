@@ -4,6 +4,7 @@ Option Explicit
 'TODO Is this comment still valid? => Variables globales pour le module
 Public lastRow As Long
 Private payRow As Long
+Private gNumeroEcritureARenverser As Long
 
 Sub ENC_Get_OS_Invoices(cc As String) '2024-08-21 @ 15:18
     
@@ -721,8 +722,8 @@ Sub ENC_Add_Check_Boxes(row As Long)
     For Each cell In chkBoxRange
     'Check if the cell is empty and doesn't have a checkbox already
     If cell.row <= 36 And _
-        Cells(cell.row, 2).value = "" And _
-        Cells(cell.row, 6).value <> "" Then 'Applied = False
+        ActiveSheet.Cells(cell.row, 2).value = "" And _
+        ActiveSheet.Cells(cell.row, 6).value <> "" Then 'Applied = False
             'Create a checkbox linked to the cell
             Set cbx = wshENC_Saisie.CheckBoxes.Add(cell.Left + 30, cell.Top, cell.Width, cell.Height)
             With cbx
@@ -834,7 +835,7 @@ Sub chkBox_Apply_Click()
     Dim chkBox As checkBox
     Set chkBox = ActiveSheet.CheckBoxes(Application.Caller)
     Dim linkedCell As Range
-    Set linkedCell = Range(chkBox.linkedCell)
+    Set linkedCell = ActiveSheet.Range(chkBox.linkedCell)
     
     If linkedCell.value = True Then
         If wshENC_Saisie.Range("K9").value > 0 Then
@@ -849,7 +850,7 @@ Sub chkBox_Apply_Click()
         wshENC_Saisie.Shapes("btnENC_Sauvegarde").Visible = True
         wshENC_Saisie.Shapes("btnENC_Annule").Visible = True
     Else
-        Range("K" & linkedCell.row).value = 0
+        ActiveSheet.Range("K" & linkedCell.row).value = 0
     End If
 
     'Libérer la mémoire

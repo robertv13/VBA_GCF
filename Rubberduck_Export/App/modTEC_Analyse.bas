@@ -21,7 +21,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     
     'Créer un dict pour tous les clients FACTURABLES
     Dim wsClientsMF As Worksheet: Set wsClientsMF = wshBD_Clients
-    Dim lastUsedRowClient
+    Dim lastUsedRowClient As Long
     lastUsedRowClient = wsClientsMF.Cells(wsClientsMF.Rows.count, "B").End(xlUp).row
     Dim dictClients As Dictionary
     Set dictClients = New Dictionary
@@ -319,14 +319,14 @@ Sub Build_Hours_Summary(rowSelected As Long)
     rowSelected = rowSelected + 1 'Summary starts on the next line (first line of expanded lines)
     saveR = rowSelected
     i = rowSelected
-    Do Until Cells(i, 5) = ""
-        If Cells(i, 6).value <> "" Then
-            If dictHours.Exists(Cells(i, 6).value) Then
-                dictHours(Cells(i, 6).value) = dictHours(Cells(i, 6).value) + Cells(i, 8).value
+    Do Until ActiveSheet.Cells(i, 5) = ""
+        If ActiveSheet.Cells(i, 6).value <> "" Then
+            If dictHours.Exists(ActiveSheet.Cells(i, 6).value) Then
+                dictHours(ActiveSheet.Cells(i, 6).value) = dictHours(ActiveSheet.Cells(i, 6).value) + ActiveSheet.Cells(i, 8).value
             Else
-                dictHours.Add Cells(i, 6).value, Cells(i, 8).value
+                dictHours.Add ActiveSheet.Cells(i, 6).value, ActiveSheet.Cells(i, 8).value
             End If
-            Cells(i, 8).Font.Color = RGB(166, 166, 166) 'RMV_15
+            ActiveSheet.Cells(i, 8).Font.Color = RGB(166, 166, 166) 'RMV_15
         End If
         i = i + 1
     Loop
@@ -339,18 +339,18 @@ Sub Build_Hours_Summary(rowSelected As Long)
     
     ws.Range("O" & rowSelected).value = 0 'Reset the total WIP value
     For Each prof In Fn_Sort_Dictionary_By_Value(dictHours, True) ' Sort dictionary by hours in descending order
-        Cells(rowSelected, 10).value = prof
+        ActiveSheet.Cells(rowSelected, 10).value = prof
         Dim strProf As String
         strProf = prof
         profID = Fn_GetID_From_Initials(strProf)
-        Cells(rowSelected, "K").HorizontalAlignment = xlRight
-        Cells(rowSelected, "K").NumberFormat = "#,##0.00"
-        Cells(rowSelected, "K").value = dictHours(prof)
+        ActiveSheet.Cells(rowSelected, "K").HorizontalAlignment = xlRight
+        ActiveSheet.Cells(rowSelected, "K").NumberFormat = "#,##0.00"
+        ActiveSheet.Cells(rowSelected, "K").value = dictHours(prof)
         tauxHoraire = Fn_Get_Hourly_Rate(profID, ws.Range("H3").value)
-        Cells(rowSelected, "L").value = tauxHoraire
-        Cells(rowSelected, "M").NumberFormat = "#,##0.00 $"
-        Cells(rowSelected, "M").FormulaR1C1 = "=RC[-2]*RC[-1]"
-        Cells(rowSelected, "M").HorizontalAlignment = xlRight
+        ActiveSheet.Cells(rowSelected, "L").value = tauxHoraire
+        ActiveSheet.Cells(rowSelected, "M").NumberFormat = "#,##0.00 $"
+        ActiveSheet.Cells(rowSelected, "M").FormulaR1C1 = "=RC[-2]*RC[-1]"
+        ActiveSheet.Cells(rowSelected, "M").HorizontalAlignment = xlRight
         rowSelected = rowSelected + 1
     Next prof
     
@@ -364,7 +364,7 @@ Sub Build_Hours_Summary(rowSelected As Long)
     'Hours Total
     Dim rTotal As Long
     rTotal = rowSelected
-    With Cells(rTotal, "K")
+    With ActiveSheet.Cells(rTotal, "K")
         .HorizontalAlignment = xlRight
         .FormulaR1C1 = "=SUM(R" & saveR & "C:R[-1]C)"
 '        .value = Format$(t, "#,##0.00")
@@ -372,14 +372,14 @@ Sub Build_Hours_Summary(rowSelected As Long)
     End With
     
     'Fees Total
-    With Cells(rowSelected, "M")
+    With ActiveSheet.Cells(rowSelected, "M")
         .HorizontalAlignment = xlRight
 '        .value = Format$(tdollars, "#,##0.00$")
         .FormulaR1C1 = "=SUM(R" & saveR & "C:R[-1]C)"
         .Font.Bold = True
     End With
     
-    With Range("J" & saveR & ":M" & rowSelected).Interior
+    With ActiveSheet.Range("J" & saveR & ":M" & rowSelected).Interior
         .Pattern = xlSolid
         .PatternColorIndex = xlAutomatic
         .ThemeColor = xlThemeColorAccent1
@@ -387,7 +387,7 @@ Sub Build_Hours_Summary(rowSelected As Long)
         .PatternTintAndShade = 0
     End With
     
-    With Range("K" & rowSelected & ", M" & rowSelected)
+    With ActiveSheet.Range("K" & rowSelected & ", M" & rowSelected)
         With .Borders(xlEdgeTop)
             .LineStyle = xlContinuous
             .ColorIndex = xlAutomatic

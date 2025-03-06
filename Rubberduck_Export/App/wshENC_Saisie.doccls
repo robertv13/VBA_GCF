@@ -176,7 +176,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshENC_Saisie_115")
             target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(target.Address)
+            Application.GoTo Range(target.Address)
         End If
         target.Interior.Color = COULEUR_BASE_COMPTABILITÉ
         Application.EnableEvents = True

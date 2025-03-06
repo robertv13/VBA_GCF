@@ -44,7 +44,7 @@ Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
     Dim profInit As String, descTEC As String
     Dim hresTEC As Currency, tauxHoraire As Currency, valeurTEC As Currency
     Dim totalHresTEC As Currency, totalValeurTEC As Currency
-    Dim currRow As Integer, activeRow As Integer
+    Dim currRow As Integer, activeRow As Long
     currRow = 6
     For i = 1 To UBound(arr, 1)
         If currRow <= 30 Then
@@ -100,7 +100,7 @@ ExitSub:
     
 End Sub
 
-Sub AjouterCheckBoxesAvecControleGlobal(lastUsedRow)
+Sub AjouterCheckBoxesAvecControleGlobal(lastUsedRow As Long)
 
     Dim ws As Worksheet
     Set ws = wshTEC_Radiation

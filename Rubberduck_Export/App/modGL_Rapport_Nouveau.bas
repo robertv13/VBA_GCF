@@ -119,9 +119,9 @@ Public Sub GenererRapportGL_Compte(wsRapport As Worksheet, dateDebut As Date, da
         If saveFirstRow <> -1 Then
             Dim isPair As Integer 'Touujours laisser la première ligne de détail sans surbrillance
             isPair = IIf(saveFirstRow Mod 2 = 0, 1, 0)
-            With Range("B" & saveFirstRow & ":H" & rowRapport - 1)
+            With ActiveSheet.Range("B" & saveFirstRow & ":H" & rowRapport - 1)
                 .FormatConditions.Add Type:=xlExpression, Formula1:="=MOD(LIGNE();2)=" & isPair
-                .FormatConditions(Range("B" & saveFirstRow & ":H" & rowRapport - 1).FormatConditions.count).SetFirstPriority
+                .FormatConditions(ActiveSheet.Range("B" & saveFirstRow & ":H" & rowRapport - 1).FormatConditions.count).SetFirstPriority
                 With .FormatConditions(1).Interior
                     .PatternColorIndex = xlAutomatic
                     .ThemeColor = xlThemeColorDark1
@@ -745,7 +745,7 @@ Sub GL_Rapport_Wrap_Up_Compte(ws As Worksheet, h1 As String, h2 As String, h3 As
     'Determine the active cells & setup Print Area
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, "H").End(xlUp).row + 1
-    Range("A3:H" & lastUsedRow).Select
+    ActiveSheet.Range("A3:H" & lastUsedRow).Select
     
     With ws.PageSetup
         .PrintArea = "$A$3:$H$" & lastUsedRow
@@ -787,10 +787,10 @@ Sub GL_Rapport_Wrap_Up_Ecriture(ws As Worksheet, h1 As String, h2 As String, h3 
     'Determine the active cells & setup Print Area
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, "H").End(xlUp).row + 1
-    Range("A3:I" & lastUsedRow).Select
+    ActiveSheet.Range("A3:I" & lastUsedRow).Select
     
-    Range("A3:I" & lastUsedRow).Font.Name = "Aptos Narrow"
-    Range("A3:I" & lastUsedRow).Font.size = 10
+    ActiveSheet.Range("A3:I" & lastUsedRow).Font.Name = "Aptos Narrow"
+    ActiveSheet.Range("A3:I" & lastUsedRow).Font.size = 10
     
     With ws.PageSetup
         .PrintArea = "$A$3:$I$" & lastUsedRow
@@ -833,10 +833,10 @@ Sub GL_Rapport_Wrap_Up_DateSaisie(ws As Worksheet, h1 As String, h2 As String, h
     'Determine the active cells & setup Print Area
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, "I").End(xlUp).row + 1
-    Range("A3:J" & lastUsedRow).Select
+    ActiveSheet.Range("A3:J" & lastUsedRow).Select
     
-    Range("A3:J" & lastUsedRow).Font.Name = "Aptos Narrow"
-    Range("A3:J" & lastUsedRow).Font.size = 10
+    ActiveSheet.Range("A3:J" & lastUsedRow).Font.Name = "Aptos Narrow"
+    ActiveSheet.Range("A3:J" & lastUsedRow).Font.size = 10
     
     With ws.PageSetup
         .PrintArea = "$A$3:$J$" & lastUsedRow

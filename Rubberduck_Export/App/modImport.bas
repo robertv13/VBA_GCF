@@ -985,7 +985,7 @@ Sub ResizeTable(targetSheet As Worksheet, tableName As String)
     End With
     
     'Redimensionner la plage du tableau
-    tbl.Resize Range(tbl.Range.Cells(1, 1), targetSheet.Cells(lastRow, lastCol))
+    tbl.Resize ActiveSheet.Range(tbl.Range.Cells(1, 1), targetSheet.Cells(lastRow, lastCol))
     
     Call Log_Record("modImport:ResizeTable", "", startTime)
 

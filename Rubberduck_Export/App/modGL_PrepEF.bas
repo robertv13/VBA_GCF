@@ -305,7 +305,7 @@ Sub CréerFeuillesEtFormat()
         On Error GoTo 0
         
         If ws Is Nothing Then ' Si la feuille n'existe pas, la créer
-            Set ws = ThisWorkbook.Sheets.Add(After:=Sheets(Sheets.count))
+            Set ws = ThisWorkbook.Sheets.Add(After:=ThisWorkbook.Sheets(ThisWorkbook.Sheets.count)) 'ThisWorkbook.Sheets()(Sheets.count))
             ws.Name = nomsFeuilles(i)
         End If
         
@@ -925,7 +925,7 @@ Function ChercherSoldes(valeur As String, colonne As Integer) As Currency
     Set ws = wshGL_PrepEF
     
     Dim r As Range
-    Set r = ws.Range("C6:C" & ws.Cells(Rows.count, "C").End(xlUp).row).Find(valeur, LookAt:=xlWhole)
+    Set r = ws.Range("C6:C" & ws.Cells(ws.Rows.count, "C").End(xlUp).row).Find(valeur, LookAt:=xlWhole)
     
     If Not r Is Nothing Then
         ChercherSoldes = r.offset(0, 3).value

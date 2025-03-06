@@ -233,7 +233,7 @@ Public Sub CheckListBoxFirstItem()
 
 End Sub
 
-Private Function ShowListbox(Optional ByVal show As Boolean = True)
+Private Sub ShowListbox(Optional ByVal show As Boolean = True)
     
     If rmv_state = rmv_modeInitial Or _
         rmv_state = rmv_modeAffichage Or _
@@ -243,9 +243,9 @@ Private Function ShowListbox(Optional ByVal show As Boolean = True)
     
     MyListBox.Visible = show
 
-End Function
+End Sub
 
-Private Function SetListboxPosition()
+Private Sub SetListboxPosition()
     
     With MyListBox
         .Left = myTextBox.Left
@@ -255,7 +255,7 @@ Private Function SetListboxPosition()
         Call ShowListbox(True)
     End With
     
-End Function
+End Sub
 
 Private Function ResizeListbox(MyListBox As MSForms.ListBox, fontSize As Double) As Double
 
@@ -358,14 +358,14 @@ Private Sub RemoveStartingText()
     
 End Sub
 
-Private Function SelectTextBox()
+Private Sub SelectTextBox()
     
     With myTextBox
 '        SelStart = 0
         .SetFocus
     End With
 
-End Function
+End Sub
 
 Public Sub FilterListBox() 'Filters the Listbox
 
@@ -426,4 +426,5 @@ Private Function FilterData() As Variant
     FilterData = finalItems
 
 End Function
+
 

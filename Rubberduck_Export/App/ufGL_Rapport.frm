@@ -47,7 +47,7 @@ Private Sub UserForm_Initialize()
     'Vérifier si la plage nommée existe
     On Error Resume Next
     Dim plage As Range
-    Set plage = Range("dnrDateRange")
+    Set plage = ActiveSheet.Range("dnrDateRange")
     On Error GoTo 0
     
     If Not plage Is Nothing Then

@@ -1,15 +1,16 @@
 Attribute VB_Name = "modCAR_Liste_Agée"
+'@IgnoreModule SetAssignmentWithIncompatibleObjectType
 Option Explicit
 
-Sub shpPréparationListeÂgée_Click()
+Sub CC_PreparerListeAgee_Click()
 
-    Call CréerListeÂgée
+    Call CreerListeAgee
 
 End Sub
 
-Sub CréerListeÂgée() '2024-09-08 @ 15:55
+Sub CreerListeAgee() '2024-09-08 @ 15:55
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modCAR_Liste_Agée:CréerListeÂgée", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modCAR_Liste_Agée:CreerListeAgee", "", 0)
    
     Application.ScreenUpdating = False
     
@@ -86,7 +87,6 @@ Sub CréerListeÂgée() '2024-09-08 @ 15:55
     For i = 1 To rngFactures.Rows.count
         'Récupérer les données de la facture directement du Range
         numFacture = CStr(rngFactures.Cells(i, fFacCCInvNo).value)
-        If numFacture = "24-24655" Or numFacture = "25-24745" Then Stop
         'Do not process non Confirmed invoice
         If Fn_Get_Invoice_Type(numFacture) <> "C" Then
             GoTo Next_Invoice
@@ -454,7 +454,7 @@ Next_Invoice:
     Set wsFactures = Nothing
     Set wsPaiements = Nothing
     
-    Call Log_Record("modCAR_Liste_Agée:CréerListeÂgée", "", startTime)
+    Call Log_Record("modCAR_Liste_Agée:CreerListeAgee", "", startTime)
     
 End Sub
 
@@ -481,12 +481,12 @@ Sub CAR_ListeAgee_AfficherMenuContextuel(ByVal target As Range) '2025-02-21 @ 19
     'Créer un nouveau menu contextuel
     Set menu = Application.CommandBars.Add(Name:="FactureMenu", position:=msoBarPopup, Temporary:=True)
 
-    'Ajout de l'option 1 au menu contextuel
+    'Option # 1 - Visualiser la facture
     Set menuItem = menu.Controls.Add(Type:=msoControlButton)
         menuItem.Caption = "Visualiser la facture (format PDF)"
         menuItem.OnAction = "'VisualiserFacturePDF """ & numeroFacture & """'"
 
-    'Ajout de l'option 2 au menu contextuel
+    'Option # 2 - Visualiser la facture
     Set menuItem = menu.Controls.Add(Type:=msoControlButton)
         menuItem.Caption = "Envoi d'un rappel par courriel"
         menuItem.OnAction = "'EnvoyerRappelParCourriel """ & numeroFacture & """'"
@@ -661,4 +661,5 @@ Sub RetourMenuFacturation()
     wshMenuFAC.Range("A1").Select
 
 End Sub
+
 

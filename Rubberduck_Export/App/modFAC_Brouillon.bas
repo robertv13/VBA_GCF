@@ -1015,20 +1015,16 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(row As Long, dateCutOffProjet As Date)
     
     For Each cell In chkBoxRange
     'Check if the cell is empty and doesn't have a checkbox already
-    If Cells(cell.row, 8).value = False Then
+    If ActiveSheet.Cells(cell.row, 8).value = False Then
         'Create a checkbox linked to the cell
         Set cbx = wshFAC_Brouillon.CheckBoxes.Add(cell.Left + 5, cell.Top, cell.Width, cell.Height)
         With cbx
             .Name = "chkBox - " & cell.row
             .Text = ""
             If dateCutOffProjet = "00:00:00" Then
-                If Cells(cell.row, 4).value < wshFAC_Brouillon.Range("O3").value Then
-                    .value = True
-                Else
-                    .value = False
-                End If
+                .value = ActiveSheet.Cells(cell.row, 4).value < wshFAC_Brouillon.Range("O3").value
             Else
-                If Cells(cell.row, 4).value <= dateCutOffProjet Then
+                If ActiveSheet.Cells(cell.row, 4).value <= dateCutOffProjet Then
                     .value = True
                 Else
                     .value = False
@@ -1291,7 +1287,7 @@ Sub Load_Invoice_Template(t As String)
         facRow = facRow + 2
     Next i
         
-    Application.Goto wshFAC_Brouillon.Range("L" & facRow)
+    Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
 

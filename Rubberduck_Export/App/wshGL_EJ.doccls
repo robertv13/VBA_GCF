@@ -34,6 +34,11 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     'Cette cellule peut aussi contenir "Client:"
     ws.Range("E6").value = "Description:"
     
+    'Certaines cellules perdent la couleur du background
+    Dim cellsToColor As Range
+    Set cellsToColor = ws.Range("G4")
+    Call Remplir_Plage_Avec_Couleur(cellsToColor, COULEUR_BASE_COMPTABILITÉ)
+    
     Call SetTabOrder(ws)
     
     Call GL_EJ_Clear_All_Cells
@@ -42,11 +47,14 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     Dim shp As Shape
     Set shp = ws.Shapes("btnUpdate")
     
-    shp.Left = 530
-    shp.Width = 115
-    shp.Height = 30
-    shp.TextFrame2.TextRange.Text = "Mettre à jour"
-    shp.TextFrame2.TextRange.Font.Fill.ForeColor.RGB = RGB(0, 0, 0) 'Noir
+    With shp
+        .Left = 530
+        .Width = 115
+        .Height = 30
+        .Fill.ForeColor.RGB = 12566463
+        .TextFrame2.TextRange.Text = "Mettre à jour"
+        .TextFrame2.TextRange.Font.Fill.ForeColor.RGB = RGB(0, 0, 0) 'Noir
+    End With
     
     Call GL_EJ_Forme_Sauvegarder(shp)
     
@@ -155,6 +163,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
         Application.EnableEvents = True
         If target.value = "Renversement" Then
             Call GL_EJ_Renverser_Ecriture
+            Exit Sub
         End If
         If target.value = "Dépôt de client" Then
             Call GL_EJ_Depot_Client
@@ -196,7 +205,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
             Application.EnableEvents = False
             target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(target.Address)
+            Application.GoTo Range(target.Address)
         End If
         
         If CDate(Me.Range("K4").value) > Date Then

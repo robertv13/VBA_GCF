@@ -814,13 +814,13 @@ Sub NettoyerCellulesEtIconesPDF()
 
 End Sub
 
-Sub ObtenirPostingExistantGL(invNo)
+Sub ObtenirPostingExistantGL(invNo As String)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:ObtenirPostingExistantGL", "", 0)
     
     Dim wsGL As Worksheet: Set wsGL = wshGL_Trans
     
-    Dim lastUsedRow
+    Dim lastUsedRow As Long
     lastUsedRow = wsGL.Cells(wsGL.Rows.count, "A").End(xlUp).row
     Dim rngToSearch As Range: Set rngToSearch = wsGL.Range("D1:D" & lastUsedRow)
     

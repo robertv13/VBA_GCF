@@ -107,7 +107,7 @@ Sub DEB_Renversement_Update()
     Call DEB_Trans_Add_Record_To_DB(rowLastUsed)
     Call DEB_Trans_Add_Record_Locally(rowLastUsed)
     
-    'Ajouter RENVERSÉ à la référence du déboursé original
+    'Mettre à jour le débouré renversé
     Call DEB_Trans_MAJ_Debourse_Renverse_To_DB
     Call DEB_Trans_MAJ_Debourse_Renverse_Locally
     
@@ -595,7 +595,7 @@ Sub Load_DEB_Auto_Into_JE(DEBAutoDesc As String, NoDEBAuto As Long)
     Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:Load_DEB_Auto_Into_JE", "", 0)
     
     'On copie l'écriture automatique vers wshDEB_Saisie
-    Dim rowDEBAuto, rowDEB As Long
+    Dim rowDEBAuto As Long, rowDEB As Long
     rowDEBAuto = wshDEB_Récurrent.Cells(wshDEB_Récurrent.Rows.count, "C").End(xlUp).row  'Last Row used in wshDEB_Recurrent
     
     Call DEB_Saisie_Clear_All_Cells

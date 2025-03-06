@@ -1,7 +1,8 @@
 Attribute VB_Name = "modGL_EJ"
 Option Explicit
 
-Private sauvegardesCaracteristiquesForme As Object
+Private gSauvegardesCaracteristiquesForme As Object
+Private gNumeroEcritureARenverser As Long
 
 Sub shp_GL_EJ_Update_Click()
 
@@ -81,7 +82,9 @@ Sub JE_Renversement_Update()
         End If
     Next i
     
-    wshGL_EJ.Range("F4").value = "RENVERSEMENT:" & wshGL_Trans.Range("AA3").value
+    gNumeroEcritureARenverser = wshGL_Trans.Range("AA3").value
+    
+    wshGL_EJ.Range("F4").value = "RENVERSEMENT:" & gNumeroEcritureARenverser
     Dim saveDescription As String
     saveDescription = wshGL_EJ.Range("F6").value
     wshGL_EJ.Range("F6").value = "RENV. - " & wshGL_EJ.Range("F6").value
@@ -90,8 +93,15 @@ Sub JE_Renversement_Update()
     Call GL_Trans_Add_Record_To_DB(rowEJLast)
     Call GL_Trans_Add_Record_Locally(rowEJLast)
     
-    msgBox "L'écriture numéro '" & wshGL_Trans.Range("AA3").value & "' a été RENVERSÉ avec succès", vbInformation, "Confirmation de traitement"
+    'Indiquer dans l'écriture originale qu'elle a été renversée par
+    Call EJ_Trans_Update_Ecriture_Renversee_To_DB
+    Call EJ_Trans_Update_Ecriture_Renversee_Locally
     
+    msgBox _
+        Prompt:="L'écriture numéro '" & gNumeroEcritureARenverser & "' a été RENVERSÉE avec succès", _
+        Title:="Confirmation de traitement", _
+        Buttons:=vbInformation
+
     Application.ScreenUpdating = True
     DoEvents
     
@@ -149,7 +159,7 @@ Sub Load_JEAuto_Into_JE(EJAutoDesc As String, NoEJAuto As Long)
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:Load_JEAuto_Into_JE", "", 0)
     
     'On copie l'E/J automatique vers wshEJ
-    Dim rowJEAuto, rowJE As Long
+    Dim rowJEAuto As Long, rowJE As Long
     rowJEAuto = wshGL_EJ_Recurrente.Cells(wshGL_EJ_Recurrente.Rows.count, 1).End(xlUp).row  'Last Row used in wshGL_EJRecuurente
     
     Call GL_EJ_Clear_All_Cells
@@ -371,14 +381,19 @@ Sub GL_EJ_Renverser_Ecriture()
     Dim ws As Worksheet: Set ws = wshGL_Trans
     
     '1. Demande le numéro d'écriture à partir d'un ListBox
-    Call Prepare_Affiche_Liste_Ecriture
+    Call PreparerAfficherListeEcriture
     Dim no_Ecriture As Long
-    If Range("B3").value <> -1 Then
-        no_Ecriture = Range("B3").value
+    If ActiveSheet.Range("B3").value <> -1 Then
+        no_Ecriture = ActiveSheet.Range("B3").value
     Else
-        msgBox "Vous n'avez sélectionné aucune écriture à renverser", vbInformation, "Sélection d'une écriture à renverser"
+        msgBox _
+            Prompt:="Vous n'avez sélectionné aucune écriture à renverser", _
+            Title:="Sélection d'une écriture à renverser", _
+            Buttons:=vbInformation
+        Application.EnableEvents = False
         wshGL_EJ.Range("F4").value = ""
         wshGL_EJ.Range("F4").Select
+        Application.EnableEvents = True
         Exit Sub
     End If
     
@@ -787,6 +802,85 @@ Sub GL_Trans_Add_Record_Locally(r As Long) 'Write records locally
 
 End Sub
 
+Sub EJ_Trans_Update_Ecriture_Renversee_To_DB()
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:EJ_Trans_Update_Ecriture_Renversee_To_DB", "", 0)
+    
+    'Définition des paramètres
+    Dim destinationFileName As String, destinationTab As String
+    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+                          "GCF_BD_MASTER.xlsx"
+    destinationTab = "GL_Trans$"
+
+    'Initialize connection, connection string & open the connection
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+
+    'Requête SQL pour rechercher la ligne correspondante
+    Dim strSQL As String
+    strSQL = "SELECT * FROM [" & destinationTab & "] WHERE [NoEntrée] = " & gNumeroEcritureARenverser
+
+    'Ouvrir le Recordset
+    rs.Open strSQL, conn, 1, 3 'adOpenKeyset (1) + adLockOptimistic (3) pour modifier les données
+
+    'Vérifier si des enregistrements existent
+    If rs.EOF Then
+        msgBox "Aucun enregistrement trouvé.", vbCritical, "Impossible de mettre à jour les écritures RENVERSÉES"
+    Else
+        'Boucler à travers les enregistrements
+        Do While Not rs.EOF
+            rs.Fields(fGlTSource - 1).value = "RENVERSÉE par " & wshGL_EJ.Range("B1").value
+            rs.Update
+        'Passer à l'enregistrement suivant
+        rs.MoveNext
+        Loop
+    End If
+    
+    'Close recordset and connection
+    On Error Resume Next
+    rs.Close
+    On Error GoTo 0
+    conn.Close
+    
+    'Libérer la mémoire
+    Set conn = Nothing
+    Set rs = Nothing
+
+    Call Log_Record("modGL_EJ:EJ_Trans_Update_Ecriture_Renversee_To_DB", "", startTime)
+    
+End Sub
+
+Sub EJ_Trans_Update_Ecriture_Renversee_Locally()
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modEJ_Saisie:EJ_Trans_Update_Ecriture_Renversee_Locally", "", 0)
+    
+    Application.ScreenUpdating = False
+    
+    Dim ws As Worksheet
+    Set ws = wshGL_Trans
+    
+    'Dernière ligne de la table
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
+    
+    'Boucler sur toutes les lignes pour trouver les correspondances
+    Dim cell As Range
+    For Each cell In ws.Range("A2:A" & lastUsedRow)
+        If cell.value = gNumeroEcritureARenverser Then
+            cell.offset(0, fGlTSource - 1).value = "RENVERSÉE par " & wshGL_EJ.Range("B1").value
+        End If
+    Next cell
+    
+    Application.ScreenUpdating = True
+    
+    'Libérer la mémoire
+    Set ws = Nothing
+
+    Call Log_Record("modEJ_Saisie:EJ_Trans_Update_Ecriture_Renversee_Locally", "", startTime)
+    
+End Sub
+
 Sub GL_EJ_Recurrente_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Recurrente_Add_Record_To_DB", "", 0)
@@ -930,6 +1024,8 @@ Sub GL_EJ_Back_To_Menu()
     wshMenuGL.Activate
     wshMenuGL.Range("A1").Select
     
+    fromMenu = True
+    
     'Libérer la mémoire
     Set shp = Nothing
     
@@ -938,31 +1034,34 @@ End Sub
 Sub GL_EJ_Forme_Sauvegarder(forme As Shape)
 
     'Vérifier si le Dictionary est déjà instancié, sinon le créer
-    If sauvegardesCaracteristiquesForme Is Nothing Then
-        Set sauvegardesCaracteristiquesForme = CreateObject("Scripting.Dictionary")
+    If gSauvegardesCaracteristiquesForme Is Nothing Then
+        Set gSauvegardesCaracteristiquesForme = CreateObject("Scripting.Dictionary")
     End If
 
     'Sauvegarder les caractéristiques originales de la forme
-    sauvegardesCaracteristiquesForme("Left") = forme.Left
-    sauvegardesCaracteristiquesForme("Width") = forme.Width
-    sauvegardesCaracteristiquesForme("Height") = forme.Height
-    sauvegardesCaracteristiquesForme("FillColor") = forme.Fill.ForeColor.RGB
-    sauvegardesCaracteristiquesForme("LineColor") = forme.Line.ForeColor.RGB
-    sauvegardesCaracteristiquesForme("Text") = forme.TextFrame2.TextRange.Text
-    sauvegardesCaracteristiquesForme("TextColor") = forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB
+    gSauvegardesCaracteristiquesForme("Left") = forme.Left
+    gSauvegardesCaracteristiquesForme("Width") = forme.Width
+    gSauvegardesCaracteristiquesForme("Height") = forme.Height
+    gSauvegardesCaracteristiquesForme("FillColor") = forme.Fill.ForeColor.RGB
+    gSauvegardesCaracteristiquesForme("LineColor") = forme.Line.ForeColor.RGB
+    gSauvegardesCaracteristiquesForme("Text") = forme.TextFrame2.TextRange.Text
+    gSauvegardesCaracteristiquesForme("TextColor") = forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB
+    
 End Sub
 
 Sub GL_EJ_Forme_Modifier(forme As Shape)
 
     'Appliquer des modifications à la forme
     Application.ScreenUpdating = True
-    forme.Left = 470
-    forme.Width = 175
-    forme.Height = 27
-    forme.Fill.ForeColor.RGB = RGB(255, 0, 0)  ' Rouge
-    forme.Line.ForeColor.RGB = RGB(255, 255, 255) ' Noir
-    forme.TextFrame2.TextRange.Text = "Renversement"
-    forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB = RGB(255, 255, 255)
+    With forme
+        .Left = 470
+        .Width = 175
+        .Height = 30
+        .Fill.ForeColor.RGB = RGB(255, 0, 0)  'Rouge
+        .Line.ForeColor.RGB = RGB(255, 255, 255) 'Blanc pur
+        .TextFrame2.TextRange.Text = "Renversement"
+        .TextFrame2.TextRange.Font.Fill.ForeColor.RGB = RGB(255, 255, 255) 'Blanc pur
+    End With
     
     DoEvents
     
@@ -973,46 +1072,51 @@ End Sub
 Sub GL_EJ_Forme_Restaurer(forme As Shape)
 
     'Vérifiez si les caractéristiques originales sont sauvegardées
-    If sauvegardesCaracteristiquesForme Is Nothing Then
+    If gSauvegardesCaracteristiquesForme Is Nothing Then
         Exit Sub
     End If
 
     'Restaurer les caractéristiques de la forme
-    forme.Left = sauvegardesCaracteristiquesForme("Left")
-    forme.Width = sauvegardesCaracteristiquesForme("Width")
-    forme.Height = sauvegardesCaracteristiquesForme("Height")
-    forme.Fill.ForeColor.RGB = sauvegardesCaracteristiquesForme("FillColor")
-    forme.Line.ForeColor.RGB = sauvegardesCaracteristiquesForme("LineColor")
-    forme.TextFrame2.TextRange.Text = sauvegardesCaracteristiquesForme("Text")
-    forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB = sauvegardesCaracteristiquesForme("TextColor")
+    forme.Left = gSauvegardesCaracteristiquesForme("Left")
+    forme.Width = gSauvegardesCaracteristiquesForme("Width")
+    forme.Height = gSauvegardesCaracteristiquesForme("Height")
+    forme.Fill.ForeColor.RGB = gSauvegardesCaracteristiquesForme("FillColor")
+    forme.Line.ForeColor.RGB = gSauvegardesCaracteristiquesForme("LineColor")
+    forme.TextFrame2.TextRange.Text = gSauvegardesCaracteristiquesForme("Text")
+    forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB = gSauvegardesCaracteristiquesForme("TextColor")
 
 End Sub
 
-Sub Prepare_Affiche_Liste_Ecriture()
+Sub PreparerAfficherListeEcriture()
 
-    'Prepare la liste des écritures au G/L
+    'Charger la liste des écritures au G/L en mémoire
     Dim ws As Worksheet: Set ws = wshGL_Trans
-    Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+    Dim arrData As Variant
+    arrData = ws.Range("A1").CurrentRegion.value
     
     'Initialiser le tableau des résultats
     Dim resultats() As Variant
     Dim compteur As Long
-    ReDim resultats(1 To lastUsedRow, 1 To 4)
+    ReDim resultats(1 To Round(UBound(arrData, 1) / 2, 0), 1 To 5) 'Maximum = Nombre de lignes / 2
     
-    Dim strDejaVu As String
-    
-    Dim cell As Range
-    For Each cell In ws.Range("D2:D" & lastUsedRow)
-        If cell.value = "" And InStr(strDejaVu, ws.Cells(cell.row, 1).value) = 0 Then
-            compteur = compteur + 1
-            resultats(compteur, 1) = ws.Cells(cell.row, 1).value
-            resultats(compteur, 2) = Format$(ws.Cells(cell.row, 2).value, wshAdmin.Range("B1").value)
-            resultats(compteur, 3) = ws.Cells(cell.row, 3).value
-            resultats(compteur, 4) = Format$(ws.Cells(cell.row, 10).value, wshAdmin.Range("B1").value & " hh:mm:ss")
-            strDejaVu = strDejaVu & ws.Cells(cell.row, 1).value
+    Dim strDejaVu As String, source As String
+    Dim i As Long
+    compteur = 0
+    For i = 2 To UBound(arrData, 1)
+        source = CStr(arrData(i, fGlTSource))
+        'Seulement les écritures de journal (exclure les autres)
+        If source = "" Or Not ExclureTransaction(source) = True Then
+            If InStr(strDejaVu, CStr(arrData(i, 1)) & ".|.") = 0 Then
+                compteur = compteur + 1
+                resultats(compteur, 1) = arrData(i, fGlTNoEntrée)
+                resultats(compteur, 2) = Format$(arrData(i, fGlTDate), wshAdmin.Range("B1").value)
+                resultats(compteur, 3) = arrData(i, fGlTDescription)
+                resultats(compteur, 4) = source
+                resultats(compteur, 5) = Format$(arrData(i, fGlTTimeStamp), wshAdmin.Range("B1").value & " hh:mm:ss")
+                strDejaVu = strDejaVu & CStr(arrData(i, fGlTNoEntrée)) & ".|."
+            End If
         End If
-    Next cell
+    Next i
     
     'Est-ce que nous avons des résultats
     If compteur = 0 Then
@@ -1024,27 +1128,28 @@ Sub Prepare_Affiche_Liste_Ecriture()
     Call Array_2D_Resizer(resultats, compteur, UBound(resultats, 2))
     
     'Charger les résultats dans la ListBox
-    With ufListeÉcritureGL.lbListeÉcritureGL
-        .Clear
-        .ColumnCount = 4
-        .ColumnWidths = "35;62;310;92"
+    With ufListeÉcritureGL.lsbListeÉcritureGL
+        .ColumnCount = 5
+        .ColumnWidths = "35;62;310;125;92"
         .List = resultats
     End With
     
-    Dim i As Long
+    ufListeÉcritureGL.lsbListeÉcritureGL.Clear
+    
+    'Ajouter chaque ligne de 'resultats' au ListBox
     i = 1
     Do While i <= compteur
-        'Ajouter chaque ligne au ListBox
-        ufListeÉcritureGL.lbListeÉcritureGL.AddItem resultats(i, 1)
-        ufListeÉcritureGL.lbListeÉcritureGL.List(ufListeÉcritureGL.lbListeÉcritureGL.ListCount - 1, 1) = resultats(i, 2)
-        ufListeÉcritureGL.lbListeÉcritureGL.List(ufListeÉcritureGL.lbListeÉcritureGL.ListCount - 1, 2) = resultats(i, 3)
-        ufListeÉcritureGL.lbListeÉcritureGL.List(ufListeÉcritureGL.lbListeÉcritureGL.ListCount - 1, 3) = resultats(i, 4)
+        ufListeÉcritureGL.lsbListeÉcritureGL.AddItem resultats(i, 1)
+        ufListeÉcritureGL.lsbListeÉcritureGL.List(ufListeÉcritureGL.lsbListeÉcritureGL.ListCount - 1, 1) = resultats(i, 2)
+        ufListeÉcritureGL.lsbListeÉcritureGL.List(ufListeÉcritureGL.lsbListeÉcritureGL.ListCount - 1, 2) = resultats(i, 3)
+        ufListeÉcritureGL.lsbListeÉcritureGL.List(ufListeÉcritureGL.lsbListeÉcritureGL.ListCount - 1, 3) = resultats(i, 4)
+        ufListeÉcritureGL.lsbListeÉcritureGL.List(ufListeÉcritureGL.lsbListeÉcritureGL.ListCount - 1, 4) = resultats(i, 5)
         i = i + 1
     Loop
 
     'Déplacer le focus sur la dernière ligne
-    If ufListeÉcritureGL.lbListeÉcritureGL.ListCount > 0 Then
-        ufListeÉcritureGL.lbListeÉcritureGL.ListIndex = ufListeÉcritureGL.lbListeÉcritureGL.ListCount - 1
+    If ufListeÉcritureGL.lsbListeÉcritureGL.ListCount > 0 Then
+        ufListeÉcritureGL.lsbListeÉcritureGL.ListIndex = ufListeÉcritureGL.lsbListeÉcritureGL.ListCount - 1
     End If
     
     'Afficher le UserForm

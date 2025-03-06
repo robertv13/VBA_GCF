@@ -1,4 +1,5 @@
 Attribute VB_Name = "modFAC_Interrogation"
+'@IgnoreModule SetAssignmentWithIncompatibleObjectType
 Option Explicit
 
 Sub shp_Affiche_Factures_Click()
@@ -449,7 +450,7 @@ End Sub
 Sub ExtraireLigneColonneCellule(adresse As String, ByRef numeroLigne As Long, ByRef numeroColonne As Long)
 
     Dim cellule As Range
-    Set cellule = Range(adresse)
+    Set cellule = ActiveSheet.Range(adresse)
     
     numeroLigne = cellule.row
     numeroColonne = cellule.Column
@@ -734,7 +735,7 @@ Sub AfficherNouvelleFeuille_Stats(invNo As String, nomClient As String, dateFact
     End With
     
    'Bordure blanche
-   With Range("C3:I" & lastRowUsed - 1)
+   With ActiveSheet.Range("C3:I" & lastRowUsed - 1)
         With .Borders(xlEdgeLeft)
             .LineStyle = xlContinuous
             .ThemeColor = 1
@@ -1597,7 +1598,7 @@ Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture
     End With
     
     'Bordure blanche
-    With Range("B3:J" & lastRowUsed - 1)
+    With ActiveSheet.Range("B3:J" & lastRowUsed - 1)
         With .Borders(xlEdgeLeft)
             .LineStyle = xlContinuous
             .ThemeColor = 1

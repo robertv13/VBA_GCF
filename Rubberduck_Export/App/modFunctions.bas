@@ -800,11 +800,7 @@ Function Fn_Validate_Client_Number(clientCode As String) As Boolean '2024-10-26 
     Dim rngFound As Range
     Set rngFound = rngToSearch.Find(What:=clientCode, LookIn:=xlValues, LookAt:=xlWhole)
 
-    If Not rngFound Is Nothing Then
-        Fn_Validate_Client_Number = True
-    Else
-        Fn_Validate_Client_Number = False
-    End If
+    Fn_Validate_Client_Number = Not rngFound Is Nothing
 
     'Clean-up - 2024-08-14 @ 10:15
     Set rngFound = Nothing
@@ -861,11 +857,7 @@ Function Fn_ValidateDaySpecificMonth(d As Long, m As Long, y As Long) As Boolean
     Fn_ValidateDaySpecificMonth = False
     
     Dim isLeapYear As Boolean
-    If y Mod 4 = 0 And (y Mod 100 <> 0 Or y Mod 400 = 0) Then
-        isLeapYear = True
-    Else
-        isLeapYear = False
-    End If
+    isLeapYear = y Mod 4 = 0 And (y Mod 100 <> 0 Or y Mod 400 = 0)
     
     'Last day of each month (0 to 11)
     Dim mdpm As Variant
@@ -882,7 +874,7 @@ Function Fn_ValidateDaySpecificMonth(d As Long, m As Long, y As Long) As Boolean
 
 End Function
 
-Function Fn_Check_Server_Access(serverPath) As Boolean '2024-09-24 @ 17:14
+Function Fn_Check_Server_Access(serverPath As String) As Boolean '2024-09-24 @ 17:14
 
     DoEvents
     
@@ -910,11 +902,7 @@ Function Fn_Is_Server_Available() As Boolean
     
     On Error Resume Next
     'Tester l'existence d'un fichier ou d'un répertoire sur le lecteur P:
-    If Dir("P:\", vbDirectory) <> "" Then
-        Fn_Is_Server_Available = True
-    Else
-        Fn_Is_Server_Available = False
-    End If
+    Fn_Is_Server_Available = Dir("P:\", vbDirectory) <> ""
     On Error GoTo 0
     
 End Function
@@ -2092,4 +2080,23 @@ Function ValiderDateDernierJourDuMois(y As Integer, m As Integer, d As Integer) 
     End If
     
 End Function
+
+Function ExclureTransaction(source As String) As Boolean '2025-03-06 @ 08:04
+
+    'Liste des sources à exclure
+    Dim Exclusions As Variant
+    Exclusions = Array("DÉBOURSÉ:", "DÉPÔT DE CLIENT:", "ENCAISSEMENT:", "FACTURE:", "RÉGULARISATION:", "RENVERSEMENT:", "RENVERSÉE par ")
+    
+    Dim i As Integer
+    For i = LBound(Exclusions) To UBound(Exclusions)
+        If Left(source, Len(Exclusions(i))) = Exclusions(i) Then
+            ExclureTransaction = True
+            Exit Function
+        End If
+    Next i
+    
+    ExclureTransaction = False
+    
+End Function
+
 

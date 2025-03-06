@@ -78,7 +78,7 @@ Public Sub GL_Get_Account_Trans_AF(glNo As String, dateDeb As Date, dateFin As D
 
 End Sub
 
-Sub GL_Posting_To_DB(df, desc, source, arr As Variant, ByRef GLEntryNo) 'Generic routine 2024-06-06 @ 07:00
+Sub GL_Posting_To_DB(df As Date, desc As String, source As String, arr As Variant, ByRef GLEntryNo As Long) 'Generic routine 2024-06-06 @ 07:00
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Stuff:GL_Posting_To_DB", "", 0)
 
@@ -158,7 +158,7 @@ Nothing_to_Post:
 
 End Sub
 
-Sub GL_Posting_Locally(df, desc, source, arr As Variant, ByRef GLEntryNo) 'Write records locally
+Sub GL_Posting_Locally(df As Date, desc As String, source As String, arr As Variant, ByRef GLEntryNo As Long) 'Write records locally
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("*** modGL_Stuff:GL_Posting_Locally", "", 0)
     
