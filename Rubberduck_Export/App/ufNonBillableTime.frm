@@ -45,7 +45,7 @@ Private Sub btnConvertir_Click()
     Next i
 
     'Informer du nombre de ligne convertie
-    msgBox "J'ai converti " & nbLigneSélectionnée & " ligne(s) en temps facturable", vbOKOnly + vbInformation, _
+    MsgBox "J'ai converti " & nbLigneSélectionnée & " ligne(s) en temps facturable", vbOKOnly + vbInformation, _
            "Sur une possibilité de " & lsbNonBillable.ListCount & " ligne(s)..."
     
     'La conversion est terminée

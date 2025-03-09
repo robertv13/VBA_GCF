@@ -50,7 +50,7 @@ Sub GL_EJ_Update()
         .Range("F4").Activate
     End With
     
-    msgBox "L'écriture numéro '" & strCurrentJE & "' a été reporté avec succès", vbInformation, "Confirmation de traitement"
+    MsgBox "L'écriture numéro '" & strCurrentJE & "' a été reporté avec succès", vbInformation, "Confirmation de traitement"
     
     Call Log_Record("modGL_EJ:GL_EJ_Update", "", startTime)
     
@@ -61,7 +61,7 @@ Sub JE_Renversement_Update()
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:JE_Renversement_Update", "", 0)
     
     If Fn_Is_Ecriture_Balance = False Then
-        msgBox "L'écriture à renverser ne balance pas !!!", vbCritical
+        MsgBox "L'écriture à renverser ne balance pas !!!", vbCritical
         Exit Sub
     End If
     
@@ -97,7 +97,7 @@ Sub JE_Renversement_Update()
     Call EJ_Trans_Update_Ecriture_Renversee_To_DB
     Call EJ_Trans_Update_Ecriture_Renversee_Locally
     
-    msgBox _
+    MsgBox _
         Prompt:="L'écriture numéro '" & gNumeroEcritureARenverser & "' a été RENVERSÉE avec succès", _
         Title:="Confirmation de traitement", _
         Buttons:=vbInformation
@@ -386,7 +386,7 @@ Sub GL_EJ_Renverser_Ecriture()
     If ActiveSheet.Range("B3").value <> -1 Then
         no_Ecriture = ActiveSheet.Range("B3").value
     Else
-        msgBox _
+        MsgBox _
             Prompt:="Vous n'avez sélectionné aucune écriture à renverser", _
             Title:="Sélection d'une écriture à renverser", _
             Buttons:=vbInformation
@@ -402,7 +402,7 @@ Sub GL_EJ_Renverser_Ecriture()
     Dim lastUsedRowResult As Long
     lastUsedRowResult = ws.Cells(ws.Rows.count, "AC").End(xlUp).row
     If lastUsedRowResult < 2 Then
-        msgBox "Je ne retrouve pas l'écriture '" & no_Ecriture & "'" & vbNewLine & vbNewLine & _
+        MsgBox "Je ne retrouve pas l'écriture '" & no_Ecriture & "'" & vbNewLine & vbNewLine & _
                 "Veuillez vérifier votre numéro et reessayez", vbInformation, "Numéro d'écriture invalide"
         Exit Sub
     End If
@@ -412,7 +412,7 @@ Sub GL_EJ_Renverser_Ecriture()
         InStr(rngResult.Cells(1, 4).value, "DÉBOURSÉ:") <> 0 Or _
         InStr(rngResult.Cells(1, 4).value, "FACTURE:") <> 0 Or _
         InStr(rngResult.Cells(1, 4).value, "RENVERSEMENT:") <> 0 Then
-        msgBox "Je ne peux renverser ce type d'écriture '" & _
+        MsgBox "Je ne peux renverser ce type d'écriture '" & _
                 Left$(rngResult.Cells(1, 4).value, InStr(rngResult.Cells(1, 4).value, ":") - 1) & _
                 "'" & vbNewLine & vbNewLine & _
                 "Veuillez vérifier votre numéro et reessayez", _
@@ -428,7 +428,7 @@ Sub GL_EJ_Renverser_Ecriture()
     Dim trouve As Range
     Set trouve = rng.Find(What:="RENVERSEMENT:" & no_Ecriture, LookIn:=xlValues, LookAt:=xlWhole)
     If Not trouve Is Nothing Then
-        msgBox "Cette écriture a déjà été RENVERSÉE..." & vbNewLine & vbNewLine & _
+        MsgBox "Cette écriture a déjà été RENVERSÉE..." & vbNewLine & vbNewLine & _
                "Avec le numéro d'écriture '" & ws.Cells(trouve.row, 1).value & "'" & vbNewLine & vbNewLine & _
                "En date du " & Format$(ws.Cells(trouve.row, 2).value, wshAdmin.Range("B1").value) & ".", vbInformation
         Exit Sub
@@ -826,7 +826,7 @@ Sub EJ_Trans_Update_Ecriture_Renversee_To_DB()
 
     'Vérifier si des enregistrements existent
     If rs.EOF Then
-        msgBox "Aucun enregistrement trouvé.", vbCritical, "Impossible de mettre à jour les écritures RENVERSÉES"
+        MsgBox "Aucun enregistrement trouvé.", vbCritical, "Impossible de mettre à jour les écritures RENVERSÉES"
     Else
         'Boucler à travers les enregistrements
         Do While Not rs.EOF
@@ -1120,7 +1120,7 @@ Sub PreparerAfficherListeEcriture()
     
     'Est-ce que nous avons des résultats
     If compteur = 0 Then
-        msgBox "Aucune écriture à renverser.", vbInformation
+        MsgBox "Aucune écriture à renverser.", vbInformation
         Exit Sub
     End If
    

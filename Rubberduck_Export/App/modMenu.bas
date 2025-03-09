@@ -128,7 +128,7 @@ Sub SauvegarderEtSortirApplication() '2024-08-30 @ 07:37
     Application.ScreenUpdating = False
     
     Dim confirmation As VbMsgBoxResult
-    confirmation = msgBox("Êtes-vous certain de vouloir quitter" & vbNewLine & vbNewLine & _
+    confirmation = MsgBox("Êtes-vous certain de vouloir quitter" & vbNewLine & vbNewLine & _
                         "l'application de gestion (sauvegarde automatique) ?", vbYesNo + vbQuestion, "Confirmation de sortie")
     
     If confirmation = vbYes Then

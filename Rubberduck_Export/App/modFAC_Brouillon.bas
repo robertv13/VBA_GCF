@@ -217,7 +217,7 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
         Application.EnableEvents = True
     Else
         wshFAC_Brouillon.Range("E3").value = ""
-        msgBox "Valeur non trouvée !!!", vbCritical
+        MsgBox "Valeur non trouvée !!!", vbCritical
         wshFAC_Brouillon.Range("E3").Select
     End If
     
@@ -437,7 +437,7 @@ Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
     Dim wsSource As Worksheet: Set wsSource = wbSource.Sheets(wbSource.Sheets.count) 'Position to the last worksheet
 
     'Step 2 - Let the user selects the cells to be copied
-    msgBox "SVP, sélectionnez les cellules à copier," & vbNewLine & vbNewLine _
+    MsgBox "SVP, sélectionnez les cellules à copier," & vbNewLine & vbNewLine _
          & "et par la suite, pesez sur <Enter>.", vbInformation
     On Error Resume Next
     Dim rngSource As Range
@@ -445,7 +445,7 @@ Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
     On Error GoTo 0
 
     If rngSource Is Nothing Then
-        msgBox "Aucune cellule de sélectionnée. L'Opération est annulée.", vbExclamation
+        MsgBox "Aucune cellule de sélectionnée. L'Opération est annulée.", vbExclamation
         wbSource.Close SaveChanges:=False
         GoTo Exit_Sub
     End If
@@ -852,7 +852,7 @@ Sub FAC_Brouillon_Goto_Onglet_FAC_Finale()
     Next i
     
     If soldeDepotClient > 0 Then
-        msgBox "Il y a un dépôt de client de disponible de " & Format$(soldeDepotClient, "###,##0.00 $") & vbNewLine & vbNewLine & _
+        MsgBox "Il y a un dépôt de client de disponible de " & Format$(soldeDepotClient, "###,##0.00 $") & vbNewLine & vbNewLine & _
             "Le total de la facture est de " & Format$(wshFAC_Brouillon.Range("O55").value, "###,##0.00 $"), vbInformation
 
         Application.EnableEvents = False
@@ -875,7 +875,7 @@ Sub FAC_Brouillon_Goto_Onglet_FAC_Finale()
             DoEvents
             'Si le montant a changé, demande confirmation
             If wshFAC_Brouillon.Range("O57").value <> montantInitial Then
-                reponse = msgBox("Veuillez confirmer le montant du dépôt de client à appliquer" & vbNewLine & _
+                reponse = MsgBox("Veuillez confirmer le montant du dépôt de client à appliquer" & vbNewLine & _
                                     "sur cette facture." & vbNewLine & vbNewLine & _
                                     "Appuyez sur OK pour accepter le montant suggéré," & vbNewLine & _
                                     "ou Annuler pour modifier le montant du dépôt.", _
@@ -1063,7 +1063,7 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(row As Long, dateCutOffProjet As Date)
     DoEvents
     
     If newTECapresProjet = True Then
-        msgBox "ATTENTION - Des charges se sont ajoutées après le projet de facture" & vbNewLine & vbNewLine & _
+        MsgBox "ATTENTION - Des charges se sont ajoutées après le projet de facture" & vbNewLine & vbNewLine & _
                 "VOUS DEVEZ EN TENIR COMPTE DANS VOTRE FACTURE", vbInformation + vbExclamation, _
                 "Le date limite du projet de facture < Date de la facture"
     End If
@@ -1245,7 +1245,7 @@ Sub Load_Invoice_Template(t As String)
     
     'Confirm use of Template
     Dim userResponse As String
-    userResponse = msgBox("Êtes-vous CERTAIN de vouloir utiliser le gabarit '" & t & "'" & vbNewLine & "pour cette facture ?", vbYesNo + vbQuestion, "Confirmation d'utilisation de gabarit")
+    userResponse = MsgBox("Êtes-vous CERTAIN de vouloir utiliser le gabarit '" & t & "'" & vbNewLine & "pour cette facture ?", vbYesNo + vbQuestion, "Confirmation d'utilisation de gabarit")
     'If user confirms, delete the worksheets
     If userResponse <> vbYes Then
         Exit Sub

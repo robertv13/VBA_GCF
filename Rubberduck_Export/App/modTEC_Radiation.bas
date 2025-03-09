@@ -28,7 +28,7 @@ Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
     Dim lastUsedRow As Long
     lastUsedRow = wsSource.Cells(wsSource.Rows.count, "AQ").End(xlUp).row
     If lastUsedRow < 3 Then
-        msgBox "Il n'y a aucune TEC pour ce client", vbInformation
+        MsgBox "Il n'y a aucune TEC pour ce client", vbInformation
         Call Prepare_Pour_Nouvelle_Radiation
         wshTEC_Radiation.Range("F3").Activate
         GoTo ExitSub
@@ -45,6 +45,8 @@ Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
     Dim hresTEC As Currency, tauxHoraire As Currency, valeurTEC As Currency
     Dim totalHresTEC As Currency, totalValeurTEC As Currency
     Dim currRow As Integer, activeRow As Long
+    Dim vueIncomplete  As Boolean
+    vueIncomplete = False
     currRow = 6
     For i = 1 To UBound(arr, 1)
         If currRow <= 30 Then
@@ -66,6 +68,8 @@ Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
             activeRow = currRow
             totalHresTEC = totalHresTEC + hresTEC
             totalValeurTEC = totalValeurTEC + valeurTEC
+        Else
+            vueIncomplete = True
         End If
         currRow = currRow + 1
     Next i
@@ -76,9 +80,16 @@ Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
         currRow = 32
     End If
     
+    If vueIncomplete Then
+        MsgBox _
+            Prompt:="L'affichage des heures n'est pas complet", _
+            Title:="Maximum de 30 lignes sont affichées", _
+            Buttons:=vbInformation
+    End If
+    
     'Affiche les totaux
     With ws
-        .Cells(currRow, 8).value = "* TOTAUX *"
+        .Cells(currRow, 8).value = "* TOTAUX des TEC qui seront RADIÉS *"
         .Cells(currRow, 8).Font.Bold = True
         .Cells(currRow, 10).Font.Bold = True
         .Cells(currRow, 11).Font.Bold = True
@@ -160,7 +171,7 @@ Sub ToutCocherOuDecocher()
     On Error GoTo 0
     'Vérifier si la case de l'en-tête existe
     If headerChkBox Is Nothing Then
-        msgBox "La case à cocher d'en-tête 'chk_header' n'existe pas.", vbExclamation
+        MsgBox "La case à cocher d'en-tête 'chk_header' n'existe pas.", vbExclamation
         Exit Sub
     End If
     
@@ -232,8 +243,8 @@ Sub CalculerTotaux()
     Next chkBox
     
     ' Afficher le total dans une cellule spécifique (par exemple, cellule Z1)
-    ws.Cells(rowNum + 2, 10).value = Format$(totalHres, "###,##0.00")
-    ws.Cells(rowNum + 2, 11).value = Format$(totalValeur, "###,##0.00 $")
+    ws.Cells(rowNum + 1, 10).value = Format$(totalHres, "###,##0.00")
+    ws.Cells(rowNum + 1, 11).value = Format$(totalValeur, "###,##0.00 $")
     
 End Sub
 
@@ -258,7 +269,7 @@ Sub Radiation_Mise_À_Jour()
         Call TEC_Radiation_Update_As_Billed_Locally(3, lastUsedRow)
     End If
     
-    msgBox "Les TEC sélectionnés ont été radié avec succès", vbOKOnly, "Confirmation de traitement"
+    MsgBox "Les TEC sélectionnés ont été radié avec succès", vbOKOnly, "Confirmation de traitement"
     
 End Sub
 
@@ -298,7 +309,7 @@ Sub TEC_Radiation_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Upd
                 rs.Update
             Else
                 'Handle the case where the specified ID is not found
-                msgBox "L'enregistrement avec le TECID '" & r & "' ne peut être trouvé!", _
+                MsgBox "L'enregistrement avec le TECID '" & r & "' ne peut être trouvé!", _
                     vbExclamation
                 rs.Close
                 conn.Close
@@ -366,16 +377,10 @@ Sub Radiation_Apercu_Avant_Impression()
     Dim ws As Worksheet: Set ws = wshTEC_Radiation
     
     Dim rngToPrint As Range
-    Set rngToPrint = ws.Range("C1:K35")
+    Set rngToPrint = ws.Range("C1:L35")
     
     Application.EnableEvents = False
 
-'    'Caractères pour le rapport
-'    With rngToPrint.offset(1).Font
-'        .Name = "Aptos Narrow"
-'        .size = 10
-'    End With
-'
     Application.EnableEvents = True
     
     DoEvents

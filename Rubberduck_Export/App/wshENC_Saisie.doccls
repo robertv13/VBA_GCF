@@ -13,8 +13,11 @@ Private Sub Worksheet_Activate()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshENC_Saisie:Worksheet_Activate", "", 0)
     
+    Dim ws As Worksheet: Set ws = wshENC_Saisie
+    
     Application.ScreenUpdating = False
     Application.EnableEvents = False
+    Me.Application.Calculation = xlCalculationAutomatic
     
     'Import transactions from MASTER file
     Call Client_List_Import_All
@@ -27,10 +30,6 @@ Private Sub Worksheet_Activate()
     
     'Set the zoom factor to 100% when this worksheet is activated
     ActiveWindow.Zoom = 100
-    
-    Dim ws As Worksheet: Set ws = wshENC_Saisie
-    
-    Me.Application.Calculation = xlCalculationAutomatic
     
     'S'assurer que les colonnes A & B sont masquées
     On Error Resume Next
@@ -68,15 +67,12 @@ Private Sub Worksheet_Activate()
     
     Call AjusteLibelléEncaissement("Banque")
     
-    With ws
-        .Range("K5").value = Format$(Date, wshAdmin.Range("B1").value)
-        .Range("B1").Select
-    End With
+    ws.Range("K5").value = Format$(Date, wshAdmin.Range("B1").value)
 
     Application.ScreenUpdating = True
     Application.EnableEvents = True
     
-    wshENC_Saisie.Range("F5:H5").Select
+    wshENC_Saisie.Range("F5").Select
     
     'Libérer la mémoire
     Set ws = Nothing
@@ -88,13 +84,11 @@ End Sub
 Private Sub Worksheet_SelectionChange(ByVal target As Range)
     
     If previousCellAddress <> "" Then
-        Debug.Print "#097 - Previous = " & previousCellAddress & " - Current = " & target.Address
-        Range(previousCellAddress).Interior.Color = COULEUR_BASE_COMPTABILITÉ
+        Range(previousCellAddress).Interior.Color = xlNone
     End If
     
     'Client has been selected
     If Not Intersect(target, Me.Range("F5")) Is Nothing Then
-'        MsgBox "Cellule F5 sélectionnée, prêt pour la saisie.", vbInformation
         target.Interior.Color = COULEUR_SAISIE
     End If
     
@@ -123,13 +117,13 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
         Call ValiderEtLancerufEncRégularisation
     End If
     
-    'Ne devrait pas passer ici...
-    If Not Intersect(target, Me.Range("I5")) Is Nothing Then
-        target.Interior.Color = COULEUR_BASE_COMPTABILITÉ
-        Me.Range("K5").Select
-        Exit Sub
-    End If
-    
+'    'Ne devrait pas passer ici...
+'    If Not Intersect(target, Me.Range("I5")) Is Nothing Then
+'        target.Interior.Color = COULEUR_BASE_COMPTABILITÉ
+'        Me.Range("K5").Select
+'        Exit Sub
+'    End If
+'
     If Not Intersect(target, Me.Range("G7")) Is Nothing Then
         target.Interior.Color = COULEUR_BASE_COMPTABILITÉ
         Me.Range("K7").Select
@@ -157,7 +151,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
             target.value = allCols(1)
             Application.EnableEvents = True
         Else
-            msgBox "Valeur non trouvée !!!", vbCritical
+            MsgBox "Valeur non trouvée !!!", vbCritical
         End If
         Application.EnableEvents = False
         clientCode = allCols(fClntFMClientID)
@@ -178,7 +172,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
             Application.EnableEvents = True
             Application.GoTo Range(target.Address)
         End If
-        target.Interior.Color = COULEUR_BASE_COMPTABILITÉ
+        target.Interior.Color = xlNone
         Application.EnableEvents = True
     End If
     

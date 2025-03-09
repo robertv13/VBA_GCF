@@ -7,7 +7,6 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Analyse:Worksheet_Activate", "", 0)
     
     Application.ScreenUpdating = False
-    
     Application.EnableEvents = False
     
     Dim ws As Worksheet: Set ws = wshTEC_Analyse
@@ -30,8 +29,8 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     
     Call SetTabOrder(ws)
     
-    Application.EnableEvents = False
-    
+'    Application.EnableEvents = False
+'
     'Indique la dernière ligne explosé, qui doit être refermé en passant au suivant
     ws.Range("B2").value = 0
     
@@ -156,7 +155,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
        
         'Future date ?
         If CDate(Range("H3").value) > Date Then
-            If msgBox("Il n'est pas permis d'utiliser une date dans le futur !", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
+            If MsgBox("Il n'est pas permis d'utiliser une date dans le futur !", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
                 Application.EnableEvents = False
                 target.ClearContents
                 Application.EnableEvents = True
@@ -197,7 +196,7 @@ Sub CheckBox1_Click() '2024-07-18 @ 18:53
     'Getting to the Client's Total Row (which is the line before the start of the summary)
     Dim i As Long
     For i = chkboxRow To 7 Step -1
-        If ws.Range("M" & i).value = 0 Then
+        If ws.Range("A" & i).value = "" Then '2025-03-09 @ 13:25 - Colonne 'A' au lieu de 'M'
             Exit For
         End If
     Next i

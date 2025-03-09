@@ -4,7 +4,7 @@ Public previousCellAddress As Variant
 
 Private Sub Worksheet_Activate()
 
-'    Dim startTime as Double: startTime = Timer: Call Log_Record("wshGL_PrepEF:Worksheet_Activate", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_PrepEF:Worksheet_Activate", "", 0)
 
     Dim ws As Worksheet: Set ws = wshGL_PrepEF
     
@@ -12,6 +12,7 @@ Private Sub Worksheet_Activate()
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
+    Me.Application.Calculation = xlCalculationAutomatic
     
     'Import transactions from MASTER file
     Call GL_Trans_Import_All
@@ -19,17 +20,12 @@ Private Sub Worksheet_Activate()
     'Set the zoom factor to 95% when this worksheet is activated
     ActiveWindow.Zoom = 100
 
-    Me.Application.Calculation = xlCalculationAutomatic
-    
     'Clear the display area & display the account number & description
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, "F").End(xlUp).row
     If lastUsedRow > 5 Then
         ws.Range("C6:S" & lastUsedRow).ClearContents
     End If
-    
-    Application.ScreenUpdating = True
-    Application.EnableEvents = True
     
     'Protection de la feuille
     With ws
@@ -40,12 +36,16 @@ Private Sub Worksheet_Activate()
     'Date du jour par défaut
     previousCellAddress = ws.Range("F3").Address
     ws.Range("F3").value = Format$(Date, wshAdmin.Range("B1").value)
+    
+    Application.ScreenUpdating = True
+    Application.EnableEvents = True
+    
     ws.Range("F3").Select
     
     'Libérer la mémoire
     Set ws = Nothing
     
-'    Call Log_Record("wshGL_PrepEF:Worksheet_Activate", "", startTime)
+    Call Log_Record("wshGL_PrepEF:Worksheet_Activate", "", startTime)
 
 End Sub
 

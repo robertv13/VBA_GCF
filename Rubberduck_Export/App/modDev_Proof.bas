@@ -190,7 +190,7 @@ Sub Identifier…cartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
     ' Ajuster la mise en forme
     wsRapport.Columns.AutoFit
     
-    msgBox "La comparaison est terminÈe. VÈrifiez l'onglet 'Rapport…cartsFactures'.", vbInformation
+    MsgBox "La comparaison est terminÈe. VÈrifiez l'onglet 'Rapport…cartsFactures'.", vbInformation
     
 End Sub
 

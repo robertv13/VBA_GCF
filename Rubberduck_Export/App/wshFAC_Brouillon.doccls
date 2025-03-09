@@ -183,7 +183,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
        
         'Future date ?
         If CDate(Range("O3").value) > Date Then
-            If msgBox("En êtes-vous CERTAIN ?", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
+            If MsgBox("En êtes-vous CERTAIN ?", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
                 Application.EnableEvents = False
                 target.ClearContents
                 Application.EnableEvents = True

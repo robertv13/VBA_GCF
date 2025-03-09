@@ -18,19 +18,19 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
     With wshFAC_Brouillon
         'Check For Mandatory Fields - Client
         If .Range("B18").value = Empty Then
-            msgBox "Veuillez vous assurer d'avoir un client avant de sauvegarder la facture"
+            MsgBox "Veuillez vous assurer d'avoir un client avant de sauvegarder la facture"
             GoTo Fast_Exit_Sub
         End If
         
         'Check For Mandatory Fields - Date de facture
         If .Range("O3").value = Empty Then
-            msgBox "Veuillez vous assurer d'avoir saisi la date de facture AVANT de sauvegarder la facture"
+            MsgBox "Veuillez vous assurer d'avoir saisi la date de facture AVANT de sauvegarder la facture"
             GoTo Fast_Exit_Sub
         End If
         
         'Check For Mandatory Fields - Date de facture
         If Len(Trim$(.Range("O6").value)) <> 8 Then
-            msgBox "Il faut corriger le numéro de facture AVANT de sauvegarder la facture"
+            MsgBox "Il faut corriger le numéro de facture AVANT de sauvegarder la facture"
             GoTo Fast_Exit_Sub
         End If
     End With
@@ -84,7 +84,7 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
     
     Application.ScreenUpdating = True
     
-    msgBox "La facture '" & wshFAC_Brouillon.Range("O6").value & "' est enregistrée." & _
+    MsgBox "La facture '" & wshFAC_Brouillon.Range("O6").value & "' est enregistrée." & _
         vbNewLine & vbNewLine & "Le total de la facture est " & _
         Trim$(Format$(invoice_Total, "### ##0.00 $")) & _
         " (avant les taxes)", vbOKOnly, "Confirmation d'enregistrement"
@@ -145,7 +145,7 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
         rs.Fields(fFacEAdresse2 - 1).value = .Range("B26").value
         rs.Fields(fFacEAdresse3 - 1).value = .Range("B27").value
         
-        rs.Fields(fFacEHonoraires - 1).value = Format$(.Range("E69").value, "0.00")
+        rs.Fields(fFacEHonoraires - 1).value = .Range("E69").value
         
         rs.Fields(fFacEAF1Desc - 1).value = .Range("B70").value
         rs.Fields(fFacEAutresFrais1 - 1).value = Format$(wshFAC_Finale.Range("E70").value, "0.00")
@@ -209,23 +209,23 @@ Sub FAC_Finale_Add_Invoice_Header_Locally() '2024-03-11 @ 08:19 - Write records 
         .Range("H" & firstFreeRow).value = wshFAC_Finale.Range("B26").value
         .Range("I" & firstFreeRow).value = wshFAC_Finale.Range("B27").value
         
-        .Range("J" & firstFreeRow).value = Format$(wshFAC_Finale.Range("E69").value, "0.00")
+        .Range("J" & firstFreeRow).value = wshFAC_Finale.Range("E69").value
         
         .Range("K" & firstFreeRow).value = wshFAC_Finale.Range("B70").value
-        .Range("L" & firstFreeRow).value = Format$(wshFAC_Finale.Range("E70").value, "0.00")
+        .Range("L" & firstFreeRow).value = wshFAC_Finale.Range("E70").value
         .Range("M" & firstFreeRow).value = wshFAC_Finale.Range("B71").value
-        .Range("N" & firstFreeRow).value = Format$(wshFAC_Finale.Range("E71").value, "0.00")
+        .Range("N" & firstFreeRow).value = wshFAC_Finale.Range("E71").value
         .Range("O" & firstFreeRow).value = wshFAC_Finale.Range("B72").value
-        .Range("P" & firstFreeRow).value = Format$(wshFAC_Finale.Range("E72").value, "0.00")
+        .Range("P" & firstFreeRow).value = wshFAC_Finale.Range("E72").value
         
-        .Range("Q" & firstFreeRow).value = Format$(wshFAC_Finale.Range("C74").value, "0.00")
-        .Range("R" & firstFreeRow).value = Format$(wshFAC_Finale.Range("E74").value, "0.00")
-        .Range("S" & firstFreeRow).value = Format$(wshFAC_Finale.Range("C75").value, "0.000")
-        .Range("T" & firstFreeRow).value = Format$(wshFAC_Finale.Range("E75").value, "0.00")
+        .Range("Q" & firstFreeRow).value = wshFAC_Finale.Range("C74").value
+        .Range("R" & firstFreeRow).value = wshFAC_Finale.Range("E74").value
+        .Range("S" & firstFreeRow).value = wshFAC_Finale.Range("C75").value
+        .Range("T" & firstFreeRow).value = wshFAC_Finale.Range("E75").value
         
-        .Range("U" & firstFreeRow).value = Format$(wshFAC_Finale.Range("E77").value, "0.00")
+        .Range("U" & firstFreeRow).value = wshFAC_Finale.Range("E77").value
         
-        .Range("V" & firstFreeRow).value = Format$(wshFAC_Finale.Range("E79").value, "0.00")
+        .Range("V" & firstFreeRow).value = wshFAC_Finale.Range("E79").value
         .Range("W" & firstFreeRow).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss") '2025-01-25 @ 15:01
     End With
     
@@ -305,7 +305,7 @@ Sub FAC_Finale_Add_Invoice_Details_to_DB()
                     rs.Fields(fFacDHeures - 1).value = CDbl(Format$(.Range("S" & i).value, "0.00"))
                     rs.Fields(fFacDTaux - 1).value = CDbl(Format$(.Range("T" & i).value, "0.00"))
                     rs.Fields(fFacDHonoraires - 1).value = CDbl(Format$(.Range("S" & i).value * .Range("T" & i).value, "0.00"))
-                    rs.Fields(fFacDInvRow - 1).value = wshFAC_Brouillon.Range("B11").value
+                    rs.Fields(fFacDInvRow - 1).value = ""
                     rs.Fields(fFacDTimeStamp - 1).value = Format$(Now, "yyyy-mm-dd hh:mm:ss")
                 End With
                 rs.Update
@@ -342,6 +342,9 @@ Sub FAC_Finale_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records
     lastEnteredService = wshFAC_Finale.Range("B64").End(xlUp).row
     If lastEnteredService < 34 Then GoTo nothing_to_update
     
+    Dim ws As Worksheet
+    Set ws = wshFAC_Détails
+    
     'timeStamnp uniforme
     Dim timeStamp As Date
     timeStamp = Now
@@ -352,16 +355,34 @@ Sub FAC_Finale_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records
    
     Dim i As Long
     For i = 34 To lastEnteredService
-        With wshFAC_Détails
+        With ws
             .Range("A" & firstFreeRow).value = wshFAC_Finale.Range("E28")
             .Range("B" & firstFreeRow).value = wshFAC_Finale.Range("B" & i).value
             .Range("C" & firstFreeRow).value = Format$(wshFAC_Finale.Range("C" & i).value, "0.00")
             .Range("D" & firstFreeRow).value = Format$(wshFAC_Finale.Range("D" & i).value, "0.00")
             .Range("E" & firstFreeRow).value = Format$(wshFAC_Finale.Range("E" & i).value, "0.00")
-            .Range("F" & firstFreeRow).value = i
+            .Range("F" & firstFreeRow).value = ""
             .Range("G" & firstFreeRow).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
-            firstFreeRow = firstFreeRow + 1
         End With
+        firstFreeRow = firstFreeRow + 1
+    Next i
+
+    'Create Summary By Rates lines
+    For i = 25 To 34
+        If wshFAC_Brouillon.Range("R" & i).value <> "" And _
+            wshFAC_Brouillon.Range("S" & i).value <> 0 Then
+                With wshFAC_Brouillon
+                    ws.Range("A" & firstFreeRow).value = wshFAC_Finale.Range("E28")
+                    ws.Range("B" & firstFreeRow).value = "*** - [Sommaire des TEC] pour la facture - " & _
+                        wshFAC_Brouillon.Range("R" & i).value
+                    ws.Range("C" & firstFreeRow).value = Format$(.Range("S" & i).value, "0.00")
+                    ws.Range("D" & firstFreeRow).value = Format$(.Range("T" & i).value, "0.00")
+                    ws.Range("E" & firstFreeRow).value = Format$(.Range("S" & i).value * .Range("T" & i).value, "0.00")
+                    ws.Range("F" & firstFreeRow).value = ""
+                    ws.Range("G" & firstFreeRow).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+                End With
+            firstFreeRow = firstFreeRow + 1
+        End If
     Next i
 
 nothing_to_update:
@@ -455,6 +476,10 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_Locally()
     Dim firstFreeRow As Long
     firstFreeRow = wshFAC_Sommaire_Taux.Cells(wshFAC_Sommaire_Taux.Rows.count, "A").End(xlUp).row + 1
    
+    'timeStamnp uniforme
+    Dim timeStamp As Date
+    timeStamp = Now
+    
     Dim noFacture As String
     noFacture = wshFAC_Finale.Range("E28").value
     Dim seq As Long
@@ -469,6 +494,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_Locally()
                 .Cells(firstFreeRow, fFacSTHeures).NumberFormat = "#,##0.00"
                 .Cells(firstFreeRow, fFacSTTaux).value = CCur(wshFAC_Brouillon.Range("T" & i).value)
                 .Cells(firstFreeRow, fFacSTTaux).NumberFormat = "#,##0.00"
+                .Cells(firstFreeRow, fFacSTTimeStamp) = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
                 firstFreeRow = firstFreeRow + 1
                 seq = seq + 1
             End With
@@ -549,7 +575,7 @@ End Sub
 Sub FAC_Finale_Add_Comptes_Clients_Locally() '2024-03-11 @ 08:49 - Write records locally
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Add_Comptes_Clients_Locally", _
-        "# = " & wshFAC_Finale.Range("E28").value & " - Date = " & Format$(wshFAC_Brouillon.Range("O3").value, "dd/mm/yyyy"), 0)
+         "# = " & wshFAC_Finale.Range("E28").value & " - Date = " & Format$(wshFAC_Brouillon.Range("O3").value, "dd/mm/yyyy"), 0)
     
     Application.ScreenUpdating = False
     
@@ -622,7 +648,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Up
             rs.Update
         Else
             'Handle the case where the specified ID is not found
-            msgBox "L'enregistrement avec le TECID '" & r & "' ne peut être trouvé!", _
+            MsgBox "L'enregistrement avec le TECID '" & r & "' ne peut être trouvé!", _
                 vbExclamation
             rs.Close
             conn.Close
@@ -796,7 +822,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID As Long)
     Exit Sub
 
 eh:
-    msgBox "An error occurred: " & Err.Description, vbCritical, "Error # APP-001"
+    MsgBox "An error occurred: " & Err.Description, vbCritical, "Error # APP-001"
     If Not conn Is Nothing Then
         On Error Resume Next
         conn.Close
@@ -989,7 +1015,7 @@ Sub FAC_Finale_Create_PDF(noFacture As String)
     result = FAC_Finale_Create_PDF_Func(noFacture, "SaveOnly")
     
     If result = False Then
-        msgBox "ATTENTION... Impossible de sauvegarder la facture en format PDF", _
+        MsgBox "ATTENTION... Impossible de sauvegarder la facture en format PDF", _
                 vbCritical, _
                 "Impossible de sauvegarder la facture en format PDF"
         flagEtapeFacture = -1
@@ -1018,7 +1044,7 @@ Function FAC_Finale_Create_PDF_Func(noFacture As String, Optional action As Stri
     'If the file exists, prompt the user for confirmation
     Dim reponse As VbMsgBoxResult
     If fileExists Then
-        reponse = msgBox("La facture (PDF) numéro '" & noFacture & "' existe déja." & _
+        reponse = MsgBox("La facture (PDF) numéro '" & noFacture & "' existe déja." & _
                           "Voulez-vous la remplacer ?", vbYesNo + vbQuestion, _
                           "Cette facture existe déjà en formt PDF")
         If reponse = vbNo Then
@@ -1052,7 +1078,7 @@ SaveOnly:
     GoTo EndMacro
     
 RefLibError:
-    msgBox "Incapable de préparer le courriel. La librairie n'est pas disponible"
+    MsgBox "Incapable de préparer le courriel. La librairie n'est pas disponible"
     FAC_Finale_Create_PDF_Func = False 'Function return value
 '    FAC_Finale_Create_Email = False 'Function return value
 
@@ -1127,7 +1153,7 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     Dim reponse As String
     
     If wsExist Then
-        reponse = msgBox("La feuille '" & strNameBase & "' existe déjà dans ce fichier" & vbCrLf & vbCrLf & _
+        reponse = MsgBox("La feuille '" & strNameBase & "' existe déjà dans ce fichier" & vbCrLf & vbCrLf & _
                          "Voulez-vous :" & vbCrLf & vbCrLf & _
                          "1. Remplacer l'onglet existant par la facture courante ?" & vbCrLf & vbCrLf & _
                          "2. Créer un nouvel onglet avec un suffixe ?" & vbCrLf & vbCrLf & _
@@ -1250,7 +1276,7 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     'Optionnel : Sauvegarder le workbook cible sous un nouveau nom si nécessaire
     If strCible = "" Then
         wbCible.SaveAs ExcelFilesFullPath & Application.PathSeparator & clientID & " - " & clientNamePurged & ".xlsx"
-        msgBox "Un nouveau fichier Excel (" & clientID & " - " & clientNamePurged & ".xlsx" & ")" & vbNewLine & vbNewLine & _
+        MsgBox "Un nouveau fichier Excel (" & clientID & " - " & clientNamePurged & ".xlsx" & ")" & vbNewLine & vbNewLine & _
                 "A été créé pour sauvegarder la facture", vbInformation
     End If
     
@@ -1290,7 +1316,7 @@ Sub FAC_Finale_Creation_Courriel(noFacture As String, clientID As String) '2024-
     '1b. Vérification de l'existence de la pièce jointe
     fileExists = Dir(attachmentFullPathName) <> ""
     If Not fileExists Then
-        msgBox "La pièce jointe (Facture en format PDF) n'existe pas" & _
+        MsgBox "La pièce jointe (Facture en format PDF) n'existe pas" & _
                     "à l'emplacement spécifié, soit " & attachmentFullPathName, vbCritical
         GoTo Exit_Sub
     End If
@@ -1302,7 +1328,7 @@ Sub FAC_Finale_Creation_Courriel(noFacture As String, clientID As String) '2024-
     '2b. Vérification de l'existence du template
     fileExists = Dir(templateFullPathName) <> ""
     If Not fileExists Then
-        msgBox "Le gabarit 'GCF_Facturation.oft' est introuvable " & _
+        MsgBox "Le gabarit 'GCF_Facturation.oft' est introuvable " & _
                     "à l'emplacement spécifié, soit " & Environ("appdata") & "\Microsoft\Templates", _
                     vbCritical
         GoTo Exit_Sub

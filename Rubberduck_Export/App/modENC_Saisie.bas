@@ -149,7 +149,7 @@ Sub MAJ_Encaissement() '2024-08-22 @ 09:46
            .Range("K5").value = Empty Or _
            .Range("F7").value = Empty Or _
            .Range("K7").value = 0 Then
-            msgBox "Assurez-vous d'avoir..." & vbNewLine & vbNewLine & _
+            MsgBox "Assurez-vous d'avoir..." & vbNewLine & vbNewLine & _
                 "1. Un client valide" & vbNewLine & _
                 "2. Une date d'encaissement" & vbNewLine & _
                 "3. Un type de paiement et" & vbNewLine & _
@@ -160,7 +160,7 @@ Sub MAJ_Encaissement() '2024-08-22 @ 09:46
         
         'Check to make sure Payment Amount = Applied Amount
         If .Range("K9").value <> 0 Then
-            msgBox "Assurez-vous que le montant de l'encaissement soit ÉGAL" & vbNewLine & _
+            MsgBox "Assurez-vous que le montant de l'encaissement soit ÉGAL" & vbNewLine & _
                 "à la somme des paiements appliqués", vbExclamation
             GoTo Clean_Exit
         End If
@@ -217,7 +217,7 @@ Sub MAJ_Encaissement() '2024-08-22 @ 09:46
         Call ENC_GL_Posting_DB(noEnc, dateEnc, nomClient, typeEnc, montantEnc, descEnc)  '2024-08-22 @ 16:08
         Call ENC_GL_Posting_Locally(noEnc, dateEnc, nomClient, typeEnc, montantEnc, descEnc)  '2024-08-22 @ 16:08
         
-        msgBox "L'encaissement '" & wshENC_Saisie.pmtNo & "' a été enregistré avec succès", vbOKOnly + vbInformation
+        MsgBox "L'encaissement '" & wshENC_Saisie.pmtNo & "' a été enregistré avec succès", vbOKOnly + vbInformation
         
         Call Encaissement_Add_New 'Reset the form
         
@@ -467,7 +467,7 @@ Sub ENC_Update_DB_Comptes_Clients(firstRow As Integer, lastRow As Integer) 'Writ
                     On Error Resume Next
                     rs.Fields(fFacCCStatus - 1).value = "Paid"
                     If Err.Number <> 0 Then
-                        msgBox "Erreur #" & Err.Number & " : " & Err.Description
+                        MsgBox "Erreur #" & Err.Number & " : " & Err.Description
                     End If
                     On Error GoTo 0
                 Else
@@ -478,7 +478,7 @@ Sub ENC_Update_DB_Comptes_Clients(firstRow As Integer, lastRow As Integer) 'Writ
                 rs.Update
             Else
                 'Handle the case where the specified ID is not found
-                msgBox "L'enregistrement avec la facture '" & Inv_No & "' ne peut être retrouvé!", _
+                MsgBox "L'enregistrement avec la facture '" & Inv_No & "' ne peut être retrouvé!", _
                     vbExclamation
                 GoTo Clean_Exit
             End If
@@ -534,7 +534,7 @@ Sub ENC_Update_Locally_Comptes_Clients(firstRow As Integer, lastRow As Integer) 
                 ws.Cells(rowToBeUpdated, fFacCCStatus) = "Unpaid"
             End If
         Else
-            msgBox "La facture '" & Inv_No & "' n'existe pas dans FAC_Comptes_Clients.", vbCritical
+            MsgBox "La facture '" & Inv_No & "' n'existe pas dans FAC_Comptes_Clients.", vbCritical
         End If
     Next r
     
@@ -915,17 +915,29 @@ Sub ValiderEtLancerufEncRégularisation()
     
     'Vérification des champs obligatoires
     If IsEmpty(ws.Range("F5").value) Then
-        msgBox "Le client est obligatoire. Veuillez le choisir avant de continuer.", vbExclamation
+        MsgBox "Le client est obligatoire. Veuillez le choisir avant de continuer.", vbExclamation
         Exit Sub
     End If
 
     If IsEmpty(ws.Range("K5").value) Then
-        msgBox "La date est obligatoire. Veuillez la saisir avant de continuer.", vbExclamation
+        MsgBox "La date est obligatoire. Veuillez la saisir avant de continuer.", vbExclamation
         Exit Sub
     End If
     
     If ws.Range("K7").value = 0 Then
-        msgBox "Le montant de la régularisation est obligatoire. Veuillez le fournir avant de continuer.", vbExclamation
+        If Not ws.Range("F7").value = "Régularisations" Then
+            MsgBox _
+                Prompt:="Le montant de l'encaissement est obligatoire." & vbNewLine & vbNewLine & _
+                        "Veuillez le fournir avant de continuer.", _
+                Title:="Un montant est requis", _
+                Buttons:=vbExclamation
+        Else
+            MsgBox _
+                Prompt:="Le montant de la régularisation est obligatoire." & vbNewLine & vbNewLine & _
+                        "Veuillez le fournir avant de continuer.", _
+                Title:="Un montant est requis", _
+                Buttons:=vbExclamation
+        End If
         Exit Sub
     End If
     

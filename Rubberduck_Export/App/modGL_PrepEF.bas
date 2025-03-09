@@ -278,7 +278,7 @@ Sub Assembler_États_Financiers()
     'On se déplace à la première page des états financiers
     ActiveWorkbook.Sheets("Page Titre").Activate
     
-    msgBox "Les états financiers ont été produits" & vbNewLine & vbNewLine & _
+    MsgBox "Les états financiers ont été produits" & vbNewLine & vbNewLine & _
             "Voir les onglets respectifs au bas du classeur", vbOKOnly, "Fin de traitement"
     
     Call Log_Record("modGL_PrepEF:Assembler_États_Financiers", "", startTime)

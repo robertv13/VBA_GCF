@@ -54,7 +54,7 @@ Sub DEB_Saisie_Update()
     Dim CurrentDeboursNo As String
     CurrentDeboursNo = wshDEB_Saisie.Range("B1").value
     
-    msgBox "Le déboursé, numéro '" & CurrentDeboursNo & "' a été reporté avec succès"
+    MsgBox "Le déboursé, numéro '" & CurrentDeboursNo & "' a été reporté avec succès"
     
     'Get ready for a new one
     Call DEB_Saisie_Clear_All_Cells
@@ -77,7 +77,7 @@ Sub DEB_Renversement_Update()
     
     'Est-ce que la transaction balance ?
     If ws.Range("O6").value <> ws.Range("I26").value Then
-        msgBox "Le déboursé à renverser ne balance pas !!!", vbCritical
+        MsgBox "Le déboursé à renverser ne balance pas !!!", vbCritical
         Exit Sub
     End If
     
@@ -114,7 +114,7 @@ Sub DEB_Renversement_Update()
     'GL posting
     Call DEB_Saisie_GL_Posting_Preparation
     
-    msgBox "Le déboursé a été RENVERSÉ avec succès", vbInformation, "Confirmation de traitement"
+    MsgBox "Le déboursé a été RENVERSÉ avec succès", vbInformation, "Confirmation de traitement"
     
     Application.ScreenUpdating = True
     Application.EnableEvents = True
@@ -223,6 +223,7 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
                 rs.Fields(fDebTFournID - 1).value = .Range("B5").value
                 rs.Fields(fDebTDescription - 1).value = .Range("F6").value & IIf(.Range("B7"), " (RENVERSEMENT de " & numeroDebourseARenverser & ")", "")
                 rs.Fields(fDebTReference - 1).value = .Range("M6").value
+                
                 rs.Fields(fDebTNoCompte - 1).value = .Range("Q" & l).value
                 rs.Fields(fDebTCompte - 1).value = .Range("E" & l).value
                 rs.Fields(fDebTCodeTaxe - 1).value = .Range("H" & l).value
@@ -289,6 +290,7 @@ Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
             ws.Cells(rowToBeUsed, fDebTFournID).value = .Range("B5").value
             ws.Cells(rowToBeUsed, fDebTDescription).value = .Range("F6").value & IIf(.Range("B7"), " (RENVERSEMENT de " & numeroDebourseARenverser & ")", "")
             ws.Cells(rowToBeUsed, fDebTReference).value = .Range("M6").value
+            
             ws.Cells(rowToBeUsed, fDebTNoCompte).value = .Range("Q" & i).value
             ws.Cells(rowToBeUsed, fDebTCompte).value = .Range("E" & i).value
             ws.Cells(rowToBeUsed, fDebTCodeTaxe).value = .Range("H" & i).value
@@ -338,7 +340,7 @@ Sub DEB_Trans_MAJ_Debourse_Renverse_To_DB()
 
     'Vérifier si des enregistrements existent
     If rs.EOF Then
-        msgBox "Aucun enregistrement trouvé.", vbCritical, "Impossible de mettre à jour les déboursés RENVERSÉS"
+        MsgBox "Aucun enregistrement trouvé.", vbCritical, "Impossible de mettre à jour les déboursés RENVERSÉS"
     Else
         'Boucler à travers les enregistrements
         Do While Not rs.EOF
@@ -400,6 +402,12 @@ Sub DEB_Trans_MAJ_Debourse_Renverse_Locally()
     
 End Sub
 
+Sub DEB_AfficherDeboursRecurrent()
+
+    ufListeDEBAuto.show
+
+End Sub
+
 Sub Preparer_Liste_Debourses_Pour_Afficher()
 
     'Afficher le UserForm
@@ -422,7 +430,7 @@ Sub DEB_Renverser_Ecriture() '2025-02-23 @ 16:56
     Call Preparer_Liste_Debourses_Pour_Afficher
     
     If numeroDebourseARenverser = -1 Then
-        msgBox "Vous n'avez sélectionné aucun déboursé à renverser", vbInformation, "Sélection d'un déboursé à renverser"
+        MsgBox "Vous n'avez sélectionné aucun déboursé à renverser", vbInformation, "Sélection d'un déboursé à renverser"
         Application.EnableEvents = True
         wshDEB_Saisie.Range("F4").value = ""
         wshDEB_Saisie.Range("F4").Select
@@ -590,9 +598,9 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
 
 End Sub
 
-Sub Load_DEB_Auto_Into_JE(DEBAutoDesc As String, NoDEBAuto As Long)
+Sub ChargerDEBRecurrentDansSaisie(DEBAutoDesc As String, noDEBAuto As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:Load_DEB_Auto_Into_JE", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:ChargerDEBRecurrentDansSaisie", "", 0)
     
     'On copie l'écriture automatique vers wshDEB_Saisie
     Dim rowDEBAuto As Long, rowDEB As Long
@@ -605,7 +613,7 @@ Sub Load_DEB_Auto_Into_JE(DEBAutoDesc As String, NoDEBAuto As Long)
     Application.EnableEvents = False
     Dim r As Long, totAmount As Currency, typeDEB As String
     For r = 2 To rowDEBAuto
-        If wshDEB_Récurrent.Range("A" & r).value = NoDEBAuto And wshDEB_Récurrent.Range("F" & r).value <> "" Then
+        If wshDEB_Récurrent.Range("A" & r).value = noDEBAuto And wshDEB_Récurrent.Range("F" & r).value <> "" Then
             wshDEB_Saisie.Range("E" & rowDEB).value = wshDEB_Récurrent.Range("G" & r).value
             wshDEB_Saisie.Range("H" & rowDEB).value = wshDEB_Récurrent.Range("H" & r).value
             wshDEB_Saisie.Range("I" & rowDEB).value = wshDEB_Récurrent.Range("I" & r).value
@@ -613,7 +621,10 @@ Sub Load_DEB_Auto_Into_JE(DEBAutoDesc As String, NoDEBAuto As Long)
             wshDEB_Saisie.Range("K" & rowDEB).value = wshDEB_Récurrent.Range("K" & r).value
             wshDEB_Saisie.Range("L" & rowDEB).value = wshDEB_Récurrent.Range("L" & r).value
             wshDEB_Saisie.Range("M" & rowDEB).value = wshDEB_Récurrent.Range("M" & r).value
-            wshDEB_Saisie.Range("Q" & rowDEBAuto).value = wshDEB_Récurrent.Range("F" & r).value
+            wshDEB_Saisie.Range("N" & rowDEB).value = wshDEB_Récurrent.Range("I" & r).value _
+                                                      - wshDEB_Récurrent.Range("L" & r).value _
+                                                      - wshDEB_Récurrent.Range("M" & r).value
+            wshDEB_Saisie.Range("Q" & rowDEB).value = wshDEB_Récurrent.Range("F" & r).value
             totAmount = totAmount + wshDEB_Récurrent.Range("I" & r).value
             If typeDEB = "" Then
                 typeDEB = wshDEB_Récurrent.Range("C" & r).value
@@ -624,12 +635,13 @@ Sub Load_DEB_Auto_Into_JE(DEBAutoDesc As String, NoDEBAuto As Long)
     wshDEB_Saisie.Range("F4").value = typeDEB
     wshDEB_Saisie.Range("F6").value = "[Auto]-" & DEBAutoDesc
     wshDEB_Saisie.Range("O6").value = Format$(totAmount, "#,##0.00")
-    wshDEB_Saisie.Range("O4").Select
-    wshDEB_Saisie.Range("O4").Activate
-
+    
     Application.EnableEvents = True
+    
+    wshDEB_Saisie.Range("O4").Activate
+    wshDEB_Saisie.Range("O4").Select
 
-    Call Log_Record("modDEB_Saisie:Load_DEB_Auto_Into_JE", "", startTime)
+    Call Log_Record("modDEB_Saisie:ChargerDEBRecurrentDansSaisie", "", startTime)
     
 End Sub
 
@@ -697,18 +709,18 @@ Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external
             With wshDEB_Saisie
                 'Add fields to the recordset before updating it
                 rs.Fields(fDebRNoDebRec - 1).value = nextDRNo
-                rs.Fields(fDebRDate - 1).value .Range("O4").value
-                rs.Fields(fDebRType - 1).value .Range("F4").value
-                rs.Fields(fDebRBeneficiaire - 1).value .Range("J4").value
-                rs.Fields(fDebRReference - 1).value .Range("M6").value
-                rs.Fields(fDebRNoCompte - 1).value .Range("Q" & l).value
-                rs.Fields(fDebRCompte - 1).value .Range("E" & l).value
-                rs.Fields(fDebRCodeTaxe - 1).value .Range("H" & l).value
-                rs.Fields(fDebRTotal - 1).value .Range("I" & l).value
-                rs.Fields(fDebRTPS - 1).value .Range("J" & l).value
-                rs.Fields(fDebRTVQ - 1).value .Range("K" & l).value
-                rs.Fields(fDebRCréditTPS - 1).value .Range("L" & l).value
-                rs.Fields(fDebRCréditTVQ - 1).value .Range("M" & l).value
+                rs.Fields(fDebRDate - 1).value = .Range("O4").value
+                rs.Fields(fDebRType - 1).value = .Range("F4").value
+                rs.Fields(fDebRBeneficiaire - 1).value = .Range("J4").value
+                rs.Fields(fDebRReference - 1).value = .Range("M6").value
+                rs.Fields(fDebRNoCompte - 1).value = .Range("Q" & l).value
+                rs.Fields(fDebRCompte - 1).value = .Range("E" & l).value
+                rs.Fields(fDebRCodeTaxe - 1).value = .Range("H" & l).value
+                rs.Fields(fDebRTotal - 1).value = .Range("I" & l).value
+                rs.Fields(fDebRTPS - 1).value = .Range("J" & l).value
+                rs.Fields(fDebRTVQ - 1).value = .Range("K" & l).value
+                rs.Fields(fDebRCréditTPS - 1).value = .Range("L" & l).value
+                rs.Fields(fDebRCréditTVQ - 1).value = .Range("M" & l).value
                 rs.Fields(fDebRTimeStamp - 1).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
             End With
         rs.Update
@@ -801,9 +813,9 @@ Sub DEB_Recurrent_Build_Summary()
     lastUsedRow1 = wshDEB_Récurrent.Cells(wshDEB_Récurrent.Rows.count, "A").End(xlUp).row
     
     Dim lastUsedRow2 As Long
-    lastUsedRow2 = wshDEB_Récurrent.Cells(wshDEB_Récurrent.Rows.count, "O").End(xlUp).row
+    lastUsedRow2 = wshDEB_Récurrent.Cells(wshDEB_Récurrent.Rows.count, "P").End(xlUp).row
     If lastUsedRow2 > 1 Then
-        wshDEB_Récurrent.Range("P2:R" & lastUsedRow2).ClearContents
+        wshDEB_Récurrent.Range("P2:S" & lastUsedRow2).ClearContents
     End If
     
     With wshDEB_Récurrent
@@ -811,9 +823,10 @@ Sub DEB_Recurrent_Build_Summary()
         k = 2
         For i = 2 To lastUsedRow1
             If .Range("A" & i).value <> oldEntry Then
-                .Range("P" & k).value = "'" & Fn_Pad_A_String(.Range("A" & i).value, " ", 5, "L")
+                .Range("P" & k).value = .Range("A" & i).value
                 .Range("Q" & k).value = .Range("D" & i).value
-                .Range("R" & k).value = .Range("B" & i).value
+                .Range("R" & k).value = .Range("I" & i).value
+                .Range("S" & k).value = .Range("B" & i).value
                 oldEntry = .Range("A" & i).value
                 k = k + 1
             End If

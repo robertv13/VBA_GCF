@@ -66,7 +66,7 @@ Private Sub lbxDatesSemaines_Click_or_DblClick(ByVal valeur As Variant) '2024-12
         
         'Il doit y avoir un écart de 6 entre les deux dates (semaine)
         If dateDimanche - dateLundi <> 6 Then
-            msgBox "Il semble y avoir un problème de format de date", vbCritical, _
+            MsgBox "Il semble y avoir un problème de format de date", vbCritical, _
                    "Dates de semaine NON VALIDES (" & dateLundi & " au " & dateDimanche & ")"
         End If
         
@@ -104,7 +104,7 @@ Private Sub lbxDatesSemaines_Click_or_DblClick(ByVal valeur As Variant) '2024-12
             
             DoEvents
         Else
-            msgBox "Il n'y a aucune heure d'enregistrée pour cette semaine", vbInformation
+            MsgBox "Il n'y a aucune heure d'enregistrée pour cette semaine", vbInformation
         End If
         
         Call AddColonnesSemaine
@@ -115,7 +115,7 @@ Private Sub lbxDatesSemaines_Click_or_DblClick(ByVal valeur As Variant) '2024-12
         rngCriteriaDate2.formula = "=DateFinSemaine"
         Application.EnableEvents = True
     Else
-        msgBox "Aucun élément sélectionné."
+        MsgBox "Aucun élément sélectionné."
     End If
     
     'Libérer la mémoire

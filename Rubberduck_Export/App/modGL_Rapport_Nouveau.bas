@@ -155,7 +155,7 @@ Public Sub GenererRapportGL_Compte(wsRapport As Worksheet, dateDebut As Date, da
     
     Call Log_Record("modGL_Rapport_Nouveau:GenererRapportGL_Compte", "", startTime)
     
-    msgBox "Le rapport a été généré avec succès", vbInformation, "Rapport des transactions du Grand Livre"
+    MsgBox "Le rapport a été généré avec succès", vbInformation, "Rapport des transactions du Grand Livre"
 
     wsRapport.Visible = xlSheetVisible
     wsRapport.Activate
@@ -318,7 +318,7 @@ Public Sub GenererRapportGL_Ecriture(wsRapport As Worksheet, noEcritureDebut As 
     
     Unload ufGL_Rapport
     
-    msgBox "Le rapport a été généré avec succès", vbInformation, "Rapport des transactions du Grand Livre"
+    MsgBox "Le rapport a été généré avec succès", vbInformation, "Rapport des transactions du Grand Livre"
     
 '    wshGL_Trans.Visible = xlSheetVisible
     wsRapport.Visible = xlSheetVisible
@@ -486,7 +486,7 @@ Public Sub GenererRapportGL_DateSaisie(wsRapport As Worksheet, dtSaisieDebut As 
     
     Unload ufGL_Rapport
     
-    msgBox "Le rapport a été généré avec succès", vbInformation, "Rapport des transactions du Grand Livre"
+    MsgBox "Le rapport a été généré avec succès", vbInformation, "Rapport des transactions du Grand Livre"
     
 '    wshGL_Trans.Visible = xlSheetVisible
     wsRapport.Visible = xlSheetVisible

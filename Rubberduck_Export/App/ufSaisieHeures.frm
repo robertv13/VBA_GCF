@@ -142,21 +142,21 @@ Public Sub cmbProfessionnel_AfterUpdate()
             DoEvents
         Case "vgervais"
             If cmbProfessionnel.value <> "VG" Then
-                msgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
+                MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
                     "Vous devez obligatoirement utiliser le code 'VG'", _
                     vbInformation
             End If
             cmbProfessionnel.value = "VG"
         Case "User"
             If cmbProfessionnel.value <> "ML" Then
-                msgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
+                MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
                         "Vous devez obligatoirement utiliser le code 'ML'", _
                         vbInformation
             End If
             cmbProfessionnel.value = "ML"
         Case "Annie"
             If cmbProfessionnel.value <> "AR" Then
-                msgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
+                MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
                     "Vous devez obligatoirement utiliser le code 'AR'", _
                     vbInformation
             End If
@@ -216,7 +216,7 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
     End If
     
     If fullDate > DateSerial(year(Date), month(Date), day(Date)) Then
-        If msgBox("En êtes-vous CERTAIN de vouloir cette date ?" & vbNewLine & vbNewLine & _
+        If MsgBox("En êtes-vous CERTAIN de vouloir cette date ?" & vbNewLine & vbNewLine & _
                     "La date saisie est '" & Format$(fullDate, wshAdmin.Range("B1").value) & "'", vbYesNo + vbQuestion, _
                     "Utilisation d'une date FUTURE") = vbNo Then
             txtDate.SelStart = 0
@@ -326,7 +326,7 @@ Private Sub txtHeures_Exit(ByVal Cancel As MSForms.ReturnBoolean)
     On Error GoTo 0
     
     If Not IsNumeric(Me.txtHeures.value) Then
-        msgBox Prompt:="La valeur saisie ne peut être utilisée comme valeur numérique!", _
+        MsgBox Prompt:="La valeur saisie ne peut être utilisée comme valeur numérique!", _
                 Title:="Validation d'une valeur numérique", _
                 Buttons:=vbCritical
 '        Cancel = True
@@ -338,9 +338,9 @@ Private Sub txtHeures_Exit(ByVal Cancel As MSForms.ReturnBoolean)
     End If
 
     If heure < 0 Or heure > 24 Then
-        msgBox _
+        MsgBox _
             Prompt:="Le nombre d'heures ne peut être une valeur négative" & vbNewLine & vbNewLine & _
-                    "ou dépasser 24 pour une charge", _
+                    "ou dépasser 24 heures pour une charge", _
             Title:="Validation d'une valeur numérique", _
             Buttons:=vbCritical
         Cancel = True
@@ -352,15 +352,18 @@ Private Sub txtHeures_Exit(ByVal Cancel As MSForms.ReturnBoolean)
     End If
     
     If Fn_Valider_Portion_Heures(heure) = False Then
-        msgBox "La portion fractionnaire (" & heure & ") des heures est invalide" & vbNewLine & vbNewLine & _
-                "Seul les valeurs de dixième et de quart d'heure sont acceptables", vbCritical, _
-                "Les valeurs permises sont les dixièmes et les quarts d'heure seulement"
-        Cancel = True
-        Me.txtHeures.SetFocus
+        MsgBox _
+            Prompt:="La portion fractionnaire (" & heure & ") des heures est invalide" & vbNewLine & vbNewLine & _
+                    "Seules les valeurs de dixième et de quart d'heure sont" & vbNewLine & vbNewLine & _
+                    "acceptables", _
+            Title:="Les valeurs permises sont les dixièmes et les quarts d'heure seulement", _
+            Buttons:=vbCritical
+            
+        Cancel = True  'Empêche de quitter le TextBox
         DoEvents
+        Me.txtHeures.SetFocus 'Remet le focus explicitement
         Me.txtHeures.SelStart = 0
-        Me.txtHeures.SelLength = Len(Me.txtHeures.value)
-        Exit Sub
+        Me.txtHeures.SelLength = Len(Me.txtHeures.Text)
     End If
     
     Call Log_Record("ufSaisieHeures:txtHeures_Exit", "", startTime)
@@ -451,7 +454,7 @@ Private Sub cmdUpdate_Click()
     If ufSaisieHeures.txtTECID.value <> "" Then
         Call TEC_Modifie_Ligne
     Else
-        msgBox Prompt:="Vous devez choisir un enregistrement à modifier !", _
+        MsgBox Prompt:="Vous devez choisir un enregistrement à modifier !", _
                Title:="", _
                Buttons:=vbCritical
     End If
@@ -467,7 +470,7 @@ Private Sub cmdDelete_Click()
     If ufSaisieHeures.txtTECID.value <> "" Then
         Call TEC_Efface_Ligne
     Else
-        msgBox Prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
+        MsgBox Prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
                Title:="", _
                Buttons:=vbCritical
     End If
@@ -530,7 +533,7 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
             Application.EnableEvents = True
 
         Else
-            msgBox "Il est impossible de modifier ou de détruire" & vbNewLine & _
+            MsgBox "Il est impossible de modifier ou de détruire" & vbNewLine & _
                         vbNewLine & "une charge déjà FACTURÉE", vbExclamation
         End If
         
@@ -565,7 +568,7 @@ Sub imgLogoGCF_Click()
             
             ufStatsHeures.show vbModeless
     Else
-        msgBox "Vous devez minimalement saisir un code de Professionnel" & vbNewLine & vbNewLine & _
+        MsgBox "Vous devez minimalement saisir un code de Professionnel" & vbNewLine & vbNewLine & _
                 "avant de pouvoir afficher vos statistiques", vbInformation, _
                 "Statistiques personnelles des heures"
     End If

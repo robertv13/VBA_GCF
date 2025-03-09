@@ -436,11 +436,11 @@ Next_Invoice:
     End If
     header2 = ordreTri & " - " & header2
     
-    Call Simple_Print_Setup(wshCAR_Liste_Agée, rngToPrint, header1, header2, "$8:$8", "L")
+    Call Simple_Print_Setup(wshCAR_Liste_Agée, rngToPrint, header1, header2, "$8:$8", "P")
     
     Application.ScreenUpdating = True
     
-    msgBox "La préparation de la liste âgée est terminée", vbInformation
+    MsgBox "La préparation de la liste âgée est terminée", vbInformation
     
     Application.EnableEvents = True
     
@@ -511,12 +511,12 @@ Sub EnvoyerRappelParCourriel(noFact As String)
         codeClient = allCols(fFacECustID)
         dateFact = allCols(fFacEDateFacture)
     Else
-        msgBox "Enregistrement '" & noFact & "' non trouvée !!!", vbCritical
+        MsgBox "Enregistrement '" & noFact & "' non trouvée !!!", vbCritical
         Exit Sub
     End If
     
     If codeClient = "" Then
-        msgBox "Le code client pour cette facture est INVALIDE", vbCritical, "Information erronée / manquante"
+        MsgBox "Le code client pour cette facture est INVALIDE", vbCritical, "Information erronée / manquante"
         Exit Sub
     End If
     
@@ -539,7 +539,7 @@ Sub EnvoyerRappelParCourriel(noFact As String)
         '0 à 2 adresses courriel
         clientCourriel = allCols(fClntFMCourrielFacturation)
     Else
-        msgBox "Enregistrement '" & codeClient & "' non trouvée !!!", vbCritical
+        MsgBox "Enregistrement '" & codeClient & "' non trouvée !!!", vbCritical
         Exit Sub
     End If
     
@@ -554,20 +554,20 @@ Sub EnvoyerRappelParCourriel(noFact As String)
         factSommePmts = allCols(fFacCCTotalPaid)
         factSommeRegul = allCols(fFacCCTotalRegul)
     Else
-        msgBox "Enregistrement '" & noFact & "' non trouvée !!!", vbCritical
+        MsgBox "Enregistrement '" & noFact & "' non trouvée !!!", vbCritical
         Exit Sub
     End If
     
     'Vérification pour éviter d'envoyer un rappel pour une facture à 0 $ ou créditeur
     If factSolde <= 0 Then
-        msgBox "Il n'y a pas lieu d'envoyer un rappel" & vbNewLine & vbNewLine & _
+        MsgBox "Il n'y a pas lieu d'envoyer un rappel" & vbNewLine & vbNewLine & _
                 "pour cette facture. Solde à " & Format$(factSolde, "#,##0.00 $"), vbCritical, "Solde à 0,00 $ ou créditeur"
         Exit Sub
     End If
     
     'Vérifier si l'email est valide
     If Fn_ValiderCourriel(clientCourriel) = False Then
-        msgBox "L'adresse courriel est vide OU invalide" & vbNewLine & vbNewLine & _
+        MsgBox "L'adresse courriel est vide OU invalide" & vbNewLine & vbNewLine & _
                 "pour ce client.", vbExclamation, "Impossible d'envoyer un rappel (Adresse courriel invalide)"
         Exit Sub
     End If
@@ -581,7 +581,7 @@ Sub EnvoyerRappelParCourriel(noFact As String)
     Dim fileExists As Boolean
     fileExists = Dir(attachmentFullPathName) <> ""
     If Not fileExists Then
-        msgBox "La pièce jointe (Facture en format PDF) n'existe pas à" & vbNewLine & _
+        MsgBox "La pièce jointe (Facture en format PDF) n'existe pas à" & vbNewLine & _
                     "l'emplacement spécifié, soit " & attachmentFullPathName, vbCritical
         GoTo Exit_Sub
     End If
@@ -593,7 +593,7 @@ Sub EnvoyerRappelParCourriel(noFact As String)
     'Vérification de l'existence du template
     fileExists = Dir(templateFullPathName) <> ""
     If Not fileExists Then
-        msgBox "Le gabarit 'GCF_Rappel.oft' est introuvable " & _
+        MsgBox "Le gabarit 'GCF_Rappel.oft' est introuvable " & _
                     "à l'emplacement spécifié, soit " & Environ("appdata") & "\Microsoft\Templates", _
                     vbCritical
         GoTo Exit_Sub
@@ -609,7 +609,7 @@ Sub EnvoyerRappelParCourriel(noFact As String)
     
     'Vérifier si Outlook est bien ouvert
     If OutlookApp Is Nothing Then
-        msgBox "Impossible d'ouvrir Outlook. Vérifiez votre installation.", vbCritical
+        MsgBox "Impossible d'ouvrir Outlook. Vérifiez votre installation.", vbCritical
         Exit Sub
     End If
 

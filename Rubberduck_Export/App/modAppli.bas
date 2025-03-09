@@ -361,7 +361,7 @@ Sub CodeEssentielDepart()
     
     'Le serveur est-il disponible ?
     If Fn_Is_Server_Available() = False Then
-        msgBox "Le répertoire (P:\) ne semble pas accessible", vbCritical, "Le serveur n'est pas disponible"
+        MsgBox "Le répertoire (P:\) ne semble pas accessible", vbCritical, "Le serveur n'est pas disponible"
         Application.Quit
     End If
     
@@ -374,7 +374,7 @@ Sub CodeEssentielDepart()
    
     'Vérification si le chemin est accessible
     If Fn_Check_Server_Access(rootPath) = False Then
-        msgBox "Le répertoire principal (P:\) n'est pas accessible." & vbNewLine & vbNewLine & _
+        MsgBox "Le répertoire principal (P:\) n'est pas accessible." & vbNewLine & vbNewLine & _
                "Veuillez vérifier votre connexion au serveur SVP", vbCritical, rootPath
         Exit Sub
     End If
@@ -473,7 +473,7 @@ Sub CreateUserActiveFile()
     Exit Sub
 
 Error_Handling:
-    msgBox _
+    MsgBox _
         Prompt:="Erreur en tentant d'accéder le répertoire" & vbNewLine & vbNewLine & _
                     "'" & traceFilePath & "'" & vbNewLine & vbNewLine & _
                     "Erreur # " & Err.Number & " - " & Err.Description, _
@@ -529,7 +529,7 @@ Sub BackupMasterFile()
     Exit Sub
     
 MASTER_NOT_AVAILABLE:
-    msgBox _
+    MsgBox _
         Prompt:="Le fichier GCF_MASTER.xlsx ne peut être accédé..." & vbNewLine & vbNewLine & _
                     "Le fichier nécessite une réparation manuelle", _
         Title:="Situation anormale (" & Err.Number & " " & Err.Description & ")", _

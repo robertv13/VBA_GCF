@@ -37,20 +37,23 @@ Private Sub Worksheet_Activate()
     
     Call SetTabOrder(ws)
     
-    With ws
-        .Range("D4").Select
-        previousCellAddress = .Range("D4").Address
-    End With
+    'Certaines cellules perdent la couleur du background
+    Dim cellsToColor As Range
+    Set cellsToColor = Union(ws.Range("I4"), ws.Range("D5"), ws.Range("F6"), ws.Range("J6"))
+    Call Remplir_Plage_Avec_Couleur(cellsToColor, COULEUR_BASE_FACTURATION)
+    'Grille
+    Set cellsToColor = Union(ws.Range("C9:O33"), ws.Range("I6"))
+    Call Remplir_Plage_Avec_Couleur(cellsToColor, 16777215) 'Blanc
     
     Application.EnableEvents = True
     
-    'Certaines cellules perdent la couleur du background
-    Dim cellsToColor As Range
-    Set cellsToColor = Union(ws.Range("I4"), ws.Range("F6"))
-    Call Remplir_Plage_Avec_Couleur(cellsToColor, COULEUR_BASE_FACTURATION)
-    
     With ws
         .Protect UserInterfaceOnly:=True
+    End With
+    
+    With ws
+        .Range("D4").Select
+        previousCellAddress = .Range("D4").Address
     End With
     
     ws.PageSetup.PrintArea = ""
@@ -118,7 +121,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
             target.value = allCols(1)
             Application.EnableEvents = True
         Else
-            msgBox "Valeur non trouvée !!!", vbCritical
+            MsgBox "Valeur non trouvée !!!", vbCritical
         End If
         
         Call FAC_Historique_Montrer_Bouton_Afficher

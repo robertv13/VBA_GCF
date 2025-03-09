@@ -110,16 +110,16 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
     Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Efface_Ligne", "", 0)
 
     If ufSaisieHeures.txtTECID.value = "" Then
-        msgBox Prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
+        MsgBox Prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
             Buttons:=vbCritical
         GoTo Clean_Exit
     End If
     
     Dim answerYesNo As Long
-    answerYesNo = msgBox("Êtes-vous certain de vouloir DÉTRUIRE cet enregistrement ? ", _
+    answerYesNo = MsgBox("Êtes-vous certain de vouloir DÉTRUIRE cet enregistrement ? ", _
                          vbYesNo + vbQuestion, "Confirmation de DESTRUCTION")
     If answerYesNo = vbNo Then
-        msgBox _
+        MsgBox _
         Prompt:="Cet enregistrement ne sera PAS détruit ! ", _
         Title:="Confirmation", _
         Buttons:=vbCritical
@@ -146,7 +146,7 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
         .chbFacturable = True
     End With
     
-    msgBox _
+    MsgBox _
         Prompt:="L'enregistrement a été DÉTRUIT !", _
         Title:="Confirmation", _
         Buttons:=vbCritical
@@ -332,7 +332,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to
     dateValue = ufSaisieHeures.txtDate.value
     'Special log to debug Date Format issue... 2024-09-06 @ 16:32
     If tecID = 0 And Date - dateValue > 30 Then
-        msgBox "La date saisie est plus de 30 jours dans le passé..." & vbNewLine & vbNewLine & _
+        MsgBox "La date saisie est plus de 30 jours dans le passé..." & vbNewLine & vbNewLine & _
                 "Veuillez aviser le développeur de cette situation SVP", vbInformation
         Call Log_Saisie_Heures("Future   ", "Plus de 30 jours dans le passé - dateValue = " & dateValue & "  type = " & TypeName(dateValue))
     End If
@@ -361,7 +361,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to
 
         Else 'Handle the case where the specified ID is not found - PROBLEM !!!
             
-            msgBox "L'enregistrement avec le TECID '" & tecID & "' ne peut être trouvé!", _
+            MsgBox "L'enregistrement avec le TECID '" & tecID & "' ne peut être trouvé!", _
                 vbExclamation
                 
             rs.Close
@@ -462,7 +462,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to
             
                 'Handle the case where the specified ID is not found - PROBLEM !!!
                 
-                msgBox "L'enregistrement avec le TECID '" & tecID & "' ne peut être trouvé!", vbExclamation
+                MsgBox "L'enregistrement avec le TECID '" & tecID & "' ne peut être trouvé!", vbExclamation
                 Call Log_Record("ERREUR - N'a pas trouvé le TECID '", CStr(saveLogTECID), -1)   '2024-09-13 @ 09:09
                 Call Log_Saisie_Heures("Erreur  ", "@00495 - Impossible de trouver le TECID = " & CStr(saveLogTECID)) '2024-09-02 @ 10:35
                 rs.Close
@@ -492,7 +492,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to
     
 ErrorHandler:
      'Si une erreur survient, cela signifie que le fichier est en lecture seule
-    msgBox "Le fichier 'MASTER' est en lecture seule" & vbNewLine & vbNewLine & _
+    MsgBox "Le fichier 'MASTER' est en lecture seule" & vbNewLine & vbNewLine & _
            "ou déjà ouvert par un autre utilisateur ou" & vbNewLine & vbNewLine & _
            "ou un autre type de problème" & vbNewLine & vbNewLine & _
            "COMMUNIQUER AVEC LE DÉVELOPPEUR IMMÉDIATEMENT", vbCritical, "Erreur = " & Err & " - " & Err.Description
@@ -560,7 +560,7 @@ Sub TEC_Record_Add_Or_Update_Locally(tecID As Long) 'Write -OR- Update a record 
         rowToBeUpdated = Fn_Find_Row_Number_TECID(Abs(tecID), lookupRange)
         If rowToBeUpdated < 1 Then
             'Handle the case where the specified TecID is not found !!
-            msgBox "L'enregistrement avec le TECID '" & tecID & "' ne peut être trouvé!", _
+            MsgBox "L'enregistrement avec le TECID '" & tecID & "' ne peut être trouvé!", _
                 vbExclamation
             Exit Sub
         End If
@@ -608,7 +608,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     Application.EnableEvents = False
 
     If ufSaisieHeures.txtProfID.value = "" Or Not IsDate(ufSaisieHeures.txtDate.value) Then
-        msgBox "Veuillez entrer un professionnel et/ou une date valide.", vbExclamation
+        MsgBox "Veuillez entrer un professionnel et/ou une date valide.", vbExclamation
         GoTo EndOfProcedure
     End If
     
@@ -725,7 +725,7 @@ EndOfProcedure:
     
 ErrorHandler:
 
-    msgBox "Erreur : " & Err.Description, vbCritical, "Erreur # APP-003"
+    MsgBox "Erreur : " & Err.Description, vbCritical, "Erreur # APP-003"
     Resume EndOfProcedure
     
 End Sub
@@ -805,7 +805,7 @@ End Sub
 
 Sub AfficherMessageDateInvalide(location As String) '2024-06-13 @ 12:40
 
-    msgBox "La date saisie ne peut être acceptée tel qu'elle est entrée." & vbNewLine & vbNewLine & _
+    MsgBox "La date saisie ne peut être acceptée tel qu'elle est entrée." & vbNewLine & vbNewLine & _
            "Elle doit être obligatoirement de format:" & vbNewLine & _
            "     'j', jj', " & vbNewLine & _
            "     'jj-mm', 'jj/mm' ou " & vbNewLine & _

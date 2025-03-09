@@ -15,7 +15,7 @@ Public Sub ConvertRangeBooleanToText(rng As Range)
             Case -1, "True", "VRAI" 'True
                 cell.value = "VRAI"
             Case Else
-                msgBox cell.value & " est une valeur INVALIDE pour la cellule " & cell.Address & " de la feuille TEC_Local"
+                MsgBox cell.value & " est une valeur INVALIDE pour la cellule " & cell.Address & " de la feuille TEC_Local"
         End Select
     Next cell
 
@@ -293,9 +293,9 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
     
     If verificationIntegriteOK = True Then
-        msgBox "La vérification d'intégrité est terminé SANS PROBLÈME" & vbNewLine & vbNewLine & "Voir la feuille 'X_Analyse_Intégrité'", vbInformation
+        MsgBox "La vérification d'intégrité est terminé SANS PROBLÈME" & vbNewLine & vbNewLine & "Voir la feuille 'X_Analyse_Intégrité'", vbInformation
     Else
-        msgBox "La vérification a détecté AU MOINS UN PROBLÈME" & vbNewLine & vbNewLine & "Voir la feuille 'X_Analyse_Intégrité'", vbInformation
+        MsgBox "La vérification a détecté AU MOINS UN PROBLÈME" & vbNewLine & vbNewLine & "Voir la feuille 'X_Analyse_Intégrité'", vbInformation
     End If
     
     ThisWorkbook.Worksheets("X_Analyse_Intégrité").Activate
@@ -347,7 +347,7 @@ Sub Simple_Print_Setup(ws As Worksheet, rng As Range, header1 As String, _
         End If
         .PaperSize = xlPaperLetter
         .FitToPagesWide = 1
-        .FitToPagesTall = 10
+        .FitToPagesTall = False
     End With
     
 CleanUp:
@@ -405,7 +405,7 @@ Sub Tx_Range_2_2D_Array(ByVal rng As Range, ByRef arr As Variant, Optional ByVal
 
     'La plage est-elle valide ?
     If rng Is Nothing Then
-        msgBox "La plage est invalide ou non définie.", vbExclamation, , "modAppli_Utils:Tx_Range_2_2D_Array"
+        MsgBox "La plage est invalide ou non définie.", vbExclamation, , "modAppli_Utils:Tx_Range_2_2D_Array"
         Exit Sub
     End If
     
@@ -417,7 +417,7 @@ Sub Tx_Range_2_2D_Array(ByVal rng As Range, ByRef arr As Variant, Optional ByVal
     
     'La plage contient-elle des données ?
     If numRows <= 0 Or numCols <= 0 Then
-        msgBox "Aucune donnée à copier dans le tableau.", vbExclamation, "modAppli_Utils:Tx_Range_2_2D_Array"
+        MsgBox "Aucune donnée à copier dans le tableau.", vbExclamation, "modAppli_Utils:Tx_Range_2_2D_Array"
         Exit Sub
     End If
     
@@ -431,7 +431,7 @@ Sub Tx_Range_2_2D_Array(ByVal rng As Range, ByRef arr As Variant, Optional ByVal
     If Not rngData Is Nothing Then
         arr = rngData.value
     Else
-        msgBox "Erreur lors de la création de la plage de données.", vbExclamation, "modAppli_Utils:Tx_Range_2_2D_Array"
+        MsgBox "Erreur lors de la création de la plage de données.", vbExclamation, "modAppli_Utils:Tx_Range_2_2D_Array"
     End If
     
     'Libérer la mémoire
@@ -1060,7 +1060,7 @@ Private Sub checkDEB_Récurrent(ByRef r As Long, ByRef readRows As Long)
     On Error GoTo 0
 
     If planComptable Is Nothing Then
-        msgBox "La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée ou est INVALIDE!", vbExclamation
+        MsgBox "La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée ou est INVALIDE!", vbExclamation
         Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée!")
         r = r + 1
         Exit Sub
@@ -1205,7 +1205,7 @@ Private Sub checkDEB_Trans(ByRef r As Long, ByRef readRows As Long)
     On Error GoTo 0
 
     If planComptable Is Nothing Then
-        msgBox "La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée ou est INVALIDE!", vbExclamation
+        MsgBox "La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée ou est INVALIDE!", vbExclamation
         Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée!")
         r = r + 1
         Exit Sub
@@ -2557,7 +2557,7 @@ Private Sub checkGL_Trans(ByRef r As Long, ByRef readRows As Long)
     isGLTransValid = True
     
     If planComptable Is Nothing Then
-        msgBox "La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée ou est INVALIDE!", vbExclamation
+        MsgBox "La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée ou est INVALIDE!", vbExclamation
         Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée!")
         r = r + 1
         isGLTransValid = False
@@ -2717,7 +2717,7 @@ Private Sub checkGL_Trans(ByRef r As Long, ByRef readRows As Long)
     rng.Characters(InStr(rng.value, Left$(arTotal, 1)), 15).Font.Bold = True
     r = r + 2
     If soldeComptesClients <> arTotal Then
-        msgBox "ATTENTION, le solde des Comptes-Clients" & vbNewLine & vbNewLine & _
+        MsgBox "ATTENTION, le solde des Comptes-Clients" & vbNewLine & vbNewLine & _
                 "diffère entre les 2 sources...", vbCritical, "FAC_Comptes_Clients <> Solde au Grand-Livre !!!"
     End If
     
@@ -2777,7 +2777,7 @@ Private Sub checkGL_EJ_Recurrente(ByRef r As Long, ByRef readRows As Long)
     On Error GoTo 0
 
     If planComptable Is Nothing Then
-        msgBox "La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée ou est INVALIDE!", vbExclamation, "modAppli_Utils:checkGL_EJ_Recurrente"
+        MsgBox "La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée ou est INVALIDE!", vbExclamation, "modAppli_Utils:checkGL_EJ_Recurrente"
         Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée!")
         r = r + 1
         isGlEjRécurrenteValid = False
@@ -3156,7 +3156,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 4636 'What is the last TECID analyzed ?
+    lastTECIDReported = 4688 'What is the last TECID analyzed ?
     
     'Feuille contenant les données à analyser
     Dim HeaderRow As Long: HeaderRow = 2
@@ -3975,10 +3975,10 @@ Sub ApplyWorksheetFormat(ws As Worksheet, rng As Range, HeaderRow As Long)
                     .Range(.Cells(3, fFacEDépôt), .Cells(lastUsedRow, fFacEDépôt)).NumberFormat = "#,##0.00"
                     .Range(.Cells(3, fFacEDateFacture), .Cells(lastUsedRow, fFacEDateFacture)).NumberFormat = "yyyy-mm-dd"
                     .Range(.Cells(3, fFacETauxTPS), .Cells(lastUsedRow, fFacETauxTPS)).HorizontalAlignment = xlCenter
-
                     .Range(.Cells(3, fFacETauxTPS), .Cells(lastUsedRow, fFacETauxTPS)).NumberFormat = "#0.000 %"
                     .Range(.Cells(3, fFacETauxTVQ), .Cells(lastUsedRow, fFacETauxTVQ)).HorizontalAlignment = xlCenter
                     .Range(.Cells(3, fFacETauxTVQ), .Cells(lastUsedRow, fFacETauxTVQ)).NumberFormat = "#0.000 %"
+                    .Range(.Cells(3, fFacETimeStamp), .Cells(lastUsedRow, fFacETimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
                 End With
     
             Case "wshFAC_Projets_Détails" '2025-02-12 @ 11:42
@@ -4373,7 +4373,7 @@ Sub Remplir_Plage_Avec_Couleur(ByVal plage As Range, ByVal couleurRVB As Long)
             On Error GoTo 0
         Next cellule
     Else
-        msgBox "La plage spécifiée est invalide.", vbExclamation, "Procédure 'Remplir_Plage_Avec_Couleur'"
+        MsgBox "La plage spécifiée est invalide.", vbExclamation, "Procédure 'Remplir_Plage_Avec_Couleur'"
     End If
     
 End Sub
@@ -4554,7 +4554,7 @@ Sub Vérifier_Mix_ClientID_ClientNom_TEC()
         If IsArray(allCols) Then
             clientNameFromMF = allCols(1)
         Else
-            msgBox "Valeur non trouvée !!!", vbCritical
+            MsgBox "Valeur non trouvée !!!", vbCritical
         End If
         
         If clientName <> clientNameFromMF Then

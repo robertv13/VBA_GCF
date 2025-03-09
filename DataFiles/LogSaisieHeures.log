@@ -16,3 +16,16 @@
 2025-03-04 08:02:58.88 | Robert M. Vigneault | APP_v6.B.0.xlsb | UPDATE 4568 | GC | 03/03/2025 | 1669 | Ventilabec Inc. [Lora Stoycheva] | tel avec Lora sur écritures comptables + revoir écriture comptable de rachat avec chiffres à jour | 1,00 | VRAI | 
 2025-03-04 08:03:09.96 | Robert M. Vigneault | APP_v6.B.0.xlsb | UPDATE 4568 | GC | 03/03/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | tel avec Lora sur écritures comptables + revoir écriture comptable de rachat avec chiffres à jour | 1,00 | VRAI | 
 2025-03-04 08:03:20.14 | Robert M. Vigneault | APP_v6.B.0.xlsb | UPDATE 4568 | GC | 03/03/2025 | 1669 | Ventilabec Inc. [Lora Stoycheva] | tel avec Lora sur écritures comptables + revoir écriture comptable de rachat avec chiffres à jour | 1,00 | VRAI | 
+2025-03-07 05:31:36.98 | Robert M. Vigneault | APP_v6.B.3.xlsb | ADD    4671 | GC | 06/03/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Test | 0,10 | VRAI | 
+2025-03-07 05:31:54.31 | Robert M. Vigneault | APP_v6.B.3.xlsb | UPDATE 4671 | GC | 06/03/2025 | 1669 | Ventilabec Inc. [Lora Stoycheva] | Test | 0,20 | VRAI | 
+2025-03-07 05:33:09.27 | Robert M. Vigneault | APP_v6.B.3.xlsb | UPDATE 4671 | GC | 06/03/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Test | 0,10 | VRAI | 
+2025-03-07 05:34:02.61 | Robert M. Vigneault | APP_v6.B.3.xlsb | DELETE-4671 | GC | 06/03/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Test | 0,10 | VRAI | 
+2025-03-09 12:17:06.99 | Robert M. Vigneault | APP_v6.B.3.xlsb | ADD    4689 | ML | 07/03/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Test | 0,10 | VRAI | 
+2025-03-09 12:31:51.29 | Robert M. Vigneault | APP_v6.B.3.xlsb | ADD    4690 | ML | 07/03/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Test | 0,10 | VRAI | 
+2025-03-09 12:32:03.06 | Robert M. Vigneault | APP_v6.B.3.xlsb | DELETE-4689 | ML | 07/03/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Test | 0,10 | VRAI | 
+2025-03-09 12:32:13.90 | Robert M. Vigneault | APP_v6.B.3.xlsb | DELETE-4690 | ML | 07/03/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Test | 0,10 | VRAI | 
+2025-03-09 12:33:02.86 | Robert M. Vigneault | APP_v6.B.3.xlsb | ADD    4691 | ML | 08/03/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Test | 0,10 | VRAI | 
+2025-03-09 12:34:23.07 | Robert M. Vigneault | APP_v6.B.3.xlsb | UPDATE 4691 | ML | 08/03/2025 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | Test | 0,10 | VRAI | 
+2025-03-09 12:36:10.34 | Robert M. Vigneault | APP_v6.B.3.xlsb | UPDATE 4691 | ML | 08/03/2025 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | Test | 0,25 | VRAI | 
+2025-03-09 12:36:28.22 | Robert M. Vigneault | APP_v6.B.3.xlsb | UPDATE 4691 | ML | 08/03/2025 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | Test | 0,20 | VRAI | 
+2025-03-09 12:40:27.71 | Robert M. Vigneault | APP_v6.B.3.xlsb | DELETE-4691 | ML | 08/03/2025 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | Test | 0,20 | VRAI | 

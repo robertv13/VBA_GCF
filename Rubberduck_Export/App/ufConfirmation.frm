@@ -50,7 +50,7 @@ Private Sub UserForm_Initialize()
                     newItem.SubItems(3) = nomClient
                     newItem.SubItems(4) = Facture(3)
                 Else
-                    msgBox "Erreur : L'élément n'est pas un tableau"
+                    MsgBox "Erreur : L'élément n'est pas un tableau"
                 End If
             Next Facture
         Else
@@ -88,7 +88,7 @@ Private Sub ListView1_ItemClick(ByVal item As MSComctlLib.listItem)
         Debug.Print "#092 - " & strShell
         Shell strShell, vbNormalFocus
     Else
-        msgBox "Le fichier PDF de la facture n'existe pas : " & PDFInvoicePath, vbExclamation, "Fichier PDF manquant"
+        MsgBox "Le fichier PDF de la facture n'existe pas : " & PDFInvoicePath, vbExclamation, "Fichier PDF manquant"
     End If
     
 End Sub
@@ -177,7 +177,7 @@ End Sub
 Private Sub cmdConfirmation_Click()
 
     If ListView1.ListItems.count < 1 Then
-        msgBox "Vous n'avez sélectionné aucune facture à confirmer"
+        MsgBox "Vous n'avez sélectionné aucune facture à confirmer"
         Exit Sub
     Else
         Dim mess As String
@@ -187,7 +187,7 @@ Private Sub cmdConfirmation_Click()
             mess = ufConfirmation.txtNbFacturesSélectionnées.value & " factures sélectionnées"
         End If
         Dim reponse As VbMsgBoxResult
-        reponse = msgBox("Êtes-vous certain de vouloir procéder à la confirmation de" & _
+        reponse = MsgBox("Êtes-vous certain de vouloir procéder à la confirmation de" & _
                             vbNewLine & vbNewLine & "facture, avec " & mess & " ?", _
                             vbQuestion + vbYesNo, "Confirmation de traitement avec " & mess)
         If reponse = vbNo Then
@@ -211,7 +211,7 @@ Private Sub UserForm_QueryClose(Cancel As Integer, CloseMode As Integer)
             mess = ufConfirmation.txtNbFacturesSélectionnées.value & " factures sélectionnées"
         End If
         Dim reponse As VbMsgBoxResult
-        reponse = msgBox("Êtes-vous certain de vouloir quitter la confirmation de" & _
+        reponse = MsgBox("Êtes-vous certain de vouloir quitter la confirmation de" & _
                             vbNewLine & vbNewLine & "facture, avec " & mess & " ?", _
                             vbQuestion + vbYesNo, "Confirmation de fermeture avec " & mess)
         If reponse = vbNo Then

@@ -4,7 +4,7 @@ Public previousCellAddress As Variant
 
 Private Sub Worksheet_Activate()
 
-    If fromMenu = False Then
+    If Not fromMenu Then
         Exit Sub
     End If
     
@@ -12,28 +12,22 @@ Private Sub Worksheet_Activate()
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
+    Application.Calculation = xlCalculationAutomatic
     
     'Import transactions from MASTER file
     Call Fournisseur_List_Import_All
     Call DEB_Trans_Import_All
+    Call DEB_Récurrent_Import_All
     Call GL_Trans_Import_All
+    
+    Dim ws As Worksheet: Set ws = wshDEB_Saisie
     
     'Set the zoom factor to 100% when this worksheet is activated
     ActiveWindow.Zoom = 100
     
-    Me.Application.Calculation = xlCalculationAutomatic
-
-    Dim ws As Worksheet: Set ws = wshDEB_Saisie
-    
     'S'assurer que les colonnes A & B sont masquées
     On Error Resume Next
     Me.Columns("A:B").Hidden = True
-    On Error GoTo 0
-    
-    'S'assurer que les cellules qui auraient été déverouillées le soient pour commencer
-    On Error Resume Next
-'    ws.Range("B12:B36").Locked = True
-'    ws.Range("E12:E36").Locked = True
     On Error GoTo 0
     
     'Certaines cellules perdent la couleur du background
@@ -67,12 +61,14 @@ Private Sub Worksheet_Activate()
         .EnableSelection = xlUnlockedCells
     End With
     
+    numeroDebourseARenverser = -1
+    Me.Range("B7").value = False
+    
+    Me.Range("O4").value = Format$(Date, wshAdmin.Range("B1").value)
+    
     Application.ScreenUpdating = True
     Application.EnableEvents = True
     
-    numeroDebourseARenverser = -1
-    Me.Range("B7").value = False
-    Me.Range("O4").value = Format$(Date, wshAdmin.Range("B1").value)
     Me.Range("F4").Select
     
     'Libérer la mémoire
@@ -86,38 +82,48 @@ End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal target As Range)
 
+    'Remove the background color of the previous Cell
     If previousCellAddress <> "" Then
         Range(previousCellAddress).Interior.Color = xlNone
     End If
     
+    'Save the current cell Address for next Selection change
+    previousCellAddress = target.Address
+
     'Type is selected
     If Not Intersect(target, Range("F4")) Is Nothing Then
         target.Interior.Color = COULEUR_SAISIE
+        Exit Sub
     End If
     
     'Beneficiaire is selected
     If Not Intersect(target, Range("J4")) Is Nothing Then
         target.Interior.Color = COULEUR_SAISIE
+        Exit Sub
     End If
     
     'Date is selected
     If Not Intersect(target, Range("O4")) Is Nothing Then
         target.Interior.Color = COULEUR_SAISIE
+        Exit Sub
     End If
     
     'Description is selected
     If Not Intersect(target, Range("$F$6")) Is Nothing Then
         target.Interior.Color = COULEUR_SAISIE
+        Exit Sub
     End If
     
     'Reference is selected
     If Not Intersect(target, Range("M6")) Is Nothing Then
         target.Interior.Color = COULEUR_SAISIE
+        Exit Sub
     End If
     
     'Total Amount is selected
     If Not Intersect(target, Range("O6")) Is Nothing Then
         target.Interior.Color = COULEUR_SAISIE
+        Exit Sub
     End If
     
     'Account is selected
@@ -126,12 +132,14 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
         Application.EnableEvents = False
         wshDEB_Saisie.Range("B4").value = target.Address
         Application.EnableEvents = True
+        Exit Sub
     End If
     
     'Tax code is selected (TPS/TVQ is the default)
     If Not Intersect(target, Range("H9:H23")) Is Nothing Then
         target.Interior.Color = COULEUR_SAISIE
         target.value = "TPS/TVQ"
+        Exit Sub
     End If
     
     'Amount is selected (Amount to distribute by default)
@@ -146,26 +154,31 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
             Application.EnableEvents = True
         End If
         target.Interior.Color = COULEUR_SAISIE
+        Exit Sub
     End If
    
    'Force GST/TPS calculation with a formula, but also accept user input
     If Not Intersect(target, Range("J9:J23")) Is Nothing Then
         target.Interior.Color = COULEUR_SAISIE
+        Exit Sub
     End If
     
     'Force PST/TVQ calculation with a formula, but also accept user input
     If Not Intersect(target, Range("K9:K23")) Is Nothing Then
         target.Interior.Color = COULEUR_SAISIE
+        Exit Sub
     End If
     
     'Credit GST/TPS
     If Not Intersect(target, Range("L9:L23")) Is Nothing Then
         target.Interior.Color = COULEUR_SAISIE
+        Exit Sub
     End If
     
     'Credit PST/TVQ
     If Not Intersect(target, Range("M9:M23")) Is Nothing Then
         target.Interior.Color = COULEUR_SAISIE
+        Exit Sub
     End If
 
     'Calculate the NET amount (Expense), but also accept user input
@@ -175,10 +188,8 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
                 Range("N" & target.row).formula = "=round(RC[-5]-RC[-2]-RC[-1],2)"
         End If
         target.Interior.Color = COULEUR_SAISIE
+         Exit Sub
     End If
-    
-    'Save the current cell Address
-    previousCellAddress = target.Address
     
 End Sub
 
@@ -196,7 +207,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
     
 ErrorHandler:
     Application.EnableEvents = True 'Ensure events are re-enabled if an error occurs
-    msgBox "Erreur " & Err.Number & ": " & Err.Description, vbCritical, "Erreur # APP-002"
+    MsgBox "Erreur " & Err.Number & ": " & Err.Description, vbCritical, "Erreur # APP-002"
 
 End Sub
 
@@ -222,6 +233,10 @@ Private Sub Process_Change(ByVal target As Range)
     
     'Type de déboursé a changé
     If Not Intersect(target, Range("F4")) Is Nothing Then
+        If target.value = "AUTO" Then
+            Call DEB_AfficherDeboursRecurrent
+        End If
+        Exit Sub
         If target.value = "Renversement" Then
             Call DEB_Renverser_Ecriture
         End If
@@ -247,6 +262,7 @@ Private Sub Process_Change(ByVal target As Range)
             Application.GoTo Range(target.Address)
         End If
         Application.EnableEvents = True
+        Exit Sub
     End If
     
     'Account has changed
@@ -355,18 +371,18 @@ Private Sub Process_Change(ByVal target As Range)
     End If
     
     'Force TAB order after a cell has been changed - 2024-08-25 @ 10:35
-    If Not Intersect(target, Me.Range("F4")) Is Nothing Then
-        Me.Range("J4").Select
-    ElseIf Not Intersect(target, Me.Range("J4")) Is Nothing Then
-        Me.Range("O4").Select
-    ElseIf Not Intersect(target, Me.Range("O4")) Is Nothing Then
-        Me.Range("F6").Select
-    ElseIf Not Intersect(target, Me.Range("F6")) Is Nothing Then
-        Me.Range("M6").Select
-    ElseIf Not Intersect(target, Me.Range("M6")) Is Nothing Then
-        Me.Range("O6").Select
-    End If
-
+'    If Not Intersect(target, Me.Range("F4")) Is Nothing Then
+'        Me.Range("J4").Select
+'    ElseIf Not Intersect(target, Me.Range("J4")) Is Nothing Then
+'        Me.Range("O4").Select
+'    ElseIf Not Intersect(target, Me.Range("O4")) Is Nothing Then
+'        Me.Range("F6").Select
+'    ElseIf Not Intersect(target, Me.Range("F6")) Is Nothing Then
+'        Me.Range("M6").Select
+'    ElseIf Not Intersect(target, Me.Range("M6")) Is Nothing Then
+'        Me.Range("O6").Select
+'    End If
+'
     'Libérer la mémoire
     Set amountRange = Nothing
     Set cell = Nothing

@@ -125,12 +125,10 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
             TotalList:=Array(8), Replace:=True, PageBreaks:=False, SummaryBelowData:=False
     Application.DisplayAlerts = True
     wsDest.Range("A:B").EntireColumn.Hidden = True
-'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - Le GroupBy est complété", -1)
 
     'Group the data to show subtotals in the destination worksheet
     destLastUsedRow = wsDest.Cells(wsDest.Rows.count, 1).End(xlUp).row
     wsDest.Outline.ShowLevels RowLevels:=2
-'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - Le 'ShowLevels est ajusté à 2", -1)
     
     'Add a formula to sum the billed amounts at the top row
     wsDest.Range("D7").formula = "=SUM(D8:D" & destLastUsedRow & ")"
@@ -171,18 +169,37 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
         End With
     End With
     
+'    Range("C8:C74").Select
+'    With Selection.Interior
+'        .PatternColorIndex = xlAutomatic
+'        .ThemeColor = xlThemeColorAccent4
+'        .TintAndShade = 0.399975585192419
+'        .PatternTintAndShade = 0
+'    End With
+'    With Selection.Font
+'        .ThemeColor = xlThemeColorLight1
+'        .TintAndShade = 0
+'    End With
+'
+'
+    
     'Change the format of all Client's Total rows
     For r = 7 To destLastUsedRow
         If wsDest.Range("A" & r).value = "" Then
             With wsDest.Range("C" & r).Interior
-                .Pattern = xlSolid
+'                .Pattern = xlSolid
                 .PatternColorIndex = xlAutomatic
-                .ThemeColor = xlThemeColorAccent1
-                .TintAndShade = -0.249977111117893
+'                .PatternColorIndex = xlAutomatic
+                .ThemeColor = xlThemeColorAccent4
+'                .ThemeColor = xlThemeColorAccent1
+                .TintAndShade = 0.399975585192419
+'                .TintAndShade = -0.249977111117893
                 .PatternTintAndShade = 0
+'                .PatternTintAndShade = 0
             End With
             With wsDest.Range("C" & r).Font
-                .ThemeColor = xlThemeColorDark1
+                .ThemeColor = xlThemeColorLight1
+'                .ThemeColor = xlThemeColorDark1
                 .TintAndShade = 0
             End With
             With wsDest.Range("C" & r)
@@ -885,7 +902,7 @@ Sub Get_CheckBox_Position(cb As OLEObject)
     Set checkBoxCell = checkBox.TopLeftCell
     
     ' Display the address of the cell
-    msgBox "The CheckBox is located at cell: " & checkBoxCell.Address
+    MsgBox "The CheckBox is located at cell: " & checkBoxCell.Address
     
     'Libérer la mémoire
     Set checkBox = Nothing

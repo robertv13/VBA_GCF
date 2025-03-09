@@ -57,7 +57,7 @@ Private Sub UserForm_Initialize()
             cmbPeriode.AddItem cellule.value
         Next cellule
     Else
-        msgBox "La plage nommée 'dnrDateRange' est introuvable.", vbExclamation, "Contacter le développeur"
+        MsgBox "La plage nommée 'dnrDateRange' est introuvable.", vbExclamation, "Contacter le développeur"
         Exit Sub
     End If
     
@@ -166,7 +166,7 @@ Private Sub txtDateDebut_Exit(ByVal Cancel As MSForms.ReturnBoolean)
     If Trim$(txtDateDebut.Text) <> "" Then
         dateCorrigee = CorrigerDate(txtDateDebut.Text)
         If dateCorrigee = "" Then
-            msgBox "La date saisie est invalide, veuillez saisir une date sous un" & vbNewLine & vbNewLine & _
+            MsgBox "La date saisie est invalide, veuillez saisir une date sous un" & vbNewLine & vbNewLine & _
                     "format valide (jj ou jj/mm ou jj/mm/aaaa ou aaaa/mm/jj)" & vbNewLine & vbNewLine & _
                     "Notez que le séparateur peut être '-' ou '/' ou ' '", vbExclamation, _
                     "Impossible d'interpréter la date saisie"
@@ -186,7 +186,7 @@ Private Sub txtDateFin_Exit(ByVal Cancel As MSForms.ReturnBoolean)
     If Trim$(txtDateFin.Text) <> "" Then
         dateCorrigee = CorrigerDate(txtDateFin.Text)
         If dateCorrigee = "" Then
-            msgBox "La date saisie est invalide, veuillez saisir une date sous un" & vbNewLine & vbNewLine & _
+            MsgBox "La date saisie est invalide, veuillez saisir une date sous un" & vbNewLine & vbNewLine & _
                     "format valide (jj ou jj/mm ou jj/mm/aaaa ou aaaa/mm/jj)" & vbNewLine & vbNewLine & _
                     "Notez que le séparateur peut être '-' ou '/' ou ' '", vbExclamation, _
                     "Impossible d'interpréter la date saisie"
@@ -206,7 +206,7 @@ Private Sub txtDateSaisieDebut_Exit(ByVal Cancel As MSForms.ReturnBoolean)
     If Trim$(txtDateSaisieDebut.Text) <> "" Then
         dateCorrigee = CorrigerDate(txtDateSaisieDebut.Text)
         If dateCorrigee = "" Then
-            msgBox "La date saisie est invalide, veuillez saisir une date sous un" & vbNewLine & vbNewLine & _
+            MsgBox "La date saisie est invalide, veuillez saisir une date sous un" & vbNewLine & vbNewLine & _
                     "format valide (jj ou jj/mm ou jj/mm/aaaa ou aaaa/mm/jj)" & vbNewLine & vbNewLine & _
                     "Notez que le séparateur peut être '-' ou '/' ou ' '", vbExclamation, _
                     "Impossible d'interpréter la date saisie"
@@ -228,7 +228,7 @@ Private Sub txtDateSaisieFin_Exit(ByVal Cancel As MSForms.ReturnBoolean)
     If Trim$(txtDateSaisieFin.Text) <> "" Then
         dateCorrigee = CorrigerDate(txtDateSaisieFin.Text)
         If dateCorrigee = "" Then
-            msgBox "La date saisie est invalide, veuillez saisir une date sous un" & vbNewLine & vbNewLine & _
+            MsgBox "La date saisie est invalide, veuillez saisir une date sous un" & vbNewLine & vbNewLine & _
                     "format valide (jj ou jj/mm ou jj/mm/aaaa ou aaaa/mm/jj)" & vbNewLine & vbNewLine & _
                     "Notez que le séparateur peut être '-' ou '/' ou ' '", vbExclamation, _
                     "Impossible d'interpréter la date saisie"
@@ -252,7 +252,7 @@ Private Sub cmdGenerer_Click()
     'Vérification que le type de rapport est sélectionné
     Dim TypeRapport As String
     If Me.cmbTypeRapport.ListIndex = -1 Then
-        msgBox "Veuillez sélectionner un type de rapport.", vbExclamation, "Erreur"
+        MsgBox "Veuillez sélectionner un type de rapport.", vbExclamation, "Erreur"
         Exit Sub
     Else
         TypeRapport = Me.cmbTypeRapport.value
@@ -273,11 +273,11 @@ Private Sub cmdGenerer_Click()
             dateDebut = CDate(Me.txtDateDebut.value)
             dateFin = CDate(Me.txtDateFin.value)
             If dateDebut > dateFin Then
-                msgBox "La date de début doit être antérieure ou égale à la date de fin.", vbExclamation, "Erreur dans les critères de date"
+                MsgBox "La date de début doit être antérieure ou égale à la date de fin.", vbExclamation, "Erreur dans les critères de date"
                 Exit Sub
             End If
         Else
-            msgBox "Veuillez entrer des dates valides.", vbExclamation, "Erreur dans les critères de date"
+            MsgBox "Veuillez entrer des dates valides.", vbExclamation, "Erreur dans les critères de date"
             Exit Sub
         End If
         
@@ -285,7 +285,7 @@ Private Sub cmdGenerer_Click()
         Dim ligneSélectionnée As Boolean
         ligneSélectionnée = EstLigneSelectionnee(Me.lsbComptes)
         If ligneSélectionnée = False Then
-            msgBox "Veuillez sélectionner au moins un numéro de compte.", vbExclamation, "Erreur"
+            MsgBox "Veuillez sélectionner au moins un numéro de compte.", vbExclamation, "Erreur"
             Exit Sub
         End If
         
@@ -301,12 +301,12 @@ Private Sub cmdGenerer_Click()
             
             'Vérification logique des numéros d'écriture
             If noEcritureDebut > noEcritureFin Then
-                msgBox "Le numéro d'écriture de début doit être inférieur ou égal au numéro de fin.", _
+                MsgBox "Le numéro d'écriture de début doit être inférieur ou égal au numéro de fin.", _
                             vbExclamation, "Erreur dans les critères de numéro d'écriture"
                 Exit Sub
             End If
         Else
-            msgBox "Veuillez entrer des numéros d'écriture valides.", vbExclamation, _
+            MsgBox "Veuillez entrer des numéros d'écriture valides.", vbExclamation, _
                         "Erreur dans les critères de numéro d'écriture"
             Exit Sub
         End If
@@ -318,7 +318,7 @@ Private Sub cmdGenerer_Click()
             Not chkEJ And _
             Not chkFacture And _
             Not chkRegularisation Then
-            msgBox _
+            MsgBox _
                 Prompt:="Vous devez MINIMALEMENT choisir un type de transaction", _
                 Title:="Selon les critères choisis, rien ne sera imprimé", _
                 Buttons:=vbInformation
@@ -334,14 +334,14 @@ Private Sub cmdGenerer_Click()
             dateSaisieDebut = CDate(Me.txtDateSaisieDebut.value)
             dateSaisieFin = CDate(Me.txtDateSaisieFin.value)
             If dateSaisieDebut > dateSaisieFin Then
-                msgBox _
+                MsgBox _
                     Prompt:="La date de début doit être antérieure ou égale à la date de fin.", _
                     Title:="Erreur dans les critères de date", _
                     Buttons:=vbExclamation
                 Exit Sub
             End If
         Else
-            msgBox _
+            MsgBox _
                 Prompt:="Veuillez entrer des dates valides.", _
                 Title:="rreur dans les critères de date", _
                 Buttons:=vbExclamation
@@ -355,7 +355,7 @@ Private Sub cmdGenerer_Click()
             Not chkEJ And _
             Not chkFacture And _
             Not chkRegularisation Then
-            msgBox _
+            MsgBox _
                 Prompt:="Vous devez MINIMALEMENT choisir un type de transaction", _
                 Title:="Selon les critères choisis, rien ne sera imprimé", _
                 Buttons:=vbInformation

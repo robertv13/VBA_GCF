@@ -74,7 +74,7 @@ Function Fn_GetID_From_Client_Name(nomClient As String) '2024-02-14 @ 06:07
     On Error GoTo 0
 
     If ws Is Nothing Or dynamicRange Is Nothing Then
-        msgBox "La feuille 'Clients' ou le DynamicRange 'dnrClients_All' n'a pas été trouvé!", _
+        MsgBox "La feuille 'Clients' ou le DynamicRange 'dnrClients_All' n'a pas été trouvé!", _
             vbExclamation
         Exit Function
     End If
@@ -91,7 +91,7 @@ Function Fn_GetID_From_Client_Name(nomClient As String) '2024-02-14 @ 06:07
         Fn_GetID_From_Client_Name = result
         ufSaisieHeures.txtClientID.value = result
     Else
-        msgBox "Impossible de retrouver le nom du client dans la feuille" & vbNewLine & vbNewLine & _
+        MsgBox "Impossible de retrouver le nom du client dans la feuille" & vbNewLine & vbNewLine & _
                     "BD_Clients...", vbExclamation, "Recherche dans BD_Clients " & dynamicRange.Address
     End If
     
@@ -114,7 +114,7 @@ Function Fn_Cell_From_BD_Client(nomClient As String, ByRef colNumberSearch As In
     On Error GoTo 0
 
     If ws Is Nothing Or dynamicRange Is Nothing Then
-        msgBox "La feuille 'Clients' ou le DynamicRange 'dnrClients_All' n'a pas été trouvé!", _
+        MsgBox "La feuille 'Clients' ou le DynamicRange 'dnrClients_All' n'a pas été trouvé!", _
             vbExclamation
         Exit Function
     End If
@@ -130,7 +130,7 @@ Function Fn_Cell_From_BD_Client(nomClient As String, ByRef colNumberSearch As In
     If result <> "Not Found" Then
         Fn_Cell_From_BD_Client = result
     Else
-        msgBox _
+        MsgBox _
             Prompt:="Impossible de retrouver le nom du client dans la feuille" & vbNewLine & vbNewLine & _
                     "BD_Clients...", _
             Title:="Erreur grave - Impossible de retrouver le nom du client - " & colNumberSearch & "-" & colNumberData, _
@@ -156,7 +156,7 @@ Function Fn_GetID_From_Fourn_Name(nomFournisseur As String) '2024-07-03 @ 16:13
     On Error GoTo 0
 
     If ws Is Nothing Or dynamicRange Is Nothing Then
-        msgBox "La feuille 'BD_Fournisseurs' ou le DynamicRange 'dnrSuppliers_All' n'a pas été trouvé!", _
+        MsgBox "La feuille 'BD_Fournisseurs' ou le DynamicRange 'dnrSuppliers_All' n'a pas été trouvé!", _
             vbExclamation
         Exit Function
     End If
@@ -343,7 +343,7 @@ Function Fn_Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hon
         
         'Confirm with the user
         Dim reponse As Long
-        reponse = msgBox("Il existe déjà une demande de facture pour ce client" & _
+        reponse = MsgBox("Il existe déjà une demande de facture pour ce client" & _
                   vbNewLine & "au montant de " & Format$(hono, "#,##0.00$") & _
                   vbNewLine & vbNewLine & "Désirez-vous..." & vbNewLine & vbNewLine & _
                   "   1) (OUI) REMPLACER cette demande" & vbNewLine & vbNewLine & _
@@ -464,7 +464,7 @@ Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 
     On Error GoTo 0
     
     If ws Is Nothing Or dynamicRange Is Nothing Then
-        msgBox "La feuille 'Admin' ou le DynamicRange n'a pas été trouvé!", _
+        MsgBox "La feuille 'Admin' ou le DynamicRange n'a pas été trouvé!", _
             vbExclamation
         Exit Function
     End If
@@ -480,7 +480,7 @@ Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 
     If result <> "Not Found" Then
         Fn_GetGL_Code_From_GL_Description = result
     Else
-        msgBox "Impossible de retrouver la valeur dans la première colonne", vbExclamation
+        MsgBox "Impossible de retrouver la valeur dans la première colonne", vbExclamation
     End If
 
     'Libérer la mémoire
@@ -970,14 +970,14 @@ Function Fn_Complete_Date(dateInput As String, joursArriere As Integer, joursFut
     Dim joursEcart As Integer
     joursEcart = parsedDate - Date
     If joursEcart < 0 And Abs(joursEcart) > joursArriere Then
-        msgBox "Cette date NE RESPECTE PAS les paramètres de date établis" & vbNewLine & vbNewLine & _
+        MsgBox "Cette date NE RESPECTE PAS les paramètres de date établis" & vbNewLine & vbNewLine & _
                     "La date minimale est '" & Format$(Date - joursArriere, wshAdmin.Range("B1").value) & "'", _
                     vbCritical, "La date saisie est hors-norme - (Du " & _
                         Format$(Date - joursArriere, wshAdmin.Range("B1").value) & " au " & Format$(Date + joursFutur, wshAdmin.Range("B1").value) & ")"
         GoTo Invalid_Date
     End If
     If joursEcart > 0 And joursEcart > joursFutur Then
-        msgBox "Cette date NE RESPECTE PAS les paramètres de date établis" & vbNewLine & vbNewLine & _
+        MsgBox "Cette date NE RESPECTE PAS les paramètres de date établis" & vbNewLine & vbNewLine & _
                     "La date maximale est '" & Format$(Date + joursFutur, wshAdmin.Range("B1").value) & "'", _
                     vbCritical, "La date saisie est hors-norme - (Du " & _
                     Format$(Date - joursArriere, wshAdmin.Range("B1").value) & " au " & Format$(Date + joursFutur, wshAdmin.Range("B1").value) & ")"
@@ -1116,7 +1116,7 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
     
     'Professionnel ?
     If ufSaisieHeures.cmbProfessionnel.value = "" Then
-        msgBox Prompt:="Le professionnel est OBLIGATOIRE !", _
+        MsgBox Prompt:="Le professionnel est OBLIGATOIRE !", _
                Title:="Vérification", _
                Buttons:=vbCritical
         ufSaisieHeures.cmbProfessionnel.SetFocus
@@ -1125,7 +1125,7 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
 
     'Date de la charge ?
     If ufSaisieHeures.txtDate.value = "" Or IsDate(ufSaisieHeures.txtDate.value) = False Then
-        msgBox Prompt:="La date est OBLIGATOIRE !", _
+        MsgBox Prompt:="La date est OBLIGATOIRE !", _
                Title:="Vérification", _
                Buttons:=vbCritical
         ufSaisieHeures.txtDate.SetFocus
@@ -1134,7 +1134,7 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
 
     'Nom du client & code de client ?
     If ufSaisieHeures.txtClient.value = "" Or ufSaisieHeures.txtClientID = "" Then
-        msgBox Prompt:="Le client et son code sont OBLIGATOIRES !" & vbNewLine & vbNewLine & _
+        MsgBox Prompt:="Le client et son code sont OBLIGATOIRES !" & vbNewLine & vbNewLine & _
                        "Code de client = '" & ufSaisieHeures.txtClientID & "'" & vbNewLine & vbNewLine & _
                        "Nom du client = '" & ufSaisieHeures.txtClient.value & "'", _
                Title:="Vérifications essentielles des données du client", _
@@ -1145,7 +1145,7 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
     
     'Heures valides ?
     If ufSaisieHeures.txtHeures.value = "" Or IsNumeric(ufSaisieHeures.txtHeures.value) = False Then
-        msgBox Prompt:="Le nombre d'heures est OBLIGATOIRE !", _
+        MsgBox Prompt:="Le nombre d'heures est OBLIGATOIRE !", _
                Title:="Vérification", _
                Buttons:=vbCritical
         ufSaisieHeures.txtHeures.SetFocus
@@ -1181,7 +1181,7 @@ Public Function Fn_Get_Hourly_Rate(profID As Long, dte As Date)
             'Loop through each cell in the row
         Next i
     Else
-        msgBox "La plage nommée 'dnrTauxHoraire' n'a pas été trouvée!", vbExclamation
+        MsgBox "La plage nommée 'dnrTauxHoraire' n'a pas été trouvée!", vbExclamation
     End If
 
     'Libérer la mémoire
@@ -1249,7 +1249,7 @@ Function Fn_Is_Date_Valide(d As String) As Boolean
 
     Fn_Is_Date_Valide = False
     If d = "" Or IsDate(d) = False Then
-        msgBox "Une date d'écriture est obligatoire." & vbNewLine & vbNewLine & _
+        MsgBox "Une date d'écriture est obligatoire." & vbNewLine & vbNewLine & _
             "Veuillez saisir une date valide!", vbCritical, "Date Invalide"
     Else
         Fn_Is_Date_Valide = True
@@ -1298,7 +1298,7 @@ Function Fn_Is_Ecriture_Balance() As Boolean
 
     Fn_Is_Ecriture_Balance = False
     If wshGL_EJ.Range("H26").value <> wshGL_EJ.Range("I26").value Then
-        msgBox "Votre écriture ne balance pas." & vbNewLine & vbNewLine & _
+        MsgBox "Votre écriture ne balance pas." & vbNewLine & vbNewLine & _
             "Débits = " & wshGL_EJ.Range("H26").value & " et Crédits = " & wshGL_EJ.Range("I26").value & vbNewLine & vbNewLine & _
             "Elle n'est donc pas reportée.", vbCritical, "Veuillez vérifier votre écriture!"
     Else
@@ -1310,8 +1310,8 @@ End Function
 Function Fn_Is_Debours_Balance() As Boolean
 
     Fn_Is_Debours_Balance = False
-    If wshDEB_Saisie.Range("O6").value <> wshDEB_Saisie.Range("I26").value Then
-        msgBox "Votre transaction ne balance pas." & vbNewLine & vbNewLine & _
+    If CCur(wshDEB_Saisie.Range("O6").value) <> CCur(wshDEB_Saisie.Range("I26").value) Then
+        MsgBox "Votre transaction ne balance pas." & vbNewLine & vbNewLine & _
             "Total saisi = " & Format$(wshDEB_Saisie.Range("O6").value, "#,##0.00 $") _
             & " vs. Ventilation = " & Format$(wshDEB_Saisie.Range("I26").value, "#,##0.00 $") _
             & vbNewLine & vbNewLine & "Elle n'est donc pas reportée.", _
@@ -1326,7 +1326,7 @@ Function Fn_Is_JE_Valid(rmax As Long) As Boolean
 
     Fn_Is_JE_Valid = True 'Optimist
     If rmax <= 9 Or rmax > 23 Then
-        msgBox "L'écriture est invalide !" & vbNewLine & vbNewLine & _
+        MsgBox "L'écriture est invalide !" & vbNewLine & vbNewLine & _
             "Elle n'est donc pas reportée!", vbCritical, "Vous devez vérifier l'écriture"
         Fn_Is_JE_Valid = False
     End If
@@ -1335,7 +1335,7 @@ Function Fn_Is_JE_Valid(rmax As Long) As Boolean
     For i = 9 To rmax
         If wshGL_EJ.Range("E" & i).value <> "" Then
             If wshGL_EJ.Range("H" & i).value = "" And wshGL_EJ.Range("I" & i).value = "" Then
-                msgBox "Il existe une ligne avec un compte, sans montant !"
+                MsgBox "Il existe une ligne avec un compte, sans montant !"
                 Fn_Is_JE_Valid = False
             End If
         End If
@@ -1347,7 +1347,7 @@ Function Fn_Is_Deb_Saisie_Valid(rmax As Long) As Boolean
 
     Fn_Is_Deb_Saisie_Valid = True 'Optimist
     If rmax < 9 Or rmax > 23 Then
-        msgBox "L'écriture est invalide !" & vbNewLine & vbNewLine & _
+        MsgBox "L'écriture est invalide !" & vbNewLine & vbNewLine & _
             "Elle n'est donc pas reportée!", vbCritical, "Vous devez vérifier l'écriture"
         Fn_Is_Deb_Saisie_Valid = False
     End If
@@ -1356,7 +1356,10 @@ Function Fn_Is_Deb_Saisie_Valid(rmax As Long) As Boolean
     For i = 9 To rmax
         If wshDEB_Saisie.Range("E" & i).value <> "" Then
             If wshDEB_Saisie.Range("N" & i).value = "" Then
-                msgBox "Il existe une ligne avec un compte, sans montant !"
+                MsgBox _
+                    Prompt:="Il existe une ligne avec un compte, sans montant !", _
+                    Title:="L'entrée ne peut être acceptée dans son état actuel", _
+                    Buttons:=vbInformation
                 Fn_Is_Deb_Saisie_Valid = False
             End If
         End If
@@ -1397,7 +1400,7 @@ Function Fn_Get_Next_Invoice_Number() As String '2024-09-17 @ 14:00
     If strLastInvoice <> "" Then
         strLastInvoice = Right$(strLastInvoice, Len(strLastInvoice) - 3)
     Else
-        msgBox "Problème avec les dernières lignes de la" & _
+        MsgBox "Problème avec les dernières lignes de la" & _
                 vbNewLine & vbNewLine & "feuille 'wshFAC_Entête'" & _
                 vbNewLine & vbNewLine & "Veuillez contacter le développeur", _
                 vbOKOnly, "Structure invalide dans 'wshFAC_Entête'"
@@ -1618,7 +1621,7 @@ Public Function Fn_Convert_Value_Boolean_To_Text(val As Boolean) As String
         Case -1, "True", "Vrai", "VRAI" 'True"
             Fn_Convert_Value_Boolean_To_Text = "VRAI"
         Case Else
-            msgBox val & " est une valeur INVALIDE !"
+            MsgBox val & " est une valeur INVALIDE !"
     End Select
 
 End Function
@@ -1878,7 +1881,7 @@ Function AppMsgBox(message As String _
                  , Optional boutons As VbMsgBoxStyle = vbOKOnly _
                  , Optional titre As String = "") As VbMsgBoxResult
                  
-    AppMsgBox = msgBox(message, boutons, titre)
+    AppMsgBox = MsgBox(message, boutons, titre)
                  
 End Function
 
@@ -2072,7 +2075,7 @@ Function ValiderDateDernierJourDuMois(y As Integer, m As Integer, d As Integer) 
         If m = 2 Then
             titre = titre & IIf(isLeapYear, "", " pour l'année " & y)
         End If
-        msgBox message, vbExclamation, titre
+        MsgBox message, vbExclamation, titre
         ValiderDateDernierJourDuMois = "" 'Si le jour n'est pas valide, on retourne une chaîne vide
         Exit Function
     Else
