@@ -484,9 +484,18 @@ Sub FAC_Entête_Import_All() '2024-07-11 @ 09:21
     
     Application.ScreenUpdating = False
     
-    'Clear all cells, but the headers, in the target worksheet
-    wshFAC_Entête.Range("A1").CurrentRegion.offset(2, 0).ClearContents
-
+    Dim ws As Worksheet
+    Set ws = wshFAC_Entête
+    
+    Dim strNomTable As String
+    strNomTable = "l_tbl_FAC_Entête"
+    Dim lo As ListObject
+    Set lo = ws.ListObjects(strNomTable)
+    
+    If Not lo.DataBodyRange Is Nothing Then
+        lo.DataBodyRange.Delete
+    End If
+    
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
     sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
@@ -514,7 +523,13 @@ Sub FAC_Entête_Import_All() '2024-07-11 @ 09:21
     
     'Copy to wshFAC_Entête workbook
     wshFAC_Entête.Range("A3").CopyFromRecordset recSet
-
+    
+    'Redimensionner la table pour inclure uniquement les nouvelles données
+    Dim derLigne As Long
+    derLigne = ws.Cells(ws.Rows.count, "A").End(xlUp).row
+    Set lo = ws.ListObjects(strNomTable)
+    lo.Resize ws.Range(lo.HeaderRowRange.Cells(1), ws.Cells(derLigne, recSet.Fields.count))
+    
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
     Dim rng As Range: Set rng = wshFAC_Entête.Range("A1").CurrentRegion
     Call ApplyWorksheetFormat(wshFAC_Entête, rng, 2)
@@ -523,8 +538,10 @@ Sub FAC_Entête_Import_All() '2024-07-11 @ 09:21
     
     'Libérer la mémoire
     Set connStr = Nothing
+    Set lo = Nothing
     Set recSet = Nothing
     Set rng = Nothing
+    Set ws = Nothing
     
     Call Log_Record("modImport:FAC_Entête_Import_All", "", startTime)
 

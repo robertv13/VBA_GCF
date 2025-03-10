@@ -1,4 +1,5 @@
 Attribute VB_Name = "modDev_Tools"
+'@IgnoreModule UnassignedVariableUsage
 Option Explicit
 
 Sub Get_Range_From_Dynamic_Named_Range(dynamicRangeName As String, ByRef rng As Range)
@@ -1592,12 +1593,12 @@ Sub ExporterCodeVBA() '2025-03-03 @ 06:59
     'Parcourir tous les modules
     Dim vbComp As Object
     Dim ext As String
-    For Each vbComp In ws.VBProject.VBComponents
+    For Each vbComp In ThisWorkbook.VBProject.VBComponents
         Select Case vbComp.Type
             Case 1: ext = ".bas" 'Module standard
             Case 2: ext = ".cls" 'Classe
             Case 3: ext = ".frm" 'UserForm
-            Case 4: ext = ".ws"  'Feuille de calcul
+            Case vbext_ct_Document: ext = ".cls" 'Feuille de calcul et ThisWorkbook
             Case Else: ext = ""  'Autres (ignorés)
         End Select
         
@@ -1606,14 +1607,10 @@ Sub ExporterCodeVBA() '2025-03-03 @ 06:59
         End If
     Next vbComp
 
-'    msgBox _
-'        Prompt:="Export des modules VBA terminé.", _
-'        Title:="Sauvegarde automatique du code VBA", _
-'        Buttons:=vbInformation
-        
     'Libérer la mémoire
     Set vbComp = Nothing
     Set ws = Nothing
         
 End Sub
+
 

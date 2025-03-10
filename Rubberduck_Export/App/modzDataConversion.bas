@@ -410,7 +410,9 @@ Sub ImporterDonnéesDeClasseursFermés_GL_BV() '2024-08-03 @ 18:20
         
     Loop
     
+    '@Ignore UnassignedVariableUsage
     If errorMesg <> "" Then
+        '@Ignore UnassignedVariableUsage
         MsgBox errorMesg
     Else
         MsgBox "Tous les soldes ont été importés, pour un total débit de " & totalDT & _

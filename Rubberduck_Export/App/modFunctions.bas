@@ -1262,7 +1262,9 @@ Function Fn_Get_Windows_Username() As String 'Function to retrieve the Windows u
     Dim buffer As String * 255
     Dim size As Long: size = 255
     
+    '@Ignore UnassignedVariableUsage
     If GetUserName(buffer, size) Then
+        '@Ignore UnassignedVariableUsage
         Fn_Get_Windows_Username = Left$(buffer, size - 1)
     Else
         Fn_Get_Windows_Username = "Unknown"

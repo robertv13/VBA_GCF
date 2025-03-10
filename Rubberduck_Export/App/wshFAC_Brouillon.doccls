@@ -72,7 +72,9 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_SelectionChange", target.Address, 0)
     
+    '@Ignore UnassignedVariableUsage
     If previousCellAddress <> "" Then
+        '@Ignore UnassignedVariableUsage
         Range(previousCellAddress).Interior.Color = COULEUR_BASE_FACTURATION
     End If
     
