@@ -10,7 +10,7 @@ Private Sub Worksheet_Activate()
     Application.EnableEvents = False
     
     'Import transactions from MASTER file
-    Call GL_Trans_Import_All
+    Call modImport.ImporterGLTransactions
 
     'Set the zoom factor to 95% when this worksheet is activated
     ActiveWindow.Zoom = 95

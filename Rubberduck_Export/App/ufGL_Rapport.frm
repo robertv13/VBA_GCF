@@ -17,7 +17,7 @@ Option Explicit
 
 Private Sub UserForm_Initialize()
 
-    Call GL_Trans_Import_All
+    Call modImport.ImporterGLTransactions
     
     'Efface le contenu de la listBox
     Me.lsbComptes.Clear
@@ -47,7 +47,7 @@ Private Sub UserForm_Initialize()
     'Vérifier si la plage nommée existe
     On Error Resume Next
     Dim plage As Range
-    Set plage = ActiveSheet.Range("dnrDateRange")
+    Set plage = wshAdmin.Range("dnrDateRange")
     On Error GoTo 0
     
     If Not plage Is Nothing Then
@@ -549,4 +549,5 @@ Private Sub CheckBox_Click() '2025-03-03 @ 08:37
     End If
     
 End Sub
+
 

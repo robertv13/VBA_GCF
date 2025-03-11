@@ -1575,7 +1575,7 @@ Sub StopperSauvegardeAutomatique()
     
 End Sub
 
-Sub ExporterCodeVBA() '2025-03-03 @ 06:59
+Sub ExporterCodeVBA() '2025-03-11 @ 06:47
 
     'Définir le dossier où enregistrer les modules
     Dim dossierBackup As String

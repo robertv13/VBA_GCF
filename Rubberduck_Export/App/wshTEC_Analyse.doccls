@@ -13,10 +13,10 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     ws.Activate
     
     'Import transactions from MASTER file
-    Call Client_List_Import_All
-    Call TEC_Import_All
-    Call FAC_Projets_Détails_Import_All
-    Call FAC_Projets_Entête_Import_All
+    Call modImport.ImporterClients
+    Call modImport.ImporterTEC
+    Call modImport.ImporterFacProjetsDetails
+    Call modImport.ImporterFacProjetsEntete
     
     'Set the zoom factor to 100% when this worksheet is activated
     ActiveWindow.Zoom = 100

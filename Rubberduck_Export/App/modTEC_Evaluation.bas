@@ -19,7 +19,7 @@ Sub TEC_Evaluation_Calcul(cutoffDate As String, ByRef maxDate As Date)
         Exit Sub
     End If
         
-    Call TEC_Import_All
+    Call modImport.ImporterTEC
     
     Dim y As Integer, m As Integer, d As Integer
     y = year(cutoffDate)
@@ -280,7 +280,7 @@ Sub TEC_Evaluation_Procedure_ACO(cutoffDate As String)
         Exit Sub
     End If
         
-    Call TEC_Import_All
+    Call modImport.ImporterTEC
     
     Dim maxDate As Date
     Dim y As Integer, m As Integer, d As Integer
@@ -580,4 +580,5 @@ Sub TEC_Evaluation_Back_To_TEC_Menu()
     Call Log_Record("modTEC_Evaluation:TEC_Evaluation_Back_To_TEC_Menu", "", startTime)
 
 End Sub
+
 

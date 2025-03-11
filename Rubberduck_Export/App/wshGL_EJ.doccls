@@ -14,8 +14,8 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     Application.EnableEvents = False
     
     'Import transactions from MASTER file
-    Call GL_Trans_Import_All
-    Call GL_EJ_Recurrente_Import_All
+    Call modImport.ImporterGLTransactions
+    Call modImport.ImporterEJRecurrente
     
     'Set the zoom factor to 100% when this worksheet is activated
     ActiveWindow.Zoom = 100
@@ -268,3 +268,4 @@ Private Sub Worksheet_Change(ByVal target As Range)
         End If
     End If
 End Sub
+

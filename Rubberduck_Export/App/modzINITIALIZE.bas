@@ -66,25 +66,25 @@ Sub DeleteAllRowsButKeepHeaders() '2024-07-30 @ 12:21
     End If
     
     'Step # 2 - Import all worksheets from Sortie.xlsx
-    Call Client_List_Import_All
-    Call Fournisseur_List_Import_All
+    Call modImport.ImporterClients
+    Call modImport.ImporterFournisseurs
     
-    Call DEB_Récurrent_Import_All
-    Call DEB_Trans_Import_All
+    Call modImport.ImporterDebRecurrent
+    Call modImport.ImporterDebTrans
     
-    Call ENC_Détails_Import_All
-    Call ENC_Entête_Import_All
+    Call modImport.ImporterEncDetails
+    Call modImport.ImporterEncEntete
     
-    Call FAC_Comptes_Clients_Import_All
-    Call FAC_Détails_Import_All
-    Call FAC_Entête_Import_All
-    Call FAC_Projets_Détails_Import_All
-    Call FAC_Projets_Entête_Import_All
+    Call modImport.ImporterFacComptesClients
+    Call modImport.ImporterFacDetails
+    Call modImport.ImporterFacEntete
+    Call modImport.ImporterFacProjetsDetails
+    Call modImport.ImporterFacProjetsEntete
     
-    Call GL_EJ_Recurrente_Import_All
-    Call GL_Trans_Import_All
+    Call modImport.ImporterEJRecurrente
+    Call modImport.ImporterGLTransactions
     
-    Call TEC_Import_All
+    Call modImport.ImporterTEC
     
     'Step # 3 - Process the current workbook
     Set ws = wshDEB_Saisie

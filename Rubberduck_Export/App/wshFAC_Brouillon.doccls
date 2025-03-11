@@ -15,13 +15,13 @@ Private Sub Worksheet_Activate()
     
     Dim ws As Worksheet: Set ws = wshFAC_Brouillon
     
-    Call Client_List_Import_All
-    Call TEC_Import_All
-    Call FAC_Entête_Import_All
-    Call FAC_Détails_Import_All
-    Call FAC_Comptes_Clients_Import_All
-    Call FAC_Projets_Entête_Import_All
-    Call FAC_Projets_Détails_Import_All
+    Call modImport.ImporterClients
+    Call modImport.ImporterTEC
+    Call modImport.ImporterFacEntete
+    Call modImport.ImporterFacDetails
+    Call modImport.ImporterFacComptesClients
+    Call modImport.ImporterFacProjetsEntete
+    Call modImport.ImporterFacProjetsDetails
     
     With ws
         .Unprotect

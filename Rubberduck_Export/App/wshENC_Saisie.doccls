@@ -20,13 +20,13 @@ Private Sub Worksheet_Activate()
     Me.Application.Calculation = xlCalculationAutomatic
     
     'Import transactions from MASTER file
-    Call Client_List_Import_All
-    Call FAC_Comptes_Clients_Import_All
-    Call FAC_Détails_Import_All
-    Call FAC_Entête_Import_All
-    Call ENC_Détails_Import_All
-    Call ENC_Entête_Import_All
-    Call GL_Trans_Import_All
+    Call modImport.ImporterClients
+    Call modImport.ImporterFacComptesClients
+    Call modImport.ImporterFacDetails
+    Call modImport.ImporterFacEntete
+    Call modImport.ImporterEncDetails
+    Call modImport.ImporterEncEntete
+    Call modImport.ImporterGLTransactions
     
     'Set the zoom factor to 100% when this worksheet is activated
     ActiveWindow.Zoom = 100

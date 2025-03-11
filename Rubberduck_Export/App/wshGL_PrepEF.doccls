@@ -15,7 +15,7 @@ Private Sub Worksheet_Activate()
     Me.Application.Calculation = xlCalculationAutomatic
     
     'Import transactions from MASTER file
-    Call GL_Trans_Import_All
+    Call modImport.ImporterGLTransactions
 
     'Set the zoom factor to 95% when this worksheet is activated
     ActiveWindow.Zoom = 100
@@ -56,7 +56,7 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
     End If
 
     'Date limite est sélectionnée
-    If Not Intersect(target, wshGL_PrepEF.Range("F3")) Is Nothing Then
+    If Not Intersect(target, Me.Range("F3")) Is Nothing Then
         target.Interior.Color = COULEUR_SAISIE
     End If
     
@@ -93,4 +93,3 @@ Private Sub Worksheet_Change(ByVal target As Range)
     End If
 
 End Sub
-

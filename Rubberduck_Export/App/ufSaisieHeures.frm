@@ -30,8 +30,8 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
     
     logSaisieHeuresVeryDetailed = False
     
-    Call Client_List_Import_All
-    Call TEC_Import_All
+    Call modImport.ImporterClients
+    Call modImport.ImporterTEC
     
     'Mise en place de la colonne à rechercher dans BD_Clients
     Dim lastUsedRow As Long

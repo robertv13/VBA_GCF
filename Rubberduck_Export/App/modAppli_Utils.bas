@@ -87,7 +87,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     Application.ScreenUpdating = True
     Call AddMessageToWorkSheet(wsOutput, r, 1, "BD_Clients")
     
-    Call Client_List_Import_All
+    Call modImport.ImporterClients
     Call AddMessageToWorkSheet(wsOutput, r, 2, "La feuille a été importée du fichier BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
@@ -99,7 +99,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     Application.ScreenUpdating = True
     Call AddMessageToWorkSheet(wsOutput, r, 1, "BD_Fournisseurs")
     
-    Call Fournisseur_List_Import_All
+    Call modImport.ImporterFournisseurs
     Call AddMessageToWorkSheet(wsOutput, r, 2, "La feuille a été importée du fichier BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
@@ -111,7 +111,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     Application.ScreenUpdating = True
     Call AddMessageToWorkSheet(wsOutput, r, 1, "DEB_Récurrent")
     
-    Call DEB_Récurrent_Import_All
+    Call modImport.ImporterDebRecurrent
     Call AddMessageToWorkSheet(wsOutput, r, 2, "DEB_Récurrent a été importée du fichier BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
@@ -123,7 +123,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     Application.ScreenUpdating = True
     Call AddMessageToWorkSheet(wsOutput, r, 1, "DEB_Trans")
     
-    Call DEB_Trans_Import_All
+    Call modImport.ImporterDebTrans
     Call AddMessageToWorkSheet(wsOutput, r, 2, "DEB_Trans a été importée du fichier BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
@@ -135,7 +135,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     Application.ScreenUpdating = True
     Call AddMessageToWorkSheet(wsOutput, r, 1, "FAC_Entête")
     
-    Call FAC_Entête_Import_All
+    Call modImport.ImporterFacEntete
     Call AddMessageToWorkSheet(wsOutput, r, 2, "FAC_Entête a été importée du fichier BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
@@ -147,7 +147,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     Application.ScreenUpdating = True
     Call AddMessageToWorkSheet(wsOutput, r, 1, "FAC_Détails")
     
-    Call FAC_Détails_Import_All
+    Call modImport.ImporterFacDetails
     Call AddMessageToWorkSheet(wsOutput, r, 2, "FAC_Détails a été importée du fichier BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
@@ -158,7 +158,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     'wshFAC_Comptes_Clients ------------------------------------------ FAC_Comptes_Clients
     Call AddMessageToWorkSheet(wsOutput, r, 1, "FAC_Comptes_Clients")
     
-    Call FAC_Comptes_Clients_Import_All
+    Call modImport.ImporterFacComptesClients
     Call AddMessageToWorkSheet(wsOutput, r, 2, "FAC_Comptes_Clients a été importée du fichier BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
@@ -168,7 +168,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     'wshFAC_Sommaire_Taux ---------------------------------------------- FAC_Sommaire_Taux
     Call AddMessageToWorkSheet(wsOutput, r, 1, "FAC_Sommaire_Taux")
     
-    Call FAC_Sommaire_Taux_Import_All
+    Call modImport.ImporterFacSommaireTaux
     Call AddMessageToWorkSheet(wsOutput, r, 2, "FAC_Sommaire_Taux a été importée du fichier BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
@@ -178,7 +178,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     'wshENC_Entête ------------------------------------------------------------ ENC_Entête
     Call AddMessageToWorkSheet(wsOutput, r, 1, "ENC_Entête")
     
-    Call ENC_Entête_Import_All
+    Call modImport.ImporterEncEntete
     Call AddMessageToWorkSheet(wsOutput, r, 2, "ENC_Entête a été importée du fichier BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
@@ -188,7 +188,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     'wshENC_Détails ---------------------------------------------------------- ENC_Détails
     Call AddMessageToWorkSheet(wsOutput, r, 1, "ENC_Détails")
     
-    Call ENC_Détails_Import_All
+    Call modImport.ImporterEncDetails
     Call AddMessageToWorkSheet(wsOutput, r, 2, "ENC_Détails a été importée du fichier BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
@@ -198,7 +198,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     'wshCC_Régularisations ---------------------------------------------------------- CC_Régularisations
     Call AddMessageToWorkSheet(wsOutput, r, 1, "CC_Régularisations")
     
-    Call CC_Régularisations_Import_All
+    Call modImport.ImporterCCRegularisations
     Call AddMessageToWorkSheet(wsOutput, r, 2, "CC_Régularisations a été importée du fichier BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
@@ -208,7 +208,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     'wshFAC_Projets_Entête -------------------------------------------- FAC_Projets_Entête
     Call AddMessageToWorkSheet(wsOutput, r, 1, "FAC_Projets_Entête")
     
-    Call FAC_Projets_Entête_Import_All
+    Call modImport.ImporterFacProjetsEntete
     Call AddMessageToWorkSheet(wsOutput, r, 2, "FAC_Projets_Entête a été importée du fichier BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
@@ -218,7 +218,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     'wshFAC_Projets_Détails ------------------------------------------ FAC_Projets_Détails
     Call AddMessageToWorkSheet(wsOutput, r, 1, "FAC_Projets_Détails")
     
-    Call FAC_Projets_Détails_Import_All
+    Call modImport.ImporterFacProjetsDetails
     Call AddMessageToWorkSheet(wsOutput, r, 2, "FAC_Projets_Détails a été importée du fichier BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
@@ -228,7 +228,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     'wshGL_Trans ---------------------------------------------------------------- GL_Trans
     Call AddMessageToWorkSheet(wsOutput, r, 1, "GL_Trans")
     
-    Call GL_Trans_Import_All
+    Call modImport.ImporterGLTransactions
     Call AddMessageToWorkSheet(wsOutput, r, 2, "GL_Trans a été importée du fichier BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
@@ -238,7 +238,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     'wshGL_EJ_Recurrente ------------------------------------------------ GL_EJ_Recurrente
     Call AddMessageToWorkSheet(wsOutput, r, 1, "GL_EJ_Recurrente")
     
-    Call GL_EJ_Recurrente_Import_All
+    Call modImport.ImporterEJRecurrente
     Call AddMessageToWorkSheet(wsOutput, r, 2, "GL_EJ_Recurrente a été importée du fichier BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
@@ -248,7 +248,7 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     'wshTEC_TdB_Data -------------------------------------------------------- TEC_TdB_Data
     Call AddMessageToWorkSheet(wsOutput, r, 1, "TEC_TdB_Data")
     
-    Call TEC_Import_All
+    Call modImport.ImporterTEC
     Call ActualiserTEC_TDB
     Call AddMessageToWorkSheet(wsOutput, r, 2, "TEC_TdB_Data a été importée du fichier BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
@@ -3156,7 +3156,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 4688 'What is the last TECID analyzed ?
+    lastTECIDReported = 4727 'What is the last TECID analyzed ?
     
     'Feuille contenant les données à analyser
     Dim HeaderRow As Long: HeaderRow = 2
@@ -3256,8 +3256,8 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Dim isTECValid As Boolean
     isTECValid = True
     
-    Dim arrHres(1 To 10000, 1 To 6) As Variant
-    Dim arrRow As Integer, pArr As Integer, rArr As Integer
+'    Dim arrHres(1 To 10000, 1 To 6) As Variant
+'    Dim arrRow As Integer, pArr As Integer, rArr As Integer
     
     'Sommaire par Date de charge (validation du format de date)
     Dim dictDateCharge As Object
@@ -3312,15 +3312,15 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
             isTECValid = False
         End If
         
-        'Validate nomClient
-        nomClient = arrTEC_Local_Data(i, fTECClientNom)
-        If tecID > lastTECIDReported And dictClient.Exists(codeClient) = True Then
-            nomClientFromMF = dictClient(codeClient)
-            If nomClient <> nomClientFromMF Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID = " & tecID & ", CLIENT = " & codeClient & ", le nom du client (TEC) '" & nomClient & "' <> (MF) '" & nomClientFromMF & "'")
-                r = r + 1
-            End If
-        End If
+'        'Validate nomClient
+'        nomClient = arrTEC_Local_Data(i, fTECClientNom)
+'        If tecID > lastTECIDReported And dictClient.Exists(codeClient) = True Then
+'            nomClientFromMF = dictClient(codeClient)
+'            If nomClient <> nomClientFromMF Then
+'                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID = " & tecID & ", CLIENT = " & codeClient & ", le nom du client (TEC) '" & nomClient & "' <> (MF) '" & nomClientFromMF & "'")
+'                r = r + 1
+'            End If
+'        End If
         hres = arrTEC_Local_Data(i, fTECHeures)
         testHres = IsNumeric(hres)
         If testHres = False Then
@@ -4156,7 +4156,7 @@ Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
     dateTo = wshAdmin.Range("MoisPrecA").value
     
     'Analyse de TEC_Local
-    Call TEC_Import_All
+    Call modImport.ImporterTEC
     
     Dim wsTEC As Worksheet: Set wsTEC = wshTEC_Local
     

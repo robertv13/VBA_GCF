@@ -49,9 +49,9 @@ Sub FAC_Historique_Click()
 
     Application.ScreenUpdating = False
     
-    Call FAC_Entête_Import_All
-    Call FAC_Détails_Import_All
-    Call FAC_Comptes_Clients_Import_All
+    Call modImport.ImporterFacEntete
+    Call modImport.ImporterFacDetails
+    Call modImport.ImporterFacComptesClients
 
     Application.EnableEvents = True
     
@@ -75,12 +75,12 @@ Sub FAC_Confirmation_Click()
     
     fromMenu = True '2024-09-03 @ 06:20
 
-    Call Client_List_Import_All
-    Call FAC_Comptes_Clients_Import_All
-    Call FAC_Détails_Import_All
-    Call FAC_Entête_Import_All
-    Call FAC_Sommaire_Taux_Import_All
-    Call TEC_Import_All
+    Call modImport.ImporterClients
+    Call modImport.ImporterFacComptesClients
+    Call modImport.ImporterFacDetails
+    Call modImport.ImporterFacEntete
+    Call modImport.ImporterFacSommaireTaux
+    Call modImport.ImporterTEC
     
     Call Afficher_ufConfirmation
     

@@ -25,7 +25,7 @@ Public fromMenu As Boolean '2024-09-03 @ 06:14
 Public logSaisieHeuresVeryDetailed As Boolean
 
 'Pour assurer un contrôle dans Facture Finale
-Public flagEtapeFacture As Integer
+Public flagEtapeFacture As Long
 
 'Sauvegarde AUTOMATIQUE du code VBA - 2025-03-03 @ 07:18
 Public gNextBackupTime As Date
@@ -423,7 +423,7 @@ Sub CodeEssentielDepart()
     Set ws = Nothing
     
     If Fn_Get_Windows_Username = "Robert M. Vigneault" Or Fn_Get_Windows_Username = "robertmv" Then
-        Call ExporterCodeVBA 'Sauvegarde AUTOMATIQUE du code VBA
+'        Call ExporterCodeVBA 'Sauvegarde AUTOMATIQUE du code VBA
         Call DemarrerSauvegardeAutomatique
     End If
     
@@ -458,7 +458,7 @@ Sub CreateUserActiveFile()
     Dim traceFilePath As String
     traceFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
     
-    Dim FileNumber As Integer
+    Dim FileNumber As Long
     FileNumber = FreeFile
     
     On Error GoTo Error_Handling
@@ -567,4 +567,5 @@ Sub WriteInfoOnMainMenu()
     Call Log_Record("modAppli:WriteInfoOnMainMenu", "", startTime)
 
 End Sub
+
 

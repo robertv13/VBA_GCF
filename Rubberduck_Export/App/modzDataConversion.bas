@@ -158,7 +158,7 @@ Sub ImporterDonnéesDeClasseursFermés_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 16
 
     Stop 'One shot deal !!!
     
-    Call Client_List_Import_All
+    Call modImport.ImporterClients
     
     'Define the path to the closed workbook
     Dim strFilePath As String
@@ -432,7 +432,7 @@ Sub ImporterDonnéesDeClasseursFermés_CAR() '2024-08-04 @ 07:31
 
     Stop 'One shot deal
     
-    Call Client_List_Import_All
+    Call modImport.ImporterClients
     
     Dim strConnection As String
     Dim wsDest As Worksheet
@@ -680,6 +680,7 @@ Sub Compare2ExcelFiles() '------------------------------------------ 2024-09-02 
     Set wsNow = Nothing
     Set wsDiff = Nothing
     
+    '@Ignore UnassignedVariableUsage
     MsgBox "La comparaison est complétée." & vbNewLine & vbNewLine & _
            differences, vbInformation
            

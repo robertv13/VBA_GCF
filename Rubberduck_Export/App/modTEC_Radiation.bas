@@ -9,7 +9,7 @@ Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
         Exit Sub
     End If
         
-    Call TEC_Import_All
+    Call modImport.ImporterTEC
     
     Dim maxDate As Date
     Dim y As Integer, m As Integer, d As Integer
@@ -446,4 +446,5 @@ Sub Prepare_Pour_Nouvelle_Radiation()
     Next chkBox
 
 End Sub
+
 

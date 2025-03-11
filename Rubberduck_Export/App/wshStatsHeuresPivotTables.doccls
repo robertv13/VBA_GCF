@@ -19,7 +19,7 @@ Private Sub Worksheet_Activate()
     'Masquer toutes les colonnes, pour la confidentialité
     ws.Range("D:V").EntireColumn.Hidden = True
     
-    Call TEC_Import_All
+    Call modImport.ImporterTEC
     
     'Set the zoom factor to 100% when this worksheet is activated
     ActiveWindow.Zoom = 100

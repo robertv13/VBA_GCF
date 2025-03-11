@@ -16,7 +16,7 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
     Dim ws As Worksheet: Set ws = wshTEC_Evaluation
     
     'Import transactions from MASTER file
-    Call Client_List_Import_All
+    Call modImport.ImporterClients
     
     'Set the zoom factor to 100% when this worksheet is activated
     ActiveWindow.Zoom = 100
@@ -76,7 +76,7 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
     End If
     
     'Is date been selected ?
-    If Not Intersect(target, wshTEC_Evaluation.Range("L3")) Is Nothing Then
+    If Not Intersect(target, Me.Range("L3")) Is Nothing Then
         target.Interior.Color = COULEUR_SAISIE
     End If
     

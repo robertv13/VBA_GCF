@@ -15,9 +15,9 @@ Private Sub Worksheet_Activate()
     Application.EnableEvents = False
     
     'Import transactions from MASTER file
-    Call FAC_Comptes_Clients_Import_All
-    Call FAC_Entête_Import_All
-    Call FAC_Détails_Import_All
+    Call modImport.ImporterFacComptesClients
+    Call modImport.ImporterFacEntete
+    Call modImport.ImporterFacDetails
     
     Call FAC_Historique_Clear_All_Cells
     

@@ -2,7 +2,7 @@
 
 Private Sub Worksheet_Activate()
 
-    Call GL_Trans_Import_All
+    Call modImport.ImporterGLTransactions
     
     Call Actualiser_Stats_CA
     
