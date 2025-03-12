@@ -181,7 +181,7 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
                                     
     'Set conditional formatting for the worksheet (alternate colors)
     Dim rngArea As Range: Set rngArea = wsDiff.Range("A2:E" & diffRow)
-    Call modAppli_Utils.ApplyConditionalFormatting(rngArea, 1, True)
+    Call modAppli_Utils.AppliquerConditionalFormating(rngArea, 1, True)
 
     'Setup print parameters
     Dim rngToPrint As Range: Set rngToPrint = wsDiff.Range("A2:E" & diffRow)
@@ -331,7 +331,7 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
                                     
     'Set conditional formatting for the worksheet (alternate colors)
     Dim rngArea As Range: Set rngArea = wsDiff.Range("A2:I" & diffRow)
-    Call modAppli_Utils.ApplyConditionalFormatting(rngArea, 1, True)
+    Call modAppli_Utils.AppliquerConditionalFormating(rngArea, 1, True)
 
     'Setup print parameters
     Dim rngToPrint As Range: Set rngToPrint = wsDiff.Range("A2:I" & diffRow)
@@ -1267,9 +1267,9 @@ Function Convertir_Couleur_RGB_Hex(ByVal couleur As Long) As String
     bleu = (couleur \ 65536) Mod 256
     
     'Construire la valeur HEX (en format #RRGGBB)
-    Convertir_Couleur_RGB_Hex = "#" & Right$("00" & Hex(rouge), 2) & _
-                                        Right$("00" & Hex(vert), 2) & _
-                                        Right$("00" & Hex(bleu), 2)
+    Convertir_Couleur_RGB_Hex = "#" & Right$("00" & Hex$(rouge), 2) & _
+                                        Right$("00" & Hex$(vert), 2) & _
+                                        Right$("00" & Hex$(bleu), 2)
     
 End Function
 
@@ -1317,9 +1317,9 @@ Function Convertir_Couleur_OLE(ByVal couleur As Long) As String
     bleu = (couleur \ 65536) Mod 256
     
     ' Construire le code OLE en inversant les composantes RGB en BGR
-    Convertir_Couleur_OLE = "&H00" & Right$("00" & Hex(bleu), 2) & _
-                                        Right$("00" & Hex(vert), 2) & _
-                                        Right$("00" & Hex(rouge), 2) & "&"
+    Convertir_Couleur_OLE = "&H00" & Right$("00" & Hex$(bleu), 2) & _
+                                        Right$("00" & Hex$(vert), 2) & _
+                                        Right$("00" & Hex$(rouge), 2) & "&"
                                         
 End Function
 
@@ -1390,7 +1390,7 @@ Function NumeroEnLettre(ByVal num As Long) As String
     'Construire la chaîne de caractères à partir du numéro
     Do
         num = num - 1
-        NumeroEnLettre = Chr(65 + (num Mod 26)) & NumeroEnLettre
+        NumeroEnLettre = Chr$(65 + (num Mod 26)) & NumeroEnLettre
         num = num \ 26
     Loop While num > 0
     

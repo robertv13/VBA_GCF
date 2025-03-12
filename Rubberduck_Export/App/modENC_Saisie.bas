@@ -1,9 +1,7 @@
 Attribute VB_Name = "modENC_Saisie"
 Option Explicit
 
-'TODO Is this comment still valid? => Variables globales pour le module
 Public lastRow As Long
-Private payRow As Long
 Private gNumeroEcritureARenverser As Long
 
 Sub ENC_Get_OS_Invoices(cc As String) '2024-08-21 @ 15:18

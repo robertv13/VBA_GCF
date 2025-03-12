@@ -259,7 +259,7 @@ Private Sub Process_Change(ByVal target As Range)
             Application.EnableEvents = False
             target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(target.Address)
+            Application.Goto Range(target.Address)
         End If
         Application.EnableEvents = True
         Exit Sub

@@ -37,7 +37,8 @@ Sub menuFacturation()
             userName = "gchar" Or _
             userName = "Robert M. Vigneault" Or _
             userName = "robertmv" Or _
-            userName = "User" Then
+            userName = "User" Or _
+            userName = "vgervais" Then
         wshMenuFAC.Visible = xlSheetVisible
         wshMenuFAC.Activate
         wshMenuFAC.Range("A1").Select
@@ -100,8 +101,7 @@ Sub Parametres()
             userName = "GuillaumeCharron" Or _
             userName = "gchar" Or _
             userName = "Robert M. Vigneault" Or _
-            userName = "robertmv" Or _
-            userName = "User" Then
+            userName = "robertmv" Then
         wshAdmin.Visible = xlSheetVisible
         wshAdmin.Select
     Else
@@ -273,9 +273,9 @@ Sub shpImporterCorrigerMASTER_Click()
 
 End Sub
 
-Sub shpVérificationIntégrité_Click()
+Sub shpVerificationIntegrite_Click()
 
-    Call VérifierIntégrité
+    Call modAppli_Utils.VerifierIntegriteTablesLocales
 
 End Sub
 
@@ -345,6 +345,5 @@ Sub RetourMenuPrincipal()
     Set ws = Nothing
     
 End Sub
-
 
 

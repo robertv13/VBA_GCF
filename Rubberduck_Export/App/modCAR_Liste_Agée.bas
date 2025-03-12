@@ -1,5 +1,7 @@
 Attribute VB_Name = "modCAR_Liste_Agée"
 '@IgnoreModule SetAssignmentWithIncompatibleObjectType
+'@Folder("Facturation")
+
 Option Explicit
 
 Sub CC_PreparerListeAgee_Click()
@@ -413,7 +415,7 @@ Next_Invoice:
     
     Application.EnableEvents = False
 
-    Call modAppli_Utils.ApplyConditionalFormatting(rngToPrint, 0, False)
+    Call modAppli_Utils.AppliquerConditionalFormating(rngToPrint, 0, False)
     
     'Caractères pour le rapport
     With rngToPrint.Font
@@ -499,7 +501,6 @@ End Sub
 Sub EnvoyerRappelParCourriel(noFact As String)
 
     Dim montantDu As String
-    Dim message As String
 
     'Retrouver le code du client
     Dim codeClient As String
@@ -523,7 +524,6 @@ Sub EnvoyerRappelParCourriel(noFact As String)
     'Retrouver le nom du client, le nom du contact et son adresse courriel
     Dim clientNom As String
     Dim clientContactFact As String
-    Dim prenomContact As String
     Dim clientCourriel As String
     allCols = Fn_Get_A_Row_From_A_Worksheet("BD_Clients", codeClient, fClntFMClientID)
     'Vérifier les résultats
@@ -532,10 +532,6 @@ Sub EnvoyerRappelParCourriel(noFact As String)
         'Élimine le ou les nom(s) de contact
         clientNom = Fn_Strip_Contact_From_Client_Name(clientNom)
         clientContactFact = Trim$(allCols(fClntFMContactFacturation)) + " "
-        prenomContact = ""
-        If InStr(clientContactFact, " ") <> 0 Then
-            prenomContact = Left$(clientContactFact, InStr(clientContactFact, " ") - 1)
-        End If
         '0 à 2 adresses courriel
         clientCourriel = allCols(fClntFMCourrielFacturation)
     Else
@@ -588,13 +584,13 @@ Sub EnvoyerRappelParCourriel(noFact As String)
     
     'Chemin du template (.oft) de courriel
     Dim templateFullPathName As String
-    templateFullPathName = Environ("appdata") & "\Microsoft\Templates\GCF_Rappel.oft"
+    templateFullPathName = Environ$("appdata") & "\Microsoft\Templates\GCF_Rappel.oft"
 
     'Vérification de l'existence du template
     fileExists = Dir(templateFullPathName) <> ""
     If Not fileExists Then
         MsgBox "Le gabarit 'GCF_Rappel.oft' est introuvable " & _
-                    "à l'emplacement spécifié, soit " & Environ("appdata") & "\Microsoft\Templates", _
+                    "à l'emplacement spécifié, soit " & Environ$("appdata") & "\Microsoft\Templates", _
                     vbCritical
         GoTo Exit_Sub
     End If

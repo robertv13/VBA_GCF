@@ -350,7 +350,7 @@ Private Sub RemoveStartingText()
     m_UpdateControl = True
 
     With myTextBox
-        .Text = Mid(.value, .SelStart, 1)
+        .Text = Mid$(.value, .SelStart, 1)
 '        .ForeColor = rgbBlack
     End With
     

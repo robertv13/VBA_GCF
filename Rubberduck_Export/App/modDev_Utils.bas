@@ -385,7 +385,7 @@ Sub List_Conditional_Formatting_All() '2024-06-23 @ 18:37
                 For ruleIndex = 1 To area.FormatConditions.count
                     Set cf = area.FormatConditions(ruleIndex)
                     i = i + 1
-                    arr(i, 1) = ws.Name & Chr(0) & area.Address
+                    arr(i, 1) = ws.Name & Chr$(0) & area.Address
                     arr(i, 2) = ws.Name
                     arr(i, 3) = area.Address
                     arr(i, 4) = cf.Type
@@ -472,7 +472,7 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
             
             If dvType <> "" And dvType <> "0" Then
                 'Write the data validation details to the output sheet
-                arr(x, 1) = ws.Name & Chr(0) & cell.Address 'Sort Key
+                arr(x, 1) = ws.Name & Chr$(0) & cell.Address 'Sort Key
                 arr(x, 2) = ws.Name
                 arr(x, 3) = cell.Address
                 arr(x, 4) = dvType
@@ -642,7 +642,7 @@ Sub List_Formulas_All() '2024-06-22 @ 15:42
             If Left$(cell.formula, 1) = "=" Then
                 'Write formula information to the destination worksheet
                 i = i + 1
-                outputArray(i, 1) = ws.CodeName & Chr(0) & cell.Address
+                outputArray(i, 1) = ws.CodeName & Chr$(0) & cell.Address
                 outputArray(i, 2) = ws.CodeName
                 outputArray(i, 3) = Name
                 outputArray(i, 4) = usedRange
@@ -792,7 +792,7 @@ Sub List_Named_Ranges_All() '2024-06-23 @ 07:40
     Dim timeStamp As String
     For Each nr In ThisWorkbook.Names
         i = i + 1
-        arr(i, 1) = UCase$(nr.Name) & Chr(0) & UCase$(nr.RefersTo) 'Sort Key
+        arr(i, 1) = UCase$(nr.Name) & Chr$(0) & UCase$(nr.RefersTo) 'Sort Key
         arr(i, 2) = nr.Name
         arr(i, 3) = "'" & nr.RefersTo
         If InStr(nr.RefersTo, "#REF!") Then
@@ -979,7 +979,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
                 arrResult(xr, 6) = "'" & saveLineOfCode
                 timeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
                 arrResult(xr, 7) = timeStamp
-                arrResult(xr, 1) = UCase$(arr(x, 1)) & Chr(0) & UCase$(arr(x, 2)) & Chr(0) & Format$(arr(x, 3), "0000") & Chr(0) & procedureName 'Future sort key
+                arrResult(xr, 1) = UCase$(arr(x, 1)) & Chr$(0) & UCase$(arr(x, 2)) & Chr$(0) & Format$(arr(x, 3), "0000") & Chr$(0) & procedureName 'Future sort key
             End If
         End If
     Next x
@@ -1227,7 +1227,7 @@ Sub List_All_Macros_Used_With_Objects() '2024-11-26 @ 20:14
     'Set conditional formatting for the worksheet (alternate colors)
     outputRow = wsOutputSheet.Cells(wsOutputSheet.Rows.count, "A").End(xlUp).row
     Dim rngArea As Range: Set rngArea = wsOutputSheet.Range("A2:D" & outputRow)
-    Call modAppli_Utils.ApplyConditionalFormatting(rngArea, 1, True) 'There are blankrows to account for
+    Call modAppli_Utils.AppliquerConditionalFormating(rngArea, 1, True) 'There are blankrows to account for
     
     outputRow = wsOutputSheet.Cells(wsOutputSheet.Rows.count, "A").End(xlUp).row
     Dim rngToPrint As Range: Set rngToPrint = wsOutputSheet.Range("A2:D" & outputRow)
@@ -1347,7 +1347,7 @@ Sub List_Subs_And_Functions_All() '2024-11-26 @ 20:02
                     End If
                     arr(i, 6) = sType
                     arr(i, 7) = trimmedLineOfCode
-                    arr(i, 1) = UCase$(oType) & Chr(0) & UCase$(vbComp.Name) & Chr(0) & UCase$(trimmedLineOfCode) 'Future sort key
+                    arr(i, 1) = UCase$(oType) & Chr$(0) & UCase$(vbComp.Name) & Chr$(0) & UCase$(trimmedLineOfCode) 'Future sort key
                     If params <> "()" Then arr(i, 8) = params
                     If remarks <> "" Then arr(i, 9) = remarks
                     arr(i, 10) = Format$(Now(), "yyyy-mm-dd hh:mm")

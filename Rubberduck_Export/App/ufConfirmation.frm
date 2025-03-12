@@ -84,7 +84,7 @@ Private Sub ListView1_ItemClick(ByVal item As MSComctlLib.listItem)
     'Open the invoice using Adobe Acrobat Reader
     If PDFInvoicePath <> "" Then
         Dim strShell As String
-        strShell = "C:\Program Files\Adobe\Acrobat DC\Acrobat\Acrobat.exe " & Chr(34) & PDFInvoicePath & Chr(34)
+        strShell = "C:\Program Files\Adobe\Acrobat DC\Acrobat\Acrobat.exe " & Chr$(34) & PDFInvoicePath & Chr$(34)
         Debug.Print "#092 - " & strShell
         Shell strShell, vbNormalFocus
     Else

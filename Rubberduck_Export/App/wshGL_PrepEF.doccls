@@ -80,7 +80,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
         Else
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshGL_PrepEF_139")
             target.ClearContents
-            Application.GoTo Range(target.Address)
+            Application.Goto Range(target.Address)
         End If
         
         Application.EnableEvents = True

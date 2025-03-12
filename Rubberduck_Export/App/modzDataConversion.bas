@@ -652,7 +652,7 @@ Sub Compare2ExcelFiles() '------------------------------------------ 2024-09-02 
                                     
     'Set conditional formatting for the worksheet (alternate colors)
     Dim rngArea As Range: Set rngArea = wsDiff.Range("A2:G" & diffRow)
-    Call modAppli_Utils.ApplyConditionalFormatting(rngArea, 1, True)
+    Call modAppli_Utils.AppliquerConditionalFormating(rngArea, 1, True)
 
     'Setup print parameters
     Dim rngToPrint As Range: Set rngToPrint = wsDiff.Range("A2:DC" & diffRow)
@@ -982,7 +982,7 @@ Sub CorrigeNomClientInTEC()  '2025-03-04 @ 05:48
                                     
     'Set conditional formatting for the worksheet (alternate colors)
     Dim rngArea As Range: Set rngArea = wsOutput.Range("A2:F" & rowOutput)
-    Call modAppli_Utils.ApplyConditionalFormatting(rngArea, 1, True)
+    Call modAppli_Utils.AppliquerConditionalFormating(rngArea, 1, True)
 
     'Setup print parameters
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:E" & rowOutput)
@@ -1009,7 +1009,7 @@ Sub CorrigeNomClientInTEC()  '2025-03-04 @ 05:48
     
 End Sub
 
-Sub DetecterErreurCodeClientInTEC()  '2025-03-06 @ 21:52
+Sub DetecterErreurCodeClientInTEC()  '2025-03-11 @ 08:29
 
     'Source - Définir les chemins d'accès des fichiers, le Workbook et le Worksheet
     Dim sourceFilePath As String
@@ -1085,7 +1085,7 @@ Sub DetecterErreurCodeClientInTEC()  '2025-03-06 @ 21:52
                                     
     'Set conditional formatting for the worksheet (alternate colors)
     Dim rngArea As Range: Set rngArea = wsOutput.Range("A2:G" & rowOutput)
-    Call modAppli_Utils.ApplyConditionalFormatting(rngArea, 1, True)
+    Call modAppli_Utils.AppliquerConditionalFormating(rngArea, 1, True)
 
     'Setup print parameters
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:G" & rowOutput)
@@ -1207,7 +1207,7 @@ Public Sub CorrigeNomClientInCAR()  '2024-08-31 @ 06:52
                                     
     'Set conditional formatting for the worksheet (alternate colors)
     Dim rngArea As Range: Set rngArea = wsOutput.Range("A2:F" & rowOutput)
-    Call modAppli_Utils.ApplyConditionalFormatting(rngArea, 1, True)
+    Call modAppli_Utils.AppliquerConditionalFormating(rngArea, 1, True)
 
     'Setup print parameters
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:E" & rowOutput)

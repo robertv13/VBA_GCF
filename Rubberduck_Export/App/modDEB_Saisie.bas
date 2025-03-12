@@ -1,4 +1,6 @@
 Attribute VB_Name = "modDEB_Saisie"
+'@Folder("Déboursés")
+
 Option Explicit
 
 'Variables globales

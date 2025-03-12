@@ -1371,11 +1371,10 @@ End Function
 
 Public Function Fn_Pad_A_String(s As String, fillCaracter As String, length As Long, leftOrRight As String) As String
 
-    Dim paddedString As String
     Dim charactersNeeded As Long
-    
     charactersNeeded = length - Len(s)
     
+    Dim paddedString As String
     If charactersNeeded > 0 Then
         If leftOrRight = "R" Then
             paddedString = s & String(charactersNeeded, fillCaracter)
@@ -2094,7 +2093,7 @@ Function ExclureTransaction(source As String) As Boolean '2025-03-06 @ 08:04
     
     Dim i As Integer
     For i = LBound(Exclusions) To UBound(Exclusions)
-        If Left(source, Len(Exclusions(i))) = Exclusions(i) Then
+        If Left$(source, Len(Exclusions(i))) = Exclusions(i) Then
             ExclureTransaction = True
             Exit Function
         End If

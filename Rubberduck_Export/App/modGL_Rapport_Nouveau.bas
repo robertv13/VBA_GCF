@@ -758,8 +758,8 @@ Sub GL_Rapport_Wrap_Up_Compte(ws As Worksheet, h1 As String, h2 As String, h3 As
         .FooterMargin = Application.InchesToPoints(0.15)
         .LeftHeader = ""
         .CenterHeader = "&""-,Gras""&16" & h1 & _
-                        Chr(10) & "&11" & h2 & _
-                        Chr(10) & "&11" & h3
+                        Chr$(10) & "&11" & h2 & _
+                        Chr$(10) & "&11" & h3
         .RightHeader = ""
         .LeftFooter = "&9&D - &T"
         .CenterFooter = ""
@@ -803,8 +803,8 @@ Sub GL_Rapport_Wrap_Up_Ecriture(ws As Worksheet, h1 As String, h2 As String, h3 
         .FooterMargin = Application.InchesToPoints(0.15)
         .LeftHeader = ""
         .CenterHeader = "&""-,Gras""&16" & h1 & _
-                        Chr(10) & "&11" & h2 & _
-                        Chr(10) & "&11" & h3
+                        Chr$(10) & "&11" & h2 & _
+                        Chr$(10) & "&11" & h3
         .RightHeader = ""
         .LeftFooter = "&9&D - &T"
         .CenterFooter = ""
@@ -849,8 +849,8 @@ Sub GL_Rapport_Wrap_Up_DateSaisie(ws As Worksheet, h1 As String, h2 As String, h
         .FooterMargin = Application.InchesToPoints(0.15)
         .LeftHeader = ""
         .CenterHeader = "&""-,Gras""&16" & h1 & _
-                        Chr(10) & "&11" & h2 & _
-                        Chr(10) & "&11" & h3
+                        Chr$(10) & "&11" & h2 & _
+                        Chr$(10) & "&11" & h3
         .RightHeader = ""
         .LeftFooter = "&9&D - &T"
         .CenterFooter = ""
@@ -895,4 +895,5 @@ Function Fn_ValiderSiDoitImprimerTransaction(ByVal source As String) As Boolean 
     Fn_ValiderSiDoitImprimerTransaction = aImprimer
     
 End Function
+
 

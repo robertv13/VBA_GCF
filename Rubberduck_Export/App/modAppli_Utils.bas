@@ -1,9 +1,12 @@
 Attribute VB_Name = "modAppli_Utils"
+'@Folder("Général")
+
 Option Explicit
 
 'Variables globales pour le module
 Private verificationIntegriteOK As Boolean
 Private soldeComptesClients As Currency
+Private gValeursAComparer() As Variant
 
 Public Sub ConvertRangeBooleanToText(rng As Range)
 
@@ -24,23 +27,27 @@ Public Sub ConvertRangeBooleanToText(rng As Range)
     
 End Sub
 
-Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
+Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VérifierIntégrité", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierIntegriteTablesLocales", "", 0)
 
-    Application.ScreenUpdating = True
+    Application.ScreenUpdating = False
     
     'Variable pour déterminer à la fin s'il y a des erreurs...
     verificationIntegriteOK = True
     
     Call Erase_And_Create_Worksheet("X_Analyse_Intégrité")
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
-    wsOutput.Unprotect
-    wsOutput.Range("A1").value = "Feuille"
-    wsOutput.Range("B1").value = "Message"
-    wsOutput.Range("C1").value = "TimeStamp"
-    wsOutput.Columns("C").NumberFormat = wshAdmin.Range("B1").value & " hh:mm:ss"
-    Call Make_It_As_Header(wsOutput.Range("A1:C1"))
+    With wsOutput
+        .Unprotect
+        .Cells.Font.Name = "Courier New"
+        .Cells.Font.size = 10
+        .Range("A1").value = "Feuille"
+        .Range("B1").value = "Message"
+        .Range("C1").value = "TimeStamp"
+        .Columns("C").NumberFormat = wshAdmin.Range("B1").value & " hh:mm:ss"
+        Call Make_It_As_Header(.Range("A1:C1"))
+    End With
 
     'Data starts at row 2
     Dim r As Long: r = 2
@@ -70,208 +77,277 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
             " soit " & j & " jours, " & h & " heures, " & m & " minutes et " & s & " secondes"
     rng.Characters(1, 19).Font.Color = vbRed
     rng.Characters(1, 19).Font.Bold = True
-
     r = r + 2
     
     Dim readRows As Long
+    'Tableau pour comparer les montants entre procédures
+    ReDim gValeursAComparer(1 To 12, 1 To 4)
     
     'dnrPlanComptable ----------------------------------------------------- Plan Comptable
-    Application.ScreenUpdating = True
     Call AddMessageToWorkSheet(wsOutput, r, 1, "Plan Comptable")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Les informations ont été importées de la feuille 'Admin'")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+    r = r + 1
     
-    Application.ScreenUpdating = False
-    Call checkPlanComptable(r, readRows)
+    Call VerifierPlanComptable(r, readRows)
 
     'wshBD_Clients --------------------------------------------------------------- Clients
-    Application.ScreenUpdating = True
     Call AddMessageToWorkSheet(wsOutput, r, 1, "BD_Clients")
-    
-    Call modImport.ImporterClients
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "La feuille a été importée du fichier BD_MASTER.xlsx")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "La feuille a été importée du fichier BD_Entrée.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Application.ScreenUpdating = False
-    Call checkClients(r, readRows)
+    Call VerifierClients(r, readRows)
     
     'wshBD_Fournisseurs ----------------------------------------------------- Fournisseurs
-    Application.ScreenUpdating = True
     Call AddMessageToWorkSheet(wsOutput, r, 1, "BD_Fournisseurs")
-    
-    Call modImport.ImporterFournisseurs
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "La feuille a été importée du fichier BD_MASTER.xlsx")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "La feuille a été importée du fichier BD_Entrée.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Application.ScreenUpdating = False
-    Call checkFournisseurs(r, readRows)
+    Call VerifierFournisseurs(r, readRows)
     
     'wshDEB_Récurrent ------------------------------------------------------ DEB_Récurrent
-    Application.ScreenUpdating = True
     Call AddMessageToWorkSheet(wsOutput, r, 1, "DEB_Récurrent")
-    
-    Call modImport.ImporterDebRecurrent
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "DEB_Récurrent a été importée du fichier BD_MASTER.xlsx")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "DEB_Récurrent a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Application.ScreenUpdating = False
-    Call checkDEB_Récurrent(r, readRows)
+    Call VerifierDEBRecurrent(r, readRows)
     
     'wshDEB_Trans -------------------------------------------------------------- DEB_Trans
-    Application.ScreenUpdating = True
     Call AddMessageToWorkSheet(wsOutput, r, 1, "DEB_Trans")
-    
-    Call modImport.ImporterDebTrans
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "DEB_Trans a été importée du fichier BD_MASTER.xlsx")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "DEB_Trans a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Application.ScreenUpdating = False
-    Call checkDEB_Trans(r, readRows)
+    Call VerifierDEBTrans(r, readRows)
     
     'wshFAC_Entête ------------------------------------------------------------ FAC_Entête
-    Application.ScreenUpdating = True
     Call AddMessageToWorkSheet(wsOutput, r, 1, "FAC_Entête")
-    
-    Call modImport.ImporterFacEntete
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "FAC_Entête a été importée du fichier BD_MASTER.xlsx")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "FAC_Entête a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Application.ScreenUpdating = False
-    Call checkFAC_Entête(r, readRows)
+    Call VerifierFACEntete(r, readRows)
     
     'wshFAC_Détails ---------------------------------------------------------- FAC_Détails
-    Application.ScreenUpdating = True
     Call AddMessageToWorkSheet(wsOutput, r, 1, "FAC_Détails")
-    
-    Call modImport.ImporterFacDetails
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "FAC_Détails a été importée du fichier BD_MASTER.xlsx")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "FAC_Détails a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Application.ScreenUpdating = False
-    Call checkFAC_Détails(r, readRows)
+    Call VerifierFACDetails(r, readRows)
     
     'wshFAC_Comptes_Clients ------------------------------------------ FAC_Comptes_Clients
     Call AddMessageToWorkSheet(wsOutput, r, 1, "FAC_Comptes_Clients")
-    
-    Call modImport.ImporterFacComptesClients
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "FAC_Comptes_Clients a été importée du fichier BD_MASTER.xlsx")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "FAC_Comptes_Clients a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Call checkFAC_Comptes_Clients(r, readRows)
+    Call VerifierFACComptesClients(r, readRows)
     
     'wshFAC_Sommaire_Taux ---------------------------------------------- FAC_Sommaire_Taux
     Call AddMessageToWorkSheet(wsOutput, r, 1, "FAC_Sommaire_Taux")
-    
-    Call modImport.ImporterFacSommaireTaux
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "FAC_Sommaire_Taux a été importée du fichier BD_MASTER.xlsx")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "FAC_Sommaire_Taux a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Call checkFAC_Sommaire_Taux(r, readRows)
+    Call VerifierFACSommaireTaux(r, readRows)
     
     'wshENC_Entête ------------------------------------------------------------ ENC_Entête
     Call AddMessageToWorkSheet(wsOutput, r, 1, "ENC_Entête")
-    
-    Call modImport.ImporterEncEntete
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "ENC_Entête a été importée du fichier BD_MASTER.xlsx")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "ENC_Entête a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Call checkENC_Entête(r, readRows)
+    Call VerifierENCEntete(r, readRows)
     
     'wshENC_Détails ---------------------------------------------------------- ENC_Détails
     Call AddMessageToWorkSheet(wsOutput, r, 1, "ENC_Détails")
-    
-    Call modImport.ImporterEncDetails
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "ENC_Détails a été importée du fichier BD_MASTER.xlsx")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "ENC_Détails a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Call checkENC_Détails(r, readRows)
+    Call VerifierENCDetails(r, readRows)
     
     'wshCC_Régularisations ---------------------------------------------------------- CC_Régularisations
     Call AddMessageToWorkSheet(wsOutput, r, 1, "CC_Régularisations")
-    
-    Call modImport.ImporterCCRegularisations
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "CC_Régularisations a été importée du fichier BD_MASTER.xlsx")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "CC_Régularisations a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Call checkCC_Régularisations(r, readRows)
+    Call VérifierCCRégularisations(r, readRows)
     
     'wshFAC_Projets_Entête -------------------------------------------- FAC_Projets_Entête
     Call AddMessageToWorkSheet(wsOutput, r, 1, "FAC_Projets_Entête")
-    
-    Call modImport.ImporterFacProjetsEntete
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "FAC_Projets_Entête a été importée du fichier BD_MASTER.xlsx")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "FAC_Projets_Entête a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Call checkFAC_Projets_Entête(r, readRows)
+    Call VerifierFACProjetsEntete(r, readRows)
     
     'wshFAC_Projets_Détails ------------------------------------------ FAC_Projets_Détails
     Call AddMessageToWorkSheet(wsOutput, r, 1, "FAC_Projets_Détails")
-    
-    Call modImport.ImporterFacProjetsDetails
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "FAC_Projets_Détails a été importée du fichier BD_MASTER.xlsx")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "FAC_Projets_Détails a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Call checkFAC_Projets_Détails(r, readRows)
+    Call VerifierFACProjetsDetails(r, readRows)
     
     'wshGL_Trans ---------------------------------------------------------------- GL_Trans
     Call AddMessageToWorkSheet(wsOutput, r, 1, "GL_Trans")
-    
-    Call modImport.ImporterGLTransactions
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "GL_Trans a été importée du fichier BD_MASTER.xlsx")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "GL_Trans a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Call checkGL_Trans(r, readRows)
+    Call VerifierGLTrans(r, readRows)
     
     'wshGL_EJ_Recurrente ------------------------------------------------ GL_EJ_Recurrente
     Call AddMessageToWorkSheet(wsOutput, r, 1, "GL_EJ_Recurrente")
-    
-    Call modImport.ImporterEJRecurrente
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "GL_EJ_Recurrente a été importée du fichier BD_MASTER.xlsx")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "GL_EJ_Recurrente a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Call checkGL_EJ_Recurrente(r, readRows)
-    
+    Call VerifierGLEJRecurrente(r, readRows)
+   
     'wshTEC_TdB_Data -------------------------------------------------------- TEC_TdB_Data
     Call AddMessageToWorkSheet(wsOutput, r, 1, "TEC_TdB_Data")
-    
-    Call modImport.ImporterTEC
-    Call ActualiserTEC_TDB
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "TEC_TdB_Data a été importée du fichier BD_MASTER.xlsx")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "TEC_TdB_Data a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Call checkTEC_TdB_Data(r, readRows)
+    Call VerifierTECTdBData(r, readRows)
     
     'wshTEC_Local -------------------------------------------------------------- TEC_Local
     Call AddMessageToWorkSheet(wsOutput, r, 1, "TEC_Local")
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "TEC_Local a été importée du fichier BD_MASTER.xlsx")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "TEC_Local a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Call checkTEC(r, readRows)
+    Call VerifierTEC(r, readRows)
     
+    'Dernière section de vérification
+    Call AddMessageToWorkSheet(wsOutput, r, 1, "Dernières vérifications")
+    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+    
+    'Comparaison des valeurs - Total des factures (confirmées)
+    If gValeursAComparer(1, 2) <> gValeursAComparer(1, 3) Then
+        Call ImprimerEcartsVerificationIntegrite(wsOutput, r, CStr(gValeursAComparer(1, 1)), _
+                                                "FAC_Entête", CCur(gValeursAComparer(1, 2)), _
+                                                "FAC_Comptes_Clients", CCur(gValeursAComparer(1, 3)), _
+                                                "", 0)
+        verificationIntegriteOK = False
+    End If
+    
+    'Comparaison des valeurs - Total des factures (à confirmer)
+    If gValeursAComparer(2, 2) <> gValeursAComparer(2, 3) Then
+        Call ImprimerEcartsVerificationIntegrite(wsOutput, r, CStr(gValeursAComparer(2, 1)), _
+                                                "FAC_Entête", CCur(gValeursAComparer(2, 2)), _
+                                                "FAC_Comptes_Clients", CCur(gValeursAComparer(2, 3)), _
+                                                "", 0)
+        verificationIntegriteOK = False
+    End If
+        
+    'Comparaison des valeurs - Montant encaissé à date
+    If gValeursAComparer(3, 2) <> gValeursAComparer(3, 3) Or _
+        gValeursAComparer(3, 2) <> gValeursAComparer(3, 4) Or _
+        gValeursAComparer(3, 3) <> gValeursAComparer(3, 4) Then
+        Call ImprimerEcartsVerificationIntegrite(wsOutput, r, CStr(gValeursAComparer(3, 1)), _
+                                                "FAC_Comptes_Clients", CCur(gValeursAComparer(3, 2)), _
+                                                "ENC_Entête", CCur(gValeursAComparer(3, 3)), _
+                                                "ENC_Détails", CCur(gValeursAComparer(3, 4)))
+        verificationIntegriteOK = False
+    End If
+    
+    'Comparaison des valeurs - Montant régularisé à date
+    If gValeursAComparer(4, 2) <> gValeursAComparer(4, 3) Then
+        Call ImprimerEcartsVerificationIntegrite(wsOutput, r, CStr(gValeursAComparer(4, 1)), _
+                                                "FAC_Comptes_Clients", CCur(gValeursAComparer(4, 2)), _
+                                                "CC_Régularisations", CCur(gValeursAComparer(4, 3)), _
+                                                "", 0)
+        verificationIntegriteOK = False
+    End If
+    
+    'Comparaison des valeurs - Solde à recevoir
+    If gValeursAComparer(5, 2) <> gValeursAComparer(5, 3) Then
+        Call ImprimerEcartsVerificationIntegrite(wsOutput, r, CStr(gValeursAComparer(5, 1)), _
+                                                "FAC_Comptes_Clients", CCur(gValeursAComparer(5, 2)), _
+                                                "GL_Trans", CCur(gValeursAComparer(5, 3)), _
+                                                "", 0)
+        verificationIntegriteOK = False
+    End If
+    
+    'Comparaison des valeurs - Heures saisies
+    If gValeursAComparer(6, 2) <> gValeursAComparer(6, 3) Then
+        Call ImprimerEcartsVerificationIntegrite(wsOutput, r, CStr(gValeursAComparer(6, 1)), _
+                                                "TEC_TdB_Data", CCur(gValeursAComparer(6, 2)), _
+                                                "TEC_Local", CCur(gValeursAComparer(6, 3)), _
+                                                "", 0)
+        verificationIntegriteOK = False
+    End If
+    
+    'Comparaison des valeurs - Heures détruites
+    If gValeursAComparer(7, 2) <> gValeursAComparer(7, 3) Then
+        Call ImprimerEcartsVerificationIntegrite(wsOutput, r, CStr(gValeursAComparer(7, 1)), _
+                                                "TEC_TdB_Data", CCur(gValeursAComparer(7, 2)), _
+                                                "TEC_Local", CCur(gValeursAComparer(7, 3)), _
+                                                "", 0)
+        verificationIntegriteOK = False
+    End If
+    
+    'Comparaison des valeurs - Heures NETTES
+    If gValeursAComparer(8, 2) <> gValeursAComparer(8, 3) Then
+        Call ImprimerEcartsVerificationIntegrite(wsOutput, r, CStr(gValeursAComparer(8, 1)), _
+                                                "TEC_TdB_Data", CCur(gValeursAComparer(8, 2)), _
+                                                "TEC_Local", CCur(gValeursAComparer(8, 3)), _
+                                                "", 0)
+        verificationIntegriteOK = False
+    End If
+
+    'Comparaison des valeurs - Heures Non-Facturables
+    If gValeursAComparer(9, 2) <> gValeursAComparer(9, 3) Then
+        Call ImprimerEcartsVerificationIntegrite(wsOutput, r, CStr(gValeursAComparer(9, 1)), _
+                                                "TEC_TdB_Data", CCur(gValeursAComparer(9, 2)), _
+                                                "TEC_Local", CCur(gValeursAComparer(9, 3)), _
+                                                "", 0)
+        verificationIntegriteOK = False
+    End If
+
+    'Comparaison des valeurs - Heures Facturables
+    If gValeursAComparer(10, 2) <> gValeursAComparer(10, 3) Then
+        Call ImprimerEcartsVerificationIntegrite(wsOutput, r, CStr(gValeursAComparer(10, 1)), _
+                                                "TEC_TdB_Data", CCur(gValeursAComparer(10, 2)), _
+                                                "TEC_Local", CCur(gValeursAComparer(10, 3)), _
+                                                "", 0)
+        verificationIntegriteOK = False
+    End If
+
+    'Comparaison des valeurs - Heures facturées
+    If gValeursAComparer(11, 2) <> gValeursAComparer(11, 3) Then
+        Call ImprimerEcartsVerificationIntegrite(wsOutput, r, CStr(gValeursAComparer(11, 1)), _
+                                                "TEC_TdB_Data", CCur(gValeursAComparer(11, 2)), _
+                                                "TEC_Local", CCur(gValeursAComparer(11, 3)), _
+                                                "", 0)
+        verificationIntegriteOK = False
+    End If
+
+    'Comparaison des valeurs - Heures TEC
+    If gValeursAComparer(12, 2) <> gValeursAComparer(12, 3) Then
+        Call ImprimerEcartsVerificationIntegrite(wsOutput, r, CStr(gValeursAComparer(12, 1)), _
+                                                "TEC_TdB_Data", CCur(gValeursAComparer(12, 2)), _
+                                                "TEC_Local", CCur(gValeursAComparer(12, 3)), _
+                                                "", 0)
+        verificationIntegriteOK = False
+    End If
+
+    If verificationIntegriteOK Then
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "Tous les montants balancent entre eux")
+        r = r + 2
+    End If
+
     'Obtenir le nombre de lignes utilisées dans les tables principales - 2025-01-22 @ 13:46
-    Call AnalyseLignesParFeuille
-    
-    'Adjust the Output Worksheet
-    With wsOutput.Range("A2:C" & r).Font
-        .Name = "Courier New"
-        .size = 10
-    End With
+    Call NoterNombreLignesParFeuille
     
     wsOutput.Range("A1").CurrentRegion.EntireColumn.AutoFit
     
@@ -307,7 +383,31 @@ Public Sub VérifierIntégrité() '2024-11-20 @ 06:55
     Set rngToPrint = Nothing
     Set wsOutput = Nothing
     
-    Call Log_Record("modAppli_Utils:VérifierIntégrité", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierIntegriteTablesLocales", "", startTime)
+
+End Sub
+
+Sub ImprimerEcartsVerificationIntegrite(ws As Worksheet, r As Long, t As String, _
+                                                        s1 As String, v1 As Currency, _
+                                                        s2 As String, v2 As Currency, _
+                                                        s3 As String, v3 As Currency)
+
+    Dim str1 As String, str2 As String, str3 As String
+    str1 = Format$(v1, "##,###,##0.00 $")
+    str2 = Format$(v2, "##,###,##0.00 $")
+    str3 = Format$(v3, "##,###,##0.00 $")
+    
+    Call AddMessageToWorkSheet(ws, r, 2, t)
+    r = r + 1
+    Call AddMessageToWorkSheet(ws, r, 2, Space(7) & Fn_Pad_A_String(s1, " ", 25, "R") & ":" & Space(16 - Len(str1)) & str1)
+    r = r + 1
+    Call AddMessageToWorkSheet(ws, r, 2, Space(7) & Fn_Pad_A_String(s2, " ", 25, "R") & ":" & Space(16 - Len(str2)) & str2)
+    r = r + 1
+    If Not Trim(s3) = "" Then
+        Call AddMessageToWorkSheet(ws, r, 2, Space(7) & Fn_Pad_A_String(s3, " ", 25, "R") & ":" & Space(16 - Len(str3)) & str3)
+        r = r + 1
+    End If
+    r = r + 1
 
 End Sub
 
@@ -357,32 +457,6 @@ CleanUp:
     
 End Sub
 
-'Public Sub ProtectCells(rng As Range)
-'
-'    'Lock the range
-'    rng.Locked = True
-'
-'    'Protect the worksheet with no restrictions
-'    With rng.Parent
-'        .Protect UserInterfaceOnly:=True
-'        .EnableSelection = xlUnlockedCells
-'    End With
-'
-'End Sub
-'
-'Public Sub UnprotectCells(rng As Range)
-'
-'    'Unlock the range
-'    rng.Locked = False
-'
-'    'Protect the worksheet with no restrictions
-'    With rng.Parent
-'        .Protect UserInterfaceOnly:=True
-'        .EnableSelection = xlUnlockedCells
-'    End With
-'
-'End Sub
-'
 Public Sub Tx_2D_Array_2_Range(ByRef arr As Variant, _
                                ByVal rngTo As Range, _
                                Optional ByVal clearExistingData As Boolean = True, _
@@ -468,38 +542,11 @@ Sub CreateOrReplaceWorksheet(wsName As String)
     
 End Sub
 
-'Sub CreateOrReplaceWorksheet(wsName As String)
-'
-'    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:CreateOrReplaceWorksheet", "", 0)
-'
-'    'Check if the worksheet exists
-'    Dim wsExists As Boolean
-'    wsExists = NomFeuilleExiste(wsName)
-'
-'    'If the worksheet exists, delete it
-'    If wsExists Then
-'        Application.DisplayAlerts = False
-'        ActiveWorkbook.Worksheets(wsName).Delete
-'        Application.DisplayAlerts = True
-'    End If
-'
-'    'Add the new worksheet
-'    Dim ws As Worksheet
-'    Set ws = ThisWorkbook.Worksheets.Add(Before:=wshMenu)
-'    ws.Name = wsName
-'
-'    'Libérer la mémoire
-'    Set ws = Nothing
-'
-'    Call Log_Record("modAppli_Utils:CreateOrReplaceWorksheet", "", startTime)
-'
-'End Sub
-'
-Private Sub checkPlanComptable(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierPlanComptable(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkPlanComptable", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierPlanComptable", "", 0)
     
-    Application.ScreenUpdating = False
+    Application.ScreenUpdating = True
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
@@ -557,7 +604,10 @@ Private Sub checkPlanComptable(ByRef r As Long, ByRef readRows As Long)
         
     Next i
     
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " comptes ont été analysés!")
+    Dim rng As Range: Set rng = wsOutput.Range("B" & r)
+    rng.value = "Un total de " & Format$(UBound(arr, 1), "#,##0") & " comptes ont été analysés!"
+    rng.Characters(13, 3).Font.Color = vbRed
+    rng.Characters(13, 3).Font.Bold = True
     r = r + 1
     
     'Add number of rows processed (read)
@@ -597,17 +647,19 @@ Clean_Exit:
     'Libérer la mémoire
     Set wsOutput = Nothing
     
-    Application.ScreenUpdating = True
+    Application.ScreenUpdating = False
     
-    Call Log_Record("modAppli_Utils:checkPlanComptable", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierPlanComptable", "", startTime)
 
 End Sub
 
-Private Sub checkClients(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierClients(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkClients", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierClients", "", 0)
     
-    Application.ScreenUpdating = False
+    Application.ScreenUpdating = True
+    
+    Call modImport.ImporterClients
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
@@ -729,18 +781,20 @@ Clean_Exit:
     Set ws = Nothing
     Set wsOutput = Nothing
     
-    Application.ScreenUpdating = True
+    Application.ScreenUpdating = False
     
-    Call Log_Record("modAppli_Utils:checkClients", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierClients", "", startTime)
 
 End Sub
 
-Private Sub checkFournisseurs(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierFournisseurs(ByRef r As Long, ByRef readRows As Long)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkFournisseurs", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierFournisseurs", "", 0)
 
-    Application.ScreenUpdating = False
+    Application.ScreenUpdating = True
 
+    Call modImport.ImporterFournisseurs
+    
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'wshBD_fournisseurs
@@ -822,17 +876,19 @@ Clean_Exit:
     Set ws = Nothing
     Set wsOutput = Nothing
     
-    Application.ScreenUpdating = True
+    Application.ScreenUpdating = False
     
-    Call Log_Record("modAppli_Utils:checkFournisseurs", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierFournisseurs", "", startTime)
 
 End Sub
 
-Private Sub checkCC_Régularisations(ByRef r As Long, ByRef readRows As Long)
+Private Sub VérifierCCRégularisations(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkCC_Régularisations", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VérifierCCRégularisations", "", 0)
 
-    Application.ScreenUpdating = False
+    Application.ScreenUpdating = True
+    
+    Call modImport.ImporterCCRegularisations
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
@@ -1001,6 +1057,7 @@ Private Sub checkCC_Régularisations(ByRef r As Long, ByRef readRows As Long)
     rng.value = "Total des régularisations : " & Format$(totalRégularisations, "##,###,##0.00 $")
     rng.Characters(InStr(rng.value, Left$(totalRégularisations, 1)), 12).Font.Color = vbRed
     rng.Characters(InStr(rng.value, Left$(totalRégularisations, 1)), 12).Font.Bold = True
+    gValeursAComparer(4, 3) = CCur(totalRégularisations)
     r = r + 2
     
     'Add number of rows processed (read)
@@ -1021,17 +1078,20 @@ Clean_Exit:
     Set wsFACEntete = Nothing
     Set wsOutput = Nothing
     
-    Application.ScreenUpdating = True
+    DoEvents
+    Application.ScreenUpdating = False
     
-    Call Log_Record("modAppli_Utils:checkCC_Régularisations", "", startTime)
+    Call Log_Record("modAppli_Utils:VérifierCCRégularisations", "", startTime)
 
 End Sub
 
-Private Sub checkDEB_Récurrent(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierDEBRecurrent(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkDEB_Récurrent", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierDEBRecurrent", "", 0)
 
-    Application.ScreenUpdating = False
+    Application.ScreenUpdating = True
+    
+    Call modImport.ImporterDebRecurrent
     
     Dim ws As Worksheet: Set ws = wshDEB_Récurrent
     
@@ -1059,11 +1119,15 @@ Private Sub checkDEB_Récurrent(ByRef r As Long, ByRef readRows As Long)
     Dim planComptable As Range: Set planComptable = wshAdmin.Range("dnrPlanComptable_All")
     On Error GoTo 0
 
+    Dim isDebRécurrentValid As Boolean
+    isDebRécurrentValid = True
+    
     If planComptable Is Nothing Then
         MsgBox "La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée ou est INVALIDE!", vbExclamation
         Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée!")
         r = r + 1
-        Exit Sub
+        isDebRécurrentValid = False
+        GoTo Clean_Exit
     End If
     
     Dim strGL As String
@@ -1083,9 +1147,6 @@ Private Sub checkDEB_Récurrent(ByRef r As Long, ByRef readRows As Long)
     'On analyse chacune des lignes du tableau
     Dim i As Long, p As Long
     Dim GL As String, descGL As String
-    
-    Dim isDebRécurrentValid As Boolean
-    isDebRécurrentValid = True
     
     For i = LBound(arr, 1) To UBound(arr, 1)
         If IsNumeric(arr(i, 1)) = False Or arr(i, 1) <> Int(arr(i, 1)) Then
@@ -1166,17 +1227,19 @@ Clean_Exit:
     Set ws = Nothing
     Set wsOutput = Nothing
 
-    Application.ScreenUpdating = True
+    Application.ScreenUpdating = False
 
-    Call Log_Record("modAppli_Utils:checkDEB_Récurrent", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierDEBRecurrent", "", startTime)
 
 End Sub
 
-Private Sub checkDEB_Trans(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierDEBTrans(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkDEB_Trans", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierDEBTrans", "", 0)
 
-    Application.ScreenUpdating = False
+    Application.ScreenUpdating = True
+    
+    Call modImport.ImporterDebTrans
     
     Dim ws As Worksheet: Set ws = wshDEB_Trans
     
@@ -1204,10 +1267,14 @@ Private Sub checkDEB_Trans(ByRef r As Long, ByRef readRows As Long)
     Dim planComptable As Range: Set planComptable = wshAdmin.Range("dnrPlanComptable_All")
     On Error GoTo 0
 
+    Dim isDebTransValid As Boolean
+    isDebTransValid = True
+    
     If planComptable Is Nothing Then
         MsgBox "La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée ou est INVALIDE!", vbExclamation
         Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée!")
         r = r + 1
+        isDebTransValid = False
         Exit Sub
     End If
     
@@ -1228,9 +1295,6 @@ Private Sub checkDEB_Trans(ByRef r As Long, ByRef readRows As Long)
     'On analyse chacune des lignes du tableau
     Dim i As Long, p As Long
     Dim GL As String, descGL As String
-    
-    Dim isDebTransValid As Boolean
-    isDebTransValid = True
     
     For i = LBound(arr, 1) To UBound(arr, 1)
         If IsNumeric(arr(i, 1)) = False Or arr(i, 1) <> Int(arr(i, 1)) Then
@@ -1310,23 +1374,28 @@ Private Sub checkDEB_Trans(ByRef r As Long, ByRef readRows As Long)
 
 Clean_Exit:
     'Libérer la mémoire
+    On Error Resume Next
     Set ligne = Nothing
     Set planComptable = Nothing
     Set rng = Nothing
     Set ws = Nothing
     Set wsOutput = Nothing
+    On Error GoTo 0
 
-    Application.ScreenUpdating = True
+    DoEvents
+    Application.ScreenUpdating = False
 
-    Call Log_Record("modAppli_Utils:checkDEB_Trans", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierDEBTrans", "", startTime)
 
 End Sub
 
-Private Sub checkENC_Détails(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierENCDetails(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkENC_Détails", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierENCDetails", "", 0)
 
     Application.ScreenUpdating = False
+    
+    Call modImport.ImporterEncDetails
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
@@ -1365,9 +1434,6 @@ Private Sub checkENC_Détails(ByRef r As Long, ByRef readRows As Long)
     Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshENC_Détails'")
     r = r + 1
     
-    'TODO Is this comment still valid? => Array pointer
-'TODO Is this comment still valid? =>     Dim row As Long: row = 1
-        
     Dim pmtNo As Long, oldpmtNo As Long
     Dim result As Variant
     'Dictionary pour accumuler les encaissements par facture
@@ -1450,7 +1516,7 @@ Private Sub checkENC_Détails(ByRef r As Long, ByRef readRows As Long)
     rng.value = "Total des encaissements : " & Format$(totalEncDetails, "##,###,##0.00 $")
     rng.Characters(InStr(rng.value, Left$(totalEncDetails, 1)), 12).Font.Color = vbRed
     rng.Characters(InStr(rng.value, Left$(totalEncDetails, 1)), 12).Font.Bold = True
-
+    gValeursAComparer(3, 4) = CCur(totalEncDetails)
     r = r + 2
     
     'Add number of rows processed (read)
@@ -1463,27 +1529,30 @@ Private Sub checkENC_Détails(ByRef r As Long, ByRef readRows As Long)
     
 Clean_Exit:
     'Libérer la mémoire
+    On Error Resume Next
     Set dictENC = Nothing
     Set rng = Nothing
-'    Set rngEntete = Nothing
     Set rngFACEntete = Nothing
     Set ws = Nothing
     Set wsComptes_Clients = Nothing
     Set wsFACEntete = Nothing
     Set wsEntete = Nothing
     Set wsOutput = Nothing
+    On Error GoTo 0
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli_Utils:checkENC_Détails", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierENCDetails", "", startTime)
 
 End Sub
 
-Private Sub checkENC_Entête(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierENCEntete(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkENC_Entête", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierENCEntete", "", 0)
 
     Application.ScreenUpdating = False
+    
+    Call modImport.ImporterEncEntete
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
@@ -1521,7 +1590,6 @@ Private Sub checkENC_Entête(ByRef r As Long, ByRef readRows As Long)
               .Resize(lastUsedRow - HeaderRow, ws.Range("A1").CurrentRegion.Columns.count).value
     
     'Array pointer
-'    Dim row As Long: row = 1
     Dim currentRow As Long
         
     Dim i As Long
@@ -1564,6 +1632,7 @@ Private Sub checkENC_Entête(ByRef r As Long, ByRef readRows As Long)
     rng.value = "Total des encaissements : " & Format$(totals, "##,###,##0.00 $")
     rng.Characters(InStr(rng.value, Left$(totals, 1)), 12).Font.Color = vbRed
     rng.Characters(InStr(rng.value, Left$(totals, 1)), 12).Font.Bold = True
+    gValeursAComparer(3, 3) = CCur(totals)
     r = r + 2
     
     'Add number of rows processed (read)
@@ -1576,23 +1645,27 @@ Private Sub checkENC_Entête(ByRef r As Long, ByRef readRows As Long)
     
 Clean_Exit:
     'Libérer la mémoire
+    On Error Resume Next
     Set rng = Nothing
     Set rngClients = Nothing
     Set ws = Nothing
     Set wsClients = Nothing
     Set wsOutput = Nothing
+    On Error GoTo 0
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli_Utils:checkENC_Entête", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierENCEntete", "", startTime)
 
 End Sub
 
-Private Sub checkFAC_Détails(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierFACDetails(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkFAC_Détails", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierFACDetails", "", 0)
 
     Application.ScreenUpdating = False
+    
+    Call modImport.ImporterFacDetails
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
@@ -1684,22 +1757,26 @@ Private Sub checkFAC_Détails(ByRef r As Long, ByRef readRows As Long)
     
 Clean_Exit:
     'Libérer la mémoire
+    On Error Resume Next
     Set rngMaster = Nothing
     Set ws = Nothing
     Set wsMaster = Nothing
     Set wsOutput = Nothing
+    On Error GoTo 0
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli_Utils:checkFAC_Détails", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierFACDetails", "", startTime)
 
 End Sub
 
-Private Sub checkFAC_Entête(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierFACEntete(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkFAC_Entête", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierFACEntete", "", 0)
 
     Application.ScreenUpdating = False
+    
+    Call modImport.ImporterFacEntete
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
@@ -1735,8 +1812,6 @@ Private Sub checkFAC_Entête(ByRef r As Long, ByRef readRows As Long)
     Dim arr As Variant
     arr = rngData
     
-    'Array pointer
-'    Dim row As Long: row = 1
     Dim currentRow As Long
         
     Dim i As Long
@@ -1771,24 +1846,24 @@ Private Sub checkFAC_Entête(ByRef r As Long, ByRef readRows As Long)
             isFACEntêteValid = False
         End If
         If arr(i, 3) = "C" Then
-            totals(1, 1) = totals(1, 1) + arr(i, 10)
-            totals(2, 1) = totals(2, 1) + arr(i, 12)
-            totals(3, 1) = totals(3, 1) + arr(i, 14)
-            totals(4, 1) = totals(4, 1) + arr(i, 16)
-            totals(5, 1) = totals(5, 1) + arr(i, 18)
-            totals(6, 1) = totals(6, 1) + arr(i, 20)
-            totals(7, 1) = totals(7, 1) + arr(i, 21)
-            totals(8, 1) = totals(8, 1) + arr(i, 22)
+            totals(1, 1) = totals(1, 1) + arr(i, fFacEHonoraires)
+            totals(2, 1) = totals(2, 1) + arr(i, fFacEAutresFrais1)
+            totals(3, 1) = totals(3, 1) + arr(i, fFacEAutresFrais2)
+            totals(4, 1) = totals(4, 1) + arr(i, fFacEAutresFrais3)
+            totals(5, 1) = totals(5, 1) + arr(i, fFacEMntTPS)
+            totals(6, 1) = totals(6, 1) + arr(i, fFacEMntTVQ)
+            totals(7, 1) = totals(7, 1) + arr(i, fFacEARTotal)
+            totals(8, 1) = totals(8, 1) + arr(i, fFacEDépôt)
             nbFactC = nbFactC + 1
         Else
-            totals(1, 2) = totals(1, 2) + arr(i, 10)
-            totals(2, 2) = totals(2, 2) + arr(i, 12)
-            totals(3, 2) = totals(3, 2) + arr(i, 14)
-            totals(4, 2) = totals(4, 2) + arr(i, 16)
-            totals(5, 2) = totals(5, 2) + arr(i, 18)
-            totals(6, 2) = totals(6, 2) + arr(i, 20)
-            totals(7, 2) = totals(7, 2) + arr(i, 21)
-            totals(8, 2) = totals(8, 2) + arr(i, 22)
+            totals(1, 2) = totals(1, 2) + arr(i, fFacEHonoraires)
+            totals(2, 2) = totals(2, 2) + arr(i, fFacEAutresFrais1)
+            totals(3, 2) = totals(3, 2) + arr(i, fFacEAutresFrais2)
+            totals(4, 2) = totals(4, 2) + arr(i, fFacEAutresFrais3)
+            totals(5, 2) = totals(5, 2) + arr(i, fFacEMntTPS)
+            totals(6, 2) = totals(6, 2) + arr(i, fFacEMntTVQ)
+            totals(7, 2) = totals(7, 2) + arr(i, fFacEARTotal)
+            totals(8, 2) = totals(8, 2) + arr(i, fFacEDépôt)
             nbFactAC = nbFactAC + 1
         End If
     Next i
@@ -1827,6 +1902,8 @@ Private Sub checkFAC_Entête(ByRef r As Long, ByRef readRows As Long)
     rng.value = "       Total Fact. : " & Fn_Pad_A_String(Format$(totals(7, 1), "##,###,##0.00 $"), " ", 15, "L")
     rng.Characters(InStr(rng.value, Left$(totals(7, 1), 1)), 15).Font.Color = vbRed
     rng.Characters(InStr(rng.value, Left$(totals(7, 1), 1)), 15).Font.Bold = True
+    gValeursAComparer(1, 1) = "Total Factures (Confirmées)"
+    gValeursAComparer(1, 2) = CCur(totals(7, 1))
     r = r + 1
 
     Call AddMessageToWorkSheet(wsOutput, r, 2, "       Acompte payé: " & _
@@ -1864,6 +1941,8 @@ Private Sub checkFAC_Entête(ByRef r As Long, ByRef readRows As Long)
     rng.value = "       Total Fact. : " & Fn_Pad_A_String(Format$(totals(7, 2), "##,###,##0.00 $"), " ", 15, "L")
     rng.Characters(InStr(rng.value, Left$(totals(7, 2), 1)), 15).Font.Color = vbRed
     rng.Characters(InStr(rng.value, Left$(totals(7, 2), 1)), 15).Font.Bold = True
+    gValeursAComparer(2, 1) = "Total Factures (À confirmer)"
+    gValeursAComparer(2, 2) = CCur(totals(7, 2))
     r = r + 1
 
     Call AddMessageToWorkSheet(wsOutput, r, 2, "       Acompte payé: " & _
@@ -1880,22 +1959,26 @@ Private Sub checkFAC_Entête(ByRef r As Long, ByRef readRows As Long)
     
 Clean_Exit:
     'Libérer la mémoire
+    On Error Resume Next
     Set rng = Nothing
     Set rngData = Nothing
     Set ws = Nothing
     Set wsOutput = Nothing
+    On Error GoTo 0
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli_Utils:checkFAC_Entête", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierFACEntete", "", startTime)
 
 End Sub
 
-Private Sub checkFAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierFACComptesClients(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkFAC_Comptes_Clients", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierFACComptesClients", "", 0)
 
     Application.ScreenUpdating = False
+    
+    Call modImport.ImporterFacComptesClients
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
@@ -2012,7 +2095,7 @@ Private Sub checkFAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
             isFACCCValid = False
         End If
         
-        'PLUG pour s'assurer que le solde impayé est bel et bien aligné sur le total moins le payé à date - les régularisations
+        'PLUG pour s'assurer que le solde impayé est bel et bien aligné sur le total moins le payé à date + les régularisations
         If Round(arr(i, fFacCCBalance), 2) <> Round(arr(i, fFacCCTotal) - arr(i, fFacCCTotalPaid) + arr(i, fFacCCTotalRegul), 2) Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", pour la facture '" & Inv_No & _
                     ", le solde à recevoir est erroné, soit " & Format$(CCur(arr(i, fFacCCBalance)), "###,##0.00 $") & "' vs. " & _
@@ -2062,6 +2145,7 @@ Private Sub checkFAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
     rng.value = "       Total des factures         : " & Fn_Pad_A_String(Format$(totals(1, 1), "##,###,##0.00 $"), " ", 15, "L")
     rng.Characters(InStr(rng.value, Left$(totals(1, 1), 1)), 15).Font.Color = vbRed
     rng.Characters(InStr(rng.value, Left$(totals(1, 1), 1)), 15).Font.Bold = True
+    gValeursAComparer(1, 3) = CCur(totals(1, 1))
     r = r + 1
     
     'Un peu de couleur
@@ -2069,6 +2153,8 @@ Private Sub checkFAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
     rng.value = "       Montants encaissés à date  : " & Fn_Pad_A_String(Format$(totals(2, 1), "##,###,##0.00 $"), " ", 15, "L")
     rng.Characters(InStr(rng.value, Left$(totals(2, 1), 1)), 15).Font.Color = vbRed
     rng.Characters(InStr(rng.value, Left$(totals(2, 1), 1)), 15).Font.Bold = True
+    gValeursAComparer(3, 1) = "Total des montants encaissés à date"
+    gValeursAComparer(3, 2) = CCur(totals(2, 1))
     r = r + 1
     
     'Un peu de couleur
@@ -2076,6 +2162,8 @@ Private Sub checkFAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
     rng.value = "       Montant régularisé à date  : " & Fn_Pad_A_String(Format$(totals(3, 1), "##,###,##0.00 $"), " ", 15, "L")
     rng.Characters(InStr(rng.value, Left$(totals(3, 1), 1)), 15).Font.Color = vbRed
     rng.Characters(InStr(rng.value, Left$(totals(3, 1), 1)), 15).Font.Bold = True
+    gValeursAComparer(4, 1) = "Total régularisé à date"
+    gValeursAComparer(4, 2) = CCur(totals(3, 1))
     r = r + 1
     
     'Un peu de couleur
@@ -2083,6 +2171,8 @@ Private Sub checkFAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
     rng.value = "       Solde à recevoir           : " & Fn_Pad_A_String(Format$(totals(4, 1), "##,###,##0.00 $"), " ", 15, "L")
     rng.Characters(InStr(rng.value, Left$(totals(4, 1), 1)), 15).Font.Color = vbRed
     rng.Characters(InStr(rng.value, Left$(totals(4, 1), 1)), 15).Font.Bold = True
+    gValeursAComparer(5, 1) = "Solde à recevoir"
+    gValeursAComparer(5, 2) = CCur(totals(4, 1))
     r = r + 2
     soldeComptesClients = totals(4, 1)
     
@@ -2098,6 +2188,7 @@ Private Sub checkFAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
     rng.value = "       Total des factures        : " & Fn_Pad_A_String(Format$(totals(1, 2), "##,###,##0.00 $"), " ", 15, "L")
     rng.Characters(InStr(rng.value, Left$(totals(1, 2), 1)), 15).Font.Color = vbRed
     rng.Characters(InStr(rng.value, Left$(totals(1, 2), 1)), 15).Font.Bold = True
+    gValeursAComparer(2, 3) = CCur(totals(1, 2))
     r = r + 2
     
     'Add number of rows processed (read)
@@ -2110,21 +2201,25 @@ Private Sub checkFAC_Comptes_Clients(ByRef r As Long, ByRef readRows As Long)
 
 Clean_Exit:
     'Libérer la mémoire
+    On Error Resume Next
     Set rng = Nothing
     Set ws = Nothing
     Set wsOutput = Nothing
+    On Error GoTo 0
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli_Utils:checkFAC_Comptes_Clients", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierFACComptesClients", "", startTime)
 
 End Sub
 
-Private Sub checkFAC_Sommaire_Taux(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierFACSommaireTaux(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkFAC_Sommaire_Taux", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierFACSommaireTaux", "", 0)
 
     Application.ScreenUpdating = False
+    
+    Call modImport.ImporterFacSommaireTaux
     
     Dim ws As Worksheet: Set ws = wshFAC_Sommaire_Taux
     
@@ -2218,24 +2313,28 @@ Private Sub checkFAC_Sommaire_Taux(ByRef r As Long, ByRef readRows As Long)
 
 Clean_Exit:
     'Libérer la mémoire
+    On Error Resume Next
     Set rng = Nothing
     Set rngMaster = Nothing
     Set rngProf = Nothing
     Set ws = Nothing
     Set wsMaster = Nothing
     Set wsOutput = Nothing
+    On Error GoTo 0
 
     Application.ScreenUpdating = True
 
-    Call Log_Record("modAppli_Utils:checkFAC_Sommaire_Taux", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierFACSommaireTaux", "", startTime)
 
 End Sub
 
-Private Sub checkFAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierFACProjetsEntete(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkFAC_Projets_Entête", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierFACProjetsEntete", "", 0)
 
     Application.ScreenUpdating = False
+    
+    Call modImport.ImporterFacProjetsEntete
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
@@ -2387,20 +2486,24 @@ Private Sub checkFAC_Projets_Entête(ByRef r As Long, ByRef readRows As Long)
 
 Clean_Exit:
     'Libérer la mémoire
+    On Error Resume Next
     Set ws = Nothing
     Set wsOutput = Nothing
+    On Error GoTo 0
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli_Utils:checkFAC_Projets_Entête", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierFACProjetsEntete", "", startTime)
 
 End Sub
 
-Private Sub checkFAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierFACProjetsDetails(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkFAC_Projets_Détails", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierFACProjetsDetails", "", 0)
 
     Application.ScreenUpdating = False
+    
+    Call modImport.ImporterFacProjetsDetails
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
@@ -2438,14 +2541,15 @@ Private Sub checkFAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
     Dim arr As Variant
     arr = ws.Range("A1").CurrentRegion.offset(1, 0).Resize(numRows, ws.Range("A1").CurrentRegion.Columns.count).value
     
-    'Array pointer
-'    Dim row As Long: row = 1
     Dim currentRow As Long
         
     Dim i As Long
     Dim projetID As Long, oldProjetID As Long
     Dim codeClient As String
     Dim result As Variant
+    
+    Dim isFacProjetDetailValid As Boolean
+    isFacProjetDetailValid = True
     
     'Sauvegarde la ligne active
     Dim saveR As Long
@@ -2466,13 +2570,15 @@ Private Sub checkFAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
         If result = "Not Found" Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " n'existe pas dans FAC_Projets_Entête")
             r = r + 1
+            isFacProjetDetailValid = False
         End If
         'Client valide ?
         codeClient = Trim$(arr(i, 3))
         If Fn_Validate_Client_Number(codeClient) = False Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le Code de Client est INVALIDE '" & arr(i, 3) & "'")
             r = r + 1
-        End If
+            isFacProjetDetailValid = False
+       End If
         If IsNumeric(arr(i, 4)) = False Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " le TECID est INVALIDE '" & arr(i, 4) & "'")
             r = r + 1
@@ -2480,14 +2586,17 @@ Private Sub checkFAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
         If IsNumeric(arr(i, 5)) = False Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " le ProfID est INVALIDE '" & arr(i, 5) & "'")
             r = r + 1
+            isFacProjetDetailValid = False
         End If
         If IsDate(arr(i, 6)) = False Or arr(i, 6) > Date Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " la Date est INVALIDE '" & arr(i, 6) & "'")
             r = r + 1
+            isFacProjetDetailValid = False
         End If
         If IsNumeric(arr(i, 8)) = False Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " les Heures sont INVALIDES '" & arr(i, 8) & "'")
             r = r + 1
+            isFacProjetDetailValid = False
         End If
     Next i
     
@@ -2502,6 +2611,11 @@ Private Sub checkFAC_Projets_Détails(ByRef r As Long, ByRef readRows As Long)
     'Add number of rows processed (read)
     readRows = readRows + UBound(arr, 1) - HeaderRow
     
+    'Cas problème dans cette vérification ?
+    If isFacProjetDetailValid = False Then
+        verificationIntegriteOK = False
+    End If
+
 Clean_Exit:
     'Libérer la mémoire
     Set rngMaster = Nothing
@@ -2511,15 +2625,17 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli_Utils:checkFAC_Projets_Détails", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierFACProjetsDetails", "", startTime)
 
 End Sub
 
-Private Sub checkGL_Trans(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierGLTrans(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkGL_Trans", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierGLTrans", "", 0)
 
     Application.ScreenUpdating = False
+    
+    Call modImport.ImporterGLTransactions
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
@@ -2652,9 +2768,6 @@ Private Sub checkGL_Trans(ByRef r As Long, ByRef readRows As Long)
                 isGLTransValid = False
             End If
         End If
-'        If arr(i, 1) = 1028 Or arr(i, 1) = 1030 Then
-'            Debug.Print "#001 - ", arr(i, 1), arr(i, 2), arr(i, 7), arr(i, 8), sum_arr(currentRow, 2), sum_arr(currentRow, 3)
-'        End If
     Next i
     
     Dim sum_dt As Currency, sum_ct As Currency
@@ -2715,6 +2828,7 @@ Private Sub checkGL_Trans(ByRef r As Long, ByRef readRows As Long)
     rng.value = "Au Grand Livre, le solde des Comptes-Clients est de : " & Format$(arTotal, "##,###,##0.00 $")
     rng.Characters(InStr(rng.value, Left$(arTotal, 1)), 15).Font.Color = vbRed
     rng.Characters(InStr(rng.value, Left$(arTotal, 1)), 15).Font.Bold = True
+    gValeursAComparer(5, 3) = CCur(arTotal)
     r = r + 2
     If soldeComptesClients <> arTotal Then
         MsgBox "ATTENTION, le solde des Comptes-Clients" & vbNewLine & vbNewLine & _
@@ -2727,25 +2841,29 @@ Private Sub checkGL_Trans(ByRef r As Long, ByRef readRows As Long)
     End If
     
 Clean_Exit:
-    Application.ScreenUpdating = True
-    
     'Libérer la mémoire
+    On Error Resume Next
     Set ligne = Nothing
     Set planComptable = Nothing
     Set rng = Nothing
     Set v = Nothing
     Set ws = Nothing
     Set wsOutput = Nothing
+    On Error GoTo 0
     
-    Call Log_Record("modAppli_Utils:checkGL_Trans", "", startTime)
+    Application.ScreenUpdating = True
+    
+    Call Log_Record("modAppli_Utils:VerifierGLTrans", "", startTime)
 
 End Sub
 
-Private Sub checkGL_EJ_Recurrente(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierGLEJRecurrente(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkGL_EJ_Recurrente", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierGLEJRecurrente", "", 0)
 
     Application.ScreenUpdating = False
+    
+    Call modImport.ImporterEJRecurrente
     
     Dim ws As Worksheet: Set ws = wshGL_EJ_Recurrente
     
@@ -2777,7 +2895,7 @@ Private Sub checkGL_EJ_Recurrente(ByRef r As Long, ByRef readRows As Long)
     On Error GoTo 0
 
     If planComptable Is Nothing Then
-        MsgBox "La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée ou est INVALIDE!", vbExclamation, "modAppli_Utils:checkGL_EJ_Recurrente"
+        MsgBox "La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée ou est INVALIDE!", vbExclamation, "modAppli_Utils:VerifierGLEJRecurrente"
         Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée!")
         r = r + 1
         isGlEjRécurrenteValid = False
@@ -2851,23 +2969,28 @@ Private Sub checkGL_EJ_Recurrente(ByRef r As Long, ByRef readRows As Long)
     
 Clean_Exit:
     'Libérer la mémoire
+    On Error Resume Next
     Set ligne = Nothing
     Set planComptable = Nothing
     Set rng = Nothing
     Set ws = Nothing
     Set wsOutput = Nothing
+    On Error GoTo 0
 
     Application.ScreenUpdating = True
 
-    Call Log_Record("modAppli_Utils:checkGL_EJ_Recurrente", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierGLEJRecurrente", "", startTime)
 
 End Sub
 
-Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierTECTdBData(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkTEC_TdB_Data", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierTECTdBData", "", 0)
     
     Application.ScreenUpdating = False
+    
+    Call modImport.ImporterTEC
+    Call ActualiserTEC_TDB
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
@@ -2900,8 +3023,6 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     Dim headerRows As Long: headerRows = 1
     Call Tx_Range_2_2D_Array(rngData, arr, 1)
     
-'    Dim arr As Variant
-'    arr = ws.Range("A1").CurrentRegion.Offset(1)
     Dim dict_TECID As New Dictionary
     
     Dim i As Long, tecID As Long, profID As String, prof As String, dateTEC As Date, clientCode As String
@@ -3025,6 +3146,7 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     Else
         Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_doublon_TECID & " cas de doublons pour les TECID")
         r = r + 1
+        isTECTDBValid = False
     End If
     
     If cas_date_invalide = 0 Then
@@ -3033,6 +3155,7 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     Else
         Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_date_invalide & " cas de date INVALIDE")
         r = r + 1
+        isTECTDBValid = False
     End If
     Call AddMessageToWorkSheet(wsOutput, r, 2, "       La date MINIMALE est '" & Format$(minDate, "dd/mm/yyyy") & "'")
     r = r + 1
@@ -3045,6 +3168,7 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     Else
         Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_hres_invalide & " cas d'heures INVALIDE")
         r = r + 1
+        isTECTDBValid = False
     End If
     
     If cas_estFacturable_invalide = 0 Then
@@ -3053,6 +3177,7 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     Else
         Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_estFacturable_invalide & " cas de valeur 'estFacturable' INVALIDE")
         r = r + 1
+        isTECTDBValid = False
     End If
     
     If cas_estFacturee_invalide = 0 Then
@@ -3061,6 +3186,7 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     Else
         Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_estFacturee_invalide & " cas de valeur 'estFacturee' INVALIDE")
         r = r + 1
+        isTECTDBValid = False
     End If
     
     If cas_estDetruit_invalide = 0 Then
@@ -3069,6 +3195,7 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     Else
         Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_estDetruit_invalide & " cas de valeur 'estDetruit' INVALIDE")
         r = r + 1
+        isTECTDBValid = False
     End If
     Call AddMessageToWorkSheet(wsOutput, r, 2, "La somme des heures saisies donne ces résultats:")
     r = r + 1
@@ -3079,6 +3206,8 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call AddMessageToWorkSheet(wsOutput, r, 2, "       Heures SAISIES         : " & formattedHours)
+    gValeursAComparer(6, 1) = "Total des heures Saisies"
+    gValeursAComparer(6, 2) = CCur(formattedHours)
     r = r + 1
     
     formattedHours = Format$(total_hres_detruites, "#,##0.00")
@@ -3086,6 +3215,8 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call AddMessageToWorkSheet(wsOutput, r, 2, "       Heures détruites       : " & formattedHours)
+    gValeursAComparer(7, 1) = "Total des heures détruites"
+    gValeursAComparer(7, 2) = CCur(formattedHours)
     r = r + 1
     
     formattedHours = Format$(total_hres_inscrites - total_hres_detruites, "#,##0.00")
@@ -3093,6 +3224,8 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call AddMessageToWorkSheet(wsOutput, r, 2, "       Heures NETTES          : " & formattedHours)
+    gValeursAComparer(8, 1) = "Total des heures NETTES"
+    gValeursAComparer(8, 2) = CCur(formattedHours)
     r = r + 1
     
     formattedHours = Format$(total_hres_non_facturable, "#,##0.00")
@@ -3100,6 +3233,8 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call AddMessageToWorkSheet(wsOutput, r, 2, "              Non_facturables : " & formattedHours)
+    gValeursAComparer(9, 1) = "Total des heures Non-Facturables"
+    gValeursAComparer(9, 2) = CCur(formattedHours)
     r = r + 1
     
     formattedHours = Format$(total_hres_facturable, "#,##0.00")
@@ -3107,6 +3242,8 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call AddMessageToWorkSheet(wsOutput, r, 2, "              Facturables     : " & formattedHours)
+    gValeursAComparer(10, 1) = "Total des heures Facturables"
+    gValeursAComparer(10, 2) = CCur(formattedHours)
     r = r + 1
     
     formattedHours = Format$(total_hres_facturees, "#,##0.00")
@@ -3114,6 +3251,8 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call AddMessageToWorkSheet(wsOutput, r, 2, "       Heures facturées       : " & formattedHours)
+    gValeursAComparer(11, 1) = "Total des heures facturées"
+    gValeursAComparer(11, 2) = CCur(formattedHours)
     r = r + 1
 
     formattedHours = Format$(total_hres_facturable - total_hres_facturees, "#,##0.00")
@@ -3126,6 +3265,8 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
     rng.value = "       Heures TEC             : " & formattedHours
     rng.Characters(InStr(rng.value, ":") + 2, Len(formattedHours)).Font.Color = vbRed
     rng.Characters(InStr(rng.value, ":") + 2, Len(formattedHours)).Font.Bold = True
+    gValeursAComparer(12, 1) = "Total des heures TEC"
+    gValeursAComparer(12, 2) = CCur(formattedHours)
     r = r + 2
 
     'Cas problème dans cette vérification ?
@@ -3135,20 +3276,22 @@ Private Sub checkTEC_TdB_Data(ByRef r As Long, ByRef readRows As Long)
 
 Clean_Exit:
     'Libérer la mémoire
+    On Error Resume Next
     Set rng = Nothing
     Set rngData = Nothing
     Set ws = Nothing
     Set wsOutput = Nothing
+    On Error GoTo 0
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli_Utils:checkTEC_TdB_Data", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierTECTdBData", "", startTime)
 
 End Sub
 
-Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierTEC(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:checkTEC", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierTEC", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -3237,7 +3380,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Dim tecID As Long, profID As String, prof As String, dateTEC As Date, dateFact As Date, testDate As Boolean
     Dim minDate As Date, maxDate As Date
     Dim maxTECID As Long
-    Dim d As Integer, m As Integer, y As Integer, p As Integer
+'    Dim d As Integer, m As Integer, y As Integer, p As Integer
     Dim codeClient As String, nomClient As String, nomClientFromMF As String
     Dim isClientValid As Boolean
     Dim hres As Double, testHres As Boolean, estFacturable As Boolean
@@ -3255,9 +3398,6 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     
     Dim isTECValid As Boolean
     isTECValid = True
-    
-'    Dim arrHres(1 To 10000, 1 To 6) As Variant
-'    Dim arrRow As Integer, pArr As Integer, rArr As Integer
     
     'Sommaire par Date de charge (validation du format de date)
     Dim dictDateCharge As Object
@@ -3312,15 +3452,6 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
             isTECValid = False
         End If
         
-'        'Validate nomClient
-'        nomClient = arrTEC_Local_Data(i, fTECClientNom)
-'        If tecID > lastTECIDReported And dictClient.Exists(codeClient) = True Then
-'            nomClientFromMF = dictClient(codeClient)
-'            If nomClient <> nomClientFromMF Then
-'                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID = " & tecID & ", CLIENT = " & codeClient & ", le nom du client (TEC) '" & nomClient & "' <> (MF) '" & nomClientFromMF & "'")
-'                r = r + 1
-'            End If
-'        End If
         hres = arrTEC_Local_Data(i, fTECHeures)
         testHres = IsNumeric(hres)
         If testHres = False Then
@@ -3510,6 +3641,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Else
         Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_doublon_TECID & " cas de doublons pour les TECID")
         r = r + 1
+        isTECValid = False
     End If
     
     If cas_date_invalide = 0 Then
@@ -3518,6 +3650,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Else
         Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_date_invalide & " cas de date INVALIDE")
         r = r + 1
+        isTECValid = False
     End If
     
     If cas_date_future = 0 Then
@@ -3526,6 +3659,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Else
         Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_date_future & " cas de date FUTURE")
         r = r + 1
+        isTECValid = False
     End If
     
     Call AddMessageToWorkSheet(wsOutput, r, 2, "       La date MINIMALE est '" & Format$(minDate, "dd/mm/yyyy") & "'")
@@ -3539,6 +3673,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Else
         Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_hres_invalide & " cas d'heures INVALIDE")
         r = r + 1
+        isTECValid = False
     End If
     
     If cas_estFacturable_invalide = 0 Then
@@ -3547,6 +3682,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Else
         Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_estFacturable_invalide & " cas de valeur 'estFacturable' INVALIDE")
         r = r + 1
+        isTECValid = False
     End If
     
     If cas_estFacturee_invalide = 0 Then
@@ -3555,6 +3691,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Else
         Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_estFacturee_invalide & " cas de valeur 'estFacturee' INVALIDE")
         r = r + 1
+        isTECValid = False
     End If
     
     If cas_date_fact_invalide = 0 Then
@@ -3563,6 +3700,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Else
         Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_date_fact_invalide & " cas de date de facture INVALIDE")
         r = r + 1
+        isTECValid = False
     End If
     
     If cas_estDetruit_invalide = 0 Then
@@ -3571,6 +3709,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     Else
         Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_estDetruit_invalide & " cas de valeur 'estDetruit' INVALIDE")
         r = r + 1
+        isTECValid = False
     End If
     
     Call AddMessageToWorkSheet(wsOutput, r, 2, "Vérification des Heures Facturées par Facture")
@@ -3588,6 +3727,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
                     "', il y a un écart d'heures facturées entre TEC_Local & FAC_Détails - " & _
                         Round(dictFactureHres(key), 2) & " vs. " & Round(totalHoursBilled, 2))
             r = r + 1
+            isTECValid = False
             cas_Heures_Differentes = cas_Heures_Differentes + 1
         End If
     Next key
@@ -3610,6 +3750,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call AddMessageToWorkSheet(wsOutput, r, 2, "       Heures SAISIES         : " & formattedHours)
+    gValeursAComparer(6, 3) = CCur(formattedHours)
     r = r + 1
     
     formattedHours = Format$(total_hres_detruites, "#,##0.00")
@@ -3617,6 +3758,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call AddMessageToWorkSheet(wsOutput, r, 2, "       Heures détruites       : " & formattedHours)
+    gValeursAComparer(7, 3) = CCur(formattedHours)
     r = r + 1
     
     formattedHours = Format$(total_hres_inscrites - total_hres_detruites, "#,##0.00")
@@ -3624,6 +3766,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call AddMessageToWorkSheet(wsOutput, r, 2, "       Heures NETTES          : " & formattedHours)
+    gValeursAComparer(8, 3) = CCur(formattedHours)
     r = r + 1
     
     formattedHours = Format$(total_hres_non_facturable, "#,##0.00")
@@ -3631,6 +3774,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call AddMessageToWorkSheet(wsOutput, r, 2, "              Non_facturables : " & formattedHours)
+    gValeursAComparer(9, 3) = CCur(formattedHours)
     r = r + 1
 
     formattedHours = Format$(total_hres_facturable, "#,##0.00")
@@ -3638,6 +3782,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call AddMessageToWorkSheet(wsOutput, r, 2, "              Facturables     : " & formattedHours)
+    gValeursAComparer(10, 3) = CCur(formattedHours)
     r = r + 1
     
     formattedHours = Format$(total_hres_facturees, "#,##0.00")
@@ -3645,6 +3790,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
     Call AddMessageToWorkSheet(wsOutput, r, 2, "       Heures facturées       : " & formattedHours)
+    gValeursAComparer(11, 3) = CCur(formattedHours)
     r = r + 1
 
     formattedHours = Format$(total_hres_facturable - total_hres_facturees, "#,##0.00")
@@ -3657,6 +3803,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
     rng.value = "       Heures TEC             : " & formattedHours
     rng.Characters(InStr(rng.value, ":") + 2, Len(formattedHours)).Font.Color = vbRed
     rng.Characters(InStr(rng.value, ":") + 2, Len(formattedHours)).Font.Bold = True
+    gValeursAComparer(12, 3) = CCur(formattedHours)
     r = r + 1
     
     Dim keys() As Variant
@@ -3713,6 +3860,7 @@ Private Sub checkTEC(ByRef r As Long, ByRef readRows As Long)
 Clean_Exit:
 
     'Libérer la mémoire
+    On Error Resume Next
     Set dictDateCharge = Nothing
     Set dictFacture = Nothing
     Set dictTimeStamp = Nothing
@@ -3723,10 +3871,11 @@ Clean_Exit:
     Set rngTEC_LocalData = Nothing
     Set ws = Nothing
     Set wsOutput = Nothing
+    On Error GoTo 0
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli_Utils:checkTEC", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierTEC", "", startTime)
 
 End Sub
 
@@ -3770,8 +3919,10 @@ Sub AddMessageToWorkSheet(ws As Worksheet, r As Long, c As Long, m As String)
 
 End Sub
 
-Sub ApplyConditionalFormatting(rng As Range, headerRows As Long, Optional EmptyLine As Boolean = False)
+Sub AppliquerConditionalFormating(rng As Range, headerRows As Long, Optional EmptyLine As Boolean = False)
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:AppliquerConditionalFormating", "", 0)
+    
     'Avons-nous un Range valide ?
     If rng Is Nothing Or rng.Rows.count <= headerRows Then
         Exit Sub
@@ -3780,7 +3931,7 @@ Sub ApplyConditionalFormatting(rng As Range, headerRows As Long, Optional EmptyL
     Dim ws As Worksheet: Set ws = rng.Worksheet
     Dim dataRange As Range
     
-   ' Définir la plage de données à laquelle appliquer la mise en forme conditionnelle, en
+    'Définir la plage de données à laquelle appliquer la mise en forme conditionnelle, en
     'excluant les lignes d'en-tête
     Set dataRange = rng.Resize(rng.Rows.count - headerRows).offset(headerRows, 0)
     
@@ -3800,9 +3951,11 @@ Sub ApplyConditionalFormatting(rng As Range, headerRows As Long, Optional EmptyL
     Set dataRange = Nothing
     Set ws = Nothing
     
+    Call Log_Record("modAppli_Utils:AppliquerConditionalFormating", "", startTime)
+
 End Sub
 
-Sub ApplyWorksheetFormat(ws As Worksheet, rng As Range, HeaderRow As Long)
+Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As Long)
 
     'Conditional Formatting (many steps)
     '1) Remove existing conditional formatting
@@ -3824,8 +3977,6 @@ Sub ApplyWorksheetFormat(ws As Worksheet, rng As Range, HeaderRow As Long)
         If lastUsedRow = HeaderRow Then
             Exit Sub
         End If
-        
-'        Debug.Print "765 - " & ws.Name, rng.Address, usedRange.Address, lastUsedRow
         
         Dim rngUnion As Range
         
@@ -4278,7 +4429,7 @@ Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
                                     
     'Set conditional formatting for the worksheet (alternate colors)
     Dim rngArea As Range: Set rngArea = wsOutput.Range("B2:K" & rowOutput)
-    Call ApplyConditionalFormatting(rngArea, 1, True)
+    Call AppliquerConditionalFormating(rngArea, 1, True)
 
     Application.ScreenUpdating = True
     Application.EnableEvents = True
@@ -4329,9 +4480,9 @@ Sub Get_Date_Derniere_Modification(fileName As String, ByRef ddm As Date, _
     
 End Sub
 
-Sub Dynamic_Range_Redefine_Plan_Comptable() '2024-07-04 @ 10:39
+Sub RedefinirDnrPlanComptable() '2024-07-04 @ 10:39
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:Dynamic_Range_Redefine_Plan_Comptable", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:RedefinirDnrPlanComptable", "", 0)
 
     'Redefine - dnrPlanComptable_Description_Only
     'Delete existing dynamic named range (assuming it could exists)
@@ -4358,7 +4509,7 @@ Sub Dynamic_Range_Redefine_Plan_Comptable() '2024-07-04 @ 10:39
     'Create the new dynamic named range
     ThisWorkbook.Names.Add Name:="dnrPlanComptable_All", RefersTo:=newRangeFormula
     
-    Call Log_Record("modAppli_Utils:Dynamic_Range_Redefine_Plan_Comptable", "", startTime)
+    Call Log_Record("modAppli_Utils:RedefinirDnrPlanComptable", "", startTime)
 
 End Sub
 
@@ -4391,8 +4542,10 @@ Sub Paint_A_Range(rng As Range, colorRGB As String)
 
 End Sub
 
-Sub AnalyseLignesParFeuille() '2025-01-22 @ 16:19
+Sub NoterNombreLignesParFeuille() '2025-01-22 @ 16:19
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:NoterNombreLignesParFeuille", "", 0)
+    
     'Spécifiez les chemins des classeurs
     Dim cheminClasseurUsage As String
     cheminClasseurUsage = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & "GCF_File_Usage.xlsx"
@@ -4457,9 +4610,11 @@ Sub AnalyseLignesParFeuille() '2025-01-22 @ 16:19
     'Sauvegarder et fermer le classeur d'usage
     wbUsage.Close SaveChanges:=True
     
+    Call Log_Record("modAppli_Utils:NoterNombreLignesParFeuille", "", startTime)
+
 End Sub
 
-Sub ChargerRangeDansDictionnaire(ByRef dict As Object, ByVal rng As Range, Optional colValeurOffset As Long = 0)
+Sub ChargerPlageDansDictionary(ByRef dict As Object, ByVal rng As Range, Optional colValeurOffset As Long = 0)
 
     'Créer un dictionnaire si non initialisé
     If dict Is Nothing Then
@@ -4493,7 +4648,7 @@ Sub ExempleUtilisation()
     Set rng = rng.Resize(rng.Rows.count - 2, rng.Columns.count)
 
     'Charger les données dans un dictionnaire
-    Call ChargerRangeDansDictionnaire(dict, rng, 2) ' 2 = Décalage de colonne pour les valeurs (colonne C)
+    Call ChargerPlageDansDictionary(dict, rng, 2) ' 2 = Décalage de colonne pour les valeurs (colonne C)
 
 '    'Afficher le contenu du dictionnaire
 '    Dim clé As Variant

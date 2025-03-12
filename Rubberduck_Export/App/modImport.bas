@@ -40,7 +40,7 @@ Sub ImporterPlanComptable() '2024-02-17 @ 07:21
     recSet.Close
     connStr.Close
 
-    Call Dynamic_Range_Redefine_Plan_Comptable
+    Call RedefinirDnrPlanComptable
 
     'Libérer la mémoire
     Set connStr = Nothing
@@ -168,7 +168,7 @@ Sub ImporterDebRecurrent() '2024-07-08 @ 08:43
     
     'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:32
     Dim rng As Range: Set rng = wshDEB_Récurrent.Range("A1").CurrentRegion
-    Call ApplyWorksheetFormat(wshDEB_Récurrent, rng, 1)
+    Call AppliquerFormatColonnesParTable(wshDEB_Récurrent, rng, 1)
     
     Call DEB_Recurrent_Build_Summary '2025-01-15 @
     
@@ -243,7 +243,7 @@ Sub ImporterDebTrans() '2024-06-26 @ 18:51
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:32
     Dim rng As Range: Set rng = wshDEB_Trans.Range("A1").CurrentRegion
-    Call ApplyWorksheetFormat(wshDEB_Trans, rng, 1)
+    Call AppliquerFormatColonnesParTable(wshDEB_Trans, rng, 1)
 
     Application.ScreenUpdating = True
     
@@ -316,7 +316,7 @@ Sub ImporterEncDetails() '2025-01-16 @ 16:55
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:35
     Dim rng As Range: Set rng = wshENC_Détails.Range("A1").CurrentRegion
-    Call ApplyWorksheetFormat(wshENC_Détails, rng, 1)
+    Call AppliquerFormatColonnesParTable(wshENC_Détails, rng, 1)
     
     Application.ScreenUpdating = True
     
@@ -389,7 +389,7 @@ Sub ImporterEncEntete() '2025-03-10 @ 17:08
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:36
     Dim rng As Range: Set rng = wshENC_Entête.Range("A1").CurrentRegion
-    Call ApplyWorksheetFormat(wshENC_Entête, rng, 1)
+    Call AppliquerFormatColonnesParTable(wshENC_Entête, rng, 1)
 
     Application.ScreenUpdating = True
     
@@ -464,7 +464,7 @@ Sub ImporterCCRegularisations() '2025-01-05 @ 11:23
    
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:35
     Dim rng As Range: Set rng = wshCC_Régularisations.Range("A1").CurrentRegion
-    Call ApplyWorksheetFormat(wshCC_Régularisations, rng, 1)
+    Call AppliquerFormatColonnesParTable(wshCC_Régularisations, rng, 1)
     
     Application.ScreenUpdating = True
     
@@ -537,7 +537,7 @@ Sub ImporterFacComptesClients() '2024-08-07 @ 17:41
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:32
     Dim rng As Range: Set rng = wshFAC_Comptes_Clients.Range("A1").CurrentRegion
-    Call ApplyWorksheetFormat(wshFAC_Comptes_Clients, rng, 1)
+    Call AppliquerFormatColonnesParTable(wshFAC_Comptes_Clients, rng, 1)
 
     Application.ScreenUpdating = True
     
@@ -591,7 +591,7 @@ Sub ImporterFacDetails() '2024-03-07 @ 17:38
 
    'Setup the format of the worksheet - 2024-07-20 @ 18:35
     Dim rng As Range: Set rng = wshFAC_Détails.Range("A1").CurrentRegion
-    Call ApplyWorksheetFormat(wshFAC_Détails, rng, 2)
+    Call AppliquerFormatColonnesParTable(wshFAC_Détails, rng, 2)
 
     Application.ScreenUpdating = True
     
@@ -661,7 +661,7 @@ Sub ImporterFacEntete() '2024-07-11 @ 09:21
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
     Dim rng As Range: Set rng = wshFAC_Entête.Range("A1").CurrentRegion
-    Call ApplyWorksheetFormat(wshFAC_Entête, rng, 2)
+    Call AppliquerFormatColonnesParTable(wshFAC_Entête, rng, 2)
     
     Application.ScreenUpdating = True
     
@@ -715,7 +715,7 @@ Sub ImporterFacSommaireTaux() '2024-07-11 @ 09:21
 
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
     Dim rng As Range: Set rng = wshFAC_Sommaire_Taux.Range("A1").CurrentRegion
-    Call ApplyWorksheetFormat(wshFAC_Sommaire_Taux, rng, 1)
+    Call AppliquerFormatColonnesParTable(wshFAC_Sommaire_Taux, rng, 1)
     
     Application.ScreenUpdating = True
     
@@ -792,7 +792,7 @@ Sub ImporterFacProjetsDetails() '2024-07-20 @ 13:25
     lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     If lastRow > 1 Then
         Set dataRange = ws.Range("A1").CurrentRegion
-        Call ApplyWorksheetFormat(wshFAC_Projets_Détails, dataRange, 1)
+        Call AppliquerFormatColonnesParTable(wshFAC_Projets_Détails, dataRange, 1)
     End If
     
     'Libérer la mémoire
@@ -875,7 +875,7 @@ Sub ImporterFacProjetsEntete() '2024-07-11 @ 09:21
     lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     If lastRow > 1 Then
         Dim rng As Range: Set rng = ws.Range("A1").CurrentRegion
-        Call ApplyWorksheetFormat(ws, rng, 1)
+        Call AppliquerFormatColonnesParTable(ws, rng, 1)
     End If
     
     Application.ScreenUpdating = True
@@ -929,7 +929,7 @@ Sub ImporterFournisseurs() 'Using ADODB - 2024-07-03 @ 15:43
     
     'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:38
     Dim rng As Range: Set rng = wshBD_Fournisseurs.Range("A1").CurrentRegion
-    Call ApplyWorksheetFormat(wshBD_Fournisseurs, rng, 1)
+    Call AppliquerFormatColonnesParTable(wshBD_Fournisseurs, rng, 1)
     
     'Close resource
     recSet.Close
@@ -990,7 +990,7 @@ Sub ImporterEJRecurrente() '2024-03-03 @ 11:36
 
    'Setup the format of the worksheet using a Sub
     Dim rng As Range: Set rng = wshGL_EJ_Recurrente.Range("A1").CurrentRegion
-    Call ApplyWorksheetFormat(wshGL_EJ_Recurrente, rng, 1)
+    Call AppliquerFormatColonnesParTable(wshGL_EJ_Recurrente, rng, 1)
     
     Call GL_EJ_Recurrente_Build_Summary '2024-03-14 @ 07:38
     
@@ -1051,7 +1051,7 @@ Sub ImporterGLTransactions() '2024-03-03 @ 10:13
 
    'Setup the format of the worksheet using a Sub
     Dim rng As Range: Set rng = wsLocal.Range("A1").CurrentRegion
-    Call ApplyWorksheetFormat(wsLocal, rng, 1)
+    Call AppliquerFormatColonnesParTable(wsLocal, rng, 1)
 
     Application.ScreenUpdating = True
     
@@ -1128,7 +1128,7 @@ Sub RedimensionnerTable(targetSheet As Worksheet, tableName As String) '2025-03-
     End With
     
     'Redimensionner la tableàsa
-    tbl.Resize Range(tbl.Range.Cells(1, 1), targetSheet.Cells(lastRow, lastCol))
+    tbl.Resize targetSheet.Range(tbl.Range.Cells(1, 1), targetSheet.Cells(lastRow, lastCol))
     
 End Sub
 

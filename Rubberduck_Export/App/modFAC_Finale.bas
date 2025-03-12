@@ -1323,13 +1323,13 @@ Sub FAC_Finale_Creation_Courriel(noFacture As String, clientID As String) '2024-
     
     '2a. Chemin du template (.oft) de courriel
     Dim templateFullPathName As String
-    templateFullPathName = Environ("appdata") & "\Microsoft\Templates\GCF_Facturation.oft"
+    templateFullPathName = Environ$("appdata") & "\Microsoft\Templates\GCF_Facturation.oft"
 
     '2b. Vérification de l'existence du template
     fileExists = Dir(templateFullPathName) <> ""
     If Not fileExists Then
         MsgBox "Le gabarit 'GCF_Facturation.oft' est introuvable " & _
-                    "à l'emplacement spécifié, soit " & Environ("appdata") & "\Microsoft\Templates", _
+                    "à l'emplacement spécifié, soit " & Environ$("appdata") & "\Microsoft\Templates", _
                     vbCritical
         GoTo Exit_Sub
     End If

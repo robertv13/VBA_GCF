@@ -393,7 +393,7 @@ Sub CodeEssentielDepart()
     'Call the BackupMasterFile (GCF_BD_MASTER.xlsx) macro at each application startup
     Call BackupMasterFile
     
-    Call WriteInfoOnMainMenu
+    Call EcrireInformationsConfigAuMenu
     wshMenu.Range("A1").value = wshAdmin.Range("NomEntreprise").value
     
     Call HideDevShapesBasedOnUsername
@@ -542,9 +542,9 @@ MASTER_NOT_AVAILABLE:
 
 End Sub
 
-Sub WriteInfoOnMainMenu()
+Sub EcrireInformationsConfigAuMenu()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:WriteInfoOnMainMenu", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:EcrireInformationsConfigAuMenu", "", 0)
     
     wshMenu.Unprotect
     
@@ -555,6 +555,7 @@ Sub WriteInfoOnMainMenu()
         .Range("A31").value = "Version - " & ThisWorkbook.Name
         .Range("A32").value = "Utilisateur - " & Fn_Get_Windows_Username
         .Range("A33").value = "Environnement - " & wshAdmin.Range("F5").value
+        .Range("A34").value = "Format de la date - " & wshAdmin.Range("B1").value
     End With
     
     Application.EnableEvents = True
@@ -564,7 +565,7 @@ Sub WriteInfoOnMainMenu()
         .EnableSelection = xlUnlockedCells
     End With
     
-    Call Log_Record("modAppli:WriteInfoOnMainMenu", "", startTime)
+    Call Log_Record("modAppli:EcrireInformationsConfigAuMenu", "", startTime)
 
 End Sub
 

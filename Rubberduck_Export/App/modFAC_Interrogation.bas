@@ -378,7 +378,7 @@ Sub VisualiserFacturePDF(noFact As String)
     'Ouvrir la version PDF de la facture, si elle existe
     If Dir(fullPDFFileName) <> "" Then
         'Le fichier existe, on peut lancer la commande Shell pour l'ouvrir
-        Shell "C:\Program Files\Adobe\Acrobat DC\Acrobat\Acrobat.exe " & Chr(34) & fullPDFFileName & Chr(34), vbNormalFocus
+        Shell "C:\Program Files\Adobe\Acrobat DC\Acrobat\Acrobat.exe " & Chr$(34) & fullPDFFileName & Chr$(34), vbNormalFocus
     Else
         'Le fichier n'existe pas, afficher un message d'erreur
         MsgBox "La version PDF de cette facture n'existe pas" & vbNewLine & vbNewLine & _
