@@ -1,13 +1,12 @@
 ﻿Option Explicit
 
-Public previousCellAddress As Variant
 Public clientCode As String
 
 Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Radiation:Worksheet_Activate", "", 0)
     
-    If fromMenu = False Then
+    If gFromMenu = False Then
         Debug.Print "#006 - wshTEC_Radiation_Worksheet_Activate - Je ne viens pas du menu"
         Exit Sub
     End If
@@ -51,7 +50,7 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
     
     ws.Visible = xlSheetVisible
     
-    fromMenu = True
+    gFromMenu = True
     
     'Libérer la mémoire
     Set ws = Nothing
@@ -64,8 +63,8 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Radiation:Worksheet_SelectionChange", "", 0)
     
-    If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.Color = vbWhite
+    If gPreviousCellAddress <> "" Then
+        Range(gPreviousCellAddress).Interior.Color = vbWhite
     End If
     
     'Is client been selected ?
@@ -78,7 +77,7 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
         target.Interior.Color = COULEUR_SAISIE
     End If
     
-    previousCellAddress = target.Address
+    gPreviousCellAddress = target.Address
     
     Call Log_Record("wshTEC_Radiation:Worksheet_SelectionChange", "", startTime)
     
@@ -121,7 +120,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
         Application.EnableEvents = False
         fullDate = Fn_Complete_Date(target.Text, 99, 0)
         If fullDate <> "Invalid Date" Then
-            target.value = Format$(fullDate, wshAdmin.Range("B1").value)
+            target.value = Format$(fullDate, wsdADMIN.Range("B1").value)
             target.Interior.Color = vbWhite
        Else
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshTEC_Radiation_75")

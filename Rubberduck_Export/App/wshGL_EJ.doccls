@@ -1,10 +1,8 @@
 ﻿Option Explicit
 
-Public previousCellAddress As Variant
-
 Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
 
-    If fromMenu = False Then
+    If gFromMenu = False Then
         Exit Sub
     End If
     
@@ -61,9 +59,9 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     With ws
         .Range("B2").value = -1
         .Range("B3").value = -1
-        .Range("K4").value = Format$(Date, wshAdmin.Range("B1").value)
+        .Range("K4").value = Format$(Date, wsdADMIN.Range("B1").value)
         .Range("F4").Select
-        previousCellAddress = .Range("F4").Address
+        gPreviousCellAddress = .Range("F4").Address
     End With
     
     Application.ScreenUpdating = True
@@ -79,8 +77,8 @@ End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal target As Range)
 
-    If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.Color = xlNone
+    If gPreviousCellAddress <> "" Then
+        Range(gPreviousCellAddress).Interior.Color = xlNone
     End If
 
     'Ne pas permettre aucun changement à l'écriture originale, lors d'un renversement
@@ -133,7 +131,7 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
     End If
     
     'Save the current cell Address
-    previousCellAddress = target.Address
+    gPreviousCellAddress = target.Address
 
 End Sub
 
@@ -199,7 +197,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
         
         'Update the cell with the full date, if valid
         If fullDate <> "Invalid Date" Then
-            target.value = Format$(fullDate, wshAdmin.Range("B1").value)
+            target.value = Format$(fullDate, wsdADMIN.Range("B1").value)
         Else
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshGL_EJ_123")
             Application.EnableEvents = False

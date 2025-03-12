@@ -102,8 +102,8 @@ Sub Parametres()
             userName = "gchar" Or _
             userName = "Robert M. Vigneault" Or _
             userName = "robertmv" Then
-        wshAdmin.Visible = xlSheetVisible
-        wshAdmin.Select
+        wsdADMIN.Visible = xlSheetVisible
+        wsdADMIN.Select
     Else
         Application.EnableEvents = False
         wshMenu.Activate
@@ -133,8 +133,8 @@ Sub SauvegarderEtSortirApplication() '2024-08-30 @ 07:37
     
     If confirmation = vbYes Then
         Application.EnableEvents = False
-        wshAdmin.Range("B1").value = ""
-        wshAdmin.Range("B2").value = ""
+        wsdADMIN.Range("B1").value = ""
+        wsdADMIN.Range("B2").value = ""
         Application.EnableEvents = True
         
         Call Delete_User_Active_File
@@ -249,7 +249,7 @@ Sub Delete_User_Active_File()
     userName = Fn_Get_Windows_Username
     
     Dim traceFilePath As String
-    traceFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
+    traceFilePath = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
     
     If Dir(traceFilePath) <> "" Then
         Kill traceFilePath

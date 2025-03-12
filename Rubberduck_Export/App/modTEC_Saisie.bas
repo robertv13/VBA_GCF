@@ -128,7 +128,7 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
     
     Call Log_Record("modTEC_Saisie:TEC_Efface_Ligne - Le DELETE est confirmé - " & CStr(-ufSaisieHeures.txtTECID.value), -1) '2024-10-05 @ 07:21
     
-    Dim Sh As Worksheet: Set Sh = wshTEC_Local
+    Dim Sh As Worksheet: Set Sh = wsdTEC_Local
     
     Dim tecID As Long
     'With a negative ID value, it means to soft delete this record
@@ -176,7 +176,7 @@ Sub TEC_Get_All_TEC_AF() '2024-11-19 @ 10:39
     Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Get_All_TEC_AF", _
                                                                  ufSaisieHeures.txtProfID.value & "/" & ufSaisieHeures.txtDate.value, 0)
 
-    Dim ws As Worksheet: Set ws = wshTEC_Local
+    Dim ws As Worksheet: Set ws = wsdTEC_Local
     
     Application.ScreenUpdating = False
 
@@ -185,7 +185,7 @@ Sub TEC_Get_All_TEC_AF() '2024-11-19 @ 10:39
         Exit Sub
     End If
     
-    'wshTEC_Local_AF#1
+    'wsdTEC_Local_AF#1
 
     'Set criteria directly in TEC_Local for AdvancedFilter
     With ws
@@ -228,19 +228,19 @@ Sub TEC_Get_All_TEC_AF() '2024-11-19 @ 10:39
     If lastResultRow < 4 Then GoTo No_Sort_Required
     With ws.Sort 'Sort - Date / Prof / TECID
         .SortFields.Clear
-        .SortFields.Add key:=wshTEC_Local.Range("X3"), _
+        .SortFields.Add key:=wsdTEC_Local.Range("X3"), _
             SortOn:=xlSortOnValues, _
             Order:=xlAscending, _
             DataOption:=xlSortNormal 'Sort Based On Date
-        .SortFields.Add key:=wshTEC_Local.Range("W3"), _
+        .SortFields.Add key:=wsdTEC_Local.Range("W3"), _
             SortOn:=xlSortOnValues, _
             Order:=xlAscending, _
             DataOption:=xlSortNormal 'Sort Based On Prof
-        .SortFields.Add key:=wshTEC_Local.Range("V3"), _
+        .SortFields.Add key:=wsdTEC_Local.Range("V3"), _
             SortOn:=xlSortOnValues, _
             Order:=xlAscending, _
             DataOption:=xlSortNormal 'Sort Based On TECID
-        .SetRange wshTEC_Local.Range("V3:AI" & lastResultRow) 'Set Range
+        .SetRange wsdTEC_Local.Range("V3:AI" & lastResultRow) 'Set Range
         .Apply 'Apply Sort
      End With
 
@@ -249,11 +249,11 @@ No_Sort_Required:
     'Suddenly, I have to convert BOOLEAN value to TEXT !!!! - 2024-06-19 @ 14:20
     Dim r As Range
     If lastResultRow > 2 Then
-        Set r = wshTEC_Local.Range("AC3:AC" & lastResultRow)
+        Set r = wsdTEC_Local.Range("AC3:AC" & lastResultRow)
         Call ConvertRangeBooleanToText(r)
-        Set r = wshTEC_Local.Range("AE3:AE" & lastResultRow)
+        Set r = wsdTEC_Local.Range("AE3:AE" & lastResultRow)
         Call ConvertRangeBooleanToText(r)
-        Set r = wshTEC_Local.Range("AG3:AG" & lastResultRow)
+        Set r = wsdTEC_Local.Range("AG3:AG" & lastResultRow)
         Call ConvertRangeBooleanToText(r)
     End If
     
@@ -306,7 +306,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "TEC_Local$"
     
@@ -533,7 +533,7 @@ Sub TEC_Record_Add_Or_Update_Locally(tecID As Long) 'Write -OR- Update a record 
     If tecID = 0 Then 'Add a new record
         'Get the next available row in TEC_Local
         Dim nextRowNumber As Long
-        With wshTEC_Local
+        With wsdTEC_Local
             nextRowNumber = .Cells(.Rows.count, 1).End(xlUp).row + 1
             .Range("A" & nextRowNumber).value = ufSaisieHeures.txtTECID.value
             .Range("B" & nextRowNumber).value = ufSaisieHeures.txtProfID.value
@@ -554,8 +554,8 @@ Sub TEC_Record_Add_Or_Update_Locally(tecID As Long) 'Write -OR- Update a record 
         End With
     Else
         'What is the row number for the TECID
-        lastUsedRow = wshTEC_Local.Cells(wshTEC_Local.Rows.count, "A").End(xlUp).row
-        Dim lookupRange As Range: Set lookupRange = wshTEC_Local.Range("A3:A" & lastUsedRow)
+        lastUsedRow = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "A").End(xlUp).row
+        Dim lookupRange As Range: Set lookupRange = wsdTEC_Local.Range("A3:A" & lastUsedRow)
         Dim rowToBeUpdated As Long
         rowToBeUpdated = Fn_Find_Row_Number_TECID(Abs(tecID), lookupRange)
         If rowToBeUpdated < 1 Then
@@ -566,7 +566,7 @@ Sub TEC_Record_Add_Or_Update_Locally(tecID As Long) 'Write -OR- Update a record 
         End If
 
         If tecID > 0 Then 'Modify the record
-            With wshTEC_Local
+            With wsdTEC_Local
                 .Range("E" & rowToBeUpdated).value = ufSaisieHeures.txtClientID.value
                 .Range("F" & rowToBeUpdated).value = ufSaisieHeures.txtClient.value
                 .Range("G" & rowToBeUpdated).value = ufSaisieHeures.txtActivite.value
@@ -581,7 +581,7 @@ Sub TEC_Record_Add_Or_Update_Locally(tecID As Long) 'Write -OR- Update a record 
                 .Range("P" & rowToBeUpdated).value = ""
             End With
         Else 'Soft delete the record
-            With wshTEC_Local
+            With wsdTEC_Local
                 .Range("K" & rowToBeUpdated).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
                 .Range("N" & rowToBeUpdated).value = Fn_Convert_Value_Boolean_To_Text(True)
                 .Range("O" & rowToBeUpdated).value = ThisWorkbook.Name
@@ -630,9 +630,9 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     
     'Manually add to listBox (because some tests have to be made)
     Dim lastRow As Long
-    lastRow = wshTEC_Local.Cells(wshTEC_Local.Rows.count, "V").End(xlUp).row
+    lastRow = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "V").End(xlUp).row
     Dim rng As Range
-    Set rng = wshTEC_Local.Range("V3:AI" & lastRow)
+    Set rng = wsdTEC_Local.Range("V3:AI" & lastRow)
      
     'Variables initiales
     Dim totalHeures As Currency: totalHeures = 0
@@ -644,7 +644,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     'Remplissage du listBox
     Dim hresFormat As String
     If lastRow >= 3 Then
-        Set rng = wshTEC_Local.Range("V3:AI" & lastRow)
+        Set rng = wsdTEC_Local.Range("V3:AI" & lastRow)
         For i = 1 To rng.Rows.count
             With ufSaisieHeures.lsbHresJour
                 .AddItem rng.Cells(i, 1).value
@@ -734,7 +734,7 @@ Sub TEC_Update_TDB_From_TEC_Local()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Update_TDB_From_TEC_Local", "", 0)
 
-    Dim wsFrom As Worksheet: Set wsFrom = wshTEC_Local
+    Dim wsFrom As Worksheet: Set wsFrom = wsdTEC_Local
     Dim lastUsedRow As Long
     lastUsedRow = wsFrom.Cells(wsFrom.Rows.count, 1).End(xlUp).row
     

@@ -4,7 +4,7 @@ Private Sub Worksheet_Activate()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshStatsHeuresPivotTables:Worksheet_Activate", "", 0)
 
-    If fromMenu = False Then
+    If gFromMenu = False Then
         Debug.Print "#012 - wshFAC_Brouillon_Worksheet_Activate - Je ne viens pas du menu"
         Exit Sub
     End If
@@ -67,7 +67,7 @@ Private Sub Worksheet_Activate()
         .EnableSelection = xlUnlockedCells
     End With
     
-    fromMenu = False
+    gFromMenu = False
 
     'Libérer la mémoire
     Set plageValide = Nothing

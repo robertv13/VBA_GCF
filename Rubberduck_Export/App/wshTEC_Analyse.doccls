@@ -1,7 +1,5 @@
 ﻿Option Explicit
 
-Public previousCellAddress As Variant
-
 Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Analyse:Worksheet_Activate", "", 0)
@@ -24,7 +22,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     Me.Application.Calculation = xlCalculationAutomatic
 
    'Mettre la date du jour comme date butoir, AVANT d'effectuer un premier traitement
-    Me.Range("H3").NumberFormat = wshAdmin.Range("B1").value
+    Me.Range("H3").NumberFormat = wsdADMIN.Range("B1").value
     Me.Range("H3").value = Date
     
     Call SetTabOrder(ws)
@@ -36,7 +34,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     
     With ws
         .Unprotect
-        previousCellAddress = .Range("H3").Address
+        gPreviousCellAddress = .Range("H3").Address
     End With
     
     ws.Outline.ShowLevels RowLevels:=2
@@ -74,8 +72,8 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
     
     Debug.Print "#013 - " & target.Address
     
-    If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.Color = COULEUR_BASE_TEC
+    If gPreviousCellAddress <> "" Then
+        Range(gPreviousCellAddress).Interior.Color = COULEUR_BASE_TEC
     End If
     
     'Is date been selected ?

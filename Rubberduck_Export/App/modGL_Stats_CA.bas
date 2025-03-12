@@ -36,7 +36,7 @@ Sub Actualiser_Stats_CA()
     dateFinMoisPrécédent = DateSerial(year(Date), month(Date), 0)
     
     Dim moisFinAnnéeFinancière As Integer
-    moisFinAnnéeFinancière = wshAdmin.Range("MoisFinAnnéeFinancière").value
+    moisFinAnnéeFinancière = wsdADMIN.Range("MoisFinAnnéeFinancière").value
     
     'Mémoriser les colonnes de la feuille pour chacun des 12 mois de l'année financière
     Dim colMois(1 To 12, 1 To 2) As String

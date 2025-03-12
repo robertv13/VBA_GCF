@@ -12,7 +12,7 @@ Sub CopieClientsEntreClasseursFermés() '2024-08-03 @ 09:40
     Dim sourceFilePath As String
     sourceFilePath = "C:\VBA\GC_FISCALITÉ\DataConversion\Clients.xlsx"
     Dim destinationFilePath As String
-    destinationFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & "GCF_BD_Entrée.xlsx"
+    destinationFilePath = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & "GCF_BD_Entrée.xlsx"
     
     'Declare le Workbook & le Worksheet (source)
     Dim sourceWorkbook As Workbook: Set sourceWorkbook = Workbooks.Open(sourceFilePath)
@@ -186,7 +186,7 @@ Sub ImporterDonnéesDeClasseursFermés_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 16
     
     'Define the destination worksheet
     Dim wsDest As Worksheet
-    Set wsDest = wshTEC_Local
+    Set wsDest = wsdTEC_Local
     
     'Get the last row in the destination sheet
     Dim lastUsedRow As Long, rowNum As Long
@@ -213,7 +213,7 @@ Sub ImporterDonnéesDeClasseursFermés_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 16
         
         'Is this a Valid Client ?
         Dim myInfo() As Variant
-        Dim rng As Range: Set rng = wshBD_Clients.Range("dnrClients_Names_Only")
+        Dim rng As Range: Set rng = wsdBD_Clients.Range("dnrClients_Names_Only")
         myInfo = Fn_Find_Data_In_A_Range(rng, 2, clientCode, 1)
         If myInfo(1) = "" Then
             If InStr(errorMesg, client) = 0 Then
@@ -290,7 +290,7 @@ Sub ImporterDonnéesDeClasseursFermésFournisseurs() '2024-08-03 @ 18:10
     Dim sourceFilePath As String
     sourceFilePath = "C:\VBA\GC_FISCALITÉ\DataConversion\Fournisseurs.xlsx"
     Dim destinationFilePath As String
-    destinationFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & "GCF_BD_Entrée.xlsx"
+    destinationFilePath = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & "GCF_BD_Entrée.xlsx"
     
     'Declare le Workbook & le Worksheet (source)
     Dim sourceWorkbook As Workbook: Set sourceWorkbook = Workbooks.Open(sourceFilePath)
@@ -364,7 +364,7 @@ Sub ImporterDonnéesDeClasseursFermés_GL_BV() '2024-08-03 @ 18:20
     rst.Open "SELECT * FROM [" & strSheetName & strRange & "]", cnn, 3, 1, 1
     
     'Define the destination worksheet
-    Dim wsDest As Worksheet: Set wsDest = wshGL_Trans
+    Dim wsDest As Worksheet: Set wsDest = wsdGL_Trans
     
     'Get the last row in the destination sheet
     Dim lastUsedRow As Long
@@ -464,7 +464,7 @@ Sub ImporterDonnéesDeClasseursFermés_CAR() '2024-08-04 @ 07:31
     rst.Open "SELECT * FROM [" & strSheetName & strRange & "]", cnn, 3, 1, 1
     
     'Define the destination worksheet
-    Set wsDest = wshFAC_Comptes_Clients
+    Set wsDest = wsdFAC_Comptes_Clients
     
     'Get the last row in the destination sheet
     lastUsedRow = wsDest.Cells(wsDest.Rows.count, "A").End(xlUp).row
@@ -507,7 +507,7 @@ Sub ImporterDonnéesDeClasseursFermés_CAR() '2024-08-04 @ 07:31
         
         'Is this a Valid Client ?
         Dim myInfo() As Variant
-        Dim rng As Range: Set rng = wshBD_Clients.Range("dnrClients_Names_Only")
+        Dim rng As Range: Set rng = wsdBD_Clients.Range("dnrClients_Names_Only")
         myInfo = Fn_Find_Data_In_A_Range(rng, 1, client, 2)
         If myInfo(1) = "" Then
             If InStr(errorMesg, client) = 0 Then
@@ -912,18 +912,18 @@ Sub CorrigeNomClientInTEC()  '2025-03-04 @ 05:48
 
     'Source - Définir les chemins d'accès des fichiers, le Workbook, le Worksheet et le Range
     Dim sourceFilePath As String
-    sourceFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceFilePath = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Master.xlsx"
     Dim wbSource As Workbook: Set wbSource = Workbooks.Open(sourceFilePath)
     Dim wsSource As Worksheet: Set wsSource = wbSource.Worksheets("TEC_Local")
     
-    'Détermine la dernière rangée et dernière colonne utilisées dans wshTEC_Local
+    'Détermine la dernière rangée et dernière colonne utilisées dans wsdTEC_Local
     Dim lastUsedRowTEC As Long
     lastUsedRowTEC = wsSource.Cells(wsSource.Rows.count, 1).End(xlUp).row
     
     'Open the Master File Workbook
     Dim clientMFPath As String
-    clientMFPath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    clientMFPath = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Entrée.xlsx"
     Dim wbMF As Workbook: Set wbMF = Workbooks.Open(clientMFPath)
     Dim wsMF As Worksheet: Set wsMF = wbMF.Worksheets("Clients")
@@ -1013,18 +1013,18 @@ Sub DetecterErreurCodeClientInTEC()  '2025-03-11 @ 08:29
 
     'Source - Définir les chemins d'accès des fichiers, le Workbook et le Worksheet
     Dim sourceFilePath As String
-    sourceFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceFilePath = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Master.xlsx"
     Dim wbSource As Workbook: Set wbSource = Workbooks.Open(sourceFilePath)
     Dim wsSource As Worksheet: Set wsSource = wbSource.Worksheets("TEC_Local")
     
-    'Détermine la dernière rangée et dernière colonne utilisées dans wshTEC_Local
+    'Détermine la dernière rangée et dernière colonne utilisées dans wsdTEC_Local
     Dim lastUsedRowTEC As Long
     lastUsedRowTEC = wsSource.Cells(wsSource.Rows.count, 1).End(xlUp).row
     
     'Open the Master File Workbook
     Dim clientMFPath As String
-    clientMFPath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    clientMFPath = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Entrée.xlsx"
     Dim wbMF As Workbook: Set wbMF = Workbooks.Open(clientMFPath)
     Dim wsMF As Worksheet: Set wsMF = wbMF.Worksheets("Clients")
@@ -1119,14 +1119,14 @@ Public Sub CorrigeNomClientInCAR()  '2024-08-31 @ 06:52
 
     'Worksheets to be corrected - Open the workbook (worksheet will be determined later)
     Dim sourceFilePath As String
-    sourceFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceFilePath = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Master.xlsx"
     Dim wbSource As Workbook
     Set wbSource = Workbooks.Open(sourceFilePath)
     
     'Client's Master File - Workbook & Worksheet
     Dim clientMFPath As String
-    clientMFPath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    clientMFPath = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Entrée.xlsx"
     Dim wbMF As Workbook
     Set wbMF = Workbooks.Open(clientMFPath)
@@ -1350,10 +1350,10 @@ Sub FusionnerDonnéesManquantes_CAR() '2024-08-29 @ 07:29
             MsgBox "Une ligne (" & i & ") ne balance pas !!!", vbCritical
         End If
         
-        'Find the InvNo in wshFAC_Entête
+        'Find the InvNo in wsdFAC_Entête
         Set foundCells = rngTarget.Columns(1).Find(What:=invNo, LookIn:=xlValues, LookAt:=xlWhole)
         If foundCells Is Nothing Then
-            MsgBox "**** Je n'ai pas trouvé la facture '" & invNo & "' dans wshFAC_Entête", vbCritical
+            MsgBox "**** Je n'ai pas trouvé la facture '" & invNo & "' dans wsdFAC_Entête", vbCritical
         Else
             ii = foundCells.row
         End If

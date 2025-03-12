@@ -1,7 +1,5 @@
 ﻿Option Explicit
 
-Public previousCellAddress As Variant
-
 Private Sub Worksheet_Activate()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_BV:Worksheet_Activate", "", 0)
@@ -48,7 +46,7 @@ Private Sub Worksheet_Activate()
     
     With ws
         .Range("J1").Select
-        previousCellAddress = .Range("J1").Address
+        gPreviousCellAddress = .Range("J1").Address
     End With
     
     'Libérer la mémoire
@@ -69,8 +67,8 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
         On Error GoTo 0
     End If
     
-    If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.Color = xlNone
+    If gPreviousCellAddress <> "" Then
+        Range(gPreviousCellAddress).Interior.Color = xlNone
     End If
 
     'Date selected
@@ -86,7 +84,7 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
         Dim GLAcct As String, GLDescription As String, dateLimite As Date
         GLAcct = CStr(Range("D" & target.row).value)
         GLDescription = Range("E" & target.row).value
-        dateLimite = Format$(Range("J1").value, wshAdmin.Range("B1").value)
+        dateLimite = Format$(Range("J1").value, wsdADMIN.Range("B1").value)
         wshGL_BV.Range("B10").value = 0
         Range("T2").value = "Toutes les dates"
         'Display all transactions for the selected G/L
@@ -163,7 +161,7 @@ Private Sub Worksheet_Change(ByVal target As Range) 'Worksheet wshBV - 2023-12-3
        
         'Update the cell with the full date, if valid
         If fullDate <> "Invalid Date" Then
-            target.value = Format$(fullDate, wshAdmin.Range("B1").value)
+            target.value = Format$(fullDate, wsdADMIN.Range("B1").value)
         Else
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshGL_BV_139")
             Application.EnableEvents = False

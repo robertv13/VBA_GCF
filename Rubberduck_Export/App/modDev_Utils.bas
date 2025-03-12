@@ -130,7 +130,7 @@ End Sub
 
 Sub Check_Invoice_Template()
 
-    Dim ws As Worksheet: Set ws = wshAdmin
+    Dim ws As Worksheet: Set ws = wsdADMIN
     Dim firstUsedRow As Long, lastUsedRow As Long
     firstUsedRow = 12
     lastUsedRow = ws.Cells(ws.Rows.count, "Z").End(xlUp).row
@@ -227,7 +227,7 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
 
     'Specify the full path and name of the closed workbook
     Dim wbPath As String
-    wbPath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    wbPath = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx"
     
     'Open the workbook in read-only mode
@@ -1567,7 +1567,7 @@ Sub Log_Record(ByVal procedureName As String, param As String, Optional ByVal st
     timeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & Right$(Format$(Timer, "0.00"), 2)
     
     Dim logFile As String
-    logFile = wshAdmin.Range("F5").value & DATA_PATH & _
+    logFile = wsdADMIN.Range("F5").value & DATA_PATH & _
                                     Application.PathSeparator & "LogMainApp.log"
     
     Dim fileNum As Integer
@@ -1608,7 +1608,7 @@ Sub Log_Record(ByVal procedureName As String, param As String, Optional ByVal st
 ErrorHandler:
 
     MsgBox "Une erreur est survenue à l'ouverture du fichier 'LogMainApp.log' " & vbNewLine & vbNewLine & _
-                "Erreur : " & Err & " = " & Err.Description, vbCritical, "Répertoire utilisé '" & wshAdmin.Range("F5").value & "'"
+                "Erreur : " & Err & " = " & Err.Description, vbCritical, "Répertoire utilisé '" & wsdADMIN.Range("F5").value & "'"
     
     'Nettoyage : réactivation des événements, calculs, etc.
     Application.EnableEvents = True
@@ -1640,7 +1640,7 @@ Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boole
     If InStr(oper, "ADD") = 0 And _
         InStr(oper, "UPDATE") = 0 And _
         InStr(oper, "DELETE") = 0 Then
-        If logSaisieHeuresVeryDetailed = False Then
+        If gLogSaisieHeuresVeryDetailed = False Then
             Exit Sub
         End If
     End If
@@ -1652,7 +1652,7 @@ Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boole
     
     'Path complet du fichier LogSaisieHeures.txt
     Dim logSaisieHeuresFile As String
-    logSaisieHeuresFile = wshAdmin.Range("F5").value & DATA_PATH & _
+    logSaisieHeuresFile = wsdADMIN.Range("F5").value & DATA_PATH & _
                                 Application.PathSeparator & "LogSaisieHeures.log"
     
     Dim fileNum As Integer
@@ -1694,7 +1694,7 @@ Sub Settrace(source As String, module As String, procedure As String, variable A
     Dim ms As String
     
     Dim settraceFile As String
-    settraceFile = wshAdmin.Range("F5").value & DATA_PATH & _
+    settraceFile = wsdADMIN.Range("F5").value & DATA_PATH & _
         Application.PathSeparator & "LogSettrace.txt"
     
     Dim fileNum As Integer
@@ -1767,7 +1767,7 @@ End Sub
 Sub LogMainApp_Analysis() '2025-01-10 @ 17:10
 
     Dim logFile As String
-    logFile = wshAdmin.Range("F5").value & Application.PathSeparator & "LogMainApp.log"
+    logFile = wsdADMIN.Range("F5").value & Application.PathSeparator & "LogMainApp.log"
     
     Dim fileNum As Integer
     fileNum = FreeFile

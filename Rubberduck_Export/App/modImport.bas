@@ -6,11 +6,11 @@ Sub ImporterPlanComptable() '2024-02-17 @ 07:21
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ImporterPlanComptable", "", 0)
 
     'Clear all cells, but the headers, in the target worksheet
-    wshAdmin.Range("T10").CurrentRegion.offset(2, 0).ClearContents
+    wsdADMIN.Range("T10").CurrentRegion.offset(2, 0).ClearContents
 
     'Import Accounts List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
     Dim sourceWorkbook As String, sourceWorksheet As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Entrée.xlsx"
     sourceWorksheet = "PlanComptable$"
 
@@ -33,8 +33,8 @@ Sub ImporterPlanComptable() '2024-02-17 @ 07:21
         .Open
     End With
 
-    'Copy to wshAdmin workbook
-    wshAdmin.Range("T11").CopyFromRecordset recSet
+    'Copy to wsdAdmin workbook
+    wsdADMIN.Range("T11").CopyFromRecordset recSet
 
     'Close resource
     recSet.Close
@@ -58,14 +58,14 @@ Sub ImporterClients() 'Using ADODB - 2024-02-25 @ 10:23
     
     'Worksheet recevant les données importées
     Dim ws As Worksheet
-    Set ws = wshBD_Clients
+    Set ws = wsdBD_Clients
     
     'Efface toutes les lignes, sauf la ligne d'entête
     ws.Range("A1").CurrentRegion.offset(1, 0).ClearContents
     
     'Import Clients List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Entrée.xlsx" '2024-02-14 @ 07:04
     sourceTab = "Clients$"
     
@@ -119,7 +119,7 @@ Sub ImporterDebRecurrent() '2024-07-08 @ 08:43
     
     'Feuille qui sera importée
     Dim ws As Worksheet
-    Set ws = wshDEB_Récurrent
+    Set ws = wsdDEB_Récurrent
     
     Dim strNomTable As String
     strNomTable = "l_tbl_DEB_Recurrent"
@@ -135,7 +135,7 @@ Sub ImporterDebRecurrent() '2024-07-08 @ 08:43
     
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx', in order to always have the LATEST version
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx" '2024-02-13 @ 15:09
     sourceTab = "DEB_Récurrent$"
                      
@@ -157,7 +157,7 @@ Sub ImporterDebRecurrent() '2024-07-08 @ 08:43
         .source = "SELECT * FROM [" & sourceTab & "]"
         .Open
     End With
-    'Copy to wshDEB_Récurrent workbook
+    'Copy to wsdDEB_Récurrent workbook
     ws.Range("A2").CopyFromRecordset recSet
 
     'Redimensionner la table pour refléter le nombre exact de lignes occupées
@@ -167,8 +167,8 @@ Sub ImporterDebRecurrent() '2024-07-08 @ 08:43
     lo.Resize ws.Range(lo.HeaderRowRange.Cells(1), ws.Cells(derLigne, recSet.Fields.count))
     
     'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:32
-    Dim rng As Range: Set rng = wshDEB_Récurrent.Range("A1").CurrentRegion
-    Call AppliquerFormatColonnesParTable(wshDEB_Récurrent, rng, 1)
+    Dim rng As Range: Set rng = wsdDEB_Récurrent.Range("A1").CurrentRegion
+    Call AppliquerFormatColonnesParTable(wsdDEB_Récurrent, rng, 1)
     
     Call DEB_Recurrent_Build_Summary '2025-01-15 @
     
@@ -193,7 +193,7 @@ Sub ImporterDebTrans() '2024-06-26 @ 18:51
     
     'Feuille qui sera importée
     Dim ws As Worksheet
-    Set ws = wshDEB_Trans
+    Set ws = wsdDEB_Trans
     
     Dim strNomTable As String
     strNomTable = "l_tbl_DEB_Trans"
@@ -209,7 +209,7 @@ Sub ImporterDebTrans() '2024-06-26 @ 18:51
     
     'Import DEB_Trans from 'GCF_BD_MASTER.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx" '2024-02-13 @ 15:09
     sourceTab = "DEB_Trans$"
                      
@@ -232,8 +232,8 @@ Sub ImporterDebTrans() '2024-06-26 @ 18:51
         .Open
     End With
     
-    'Copy to wshDEB_Trans workbook after erasing actual lines
-    wshDEB_Trans.Range("A2").CopyFromRecordset recSet
+    'Copy to wsdDEB_Trans workbook after erasing actual lines
+    wsdDEB_Trans.Range("A2").CopyFromRecordset recSet
     
     'Redimensionner la table pour refléter le nombre exact de lignes occupées
     Dim derLigne As Long
@@ -242,8 +242,8 @@ Sub ImporterDebTrans() '2024-06-26 @ 18:51
     lo.Resize ws.Range(lo.HeaderRowRange.Cells(1), ws.Cells(derLigne, recSet.Fields.count))
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:32
-    Dim rng As Range: Set rng = wshDEB_Trans.Range("A1").CurrentRegion
-    Call AppliquerFormatColonnesParTable(wshDEB_Trans, rng, 1)
+    Dim rng As Range: Set rng = wsdDEB_Trans.Range("A1").CurrentRegion
+    Call AppliquerFormatColonnesParTable(wsdDEB_Trans, rng, 1)
 
     Application.ScreenUpdating = True
     
@@ -266,7 +266,7 @@ Sub ImporterEncDetails() '2025-01-16 @ 16:55
     
     'Feuille qui sera importée
     Dim ws As Worksheet
-    Set ws = wshENC_Détails
+    Set ws = wsdENC_Détails
     
     Dim strNomTable As String
     strNomTable = "l_tbl_ENC_Détails"
@@ -282,7 +282,7 @@ Sub ImporterEncDetails() '2025-01-16 @ 16:55
     
     'Import ENC_Détails from 'GCF_BD_MASTER.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx"
     sourceTab = "ENC_Détails$"
                      
@@ -305,8 +305,8 @@ Sub ImporterEncDetails() '2025-01-16 @ 16:55
         .Open
     End With
     
-    'Copy to wshENC_Détails worksheet
-    wshENC_Détails.Range("A2").CopyFromRecordset recSet
+    'Copy to wsdENC_Détails worksheet
+    wsdENC_Détails.Range("A2").CopyFromRecordset recSet
 
     'Redimensionner la table pour refléter le nombre exact de lignes occupées
     Dim derLigne As Long
@@ -315,8 +315,8 @@ Sub ImporterEncDetails() '2025-01-16 @ 16:55
     lo.Resize ws.Range(lo.HeaderRowRange.Cells(1), ws.Cells(derLigne, recSet.Fields.count))
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:35
-    Dim rng As Range: Set rng = wshENC_Détails.Range("A1").CurrentRegion
-    Call AppliquerFormatColonnesParTable(wshENC_Détails, rng, 1)
+    Dim rng As Range: Set rng = wsdENC_Détails.Range("A1").CurrentRegion
+    Call AppliquerFormatColonnesParTable(wsdENC_Détails, rng, 1)
     
     Application.ScreenUpdating = True
     
@@ -339,7 +339,7 @@ Sub ImporterEncEntete() '2025-03-10 @ 17:08
     
     'Feuille qui sera importée
     Dim ws As Worksheet
-    Set ws = wshENC_Entête
+    Set ws = wsdENC_Entête
     
     Dim strNomTable As String
     strNomTable = "l_tbl_ENC_Entête"
@@ -355,7 +355,7 @@ Sub ImporterEncEntete() '2025-03-10 @ 17:08
     
     'Import ENC_Entête from 'GCF_BD_MASTER.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx"
     sourceTab = "ENC_Entête$"
                      
@@ -378,8 +378,8 @@ Sub ImporterEncEntete() '2025-03-10 @ 17:08
         .Open
     End With
     
-    'Copy to wshENC_Entête worksheet
-    wshENC_Entête.Range("A2").CopyFromRecordset recSet
+    'Copy to wsdENC_Entête worksheet
+    wsdENC_Entête.Range("A2").CopyFromRecordset recSet
     
     'Redimensionner la table pour refléter le nombre exact de lignes occupées
     Dim derLigne As Long
@@ -388,8 +388,8 @@ Sub ImporterEncEntete() '2025-03-10 @ 17:08
     lo.Resize ws.Range(lo.HeaderRowRange.Cells(1), ws.Cells(derLigne, recSet.Fields.count))
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:36
-    Dim rng As Range: Set rng = wshENC_Entête.Range("A1").CurrentRegion
-    Call AppliquerFormatColonnesParTable(wshENC_Entête, rng, 1)
+    Dim rng As Range: Set rng = wsdENC_Entête.Range("A1").CurrentRegion
+    Call AppliquerFormatColonnesParTable(wsdENC_Entête, rng, 1)
 
     Application.ScreenUpdating = True
     
@@ -412,7 +412,7 @@ Sub ImporterCCRegularisations() '2025-01-05 @ 11:23
     
     'Feuille qui sera importée
     Dim ws As Worksheet
-    Set ws = wshCC_Régularisations
+    Set ws = wsdCC_Régularisations
     
     Dim strNomTable As String
     strNomTable = "tbl_REGUL_Détails"
@@ -428,7 +428,7 @@ Sub ImporterCCRegularisations() '2025-01-05 @ 11:23
     
     'Import CC_Régularisations from 'GCF_BD_MASTER.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx"
     sourceTab = "CC_Régularisations$"
                      
@@ -451,9 +451,9 @@ Sub ImporterCCRegularisations() '2025-01-05 @ 11:23
         .Open
     End With
     
-    'Copy to wshCC_Régularisations worksheet
+    'Copy to wsdCC_Régularisations worksheet
     If recSet.EOF = False Then
-        wshCC_Régularisations.Range("A2").CopyFromRecordset recSet
+        wsdCC_Régularisations.Range("A2").CopyFromRecordset recSet
     End If
 
     'Redimensionner la table pour refléter le nombre exact de lignes occupées
@@ -463,8 +463,8 @@ Sub ImporterCCRegularisations() '2025-01-05 @ 11:23
     lo.Resize ws.Range(lo.HeaderRowRange.Cells(1), ws.Cells(derLigne, recSet.Fields.count))
    
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:35
-    Dim rng As Range: Set rng = wshCC_Régularisations.Range("A1").CurrentRegion
-    Call AppliquerFormatColonnesParTable(wshCC_Régularisations, rng, 1)
+    Dim rng As Range: Set rng = wsdCC_Régularisations.Range("A1").CurrentRegion
+    Call AppliquerFormatColonnesParTable(wsdCC_Régularisations, rng, 1)
     
     Application.ScreenUpdating = True
     
@@ -487,7 +487,7 @@ Sub ImporterFacComptesClients() '2024-08-07 @ 17:41
     
     'Feuille qui sera importée
     Dim ws As Worksheet
-    Set ws = wshFAC_Comptes_Clients
+    Set ws = wsdFAC_Comptes_Clients
     
     Dim strNomTable As String
     strNomTable = "tblFAC_Comptes_Clients"
@@ -503,7 +503,7 @@ Sub ImporterFacComptesClients() '2024-08-07 @ 17:41
     
     'Import FAC_Comptes_Clients from 'GCF_DB_MASTER.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx" '2024-02-13 @ 15:09
     sourceTab = "FAC_Comptes_Clients$"
                      
@@ -527,7 +527,7 @@ Sub ImporterFacComptesClients() '2024-08-07 @ 17:41
     End With
     
     'Copy to wshCAR workbook
-    wshFAC_Comptes_Clients.Range("A3").CopyFromRecordset recSet
+    wsdFAC_Comptes_Clients.Range("A3").CopyFromRecordset recSet
     
     'Redimensionner la table pour refléter le nombre exact de lignes occupées
     Dim derLigne As Long
@@ -536,8 +536,8 @@ Sub ImporterFacComptesClients() '2024-08-07 @ 17:41
     lo.Resize ws.Range(lo.HeaderRowRange.Cells(1), ws.Cells(derLigne, recSet.Fields.count))
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:32
-    Dim rng As Range: Set rng = wshFAC_Comptes_Clients.Range("A1").CurrentRegion
-    Call AppliquerFormatColonnesParTable(wshFAC_Comptes_Clients, rng, 1)
+    Dim rng As Range: Set rng = wsdFAC_Comptes_Clients.Range("A1").CurrentRegion
+    Call AppliquerFormatColonnesParTable(wsdFAC_Comptes_Clients, rng, 1)
 
     Application.ScreenUpdating = True
     
@@ -559,11 +559,11 @@ Sub ImporterFacDetails() '2024-03-07 @ 17:38
     Application.ScreenUpdating = False
     
     'Clear all cells, but the headers, in the target worksheet
-    wshFAC_Détails.Range("A1").CurrentRegion.offset(2, 0).ClearContents
+    wsdFAC_Détails.Range("A1").CurrentRegion.offset(2, 0).ClearContents
 
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx"
     sourceTab = "FAC_Détails$"
                      
@@ -586,12 +586,12 @@ Sub ImporterFacDetails() '2024-03-07 @ 17:38
         .Open
     End With
     
-    'Copy to wshFAC_Détails workbook
-    wshFAC_Détails.Range("A3").CopyFromRecordset recSet
+    'Copy to wsdFAC_Détails workbook
+    wsdFAC_Détails.Range("A3").CopyFromRecordset recSet
 
    'Setup the format of the worksheet - 2024-07-20 @ 18:35
-    Dim rng As Range: Set rng = wshFAC_Détails.Range("A1").CurrentRegion
-    Call AppliquerFormatColonnesParTable(wshFAC_Détails, rng, 2)
+    Dim rng As Range: Set rng = wsdFAC_Détails.Range("A1").CurrentRegion
+    Call AppliquerFormatColonnesParTable(wsdFAC_Détails, rng, 2)
 
     Application.ScreenUpdating = True
     
@@ -611,7 +611,7 @@ Sub ImporterFacEntete() '2024-07-11 @ 09:21
     Application.ScreenUpdating = False
     
     Dim ws As Worksheet
-    Set ws = wshFAC_Entête
+    Set ws = wsdFAC_Entête
     
     Dim strNomTable As String
     strNomTable = "l_tbl_FAC_Entête"
@@ -627,7 +627,7 @@ Sub ImporterFacEntete() '2024-07-11 @ 09:21
     
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx"
     sourceTab = "FAC_Entête$"
                      
@@ -650,8 +650,8 @@ Sub ImporterFacEntete() '2024-07-11 @ 09:21
         .Open
     End With
     
-    'Copy to wshFAC_Entête workbook
-    wshFAC_Entête.Range("A3").CopyFromRecordset recSet
+    'Copy to wsdFAC_Entête workbook
+    wsdFAC_Entête.Range("A3").CopyFromRecordset recSet
     
     'Redimensionner la table pour inclure uniquement les nouvelles données
     Dim derLigne As Long
@@ -660,8 +660,8 @@ Sub ImporterFacEntete() '2024-07-11 @ 09:21
     lo.Resize ws.Range(lo.HeaderRowRange.Cells(1), ws.Cells(derLigne, recSet.Fields.count))
     
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
-    Dim rng As Range: Set rng = wshFAC_Entête.Range("A1").CurrentRegion
-    Call AppliquerFormatColonnesParTable(wshFAC_Entête, rng, 2)
+    Dim rng As Range: Set rng = wsdFAC_Entête.Range("A1").CurrentRegion
+    Call AppliquerFormatColonnesParTable(wsdFAC_Entête, rng, 2)
     
     Application.ScreenUpdating = True
     
@@ -683,11 +683,11 @@ Sub ImporterFacSommaireTaux() '2024-07-11 @ 09:21
     Application.ScreenUpdating = False
     
     'Clear all cells, but the headers, in the target worksheet
-    wshFAC_Sommaire_Taux.Range("A1").CurrentRegion.offset(1, 0).ClearContents
+    wsdFAC_Sommaire_Taux.Range("A1").CurrentRegion.offset(1, 0).ClearContents
 
     'Import FAC_Sommaire_Taux from 'GCF_BD_MASTER.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx"
     sourceTab = "FAC_Sommaire_Taux$"
                      
@@ -710,12 +710,12 @@ Sub ImporterFacSommaireTaux() '2024-07-11 @ 09:21
         .Open
     End With
     
-    'Copy to wshFAC_Entête workbook
-    wshFAC_Sommaire_Taux.Range("A2").CopyFromRecordset recSet
+    'Copy to wsdFAC_Entête workbook
+    wsdFAC_Sommaire_Taux.Range("A2").CopyFromRecordset recSet
 
    'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:37
-    Dim rng As Range: Set rng = wshFAC_Sommaire_Taux.Range("A1").CurrentRegion
-    Call AppliquerFormatColonnesParTable(wshFAC_Sommaire_Taux, rng, 1)
+    Dim rng As Range: Set rng = wsdFAC_Sommaire_Taux.Range("A1").CurrentRegion
+    Call AppliquerFormatColonnesParTable(wsdFAC_Sommaire_Taux, rng, 1)
     
     Application.ScreenUpdating = True
     
@@ -735,14 +735,14 @@ Sub ImporterFacProjetsDetails() '2024-07-20 @ 13:25
     Application.ScreenUpdating = False
     Application.EnableEvents = False
 
-    Dim ws As Worksheet: Set ws = wshFAC_Projets_Détails
+    Dim ws As Worksheet: Set ws = wsdFAC_Projets_Détails
     
     'Clear all cells, but the headers, in the target worksheet
     ws.Range("A1").CurrentRegion.offset(1, 0).ClearContents
 
     'Import FAC_Projets_Détails from 'GCF_DB_MASTER.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx"
     sourceTab = "FAC_Projets_Détails$"
                      
@@ -767,7 +767,7 @@ Sub ImporterFacProjetsDetails() '2024-07-20 @ 13:25
         .Open
     End With
     
-    'Copy all rows to wshFAC_Projets_Détails workbook
+    'Copy all rows to wsdFAC_Projets_Détails workbook
     If recSet.RecordCount > 0 Then
         ws.Range("A2").CopyFromRecordset recSet
     End If
@@ -792,7 +792,7 @@ Sub ImporterFacProjetsDetails() '2024-07-20 @ 13:25
     lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     If lastRow > 1 Then
         Set dataRange = ws.Range("A1").CurrentRegion
-        Call AppliquerFormatColonnesParTable(wshFAC_Projets_Détails, dataRange, 1)
+        Call AppliquerFormatColonnesParTable(wsdFAC_Projets_Détails, dataRange, 1)
     End If
     
     'Libérer la mémoire
@@ -820,14 +820,14 @@ Sub ImporterFacProjetsEntete() '2024-07-11 @ 09:21
     
     Application.ScreenUpdating = False
     
-    Dim ws As Worksheet: Set ws = wshFAC_Projets_Entête
+    Dim ws As Worksheet: Set ws = wsdFAC_Projets_Entête
     
     'Clear all cells, but the headers, in the target worksheet
     ws.Range("A1").CurrentRegion.offset(1, 0).ClearContents
 
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx"
     sourceTab = "FAC_Projets_Entête$"
                      
@@ -852,7 +852,7 @@ Sub ImporterFacProjetsEntete() '2024-07-11 @ 09:21
         .Open
     End With
     
-    'Copy to wshFAC_Projets_Entête workbook
+    'Copy to wsdFAC_Projets_Entête workbook
     If recSet.RecordCount > 0 Then
         ws.Range("A2").CopyFromRecordset recSet
     End If
@@ -897,11 +897,11 @@ Sub ImporterFournisseurs() 'Using ADODB - 2024-07-03 @ 15:43
     Application.ScreenUpdating = False
     
     'Clear all cells, but the headers, in the destination worksheet
-    wshBD_Fournisseurs.Range("A1").CurrentRegion.offset(1, 0).ClearContents
+    wsdBD_Fournisseurs.Range("A1").CurrentRegion.offset(1, 0).ClearContents
 
     'Import Suppliers List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Entrée.xlsx" '2024-02-14 @ 07:04
     sourceTab = "Fournisseurs$"
     
@@ -924,12 +924,12 @@ Sub ImporterFournisseurs() 'Using ADODB - 2024-07-03 @ 15:43
         .Open
     End With
     
-    'Copy to wshBD_Fournisseurs workbook
-    wshBD_Fournisseurs.Range("A2").CopyFromRecordset recSet
+    'Copy to wsdBD_Fournisseurs workbook
+    wsdBD_Fournisseurs.Range("A2").CopyFromRecordset recSet
     
     'Setup the format of the worksheet using a Sub - 2024-07-20 @ 18:38
-    Dim rng As Range: Set rng = wshBD_Fournisseurs.Range("A1").CurrentRegion
-    Call AppliquerFormatColonnesParTable(wshBD_Fournisseurs, rng, 1)
+    Dim rng As Range: Set rng = wsdBD_Fournisseurs.Range("A1").CurrentRegion
+    Call AppliquerFormatColonnesParTable(wsdBD_Fournisseurs, rng, 1)
     
     'Close resource
     recSet.Close
@@ -953,16 +953,16 @@ Sub ImporterEJRecurrente() '2024-03-03 @ 11:36
     Application.ScreenUpdating = False
     
     Dim lastUsedRow As Long
-    lastUsedRow = wshGL_EJ_Recurrente.Cells(wshGL_EJ_Recurrente.Rows.count, "C").End(xlUp).row
+    lastUsedRow = wsdGL_EJ_Recurrente.Cells(wsdGL_EJ_Recurrente.Rows.count, "C").End(xlUp).row
     
     'Clear all cells, but the headers and Columns A & B, in the target worksheet
     If lastUsedRow > 1 Then
-        wshGL_EJ_Recurrente.Range("C2:I" & lastUsedRow).ClearContents
+        wsdGL_EJ_Recurrente.Range("C2:I" & lastUsedRow).ClearContents
     End If
     
     'Import EJ_Auto from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx" '2024-02-13 @ 15:09
     sourceTab = "GL_EJ_Récurrente$"
                      
@@ -985,12 +985,12 @@ Sub ImporterEJRecurrente() '2024-03-03 @ 11:36
         .Open
     End With
     
-    'Copy to wshGL_EJ_Recurrente workbook
-    wshGL_EJ_Recurrente.Range("A2").CopyFromRecordset recSet
+    'Copy to wsdGL_EJ_Recurrente workbook
+    wsdGL_EJ_Recurrente.Range("A2").CopyFromRecordset recSet
 
    'Setup the format of the worksheet using a Sub
-    Dim rng As Range: Set rng = wshGL_EJ_Recurrente.Range("A1").CurrentRegion
-    Call AppliquerFormatColonnesParTable(wshGL_EJ_Recurrente, rng, 1)
+    Dim rng As Range: Set rng = wsdGL_EJ_Recurrente.Range("A1").CurrentRegion
+    Call AppliquerFormatColonnesParTable(wsdGL_EJ_Recurrente, rng, 1)
     
     Call GL_EJ_Recurrente_Build_Summary '2024-03-14 @ 07:38
     
@@ -1013,7 +1013,7 @@ Sub ImporterGLTransactions() '2024-03-03 @ 10:13
     Application.ScreenUpdating = False
     
     'Worksheet recevant les données importées
-    Dim wsLocal As Worksheet: Set wsLocal = wshGL_Trans
+    Dim wsLocal As Worksheet: Set wsLocal = wsdGL_Trans
     
     'Effacer toutes les lignes, sauf la ligne d'entête
     Dim saveLastRow As Long
@@ -1024,7 +1024,7 @@ Sub ImporterGLTransactions() '2024-03-03 @ 10:13
 
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx" '2024-02-13 @ 15:09
     sourceTab = "GL_Trans$"
                      
@@ -1071,14 +1071,14 @@ Sub ImporterTEC()                             '2024-02-14 @ 06:19
     
 '    Application.ScreenUpdating = False
     
-    Dim ws As Worksheet: Set ws = wshTEC_Local
+    Dim ws As Worksheet: Set ws = wsdTEC_Local
     
     'Clear all cells, but the headers, in the destination worksheet
     ws.Range("A1").CurrentRegion.offset(2, 0).ClearContents
 
     'Import TEC from 'GCF_DB_Sortie.xlsx'
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx"        '2024-02-14 @ 06:22
     sourceTab = "TEC_Local$"
     
@@ -1101,7 +1101,7 @@ Sub ImporterTEC()                             '2024-02-14 @ 06:19
         .Open
     End With
     
-    'Copy to wshTEC_Local workbook
+    'Copy to wsdTEC_Local workbook
     ws.Range("A3").CopyFromRecordset recSet
 
     'Libérer la mémoire

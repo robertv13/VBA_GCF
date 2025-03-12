@@ -36,7 +36,7 @@ Sub Affiche_Liste_Factures()
     
     'What is the ID for the selected client ?
     Dim myInfo() As Variant
-    Dim rng As Range: Set rng = wshBD_Clients.Range("dnrClients_Names_Only")
+    Dim rng As Range: Set rng = wsdBD_Clients.Range("dnrClients_Names_Only")
     myInfo = Fn_Find_Data_In_A_Range(rng, 1, clientName, fClntFMClientID)
     If myInfo(1) = "" Then
         MsgBox "Je ne peux retrouver ce client dans ma liste de clients", vbCritical
@@ -85,9 +85,9 @@ End Sub
 
 Sub FAC_Get_Invoice_Client_AF(codeClient As String) '2024-06-27 @ 15:27
 
-    Dim ws As Worksheet: Set ws = wshFAC_Entête
+    Dim ws As Worksheet: Set ws = wsdFAC_Entête
     
-    'wshFAC_Entête_AF#1
+    'wsdFAC_Entête_AF#1
 
     With ws
         'Effacer les données de la dernière utilisation
@@ -146,9 +146,9 @@ End Sub
 
 Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
 
-    Dim ws As Worksheet: Set ws = wshFAC_Entête
+    Dim ws As Worksheet: Set ws = wsdFAC_Entête
     
-    'Détermine la dernière utilisée dans les résultats de AF_1 dans wshFAC_Entête
+    'Détermine la dernière utilisée dans les résultats de AF_1 dans wsdFAC_Entête
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, "AA").End(xlUp).row
     If lastUsedRow < 3 Then Exit Sub 'Nothing to display
@@ -197,7 +197,7 @@ Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
         For i = 1 To UBound(arr, 1)
             ACouC = arr(i, 0)
             .Range("C" & i + 8).value = arr(i, 1)
-            .Range("D" & i + 8).value = Format$(arr(i, 2), wshAdmin.Range("B1").value)
+            .Range("D" & i + 8).value = Format$(arr(i, 2), wsdADMIN.Range("B1").value)
             .Range("E" & i + 8).value = arr(i, 3)
             .Range("F" & i + 8).value = arr(i, 13)
             .Range("G" & i + 8).value = arr(i, 4)
@@ -372,7 +372,7 @@ Sub VisualiserFacturePDF(noFact As String)
 
     'The invoice number is in column C (3rd column) pour les 2 feuilles...
     Dim fullPDFFileName As String
-    fullPDFFileName = wshAdmin.Range("F5").value & FACT_PDF_PATH & _
+    fullPDFFileName = wsdADMIN.Range("F5").value & FACT_PDF_PATH & _
                             Application.PathSeparator & noFact & ".pdf"
     
     'Ouvrir la version PDF de la facture, si elle existe
@@ -402,7 +402,7 @@ Sub TEC_HONO_Facture(adresse As String)
     Dim nomClient As String
     nomClient = ws.Range("D4").value
     Dim dateFacture As Date
-    dateFacture = Format$(ws.Cells(numeroLigne, 4).value, wshAdmin.Range("B1").value)
+    dateFacture = Format$(ws.Cells(numeroLigne, 4).value, wsdADMIN.Range("B1").value)
     
     Call ObtenirFactureInfos(invNo, nomClient, dateFacture)
     
@@ -783,7 +783,7 @@ Function ObtenirTableauTEC(numeroFacture As String) As Variant
 
     Dim tableauTEC(1 To 9, 1 To 4) As String
     
-    Dim ws As Worksheet: Set ws = wshFAC_Détails
+    Dim ws As Worksheet: Set ws = wsdFAC_Détails
     
     Dim hresTEC As Currency
     
@@ -821,7 +821,7 @@ Function ObtenirTableauHonoraires(numeroFacture As String) As Variant
 
     Dim tableauHonoraires(1 To 9, 1 To 4) As String
     
-    Dim wsFees As Worksheet: Set wsFees = wshFAC_Sommaire_Taux
+    Dim wsFees As Worksheet: Set wsFees = wsdFAC_Sommaire_Taux
     
     'Déterminer la dernière ligne utilisée
     Dim lastUsedRow As Long
@@ -870,16 +870,16 @@ Function ObtenirTransCC(numeroFacture As String) As Variant
     Dim tableauCC(1 To 25, 1 To 7) As String
     
     'Feuilles nécessaires
-    Dim wsFactures As Worksheet: Set wsFactures = wshFAC_Comptes_Clients
-    Dim wsPaiements As Worksheet: Set wsPaiements = wshENC_Détails
-    Dim wsRégularisations As Worksheet: Set wsRégularisations = wshCC_Régularisations
+    Dim wsFactures As Worksheet: Set wsFactures = wsdFAC_Comptes_Clients
+    Dim wsPaiements As Worksheet: Set wsPaiements = wsdENC_Détails
+    Dim wsRégularisations As Worksheet: Set wsRégularisations = wsdCC_Régularisations
     
     'Obtenir les informations sur la facture (wshComptes_Clients)
     Dim ligneFacture As Long
     ligneFacture = TrouverLigneFacture(wsFactures, numeroFacture)
     Dim montantFacture As Currency
     Dim dateFacture As Date, dateDue As Date
-    dateFacture = Format$(wsFactures.Cells(ligneFacture, fFacCCInvoiceDate).value, wshAdmin.Range("B1").value)
+    dateFacture = Format$(wsFactures.Cells(ligneFacture, fFacCCInvoiceDate).value, wsdADMIN.Range("B1").value)
     montantFacture = wsFactures.Cells(ligneFacture, fFacCCTotal).value
     dateDue = wsFactures.Cells(ligneFacture, fFacCCDueDate).value
     
@@ -943,7 +943,7 @@ Function ObtenirTransCC(numeroFacture As String) As Variant
         Do
             i = i + 1
             tableauCC(i, 1) = "Régularisation"
-            tableauCC(i, 2) = Format$(rngRégularisationAssoc.offset(0, 1).value, wshAdmin.Range("B1").value)
+            tableauCC(i, 2) = Format$(rngRégularisationAssoc.offset(0, 1).value, wsdADMIN.Range("B1").value)
             tableauCC(i, 3) = rngRégularisationAssoc.offset(0, 4).value + _
                 rngRégularisationAssoc.offset(0, 5).value + _
                 rngRégularisationAssoc.offset(0, 6).value + _
@@ -1150,7 +1150,7 @@ Sub ObtenirListeTECFactures(adresse As String)
     'Utilisation d'un AdvancedFilter directement dans TEC_Local (BI:BX)
     Call ObtenirListeTECFacturésFiltreAvancé(invNo)
 
-    Set ws = wshTEC_Local
+    Set ws = wsdTEC_Local
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, "BJ").End(xlUp).row
     
@@ -1191,7 +1191,7 @@ Sub PreparerRapportTECFactures()
         .Range("A1").Font.size = 12
         
         'Ajouter une date de génération du rapport
-        .Range("A2").value = "Date de création : " & Format$(Date, wshAdmin.Range("B1").value)
+        .Range("A2").value = "Date de création : " & Format$(Date, wsdADMIN.Range("B1").value)
         .Range("A2").Font.Italic = True
         .Range("A2").Font.size = 10
         
@@ -1210,7 +1210,7 @@ Sub PreparerRapportTECFactures()
         
         'Utilisation du AdvancedFilter # 3 sur la feuille TEC_Local
         Dim wsSource As Worksheet
-        Set wsSource = wshTEC_Local 'Utilisation des résultats du AF (BJ:BY)
+        Set wsSource = wsdTEC_Local 'Utilisation des résultats du AF (BJ:BY)
         
         'Copier quelques données de la source
         Dim rngResult As Range
@@ -1321,9 +1321,9 @@ Sub ObtenirListeTECFacturésFiltreAvancé(noFact As String) '2024-10-20 @ 11:11
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Interrogation:ObtenirListeTECFacturésFiltreAvancé", "", 0)
 
     'Utilisation de la feuille TEC_Local
-    Dim ws As Worksheet: Set ws = wshTEC_Local
+    Dim ws As Worksheet: Set ws = wsdTEC_Local
     
-    'wshTEC_Local_AF#3
+    'wsdTEC_Local_AF#3
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -1509,7 +1509,7 @@ Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture
         If tableauCC(i, 1) <> "" Then
             For j = 1 To UBound(tableauCC, 2)
                 If j = 2 Then
-                    ws.Cells(i + rOffset, j + cOffset).value = "'" & Format$(tableauCC(i, j), wshAdmin.Range("B1").value)
+                    ws.Cells(i + rOffset, j + cOffset).value = "'" & Format$(tableauCC(i, j), wsdADMIN.Range("B1").value)
                     Debug.Print "#110 - " & ws.Cells(i + rOffset, j + cOffset).value
                 Else
                     ws.Cells(i + rOffset, j + cOffset).value = tableauCC(i, j)
@@ -1688,7 +1688,7 @@ Sub PreparerRapportTECFacturés(numeroFacture As String)
         
         'Utilisation du AdvancedFilter # 3 sur la feuille TEC_Local
         Dim wsSource As Worksheet
-        Set wsSource = wshTEC_Local 'Utilisation des résultats du AF (BJ:BY)
+        Set wsSource = wsdTEC_Local 'Utilisation des résultats du AF (BJ:BY)
         
         'Copier quelques données de la source
         Dim rngResult As Range

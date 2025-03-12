@@ -56,7 +56,7 @@ End Sub
 Private Sub cbbNoFacture_AfterUpdate()
 
     Dim wsCC As Worksheet
-    Set wsCC = wshFAC_Comptes_Clients
+    Set wsCC = wsdFAC_Comptes_Clients
     
     Dim invNo As String
     invNo = ufEncRégularisation.cbbNoFacture.value
@@ -70,7 +70,7 @@ Private Sub cbbNoFacture_AfterUpdate()
     If Not rngTrouve Is Nothing Then
         'Si la valeur est trouvée, récupérer d'autres colonnes
         soldeFacture = CCur(rngTrouve.offset(0, 10).value)
-        dateFacture = Format$(rngTrouve.offset(0, 1).value, wshAdmin.Range("B1").value)
+        dateFacture = Format$(rngTrouve.offset(0, 1).value, wsdADMIN.Range("B1").value)
         ufEncRégularisation.lblDateFactureData.Caption = dateFacture
         ufEncRégularisation.lblTotalFactureValue.Caption = FormatCurrency(soldeFacture, 2)
         

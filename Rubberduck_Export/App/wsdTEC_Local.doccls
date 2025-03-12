@@ -1,0 +1,12 @@
+﻿Option Explicit
+
+'CommentOut - 2025-03-12 @ 12:24
+'Private Sub Worksheet_Activate()
+'
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("wsdTEC_Local:Worksheet_Activate", "", 0)
+'
+'    Me.EnableCalculation = True
+'
+'    Call Log_Record("wsdTEC_Local:Worksheet_Activate", "", startTime)
+'
+'End Sub

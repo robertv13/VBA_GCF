@@ -1,8 +1,6 @@
 Attribute VB_Name = "modTEC_Radiation"
 Option Explicit
 
-Public previousCellAddress As Variant
-
 Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
 
     If cutoffDate = "" Then
@@ -19,7 +17,7 @@ Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
     maxDate = DateSerial(y, m, d)
     
     Dim ws As Worksheet: Set ws = wshTEC_Radiation
-    Dim wsSource As Worksheet: Set wsSource = wshTEC_Local
+    Dim wsSource As Worksheet: Set wsSource = wsdTEC_Local
     
     'AdvancedFilter # 2 avec TEC_Local (Heures Facturables, Non Facturées, Non Détruites à la date Limite)
     Call Get_TEC_For_Client_AF(codeClient, CDate(cutoffDate), "VRAI", "FAUX", "FAUX")
@@ -51,7 +49,7 @@ Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
     For i = 1 To UBound(arr, 1)
         If currRow <= 30 Then
             tecID = CLng(arr(i, fTECTECID))
-            dateTEC = Format$(arr(i, fTECDate), wshAdmin.Range("B1").value)
+            dateTEC = Format$(arr(i, fTECDate), wsdADMIN.Range("B1").value)
             profInit = Format$(arr(i, fTECProfID), "000") & arr(i, fTECProf)
             descTEC = arr(i, fTECDescription)
             hresTEC = arr(i, fTECHeures)
@@ -262,7 +260,7 @@ Sub Radiation_Mise_À_Jour()
 
     'Avons-nous des résultats ?
     Dim lastUsedRow As Long
-    lastUsedRow = wshTEC_Local.Cells(wshTEC_Local.Rows.count, "AQ").End(xlUp).row
+    lastUsedRow = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "AQ").End(xlUp).row
     
     If lastUsedRow >= 3 Then
         Call TEC_Radiation_Update_As_Billed_To_DB(3, lastUsedRow)
@@ -280,7 +278,7 @@ Sub TEC_Radiation_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Upd
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "TEC_Local$"
     
@@ -296,7 +294,7 @@ Sub TEC_Radiation_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Upd
     offset = 3
     For r = firstRow To lastRow
         If wshTEC_Radiation.Range("B" & r + offset).value = True Then
-            tecID = wshTEC_Local.Range("AQ" & r).value
+            tecID = wsdTEC_Local.Range("AQ" & r).value
             
             'Open the recordset for the specified ID
             strSQL = "SELECT * FROM [" & destinationTab & "] WHERE TECID=" & tecID
@@ -343,7 +341,7 @@ Sub TEC_Radiation_Update_As_Billed_Locally(firstResultRow As Long, lastResultRow
     Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Radiation:TEC_Radiation_Update_As_Billed_Locally", firstResultRow & ", " & lastResultRow, 0)
     
     'Set the range to look for
-    Dim lookupRange As Range: Set lookupRange = wshTEC_Local.Range("l_tbl_TEC_Local[TECID]")
+    Dim lookupRange As Range: Set lookupRange = wsdTEC_Local.Range("l_tbl_TEC_Local[TECID]")
     
     Dim r As Long, rowToBeUpdated As Long, tecID As Long
     'Offset entre TEC_Local & wshTEC_Radiation
@@ -351,11 +349,11 @@ Sub TEC_Radiation_Update_As_Billed_Locally(firstResultRow As Long, lastResultRow
     offset = 3
     For r = firstResultRow To lastResultRow
         If wshTEC_Radiation.Range("B" & r + offset).value = True Then
-            tecID = wshTEC_Local.Range("AQ" & r).value
+            tecID = wsdTEC_Local.Range("AQ" & r).value
             rowToBeUpdated = Fn_Find_Row_Number_TECID(tecID, lookupRange)
-            wshTEC_Local.Cells(rowToBeUpdated, fTECEstFacturee).value = "VRAI"
-            wshTEC_Local.Cells(rowToBeUpdated, fTECDateFacturee).value = Format$(Date, "yyyy-mm-dd")
-            wshTEC_Local.Cells(rowToBeUpdated, fTECNoFacture).value = "Radiation"
+            wsdTEC_Local.Cells(rowToBeUpdated, fTECEstFacturee).value = "VRAI"
+            wsdTEC_Local.Cells(rowToBeUpdated, fTECDateFacturee).value = Format$(Date, "yyyy-mm-dd")
+            wsdTEC_Local.Cells(rowToBeUpdated, fTECNoFacture).value = "Radiation"
         End If
     Next r
     
@@ -410,7 +408,7 @@ Sub TEC_Radiation_Back_To_TEC_Menu()
     
     wshTEC_Radiation.Visible = xlSheetHidden
     
-    fromMenu = False
+    gFromMenu = False
     
     wshMenuTEC.Activate
     wshMenuTEC.Range("A1").Select
@@ -434,7 +432,7 @@ Sub Prepare_Pour_Nouvelle_Radiation()
             .Range("F3").value = ""
             .Range("K3").value = ""
         Application.EnableEvents = True
-        previousCellAddress = .Range("F3").Address
+        gPreviousCellAddress = .Range("F3").Address
         .Range("F3").Select
     End With
 

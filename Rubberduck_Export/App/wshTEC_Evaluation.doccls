@@ -1,12 +1,10 @@
 ﻿Option Explicit
 
-Public previousCellAddress As Variant
-
 Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Evaluation:Worksheet_Activate", "", 0)
     
-    If fromMenu = False Then
+    If gFromMenu = False Then
         Exit Sub
     End If
 
@@ -50,7 +48,7 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
             .PatternTintAndShade = 0
         End With
         Application.EnableEvents = True
-        previousCellAddress = .Range("L3").Address
+        gPreviousCellAddress = .Range("L3").Address
         .Range("L3").Select
     End With
 
@@ -58,7 +56,7 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
     
     Application.EnableEvents = True
     
-    fromMenu = True
+    gFromMenu = True
     
     'Libérer la mémoire
     Set ws = Nothing
@@ -71,8 +69,8 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Evaluation:Worksheet_SelectionChange", "", 0)
     
-    If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.Color = COULEUR_BASE_TEC
+    If gPreviousCellAddress <> "" Then
+        Range(gPreviousCellAddress).Interior.Color = COULEUR_BASE_TEC
     End If
     
     'Is date been selected ?
@@ -95,7 +93,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
         Application.EnableEvents = False
         fullDate = Fn_Complete_Date(target.Text, 99, 0)
         If fullDate <> "Invalid Date" Then
-            target.value = Format$(fullDate, wshAdmin.Range("B1").value)
+            target.value = Format$(fullDate, wsdADMIN.Range("B1").value)
         Else
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshTEC_Evaluation_75")
             Application.EnableEvents = False

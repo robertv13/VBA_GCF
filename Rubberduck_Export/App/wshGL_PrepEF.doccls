@@ -1,7 +1,5 @@
 ﻿Option Explicit
 
-Public previousCellAddress As Variant
-
 Private Sub Worksheet_Activate()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_PrepEF:Worksheet_Activate", "", 0)
@@ -34,8 +32,8 @@ Private Sub Worksheet_Activate()
     End With
     
     'Date du jour par défaut
-    previousCellAddress = ws.Range("F3").Address
-    ws.Range("F3").value = Format$(Date, wshAdmin.Range("B1").value)
+    gPreviousCellAddress = ws.Range("F3").Address
+    ws.Range("F3").value = Format$(Date, wsdADMIN.Range("B1").value)
     
     Application.ScreenUpdating = True
     Application.EnableEvents = True
@@ -51,8 +49,8 @@ End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal target As Range)
 
-    If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.Color = xlNone
+    If gPreviousCellAddress <> "" Then
+        Range(gPreviousCellAddress).Interior.Color = xlNone
     End If
 
     'Date limite est sélectionnée
@@ -76,7 +74,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
         fullDate = Fn_Complete_Date(target.value, 999, 15)
         'Date est-elle valide ?
         If fullDate <> "Invalid Date" Then
-            target.value = Format$(fullDate, wshAdmin.Range("B1").value)
+            target.value = Format$(fullDate, wsdADMIN.Range("B1").value)
         Else
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshGL_PrepEF_139")
             target.ClearContents

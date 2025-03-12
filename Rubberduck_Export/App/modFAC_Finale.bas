@@ -52,7 +52,7 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
     Call FAC_Finale_Add_Comptes_Clients_Locally
     
     Dim lastResultRow As Long
-    lastResultRow = wshTEC_Local.Cells(wshTEC_Local.Rows.count, "AQ").End(xlUp).row
+    lastResultRow = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "AQ").End(xlUp).row
         
     If lastResultRow > 2 Then
         Call FAC_Finale_TEC_Update_As_Billed_To_DB(3, lastResultRow)
@@ -113,7 +113,7 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Entête$"
     
@@ -196,9 +196,9 @@ Sub FAC_Finale_Add_Invoice_Header_Locally() '2024-03-11 @ 08:19 - Write records 
     
     'Get the first free row
     Dim firstFreeRow As Long
-    firstFreeRow = wshFAC_Entête.Cells(wshFAC_Entête.Rows.count, "A").End(xlUp).row + 1
+    firstFreeRow = wsdFAC_Entête.Cells(wsdFAC_Entête.Rows.count, "A").End(xlUp).row + 1
     
-    With wshFAC_Entête
+    With wsdFAC_Entête
         .Range("A" & firstFreeRow).value = wshFAC_Finale.Range("E28")
         .Range("B" & firstFreeRow).value = Format$(wshFAC_Brouillon.Range("O3").value, "mm-dd-yyyy")
         .Range("C" & firstFreeRow).value = "AC"
@@ -251,7 +251,7 @@ Sub FAC_Finale_Add_Invoice_Details_to_DB()
     If rowLastService < 34 Then GoTo nothing_to_update
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Détails$"
     
@@ -343,7 +343,7 @@ Sub FAC_Finale_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records
     If lastEnteredService < 34 Then GoTo nothing_to_update
     
     Dim ws As Worksheet
-    Set ws = wshFAC_Détails
+    Set ws = wsdFAC_Détails
     
     'timeStamnp uniforme
     Dim timeStamp As Date
@@ -351,7 +351,7 @@ Sub FAC_Finale_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records
     
     'Get the first free row
     Dim firstFreeRow As Long
-    firstFreeRow = wshFAC_Détails.Cells(wshFAC_Détails.Rows.count, "A").End(xlUp).row + 1
+    firstFreeRow = wsdFAC_Détails.Cells(wsdFAC_Détails.Rows.count, "A").End(xlUp).row + 1
    
     Dim i As Long
     For i = 34 To lastEnteredService
@@ -405,7 +405,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_to_DB()
     lastRow = 48
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Sommaire_Taux$"
     
@@ -474,7 +474,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_Locally()
     
     'Get the first free row
     Dim firstFreeRow As Long
-    firstFreeRow = wshFAC_Sommaire_Taux.Cells(wshFAC_Sommaire_Taux.Rows.count, "A").End(xlUp).row + 1
+    firstFreeRow = wsdFAC_Sommaire_Taux.Cells(wsdFAC_Sommaire_Taux.Rows.count, "A").End(xlUp).row + 1
    
     'timeStamnp uniforme
     Dim timeStamp As Date
@@ -486,7 +486,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_Locally()
     Dim i As Long
     For i = firstRow To lastRow
         If wshFAC_Brouillon.Range("R" & i).value <> "" Then
-            With wshFAC_Sommaire_Taux
+            With wsdFAC_Sommaire_Taux
                 .Cells(firstFreeRow, fFacSTInvNo).value = noFacture
                 .Cells(firstFreeRow, fFacSTSéquence).value = seq
                 .Cells(firstFreeRow, fFacSTProf).value = wshFAC_Brouillon.Range("R" & i).value
@@ -518,7 +518,7 @@ Sub FAC_Finale_Add_Comptes_Clients_to_DB()
     Dim formula As String
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Comptes_Clients$"
     
@@ -585,9 +585,9 @@ Sub FAC_Finale_Add_Comptes_Clients_Locally() '2024-03-11 @ 08:49 - Write records
     
     'Get the first free row
     Dim firstFreeRow As Long
-    firstFreeRow = wshFAC_Comptes_Clients.Cells(wshFAC_Comptes_Clients.Rows.count, "A").End(xlUp).row + 1
+    firstFreeRow = wsdFAC_Comptes_Clients.Cells(wsdFAC_Comptes_Clients.Rows.count, "A").End(xlUp).row + 1
    
-    With wshFAC_Comptes_Clients
+    With wsdFAC_Comptes_Clients
         .Cells(firstFreeRow, fFacCCInvNo).value = wshFAC_Finale.Range("E28")
         .Cells(firstFreeRow, fFacCCInvoiceDate).value = CDate(wshFAC_Brouillon.Range("O3").value)
         .Cells(firstFreeRow, fFacCCCustomer).value = wshFAC_Finale.Range("B24").value
@@ -618,7 +618,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Up
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "TEC_Local$"
     
@@ -630,11 +630,11 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Up
 
     Dim r As Long, tecID As Long, SQL As String
     For r = firstRow To lastRow
-        If wshTEC_Local.Range("BB" & r).value = "VRAI" Or _
+        If wsdTEC_Local.Range("BB" & r).value = "VRAI" Or _
             wshFAC_Brouillon.Range("C" & r + 4) <> True Then
             GoTo next_iteration
         End If
-        tecID = wshTEC_Local.Range("AQ" & r).value
+        tecID = wsdTEC_Local.Range("AQ" & r).value
         
         'Open the recordset for the specified ID
         SQL = "SELECT * FROM [" & destinationTab & "] WHERE TECID=" & tecID
@@ -682,19 +682,19 @@ Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Long, lastResultRo
     
     'Set the range to look for
     Dim lastTECRow As Long
-    lastTECRow = wshTEC_Local.Cells(wshTEC_Local.Rows.count, "A").End(xlUp).row
-    Dim lookupRange As Range: Set lookupRange = wshTEC_Local.Range("A3:A" & lastTECRow)
+    lastTECRow = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "A").End(xlUp).row
+    Dim lookupRange As Range: Set lookupRange = wsdTEC_Local.Range("A3:A" & lastTECRow)
     
     Dim r As Long, rowToBeUpdated As Long, tecID As Long
     For r = firstResultRow To lastResultRow
-        If wshTEC_Local.Range("BB" & r).value = "FAUX" And _
+        If wsdTEC_Local.Range("BB" & r).value = "FAUX" And _
                 wshFAC_Brouillon.Range("C" & r + 4) = True Then
-            tecID = wshTEC_Local.Range("AQ" & r).value
+            tecID = wsdTEC_Local.Range("AQ" & r).value
             rowToBeUpdated = Fn_Find_Row_Number_TECID(tecID, lookupRange)
-            wshTEC_Local.Range("L" & rowToBeUpdated).value = "VRAI"
-            wshTEC_Local.Range("M" & rowToBeUpdated).value = Format$(Date, "yyyy-mm-dd")
-            wshTEC_Local.Range("O" & rowToBeUpdated).value = ThisWorkbook.Name
-            wshTEC_Local.Range("P" & rowToBeUpdated).value = wshFAC_Brouillon.Range("O6").value
+            wsdTEC_Local.Range("L" & rowToBeUpdated).value = "VRAI"
+            wsdTEC_Local.Range("M" & rowToBeUpdated).value = Format$(Date, "yyyy-mm-dd")
+            wsdTEC_Local.Range("O" & rowToBeUpdated).value = ThisWorkbook.Name
+            wsdTEC_Local.Range("P" & rowToBeUpdated).value = wshFAC_Brouillon.Range("O6").value
         End If
     Next r
     
@@ -712,7 +712,7 @@ Sub FAC_Finale_Softdelete_Projets_Détails_To_DB(projetID As Long)
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Projets_Détails$"
     
@@ -749,7 +749,7 @@ Sub FAC_Finale_Softdelete_Projets_Détails_Locally(projetID As Long)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_Locally", CStr(projetID), 0)
     
-    Dim ws As Worksheet: Set ws = wshFAC_Projets_Détails
+    Dim ws As Worksheet: Set ws = wsdFAC_Projets_Détails
     
     Dim projetIDColumn As String, isDétruiteColumn As String
     projetIDColumn = "A"
@@ -790,7 +790,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID As Long)
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Projets_Entête$"
     
@@ -836,7 +836,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_Locally(projetID As Long)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally", CStr(projetID), 0)
     
-    Dim ws As Worksheet: Set ws = wshFAC_Projets_Entête
+    Dim ws As Worksheet: Set ws = wsdFAC_Projets_Entête
     
     Dim projetIDColumn As String, isDétruiteColumn As String
     projetIDColumn = "A"
@@ -981,7 +981,7 @@ Sub FAC_Finale_Creation_PDF() '2024-10-13 @ 10:15
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Creation_PDF", wshFAC_Finale.Range("E28").value, 0)
     
-    flagEtapeFacture = 1
+    gFlagEtapeFacture = 1
     
     'Étape 1 - Création du document PDF
     Call FAC_Finale_Create_PDF(wshFAC_Finale.Range("E28").value)
@@ -991,16 +991,16 @@ Sub FAC_Finale_Creation_PDF() '2024-10-13 @ 10:15
                                           wshFAC_Finale.Range("L81").value, _
                                           wshFAC_Finale.Range("E28").value, _
                                           Format$(wshFAC_Brouillon.Range("O3").value, "yyyy-mm-dd"))
-    flagEtapeFacture = 3
+    gFlagEtapeFacture = 3
     
     'Étape 3 - Envoi du courriel
     DoEvents
     Call FAC_Finale_Creation_Courriel(wshFAC_Finale.Range("E28").value, wshFAC_Brouillon.Range("B18").value)
-    flagEtapeFacture = 4
+    gFlagEtapeFacture = 4
     
     'Étape 4 - Activation du bouton SAUVEGARDE
     Call FAC_Finale_Enable_Save_Button
-    flagEtapeFacture = 5
+    gFlagEtapeFacture = 5
 
     Call Log_Record("modFAC_Finale:FAC_Finale_Creation_PDF", "", startTime)
 
@@ -1018,7 +1018,7 @@ Sub FAC_Finale_Create_PDF(noFacture As String)
         MsgBox "ATTENTION... Impossible de sauvegarder la facture en format PDF", _
                 vbCritical, _
                 "Impossible de sauvegarder la facture en format PDF"
-        flagEtapeFacture = -1
+        gFlagEtapeFacture = -1
     End If
 
     Call Log_Record("modFAC_Finale:FAC_Finale_Create_PDF", "", startTime)
@@ -1034,7 +1034,7 @@ Function FAC_Finale_Create_PDF_Func(noFacture As String, Optional action As Stri
     Application.ScreenUpdating = False
 
     'Construct the SaveAs filename
-    SaveAs = wshAdmin.Range("F5").value & FACT_PDF_PATH & Application.PathSeparator & _
+    SaveAs = wsdADMIN.Range("F5").value & FACT_PDF_PATH & Application.PathSeparator & _
                      noFacture & ".pdf" '2023-12-19 @ 07:28
 
     'Check if the file already exists
@@ -1106,7 +1106,7 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     
     'Définir le chemin complet du répertoire des fichiers Excel
     Dim ExcelFilesFullPath As String
-    ExcelFilesFullPath = wshAdmin.Range("F5").value & FACT_EXCEL_PATH
+    ExcelFilesFullPath = wsdADMIN.Range("F5").value & FACT_EXCEL_PATH
     ChDir ExcelFilesFullPath
     
     'Définir la feuille source et la plage à copier
@@ -1284,7 +1284,7 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     Application.EnableEvents = True
     
     'La facture a été sauvegardé en format EXCEL
-    flagEtapeFacture = 3
+    gFlagEtapeFacture = 3
     
     Application.ScreenUpdating = True
     
@@ -1310,7 +1310,7 @@ Sub FAC_Finale_Creation_Courriel(noFacture As String, clientID As String) '2024-
     
     '1a. Chemin de la pièce jointe (Facture en format PDF)
     Dim attachmentFullPathName As String
-    attachmentFullPathName = wshAdmin.Range("F5").value & FACT_PDF_PATH & Application.PathSeparator & _
+    attachmentFullPathName = wsdADMIN.Range("F5").value & FACT_PDF_PATH & Application.PathSeparator & _
                      noFacture & ".pdf" '2024-09-03 @ 16:43
     
     '1b. Vérification de l'existence de la pièce jointe
@@ -1351,7 +1351,7 @@ Sub FAC_Finale_Creation_Courriel(noFacture As String, clientID As String) '2024-
     mailItem.Attachments.Add attachmentFullPathName
 
     '6. Obtenir l'adresse courriel pour le client
-    Dim ws As Worksheet: Set ws = wshBD_Clients
+    Dim ws As Worksheet: Set ws = wsdBD_Clients
     Dim eMailFacturation As String
     eMailFacturation = Fn_Get_Value_From_UniqueID(ws, clientID, 2, fClntFMCourrielFacturation)
     If eMailFacturation = "uniqueID introuvable" Then
@@ -1556,7 +1556,7 @@ Sub FAC_Finale_Enable_Save_Button()
     Dim shp As Shape: Set shp = wshFAC_Finale.Shapes("shpSauvegarde")
     shp.Visible = True
     
-    flagEtapeFacture = 3
+    gFlagEtapeFacture = 3
 
     'Libérer la mémoire
     Set shp = Nothing

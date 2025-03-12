@@ -18,7 +18,7 @@ Sub ENC_Get_OS_Invoices(cc As String) '2024-08-21 @ 15:18
     
     'Bring the Result from AF into our List of Oustanding Invoices
     Dim lastResultRow As Long
-    lastResultRow = wshFAC_Comptes_Clients.Cells(ws.Rows.count, "R").End(xlUp).row
+    lastResultRow = wsdFAC_Comptes_Clients.Cells(ws.Rows.count, "R").End(xlUp).row
     
     Dim i As Integer
     'Unlock the required area
@@ -34,13 +34,13 @@ Sub ENC_Get_OS_Invoices(cc As String) '2024-08-21 @ 15:18
     
     'Copy à partir du résultat de AF, dans la feuille de saisie des encaissements
     Dim rr As Integer: rr = 12
-    With wshFAC_Comptes_Clients
+    With wsdFAC_Comptes_Clients
         For i = 3 To WorksheetFunction.Min(27, lastResultRow) 'No space for more O/S invoices
             If .Range("X" & i).value <> 0 And _
                             Fn_Invoice_Is_Confirmed(.Range("S" & i).value) = True Then
                 Application.EnableEvents = False
                 wshENC_Saisie.Range("F" & rr).value = .Range("S" & i).value
-                wshENC_Saisie.Range("G" & rr).value = Format$(.Range("T" & i).value, wshAdmin.Range("B1").value)
+                wshENC_Saisie.Range("G" & rr).value = Format$(.Range("T" & i).value, wsdADMIN.Range("B1").value)
                 wshENC_Saisie.Range("H" & rr).value = .Range("U" & i).value
                 wshENC_Saisie.Range("I" & rr).value = .Range("V" & i).value + .Range("W" & i).value
                 wshENC_Saisie.Range("J" & rr).value = .Range("X" & i).value
@@ -63,7 +63,7 @@ Sub ENC_Get_OS_Invoices_With_AF(cc As String)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Get_OS_Invoices_With_AF", "", 0)
     
-    Dim ws As Worksheet: Set ws = wshFAC_Comptes_Clients
+    Dim ws As Worksheet: Set ws = wsdFAC_Comptes_Clients
     
     'Effacer les données de la dernière utilisation
     ws.Range("O6:O10").ClearContents
@@ -245,7 +245,7 @@ Sub ENC_Add_DB_Entete() 'Write to MASTER.xlsx
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "ENC_Entête$"
     
@@ -324,17 +324,17 @@ Sub ENC_Add_Locally_Entete() '2024-08-22 @ 10:38
     
     'What is the last used row in DEB_Trans ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wshENC_Entête.Cells(wshENC_Entête.Rows.count, "A").End(xlUp).row
+    lastUsedRow = wsdENC_Entête.Cells(wsdENC_Entête.Rows.count, "A").End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
     
-    wshENC_Entête.Cells(rowToBeUsed, fEncEPayID).value = currentPmtNo
-    wshENC_Entête.Cells(rowToBeUsed, fEncEPayDate).value = wshENC_Saisie.Range("K5").value
-    wshENC_Entête.Cells(rowToBeUsed, fEncECustomer).value = wshENC_Saisie.Range("F5").value
-    wshENC_Entête.Cells(rowToBeUsed, fEncECodeClient).value = wshENC_Saisie.clientCode
-    wshENC_Entête.Cells(rowToBeUsed, fEncEPayType).value = wshENC_Saisie.Range("F7").value
-    wshENC_Entête.Cells(rowToBeUsed, fEncEAmount).value = CDbl(Format$(wshENC_Saisie.Range("K7").value, "#,##0.00"))
-    wshENC_Entête.Cells(rowToBeUsed, fEncENotes).value = wshENC_Saisie.Range("F9").value
-    wshENC_Entête.Cells(rowToBeUsed, fEncETimeStamp).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+    wsdENC_Entête.Cells(rowToBeUsed, fEncEPayID).value = currentPmtNo
+    wsdENC_Entête.Cells(rowToBeUsed, fEncEPayDate).value = wshENC_Saisie.Range("K5").value
+    wsdENC_Entête.Cells(rowToBeUsed, fEncECustomer).value = wshENC_Saisie.Range("F5").value
+    wsdENC_Entête.Cells(rowToBeUsed, fEncECodeClient).value = wshENC_Saisie.clientCode
+    wsdENC_Entête.Cells(rowToBeUsed, fEncEPayType).value = wshENC_Saisie.Range("F7").value
+    wsdENC_Entête.Cells(rowToBeUsed, fEncEAmount).value = CDbl(Format$(wshENC_Saisie.Range("K7").value, "#,##0.00"))
+    wsdENC_Entête.Cells(rowToBeUsed, fEncENotes).value = wshENC_Saisie.Range("F9").value
+    wsdENC_Entête.Cells(rowToBeUsed, fEncETimeStamp).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
     
     Application.ScreenUpdating = True
 
@@ -349,7 +349,7 @@ Sub ENC_Add_DB_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow As Int
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "ENC_Détails$"
     
@@ -406,19 +406,19 @@ Sub ENC_Add_Locally_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow A
     
     'What is the last used row in ENC_Détails ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wshENC_Détails.Cells(wshENC_Détails.Rows.count, 1).End(xlUp).row
+    lastUsedRow = wsdENC_Détails.Cells(wsdENC_Détails.Rows.count, 1).End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
     
     Dim r As Integer
     For r = firstRow To lastAppliedRow
         If wshENC_Saisie.Range("B" & r).value = True And _
             wshENC_Saisie.Range("K" & r).value <> 0 Then
-            wshENC_Détails.Range("A" & rowToBeUsed).value = pmtNo
-            wshENC_Détails.Range("B" & rowToBeUsed).value = wshENC_Saisie.Range("F" & r).value
-            wshENC_Détails.Range("C" & rowToBeUsed).value = wshENC_Saisie.Range("F5").value
-            wshENC_Détails.Range("D" & rowToBeUsed).value = wshENC_Saisie.Range("K5").value
-            wshENC_Détails.Range("E" & rowToBeUsed).value = CDbl(Format$(wshENC_Saisie.Range("K" & r).value, "#,##0.00"))
-            wshENC_Détails.Range("F" & rowToBeUsed).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+            wsdENC_Détails.Range("A" & rowToBeUsed).value = pmtNo
+            wsdENC_Détails.Range("B" & rowToBeUsed).value = wshENC_Saisie.Range("F" & r).value
+            wsdENC_Détails.Range("C" & rowToBeUsed).value = wshENC_Saisie.Range("F5").value
+            wsdENC_Détails.Range("D" & rowToBeUsed).value = wshENC_Saisie.Range("K5").value
+            wsdENC_Détails.Range("E" & rowToBeUsed).value = CDbl(Format$(wshENC_Saisie.Range("K" & r).value, "#,##0.00"))
+            wsdENC_Détails.Range("F" & rowToBeUsed).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
             rowToBeUsed = rowToBeUsed + 1
         End If
     Next r
@@ -436,7 +436,7 @@ Sub ENC_Update_DB_Comptes_Clients(firstRow As Integer, lastRow As Integer) 'Writ
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Comptes_Clients$"
     
@@ -505,7 +505,7 @@ Sub ENC_Update_Locally_Comptes_Clients(firstRow As Integer, lastRow As Integer) 
     
     Application.ScreenUpdating = False
     
-    Dim ws As Worksheet: Set ws = wshFAC_Comptes_Clients
+    Dim ws As Worksheet: Set ws = wsdFAC_Comptes_Clients
     
     'Set the range to look for
     Dim lastUsedRow As Long
@@ -554,7 +554,7 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "GL_Trans$"
     
@@ -653,7 +653,7 @@ Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As Str
     
     'What is the last used row in GL_Trans ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wshGL_Trans.Cells(wshGL_Trans.Rows.count, 1).End(xlUp).row
+    lastUsedRow = wsdGL_Trans.Cells(wsdGL_Trans.Rows.count, 1).End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
     
     gNextJENo = wshENC_Saisie.Range("B10").value
@@ -662,7 +662,7 @@ Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As Str
     Dim timeStamp As Date
     timeStamp = Now
     
-    With wshGL_Trans
+    With wsdGL_Trans
     'Debit side
         .Range("A" & rowToBeUsed).value = gNextJENo
         .Range("B" & rowToBeUsed).value = CDate(dt)

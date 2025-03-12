@@ -18,14 +18,17 @@ Public Const COULEUR_BASE_TEC As Long = 6740479
 Public Const COULEUR_BASE_FACTURATION As Long = 11854022
 Public Const COULEUR_BASE_COMPTABILITÉ As Long = 14277081
 
+'Variable qui contient l'addresse de la dernière cellule sélectionnée
+Public gPreviousCellAddress As String
+
 'Variable utilisée pour éviter l'évènement Activate à chaque fois que l'on revient dans une feuille
-Public fromMenu As Boolean '2024-09-03 @ 06:14
+Public gFromMenu As Boolean '2024-09-03 @ 06:14
 
 'Niveau de détail pour le log de SaisieHeures
-Public logSaisieHeuresVeryDetailed As Boolean
+Public gLogSaisieHeuresVeryDetailed As Boolean
 
 'Pour assurer un contrôle dans Facture Finale
-Public flagEtapeFacture As Long
+Public gFlagEtapeFacture As Long
 
 'Sauvegarde AUTOMATIQUE du code VBA - 2025-03-03 @ 07:18
 Public gNextBackupTime As Date
@@ -369,7 +372,7 @@ Sub CodeEssentielDepart()
     rootPath = FN_Get_Root_Path
 
     Application.EnableEvents = False
-    wshAdmin.Range("F5").value = rootPath
+    wsdADMIN.Range("F5").value = rootPath
     Application.EnableEvents = True
    
     'Vérification si le chemin est accessible
@@ -394,7 +397,7 @@ Sub CodeEssentielDepart()
     Call BackupMasterFile
     
     Call EcrireInformationsConfigAuMenu
-    wshMenu.Range("A1").value = wshAdmin.Range("NomEntreprise").value
+    wshMenu.Range("A1").value = wsdADMIN.Range("NomEntreprise").value
     
     Call HideDevShapesBasedOnUsername
     
@@ -456,7 +459,7 @@ Sub CreateUserActiveFile()
     userName = Fn_Get_Windows_Username
     
     Dim traceFilePath As String
-    traceFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
+    traceFilePath = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
     
     Dim FileNumber As Long
     FileNumber = FreeFile
@@ -501,7 +504,7 @@ Sub SetupUserDateFormat()
             userDateFormat = "dd/mm/yyyy"
     End Select
 
-    wshAdmin.Range("B1").value = userDateFormat
+    wsdADMIN.Range("B1").value = userDateFormat
     
     Call Log_Record("modAppli:SetupUserDateFormat", "", startTime)
     
@@ -515,10 +518,10 @@ Sub BackupMasterFile()
     
     'Chemin source (fichier principal) et destination (sauvegarde)
     Dim masterFilePath As String
-    masterFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
+    masterFilePath = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
     
     Dim backupFilePath As String
-    backupFilePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    backupFilePath = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER_" & Format$(Now, "YYYYMMDD_HHMMSS") & ".xlsx"
     
     'Créer directement une copie du fichier sans ouvrir Excel
@@ -551,11 +554,11 @@ Sub EcrireInformationsConfigAuMenu()
     Application.EnableEvents = False
     
     With wshMenu
-        .Range("A30").value = "Heure - " & Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss")
+        .Range("A30").value = "Heure - " & Format$(Now(), wsdADMIN.Range("B1").value & " hh:mm:ss")
         .Range("A31").value = "Version - " & ThisWorkbook.Name
         .Range("A32").value = "Utilisateur - " & Fn_Get_Windows_Username
-        .Range("A33").value = "Environnement - " & wshAdmin.Range("F5").value
-        .Range("A34").value = "Format de la date - " & wshAdmin.Range("B1").value
+        .Range("A33").value = "Environnement - " & wsdADMIN.Range("F5").value
+        .Range("A34").value = "Format de la date - " & wsdADMIN.Range("B1").value
     End With
     
     Application.EnableEvents = True

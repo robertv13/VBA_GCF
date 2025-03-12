@@ -20,9 +20,9 @@ Sub CreerListeAgee() '2024-09-08 @ 15:55
     ActiveSheet.Unprotect
     
     'Initialiser les feuilles nécessaires
-    Dim wsFactures As Worksheet: Set wsFactures = wshFAC_Comptes_Clients
-    Dim wsPaiements As Worksheet: Set wsPaiements = wshENC_Détails
-    Dim wsRégularisations As Worksheet: Set wsRégularisations = wshCC_Régularisations
+    Dim wsFactures As Worksheet: Set wsFactures = wsdFAC_Comptes_Clients
+    Dim wsPaiements As Worksheet: Set wsPaiements = wsdENC_Détails
+    Dim wsRégularisations As Worksheet: Set wsRégularisations = wsdCC_Régularisations
     
     'Utilisation de la même feuille
     Dim rngResultat As Range
@@ -168,7 +168,7 @@ Sub CreerListeAgee() '2024-09-08 @ 15:55
                 wshCAR_Liste_Agée.Cells(r, 2).value = client
                 wshCAR_Liste_Agée.Cells(r, 3).value = numFacture
                 wshCAR_Liste_Agée.Cells(r, 4).value = dateFacture
-                wshCAR_Liste_Agée.Cells(r, 4).NumberFormat = wshAdmin.Range("B1").value
+                wshCAR_Liste_Agée.Cells(r, 4).NumberFormat = wsdADMIN.Range("B1").value
                 wshCAR_Liste_Agée.Cells(r, 5).value = montantRestant
                 Select Case trancheAge
                     Case "- de 30 jours"
@@ -188,7 +188,7 @@ Sub CreerListeAgee() '2024-09-08 @ 15:55
                 wshCAR_Liste_Agée.Cells(r, 3).value = numFacture
                 wshCAR_Liste_Agée.Cells(r, 4).value = "Facture"
                 wshCAR_Liste_Agée.Cells(r, 5).value = dateFacture
-                wshCAR_Liste_Agée.Cells(r, 5).NumberFormat = wshAdmin.Range("B1").value
+                wshCAR_Liste_Agée.Cells(r, 5).NumberFormat = wsdADMIN.Range("B1").value
                 wshCAR_Liste_Agée.Cells(r, 6).value = montantFacture
                 Select Case trancheAge
                     Case "- de 30 jours"
@@ -570,7 +570,7 @@ Sub EnvoyerRappelParCourriel(noFact As String)
 
     'Ajouter la copie de la facture (format PDF)
     Dim attachmentFullPathName As String
-    attachmentFullPathName = wshAdmin.Range("F5").value & FACT_PDF_PATH & Application.PathSeparator & _
+    attachmentFullPathName = wsdADMIN.Range("F5").value & FACT_PDF_PATH & Application.PathSeparator & _
                      noFact & ".pdf"
     
     'Vérification de l'existence de la pièce jointe
@@ -631,7 +631,7 @@ Sub EnvoyerRappelParCourriel(noFact As String)
             Case Else
         End Select
         
-        .Subject = wshAdmin.Range("NomEntreprise") & " - Rappel pour facture impayée - " & clientNom & " - Facture # " & noFact
+        .Subject = wsdADMIN.Range("NomEntreprise") & " - Rappel pour facture impayée - " & clientNom & " - Facture # " & noFact
         .Display  'Pour afficher le mail avant envoi (remplacez par .Send pour envoyer directement)
     End With
 

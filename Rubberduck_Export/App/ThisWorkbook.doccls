@@ -1,10 +1,8 @@
 ﻿Option Explicit
 
-'Ces variables sont disponibles partout dans l'application
-Public previousCellAddress As Variant
-
 Private Sub Workbook_BeforeClose(Cancel As Boolean)
     
+    'La sortie du classeur ne peut se faire par le X rouge à droite en haut de EXCEL
     Cancel = True
     ufExitDisable.show
 

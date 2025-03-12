@@ -1,13 +1,12 @@
 ﻿Option Explicit
 
-Public previousCellAddress As Variant
 Public clientCode As String
 Public pmtNo As Long
 Public GLEntryNo As Long
 
 Private Sub Worksheet_Activate()
 
-    If fromMenu = False Then
+    If gFromMenu = False Then
         Exit Sub
     End If
     
@@ -67,7 +66,7 @@ Private Sub Worksheet_Activate()
     
     Call AjusteLibelléEncaissement("Banque")
     
-    ws.Range("K5").value = Format$(Date, wshAdmin.Range("B1").value)
+    ws.Range("K5").value = Format$(Date, wsdADMIN.Range("B1").value)
 
     Application.ScreenUpdating = True
     Application.EnableEvents = True
@@ -83,8 +82,8 @@ End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal target As Range)
     
-    If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.Color = xlNone
+    If gPreviousCellAddress <> "" Then
+        Range(gPreviousCellAddress).Interior.Color = xlNone
     End If
     
     'Client has been selected
@@ -130,7 +129,7 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
         Exit Sub
     End If
     
-    previousCellAddress = target.Address
+    gPreviousCellAddress = target.Address
     
 End Sub
 
@@ -165,7 +164,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
         Application.EnableEvents = False
         fullDate = Fn_Complete_Date(target.Text, 30, 0)
         If fullDate <> "Invalid Date" Then
-            target.value = Format$(fullDate, wshAdmin.Range("B1").value)
+            target.value = Format$(fullDate, wsdADMIN.Range("B1").value)
         Else
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshENC_Saisie_115")
             target.ClearContents

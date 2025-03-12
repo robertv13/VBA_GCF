@@ -13,7 +13,7 @@ Sub DeleteAllRowsButKeepHeaders() '2024-07-30 @ 12:21
     
     'Define workbook path
     Dim sourcePath As String
-    sourcePath = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourcePath = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                 "GCF_BD_MASTER.xlsx" '2024-07-29 @ 18:17
 
     'Ouvrir le workbook
@@ -46,7 +46,7 @@ Sub DeleteAllRowsButKeepHeaders() '2024-07-30 @ 12:21
         'Requires a minimum of one line (values)
         ws.Range("A2").value = 0
         ws.Range("B2").value = ""
-        ws.Range("C2").value = Format$(Date, wshAdmin.Range("B1").value)
+        ws.Range("C2").value = Format$(Date, wsdADMIN.Range("B1").value)
         ws.Range("E2").value = 0
         ws.Range("F2").value = "VRAI"
         ws.Range("G2").value = "FAUX"

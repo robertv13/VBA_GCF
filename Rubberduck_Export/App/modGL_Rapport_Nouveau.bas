@@ -86,7 +86,7 @@ Public Sub GenererRapportGL_Compte(wsRapport As Worksheet, dateDebut As Date, da
             saveFirstRow = rowRapport
             For i = 1 To UBound(arrTrans, 1)
                 wsRapport.Range("B" & rowRapport).value = arrTrans(i, 2)
-                wsRapport.Range("B" & rowRapport).NumberFormat = wshAdmin.Range("B1").value
+                wsRapport.Range("B" & rowRapport).NumberFormat = wsdADMIN.Range("B1").value
                 wsRapport.Range("C" & rowRapport).value = arrTrans(i, 3)
                 wsRapport.Range("D" & rowRapport).value = arrTrans(i, 4)
                 wsRapport.Range("E" & rowRapport).value = arrTrans(i, 1)
@@ -146,7 +146,7 @@ Public Sub GenererRapportGL_Compte(wsRapport As Worksheet, dateDebut As Date, da
     Application.ScreenUpdating = True
     
     Dim h1 As String, h2 As String, h3 As String
-    h1 = wshAdmin.Range("NomEntreprise")
+    h1 = wsdADMIN.Range("NomEntreprise")
     h2 = "Rapport des transactions du Grand Livre"
     h3 = "(Du " & dateDebut & " au " & dateFin & ")"
     Call GL_Rapport_Wrap_Up_Compte(wsRapport, h1, h2, h3)
@@ -175,7 +175,7 @@ Public Sub GenererRapportGL_Ecriture(wsRapport As Worksheet, noEcritureDebut As 
    
     'Référence à la feuille source (les données de base)
     Dim wsSource As Worksheet
-    Set wsSource = wshGL_Trans
+    Set wsSource = wsdGL_Trans
     
     'Setup report header
     Call SetUpGLReportHeadersAndColumns_Ecriture(wsRapport)
@@ -309,7 +309,7 @@ Public Sub GenererRapportGL_Ecriture(wsRapport As Worksheet, noEcritureDebut As 
     Application.ScreenUpdating = True
     
     Dim h1 As String, h2 As String, h3 As String
-    h1 = wshAdmin.Range("NomEntreprise")
+    h1 = wsdADMIN.Range("NomEntreprise")
     h2 = "Rapport des transactions du Grand Livre par numéro d'écriture"
     h3 = "(Pour les numéros d'écriture de " & noEcritureDebut & " à " & noEcritureFin & ")"
     Call GL_Rapport_Wrap_Up_Ecriture(wsRapport, h1, h2, h3)
@@ -320,7 +320,7 @@ Public Sub GenererRapportGL_Ecriture(wsRapport As Worksheet, noEcritureDebut As 
     
     MsgBox "Le rapport a été généré avec succès", vbInformation, "Rapport des transactions du Grand Livre"
     
-'    wshGL_Trans.Visible = xlSheetVisible
+'    wsdGL_Trans.Visible = xlSheetVisible
     wsRapport.Visible = xlSheetVisible
     wsRapport.Activate
     ActiveWindow.SplitRow = 2
@@ -339,7 +339,7 @@ Public Sub GenererRapportGL_DateSaisie(wsRapport As Worksheet, dtSaisieDebut As 
    
     'Référence à la feuille source (les données de base)
     Dim wsSource As Worksheet
-    Set wsSource = wshGL_Trans
+    Set wsSource = wsdGL_Trans
     
     'Setup report header
     Call SetUpGLReportHeadersAndColumns_DateSaisie(wsRapport)
@@ -477,7 +477,7 @@ Public Sub GenererRapportGL_DateSaisie(wsRapport As Worksheet, dtSaisieDebut As 
     Application.ScreenUpdating = True
     
     Dim h1 As String, h2 As String, h3 As String
-    h1 = wshAdmin.Range("NomEntreprise")
+    h1 = wsdADMIN.Range("NomEntreprise")
     h2 = "Rapport des transactions du Grand Livre par date de saisie"
     h3 = "(Pour les écritures saisies entre le " & dtSaisieDebut & " et le " & dtSaisieFin & ")"
     Call GL_Rapport_Wrap_Up_DateSaisie(wsRapport, h1, h2, h3)
@@ -488,7 +488,7 @@ Public Sub GenererRapportGL_DateSaisie(wsRapport As Worksheet, dtSaisieDebut As 
     
     MsgBox "Le rapport a été généré avec succès", vbInformation, "Rapport des transactions du Grand Livre"
     
-'    wshGL_Trans.Visible = xlSheetVisible
+'    wsdGL_Trans.Visible = xlSheetVisible
     wsRapport.Visible = xlSheetVisible
     wsRapport.Activate
     ActiveWindow.SplitRow = 2

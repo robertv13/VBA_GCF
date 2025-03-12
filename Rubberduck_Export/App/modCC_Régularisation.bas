@@ -59,7 +59,7 @@ Sub MAJ_Regularisation() '2025-01-14 @ 12:00
         
         Call AjusteLibelléEncaissement("Banque")
     
-        .Range("K5").value = Format$(Date, wshAdmin.Range("B1").value)
+        .Range("K5").value = Format$(Date, wsdADMIN.Range("B1").value)
         .Range("B1").Select
 
         'De retour à la saisie du client
@@ -90,7 +90,7 @@ Sub REGUL_Add_DB() 'Write to MASTER.xlsx
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "CC_Régularisations$"
     
@@ -166,7 +166,7 @@ Sub REGUL_Add_Locally() '2024-08-22 @ 10:38
     currentRegulNo = regulNo
     
     'What is the last used row in CC_Régularisations ?
-    Dim ws As Worksheet: Set ws = wshCC_Régularisations
+    Dim ws As Worksheet: Set ws = wsdCC_Régularisations
     Dim lastUsedRow As Long, rowToBeUsed As Long
     lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
@@ -202,7 +202,7 @@ Sub REGUL_Update_Comptes_Clients_DB() 'Write to MASTER.xlsx
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Comptes_Clients$"
     
@@ -262,7 +262,7 @@ Sub REGUL_Update_Comptes_Clients_Locally() '2024-08-22 @ 10:55
     Application.ScreenUpdating = False
     
     'Set the range to look for
-    Dim ws As Worksheet: Set ws = wshFAC_Comptes_Clients
+    Dim ws As Worksheet: Set ws = wsdFAC_Comptes_Clients
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     Dim lookupRange As Range: Set lookupRange = ws.Range("A3:A" & lastUsedRow)
@@ -315,7 +315,7 @@ Sub REGUL_GL_Posting_DB(no As Long, dt As Date, nom As String, desc As String)
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "GL_Trans$"
     
@@ -457,7 +457,7 @@ Sub REGUL_GL_Posting_Locally(no As Long, dt As Date, nom As String, desc As Stri
     Application.ScreenUpdating = False
 
     'What is the last used row in GL_Trans ?
-    Dim ws As Worksheet: Set ws = wshGL_Trans
+    Dim ws As Worksheet: Set ws = wsdGL_Trans
     Dim lastUsedRow As Long, rowToBeUsed As Long
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     rowToBeUsed = lastUsedRow + 1

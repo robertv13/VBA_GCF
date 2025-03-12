@@ -1,11 +1,10 @@
 ﻿Option Explicit
 
-Public previousCellAddress As Variant
 Public celluleSélectionnée As Range
 
 Private Sub Worksheet_Activate()
 
-    If fromMenu = False Then
+    If gFromMenu = False Then
         Exit Sub
     End If
     
@@ -53,7 +52,7 @@ Private Sub Worksheet_Activate()
     
     With ws
         .Range("D4").Select
-        previousCellAddress = .Range("D4").Address
+        gPreviousCellAddress = .Range("D4").Address
     End With
     
     ws.PageSetup.PrintArea = ""
@@ -63,7 +62,7 @@ Private Sub Worksheet_Activate()
     ws.Range("G6,I6").ClearContents
     Application.EnableEvents = True
     
-    fromMenu = False
+    gFromMenu = False
     
     'Libérer la mémoire
     Set shp = Nothing
@@ -75,8 +74,8 @@ End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal target As Range)
 
-    If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.Color = xlNone
+    If gPreviousCellAddress <> "" Then
+        Range(gPreviousCellAddress).Interior.Color = xlNone
     End If
 
     Set celluleSélectionnée = target
@@ -102,7 +101,7 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
     End If
 
     'Save the current cell Address
-    previousCellAddress = target.Address
+    gPreviousCellAddress = target.Address
 
 End Sub
 
@@ -135,38 +134,38 @@ Private Sub Worksheet_Change(ByVal target As Range)
         With wshFAC_Interrogation
             Select Case Range("D6").value
                 Case "Aujourd'hui"
-                    .Range("G6").value = Format$(wshAdmin.Range("Aujourdhui"), wshAdmin.Range("B1").value)
-                    .Range("I6").value = Format$(wshAdmin.Range("Aujourdhui"), wshAdmin.Range("B1").value)
+                    .Range("G6").value = Format$(wsdADMIN.Range("Aujourdhui"), wsdADMIN.Range("B1").value)
+                    .Range("I6").value = Format$(wsdADMIN.Range("Aujourdhui"), wsdADMIN.Range("B1").value)
                 Case "Semaine"
-                    .Range("G6").value = Format$(wshAdmin.Range("DateDebutSemaine"), wshAdmin.Range("B1").value)
-                    .Range("I6").value = Format$(wshAdmin.Range("DateFinSemaine"), wshAdmin.Range("B1").value)
+                    .Range("G6").value = Format$(wsdADMIN.Range("DateDebutSemaine"), wsdADMIN.Range("B1").value)
+                    .Range("I6").value = Format$(wsdADMIN.Range("DateFinSemaine"), wsdADMIN.Range("B1").value)
                 Case "7 derniers jours"
-                    .Range("G6").value = Format$(wshAdmin.Range("SeptJoursDe"), wshAdmin.Range("B1").value)
-                    .Range("I6").value = Format$(wshAdmin.Range("SeptJoursA"), wshAdmin.Range("B1").value)
+                    .Range("G6").value = Format$(wsdADMIN.Range("SeptJoursDe"), wsdADMIN.Range("B1").value)
+                    .Range("I6").value = Format$(wsdADMIN.Range("SeptJoursA"), wsdADMIN.Range("B1").value)
                 Case "15 derniers jours"
-                    .Range("G6").value = Format$(wshAdmin.Range("QuinzeJoursDe"), wshAdmin.Range("B1").value)
-                    .Range("I6").value = Format$(wshAdmin.Range("QuinzeJoursA"), wshAdmin.Range("B1").value)
+                    .Range("G6").value = Format$(wsdADMIN.Range("QuinzeJoursDe"), wsdADMIN.Range("B1").value)
+                    .Range("I6").value = Format$(wsdADMIN.Range("QuinzeJoursA"), wsdADMIN.Range("B1").value)
                 Case "Mois Courant"
-                    .Range("G6").value = Format$(wshAdmin.Range("MoisDe"), wshAdmin.Range("B1").value)
-                    .Range("I6").value = Format$(wshAdmin.Range("MoisA"), wshAdmin.Range("B1").value)
+                    .Range("G6").value = Format$(wsdADMIN.Range("MoisDe"), wsdADMIN.Range("B1").value)
+                    .Range("I6").value = Format$(wsdADMIN.Range("MoisA"), wsdADMIN.Range("B1").value)
                 Case "Mois Dernier"
-                    .Range("G6").value = Format$(wshAdmin.Range("MoisPrecDe"), wshAdmin.Range("B1").value)
-                    .Range("I6").value = Format$(wshAdmin.Range("MoisPrecA"), wshAdmin.Range("B1").value)
+                    .Range("G6").value = Format$(wsdADMIN.Range("MoisPrecDe"), wsdADMIN.Range("B1").value)
+                    .Range("I6").value = Format$(wsdADMIN.Range("MoisPrecA"), wsdADMIN.Range("B1").value)
                 Case "Trimestre courant"
-                    .Range("G6").value = Format$(wshAdmin.Range("TrimDe"), wshAdmin.Range("B1").value)
-                    .Range("I6").value = Format$(wshAdmin.Range("TrimA"), wshAdmin.Range("B1").value)
+                    .Range("G6").value = Format$(wsdADMIN.Range("TrimDe"), wsdADMIN.Range("B1").value)
+                    .Range("I6").value = Format$(wsdADMIN.Range("TrimA"), wsdADMIN.Range("B1").value)
                 Case "Trimestre précédent"
-                    .Range("G6").value = Format$(wshAdmin.Range("TrimPrecDe"), wshAdmin.Range("B1").value)
-                    .Range("I6").value = Format$(wshAdmin.Range("TrimPrecA"), wshAdmin.Range("B1").value)
+                    .Range("G6").value = Format$(wsdADMIN.Range("TrimPrecDe"), wsdADMIN.Range("B1").value)
+                    .Range("I6").value = Format$(wsdADMIN.Range("TrimPrecA"), wsdADMIN.Range("B1").value)
                 Case "Année courante"
-                    .Range("G6").value = Format$(wshAdmin.Range("AnneeDe"), wshAdmin.Range("B1").value)
-                    .Range("I6").value = Format$(wshAdmin.Range("AnneeA"), wshAdmin.Range("B1").value)
+                    .Range("G6").value = Format$(wsdADMIN.Range("AnneeDe"), wsdADMIN.Range("B1").value)
+                    .Range("I6").value = Format$(wsdADMIN.Range("AnneeA"), wsdADMIN.Range("B1").value)
                 Case "Année précédente"
-                    .Range("G6").value = Format$(wshAdmin.Range("AnneePrecDe"), wshAdmin.Range("B1").value)
-                    .Range("I6").value = Format$(wshAdmin.Range("AnneePrecA"), wshAdmin.Range("B1").value)
+                    .Range("G6").value = Format$(wsdADMIN.Range("AnneePrecDe"), wsdADMIN.Range("B1").value)
+                    .Range("I6").value = Format$(wsdADMIN.Range("AnneePrecA"), wsdADMIN.Range("B1").value)
                 Case "Toutes les dates"
-                    .Range("G6").value = Format$(#1/1/2024#, wshAdmin.Range("B1").value)
-                    .Range("I6").value = Format$(wshAdmin.Range("AnneeA"), wshAdmin.Range("B1").value)
+                    .Range("G6").value = Format$(#1/1/2024#, wsdADMIN.Range("B1").value)
+                    .Range("I6").value = Format$(wsdADMIN.Range("AnneeA"), wsdADMIN.Range("B1").value)
                 Case Else
                     .Range("G6").value = ""
                     .Range("I6").value = ""
@@ -183,7 +182,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
         
         'Update the cell with the full date, if valid
         If fullDate <> "Invalid Date" Then
-            target.value = Format$(fullDate, wshAdmin.Range("B1").value)
+            target.value = Format$(fullDate, wsdADMIN.Range("B1").value)
             Call FAC_Historique_Montrer_Bouton_Afficher
             Application.EnableEvents = True
         Else
@@ -201,7 +200,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
         fullDate = Fn_Complete_Date(target.Text, 999, 366)
         'Update the cell with the full date, if valid
         If fullDate <> "Invalid Date" Then
-            target.value = Format$(fullDate, wshAdmin.Range("B1").value)
+            target.value = Format$(fullDate, wsdADMIN.Range("B1").value)
             Call FAC_Historique_Montrer_Bouton_Afficher
 '            Call Remove_All_PDF_Icons
             Application.EnableEvents = True

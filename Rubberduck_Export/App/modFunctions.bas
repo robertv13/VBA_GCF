@@ -8,7 +8,7 @@ Function Fn_GetID_From_Initials(i As String)
 
     Dim cell As Range
     
-    For Each cell In wshAdmin.Range("dnrProf_All")
+    For Each cell In wsdADMIN.Range("dnrProf_All")
         If cell.Value2 = i Then
             Fn_GetID_From_Initials = cell.offset(0, 1).value
             Exit Function
@@ -24,7 +24,7 @@ Function Fn_Get_Prof_From_ProfID(i As Long)
 
     Dim cell As Range
     
-    For Each cell In wshAdmin.Range("dnrProf_All")
+    For Each cell In wsdADMIN.Range("dnrProf_All")
         If cell.Value2 = i Then
             Fn_Get_Prof_From_ProfID = cell.offset(0, -1).value
             Exit Function
@@ -67,7 +67,7 @@ Function Fn_GetID_From_Client_Name(nomClient As String) '2024-02-14 @ 06:07
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_GetID_From_Client_Name", nomClient, 0)
     
-    Dim ws As Worksheet: Set ws = wshBD_Clients
+    Dim ws As Worksheet: Set ws = wsdBD_Clients
     
     On Error Resume Next
     Dim dynamicRange As Range: Set dynamicRange = ws.Range("dnrClients_All")
@@ -107,7 +107,7 @@ Function Fn_Cell_From_BD_Client(nomClient As String, ByRef colNumberSearch As In
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Cell_From_BD_Client", nomClient, 0)
     
-    Dim ws As Worksheet: Set ws = wshBD_Clients
+    Dim ws As Worksheet: Set ws = wsdBD_Clients
     
     On Error Resume Next
     Dim dynamicRange As Range: Set dynamicRange = ws.Range("dnrClients_All")
@@ -149,7 +149,7 @@ Function Fn_GetID_From_Fourn_Name(nomFournisseur As String) '2024-07-03 @ 16:13
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_GetID_From_Fourn_Name", nomFournisseur, 0)
     
-    Dim ws As Worksheet: Set ws = wshBD_Fournisseurs
+    Dim ws As Worksheet: Set ws = wsdBD_Fournisseurs
     
     On Error Resume Next
     Dim dynamicRange As Range: Set dynamicRange = ws.Range("dnrSuppliers_All")
@@ -187,7 +187,7 @@ Function Fn_Get_Prenom_From_Initials(i As String)
 
     Dim cell As Range
     
-    For Each cell In wshAdmin.Range("dnrProf_All")
+    For Each cell In wsdADMIN.Range("dnrProf_All")
         If cell.Value2 = i Then
             Fn_Get_Prenom_From_Initials = cell.offset(0, 2).value
             Exit Function
@@ -203,7 +203,7 @@ Function Fn_Get_Nom_From_Initials(i As String)
 
     Dim cell As Range
     
-    For Each cell In wshAdmin.Range("dnrProf_All")
+    For Each cell In wsdADMIN.Range("dnrProf_All")
         If cell.Value2 = i Then
             Fn_Get_Nom_From_Initials = cell.offset(0, 3).value
             Exit Function
@@ -316,7 +316,7 @@ End Function
 Function Fn_Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hono As Double) As String '2024-07-18 @ 16:32
     
     'Define the worksheet
-    Dim ws As Worksheet: Set ws = wshFAC_Projets_Détails
+    Dim ws As Worksheet: Set ws = wsdFAC_Projets_Détails
     
     'Define the range to search in (Column 1)
     Dim searchRange As Range: Set searchRange = ws.Columns(2)
@@ -358,7 +358,7 @@ Function Fn_Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hon
                     Fn_Verify_And_Delete_Rows_If_Value_Is_Found = "SUPPRIMER"
                 End If
                 
-                'Delete all collected rows from wshFAC_Projets_Détails (locally)
+                'Delete all collected rows from wsdFAC_Projets_Détails (locally)
                 Dim i As Long
                 For i = rowsToDelete.count To 1 Step -1
                     ws.Rows(rowsToDelete(i)).Delete
@@ -366,7 +366,7 @@ Function Fn_Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hon
                 
                 'Update rows from MASTER file (details)
                 Dim destinationFileName As String, destinationTab As String
-                destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+                destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                                       "GCF_BD_MASTER.xlsx"
                 destinationTab = "FAC_Projets_Détails$"
                 
@@ -378,7 +378,7 @@ Function Fn_Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hon
                                                                      valueToFind)
                                                                      
                 'Update row from MASTER file (entête)
-                destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+                destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                                       "GCF_BD_MASTER.xlsx"
                 destinationTab = "FAC_Projets_Entête$"
                 Call Soft_Delete_If_Value_Is_Found_In_Master_Entete(destinationFileName, _
@@ -457,7 +457,7 @@ Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_GetGL_Code_From_GL_Description", glDescr, 0)
     
-    Dim ws As Worksheet: Set ws = wshAdmin
+    Dim ws As Worksheet: Set ws = wsdADMIN
     
     On Error Resume Next
     Dim dynamicRange As Range: Set dynamicRange = ws.Range("dnrPlanComptable_All")
@@ -524,7 +524,7 @@ End Function
 
 Function Fn_ObtenirTECFacturésPourFacture(invNo As String) As Variant
 
-    Dim wsTEC As Worksheet: Set wsTEC = wshTEC_Local
+    Dim wsTEC As Worksheet: Set wsTEC = wsdTEC_Local
     
     Dim lastUsedRow As Long
     lastUsedRow = wsTEC.Cells(wsTEC.Rows.count, 1).End(xlUp).row '2024-08-18 @ 06:37
@@ -562,7 +562,7 @@ Function Fn_Get_TEC_Total_Invoice_AF(invNo As String, t As String) As Currency
     
     Fn_Get_TEC_Total_Invoice_AF = 0
     
-    Dim ws As Worksheet: Set ws = wshFAC_Détails
+    Dim ws As Worksheet: Set ws = wsdFAC_Détails
     
     'Effacer les données de la dernière utilisation
     ws.Range("I6:I10").ClearContents
@@ -666,7 +666,7 @@ Function Fn_Get_Invoice_Total_Payments_AF(invNo As String)
 
     Fn_Get_Invoice_Total_Payments_AF = 0
     
-    Dim ws As Worksheet: Set ws = wshENC_Détails
+    Dim ws As Worksheet: Set ws = wsdENC_Détails
     
     'Effacer les données de la dernière utilisation
     ws.Range("H6:H10").ClearContents
@@ -747,7 +747,7 @@ End Function
 '
 '    'Définir la feuille pour la recherche
 '    Dim ws As Worksheet
-'    Set ws = wshFAC_Comptes_Clients
+'    Set ws = wsdFAC_Comptes_Clients
 '
 '    'Définir la plage pour le résultat
 '    Dim foundCell As Range
@@ -792,9 +792,9 @@ Function Fn_Validate_Client_Number(clientCode As String) As Boolean '2024-10-26 
     Fn_Validate_Client_Number = False
     
     Dim lastUsedRow As Long
-    lastUsedRow = wshBD_Clients.Cells(wshBD_Clients.Rows.count, "B").End(xlUp).row
+    lastUsedRow = wsdBD_Clients.Cells(wsdBD_Clients.Rows.count, "B").End(xlUp).row
     Dim rngToSearch As Range
-    Set rngToSearch = wshBD_Clients.Range("B1:B" & lastUsedRow)
+    Set rngToSearch = wsdBD_Clients.Range("B1:B" & lastUsedRow)
     
     'Search for the string in a given range (r) at the column specified (cs)
     Dim rngFound As Range
@@ -971,16 +971,16 @@ Function Fn_Complete_Date(dateInput As String, joursArriere As Integer, joursFut
     joursEcart = parsedDate - Date
     If joursEcart < 0 And Abs(joursEcart) > joursArriere Then
         MsgBox "Cette date NE RESPECTE PAS les paramètres de date établis" & vbNewLine & vbNewLine & _
-                    "La date minimale est '" & Format$(Date - joursArriere, wshAdmin.Range("B1").value) & "'", _
+                    "La date minimale est '" & Format$(Date - joursArriere, wsdADMIN.Range("B1").value) & "'", _
                     vbCritical, "La date saisie est hors-norme - (Du " & _
-                        Format$(Date - joursArriere, wshAdmin.Range("B1").value) & " au " & Format$(Date + joursFutur, wshAdmin.Range("B1").value) & ")"
+                        Format$(Date - joursArriere, wsdADMIN.Range("B1").value) & " au " & Format$(Date + joursFutur, wsdADMIN.Range("B1").value) & ")"
         GoTo Invalid_Date
     End If
     If joursEcart > 0 And joursEcart > joursFutur Then
         MsgBox "Cette date NE RESPECTE PAS les paramètres de date établis" & vbNewLine & vbNewLine & _
-                    "La date maximale est '" & Format$(Date + joursFutur, wshAdmin.Range("B1").value) & "'", _
+                    "La date maximale est '" & Format$(Date + joursFutur, wsdADMIN.Range("B1").value) & "'", _
                     vbCritical, "La date saisie est hors-norme - (Du " & _
-                    Format$(Date - joursArriere, wshAdmin.Range("B1").value) & " au " & Format$(Date + joursFutur, wshAdmin.Range("B1").value) & ")"
+                    Format$(Date - joursArriere, wsdADMIN.Range("B1").value) & " au " & Format$(Date + joursFutur, wsdADMIN.Range("B1").value) & ")"
         GoTo Invalid_Date
     End If
    
@@ -1195,9 +1195,9 @@ Function Fn_Get_Invoice_Type(invNo As String) As String '2024-08-17 @ 06:55
     'Return the Type of invoice - 'C' for confirmed, 'AC' to be confirmed
     
     Dim lastUsedRow As Long
-    lastUsedRow = wshFAC_Entête.Cells(wshFAC_Entête.Rows.count, 1).End(xlUp).row
+    lastUsedRow = wsdFAC_Entête.Cells(wsdFAC_Entête.Rows.count, 1).End(xlUp).row
     Dim rngToSearch As Range
-    Set rngToSearch = wshFAC_Entête.Range("A1:A" & lastUsedRow)
+    Set rngToSearch = wsdFAC_Entête.Range("A1:A" & lastUsedRow)
     
     'Find the invNo into rngToSearch
     Dim rngFound As Range
@@ -1219,7 +1219,7 @@ Public Function Fn_Get_Tax_Rate(d As Date, taxType As String) As Double
 
     Dim row As Long
     Dim rate As Double
-    With wshAdmin
+    With wsdADMIN
         For row = 18 To 11 Step -1
             If .Range("L" & row).value = taxType Then
                 If d >= .Range("M" & row).value Then
@@ -1276,7 +1276,7 @@ Function Fn_Invoice_Is_Confirmed(invNo As String) As Boolean
 
     Fn_Invoice_Is_Confirmed = False
     
-    Dim ws As Worksheet: Set ws = wshFAC_Entête
+    Dim ws As Worksheet: Set ws = wsdFAC_Entête
 
     'Utilisation de FIND pour trouver la cellule contenant la valeur recherchée dans la colonne A
     Dim foundCell As Range
@@ -1391,7 +1391,7 @@ End Function
 
 Function Fn_Get_Next_Invoice_Number() As String '2024-09-17 @ 14:00
 
-    Dim ws As Worksheet: Set ws = wshFAC_Entête
+    Dim ws As Worksheet: Set ws = wsdFAC_Entête
     
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
@@ -1402,9 +1402,9 @@ Function Fn_Get_Next_Invoice_Number() As String '2024-09-17 @ 14:00
         strLastInvoice = Right$(strLastInvoice, Len(strLastInvoice) - 3)
     Else
         MsgBox "Problème avec les dernières lignes de la" & _
-                vbNewLine & vbNewLine & "feuille 'wshFAC_Entête'" & _
+                vbNewLine & vbNewLine & "feuille 'wsdFAC_Entête'" & _
                 vbNewLine & vbNewLine & "Veuillez contacter le développeur", _
-                vbOKOnly, "Structure invalide dans 'wshFAC_Entête'"
+                vbOKOnly, "Structure invalide dans 'wsdFAC_Entête'"
     End If
     Fn_Get_Next_Invoice_Number = strLastInvoice + 1
 
@@ -1415,11 +1415,11 @@ End Function
 
 Function Fn_Get_GL_Account_Opening_Balance_AF(glNo As String, d As Date) As Double
 
-    'Using AdvancedFilter # 1 in wshGL_Trans
+    'Using AdvancedFilter # 1 in wsdGL_Trans
     
     Fn_Get_GL_Account_Opening_Balance_AF = 0
     
-    Dim ws As Worksheet: Set ws = wshGL_Trans
+    Dim ws As Worksheet: Set ws = wsdGL_Trans
     
     Application.EnableEvents = False
     
@@ -1483,7 +1483,7 @@ Function Fn_Get_Plan_Comptable(nbCol As Long) As Variant '2024-06-07 @ 07:31
     Debug.Assert nbCol >= 1 And nbCol <= 4 '2024-07-31 @ 19:26
     
     'Reference the named range
-    Dim planComptable As Range: Set planComptable = wshAdmin.Range("dnrPlanComptable_All")
+    Dim planComptable As Range: Set planComptable = wsdADMIN.Range("dnrPlanComptable_All")
     
     'Iterate through each row of the named range
     Dim rowNum As Long, row As Range, rowRange As Range
@@ -1530,7 +1530,7 @@ Function Fn_Get_Client_Name(cc As String) As String
     Dim ws As Worksheet
     Dim foundCell As Range
     
-    Set ws = wshBD_Clients
+    Set ws = wsdBD_Clients
     
     'Recherche le code de client dans la colonne B
     Set foundCell = ws.Columns("B").Find(What:=cc, LookIn:=xlValues, LookAt:=xlWhole)
@@ -1685,7 +1685,7 @@ End Sub
 Function Fn_Numero_Semaine_Selon_AnneeFinancière(DateDonnee As Date) As Long
     
     Dim DebutAnneeFinanciere As Date
-    DebutAnneeFinanciere = wshAdmin.Range("AnneeDe")
+    DebutAnneeFinanciere = wsdADMIN.Range("AnneeDe")
     
     'Trouver le jour de la semaine du début de l'année financière (1 = dimanche, 2 = lundi, etc.)
     Dim JourSemaineDebut As Long
@@ -1772,7 +1772,7 @@ Function ObtenirNoGlIndicateur(ByVal indic As Variant) As String
 
     'Plage où sont situés les liens (indicateur/no de GL)
     Dim plage As Range
-    Set plage = wshAdmin.Range("D44:F60")
+    Set plage = wsdADMIN.Range("D44:F60")
     
     'Parcourir chaque cellule dans la première colonne de la plage
     Dim cellule As Range
@@ -1791,7 +1791,7 @@ End Function
 
 Function Fn_Obtenir_Paiements_Facture(invNo As String, dateLimite As Date) As Currency
 
-    Dim ws As Worksheet: Set ws = wshENC_Détails
+    Dim ws As Worksheet: Set ws = wsdENC_Détails
     
     Dim premièreCellule As Range, celluleTrouvée As Range
     Dim ligne As Long
@@ -1821,7 +1821,7 @@ End Function
 
 Function Fn_Obtenir_Régularisations_Facture(invNo As String, dateLimite As Date) As Currency
 
-    Dim ws As Worksheet: Set ws = wshCC_Régularisations
+    Dim ws As Worksheet: Set ws = wsdCC_Régularisations
     
     Dim premièreCellule As Range, celluleTrouvée As Range
     Dim ligne As Long

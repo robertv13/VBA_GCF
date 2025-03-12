@@ -105,7 +105,7 @@ Sub DEB_Renversement_Update()
         ws.Cells(i, 14).value = -ws.Cells(i, 14).value
     Next i
     
-    'Transfert des données vers wshDEB_Trans
+    'Transfert des données vers wsdDEB_Trans
     Call DEB_Trans_Add_Record_To_DB(rowLastUsed)
     Call DEB_Trans_Add_Record_Locally(rowLastUsed)
     
@@ -123,7 +123,7 @@ Sub DEB_Renversement_Update()
     
     DoEvents
     
-    'Reorganise wshDEB_Trans
+    'Reorganise wsdDEB_Trans
     Application.ScreenUpdating = False
     Dim shp As Shape
     Set shp = ws.Shapes("btnUpdate")
@@ -170,7 +170,7 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "DEB_Trans$"
     
@@ -265,7 +265,7 @@ Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
     Dim startTime As Double: startTime = Timer: Call Log_Record("*** modDEB_Saisie:DEB_Trans_Add_Record_Locally", CStr(r), 0)
     
     Dim ws As Worksheet
-    Set ws = wshDEB_Trans
+    Set ws = wsdDEB_Trans
     
     Application.ScreenUpdating = False
     
@@ -275,7 +275,7 @@ Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
     
     'What is the last used row in DEB_Trans ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wshDEB_Trans.Cells(wshDEB_Trans.Rows.count, "A").End(xlUp).row
+    lastUsedRow = wsdDEB_Trans.Cells(wsdDEB_Trans.Rows.count, "A").End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
     
     'timeStamp uniforme
@@ -324,7 +324,7 @@ Sub DEB_Trans_MAJ_Debourse_Renverse_To_DB()
     
     'Définition des paramètres
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "DEB_Trans$"
 
@@ -377,7 +377,7 @@ Sub DEB_Trans_MAJ_Debourse_Renverse_Locally()
     Application.ScreenUpdating = False
     
     Dim ws As Worksheet
-    Set ws = wshDEB_Trans
+    Set ws = wsdDEB_Trans
     
     'Dernière ligne de la table
     Dim lastUsedRow As Long
@@ -426,7 +426,7 @@ End Sub
 
 Sub DEB_Renverser_Ecriture() '2025-02-23 @ 16:56
 
-    Dim ws As Worksheet: Set ws = wshDEB_Trans
+    Dim ws As Worksheet: Set ws = wsdDEB_Trans
     
     '1. Quelle écriture doit-on renverser (à partir d'un ListBox)
     Call Preparer_Liste_Debourses_Pour_Afficher
@@ -451,7 +451,7 @@ Sub DEB_Renverser_Ecriture() '2025-02-23 @ 16:56
         'Entête
         .Range("F4").value = debTransSubset(1, fDebTType)
         .Range("J4").value = debTransSubset(1, fDebTBeneficiaire)
-        .Range("O4").value = Format$(debTransSubset(1, fDebTDate), wshAdmin.Range("B1").value)
+        .Range("O4").value = Format$(debTransSubset(1, fDebTDate), wsdADMIN.Range("B1").value)
         .Range("F6").value = debTransSubset(1, fDebTDescription)
         .Range("M6").value = debTransSubset(1, fDebTReference)
         'Détail
@@ -606,7 +606,7 @@ Sub ChargerDEBRecurrentDansSaisie(DEBAutoDesc As String, noDEBAuto As Long)
     
     'On copie l'écriture automatique vers wshDEB_Saisie
     Dim rowDEBAuto As Long, rowDEB As Long
-    rowDEBAuto = wshDEB_Récurrent.Cells(wshDEB_Récurrent.Rows.count, "C").End(xlUp).row  'Last Row used in wshDEB_Recurrent
+    rowDEBAuto = wsdDEB_Récurrent.Cells(wsdDEB_Récurrent.Rows.count, "C").End(xlUp).row  'Last Row used in wshDEB_Recurrent
     
     Call DEB_Saisie_Clear_All_Cells
     
@@ -615,21 +615,21 @@ Sub ChargerDEBRecurrentDansSaisie(DEBAutoDesc As String, noDEBAuto As Long)
     Application.EnableEvents = False
     Dim r As Long, totAmount As Currency, typeDEB As String
     For r = 2 To rowDEBAuto
-        If wshDEB_Récurrent.Range("A" & r).value = noDEBAuto And wshDEB_Récurrent.Range("F" & r).value <> "" Then
-            wshDEB_Saisie.Range("E" & rowDEB).value = wshDEB_Récurrent.Range("G" & r).value
-            wshDEB_Saisie.Range("H" & rowDEB).value = wshDEB_Récurrent.Range("H" & r).value
-            wshDEB_Saisie.Range("I" & rowDEB).value = wshDEB_Récurrent.Range("I" & r).value
-            wshDEB_Saisie.Range("J" & rowDEB).value = wshDEB_Récurrent.Range("J" & r).value
-            wshDEB_Saisie.Range("K" & rowDEB).value = wshDEB_Récurrent.Range("K" & r).value
-            wshDEB_Saisie.Range("L" & rowDEB).value = wshDEB_Récurrent.Range("L" & r).value
-            wshDEB_Saisie.Range("M" & rowDEB).value = wshDEB_Récurrent.Range("M" & r).value
-            wshDEB_Saisie.Range("N" & rowDEB).value = wshDEB_Récurrent.Range("I" & r).value _
-                                                      - wshDEB_Récurrent.Range("L" & r).value _
-                                                      - wshDEB_Récurrent.Range("M" & r).value
-            wshDEB_Saisie.Range("Q" & rowDEB).value = wshDEB_Récurrent.Range("F" & r).value
-            totAmount = totAmount + wshDEB_Récurrent.Range("I" & r).value
+        If wsdDEB_Récurrent.Range("A" & r).value = noDEBAuto And wsdDEB_Récurrent.Range("F" & r).value <> "" Then
+            wshDEB_Saisie.Range("E" & rowDEB).value = wsdDEB_Récurrent.Range("G" & r).value
+            wshDEB_Saisie.Range("H" & rowDEB).value = wsdDEB_Récurrent.Range("H" & r).value
+            wshDEB_Saisie.Range("I" & rowDEB).value = wsdDEB_Récurrent.Range("I" & r).value
+            wshDEB_Saisie.Range("J" & rowDEB).value = wsdDEB_Récurrent.Range("J" & r).value
+            wshDEB_Saisie.Range("K" & rowDEB).value = wsdDEB_Récurrent.Range("K" & r).value
+            wshDEB_Saisie.Range("L" & rowDEB).value = wsdDEB_Récurrent.Range("L" & r).value
+            wshDEB_Saisie.Range("M" & rowDEB).value = wsdDEB_Récurrent.Range("M" & r).value
+            wshDEB_Saisie.Range("N" & rowDEB).value = wsdDEB_Récurrent.Range("I" & r).value _
+                                                      - wsdDEB_Récurrent.Range("L" & r).value _
+                                                      - wsdDEB_Récurrent.Range("M" & r).value
+            wshDEB_Saisie.Range("Q" & rowDEB).value = wsdDEB_Récurrent.Range("F" & r).value
+            totAmount = totAmount + wsdDEB_Récurrent.Range("I" & r).value
             If typeDEB = "" Then
-                typeDEB = wshDEB_Récurrent.Range("C" & r).value
+                typeDEB = wsdDEB_Récurrent.Range("C" & r).value
             End If
             rowDEB = rowDEB + 1
         End If
@@ -668,7 +668,7 @@ Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "DEB_Récurrent$"
     
@@ -756,7 +756,7 @@ Sub DEB_Recurrent_Add_Record_Locally(r As Long) 'Write records to local file
     
     'What is the last used row in EJ_AUto ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wshDEB_Récurrent.Cells(wshDEB_Récurrent.Rows.count, "C").End(xlUp).row
+    lastUsedRow = wsdDEB_Récurrent.Cells(wsdDEB_Récurrent.Rows.count, "C").End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
     
     'timeStamp uniforme
@@ -766,21 +766,21 @@ Sub DEB_Recurrent_Add_Record_Locally(r As Long) 'Write records to local file
     Dim i As Long
     For i = 9 To r
         With wshDEB_Saisie
-            wshDEB_Récurrent.Range("A" & rowToBeUsed).value = DEBRecNo
-            wshDEB_Récurrent.Range("B" & rowToBeUsed).value = .Range("O4").value
-            wshDEB_Récurrent.Range("C" & rowToBeUsed).value = .Range("F4").value
-            wshDEB_Récurrent.Range("D" & rowToBeUsed).value = .Range("J4").value
-            wshDEB_Récurrent.Range("E" & rowToBeUsed).value = .Range("M6").value
+            wsdDEB_Récurrent.Range("A" & rowToBeUsed).value = DEBRecNo
+            wsdDEB_Récurrent.Range("B" & rowToBeUsed).value = .Range("O4").value
+            wsdDEB_Récurrent.Range("C" & rowToBeUsed).value = .Range("F4").value
+            wsdDEB_Récurrent.Range("D" & rowToBeUsed).value = .Range("J4").value
+            wsdDEB_Récurrent.Range("E" & rowToBeUsed).value = .Range("M6").value
             
-            wshDEB_Récurrent.Range("F" & rowToBeUsed).value = .Range("Q" & i).value
-            wshDEB_Récurrent.Range("G" & rowToBeUsed).value = .Range("E" & i).value
-            wshDEB_Récurrent.Range("H" & rowToBeUsed).value = .Range("H" & i).value
-            wshDEB_Récurrent.Range("I" & rowToBeUsed).value = .Range("I" & i).value
-            wshDEB_Récurrent.Range("J" & rowToBeUsed).value = .Range("J" & i).value
-            wshDEB_Récurrent.Range("K" & rowToBeUsed).value = .Range("K" & i).value
-            wshDEB_Récurrent.Range("L" & rowToBeUsed).value = .Range("L" & i).value
-            wshDEB_Récurrent.Range("M" & rowToBeUsed).value = .Range("M" & i).value
-            wshDEB_Récurrent.Range("N" & rowToBeUsed).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+            wsdDEB_Récurrent.Range("F" & rowToBeUsed).value = .Range("Q" & i).value
+            wsdDEB_Récurrent.Range("G" & rowToBeUsed).value = .Range("E" & i).value
+            wsdDEB_Récurrent.Range("H" & rowToBeUsed).value = .Range("H" & i).value
+            wsdDEB_Récurrent.Range("I" & rowToBeUsed).value = .Range("I" & i).value
+            wsdDEB_Récurrent.Range("J" & rowToBeUsed).value = .Range("J" & i).value
+            wsdDEB_Récurrent.Range("K" & rowToBeUsed).value = .Range("K" & i).value
+            wsdDEB_Récurrent.Range("L" & rowToBeUsed).value = .Range("L" & i).value
+            wsdDEB_Récurrent.Range("M" & rowToBeUsed).value = .Range("M" & i).value
+            wsdDEB_Récurrent.Range("N" & rowToBeUsed).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
         End With
         rowToBeUsed = rowToBeUsed + 1
     Next i
@@ -812,15 +812,15 @@ Sub DEB_Recurrent_Build_Summary()
     
     'Build the summary at column K & L
     Dim lastUsedRow1 As Long
-    lastUsedRow1 = wshDEB_Récurrent.Cells(wshDEB_Récurrent.Rows.count, "A").End(xlUp).row
+    lastUsedRow1 = wsdDEB_Récurrent.Cells(wsdDEB_Récurrent.Rows.count, "A").End(xlUp).row
     
     Dim lastUsedRow2 As Long
-    lastUsedRow2 = wshDEB_Récurrent.Cells(wshDEB_Récurrent.Rows.count, "P").End(xlUp).row
+    lastUsedRow2 = wsdDEB_Récurrent.Cells(wsdDEB_Récurrent.Rows.count, "P").End(xlUp).row
     If lastUsedRow2 > 1 Then
-        wshDEB_Récurrent.Range("P2:S" & lastUsedRow2).ClearContents
+        wsdDEB_Récurrent.Range("P2:S" & lastUsedRow2).ClearContents
     End If
     
-    With wshDEB_Récurrent
+    With wsdDEB_Récurrent
         Dim i As Long, k As Long, oldEntry As String
         k = 2
         For i = 2 To lastUsedRow1
@@ -851,7 +851,7 @@ Public Sub DEB_Saisie_Clear_All_Cells()
     
     With ws
         .Range("F4:H4, J4:M4, O4, F6:J6, M6, O6, E9:O23, Q9:Q29").ClearContents
-        .Range("O4").value = Format$(Date, wshAdmin.Range("B1").value)
+        .Range("O4").value = Format$(Date, wsdADMIN.Range("B1").value)
         wshDEB_Saisie.ckbRecurrente = False
     End With
     

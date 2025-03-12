@@ -4,7 +4,7 @@ Option Explicit
 Sub ObtenirHeuresFacturéesParFacture()
 
     '1. Obtenir toutes les charges facturées
-    Dim ws As Worksheet: Set ws = wshTEC_Local
+    Dim ws As Worksheet: Set ws = wsdTEC_Local
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     
@@ -87,9 +87,9 @@ Sub IdentifierÉcartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
 
     'Initialisation
     Dim wsEntete As Worksheet
-    Set wsEntete = wshFAC_Entête
+    Set wsEntete = wsdFAC_Entête
     Dim wsComptesClients As Worksheet
-    Set wsComptesClients = wshFAC_Comptes_Clients
+    Set wsComptesClients = wsdFAC_Comptes_Clients
     Dim wsRapport As Worksheet
     
     On Error Resume Next
@@ -113,7 +113,7 @@ Sub IdentifierÉcartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
     Dim dictComptesClients As Object
     Set dictComptesClients = CreateObject("Scripting.Dictionary")
     
-    'Lire wshFAC_Entête
+    'Lire wsdFAC_Entête
     Dim Facture As String
     Dim lastRowEntete As Long, lastRowComptes As Long
     lastRowEntete = wsEntete.Cells(wsEntete.Rows.count, 1).End(xlUp).row
@@ -126,7 +126,7 @@ Sub IdentifierÉcartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
         If Len(Facture) > 0 Then dictEntete(Facture) = montantEntete
     Next i
     
-    'Lire wshFAC_Comptes_Clients
+    'Lire wsdFAC_Comptes_Clients
     Dim montantCompte As Currency, totalComptesClients As Currency
     Dim montantPayé As Currency, montantRégul As Currency
     Dim solde As Currency, soldeCC1 As Currency, soldeCC2 As Currency
@@ -161,7 +161,7 @@ Sub IdentifierÉcartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
                 rowRapport = rowRapport + 1
             End If
         Else
-            'Facture manquante dans wshFAC_Comptes_Clients
+            'Facture manquante dans wsdFAC_Comptes_Clients
             wsRapport.Cells(rowRapport, 1).value = fact
             wsRapport.Cells(rowRapport, 2).value = dictEntete(fact)
             wsRapport.Cells(rowRapport, 3).value = "Manquant"
@@ -170,7 +170,7 @@ Sub IdentifierÉcartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
         End If
     Next fact
     
-    'Vérifier les factures manquantes dans wshFAC_Entête
+    'Vérifier les factures manquantes dans wsdFAC_Entête
     For Each fact In dictComptesClients.keys
         If Not dictEntete.Exists(fact) Then
             wsRapport.Cells(rowRapport, 1).value = fact

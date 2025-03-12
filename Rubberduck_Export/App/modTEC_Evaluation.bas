@@ -28,7 +28,7 @@ Sub TEC_Evaluation_Calcul(cutoffDate As String, ByRef maxDate As Date)
     maxDate = DateSerial(y, m, d)
     
     Dim ws As Worksheet: Set ws = wshTEC_Evaluation
-    Dim wsSource As Worksheet: Set wsSource = wshTEC_Local
+    Dim wsSource As Worksheet: Set wsSource = wsdTEC_Local
     
     Dim lastUsedRow As Long
     lastUsedRow = wsSource.Cells(wsSource.Rows.count, 1).End(xlUp).row
@@ -290,7 +290,7 @@ Sub TEC_Evaluation_Procedure_ACO(cutoffDate As String)
     maxDate = DateSerial(y, m, d)
     
     Dim ws As Worksheet: Set ws = wshTEC_Evaluation
-    Dim wsSource As Worksheet: Set wsSource = wshTEC_Local
+    Dim wsSource As Worksheet: Set wsSource = wsdTEC_Local
     
     Dim lastUsedRow As Long
     lastUsedRow = wsSource.Cells(wsSource.Rows.count, 1).End(xlUp).row

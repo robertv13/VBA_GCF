@@ -18,7 +18,7 @@ Option Explicit
 Private Sub UserForm_Initialize()
     
     Dim ws As Worksheet
-    Set ws = wshDEB_Récurrent
+    Set ws = wsdDEB_Récurrent
     
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, "P").End(xlUp).row
@@ -28,7 +28,7 @@ Private Sub UserForm_Initialize()
     
     Application.ScreenUpdating = False
     
-    With wshDEB_Récurrent
+    With wsdDEB_Récurrent
         Dim i As Long
         For i = 2 To lastUsedRow
             arr(i - 1, 1) = .Range("P" & i).value      'Deb Récurrent Auto

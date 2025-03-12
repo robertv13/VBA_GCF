@@ -6,7 +6,7 @@ Sub SaisieHeures_Click()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modMENU_TEC:SaisieHeures_Click", "", 0)
     
-    fromMenu = True '2024-09-03 @ 06:20
+    gFromMenu = True '2024-09-03 @ 06:20
 
     Load ufSaisieHeures
     ufSaisieHeures.show vbModeless '2024-08-08 @ 13:56
@@ -20,7 +20,7 @@ Sub TEC_TDB_Click()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modMENU_TEC:TEC_TDB_Click", "", 0)
     
-    fromMenu = True '2024-09-03 @ 06:20
+    gFromMenu = True '2024-09-03 @ 06:20
 
     Application.ScreenUpdating = False
     
@@ -42,7 +42,7 @@ Sub TEC_Analyse_Click()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modMENU_TEC:TEC_Analyse_Click", "", 0)
     
-    fromMenu = True '2024-09-03 @ 06:20
+    gFromMenu = True '2024-09-03 @ 06:20
 
     Application.ScreenUpdating = False
     
@@ -64,7 +64,7 @@ Sub TEC_Evaluation_Click()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modMENU_TEC:TEC_Evaluation_Click", "", 0)
     
-    fromMenu = True '2024-09-03 @ 06:20
+    gFromMenu = True '2024-09-03 @ 06:20
 
     Application.ScreenUpdating = False
     
@@ -86,7 +86,7 @@ Sub TEC_Radiation_Click()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modMENU_TEC:TEC_Radiation_Click", "", 0)
     
-    fromMenu = True '2024-09-03 @ 06:20
+    gFromMenu = True '2024-09-03 @ 06:20
 
     Application.ScreenUpdating = False
     

@@ -80,7 +80,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         'Save button is disabled UNTIL the invoice is saved
         Call FAC_Finale_Disable_Save_Button
         
-        flagEtapeFacture = 0
+        gFlagEtapeFacture = 0
     
         'Ensure all pending events could be processed
         DoEvents
@@ -90,12 +90,12 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         
         'Do we have pending requests to invoice ?
         Dim lastUsedRow As Long, liveOne As Long
-        lastUsedRow = wshFAC_Projets_Entête.Cells(wshFAC_Projets_Entête.Rows.count, 1).End(xlUp).row
+        lastUsedRow = wsdFAC_Projets_Entête.Cells(wsdFAC_Projets_Entête.Rows.count, 1).End(xlUp).row
         If lastUsedRow > 1 Then
             Dim i As Long
             For i = 2 To lastUsedRow
-                If UCase$(wshFAC_Projets_Entête.Range("Z" & i).value) = "FAUX" Or _
-                    wshFAC_Projets_Entête.Range("Z" & i).value = 0 Then
+                If UCase$(wsdFAC_Projets_Entête.Range("Z" & i).value) = "FAUX" Or _
+                    wsdFAC_Projets_Entête.Range("Z" & i).value = 0 Then
                         liveOne = liveOne + 1
                 End If
             Next i
@@ -113,8 +113,8 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
             Application.EnableEvents = False
             projetID = CLng(wshFAC_Brouillon.Range("B52").value)
             'Obtenir l'entête pour ce projet de facture
-            lastUsedRow = wshFAC_Projets_Entête.Cells(wshFAC_Projets_Entête.Rows.count, 1).End(xlUp).row
-            Dim rngToSearch As Range: Set rngToSearch = wshFAC_Projets_Entête.Range("A1:A" & lastUsedRow)
+            lastUsedRow = wsdFAC_Projets_Entête.Cells(wsdFAC_Projets_Entête.Rows.count, 1).End(xlUp).row
+            Dim rngToSearch As Range: Set rngToSearch = wsdFAC_Projets_Entête.Range("A1:A" & lastUsedRow)
             Dim result As Variant
             result = Application.WorksheetFunction.XLookup(projetID, _
                                                            rngToSearch, _
@@ -130,9 +130,9 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
                 ReDim arr(1 To 5, 1 To 3)
                 Dim ii As Long
                 For ii = 1 To 5
-                    arr(ii, 1) = wshFAC_Projets_Entête.Cells(matchedRow, (ii - 1) * 4 + 6).value
-                    arr(ii, 2) = wshFAC_Projets_Entête.Cells(matchedRow, (ii - 1) * 4 + 7).value
-                    arr(ii, 3) = wshFAC_Projets_Entête.Cells(matchedRow, (ii - 1) * 4 + 8).value
+                    arr(ii, 1) = wsdFAC_Projets_Entête.Cells(matchedRow, (ii - 1) * 4 + 6).value
+                    arr(ii, 2) = wsdFAC_Projets_Entête.Cells(matchedRow, (ii - 1) * 4 + 7).value
+                    arr(ii, 3) = wsdFAC_Projets_Entête.Cells(matchedRow, (ii - 1) * 4 + 8).value
                 Next ii
                 'Update the summary for billing
                 'Transfer data to the worksheet
@@ -173,7 +173,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
             Application.EnableEvents = False
             
             'Utilisation de la date du projet de facture
-            wshFAC_Brouillon.Range("O3").value = Format$(Date, wshAdmin.Range("B1").value)
+            wshFAC_Brouillon.Range("O3").value = Format$(Date, wsdADMIN.Range("B1").value)
             Call FAC_Brouillon_Date_Change(wshFAC_Brouillon.Range("O3").value)
             
             wshFAC_Brouillon.Range("O9").Select
@@ -379,15 +379,15 @@ Sub FAC_Brouillon_Setup_All_Cells()
         'Establish Formulas
 '        .Range("M47").formula = "=SUM(M11:M45)"                          'Total hours entered OR TEC selected"
 '        .Range("N47").formula = "=T25"                                   'Uses the first professional rate
-'        .Range("N47").formula = wshAdmin.Range("TauxHoraireFacturation") 'Rate per hour
+'        .Range("N47").formula = wsdAdmin.Range("TauxHoraireFacturation") 'Rate per hour
         .Range("O47").formula = "=U35"                                   'Fees sub-total from hours summary
         .Range("O47").Font.Bold = True
         
-        .Range("M48").value = wshAdmin.Range("FAC_Label_Frais_1").value   'Misc. # 1 - Descr.
+        .Range("M48").value = wsdADMIN.Range("FAC_Label_Frais_1").value   'Misc. # 1 - Descr.
         .Range("O48").value = ""                                          'Misc. # 1 - Amount
-        .Range("M49").value = wshAdmin.Range("FAC_Label_Frais_2").value   'Misc. # 2 - Descr.
+        .Range("M49").value = wsdADMIN.Range("FAC_Label_Frais_2").value   'Misc. # 2 - Descr.
         .Range("O49").value = ""                                          'Misc. # 2 - Amount
-        .Range("M50").value = wshAdmin.Range("FAC_Label_Frais_3").value   'Misc. # 3 - Descr.
+        .Range("M50").value = wsdADMIN.Range("FAC_Label_Frais_3").value   'Misc. # 3 - Descr.
         .Range("O50").value = ""                                          'Misc. # 3 - Amount
         
         .Range("O51").formula = "=sum(O47:O50)"                           'Sub-total
@@ -487,8 +487,8 @@ End Sub
 
 Sub FAC_Brouillon_Set_Labels(r As Range, l As String)
 
-    r.value = wshAdmin.Range(l).value
-    If wshAdmin.Range(l & "_Bold").value = "OUI" Then r.Font.Bold = True
+    r.value = wsdADMIN.Range(l).value
+    If wsdADMIN.Range(l & "_Bold").value = "OUI" Then r.Font.Bold = True
 
 End Sub
 
@@ -580,7 +580,7 @@ Sub FAC_Brouillon_Load_Non_Billable_Into_Userform()
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Load_Non_Billable_Into_Userform", "", 0)
 
     Dim lastUsedRow As Long
-    lastUsedRow = wshTEC_Local.Cells(wshTEC_Local.Rows.count, "AQ").End(xlUp).row
+    lastUsedRow = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "AQ").End(xlUp).row
     If lastUsedRow < 3 Then Exit Sub 'No rows
     
     Application.ScreenUpdating = False
@@ -591,7 +591,7 @@ Sub FAC_Brouillon_Load_Non_Billable_Into_Userform()
     Dim arr() As Variant
     ReDim arr(1 To (lastUsedRow - 2), 1 To 5) As Variant
     
-    With wshTEC_Local
+    With wsdTEC_Local
         Dim i As Long
         For i = 3 To lastUsedRow
             arr(i - 2, 1) = .Range("AQ" & i).value      'TECID
@@ -637,7 +637,7 @@ Sub Get_TEC_For_Client_AF(clientID As String, _
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:Get_TEC_For_Client_AF", clientID & _
                     "', " & cutoffDate & ", " & isBillable & ", " & isInvoiced & ", " & isDeleted, 0)
     
-    Dim ws As Worksheet: Set ws = wshTEC_Local
+    Dim ws As Worksheet: Set ws = wsdTEC_Local
     
     'wshTEC_Loal_AF#2
     
@@ -698,19 +698,19 @@ Sub Get_TEC_For_Client_AF(clientID As String, _
         If lastResultRow < 4 Then GoTo No_Sort_Required
         With .Sort
             .SortFields.Clear
-            .SortFields.Add key:=wshTEC_Local.Range("AT3"), _
+            .SortFields.Add key:=wsdTEC_Local.Range("AT3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On Date
-            .SortFields.Add key:=wshTEC_Local.Range("AR3"), _
+            .SortFields.Add key:=wsdTEC_Local.Range("AR3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On ProfID
-            .SortFields.Add key:=wshTEC_Local.Range("AQ3"), _
+            .SortFields.Add key:=wsdTEC_Local.Range("AQ3"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Sort Based On TECID
-            .SetRange wshTEC_Local.Range("AQ3:BE" & lastResultRow) 'Set Range
+            .SetRange wsdTEC_Local.Range("AQ3:BE" & lastResultRow) 'Set Range
             .Apply 'Apply Sort
          End With
          
@@ -734,7 +734,7 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon", "", 0)
 
     Dim lastUsedRow As Long
-    lastUsedRow = wshTEC_Local.Cells(wshTEC_Local.Rows.count, "AQ").End(xlUp).row
+    lastUsedRow = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "AQ").End(xlUp).row
     If lastUsedRow < 3 Then Exit Sub 'No rows
     
     Application.ScreenUpdating = False
@@ -746,7 +746,7 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
     Dim arr() As Variant
     ReDim arr(1 To (lastUsedRow - 2), 1 To 6) As Variant
     
-    With wshTEC_Local
+    With wsdTEC_Local
         Dim i As Long
         For i = 3 To lastUsedRow
             arr(i - 2, 1) = .Range("AT" & i).value 'Date
@@ -842,12 +842,12 @@ Sub FAC_Brouillon_Goto_Onglet_FAC_Finale()
     
     'Les résultats du AvancedFilter sont dans GL_Trans - Colonnes P @ Y
     Dim lastUsedRowResult As Double
-    lastUsedRowResult = wshGL_Trans.Cells(wshGL_Trans.Rows.count, "P").End(xlUp).row
+    lastUsedRowResult = wsdGL_Trans.Cells(wsdGL_Trans.Rows.count, "P").End(xlUp).row
     Dim soldeDepotClient As Double
     Dim i As Long
     For i = 2 To lastUsedRowResult
-        If InStr(wshGL_Trans.Cells(i, 18).value, "Client:" & wshFAC_Brouillon.Range("B18").value) <> 0 Then
-            soldeDepotClient = soldeDepotClient - wshGL_Trans.Cells(i, "V").value + wshGL_Trans.Cells(i, "W").value
+        If InStr(wsdGL_Trans.Cells(i, 18).value, "Client:" & wshFAC_Brouillon.Range("B18").value) <> 0 Then
+            soldeDepotClient = soldeDepotClient - wsdGL_Trans.Cells(i, "V").value + wsdGL_Trans.Cells(i, "W").value
         End If
     Next i
     
@@ -1133,7 +1133,7 @@ Sub Setup_Hours_Summary()
     
     Dim r As Long
     r = 11
-    With wshAdmin
+    With wsdADMIN
         Do While .Range("D" & r).value <> ""
             ws.Range("R" & r + 14).value = .Range("D" & r).value
             ws.Range("W" & r + 14).value = .Range("E" & r).value
@@ -1256,15 +1256,15 @@ Sub Load_Invoice_Template(t As String)
     wshFAC_Finale.Range("B34:E63").ClearContents
     
     Dim lastUsedRow As Long
-    lastUsedRow = wshAdmin.Cells(wshAdmin.Rows.count, "Z").End(xlUp).row
+    lastUsedRow = wsdADMIN.Cells(wsdADMIN.Rows.count, "Z").End(xlUp).row
     
     'Get the services with the appropriate template letter
     Dim strServices As String
     Dim i As Long
     For i = 12 To lastUsedRow
-        If InStr(1, wshAdmin.Range("AA" & i), t) Then
+        If InStr(1, wsdADMIN.Range("AA" & i), t) Then
             'Build a string with 2 digits + Service description
-            strServices = strServices & Right$(wshAdmin.Range("AA" & i).value, 2) & wshAdmin.Range("Z" & i).value & "|"
+            strServices = strServices & Right$(wsdADMIN.Range("AA" & i).value, 2) & wsdADMIN.Range("Z" & i).value & "|"
         End If
     Next i
     

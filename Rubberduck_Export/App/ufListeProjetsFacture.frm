@@ -17,7 +17,7 @@ Option Explicit
 
 Private Sub UserForm_Initialize()
     
-    Dim ws As Worksheet: Set ws = wshFAC_Projets_Entête
+    Dim ws As Worksheet: Set ws = wsdFAC_Projets_Entête
     
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row

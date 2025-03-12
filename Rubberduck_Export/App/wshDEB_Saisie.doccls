@@ -1,10 +1,8 @@
 ﻿Option Explicit
 
-Public previousCellAddress As Variant
-
 Private Sub Worksheet_Activate()
 
-    If Not fromMenu Then
+    If Not gFromMenu Then
         Exit Sub
     End If
     
@@ -64,7 +62,7 @@ Private Sub Worksheet_Activate()
     numeroDebourseARenverser = -1
     Me.Range("B7").value = False
     
-    Me.Range("O4").value = Format$(Date, wshAdmin.Range("B1").value)
+    Me.Range("O4").value = Format$(Date, wsdADMIN.Range("B1").value)
     
     Application.ScreenUpdating = True
     Application.EnableEvents = True
@@ -83,12 +81,12 @@ End Sub
 Private Sub Worksheet_SelectionChange(ByVal target As Range)
 
     'Remove the background color of the previous Cell
-    If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.Color = xlNone
+    If gPreviousCellAddress <> "" Then
+        Range(gPreviousCellAddress).Interior.Color = xlNone
     End If
     
     'Save the current cell Address for next Selection change
-    previousCellAddress = target.Address
+    gPreviousCellAddress = target.Address
 
     'Type is selected
     If Not Intersect(target, Range("F4")) Is Nothing Then
@@ -253,7 +251,7 @@ Private Sub Process_Change(ByVal target As Range)
         
         'Update the cell with the full date, if valid
         If fullDate <> "Invalid Date" Then
-            target.value = Format$(fullDate, wshAdmin.Range("B1").value)
+            target.value = Format$(fullDate, wsdADMIN.Range("B1").value)
         Else
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshDEB_Saisie_190")
             Application.EnableEvents = False
@@ -287,8 +285,8 @@ Private Sub Process_Change(ByVal target As Range)
                 cell.offset(0, 4).value = "" 'Clear PST_Credit
                 cell.offset(0, 5).value = "" 'Clear netAmount
                 'Move focus to netAmount
-                If previousCellAddress <> "" Then
-                    Range(previousCellAddress).Interior.Color = xlNone
+                If gPreviousCellAddress <> "" Then
+                    Range(gPreviousCellAddress).Interior.Color = xlNone
                 End If
                 cell.offset(0, 5).Select 'Input NET amount
             Else
@@ -306,8 +304,8 @@ Private Sub Process_Change(ByVal target As Range)
                     cell.offset(0, 4).value = pstCredit
                     cell.offset(0, 5).value = netAmount
                     Application.EnableEvents = True
-                    If previousCellAddress <> "" Then
-                        Range(previousCellAddress).Interior.Color = xlNone
+                    If gPreviousCellAddress <> "" Then
+                        Range(gPreviousCellAddress).Interior.Color = xlNone
                     End If
                     'Move to the next line
                     cell.offset(1, -4).Select

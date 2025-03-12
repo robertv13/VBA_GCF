@@ -82,7 +82,7 @@ Sub JE_Renversement_Update()
         End If
     Next i
     
-    gNumeroEcritureARenverser = wshGL_Trans.Range("AA3").value
+    gNumeroEcritureARenverser = wsdGL_Trans.Range("AA3").value
     
     wshGL_EJ.Range("F4").value = "RENVERSEMENT:" & gNumeroEcritureARenverser
     Dim saveDescription As String
@@ -160,19 +160,19 @@ Sub Load_JEAuto_Into_JE(EJAutoDesc As String, NoEJAuto As Long)
     
     'On copie l'E/J automatique vers wshEJ
     Dim rowJEAuto As Long, rowJE As Long
-    rowJEAuto = wshGL_EJ_Recurrente.Cells(wshGL_EJ_Recurrente.Rows.count, 1).End(xlUp).row  'Last Row used in wshGL_EJRecuurente
+    rowJEAuto = wsdGL_EJ_Recurrente.Cells(wsdGL_EJ_Recurrente.Rows.count, 1).End(xlUp).row  'Last Row used in wshGL_EJRecuurente
     
     Call GL_EJ_Clear_All_Cells
     rowJE = 9
     
     Dim r As Long
     For r = 2 To rowJEAuto
-        If wshGL_EJ_Recurrente.Range("A" & r).value = NoEJAuto And wshGL_EJ_Recurrente.Range("C" & r).value <> "" Then
-            wshGL_EJ.Range("E" & rowJE).value = wshGL_EJ_Recurrente.Range("D" & r).value
-            wshGL_EJ.Range("H" & rowJE).value = wshGL_EJ_Recurrente.Range("E" & r).value
-            wshGL_EJ.Range("I" & rowJE).value = wshGL_EJ_Recurrente.Range("F" & r).value
-            wshGL_EJ.Range("J" & rowJE).value = wshGL_EJ_Recurrente.Range("G" & r).value
-            wshGL_EJ.Range("L" & rowJE).value = wshGL_EJ_Recurrente.Range("C" & r).value
+        If wsdGL_EJ_Recurrente.Range("A" & r).value = NoEJAuto And wsdGL_EJ_Recurrente.Range("C" & r).value <> "" Then
+            wshGL_EJ.Range("E" & rowJE).value = wsdGL_EJ_Recurrente.Range("D" & r).value
+            wshGL_EJ.Range("H" & rowJE).value = wsdGL_EJ_Recurrente.Range("E" & r).value
+            wshGL_EJ.Range("I" & rowJE).value = wsdGL_EJ_Recurrente.Range("F" & r).value
+            wshGL_EJ.Range("J" & rowJE).value = wsdGL_EJ_Recurrente.Range("G" & r).value
+            wshGL_EJ.Range("L" & rowJE).value = wsdGL_EJ_Recurrente.Range("C" & r).value
             rowJE = rowJE + 1
         End If
     Next r
@@ -229,18 +229,18 @@ Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
     'Remplir la description, si elle est vide
     If wshGL_EJ.Range("F6").value = "" Then
         wshGL_EJ.Range("F6").value = "Déclaration TPS/TVQ - Du " & _
-            Format$(Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), wshAdmin.Range("B1").value) & " au " & _
-            Format$(dateFin, wshAdmin.Range("B1").value)
+            Format$(Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), wsdADMIN.Range("B1").value) & " au " & _
+            Format$(dateFin, wsdADMIN.Range("B1").value)
     End If
     
     Dim cases() As Currency
     ReDim cases(101 To 213)
     
     'Remplir le formulaire de déclaration
-    wshGL_EJ.Range("T5").value = "du " & Format$(Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), wshAdmin.Range("B1").value)
-    wshGL_EJ.Range("V5").value = "du " & Format$(Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), wshAdmin.Range("B1").value)
-    wshGL_EJ.Range("T6").value = "du " & Format$(dateFin, wshAdmin.Range("B1").value)
-    wshGL_EJ.Range("V6").value = "du " & Format$(dateFin, wshAdmin.Range("B1").value)
+    wshGL_EJ.Range("T5").value = "du " & Format$(Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), wsdADMIN.Range("B1").value)
+    wshGL_EJ.Range("V5").value = "du " & Format$(Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), wsdADMIN.Range("B1").value)
+    wshGL_EJ.Range("T6").value = "du " & Format$(dateFin, wsdADMIN.Range("B1").value)
+    wshGL_EJ.Range("V6").value = "du " & Format$(dateFin, wsdADMIN.Range("B1").value)
     
     Dim rngResultAF As Range
     Call GL_Get_Account_Trans_AF(ObtenirNoGlIndicateur("Revenus de consultation"), Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), dateFin, rngResultAF)
@@ -378,7 +378,7 @@ End Sub
 
 Sub GL_EJ_Renverser_Ecriture()
 
-    Dim ws As Worksheet: Set ws = wshGL_Trans
+    Dim ws As Worksheet: Set ws = wsdGL_Trans
     
     '1. Demande le numéro d'écriture à partir d'un ListBox
     Call PreparerAfficherListeEcriture
@@ -430,12 +430,12 @@ Sub GL_EJ_Renverser_Ecriture()
     If Not trouve Is Nothing Then
         MsgBox "Cette écriture a déjà été RENVERSÉE..." & vbNewLine & vbNewLine & _
                "Avec le numéro d'écriture '" & ws.Cells(trouve.row, 1).value & "'" & vbNewLine & vbNewLine & _
-               "En date du " & Format$(ws.Cells(trouve.row, 2).value, wshAdmin.Range("B1").value) & ".", vbInformation
+               "En date du " & Format$(ws.Cells(trouve.row, 2).value, wsdADMIN.Range("B1").value) & ".", vbInformation
         Exit Sub
     End If
     
     Application.EnableEvents = False
-    wshGL_EJ.Range("K4").value = Format$(rngResult.Cells(1, 2).value, wshAdmin.Range("B1").value)
+    wshGL_EJ.Range("K4").value = Format$(rngResult.Cells(1, 2).value, wsdADMIN.Range("B1").value)
     wshGL_EJ.Range("F6").value = rngResult.Cells(1, 3).value
     Dim ligne As Range
     Dim l As Long: l = 9
@@ -561,15 +561,15 @@ Sub GL_EJ_Recurrente_Build_Summary()
     
     'Build the summary at column K & L
     Dim lastUsedRow1 As Long
-    lastUsedRow1 = wshGL_EJ_Recurrente.Cells(wshGL_EJ_Recurrente.Rows.count, 1).End(xlUp).row
+    lastUsedRow1 = wsdGL_EJ_Recurrente.Cells(wsdGL_EJ_Recurrente.Rows.count, 1).End(xlUp).row
     
     Dim lastUsedRow2 As Long
-    lastUsedRow2 = wshGL_EJ_Recurrente.Cells(wshGL_EJ_Recurrente.Rows.count, "J").End(xlUp).row
+    lastUsedRow2 = wsdGL_EJ_Recurrente.Cells(wsdGL_EJ_Recurrente.Rows.count, "J").End(xlUp).row
     If lastUsedRow2 > 1 Then
-        wshGL_EJ_Recurrente.Range("J2:K" & lastUsedRow2).Clear
+        wsdGL_EJ_Recurrente.Range("J2:K" & lastUsedRow2).Clear
     End If
     
-    With wshGL_EJ_Recurrente
+    With wsdGL_EJ_Recurrente
         Dim i As Long, k As Long, oldEntry As String
         k = 2
         For i = 2 To lastUsedRow1
@@ -590,9 +590,9 @@ Sub GL_Get_JE_Detail_Trans_AF(noEJ As Long) '2024-11-17 @ 12:08
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_Get_JE_Detail_Trans_AF", "", 0)
 
-    Dim ws As Worksheet: Set ws = wshGL_Trans
+    Dim ws As Worksheet: Set ws = wsdGL_Trans
     
-    'wshGL_Trans_AF#2
+    'wsdGL_Trans_AF#2
 
     'Effacer les données de la dernière utilisation
     ws.Range("AA6:AA10").ClearContents
@@ -646,7 +646,7 @@ Sub GL_Get_JE_Detail_Trans_AF(noEJ As Long) '2024-11-17 @ 12:08
                 SortOn:=xlSortOnValues, _
                 Order:=xlDescending, _
                 DataOption:=xlSortNormal
-            .SetRange wshGL_Trans.Range("AC2:AK" & lastUsedRow)
+            .SetRange wsdGL_Trans.Range("AC2:AK" & lastUsedRow)
             .Apply 'Apply Sort
          End With
     End If
@@ -668,7 +668,7 @@ Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xls
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "GL_Trans$"
     
@@ -764,32 +764,32 @@ Sub GL_Trans_Add_Record_Locally(r As Long) 'Write records locally
     
     'What is the last used row in GL_Trans ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wshGL_Trans.Cells(wshGL_Trans.Rows.count, "A").End(xlUp).row
+    lastUsedRow = wsdGL_Trans.Cells(wsdGL_Trans.Rows.count, "A").End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
     
     Call Log_Record("modGL_EJ:GL_Trans_Add_Record_Locally - r = " & r, -1)
     
     Dim i As Long
     For i = 9 To r
-        wshGL_Trans.Range("A" & rowToBeUsed).value = JENo
-        wshGL_Trans.Range("B" & rowToBeUsed).value = CDate(wshGL_EJ.Range("K4").value)
+        wsdGL_Trans.Range("A" & rowToBeUsed).value = JENo
+        wsdGL_Trans.Range("B" & rowToBeUsed).value = CDate(wshGL_EJ.Range("K4").value)
         If wshGL_EJ.Range("F4").value <> "Dépôt de client" Then
-            wshGL_Trans.Range("C" & rowToBeUsed).value = wshGL_EJ.Range("F6").value
-            wshGL_Trans.Range("D" & rowToBeUsed).value = wshGL_EJ.Range("F4").value
+            wsdGL_Trans.Range("C" & rowToBeUsed).value = wshGL_EJ.Range("F6").value
+            wsdGL_Trans.Range("D" & rowToBeUsed).value = wshGL_EJ.Range("F4").value
         Else
-            wshGL_Trans.Range("C" & rowToBeUsed) = "Client:" & wshGL_EJ.Range("B6").value & " - " & wshGL_EJ.Range("F6").value
-            wshGL_Trans.Range("D" & rowToBeUsed).value = UCase$(wshGL_EJ.Range("F4").value)
+            wsdGL_Trans.Range("C" & rowToBeUsed) = "Client:" & wshGL_EJ.Range("B6").value & " - " & wshGL_EJ.Range("F6").value
+            wsdGL_Trans.Range("D" & rowToBeUsed).value = UCase$(wshGL_EJ.Range("F4").value)
         End If
-        wshGL_Trans.Range("E" & rowToBeUsed).value = wshGL_EJ.Range("L" & i).value
-        wshGL_Trans.Range("F" & rowToBeUsed).value = wshGL_EJ.Range("E" & i).value
+        wsdGL_Trans.Range("E" & rowToBeUsed).value = wshGL_EJ.Range("L" & i).value
+        wsdGL_Trans.Range("F" & rowToBeUsed).value = wshGL_EJ.Range("E" & i).value
         If wshGL_EJ.Range("H" & i).value <> "" Then
-            wshGL_Trans.Range("G" & rowToBeUsed).value = wshGL_EJ.Range("H" & i).value
+            wsdGL_Trans.Range("G" & rowToBeUsed).value = wshGL_EJ.Range("H" & i).value
         End If
         If wshGL_EJ.Range("I" & i).value <> "" Then
-            wshGL_Trans.Range("H" & rowToBeUsed).value = wshGL_EJ.Range("I" & i).value
+            wsdGL_Trans.Range("H" & rowToBeUsed).value = wshGL_EJ.Range("I" & i).value
         End If
-        wshGL_Trans.Range("I" & rowToBeUsed).value = wshGL_EJ.Range("J" & i).value
-        wshGL_Trans.Range("J" & rowToBeUsed).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+        wsdGL_Trans.Range("I" & rowToBeUsed).value = wshGL_EJ.Range("J" & i).value
+        wsdGL_Trans.Range("J" & rowToBeUsed).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
         rowToBeUsed = rowToBeUsed + 1
         
         Call Log_Record("modGL_EJ:GL_Trans_Add_Record_Locally - i = " & i, -1)
@@ -808,7 +808,7 @@ Sub EJ_Trans_Update_Ecriture_Renversee_To_DB()
     
     'Définition des paramètres
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "GL_Trans$"
 
@@ -858,7 +858,7 @@ Sub EJ_Trans_Update_Ecriture_Renversee_Locally()
     Application.ScreenUpdating = False
     
     Dim ws As Worksheet
-    Set ws = wshGL_Trans
+    Set ws = wsdGL_Trans
     
     'Dernière ligne de la table
     Dim lastUsedRow As Long
@@ -888,7 +888,7 @@ Sub GL_EJ_Recurrente_Add_Record_To_DB(r As Long) 'Write/Update a record to exter
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "GL_EJ_Récurrente$"
     
@@ -915,7 +915,7 @@ Sub GL_EJ_Recurrente_Add_Record_To_DB(r As Long) 'Write/Update a record to exter
     
     'Calculate the new ID
     nextEJANo = lastEJA + 1
-    wshGL_EJ_Recurrente.Range("B2").value = nextEJANo
+    wsdGL_EJ_Recurrente.Range("B2").value = nextEJANo
 
     'timeStamp uniforme
     Dim timeStamp As Date
@@ -968,7 +968,7 @@ Sub GL_EJ_Recurrente_Add_Record_Locally(r As Long) 'Write records to local file
     
     'Get the JE number
     Dim JENo As Long
-    JENo = wshGL_EJ_Recurrente.Range("B2").value
+    JENo = wsdGL_EJ_Recurrente.Range("B2").value
     
     'timeStamp uniforme
     Dim timeStamp As Date
@@ -976,23 +976,23 @@ Sub GL_EJ_Recurrente_Add_Record_Locally(r As Long) 'Write records to local file
     
     'What is the last used row in EJ_AUto ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wshGL_EJ_Recurrente.Cells(wshGL_EJ_Recurrente.Rows.count, "C").End(xlUp).row
+    lastUsedRow = wsdGL_EJ_Recurrente.Cells(wsdGL_EJ_Recurrente.Rows.count, "C").End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
     
     Dim i As Long
     For i = 9 To r
-        wshGL_EJ_Recurrente.Range("A" & rowToBeUsed).value = JENo
-        wshGL_EJ_Recurrente.Range("B" & rowToBeUsed).value = Replace(wshGL_EJ.Range("F6").value, "[Auto]-", "")
-        wshGL_EJ_Recurrente.Range("C" & rowToBeUsed).value = wshGL_EJ.Range("L" & i).value
-        wshGL_EJ_Recurrente.Range("D" & rowToBeUsed).value = wshGL_EJ.Range("E" & i).value
+        wsdGL_EJ_Recurrente.Range("A" & rowToBeUsed).value = JENo
+        wsdGL_EJ_Recurrente.Range("B" & rowToBeUsed).value = Replace(wshGL_EJ.Range("F6").value, "[Auto]-", "")
+        wsdGL_EJ_Recurrente.Range("C" & rowToBeUsed).value = wshGL_EJ.Range("L" & i).value
+        wsdGL_EJ_Recurrente.Range("D" & rowToBeUsed).value = wshGL_EJ.Range("E" & i).value
         If wshGL_EJ.Range("H" & i).value <> "" Then
-            wshGL_EJ_Recurrente.Range("E" & rowToBeUsed).value = wshGL_EJ.Range("H" & i).value
+            wsdGL_EJ_Recurrente.Range("E" & rowToBeUsed).value = wshGL_EJ.Range("H" & i).value
         End If
         If wshGL_EJ.Range("I" & i).value <> "" Then
-            wshGL_EJ_Recurrente.Range("F" & rowToBeUsed).value = wshGL_EJ.Range("I" & i).value
+            wsdGL_EJ_Recurrente.Range("F" & rowToBeUsed).value = wshGL_EJ.Range("I" & i).value
         End If
-        wshGL_EJ_Recurrente.Range("G" & rowToBeUsed).value = wshGL_EJ.Range("J" & i).value
-        wshGL_EJ_Recurrente.Range("H" & rowToBeUsed).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+        wsdGL_EJ_Recurrente.Range("G" & rowToBeUsed).value = wshGL_EJ.Range("J" & i).value
+        wsdGL_EJ_Recurrente.Range("H" & rowToBeUsed).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
         
         rowToBeUsed = rowToBeUsed + 1
     Next i
@@ -1024,7 +1024,7 @@ Sub GL_EJ_Back_To_Menu()
     wshMenuGL.Activate
     wshMenuGL.Range("A1").Select
     
-    fromMenu = True
+    gFromMenu = True
     
     'Libérer la mémoire
     Set shp = Nothing
@@ -1090,7 +1090,7 @@ End Sub
 Sub PreparerAfficherListeEcriture()
 
     'Charger la liste des écritures au G/L en mémoire
-    Dim ws As Worksheet: Set ws = wshGL_Trans
+    Dim ws As Worksheet: Set ws = wsdGL_Trans
     Dim arrData As Variant
     arrData = ws.Range("A1").CurrentRegion.value
     
@@ -1109,10 +1109,10 @@ Sub PreparerAfficherListeEcriture()
             If InStr(strDejaVu, CStr(arrData(i, 1)) & ".|.") = 0 Then
                 compteur = compteur + 1
                 resultats(compteur, 1) = arrData(i, fGlTNoEntrée)
-                resultats(compteur, 2) = Format$(arrData(i, fGlTDate), wshAdmin.Range("B1").value)
+                resultats(compteur, 2) = Format$(arrData(i, fGlTDate), wsdADMIN.Range("B1").value)
                 resultats(compteur, 3) = arrData(i, fGlTDescription)
                 resultats(compteur, 4) = source
-                resultats(compteur, 5) = Format$(arrData(i, fGlTTimeStamp), wshAdmin.Range("B1").value & " hh:mm:ss")
+                resultats(compteur, 5) = Format$(arrData(i, fGlTTimeStamp), wsdADMIN.Range("B1").value & " hh:mm:ss")
                 strDejaVu = strDejaVu & CStr(arrData(i, fGlTNoEntrée)) & ".|."
             End If
         End If

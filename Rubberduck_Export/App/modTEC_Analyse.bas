@@ -20,7 +20,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     wsDest.Range("A6:I" & destLastUsedRow).Clear
     
     'Créer un dict pour tous les clients FACTURABLES
-    Dim wsClientsMF As Worksheet: Set wsClientsMF = wshBD_Clients
+    Dim wsClientsMF As Worksheet: Set wsClientsMF = wsdBD_Clients
     Dim lastUsedRowClient As Long
     lastUsedRowClient = wsClientsMF.Cells(wsClientsMF.Rows.count, "B").End(xlUp).row
     Dim dictClients As Dictionary
@@ -41,7 +41,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Dim lastUsedRow As Long, firstEmptyCol As Long
     
     'Set the source worksheet, lastUsedRow and lastUsedCol
-    Dim wsSource As Worksheet: Set wsSource = wshTEC_Local
+    Dim wsSource As Worksheet: Set wsSource = wsdTEC_Local
     'Find the last row with data in the source worksheet
     lastUsedRow = wsSource.Cells(wsSource.Rows.count, 1).End(xlUp).row
     'Find the first empty column from the left in the source worksheet
@@ -58,7 +58,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Call Get_TEC_For_Client_AF("", CLng(CDate(wsDest.Range("H3").value)), "VRAI", "FAUX", "FAUX")
     
     Dim lastUsedResult As Long
-    lastUsedResult = wshTEC_Local.Cells(wshTEC_Local.Rows.count, "AQ").End(xlUp).row
+    lastUsedResult = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "AQ").End(xlUp).row
     
     'Charger les données sources dans un tableau (beaucoup plus rapide)
     Dim sourceData As Variant
@@ -451,7 +451,7 @@ End Sub
     
 Sub Bring_In_Existing_Invoice_Requests(activeLastUsedRow As Long)
 
-    Dim wsSource As Worksheet: Set wsSource = wshFAC_Projets_Entête
+    Dim wsSource As Worksheet: Set wsSource = wsdFAC_Projets_Entête
     Dim sourceLastUsedRow As Long
     sourceLastUsedRow = wsSource.Cells(wsSource.Rows.count, "A").End(xlUp).row
     
@@ -500,7 +500,7 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As L
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Projets_Détails$"
     
@@ -581,7 +581,7 @@ Sub FAC_Projets_Détails_Add_Record_Locally(clientID As String, fr As Long, lr As
     
     'What is the last used row in FAC_Projets_Détails?
     Dim lastUsedRow As Long, rn As Long
-    lastUsedRow = wshFAC_Projets_Détails.Cells(wshFAC_Projets_Détails.Rows.count, "A").End(xlUp).row
+    lastUsedRow = wsdFAC_Projets_Détails.Cells(wsdFAC_Projets_Détails.Rows.count, "A").End(xlUp).row
     rn = lastUsedRow + 1
     
     'timeStamp uniforme
@@ -591,17 +591,17 @@ Sub FAC_Projets_Détails_Add_Record_Locally(clientID As String, fr As Long, lr As
     Dim dateTEC As String
     Dim i As Long
     For i = fr To lr
-        wshFAC_Projets_Détails.Range("A" & rn).value = projetID
-        wshFAC_Projets_Détails.Range("B" & rn).value = wshTEC_Analyse.Range("C" & i).value
-        wshFAC_Projets_Détails.Range("C" & rn).value = clientID
-        wshFAC_Projets_Détails.Range("D" & rn).value = wshTEC_Analyse.Range("A" & i).value
-        wshFAC_Projets_Détails.Range("E" & rn).value = wshTEC_Analyse.Range("B" & i).value
+        wsdFAC_Projets_Détails.Range("A" & rn).value = projetID
+        wsdFAC_Projets_Détails.Range("B" & rn).value = wshTEC_Analyse.Range("C" & i).value
+        wsdFAC_Projets_Détails.Range("C" & rn).value = clientID
+        wsdFAC_Projets_Détails.Range("D" & rn).value = wshTEC_Analyse.Range("A" & i).value
+        wsdFAC_Projets_Détails.Range("E" & rn).value = wshTEC_Analyse.Range("B" & i).value
         dateTEC = Format$(wshTEC_Analyse.Range("E" & i).value, "yyyy-mm-dd")
-        wshFAC_Projets_Détails.Range("F" & rn).value = dateTEC
-        wshFAC_Projets_Détails.Range("G" & rn).value = wshTEC_Analyse.Range("F" & i).value
-        wshFAC_Projets_Détails.Range("H" & rn).value = wshTEC_Analyse.Range("H" & i).value
-        wshFAC_Projets_Détails.Range("I" & rn).value = "FAUX"
-        wshFAC_Projets_Détails.Range("J" & rn).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+        wsdFAC_Projets_Détails.Range("F" & rn).value = dateTEC
+        wsdFAC_Projets_Détails.Range("G" & rn).value = wshTEC_Analyse.Range("F" & i).value
+        wsdFAC_Projets_Détails.Range("H" & rn).value = wshTEC_Analyse.Range("H" & i).value
+        wsdFAC_Projets_Détails.Range("I" & rn).value = "FAUX"
+        wsdFAC_Projets_Détails.Range("J" & rn).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
         rn = rn + 1
     Next i
     
@@ -643,7 +643,7 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Projets_Entête$"
     
@@ -733,7 +733,7 @@ Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String,
     
     'What is the last used row in FAC_Projets_Détails?
     Dim lastUsedRow As Long, rn As Long
-    lastUsedRow = wshFAC_Projets_Entête.Cells(wshFAC_Projets_Entête.Rows.count, "A").End(xlUp).row
+    lastUsedRow = wsdFAC_Projets_Entête.Cells(wsdFAC_Projets_Entête.Rows.count, "A").End(xlUp).row
     rn = lastUsedRow + 1
     
     'timeStamp uniforme
@@ -741,20 +741,20 @@ Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String,
     timeStamp = Now
     
     Dim dateTEC As String
-    wshFAC_Projets_Entête.Range("A" & rn).value = projetID
-    wshFAC_Projets_Entête.Range("B" & rn).value = nomClient
-    wshFAC_Projets_Entête.Range("C" & rn).value = clientID
-    wshFAC_Projets_Entête.Range("D" & rn).value = dte
-    wshFAC_Projets_Entête.Range("E" & rn).value = hono
+    wsdFAC_Projets_Entête.Range("A" & rn).value = projetID
+    wsdFAC_Projets_Entête.Range("B" & rn).value = nomClient
+    wsdFAC_Projets_Entête.Range("C" & rn).value = clientID
+    wsdFAC_Projets_Entête.Range("D" & rn).value = dte
+    wsdFAC_Projets_Entête.Range("E" & rn).value = hono
     'Assign values from the array to the worksheet using .Cells
     Dim i As Long, j As Long
     For i = 1 To UBound(arr, 1)
         For j = 1 To UBound(arr, 2)
-            wshFAC_Projets_Entête.Cells(rn, 6 + (i - 1) * UBound(arr, 2) + j - 1).value = arr(i, j)
+            wsdFAC_Projets_Entête.Cells(rn, 6 + (i - 1) * UBound(arr, 2) + j - 1).value = arr(i, j)
         Next j
     Next i
-    wshFAC_Projets_Entête.Range("Z" & rn).value = "FAUX"
-    wshFAC_Projets_Entête.Range("AA" & rn).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+    wsdFAC_Projets_Entête.Range("Z" & rn).value = "FAUX"
+    wsdFAC_Projets_Entête.Range("AA" & rn).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
     
     Application.ScreenUpdating = True
 

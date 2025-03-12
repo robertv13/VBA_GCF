@@ -10,7 +10,7 @@ Sub PreparationFacture_Click()
     
     Application.EnableEvents = True
     
-    fromMenu = True '2024-09-03 @ 06:20
+    gFromMenu = True '2024-09-03 @ 06:20
     
     wshFAC_Brouillon.Visible = xlSheetVisible
     wshFAC_Brouillon.Activate
@@ -31,7 +31,7 @@ Sub SuiviCC_Click()
     
     wshCAR_Liste_Agée.Application.Calculation = xlCalculationAutomatic
     
-    fromMenu = True '2024-09-03 @ 06:20
+    gFromMenu = True '2024-09-03 @ 06:20
     
     With wshCAR_Liste_Agée
         .Visible = xlSheetVisible
@@ -55,7 +55,7 @@ Sub FAC_Historique_Click()
 
     Application.EnableEvents = True
     
-    fromMenu = True '2024-09-03 @ 06:20
+    gFromMenu = True '2024-09-03 @ 06:20
 
     wshFAC_Interrogation.Visible = xlSheetVisible
     wshFAC_Interrogation.Activate
@@ -73,7 +73,7 @@ Sub FAC_Confirmation_Click()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modMENU_FAC:FAC_Confirmation_Click", "", 0)
     
-    fromMenu = True '2024-09-03 @ 06:20
+    gFromMenu = True '2024-09-03 @ 06:20
 
     Call modImport.ImporterClients
     Call modImport.ImporterFacComptesClients

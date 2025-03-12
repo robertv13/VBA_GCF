@@ -144,8 +144,8 @@ Sub AddColonnesSemaine()
     t3 = Application.WorksheetFunction.Sum(rngResult.Columns(8))
     
     ufStatsHeures.lblTotaux = "* Totaux de la semaine (" & _
-        Format$(wshTEC_TDB_Data.Range("T7").value, wshAdmin.Range("B1").value) & " au " & _
-        Format$(wshTEC_TDB_Data.Range("U7").value, wshAdmin.Range("B1").value) & ") *"
+        Format$(wshTEC_TDB_Data.Range("T7").value, wsdADMIN.Range("B1").value) & " au " & _
+        Format$(wshTEC_TDB_Data.Range("U7").value, wsdADMIN.Range("B1").value) & ") *"
     
     ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresNettes.value = Format$(t1, "#,##0.00") 'Formatage du total en deux décimales
     ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresFact.value = Format$(t2, "#,##0.00") 'Formatage du total en deux décimales
@@ -274,7 +274,7 @@ Sub ChargerListBoxAvec52DernieresSemaines()
         dtDimanche = dtLundi + 6
         
         'Ajouter l'intervalle dans la ListBox
-        semaines(i) = Format$(CLng(dtLundi), wshAdmin.Range("B1").value) & " au " & Format$(CLng(dtDimanche), wshAdmin.Range("B1").value)
+        semaines(i) = Format$(CLng(dtLundi), wsdADMIN.Range("B1").value) & " au " & Format$(CLng(dtDimanche), wsdADMIN.Range("B1").value)
         
         'Passer à la semaine précédente
         dtLundi = dtLundi - 7

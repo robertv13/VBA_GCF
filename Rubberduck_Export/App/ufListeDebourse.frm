@@ -30,7 +30,7 @@ Private Sub ChargerDebDonnees()
 
     'Définir la feuille source et la plage des données
     Dim ws As Worksheet
-    Set ws = wshDEB_Trans
+    Set ws = wsdDEB_Trans
     dataArray = ws.Range("A2:S" & ws.Cells(ws.Rows.count, 1).End(xlUp).row).value
     
     'Définir la date limite (75 jours avant aujourd'hui)
@@ -190,7 +190,7 @@ Sub FormatArrayBeforeAddingToDebListBox(ByRef arrData As Variant)
     Dim i As Long, j As Long
     For i = 1 To UBound(arrData, 1)
         'Formater la première colonne comme date
-        arrData(i, 1) = Format$(arrData(i, 1), wshAdmin.Range("B1").value)
+        arrData(i, 1) = Format$(arrData(i, 1), wsdADMIN.Range("B1").value)
         'Formater les colonnes contenant des montants, alignées à droite avec espaces
         For j = 5 To 8
             arrData(i, j) = Format$(arrData(i, j), "#,##0.00;-#,##0.00;-")

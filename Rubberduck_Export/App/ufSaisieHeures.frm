@@ -28,16 +28,16 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:UserForm_Activate", "", 0)
     
-    logSaisieHeuresVeryDetailed = False
+    gLogSaisieHeuresVeryDetailed = False
     
     Call modImport.ImporterClients
     Call modImport.ImporterTEC
     
     'Mise en place de la colonne à rechercher dans BD_Clients
     Dim lastUsedRow As Long
-    lastUsedRow = wshBD_Clients.Cells(wshBD_Clients.Rows.count, 1).End(xlUp).row
-    ufSaisieHeures.ListData = wshBD_Clients.Range("Q1:Q" & lastUsedRow) '2025-01-11 @ 18:00
-'    ufSaisieHeures.ListData = wshBD_Clients.Range("A1:B" & lastUsedRow) '2024-11-05 @ 07:05
+    lastUsedRow = wsdBD_Clients.Cells(wsdBD_Clients.Rows.count, 1).End(xlUp).row
+    ufSaisieHeures.ListData = wsdBD_Clients.Range("Q1:Q" & lastUsedRow) '2025-01-11 @ 18:00
+'    ufSaisieHeures.ListData = wsdBD_Clients.Range("A1:B" & lastUsedRow) '2024-11-05 @ 07:05
     
     With oEventHandler
         Set .SearchListBox = lstboxNomClient
@@ -180,9 +180,9 @@ End Sub
 Private Sub txtDate_Enter()
 
     If ufSaisieHeures.txtDate.value = "" Then
-        ufSaisieHeures.txtDate.value = Format$(Date, wshAdmin.Range("B1").value)
+        ufSaisieHeures.txtDate.value = Format$(Date, wsdADMIN.Range("B1").value)
     Else
-        ufSaisieHeures.txtDate.value = Format$(ufSaisieHeures.txtDate.value, wshAdmin.Range("B1").value)
+        ufSaisieHeures.txtDate.value = Format$(ufSaisieHeures.txtDate.value, wsdADMIN.Range("B1").value)
     End If
     
 End Sub
@@ -204,7 +204,7 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
     
     'Update the cell with the full date, if valid
     If fullDate <> "Invalid Date" Then
-        ufSaisieHeures.txtDate.value = Format$(fullDate, wshAdmin.Range("B1").value)
+        ufSaisieHeures.txtDate.value = Format$(fullDate, wsdADMIN.Range("B1").value)
     Else
         Cancel = True
         With ufSaisieHeures.txtDate
@@ -217,7 +217,7 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
     
     If fullDate > DateSerial(year(Date), month(Date), day(Date)) Then
         If MsgBox("En êtes-vous CERTAIN de vouloir cette date ?" & vbNewLine & vbNewLine & _
-                    "La date saisie est '" & Format$(fullDate, wshAdmin.Range("B1").value) & "'", vbYesNo + vbQuestion, _
+                    "La date saisie est '" & Format$(fullDate, wsdADMIN.Range("B1").value) & "'", vbYesNo + vbQuestion, _
                     "Utilisation d'une date FUTURE") = vbNo Then
             txtDate.SelStart = 0
             txtDate.SelLength = Len(Me.txtDate.value)
@@ -241,7 +241,7 @@ Private Sub txtDate_AfterUpdate()
         Dim dateStr As String, dateFormated As Date
         dateStr = ufSaisieHeures.txtDate.value
         dateFormated = DateSerial(year(dateStr), month(dateStr), day(dateStr))
-        ufSaisieHeures.txtDate.value = Format$(dateFormated, wshAdmin.Range("B1").value)
+        ufSaisieHeures.txtDate.value = Format$(dateFormated, wsdADMIN.Range("B1").value)
     Else
         ufSaisieHeures.txtDate.SetFocus
         ufSaisieHeures.txtDate.SelLength = Len(ufSaisieHeures.txtDate.value)
@@ -492,14 +492,14 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
         ufSaisieHeures.txtTECID.value = tecID
         txtTECID = tecID
         
-        'Retrieve the record in wshTEC_Local
+        'Retrieve the record in wsdTEC_Local
         Dim lookupRange As Range, lastTECRow As Long, rowTECID As Long
-        lastTECRow = wshTEC_Local.Cells(wshTEC_Local.Rows.count, "A").End(xlUp).row
-        Set lookupRange = wshTEC_Local.Range("A3:A" & lastTECRow)
+        lastTECRow = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "A").End(xlUp).row
+        Set lookupRange = wsdTEC_Local.Range("A3:A" & lastTECRow)
         rowTECID = Fn_Find_Row_Number_TECID(tecID, lookupRange)
         
         Dim isBilled As Boolean
-        isBilled = wshTEC_Local.Range("L" & rowTECID).value
+        isBilled = wsdTEC_Local.Range("L" & rowTECID).value
 
         'Remplir le userForm, si cette charge n'a pas été facturée
         If Not isBilled Then
@@ -507,13 +507,13 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
             .cmbProfessionnel.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 1)
             .cmbProfessionnel.Enabled = False
     
-            .txtDate.value = Format$(.lsbHresJour.List(.lsbHresJour.ListIndex, 2), wshAdmin.Range("B1").value) '2025-01-31 @ 13:31
+            .txtDate.value = Format$(.lsbHresJour.List(.lsbHresJour.ListIndex, 2), wsdADMIN.Range("B1").value) '2025-01-31 @ 13:31
             .txtDate.Enabled = False
     
             .txtClient.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 3)
             savedClient = .txtClient.value
             .txtSavedClient.value = .txtClient.value
-            .txtClientID.value = wshTEC_Local.Range("E" & rowTECID).value
+            .txtClientID.value = wsdTEC_Local.Range("E" & rowTECID).value
     
             .txtActivite.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 4)
             savedActivite = .txtActivite.value
@@ -583,7 +583,7 @@ Sub imgStats_Click()
     
     Application.EnableEvents = True
     
-    fromMenu = True
+    gFromMenu = True
     
     With wshStatsHeuresPivotTables
         .Visible = xlSheetVisible

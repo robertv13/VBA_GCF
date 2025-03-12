@@ -31,8 +31,8 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
     Dim cutOffAnPassé As Date
     cutOffAnPassé = dateCutOff
     cutOffAnPassé = DateAdd("yyyy", -1, cutOffAnPassé)
-    ws.Range("F5").value = Format$(dateCutOff, wshAdmin.Range("B1").value)
-    ws.Range("H5").value = Format$(cutOffAnPassé, wshAdmin.Range("B1").value)
+    ws.Range("F5").value = Format$(dateCutOff, wsdADMIN.Range("B1").value)
+    ws.Range("H5").value = Format$(cutOffAnPassé, wsdADMIN.Range("B1").value)
     
     'The Chart of Account will drive the results, so the sort order is determined by COA
     Dim arr As Variant
@@ -364,7 +364,7 @@ Sub Assembler_Page_Titre_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Dat
     ws.Cells.HorizontalAlignment = xlCenter
     ws.Cells.VerticalAlignment = xlCenter
     
-    Call PositionnerCellule(ws, UCase$(wshAdmin.Range("NomEntreprise")), 8, 2, 20, True, xlCenter)
+    Call PositionnerCellule(ws, UCase$(wsdADMIN.Range("NomEntreprise")), 8, 2, 20, True, xlCenter)
     Call PositionnerCellule(ws, UCase$("États Financiers"), 15, 2, 20, True, xlCenter)
     Call PositionnerCellule(ws, UCase$(Format$(dateAC, "dd mmmm yyyy")), 28, 2, 20, True, xlCenter)
     
@@ -419,7 +419,7 @@ Sub Assembler_TM_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateA
     ws.Cells.VerticalAlignment = xlCenter
     
     'Appliquer le format d'en-tête
-    Call PositionnerCellule(ws, UCase$(wshAdmin.Range("NomEntreprise")), 1, 2, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$(wsdADMIN.Range("NomEntreprise")), 1, 2, 12, True, xlLeft)
     Call PositionnerCellule(ws, UCase$("Table des Matières"), 2, 2, 12, True, xlLeft)
     Call PositionnerCellule(ws, UCase$("États Financiers"), 3, 2, 12, True, xlLeft)
     Call PositionnerCellule(ws, UCase$("Au " & Format$(dateAC, "dd mmmm yyyy")), 4, 2, 12, True, xlLeft)
@@ -531,12 +531,12 @@ Sub Assembler_ER_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateA
     anneeAC = year(dateAC)
     Dim titre As String
     Dim nbMois As Integer
-    If moisAC > wshAdmin.Range("MoisFinAnnéeFinancière") Then
-        nbMois = moisAC - wshAdmin.Range("MoisFinAnnéeFinancière")
+    If moisAC > wsdADMIN.Range("MoisFinAnnéeFinancière") Then
+        nbMois = moisAC - wsdADMIN.Range("MoisFinAnnéeFinancière")
     Else
-        nbMois = moisAC + 12 - wshAdmin.Range("MoisFinAnnéeFinancière")
+        nbMois = moisAC + 12 - wsdADMIN.Range("MoisFinAnnéeFinancière")
     End If
-    If moisAC = wshAdmin.Range("MoisFinAnnéeFinancière") And jourAC = DateSerial(anneeAC, moisAC + 1, 0) Then
+    If moisAC = wsdADMIN.Range("MoisFinAnnéeFinancière") And jourAC = DateSerial(anneeAC, moisAC + 1, 0) Then
         titre = "Pour l'exercice financier se terminant le "
     Else
         titre = "Pour la période de " & nbMois & " mois terminée le "
@@ -544,7 +544,7 @@ Sub Assembler_ER_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateA
     titre = titre & Format$(dateAC, "dd mmmm yyyy")
     
     'Appliquer le format d'en-tête
-    Call PositionnerCellule(ws, UCase$(wshAdmin.Range("NomEntreprise")), 1, 2, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$(wsdADMIN.Range("NomEntreprise")), 1, 2, 12, True, xlLeft)
     Call PositionnerCellule(ws, UCase$("État des Résultats"), 2, 2, 12, True, xlLeft)
     Call PositionnerCellule(ws, UCase$(titre), 3, 2, 12, True, xlLeft)
     ws.Range("C5:E6").HorizontalAlignment = xlRight
@@ -582,7 +582,7 @@ Sub Assembler_ER_2_Lignes(ws As Worksheet)
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_ER_2_Lignes", "", 0)
     
     Dim wsAdmin As Worksheet
-    Set wsAdmin = wshAdmin
+    Set wsAdmin = wsdADMIN
     
     Dim tbl As ListObject
     Set tbl = wsAdmin.ListObjects("tblÉtatsFinanciersCodes")
@@ -672,7 +672,7 @@ Sub Assembler_Bilan_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, da
     ws.Cells.VerticalAlignment = xlCenter
     
     'Appliquer le format d'en-tête
-    Call PositionnerCellule(ws, UCase$(wshAdmin.Range("NomEntreprise")), 1, 2, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$(wsdADMIN.Range("NomEntreprise")), 1, 2, 12, True, xlLeft)
     Call PositionnerCellule(ws, UCase$("Bilan"), 2, 2, 12, True, xlLeft)
     Call PositionnerCellule(ws, UCase$("Au " & Format$(dateAC, "dd mmmm yyyy")), 3, 2, 12, True, xlLeft)
     ws.Range("C5:E6").HorizontalAlignment = xlRight
@@ -712,7 +712,7 @@ Sub Assembler_Bilan_2_Lignes(ws As Worksheet)
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_Bilan_2_Lignes", "", 0)
     
     Dim wsAdmin As Worksheet
-    Set wsAdmin = wshAdmin
+    Set wsAdmin = wsdADMIN
     
     Dim tbl As ListObject
     Set tbl = wsAdmin.ListObjects("tblÉtatsFinanciersCodes")
@@ -794,12 +794,12 @@ Sub Assembler_BNR_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, date
     anneeAC = year(dateAC)
     Dim titre As String
     Dim nbMois As Integer
-    If moisAC > wshAdmin.Range("MoisFinAnnéeFinancière") Then
-        nbMois = moisAC - wshAdmin.Range("MoisFinAnnéeFinancière")
+    If moisAC > wsdADMIN.Range("MoisFinAnnéeFinancière") Then
+        nbMois = moisAC - wsdADMIN.Range("MoisFinAnnéeFinancière")
     Else
-        nbMois = moisAC + 12 - wshAdmin.Range("MoisFinAnnéeFinancière")
+        nbMois = moisAC + 12 - wsdADMIN.Range("MoisFinAnnéeFinancière")
     End If
-    If moisAC = wshAdmin.Range("MoisFinAnnéeFinancière") And jourAC = DateSerial(anneeAC, moisAC + 1, 0) Then
+    If moisAC = wsdADMIN.Range("MoisFinAnnéeFinancière") And jourAC = DateSerial(anneeAC, moisAC + 1, 0) Then
         titre = "Pour l'exercice financier se terminant le "
     Else
         titre = "Pour la période de " & nbMois & " mois terminée le "
@@ -807,7 +807,7 @@ Sub Assembler_BNR_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, date
     titre = titre & Format$(dateAC, "dd mmmm yyyy")
     
     'Appliquer le format d'en-tête
-    Call PositionnerCellule(ws, UCase$(wshAdmin.Range("NomEntreprise")), 1, 2, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$(wsdADMIN.Range("NomEntreprise")), 1, 2, 12, True, xlLeft)
     Call PositionnerCellule(ws, UCase$("Bénéfices non répartis"), 2, 2, 12, True, xlLeft)
     Call PositionnerCellule(ws, UCase$(titre), 3, 2, 12, True, xlLeft)
     ws.Range("C5:E6").HorizontalAlignment = xlRight
@@ -844,7 +844,7 @@ Sub Assembler_BNR_2_Lignes(ws As Worksheet)
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_BNR_2_Lignes", "", 0)
     
     Dim wsAdmin As Worksheet
-    Set wsAdmin = wshAdmin
+    Set wsAdmin = wsdADMIN
     
     Dim tbl As ListObject
     Set tbl = wsAdmin.ListObjects("tblÉtatsFinanciersCodes")

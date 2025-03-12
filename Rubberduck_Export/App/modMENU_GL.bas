@@ -8,7 +8,7 @@ Sub DEB_Saisie_Click()
     
     Application.EnableEvents = True
     
-    fromMenu = True '2024-09-30 @ 09:33
+    gFromMenu = True '2024-09-30 @ 09:33
     
     With wshDEB_Saisie
         .Visible = xlSheetVisible
@@ -26,7 +26,7 @@ Sub Encaissement_Click()
 
     Application.ScreenUpdating = False
     
-    fromMenu = True '2024-09-03 @ 06:20
+    gFromMenu = True '2024-09-03 @ 06:20
     
     With wshENC_Saisie
         .Visible = xlSheetVisible

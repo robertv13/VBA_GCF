@@ -45,14 +45,14 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
         .Range("A1").value = "Feuille"
         .Range("B1").value = "Message"
         .Range("C1").value = "TimeStamp"
-        .Columns("C").NumberFormat = wshAdmin.Range("B1").value & " hh:mm:ss"
+        .Columns("C").NumberFormat = wsdADMIN.Range("B1").value & " hh:mm:ss"
         Call Make_It_As_Header(.Range("A1:C1"))
     End With
 
     'Data starts at row 2
     Dim r As Long: r = 2
     Call AddMessageToWorkSheet(wsOutput, r, 1, "Répertoire utilisé")
-    Call AddMessageToWorkSheet(wsOutput, r, 2, wshAdmin.Range("FolderSharedData").value & DATA_PATH)
+    Call AddMessageToWorkSheet(wsOutput, r, 2, wsdADMIN.Range("FolderSharedData").value & DATA_PATH)
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
 
@@ -65,7 +65,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     
     'Date dernière modification du fichier MAÎTRE
     Dim fullFileName As String
-    fullFileName = wshAdmin.Range("FolderSharedData").value & DATA_PATH & Application.PathSeparator & masterFileName
+    fullFileName = wsdADMIN.Range("FolderSharedData").value & DATA_PATH & Application.PathSeparator & masterFileName
     Dim ddm As Date
     Dim j As Long, h As Long, m As Long, s As Long
     Call Get_Date_Derniere_Modification(fullFileName, ddm, j, h, m, s)
@@ -73,7 +73,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     
     'Un peu de couleur
     Dim rng As Range: Set rng = wsOutput.Range("B" & r)
-    rng.value = Format$(ddm, wshAdmin.Range("B1").value & " hh:mm:ss") & _
+    rng.value = Format$(ddm, wsdADMIN.Range("B1").value & " hh:mm:ss") & _
             " soit " & j & " jours, " & h & " heures, " & m & " minutes et " & s & " secondes"
     rng.Characters(1, 19).Font.Color = vbRed
     rng.Characters(1, 19).Font.Bold = True
@@ -91,7 +91,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     
     Call VerifierPlanComptable(r, readRows)
 
-    'wshBD_Clients --------------------------------------------------------------- Clients
+    'wsdBD_Clients --------------------------------------------------------------- Clients
     Call AddMessageToWorkSheet(wsOutput, r, 1, "BD_Clients")
     Call AddMessageToWorkSheet(wsOutput, r, 2, "La feuille a été importée du fichier BD_Entrée.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
@@ -99,7 +99,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     
     Call VerifierClients(r, readRows)
     
-    'wshBD_Fournisseurs ----------------------------------------------------- Fournisseurs
+    'wsdBD_Fournisseurs ----------------------------------------------------- Fournisseurs
     Call AddMessageToWorkSheet(wsOutput, r, 1, "BD_Fournisseurs")
     Call AddMessageToWorkSheet(wsOutput, r, 2, "La feuille a été importée du fichier BD_Entrée.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
@@ -107,7 +107,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     
     Call VerifierFournisseurs(r, readRows)
     
-    'wshDEB_Récurrent ------------------------------------------------------ DEB_Récurrent
+    'wsdDEB_Récurrent ------------------------------------------------------ DEB_Récurrent
     Call AddMessageToWorkSheet(wsOutput, r, 1, "DEB_Récurrent")
     Call AddMessageToWorkSheet(wsOutput, r, 2, "DEB_Récurrent a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
@@ -115,7 +115,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     
     Call VerifierDEBRecurrent(r, readRows)
     
-    'wshDEB_Trans -------------------------------------------------------------- DEB_Trans
+    'wsdDEB_Trans -------------------------------------------------------------- DEB_Trans
     Call AddMessageToWorkSheet(wsOutput, r, 1, "DEB_Trans")
     Call AddMessageToWorkSheet(wsOutput, r, 2, "DEB_Trans a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
@@ -123,7 +123,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     
     Call VerifierDEBTrans(r, readRows)
     
-    'wshFAC_Entête ------------------------------------------------------------ FAC_Entête
+    'wsdFAC_Entête ------------------------------------------------------------ FAC_Entête
     Call AddMessageToWorkSheet(wsOutput, r, 1, "FAC_Entête")
     Call AddMessageToWorkSheet(wsOutput, r, 2, "FAC_Entête a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
@@ -131,7 +131,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     
     Call VerifierFACEntete(r, readRows)
     
-    'wshFAC_Détails ---------------------------------------------------------- FAC_Détails
+    'wsdFAC_Détails ---------------------------------------------------------- FAC_Détails
     Call AddMessageToWorkSheet(wsOutput, r, 1, "FAC_Détails")
     Call AddMessageToWorkSheet(wsOutput, r, 2, "FAC_Détails a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
@@ -139,7 +139,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     
     Call VerifierFACDetails(r, readRows)
     
-    'wshFAC_Comptes_Clients ------------------------------------------ FAC_Comptes_Clients
+    'wsdFAC_Comptes_Clients ------------------------------------------ FAC_Comptes_Clients
     Call AddMessageToWorkSheet(wsOutput, r, 1, "FAC_Comptes_Clients")
     Call AddMessageToWorkSheet(wsOutput, r, 2, "FAC_Comptes_Clients a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
@@ -147,7 +147,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     
     Call VerifierFACComptesClients(r, readRows)
     
-    'wshFAC_Sommaire_Taux ---------------------------------------------- FAC_Sommaire_Taux
+    'wsdFAC_Sommaire_Taux ---------------------------------------------- FAC_Sommaire_Taux
     Call AddMessageToWorkSheet(wsOutput, r, 1, "FAC_Sommaire_Taux")
     Call AddMessageToWorkSheet(wsOutput, r, 2, "FAC_Sommaire_Taux a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
@@ -155,7 +155,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     
     Call VerifierFACSommaireTaux(r, readRows)
     
-    'wshENC_Entête ------------------------------------------------------------ ENC_Entête
+    'wsdENC_Entête ------------------------------------------------------------ ENC_Entête
     Call AddMessageToWorkSheet(wsOutput, r, 1, "ENC_Entête")
     Call AddMessageToWorkSheet(wsOutput, r, 2, "ENC_Entête a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
@@ -163,7 +163,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     
     Call VerifierENCEntete(r, readRows)
     
-    'wshENC_Détails ---------------------------------------------------------- ENC_Détails
+    'wsdENC_Détails ---------------------------------------------------------- ENC_Détails
     Call AddMessageToWorkSheet(wsOutput, r, 1, "ENC_Détails")
     Call AddMessageToWorkSheet(wsOutput, r, 2, "ENC_Détails a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
@@ -171,7 +171,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     
     Call VerifierENCDetails(r, readRows)
     
-    'wshCC_Régularisations ---------------------------------------------------------- CC_Régularisations
+    'wsdCC_Régularisations ---------------------------------------------------------- CC_Régularisations
     Call AddMessageToWorkSheet(wsOutput, r, 1, "CC_Régularisations")
     Call AddMessageToWorkSheet(wsOutput, r, 2, "CC_Régularisations a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
@@ -179,7 +179,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     
     Call VérifierCCRégularisations(r, readRows)
     
-    'wshFAC_Projets_Entête -------------------------------------------- FAC_Projets_Entête
+    'wsdFAC_Projets_Entête -------------------------------------------- FAC_Projets_Entête
     Call AddMessageToWorkSheet(wsOutput, r, 1, "FAC_Projets_Entête")
     Call AddMessageToWorkSheet(wsOutput, r, 2, "FAC_Projets_Entête a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
@@ -187,7 +187,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     
     Call VerifierFACProjetsEntete(r, readRows)
     
-    'wshFAC_Projets_Détails ------------------------------------------ FAC_Projets_Détails
+    'wsdFAC_Projets_Détails ------------------------------------------ FAC_Projets_Détails
     Call AddMessageToWorkSheet(wsOutput, r, 1, "FAC_Projets_Détails")
     Call AddMessageToWorkSheet(wsOutput, r, 2, "FAC_Projets_Détails a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
@@ -195,7 +195,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     
     Call VerifierFACProjetsDetails(r, readRows)
     
-    'wshGL_Trans ---------------------------------------------------------------- GL_Trans
+    'wsdGL_Trans ---------------------------------------------------------------- GL_Trans
     Call AddMessageToWorkSheet(wsOutput, r, 1, "GL_Trans")
     Call AddMessageToWorkSheet(wsOutput, r, 2, "GL_Trans a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
@@ -203,7 +203,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     
     Call VerifierGLTrans(r, readRows)
     
-    'wshGL_EJ_Recurrente ------------------------------------------------ GL_EJ_Recurrente
+    'wsdGL_EJ_Recurrente ------------------------------------------------ GL_EJ_Recurrente
     Call AddMessageToWorkSheet(wsOutput, r, 1, "GL_EJ_Recurrente")
     Call AddMessageToWorkSheet(wsOutput, r, 2, "GL_EJ_Recurrente a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
@@ -219,7 +219,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     
     Call VerifierTECTdBData(r, readRows)
     
-    'wshTEC_Local -------------------------------------------------------------- TEC_Local
+    'wsdTEC_Local -------------------------------------------------------------- TEC_Local
     Call AddMessageToWorkSheet(wsOutput, r, 1, "TEC_Local")
     Call AddMessageToWorkSheet(wsOutput, r, 2, "TEC_Local a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
@@ -359,7 +359,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     Set rng = wsOutput.Range("A" & r)
     rng.value = "**** " & Format$(readRows, "###,##0") & _
                     " lignes analysées dans l'ensemble des tables - " & _
-                    Format$(Now(), wshAdmin.Range("B1").value & " hh:mm:ss") & " ***"
+                    Format$(Now(), wsdADMIN.Range("B1").value & " hh:mm:ss") & " ***"
     rng.Characters(6, 6).Font.Color = vbRed
     rng.Characters(6, 6).Font.Bold = True
     
@@ -664,16 +664,16 @@ Private Sub VerifierClients(ByRef r As Long, ByRef readRows As Long)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'Fichier maître des Clients
-    Dim ws As Worksheet: Set ws = wshBD_Clients
+    Dim ws As Worksheet: Set ws = wsdBD_Clients
     Call AddMessageToWorkSheet(wsOutput, r, 2, "Il y a " & Format$(ws.Range("A1").CurrentRegion.Rows.count, "###,##0") & _
         " lignes et " & Format$(ws.Range("A1").CurrentRegion.Columns.count, "#,##0") & " colonnes dans cette table")
     r = r + 1
     
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshBD_Clients'")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wsdBD_Clients'")
     r = r + 1
     
     Dim arr As Variant
-    arr = wshBD_Clients.Range("A1").CurrentRegion.value
+    arr = wsdBD_Clients.Range("A1").CurrentRegion.value
     If UBound(arr, 1) < 2 Then
         r = r + 1
         GoTo Clean_Exit
@@ -798,16 +798,16 @@ Private Sub VerifierFournisseurs(ByRef r As Long, ByRef readRows As Long)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'wshBD_fournisseurs
-    Dim ws As Worksheet: Set ws = wshBD_Fournisseurs
+    Dim ws As Worksheet: Set ws = wsdBD_Fournisseurs
     Call AddMessageToWorkSheet(wsOutput, r, 2, "Il y a " & Format$(ws.Range("A1").CurrentRegion.Rows.count, "###,##0") & _
         " lignes et " & Format$(ws.Range("A1").CurrentRegion.Columns.count, "#,##0") & " colonnes dans cette table")
     r = r + 1
     
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshBD_Fournisseurs'")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wsdBD_Fournisseurs'")
     r = r + 1
     
     Dim arr As Variant
-    arr = wshBD_Fournisseurs.Range("A1").CurrentRegion.value
+    arr = wsdBD_Fournisseurs.Range("A1").CurrentRegion.value
     If UBound(arr, 1) < 2 Then
         r = r + 1
         GoTo Clean_Exit
@@ -892,8 +892,8 @@ Private Sub VérifierCCRégularisations(ByRef r As Long, ByRef readRows As Long)
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
-    'wshCC_Régularisations
-    Dim ws As Worksheet: Set ws = wshCC_Régularisations
+    'wsdCC_Régularisations
+    Dim ws As Worksheet: Set ws = wsdCC_Régularisations
     Dim HeaderRow As Long: HeaderRow = 1
     Dim lastUsedRowDetails As Long
     lastUsedRowDetails = ws.Cells(ws.Rows.count, 1).End(xlUp).row
@@ -908,18 +908,18 @@ Private Sub VérifierCCRégularisations(ByRef r As Long, ByRef readRows As Long)
     r = r + 1
     
     'FAC_Entête Worksheet
-    Dim wsFACEntete As Worksheet: Set wsFACEntete = wshFAC_Entête
+    Dim wsFACEntete As Worksheet: Set wsFACEntete = wsdFAC_Entête
     Dim lastUsedRowFacEntete As Long
     lastUsedRowFacEntete = wsFACEntete.Cells(wsFACEntete.Rows.count, 1).End(xlUp).row
     Dim rngFACEntete As Range: Set rngFACEntete = wsFACEntete.Range("A2:A" & lastUsedRowFacEntete)
     
     'Clients Master File
-    Dim wsClients As Worksheet: Set wsClients = wshBD_Clients
+    Dim wsClients As Worksheet: Set wsClients = wsdBD_Clients
     Dim lastUsedRowClient As Long
     lastUsedRowClient = wsClients.Cells(wsClients.Rows.count, "B").End(xlUp).row
     Dim rngClients As Range: Set rngClients = wsClients.Range("B2:B" & lastUsedRowClient)
     
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshCC_Régularisations'")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wsdCC_Régularisations'")
     r = r + 1
     
     'Array pointer
@@ -1034,8 +1034,8 @@ Private Sub VérifierCCRégularisations(ByRef r As Long, ByRef readRows As Long)
     Call AddMessageToWorkSheet(wsOutput, r, 2, "Un total de " & Format$(lastUsedRowDetails - 1, "##,##0") & " lignes de transactions ont été analysées")
     r = r + 1
     
-    'Compare les régularisations accumulés (dictRegul) avec wshFAC_Comptes_Clients
-    Dim wsComptes_Clients As Worksheet: Set wsComptes_Clients = wshFAC_Comptes_Clients
+    'Compare les régularisations accumulés (dictRegul) avec wsdFAC_Comptes_Clients
+    Dim wsComptes_Clients As Worksheet: Set wsComptes_Clients = wsdFAC_Comptes_Clients
     Dim lastUsedRow As Long
     lastUsedRow = wsComptes_Clients.Cells(wsComptes_Clients.Rows.count, 1).End(xlUp).row
     Dim totalRegul As Currency
@@ -1046,7 +1046,7 @@ Private Sub VérifierCCRégularisations(ByRef r As Long, ByRef readRows As Long)
         If totalRegul <> dictRegul(Inv_No) Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Pour la facture '" & Inv_No & "', le total des régularisations de " _
                             & "(wshFAC_Comptes_clients) " & Format$(totalRegul, "###,##0.00 $") _
-                            & " est <> du détail des régularisations (wshCC_Régularisations) " & Format$(dictRegul(Inv_No), "###,##0.00 $"))
+                            & " est <> du détail des régularisations (wsdCC_Régularisations) " & Format$(dictRegul(Inv_No), "###,##0.00 $"))
             r = r + 1
             isRegularisationValid = False
         End If
@@ -1093,11 +1093,11 @@ Private Sub VerifierDEBRecurrent(ByRef r As Long, ByRef readRows As Long)
     
     Call modImport.ImporterDebRecurrent
     
-    Dim ws As Worksheet: Set ws = wshDEB_Récurrent
+    Dim ws As Worksheet: Set ws = wsdDEB_Récurrent
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
-    'wshDEB_Récurrent
+    'wsdDEB_Récurrent
     Dim HeaderRow As Long: HeaderRow = 1
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
@@ -1111,12 +1111,12 @@ Private Sub VerifierDEBRecurrent(ByRef r As Long, ByRef readRows As Long)
         " lignes et " & Format$(ws.Range("A1").CurrentRegion.Columns.count, "#,##0") & " colonnes dans cette table")
     r = r + 1
     
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshDEB_Récurrent'")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wsdDEB_Récurrent'")
     r = r + 1
     
     'On a besoin du plan comptable pour valider les données
     On Error Resume Next
-    Dim planComptable As Range: Set planComptable = wshAdmin.Range("dnrPlanComptable_All")
+    Dim planComptable As Range: Set planComptable = wsdADMIN.Range("dnrPlanComptable_All")
     On Error GoTo 0
 
     Dim isDebRécurrentValid As Boolean
@@ -1241,11 +1241,11 @@ Private Sub VerifierDEBTrans(ByRef r As Long, ByRef readRows As Long)
     
     Call modImport.ImporterDebTrans
     
-    Dim ws As Worksheet: Set ws = wshDEB_Trans
+    Dim ws As Worksheet: Set ws = wsdDEB_Trans
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
-    'wshDEB_Trans
+    'wsdDEB_Trans
     Dim HeaderRow As Long: HeaderRow = 1
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
@@ -1259,12 +1259,12 @@ Private Sub VerifierDEBTrans(ByRef r As Long, ByRef readRows As Long)
         " lignes et " & Format$(ws.Range("A1").CurrentRegion.Columns.count, "#,##0") & " colonnes dans cette table")
     r = r + 1
     
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshDEB_Trans'")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wsdDEB_Trans'")
     r = r + 1
     
     'On a besoin du plan comptable pour valider les données
     On Error Resume Next
-    Dim planComptable As Range: Set planComptable = wshAdmin.Range("dnrPlanComptable_All")
+    Dim planComptable As Range: Set planComptable = wsdADMIN.Range("dnrPlanComptable_All")
     On Error GoTo 0
 
     Dim isDebTransValid As Boolean
@@ -1399,8 +1399,8 @@ Private Sub VerifierENCDetails(ByRef r As Long, ByRef readRows As Long)
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
-    'wshENC_Détails
-    Dim ws As Worksheet: Set ws = wshENC_Détails
+    'wsdENC_Détails
+    Dim ws As Worksheet: Set ws = wsdENC_Détails
     Dim HeaderRow As Long: HeaderRow = 1
     Dim lastUsedRowDetails As Long
     lastUsedRowDetails = ws.Cells(ws.Rows.count, 1).End(xlUp).row
@@ -1415,7 +1415,7 @@ Private Sub VerifierENCDetails(ByRef r As Long, ByRef readRows As Long)
     r = r + 1
     
     'ENC_Entête Worksheet
-    Dim wsEntete As Worksheet: Set wsEntete = wshENC_Entête
+    Dim wsEntete As Worksheet: Set wsEntete = wsdENC_Entête
     Dim lastUsedRowEntete As Long
     lastUsedRowEntete = wsEntete.Cells(wsEntete.Rows.count, 1).End(xlUp).row
 '    Dim rngEntete As Range: Set rngEntete = wsEntete.Range("A2:A" & lastUsedRowEntete)
@@ -1426,12 +1426,12 @@ Private Sub VerifierENCDetails(ByRef r As Long, ByRef readRows As Long)
     Next i
     
     'FAC_Entête Worksheet
-    Dim wsFACEntete As Worksheet: Set wsFACEntete = wshFAC_Entête
+    Dim wsFACEntete As Worksheet: Set wsFACEntete = wsdFAC_Entête
     Dim lastUsedRowFacEntete As Long
     lastUsedRowFacEntete = wsFACEntete.Cells(wsFACEntete.Rows.count, 1).End(xlUp).row
     Dim rngFACEntete As Range: Set rngFACEntete = wsFACEntete.Range("A2:A" & lastUsedRowFacEntete)
     
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshENC_Détails'")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wsdENC_Détails'")
     r = r + 1
     
     Dim pmtNo As Long, oldpmtNo As Long
@@ -1493,8 +1493,8 @@ Private Sub VerifierENCDetails(ByRef r As Long, ByRef readRows As Long)
     Call AddMessageToWorkSheet(wsOutput, r, 2, "Un total de " & Format$(lastUsedRowDetails - 1, "##,##0") & " lignes de transactions ont été analysées")
     r = r + 1
     
-    'Compare les encaissements accumulés (dictENC) avec wshFAC_Comptes_Clients
-    Dim wsComptes_Clients As Worksheet: Set wsComptes_Clients = wshFAC_Comptes_Clients
+    'Compare les encaissements accumulés (dictENC) avec wsdFAC_Comptes_Clients
+    Dim wsComptes_Clients As Worksheet: Set wsComptes_Clients = wsdFAC_Comptes_Clients
     Dim lastUsedRow As Long
     lastUsedRow = wsComptes_Clients.Cells(wsComptes_Clients.Rows.count, 1).End(xlUp).row
     Dim totalPaid As Currency
@@ -1557,13 +1557,13 @@ Private Sub VerifierENCEntete(ByRef r As Long, ByRef readRows As Long)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'Clients Master File
-    Dim wsClients As Worksheet: Set wsClients = wshBD_Clients
+    Dim wsClients As Worksheet: Set wsClients = wsdBD_Clients
     Dim lastUsedRowClient As Long
     lastUsedRowClient = wsClients.Cells(wsClients.Rows.count, "B").End(xlUp).row
     Dim rngClients As Range: Set rngClients = wsClients.Range("B2:B" & lastUsedRowClient)
     
-    'wshENC_Entête
-    Dim ws As Worksheet: Set ws = wshENC_Entête
+    'wsdENC_Entête
+    Dim ws As Worksheet: Set ws = wsdENC_Entête
     Dim HeaderRow As Long: HeaderRow = 1
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
@@ -1577,7 +1577,7 @@ Private Sub VerifierENCEntete(ByRef r As Long, ByRef readRows As Long)
         " lignes et " & Format$(ws.Range("A1").CurrentRegion.Columns.count, "#,##0") & " colonnes dans cette table")
     r = r + 1
     
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshENC_Entête'")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wsdENC_Entête'")
     r = r + 1
     
     If lastUsedRow = HeaderRow Then
@@ -1586,7 +1586,7 @@ Private Sub VerifierENCEntete(ByRef r As Long, ByRef readRows As Long)
     End If
 
     Dim arr As Variant
-    arr = wshENC_Entête.Range("A1").CurrentRegion.offset(1, 0) _
+    arr = wsdENC_Entête.Range("A1").CurrentRegion.offset(1, 0) _
               .Resize(lastUsedRow - HeaderRow, ws.Range("A1").CurrentRegion.Columns.count).value
     
     'Array pointer
@@ -1669,8 +1669,8 @@ Private Sub VerifierFACDetails(ByRef r As Long, ByRef readRows As Long)
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
-    'wshFAC_Détails
-    Dim ws As Worksheet: Set ws = wshFAC_Détails
+    'wsdFAC_Détails
+    Dim ws As Worksheet: Set ws = wsdFAC_Détails
     Dim HeaderRow As Long: HeaderRow = 2
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
@@ -1684,17 +1684,17 @@ Private Sub VerifierFACDetails(ByRef r As Long, ByRef readRows As Long)
         " lignes et " & Format$(ws.Range("A1").CurrentRegion.Columns.count, "#,##0") & " colonnes dans cette table")
     r = r + 1
     
-    Dim wsMaster As Worksheet: Set wsMaster = wshFAC_Entête
+    Dim wsMaster As Worksheet: Set wsMaster = wsdFAC_Entête
     Dim lastUsedRowEntete As Long
     lastUsedRowEntete = wsMaster.Cells(wsMaster.Rows.count, 1).End(xlUp).row
     Dim rngMaster As Range: Set rngMaster = wsMaster.Range("A" & 1 + HeaderRow & ":A" & lastUsedRowEntete)
     
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshFAC_Détails'")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wsdFAC_Détails'")
     r = r + 1
     
     'Transfer FAC_Details data from Worksheet into an Array (arr)
     Dim arr As Variant
-    arr = wshFAC_Détails.Range("A1").CurrentRegion.offset(1, 0).value
+    arr = wsdFAC_Détails.Range("A1").CurrentRegion.offset(1, 0).value
     
     'Array pointer
 '    Dim row As Long: row = 1
@@ -1780,8 +1780,8 @@ Private Sub VerifierFACEntete(ByRef r As Long, ByRef readRows As Long)
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
-    'wshFAC_Entête
-    Dim ws As Worksheet: Set ws = wshFAC_Entête
+    'wsdFAC_Entête
+    Dim ws As Worksheet: Set ws = wsdFAC_Entête
     
     Dim HeaderRow As Long: HeaderRow = 2
     
@@ -1797,7 +1797,7 @@ Private Sub VerifierFACEntete(ByRef r As Long, ByRef readRows As Long)
         " lignes et " & Format$(ws.Range("A1").CurrentRegion.Columns.count, "#,##0") & " colonnes dans cette table")
     r = r + 1
     
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshFAC_Entête'")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wsdFAC_Entête'")
     r = r + 1
     
     If lastUsedRow = HeaderRow Then
@@ -1982,8 +1982,8 @@ Private Sub VerifierFACComptesClients(ByRef r As Long, ByRef readRows As Long)
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
-    'wshGL_Trans
-    Dim ws As Worksheet: Set ws = wshFAC_Comptes_Clients
+    'wsdGL_Trans
+    Dim ws As Worksheet: Set ws = wsdFAC_Comptes_Clients
     
     Dim HeaderRow As Long: HeaderRow = 2
     Dim lastUsedRow As Long
@@ -1998,7 +1998,7 @@ Private Sub VerifierFACComptesClients(ByRef r As Long, ByRef readRows As Long)
         " lignes et " & Format$(ws.Range("A1").CurrentRegion.Columns.count, "#,##0") & " colonnes dans cette table")
     r = r + 1
     
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshFAC_Comptes_Clients'")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wsdFAC_Comptes_Clients'")
     r = r + 1
     
     If lastUsedRow = HeaderRow Then
@@ -2008,7 +2008,7 @@ Private Sub VerifierFACComptesClients(ByRef r As Long, ByRef readRows As Long)
 
     'Load every records into an Array
     Dim arr As Variant
-    arr = wshFAC_Comptes_Clients.Range("A1").CurrentRegion.offset(2, 0) _
+    arr = wsdFAC_Comptes_Clients.Range("A1").CurrentRegion.offset(2, 0) _
               .Resize(lastUsedRow - HeaderRow, ws.Range("A1").CurrentRegion.Columns.count).value
     
     'Array pointer
@@ -2221,14 +2221,14 @@ Private Sub VerifierFACSommaireTaux(ByRef r As Long, ByRef readRows As Long)
     
     Call modImport.ImporterFacSommaireTaux
     
-    Dim ws As Worksheet: Set ws = wshFAC_Sommaire_Taux
+    Dim ws As Worksheet: Set ws = wsdFAC_Sommaire_Taux
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     Dim tol As Double
     tol = 0.0001 'Petite tolérance pour la comparaison
     
-    'wshFAC_Sommaire_Taux
+    'wsdFAC_Sommaire_Taux
     Dim HeaderRow As Long: HeaderRow = 1
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
@@ -2242,11 +2242,11 @@ Private Sub VerifierFACSommaireTaux(ByRef r As Long, ByRef readRows As Long)
         " lignes et " & Format$(ws.Range("A1").CurrentRegion.Columns.count, "#,##0") & " colonnes dans cette table")
     r = r + 1
     
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshFAC_Sommaire_Taux'")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wsdFAC_Sommaire_Taux'")
     r = r + 1
     
     'On a besoin des factures pour la validation
-    Dim wsMaster As Worksheet: Set wsMaster = wshFAC_Entête
+    Dim wsMaster As Worksheet: Set wsMaster = wsdFAC_Entête
     Dim lastUsedRowEntete As Long
     lastUsedRowEntete = wsMaster.Cells(wsMaster.Rows.count, 1).End(xlUp).row
     Dim rngMaster As Range: Set rngMaster = wsMaster.Range("A2:A" & lastUsedRowEntete)
@@ -2338,8 +2338,8 @@ Private Sub VerifierFACProjetsEntete(ByRef r As Long, ByRef readRows As Long)
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
-    'wshGL_Trans
-    Dim ws As Worksheet: Set ws = wshFAC_Projets_Entête
+    'wsdGL_Trans
+    Dim ws As Worksheet: Set ws = wsdFAC_Projets_Entête
     Dim HeaderRow As Long: HeaderRow = 1
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
@@ -2353,7 +2353,7 @@ Private Sub VerifierFACProjetsEntete(ByRef r As Long, ByRef readRows As Long)
         " lignes et " & Format$(ws.Range("A1").CurrentRegion.Columns.count, "#,##0") & " colonnes dans cette table")
     r = r + 1
     
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshFAC_Projets_Entête'")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wsdFAC_Projets_Entête'")
     r = r + 1
     
     'Establish the number of rows before transferring it to an Array
@@ -2507,8 +2507,8 @@ Private Sub VerifierFACProjetsDetails(ByRef r As Long, ByRef readRows As Long)
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
-    'wshFAC_Projets_Détails
-    Dim ws As Worksheet: Set ws = wshFAC_Projets_Détails
+    'wsdFAC_Projets_Détails
+    Dim ws As Worksheet: Set ws = wsdFAC_Projets_Détails
     Dim HeaderRow As Long: HeaderRow = 1
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
@@ -2522,11 +2522,11 @@ Private Sub VerifierFACProjetsDetails(ByRef r As Long, ByRef readRows As Long)
         " lignes et " & Format$(ws.Range("A1").CurrentRegion.Columns.count, "#,##0") & " colonnes dans cette table")
     r = r + 1
     
-    Dim wsMaster As Worksheet: Set wsMaster = wshFAC_Projets_Entête
+    Dim wsMaster As Worksheet: Set wsMaster = wsdFAC_Projets_Entête
     lastUsedRow = wsMaster.Cells(wsMaster.Rows.count, 1).End(xlUp).row
     Dim rngMaster As Range: Set rngMaster = wsMaster.Range("A2:A" & lastUsedRow)
     
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshFAC_Projets_Détails'")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wsdFAC_Projets_Détails'")
     r = r + 1
     
     'Transfer data from Worksheet into an Array (arr)
@@ -2537,7 +2537,7 @@ Private Sub VerifierFACProjetsDetails(ByRef r As Long, ByRef readRows As Long)
         GoTo Clean_Exit
     End If
     
-    'Charge le contenu de 'wshFAC_Projets_Détails' en mémoire (Array)
+    'Charge le contenu de 'wsdFAC_Projets_Détails' en mémoire (Array)
     Dim arr As Variant
     arr = ws.Range("A1").CurrentRegion.offset(1, 0).Resize(numRows, ws.Range("A1").CurrentRegion.Columns.count).value
     
@@ -2639,8 +2639,8 @@ Private Sub VerifierGLTrans(ByRef r As Long, ByRef readRows As Long)
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
-    'wshGL_Trans
-    Dim ws As Worksheet: Set ws = wshGL_Trans
+    'wsdGL_Trans
+    Dim ws As Worksheet: Set ws = wsdGL_Trans
     Dim HeaderRow As Long: HeaderRow = 1
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
@@ -2662,11 +2662,11 @@ Private Sub VerifierGLTrans(ByRef r As Long, ByRef readRows As Long)
         " lignes et " & Format$(lastUsedCol, "#,##0") & " colonnes dans cette table")
     r = r + 1
     
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshGL_Trans'")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wsdGL_Trans'")
     r = r + 1
     
     On Error Resume Next
-    Dim planComptable As Range: Set planComptable = wshAdmin.Range("dnrPlanComptable_All")
+    Dim planComptable As Range: Set planComptable = wsdADMIN.Range("dnrPlanComptable_All")
     On Error GoTo 0
 
     Dim isGLTransValid As Boolean
@@ -2865,11 +2865,11 @@ Private Sub VerifierGLEJRecurrente(ByRef r As Long, ByRef readRows As Long)
     
     Call modImport.ImporterEJRecurrente
     
-    Dim ws As Worksheet: Set ws = wshGL_EJ_Recurrente
+    Dim ws As Worksheet: Set ws = wsdGL_EJ_Recurrente
     
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
-    'wshGL_EJ_Recurrente
+    'wsdGL_EJ_Recurrente
     Dim HeaderRow As Long: HeaderRow = 1
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
@@ -2883,7 +2883,7 @@ Private Sub VerifierGLEJRecurrente(ByRef r As Long, ByRef readRows As Long)
         " lignes et " & Format$(ws.Range("A1").CurrentRegion.Columns.count, "#,##0") & " colonnes dans cette table")
     r = r + 1
     
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshGL_EJ_Recurrente'")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wsdGL_EJ_Recurrente'")
     r = r + 1
     
     Dim isGlEjRécurrenteValid As Boolean
@@ -2891,7 +2891,7 @@ Private Sub VerifierGLEJRecurrente(ByRef r As Long, ByRef readRows As Long)
     
     'On a besoin des comptes du G/L pour la validation
     On Error Resume Next
-    Dim planComptable As Range: Set planComptable = wshAdmin.Range("dnrPlanComptable_All")
+    Dim planComptable As Range: Set planComptable = wsdADMIN.Range("dnrPlanComptable_All")
     On Error GoTo 0
 
     If planComptable Is Nothing Then
@@ -3295,7 +3295,7 @@ Private Sub VerifierTEC(ByRef r As Long, ByRef readRows As Long)
     
     Application.ScreenUpdating = False
     
-    Dim ws As Worksheet: Set ws = wshTEC_Local
+    Dim ws As Worksheet: Set ws = wsdTEC_Local
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     Dim lastTECIDReported As Long
@@ -3315,10 +3315,10 @@ Private Sub VerifierTEC(ByRef r As Long, ByRef readRows As Long)
         " lignes et " & Format$(ws.Range("A1").CurrentRegion.Columns.count, "#,##0") & " colonnes dans cette table")
     r = r + 1
     
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wshTEC_Local'")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wsdTEC_Local'")
     r = r + 1
     
-    'Identifier la plage de données dans wshTEC_Local (exclus les entêtes)
+    'Identifier la plage de données dans wsdTEC_Local (exclus les entêtes)
     Dim rngTEC_LocalData As Range
     Set rngTEC_LocalData = ws.Range("A1").CurrentRegion.offset(2, 0)
     Set rngTEC_LocalData = rngTEC_LocalData.Resize(rngTEC_LocalData.Rows.count - 2, rngTEC_LocalData.Columns.count)
@@ -3331,7 +3331,7 @@ Private Sub VerifierTEC(ByRef r As Long, ByRef readRows As Long)
     Dim dictClient As New Dictionary
     'Définir la feuille de calcul et la plage de données
     Dim rngClient As Range
-    Set rngClient = wshBD_Clients.Range("A1").CurrentRegion
+    Set rngClient = wsdBD_Clients.Range("A1").CurrentRegion
     Set rngClient = rngClient.offset(1, 0).Resize(rngClient.Rows.count - 1, 2)
 
     'Charger les données dans un tableau (deux premières colonnes seulement)
@@ -3347,9 +3347,9 @@ Private Sub VerifierTEC(ByRef r As Long, ByRef readRows As Long)
         dictClient(arr(i, 2)) = arr(i, 1) 'Utilise la colonne 1 comme clé et la colonne 2 comme valeur
     Next i
     
-    'Obtenir toutes les factures émises (wshFAC_Entête) et utiliser un dictionary pour les mémoriser
+    'Obtenir toutes les factures émises (wsdFAC_Entête) et utiliser un dictionary pour les mémoriser
     Dim rngFAC_EntêteData As Range
-    Set rngFAC_EntêteData = wshFAC_Entête.Range("A1").CurrentRegion
+    Set rngFAC_EntêteData = wsdFAC_Entête.Range("A1").CurrentRegion
     Set rngFAC_EntêteData = rngFAC_EntêteData.offset(2, 0).Resize(rngFAC_EntêteData.Rows.count - 2)
     
     'Calculer le nombre de lignes dans la plage
@@ -3984,12 +3984,12 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
         firstDataRow = HeaderRow + 1
         
         Select Case rng.Worksheet.CodeName
-'            Case "wshBD_Clients"
+'            Case "wsdBD_Clients"
 '
-'            Case "wshBD_Fournisseurs"
+'            Case "wsdBD_Fournisseurs"
 '
-            Case "wshCC_Régularisations" '2025-02-12 @ 07:58
-                With wshCC_Régularisations
+            Case "wsdCC_Régularisations" '2025-02-12 @ 07:58
+                With wsdCC_Régularisations
                     .Range(.Cells(2, fREGULRegulID), .Cells(lastUsedRow, fREGULTimeStamp)).HorizontalAlignment = xlCenter
                     .Range(.Cells(2, fREGULInvNo), .Cells(lastUsedRow, fREGULInvNo)).NumberFormat = "yyyy-mm-dd"
                     .Range(.Cells(2, fREGULClientNom), .Cells(lastUsedRow, fREGULClientNom)).HorizontalAlignment = xlLeft
@@ -4001,8 +4001,8 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                     .Range(.Cells(2, fREGULTimeStamp), .Cells(lastUsedRow, fREGULTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
                 End With
                     
-            Case "wshDEB_Récurrent"  '2025-02-12 @ 08:06
-                With wshDEB_Récurrent
+            Case "wsdDEB_Récurrent"  '2025-02-12 @ 08:06
+                With wsdDEB_Récurrent
                     .Range(.Cells(2, fDebRNoDebRec), .Cells(lastUsedRow, fDebRTimeStamp)).HorizontalAlignment = xlCenter
                     .Range(.Cells(2, fDebRDate), .Cells(lastUsedRow, fDebRDate)).NumberFormat = "yyyy-mm-dd"
                     .Range(.Cells(2, fDebRType), .Cells(lastUsedRow, fDebRReference)).HorizontalAlignment = xlLeft
@@ -4014,8 +4014,8 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                     .Range(.Cells(2, fDebRTimeStamp), .Cells(lastUsedRow, fDebRTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
                 End With
            
-            Case "wshDEB_Trans" '2025-02-12 @ 08:22
-                With wshDEB_Trans
+            Case "wsdDEB_Trans" '2025-02-12 @ 08:22
+                With wsdDEB_Trans
                     Set rngUnion = Application.Union( _
                         .Range(ws.Cells(2, fDebTType), ws.Cells(lastUsedRow, fDebTBeneficiaire)), _
                         .Range(ws.Cells(2, fDebTDescription), ws.Cells(lastUsedRow, fDebTReference)), _
@@ -4034,8 +4034,8 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                     .Range(.Cells(2, fDebTTimeStamp), .Cells(lastUsedRow, fDebTTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
                 End With
             
-            Case "wshENC_Détails" '2025-02-12 @ 08:33
-                With wshENC_Détails
+            Case "wsdENC_Détails" '2025-02-12 @ 08:33
+                With wsdENC_Détails
                     Set rngUnion = Application.Union( _
                         .Range(.Cells(2, fEncDPayID), .Cells(lastUsedRow, fEncDPayID)), _
                         .Range(.Cells(2, fEncDInvNo), .Cells(lastUsedRow, fEncDInvNo)), _
@@ -4052,8 +4052,8 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                     .Range(.Cells(2, fEncDTimeStamp), .Cells(lastUsedRow, fEncDTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
                 End With
             
-            Case "wshENC_Entête" '2025-02-12 @ 08:39
-                With wshENC_Entête
+            Case "wsdENC_Entête" '2025-02-12 @ 08:39
+                With wsdENC_Entête
                     Set rngUnion = Application.Union( _
                         .Range(.Cells(2, fEncEPayID), .Cells(lastUsedRow, fEncEPayID)), _
                         .Range(.Cells(2, fEncEPayDate), .Cells(lastUsedRow, fEncEPayDate)), _
@@ -4074,8 +4074,8 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                     .Range(.Cells(2, fEncETimeStamp), .Cells(lastUsedRow, fEncETimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
                 End With
             
-            Case "wshFAC_Comptes_Clients" '2025-01-25 @ 15:35
-                With wshFAC_Comptes_Clients
+            Case "wsdFAC_Comptes_Clients" '2025-01-25 @ 15:35
+                With wsdFAC_Comptes_Clients
                     .Range(.Cells(3, fFacCCInvNo), .Cells(lastUsedRow, fFacCCInvoiceDate)).HorizontalAlignment = xlCenter
                     .Range(.Cells(3, fFacCCCodeClient), .Cells(lastUsedRow, fFacCCDueDate)).HorizontalAlignment = xlCenter
                     .Range(.Cells(3, fFacCCCustomer), .Cells(lastUsedRow, fFacCCCustomer)).HorizontalAlignment = xlLeft
@@ -4086,8 +4086,8 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                     .Range(.Cells(3, fFacCCTimeStamp), .Cells(lastUsedRow, fFacCCTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
                 End With
             
-            Case "wshFAC_Détails" '2025-02-12 @ 10:15
-                With wshFAC_Détails
+            Case "wsdFAC_Détails" '2025-02-12 @ 10:15
+                With wsdFAC_Détails
                     Set rngUnion = Application.Union( _
                         .Range(.Cells(3, fFacDInvNo), .Cells(lastUsedRow, fFacDInvNo)), _
                         .Range(.Cells(3, fFacDInvRow), .Cells(lastUsedRow, fFacDInvRow)), _
@@ -4100,8 +4100,8 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                     .Range(.Cells(3, fFacDTimeStamp), .Cells(lastUsedRow, fFacDTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
                 End With
             
-            Case "wshFAC_Entête" '2025-02-12 @ 10:36
-                With wshFAC_Entête
+            Case "wsdFAC_Entête" '2025-02-12 @ 10:36
+                With wsdFAC_Entête
                     .Range(.Cells(3, fFacEInvNo), .Cells(lastUsedRow, fFacECustID)).HorizontalAlignment = xlCenter
                     .Range(.Cells(3, fFacETimeStamp), .Cells(lastUsedRow, fFacETimeStamp)).HorizontalAlignment = xlCenter
                     .Range(.Cells(3, fFacEContact), .Cells(lastUsedRow, fFacEAdresse3)).HorizontalAlignment = xlLeft
@@ -4132,8 +4132,8 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                     .Range(.Cells(3, fFacETimeStamp), .Cells(lastUsedRow, fFacETimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
                 End With
     
-            Case "wshFAC_Projets_Détails" '2025-02-12 @ 11:42
-                With wshFAC_Projets_Détails
+            Case "wsdFAC_Projets_Détails" '2025-02-12 @ 11:42
+                With wsdFAC_Projets_Détails
                     Set rngUnion = Application.Union( _
                         .Range(.Cells(2, fFacPDProjetID), .Cells(lastUsedRow, fFacPDProjetID)) _
                         .Range(.Cells(2, fFacPDClientID), .Cells(lastUsedRow, fFacPDProf)), _
@@ -4148,8 +4148,8 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                     .Range(.Cells(2, fFacPDTimeStamp), .Cells(lastUsedRow, fFacPDTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
                 End With
             
-            Case "wshFAC_Projets_Entête" '2025-02-12 @ 12:41
-                With wshFAC_Projets_Entête
+            Case "wsdFAC_Projets_Entête" '2025-02-12 @ 12:41
+                With wsdFAC_Projets_Entête
                     Set rngUnion = Application.Union( _
                         .Range(.Cells(2, fFacPEProjetID), .Cells(lastUsedRow, fFacPEProjetID)) _
                         .Range(.Cells(2, fFacPEClientID), .Cells(lastUsedRow, fFacPEDate)), _
@@ -4177,8 +4177,8 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                     End If
                 End With
             
-            Case "wshFAC_Sommaire_Taux" '2025-02-12 @ 12:50
-                With wshFAC_Sommaire_Taux
+            Case "wsdFAC_Sommaire_Taux" '2025-02-12 @ 12:50
+                With wsdFAC_Sommaire_Taux
                     .Range(.Cells(2, fFacSTInvNo), .Cells(lastUsedRow, fFacSTProf)).HorizontalAlignment = xlCenter
                     
                     .Range(.Cells(2, fFacSTHeures), .Cells(lastUsedRow, fFacSTTaux)).HorizontalAlignment = xlRight
@@ -4186,8 +4186,8 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                     .Range(.Cells(2, fFacSTTimeStamp), .Cells(lastUsedRow, fFacSTTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
                 End With
             
-            Case "wshGL_EJ_Recurrente" '2025-02-12 @ 12:59
-                With wshGL_EJ_Recurrente
+            Case "wsdGL_EJ_Recurrente" '2025-02-12 @ 12:59
+                With wsdGL_EJ_Recurrente
                     Set rngUnion = Application.Union( _
                         .Range(.Cells(2, fGlEjRNoEjR), .Cells(lastUsedRow, fGlEjRNoEjR)) _
                         .Range(.Cells(2, fGlEjRNoCompte), .Cells(lastUsedRow, fGlEjRNoCompte)), _
@@ -4205,8 +4205,8 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                     .Range(.Cells(2, fGlEjRTimeStamp), .Cells(lastUsedRow, fGlEjRTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
                 End With
             
-            Case "wshGL_Trans" '2025-02-12 @ 13:06
-                With wshGL_Trans
+            Case "wsdGL_Trans" '2025-02-12 @ 13:06
+                With wsdGL_Trans
                     .Range(.Cells(2, fGlTNoCompte), .Cells(lastUsedRow, fGlTTimeStamp)).HorizontalAlignment = xlCenter
                     Set rngUnion = Application.Union( _
                         .Range(.Cells(2, fGlTDate), .Cells(lastUsedRow, fGlTSource)), _
@@ -4221,8 +4221,8 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                     .Range(.Cells(2, fGlTTimeStamp), .Cells(lastUsedRow, fGlTTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
                 End With
             
-            Case "wshTEC_Local" '2025-02-12 @ 13:14
-                With wshTEC_Local
+            Case "wsdTEC_Local" '2025-02-12 @ 13:14
+                With wsdTEC_Local
                     .Range(.Cells(3, fTECTECID), .Cells(lastUsedRow, fTECNoFacture)).HorizontalAlignment = xlCenter
                     Set rngUnion = Application.Union( _
                         .Range(.Cells(3, fTECClientNom), .Cells(lastUsedRow, fTECDescription)), _
@@ -4295,7 +4295,7 @@ Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
     Call Make_It_As_Header(wsOutput.Range("A1:K1"))
     
     'Feuille pour les clients
-    Dim wsMF As Worksheet: Set wsMF = wshBD_Clients
+    Dim wsMF As Worksheet: Set wsMF = wsdBD_Clients
     Dim lastUsedRowClientMF As Long
     lastUsedRowClientMF = wsMF.Cells(wsMF.Rows.count, 1).End(xlUp).row
     Dim rngClientsMF As Range
@@ -4303,13 +4303,13 @@ Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
     
     'Get From and To Dates
     Dim dateFrom As Date, dateTo As Date
-    dateFrom = wshAdmin.Range("MoisPrecDe").value
-    dateTo = wshAdmin.Range("MoisPrecA").value
+    dateFrom = wsdADMIN.Range("MoisPrecDe").value
+    dateTo = wsdADMIN.Range("MoisPrecA").value
     
     'Analyse de TEC_Local
     Call modImport.ImporterTEC
     
-    Dim wsTEC As Worksheet: Set wsTEC = wshTEC_Local
+    Dim wsTEC As Worksheet: Set wsTEC = wsdTEC_Local
     
     Dim lastUsedRowTEC As Long
     lastUsedRowTEC = wsTEC.Cells(wsTEC.Rows.count, 1).End(xlUp).row
@@ -4356,11 +4356,11 @@ Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
             SortOn:=xlSortOnValues, _
             Order:=xlAscending, _
             DataOption:=xlSortTextAsNumbers 'Sort Date
-        .SortFields.Add key:=wshTEC_Local.Range("C2"), _
+        .SortFields.Add key:=wsdTEC_Local.Range("C2"), _
             SortOn:=xlSortOnValues, _
             Order:=xlAscending, _
             DataOption:=xlSortNormal 'Sort on Client's name
-        .SortFields.Add key:=wshTEC_Local.Range("D2"), _
+        .SortFields.Add key:=wsdTEC_Local.Range("D2"), _
             SortOn:=xlSortOnValues, _
             Order:=xlDescending, _
             DataOption:=xlSortNormal 'Sort on Hours
@@ -4370,7 +4370,7 @@ Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
     
     'Ajustement des formats
     With wsOutput
-        .Range("A2:B" & rowOutput + 1).NumberFormat = wshAdmin.Range("B1").value
+        .Range("A2:B" & rowOutput + 1).NumberFormat = wsdADMIN.Range("B1").value
         .Range("D2:D" & rowOutput + 1).NumberFormat = "##0.00"
         .Range("A2:K" & rowOutput + 1).Font.Name = "Aptos Narrow"
         .Range("A2:K" & rowOutput + 1).Font.size = 10
@@ -4548,9 +4548,9 @@ Sub NoterNombreLignesParFeuille() '2025-01-22 @ 16:19
     
     'Spécifiez les chemins des classeurs
     Dim cheminClasseurUsage As String
-    cheminClasseurUsage = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & "GCF_File_Usage.xlsx"
+    cheminClasseurUsage = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & "GCF_File_Usage.xlsx"
     Dim cheminClasseurMASTER As String
-    cheminClasseurMASTER = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
+    cheminClasseurMASTER = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
     
     Application.ScreenUpdating = False
     
@@ -4642,7 +4642,7 @@ Sub ExempleUtilisation()
     Dim dict As Object
     
     'Définir la feuille de calcul et la plage
-    Dim ws As Worksheet: Set ws = wshFAC_Entête
+    Dim ws As Worksheet: Set ws = wsdFAC_Entête
     Dim rng As Range: Set rng = ws.Range("A1").CurrentRegion.offset(2, 0)
     'Redimensionner la plage pour inclure uniquement les lignes restantes
     Set rng = rng.Resize(rng.Rows.count - 2, rng.Columns.count)
@@ -4672,7 +4672,7 @@ Sub Vérifier_Mix_ClientID_ClientNom_TEC()
     
     'Feuille TEC_Local
     Dim ws As Worksheet
-    Set ws = wshTEC_Local
+    Set ws = wsdTEC_Local
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     'Transfère la feuille en mémoire (matrice)

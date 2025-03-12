@@ -9,7 +9,7 @@ Public Sub Convertir_NF_en_Facturable_Dans_BD(tecID As Long) '2025-01-15 @ 09:44
     
     'Classeur & feuille à mettre à jour
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "TEC_Local$"
     
@@ -56,7 +56,7 @@ Public Sub Convertir_NF_en_Facturable_Locally(tecID As Long) '2025-01-15 @ 09:44
     Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Stuff:Convertir_NF_en_Facturable_Locally", CStr(tecID), 0)
     
     Dim ws As Worksheet
-    Set ws = wshTEC_Local
+    Set ws = wsdTEC_Local
     
     'Déterminer la plage à rechercher dans TEC_Local
     Dim lastTECRow As Long

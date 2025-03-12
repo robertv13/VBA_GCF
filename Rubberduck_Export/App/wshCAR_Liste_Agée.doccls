@@ -1,8 +1,5 @@
 ﻿Option Explicit
 
-Public previousCellAddress As Variant
-'Public CelluleClicDroit As Range
-
 Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshCAR_Liste_Agée:Worksheet_Activate", "", 0)
@@ -35,7 +32,7 @@ Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
     wshCAR_Liste_Agée.Range("B4").value = "Facture"
     wshCAR_Liste_Agée.Range("D4").value = "Numéro de facture"
     wshCAR_Liste_Agée.Range("F4").value = "Non"
-    wshCAR_Liste_Agée.Range("H4").value = Format$(Date, wshAdmin.Range("B1").value)
+    wshCAR_Liste_Agée.Range("H4").value = Format$(Date, wsdADMIN.Range("B1").value)
     
     'Efface la liste précédente
     Dim lastUsedRow As Long
@@ -54,7 +51,7 @@ Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
     Application.ScreenUpdating = True
     
     ws.Range("B4").Select
-    previousCellAddress = ws.Range("B4").Address
+    gPreviousCellAddress = ws.Range("B4").Address
 
     'Libérer la mémoire
     Set ws = Nothing
@@ -67,8 +64,8 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshCAR_Liste_Agée:Worksheet_SelectionChange", target.Address, 0)
     
-    If previousCellAddress <> "" Then
-        Range(previousCellAddress).Interior.Color = COULEUR_BASE_FACTURATION
+    If gPreviousCellAddress <> "" Then
+        Range(gPreviousCellAddress).Interior.Color = COULEUR_BASE_FACTURATION
     End If
     
     'Is Niveau de Détail been selected ?
@@ -95,7 +92,7 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
     End If
     
     'Save the current cell Address
-    previousCellAddress = target.Address
+    gPreviousCellAddress = target.Address
     
     Call Log_Record("wshCAR_Liste_Agée:Worksheet_SelectionChange", "", startTime)
     
@@ -121,7 +118,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
         Application.EnableEvents = False
         fullDate = Fn_Complete_Date(target.Text, 365, 0)
         If fullDate <> "Invalid Date" Then
-            target.value = Format$(fullDate, wshAdmin.Range("B1").value)
+            target.value = Format$(fullDate, wsdADMIN.Range("B1").value)
             Application.EnableEvents = True
         Else
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshCAR_Liste_Agée_125")

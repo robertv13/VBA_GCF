@@ -47,7 +47,7 @@ Private Sub UserForm_Initialize()
     'Vérifier si la plage nommée existe
     On Error Resume Next
     Dim plage As Range
-    Set plage = wshAdmin.Range("dnrDateRange")
+    Set plage = wsdADMIN.Range("dnrDateRange")
     On Error GoTo 0
     
     If Not plage Is Nothing Then
@@ -94,7 +94,7 @@ Private Sub cmbTypeRapport_Change()
         fraTypeEcriture.Top = 145
         txtNoEcritureDebut = 1
         Dim maxNumeroEcriture As Long
-        maxNumeroEcriture = Application.WorksheetFunction.Max(wshGL_Trans.Range("A:A"))
+        maxNumeroEcriture = Application.WorksheetFunction.Max(wsdGL_Trans.Range("A:A"))
         txtNoEcritureFin = maxNumeroEcriture
         'Désactiver la sélection de comptes (car non applicable)
         lsbComptes.Enabled = False
@@ -120,38 +120,38 @@ Private Sub cmbPeriode_Change()
 
         Select Case cmbPeriode.value
             Case "Aujourd'hui"
-                txtDateDebut.value = Format$(Date, wshAdmin.Range("B1").value)
-                txtDateFin.value = Format$(Date, wshAdmin.Range("B1").value)
+                txtDateDebut.value = Format$(Date, wsdADMIN.Range("B1").value)
+                txtDateFin.value = Format$(Date, wsdADMIN.Range("B1").value)
             Case "Mois Courant"
-                txtDateDebut.value = Format$(wshAdmin.Range("MoisDe"), wshAdmin.Range("B1").value)
-                txtDateFin.value = Format$(wshAdmin.Range("MoisA"), wshAdmin.Range("B1").value)
+                txtDateDebut.value = Format$(wsdADMIN.Range("MoisDe"), wsdADMIN.Range("B1").value)
+                txtDateFin.value = Format$(wsdADMIN.Range("MoisA"), wsdADMIN.Range("B1").value)
             Case "Mois Dernier"
-                txtDateDebut.value = Format$(wshAdmin.Range("MoisPrecDe"), wshAdmin.Range("B1").value)
-                txtDateFin.value = Format$(wshAdmin.Range("MoisPrecA"), wshAdmin.Range("B1").value)
+                txtDateDebut.value = Format$(wsdADMIN.Range("MoisPrecDe"), wsdADMIN.Range("B1").value)
+                txtDateFin.value = Format$(wsdADMIN.Range("MoisPrecA"), wsdADMIN.Range("B1").value)
             Case "Trimestre courant"
-                txtDateDebut.value = Format$(wshAdmin.Range("TrimDe"), wshAdmin.Range("B1").value)
-                txtDateFin.value = Format$(wshAdmin.Range("TrimA"), wshAdmin.Range("B1").value)
+                txtDateDebut.value = Format$(wsdADMIN.Range("TrimDe"), wsdADMIN.Range("B1").value)
+                txtDateFin.value = Format$(wsdADMIN.Range("TrimA"), wsdADMIN.Range("B1").value)
             Case "Trimestre précédent"
-                txtDateDebut.value = Format$(wshAdmin.Range("TrimPrecDe"), wshAdmin.Range("B1").value)
-                txtDateFin.value = Format$(wshAdmin.Range("TrimPrecA"), wshAdmin.Range("B1").value)
+                txtDateDebut.value = Format$(wsdADMIN.Range("TrimPrecDe"), wsdADMIN.Range("B1").value)
+                txtDateFin.value = Format$(wsdADMIN.Range("TrimPrecA"), wsdADMIN.Range("B1").value)
             Case "Année courante"
-                txtDateDebut.value = Format$(wshAdmin.Range("AnneeDe"), wshAdmin.Range("B1").value)
-                txtDateFin.value = Format$(wshAdmin.Range("AnneeA"), wshAdmin.Range("B1").value)
+                txtDateDebut.value = Format$(wsdADMIN.Range("AnneeDe"), wsdADMIN.Range("B1").value)
+                txtDateFin.value = Format$(wsdADMIN.Range("AnneeA"), wsdADMIN.Range("B1").value)
             Case "Année précédente"
-                txtDateDebut.value = Format$(wshAdmin.Range("AnneePrecDe"), wshAdmin.Range("B1").value)
-                txtDateFin.value = Format$(wshAdmin.Range("AnneePrecA"), wshAdmin.Range("B1").value)
+                txtDateDebut.value = Format$(wsdADMIN.Range("AnneePrecDe"), wsdADMIN.Range("B1").value)
+                txtDateFin.value = Format$(wsdADMIN.Range("AnneePrecA"), wsdADMIN.Range("B1").value)
             Case "7 derniers jours"
-                txtDateDebut.value = Format$(wshAdmin.Range("SeptJoursDe"), wshAdmin.Range("B1").value)
-                txtDateFin.value = Format$(wshAdmin.Range("SeptJoursA"), wshAdmin.Range("B1").value)
+                txtDateDebut.value = Format$(wsdADMIN.Range("SeptJoursDe"), wsdADMIN.Range("B1").value)
+                txtDateFin.value = Format$(wsdADMIN.Range("SeptJoursA"), wsdADMIN.Range("B1").value)
             Case "15 derniers jours"
-                txtDateDebut.value = Format$(wshAdmin.Range("QuinzeJoursDe"), wshAdmin.Range("B1").value)
-                txtDateFin.value = Format$(wshAdmin.Range("QuinzeJoursA"), wshAdmin.Range("B1").value)
+                txtDateDebut.value = Format$(wsdADMIN.Range("QuinzeJoursDe"), wsdADMIN.Range("B1").value)
+                txtDateFin.value = Format$(wsdADMIN.Range("QuinzeJoursA"), wsdADMIN.Range("B1").value)
             Case "Semaine"
-                txtDateDebut.value = Format$(wshAdmin.Range("DateDebutSemaine"), wshAdmin.Range("B1").value)
-                txtDateFin.value = Format$(wshAdmin.Range("DateFinSemaine"), wshAdmin.Range("B1").value)
+                txtDateDebut.value = Format$(wsdADMIN.Range("DateDebutSemaine"), wsdADMIN.Range("B1").value)
+                txtDateFin.value = Format$(wsdADMIN.Range("DateFinSemaine"), wsdADMIN.Range("B1").value)
             Case "Toutes les dates"
-                txtDateDebut.value = Format$(#1/1/2024#, wshAdmin.Range("B1").value)
-                txtDateFin.value = Format$(wshAdmin.Range("AnneeA"), wshAdmin.Range("B1").value)
+                txtDateDebut.value = Format$(#1/1/2024#, wsdADMIN.Range("B1").value)
+                txtDateFin.value = Format$(wsdADMIN.Range("AnneeA"), wsdADMIN.Range("B1").value)
             Case Else
                 txtDateDebut.value = ""
                 txtDateFin.value = ""

@@ -6,9 +6,9 @@ Public Sub GL_Get_Account_Trans_AF(glNo As String, dateDeb As Date, dateFin As D
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Stuff:GL_Get_Account_Trans_AF", glNo & " - De " & dateDeb & " à " & dateFin, 0)
 
     'Les données à AF proviennent de GL_Trans
-    Dim ws As Worksheet: Set ws = wshGL_Trans
+    Dim ws As Worksheet: Set ws = wsdGL_Trans
     
-    'wshGL_Trans_AF#1
+    'wsdGL_Trans_AF#1
 
     'Effacer les données de la dernière utilisation
     ws.Range("M6:M10").ClearContents
@@ -48,25 +48,25 @@ Public Sub GL_Get_Account_Trans_AF(glNo As String, dateDeb As Date, dateFin As D
     If lastUsedRow > 2 Then
         With ws.Sort
             .SortFields.Clear
-            .SortFields.Add key:=wshGL_Trans.Range("T2"), _
+            .SortFields.Add key:=wsdGL_Trans.Range("T2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Tri par numéro de compte
-            .SortFields.Add key:=wshGL_Trans.Range("Q2"), _
+            .SortFields.Add key:=wsdGL_Trans.Range("Q2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Tri par date
-            .SortFields.Add key:=wshGL_Trans.Range("P2"), _
+            .SortFields.Add key:=wsdGL_Trans.Range("P2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal 'Tri par numéro d'écriture
-            .SetRange wshGL_Trans.Range("P2:Y" & lastUsedRow) 'Set Range
+            .SetRange wsdGL_Trans.Range("P2:Y" & lastUsedRow) 'Set Range
             .Apply 'Apply Sort
         End With
     End If
 
     'Retourne le Range des résultats
-    Set rResult = wshGL_Trans.Range("P1:Y" & lastUsedRow)
+    Set rResult = wsdGL_Trans.Range("P1:Y" & lastUsedRow)
     
     'Libérer la mémoire
     Set rngCriteria = Nothing
@@ -83,7 +83,7 @@ Sub GL_Posting_To_DB(df As Date, desc As String, source As String, arr As Varian
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Stuff:GL_Posting_To_DB", "", 0)
 
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wshAdmin.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "GL_Trans$"
     
@@ -166,7 +166,7 @@ Sub GL_Posting_Locally(df As Date, desc As String, source As String, arr As Vari
     
     'What is the last used row in GL_Trans ?
     Dim rowToBeUsed As Long
-    rowToBeUsed = wshGL_Trans.Cells(wshGL_Trans.Rows.count, 1).End(xlUp).row + 1
+    rowToBeUsed = wsdGL_Trans.Cells(wsdGL_Trans.Rows.count, 1).End(xlUp).row + 1
     
     'timeStamp uniforme
     Dim timeStamp As Date
@@ -174,7 +174,7 @@ Sub GL_Posting_Locally(df As Date, desc As String, source As String, arr As Vari
     
     Dim i As Long, j As Long
     'Loop through the array and post each row
-    With wshGL_Trans
+    With wsdGL_Trans
         For i = LBound(arr, 1) To UBound(arr, 1)
             If arr(i, 1) <> "" Then
                 .Range("A" & rowToBeUsed).value = GLEntryNo

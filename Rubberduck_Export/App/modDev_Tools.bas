@@ -470,7 +470,7 @@ End Sub
 
 Sub Debug_Écart_TEC_Local_vs_TEC_TDB_Data()
 
-    Dim wsTEC As Worksheet: Set wsTEC = wshTEC_Local
+    Dim wsTEC As Worksheet: Set wsTEC = wsdTEC_Local
     Dim lurTEC As Long
     lurTEC = wsTEC.Cells(wsTEC.Rows.count, 1).End(xlUp).row
     
@@ -669,13 +669,13 @@ End Sub
 
 Sub Sauvegarder_UserForms_Parameters() '2024-11-26 @ 07:42
 
-    'Utiliser la feuille 'UserForm_Params' ou la créer pour sauvegarder les paramètres
+    'Utiliser la feuille 'Doc_UserForm_Params' ou la créer pour sauvegarder les paramètres
     On Error Resume Next
     Dim ws As Worksheet
-    Set ws = wshUserFormParams
+    Set ws = wshzDocUserFormParams
     If ws Is Nothing Then
         Set ws = ThisWorkbook.Sheets.Add
-        ws.Name = "UserForm_Params"
+        ws.Name = "Doc_UserForm_Params"
     End If
     On Error GoTo 0
     
@@ -727,9 +727,9 @@ Sub Restaurer_UserForms_Parameters()
 
     'Vérifier si la feuille existe
     On Error Resume Next
-    Set ws = wshUserFormParams
+    Set ws = wshzDocUserFormParams
     If ws Is Nothing Then
-        MsgBox "La feuille 'UserForm_Params' n'existe pas. Sauvegardez d'abord les paramètres.", vbExclamation
+        MsgBox "La feuille 'Doc_UserForm_Params' n'existe pas. Sauvegardez d'abord les paramètres.", vbExclamation
         Exit Sub
     End If
     On Error GoTo 0
