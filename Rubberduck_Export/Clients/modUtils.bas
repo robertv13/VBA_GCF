@@ -93,7 +93,7 @@ Sub CM_Verify_DDM(fullFileName As String)
     Call CM_Get_Date_Derniere_Modification(fullFileName, ddm, jours, heures, minutes, secondes)
     
     'Record to the log the difference between NOW and the date of last modifcation
-    Call CM_Log_Activities("modMain:CM_Update_External_GCF_BD_Entrée", "DDM (" & jours & "." & heures & "." & minutes & "." & secondes & ")", -1)
+    Call CM_Log_Activities("modMain:CM_Update_External_GCF_Entrée_BD", "DDM (" & jours & "." & heures & "." & minutes & "." & secondes & ")", -1)
     If jours > 0 Or heures > 0 Or minutes > 0 Or secondes > 3 Then
         MsgBox "ATTENTION, le fichier MAÎTRE (GCF_Entrée.xlsx)" & vbNewLine & vbNewLine & _
                "n'a pas été modifié adéquatement sur disque..." & vbNewLine & vbNewLine & _
@@ -105,7 +105,7 @@ Sub CM_Verify_DDM(fullFileName As String)
 
 End Sub
 
-Sub Max_Code_Values_From_GCF_Entree(ByRef maxSmallCodes As String, ByRef maxLargeCodes As String)
+Sub Max_Code_Values_From_GCF_Entree(ByRef maxSmallCodes As String, ByRef maxLargeCodes As String, ByRef maxVeryLargeCodes As String)
 
     'Analyze Clients List from 'GCF_BD_Entrée.xlsx
     Dim strFilePath As String, strSheet As String
@@ -126,10 +126,11 @@ Sub Max_Code_Values_From_GCF_Entree(ByRef maxSmallCodes As String, ByRef maxLarg
     'Ouvrir la connexion
     cn.Open strConn
 
-    'Requête pour trouver la valeur maximale pour les codes de 1 à 999
-    Dim sqlQuery As String
-    sqlQuery = "SELECT MAX(Val(ClientID)) AS MaxSmallCodes FROM [" & strSheet & "] WHERE Val(ClientID) >= 1 AND Val(ClientID) <= 999"
     Dim rs As Object
+    Dim sqlQuery As String
+    
+    'Requête pour trouver la valeur maximale pour les codes de 1 à 999
+    sqlQuery = "SELECT MAX(Val(ClientID)) AS MaxSmallCodes FROM [" & strSheet & "] WHERE Val(ClientID) >= 1 AND Val(ClientID) <= 999"
     Set rs = cn.Execute(sqlQuery)
 
     If Not rs.EOF Then
@@ -152,6 +153,20 @@ Sub Max_Code_Values_From_GCF_Entree(ByRef maxSmallCodes As String, ByRef maxLarg
 
     'Fermer le Recordset et la connexion
     rs.Close
+    
+    'Requête pour trouver la valeur maximale pour les codes supérieurs ou égaux à 1000
+    sqlQuery = "SELECT MAX(Val(ClientID)) AS MaxVeryLargeCodes FROM [" & strSheet & "] WHERE Len(ClientID) >= 4 AND Val(ClientID) >= 5000"
+    Set rs = cn.Execute(sqlQuery)
+
+    If Not rs.EOF Then
+        maxVeryLargeCodes = rs.Fields("MaxVeryLargeCodes").Value
+    Else
+        maxVeryLargeCodes = ""
+    End If
+
+    'Fermer le Recordset et la connexion
+    rs.Close
+    
     cn.Close
     
     If maxSmallCodes <> "" Then
@@ -160,6 +175,10 @@ Sub Max_Code_Values_From_GCF_Entree(ByRef maxSmallCodes As String, ByRef maxLarg
 
     If maxLargeCodes <> "" Then
         maxLargeCodes = Fn_Incremente_Code(maxLargeCodes)
+    End If
+
+    If maxVeryLargeCodes <> "" Then
+        maxVeryLargeCodes = Fn_Incremente_Code(maxVeryLargeCodes)
     End If
 
     'Nettoyer les objets
@@ -199,7 +218,8 @@ Sub Valider_Client_Avant_Effacement(clientID As String, Optional ByRef clientExi
             'Boucle sur les feuilles à vérifier (exemple: "Sheet1", "Sheet2")
             Dim feuilleRechercher As Variant
             Dim plageRechercher As String, colName As String, feuilleName As String
-            For Each feuilleRechercher In Array("ENC_Entête|CodeClient", _
+            For Each feuilleRechercher In Array("CC_Régularisations|ClientID", _
+                                                "ENC_Entête|CodeClient", _
                                                 "FAC_Comptes_Clients|CodeClient", _
                                                 "FAC_Entête|CustID", _
                                                 "FAC_Projets_Détails|ClientID", _
@@ -214,9 +234,11 @@ Sub Valider_Client_Avant_Effacement(clientID As String, Optional ByRef clientExi
                 
                 Set rs = conn.Execute(sql)
                 If Not rs.EOF Then
-                    message1 = message1 & "Le client '" & clientID & "' existe dans la feuille '" & feuilleName & "'" & vbCrLf
+                    message1 = message1 & "Le client '" & clientID & "' existe dans la feuille '" & feuilleName & "' " & vbNewLine & vbNewLine & _
+                                          "du classeur '" & listeWorkbooks(i) & "'" & vbCrLf
+                    Debug.Print message1
                     clientExiste = True
-                GoTo Exit_Sub
+'                GoTo Exit_Sub
                 End If
                 rs.Close
             Next feuilleRechercher
@@ -241,8 +263,9 @@ Sub Valider_Client_Avant_Effacement(clientID As String, Optional ByRef clientExi
             Set foundCell = ws.Cells.Find(What:=clientID, LookIn:=xlValues, LookAt:=xlWhole)
             If Not foundCell Is Nothing Then
                 message2 = message2 & "Le client '" & clientID & "' existe dans la feuille '" & ws.Name & "' du Workbook '" & wb.Name & "'" & vbCrLf
+                Debug.Print message2
                 clientExiste = True
-                GoTo Exit_Sub
+'                GoTo Exit_Sub
             End If
 Next_Worksheet:
         Next ws
@@ -266,11 +289,11 @@ Exit_Sub:
     
 End Sub
 
-Sub Code_Search_Everywhere() '2024-10-26 @ 11:27
+Sub CodeSearchMain() '2024-10-26 @ 11:27
     
     'Declare lineOfCode() as variant
     Dim allLinesOfCode As Variant
-    ReDim allLinesOfCode(1 To 25000, 1 To 4)
+    ReDim allLinesOfCode(1 To 30000, 1 To 4)
     
 '    Application.ScreenUpdating = False
     
@@ -367,7 +390,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
 
     Dim posProcedure As Long, posFunction As Long
     Dim saveLineOfCode As String, trimmedLineOfCode As String, procedureName As String
-    Dim TimeStamp As String
+    Dim timeStamp As String
     Dim X As Long, xr As Long
     For X = LBound(arr, 1) To UBound(arr, 1)
         trimmedLineOfCode = arr(X, 4)
@@ -418,8 +441,8 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
                 arrResult(xr, 4) = arr(X, 3) 'LineNum
                 arrResult(xr, 5) = procedureName
                 arrResult(xr, 6) = "'" & saveLineOfCode
-                TimeStamp = Format$(Now(), "mm/dd/yyyy hh:mm:ss")
-                arrResult(xr, 7) = TimeStamp
+                timeStamp = Format$(Now(), "mm/dd/yyyy hh:mm:ss")
+                arrResult(xr, 7) = timeStamp
                 arrResult(xr, 1) = UCase(arr(X, 1)) & Chr(0) & UCase(arr(X, 2)) & Chr(0) & Format$(arr(X, 3), "0000") & Chr(0) & procedureName 'Future sort key
             End If
         End If
@@ -664,6 +687,23 @@ Sub Array_2D_Bubble_Sort(ByRef arr() As Variant) '2024-06-23 @ 07:05
     Next i
 
 End Sub
+
+Function FichierEstOuvert(cheminFichier As String) As Boolean '2025-03-13 @ 08:06
+
+    Dim fichier As Integer
+    fichier = FreeFile
+    
+    On Error Resume Next
+    Open cheminFichier For Binary Access Read Write Lock Read Write As #fichier
+    If Err.Number <> 0 Then
+        FichierEstOuvert = True
+    Else
+        FichierEstOuvert = False
+        Close #fichier
+    End If
+    On Error GoTo 0
+    
+End Function
 
 Sub Simple_Print_Setup(ws As Worksheet, rng As Range, header1 As String, _
                        header2 As String, titleRows As String, Optional Orient As String = "L")

@@ -75,13 +75,16 @@ Private Sub cmdAddClient_Click()
     ufClientMF.txtCodeClient.SetFocus
     
     'Obtenir le dernier numéro de client utilisé (particulier / corporatif)
-    Dim maxSmallCode As String, maxLargeCode As String
-    Call Max_Code_Values_From_GCF_Entree(maxSmallCode, maxLargeCode)
+    Dim maxSmallCode As String, maxLargeCode As String, maxVeryLargeCode As String
+    Call Max_Code_Values_From_GCF_Entree(maxSmallCode, maxLargeCode, maxVeryLargeCode)
     
-    MsgBox "Code à utiliser pour les particuliers = '" & maxSmallCode & "'" & vbNewLine & vbNewLine & _
-           "Code à utiliser pour les entreprises  = '" & maxLargeCode & "'", vbInformation, _
-                                        "Codes à utiliser pour la création d'un nouveau client"
-
+    MsgBox _
+        Prompt:="Code à utiliser pour les particuliers = '" & maxSmallCode & "'" & vbNewLine & vbNewLine & _
+                "Code à utiliser pour les entreprises  = '" & maxLargeCode & "'" & vbNewLine & vbNewLine & _
+                "Code à utiliser pour > 5000  = '" & maxVeryLargeCode & "'", _
+        Title:="Codes à utiliser pour la création d'un nouveau client", _
+        Buttons:=vbInformation
+        
     Call CM_Log_Activities("ufClientMF:cmdAddClient_Click", "", startTime)
 
 End Sub
