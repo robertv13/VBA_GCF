@@ -1,4 +1,6 @@
-﻿Option Explicit
+﻿'@Folder("Rapport_ListeAgéeCC")
+
+Option Explicit
 
 Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
 
@@ -150,11 +152,11 @@ Private Sub Worksheet_BeforeRightClick(ByVal target As Range, Cancel As Boolean)
     'Déprotéger temporairement la feuille pour autoriser le changement de sélection
     Dim feuilleProtegee As Boolean
     feuilleProtegee = ActiveSheet.ProtectContents
-    
+
     If feuilleProtegee = True Then
         ActiveSheet.Unprotect
     End If
-    
+
     'Stocker la cellule cliquée dans une variable globale
 '    Set CelluleClicDroit = Target
 
@@ -175,5 +177,5 @@ Private Sub Worksheet_BeforeRightClick(ByVal target As Range, Cancel As Boolean)
     If feuilleProtegee Then
         ActiveSheet.Protect
     End If
-    
+
 End Sub

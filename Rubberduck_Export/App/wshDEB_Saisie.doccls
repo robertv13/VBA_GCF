@@ -1,4 +1,6 @@
-﻿Option Explicit
+﻿'@Folder("Saisie_Déboursé")
+
+Option Explicit
 
 Private Sub Worksheet_Activate()
 
@@ -233,12 +235,11 @@ Private Sub Process_Change(ByVal target As Range)
     If Not Intersect(target, Range("F4")) Is Nothing Then
         If target.value = "AUTO" Then
             Call DEB_AfficherDeboursRecurrent
+            Exit Sub
         End If
-        Exit Sub
         If target.value = "Renversement" Then
             Call DEB_Renverser_Ecriture
         End If
-        Exit Sub
     End If
     
     'Date has changed

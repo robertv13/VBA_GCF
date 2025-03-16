@@ -1,4 +1,6 @@
 Attribute VB_Name = "modCC_Régularisation"
+'@Folder("Saisie_Encaissement")
+
 Option Explicit
 
 'Variables globales pour le module

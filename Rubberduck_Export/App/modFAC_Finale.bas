@@ -1,4 +1,6 @@
 Attribute VB_Name = "modFAC_Finale"
+'@Folder("Saisie_Facture")
+
 Option Explicit
 
 Private invRow As Long, itemDBRow As Long, invitemRow As Long, invNumb As Long

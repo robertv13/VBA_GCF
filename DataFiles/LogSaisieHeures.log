@@ -29,3 +29,7 @@
 2025-03-09 12:36:10.34 | Robert M. Vigneault | APP_v6.B.3.xlsb | UPDATE 4691 | ML | 08/03/2025 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | Test | 0,25 | VRAI | 
 2025-03-09 12:36:28.22 | Robert M. Vigneault | APP_v6.B.3.xlsb | UPDATE 4691 | ML | 08/03/2025 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | Test | 0,20 | VRAI | 
 2025-03-09 12:40:27.71 | Robert M. Vigneault | APP_v6.B.3.xlsb | DELETE-4691 | ML | 08/03/2025 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | Test | 0,20 | VRAI | 
+2025-03-14 11:11:46.71 | Robert M. Vigneault | APP_v6.C.1.xlsb | ADD    4835 | OB | 14/03/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Test | 0,10 | VRAI | Commentaire / Note
+2025-03-14 11:11:57.38 | Robert M. Vigneault | APP_v6.C.1.xlsb | UPDATE 4835 | OB | 14/03/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Test | 0,20 | VRAI | Commentaire / Note
+2025-03-14 11:12:21.16 | Robert M. Vigneault | APP_v6.C.1.xlsb | UPDATE 4835 | OB | 14/03/2025 | 1516 | Les Industries Canplex Ltée [Marco Stocchero] | Test | 0,20 | VRAI | Commentaire / Note
+2025-03-14 11:14:38.92 | Robert M. Vigneault | APP_v6.C.1.xlsb | DELETE-4835 | OB | 14/03/2025 | 1516 | Les Industries Canplex Ltée [Marco Stocchero] | Test | 0,20 | VRAI | Commentaire / Note

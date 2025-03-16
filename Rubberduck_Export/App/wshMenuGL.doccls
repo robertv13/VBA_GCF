@@ -1,4 +1,6 @@
-﻿Option Explicit
+﻿'@Folder("Menu")
+
+Option Explicit
 
 Private Sub Worksheet_Activate()
 

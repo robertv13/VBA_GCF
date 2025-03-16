@@ -686,12 +686,12 @@ Sub Sauvegarder_UserForms_Parameters() '2024-11-26 @ 07:42
     Dim i As Integer
     i = 2
     'Parcourir tous les composants VBA pour trouver les UserForms
-    Dim vbComp As Object
+    Dim VBComp As Object
     Dim userFormName As String
     Dim uf As Object
-    For Each vbComp In ThisWorkbook.VBProject.VBComponents
-        If vbComp.Type = vbext_ct_MSForm Then
-            userFormName = vbComp.Name
+    For Each VBComp In ThisWorkbook.VBProject.VBComponents
+        If VBComp.Type = vbext_ct_MSForm Then
+            userFormName = VBComp.Name
             On Error Resume Next
             ' Charger dynamiquement le UserForm
             Set uf = VBA.UserForms.Add(userFormName)
@@ -709,7 +709,7 @@ Sub Sauvegarder_UserForms_Parameters() '2024-11-26 @ 07:42
                 Set uf = Nothing
             End If
         End If
-    Next vbComp
+    Next VBComp
     
     'Libérer la mémoire
     Set uf = Nothing
@@ -964,7 +964,7 @@ Sub VerifierControlesAssociesToutesFeuilles()
     Dim btn As Object
     Dim macroNameRaw As String
     Dim macroName As String
-    Dim vbComp As Object
+    Dim VBComp As Object
     Dim codeModule As Object
     Dim ligne As Long
     Dim found As Boolean
@@ -1041,16 +1041,16 @@ Function VerifierMacroExiste(macroName As String, Optional moduleName As String 
     VerifierMacroExiste = False
     
     'Si un module spécifique est fourni, vérifier uniquement dans ce module
-    Dim vbComp As Object
+    Dim VBComp As Object
     Dim codeModule As Object
     Dim ligne As Long
     
     If moduleName <> "" Then
         On Error Resume Next
-        Set vbComp = ThisWorkbook.VBProject.VBComponents(moduleName)
+        Set VBComp = ThisWorkbook.VBProject.VBComponents(moduleName)
         On Error GoTo 0
-        If Not vbComp Is Nothing Then
-            Set codeModule = vbComp.codeModule
+        If Not VBComp Is Nothing Then
+            Set codeModule = VBComp.codeModule
             For ligne = 1 To codeModule.CountOfLines
                 If codeModule.ProcOfLine(ligne, vbext_pk_Proc) = macroName Then
                     VerifierMacroExiste = True
@@ -1062,15 +1062,15 @@ Function VerifierMacroExiste(macroName As String, Optional moduleName As String 
     End If
     
     'Parcourir tous les modules si aucun module spécifique n'est fourni
-    For Each vbComp In ThisWorkbook.VBProject.VBComponents
-        Set codeModule = vbComp.codeModule
+    For Each VBComp In ThisWorkbook.VBProject.VBComponents
+        Set codeModule = VBComp.codeModule
         For ligne = 1 To codeModule.CountOfLines
             If codeModule.ProcOfLine(ligne, vbext_pk_Proc) = macroName Then
                 VerifierMacroExiste = True
                 Exit Function
             End If
         Next ligne
-    Next vbComp
+    Next VBComp
     
 End Function
 
@@ -1207,10 +1207,10 @@ Sub ExtractEnumDefinition(tableName As String, ByRef arr() As Variant)
     Set VBProj = ThisWorkbook.VBProject
 
     'Parcourir tous les composants VBA
-    Dim vbComp As VBIDE.VBComponent
+    Dim VBComp As VBIDE.VBComponent
     Dim CodeMod As VBIDE.codeModule
-    For Each vbComp In VBProj.VBComponents
-        Set CodeMod = vbComp.codeModule
+    For Each VBComp In VBProj.VBComponents
+        Set CodeMod = VBComp.codeModule
         'Parcourir chaque ligne de code
         For LineNum = 1 To CodeMod.CountOfLines
             codeLine = Trim$(CodeMod.Lines(LineNum, 1))
@@ -1236,7 +1236,7 @@ Sub ExtractEnumDefinition(tableName As String, ByRef arr() As Variant)
                 End If
             End If
         Next LineNum
-    Next vbComp
+    Next VBComp
 
     'Redimension au minimum le tableau
     Call Array_2D_Resizer(arr, e, 2)
@@ -1591,10 +1591,10 @@ Sub ExporterCodeVBA() '2025-03-11 @ 06:47
     Set ws = ThisWorkbook
 
     'Parcourir tous les modules
-    Dim vbComp As Object
+    Dim VBComp As Object
     Dim ext As String
-    For Each vbComp In ThisWorkbook.VBProject.VBComponents
-        Select Case vbComp.Type
+    For Each VBComp In ThisWorkbook.VBProject.VBComponents
+        Select Case VBComp.Type
             Case 1: ext = ".bas" 'Module standard
             Case 2: ext = ".cls" 'Classe
             Case 3: ext = ".frm" 'UserForm
@@ -1603,14 +1603,104 @@ Sub ExporterCodeVBA() '2025-03-11 @ 06:47
         End Select
         
         If ext <> "" Then
-            vbComp.Export dossierBackup & vbComp.Name & ext
+            VBComp.Export dossierBackup & VBComp.Name & ext
         End If
-    Next vbComp
+    Next VBComp
 
     'Libérer la mémoire
-    Set vbComp = Nothing
+    Set VBComp = Nothing
     Set ws = Nothing
         
 End Sub
 
+Sub CompterLignesCode()
 
+    Dim VBComp As VBComponent
+    Dim ws As Worksheet
+    Dim i As Integer
+    Dim TotalLignes As Long
+
+    'Vérifier si l'accès au VBA est activé
+    If Not VérifierAccesVBAAutorise() Then
+        MsgBox "L'accès au projet VBA est bloqué. Activez-le dans les options de sécurité.", vbCritical
+        Exit Sub
+    End If
+
+    'Ajouter une nouvelle feuille pour stocker les résultats
+    On Error Resume Next
+    Set ws = ThisWorkbook.Sheets("NombreLignesCodeVBA")
+    If ws Is Nothing Then
+        Set ws = ThisWorkbook.Sheets.Add
+        ws.Name = "NombreLignesCodeVBA"
+    Else
+        ws.Cells.Clear
+    End If
+    On Error GoTo 0
+
+    'En-têtes de colonne
+    ws.Cells(1, 1).value = "Type"
+    ws.Cells(1, 2).value = "Nom du Composant"
+    ws.Cells(1, 3).value = "Lignes de Code"
+
+    'Boucle sur tous les composants VBA
+    i = 2
+    TotalLignes = 0
+    For Each VBComp In ThisWorkbook.VBProject.VBComponents
+        ws.Cells(i, 2).value = VBComp.Name
+
+        'Déterminer le type du composant
+        Select Case VBComp.Type
+            Case vbext_ct_StdModule
+                ws.Cells(i, 1).value = "Module Standard"
+            Case vbext_ct_ClassModule
+                ws.Cells(i, 1).value = "Classe"
+            Case vbext_ct_MSForm
+                ws.Cells(i, 1).value = "UserForm"
+            Case vbext_ct_Document
+                ws.Cells(i, 1).value = "Feuille/Workbook"
+            Case Else
+                ws.Cells(i, 1).value = "Autre"
+        End Select
+
+        'Compter les lignes de code
+        ws.Cells(i, 3).value = VBComp.codeModule.CountOfLines
+        TotalLignes = TotalLignes + VBComp.codeModule.CountOfLines
+        i = i + 1
+    Next VBComp
+
+    'Résumé dans MsgBox
+    MsgBox "Analyse terminée !" & vbCrLf & _
+           "Total de lignes de code : " & TotalLignes, vbInformation, "Résultat"
+
+End Sub
+
+Function VérifierAccesVBAAutorise() As Boolean
+
+    Dim Test As Object
+    On Error Resume Next
+    Set Test = ThisWorkbook.VBProject.VBComponents
+    VérifierAccesVBAAutorise = (Err.Number = 0)
+    On Error GoTo 0
+    
+End Function
+
+Sub Tester_dnrProf_Initials_Only() '2025-03-14 @ 10:42
+
+    Dim nm As Name
+    Dim rng As Range
+    Dim strRef As String
+    
+    Set nm = ThisWorkbook.Names("dnrProf_Initials_Only")
+    
+    On Error Resume Next
+    strRef = nm.RefersTo
+    Set rng = Evaluate(strRef) 'Utiliser Evaluate pour contourner RefersToRange
+    On Error GoTo 0
+    
+    If Not rng Is Nothing Then
+        MsgBox "Plage correcte : " & rng.Address
+    Else
+        MsgBox "Erreur : la plage nommée est invalide !", vbCritical
+    End If
+    
+End Sub

@@ -362,6 +362,10 @@ Private Sub cmdGenerer_Click()
             Exit Sub
         End If
         
+        Debug.Print CLng(dateSaisieDebut), CLng(dateSaisieFin)
+        dateSaisieDebut = DateSerial(year(dateSaisieDebut), month(dateSaisieDebut), day(dateSaisieDebut))
+        dateSaisieFin = DateSerial(year(dateSaisieFin), month(dateSaisieFin), day(dateSaisieFin))
+        
         'Les validations sont terminées, on appelle la procédure pour le rapport par date de saisie
         Call GenererRapportGL_DateSaisie(wsRapport, dateSaisieDebut, dateSaisieFin)
        

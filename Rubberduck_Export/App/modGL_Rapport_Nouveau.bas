@@ -358,7 +358,10 @@ Public Sub GenererRapportGL_DateSaisie(wsRapport As Worksheet, dtSaisieDebut As 
     wsSource.AutoFilterMode = False
     On Error GoTo 0
     With wsSource.ListObjects("l_tbl_GL_Trans")
-        .Range.AutoFilter Field:=10, Criteria1:=">=" & CDbl(dtSaisieDebut), Operator:=xlAnd, Criteria2:="<=" & CDbl(dtSaisieFin)
+        .Range.AutoFilter Field:=10, _
+                          Criteria1:=">=" & CLng(dtSaisieDebut), _
+                          Operator:=xlAnd, _
+                          Criteria2:="<" & CLng(dtSaisieFin) + 1
     End With
     
     'Assigner le résultat à un range

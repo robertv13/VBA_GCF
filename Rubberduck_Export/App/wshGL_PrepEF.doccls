@@ -1,4 +1,6 @@
-﻿Option Explicit
+﻿'@Folder("Rapport_ÉtatsFinanciers")
+
+Option Explicit
 
 Private Sub Worksheet_Activate()
 

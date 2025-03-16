@@ -879,8 +879,8 @@ Sub ENC_Back_To_GL_Menu()
     
     wshENC_Saisie.Visible = xlSheetVeryHidden
 
-    wshMenuFAC.Activate
-    wshMenuFAC.Range("A1").Select
+    wshMenuGL.Activate
+    wshMenuGL.Range("A1").Select
     
     Call Log_Record("modENC_Saisie:ENC_Back_To_GL_Menu", "", startTime)
 

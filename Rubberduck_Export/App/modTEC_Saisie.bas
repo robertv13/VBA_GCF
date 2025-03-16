@@ -310,7 +310,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "TEC_Local$"
     
-    On Error GoTo ErrorHandler
+'    On Error GoTo ErrorHandler
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")

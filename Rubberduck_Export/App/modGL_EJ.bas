@@ -1,4 +1,6 @@
 Attribute VB_Name = "modGL_EJ"
+'@Folder("Saisie_Entrée_Journal")
+
 Option Explicit
 
 Private gSauvegardesCaracteristiquesForme As Object

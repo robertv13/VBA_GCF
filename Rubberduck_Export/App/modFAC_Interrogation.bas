@@ -358,11 +358,6 @@ Sub FAC_Interrogation_AfficherMenuContextuel(ByVal target As Range) '2025-01-28 
         menuItem.Caption = "Transactions des Comptes-Clients"
         menuItem.OnAction = "'TransactionComptesClients """ & target.Address & """'"
 
-'    'Ajout de l'option 5 au menu contextuel
-'    Set menuItem = menu.Controls.Add(Type:=msoControlButton)
-'        menuItem.Caption = "Historique des transactions"
-'        menuItem.OnAction = "'HistoriqueTransactions """ & Target.Address & """'"
-
     'Afficher le menu contextuel
     menu.ShowPopup
     
@@ -408,15 +403,16 @@ Sub TEC_HONO_Facture(adresse As String)
     
 End Sub
 
-Sub StatistiquesHonoraires(adresse As String)
-
-    Dim numeroLigne As Long, numeroColonne As Long
-    Call ExtraireLigneColonneCellule(adresse, numeroLigne, numeroColonne)
-    MsgBox "Statistiques d'honoraires pour la cellule " & adresse & vbCrLf & "Ligne : " & numeroLigne & vbCrLf & "Colonne : " & numeroColonne
-    ' Votre logique pour afficher les statistiques d'honoraires ici
-
-End Sub
-
+'CommentOut - 2025-03-14 @ 14:26
+'Sub StatistiquesHonoraires(adresse As String)
+'
+'    Dim numeroLigne As Long, numeroColonne As Long
+'    Call ExtraireLigneColonneCellule(adresse, numeroLigne, numeroColonne)
+'    MsgBox "Statistiques d'honoraires pour la cellule " & adresse & vbCrLf & "Ligne : " & numeroLigne & vbCrLf & "Colonne : " & numeroColonne
+'    ' Votre logique pour afficher les statistiques d'honoraires ici
+'
+'End Sub
+'
 Sub TransactionComptesClients(adresse As String)
 
     Dim numeroLigne As Long, numeroColonne As Long
@@ -438,15 +434,16 @@ Sub TransactionComptesClients(adresse As String)
 
 End Sub
 
-Sub HistoriqueTransactions(adresse As String)
-
-    Dim numeroLigne As Long, numeroColonne As Long
-    Call ExtraireLigneColonneCellule(adresse, numeroLigne, numeroColonne)
-    MsgBox "Historique des transactions pour la cellule " & adresse & vbCrLf & "Ligne : " & numeroLigne & vbCrLf & "Colonne : " & numeroColonne
-    ' Votre logique pour afficher l'historique des transactions ici
-
-End Sub
-
+'CommentOut - 2025-03-14 @ 14:26
+'Sub HistoriqueTransactions(adresse As String)
+'
+'    Dim numeroLigne As Long, numeroColonne As Long
+'    Call ExtraireLigneColonneCellule(adresse, numeroLigne, numeroColonne)
+'    MsgBox "Historique des transactions pour la cellule " & adresse & vbCrLf & "Ligne : " & numeroLigne & vbCrLf & "Colonne : " & numeroColonne
+'    ' Votre logique pour afficher l'historique des transactions ici
+'
+'End Sub
+'
 Sub ExtraireLigneColonneCellule(adresse As String, ByRef numeroLigne As Long, ByRef numeroColonne As Long)
 
     Dim cellule As Range
@@ -1400,6 +1397,20 @@ Sub ObtenirListeTECFacturésFiltreAvancé(noFact As String) '2024-10-20 @ 11:11
     
 End Sub
 
+Sub shpRetourInterrogation_Click()
+
+    Call RetourInterrogation
+
+End Sub
+
+Sub RetourInterrogation()
+
+    Application.ScreenUpdating = False
+    wshFAC_Interrogation.Activate
+    Application.ScreenUpdating = True
+    
+End Sub
+
 Sub ObtenirTransactionsCC(invNo As String, nomClient As String, dateFacture As Date)
 
     Call AfficherNouvelleFeuille_CC(invNo, nomClient, dateFacture)
@@ -1654,6 +1665,9 @@ Sub PreparerRapportTECFacturés(numeroFacture As String)
     Dim strRapport As String
     strRapport = "Rapport TEC facturés"
     Dim wsRapport As Worksheet: Set wsRapport = wshTECFacturé
+    On Error Resume Next
+    wsRapport.Unprotect
+    On Error GoTo 0
     wsRapport.Cells.Clear
     
     'Désactiver les mises à jour de l'écran et autres alertes
@@ -1794,4 +1808,9 @@ Sub PreparerRapportTECFacturés(numeroFacture As String)
     
 End Sub
 
+Sub shpExitDetailTEC_Click()
+
+    ActiveSheet.Visible = xlSheetHidden
+
+End Sub
 

@@ -1,4 +1,6 @@
-﻿Option Explicit
+﻿'@Folder("TEC - Pivot tables")
+
+Option Explicit
 
 Private Sub Worksheet_Activate()
 
@@ -39,12 +41,14 @@ Private Sub Worksheet_Activate()
     Select Case Fn_Get_Windows_Username
         Case "Guillaume", "GuillaumeCharron", "gchar", "Robert M. Vigneault", "robertmv"
             listeChoixValides = "Tous,Guillaume,Vladimir,Michel,Annie"
-        Case "vgervais"
+        Case "vgervais", "Vlad_Portable"
             listeChoixValides = "Vladimir"
         Case "User"
             listeChoixValides = "Michel"
         Case "Annie"
             listeChoixValides = "Annie"
+        Case "newUser"
+            listeChoixValides = "Olivier"
         Case Else
             listeChoixValides = ""
     End Select
@@ -96,6 +100,8 @@ Private Sub Worksheet_Change(ByVal target As Range)
                 wshTEC_TDB_Data.Range("S7").value = "ML"
             Case "Annie"
                 wshTEC_TDB_Data.Range("S7").value = "AR"
+            Case "Olivier"
+                wshTEC_TDB_Data.Range("S7").value = "OB"
             Case "Tous"
                 wshTEC_TDB_Data.Range("S7").value = ""
         End Select

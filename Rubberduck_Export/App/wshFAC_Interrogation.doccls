@@ -218,18 +218,15 @@ Private Sub Worksheet_BeforeRightClick(ByVal target As Range, Cancel As Boolean)
 
     'Déprotéger temporairement la feuille pour autoriser le changement de sélection
     Dim feuilleProtegee As Boolean
+    Debug.Print ActiveSheet.Name
     feuilleProtegee = ActiveSheet.ProtectContents
-    
+
     If feuilleProtegee = True Then
         ActiveSheet.Unprotect
     End If
 
     'Forcer Excel à mettre à jour la cellule active
     target.Activate
-
-    ' Debugging
-    Debug.Print "Cellule Active AVANT clic : " & ActiveCell.Address
-    Debug.Print "Cellule cliquée (Target) : " & target.Address
 
     ' Vérifier si la cellule cliquée est dans la plage
     If Not Intersect(target, Me.Range("C9:O33")) Is Nothing Then
@@ -239,7 +236,7 @@ Private Sub Worksheet_BeforeRightClick(ByVal target As Range, Cancel As Boolean)
 
     'Réactiver la protection de la feuille si elle l'était
     If feuilleProtegee Then
-        ActiveSheet.Protect
+        wshFAC_Interrogation.Protect
     End If
-    
+
 End Sub

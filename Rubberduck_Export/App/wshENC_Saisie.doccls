@@ -1,4 +1,6 @@
-﻿Option Explicit
+﻿'@Folder("Saisie_Encaissement")
+
+Option Explicit
 
 Public clientCode As String
 Public pmtNo As Long

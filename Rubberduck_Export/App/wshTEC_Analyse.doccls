@@ -1,4 +1,6 @@
-﻿Option Explicit
+﻿'@Foleder("Facturation")
+
+Option Explicit
 
 Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
 
@@ -193,8 +195,8 @@ Sub CheckBox1_Click() '2024-07-18 @ 18:53
 
     'Getting to the Client's Total Row (which is the line before the start of the summary)
     Dim i As Long
-    For i = chkboxRow To 7 Step -1
-        If ws.Range("A" & i).value = "" Then '2025-03-09 @ 13:25 - Colonne 'A' au lieu de 'M'
+    For i = chkboxRow - 1 To 7 Step -1
+        If ws.Range("M" & i).value = "" Then
             Exit For
         End If
     Next i

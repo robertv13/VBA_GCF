@@ -900,12 +900,3 @@ End Sub
 '
 'End Sub
 '
-
-'CommentOut - 2025-03-12 @ 12:54
-'Sub shpExitDetailTEC_Click()
-'
-'    ActiveSheet.Visible = xlSheetHidden
-'    wshFAC_Confirmation.Activate
-'    Call NettoyerCellulesEtIconesPDF
-'
-'End Sub

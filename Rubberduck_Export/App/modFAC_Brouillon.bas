@@ -1,4 +1,6 @@
 Attribute VB_Name = "modFAC_Brouillon"
+'@Folder("Saisie_Facture")
+
 Option Explicit
 
 Private invRow As Long, itemDBRow As Long, invitemRow As Long, invNumb As Long
@@ -771,18 +773,20 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
     
     'Déverrouiller les cellules des descriptions des TEC - 2025-03-02 @ 21:53
     wshFAC_Brouillon.Unprotect
-    wshFAC_Brouillon.Range("F7:F" & lastUsedRow).Locked = False
+    If lastUsedRow >= 7 Then
+        wshFAC_Brouillon.Range("F7:F" & lastUsedRow).Locked = False
+    End If
     wshFAC_Brouillon.Protect UserInterfaceOnly:=True
     
     'Création du userForm s'il y a quelque chose à afficher
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.listBox1.Clear
+        ufFraisDivers.ListBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.listBox1.AddItem item
+            ufFraisDivers.ListBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless
@@ -1099,7 +1103,9 @@ Sub FAC_Brouillon_TEC_Remove_Check_Boxes(row As Long)
     On Error GoTo 0
     
     'Lock the range
-    ws.Range("C7:C" & row).Locked = True
+    If row >= 7 Then
+        ws.Range("C7:C" & row).Locked = True
+    End If
     
     'Protect the worksheet
     With ws

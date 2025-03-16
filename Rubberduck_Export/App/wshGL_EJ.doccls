@@ -1,4 +1,6 @@
-﻿Option Explicit
+﻿'@Folder("Saisie_Entrée_Journal")
+
+Option Explicit
 
 Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
 
@@ -34,7 +36,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     
     'Certaines cellules perdent la couleur du background
     Dim cellsToColor As Range
-    Set cellsToColor = ws.Range("G4")
+    Set cellsToColor = Me.Range("G4:H4")
     Call Remplir_Plage_Avec_Couleur(cellsToColor, COULEUR_BASE_COMPTABILITÉ)
     
     Call SetTabOrder(ws)
@@ -61,9 +63,14 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
         .Range("B3").value = -1
         .Range("K4").value = Format$(Date, wsdADMIN.Range("B1").value)
         .Range("F4").Select
-        gPreviousCellAddress = .Range("F4").Address
     End With
     
+    'Protection de la feuille
+    With ws
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+    End With
+
     Application.ScreenUpdating = True
     Application.EnableEvents = True
     
@@ -78,60 +85,77 @@ End Sub
 Private Sub Worksheet_SelectionChange(ByVal target As Range)
 
     If gPreviousCellAddress <> "" Then
-        Range(gPreviousCellAddress).Interior.Color = xlNone
+        If Not Range(gPreviousCellAddress) Is Nothing Then
+            Range(gPreviousCellAddress).Interior.Color = xlNone
+        End If
     End If
-
+    
     'Ne pas permettre aucun changement à l'écriture originale, lors d'un renversement
-    If wshGL_EJ.Range("F4").value = "Renversement" Then
+    If Me.Range("F4").value = "Renversement" Then
         MsgBox "Il n'est pas permis de modifier l'écriture à renverser", vbInformation, ""
         Exit Sub
     End If
     
     'Source has been selected
-    If Not Intersect(target, wshGL_EJ.Range("F4")) Is Nothing Then
+    If Not Intersect(target, Me.Range("F4")) Is Nothing Then
+        On Error Resume Next
         target.Interior.Color = COULEUR_SAISIE
+        On Error GoTo 0
     End If
 
     'Date has been selected
-    If Not Intersect(target, wshGL_EJ.Range("K4")) Is Nothing Then
+    If Not Intersect(target, Me.Range("K4")) Is Nothing Then
+        On Error Resume Next
         target.Interior.Color = COULEUR_SAISIE
+        On Error GoTo 0
     End If
 
     'Description has been selected
-    If Not Intersect(target, wshGL_EJ.Range("F6")) Is Nothing Then
-        If wshGL_EJ.Range("F4").value = "Dépôt de client" Then
+    If Not Intersect(target, Me.Range("F6")) Is Nothing Then
+        If Me.Range("F4").value = "Dépôt de client" Then
             MsgBox "Vous devez maintenant saisir le nom du client" & _
-                vbNewLine & vbNewLine & "qui effectue le dépôt de client (perçu d'avance)", _
-                vbOKOnly, "Enregistrement d'un dépôt de client"
+                   vbNewLine & vbNewLine & "qui effectue le dépôt de client (perçu d'avance)", _
+                   vbOKOnly, "Enregistrement d'un dépôt de client"
         End If
         target.Interior.Color = COULEUR_SAISIE
     End If
 
     'Compte has been selected
-    If Not Intersect(target, wshGL_EJ.Range("E9:E23")) Is Nothing Then
+    If Not Intersect(target, Me.Range("E9:E23")) Is Nothing Then
         target.Interior.Color = COULEUR_SAISIE
-        If target.row = 9 And wshGL_EJ.Range("F4").value = "Remise TPS/TVQ" Then
+        If target.row = 9 And Me.Range("F4").value = "Remise TPS/TVQ" Then
             Call GL_EJ_Construire_Remise_TPS_TVQ(target.row)
         End If
     End If
     
     'Debit amount has been selected
-    If Not Intersect(target, wshGL_EJ.Range("H9:H23")) Is Nothing Then
+    If Not Intersect(target, Me.Range("H9:H23")) Is Nothing Then
         target.Interior.Color = COULEUR_SAISIE
     End If
     
     'Credit amount has been selected
-    If Not Intersect(target, wshGL_EJ.Range("I9:I23")) Is Nothing Then
+    If Not Intersect(target, Me.Range("I9:I23")) Is Nothing Then
         target.Interior.Color = COULEUR_SAISIE
     End If
     
     'Extra description has been selected
-    If Not Intersect(target, wshGL_EJ.Range("J9:J23")) Is Nothing Then
+    If Not Intersect(target, Me.Range("J9:J23")) Is Nothing Then
         target.Interior.Color = COULEUR_SAISIE
     End If
     
     'Save the current cell Address
     gPreviousCellAddress = target.Address
+    
+'    'Passe à la cellule suivante
+'    Application.EnableEvents = False
+'    If target.Address = "$F$4" Then
+'        Me.Range("K4").Select
+'    End If
+'     If target.Address = "$K$4" Then
+'        Me.Range("F6").Select
+'    End If
+'    Application.EnableEvents = True
+'
 
 End Sub
 

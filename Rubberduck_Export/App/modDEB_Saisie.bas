@@ -1,5 +1,5 @@
 Attribute VB_Name = "modDEB_Saisie"
-'@Folder("Déboursés")
+'@Folder("Saisie_Déboursé")
 
 Option Explicit
 

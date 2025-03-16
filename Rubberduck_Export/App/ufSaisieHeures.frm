@@ -53,12 +53,14 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
     Select Case Fn_Get_Windows_Username
         Case "Guillaume", "GuillaumeCharron", "gchar", "Robert M. Vigneault", "Robertmv"
             cmbProfessionnel.value = "GC"
-        Case "vgervais"
+        Case "vgervais", "Vlad_Portable"
             cmbProfessionnel.value = "VG"
         Case "User"
             cmbProfessionnel.value = "ML"
-        Case "vgervais"
+        Case "Annie"
             cmbProfessionnel.value = "AR"
+        Case "newUser"
+            cmbProfessionnel.value = "OB"
         Case Else
             cmbProfessionnel.value = ""
     End Select
@@ -140,7 +142,7 @@ Public Sub cmbProfessionnel_AfterUpdate()
     Select Case Fn_Get_Windows_Username
         Case "Guillaume", "GuillaumeCharron", "gchar", "Robert M. Vigneault", "robertmv"
             DoEvents
-        Case "vgervais"
+        Case "vgervais", "Vlad_Portable"
             If cmbProfessionnel.value <> "VG" Then
                 MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
                     "Vous devez obligatoirement utiliser le code 'VG'", _
@@ -161,6 +163,13 @@ Public Sub cmbProfessionnel_AfterUpdate()
                     vbInformation
             End If
             cmbProfessionnel.value = "AR"
+        Case "newUser"
+            If cmbProfessionnel.value <> "OB" Then
+                MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
+                    "Vous devez obligatoirement utiliser le code 'OB'", _
+                    vbInformation
+            End If
+            cmbProfessionnel.value = "OB"
         Case Else
             cmbProfessionnel.value = ""
     End Select
