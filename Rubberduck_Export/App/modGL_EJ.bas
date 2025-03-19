@@ -1015,6 +1015,8 @@ End Sub
 
 Sub GL_EJ_Back_To_Menu()
     
+    ActiveSheet.Unprotect
+    
     'Rétablir la forme du bouton (Mettre à jour / Renverser)
     Dim shp As Shape
     Set shp = wshGL_EJ.Shapes("btnUpdate")

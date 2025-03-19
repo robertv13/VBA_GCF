@@ -51,9 +51,14 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
 
     'Data starts at row 2
     Dim r As Long: r = 2
+    Call AddMessageToWorkSheet(wsOutput, r, 1, "Version du programme")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, ThisWorkbook.Name)
+    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+    r = r + 1
+
+    'Répertoire de données
     Call AddMessageToWorkSheet(wsOutput, r, 1, "Répertoire utilisé")
     Call AddMessageToWorkSheet(wsOutput, r, 2, wsdADMIN.Range("FolderSharedData").value & DATA_PATH)
-    Call AddMessageToWorkSheet(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
 
     'Fichier utilisé
@@ -3299,7 +3304,7 @@ Private Sub VerifierTEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 4834 'What is the last TECID analyzed ?
+    lastTECIDReported = 4894 'What is the last TECID analyzed ?
     
     'Feuille contenant les données à analyser
     Dim HeaderRow As Long: HeaderRow = 2

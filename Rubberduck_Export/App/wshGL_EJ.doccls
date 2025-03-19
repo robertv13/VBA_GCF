@@ -84,6 +84,8 @@ End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal target As Range)
 
+    ActiveSheet.Unprotect
+    
     If gPreviousCellAddress <> "" Then
         If Not Range(gPreviousCellAddress) Is Nothing Then
             Range(gPreviousCellAddress).Interior.Color = xlNone
@@ -145,6 +147,8 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
     
     'Save the current cell Address
     gPreviousCellAddress = target.Address
+    
+    ActiveSheet.Protect UserInterfaceOnly:=True
     
 '    'Passe à la cellule suivante
 '    Application.EnableEvents = False
