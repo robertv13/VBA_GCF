@@ -40,7 +40,7 @@ Sub menuFacturation()
             userName = "User" Or _
             userName = "vgervais" Or _
             userName = "Vlad_Portable" Or _
-            userName = "newUser" Then
+            userName = "Oli_Portable" Then
         wshMenuFAC.Visible = xlSheetVisible
         wshMenuFAC.Activate
         wshMenuFAC.Range("A1").Select

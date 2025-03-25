@@ -47,7 +47,7 @@ Private Sub Worksheet_Activate()
             listeChoixValides = "Michel"
         Case "Annie"
             listeChoixValides = "Annie"
-        Case "newUser"
+        Case "Oli_Portable"
             listeChoixValides = "Olivier"
         Case Else
             listeChoixValides = ""

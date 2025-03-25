@@ -35,7 +35,8 @@ Sub ENC_Get_OS_Invoices(cc As String) '2024-08-21 @ 15:18
     'Copy à partir du résultat de AF, dans la feuille de saisie des encaissements
     Dim rr As Integer: rr = 12
     With wsdFAC_Comptes_Clients
-        For i = 3 To WorksheetFunction.Min(27, lastResultRow) 'No space for more O/S invoices
+        For i = 3 To lastResultRow
+'        For i = 3 To WorksheetFunction.Min(27, lastResultRow) 'No space for more O/S invoices
             If .Range("X" & i).value <> 0 And _
                             Fn_Invoice_Is_Confirmed(.Range("S" & i).value) = True Then
                 Application.EnableEvents = False

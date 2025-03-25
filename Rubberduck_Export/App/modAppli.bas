@@ -494,7 +494,7 @@ Sub SetupUserDateFormat()
     Select Case Fn_Get_Windows_Username
         Case "GuillaumeCharron", "Guillaume", "gchar"
             userDateFormat = "dd/mm/yy"
-        Case "vgervais", "Vlad_Portable", "User", "newUser"
+        Case "vgervais", "Vlad_Portable", "User", "Oli_Portable"
             userDateFormat = "dd/mm/yyyy"
         Case "Annie"
             userDateFormat = "yyyy/mm/dd"

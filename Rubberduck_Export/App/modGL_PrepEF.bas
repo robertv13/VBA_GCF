@@ -1,15 +1,16 @@
 Attribute VB_Name = "modGL_PrepEF"
 Option Explicit
 
-Public dictSoldeCodeEF As Object
-Public soldeCodeEF() As Variant
-Public ligneTotalPassif As Integer, ligneTotalADA As Integer
-Public ligneTotalRevenus As Integer, ligneTotalDépenses As Integer
-Public ligneAutresRevenus As Integer
-Public ligneRevenuNetAvantImpôts As Integer
-Public totalRevenuNet_AC As Currency, totalRevenuNet_AP As Currency
-Public BNR_Début_Année_AC As Currency, BNR_Début_Année_AP As Currency
-Public Dividendes_Année_AC As Currency, Dividendes_Année_AP As Currency
+Public gDictgSoldeCodeEF As Object
+Public gSoldeCodeEF() As Variant
+Public gSavePremiereLigne As Integer
+Public gLigneTotalPassif As Integer, gLigneTotalADA As Integer
+Public gLigneTotalRevenus As Integer, gLigneTotalDépenses As Integer
+Public gLigneAutresRevenus As Integer
+Public gLigneRevenuNetAvantImpôts As Integer
+Public gTotalRevenuNet_AC As Currency, gTotalRevenuNet_AP As Currency
+Public gBNR_Début_Année_AC As Currency, gBNR_Début_Année_AP As Currency
+Public gDividendes_Année_AC As Currency, gDividendes_Année_AP As Currency
 
 Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 04:26
     
@@ -89,14 +90,14 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
     
     'Maintenant on affiche des résulats, piloté par le plan comptable
     'Utilisation d'un dictionary pour sommariser les lignes de EF
-    If Not dictSoldeCodeEF Is Nothing Then
-        dictSoldeCodeEF.RemoveAll
+    If Not gDictgSoldeCodeEF Is Nothing Then
+        gDictgSoldeCodeEF.RemoveAll
     End If
-    If dictSoldeCodeEF Is Nothing Then
-        Set dictSoldeCodeEF = CreateObject("Scripting.Dictionary")
+    If gDictgSoldeCodeEF Is Nothing Then
+        Set gDictgSoldeCodeEF = CreateObject("Scripting.Dictionary")
     End If
-    Dim rowID_to_soldeCodeEF As Long
-    ReDim soldeCodeEF(1 To UBound(arr, 1), 1 To 3)
+    Dim rowID_to_gSoldeCodeEF As Long
+    ReDim gSoldeCodeEF(1 To UBound(arr, 1), 1 To 3)
     Dim codeEF As String
     Dim dictPreuve As Dictionary
     Set dictPreuve = New Dictionary
@@ -133,18 +134,18 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
                     ws.Range("N" & currRow).value = glNo
                 End If
                 'Accumule les montants par ligne d'état financier (codeEF)
-                If Not dictSoldeCodeEF.Exists(codeEF) Then
-                    rowID_to_soldeCodeEF = rowID_to_soldeCodeEF + 1
-                    dictSoldeCodeEF.Add codeEF, rowID_to_soldeCodeEF
-                    soldeCodeEF(rowID_to_soldeCodeEF, 1) = codeEF
+                If Not gDictgSoldeCodeEF.Exists(codeEF) Then
+                    rowID_to_gSoldeCodeEF = rowID_to_gSoldeCodeEF + 1
+                    gDictgSoldeCodeEF.Add codeEF, rowID_to_gSoldeCodeEF
+                    gSoldeCodeEF(rowID_to_gSoldeCodeEF, 1) = codeEF
                 End If
-                currRowID = dictSoldeCodeEF(codeEF)
+                currRowID = gDictgSoldeCodeEF(codeEF)
                 
                 ws.Range("F" & currRow).value = arrSoldesParGL(r, 2)
-                soldeCodeEF(currRowID, 2) = soldeCodeEF(currRowID, 2) + arrSoldesParGL(r, 2)
+                gSoldeCodeEF(currRowID, 2) = gSoldeCodeEF(currRowID, 2) + arrSoldesParGL(r, 2)
                 totalAC = totalAC + arrSoldesParGL(r, 2)
                 ws.Range("H" & currRow).value = arrSoldesParGL(r, 3)
-                soldeCodeEF(currRowID, 3) = soldeCodeEF(currRowID, 3) + arrSoldesParGL(r, 3)
+                gSoldeCodeEF(currRowID, 3) = gSoldeCodeEF(currRowID, 3) + arrSoldesParGL(r, 3)
                 totalAP = totalAP + CCur(arrSoldesParGL(r, 3))
                 
                 'Preuve
@@ -164,11 +165,11 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
         
         'Sauvegarde des BNR au début de l'année et Dividendes
         If glNo = "3100" Then
-            BNR_Début_Année_AC = ws.Range("F" & currRow).value
-            BNR_Début_Année_AP = ws.Range("H" & currRow).value
+            gBNR_Début_Année_AC = ws.Range("F" & currRow).value
+            gBNR_Début_Année_AP = ws.Range("H" & currRow).value
         ElseIf glNo = "3200" Then
-            Dividendes_Année_AC = ws.Range("F" & currRow).value
-            Dividendes_Année_AP = ws.Range("H" & currRow).value
+            gDividendes_Année_AC = ws.Range("F" & currRow).value
+            gDividendes_Année_AP = ws.Range("H" & currRow).value
         End If
     
         If isDeveloppeur = True Then
@@ -504,9 +505,9 @@ Sub Assembler_ER_0_Main(dateAC As Date, dateAP As Date)
     
     'On ajoute le Revenu Net au BNR du bilan via variables Globales
     Dim indice As Integer
-    indice = dictSoldeCodeEF("E02")
-    soldeCodeEF(indice, 2) = soldeCodeEF(indice, 2) - totalRevenuNet_AC
-    soldeCodeEF(indice, 3) = soldeCodeEF(indice, 3) - totalRevenuNet_AP
+    indice = gDictgSoldeCodeEF("E02")
+    gSoldeCodeEF(indice, 2) = gSoldeCodeEF(indice, 2) - gTotalRevenuNet_AC
+    gSoldeCodeEF(indice, 3) = gSoldeCodeEF(indice, 3) - gTotalRevenuNet_AP
     
     Application.StatusBar = ""
     
@@ -636,6 +637,8 @@ Sub Assembler_ER_2_Lignes(ws As Worksheet)
         .Apply
     End With
     
+    'Fixer le printArea selon le nombre de lignes ET colonnes
+    ActiveSheet.PageSetup.PrintArea = "$A1:$F" & ws.Cells(ws.Rows.count, 2).End(xlUp).row + 3
     
     Call Log_Record("modGL_PrepEF:Assembler_ER_2_Lignes", "", startTime)
 
@@ -752,6 +755,9 @@ Sub Assembler_Bilan_2_Lignes(ws As Worksheet)
         End If
     Next i
     ws.Range("G7:I38").Clear
+    
+    'Fixer le printArea selon le nombre de lignes ET colonnes
+    ActiveSheet.PageSetup.PrintArea = "$A1:$F" & ws.Cells(ws.Rows.count, 2).End(xlUp).row + 3
     
     Call Log_Record("modGL_PrepEF:Assembler_Bilan_2_Lignes", "", startTime)
 
@@ -886,6 +892,9 @@ Sub Assembler_BNR_2_Lignes(ws As Worksheet)
     Next i
     ws.Range("G7:I25").Clear
     
+    'Fixer le printArea selon le nombre de lignes ET colonnes
+    ActiveSheet.PageSetup.PrintArea = "$A1:$F" & ws.Cells(ws.Rows.count, 2).End(xlUp).row + 3
+    
     Call Log_Record("modGL_PrepEF:Assembler_BNR_2_Lignes", "", startTime)
 
 End Sub
@@ -953,20 +962,21 @@ Sub Imprime_Ligne_EF(ws As Worksheet, ByRef currRow As Integer, LigneEF As Strin
                 currRow = currRow + 1
             End If
             If codeEF = "B00" Then
-                ws.Range("G" & currRow).value = BNR_Début_Année_AC * correcteurSigne
-                ws.Range("I" & currRow).value = BNR_Début_Année_AP * correcteurSigne
-                Dim savePremiereLigne As Integer
-                savePremiereLigne = currRow
+                ws.Range("G" & currRow).value = gBNR_Début_Année_AC * correcteurSigne
+                ws.Range("I" & currRow).value = gBNR_Début_Année_AP * correcteurSigne
+                gSavePremiereLigne = currRow
             Else
-                savePremiereLigne = currRow + 1
+                gSavePremiereLigne = currRow + 1
             End If
             
+            If gSavePremiereLigne = 0 Then Stop
+            
         Case "G" 'Groupement
-            index = dictSoldeCodeEF(codeEF)
+            index = gDictgSoldeCodeEF(codeEF)
             If index <> 0 Then
-                If Round(soldeCodeEF(index, 2), 2) <> 0 Or Round(soldeCodeEF(index, 3), 2) <> 0 Then
-                    ws.Range("G" & currRow).value = soldeCodeEF(index, 2) * correcteurSigne
-                    ws.Range("I" & currRow).value = soldeCodeEF(index, 3) * correcteurSigne
+                If Round(gSoldeCodeEF(index, 2), 2) <> 0 Or Round(gSoldeCodeEF(index, 3), 2) <> 0 Then
+                    ws.Range("G" & currRow).value = gSoldeCodeEF(index, 2) * correcteurSigne
+                    ws.Range("I" & currRow).value = gSoldeCodeEF(index, 3) * correcteurSigne
                 Else
                     doitImprimer = False
                 End If
@@ -993,17 +1003,17 @@ Sub Imprime_Ligne_EF(ws As Worksheet, ByRef currRow As Integer, LigneEF As Strin
             End If
             
             If codeEF = "E60" Then
-                ws.Range("G" & currRow).formula = "=sum(G" & ligneTotalPassif & ", G" & ligneTotalADA & ")"
-                ws.Range("I" & currRow).formula = "=sum(I" & ligneTotalPassif & ", I" & ligneTotalADA & ")"
+                ws.Range("G" & currRow).formula = "=sum(G" & gLigneTotalPassif & ", G" & gLigneTotalADA & ")"
+                ws.Range("I" & currRow).formula = "=sum(I" & gLigneTotalPassif & ", I" & gLigneTotalADA & ")"
             ElseIf codeEF = "I01" Then
-                ws.Range("G" & currRow).formula = "=sum(G" & ligneTotalRevenus & " - G" & ligneTotalDépenses & " + G" & ligneAutresRevenus & ")"
-                ws.Range("I" & currRow).formula = "=sum(I" & ligneTotalRevenus & " - I" & ligneTotalDépenses & " + I" & ligneAutresRevenus & ")"
+                ws.Range("G" & currRow).formula = "=sum(G" & gLigneTotalRevenus & " - G" & gLigneTotalDépenses & " + G" & gLigneAutresRevenus & ")"
+                ws.Range("I" & currRow).formula = "=sum(I" & gLigneTotalRevenus & " - I" & gLigneTotalDépenses & " + I" & gLigneAutresRevenus & ")"
             ElseIf codeEF = "I03" Then
-                ws.Range("G" & currRow).formula = "=sum(G" & ligneRevenuNetAvantImpôts & ":G" & currRow - 1 & ")"
-                ws.Range("I" & currRow).formula = "=sum(I" & ligneRevenuNetAvantImpôts & ":I" & currRow - 1 & ")"
+                ws.Range("G" & currRow).formula = "=sum(G" & gLigneRevenuNetAvantImpôts & ":G" & currRow - 1 & ")"
+                ws.Range("I" & currRow).formula = "=sum(I" & gLigneRevenuNetAvantImpôts & ":I" & currRow - 1 & ")"
             Else
-                ws.Range("G" & currRow).formula = "=sum(G" & savePremiereLigne & ":G" & currRow - 1 & ")"
-                ws.Range("I" & currRow).formula = "=sum(I" & savePremiereLigne & ":I" & currRow - 1 & ")"
+                ws.Range("G" & currRow).formula = "=sum(G" & gSavePremiereLigne & ":G" & currRow - 1 & ")"
+                ws.Range("I" & currRow).formula = "=sum(I" & gSavePremiereLigne & ":I" & currRow - 1 & ")"
             End If
             'Bordures dans le bas de la cellule
             If codeEF = "I01" Or codeEF = "I03" Then
@@ -1020,22 +1030,22 @@ Sub Imprime_Ligne_EF(ws As Worksheet, ByRef currRow As Integer, LigneEF As Strin
             End If
             
             'Partir un nouveau sous-total, sans entête
-            If codeEF = "B10" Then savePremiereLigne = currRow
+            If codeEF = "B10" Then gSavePremiereLigne = currRow
             
     End Select
         
     'Certaines lignes ont besoin d'être notées pour utilisation particulière
-    If codeEF = "P99" Then ligneTotalPassif = currRow
-    If codeEF = "E50" Then ligneTotalADA = currRow
-    If codeEF = "R99" Then ligneTotalRevenus = currRow
-    If codeEF = "D99" Then ligneTotalDépenses = currRow
-    If codeEF = "R04" Then ligneAutresRevenus = currRow
-    If codeEF = "I01" Then ligneRevenuNetAvantImpôts = currRow
+    If codeEF = "P99" Then gLigneTotalPassif = currRow
+    If codeEF = "E50" Then gLigneTotalADA = currRow
+    If codeEF = "R99" Then gLigneTotalRevenus = currRow
+    If codeEF = "D99" Then gLigneTotalDépenses = currRow
+    If codeEF = "R04" Then gLigneAutresRevenus = currRow
+    If codeEF = "I01" Then gLigneRevenuNetAvantImpôts = currRow
     
     'Sauvegarder les 2 montants de Revenu Net
     If codeEF = "I03" Then
-        totalRevenuNet_AC = ws.Range("G" & currRow).Value2
-        totalRevenuNet_AP = ws.Range("I" & currRow).Value2
+        gTotalRevenuNet_AC = ws.Range("G" & currRow).Value2
+        gTotalRevenuNet_AP = ws.Range("I" & currRow).Value2
     End If
     
     With ws.Range("B" & currRow & ":E" & currRow).Font
@@ -1055,8 +1065,8 @@ Sub Imprime_Ligne_EF(ws As Worksheet, ByRef currRow As Integer, LigneEF As Strin
     End If
     
     If codeEF = "B01" Then 'Bénéfice net / Revenu net
-        ws.Range("G" & currRow).value = totalRevenuNet_AC
-        ws.Range("I" & currRow).value = totalRevenuNet_AP
+        ws.Range("G" & currRow).value = gTotalRevenuNet_AC
+        ws.Range("I" & currRow).value = gTotalRevenuNet_AP
         With ws.Range("C" & currRow).Borders(xlEdgeBottom)
             .LineStyle = xlContinuous
             .Color = -11511710
@@ -1070,8 +1080,8 @@ Sub Imprime_Ligne_EF(ws As Worksheet, ByRef currRow As Integer, LigneEF As Strin
     End If
     
     If codeEF = "B20" Then 'Dividendes
-        ws.Range("G" & currRow).value = -Dividendes_Année_AC
-        ws.Range("I" & currRow).value = -Dividendes_Année_AP
+        ws.Range("G" & currRow).value = -gDividendes_Année_AC
+        ws.Range("I" & currRow).value = -gDividendes_Année_AP
     End If
     
     If codeEF = "B50" Then 'Solde de fin (BNR)

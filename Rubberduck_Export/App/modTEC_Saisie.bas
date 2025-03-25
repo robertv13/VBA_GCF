@@ -10,7 +10,7 @@ Public rmv_state As Long
 
 Public savedClient As String
 Public savedActivite As String
-Public savedHeures As String
+Public savedHeures As Currency
 Public savedFacturable As String
 Public savedCommNote As String
 
@@ -52,7 +52,7 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
             .txtHeures.value = ""
             .txtCommNote.value = ""
             .chbFacturable = True
-            .txtSavedHeures.value = ""
+'            .txtSavedHeures.value = ""
         End With
         
         Call TEC_Get_All_TEC_AF
@@ -282,10 +282,12 @@ Sub TEC_Efface_Formulaire() 'Clear all fields on the userForm
         .txtActivite.value = ""
         .txtHeures.value = ""
         .txtCommNote.value = ""
-        .txtSavedHeures = ""
+'        .txtSavedHeures = ""
         .cmbProfessionnel.Enabled = True
         .txtDate.Enabled = True
     End With
+    
+    savedHeures = 0
     
     Call TEC_Get_All_TEC_AF
     

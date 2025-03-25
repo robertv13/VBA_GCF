@@ -231,7 +231,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
             Application.EnableEvents = False
             target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(target.Address)
+            Application.GoTo Range(target.Address)
         End If
         
         If CDate(Me.Range("K4").value) > Date Then

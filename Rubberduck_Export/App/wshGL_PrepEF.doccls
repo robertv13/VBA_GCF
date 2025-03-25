@@ -20,6 +20,11 @@ Private Sub Worksheet_Activate()
     'Set the zoom factor to 95% when this worksheet is activated
     ActiveWindow.Zoom = 100
 
+    'Cache le bouton 'Actualiser'
+    Dim shp As Shape
+    Set shp = ws.Shapes("Actualiser")
+    shp.Visible = False
+    
     'Clear the display area & display the account number & description
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, "F").End(xlUp).row
@@ -35,7 +40,8 @@ Private Sub Worksheet_Activate()
     
     'Date du jour par défaut
     gPreviousCellAddress = ws.Range("F3").Address
-    ws.Range("F3").value = Format$(Date, wsdADMIN.Range("B1").value)
+    ws.Range("F3").value = ""
+'    ws.Range("F3").value = Format$(Date, wsdADMIN.Range("B1").value)
     
     Application.ScreenUpdating = True
     Application.EnableEvents = True
@@ -80,7 +86,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
         Else
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshGL_PrepEF_139")
             target.ClearContents
-            Application.Goto Range(target.Address)
+            Application.GoTo Range(target.Address)
         End If
         
         Application.EnableEvents = True
@@ -89,6 +95,11 @@ Private Sub Worksheet_Change(ByVal target As Range)
         Set ws = wshGL_PrepEF
         
         Call Calculer_Soldes_Pour_EF(ws, Range("F3").value)
+        
+        'Afficher le bouton 'Actualiser'
+        Dim shp As Shape
+        Set shp = ws.Shapes("Actualiser")
+        shp.Visible = True
         
     End If
 

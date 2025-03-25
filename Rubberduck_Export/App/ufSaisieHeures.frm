@@ -59,7 +59,7 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
             cmbProfessionnel.value = "ML"
         Case "Annie"
             cmbProfessionnel.value = "AR"
-        Case "newUser"
+        Case "Oli_Portable"
             cmbProfessionnel.value = "OB"
         Case Else
             cmbProfessionnel.value = ""
@@ -163,7 +163,7 @@ Public Sub cmbProfessionnel_AfterUpdate()
                     vbInformation
             End If
             cmbProfessionnel.value = "AR"
-        Case "newUser"
+        Case "Oli_Portable"
             If cmbProfessionnel.value <> "OB" Then
                 MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
                     "Vous devez obligatoirement utiliser le code 'OB'", _
@@ -279,7 +279,7 @@ Private Sub txtClient_AfterUpdate()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtClient_AfterUpdate", ufSaisieHeures.txtClient.value, 0)
     
-    If Me.txtClient.value <> Me.txtSavedClient.value Then
+    If Me.txtClient.value <> savedClient Then '2025-03-25 @ 13:05
         If Me.txtTECID = "" Then
             Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, False, False, True)
         Else
@@ -292,7 +292,7 @@ Private Sub txtClient_AfterUpdate()
     Me.lstboxNomClient.Visible = False
     On Error GoTo 0
     
-    Call Log_Record("ufSaisieHeures:txtClient_AfterUpdate", "", startTime)
+    Call Log_Record("ufSaisieHeures:txtClient_AfterUpdate", Me.txtTECID, startTime)
     
 End Sub
 
@@ -300,7 +300,8 @@ Private Sub txtActivite_AfterUpdate()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtActivite_AfterUpdate", Me.txtActivite.value, 0)
     
-    If Me.txtActivite.value <> Me.txtSavedActivite.value Then
+    If Me.txtActivite.value <> savedActivite Then '2025-03-25 @ 13:05
+        Debug.Print "txtActivite_AfterUpdate : ", Me.txtActivite.value, " vs ", savedActivite, " - TECID=" & Me.txtTECID
         If Me.txtTECID = "" Then
             Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, False, False, True)
         Else
@@ -308,19 +309,20 @@ Private Sub txtActivite_AfterUpdate()
         End If
     End If
     
-    If Me.txtActivite.value <> Me.txtSavedActivite.value Then '2025-01-16 @ 16:46
-        If Me.txtHeures.value <> "" Then
-            If CCur(Me.txtHeures.value) <> 0 Then
-                Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True)
-            Else
-                Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, True, False, True)
-            End If
-        End If
-    End If
-    
+'CommentOut - 2025-03-25 @ 13:12
+'    If Me.txtActivite.value <> savedActivite Then '2025-01-16 @ 16:46
+'        If Me.txtHeures.value <> "" Then
+'            If CCur(Me.txtHeures.value) <> 0 Then
+'                Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True)
+'            Else
+'                Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, True, False, True)
+'            End If
+'        End If
+'    End If
+'
     Me.txtActivite.value = Fn_Nettoyer_Fin_Chaine(Me.txtActivite.value)
     
-    Call Log_Record("ufSaisieHeures:txtActivite_AfterUpdate", "", startTime)
+    Call Log_Record("ufSaisieHeures:txtActivite_AfterUpdate", Me.txtTECID, startTime)
     
 End Sub
 
@@ -391,7 +393,8 @@ Sub txtHeures_AfterUpdate()
     
     Me.txtHeures.value = Format$(strHeures, "#0.00")
     
-    If Me.txtHeures.value <> Me.txtSavedHeures.value Then
+    If CCur(Me.txtHeures.value) <> savedHeures Then '2025-03-25 @ 13:05
+        Debug.Print "txtHeures_AfterUpdate : ", Me.txtHeures.value, " vs ", savedHeures, " - TECID=" & Me.txtTECID
         If Me.txtTECID = "" Then 'Création d'une nouvelle charge
             Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True)
         Else 'Modification d'une charge existante
@@ -399,7 +402,7 @@ Sub txtHeures_AfterUpdate()
         End If
     End If
     
-    Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate", "", startTime)
+    Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate", Me.txtTECID, startTime)
     
 End Sub
 
@@ -407,7 +410,8 @@ Private Sub chbFacturable_AfterUpdate()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:chbFacturable_AfterUpdate", "", 0)
     
-    If Me.chbFacturable.value <> Me.txtSavedFacturable.value Then
+    If Me.chbFacturable.value <> savedFacturable Then '2025-03-25 @ 13:05
+        Debug.Print "chbFacturable_AfterUpdate : ", Me.chbFacturable.value, " vs ", savedFacturable, " - TECID=" & Me.txtTECID
         If Me.txtTECID = "" Then
             Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True) '2024-10-06 @ 14:33
         Else
@@ -415,7 +419,7 @@ Private Sub chbFacturable_AfterUpdate()
         End If
     End If
 
-    Call Log_Record("ufSaisieHeures:chbFacturable_AfterUpdate", "", startTime)
+    Call Log_Record("ufSaisieHeures:chbFacturable_AfterUpdate", Me.txtTECID, startTime)
     
 End Sub
 
@@ -423,7 +427,8 @@ Private Sub txtCommNote_AfterUpdate()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtCommNote_AfterUpdate", Me.txtCommNote.value, 0)
     
-    If Me.txtCommNote.value <> Me.txtSavedCommNote.value Then
+    If Me.txtCommNote.value <> savedCommNote Then '2025-03-25 @ 13:05
+        Debug.Print "txtCommNote_AfterUpdate : ", Me.txtCommNote.value, " vs ", savedCommNote, " - TECID=" & Me.txtTECID
         If Me.txtTECID = "" Then
             Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True) '2024-10-06 @ 14:33
         Else
@@ -431,7 +436,7 @@ Private Sub txtCommNote_AfterUpdate()
         End If
     End If
 
-    Call Log_Record("ufSaisieHeures:txtCommNote_AfterUpdate", "", startTime)
+    Call Log_Record("ufSaisieHeures:txtCommNote_AfterUpdate", Me.txtTECID, startTime)
     
 End Sub
 
@@ -521,24 +526,24 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
     
             .txtClient.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 3)
             savedClient = .txtClient.value
-            .txtSavedClient.value = .txtClient.value
+'            .txtSavedClient.value = .txtClient.value
             .txtClientID.value = wsdTEC_Local.Range("E" & rowTECID).value
     
             .txtActivite.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 4)
             savedActivite = .txtActivite.value
-            .txtSavedActivite.value = .txtActivite.value
+'            .txtSavedActivite.value = .txtActivite.value
     
             .txtHeures.value = Format$(.lsbHresJour.List(.lsbHresJour.ListIndex, 5), "#0.00")
-            savedHeures = .txtHeures.value
-            .txtSavedHeures.value = .txtHeures.value
+            savedHeures = CCur(.txtHeures.value)
+'            .txtSavedHeures.value = .txtHeures.value
     
             .txtCommNote.value = .lsbHresJour.List(.lsbHresJour.ListIndex, 6)
             savedCommNote = .txtCommNote.value
-            .txtSavedCommNote.value = .txtCommNote.value
+'            .txtSavedCommNote.value = .txtCommNote.value
     
             .chbFacturable.value = CBool(.lsbHresJour.List(.lsbHresJour.ListIndex, 7))
             savedFacturable = .chbFacturable.value
-            .txtSavedFacturable.value = .chbFacturable.value
+'            .txtSavedFacturable.value = .chbFacturable.value
             Application.EnableEvents = True
 
         Else
