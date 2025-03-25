@@ -33,3 +33,18 @@
 2025-03-14 11:11:57.38 | Robert M. Vigneault | APP_v6.C.1.xlsb | UPDATE 4835 | OB | 14/03/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Test | 0,20 | VRAI | Commentaire / Note
 2025-03-14 11:12:21.16 | Robert M. Vigneault | APP_v6.C.1.xlsb | UPDATE 4835 | OB | 14/03/2025 | 1516 | Les Industries Canplex Ltée [Marco Stocchero] | Test | 0,20 | VRAI | Commentaire / Note
 2025-03-14 11:14:38.92 | Robert M. Vigneault | APP_v6.C.1.xlsb | DELETE-4835 | OB | 14/03/2025 | 1516 | Les Industries Canplex Ltée [Marco Stocchero] | Test | 0,20 | VRAI | Commentaire / Note
+2025-03-25 13:00:39.75 | Robert M. Vigneault | APP_v6.C.3.xlsb | UPDATE 5057 | AR | 21/03/2025 | 1112 | Vignoble Kobloth et fils Inc. [Roxane Gauthier] | Correction des factures à payer (annulation de factures), rapport des taxes à payer pour le trimestre de décembre 2024 à février 2025 | 0,60 | VRAI | 
+2025-03-25 13:00:48.54 | Robert M. Vigneault | APP_v6.C.3.xlsb | UPDATE 5057 | AR | 21/03/2025 | 1112 | Vignoble Kobloth et fils Inc. [Roxane Gauthier] | Correction des factures à payer (annulation de factures), rapport des taxes à payer pour le trimestre de décembre 2024 à février 2025 | 0,50 | VRAI | 
+2025-03-25 13:01:11.70 | Robert M. Vigneault | APP_v6.C.3.xlsb | ADD    5067 | GC | 25/03/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Test | 0,10 | VRAI | 
+2025-03-25 13:01:24.59 | Robert M. Vigneault | APP_v6.C.3.xlsb | UPDATE 5067 | GC | 25/03/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Testa | 0,20 | VRAI | 
+2025-03-25 13:01:34.79 | Robert M. Vigneault | APP_v6.C.3.xlsb | UPDATE 5067 | GC | 25/03/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Test | 0,10 | VRAI | 
+2025-03-25 13:11:08.36 | Robert M. Vigneault | APP_v6.C.3.xlsb | UPDATE 5067 | GC | 25/03/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Testa | 0,10 | VRAI | 
+2025-03-25 13:18:20.63 | Robert M. Vigneault | APP_v6.C.3.xlsb | UPDATE 5067 | GC | 25/03/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Testa | 0,10 | VRAI | 
+2025-03-25 13:18:32.75 | Robert M. Vigneault | APP_v6.C.3.xlsb | UPDATE 5067 | GC | 25/03/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Testa | 0,20 | VRAI | 
+2025-03-25 13:18:54.77 | Robert M. Vigneault | APP_v6.C.3.xlsb | UPDATE 5067 | GC | 25/03/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Testa | 0,20 | VRAI | a
+2025-03-25 13:19:10.92 | Robert M. Vigneault | APP_v6.C.3.xlsb | UPDATE 5067 | GC | 25/03/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Test | 0,10 | VRAI | 
+2025-03-25 13:19:57.13 | Robert M. Vigneault | APP_v6.C.3.xlsb | ADD    5068 | GC | 25/03/2025 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | Test | 0,10 | VRAI | 
+2025-03-25 13:22:28.62 | Robert M. Vigneault | APP_v6.C.3.xlsb | ADD    5068 | GC | 25/03/2025 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | Test | 0,10 | VRAI | 
+2025-03-25 13:22:38.96 | Robert M. Vigneault | APP_v6.C.3.xlsb | UPDATE 5068 | GC | 25/03/2025 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | Test | 0,20 | VRAI | 
+2025-03-25 13:22:45.72 | Robert M. Vigneault | APP_v6.C.3.xlsb | DELETE-5067 | GC | 25/03/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Test | 0,10 | VRAI | 
+2025-03-25 13:22:54.47 | Robert M. Vigneault | APP_v6.C.3.xlsb | DELETE-5068 | GC | 25/03/2025 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | Test | 0,20 | VRAI | 
