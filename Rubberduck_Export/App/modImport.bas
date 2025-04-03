@@ -605,7 +605,7 @@ Sub ImporterFacDetails() '2024-03-07 @ 17:38
 End Sub
 
 Sub ImporterFacEntete() '2024-07-11 @ 09:21
-    
+        
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ImporterFacEntete", "", 0)
     
     Application.ScreenUpdating = False
@@ -1013,13 +1013,19 @@ Sub ImporterGLTransactions() '2024-03-03 @ 10:13
     Application.ScreenUpdating = False
     
     'Worksheet recevant les données importées
-    Dim wsLocal As Worksheet: Set wsLocal = wsdGL_Trans
+    Dim ws As Worksheet
+    Set ws = wsdGL_Trans
     
-    'Effacer toutes les lignes, sauf la ligne d'entête
-    Dim saveLastRow As Long
-    saveLastRow = wsLocal.Cells(wsLocal.Rows.count, 1).End(xlUp).row
-    If saveLastRow > 1 Then
-        wsLocal.Range("A1").CurrentRegion.offset(1, 0).ClearContents
+    Dim strNomTable As String
+    strNomTable = "l_tbl_GL_Trans"
+    Dim lo As ListObject
+    Set lo = ws.ListObjects(strNomTable)
+    
+    If Not lo.DataBodyRange Is Nothing Then
+        If lo.ShowAutoFilter Then
+            lo.AutoFilter.ShowAllData
+        End If
+        lo.DataBodyRange.Delete
     End If
 
     'Import GL_Trans from 'GCF_DB_Sortie.xlsx'
@@ -1046,20 +1052,27 @@ Sub ImporterGLTransactions() '2024-03-03 @ 10:13
         .source = "SELECT * FROM [" & sourceTab & "]"
         .Open
     End With
-    'Copy to wsLocal workbook
-    wsLocal.Range("A2").CopyFromRecordset recSet
+    'Copy to ws workbook
+    ws.Range("A2").CopyFromRecordset recSet
 
+    'Redimensionner la table pour inclure uniquement les nouvelles données
+    Dim derLigne As Long
+    derLigne = ws.Cells(ws.Rows.count, "A").End(xlUp).row
+    Set lo = ws.ListObjects(strNomTable)
+    lo.Resize ws.Range(lo.HeaderRowRange.Cells(1), ws.Cells(derLigne, recSet.Fields.count))
+    
    'Setup the format of the worksheet using a Sub
-    Dim rng As Range: Set rng = wsLocal.Range("A1").CurrentRegion
-    Call AppliquerFormatColonnesParTable(wsLocal, rng, 1)
+    Dim rng As Range: Set rng = ws.Range("A1").CurrentRegion
+    Call AppliquerFormatColonnesParTable(ws, rng, 1)
 
     Application.ScreenUpdating = True
     
     'Libérer la mémoire
     Set connStr = Nothing
+    Set lo = Nothing
     Set recSet = Nothing
     Set rng = Nothing
-    Set wsLocal = Nothing
+    Set ws = Nothing
     
     Call Log_Record("modImport:ImporterGLTransactions", "", startTime)
 

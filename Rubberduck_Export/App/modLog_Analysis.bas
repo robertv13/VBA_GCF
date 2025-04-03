@@ -11,7 +11,7 @@ Sub Main_OuvrirRepertoireEtTraiterFichiers()
     'Un répertoire a-t-il été sélectionné ?
     Dim folderPath As String
     If fileDialog.show = -1 Then
-        folderPath = fileDialog.selectedItems(1)
+        folderPath = fileDialog.SelectedItems(1)
     Else
         MsgBox "Aucun répertoire sélectionné.", vbExclamation
         Exit Sub

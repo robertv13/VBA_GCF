@@ -190,7 +190,7 @@ Sub TEC_Evaluation_Affichage(cutoffDate As String, maxDate As Date)
             prenom = prenom & " " & Left$(nom, 1) & "."
             If gDictHours(prof)(i) <> 0 Then
                 tauxHoraire = Fn_Get_Hourly_Rate(profID, ws.Range("L3").value)
-                Debug.Print i, prof, gDictHours(prof)(i), tauxHoraire, gDictHours(prof)(i) * tauxHoraire
+'                Debug.Print i, prof, gDictHours(prof)(i), tauxHoraire, gDictHours(prof)(i) * tauxHoraire
                 ws.Range("E" & currentRow).value = prenom
                 ws.Range("F" & currentRow).HorizontalAlignment = xlRight
                 ws.Range("F" & currentRow).value = Format$(gDictHours(prof)(i), "#,##0.00")

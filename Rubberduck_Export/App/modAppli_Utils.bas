@@ -1151,7 +1151,7 @@ Private Sub VerifierDEBRecurrent(ByRef r As Long, ByRef readRows As Long)
     
     'On analyse chacune des lignes du tableau
     Dim i As Long, p As Long
-    Dim GL As String, descGL As String
+    Dim gl As String, descGL As String
     
     For i = LBound(arr, 1) To UBound(arr, 1)
         If IsNumeric(arr(i, 1)) = False Or arr(i, 1) <> Int(arr(i, 1)) Then
@@ -1173,8 +1173,8 @@ Private Sub VerifierDEBRecurrent(ByRef r As Long, ByRef readRows As Long)
             isDebRécurrentValid = False
         End If
         If p > 0 Then
-            GL = Mid$(strGL, p + 3)
-            descGL = Mid$(GL, InStr(GL, "^D:") + 3, InStr(GL, " | ") - 8)
+            gl = Mid$(strGL, p + 3)
+            descGL = Mid$(gl, InStr(gl, "^D:") + 3, InStr(gl, " | ") - 8)
             If descGL <> Trim$(arr(i, 7)) Then
                 Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la description du G/L '" & arr(i, 7) & "' est INVALIDE")
                 r = r + 1
@@ -1299,7 +1299,7 @@ Private Sub VerifierDEBTrans(ByRef r As Long, ByRef readRows As Long)
     
     'On analyse chacune des lignes du tableau
     Dim i As Long, p As Long
-    Dim GL As String, descGL As String
+    Dim gl As String, descGL As String
     
     For i = LBound(arr, 1) To UBound(arr, 1)
         If IsNumeric(arr(i, 1)) = False Or arr(i, 1) <> Int(arr(i, 1)) Then
@@ -1321,8 +1321,8 @@ Private Sub VerifierDEBTrans(ByRef r As Long, ByRef readRows As Long)
             isDebTransValid = False
         End If
         If p > 0 Then
-            GL = Mid$(strGL, p + 3)
-            descGL = Mid$(GL, InStr(GL, "^D:") + 3, InStr(GL, " | ") - 8)
+            gl = Mid$(strGL, p + 3)
+            descGL = Mid$(gl, InStr(gl, "^D:") + 3, InStr(gl, " | ") - 8)
             If descGL <> Trim$(arr(i, 9)) Then
                 Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la description du G/L '" & arr(i, 8) & "' est INVALIDE")
                 r = r + 1
@@ -2924,7 +2924,7 @@ Private Sub VerifierGLEJRecurrente(ByRef r As Long, ByRef readRows As Long)
     
     'On analyse chacune des lignes du tableau
     Dim i As Long, p As Long
-    Dim GL As String, descGL As String
+    Dim gl As String, descGL As String
     For i = LBound(arr, 1) To UBound(arr, 1)
         If IsNumeric(arr(i, 1)) = False Then
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le numéro d'écriture '" & arr(i, 1) & "' est INVALIDE")
@@ -2939,8 +2939,8 @@ Private Sub VerifierGLEJRecurrente(ByRef r As Long, ByRef readRows As Long)
             isGlEjRécurrenteValid = False
         End If
         If p > 0 Then
-            GL = Mid$(strGL, p)
-            descGL = Mid$(GL, InStr(GL, "-") + 1, InStr(GL, " | ") - 6)
+            gl = Mid$(strGL, p)
+            descGL = Mid$(gl, InStr(gl, "-") + 1, InStr(gl, " | ") - 6)
             If descGL <> Trim$(arr(i, 4)) Then
                 Call AddMessageToWorkSheet(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la description du G/L '" & arr(i, 4) & "' est INVALIDE")
                 r = r + 1
@@ -3304,7 +3304,7 @@ Private Sub VerifierTEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 5066 'What is the last TECID analyzed ?
+    lastTECIDReported = 5404 'What is the last TECID analyzed ?
     
     'Feuille contenant les données à analyser
     Dim HeaderRow As Long: HeaderRow = 2

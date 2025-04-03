@@ -29,19 +29,19 @@ Public Sub GenererRapportGL_Compte(wsRapport As Worksheet, dateDebut As Date, da
     Call GL_Get_Account_Trans_AF("", #1/1/2024#, dateFin, rngResultAll)
     
     'Process one account at the time...
-    Dim GL As String, descGL As String
+    Dim gl As String, descGL As String
     Dim soldeOuverture As Currency, solde As Currency
     Dim item As Variant
     For Each item In collGL_Selectionnes
-        GL = Left$(item, InStr(item, " ") - 1)
+        gl = Left$(item, InStr(item, " ") - 1)
         descGL = Right$(item, Len(item) - InStr(item, " "))
         soldeOuverture = 0
         'Informe l'utilisateur de la progression
-        Application.StatusBar = "Traitement du compte " & GL & " - " & descGL
+        Application.StatusBar = "Traitement du compte " & gl & " - " & descGL
         
         'Extraire les lignes pertinentes pour un compte de GL - arr()
         Dim arr() As Variant
-        arr = ExtraireTransactionsPourUnCompte(rngResultAll, GL)
+        arr = ExtraireTransactionsPourUnCompte(rngResultAll, gl)
         Dim arrTrans() As Variant
         arrTrans = Array()
         If UBound(arr, 1) > 0 Then
@@ -70,7 +70,7 @@ Public Sub GenererRapportGL_Compte(wsRapport As Worksheet, dateDebut As Date, da
         
         'Solde d'ouverture
         solde = soldeOuverture
-        wsRapport.Range("A" & rowRapport).value = GL & " - " & descGL
+        wsRapport.Range("A" & rowRapport).value = gl & " - " & descGL
         wsRapport.Range("A" & rowRapport).Font.Bold = True
         wsRapport.Range("D" & rowRapport).value = "Solde d'ouverture"
         wsRapport.Range("H" & rowRapport).value = solde
