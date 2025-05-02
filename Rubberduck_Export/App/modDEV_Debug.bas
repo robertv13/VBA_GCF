@@ -22,7 +22,7 @@ Sub IdentifierEcartsComptesClientsEtGL() '2025-04-02 @ 07:46
     Dim matENC() As Currency
     ReDim matENC(1 To 500, 1 To 2)
     Dim matFAC() As Currency
-    ReDim matFAC(24475 To 24888, 1 To 2)
+    ReDim matFAC(24475 To 26000, 1 To 2)
     
     'Additionne TOUS les encaissements à partir de ENC_Détails et accumule dans dictionary
     Dim totalENC_Détails As Currency
@@ -85,5 +85,71 @@ Sub IdentifierEcartsComptesClientsEtGL() '2025-04-02 @ 07:46
         End If
     Next i
     
+    MsgBox "Fin de la vérification"
+    
 End Sub
+
+Sub VérifierTousLesContrôlesFeuillesEtUserForms()
+
+    Dim ws As Worksheet
+    Dim ctrl As OLEObject
+    Dim rapport As String
+    Dim testValue As Variant
+    Dim erreurTrouvée As Boolean
+    Dim vbComp As Object
+    Dim uf As Object
+    Dim ctrlUF As MSForms.Control
+
+    rapport = "?? Contrôles ActiveX corrompus (feuilles + UserForms)" & vbCrLf & String(60, "-") & vbCrLf
+
+    ' Vérification des feuilles
+    For Each ws In ThisWorkbook.Worksheets
+        For Each ctrl In ws.OLEObjects
+            On Error Resume Next
+            testValue = ctrl.Object.value
+            If Err.Number <> 0 Then
+                rapport = rapport & "?? Feuille: " & ws.Name & _
+                          " - Contrôle: " & ctrl.Name & _
+                          " ? Erreur : " & Err.Description & vbCrLf
+            End If
+            Err.Clear
+            On Error GoTo 0
+        Next ctrl
+    Next ws
+
+    ' Vérification des UserForms
+    For Each vbComp In ThisWorkbook.VBProject.VBComponents
+        If vbComp.Type = 3 Then ' 3 = vbext_ct_MSForm (UserForm)
+            On Error Resume Next
+            Set uf = VBA.UserForms.Add(vbComp.Name)
+            If Err.Number <> 0 Then
+                rapport = rapport & "? UserForm: " & vbComp.Name & " - Erreur d'ouverture : " & Err.Description & vbCrLf
+                Err.Clear
+                GoTo NextForm
+            End If
+
+            For Each ctrlUF In uf.Controls
+                On Error Resume Next
+                testValue = ctrlUF.value
+                If Err.Number <> 0 Then
+                    rapport = rapport & "?? UserForm: " & vbComp.Name & _
+                              " - Contrôle: " & ctrlUF.Name & _
+                              " ? Erreur : " & Err.Description & vbCrLf
+                End If
+                Err.Clear
+                On Error GoTo 0
+            Next ctrlUF
+
+NextForm:
+            Unload uf
+        End If
+    Next vbComp
+
+    If InStr(rapport, "? Erreur") > 0 Or InStr(rapport, "?") > 0 Then
+        MsgBox rapport, vbExclamation, "?? Problèmes détectés"
+    Else
+        MsgBox "? Aucun contrôle problématique trouvé sur les feuilles ou les UserForms.", vbInformation, "Tout est OK"
+    End If
+End Sub
+
 
