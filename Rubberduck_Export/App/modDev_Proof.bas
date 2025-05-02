@@ -194,6 +194,156 @@ Sub IdentifierÉcartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
     
 End Sub
 
+'Sub AnalyserFichiersLogSaisieHeures() '2024-12-15 @ 11:03
+'
+'    'Définir le chemin du dossier principal des fichiers de PROD
+'    Dim cheminDossier As String
+'    cheminDossier = "C:\VBA\GC_FISCALITÉ\GCF_DataFiles\"
+'
+'    'Initialiser FileSystemObject
+'    Dim FSO As Object
+'    Set FSO = CreateObject("Scripting.FileSystemObject")
+'
+'    Dim dossier As Object
+'    Set dossier = FSO.GetFolder(cheminDossier)
+'
+'    'Mettre en place le fichier de sortie
+'    Dim output As String
+'    output = "X_AnalyseTransTEC"
+'    Call CreateOrReplaceWorksheet(output)
+'    Dim ws As Worksheet
+'    Set ws = ThisWorkbook.Sheets(output)
+'    Dim r As Long: r = 1
+'    ws.Cells(r, 1) = "TECID"
+'    ws.Cells(r, 2) = "timeStamp"
+'    ws.Cells(r, 3) = "Opération"
+'    ws.Cells(r, 4) = "Heures"
+'    ws.Cells(r, 5) = "Prof"
+'    ws.Cells(r, 6) = "dateTEC"
+'    ws.Cells(r, 7) = "NoClient"
+'    ws.Cells(r, 8) = "NomClient"
+'    ws.Cells(r, 9) = "Description"
+'    ws.Cells(r, 10) = "Fichier"
+'    ws.Cells(r, 11) = "Ligne"
+'    ws.Range("A1").CurrentRegion.offset(1).Clear
+'    r = r + 1
+'
+'    'Appeler la fonction récursive pour analyser tous les fichiers
+'    Call AnalyserDossier(dossier, FSO, ws, r)
+'
+'    'Tri des informations
+'    If r > 2 Then
+'        With ws.Sort
+'            .SortFields.Clear
+'            'First sort On NoTEC
+'            .SortFields.Add key:=ws.Range("A2"), _
+'                SortOn:=xlSortOnValues, _
+'                Order:=xlAscending, _
+'                DataOption:=xlSortNormal
+'            'Second, sort On timeStamp
+'            .SortFields.Add key:=ws.Range("B2"), _
+'                SortOn:=xlSortOnValues, _
+'                Order:=xlAscending, _
+'                DataOption:=xlSortNormal
+'            'Third, sort On dateTEC
+'            .SortFields.Add key:=ws.Range("F2"), _
+'                SortOn:=xlSortOnValues, _
+'                Order:=xlAscending, _
+'                DataOption:=xlSortNormal
+'            .SetRange ws.Range("A2:K" & r)
+'            .Apply 'Apply Sort
+'         End With
+'    End If
+'
+'    msgBox "L'analyse est terminée.", vbInformation
+'
+'End Sub
+'
+'Sub AnalyserDossier(dossier As Object, FSO As Object, ws As Worksheet, r As Long)
+'
+'    'Parcourir tous les fichiers de dossier
+'    Dim fichier As Object
+'    Dim cheminFichier As String
+'    Dim compteurLigne As Long
+'    Dim compteurOccurences As Integer
+'
+'    For Each fichier In dossier.Files
+'        If fichier.Name Like "LogSaisieHeures.*" Then
+'            cheminFichier = fichier.path
+'            Debug.Print "#077 - Analyse du fichier : " & cheminFichier
+'
+'            'Initialiser le compteur pour ce fichier
+'            compteurLigne = 0
+'
+'            'Ouvrir le fichier pour lecture seulement
+'            Dim fichierSource As Object
+'            Set fichierSource = FSO.OpenTextFile(cheminFichier, ForReading)
+'
+'            'Parcourir les lignes du fichier
+'            Dim ligne As String, user As String, timeStamp As String, version As String, oper As String
+'            Dim noTEC As Long
+'            Dim prof As String
+'            Dim dateTEC As Date
+'            Dim noClient As String, nomClient As String, desc As String, comm As String
+'            Dim hres As Currency
+'            Dim isFACT As Boolean
+'
+'            Do Until fichierSource.AtEndOfStream
+'                ligne = fichierSource.ReadLine
+'                compteurLigne = compteurLigne + 1
+'
+'                'Compter les occurrences de " | " dans la ligne
+'                compteurOccurences = CompterOccurrences(ligne, "|")
+'                If compteurOccurences = 0 Or compteurOccurences = 4 Then
+'                    Exit Do
+'                End If
+''                Debug.Print compteurOccurences & " - " & ligne
+'                Call FnStripLigneLogSaisieHeures(compteurOccurences, ligne, user, timeStamp, version, _
+'                                                 oper, noTEC, prof, dateTEC, noClient, nomClient, desc, _
+'                                                 hres, comm, isFACT)
+'                'Ajustement de certaies variables
+'                oper = UCase$(Trim$(oper))
+'                If InStr(oper, "ADD ") = 1 Then
+'                    noTEC = Mid$(oper, InStr(oper, " ") + 1)
+'                    oper = Left$(oper, InStr(oper, " ") - 1)
+'                End If
+'                If InStr(oper, "UPDATE ") = 1 Then
+'                    noTEC = Mid$(oper, InStr(oper, " ") + 1)
+'                    oper = Left$(oper, InStr(oper, " ") - 1)
+'                End If
+'                If InStr(oper, "DELETE-") = 1 Then
+'                    noTEC = Mid$(oper, InStr(oper, "-") + 1)
+'                    oper = Left$(oper, InStr(oper, "-") - 1)
+'                End If
+'
+'                ws.Cells(r, 1) = noTEC
+'                ws.Cells(r, 2) = timeStamp
+'                ws.Cells(r, 3) = oper
+'                ws.Cells(r, 4) = hres
+'                ws.Cells(r, 5) = prof
+'                ws.Cells(r, 6) = dateTEC
+'                ws.Cells(r, 7) = noClient
+'                ws.Cells(r, 8) = nomClient
+'                ws.Cells(r, 9) = desc
+'                ws.Cells(r, 10) = cheminFichier
+'                ws.Cells(r, 11) = compteurLigne
+'                r = r + 1
+'            Loop
+'
+'            'Fermer le fichier qui a été lu
+'            fichierSource.Close
+'
+'        End If
+'    Next fichier
+'
+'    'Parcourir tous les sous-dossiers
+'    Dim sousDossier As Object
+'    For Each sousDossier In dossier.SubFolders
+'        Call AnalyserDossier(sousDossier, FSO, ws, r)
+'    Next sousDossier
+'
+'End Sub
+'
 Function CompterOccurrences(texte As String, motif As String) As Long
 
     'Initialiser la position et trouver la position
@@ -212,3 +362,172 @@ Function CompterOccurrences(texte As String, motif As String) As Long
     
 End Function
 
+'Sub FnStripLigneLogSaisieHeures(nbrChamp As Integer, l As String, user As String, timeStamp As String, _
+'                                version As String, oper As String, noTEC As Long, prof As String, dateTEC As Date, _
+'                                noClient As String, nomClient As String, desc As String, hres As Currency, _
+'                                comm As String, isFACT As Boolean)
+'
+'    Dim arr As Variant
+'    arr = Split(l, "|")
+'
+'    Select Case nbrChamp
+'        Case 3
+'            user = Trim$(arr(0))
+'            timeStamp = Trim$(arr(1))
+'            If Len(timeStamp) <> 19 Then Stop
+'            oper = "Delete"
+'            noTEC = Abs(arr(3))
+'            prof = ""
+'            dateTEC = #7/31/2023#
+'            noClient = ""
+'            nomClient = ""
+'            desc = ""
+'            hres = 0
+'            isFACT = False
+'        Case 11
+'            If InStr(arr(0), ".") Then arr(0) = Left$(arr(0), InStr(arr(0), ".") - 1)
+'            If IsDate(arr(0)) = False Then
+'                user = Trim$(arr(0))
+'                timeStamp = Trim$(arr(1))
+'                If Len(timeStamp) <> 19 And Len(timeStamp) < 22 Then Stop
+'                oper = Trim$(arr(2))
+'                noTEC = Trim$(arr(3))
+'                prof = Trim$(arr(4))
+'                dateTEC = arr(5)
+'                noClient = Trim$(arr(6))
+'                nomClient = Trim$(arr(7))
+'                desc = Trim$(arr(8))
+'                hres = Trim$(Replace(arr(9), ".", ","))
+'                comm = Trim$(arr(10))
+'                isFACT = arr(11)
+'            Else
+'                If InStr(Trim$(arr(2)), "APP_") <> 1 Then
+'                    timeStamp = Trim$(arr(0))
+'                    If Len(timeStamp) <> 19 And Len(timeStamp) < 23 Then Stop
+'                    user = Trim$(arr(1))
+'                    oper = Trim$(arr(2))
+'                    noTEC = Trim$(arr(3))
+'                    prof = Trim$(arr(4))
+'                    dateTEC = arr(5)
+'                    noClient = Trim$(arr(6))
+'                    nomClient = Trim$(arr(7))
+'                    desc = Trim$(arr(8))
+'                    isFACT = arr(9)
+'                    hres = 0
+'                    comm = Trim$(arr(10))
+'                Else
+'                    timeStamp = Trim$(arr(0))
+'                    If Len(timeStamp) <> 19 And Len(timeStamp) < 23 Then Stop
+'                    user = Trim$(arr(1))
+'                    version = Trim$(arr(2))
+'                    oper = Trim$(arr(3))
+'                    noTEC = 0
+'                    prof = Trim$(arr(4))
+'                    dateTEC = arr(5)
+'                    noClient = Trim$(arr(6))
+'                    nomClient = Trim$(arr(7))
+'                    desc = Trim$(arr(8))
+'                    hres = Trim$(Replace(arr(9), ".", ","))
+'                    isFACT = Trim$(arr(10))
+'                    comm = Trim$(arr(11))
+'                End If
+'            End If
+'        Case 12
+'            If InStr(arr(0), ".") Then arr(0) = Left$(arr(0), InStr(arr(0), ".") - 1)
+'            If IsDate(arr(0)) = False Then
+'                user = Trim$(arr(0))
+'                timeStamp = Trim$(arr(1))
+'                If Len(timeStamp) <> 19 And Len(timeStamp) < 23 Then Stop
+'                oper = Trim$(arr(2))
+'                noTEC = Trim$(arr(3))
+'                prof = Trim$(arr(4))
+'                dateTEC = arr(5)
+'                noClient = Trim$(arr(6))
+'                nomClient = Trim$(arr(7))
+'                desc = Trim$(arr(8))
+'                hres = Trim$(Replace(arr(9), ".", ","))
+'                isFACT = arr(10)
+'                comm = Trim$(arr(12))
+'            Else
+'                If IsDate(arr(4)) = False Then
+'                    If InStr(Trim$(arr(2)), "APP_") <> 1 Then
+'                        timeStamp = Trim$(arr(0))
+'                        If Len(timeStamp) <> 19 Then Stop
+'                        user = Trim$(arr(1))
+'                        oper = Trim$(arr(2))
+'                        noTEC = Trim$(arr(3))
+'                        prof = Trim$(arr(4))
+'                        dateTEC = arr(5)
+'                        noClient = Trim$(arr(6))
+'                        nomClient = Trim$(arr(7))
+'                        desc = Trim$(arr(8))
+'                        hres = Trim$(Replace(arr(9), ".", ","))
+'                        isFACT = Trim$(arr(10))
+'                        comm = Trim$(arr(12))
+'                    Else
+'                        timeStamp = Trim$(arr(0))
+'                        If Len(timeStamp) <> 19 Then Stop
+'                        user = Trim$(arr(1))
+'                        version = Trim$(arr(2))
+'                        oper = Trim$(arr(3))
+'                        noTEC = 0
+'                        prof = Trim$(arr(4))
+'                        dateTEC = arr(5)
+'                        noClient = Trim$(arr(6))
+'                        nomClient = Trim$(arr(7))
+'                        desc = Trim$(arr(8))
+'                        hres = Trim$(Replace(arr(9), ".", ","))
+'                        isFACT = Trim$(arr(10))
+'                        comm = Trim$(arr(11))
+'                    End If
+'                Else
+'                    timeStamp = Trim$(arr(0))
+'                    If Len(timeStamp) <> 19 Then Stop
+'                    user = Trim$(arr(1))
+'                    oper = Trim$(arr(2))
+'                    noTEC = 0
+'                    prof = Trim$(arr(3))
+'                    dateTEC = arr(4)
+'                    noClient = Trim$(arr(5))
+'                    nomClient = Trim$(arr(6))
+'                    desc = Trim$(arr(7))
+'                    hres = Trim$(Replace(arr(8), ".", ","))
+'                    isFACT = Trim$(arr(9))
+'                    comm = Trim$(arr(10))
+'                End If
+'            End If
+'        Case 13
+'            If IsNumeric(arr(10)) = True Then
+'                timeStamp = Trim$(arr(0))
+'                If Len(timeStamp) <> 19 And Len(timeStamp) < 23 Then Stop
+'                user = Trim$(arr(1))
+'                oper = Trim$(arr(3))
+'                noTEC = Trim$(arr(4))
+'                prof = Trim$(arr(5))
+'                dateTEC = arr(6)
+'                noClient = Trim$(arr(7))
+'                nomClient = Trim$(arr(8))
+'                desc = Trim$(arr(9))
+'                hres = Trim$(Replace(arr(10), ".", ","))
+'                isFACT = arr(11)
+'                comm = Trim$(arr(12))
+'            Else
+'                timeStamp = Trim$(arr(0))
+'                If Len(timeStamp) <> 19 And Len(timeStamp) < 23 Then Stop
+'                user = Trim$(arr(1))
+'                oper = Trim$(arr(2))
+'                noTEC = Trim$(arr(3))
+'                prof = Trim$(arr(4))
+'                dateTEC = arr(5)
+'                noClient = Trim$(arr(6))
+'                nomClient = Trim$(arr(7))
+'                desc = Trim$(arr(8))
+'                hres = Trim$(Replace(arr(9), ".", ","))
+'                isFACT = Trim$(arr(10))
+'                comm = Trim$(arr(11))
+'            End If
+'        Case Else
+'            Stop
+'    End Select
+'
+'End Sub

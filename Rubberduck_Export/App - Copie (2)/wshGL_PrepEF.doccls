@@ -1,0 +1,106 @@
+﻿'@Folder("Rapport_ÉtatsFinanciers")
+
+Option Explicit
+
+Private Sub Worksheet_Activate()
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_PrepEF:Worksheet_Activate", "", 0)
+
+    Dim ws As Worksheet: Set ws = wshGL_PrepEF
+    
+    ws.Unprotect
+    
+    Application.ScreenUpdating = False
+    Application.EnableEvents = False
+    Me.Application.Calculation = xlCalculationAutomatic
+    
+    'Import transactions from MASTER file
+    Call modImport.ImporterGLTransactions
+
+    'Set the zoom factor to 95% when this worksheet is activated
+    ActiveWindow.Zoom = 100
+
+    'Cache le bouton 'Actualiser'
+    Dim shp As Shape
+    Set shp = ws.Shapes("Actualiser")
+    shp.Visible = False
+    
+    'Clear the display area & display the account number & description
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.Rows.count, "F").End(xlUp).row
+    If lastUsedRow > 5 Then
+        ws.Range("C6:S" & lastUsedRow).ClearContents
+    End If
+    
+    'Protection de la feuille
+    With ws
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+    End With
+    
+    'Date du jour par défaut
+    gPreviousCellAddress = ws.Range("F3").Address
+    ws.Range("F3").value = ""
+'    ws.Range("F3").value = Format$(Date, wsdADMIN.Range("B1").value)
+    
+    Application.ScreenUpdating = True
+    Application.EnableEvents = True
+    
+    ws.Range("F3").Select
+    
+    'Libérer la mémoire
+    Set ws = Nothing
+    
+    Call Log_Record("wshGL_PrepEF:Worksheet_Activate", "", startTime)
+
+End Sub
+
+Private Sub Worksheet_SelectionChange(ByVal target As Range)
+
+    If gPreviousCellAddress <> "" Then
+        Range(gPreviousCellAddress).Interior.Color = xlNone
+    End If
+
+    'Date limite est sélectionnée
+    If Not Intersect(target, Me.Range("F3")) Is Nothing Then
+        target.Interior.Color = COULEUR_SAISIE
+    End If
+    
+End Sub
+
+Private Sub Worksheet_Change(ByVal target As Range)
+
+    Dim fullDate As Variant
+    
+    'Date limite a été changée
+    If Not Intersect(target, Range("F3")) Is Nothing Then
+        
+        'Pour éviter des boucles infinies
+        Application.EnableEvents = False
+        
+        'Validation de la date
+        fullDate = Fn_Complete_Date(target.value, 999, 15)
+        'Date est-elle valide ?
+        If fullDate <> "Invalid Date" Then
+            target.value = Format$(fullDate, wsdADMIN.Range("B1").value)
+        Else
+            Call modTEC_Saisie.AfficherMessageDateInvalide("wshGL_PrepEF_139")
+            target.ClearContents
+            Application.GoTo Range(target.Address)
+        End If
+        
+        Application.EnableEvents = True
+        
+        Dim ws As Worksheet
+        Set ws = wshGL_PrepEF
+        
+        Call Calculer_Soldes_Pour_EF(ws, Range("F3").value)
+        
+        'Afficher le bouton 'Actualiser'
+        Dim shp As Shape
+        Set shp = ws.Shapes("Actualiser")
+        shp.Visible = True
+        
+    End If
+
+End Sub

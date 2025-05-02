@@ -378,7 +378,7 @@ Sub Fix_Date_Format()
     Dim filePath As String
     Dim fileSelected As Boolean
     If fd.show = -1 Then
-        filePath = fd.SelectedItems(1)
+        filePath = fd.selectedItems(1)
         fileSelected = True
     Else
         MsgBox "Aucun fichier sélectionné.", vbExclamation
@@ -1507,7 +1507,7 @@ Sub UniformiserValeurVBA() '2025-02-27 @ 10:56
     With Application.fileDialog(msoFileDialogFolderPicker)
         .Title = "Sélectionnez le dossier contenant les fichiers VBA"
         If .show = -1 Then
-            dossier = .SelectedItems(1)
+            dossier = .selectedItems(1)
         Else
             Exit Sub 'Annuler l'opération si aucun dossier sélectionné
         End If
@@ -1702,112 +1702,5 @@ Sub Tester_dnrProf_Initials_Only() '2025-03-14 @ 10:42
     Else
         MsgBox "Erreur : la plage nommée est invalide !", vbCritical
     End If
-    
-End Sub
-
-Sub ComparerClasseursNiveauCellules()
-
-    Dim wbOld As Workbook, wbNew As Workbook, wbReport As Workbook
-    Dim wsOld As Worksheet, wsNew As Worksheet, wsReport As Worksheet
-    Dim dictOld As Object, dictNew As Object
-    Dim rngOld As Range, rngNew As Range
-    Dim key As Variant, row As Range, lastRowOld As Long, lastRowNew As Long
-    Dim reportRow As Long, col As Integer, lastCol As Integer
-    Dim oldValues As Variant, newValues As Variant
-    Dim diff As Boolean
-    Dim fDialog As fileDialog
-    
-    'Sélection des fichiers
-    Set fDialog = Application.fileDialog(msoFileDialogFilePicker)
-    fDialog.Title = "Sélectionnez l'ancien classeur"
-    If fDialog.show <> -1 Then Exit Sub
-    Set wbOld = Workbooks.Open(fDialog.SelectedItems(1))
-    
-    fDialog.Title = "Sélectionnez le nouveau classeur"
-    If fDialog.show <> -1 Then Exit Sub
-    Set wbNew = Workbooks.Open(fDialog.SelectedItems(1))
-    
-    'Création du classeur de rapport
-    Set wbReport = Workbooks.Add
-    
-    'Boucler sur les feuilles communes
-    For Each wsOld In wbOld.Sheets
-        On Error Resume Next
-        Set wsNew = wbNew.Sheets(wsOld.Name)
-        On Error GoTo 0
-        
-        If Not wsNew Is Nothing Then
-            'Initialiser les dictionnaires
-            Set dictOld = CreateObject("Scripting.Dictionary")
-            Set dictNew = CreateObject("Scripting.Dictionary")
-            
-            'Déterminer la dernière ligne et colonne
-            lastRowOld = wsOld.Cells(wsOld.Rows.count, 1).End(xlUp).row
-            lastRowNew = wsNew.Cells(wsNew.Rows.count, 1).End(xlUp).row
-            lastCol = wsOld.Cells(1, wsOld.Columns.count).End(xlToLeft).Column
-            
-            'Charger les données de l'ancien classeur
-            Set rngOld = wsOld.Range("A2:A" & lastRowOld)
-            For Each row In rngOld.Rows
-                key = row.row & " - " & row.Cells(1, 1).value & " " & row.Cells(1, 2).value 'Clé unique (ajustez si nécessaire)
-                dictOld(key) = row.EntireRow.value
-            Next row
-            
-            'Charger les données du nouveau classeur
-            Set rngNew = wsNew.Range("A2:A" & lastRowNew)
-            For Each row In rngNew.Rows
-                key = row.row & " - " & row.Cells(1, 1).value & " " & row.Cells(1, 2).value
-                dictNew(key) = row.EntireRow.value
-            Next row
-            
-            'Créer une feuille pour le rapport
-            Set wsReport = wbReport.Sheets.Add
-            wsReport.Name = "Diff " & wsOld.Name
-            wsReport.Range("A1:D1").value = Array("Élément", "Colonne", "Ancienne", "Nouvelle")
-            reportRow = 2
-            
-            'Comparer les données cellule par cellule
-            For Each key In dictOld.keys
-                If Not dictNew.Exists(key) Then
-                    'Ligne supprimée
-                    wsReport.Cells(reportRow, 1).value = key
-                    wsReport.Cells(reportRow, 2).value = "Ligne entière"
-                    wsReport.Cells(reportRow, 3).value = "Supprimée"
-                    reportRow = reportRow + 1
-                Else
-                    'Vérifier chaque colonne individuellement
-                    oldValues = dictOld(key)
-                    newValues = dictNew(key)
-                    For col = 1 To lastCol
-                        If oldValues(1, col) <> newValues(1, col) Then
-                            wsReport.Cells(reportRow, 1).value = key
-                            wsReport.Cells(reportRow, 2).value = wsOld.Cells(1, col).value 'Nom de la colonne
-                            wsReport.Cells(reportRow, 3).value = "Modifiée"
-                            wsReport.Cells(reportRow, 4).value = oldValues(1, col)
-                            wsReport.Cells(reportRow, 5).value = newValues(1, col)
-                            reportRow = reportRow + 1
-                        End If
-                    Next col
-                End If
-            Next key
-            
-            'Vérifier les ajouts
-            reportRow = reportRow + 1
-            For Each key In dictNew.keys
-                If Not dictOld.Exists(key) Then
-                    wsReport.Cells(reportRow, 1).value = key
-                    wsReport.Cells(reportRow, 2).value = "Ligne entière"
-                    wsReport.Cells(reportRow, 3).value = "Ajoutée"
-                    reportRow = reportRow + 1
-                End If
-            Next key
-        End If
-    Next wsOld
-    
-    'Fermer les fichiers source sans enregistrer
-    wbOld.Close False
-    wbNew.Close False
-    
-    MsgBox "Comparaison terminée ! Consultez le classeur de rapport.", vbInformation
     
 End Sub

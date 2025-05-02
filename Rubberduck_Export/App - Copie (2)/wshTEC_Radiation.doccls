@@ -1,0 +1,153 @@
+﻿Option Explicit
+
+Public clientCode As String
+
+Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Radiation:Worksheet_Activate", "", 0)
+    
+    If gFromMenu = False Then
+        Debug.Print "#006 - wshTEC_Radiation_Worksheet_Activate - Je ne viens pas du menu"
+        Exit Sub
+    End If
+
+    Application.ScreenUpdating = False
+    Application.EnableEvents = False
+    
+    Dim ws As Worksheet: Set ws = wshTEC_Radiation
+    
+    'Import transactions from MASTER file
+    Call modImport.ImporterClients
+    
+    'Set the zoom factor to 100% when this worksheet is activated
+    ActiveWindow.Zoom = 100
+
+    Me.Application.Calculation = xlCalculationAutomatic
+
+    'Masquer (si nécessaire) les colonnes A et B
+    ws.Unprotect
+    Dim colsHidden As Boolean
+    colsHidden = ws.Columns("A:B").Hidden
+    If colsHidden = False Then
+        ws.Range("A:B").EntireColumn.Hidden = True
+    End If
+    
+    'Certaines cellules perdent la couleur du background
+    Dim cellsToColor As Range
+    Set cellsToColor = Union(ws.Range("E3"), ws.Range("I3"), ws.Range("J3"), ws.Range("L3"), ws.Range("F4"))
+    Call Remplir_Plage_Avec_Couleur(cellsToColor, COULEUR_BASE_TEC)
+    
+    Call SetTabOrder(ws)
+        
+    Call Prepare_Pour_Nouvelle_Radiation
+    
+    With ws
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+    End With
+
+    Application.EnableEvents = True
+    
+    ws.Visible = xlSheetVisible
+    
+    gFromMenu = True
+    
+    'Libérer la mémoire
+    Set ws = Nothing
+    
+    Call Log_Record("wshTEC_Radiation:Worksheet_Activate", "", startTime)
+
+End Sub
+
+Private Sub Worksheet_SelectionChange(ByVal target As Range)
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Radiation:Worksheet_SelectionChange", "", 0)
+    
+    If gPreviousCellAddress <> "" Then
+        Range(gPreviousCellAddress).Interior.Color = vbWhite
+    End If
+    
+    'Is client been selected ?
+    If Not Intersect(target, wshTEC_Radiation.Range("F3")) Is Nothing Then
+        target.Interior.Color = COULEUR_SAISIE
+    End If
+    
+    'Is date been selected ?
+    If Not Intersect(target, wshTEC_Radiation.Range("K3")) Is Nothing Then
+        target.Interior.Color = COULEUR_SAISIE
+    End If
+    
+    gPreviousCellAddress = target.Address
+    
+    Call Log_Record("wshTEC_Radiation:Worksheet_SelectionChange", "", startTime)
+    
+End Sub
+
+Private Sub Worksheet_Change(ByVal target As Range)
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Radiation:Worksheet_Change", target.Address, 0)
+    
+    Dim fullDate As Variant
+    
+    'Le client a changé
+    If Not Intersect(target, Range("F3")) Is Nothing Then
+        'Aller chercher le vrai nom du client
+        Dim allCols As Variant
+        allCols = Fn_Get_A_Row_From_A_Worksheet("BD_Clients", target.value, fClntFMNomClientPlusNomClientSystème)
+        'Vérifier les résultats
+        If IsArray(allCols) Then
+            Application.EnableEvents = False
+            target.value = allCols(1)
+            Application.EnableEvents = True
+        Else
+            MsgBox "Valeur non trouvée !!!", vbCritical
+        End If
+        Application.EnableEvents = False
+        target.Interior.Color = COULEUR_BASE_TEC
+        clientCode = allCols(fClntFMClientID)
+        Application.EnableEvents = True
+        If Fn_Is_Client_Facturable(clientCode) = False Then
+            MsgBox "Ce client n'est pas un client facturable", vbInformation
+            target.Activate
+'        Else
+'            wshTEC_Radiation.Range("K3").Select
+        End If
+        
+    End If
+    
+    'CutOffDate has changed
+    If Not Intersect(target, Range("K3")) Is Nothing Then
+        Application.EnableEvents = False
+        fullDate = Fn_Complete_Date(target.Text, 99, 0)
+        If fullDate <> "Invalid Date" Then
+            target.value = Format$(fullDate, wsdADMIN.Range("B1").value)
+            target.Interior.Color = vbWhite
+       Else
+            Call modTEC_Saisie.AfficherMessageDateInvalide("wshTEC_Radiation_75")
+            Application.EnableEvents = False
+            target.ClearContents
+            Application.EnableEvents = True
+            Application.GoTo Range(target.Address)
+        End If
+       
+        'Future date ?
+        If CDate(Range("L3").value) > Date Then
+            If MsgBox("Il n'est pas permis d'utiliser une date dans le futur !", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
+                Application.EnableEvents = False
+                target.ClearContents
+                Application.EnableEvents = True
+                Application.GoTo Range(target.Address)
+            End If
+        Else
+            Call TEC_Radiation_Procedure(clientCode, target.value)
+        End If
+        
+    End If
+
+ExitSub:
+
+    Application.EnableEvents = True
+    
+    Call Log_Record("wshTEC_Radiation:Worksheet_Change", "", startTime)
+  
+End Sub
