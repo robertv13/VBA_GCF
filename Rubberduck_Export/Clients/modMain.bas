@@ -317,9 +317,26 @@ Sub CM_Update_External_GCF_Entrée_BD(action As String) 'Update/Write Client reco
         End If
     End If
     
+    'Proposition chatGPT pour forcer l'écriture par EXCEL - 2025-05-02 @ 14:06
+    'Ouvrir le fichier temporairement via Excel pour forcer l'enregistrement
+    Dim xlApp As Object, wb As Workbook
+    Set xlApp = CreateObject("Excel.Application")
+    xlApp.DisplayAlerts = False
+    xlApp.Visible = False
+
+    On Error GoTo CleanupFile
+    Set wb = xlApp.Workbooks.Open(destinationFileName, False, False)
+    wb.Save
+    wb.Close False
+
+CleanupFile:
+    xlApp.Quit
+    Set wb = Nothing
+    Set xlApp = Nothing
+    
     DoEvents
 
-    Application.Wait Now + TimeValue("00:00:02") 'Attente de 2 secondes
+'    Application.Wait Now + TimeValue("00:00:01") 'Attente de 1 seconde
 
     DoEvents
     
@@ -328,7 +345,7 @@ Sub CM_Update_External_GCF_Entrée_BD(action As String) 'Update/Write Client reco
     Call CM_Get_Date_Derniere_Modification(destinationFileName, _
                                                 ddm, jours, heures, minutes, secondes)
     'Record to the log the difference between NOW and the date of last modifcation
-    Call CM_Log_Activities("modMain:Update_External_GCF_BD_Entree", "DDM (" & jours & "." & heures & "." & minutes & "." & secondes & ")", -1)
+    Call CM_Log_Activities("modMain:Update_External_GCF_BD_Entree", "DDM (" & ddm & " : " & jours & "." & heures & "." & minutes & "." & secondes & ")", -1)
     If jours > 0 Or heures > 0 Or minutes > 0 Or secondes > 10 Then
         MsgBox "ATTENTION, le fichier MAÎTRE (GCF_Entrée.xlsx)" & vbNewLine & vbNewLine & _
                "n'a pas été modifié adéquatement sur disque..." & vbNewLine & vbNewLine & _

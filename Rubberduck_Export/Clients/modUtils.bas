@@ -93,7 +93,7 @@ Sub CM_Verify_DDM(fullFileName As String)
     Call CM_Get_Date_Derniere_Modification(fullFileName, ddm, jours, heures, minutes, secondes)
     
     'Record to the log the difference between NOW and the date of last modifcation
-    Call CM_Log_Activities("modMain:CM_Update_External_GCF_Entrée_BD", "DDM (" & jours & "." & heures & "." & minutes & "." & secondes & ")", -1)
+    Call CM_Log_Activities("modUtils:CM_Verify_DDM", "DDM (" & ddm & " : " & jours & "." & heures & "." & minutes & "." & secondes & ")", -1)
     If jours > 0 Or heures > 0 Or minutes > 0 Or secondes > 3 Then
         MsgBox "ATTENTION, le fichier MAÎTRE (GCF_Entrée.xlsx)" & vbNewLine & vbNewLine & _
                "n'a pas été modifié adéquatement sur disque..." & vbNewLine & vbNewLine & _
