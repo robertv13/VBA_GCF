@@ -979,34 +979,94 @@ Sub FAC_Finale_Creation_PDF_Click()
     
 End Sub
 
-Sub FAC_Finale_Creation_PDF() '2024-10-13 @ 10:15
+Sub FAC_Finale_Creation_PDF() '2025-05-06 @ 11:07
+
+    Dim startTime As Double: startTime = Timer
+    Dim codeFacture As String: codeFacture = wshFAC_Finale.Range("E28").value
+    Dim nomClient As String: nomClient = wshFAC_Brouillon.Range("B18").value
+    Dim nomFichier As String: nomFichier = wshFAC_Finale.Range("L81").value
+    Dim dateFacture As String: dateFacture = Format$(wshFAC_Brouillon.Range("O3").value, "yyyy-mm-dd")
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Creation_PDF", wshFAC_Finale.Range("E28").value, 0)
-    
+    'État initial
     gFlagEtapeFacture = 1
+    Call Log_Record("modFAC_Finale:FAC_Finale_Creation_PDF", codeFacture, 0)
     
+    'Sécuriser l’environnement
+    With Application
+        .ScreenUpdating = False
+        .EnableEvents = False
+        .Calculation = xlCalculationManual
+        .CutCopyMode = False
+    End With
+    
+    On Error GoTo GestionErreur
+
     'Étape 1 - Création du document PDF
-    Call FAC_Finale_Create_PDF(wshFAC_Finale.Range("E28").value)
+    Call FAC_Finale_Create_PDF(codeFacture)
+    DoEvents: Application.Wait Now + TimeValue("0:00:01")
     
-    'Étape 2 - Copie de la facture en format EXCEL
-    Call FAC_Finale_Copie_Vers_Excel(wshFAC_Brouillon.Range("B18").value, _
-                                          wshFAC_Finale.Range("L81").value, _
-                                          wshFAC_Finale.Range("E28").value, _
-                                          Format$(wshFAC_Brouillon.Range("O3").value, "yyyy-mm-dd"))
+    'Étape 2 - Copie vers fichier Excel client
+    Call FAC_Finale_Copie_Vers_Excel(nomClient, nomFichier, codeFacture, dateFacture)
+    DoEvents: Application.Wait Now + TimeValue("0:00:01")
     gFlagEtapeFacture = 3
-    
-    'Étape 3 - Envoi du courriel
-    DoEvents
-    Call FAC_Finale_Creation_Courriel(wshFAC_Finale.Range("E28").value, wshFAC_Brouillon.Range("B18").value)
+
+    'Étape 3 - Création du courriel avec pièce jointe PDF
+    Call FAC_Finale_Creation_Courriel(codeFacture, nomClient)
+    DoEvents: Application.Wait Now + TimeValue("0:00:01")
     gFlagEtapeFacture = 4
-    
-    'Étape 4 - Activation du bouton SAUVEGARDE
+
+    'Étape 4 - Activation du bouton Sauvegarde
     Call FAC_Finale_Enable_Save_Button
     gFlagEtapeFacture = 5
 
-    Call Log_Record("modFAC_Finale:FAC_Finale_Creation_PDF", "", startTime)
+    GoTo Fin
 
+GestionErreur:
+    MsgBox "Une erreur est survenue à l'étape " & gFlagEtapeFacture & "." & vbCrLf & _
+           "Erreur: " & Err.Number & " - " & Err.Description, vbCritical
+    Call Log_Record("modFAC_Finale:FAC_Finale_Creation_PDF", codeFacture & " ÉTAPE " & gFlagEtapeFacture & " > " & Err.Description, startTime)
+
+Fin:
+    'Restaurer l’environnement
+    With Application
+        .CutCopyMode = False
+        .EnableEvents = True
+        .ScreenUpdating = True
+        .Calculation = xlCalculationAutomatic
+    End With
+
+    Call Log_Record("modFAC_Finale:FAC_Finale_Creation_PDF", "", startTime)
+    
 End Sub
+
+'Sub FAC_Finale_Creation_PDF() '2024-10-13 @ 10:15
+'
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Creation_PDF", wshFAC_Finale.Range("E28").value, 0)
+'
+'    gFlagEtapeFacture = 1
+'
+'    'Étape 1 - Création du document PDF
+'    Call FAC_Finale_Create_PDF(wshFAC_Finale.Range("E28").value)
+'
+'    'Étape 2 - Copie de la facture en format EXCEL
+'    Call FAC_Finale_Copie_Vers_Excel(wshFAC_Brouillon.Range("B18").value, _
+'                                          wshFAC_Finale.Range("L81").value, _
+'                                          wshFAC_Finale.Range("E28").value, _
+'                                          Format$(wshFAC_Brouillon.Range("O3").value, "yyyy-mm-dd"))
+'    gFlagEtapeFacture = 3
+'
+'    'Étape 3 - Envoi du courriel
+'    DoEvents
+'    Call FAC_Finale_Creation_Courriel(wshFAC_Finale.Range("E28").value, wshFAC_Brouillon.Range("B18").value)
+'    gFlagEtapeFacture = 4
+'
+'    'Étape 4 - Activation du bouton SAUVEGARDE
+'    Call FAC_Finale_Enable_Save_Button
+'    gFlagEtapeFacture = 5
+'
+'    Call Log_Record("modFAC_Finale:FAC_Finale_Creation_PDF", "", startTime)
+'
+'End Sub
 
 Sub FAC_Finale_Create_PDF(noFacture As String)
 
@@ -1223,32 +1283,44 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
         wsCible.Rows(i).RowHeight = plageSource.Rows(i).RowHeight
     Next i
 
-    '5. Copier l'entête de la facture
-    Dim forme As Shape, newForme As Shape
-    For Each forme In wsSource.Shapes
-        If forme.Name = "GCF_Entête" Then
-            'Copier & coller l'entête de la facture (logo)
+    '5. Copier l'entête de la facture (logo)
+    
+    Call CopierFormeEnteteEnTouteSécurité(wsSource, wsCible) '2025-05-06 @ 10:59
+
+'    '5. Copier l'entête de la facture
+'    Dim forme As Shape, newForme As Shape
+'    For Each forme In wsSource.Shapes
+'        If forme.Name = "GCF_Entête" Then
+'            'Copier & coller l'entête de la facture (logo)
+'            forme.Copy
 '            DoEvents
-            forme.Copy
-'            DoEvents
+'            Application.Wait Now + TimeValue("0:00:01")
+'
 '            wsCible.Activate
 '            DoEvents
-            wsCible.PasteSpecial Format:="Picture (Enhanced Metafile)"
-'            wsCible.Paste
-            'Récupérer la nouvelle forme
-'            DoEvents
-            Set newForme = wsCible.Shapes(wsCible.Shapes.count)
-            'Ajuster la position et la taille de la forme
-            With newForme
-                .Top = forme.Top
-                .Left = forme.Left
-                .Height = 250
-            End With
-        End If
-    Next forme
-    
-    DoEvents
-    Application.CutCopyMode = False
+'
+'            On Error Resume Next
+'            wsCible.PasteSpecial Format:="Picture (Enhanced Metafile)"
+'            If Err.Number <> 0 Then
+'                Err.Clear
+'                wsCible.Paste 'Fallback
+'            End If
+'            On Error GoTo 0
+'
+'            If wsCible.Shapes.count > 0 Then
+'                Set newForme = wsCible.Shapes(wsCible.Shapes.count)
+'                With newForme
+'                    .Top = forme.Top
+'                    .Left = forme.Left
+'                    .Height = 250
+'                End With
+'            End If
+'            Exit For ' si on a trouvé la forme, on peut sortir
+'        End If
+'    Next forme
+'
+'    DoEvents
+'    Application.CutCopyMode = False
 
     '6. Copier les paramètres d'impression
     With wsCible.PageSetup
@@ -1291,9 +1363,7 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     Application.ScreenUpdating = True
     
     'Libérer la mémoire
-    Set forme = Nothing
     Set plageSource = Nothing
-    Set newForme = Nothing
     Set wbCible = Nothing
     Set wbSource = Nothing
     Set wsCible = Nothing
@@ -1301,6 +1371,36 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     
     Call Log_Record("modFAC_Finale:FAC_Finale_Copie_Vers_Excel", "", startTime)
 
+End Sub
+
+Sub CopierFormeEnteteEnTouteSécurité(wsSource As Worksheet, wsCible As Worksheet) '2025-05-06 @ 11:12
+
+    Dim forme As Shape, newForme As Shape
+    On Error Resume Next
+    Set forme = wsSource.Shapes("GCF_Entête")
+    On Error GoTo 0
+
+    If Not forme Is Nothing Then
+        forme.Copy
+        DoEvents
+        Application.Wait Now + TimeValue("0:00:01")
+        
+        ' Coller en tant qu'image (plus stable)
+        wsCible.PasteSpecial Format:="Picture (Enhanced Metafile)"
+        DoEvents
+
+        ' Récupérer la dernière forme collée
+        Set newForme = wsCible.Shapes(wsCible.Shapes.count)
+        With newForme
+            .Top = forme.Top
+            .Left = forme.Left
+            .Height = 250 ' Ajustez selon vos besoins
+        End With
+
+        Application.CutCopyMode = False
+    Else
+        Debug.Print "Forme 'GCF_Entête' introuvable sur la feuille source."
+    End If
 End Sub
 
 Sub FAC_Finale_Creation_Courriel(noFacture As String, clientID As String) '2024-10-13 @ 11:33
