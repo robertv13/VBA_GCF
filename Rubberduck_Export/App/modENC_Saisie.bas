@@ -860,20 +860,8 @@ End Sub
 
 Sub shp_ENC_Exit_Click()
 
-    If ActiveSheet.Range("K7").value <> 0 Then
-        Dim reponse As VbMsgBoxResult
-        reponse = MsgBox("Voulez-vous vraiment quitter SANS enregistrer" & vbNewLine & vbNewLine & _
-                "l'encaissement qui n'a pas été mis à jour ?", _
-                vbExclamation + vbYesNo + vbDefaultButton2, "Confirmation avant de quitter SANS enregistrer")
-        If reponse = vbYes Then
-            'Exemple d'action : retour à la feuille "MenuPrincipal"
-            Call ENC_Back_To_GL_Menu
-'            Application.GoTo Worksheets("MenuPrincipal").Range("A1")
-        Else
-            'L'utilisateur a annulé la sortie, donc on ne fait rien et il reste sur la feuille.
-        End If
-    End If
-    
+    Call ENC_Back_To_GL_Menu
+
 End Sub
 
 Sub ENC_Back_To_GL_Menu()

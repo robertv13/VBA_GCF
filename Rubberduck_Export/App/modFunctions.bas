@@ -50,8 +50,7 @@ Function Fn_Get_A_Row_From_A_Worksheet(feuille As String, cle As Variant, cleCol
     Dim resultArray() As Variant
     Dim i As Long
     For i = 1 To UBound(allData, 1)
-'        If i = 761 Or allData(i, 2) = "1472" Then Stop
-        If Trim(allData(i, cleCol)) = Trim(cle) Then
+        If allData(i, cleCol) = cle Then
             'Ligne est trouvée alors on copie toutes les colonnes dans le tableau résultat
             resultArray = Application.index(allData, i, 0)
             Fn_Get_A_Row_From_A_Worksheet = resultArray

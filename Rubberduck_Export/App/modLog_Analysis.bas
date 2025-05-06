@@ -6,15 +6,12 @@ Sub Main_OuvrirRepertoireEtTraiterFichiers()
     'Initialisation du FileDialog pour sélectionner un répertoire
     Dim fileDialog As fileDialog
     Set fileDialog = Application.fileDialog(msoFileDialogFolderPicker)
-    With fileDialog
-        .Title = "Sélectionnez un répertoire à traiter"
-        .InitialFileName = "C:\VBA\GC_FISCALITÉ\GCF_DataFiles\"
-    End With
+    fileDialog.Title = "Sélectionnez un répertoire à traiter"
     
     'Un répertoire a-t-il été sélectionné ?
     Dim folderPath As String
     If fileDialog.show = -1 Then
-        folderPath = fileDialog.SelectedItems(1)
+        folderPath = fileDialog.selectedItems(1)
     Else
         MsgBox "Aucun répertoire sélectionné.", vbExclamation
         Exit Sub

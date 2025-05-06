@@ -309,10 +309,10 @@ Sub Code_Search_Everywhere() '2024-10-26 @ 10:41
     Dim LineNum As Long
     Dim x As Long
     
-    Dim vbComp As Object
+    Dim VBComp As Object
     Dim oType As String
-    For Each vbComp In ThisWorkbook.VBProject.VBComponents
-        Select Case vbComp.Type
+    For Each VBComp In ThisWorkbook.VBProject.VBComponents
+        Select Case VBComp.Type
         Case 1
             oType = "1_Module"
         Case 2
@@ -327,19 +327,19 @@ Sub Code_Search_Everywhere() '2024-10-26 @ 10:41
         End Select
         
         'Get the code module for the component
-        Dim vbCodeMod As Object: Set vbCodeMod = vbComp.codeModule
+        Dim vbCodeMod As Object: Set vbCodeMod = VBComp.codeModule
         
         'Loop through all lines in the code module to save all the lines in memory
         For LineNum = 1 To vbCodeMod.CountOfLines
             If Trim$(vbCodeMod.Lines(LineNum, 1)) <> "" Then
                 x = x + 1
                 allLinesOfCode(x, 1) = oType
-                allLinesOfCode(x, 2) = vbComp.Name
+                allLinesOfCode(x, 2) = VBComp.Name
                 allLinesOfCode(x, 3) = LineNum
                 allLinesOfCode(x, 4) = Trim$(vbCodeMod.Lines(LineNum, 1))
             End If
         Next LineNum
-    Next vbComp
+    Next VBComp
     
     'At this point allLinesOfCode contains all lines of code of the application - 2024-07-10 @ 17:33
     
@@ -348,7 +348,7 @@ Sub Code_Search_Everywhere() '2024-10-26 @ 10:41
     Call Search_Every_Lines_Of_Code(allLinesOfCode, search1, search2, search3)
     
     'Libérer la mémoire
-    Set vbComp = Nothing
+    Set VBComp = Nothing
     Set vbCodeMod = Nothing
     
 End Sub
@@ -1259,7 +1259,7 @@ Sub List_Subs_And_Functions_All() '2024-11-26 @ 20:02
     Dim scope As String, sType As String
     
     'Loop through all VBcomponents (modules, class and forms) in the active workbook
-    Dim vbComp As Object
+    Dim VBComp As Object
     Dim oType As String
     Dim arr() As Variant
     ReDim arr(1 To 750, 1 To 10)
@@ -1267,10 +1267,10 @@ Sub List_Subs_And_Functions_All() '2024-11-26 @ 20:02
     Dim LineNum As Long, lread As Long
     Dim i As Long
 
-    For Each vbComp In ThisWorkbook.VBProject.VBComponents
+    For Each VBComp In ThisWorkbook.VBProject.VBComponents
         'Check if the component is a userForm (1), a module (2) or a class module (3)
-        If vbComp.Type <= 100 Then
-            Select Case vbComp.Type
+        If VBComp.Type <= 100 Then
+            Select Case VBComp.Type
                 Case 1
                     oType = "1_Module"
                 Case 2
@@ -1280,10 +1280,10 @@ Sub List_Subs_And_Functions_All() '2024-11-26 @ 20:02
                 Case 100
                     oType = "0_Worksheet"
                 Case Else
-                    oType = vbComp.Type & "_?????"
+                    oType = VBComp.Type & "_?????"
             End Select
             'Get the code module for the component
-            Dim vbCodeMod As Object: Set vbCodeMod = vbComp.codeModule
+            Dim vbCodeMod As Object: Set vbCodeMod = VBComp.codeModule
             'Loop through all lines in the code module
             For LineNum = 1 To vbCodeMod.CountOfLines
                 lread = lread + 1
@@ -1314,7 +1314,7 @@ Sub List_Subs_And_Functions_All() '2024-11-26 @ 20:02
                 If (posProcedure <> 0 Or posFonction <> 0) And posExitProcedure = 0 And posExitFonction = 0 Then
                     i = i + 1
                     arr(i, 2) = oType
-                    arr(i, 3) = vbComp.Name
+                    arr(i, 3) = VBComp.Name
                     arr(i, 4) = LineNum
                     'Goback to savedLineOfCode
                     trimmedLineOfCode = Trim$(vbCodeMod.Lines(LineNum, 1))
@@ -1348,7 +1348,7 @@ Sub List_Subs_And_Functions_All() '2024-11-26 @ 20:02
                     End If
                     arr(i, 6) = sType
                     arr(i, 7) = trimmedLineOfCode
-                    arr(i, 1) = UCase$(oType) & Chr$(0) & UCase$(vbComp.Name) & Chr$(0) & UCase$(trimmedLineOfCode) 'Future sort key
+                    arr(i, 1) = UCase$(oType) & Chr$(0) & UCase$(VBComp.Name) & Chr$(0) & UCase$(trimmedLineOfCode) 'Future sort key
                     If params <> "()" Then arr(i, 8) = params
                     If remarks <> "" Then arr(i, 9) = remarks
                     arr(i, 10) = Format$(Now(), "yyyy-mm-dd hh:mm")
@@ -1357,7 +1357,7 @@ Sub List_Subs_And_Functions_All() '2024-11-26 @ 20:02
                 End If
             Next LineNum
         End If
-    Next vbComp
+    Next VBComp
     
     'Prepare the output worksheet
     Dim lastUsedRow As Long
@@ -1380,7 +1380,7 @@ Sub List_Subs_And_Functions_All() '2024-11-26 @ 20:02
                 Format$(lread, "#,##0") & " Lignes de code"
     
     'Libérer la mémoire
-    Set vbComp = Nothing
+    Set VBComp = Nothing
     Set vbCodeMod = Nothing
     Set ws = Nothing
     
