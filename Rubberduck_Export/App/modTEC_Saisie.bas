@@ -60,7 +60,7 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
         Call TEC_Refresh_ListBox_And_Add_Hours
         
         'Reset command buttons
-        Call ActiverButtonsVraiOuFaux(False, False, False, False)
+        Call ActiverButtonsVraiOuFaux("TEC_Ajoute_Ligne", False, False, False, False)
         
         'Back to client
         ufSaisieHeures.txtClient.SetFocus
@@ -293,7 +293,7 @@ Sub TEC_Efface_Formulaire() 'Clear all fields on the userForm
     
     Call TEC_Refresh_ListBox_And_Add_Hours
     
-    Call ActiverButtonsVraiOuFaux(False, False, False, False)
+    Call ActiverButtonsVraiOuFaux("TEC_Efface_Formulaire", False, False, False, False)
         
     ufSaisieHeures.txtClient.SetFocus
     
@@ -710,7 +710,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
 
 EndOfProcedure:
 
-    Call ActiverButtonsVraiOuFaux(False, False, False, False)
+    Call ActiverButtonsVraiOuFaux("TEC_Refresh_ListBox_And_Add_Hours", False, False, False, False)
 
     ufSaisieHeures.txtClient.SetFocus
     
@@ -793,8 +793,9 @@ Sub TEC_TdB_Refresh_All_Pivot_Tables()
     
 End Sub
 
-Sub ActiverButtonsVraiOuFaux(a As Boolean, u As Boolean, _
+Sub ActiverButtonsVraiOuFaux(where As String, a As Boolean, u As Boolean, _
                                   d As Boolean, c As Boolean)
+    Debug.Print "077# - " & where, a, u, d, c
                                   
     With ufSaisieHeures
         .cmdAdd.Enabled = a

@@ -291,7 +291,7 @@ Private Sub Process_Change(ByVal target As Range)
                 End If
                 cell.offset(0, 5).Select 'Input NET amount
             Else
-                If wshDEB_Saisie.Range("H" & target.row).value <> "M" Then
+'                If wshDEB_Saisie.Range("H" & target.row).value <> "M" Then
                     Call Calculate_GST_PST_And_Credits(wshDEB_Saisie.Range("O4").value, _
                                                        wshDEB_Saisie.Range("H" & target.row).value, _
                                                        target.value, _
@@ -310,7 +310,7 @@ Private Sub Process_Change(ByVal target As Range)
                     End If
                     'Move to the next line
                     cell.offset(1, -4).Select
-                End If
+'                End If
             End If
         Next cell
     End If
@@ -369,19 +369,6 @@ Private Sub Process_Change(ByVal target As Range)
         cell.offset(0, 5).value = netAmount
     End If
     
-    'Force TAB order after a cell has been changed - 2024-08-25 @ 10:35
-'    If Not Intersect(target, Me.Range("F4")) Is Nothing Then
-'        Me.Range("J4").Select
-'    ElseIf Not Intersect(target, Me.Range("J4")) Is Nothing Then
-'        Me.Range("O4").Select
-'    ElseIf Not Intersect(target, Me.Range("O4")) Is Nothing Then
-'        Me.Range("F6").Select
-'    ElseIf Not Intersect(target, Me.Range("F6")) Is Nothing Then
-'        Me.Range("M6").Select
-'    ElseIf Not Intersect(target, Me.Range("M6")) Is Nothing Then
-'        Me.Range("O6").Select
-'    End If
-'
     'Libérer la mémoire
     Set amountRange = Nothing
     Set cell = Nothing

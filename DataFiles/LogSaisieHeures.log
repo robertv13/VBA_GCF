@@ -48,3 +48,8 @@
 2025-03-25 13:22:38.96 | Robert M. Vigneault | APP_v6.C.3.xlsb | UPDATE 5068 | GC | 25/03/2025 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | Test | 0,20 | VRAI | 
 2025-03-25 13:22:45.72 | Robert M. Vigneault | APP_v6.C.3.xlsb | DELETE-5067 | GC | 25/03/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Test | 0,10 | VRAI | 
 2025-03-25 13:22:54.47 | Robert M. Vigneault | APP_v6.C.3.xlsb | DELETE-5068 | GC | 25/03/2025 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | Test | 0,20 | VRAI | 
+2025-05-06 22:41:28.33 | Robert M. Vigneault | APP_v6.C.4.2.xlsb | ADD    6451 | GC | 06/05/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Test | 0,10 | VRAI | 
+2025-05-06 22:41:44.87 | Robert M. Vigneault | APP_v6.C.4.2.xlsb | ADD    6452 | GC | 06/05/2025 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | Test | 0,10 | VRAI | 
+2025-05-06 22:50:03.27 | Robert M. Vigneault | APP_v6.C.4.2.xlsb | UPDATE 6452 | GC | 06/05/2025 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | Testa | 0,10 | VRAI | 
+2025-05-06 22:50:15.03 | Robert M. Vigneault | APP_v6.C.4.2.xlsb | UPDATE 6452 | GC | 06/05/2025 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | Testa | 0,20 | VRAI | 
+2025-05-06 22:50:23.02 | Robert M. Vigneault | APP_v6.C.4.2.xlsb | UPDATE 6452 | GC | 06/05/2025 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | Testa | 0,10 | VRAI | 

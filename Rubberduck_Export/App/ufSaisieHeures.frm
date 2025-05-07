@@ -47,7 +47,7 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
         .CompareMethod = vbTextCompare
     End With
 
-    Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, False, False, False)
+    Call modTEC_Saisie.ActiverButtonsVraiOuFaux("UserFormActivate", False, False, False, False)
 
     'Default Professionnal - 2024-08-19 @ 07:59
     Select Case Fn_Get_Windows_Username
@@ -281,9 +281,9 @@ Private Sub txtClient_AfterUpdate()
     
     If Me.txtClient.value <> savedClient Then '2025-03-25 @ 13:05
         If Me.txtTECID = "" Then
-            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, False, False, True)
+            Call modTEC_Saisie.ActiverButtonsVraiOuFaux("txtClient_AfterUpdate", False, False, False, True)
         Else
-            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, True, False, True)
+            Call modTEC_Saisie.ActiverButtonsVraiOuFaux("txtClient_AfterUpdate", False, True, False, True)
         End If
     End If
 
@@ -303,23 +303,22 @@ Private Sub txtActivite_AfterUpdate()
     If Me.txtActivite.value <> savedActivite Then '2025-03-25 @ 13:05
         Debug.Print "txtActivite_AfterUpdate : ", Me.txtActivite.value, " vs ", savedActivite, " - TECID=" & Me.txtTECID
         If Me.txtTECID = "" Then
-            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, False, False, True)
+            Call modTEC_Saisie.ActiverButtonsVraiOuFaux("txtActivite_AfterUpdate", False, False, False, True)
         Else
-            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, True, False, True)
+            Call modTEC_Saisie.ActiverButtonsVraiOuFaux("txtActivite_AfterUpdate", False, True, False, True)
         End If
     End If
     
-'CommentOut - 2025-03-25 @ 13:12
 '    If Me.txtActivite.value <> savedActivite Then '2025-01-16 @ 16:46
 '        If Me.txtHeures.value <> "" Then
 '            If CCur(Me.txtHeures.value) <> 0 Then
-'                Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True)
+'                Call modTEC_Saisie.ActiverButtonsVraiOuFaux("txtActivite_AfterUpdate", True, False, False, True)
 '            Else
-'                Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, True, False, True)
+'                Call modTEC_Saisie.ActiverButtonsVraiOuFaux("txtActivite_AfterUpdate", False, True, False, True)
 '            End If
 '        End If
 '    End If
-'
+
     Me.txtActivite.value = Fn_Nettoyer_Fin_Chaine(Me.txtActivite.value)
     
     Call Log_Record("ufSaisieHeures:txtActivite_AfterUpdate", Me.txtTECID, startTime)
@@ -396,9 +395,9 @@ Sub txtHeures_AfterUpdate()
     If CCur(Me.txtHeures.value) <> savedHeures Then '2025-03-25 @ 13:05
         Debug.Print "txtHeures_AfterUpdate : ", Me.txtHeures.value, " vs ", savedHeures, " - TECID=" & Me.txtTECID
         If Me.txtTECID = "" Then 'Création d'une nouvelle charge
-            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True)
+            Call modTEC_Saisie.ActiverButtonsVraiOuFaux("txtHeures_AfterUpdate", True, False, False, True)
         Else 'Modification d'une charge existante
-            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, True, False, True)
+            Call modTEC_Saisie.ActiverButtonsVraiOuFaux("txtHeures_AfterUpdate", False, True, False, True)
         End If
     End If
     
@@ -413,9 +412,9 @@ Private Sub chbFacturable_AfterUpdate()
     If Me.chbFacturable.value <> savedFacturable Then '2025-03-25 @ 13:05
         Debug.Print "chbFacturable_AfterUpdate : ", Me.chbFacturable.value, " vs ", savedFacturable, " - TECID=" & Me.txtTECID
         If Me.txtTECID = "" Then
-            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True) '2024-10-06 @ 14:33
+            Call modTEC_Saisie.ActiverButtonsVraiOuFaux("chbFacturable_AfterUpdate", True, False, False, True) '2024-10-06 @ 14:33
         Else
-            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, True, False, True)
+            Call modTEC_Saisie.ActiverButtonsVraiOuFaux("chbFacturable_AfterUpdate", False, True, False, True)
         End If
     End If
 
@@ -430,9 +429,9 @@ Private Sub txtCommNote_AfterUpdate()
     If Me.txtCommNote.value <> savedCommNote Then '2025-03-25 @ 13:05
         Debug.Print "txtCommNote_AfterUpdate : ", Me.txtCommNote.value, " vs ", savedCommNote, " - TECID=" & Me.txtTECID
         If Me.txtTECID = "" Then
-            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True) '2024-10-06 @ 14:33
+            Call modTEC_Saisie.ActiverButtonsVraiOuFaux("txtCommNote_AfterUpdate", True, False, False, True) '2024-10-06 @ 14:33
         Else
-            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, True, True, True)
+            Call modTEC_Saisie.ActiverButtonsVraiOuFaux("txtCommNote_AfterUpdate", False, True, True, True)
         End If
     End If
 
@@ -553,7 +552,7 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
         
     End With
 
-    Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, False, True, True)
+    Call modTEC_Saisie.ActiverButtonsVraiOuFaux("lsbHresJour_dblClick", False, False, True, True)
     
     rmv_state = rmv_modeModification
     

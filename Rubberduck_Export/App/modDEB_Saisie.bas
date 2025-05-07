@@ -924,17 +924,12 @@ Sub Calculate_GST_PST_And_Credits(d As Date, _
     pstRate = Fn_Get_Tax_Rate(d, "TVQ")
     
     If total <> 0 Then 'Calculate the amount before taxes
-        'GST calculation
+        'GST & PST calculation
         If taxCode = "TPS/TVQ" Or taxCode = "REP" Then
             gst = Round(total / (1 + gstRate + pstRate) * gstRate, 2)
-        Else
-            gst = 0
-        End If
-        
-        'PST calculation
-        If taxCode = "TPS/TVQ" Or taxCode = "REP" Then
             pst = Round(total / (1 + gstRate + pstRate) * pstRate, 2)
         Else
+            gst = 0
             pst = 0
         End If
         
@@ -947,6 +942,13 @@ Sub Calculate_GST_PST_And_Credits(d As Date, _
             pstCredit = pst
         End If
         
+        If taxCode = "M" Then
+            gst = 0
+            gstCredit = 0
+            pst = 0
+            pstCredit = 0
+        End If
+        
         'Net amount (Expense) = Total - gstCredit - pstCredit
         netAmount = total - gstCredit - pstCredit
         Exit Sub
@@ -956,14 +958,9 @@ Sub Calculate_GST_PST_And_Credits(d As Date, _
         'gst calculation
         If taxCode = "TPS/TVQ" Or taxCode = "REP" Then
             gst = Round(netAmount * gstRate, 2)
-        Else
-            gst = 0
-        End If
-        
-        'PST calculation
-        If taxCode = "TPS/TVQ" Or taxCode = "REP" Then
             pst = Round(netAmount * pstRate, 2)
         Else
+            gst = 0
             pst = 0
         End If
         
@@ -973,6 +970,13 @@ Sub Calculate_GST_PST_And_Credits(d As Date, _
         Else
             gstCredit = gst
             pstCredit = pst
+        End If
+        
+        If taxCode = "M" Then
+            gst = 0
+            gstCredit = 0
+            pst = 0
+            pstCredit = 0
         End If
         
         total = netAmount + gstCredit + pstCredit
