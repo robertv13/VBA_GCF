@@ -53,3 +53,20 @@
 2025-05-06 22:50:03.27 | Robert M. Vigneault | APP_v6.C.4.2.xlsb | UPDATE 6452 | GC | 06/05/2025 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | Testa | 0,10 | VRAI | 
 2025-05-06 22:50:15.03 | Robert M. Vigneault | APP_v6.C.4.2.xlsb | UPDATE 6452 | GC | 06/05/2025 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | Testa | 0,20 | VRAI | 
 2025-05-06 22:50:23.02 | Robert M. Vigneault | APP_v6.C.4.2.xlsb | UPDATE 6452 | GC | 06/05/2025 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | Testa | 0,10 | VRAI | 
+2025-05-07 16:44:28.59 | Robert M. Vigneault | APP_v6.C.5.xlsb | UPDATE 6468 | GC | 06/05/2025 | 1803 | Construction Nelson Inc. [Nelson Massicotte] | rencontre Geneviève notaire + courriel | 0,75 | VRAI | Test
+2025-05-07 16:49:24.66 | Robert M. Vigneault | APP_v6.C.5.xlsb | ADD    6488 | GC | 07/05/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Test | 1,00 | VRAI | 
+2025-05-07 16:51:23.64 | Robert M. Vigneault | APP_v6.C.5.xlsb | ADD    6489 | GC | 07/05/2025 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | Test | 0,90 | VRAI | 
+2025-05-07 17:06:15.50 | Robert M. Vigneault | APP_v6.C.5.xlsb | ADD    6490 | GC | 07/05/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Test | 0,10 | VRAI | 
+2025-05-07 17:06:28.62 | Robert M. Vigneault | APP_v6.C.5.xlsb | ADD    6491 | GC | 07/05/2025 | 1142 | Gestion L'Anneau Inc. [Lalonde & Brient] [Nathalie Brient] | Test | 0,10 | VRAI | 
+2025-05-07 17:06:47.95 | Robert M. Vigneault | APP_v6.C.5.xlsb | ADD    6492 | GC | 07/05/2025 | 257 | Pierre-Yves Gay  | Test | 0,10 | VRAI | 
+2025-05-07 17:07:07.94 | Robert M. Vigneault | APP_v6.C.5.xlsb | UPDATE 6489 | GC | 07/05/2025 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | Test | 0,10 | VRAI | 
+2025-05-07 17:07:37.73 | Robert M. Vigneault | APP_v6.C.5.xlsb | UPDATE 6488 | GC | 07/05/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Test | 0,10 | VRAI | 
+2025-05-07 17:08:38.97 | Robert M. Vigneault | APP_v6.C.5.xlsb | UPDATE 6491 | GC | 07/05/2025 | 1142 | Gestion L'Anneau Inc. [Lalonde & Brient] [Nathalie Brient] | Test | 0,20 | VRAI | 
+2025-05-07 17:08:46.55 | Robert M. Vigneault | APP_v6.C.5.xlsb | UPDATE 6491 | GC | 07/05/2025 | 1142 | Gestion L'Anneau Inc. [Lalonde & Brient] [Nathalie Brient] | Test | 0,10 | VRAI | 
+2025-05-07 17:09:01.45 | Robert M. Vigneault | APP_v6.C.5.xlsb | ADD    6493 | GC | 07/05/2025 | 227 | Patrick Monaghan [Barry Monaghan (Patrick Monaghan's Estate)] | Test | 0,10 | VRAI | 
+2025-05-07 17:09:07.22 | Robert M. Vigneault | APP_v6.C.5.xlsb | DELETE-6488 | GC | 07/05/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Test | 0,10 | VRAI | 
+2025-05-07 17:09:13.06 | Robert M. Vigneault | APP_v6.C.5.xlsb | DELETE-6489 | GC | 07/05/2025 | 193l | 9299-2593 Québec Inc. [anciennement Informat] [Luc Grenier] | Test | 0,10 | VRAI | 
+2025-05-07 17:09:20.25 | Robert M. Vigneault | APP_v6.C.5.xlsb | DELETE-6490 | GC | 07/05/2025 | 193r | 9299-2585 Québec Inc. [Informat] [Robert M. Vigneault] | Test | 0,10 | VRAI | 
+2025-05-07 17:09:27.13 | Robert M. Vigneault | APP_v6.C.5.xlsb | DELETE-6491 | GC | 07/05/2025 | 1142 | Gestion L'Anneau Inc. [Lalonde & Brient] [Nathalie Brient] | Test | 0,10 | VRAI | 
+2025-05-07 17:09:33.78 | Robert M. Vigneault | APP_v6.C.5.xlsb | DELETE-6492 | GC | 07/05/2025 | 257 | Pierre-Yves Gay | Test | 0,10 | VRAI | 
+2025-05-07 17:09:40.73 | Robert M. Vigneault | APP_v6.C.5.xlsb | DELETE-6493 | GC | 07/05/2025 | 227 | Patrick Monaghan [Barry Monaghan (Patrick Monaghan's Estate)] | Test | 0,10 | VRAI | 
