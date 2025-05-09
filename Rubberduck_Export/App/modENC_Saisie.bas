@@ -72,7 +72,7 @@ Sub ENC_Get_OS_Invoices_With_AF(cc As String)
 
     'Définir le range pour la source des données en utilisant un tableau
     Dim rngData As Range
-    Set rngData = ws.Range("tblFAC_Comptes_Clients[#All]")
+    Set rngData = ws.Range("l_tbl_FAC_Comptes_Clients[#All]")
     ws.Range("O7").value = rngData.Address
     
     'Définir le range des critères
@@ -959,5 +959,4 @@ Sub ValiderEtLancerufEncRégularisation()
     End If
     
 End Sub
-
 

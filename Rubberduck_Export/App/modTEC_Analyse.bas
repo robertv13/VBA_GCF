@@ -169,20 +169,6 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
         End With
     End With
     
-'    Range("C8:C74").Select
-'    With Selection.Interior
-'        .PatternColorIndex = xlAutomatic
-'        .ThemeColor = xlThemeColorAccent4
-'        .TintAndShade = 0.399975585192419
-'        .PatternTintAndShade = 0
-'    End With
-'    With Selection.Font
-'        .ThemeColor = xlThemeColorLight1
-'        .TintAndShade = 0
-'    End With
-'
-'
-    
     'Change the format of all Client's Total rows
     For r = 7 To destLastUsedRow
         If wsDest.Range("A" & r).value = "" Then

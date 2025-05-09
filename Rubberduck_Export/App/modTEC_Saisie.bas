@@ -29,13 +29,6 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
             y = year(ufSaisieHeures.txtDate.value)
             m = month(ufSaisieHeures.txtDate.value)
             d = day(ufSaisieHeures.txtDate.value)
-'            If y = 2024 And m < 9 Then 'Si mois < 9 alors, on prend pour acquis que le jour et le mois sont inversés...
-'                Dim temp As Integer
-'                temp = m
-'                m = d
-'                d = temp
-'                Call Log_Saisie_Heures("info     ", "@00045 - AJUSTEMENT (PLUG) --->   y = " & y & "   m = " & m & "   d = " & d & "   type = " & TypeName(ufSaisieHeures.txtDate.value))
-'            End If
             ufSaisieHeures.txtDate.value = Format$(DateSerial(y, m, d), "yyyy-mm-dd")
         On Error GoTo 0
         
@@ -54,6 +47,8 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
             .chbFacturable = True
 '            .txtSavedHeures.value = ""
         End With
+        
+        savedHeures = 0 '2025-05-07 @ 16:54
         
         Call TEC_Get_All_TEC_AF
         
@@ -282,12 +277,11 @@ Sub TEC_Efface_Formulaire() 'Clear all fields on the userForm
         .txtActivite.value = ""
         .txtHeures.value = ""
         .txtCommNote.value = ""
-'        .txtSavedHeures = ""
         .cmbProfessionnel.Enabled = True
         .txtDate.Enabled = True
     End With
     
-    savedHeures = 0
+    savedHeures = 0 '2025-05-07 @ 17:03
     
     Call TEC_Get_All_TEC_AF
     
@@ -842,5 +836,4 @@ Sub UpdatePivotTables()
     Call Log_Record("modTEC_Saisie:UpdatePivotTables", "", startTime)
     
 End Sub
-
 

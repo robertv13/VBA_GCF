@@ -37,7 +37,6 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
     Dim lastUsedRow As Long
     lastUsedRow = wsdBD_Clients.Cells(wsdBD_Clients.Rows.count, 1).End(xlUp).row
     ufSaisieHeures.ListData = wsdBD_Clients.Range("Q1:Q" & lastUsedRow) '2025-01-11 @ 18:00
-'    ufSaisieHeures.ListData = wsdBD_Clients.Range("A1:B" & lastUsedRow) '2024-11-05 @ 07:05
     
     With oEventHandler
         Set .SearchListBox = lstboxNomClient
@@ -71,6 +70,8 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
     ufSaisieHeures.cmbProfessionnel.SetFocus
     On Error GoTo 0
    
+    savedHeures = 0 '2025-05-07 @17:03
+    
     rmv_state = rmv_modeInitial
     
     Call Log_Record("ufSaisieHeures:UserForm_Activate", "", startTime)

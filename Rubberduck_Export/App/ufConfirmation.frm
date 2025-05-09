@@ -146,22 +146,6 @@ Public Sub MarquerLigneSelectionnee(item As listItem)
     
 End Sub
 
-'Le tri ne fonctionne pas bien pour la colonne Date, car celle-ci est considérée comme string...
-'Private Sub ListView1_ColumnClick(ByVal ColumnHeader As MSComctlLib.ColumnHeader)
-'
-'    With ListView1
-'        .SortKey = ColumnHeader.Index - 1 ' Index basé sur la colonne cliquée
-'        .sorted = True                   ' Active le tri
-'        ' Alterne l'ordre de tri
-'        If .SortOrder = lvwAscending Then
-'            .SortOrder = lvwDescending
-'        Else
-'            .SortOrder = lvwAscending
-'        End If
-'    End With
-'
-'End Sub
-'
 Private Sub cmdCocherToutesCases_Click()
 
     Call CocherToutesLesCases(ListView1)
@@ -246,5 +230,4 @@ Exit_Sub:
     Call Log_Record("ufConfirmation:UserForm_Terminate", "", startTime)
 
 End Sub
-
 

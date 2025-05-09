@@ -212,8 +212,6 @@ End Sub
 Sub EffaceDonnéesRégularisation()
 
     With ufEncRégularisation
-'        'Solde actuel
-'        .lblTotalFactureValue.Caption = ""
         
         'Montants de la régularisation
         .txtTotalFacture.value = ""
@@ -222,8 +220,6 @@ Sub EffaceDonnéesRégularisation()
         .txtTPS.value = ""
         .txtTVQ.value = ""
         
-'        'Nouveau solde
-'        .lblTotalFactureAjuste.Caption = ""
     End With
     
 End Sub

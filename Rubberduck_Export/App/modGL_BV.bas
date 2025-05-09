@@ -520,18 +520,6 @@ Sub GL_BV_SetUp_And_Print_Document(myPrintRange As Range, pagesTall As Long)
         .FooterMargin = Application.InchesToPoints(0.16)
         Call Log_Record("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 2 (Header & Footer) margins", -1)
         
-'        .PrintHeadings = False
-'        .PrintGridlines = False
-'        .PrintComments = xlPrintInPlace
-'        .PrintQuality = -3
-'        .Draft = False
-'        .FirstPageNumber = xlAutomatic
-'        .Order = xlDownThenOver
-'        .BlackAndWhite = False
-'        .Zoom = False
-'        .PrintErrors = xlPrintErrorsDisplayed
-'        .OddAndEvenPagesHeaderFooter = False
-'        .DifferentFirstPageHeaderFooter = False
         .ScaleWithDocHeaderFooter = True
         .AlignMarginsHeaderFooter = True
     End With
@@ -679,10 +667,6 @@ Sub GL_BV_Show_Dynamic_Shape()
     Dim shp As Shape: Set shp = wshGL_BV.Shapes("JE_Detail_Trans")
     shp.Visible = msoTrue
     
-'    If Not dynamicShape Is Nothing Then
-'        dynamicShape.Visible = True
-'    End If
-
     'Libérer la mémoire
     Set shp = Nothing
     
@@ -714,5 +698,4 @@ Sub GL_BV_Back_To_Menu()
     wshMenuGL.Range("A1").Select
     
 End Sub
-
 

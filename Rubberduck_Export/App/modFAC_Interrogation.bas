@@ -1,5 +1,6 @@
 Attribute VB_Name = "modFAC_Interrogation"
 '@IgnoreModule SetAssignmentWithIncompatibleObjectType
+
 Option Explicit
 
 Sub shp_Affiche_Factures_Click()
@@ -403,16 +404,6 @@ Sub TEC_HONO_Facture(adresse As String)
     
 End Sub
 
-'CommentOut - 2025-03-14 @ 14:26
-'Sub StatistiquesHonoraires(adresse As String)
-'
-'    Dim numeroLigne As Long, numeroColonne As Long
-'    Call ExtraireLigneColonneCellule(adresse, numeroLigne, numeroColonne)
-'    MsgBox "Statistiques d'honoraires pour la cellule " & adresse & vbCrLf & "Ligne : " & numeroLigne & vbCrLf & "Colonne : " & numeroColonne
-'    ' Votre logique pour afficher les statistiques d'honoraires ici
-'
-'End Sub
-'
 Sub TransactionComptesClients(adresse As String)
 
     Dim numeroLigne As Long, numeroColonne As Long
@@ -434,16 +425,6 @@ Sub TransactionComptesClients(adresse As String)
 
 End Sub
 
-'CommentOut - 2025-03-14 @ 14:26
-'Sub HistoriqueTransactions(adresse As String)
-'
-'    Dim numeroLigne As Long, numeroColonne As Long
-'    Call ExtraireLigneColonneCellule(adresse, numeroLigne, numeroColonne)
-'    MsgBox "Historique des transactions pour la cellule " & adresse & vbCrLf & "Ligne : " & numeroLigne & vbCrLf & "Colonne : " & numeroColonne
-'    ' Votre logique pour afficher l'historique des transactions ici
-'
-'End Sub
-'
 Sub ExtraireLigneColonneCellule(adresse As String, ByRef numeroLigne As Long, ByRef numeroColonne As Long)
 
     Dim cellule As Range

@@ -87,9 +87,6 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         'Ensure all pending events could be processed
         DoEvents
 
-        'Introduce a small delay to ensure the worksheet is fully updated
-'        Application.Wait (Now + TimeValue("0:00:01")) '2024-09-03 @ 06:45
-        
         'Do we have pending requests to invoice ?
         Dim lastUsedRow As Long, liveOne As Long
         lastUsedRow = wsdFAC_Projets_Entête.Cells(wsdFAC_Projets_Entête.Rows.count, 1).End(xlUp).row
@@ -379,9 +376,6 @@ Sub FAC_Brouillon_Setup_All_Cells()
         Call FAC_Brouillon_Set_Labels(.Range("K59"), "FAC_Label_AmountDue")
         
         'Establish Formulas
-'        .Range("M47").formula = "=SUM(M11:M45)"                          'Total hours entered OR TEC selected"
-'        .Range("N47").formula = "=T25"                                   'Uses the first professional rate
-'        .Range("N47").formula = wsdAdmin.Range("TauxHoraireFacturation") 'Rate per hour
         .Range("O47").formula = "=U35"                                   'Fees sub-total from hours summary
         .Range("O47").Font.Bold = True
         
@@ -1117,8 +1111,6 @@ Sub FAC_Brouillon_TEC_Remove_Check_Boxes(row As Long)
     wshFAC_Brouillon.Range("D" & row + 2).value = "" 'Remove the TEC selected total formula
     wshFAC_Brouillon.Range("G" & row + 2).value = "" 'Remove the Grand total formula
     
-    'Unprotect the worksheet to LOCK the cells that were associated with checkbox
-
     Application.EnableEvents = True
 
     'Libérer la mémoire
@@ -1296,13 +1288,4 @@ Sub Load_Invoice_Template(t As String)
     Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
-
-Sub test_fn_get_hourly_rate()
-
-    Dim hr As Currency
-    hr = Fn_Get_Hourly_Rate(2, "2024-07-21")
-    Debug.Print "#053 - test_fn_get_hourly_rate() = " & hr
-
-End Sub
-
 

@@ -537,10 +537,6 @@ MASTER_NOT_AVAILABLE:
                     "Le fichier nécessite une réparation manuelle", _
         Title:="Situation anormale (" & Err.Number & " " & Err.Description & ")", _
         Buttons:=vbCritical
-'    msgBox "Le fichier GCF_MASTER.xlsx ne peut être accédé..." & vbNewLine & vbNewLine & _
-'            "Le fichier nécessite une réparation manuelle", _
-'            vbCritical, _
-'            "Situation anormale (" & Err.Number & " " & Err.Description & ")"
     Application.Quit
 
 End Sub

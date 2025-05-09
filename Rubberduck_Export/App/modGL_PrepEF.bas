@@ -269,13 +269,6 @@ Sub Assembler_États_Financiers()
         End With
     Next i
     
-'    'Afficher les sous totaux par section
-'    Debug.Print vbNewLine & "Sous-totaux par section"
-'    Dim section As Variant
-'    For Each section In dictSectionSub
-'        Debug.Print "   Section: " & section & " - Le sous-total est:" & Format$(dictSectionSub(section), "###,###,##0.00 $")
-'    Next section
-
     'On se déplace à la première page des états financiers
     ActiveWorkbook.Sheets("Page Titre").Activate
     
@@ -1146,5 +1139,4 @@ Sub TrierDictionaryParCle(ByRef dict As Object)
         Debug.Print keys(i) & " - " & Format$(values(i), "###,##0.00")
     Next i
 End Sub
-
 

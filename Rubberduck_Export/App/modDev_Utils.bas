@@ -295,15 +295,11 @@ Sub Code_Search_Everywhere() '2024-10-26 @ 10:41
     Dim allLinesOfCode As Variant
     ReDim allLinesOfCode(1 To 35000, 1 To 4)
     
-'    Application.ScreenUpdating = False
-    
     'Allows up to 3 search strings
     Dim search1 As String, search2 As String, search3 As String
     search1 = InputBox("Enter the search string ? ", "Search1")
     search2 = InputBox("Enter the search string ? ", "Search2")
     search3 = InputBox("Enter the search string ? ", "Search3")
-    
-'    Application.ScreenUpdating = True
     
     'Loop through all VBcomponents (modules, class and forms) in the active workbook
     Dim LineNum As Long
@@ -553,7 +549,6 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
         wsOutput.Range("A1").CurrentRegion.EntireColumn.AutoFit
 
     End If
-    'Initialize the output row counter
 
     'AutoFit the columns for better readability
     wsOutput.Columns.AutoFit
@@ -1929,8 +1924,6 @@ Sub GetLastCellUsedRangeInAllSheets() '2025-01-10 @ 12:18 Copilot - RMV
                                     MatchCase:=False).Column
                                     
             Debug.Print "#082 - " & ws.Name; Tab(30); lastRow; Tab(40); lastCol; Tab(50); ws.Cells(lastRow, 1).value
-    '        ws.Range(ws.Cells(lastRow + 1, 1), ws.Cells(ws.Rows.count, ws.Columns.count)).Clear
-    '        ws.Range(ws.Cells(1, lastCol + 1), ws.Cells(ws.Rows.count, ws.Columns.count)).Clear
     Next sheetName
 
     MsgBox "Analyse terminé!" & vbNewLine & vbNewLine & _
@@ -1938,5 +1931,3 @@ Sub GetLastCellUsedRangeInAllSheets() '2025-01-10 @ 12:18 Copilot - RMV
            "Vérification des dernières lignes de tables"
     
 End Sub
-
-

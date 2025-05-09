@@ -147,13 +147,6 @@ Sub TEC_Evaluation_Affichage(cutoffDate As String, maxDate As Date)
     Dim ws  As Worksheet
     Set ws = wshTEC_Evaluation
     
-'    Dim maxDate As Date
-'    Dim y As Integer, m As Integer, d As Integer
-'    y = year(cutoffDate)
-'    m = month(cutoffDate)
-'    d = day(cutoffDate)
-'    maxDate = DateSerial(y, m, d)
-'
     Dim totalHresTEC As Currency, totalValeurTEC As Currency
     Dim prof As Variant
     Dim strProf As String
@@ -399,9 +392,6 @@ Sub TEC_Evaluation_Procedure_ACO(cutoffDate As String)
                         tableau(14) = tableau(14) + hresTEC
                     End Select
                 dictHours(profInit) = tableau 'Replacer le tableau dans le dictionnaire
-'                If arr(i, fTECProfID) = 3 Then
-'                    Debug.Print "999 - " & arr(i, fTECTECID), arr(i, fTECProfID), CDate(arr(i, fTECDate)), arr(i, fTECHeures), UCase$(arr(i, fTECEstFacturee)), arr(i, fTECDateFacturee), hresTEC
-'                End If
             End If
         End If
     Next i
@@ -580,5 +570,4 @@ Sub TEC_Evaluation_Back_To_TEC_Menu()
     Call Log_Record("modTEC_Evaluation:TEC_Evaluation_Back_To_TEC_Menu", "", startTime)
 
 End Sub
-
 

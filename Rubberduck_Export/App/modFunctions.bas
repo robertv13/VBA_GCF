@@ -277,43 +277,6 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
 
 End Function
 
-'Function Fn_Valider_Courriel(ByVal courriel As String) As Boolean
-'
-'    Fn_Valider_Courriel = False
-'
-'    Dim regex As Object
-'    Set regex = CreateObject("VBScript.RegExp")
-'
-'    'Définir le pattern pour l'expression régulière
-'    regex.Pattern = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
-'    regex.IgnoreCase = True
-'    regex.Global = False
-'
-'    'Possibilité qu'il y ait plus d'une adresse courriel
-'    Dim eMail() As Variant
-'
-'
-'    'Last chance to accept a invalid email address...
-'    If regex.Test(courriel) = False Then
-'        Dim msgValue As VbMsgBoxResult
-'        msgValue = MsgBox("'" & courriel & "'" & vbNewLine & vbNewLine & _
-'                            "N'est pas structurée selon les standards..." & vbNewLine & vbNewLine & _
-'                            "Désirez-vous quand même conserver cette adresse ?", _
-'                            vbYesNo + vbInformation, "Struture de courriel non standard")
-'        If msgValue = vbYes Then
-'            Fn_Valider_Courriel = True
-'        Else
-'            Fn_Valider_Courriel = False
-'        End If
-'    Else
-'        Fn_Valider_Courriel = True
-'    End If
-'
-'    'Libérer la mémoire
-'    Set regex = Nothing
-'
-'End Function
-'
 Function Fn_Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hono As Double) As String '2024-07-18 @ 16:32
     
     'Define the worksheet
@@ -744,30 +707,6 @@ Function Fn_Get_A_Cell_From_A_Worksheet(feuille As String, cle As String, cleCol
 
 End Function
 
-'Function Fn_GetCellFromComptesClients_ACO(invNo As String, col As Integer) As String
-'
-'    'Définir la feuille pour la recherche
-'    Dim ws As Worksheet
-'    Set ws = wsdFAC_Comptes_Clients
-'
-'    'Définir la plage pour le résultat
-'    Dim foundCell As Range
-'
-'    'Utilisation de la méthode Find pour rechercher dans la première colonne
-'    Set foundCell = ws.Columns(1).Find(What:=invNo, LookIn:=xlValues, LookAt:=xlWhole)
-'
-'    If Not foundCell Is Nothing Then
-'        Fn_GetCellFromComptesClients = ws.Cells(foundCell.row, col)
-'    Else
-'        Fn_GetCellFromComptesClients = ""
-'    End If
-'
-'    'Libérer la mémoire
-'    Set foundCell = Nothing
-'    Set ws = Nothing
-'
-'End Function
-'
 Function Fn_Validate_And_Get_A_Cell(ws As Worksheet, search As String, searchCol As Long, returnCol As Long) As Variant
 
     Dim foundCell As Range

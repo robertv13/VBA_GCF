@@ -1,5 +1,6 @@
 Attribute VB_Name = "modDev_Tools"
 '@IgnoreModule UnassignedVariableUsage
+
 Option Explicit
 
 Sub Get_Range_From_Dynamic_Named_Range(dynamicRangeName As String, ByRef rng As Range)
@@ -395,7 +396,6 @@ Sub Fix_Date_Format()
         Set colonnesANettoyer = CreateObject("Scripting.Dictionary")
         
         'Ajouter des feuilles et colonnes spécifiques (exemple)
-'        colonnesANettoyer.add "DEB_Recurrent", Array("B") 'Vérifier la colonne B
 '        colonnesANettoyer.add "DEB_Trans", Array("B") 'Vérifier la colonne B
 '
 '        colonnesANettoyer.add "ENC_Détails", Array("D") 'Vérifier la colonne D
@@ -408,7 +408,6 @@ Sub Fix_Date_Format()
 '
 '        colonnesANettoyer.add "GL_Trans", Array("B") 'Vérifier et corriger la colonne B
 '
-'        colonnesANettoyer.add "TEC_Local", Array("D") 'Vérifier et corriger la colonne D
         colonnesANettoyer.Add "TEC_Local", Array("M") 'Vérifier et corriger la colonne D
         
         'Parcourir chaque feuille définie dans le dictionnaire
@@ -607,11 +606,6 @@ Sub Analyse_Search_For_Memory_Management()
             GoTo Next_For
         End If
         ligneCode = Trim$(ws.Cells(i, 6))
-'        If InStr(ligneCode, "= Nothing") Then
-'            If InStr(ligneCode, " recSet ") = 0 Then
-'                ligneCode = Replace(ligneCode, "Set", "set")
-'            End If
-'        End If
         If InStr(ligneCode, "recSet As ") Then
             ligneCode = Replace(ligneCode, "recSet As ", "resste As ")
         End If
@@ -1811,5 +1805,3 @@ Sub ComparerClasseursNiveauCellules()
     MsgBox "Comparaison terminée ! Consultez le classeur de rapport.", vbInformation
     
 End Sub
-
-

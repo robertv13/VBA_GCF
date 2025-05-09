@@ -899,4 +899,3 @@ Function Fn_ValiderSiDoitImprimerTransaction(ByVal source As String) As Boolean 
     
 End Function
 
-

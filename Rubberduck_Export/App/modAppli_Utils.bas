@@ -4012,7 +4012,7 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                     .Range(.Cells(2, fDebRDate), .Cells(lastUsedRow, fDebRDate)).NumberFormat = "yyyy-mm-dd"
                     .Range(.Cells(2, fDebRType), .Cells(lastUsedRow, fDebRReference)).HorizontalAlignment = xlLeft
                     .Range(.Cells(2, fDebRCompte), .Cells(lastUsedRow, fDebRCompte)).HorizontalAlignment = xlLeft
-                    With .Range(.Cells(2, fDebRTotal), .Cells(lastUsedRow, fDebRTVQ))
+                    With .Range(.Cells(2, fDebRTotal), .Cells(lastUsedRow, fDebRCréditTVQ))
                         .HorizontalAlignment = xlRight
                         .NumberFormat = "#,##0.00"
                     End With
@@ -4259,10 +4259,6 @@ End Sub
 
 Sub Fix_Font_Size_And_Family(r As Range, ff As String, fs As Long)
 
-    'r is the range
-    'ff is the Font Family
-    'fs is the Font Size
-    
     With r.Font
         .Name = ff
         .size = fs
@@ -4655,12 +4651,6 @@ Sub ExempleUtilisation()
     'Charger les données dans un dictionnaire
     Call ChargerPlageDansDictionary(dict, rng, 2) ' 2 = Décalage de colonne pour les valeurs (colonne C)
 
-'    'Afficher le contenu du dictionnaire
-'    Dim clé As Variant
-'    For Each clé In dict.keys
-'        Debug.Print "Clé: " & clé & ", Valeur: " & dict(clé)
-'    Next clé
-'
     'Nettoyer la mémoire
     Set rng = Nothing
     Set ws = Nothing

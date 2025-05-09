@@ -35,7 +35,7 @@ Sub ExecuterAdvancedFilter(ws As Worksheet, criteriaRange As String, resultStart
     ws.Range(logRange).Cells(1, 1).value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
     'Définir le range source des données
-    Set rngData = ws.Range("tblTEC_TDB_data[#All]")
+    Set rngData = ws.Range("l_tbl_TEC_TDB_data[#All]")
     ws.Range(logRange).Cells(2, 1).value = rngData.Address
     
     'Définir les critères
@@ -97,5 +97,4 @@ Sub Back_To_ufSaisieHeures()
     Call Log_Record("modStatsHeures:Back_To_ufSaisieHeures", "", startTime)
 
 End Sub
-
 

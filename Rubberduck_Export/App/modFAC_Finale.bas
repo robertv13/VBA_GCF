@@ -1039,35 +1039,6 @@ Fin:
     
 End Sub
 
-'Sub FAC_Finale_Creation_PDF() '2024-10-13 @ 10:15
-'
-'    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Creation_PDF", wshFAC_Finale.Range("E28").value, 0)
-'
-'    gFlagEtapeFacture = 1
-'
-'    'Étape 1 - Création du document PDF
-'    Call FAC_Finale_Create_PDF(wshFAC_Finale.Range("E28").value)
-'
-'    'Étape 2 - Copie de la facture en format EXCEL
-'    Call FAC_Finale_Copie_Vers_Excel(wshFAC_Brouillon.Range("B18").value, _
-'                                          wshFAC_Finale.Range("L81").value, _
-'                                          wshFAC_Finale.Range("E28").value, _
-'                                          Format$(wshFAC_Brouillon.Range("O3").value, "yyyy-mm-dd"))
-'    gFlagEtapeFacture = 3
-'
-'    'Étape 3 - Envoi du courriel
-'    DoEvents
-'    Call FAC_Finale_Creation_Courriel(wshFAC_Finale.Range("E28").value, wshFAC_Brouillon.Range("B18").value)
-'    gFlagEtapeFacture = 4
-'
-'    'Étape 4 - Activation du bouton SAUVEGARDE
-'    Call FAC_Finale_Enable_Save_Button
-'    gFlagEtapeFacture = 5
-'
-'    Call Log_Record("modFAC_Finale:FAC_Finale_Creation_PDF", "", startTime)
-'
-'End Sub
-
 Sub FAC_Finale_Create_PDF(noFacture As String)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Create_PDF", noFacture, 0)
@@ -1284,43 +1255,7 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     Next i
 
     '5. Copier l'entête de la facture (logo)
-    
     Call CopierFormeEnteteEnTouteSécurité(wsSource, wsCible) '2025-05-06 @ 10:59
-
-'    '5. Copier l'entête de la facture
-'    Dim forme As Shape, newForme As Shape
-'    For Each forme In wsSource.Shapes
-'        If forme.Name = "GCF_Entête" Then
-'            'Copier & coller l'entête de la facture (logo)
-'            forme.Copy
-'            DoEvents
-'            Application.Wait Now + TimeValue("0:00:01")
-'
-'            wsCible.Activate
-'            DoEvents
-'
-'            On Error Resume Next
-'            wsCible.PasteSpecial Format:="Picture (Enhanced Metafile)"
-'            If Err.Number <> 0 Then
-'                Err.Clear
-'                wsCible.Paste 'Fallback
-'            End If
-'            On Error GoTo 0
-'
-'            If wsCible.Shapes.count > 0 Then
-'                Set newForme = wsCible.Shapes(wsCible.Shapes.count)
-'                With newForme
-'                    .Top = forme.Top
-'                    .Left = forme.Left
-'                    .Height = 250
-'                End With
-'            End If
-'            Exit For ' si on a trouvé la forme, on peut sortir
-'        End If
-'    Next forme
-'
-'    DoEvents
-'    Application.CutCopyMode = False
 
     '6. Copier les paramètres d'impression
     With wsCible.PageSetup
@@ -1674,5 +1609,4 @@ Sub FAC_Finale_Disable_Save_Button()
     Set shp = Nothing
     
 End Sub
-
 
