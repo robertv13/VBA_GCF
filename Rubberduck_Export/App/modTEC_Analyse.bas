@@ -63,6 +63,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     'Charger les données sources dans un tableau (beaucoup plus rapide)
     Dim sourceData As Variant
     Dim rowCount As Long
+    Debug.Print "Il y a " & lastUsedResult & " rangées dans le tableau"
     sourceData = wsSource.Range("AQ3:AX" & lastUsedResult).value
     rowCount = UBound(sourceData, 1)
 

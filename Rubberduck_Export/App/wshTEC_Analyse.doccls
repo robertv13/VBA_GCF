@@ -29,10 +29,10 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     
     Call SetTabOrder(ws)
     
-'    Application.EnableEvents = False
-'
     'Indique la dernière ligne explosé, qui doit être refermé en passant au suivant
+'    Application.EnableEvents = False
     ws.Range("B2").value = 0
+'    Application.EnableEvents = True
     
     With ws
         .Unprotect

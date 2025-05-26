@@ -433,8 +433,8 @@ Sub ImporterFacProjetsEntete() '2025-05-07 @ 16:05
     Dim i As Long
     If lastRow >= 2 Then
         For i = lastRow To 2 Step -1
-            If UCase$(ws.Cells(i, 26).value) = "VRAI" Or _
-                ws.Cells(i, 26).value = -1 Then
+            If UCase$(ws.Range("Z" & i).value) = "VRAI" Or _
+                ws.Range("Z" & i).value = -1 Then
                 ws.Rows(i).Delete
             End If
         Next i
