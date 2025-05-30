@@ -6,8 +6,10 @@ Private Sub Worksheet_Activate()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_BV:Worksheet_Activate", "", 0)
 
-    Application.ScreenUpdating = False
-    Application.EnableEvents = False
+'    Application.ScreenUpdating = False
+'    Application.EnableEvents = False
+    
+    DoEvents
     
     'Import transactions from MASTER file
     Call modImport.ImporterGLTransactions
@@ -19,37 +21,30 @@ Private Sub Worksheet_Activate()
     
     Dim ws As Worksheet: Set ws = wshGL_BV
 
-'    Call SetTabOrder(ws)
-    
     'Clear the display area & display the account number & description
     Application.EnableEvents = False
-    
     With ws
-        .Unprotect
-        .Range("L4").CurrentRegion.offset(3, 0).Clear
-        
-        .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlUnlockedCells
-        
-        .Range("B10").value = 0
+        .Range("T2").value = "Mois"
+        .Range("B6").value = ""
+        .Range("B7").value = ""
+        Call GL_BV_EffacerZoneBV(ws)
+        Call GL_BV_EffacerZoneTransactionsDetaillees(ws)
     End With
     
     Dim cbx As Shape
     For Each cbx In wshGL_BV.Shapes
-        If InStr(cbx.Name, "GL_Trans") Then
+        If InStr(cbx.Name, "GL_Trans") Or cbx.Name = "shpRetour" Then
             cbx.Delete
         End If
     Next cbx
 
-    Application.ScreenUpdating = True
-    Application.EnableEvents = True
-    
-    ws.Range("J1").value = ""
-    
     With ws
+        .Range("J1").value = Format$(Date, wsdADMIN.Range("B1").value)
         .Range("J1").Select
         gPreviousCellAddress = .Range("J1").Address
     End With
+    
+    Application.EnableEvents = True
     
     'Libérer la mémoire
     Set cbx = Nothing
@@ -78,20 +73,28 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
         target.Interior.Color = COULEUR_SAISIE
     End If
     
-    'An account has been selected from Trial Balance
-    If Not Intersect(target, wshGL_BV.Range("D4:G" & Range("B2").value - 2)) Is Nothing Then
+    'An account, description, debit or credit has been selected from TB
+    Dim lastUsedAccount As Long
+    lastUsedAccount = wshGL_BV.Cells(wshGL_BV.Rows.count, "D").End(xlUp).row
+    If Not Intersect(target, wshGL_BV.Range("D4:G" & lastUsedAccount - 2)) Is Nothing Then
         If target.CountLarge > 1 Then Exit Sub
-        Call GL_BV_Effacer_Zone_Et_Shape
-        Application.EnableEvents = False
+        Call GL_BV_EffacerZoneTransactionsDetaillees(wshGL_BV)
+'        Call GL_BV_Effacer_Zone_Et_Shape
         Dim GLAcct As String, GLDescription As String, dateLimite As Date
         GLAcct = CStr(Range("D" & target.row).value)
         GLDescription = Range("E" & target.row).value
+        Application.EnableEvents = False
+        wshGL_BV.Range("B6").value = GLAcct
+        wshGL_BV.Range("B7").value = GLDescription
         dateLimite = Format$(Range("J1").value, wsdADMIN.Range("B1").value)
-        wshGL_BV.Range("B10").value = 0
-        Range("T2").value = "Toutes les dates"
-        'Display all transactions for the selected G/L
-        Call GL_BV_Display_Trans_For_Selected_Account(GLAcct, GLDescription, #7/31/2024#, dateLimite)
+        wshGL_BV.Range("B9").value = dateLimite
         Application.EnableEvents = True
+        
+'        wshGL_BV.Range("T2").value = "Mois"
+        DoEvents
+        
+        'Display all transactions for the selected G/L
+        Call GL_BV_Display_Trans_For_Selected_Account(GLAcct, GLDescription, wshGL_BV.Range("B8").value, dateLimite)
     End If
     
     'Get the entire transaction, from a selected line
@@ -169,28 +172,48 @@ Private Sub Worksheet_Change(ByVal target As Range) 'Worksheet wshBV - 2023-12-3
             Application.EnableEvents = False
             target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(target.Address)
+            Application.Goto Range(target.Address)
         End If
         
+        Range("B8").value = DateSerial(year(Range("J1").value), month(Range("J1").value), 1)
         Range("B9").value = Range("J1").value
         
         Dim ws As Worksheet
         Set ws = wshGL_BV
-        Call GL_Trial_Balance_Build(ws, Range("J1").value)
+        Call GL_Trial_Balance_Build
         
         Application.EnableEvents = True
     End If
 
-    'Changement des dates (from/to) pour les transactions détaillées
-    If Not Intersect(target, Range("T2")) Is Nothing Then 'Dates have changed
+    'Changement des dates pour la période à imprimer
+    If Not Intersect(target, Range("T2")) Is Nothing Then
         If Range("T2").value <> "" Then
-            Application.EnableEvents = False
+            Dim dateMin As Date, dateMax As Date
+            dateMax = Range("J1").value
+            Dim periode As String
+            periode = target.value
             
-            Call GL_BV_Determine_From_And_To_Date(Range("T2").value)
-                    
+            Select Case periode
+                Case "Mois"
+                    dateMin = DateSerial(year(dateMax), month(dateMax), 1)
+                Case "Trimestre"
+                    dateMin = PremierJourTrimestreFiscal(dateMax)
+                Case "Année Financière"
+                    dateMin = PremierJourAnneeFiscal(dateMax)
+                Case "Toutes les dates"
+                    dateMin = DateSerial(2024, 7, 31)
+            End Select
+            
+            'Ajuste l'entête de la section
+            Application.EnableEvents = False
+            Range("L2").value = "Du " & Format$(dateMin, wsdADMIN.Range("B1").value) & " au " & Format$(dateMax, wsdADMIN.Range("B1").value)
+            Range("B8").value = dateMin
+            Application.EnableEvents = True
             'Force redisplay of GL Transactions details
-            Call GL_BV_Display_Trans_For_Selected_Account(Range("B6").value, Range("B7").value, _
-                Range("B8").value, Range("B9").value)
+            If Range("B6").value <> "" Then
+                Call GL_BV_Display_Trans_For_Selected_Account(Range("B6").value, Range("B7").value, _
+                                                              Range("B8").value, Range("B9").value)
+            End If
         End If
     End If
     

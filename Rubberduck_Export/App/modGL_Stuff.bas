@@ -216,24 +216,26 @@ Sub GL_BV_Ajouter_Shape_Retour()
     Dim lastRow As Long
     lastRow = ws.Cells(ws.Rows.count, "M").End(xlUp).row
 
-    'Calculer les positions (Left & Top) du bouton
-    leftPosition = ws.Range("T" & lastRow).Left
-    topPosition = ws.Range("S" & lastRow).Top + (2 * ws.Range("S" & lastRow).Height)
-
-    ' Ajouter une Shape
-    Set btn = ws.Shapes.AddShape(msoShapeRoundedRectangle, Left:=leftPosition, Top:=topPosition, _
-                                                    Width:=90, Height:=30)
-    With btn
-        .Name = "shpRetour"
-        .TextFrame2.TextRange.Text = "Retour"
-        .TextFrame2.TextRange.Font.Fill.ForeColor.RGB = RGB(0, 0, 0)
-        .TextFrame2.TextRange.Font.size = 14
-        .TextFrame2.TextRange.Font.Bold = True
-        .TextFrame2.HorizontalAnchor = msoAnchorCenter
-        .TextFrame2.VerticalAnchor = msoAnchorMiddle
-        .Fill.ForeColor.RGB = RGB(166, 166, 166)
-        .OnAction = "GL_BV_Effacer_Zone_Et_Shape"
-    End With
+    If lastRow >= 5 Then
+        'Calculer les positions (Left & Top) du bouton
+        leftPosition = ws.Range("T" & lastRow).Left
+        topPosition = ws.Range("S" & lastRow).Top + (2 * ws.Range("S" & lastRow).Height)
+    
+        ' Ajouter une Shape
+        Set btn = ws.Shapes.AddShape(msoShapeRoundedRectangle, Left:=leftPosition, Top:=topPosition, _
+                                                        Width:=90, Height:=30)
+        With btn
+            .Name = "shpRetour"
+            .TextFrame2.TextRange.Text = "Retour"
+            .TextFrame2.TextRange.Font.Fill.ForeColor.RGB = RGB(0, 0, 0)
+            .TextFrame2.TextRange.Font.size = 14
+            .TextFrame2.TextRange.Font.Bold = True
+            .TextFrame2.HorizontalAnchor = msoAnchorCenter
+            .TextFrame2.VerticalAnchor = msoAnchorMiddle
+            .Fill.ForeColor.RGB = RGB(166, 166, 166)
+            .OnAction = "GL_BV_Effacer_Zone_Et_Shape"
+        End With
+    End If
     
     'Libérer la mémoire
     Set btn = Nothing
@@ -254,20 +256,14 @@ Sub GL_BV_Effacer_Zone_Et_Shape()
     ws.Range("L1:T" & ws.Cells(ws.Rows.count, "M").End(xlUp).row).offset(3, 0).Clear
     Application.EnableEvents = True
 
-    'Trouver la dernière ligne de la plage M4:T*
-    Dim lastRow As Long
-    lastRow = ws.Cells(ws.Rows.count, "M").End(xlUp).row
-
-    'Supprimer la shape
-    On Error Resume Next
-    ws.Shapes("shpRetour").Delete
-    On Error GoTo 0
+    'Supprimer les formes shpRetour
+    Call GL_BV_SupprimerToutesLesFormes_shpRetour(ws)
 
     Call GL_BV_Hide_Dynamic_Shape
     
     'Ramener le focus à C4
     Application.EnableEvents = False
-    ws.Range("C4").Select
+    ws.Range("D4").Select
     Application.EnableEvents = True
     
     'Libérer la mémoire
@@ -275,5 +271,48 @@ Sub GL_BV_Effacer_Zone_Et_Shape()
     
     Call Log_Record("modGL_Stuff:GL_BV_Effacer_Zone_Et_Shape", "", startTime)
 
+End Sub
+
+Sub GL_BV_EffacerZoneBV(w As Worksheet)
+
+    Application.EnableEvents = False
+    Dim lastUsedRow As Long
+    lastUsedRow = w.Cells(w.Rows.count, "D").End(xlUp).row
+    If lastUsedRow >= 4 Then
+        w.Range("D4:G" & lastUsedRow).Clear
+    End If
+    Application.EnableEvents = True
+
+End Sub
+
+Sub GL_BV_EffacerZoneTransactionsDetaillees(w As Worksheet)
+
+    Application.EnableEvents = False
+    Dim lastUsedRow As Long
+    lastUsedRow = w.Cells(w.Rows.count, "M").End(xlUp).row
+    
+    Application.EnableEvents = False
+    If lastUsedRow >= 4 Then
+        w.Range("L4:T" & lastUsedRow).Clear
+    End If
+    Application.EnableEvents = True
+    
+    'Supprimer les formes 'shpRetour'
+    Call GL_BV_SupprimerToutesLesFormes_shpRetour(w)
+
+    Application.EnableEvents = True
+
+End Sub
+
+Sub GL_BV_SupprimerToutesLesFormes_shpRetour(w As Worksheet)
+
+    Dim shp As Shape
+
+    For Each shp In w.Shapes
+        If shp.Name = "shpRetour" Then
+            shp.Delete
+        End If
+    Next shp
+    
 End Sub
 

@@ -127,7 +127,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
             Application.EnableEvents = False
             target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(target.Address)
+            Application.Goto Range(target.Address)
         End If
        
         'Future date ?
@@ -136,7 +136,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
                 Application.EnableEvents = False
                 target.ClearContents
                 Application.EnableEvents = True
-                Application.GoTo Range(target.Address)
+                Application.Goto Range(target.Address)
             End If
         Else
             Call TEC_Radiation_Procedure(clientCode, target.value)

@@ -824,7 +824,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID As Long)
     Exit Sub
 
 eh:
-    MsgBox "An error occurred: " & Err.Description, vbCritical, "Error # APP-001"
+    MsgBox "An error occurred: " & Err.description, vbCritical, "Error # APP-001"
     If Not conn Is Nothing Then
         On Error Resume Next
         conn.Close
@@ -1023,8 +1023,8 @@ Sub FAC_Finale_Creation_PDF() '2025-05-06 @ 11:07
 
 GestionErreur:
     MsgBox "Une erreur est survenue à l'étape " & gFlagEtapeFacture & "." & vbCrLf & _
-           "Erreur: " & Err.Number & " - " & Err.Description, vbCritical
-    Call Log_Record("modFAC_Finale:FAC_Finale_Creation_PDF", codeFacture & " ÉTAPE " & gFlagEtapeFacture & " > " & Err.Description, startTime)
+           "Erreur: " & Err.Number & " - " & Err.description, vbCritical
+    Call Log_Record("modFAC_Finale:FAC_Finale_Creation_PDF", codeFacture & " ÉTAPE " & gFlagEtapeFacture & " > " & Err.description, startTime)
 
 Fin:
     'Restaurer l’environnement

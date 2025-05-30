@@ -1604,7 +1604,7 @@ Sub Log_Record(ByVal procedureName As String, param As String, Optional ByVal st
 ErrorHandler:
 
     MsgBox "Une erreur est survenue à l'ouverture du fichier 'LogMainApp.log' " & vbNewLine & vbNewLine & _
-                "Erreur : " & Err & " = " & Err.Description, vbCritical, "Répertoire utilisé '" & wsdADMIN.Range("F5").value & "'"
+                "Erreur : " & Err & " = " & Err.description, vbCritical, "Répertoire utilisé '" & wsdADMIN.Range("F5").value & "'"
     
     'Nettoyage : réactivation des événements, calculs, etc.
     Application.EnableEvents = True
@@ -1671,7 +1671,7 @@ Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boole
     
 Error_Handler:
 
-    MsgBox "Une erreur est survenue : " & Err.Description, vbCritical, "Log_Saisie_Heures"
+    MsgBox "Une erreur est survenue : " & Err.description, vbCritical, "Log_Saisie_Heures"
     'Sortir gracieusement de l'application
     Application.Quit 'No save...
     
@@ -1718,7 +1718,7 @@ Sub Settrace(source As String, module As String, procedure As String, variable A
     
 Error_Handler:
 
-    MsgBox "Une erreur est survenue : " & Err.Description, vbCritical, "Log_Settrace"
+    MsgBox "Une erreur est survenue : " & Err.description, vbCritical, "Log_Settrace"
     'Sortir gracieusement de l'application
     Application.Quit 'No save...
     
@@ -1882,52 +1882,54 @@ Sub Test_Fn_Get_A_Row_From_A_Worksheet() '2025-01-13 @ 08:49
     
 End Sub
 
-Sub shp_GetLastCellUsedRangeInAllSheets_Click()
-
-    Call GetLastCellUsedRangeInAllSheets
-
-End Sub
-
-Sub GetLastCellUsedRangeInAllSheets() '2025-01-10 @ 12:18 Copilot - RMV
-    
-    Dim ws As Worksheet
-    Dim sheetNames As Variant
-    Dim sheetName As Variant
-    
-    Dim lastRow As Long, lastCol As Long
-    Dim cell As Range
-    
-    'Spécifiez les noms des feuilles de calcul
-    sheetNames = Array("BD_Clients", "BD_Fournisseurs", "CC_Régularisations", "DEB_Trans", "DEB_Récurrent", _
-                       "ENC_Détails", "ENC_Entête", "FAC_Comptes_Clients", "FAC_Détails", "FAC_Entête", _
-                       "FAC_Projets_Détails", "FAC_Projets_Entête", "FAC_Sommaire_Taux", "GL_EJ_Récurrente", _
-                       "GL_Trans", "TEC_Local", "TEC_TDB_Data")
-
-    For Each sheetName In sheetNames
-        Set ws = ThisWorkbook.Worksheets(sheetName)
-            'Trouver la dernière ligne utilisée
-            lastRow = ws.Cells.Find(What:="*", _
-                                    After:=ws.Cells(1, 1), _
-                                    LookAt:=xlPart, _
-                                    LookIn:=xlFormulas, _
-                                    SearchOrder:=xlByRows, _
-                                    SearchDirection:=xlPrevious, _
-                                    MatchCase:=False).row
-                                    
-            'Trouver la dernière colonne utilisée
-            lastCol = ws.Cells.Find(What:="*", _
-                                    After:=ws.Cells(1, 1), _
-                                    LookAt:=xlPart, _
-                                    LookIn:=xlFormulas, _
-                                    SearchOrder:=xlByColumns, _
-                                    SearchDirection:=xlPrevious, _
-                                    MatchCase:=False).Column
-                                    
-            Debug.Print "#082 - " & ws.Name; Tab(30); lastRow; Tab(40); lastCol; Tab(50); ws.Cells(lastRow, 1).value
-    Next sheetName
-
-    MsgBox "Analyse terminé!" & vbNewLine & vbNewLine & _
-           "Voir fenêtre Exécution", vbOKOnly, _
-           "Vérification des dernières lignes de tables"
-    
-End Sub
+'CommentOut - 2025-05-28 @ 06:23 - v6.C.7
+'Sub shp_GetLastCellUsedRangeInAllSheets_Click()
+'
+'    Call GetLastCellUsedRangeInAllSheets
+'
+'End Sub
+'
+'CommentOut - 2025-05-28 @ 06:23 - v6.C.7
+'Sub GetLastCellUsedRangeInAllSheets() '2025-01-10 @ 12:18 Copilot - RMV
+'
+'    Dim ws As Worksheet
+'    Dim sheetNames As Variant
+'    Dim sheetName As Variant
+'
+'    Dim lastRow As Long, lastCol As Long
+'    Dim cell As Range
+'
+'    'Spécifiez les noms des feuilles de calcul
+'    sheetNames = Array("BD_Clients", "BD_Fournisseurs", "CC_Régularisations", "DEB_Trans", "DEB_Récurrent", _
+'                       "ENC_Détails", "ENC_Entête", "FAC_Comptes_Clients", "FAC_Détails", "FAC_Entête", _
+'                       "FAC_Projets_Détails", "FAC_Projets_Entête", "FAC_Sommaire_Taux", "GL_EJ_Récurrente", _
+'                       "GL_Trans", "TEC_Local", "TEC_TDB_Data")
+'
+'    For Each sheetName In sheetNames
+'        Set ws = ThisWorkbook.Worksheets(sheetName)
+'            'Trouver la dernière ligne utilisée
+'            lastRow = ws.Cells.Find(What:="*", _
+'                                    After:=ws.Cells(1, 1), _
+'                                    LookAt:=xlPart, _
+'                                    LookIn:=xlFormulas, _
+'                                    SearchOrder:=xlByRows, _
+'                                    SearchDirection:=xlPrevious, _
+'                                    MatchCase:=False).row
+'
+'            'Trouver la dernière colonne utilisée
+'            lastCol = ws.Cells.Find(What:="*", _
+'                                    After:=ws.Cells(1, 1), _
+'                                    LookAt:=xlPart, _
+'                                    LookIn:=xlFormulas, _
+'                                    SearchOrder:=xlByColumns, _
+'                                    SearchDirection:=xlPrevious, _
+'                                    MatchCase:=False).Column
+'
+'            Debug.Print "#082 - " & ws.Name; Tab(30); lastRow; Tab(40); lastCol; Tab(50); ws.Cells(lastRow, 1).value
+'    Next sheetName
+'
+'    MsgBox "Analyse terminé!" & vbNewLine & vbNewLine & _
+'           "Voir fenêtre Exécution", vbOKOnly, _
+'           "Vérification des dernières lignes de tables"
+'
+'End Sub

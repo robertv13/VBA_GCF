@@ -491,7 +491,7 @@ ErrorHandler:
     MsgBox "Le fichier 'MASTER' est en lecture seule" & vbNewLine & vbNewLine & _
            "ou déjà ouvert par un autre utilisateur ou" & vbNewLine & vbNewLine & _
            "ou un autre type de problème" & vbNewLine & vbNewLine & _
-           "COMMUNIQUER AVEC LE DÉVELOPPEUR IMMÉDIATEMENT", vbCritical, "Erreur = " & Err & " - " & Err.Description
+           "COMMUNIQUER AVEC LE DÉVELOPPEUR IMMÉDIATEMENT", vbCritical, "Erreur = " & Err & " - " & Err.description
     If Not rs Is Nothing Then
         rs.Close
     End If
@@ -721,7 +721,7 @@ EndOfProcedure:
     
 ErrorHandler:
 
-    MsgBox "Erreur : " & Err.Description, vbCritical, "Erreur # APP-003"
+    MsgBox "Erreur : " & Err.description, vbCritical, "Erreur # APP-003"
     Resume EndOfProcedure
     
 End Sub

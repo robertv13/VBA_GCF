@@ -821,18 +821,18 @@ Function Fn_Check_Server_Access(serverPath As String) As Boolean '2024-09-24 @ 1
     Fn_Check_Server_Access = False
     
     'Créer un FileSystemObject
-    Dim FSO As Object: Set FSO = CreateObject("Scripting.FileSystemObject")
+    Dim fso As Object: Set fso = CreateObject("Scripting.FileSystemObject")
     
     'Vérifier si le fichier existe
     Dim folderExists As Boolean
-    folderExists = FSO.folderExists(serverPath)
+    folderExists = fso.folderExists(serverPath)
     
     If folderExists Then
         Fn_Check_Server_Access = True
     End If
     
     'Libérer la mémoire
-    Set FSO = Nothing
+    Set fso = Nothing
     
 End Function
 
@@ -2043,4 +2043,48 @@ Function ExclureTransaction(source As String) As Boolean '2025-03-06 @ 08:04
     
 End Function
 
+Function PremierJourTrimestreFiscal(dateMax As Date) As Date
+
+    Dim annee As Integer
+    Dim mois As Integer
+    Dim MoisFinAnneeFinanciere As Integer
+    Dim decalage As Integer
+
+    mois = month(dateMax)
+    MoisFinAnneeFinanciere = wsdADMIN.Range("MoisFinAnnéeFinancière")
+
+    If mois < MoisFinAnneeFinanciere + 1 Then
+        annee = year(dateMax) - 1
+        decalage = Int((mois + 12 - (MoisFinAnneeFinanciere + 1)) / 3) * 3
+    Else
+        annee = year(dateMax)
+        decalage = Int((mois - (MoisFinAnneeFinanciere + 1)) / 3) * 3
+    End If
+
+    PremierJourTrimestreFiscal = DateSerial(annee, MoisFinAnneeFinanciere + 1 + decalage, 1)
+    
+End Function
+
+Function PremierJourAnneeFiscal(maxDate) As Date
+
+    Dim dt As Date
+    Dim annee As Integer
+
+    'Calcul de l'année du début d'exercice
+    If month(maxDate) > wsdADMIN.Range("MoisFinAnnéeFinancière") Then
+        annee = year(maxDate)
+    Else
+        annee = year(maxDate) - 1
+    End If
+
+    'Retourner le 1er jour du mois suivant la fin d'exercice
+    If wsdADMIN.Range("MoisFinAnnéeFinancière") = 12 Then
+        dt = DateSerial(annee + 1, 1, 1)
+    Else
+        dt = DateSerial(annee, wsdADMIN.Range("MoisFinAnnéeFinancière") + 1, 1)
+    End If
+
+    PremierJourAnneeFiscal = dt
+    
+End Function
 

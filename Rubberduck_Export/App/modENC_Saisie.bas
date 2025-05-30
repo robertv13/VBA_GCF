@@ -466,7 +466,7 @@ Sub ENC_Update_DB_Comptes_Clients(firstRow As Integer, lastRow As Integer) 'Writ
                     On Error Resume Next
                     rs.Fields(fFacCCStatus - 1).value = "Paid"
                     If Err.Number <> 0 Then
-                        MsgBox "Erreur #" & Err.Number & " : " & Err.Description
+                        MsgBox "Erreur #" & Err.Number & " : " & Err.description
                     End If
                     On Error GoTo 0
                 Else

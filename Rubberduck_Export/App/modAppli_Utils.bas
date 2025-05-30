@@ -3304,7 +3304,7 @@ Private Sub VerifierTEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 6553 'What is the last TECID analyzed ?
+    lastTECIDReported = 6920 'What is the last TECID analyzed ?
     
     'Feuille contenant les données à analyser
     Dim HeaderRow As Long: HeaderRow = 2
@@ -4457,10 +4457,10 @@ Sub Get_Date_Derniere_Modification(fileName As String, ByRef ddm As Date, _
                                     ByRef minutes As Long, ByRef secondes As Long)
     
     'Créer une instance de FileSystemObject
-    Dim FSO As Object: Set FSO = CreateObject("Scripting.FileSystemObject")
+    Dim fso As Object: Set fso = CreateObject("Scripting.FileSystemObject")
     
     'Obtenir le fichier
-    Dim fichier As Object: Set fichier = FSO.GetFile(fileName)
+    Dim fichier As Object: Set fichier = fso.GetFile(fileName)
     
     'Récupérer la date et l'heure de la dernière modification
     ddm = fichier.DateLastModified
@@ -4477,7 +4477,7 @@ Sub Get_Date_Derniere_Modification(fileName As String, ByRef ddm As Date, _
     
     ' Libérer les objets
     Set fichier = Nothing
-    Set FSO = Nothing
+    Set fso = Nothing
     
 End Sub
 

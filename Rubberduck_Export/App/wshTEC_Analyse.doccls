@@ -14,13 +14,19 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     
     'Import transactions from MASTER file
     Call modImport.ImporterClients
+    DoEvents
     Call modImport.ImporterTEC
+    DoEvents
     Call modImport.ImporterFacProjetsDetails
+    DoEvents
     Call modImport.ImporterFacProjetsEntete
+    DoEvents
     
     'Set the zoom factor to 100% when this worksheet is activated
     ActiveWindow.Zoom = 100
 
+    Application.EnableEvents = True '2025-05-09 @ 23:04
+    
     Me.Application.Calculation = xlCalculationAutomatic
 
    'Mettre la date du jour comme date butoir, AVANT d'effectuer un premier traitement
@@ -150,7 +156,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
             Application.EnableEvents = False
             target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(target.Address)
+            Application.Goto Range(target.Address)
         End If
        
         'Future date ?
@@ -159,7 +165,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
                 Application.EnableEvents = False
                 target.ClearContents
                 Application.EnableEvents = True
-                Application.GoTo Range(target.Address)
+                Application.Goto Range(target.Address)
             End If
         End If
 

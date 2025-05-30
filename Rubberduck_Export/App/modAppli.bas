@@ -356,18 +356,24 @@ Sub CodeEssentielDepart()
     
     On Error GoTo ErrorHandler
     
-    ' Réinitialiser les paramètres globaux d'Excel
+    'Réinitialiser les paramètres globaux d'Excel
     Application.EnableEvents = True
     Application.Calculation = xlCalculationAutomatic
     Application.DisplayAlerts = True
     Application.ScreenUpdating = True
     
-    'Le serveur est-il disponible ?
-    If Fn_Is_Server_Available() = False Then
-        MsgBox "Le répertoire (P:\) ne semble pas accessible", vbCritical, "Le serveur n'est pas disponible"
-        Application.Quit
-    End If
-    
+'   !CommentOut - 2025-05-27 - v6.C.7
+'    'Le serveur est-il disponible (pour tous les usagers sauf le développeur) ?
+'    If Fn_Get_Windows_Username <> "Robert M. Vigneault" And Fn_Get_Windows_Username <> "robertmv" Then
+'        Application.StatusBar = "Vérification de l'accès au serveur P:\"
+'        If Fn_Is_Server_Available() = False Then
+'            MsgBox "Le répertoire (P:\) ne semble pas accessible", vbCritical, "Le serveur n'est pas disponible"
+'            Debug.Print
+'            Application.Quit
+'        End If
+'        Application.StatusBar = False
+'    End If
+'
     Dim rootPath As String
     rootPath = FN_Get_Root_Path
 
@@ -376,30 +382,35 @@ Sub CodeEssentielDepart()
     Application.EnableEvents = True
    
     'Vérification si le chemin est accessible
+    Application.StatusBar = "Vérification de l'accès au répertoire principal"
     If Fn_Check_Server_Access(rootPath) = False Then
-        MsgBox "Le répertoire principal (P:\) n'est pas accessible." & vbNewLine & vbNewLine & _
+        MsgBox "Le répertoire principal '" & rootPath & "' n'est pas accessible." & vbNewLine & vbNewLine & _
                "Veuillez vérifier votre connexion au serveur SVP", vbCritical, rootPath
         Exit Sub
     End If
+    Application.StatusBar = False
 
     'Log initial activity
     Dim startTime As Double: startTime = Timer: Call Log_Record("----- Début d'une nouvelle session (modAppli:CodeEssentielDepart) -----", "", 0)
     Application.EnableEvents = True
     
-    Call Log_Record("Validation d'accès serveur terminée", "", Timer)
+    'Quel est l'utilisateur ?
+    Dim utilisateur As String
+    utilisateur = Fn_Get_Windows_Username
     
     'Création d'un fichier qui indique de l'utilisateur utilise l'application
-    Call CreateUserActiveFile
+    Call CreateUserActiveFile(utilisateur)
     
-    Call SetupUserDateFormat
+    Call SetupUserDateFormat(utilisateur)
     
     'Call the BackupMasterFile (GCF_BD_MASTER.xlsx) macro at each application startup
     Call BackupMasterFile
     
-    Call EcrireInformationsConfigAuMenu
+    Call EcrireInformationsConfigAuMenu(utilisateur)
+    
     wshMenu.Range("A1").value = wsdADMIN.Range("NomEntreprise").value
     
-    Call HideDevShapesBasedOnUsername
+    Call HideDevShapesBasedOnUsername(utilisateur)
     
     'Protection de la feuille wshMenu
     With wshMenu
@@ -425,8 +436,8 @@ Sub CodeEssentielDepart()
     Set wb = Nothing
     Set ws = Nothing
     
-    If Fn_Get_Windows_Username = "Robert M. Vigneault" Or Fn_Get_Windows_Username = "robertmv" Then
-'        Call ExporterCodeVBA 'Sauvegarde AUTOMATIQUE du code VBA
+    If utilisateur = "Robert M. Vigneault" Or utilisateur = "robertmv" Then
+'        Call ExporterCodeVBA 'Sauvegarde AUTOMATIQUE du code VBA en entrant
         Call DemarrerSauvegardeAutomatique
     End If
     
@@ -435,7 +446,7 @@ Sub CodeEssentielDepart()
     Exit Sub
     
 ErrorHandler:
-    Call Log_Record("Erreur dans modAppli:CodeEssentielDepart : " & Err.Description, Timer)
+    Call Log_Record("Erreur dans modAppli:CodeEssentielDepart : " & Err.description, Timer)
 
 End Sub
 
@@ -443,7 +454,7 @@ Function FN_Get_Root_Path() As String '2025-03-03 @ 20:28
    
     DoEvents
     
-    If Fn_Get_Windows_Username = "Robert M. Vigneault" Then
+    If Fn_Get_Windows_Username = "Robert M. Vigneault" Or Fn_Get_Windows_Username = "robertmv" Then
         FN_Get_Root_Path = "C:\VBA\GC_FISCALITÉ"
     Else
         FN_Get_Root_Path = "P:\Administration\APP\GCF"
@@ -451,12 +462,9 @@ Function FN_Get_Root_Path() As String '2025-03-03 @ 20:28
 
 End Function
 
-Sub CreateUserActiveFile()
+Sub CreateUserActiveFile(userName As String)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:CreateUserActiveFile", "", 0)
-    
-    Dim userName As String
-    userName = Fn_Get_Windows_Username
     
     Dim traceFilePath As String
     traceFilePath = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
@@ -479,19 +487,19 @@ Error_Handling:
     MsgBox _
         Prompt:="Erreur en tentant d'accéder le répertoire" & vbNewLine & vbNewLine & _
                     "'" & traceFilePath & "'" & vbNewLine & vbNewLine & _
-                    "Erreur # " & Err.Number & " - " & Err.Description, _
+                    "Erreur # " & Err.Number & " - " & Err.description, _
         Title:="Accès à " & traceFilePath, _
         Buttons:=vbCritical
 
 End Sub
 
-Sub SetupUserDateFormat()
+Sub SetupUserDateFormat(user As String)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:SetupUserDateFormat", "", 0)
 
     Dim userDateFormat As String
     
-    Select Case Fn_Get_Windows_Username
+    Select Case user
         Case "GuillaumeCharron", "Guillaume", "gchar"
             userDateFormat = "dd/mm/yy"
         Case "vgervais", "Vlad_Portable", "User", "Oli_Portable"
@@ -535,13 +543,13 @@ MASTER_NOT_AVAILABLE:
     MsgBox _
         Prompt:="Le fichier GCF_MASTER.xlsx ne peut être accédé..." & vbNewLine & vbNewLine & _
                     "Le fichier nécessite une réparation manuelle", _
-        Title:="Situation anormale (" & Err.Number & " " & Err.Description & ")", _
+        Title:="Situation anormale (" & Err.Number & " " & Err.description & ")", _
         Buttons:=vbCritical
     Application.Quit
 
 End Sub
 
-Sub EcrireInformationsConfigAuMenu()
+Sub EcrireInformationsConfigAuMenu(user As String)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:EcrireInformationsConfigAuMenu", "", 0)
     
@@ -552,7 +560,7 @@ Sub EcrireInformationsConfigAuMenu()
     With wshMenu
         .Range("A30").value = "Heure - " & Format$(Now(), wsdADMIN.Range("B1").value & " hh:mm:ss")
         .Range("A31").value = "Version - " & ThisWorkbook.Name
-        .Range("A32").value = "Utilisateur - " & Fn_Get_Windows_Username
+        .Range("A32").value = "Utilisateur - " & user
         .Range("A33").value = "Environnement - " & wsdADMIN.Range("F5").value
         .Range("A34").value = "Format de la date - " & wsdADMIN.Range("B1").value
     End With

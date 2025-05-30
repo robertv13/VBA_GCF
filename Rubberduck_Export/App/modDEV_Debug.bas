@@ -110,7 +110,7 @@ Sub VérifierTousLesContrôlesFeuillesEtUserForms()
             If Err.Number <> 0 Then
                 rapport = rapport & "?? Feuille: " & ws.Name & _
                           " - Contrôle: " & ctrl.Name & _
-                          " ? Erreur : " & Err.Description & vbCrLf
+                          " ? Erreur : " & Err.description & vbCrLf
             End If
             Err.Clear
             On Error GoTo 0
@@ -123,7 +123,7 @@ Sub VérifierTousLesContrôlesFeuillesEtUserForms()
             On Error Resume Next
             Set uf = VBA.UserForms.Add(vbComp.Name)
             If Err.Number <> 0 Then
-                rapport = rapport & "? UserForm: " & vbComp.Name & " - Erreur d'ouverture : " & Err.Description & vbCrLf
+                rapport = rapport & "? UserForm: " & vbComp.Name & " - Erreur d'ouverture : " & Err.description & vbCrLf
                 Err.Clear
                 GoTo NextForm
             End If
@@ -134,7 +134,7 @@ Sub VérifierTousLesContrôlesFeuillesEtUserForms()
                 If Err.Number <> 0 Then
                     rapport = rapport & "?? UserForm: " & vbComp.Name & _
                               " - Contrôle: " & ctrlUF.Name & _
-                              " ? Erreur : " & Err.Description & vbCrLf
+                              " ? Erreur : " & Err.description & vbCrLf
                 End If
                 Err.Clear
                 On Error GoTo 0

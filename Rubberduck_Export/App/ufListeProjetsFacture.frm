@@ -1,7 +1,7 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufListeProjetsFacture 
    Caption         =   "Facturation des projets de facture"
-   ClientHeight    =   6435
+   ClientHeight    =   7650
    ClientLeft      =   180
    ClientTop       =   690
    ClientWidth     =   11520
@@ -21,7 +21,7 @@ Private Sub UserForm_Initialize()
     
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
-    If lastUsedRow < 2 Then Exit Sub 'Empty List
+    If lastUsedRow <= 2 Then Exit Sub 'Empty List
     
     Dim arr() As Variant
     ReDim arr(1 To lastUsedRow - 1, 1 To 4)

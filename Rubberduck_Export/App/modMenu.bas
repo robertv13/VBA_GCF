@@ -196,7 +196,7 @@ Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
     
 End Sub
 
-Sub HideDevShapesBasedOnUsername()
+Sub HideDevShapesBasedOnUsername(userName As String)
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:HideDevShapesBasedOnUsername", "", 0)
     
@@ -205,14 +205,10 @@ Sub HideDevShapesBasedOnUsername()
     
     'Loop through each shape in the worksheet
     Dim shp As Shape
-    Dim userName As String
-    userName = Fn_Get_Windows_Username
     If userName = "Robert M. Vigneault" Or userName = "robertmv" Then
         ws.Shapes("shpImporterCorrigerMASTER").Visible = msoTrue
         ws.Shapes("shpVérificationIntégrité").Visible = msoTrue
         ws.Shapes("shpTraitementFichiersLog").Visible = msoTrue
-        ws.Shapes("shpAjustementsCasse").Visible = msoTrue
-        ws.Shapes("shpVérifierDernièresLignes").Visible = msoTrue
         ws.Shapes("shpRechercherCode").Visible = msoTrue
         ws.Shapes("shpCorrigerNomClientTEC").Visible = msoTrue
         ws.Shapes("shpCorrigerNomClientCAR").Visible = msoTrue
@@ -224,8 +220,6 @@ Sub HideDevShapesBasedOnUsername()
         ws.Shapes("shpImporterCorrigerMASTER").Visible = msoFalse
         ws.Shapes("shpVérificationIntégrité").Visible = msoFalse
         ws.Shapes("shpTraitementFichiersLog").Visible = msoFalse
-        ws.Shapes("shpAjustementsCasse").Visible = msoFalse
-        ws.Shapes("shpVérifierDernièresLignes").Visible = msoFalse
         ws.Shapes("shpRechercherCode").Visible = msoFalse
         ws.Shapes("shpCorrigerNomClientTEC").Visible = msoFalse
         ws.Shapes("shpCorrigerNomClientCAR").Visible = msoFalse

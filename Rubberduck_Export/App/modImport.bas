@@ -105,7 +105,6 @@ Sub ImportGeneriqueDuMaster(sourceWb As String, ws As Worksheet, onglet As Strin
     
     Dim rng As Range: Set rng = ws.Range("A1").CurrentRegion
     Call AppliquerFormatColonnesParTable(ws, rng, tbl.HeaderRowRange.row)
-    Debug.Print "666 - ", ws.Name, tbl.HeaderRowRange.row
     
     Application.ScreenUpdating = True
     
@@ -391,19 +390,6 @@ Sub ImporterFacProjetsDetails() '2025-05-07 @ 15:57
 
     Call ImportGeneriqueDuMaster(sourceWb, ws, onglet, table)
     
-    'Enlever les lignes qui doivent être enlevées
-    Dim lastRow As Long
-    lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
-    
-    If lastRow >= 2 Then
-        Dim r As Long
-        For r = lastRow To 2 Step -1
-            If Trim(ws.Cells(r, 9).value) = "-1" Then
-                ws.Rows(r).Delete
-            End If
-        Next r
-    End If
-    
     'Libérer la mémoire
     Set ws = Nothing
     
@@ -428,17 +414,6 @@ Sub ImporterFacProjetsEntete() '2025-05-07 @ 16:05
     
     Dim lastRow As Long
     lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
-    
-    'Delete the rows that column (isDétruite) is set to TRUE
-    Dim i As Long
-    If lastRow >= 2 Then
-        For i = lastRow To 2 Step -1
-            If UCase$(ws.Range("Z" & i).value) = "VRAI" Or _
-                ws.Range("Z" & i).value = -1 Then
-                ws.Rows(i).Delete
-            End If
-        Next i
-    End If
     
     'Libérer la mémoire
     Set ws = Nothing

@@ -833,10 +833,10 @@ Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
     nouveauDossier = cheminRacineDestination & dateHeure & "\"
     
     'Créer le répertoire s'il n'existe pas déjà (ne devrait pas exister)
-    Dim FSO As Object
-    Set FSO = CreateObject("Scripting.FileSystemObject")
-    If Not FSO.folderExists(nouveauDossier) Then
-        FSO.CreateFolder nouveauDossier
+    Dim fso As Object
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    If Not fso.folderExists(nouveauDossier) Then
+        fso.CreateFolder nouveauDossier
     End If
     
     'Noms des deux fichiers à copier (fixe)
@@ -845,15 +845,15 @@ Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
     nomFichier2 = "GCF_BD_Entrée.xlsx"
     
     'Copier le premier fichier
-    If FSO.fileExists(cheminSourcePROD & nomFichier1) Then
-        FSO.CopyFile source:=cheminSourcePROD & nomFichier1, Destination:=nouveauDossier, OverwriteFiles:=False
+    If fso.fileExists(cheminSourcePROD & nomFichier1) Then
+        fso.CopyFile source:=cheminSourcePROD & nomFichier1, Destination:=nouveauDossier, OverwriteFiles:=False
     Else
         MsgBox "Fichier non trouvé : " & cheminSourcePROD & nomFichier1, vbExclamation, "Erreur"
     End If
     
     'Copier le deuxième fichier
-    If FSO.fileExists(cheminSourcePROD & nomFichier2) Then
-        FSO.CopyFile source:=cheminSourcePROD & nomFichier2, Destination:=nouveauDossier, OverwriteFiles:=False
+    If fso.fileExists(cheminSourcePROD & nomFichier2) Then
+        fso.CopyFile source:=cheminSourcePROD & nomFichier2, Destination:=nouveauDossier, OverwriteFiles:=False
     Else
         MsgBox "Fichier non trouvé : " & cheminSourcePROD & nomFichier2, vbExclamation, "Erreur"
     End If
@@ -863,7 +863,7 @@ Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
     fichier = Dir(cheminSourcePROD & "*.log")
     Do While fichier <> ""
         'Copie du fichier PROD ---> Local
-        FSO.CopyFile source:=cheminSourcePROD & fichier, Destination:=nouveauDossier, OverwriteFiles:=False
+        fso.CopyFile source:=cheminSourcePROD & fichier, Destination:=nouveauDossier, OverwriteFiles:=False
         'Efface le fichier PROD (initialiation)
         Kill cheminSourcePROD & fichier
         'Fichier suivant à copier
@@ -876,15 +876,15 @@ Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
     dossierDEV = "C:\VBA\GC_FISCALITÉ\DataFiles\"
     
     'Copier le premier fichier
-    If FSO.fileExists(nouveauDossier & nomFichier1) Then
-        FSO.CopyFile source:=cheminSourcePROD & nomFichier1, Destination:=dossierDEV, OverwriteFiles:=True
+    If fso.fileExists(nouveauDossier & nomFichier1) Then
+        fso.CopyFile source:=cheminSourcePROD & nomFichier1, Destination:=dossierDEV, OverwriteFiles:=True
     Else
         MsgBox "Fichier non trouvé : " & nouveauDossier & nomFichier1, vbExclamation, "Erreur"
     End If
     
     'Copier le deuxième fichier
-    If FSO.fileExists(nouveauDossier & nomFichier2) Then
-        FSO.CopyFile source:=cheminSourcePROD & nomFichier2, Destination:=dossierDEV, OverwriteFiles:=True
+    If fso.fileExists(nouveauDossier & nomFichier2) Then
+        fso.CopyFile source:=cheminSourcePROD & nomFichier2, Destination:=dossierDEV, OverwriteFiles:=True
     Else
         MsgBox "Fichier non trouvé : " & nouveauDossier & nomFichier2, vbExclamation, "Erreur"
     End If
@@ -913,6 +913,49 @@ Sub AjusterTableauxDansMaster() '2024-12-07 @ 06:47
     End If
     On Error GoTo 0
 
+'    'Supprimer les lignes dans FAC_Projets_Détails et FAC_Projets_Entête - 2025-05-26 @ 11:04
+'    Dim wsDetails As Worksheet, wsEntete As Worksheet
+'    Dim i As Long
+'
+'    On Error Resume Next
+'    Set wsDetails = wb.Sheets("FAC_Projets_Détails")
+'    Set wsEntete = wb.Sheets("FAC_Projets_Entête")
+''    Set wsDetails = wsdFAC_Projets_Détails
+''    Set wsEntete = wsdFAC_Projets_Entête
+'    On Error GoTo 0
+'
+'    Dim lastUsedRow As Long
+'
+'    If Not wsDetails Is Nothing Then
+'        With wsDetails
+'            lastUsedRow = .Cells(.Rows.count, "A").End(xlUp).row
+'            If lastUsedRow > 2 Then
+'                For i = lastUsedRow To 2 Step -1
+'                    If Trim(.Cells(i, "I").value) = "-1" _
+'                       Or LCase(Trim(.Cells(i, "I").value)) = "vrai" _
+'                       Or .Cells(i, "I").value = True Then
+'                        .Rows(i).Delete
+'                    End If
+'                Next i
+'            End If
+'        End With
+'    End If
+
+'    If Not wsEntete Is Nothing Then
+'        With wsEntete
+'            lastUsedRow = .Cells(.Rows.count, "A").End(xlUp).row
+'            If lastUsedRow > 2 Then
+'                For i = lastUsedRow To 2 Step -1
+'                    If Trim(.Cells(i, "Z").value) = "-1" _
+'                       Or LCase(Trim(.Cells(i, "Z").value)) = "vrai" _
+'                       Or .Cells(i, "Z").value = True Then
+'                        .Rows(i).Delete
+'                    End If
+'                Next i
+'            End If
+'        End With
+'    End If
+'
     'Parcourir toutes les feuilles
     Dim ws As Worksheet
     Dim listeObjets As ListObjects
@@ -1481,73 +1524,75 @@ Sub CreerBorduresInterieures(rng As Variant) '2025-02-24 @ 16:40
             
 End Sub
 
-Sub AjustementAvantGit_Click() '2025-02-27 @ 11:22
-
-    Call UniformiserValeurVBA
-
-End Sub
-
-Sub UniformiserValeurVBA() '2025-02-27 @ 10:56
-
-    Dim FSO As Object
-    Dim dossier As String
-    Dim fichier As Object
-    Dim fichierTexte As Object
-    Dim contenu As String
-    Dim toUpper As Boolean: toUpper = True 'True = mettre ".value", False = mettre ".value"
-    toUpper = False
-    
-    'Demander à l'utilisateur de sélectionner le dossier
-    With Application.fileDialog(msoFileDialogFolderPicker)
-        .Title = "Sélectionnez le dossier contenant les fichiers VBA"
-        If .show = -1 Then
-            dossier = .SelectedItems(1)
-        Else
-            Exit Sub 'Annuler l'opération si aucun dossier sélectionné
-        End If
-    End With
-    
-    'Vérifier si le dossier est valide
-    If Len(Dir(dossier, vbDirectory)) = 0 Then
-        MsgBox "Dossier invalide.", vbExclamation
-        Exit Sub
-    End If
-    
-    'Initialiser FileSystemObject
-    Set FSO = CreateObject("Scripting.FileSystemObject")
-    
-    'Parcourir tous les fichiers .bas, .cls, .frm du dossier
-    For Each fichier In FSO.GetFolder(dossier).Files
-        If fichier.Name Like "*.bas" Or fichier.Name Like "*.cls" Or fichier.Name Like "*.frm" Then
-            'Lire le contenu du fichier
-            Set fichierTexte = FSO.OpenTextFile(fichier.path, 1) 'Mode lecture
-            contenu = fichierTexte.ReadAll
-            fichierTexte.Close
-            
-            'Modifier le contenu pour plusieurs chaines
-            If toUpper Then
-                contenu = Replace(contenu, ".value", ".Value")
-                contenu = Replace(contenu, "FSO", "FSO")
-            Else
-                contenu = Replace(contenu, ".Count", ".count")
-                contenu = Replace(contenu, "FSO", "FSO")
-            End If
-        
-            'Réécrire le fichier modifié
-            Set fichierTexte = FSO.OpenTextFile(fichier.path, 2) 'Mode écriture
-            fichierTexte.Write contenu
-            fichierTexte.Close
-        End If
-    Next
-    
-    'Nettoyage
-    Set fichierTexte = Nothing
-    Set FSO = Nothing
-    
-    MsgBox "Corrections terminées !", vbInformation
-    
-End Sub
-
+'CommentOut - 2025-05-28 @ 06:20
+'Sub AjustementAvantGit_Click() '2025-02-27 @ 11:22
+'
+'    Call UniformiserValeurVBA
+'
+'End Sub
+'
+'CommentOut - 2025-05-28 @ 06:20
+'Sub UniformiserValeurVBA() '2025-02-27 @ 10:56
+'
+'    Dim fso As Object
+'    Dim dossier As String
+'    Dim fichier As Object
+'    Dim fichierTexte As Object
+'    Dim contenu As String
+'    Dim toUpper As Boolean: toUpper = True 'True = mettre ".value", False = mettre ".value"
+'    toUpper = False
+'
+'    'Demander à l'utilisateur de sélectionner le dossier
+'    With Application.fileDialog(msoFileDialogFolderPicker)
+'        .Title = "Sélectionnez le dossier contenant les fichiers VBA"
+'        If .show = -1 Then
+'            dossier = .SelectedItems(1)
+'        Else
+'            Exit Sub 'Annuler l'opération si aucun dossier sélectionné
+'        End If
+'    End With
+'
+'    'Vérifier si le dossier est valide
+'    If Len(Dir(dossier, vbDirectory)) = 0 Then
+'        MsgBox "Dossier invalide.", vbExclamation
+'        Exit Sub
+'    End If
+'
+'    'Initialiser FileSystemObject
+'    Set fso = CreateObject("Scripting.FileSystemObject")
+'
+'    'Parcourir tous les fichiers .bas, .cls, .frm du dossier
+'    For Each fichier In fso.GetFolder(dossier).Files
+'        If fichier.Name Like "*.bas" Or fichier.Name Like "*.cls" Or fichier.Name Like "*.frm" Then
+'            'Lire le contenu du fichier
+'            Set fichierTexte = fso.OpenTextFile(fichier.path, 1) 'Mode lecture
+'            contenu = fichierTexte.ReadAll
+'            fichierTexte.Close
+'
+'            'Modifier le contenu pour plusieurs chaines
+'            If toUpper Then
+'                contenu = Replace(contenu, ".value", ".Value")
+'                contenu = Replace(contenu, "FSO", "FSO")
+'            Else
+'                contenu = Replace(contenu, ".Count", ".count")
+'                contenu = Replace(contenu, "FSO", "FSO")
+'            End If
+'
+'            'Réécrire le fichier modifié
+'            Set fichierTexte = fso.OpenTextFile(fichier.path, 2) 'Mode écriture
+'            fichierTexte.Write contenu
+'            fichierTexte.Close
+'        End If
+'    Next
+'
+'    'Nettoyage
+'    Set fichierTexte = Nothing
+'    Set fso = Nothing
+'
+'    MsgBox "Corrections terminées !", vbInformation
+'
+'End Sub
+'
 Sub DemarrerSauvegardeAutomatique() '2025-03-03 @ 07:19
 
     'Lancer l'export des modules VBA
@@ -1805,3 +1850,94 @@ Sub ComparerClasseursNiveauCellules()
     MsgBox "Comparaison terminée ! Consultez le classeur de rapport.", vbInformation
     
 End Sub
+
+Sub AnalyserImagesEntêteFactureExcel() '2025-05-27 @ 14:40
+
+    Dim dossier As String, fichier As String
+    Dim wb As Workbook, ws As Worksheet
+    Dim img As Shape
+    Dim largeurOrig As Double, hauteurOrig As Double
+    Dim largeurActuelle As Double, hauteurActuelle As Double
+    Dim cheminComplet As String
+    Dim nomImageCible As String
+
+    'Demande à l'utilisateur de choisir un dossier
+    With Application.fileDialog(msoFileDialogFolderPicker)
+        .Title = "Choisissez un dossier contenant les fichiers Excel"
+        If .show <> -1 Then Exit Sub 'Annuler
+        dossier = .SelectedItems(1)
+    End With
+
+    'Nom exact de l'image à trouver (ou utiliser un critère partiel)
+    nomImageCible = "Image 1" '? Modifier si nécessaire
+
+    'Recherche tous les fichiers .xlsx dans le dossier
+    Dim dateSeuilMinimum As Date
+    dateSeuilMinimum = DateSerial(2024, 8, 1)
+    fichier = Dir(dossier & "\*.xlsx")
+
+    Do While fichier <> ""
+        cheminComplet = dossier & "\" & fichier
+        If FileDateTime(cheminComplet) < dateSeuilMinimum Then
+            fichier = Dir
+            GoTo SkipFile
+        End If
+        Set wb = Workbooks.Open(cheminComplet, ReadOnly:=True)
+
+        On Error Resume Next
+        Set ws = wb.Worksheets(wb.Worksheets.count)
+        If ws.Name = "Activités" Then
+            GoTo SkipFile
+        End If
+        On Error GoTo 0
+
+        If Not ws Is Nothing Then
+            For Each img In ws.Shapes
+                If img.Type = msoPicture Then
+                    If img.Name = nomImageCible Then
+                        largeurActuelle = img.Width
+                        hauteurActuelle = img.Height
+
+                        'Lire la taille originale estimée
+                        Call LireTailleOriginaleImage(img, largeurOrig, hauteurOrig)
+
+                        Debug.Print "Fichier : " & fichier
+                        Debug.Print "  Image : " & img.Name
+                        Debug.Print "  Taille actuelle : " & largeurActuelle & " x " & hauteurActuelle
+                        Debug.Print "  Taille originale : " & largeurOrig & " x " & hauteurOrig
+                        Debug.Print String(40, "-")
+                    End If
+                End If
+            Next img
+        End If
+
+        wb.Close SaveChanges:=False
+        fichier = Dir
+SkipFile:
+    Loop
+
+    MsgBox "Analyse terminée."
+    
+End Sub
+
+'Fonction pour estimer la taille originale d'une image
+Sub LireTailleOriginaleImage(img As Shape, ByRef largeurOrig As Double, ByRef hauteurOrig As Double)
+
+    Dim ws As Worksheet
+    Dim copie As Shape
+
+    Set ws = img.Parent
+    img.Copy
+    ws.Paste
+    Set copie = ws.Shapes(ws.Shapes.count) 'la dernière collée
+
+    With copie
+        .ScaleWidth 1, msoTrue, msoScaleFromTopLeft
+        .ScaleHeight 1, msoTrue, msoScaleFromTopLeft
+        largeurOrig = .Width
+        hauteurOrig = .Height
+        .Delete
+    End With
+    
+End Sub
+
