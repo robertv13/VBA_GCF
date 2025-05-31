@@ -18,6 +18,9 @@ Public Const COULEUR_BASE_TEC As Long = 6740479
 Public Const COULEUR_BASE_FACTURATION As Long = 11854022
 Public Const COULEUR_BASE_COMPTABILITÉ As Long = 14277081
 
+'Variable qui contient le code d'utilisateur Windows
+Public gUtilisateurWindows As String
+
 'Variable qui contient l'addresse de la dernière cellule sélectionnée
 Public gPreviousCellAddress As String
 
@@ -32,7 +35,16 @@ Public gFlagEtapeFacture As Long
 
 'Sauvegarde AUTOMATIQUE du code VBA - 2025-03-03 @ 07:18
 Public gNextBackupTime As Date
-Public Const INTERVALLE_MINUTES As Double = 10
+Public Const INTERVALLE_MINUTES_SAUVEGARDE As Double = 10
+
+'Fermeture AUTOMATIQUE de l'application - 2025-05-30 @ 11:36
+Public gDerniereActivite As Date
+Public gProchaineVerification As Date
+Public Const FREQUENCE_VERIFICATION_INACTIVITE As Long = 5
+Public Const INTERVALLE_MAXIMUM_INACTIVITE As Long = 15
+
+'Pour capturer év`nements sur tous les controls des userForm - 2025-05-30 @ 13:11
+Public colWrappers As Collection
 
 'Using Enum to specify the column number of worksheets (data)
 Public Enum BD_Clients '2024-10-26 @ 17:41
@@ -346,11 +358,17 @@ End Enum
 
 Private Sub Auto_Open() '2024-12-28 @ 11:09
 
-    Call CodeEssentielDepart
+    gDerniereActivite = Now
+'    Debug.Print "L'application a démarré à " & gDerniereActivite
+    gProchaineVerification = Now + TimeSerial(0, FREQUENCE_VERIFICATION_INACTIVITE, 0)
+'    Debug.Print "La prochaine vérification est prévue à " & gProchaineVerification
+    Application.OnTime gProchaineVerification, "VerifierInactivite"
+
+    Call DemarrageApplication
     
 End Sub
 
-Sub CodeEssentielDepart()
+Sub DemarrageApplication()
 
     If Application.EnableEvents = False Then Application.EnableEvents = True
     
@@ -364,7 +382,7 @@ Sub CodeEssentielDepart()
     
 '   !CommentOut - 2025-05-27 - v6.C.7
 '    'Le serveur est-il disponible (pour tous les usagers sauf le développeur) ?
-'    If Fn_Get_Windows_Username <> "Robert M. Vigneault" And Fn_Get_Windows_Username <> "robertmv" Then
+'    If gUtilisateurWindows <> "Robert M. Vigneault" And gUtilisateurWindows <> "robertmv" Then
 '        Application.StatusBar = "Vérification de l'accès au serveur P:\"
 '        If Fn_Is_Server_Available() = False Then
 '            MsgBox "Le répertoire (P:\) ne semble pas accessible", vbCritical, "Le serveur n'est pas disponible"
@@ -374,6 +392,9 @@ Sub CodeEssentielDepart()
 '        Application.StatusBar = False
 '    End If
 '
+    'Quel est l'utilisateur Windows ?
+    gUtilisateurWindows = Fn_Get_Windows_Username
+    
     Dim rootPath As String
     rootPath = FN_Get_Root_Path
 
@@ -391,26 +412,22 @@ Sub CodeEssentielDepart()
     Application.StatusBar = False
 
     'Log initial activity
-    Dim startTime As Double: startTime = Timer: Call Log_Record("----- Début d'une nouvelle session (modAppli:CodeEssentielDepart) -----", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("----- Début d'une nouvelle session (modAppli:DemarrageApplication) -----", "", 0)
     Application.EnableEvents = True
     
-    'Quel est l'utilisateur ?
-    Dim utilisateur As String
-    utilisateur = Fn_Get_Windows_Username
-    
     'Création d'un fichier qui indique de l'utilisateur utilise l'application
-    Call CreateUserActiveFile(utilisateur)
+    Call CreateUserActiveFile(gUtilisateurWindows)
     
-    Call SetupUserDateFormat(utilisateur)
+    Call SetupUserDateFormat(gUtilisateurWindows)
     
     'Call the BackupMasterFile (GCF_BD_MASTER.xlsx) macro at each application startup
     Call BackupMasterFile
     
-    Call EcrireInformationsConfigAuMenu(utilisateur)
+    Call EcrireInformationsConfigAuMenu(gUtilisateurWindows)
     
     wshMenu.Range("A1").value = wsdADMIN.Range("NomEntreprise").value
     
-    Call HideDevShapesBasedOnUsername(utilisateur)
+    Call HideDevShapesBasedOnUsername(gUtilisateurWindows)
     
     'Protection de la feuille wshMenu
     With wshMenu
@@ -436,17 +453,17 @@ Sub CodeEssentielDepart()
     Set wb = Nothing
     Set ws = Nothing
     
-    If utilisateur = "Robert M. Vigneault" Or utilisateur = "robertmv" Then
+    If gUtilisateurWindows = "Robert M. Vigneault" Or gUtilisateurWindows = "robertmv" Then
 '        Call ExporterCodeVBA 'Sauvegarde AUTOMATIQUE du code VBA en entrant
         Call DemarrerSauvegardeAutomatique
     End If
     
-    Call Log_Record("modAppli:CodeEssentielDepart", "", startTime)
+    Call Log_Record("modAppli:DemarrageApplication", "", startTime)
     
     Exit Sub
     
 ErrorHandler:
-    Call Log_Record("Erreur dans modAppli:CodeEssentielDepart : " & Err.description, Timer)
+    Call Log_Record("Erreur dans modAppli:DemarrageApplication : " & Err.description, Timer)
 
 End Sub
 
@@ -454,7 +471,7 @@ Function FN_Get_Root_Path() As String '2025-03-03 @ 20:28
    
     DoEvents
     
-    If Fn_Get_Windows_Username = "Robert M. Vigneault" Or Fn_Get_Windows_Username = "robertmv" Then
+    If gUtilisateurWindows = "Robert M. Vigneault" Or gUtilisateurWindows = "robertmv" Then
         FN_Get_Root_Path = "C:\VBA\GC_FISCALITÉ"
     Else
         FN_Get_Root_Path = "P:\Administration\APP\GCF"
@@ -462,7 +479,7 @@ Function FN_Get_Root_Path() As String '2025-03-03 @ 20:28
 
 End Function
 
-Sub CreateUserActiveFile(userName As String)
+Sub CreateUserActiveFile(ByVal userName As String)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:CreateUserActiveFile", "", 0)
     
@@ -493,9 +510,9 @@ Error_Handling:
 
 End Sub
 
-Sub SetupUserDateFormat(user As String)
+Sub SetupUserDateFormat(ByVal user As String)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:SetupUserDateFormat", "", 0)
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:SetupUserDateFormat", "", 0)
 
     Dim userDateFormat As String
     
@@ -514,7 +531,7 @@ Sub SetupUserDateFormat(user As String)
 
     wsdADMIN.Range("B1").value = userDateFormat
     
-    Call Log_Record("modAppli:SetupUserDateFormat", "", startTime)
+'    Call Log_Record("modAppli:SetupUserDateFormat", "", startTime)
     
 End Sub
 
@@ -549,9 +566,9 @@ MASTER_NOT_AVAILABLE:
 
 End Sub
 
-Sub EcrireInformationsConfigAuMenu(user As String)
+Sub EcrireInformationsConfigAuMenu(ByVal user As String)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:EcrireInformationsConfigAuMenu", "", 0)
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:EcrireInformationsConfigAuMenu", "", 0)
     
     wshMenu.Unprotect
     
@@ -572,8 +589,95 @@ Sub EcrireInformationsConfigAuMenu(user As String)
         .EnableSelection = xlUnlockedCells
     End With
     
-    Call Log_Record("modAppli:EcrireInformationsConfigAuMenu", "", startTime)
+'    Call Log_Record("modAppli:EcrireInformationsConfigAuMenu", "", startTime)
 
+End Sub
+
+'Mettre à jour à chaque activité
+Public Sub RafraichirActivite(Optional ByVal msg As String = "") '2025-05-30 @ 12:22
+
+    Debug.Print "Activité détectée à " & Format(gDerniereActivite, "hh:nn:ss") & " - " & msg
+    gDerniereActivite = Now
+    Application.StatusBar = False
+    
+End Sub
+
+'Vérifie l'inactivité et ferme si plus de 60 minutes
+Public Sub VerifierInactivite() '2025-05-30 @ 12:22
+
+    On Error GoTo GestionErreur
+    
+    Dim heureActuelle As Double
+    heureActuelle = Time
+    
+    'Vérifier si on est dans la plage 18:00 à 23:59
+    If heureActuelle < TimeValue("06:00:00") Then
+        'Replanifier tout de même la prochaine vérification
+        gProchaineVerification = Now + TimeSerial(0, FREQUENCE_VERIFICATION_INACTIVITE, 0)
+        Application.OnTime gProchaineVerification, "VerifierInactivite"
+        Exit Sub
+    End If
+    
+    If gDerniereActivite = 0 Then
+        Debug.Print "gDerniereActivite n'est pas initialisée..."
+        Exit Sub
+    End If
+    
+    'Déterminer le moment précis la dernière activité en minutes
+    Dim minutesInactive As Double
+    minutesInactive = (Now - gDerniereActivite) * 24 * 60 'Convertir en minutes
+    Application.StatusBar = "Aucune activité depuis " & Format(minutesInactive, "#0") & " minute(s)"
+
+    If minutesInactive >= INTERVALLE_MAXIMUM_INACTIVITE Then
+        If Not ApplicationIsActive Then
+            Application.DisplayAlerts = False
+            Call ApplicationFermetureNormale(gUtilisateurWindows)
+        End If
+    End If
+
+'    If gUtilisateurWindows <> "Robert M. Vigneault" And gUtilisateurWindows <> "Robertmv" Then
+'        If minutesInactive >= INTERVALLE_MAXIMUM_INACTIVITE Then
+'            Application.DisplayAlerts = False
+'            Call ApplicationFermetureNormale
+'        End If
+'    End If
+    
+    'Reprogrammer la vérification
+    gProchaineVerification = Now + TimeSerial(0, FREQUENCE_VERIFICATION_INACTIVITE, 0) 'Vérifie toutes les 5 minutes
+    Application.OnTime gProchaineVerification, "VerifierInactivite"
+
+    Exit Sub
+    
+GestionErreur:
+    Debug.Print "Erreur dans procédure 'VerifierInactivite' : " & Err.Number & " - " & Err.description
+    
+End Sub
+
+Private Sub ConnectControlsRecursive(ctrls As MSForms.Controls) '2025-05-30 @ 13:12
+
+    Dim ctrl As MSForms.Control
+    For Each ctrl In ctrls
+        Debug.Print "Contrôle : " & ctrl.Name & " - Type : " & TypeName(ctrl)
+
+        Select Case TypeName(ctrl)
+            Case "Frame", "TabStrip"
+                ConnectControlsRecursive ctrl.Controls 'Récursif pour atteindre tous les niveaux
+            Case "MultiPage"
+                Dim i As Integer
+                For i = 0 To ctrl.Pages.count - 1
+                    ConnectControlsRecursive ctrl.Pages(i).Controls
+                Next i
+            Case "Label"
+                'Ignorer les labels (contrôles passifs)
+            Case Else
+                On Error Resume Next
+                Dim wrapper As New clsControlWrapper
+                Set wrapper.ctrl = ctrl
+                colWrappers.Add wrapper, ctrl.Name
+                On Error GoTo 0
+        End Select
+    Next ctrl
+    
 End Sub
 
 

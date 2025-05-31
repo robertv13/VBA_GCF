@@ -194,7 +194,7 @@ Function Get_Summary_By_GL_Account(dateMin As Date, dateMax As Date) As ADODB.Re
            "AND [Date] <= #" & Format(dateMax, "yyyy-mm-dd") & "# " & _
            "GROUP BY [NoCompte] " & _
            "ORDER BY [NoCompte];"
-    Debug.Print "Calcul de la BV" & vbNewLine & "Get_Summary_By_GL_Account - strSQL = '" & strSQL & "'"
+    Debug.Print "Calcul de la BV" & vbNewLine & "Get_Summary_By_GL_Account - strSQL = " & strSQL
     
     'Connexion ADO
     Set cn = New ADODB.Connection
@@ -291,8 +291,8 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
     Set rsInit = CreateObject("ADODB.Recordset")
     
     strSQL = "SELECT SUM(Débit) AS TotalDebit, SUM(Crédit) AS TotalCredit FROM [GL_Trans$] " & _
-             "WHERE NoCompte = '" & compte & "'AND Date < #" & Format(dateMin, "mm/dd/yyyy") & "#"
-    Debug.Print "GL_BV_Display_Trans_For_Selected_Account - strSQL1 = '" & strSQL & "'"
+             "WHERE NoCompte = '" & compte & "' AND Date < #" & Format(dateMin, "mm/dd/yyyy") & "#"
+    Debug.Print "GL_BV_Display_Trans_For_Selected_Account - strSQL1 = " & strSQL
     
     rsInit.Open strSQL, cn, 1, 1
     If Not rsInit.EOF Then
@@ -306,7 +306,7 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
              "AND Date >= #" & Format(dateMin, "yyyy-mm-dd") & "# " & _
              "AND Date <= #" & Format(dateMax, "yyyy-mm-dd") & "# " & _
              "ORDER BY Date, NoEntrée"
-    Debug.Print "GL_BV_Display_Trans_For_Selected_Account - strSQL2 = '" & strSQL & "'"
+    Debug.Print "GL_BV_Display_Trans_For_Selected_Account - strSQL2 = " & strSQL
     
     'Exécuter la requête
     Set rs = CreateObject("ADODB.Recordset")
@@ -993,15 +993,15 @@ Sub Test_Get_All_Shapes() '2024-08-15 @ 14:42
     
 End Sub
 
-Sub wshGL_BV_Display_JE_Trans_With_Shape()
+Sub GL_BV_Display_JE_Trans_With_Shape()
 
-    Call wshGL_BV_Create_Dynamic_Shape
-    Call wshGL_BV_Adjust_The_Shape
+    Call GL_BV_Create_Dynamic_Shape
+    Call GL_BV_Adjust_The_Shape
     Call GL_BV_Show_Dynamic_Shape
     
 End Sub
 
-Sub wshGL_BV_Create_Dynamic_Shape()
+Sub GL_BV_Create_Dynamic_Shape()
 
     'Check if the shape has already been created
     If dynamicShape Is Nothing Then
@@ -1010,14 +1010,11 @@ Sub wshGL_BV_Create_Dynamic_Shape()
         Set dynamicShape = wshGL_BV.Shapes.AddShape(msoShapeRoundedRectangle, 2000, 100, 600, 100)
     End If
 
-    'Libérer la mémoire
-'    Set dynamicShape = Nothing
-    
 End Sub
 
-Sub wshGL_BV_Adjust_The_Shape()
+Sub GL_BV_Adjust_The_Shape()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:wshGL_BV_Adjust_The_Shape", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_BV_Adjust_The_Shape", "", 0)
     
     Dim lastResultRow As Long
     lastResultRow = wsdGL_Trans.Cells(wsdGL_Trans.Rows.count, "AC").End(xlUp).row
@@ -1089,7 +1086,7 @@ Sub wshGL_BV_Adjust_The_Shape()
     'Libérer la mémoire
     Set dynamicShape = Nothing
       
-    Call Log_Record("modGL_BV:wshGL_BV_Adjust_The_Shape", "", startTime)
+    Call Log_Record("modGL_BV:GL_BV_Adjust_The_Shape", "", startTime)
       
 End Sub
 

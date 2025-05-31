@@ -6,6 +6,8 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Analyse:Worksheet_Activate", "", 0)
     
+    Call RafraichirActivite("Projet de facture")
+    
     Application.ScreenUpdating = False
     Application.EnableEvents = False
     
@@ -78,7 +80,7 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Analyse:Worksheet_SelectionChange", target.Address, 0)
     
-    Debug.Print "#013 - " & target.Address
+    Call RafraichirActivite("Projet de facture")
     
     If gPreviousCellAddress <> "" Then
         Range(gPreviousCellAddress).Interior.Color = COULEUR_BASE_TEC

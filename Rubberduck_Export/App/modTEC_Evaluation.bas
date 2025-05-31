@@ -21,11 +21,11 @@ Sub TEC_Evaluation_Calcul(cutoffDate As String, ByRef maxDate As Date)
         
     Call modImport.ImporterTEC
     
-    Dim y As Integer, m As Integer, d As Integer
-    y = year(cutoffDate)
+    Dim Y As Integer, m As Integer, d As Integer
+    Y = year(cutoffDate)
     m = month(cutoffDate)
     d = day(cutoffDate)
-    maxDate = DateSerial(y, m, d)
+    maxDate = DateSerial(Y, m, d)
     
     Dim ws As Worksheet: Set ws = wshTEC_Evaluation
     Dim wsSource As Worksheet: Set wsSource = wsdTEC_Local
@@ -276,11 +276,11 @@ Sub TEC_Evaluation_Procedure_ACO(cutoffDate As String)
     Call modImport.ImporterTEC
     
     Dim maxDate As Date
-    Dim y As Integer, m As Integer, d As Integer
-    y = year(cutoffDate)
+    Dim Y As Integer, m As Integer, d As Integer
+    Y = year(cutoffDate)
     m = month(cutoffDate)
     d = day(cutoffDate)
-    maxDate = DateSerial(y, m, d)
+    maxDate = DateSerial(Y, m, d)
     
     Dim ws As Worksheet: Set ws = wshTEC_Evaluation
     Dim wsSource As Worksheet: Set wsSource = wsdTEC_Local

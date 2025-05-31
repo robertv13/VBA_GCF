@@ -6,6 +6,8 @@ Private Sub Worksheet_Activate()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_Activate", "", 0)
 
+    Call RafraichirActivite("Saisie de Facture")
+    
     If gFromMenu = False Then
         Exit Sub
     End If
@@ -71,6 +73,8 @@ End Sub
 Private Sub Worksheet_SelectionChange(ByVal target As Range)
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_SelectionChange", target.Address, 0)
+    
+    Call RafraichirActivite("Saisie de facture")
     
     '@Ignore UnassignedVariableUsage
     If gPreviousCellAddress <> "" Then

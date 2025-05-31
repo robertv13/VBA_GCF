@@ -893,19 +893,20 @@ Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
 
 End Sub
 
-Sub AjusterTableauxDansMaster() '2024-12-07 @ 06:47
+Sub AjusterEpurerTablesDeMaster() '2024-12-07 @ 06:47
 
     'Chemin du classeur à ajuster
     Dim cheminClasseur As String
     cheminClasseur = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx"
 
-    If Fn_Get_Windows_Username <> "Robert M. Vigneault" Then
-        Exit Sub
-    End If
-    
+'CommentOut - 2025-05-30 @ 07:29
+'    If gUtilisateurWindows <> "Robert M. Vigneault" Then
+'        Exit Sub
+'    End If
+'
     'Ouvrir le classeur
-    On Error Resume Next
     Dim wb As Workbook
+    On Error Resume Next
     Set wb = Workbooks.Open(cheminClasseur, ReadOnly:=False)
     If wb Is Nothing Then
         MsgBox "Impossible d'ouvrir le classeur 'GCF_BD_MASTER.xlsx'", vbExclamation, "Erreur"
@@ -913,50 +914,49 @@ Sub AjusterTableauxDansMaster() '2024-12-07 @ 06:47
     End If
     On Error GoTo 0
 
-'    'Supprimer les lignes dans FAC_Projets_Détails et FAC_Projets_Entête - 2025-05-26 @ 11:04
-'    Dim wsDetails As Worksheet, wsEntete As Worksheet
-'    Dim i As Long
-'
-'    On Error Resume Next
-'    Set wsDetails = wb.Sheets("FAC_Projets_Détails")
-'    Set wsEntete = wb.Sheets("FAC_Projets_Entête")
-''    Set wsDetails = wsdFAC_Projets_Détails
-''    Set wsEntete = wsdFAC_Projets_Entête
-'    On Error GoTo 0
-'
-'    Dim lastUsedRow As Long
-'
-'    If Not wsDetails Is Nothing Then
-'        With wsDetails
-'            lastUsedRow = .Cells(.Rows.count, "A").End(xlUp).row
-'            If lastUsedRow > 2 Then
-'                For i = lastUsedRow To 2 Step -1
-'                    If Trim(.Cells(i, "I").value) = "-1" _
-'                       Or LCase(Trim(.Cells(i, "I").value)) = "vrai" _
-'                       Or .Cells(i, "I").value = True Then
-'                        .Rows(i).Delete
-'                    End If
-'                Next i
-'            End If
-'        End With
-'    End If
+    '1. Supprimer les lignes facturées dans FAC_Projets_Détails et FAC_Projets_Entête - 2025-05-30 @ 07:17
+    Dim i As Long
+    Dim wsDetails As Worksheet, wsEntete As Worksheet
 
-'    If Not wsEntete Is Nothing Then
-'        With wsEntete
-'            lastUsedRow = .Cells(.Rows.count, "A").End(xlUp).row
-'            If lastUsedRow > 2 Then
-'                For i = lastUsedRow To 2 Step -1
-'                    If Trim(.Cells(i, "Z").value) = "-1" _
-'                       Or LCase(Trim(.Cells(i, "Z").value)) = "vrai" _
-'                       Or .Cells(i, "Z").value = True Then
-'                        .Rows(i).Delete
-'                    End If
-'                Next i
-'            End If
-'        End With
-'    End If
-'
-    'Parcourir toutes les feuilles
+    'wsDetails et wsEntete du Workbook MASTER (pas les feuilles locales)
+    Dim lastUsedRow As Long
+    
+    On Error Resume Next
+    Set wsDetails = wb.Sheets("FAC_Projets_Détails")
+    Set wsEntete = wb.Sheets("FAC_Projets_Entête")
+    On Error GoTo 0
+
+    If Not wsDetails Is Nothing Then
+        With wsDetails
+            lastUsedRow = .Cells(.Rows.count, "A").End(xlUp).row
+            If lastUsedRow >= 2 Then
+                For i = lastUsedRow To 2 Step -1
+                    If Trim(.Cells(i, "I").value) = "-1" _
+                       Or LCase(Trim(.Cells(i, "I").value)) = "vrai" _
+                       Or .Cells(i, "I").value = True Then
+                        .Rows(i).Delete
+                    End If
+                Next i
+            End If
+        End With
+    End If
+
+    If Not wsEntete Is Nothing Then
+        With wsEntete
+            lastUsedRow = .Cells(.Rows.count, "A").End(xlUp).row
+            If lastUsedRow >= 2 Then
+                For i = lastUsedRow To 2 Step -1
+                    If Trim(.Cells(i, "Z").value) = "-1" _
+                       Or LCase(Trim(.Cells(i, "Z").value)) = "vrai" _
+                       Or .Cells(i, "Z").value = True Then
+                        .Rows(i).Delete
+                    End If
+                Next i
+            End If
+        End With
+    End If
+
+    '2. Parcourir toutes les feuilles
     Dim ws As Worksheet
     Dim listeObjets As ListObjects
     Dim tableau As ListObject
@@ -981,11 +981,19 @@ Sub AjusterTableauxDansMaster() '2024-12-07 @ 06:47
         Next tableau
     Next ws
 
-    'Enregistrer et fermer le classeur
+    '3. Enregistrer et fermer le classeur MASTER
     wb.Save
     wb.Close
     
-    MsgBox "Tous les tableaux ont été ajustés avec succès.", vbInformation, "Terminé"
+    'Libérer la mémoire
+    Set listeObjets = Nothing
+    Set nouvellePlage = Nothing
+    Set tableau = Nothing
+    Set wb = Nothing
+    Set wsDetails = Nothing
+    Set wsEntete = Nothing
+    
+    MsgBox "Tous les tableaux ont été ajustés avec succès.", vbInformation, "Traitement est terminé"
     
 End Sub
 
@@ -1599,7 +1607,7 @@ Sub DemarrerSauvegardeAutomatique() '2025-03-03 @ 07:19
     Call ExporterCodeVBA
     
     'Programmer la prochaine sauvegarde
-    gNextBackupTime = Now + TimeValue("00:" & INTERVALLE_MINUTES & ":00")
+    gNextBackupTime = Now + TimeValue("00:" & INTERVALLE_MINUTES_SAUVEGARDE & ":00")
     
     Application.OnTime gNextBackupTime, "DemarrerSauvegardeAutomatique"
     
@@ -1618,7 +1626,8 @@ Sub ExporterCodeVBA() '2025-03-11 @ 06:47
 
     'Définir le dossier où enregistrer les modules
     Dim dossierBackup As String
-    dossierBackup = "C:\Users\Robert M. Vigneault\OneDrive\_P E R S O N N E L\00_AU CAS OÙ\Backup_VBA\" & Format$(Now, "yyyy-mm-dd_HHMMSS") & "\"
+    dossierBackup = "C:\Users\Robert M. Vigneault\OneDrive\_P E R S O N N E L\00_AU CAS OÙ\Backup_VBA\" & _
+                            Format$(Now, "yyyy-mm-dd_HHMMSS") & "-" & ThisWorkbook.Name & "\"
     
     'Vérifier si le dossier existe, sinon le créer
     If Dir(dossierBackup, vbDirectory) = "" Then

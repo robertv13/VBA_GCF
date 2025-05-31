@@ -14,6 +14,7 @@ Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 '@IgnoreModule ArgumentWithIncompatibleObjectType
+
 Option Explicit
 
 Private Sub UserForm_Initialize()
@@ -203,6 +204,7 @@ Private Sub UserForm_QueryClose(Cancel As Integer, CloseMode As Integer)
             Cancel = True
         End If
     End If
+    
 End Sub
 
 Private Sub UserForm_Terminate()

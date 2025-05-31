@@ -10,11 +10,11 @@ Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
     Call modImport.ImporterTEC
     
     Dim maxDate As Date
-    Dim y As Integer, m As Integer, d As Integer
-    y = year(cutoffDate)
+    Dim Y As Integer, m As Integer, d As Integer
+    Y = year(cutoffDate)
     m = month(cutoffDate)
     d = day(cutoffDate)
-    maxDate = DateSerial(y, m, d)
+    maxDate = DateSerial(Y, m, d)
     
     Dim ws As Worksheet: Set ws = wshTEC_Radiation
     Dim wsSource As Worksheet: Set wsSource = wsdTEC_Local

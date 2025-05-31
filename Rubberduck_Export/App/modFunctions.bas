@@ -791,13 +791,13 @@ Function Fn_ValiderCourriel(ByVal adresses As String) As Boolean '2024-10-26 @ 1
     
 End Function
 
-Function Fn_ValidateDaySpecificMonth(d As Long, m As Long, y As Long) As Boolean
+Function Fn_ValidateDaySpecificMonth(d As Long, m As Long, Y As Long) As Boolean
     'Returns TRUE or FALSE if d, m and y combined are VALID values
     
     Fn_ValidateDaySpecificMonth = False
     
     Dim isLeapYear As Boolean
-    isLeapYear = y Mod 4 = 0 And (y Mod 100 <> 0 Or y Mod 400 = 0)
+    isLeapYear = Y Mod 4 = 0 And (Y Mod 100 <> 0 Or Y Mod 400 = 0)
     
     'Last day of each month (0 to 11)
     Dim mdpm As Variant
@@ -806,7 +806,7 @@ Function Fn_ValidateDaySpecificMonth(d As Long, m As Long, y As Long) As Boolean
     
     If m < 1 Or m > 12 Or _
        d > mdpm(m - 1) Or _
-       Abs(year(Date) - y) > 75 Then
+       Abs(year(Date) - Y) > 75 Then
             Exit Function
     Else
         Fn_ValidateDaySpecificMonth = True
@@ -1197,7 +1197,7 @@ Function Fn_Is_Date_Valide(d As String) As Boolean
 
 End Function
 
-Function Fn_Get_Windows_Username() As String 'Function to retrieve the Windows username using the API
+Function Fn_Get_Windows_Username() As String 'Function to retrieve the Windows username using an API
 
     Dim buffer As String * 255
     Dim size As Long: size = 255
@@ -1987,7 +1987,7 @@ Function EstBissextile(annee As Integer) As Boolean '2025-03-02 @ 10:21
     
 End Function
 
-Function ValiderDateDernierJourDuMois(y As Integer, m As Integer, d As Integer) As String '2025-03-02 @ 11:00
+Function ValiderDateDernierJourDuMois(Y As Integer, m As Integer, d As Integer) As String '2025-03-02 @ 11:00
 
     'Le mois est-il valide (max 12)
     If m > 12 Then
@@ -1996,13 +1996,13 @@ Function ValiderDateDernierJourDuMois(y As Integer, m As Integer, d As Integer) 
     End If
     'Quel est le dernier jour de ce mois ?
     Dim dernierJourDuMois As Integer
-    dernierJourDuMois = day(DateSerial(y, m + 1, 0))
+    dernierJourDuMois = day(DateSerial(Y, m + 1, 0))
     
     'Vérification additionnelle pour le mois de février (années bissextiles)
     Dim isLeapYear As Boolean
     isLeapYear = False
     If m = 2 Then
-        isLeapYear = EstBissextile(y)
+        isLeapYear = EstBissextile(Y)
         If isLeapYear Then
             dernierJourDuMois = 29
         End If
@@ -2014,13 +2014,13 @@ Function ValiderDateDernierJourDuMois(y As Integer, m As Integer, d As Integer) 
         message = "La combinaison jour (" & d & ") et mois (" & m & ") n'existe pas"
         titre = "Date invalide"
         If m = 2 Then
-            titre = titre & IIf(isLeapYear, "", " pour l'année " & y)
+            titre = titre & IIf(isLeapYear, "", " pour l'année " & Y)
         End If
         MsgBox message, vbExclamation, titre
         ValiderDateDernierJourDuMois = "" 'Si le jour n'est pas valide, on retourne une chaîne vide
         Exit Function
     Else
-        ValiderDateDernierJourDuMois = DateSerial(y, m, d)
+        ValiderDateDernierJourDuMois = DateSerial(Y, m, d)
     End If
     
 End Function

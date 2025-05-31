@@ -12514,3 +12514,18 @@
 2025-05-31 18:04:58.11 | Robert M. Vigneault | APP_v6.C.9.xlsb | modMenu:SauvegarderEtSortirApplication |  | 
 2025-05-31 18:04:59.57 | Robert M. Vigneault | APP_v6.C.9.xlsb | ----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) ----- |  | 
 
+2025-05-31 18:09:07.51 | Robert M. Vigneault | APP_v6.C.9.xlsb | ----- Début d'une nouvelle session (modAppli:DemarrageApplication) ----- |  | 
+2025-05-31 18:09:07.52 | Robert M. Vigneault | APP_v6.C.9.xlsb | modAppli:CreateUserActiveFile |  | 
+2025-05-31 18:09:07.52 | Robert M. Vigneault | APP_v6.C.9.xlsb | modAppli:CreateUserActiveFile |  | 0,0000 secondes
+
+2025-05-31 18:09:07.52 | Robert M. Vigneault | APP_v6.C.9.xlsb | modAppli:BackupMasterFile |  | 
+2025-05-31 18:09:07.89 | Robert M. Vigneault | APP_v6.C.9.xlsb | modAppli:BackupMasterFile |  | 0,3672 secondes
+
+2025-05-31 18:09:10.19 | Robert M. Vigneault | APP_v6.C.9.xlsb | modAppli:DemarrageApplication |  | 2,6797 secondes
+
+2025-05-31 18:10:09.28 | Robert M. Vigneault | APP_v6.C.9.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-05-31 18:10:09.29 | Robert M. Vigneault | APP_v6.C.9.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0117 secondes
+
+2025-05-31 18:10:28.23 | Robert M. Vigneault | APP_v6.C.9.xlsb | modMenu:SauvegarderEtSortirApplication |  | 
+2025-05-31 18:10:29.66 | Robert M. Vigneault | APP_v6.C.9.xlsb | ----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) ----- |  | 
+

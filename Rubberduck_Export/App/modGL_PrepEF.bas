@@ -20,13 +20,10 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
     Application.ScreenUpdating = False
     
     'Qui exécute ce programme ?
-    Dim userName As String
     Dim isDeveloppeur As Boolean
-    userName = Fn_Get_Windows_Username
-    If userName = "Robert M. Vigneault" Or userName = "robertmv" Then
+    If gUtilisateurWindows = "Robert M. Vigneault" Or gUtilisateurWindows = "robertmv" Then
         isDeveloppeur = True
     End If
-    userName = ""
     
     'Déterminer la date de cutoff pour l'an passé
     Dim cutOffAnPassé As Date

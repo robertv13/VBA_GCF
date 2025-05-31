@@ -22,14 +22,14 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
     ufSaisieHeures.txtClientID.value = Fn_Cell_From_BD_Client(ufSaisieHeures.txtClient.value, 1, 2)
         
     If Fn_TEC_Is_Data_Valid() = True Then
-        Dim y As Integer, m As Integer, d As Integer
+        Dim Y As Integer, m As Integer, d As Integer
         Dim avant As String
         On Error Resume Next
             avant = ufSaisieHeures.txtDate.value
-            y = year(ufSaisieHeures.txtDate.value)
+            Y = year(ufSaisieHeures.txtDate.value)
             m = month(ufSaisieHeures.txtDate.value)
             d = day(ufSaisieHeures.txtDate.value)
-            ufSaisieHeures.txtDate.value = Format$(DateSerial(y, m, d), "yyyy-mm-dd")
+            ufSaisieHeures.txtDate.value = Format$(DateSerial(Y, m, d), "yyyy-mm-dd")
         On Error GoTo 0
         
         Call TEC_Record_Add_Or_Update_To_DB(0)
@@ -789,7 +789,7 @@ End Sub
 
 Sub ActiverButtonsVraiOuFaux(where As String, a As Boolean, u As Boolean, _
                                   d As Boolean, c As Boolean)
-    Debug.Print "077# - " & where, a, u, d, c
+'    Debug.Print "077# - " & where, a, u, d, c
                                   
     With ufSaisieHeures
         .cmdAdd.Enabled = a

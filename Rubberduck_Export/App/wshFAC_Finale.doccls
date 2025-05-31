@@ -6,6 +6,8 @@ Private Sub Worksheet_Activate()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Finale:Worksheet_Activate", "", 0)
     
+    Call RafraichirActivite("Saisie de facture - Finale")
+    
     Application.ScreenUpdating = False
     
     'Set the zoom factor to 75% when this worksheet is activated

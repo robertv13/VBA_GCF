@@ -14,6 +14,8 @@ Private Sub Worksheet_Activate()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshENC_Saisie:Worksheet_Activate", "", 0)
     
+    Call RafraichirActivite("Début des encaissements")
+    
     Dim ws As Worksheet: Set ws = wshENC_Saisie
     
     Application.ScreenUpdating = False
@@ -87,6 +89,8 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
     If gPreviousCellAddress <> "" Then
         Range(gPreviousCellAddress).Interior.Color = xlNone
     End If
+    
+    Call RafraichirActivite("Saisie des encaissements")
     
     'Client has been selected
     If Not Intersect(target, Me.Range("F5")) Is Nothing Then

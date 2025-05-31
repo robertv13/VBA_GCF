@@ -10,6 +10,8 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_EJ:Worksheet_Activate", "", 0)
     
+    Call RafraichirActivite("Entrée de journal")
+    
     Application.ScreenUpdating = False
     Application.EnableEvents = False
     
@@ -84,6 +86,8 @@ End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal target As Range)
 
+    Call RafraichirActivite("Entrée de journal")
+    
     ActiveSheet.Unprotect
     
     If gPreviousCellAddress <> "" Then

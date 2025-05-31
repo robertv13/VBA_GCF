@@ -16,6 +16,7 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private oEventHandler As New clsSearchableDropdown '2023-03-21 @ 09:16
+'Private tracker As clsFormActivityTracker '2025-05-30 @ 12:49
 
 'Allows the calling code to set the data
 Public Property Let ListData(ByVal rg As Range)
@@ -23,6 +24,13 @@ Public Property Let ListData(ByVal rg As Range)
     oEventHandler.List = rg.value
 
 End Property
+
+Private Sub UserForm_Initialize() '2025-05-30 @ 13:26
+
+    Call ConnectFormControls(Me)
+    Call RafraichirActivite("Activité dans userForm '" & Me.Name & "'")
+    
+End Sub
 
 Sub UserForm_Activate() '2024-07-31 @ 07:57
 
@@ -48,21 +56,21 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
 
     Call modTEC_Saisie.ActiverButtonsVraiOuFaux("UserFormActivate", False, False, False, False)
 
-    'Default Professionnal - 2024-08-19 @ 07:59
-    Select Case Fn_Get_Windows_Username
-        Case "Guillaume", "GuillaumeCharron", "gchar", "Robert M. Vigneault", "Robertmv"
-            cmbProfessionnel.value = "GC"
-        Case "vgervais", "Vlad_Portable"
-            cmbProfessionnel.value = "VG"
-        Case "User"
-            cmbProfessionnel.value = "ML"
-        Case "Annie"
-            cmbProfessionnel.value = "AR"
-        Case "Oli_Portable"
-            cmbProfessionnel.value = "OB"
-        Case Else
-            cmbProfessionnel.value = ""
-    End Select
+'    'Default Professionnal - 2024-08-19 @ 07:59
+'    Select Case gUtilisateurWindows
+'        Case "Guillaume", "GuillaumeCharron", "gchar", "Robert M. Vigneault", "robertmv"
+'            cmbProfessionnel.value = "GC"
+'        Case "vgervais", "Vlad_Portable"
+'            cmbProfessionnel.value = "VG"
+'        Case "User"
+'            cmbProfessionnel.value = "ML"
+'        Case "Annie"
+'            cmbProfessionnel.value = "AR"
+'        Case "Oli_Portable"
+'            cmbProfessionnel.value = "OB"
+'        Case Else
+'            cmbProfessionnel.value = ""
+'    End Select
     
     ufSaisieHeures.txtDate.value = "" 'On vide la date pour forcer la saisie
     
@@ -135,55 +143,190 @@ Exit_Sub:
 
 End Sub
 
-Public Sub cmbProfessionnel_AfterUpdate()
+Private Sub cmbProfessionnel_Enter() '2025-05-31 @ 16:31
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmbProfessionnel_AfterUpdate", "", 0)
+    Dim ws As Worksheet
+    Dim plageInitiales As Range
+    Dim cell As Range, cellInit As Range
+    Dim listeInitiales As Collection
+    Dim utilisateur As String
+    Dim toutesInitiales As Boolean
 
-    'Restreindre l'accès au professionnel par défaut du code d'utilisateur
-    Select Case Fn_Get_Windows_Username
-        Case "Guillaume", "GuillaumeCharron", "gchar", "Robert M. Vigneault", "robertmv"
-            DoEvents
-        Case "vgervais", "Vlad_Portable"
-            If cmbProfessionnel.value <> "VG" Then
-                MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
-                    "Vous devez obligatoirement utiliser le code 'VG'", _
-                    vbInformation
-            End If
-            cmbProfessionnel.value = "VG"
-        Case "User"
-            If cmbProfessionnel.value <> "ML" Then
-                MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
-                        "Vous devez obligatoirement utiliser le code 'ML'", _
-                        vbInformation
-            End If
-            cmbProfessionnel.value = "ML"
-        Case "Annie"
-            If cmbProfessionnel.value <> "AR" Then
-                MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
-                    "Vous devez obligatoirement utiliser le code 'AR'", _
-                    vbInformation
-            End If
-            cmbProfessionnel.value = "AR"
-        Case "Oli_Portable"
-            If cmbProfessionnel.value <> "OB" Then
-                MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
-                    "Vous devez obligatoirement utiliser le code 'OB'", _
-                    vbInformation
-            End If
-            cmbProfessionnel.value = "OB"
-        Case Else
-            cmbProfessionnel.value = ""
-    End Select
+    Set ws = wsdADMIN
+    ' Plage de la table WindowsUser_Initials : colonnes D à F, lignes 63 à 78
+    Set plageInitiales = ws.Range("D63:D78")
+    
+    utilisateur = gUtilisateurWindows ' Variable globale utilisateur Windows
 
-    If ufSaisieHeures.cmbProfessionnel.value <> "" Then
-        ufSaisieHeures.txtProfID.value = Fn_GetID_From_Initials(ufSaisieHeures.cmbProfessionnel.value)
-        If ufSaisieHeures.txtDate.value <> "" Then '2024-09-05 @ 20:50
-            Call TEC_Get_All_TEC_AF
-            Call TEC_Refresh_ListBox_And_Add_Hours
+    Set listeInitiales = New Collection
+    toutesInitiales = False
+    
+    ' Chercher utilisateur dans la liste et récupérer initiales permises
+    For Each cell In plageInitiales
+        If Trim(cell.value) <> "" Then
+            If StrComp(cell.value, utilisateur, vbTextCompare) = 0 Then
+                If Trim(cell.offset(0, 2).value) <> "" Then
+                    'Initiales spécifiques autorisées pour cet utilisateur
+                    listeInitiales.Add Trim(cell.offset(0, 2).value)
+                Else
+                    'Pas de restriction, on doit autoriser toutes les initiales
+                    toutesInitiales = True
+                End If
+                Exit For ' Utilisateur trouvé, on peut sortir
+            End If
         End If
+    Next cell
+
+    ' Si toutes les initiales sont permises, on ajoute toutes celles listées en colonne F
+    If toutesInitiales Then
+        'Ajoute GC qui est la valeur par défut
+        listeInitiales.Add "GC", "GC"
+        For Each cellInit In plageInitiales.offset(, 2).Resize(, 1)
+            If Trim(cellInit.value) <> "" Then
+                On Error Resume Next 'Eviter doublons dans la collection
+                If Trim(cellInit.value) <> "Init. Permises" Then
+                    Debug.Print "XYZ - " & Trim(cellInit.value)
+                    listeInitiales.Add Trim(cellInit.value), CStr(Trim(cellInit.value))
+                End If
+                On Error GoTo 0
+            End If
+        Next cellInit
     End If
 
-    Call Log_Record("ufSaisieHeures:cmbProfessionnel_AfterUpdate", "", startTime)
+    ' Remplir le ComboBox
+    With Me.cmbProfessionnel
+        .Clear
+        Dim item As Variant
+        For Each item In listeInitiales
+            .AddItem item
+        Next item
+        ' Optionnel : sélection automatique de la première initiale
+        If .ListCount > 0 Then .ListIndex = 0
+    End With
+
+End Sub
+
+Private Sub cmbProfessionnel_AfterUpdate() '2025-05-31 @ 16:11
+
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmbProfessionnel_AfterUpdate", "", 0)
+
+    Dim initProfAutorises As String
+    
+    initProfAutorises = GetInitialesObligatoiresFromADMIN(gUtilisateurWindows)
+
+    Select Case initProfAutorises
+        Case "INVALID"
+            MsgBox "Votre code Windows n'est pas reconnu dans la liste d'administration.", vbExclamation
+            cmbProfessionnel.value = ""
+            Exit Sub
+        Case ""
+            'Aucune restriction sur les initiales à utiliser
+        Case Else
+            If cmbProfessionnel.value <> initProfAutorises Then
+                MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
+                       "Vous devez obligatoirement utiliser le code '" & initProfAutorises & "'", vbInformation
+            End If
+            cmbProfessionnel.value = initProfAutorises
+    End Select
+
+    With ufSaisieHeures
+        If .cmbProfessionnel.value <> "" Then
+            .txtProfID.value = Fn_GetID_From_Initials(.cmbProfessionnel.value)
+            If .txtDate.value <> "" Then
+                Call TEC_Get_All_TEC_AF
+                Call TEC_Refresh_ListBox_And_Add_Hours
+            End If
+        End If
+    End With
+    
+'CommentOut - 2025-05-31 @ 15:31
+'    Dim initProfPermises As String
+'    initProfPermises = GetInitialesAutorises(gUtilisateurWindows)
+'
+'    Dim initialesObligatoires As String
+'
+'    'Restreindre l'accès au professionnel par défaut du code d'utilisateur
+'    Select Case gUtilisateurWindows
+'        Case "Guillaume", "GuillaumeCharron", "gchar", "Robert M. Vigneault", "robertmv"
+'            'Accès à toutes les initiales de professionnel
+'            initialesObligatoires = ""
+'        Case "vgervais", "Vlad_Portable"
+'            initialesObligatoires = "VG"
+'        Case "User"
+'            initialesObligatoires = "ML"
+'        Case "Annie"
+'            initialesObligatoires = "AR"
+'        Case "Oli_Portable"
+'            initialesObligatoires = "OB"
+'        Case Else
+'            cmbProfessionnel.value = ""
+'            Exit Sub
+'    End Select
+'
+'    Select Case gUtilisateurWindows
+'        Case "Guillaume", "GuillaumeCharron", "gchar", "Robert M. Vigneault", "robertmv"
+'            DoEvents
+'        Case "vgervais", "Vlad_Portable"
+'            If cmbProfessionnel.value <> "VG" Then
+'                MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
+'                    "Vous devez obligatoirement utiliser le code 'VG'", _
+'                    vbInformation
+'            End If
+'            cmbProfessionnel.value = "VG"
+'        Case "User"
+'            If cmbProfessionnel.value <> "ML" Then
+'                MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
+'                        "Vous devez obligatoirement utiliser le code 'ML'", _
+'                        vbInformation
+'            End If
+'            cmbProfessionnel.value = "ML"
+'        Case "Annie"
+'            If cmbProfessionnel.value <> "AR" Then
+'                MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
+'                    "Vous devez obligatoirement utiliser le code 'AR'", _
+'                    vbInformation
+'            End If
+'            cmbProfessionnel.value = "AR"
+'        Case "Oli_Portable"
+'            If cmbProfessionnel.value <> "OB" Then
+'                MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
+'                    "Vous devez obligatoirement utiliser le code 'OB'", _
+'                    vbInformation
+'            End If
+'            cmbProfessionnel.value = "OB"
+'        Case Else
+'            cmbProfessionnel.value = ""
+'    End Select
+'
+'    'Vérifier si une restriction s'applique
+'    If initialesObligatoires <> "" Then
+'        If cmbProfessionnel.value <> initialesObligatoires Then
+'            MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
+'                   "Vous devez obligatoirement utiliser le code '" & initialesObligatoires & "'", vbInformation
+'        End If
+'        cmbProfessionnel.value = initialesObligatoires
+'    End If
+'
+'    ' Mettre à jour l'ID du professionnel et charger les heures
+'    With ufSaisieHeures
+'        If .cmbProfessionnel.value <> "" Then
+'            .txtProfID.value = Fn_GetID_From_Initials(.cmbProfessionnel.value)
+'            If .txtDate.value <> "" Then
+'                Call TEC_Get_All_TEC_AF
+'                Call TEC_Refresh_ListBox_And_Add_Hours
+'            End If
+'        End If
+'    End With
+'
+'    If ufSaisieHeures.cmbProfessionnel.value <> "" Then
+'        ufSaisieHeures.txtProfID.value = Fn_GetID_From_Initials(ufSaisieHeures.cmbProfessionnel.value)
+'        If ufSaisieHeures.txtDate.value <> "" Then '2024-09-05 @ 20:50
+'            Call TEC_Get_All_TEC_AF
+'            Call TEC_Refresh_ListBox_And_Add_Hours
+'        End If
+'    End If
+'
+'    Call Log_Record("ufSaisieHeures:cmbProfessionnel_AfterUpdate", "", startTime)
 
 End Sub
 
@@ -302,7 +445,7 @@ Private Sub txtActivite_AfterUpdate()
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtActivite_AfterUpdate", Me.txtActivite.value, 0)
     
     If Me.txtActivite.value <> savedActivite Then '2025-03-25 @ 13:05
-        Debug.Print "txtActivite_AfterUpdate : ", Me.txtActivite.value, " vs ", savedActivite, " - TECID=" & Me.txtTECID
+'        Debug.Print "txtActivite_AfterUpdate : ", Me.txtActivite.value, " vs ", savedActivite, " - TECID=" & Me.txtTECID
         If Me.txtTECID = "" Then
             Call modTEC_Saisie.ActiverButtonsVraiOuFaux("txtActivite_AfterUpdate", False, False, False, True)
         Else
@@ -394,7 +537,7 @@ Sub txtHeures_AfterUpdate()
     Me.txtHeures.value = Format$(strHeures, "#0.00")
     
     If CCur(Me.txtHeures.value) <> savedHeures Then '2025-03-25 @ 13:05
-        Debug.Print "txtHeures_AfterUpdate : ", Me.txtHeures.value, " vs ", savedHeures, " - TECID=" & Me.txtTECID
+'        Debug.Print "txtHeures_AfterUpdate : ", Me.txtHeures.value, " vs ", savedHeures, " - TECID=" & Me.txtTECID
         If Me.txtTECID = "" Then 'Création d'une nouvelle charge
             Call modTEC_Saisie.ActiverButtonsVraiOuFaux("txtHeures_AfterUpdate", True, False, False, True)
         Else 'Modification d'une charge existante

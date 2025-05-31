@@ -19,6 +19,10 @@ Private Sub UserForm_Initialize()
 
     Call modImport.ImporterGLTransactions
     
+    'Noter l'activité
+    Call ConnectFormControls(Me)
+    Call RafraichirActivite("Activité dans userForm '" & Me.Name & "'")
+    
     'Efface le contenu de la listBox
     Me.lsbComptes.Clear
     
@@ -395,7 +399,7 @@ End Sub
 
 Function CorrigerDate(txtDate As String) As String
 
-    Dim d As Integer, m As Integer, y As Integer
+    Dim d As Integer, m As Integer, Y As Integer
     Dim arr() As String
     Dim dt As Date
     Dim currentDate As Date
@@ -421,7 +425,7 @@ Function CorrigerDate(txtDate As String) As String
         'Si l'utilisateur entre un chiffre seul, c'est le jour du mois courant avec le mois et l'année courants
         d = CInt(txtDate)
         m = month(currentDate)
-        y = year(currentDate)
+        Y = year(currentDate)
         GoTo DerniereValidation
     End If
 
@@ -449,14 +453,14 @@ Function CorrigerDate(txtDate As String) As String
         'jj/mm/aaaa ou aaaa/mm/jj
         If Len(arr(0)) = 4 Then
             'Format aaaa/mm/jj
-            y = CInt(arr(0))
+            Y = CInt(arr(0))
             m = CInt(arr(1))
             d = CInt(arr(2))
         Else
             'Format jj/mm/aaaa
             d = CInt(arr(0))
             m = CInt(arr(1))
-            y = CInt(arr(2))
+            Y = CInt(arr(2))
         End If
         
         GoTo DerniereValidation
@@ -472,15 +476,15 @@ Function CorrigerDate(txtDate As String) As String
             'Format jj/mm
             d = CInt(arr(0))
             m = CInt(arr(1))
-            y = year(currentDate) 'L'année courante par défaut
+            Y = year(currentDate) 'L'année courante par défaut
             GoTo DerniereValidation
         End If
     End If
     
 DerniereValidation:
-    If ValiderDateDernierJourDuMois(y, m, d) <> "" Then
+    If ValiderDateDernierJourDuMois(Y, m, d) <> "" Then
         'Conversion en date (Toutes les validations sont terminées)
-        dt = DateSerial(y, m, d)
+        dt = DateSerial(Y, m, d)
         CorrigerDate = Format$(dt, "dd/mm/yyyy")
     Else
         CorrigerDate = ""

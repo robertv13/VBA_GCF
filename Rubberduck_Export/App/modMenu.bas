@@ -29,18 +29,15 @@ Sub menuFacturation()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:menuFacturation_Click", "", 0)
     
-    Dim userName As String
-    userName = Fn_Get_Windows_Username
-    
-    If userName = "Guillaume" Or _
-            userName = "GuillaumeCharron" Or _
-            userName = "gchar" Or _
-            userName = "Robert M. Vigneault" Or _
-            userName = "robertmv" Or _
-            userName = "User" Or _
-            userName = "vgervais" Or _
-            userName = "Vlad_Portable" Or _
-            userName = "Oli_Portable" Then
+    If gUtilisateurWindows = "Guillaume" Or _
+            gUtilisateurWindows = "GuillaumeCharron" Or _
+            gUtilisateurWindows = "gchar" Or _
+            gUtilisateurWindows = "Robert M. Vigneault" Or _
+            gUtilisateurWindows = "robertmv" Or _
+            gUtilisateurWindows = "User" Or _
+            gUtilisateurWindows = "vgervais" Or _
+            gUtilisateurWindows = "Vlad_Portable" Or _
+            gUtilisateurWindows = "Oli_Portable" Then
         wshMenuFAC.Visible = xlSheetVisible
         wshMenuFAC.Activate
         wshMenuFAC.Range("A1").Select
@@ -64,15 +61,12 @@ Sub menuComptabilité()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:menuComptabilité", "", 0)
     
-    Dim userName As String
-    userName = Fn_Get_Windows_Username
-    
-    If userName = "Guillaume" Or _
-            userName = "GuillaumeCharron" Or _
-            userName = "gchar" Or _
-            userName = "Robert M. Vigneault" Or _
-            userName = "robertmv" Or _
-            userName = "User" Then
+    If gUtilisateurWindows = "Guillaume" Or _
+            gUtilisateurWindows = "GuillaumeCharron" Or _
+            gUtilisateurWindows = "gchar" Or _
+            gUtilisateurWindows = "Robert M. Vigneault" Or _
+            gUtilisateurWindows = "robertmv" Or _
+            gUtilisateurWindows = "User" Then
         wshMenuGL.Visible = xlSheetVisible
         wshMenuGL.Activate
         wshMenuGL.Range("A1").Select
@@ -96,14 +90,11 @@ Sub Parametres()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:Parametres", "", 0)
     
-    Dim userName As String
-    userName = Fn_Get_Windows_Username
-    
-    If userName = "Guillaume" Or _
-            userName = "GuillaumeCharron" Or _
-            userName = "gchar" Or _
-            userName = "Robert M. Vigneault" Or _
-            userName = "robertmv" Then
+    If gUtilisateurWindows = "Guillaume" Or _
+            gUtilisateurWindows = "GuillaumeCharron" Or _
+            gUtilisateurWindows = "gchar" Or _
+            gUtilisateurWindows = "Robert M. Vigneault" Or _
+            gUtilisateurWindows = "robertmv" Then
         wsdADMIN.Visible = xlSheetVisible
         wsdADMIN.Select
     Else
@@ -134,40 +125,88 @@ Sub SauvegarderEtSortirApplication() '2024-08-30 @ 07:37
                         "l'application de gestion (sauvegarde automatique) ?", vbYesNo + vbQuestion, "Confirmation de sortie")
     
     If confirmation = vbYes Then
-        Application.EnableEvents = False
-        wsdADMIN.Range("B1").value = ""
-        wsdADMIN.Range("B2").value = ""
-        Application.EnableEvents = True
-        
-        Call Delete_User_Active_File
-
-        On Error Resume Next
-        Call Log_Record("----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) -----", "", 0)
-        Call Log_Record("", "", -1)
-        On Error GoTo 0
-        
-        Application.ScreenUpdating = True
-        
-       'On termine ici...
-        Dim wb As Workbook: Set wb = ActiveWorkbook
-        Application.EnableEvents = False
-        ActiveWorkbook.Close SaveChanges:=True
-        Application.EnableEvents = True
-        
-        If Fn_Get_Windows_Username = "Robert M. Vigneault" Or Fn_Get_Windows_Username = "robertmv" Then
-            Call StopperSauvegardeAutomatique
-            Call ExporterCodeVBA 'Sauvegarde AUTOMATIQUE du code VBA
-        End If
-        
-        DoEvents
-        
-        'On tente de quitter l'application EXCEL
-        Application.Application.Quit
-        
+        Call ApplicationFermetureNormale(gUtilisateurWindows)
     End If
     
-    'Libérer la mémoire
-    Set wb = Nothing
+'        Application.EnableEvents = False
+'        wsdADMIN.Range("B1").value = ""
+'        wsdADMIN.Range("B2").value = ""
+'        Application.EnableEvents = True
+'
+'        Call Delete_User_Active_File
+'
+'        On Error Resume Next
+'        Call Log_Record("----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) -----", "", 0)
+'        Call Log_Record("", "", -1)
+'        On Error GoTo 0
+'
+'        Application.ScreenUpdating = True
+'
+'       'On termine ici...
+'        Dim wb As Workbook: Set wb = ActiveWorkbook
+'        Application.EnableEvents = False
+'        ActiveWorkbook.Close SaveChanges:=True
+'        Application.EnableEvents = True
+'
+'        If gUtilisateurWindows = "Robert M. Vigneault" Or gUtilisateurWindows = "robertmv" Then
+'            Call StopperSauvegardeAutomatique
+'            Call ExporterCodeVBA 'Sauvegarde AUTOMATIQUE du code VBA
+'        End If
+'
+'        DoEvents
+'
+'        'On tente de quitter l'application EXCEL
+'        Application.Application.Quit
+'
+'    End If
+'
+'    'Libérer la mémoire
+'    Set wb = Nothing
+    
+End Sub
+
+Sub ApplicationFermetureNormale(ByVal userName As String) 'Nouvelle procédure - 2025-05-30 @ 11:07
+
+    On Error GoTo ExitPoint
+    
+    Application.EnableEvents = False
+    Application.ScreenUpdating = False
+    
+    Application.StatusBar = False
+    
+    Dim ws As Worksheet
+    Set ws = wsdADMIN
+    With ws
+        .Range("B1").value = ""
+        .Range("B2").value = ""
+    End With
+    
+    'Effacer fichier utilisateur actif + Fermeture de la journalisation
+    Call Delete_User_Active_File(gUtilisateurWindows)
+    Call Log_Record("----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) -----", "", 0)
+    Call Log_Record("", "", -1)
+
+    'Fermer la vérification d'inactivité
+    If gProchaineVerification > 0 Then
+        On Error Resume Next
+        Application.OnTime gProchaineVerification, "VerifierInactivite", , False
+        On Error GoTo 0
+    End If
+
+    'Fermer la sauvegarde automtique du code VBA (seul le développeur déclenche la sauvegarde automtique)
+    If userName = "Robert M. Vigneault" Or userName = "robertmv" Then
+        Call StopperSauvegardeAutomatique
+        Call ExporterCodeVBA
+    End If
+    
+    'Fermeture du classeur de l'application uniquement
+    ThisWorkbook.Close SaveChanges:=True
+    
+ExitPoint:
+    Application.EnableEvents = True
+    Application.ScreenUpdating = True
+    Set ws = Nothing
+    On Error GoTo 0
     
 End Sub
 
@@ -177,13 +216,10 @@ Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:Hide_All_Worksheets_Except_Menu", "", 0)
     
-    Dim userName As String
-    userName = Fn_Get_Windows_Username
-    
     Dim ws As Worksheet
     For Each ws In ThisWorkbook.Worksheets
         If ws.CodeName <> "wshMenu" Then
-            If userName <> "Robert M. Vigneault" Or InStr(ws.CodeName, "wshzDoc") = 0 Then
+            If gUtilisateurWindows <> "Robert M. Vigneault" Or InStr(ws.CodeName, "wshzDoc") = 0 Then
                 ws.Visible = xlSheetHidden
             End If
         End If
@@ -196,9 +232,9 @@ Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
     
 End Sub
 
-Sub HideDevShapesBasedOnUsername(userName As String)
+Sub HideDevShapesBasedOnUsername(ByVal userName As String)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:HideDevShapesBasedOnUsername", "", 0)
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:HideDevShapesBasedOnUsername", "", 0)
     
     'Set the worksheet where the shapes are located
     Dim ws As Worksheet: Set ws = wshMenu
@@ -233,16 +269,13 @@ Sub HideDevShapesBasedOnUsername(userName As String)
     Set shp = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modMenu:HideDevShapesBasedOnUsername", "", startTime)
+'    Call Log_Record("modMenu:HideDevShapesBasedOnUsername", "", startTime)
 
 End Sub
 
-Sub Delete_User_Active_File()
+Sub Delete_User_Active_File(ByVal userName As String)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:Delete_User_Active_File", "", 0)
-    
-    Dim userName As String
-    userName = Fn_Get_Windows_Username
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:Delete_User_Active_File", "", 0)
     
     Dim traceFilePath As String
     traceFilePath = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
@@ -251,13 +284,13 @@ Sub Delete_User_Active_File()
         Kill traceFilePath
     End If
 
-    Call Log_Record("modMenu:Delete_User_Active_File", "", startTime)
+'    Call Log_Record("modMenu:Delete_User_Active_File", userName, startTime)
 
 End Sub
 
 Sub shpImporterCorrigerMASTER_Click()
 
-    If Not Fn_Get_Windows_Username = "Robert M. Vigneault" Then
+    If gUtilisateurWindows <> "Robert M. Vigneault" And gUtilisateurWindows <> "robertmv" Then
         Exit Sub
     End If
     
@@ -265,7 +298,7 @@ Sub shpImporterCorrigerMASTER_Click()
     Call CreerRepertoireEtImporterFichiers
     
     'Ajuste les tableaux (tables) de toutes les feuilles de GCF_BD_MASTER.xlsx
-    Call AjusterTableauxDansMaster
+    Call AjusterEpurerTablesDeMaster
 
 End Sub
 

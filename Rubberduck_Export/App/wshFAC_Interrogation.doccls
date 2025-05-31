@@ -10,6 +10,8 @@ Private Sub Worksheet_Activate()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Interrogation:Worksheet_Activate", "", 0)
     
+    Call RafraichirActivite("Interrogation de facture")
+    
     Application.ScreenUpdating = False
     Application.EnableEvents = False
     
@@ -78,6 +80,8 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
         Range(gPreviousCellAddress).Interior.Color = xlNone
     End If
 
+    Call RafraichirActivite("Interrogation de facture")
+    
     Set celluleSélectionnée = target
     
     'Client has been selected

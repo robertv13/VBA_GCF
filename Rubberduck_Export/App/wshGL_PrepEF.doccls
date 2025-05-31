@@ -6,6 +6,8 @@ Private Sub Worksheet_Activate()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_PrepEF:Worksheet_Activate", "", 0)
 
+    Call RafraichirActivite("États financiers")
+    
     Dim ws As Worksheet: Set ws = wshGL_PrepEF
     
     ws.Unprotect
@@ -57,6 +59,8 @@ End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal target As Range)
 
+    Call RafraichirActivite("États financiers")
+    
     If gPreviousCellAddress <> "" Then
         Range(gPreviousCellAddress).Interior.Color = xlNone
     End If

@@ -10,6 +10,8 @@ Private Sub Worksheet_Activate()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshDEB_Saisie:Worksheet_Activate", "", 0)
     
+    Call RafraichirActivite("Liste Agée des Comptes Clients")
+    
     Application.ScreenUpdating = False
     Application.EnableEvents = False
     Application.Calculation = xlCalculationAutomatic
@@ -82,6 +84,8 @@ End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal target As Range)
 
+    Call RafraichirActivite("Liste Agée des Comptes Clients")
+    
     'Remove the background color of the previous Cell
     If gPreviousCellAddress <> "" Then
         Range(gPreviousCellAddress).Interior.Color = xlNone

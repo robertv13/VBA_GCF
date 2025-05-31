@@ -6,6 +6,8 @@ Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshCAR_Liste_Agée:Worksheet_Activate", "", 0)
     
+    Call RafraichirActivite("Liste Agée des Comptes Clients")
+
     Application.ScreenUpdating = False
     Application.EnableEvents = False
     
@@ -103,6 +105,8 @@ End Sub
 Private Sub Worksheet_Change(ByVal target As Range)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshCAR_Liste_Agée:Worksheet_Change", "", 0)
+    
+    Call RafraichirActivite("Liste Agée des Comptes Clients")
     
     Dim fullDate As Variant
     

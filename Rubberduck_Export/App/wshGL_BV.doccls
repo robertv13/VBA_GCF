@@ -6,8 +6,7 @@ Private Sub Worksheet_Activate()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_BV:Worksheet_Activate", "", 0)
 
-'    Application.ScreenUpdating = False
-'    Application.EnableEvents = False
+    Call RafraichirActivite("Balance de vérification")
     
     DoEvents
     
@@ -32,7 +31,7 @@ Private Sub Worksheet_Activate()
     End With
     
     Dim cbx As Shape
-    For Each cbx In wshGL_BV.Shapes
+    For Each cbx In ws.Shapes
         If InStr(cbx.Name, "GL_Trans") Or cbx.Name = "shpRetour" Then
             cbx.Delete
         End If
@@ -56,6 +55,8 @@ End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal target As Range)
 
+    Call RafraichirActivite("Balance de vérification")
+    
     If Not dynamicShape Is Nothing Then
         On Error Resume Next
         If dynamicShape.Visible = True Then
@@ -107,7 +108,7 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
             wshGL_BV.Range("B10").value = target.row
             Application.EnableEvents = True
             Call GL_Get_JE_Detail_Trans_AF(noJE)
-            Call wshGL_BV_Display_JE_Trans_With_Shape
+            Call GL_BV_Display_JE_Trans_With_Shape
     Else
         Application.EnableEvents = False
         wshGL_BV.Range("B10").value = 0
