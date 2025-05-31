@@ -1,9 +1,0 @@
-﻿Option Explicit
-
-Private Sub Workbook_BeforeClose(Cancel As Boolean)
-    
-    'La sortie du classeur ne peut se faire par le X rouge à droite en haut de EXCEL
-    Cancel = True
-    ufExitDisable.show
-
-End Sub
