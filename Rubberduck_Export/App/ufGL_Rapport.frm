@@ -506,7 +506,7 @@ Function EstDateCaractereValide(ByVal txt As String) As Boolean '2025-03-03 @ 09
     regex.Global = False
 
     'Teste si la chaîne correspond au modèle
-    EstDateCaractereValide = regex.Test(txt)
+    EstDateCaractereValide = regex.test(txt)
 
     'Libérer la mémoire
     Set regex = Nothing
@@ -524,7 +524,7 @@ Function EstSeulementChiffres(ByVal txt As String) As Boolean '2025-03-03 @ 09:4
     regex.Global = False
 
     'Teste si la chaîne correspond au modèle
-    EstSeulementChiffres = regex.Test(txt)
+    EstSeulementChiffres = regex.test(txt)
 
     'Libérer la mémoire
     Set regex = Nothing

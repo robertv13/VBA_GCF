@@ -221,10 +221,10 @@ Sub MAJ_Statut_Facture_Entête_BD_MASTER(invoice As String) '2025-03-12 @ 12:40
               ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
     Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
-    Dim SQL As String
+    Dim sql As String
     'Open the recordset for the specified invoice
-    SQL = "SELECT * FROM [" & destinationTab & "] WHERE InvNo = '" & invoice & "'"
-    rs.Open SQL, conn, 2, 3
+    sql = "SELECT * FROM [" & destinationTab & "] WHERE InvNo = '" & invoice & "'"
+    rs.Open sql, conn, 2, 3
     If Not rs.EOF Then
         'Update AC_ouC with 'C'
         rs.Fields(fFacEACouC - 1).value = "C"

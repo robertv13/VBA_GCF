@@ -1,9 +1,6 @@
 Attribute VB_Name = "modFunctions"
 Option Explicit
 
-'API pour code d'utilisateur
-Declare PtrSafe Function GetUserName Lib "advapi32.dll" Alias "GetUserNameA" (ByVal lpBuffer As String, nSize As Long) As Long
-
 Function Fn_GetID_From_Initials(i As String)
 
     Dim cell As Range
@@ -775,7 +772,7 @@ Function Fn_ValiderCourriel(ByVal adresses As String) As Boolean '2024-10-26 @ 1
         'Passer si l'adresse est vide (Aucune adresse est aussi permis)
         If adresse <> "" Then
             'Si l'adresse ne correspond pas au pattern, renvoyer Faux
-            If Not regex.Test(adresse) Then
+            If Not regex.test(adresse) Then
                 Fn_ValiderCourriel = False
                 Exit Function
             End If
@@ -1197,18 +1194,29 @@ Function Fn_Is_Date_Valide(d As String) As Boolean
 
 End Function
 
-Function Fn_Get_Windows_Username() As String 'Function to retrieve the Windows username using an API
+Function Fn_Get_Windows_Username() As String '2025-06-01 @ 05:36
 
     Dim buffer As String * 255
     Dim size As Long: size = 255
-    
+
     '@Ignore UnassignedVariableUsage
     If GetUserName(buffer, size) Then
-        '@Ignore UnassignedVariableUsage
         Fn_Get_Windows_Username = Left$(buffer, size - 1)
     Else
+        Debug.Print "Fn_Get_Windows_Username : Incapable de déterminer l'utilisateur Windows !"
         Fn_Get_Windows_Username = "Unknown"
     End If
+    
+End Function
+
+Function GetNomUtilisateur() As String '2025-06-01 @ 05:48
+
+    If Len(gUtilisateurWindows) = 0 Then
+        gUtilisateurWindows = Fn_Get_Windows_Username()
+        Debug.Print "GetNomUtilisateur - Initialisation de GetNomUtilisateur() en cours..."
+    End If
+    
+    GetNomUtilisateur = gUtilisateurWindows
     
 End Function
 
@@ -2085,6 +2093,37 @@ Function PremierJourAnneeFiscal(maxDate) As Date
     End If
 
     PremierJourAnneeFiscal = dt
+    
+End Function
+
+Function TableauContientDesDonnees(lo As ListObject) As Boolean '2025-06-01 @ 06:41
+
+    If lo.DataBodyRange Is Nothing Then
+        TableauContientDesDonnees = False
+    Else
+        TableauContientDesDonnees = (Application.WorksheetFunction.CountA(lo.DataBodyRange) > 0)
+    End If
+    
+End Function
+
+Public Function TransposeToRowColumn(ByVal arr As Variant) As Variant '2025-06-01 @ 11:15
+
+    Dim r As Long, c As Long
+    Dim result As Variant
+
+    If Not IsArray(arr) Then
+        TransposeToRowColumn = arr
+        Exit Function
+    End If
+
+    ReDim result(0 To UBound(arr, 2), 0 To UBound(arr, 1))
+    For r = 0 To UBound(arr, 2)
+        For c = 0 To UBound(arr, 1)
+            result(r, c) = arr(c, r)
+        Next c
+    Next r
+
+    TransposeToRowColumn = result
     
 End Function
 

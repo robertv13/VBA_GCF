@@ -57,7 +57,7 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
     Call modTEC_Saisie.ActiverButtonsVraiOuFaux("UserFormActivate", False, False, False, False)
 
 '    'Default Professionnal - 2024-08-19 @ 07:59
-'    Select Case gUtilisateurWindows
+'    Select Case GetNomUtilisateur()
 '        Case "Guillaume", "GuillaumeCharron", "gchar", "Robert M. Vigneault", "robertmv"
 '            cmbProfessionnel.value = "GC"
 '        Case "vgervais", "Vlad_Portable"
@@ -156,7 +156,7 @@ Private Sub cmbProfessionnel_Enter() '2025-05-31 @ 16:31
     ' Plage de la table WindowsUser_Initials : colonnes D à F, lignes 63 à 78
     Set plageInitiales = ws.Range("D63:D78")
     
-    utilisateur = gUtilisateurWindows ' Variable globale utilisateur Windows
+    utilisateur = GetNomUtilisateur() ' Variable globale utilisateur Windows
 
     Set listeInitiales = New Collection
     toutesInitiales = False
@@ -185,7 +185,7 @@ Private Sub cmbProfessionnel_Enter() '2025-05-31 @ 16:31
             If Trim(cellInit.value) <> "" Then
                 On Error Resume Next 'Eviter doublons dans la collection
                 If Trim(cellInit.value) <> "Init. Permises" Then
-                    Debug.Print "XYZ - " & Trim(cellInit.value)
+'                    Debug.Print "XYZ - " & Trim(cellInit.value)
                     listeInitiales.Add Trim(cellInit.value), CStr(Trim(cellInit.value))
                 End If
                 On Error GoTo 0
@@ -212,7 +212,7 @@ Private Sub cmbProfessionnel_AfterUpdate() '2025-05-31 @ 16:11
 
     Dim initProfAutorises As String
     
-    initProfAutorises = GetInitialesObligatoiresFromADMIN(gUtilisateurWindows)
+    initProfAutorises = GetInitialesObligatoiresFromADMIN(GetNomUtilisateur())
 
     Select Case initProfAutorises
         Case "INVALID"
@@ -241,12 +241,12 @@ Private Sub cmbProfessionnel_AfterUpdate() '2025-05-31 @ 16:11
     
 'CommentOut - 2025-05-31 @ 15:31
 '    Dim initProfPermises As String
-'    initProfPermises = GetInitialesAutorises(gUtilisateurWindows)
+'    initProfPermises = GetInitialesAutorises(GetNomUtilisateur())
 '
 '    Dim initialesObligatoires As String
 '
 '    'Restreindre l'accès au professionnel par défaut du code d'utilisateur
-'    Select Case gUtilisateurWindows
+'    Select Case GetNomUtilisateur()
 '        Case "Guillaume", "GuillaumeCharron", "gchar", "Robert M. Vigneault", "robertmv"
 '            'Accès à toutes les initiales de professionnel
 '            initialesObligatoires = ""
@@ -263,7 +263,7 @@ Private Sub cmbProfessionnel_AfterUpdate() '2025-05-31 @ 16:11
 '            Exit Sub
 '    End Select
 '
-'    Select Case gUtilisateurWindows
+'    Select Case GetNomUtilisateur()
 '        Case "Guillaume", "GuillaumeCharron", "gchar", "Robert M. Vigneault", "robertmv"
 '            DoEvents
 '        Case "vgervais", "Vlad_Portable"

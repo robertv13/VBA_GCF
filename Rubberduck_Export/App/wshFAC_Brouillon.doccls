@@ -47,7 +47,7 @@ Private Sub Worksheet_Activate()
     
     Application.EnableEvents = False
     
-    Application.Goto Reference:=Me.Cells(1, 3), Scroll:=True
+    Application.GoTo Reference:=Me.Cells(1, 3), Scroll:=True
     
     Me.Range("O3").value = Format$(Date, wsdADMIN.Range("B1").value)
     Me.Range("B27").value = False '2024-09-03 @ 06:33
@@ -61,10 +61,10 @@ Private Sub Worksheet_Activate()
     
     Call FAC_Brouillon_New_Invoice
     
+    Application.EnableEvents = True
+    
     'Libérer la mémoire
     Set ws = Nothing
-    
-    Application.EnableEvents = True
     
     Call Log_Record("wshFAC_Brouillon:Worksheet_Activate", "", startTime)
 
@@ -184,7 +184,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
             Application.EnableEvents = False
             target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(target.Address)
+            Application.GoTo Range(target.Address)
         End If
        
         'Future date ?
@@ -193,7 +193,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
                 Application.EnableEvents = False
                 target.ClearContents
                 Application.EnableEvents = True
-                Application.Goto Range(target.Address)
+                Application.GoTo Range(target.Address)
             End If
         End If
 

@@ -101,7 +101,8 @@ Sub ImportGeneriqueDuMaster(sourceWb As String, ws As Worksheet, onglet As Strin
         targetCell.CopyFromRecordset recSet
     End If
     
-    tbl.tableStyle = "TableStyleMedium2"
+'    tbl.tableStyle = "TableStyleMedium2"
+    If tbl.ShowTableStyleRowStripes = False Then tbl.ShowTableStyleRowStripes = True
     
     Dim rng As Range: Set rng = ws.Range("A1").CurrentRegion
     Call AppliquerFormatColonnesParTable(ws, rng, tbl.HeaderRowRange.row)

@@ -630,7 +630,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Up
         ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
     Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
-    Dim r As Long, tecID As Long, SQL As String
+    Dim r As Long, tecID As Long, sql As String
     For r = firstRow To lastRow
         If wsdTEC_Local.Range("BB" & r).value = "VRAI" Or _
             wshFAC_Brouillon.Range("C" & r + 4) <> True Then
@@ -639,8 +639,8 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Up
         tecID = wsdTEC_Local.Range("AQ" & r).value
         
         'Open the recordset for the specified ID
-        SQL = "SELECT * FROM [" & destinationTab & "] WHERE TECID=" & tecID
-        rs.Open SQL, conn, 2, 3
+        sql = "SELECT * FROM [" & destinationTab & "] WHERE TECID=" & tecID
+        rs.Open sql, conn, 2, 3
         If Not rs.EOF Then
             'Update EstFacturee, DateFacturee & NoFacture
             rs.Fields(fTECEstFacturee - 1).value = "VRAI"
@@ -943,7 +943,7 @@ Sub FAC_Finale_Preview_PDF() '2024-03-02 @ 16:18
     
     'Imprimante PDF à utiliser
     Dim imprimantePDF As String
-    If gUtilisateurWindows = "Robert M. Vigneault" Or gUtilisateurWindows = "robertmv" Then
+    If GetNomUtilisateur() = "Robert M. Vigneault" Or GetNomUtilisateur() = "robertmv" Then
         imprimantePDF = "Adobe PDF"
     Else
         imprimantePDF = "Microsoft Print to PDF"
@@ -1125,7 +1125,7 @@ End Function
 Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo As String, invDate As String)
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Copie_Vers_Excel", _
-        clientID & ", " & clientName & ", " & invNo & ", " & invDate, 0)
+        clientID & " - " & clientName & " - " & invNo & " - " & invDate, 0)
     
     Dim clientNamePurged As String
     clientNamePurged = clientName
@@ -1152,7 +1152,7 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     
     'Ouvrir un nouveau Workbook (ou choisir un workbook existant)
     On Error Resume Next
-    Dim strCible As String
+    Dim strCible As Variant
     strCible = Application.GetOpenFilename("Excel Files (*.xlsx), *.xlsx") 'Sélectionner un classeur cible
     On Error GoTo 0
     
@@ -1316,26 +1316,37 @@ Sub CopierFormeEnteteEnTouteSécurité(wsSource As Worksheet, wsCible As Worksheet
     On Error GoTo 0
 
     If Not forme Is Nothing Then
+        'Mémoriser la taille et la position exacte de la forme source
+        Dim topPos As Double, leftPos As Double, heightVal As Double, widthVal As Double
+        topPos = forme.Top
+        leftPos = forme.Left
+        heightVal = forme.Height
+        widthVal = forme.Width
+        
         forme.Copy
         DoEvents
         Application.Wait Now + TimeValue("0:00:01")
         
-        ' Coller en tant qu'image (plus stable)
+        'Coller en tant qu'image (Enhanced Metafile pour plus de compatibilité)
         wsCible.PasteSpecial Format:="Picture (Enhanced Metafile)"
         DoEvents
 
-        ' Récupérer la dernière forme collée
+        'Récupérer la dernière forme collée
         Set newForme = wsCible.Shapes(wsCible.Shapes.count)
+        
+        'Réappliquer taille et position exactes
         With newForme
-            .Top = forme.Top
-            .Left = forme.Left
-            .Height = 250 ' Ajustez selon vos besoins
-        End With
+            .Top = topPos
+            .Left = leftPos
+            .Height = heightVal
+            .Width = widthVal
+         End With
 
         Application.CutCopyMode = False
     Else
         Debug.Print "Forme 'GCF_Entête' introuvable sur la feuille source."
     End If
+    
 End Sub
 
 Sub FAC_Finale_Creation_Courriel(noFacture As String, clientID As String) '2024-10-13 @ 11:33

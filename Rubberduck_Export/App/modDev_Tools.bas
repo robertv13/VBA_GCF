@@ -900,7 +900,7 @@ Sub AjusterEpurerTablesDeMaster() '2024-12-07 @ 06:47
     cheminClasseur = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx"
 
 'CommentOut - 2025-05-30 @ 07:29
-'    If gUtilisateurWindows <> "Robert M. Vigneault" Then
+'    If GetNomUtilisateur() <> "Robert M. Vigneault" Then
 '        Exit Sub
 '    End If
 '
@@ -1724,9 +1724,9 @@ End Sub
 
 Function VérifierAccesVBAAutorise() As Boolean
 
-    Dim Test As Object
+    Dim test As Object
     On Error Resume Next
-    Set Test = ThisWorkbook.VBProject.VBComponents
+    Set test = ThisWorkbook.VBProject.VBComponents
     VérifierAccesVBAAutorise = (Err.Number = 0)
     On Error GoTo 0
     

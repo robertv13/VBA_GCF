@@ -131,7 +131,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
             Application.EnableEvents = False
             target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(target.Address)
+            Application.GoTo Range(target.Address)
         End If
        
         'Future date ?
@@ -140,7 +140,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
                 Application.EnableEvents = False
                 target.ClearContents
                 Application.EnableEvents = True
-                Application.Goto Range(target.Address)
+                Application.GoTo Range(target.Address)
             End If
         End If
     End If

@@ -88,16 +88,26 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         DoEvents
 
         'Do we have pending requests to invoice ?
-        Dim lastUsedRow As Long, liveOne As Long
-        lastUsedRow = wsdFAC_Projets_Entête.Cells(wsdFAC_Projets_Entête.Rows.count, 1).End(xlUp).row
-        If lastUsedRow > 1 Then
-            Dim i As Long
-            For i = 2 To lastUsedRow
-                If UCase$(wsdFAC_Projets_Entête.Range("Z" & i).value) = "FAUX" Or _
-                    wsdFAC_Projets_Entête.Range("Z" & i).value = 0 Then
+        Dim lo As ListObject '2025-06-01 @ 06:07
+        Set lo = wsdFAC_Projets_Entête.ListObjects("l_tbl_FAC_Projets_Entête")
+        
+        Dim liveOne As Long
+        Dim i As Long
+        
+        If TableauContientDesDonnees(lo) Then
+            If Application.WorksheetFunction.CountA(lo.DataBodyRange) > 0 Then
+                Dim nomColonne As ListColumn
+                Set nomColonne = lo.ListColumns("estDetruite")
+            
+                For i = 1 To lo.ListRows.count
+                    Dim val As Variant
+                    val = nomColonne.DataBodyRange.Cells(i, 1).value
+            
+                    If UCase$(val) = "FAUX" Or val = 0 Then
                         liveOne = liveOne + 1
-                End If
-            Next i
+                    End If
+                Next i
+            End If
         End If
         
         'Bring the visible area to the top
@@ -112,6 +122,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
             Application.EnableEvents = False
             projetID = CLng(wshFAC_Brouillon.Range("B52").value)
             'Obtenir l'entête pour ce projet de facture
+            Dim lastUsedRow As Long
             lastUsedRow = wsdFAC_Projets_Entête.Cells(wsdFAC_Projets_Entête.Rows.count, 1).End(xlUp).row
             Dim rngToSearch As Range: Set rngToSearch = wsdFAC_Projets_Entête.Range("A1:A" & lastUsedRow)
             Dim result As Variant
@@ -1285,7 +1296,7 @@ Sub Load_Invoice_Template(t As String)
         facRow = facRow + 2
     Next i
         
-    Application.Goto wshFAC_Brouillon.Range("L" & facRow)
+    Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
 

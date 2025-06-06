@@ -29,15 +29,15 @@ Sub menuFacturation()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:menuFacturation_Click", "", 0)
     
-    If gUtilisateurWindows = "Guillaume" Or _
-            gUtilisateurWindows = "GuillaumeCharron" Or _
-            gUtilisateurWindows = "gchar" Or _
-            gUtilisateurWindows = "Robert M. Vigneault" Or _
-            gUtilisateurWindows = "robertmv" Or _
-            gUtilisateurWindows = "User" Or _
-            gUtilisateurWindows = "vgervais" Or _
-            gUtilisateurWindows = "Vlad_Portable" Or _
-            gUtilisateurWindows = "Oli_Portable" Then
+    If GetNomUtilisateur() = "Guillaume" Or _
+            GetNomUtilisateur() = "GuillaumeCharron" Or _
+            GetNomUtilisateur() = "gchar" Or _
+            GetNomUtilisateur() = "Robert M. Vigneault" Or _
+            GetNomUtilisateur() = "robertmv" Or _
+            GetNomUtilisateur() = "User" Or _
+            GetNomUtilisateur() = "vgervais" Or _
+            GetNomUtilisateur() = "Vlad_Portable" Or _
+            GetNomUtilisateur() = "Oli_Portable" Then
         wshMenuFAC.Visible = xlSheetVisible
         wshMenuFAC.Activate
         wshMenuFAC.Range("A1").Select
@@ -61,12 +61,12 @@ Sub menuComptabilité()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:menuComptabilité", "", 0)
     
-    If gUtilisateurWindows = "Guillaume" Or _
-            gUtilisateurWindows = "GuillaumeCharron" Or _
-            gUtilisateurWindows = "gchar" Or _
-            gUtilisateurWindows = "Robert M. Vigneault" Or _
-            gUtilisateurWindows = "robertmv" Or _
-            gUtilisateurWindows = "User" Then
+    If GetNomUtilisateur() = "Guillaume" Or _
+            GetNomUtilisateur() = "GuillaumeCharron" Or _
+            GetNomUtilisateur() = "gchar" Or _
+            GetNomUtilisateur() = "Robert M. Vigneault" Or _
+            GetNomUtilisateur() = "robertmv" Or _
+            GetNomUtilisateur() = "User" Then
         wshMenuGL.Visible = xlSheetVisible
         wshMenuGL.Activate
         wshMenuGL.Range("A1").Select
@@ -90,11 +90,11 @@ Sub Parametres()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:Parametres", "", 0)
     
-    If gUtilisateurWindows = "Guillaume" Or _
-            gUtilisateurWindows = "GuillaumeCharron" Or _
-            gUtilisateurWindows = "gchar" Or _
-            gUtilisateurWindows = "Robert M. Vigneault" Or _
-            gUtilisateurWindows = "robertmv" Then
+    If GetNomUtilisateur() = "Guillaume" Or _
+            GetNomUtilisateur() = "GuillaumeCharron" Or _
+            GetNomUtilisateur() = "gchar" Or _
+            GetNomUtilisateur() = "Robert M. Vigneault" Or _
+            GetNomUtilisateur() = "robertmv" Then
         wsdADMIN.Visible = xlSheetVisible
         wsdADMIN.Select
     Else
@@ -125,7 +125,7 @@ Sub SauvegarderEtSortirApplication() '2024-08-30 @ 07:37
                         "l'application de gestion (sauvegarde automatique) ?", vbYesNo + vbQuestion, "Confirmation de sortie")
     
     If confirmation = vbYes Then
-        Call ApplicationFermetureNormale(gUtilisateurWindows)
+        Call ApplicationFermetureNormale(GetNomUtilisateur())
     End If
     
 '        Application.EnableEvents = False
@@ -148,7 +148,7 @@ Sub SauvegarderEtSortirApplication() '2024-08-30 @ 07:37
 '        ActiveWorkbook.Close SaveChanges:=True
 '        Application.EnableEvents = True
 '
-'        If gUtilisateurWindows = "Robert M. Vigneault" Or gUtilisateurWindows = "robertmv" Then
+'        If GetNomUtilisateur() = "Robert M. Vigneault" Or GetNomUtilisateur() = "robertmv" Then
 '            Call StopperSauvegardeAutomatique
 '            Call ExporterCodeVBA 'Sauvegarde AUTOMATIQUE du code VBA
 '        End If
@@ -182,7 +182,7 @@ Sub ApplicationFermetureNormale(ByVal userName As String) 'Nouvelle procédure - 
     End With
     
     'Effacer fichier utilisateur actif + Fermeture de la journalisation
-    Call Delete_User_Active_File(gUtilisateurWindows)
+    Call Delete_User_Active_File(GetNomUtilisateur())
     Call Log_Record("----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) -----", "", 0)
     Call Log_Record("", "", -1)
 
@@ -219,7 +219,7 @@ Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
     Dim ws As Worksheet
     For Each ws In ThisWorkbook.Worksheets
         If ws.CodeName <> "wshMenu" Then
-            If gUtilisateurWindows <> "Robert M. Vigneault" Or InStr(ws.CodeName, "wshzDoc") = 0 Then
+            If GetNomUtilisateur() <> "Robert M. Vigneault" Or InStr(ws.CodeName, "wshzDoc") = 0 Then
                 ws.Visible = xlSheetHidden
             End If
         End If
@@ -290,7 +290,7 @@ End Sub
 
 Sub shpImporterCorrigerMASTER_Click()
 
-    If gUtilisateurWindows <> "Robert M. Vigneault" And gUtilisateurWindows <> "robertmv" Then
+    If GetNomUtilisateur() <> "Robert M. Vigneault" And GetNomUtilisateur() <> "robertmv" Then
         Exit Sub
     End If
     

@@ -1536,7 +1536,7 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
     'Sort to ensure cells are sorted left-to-right, top-to-bottom
     If Not unprotectedCells Is Nothing Then
         Dim sortedCells As Range: Set sortedCells = unprotectedCells
-        Debug.Print "#036 - " & ws.Name & " - Unprotected cells are '" & sortedCells.Address & "' - " & sortedCells.count & " - " & Format$(Now(), "dd/mm/yyyy hh:mm:ss")
+        Debug.Print "SetTabOrder (" & ws.Name & ") - Unprotected; Cells; are '" & sortedCells.Address & "' - " & sortedCells.count & " cellule(s) - " & Format$(Now(), "dd/mm/yyyy hh:mm:ss")
 
         'Enable TAB through unprotected cells
         Application.EnableEvents = False
@@ -1556,7 +1556,11 @@ End Sub
 
 Sub Log_Record(ByVal procedureName As String, param As String, Optional ByVal startTime As Double = 0) '2025-02-03 @ 17:17
 
-    If gUtilisateurWindows = "" Then Stop
+    'En attendant de trouver la problématique... 2025-06-01 @ 05:06
+    If gUtilisateurWindows = "" Then
+        gUtilisateurWindows = Fn_Get_Windows_Username
+        Debug.Print "Réinitialisation forcée de gUtilisateurWindows - " & Format$(Now, "yyyy-mm-dd hh:nn:ss")
+    End If
     
     On Error GoTo ErrorHandler
     
@@ -1578,13 +1582,13 @@ Sub Log_Record(ByVal procedureName As String, param As String, Optional ByVal st
         Print #fileNum, ""
     ElseIf startTime = 0 Then 'On marque le départ d'une procédure/fonction
         Print #fileNum, timeStamp & " | " & _
-                        gUtilisateurWindows & " | " & _
+                        GetNomUtilisateur() & " | " & _
                         ThisWorkbook.Name & " | " & _
                         procedureName & " | " & _
                         param & " | "
     ElseIf startTime < 0 Then 'On enregistre une entrée intermédiaire (au coeur d'un procédure/fonction)
         Print #fileNum, timeStamp & " | " & _
-                        gUtilisateurWindows & " | " & _
+                        GetNomUtilisateur() & " | " & _
                         ThisWorkbook.Name & " | " & _
                         procedureName & " | " & _
                         param & " | "
@@ -1592,7 +1596,7 @@ Sub Log_Record(ByVal procedureName As String, param As String, Optional ByVal st
         Dim elapsedTime As Double
         elapsedTime = Round(Timer - startTime, 4) 'Calculate elapsed time
         Print #fileNum, timeStamp & " | " & _
-                        gUtilisateurWindows & " | " & _
+                        GetNomUtilisateur() & " | " & _
                         ThisWorkbook.Name & " | " & _
                         procedureName & " | " & _
                         param & " | " & _
@@ -1663,7 +1667,7 @@ Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boole
     End If
     
     Print #fileNum, timeStamp & " | " & _
-                        Left$(gUtilisateurWindows & Space(19), 19) & " | " & _
+                        Left$(GetNomUtilisateur() & Space(19), 19) & " | " & _
                         ThisWorkbook.Name & " | " & _
                         oper & " | " & _
                         txt
@@ -1707,7 +1711,7 @@ Sub Settrace(source As String, module As String, procedure As String, variable A
     Open settraceFile For Append As #fileNum
     
     Print #fileNum, timeStamp & " | " & _
-                    gUtilisateurWindows & " | " & _
+                    GetNomUtilisateur() & " | " & _
                     source & " | " & _
                     module & " | " & _
                     procedure & " | " & _

@@ -1,12 +1,6 @@
 Attribute VB_Name = "modAppli"
 Option Explicit
 
-'#If VBA7 Then
-'    Declare PtrSafe Function GetSystemMetrics Lib "user32" (ByVal nIndex As Long) As Long
-'#Else
-'    Declare Function GetSystemMetrics Lib "user32" (ByVal nIndex As Long) As Long
-'#End If
-'
 Public Const DATA_PATH As String = "\DataFiles"
 Public Const FACT_PDF_PATH As String = "\Factures_PDF"
 Public Const FACT_EXCEL_PATH As String = "\Factures_Excel"
@@ -380,20 +374,9 @@ Sub DemarrageApplication()
     Application.DisplayAlerts = True
     Application.ScreenUpdating = True
     
-'   !CommentOut - 2025-05-27 - v6.C.7
-'    'Le serveur est-il disponible (pour tous les usagers sauf le développeur) ?
-'    If gUtilisateurWindows <> "Robert M. Vigneault" And gUtilisateurWindows <> "robertmv" Then
-'        Application.StatusBar = "Vérification de l'accès au serveur P:\"
-'        If Fn_Is_Server_Available() = False Then
-'            MsgBox "Le répertoire (P:\) ne semble pas accessible", vbCritical, "Le serveur n'est pas disponible"
-'            Debug.Print
-'            Application.Quit
-'        End If
-'        Application.StatusBar = False
-'    End If
-'
     'Quel est l'utilisateur Windows ?
     gUtilisateurWindows = Fn_Get_Windows_Username
+    Debug.Print "DemarrageApplication - GetNomUtilisateur() = " & GetNomUtilisateur()
     
     Dim rootPath As String
     rootPath = FN_Get_Root_Path
@@ -416,18 +399,18 @@ Sub DemarrageApplication()
     Application.EnableEvents = True
     
     'Création d'un fichier qui indique de l'utilisateur utilise l'application
-    Call CreateUserActiveFile(gUtilisateurWindows)
+    Call CreateUserActiveFile(GetNomUtilisateur())
     
-    Call SetupUserDateFormat(gUtilisateurWindows)
+    Call SetupUserDateFormat(GetNomUtilisateur())
     
     'Call the BackupMasterFile (GCF_BD_MASTER.xlsx) macro at each application startup
     Call BackupMasterFile
     
-    Call EcrireInformationsConfigAuMenu(gUtilisateurWindows)
+    Call EcrireInformationsConfigAuMenu(GetNomUtilisateur())
     
     wshMenu.Range("A1").value = wsdADMIN.Range("NomEntreprise").value
     
-    Call HideDevShapesBasedOnUsername(gUtilisateurWindows)
+    Call HideDevShapesBasedOnUsername(GetNomUtilisateur())
     
     'Protection de la feuille wshMenu
     With wshMenu
@@ -453,7 +436,7 @@ Sub DemarrageApplication()
     Set wb = Nothing
     Set ws = Nothing
     
-    If gUtilisateurWindows = "Robert M. Vigneault" Or gUtilisateurWindows = "robertmv" Then
+    If GetNomUtilisateur() = "Robert M. Vigneault" Or GetNomUtilisateur() = "robertmv" Then
 '        Call ExporterCodeVBA 'Sauvegarde AUTOMATIQUE du code VBA en entrant
         Call DemarrerSauvegardeAutomatique
     End If
@@ -471,7 +454,7 @@ Function FN_Get_Root_Path() As String '2025-03-03 @ 20:28
    
     DoEvents
     
-    If gUtilisateurWindows = "Robert M. Vigneault" Or gUtilisateurWindows = "robertmv" Then
+    If GetNomUtilisateur() = "Robert M. Vigneault" Or GetNomUtilisateur() = "robertmv" Then
         FN_Get_Root_Path = "C:\VBA\GC_FISCALITÉ"
     Else
         FN_Get_Root_Path = "P:\Administration\APP\GCF"
@@ -596,7 +579,7 @@ End Sub
 'Mettre à jour à chaque activité
 Public Sub RafraichirActivite(Optional ByVal msg As String = "") '2025-05-30 @ 12:22
 
-    Debug.Print "Activité détectée à " & Format(gDerniereActivite, "hh:nn:ss") & " - " & msg
+'    Debug.Print "Activité détectée à " & Format(gDerniereActivite, "hh:nn:ss") & " - " & msg
     gDerniereActivite = Now
     Application.StatusBar = False
     
@@ -631,11 +614,11 @@ Public Sub VerifierInactivite() '2025-05-30 @ 12:22
     If minutesInactive >= INTERVALLE_MAXIMUM_INACTIVITE Then
         If Not ApplicationIsActive Then
             Application.DisplayAlerts = False
-            Call ApplicationFermetureNormale(gUtilisateurWindows)
+            Call ApplicationFermetureNormale(GetNomUtilisateur())
         End If
     End If
 
-'    If gUtilisateurWindows <> "Robert M. Vigneault" And gUtilisateurWindows <> "Robertmv" Then
+'    If GetNomUtilisateur() <> "Robert M. Vigneault" And GetNomUtilisateur() <> "Robertmv" Then
 '        If minutesInactive >= INTERVALLE_MAXIMUM_INACTIVITE Then
 '            Application.DisplayAlerts = False
 '            Call ApplicationFermetureNormale

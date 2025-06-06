@@ -14,8 +14,8 @@ Private Sub Worksheet_Activate()
     Call modImport.ImporterGLTransactions
 
     'Set the zoom factor to 95% when this worksheet is activated
-    ActiveWindow.Zoom = 95
-
+    If Not ActiveWindow Is Nothing Then ActiveWindow.Zoom = 95
+    
     Me.Application.Calculation = xlCalculationAutomatic
     
     Dim ws As Worksheet: Set ws = wshGL_BV
@@ -77,25 +77,27 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
     'An account, description, debit or credit has been selected from TB
     Dim lastUsedAccount As Long
     lastUsedAccount = wshGL_BV.Cells(wshGL_BV.Rows.count, "D").End(xlUp).row
-    If Not Intersect(target, wshGL_BV.Range("D4:G" & lastUsedAccount - 2)) Is Nothing Then
-        If target.CountLarge > 1 Then Exit Sub
-        Call GL_BV_EffacerZoneTransactionsDetaillees(wshGL_BV)
-'        Call GL_BV_Effacer_Zone_Et_Shape
-        Dim GLAcct As String, GLDescription As String, dateLimite As Date
-        GLAcct = CStr(Range("D" & target.row).value)
-        GLDescription = Range("E" & target.row).value
-        Application.EnableEvents = False
-        wshGL_BV.Range("B6").value = GLAcct
-        wshGL_BV.Range("B7").value = GLDescription
-        dateLimite = Format$(Range("J1").value, wsdADMIN.Range("B1").value)
-        wshGL_BV.Range("B9").value = dateLimite
-        Application.EnableEvents = True
-        
-'        wshGL_BV.Range("T2").value = "Mois"
-        DoEvents
-        
-        'Display all transactions for the selected G/L
-        Call GL_BV_Display_Trans_For_Selected_Account(GLAcct, GLDescription, wshGL_BV.Range("B8").value, dateLimite)
+    If lastUsedAccount > 5 Then
+        If Not Intersect(target, wshGL_BV.Range("D4:G" & lastUsedAccount - 2)) Is Nothing Then
+            If target.CountLarge > 1 Then Exit Sub
+            Call GL_BV_EffacerZoneTransactionsDetaillees(wshGL_BV)
+    '        Call GL_BV_Effacer_Zone_Et_Shape
+            Dim GLAcct As String, GLDescription As String, dateLimite As Date
+            GLAcct = CStr(Range("D" & target.row).value)
+            GLDescription = Range("E" & target.row).value
+            Application.EnableEvents = False
+            wshGL_BV.Range("B6").value = GLAcct
+            wshGL_BV.Range("B7").value = GLDescription
+            dateLimite = Format$(Range("J1").value, wsdADMIN.Range("B1").value)
+            wshGL_BV.Range("B9").value = Format$(dateLimite, wsdADMIN.Range("B1").value)
+            Application.EnableEvents = True
+            
+    '        wshGL_BV.Range("T2").value = "Mois"
+'            DoEvents
+            
+            'Display all transactions for the selected G/L
+            Call GL_BV_Display_Trans_For_Selected_Account(GLAcct, GLDescription, wshGL_BV.Range("B8").value, dateLimite)
+        End If
     End If
     
     'Get the entire transaction, from a selected line
@@ -173,15 +175,14 @@ Private Sub Worksheet_Change(ByVal target As Range) 'Worksheet wshBV - 2023-12-3
             Application.EnableEvents = False
             target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(target.Address)
+            Application.GoTo Range(target.Address)
         End If
         
         Range("B8").value = DateSerial(year(Range("J1").value), month(Range("J1").value), 1)
-        Range("B9").value = Range("J1").value
+        Range("B9").value = Format$(Range("J1").value, wsdADMIN.Range("B1").value)
         
         Dim ws As Worksheet
         Set ws = wshGL_BV
-        Call GL_Trial_Balance_Build
         
         Application.EnableEvents = True
     End If
