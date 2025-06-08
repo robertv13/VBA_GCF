@@ -29,7 +29,7 @@ Sub ImporterPlanComptable() '2024-02-17 @ 07:21
         .ActiveConnection = connStr
         .CursorType = adOpenStatic
         .LockType = adLockReadOnly
-        .source = "SELECT * FROM [" & sourceWorksheet & "]"
+        .Source = "SELECT * FROM [" & sourceWorksheet & "]"
         .Open
     End With
 
@@ -80,7 +80,7 @@ Sub ImportGeneriqueDuMaster(sourceWb As String, ws As Worksheet, onglet As Strin
         .ActiveConnection = connStr
         .CursorType = adOpenStatic
         .LockType = adLockReadOnly
-        .source = "SELECT * FROM [" & sourceTab & "]"
+        .Source = "SELECT * FROM [" & sourceTab & "]"
         .Open
     End With
     
@@ -156,7 +156,7 @@ Sub ImporterClients() 'Using ADODB - 2024-02-25 @ 10:23
         .ActiveConnection = connStr
         .CursorType = adOpenStatic
         .LockType = adLockReadOnly
-        .source = "SELECT * FROM [" & sourceTab & "]"
+        .Source = "SELECT * FROM [" & sourceTab & "]"
         .Open
     End With
     
@@ -453,7 +453,7 @@ Sub ImporterFournisseurs() 'Using ADODB - 2024-07-03 @ 15:43
         .ActiveConnection = connStr
         .CursorType = adOpenStatic
         .LockType = adLockReadOnly
-        .source = "SELECT * FROM [" & sourceTab & "]"
+        .Source = "SELECT * FROM [" & sourceTab & "]"
         .Open
     End With
     

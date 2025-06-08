@@ -43,7 +43,7 @@ Function Get_Summary_By_GL_Account(dateMin As Date, dateMax As Date) As Variant 
     On Error GoTo ErrHandler
 
     'Copier les données vers un fichier temporaire (silencieusement)
-    tmpFile = CréerCopieTemporaireSolide("GL_Trans")
+    tmpFile = CreerCopieTemporaireSolide("GL_Trans")
 '    tmpFile = CréerCopieTemporaireSansFlash("GL_Trans")
     If tmpFile = "" Then Exit Function
 
@@ -418,13 +418,13 @@ Private Sub Sort2DArray(arr As Variant, sortColumn As Long, ascending As Boolean
 
 End Sub
 
-Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As String, dateMin As Date, dateMax As Date) '2025-05-27 @ 19:40 - v6.C.7 - ChatGPT
+Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, Description As String, dateMin As Date, dateMax As Date) '2025-05-27 @ 19:40 - v6.C.7 - ChatGPT
 
     Dim cn As Object, rs As Object, rsInit As Object
     Dim wsTrans As Worksheet, wsResult As Worksheet
     Dim strSQL As String
     Dim ligne As Long, lastRow As Long
-    Dim debit As Currency, credit As Currency, solde As Currency, soldeInitial As Currency
+    Dim Debit As Currency, Credit As Currency, solde As Currency, soldeInitial As Currency
 
     'Feuilles
     Set wsTrans = wsdGL_Trans
@@ -444,14 +444,14 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
     
     'Écrire NoCompte & Description en L4
     With wsResult.Range("L4")
-        .value = compte & IIf(description <> "", " - " & description, "")
+        .value = compte & IIf(Description <> "", " - " & Description, "")
         .Font.Name = "Aptos Narrow"
         .Font.size = 10
         .Font.Bold = True
     End With
     'Sauvegarder le numéro du compte sélectionné ainsi que la description
     wshGL_BV.Range("B6").value = compte
-    wshGL_BV.Range("B7").value = description
+    wshGL_BV.Range("B7").value = Description
     Application.EnableEvents = True
     
     'Connexion ADO
@@ -515,16 +515,16 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
         Application.EnableEvents = True
 
         Do While Not rs.EOF
-            debit = Nz(rs.Fields("Débit").value)
-            credit = Nz(rs.Fields("Crédit").value)
-            solde = solde + debit - credit
+            Debit = Nz(rs.Fields("Débit").value)
+            Credit = Nz(rs.Fields("Crédit").value)
+            solde = solde + Debit - Credit
 
             tableau(ligne, 1) = rs.Fields("Date").value
             tableau(ligne, 2) = rs.Fields("NoEntrée").value
             tableau(ligne, 3) = rs.Fields("Description").value
             tableau(ligne, 4) = rs.Fields("Source").value
-            tableau(ligne, 5) = IIf(debit > 0, debit, "")
-            tableau(ligne, 6) = IIf(credit > 0, credit, "")
+            tableau(ligne, 5) = IIf(Debit > 0, Debit, "")
+            tableau(ligne, 6) = IIf(Credit > 0, Credit, "")
             tableau(ligne, 7) = solde
             tableau(ligne, 8) = rs.Fields("AutreRemarque")
 

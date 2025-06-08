@@ -466,7 +466,7 @@ Sub ENC_Update_DB_Comptes_Clients(firstRow As Integer, lastRow As Integer) 'Writ
                     On Error Resume Next
                     rs.Fields(fFacCCStatus - 1).value = "Paid"
                     If Err.Number <> 0 Then
-                        MsgBox "Erreur #" & Err.Number & " : " & Err.description
+                        MsgBox "Erreur #" & Err.Number & " : " & Err.Description
                     End If
                     On Error GoTo 0
                 Else
@@ -548,7 +548,7 @@ Sub ENC_Update_Locally_Comptes_Clients(firstRow As Integer, lastRow As Integer) 
 
 End Sub
 
-Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, montant As Currency, desc As String) 'Write/Update to GCF_BD_MASTER / GL_Trans
+Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, Montant As Currency, desc As String) 'Write/Update to GCF_BD_MASTER / GL_Trans
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_GL_Posting_DB", "", 0)
     
@@ -606,7 +606,7 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
             rs.Fields(fGlTNoCompte - 1).value = ObtenirNoGlIndicateur("Encaisse")
             rs.Fields(fGlTCompte - 1).value = "Encaisse" 'Hardcoded
         End If
-        rs.Fields(fGlTDébit - 1).value = montant
+        rs.Fields(fGlTDébit - 1).value = Montant
         rs.Fields(fGlTAutreRemarque - 1).value = desc
         rs.Fields(fGlTTimeStamp - 1).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
     rs.Update
@@ -625,7 +625,7 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
         End If
         rs.Fields(fGlTNoCompte - 1).value = ObtenirNoGlIndicateur("Comptes Clients")
         rs.Fields(fGlTCompte - 1).value = "Comptes clients" 'Hardcoded
-        rs.Fields(fGlTCrédit - 1).value = montant
+        rs.Fields(fGlTCrédit - 1).value = Montant
         rs.Fields(fGlTAutreRemarque - 1).value = desc
         rs.Fields(fGlTTimeStamp - 1).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
     rs.Update
@@ -646,7 +646,7 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
 
 End Sub
 
-Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As String, montant As Currency, desc As String) 'Write/Update to GCF_BD_MASTER / GL_Trans
+Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As String, Montant As Currency, desc As String) 'Write/Update to GCF_BD_MASTER / GL_Trans
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_GL_Posting_Locally", "", 0)
     
@@ -678,7 +678,7 @@ Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As Str
             .Range("E" & rowToBeUsed).value = ObtenirNoGlIndicateur("Encaisse")
             .Range("F" & rowToBeUsed).value = "Encaisse" 'Hardcoded
         End If
-        .Range("G" & rowToBeUsed).value = montant
+        .Range("G" & rowToBeUsed).value = Montant
         .Range("I" & rowToBeUsed).value = desc
         .Range("J" & rowToBeUsed).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
         rowToBeUsed = rowToBeUsed + 1
@@ -695,7 +695,7 @@ Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As Str
         End If
         .Range("E" & rowToBeUsed).value = ObtenirNoGlIndicateur("Comptes Clients")
         .Range("F" & rowToBeUsed).value = "Comptes clients" 'Hardcoded
-        .Range("H" & rowToBeUsed).value = montant
+        .Range("H" & rowToBeUsed).value = Montant
         .Range("I" & rowToBeUsed).value = desc
         .Range("J" & rowToBeUsed).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
     End With

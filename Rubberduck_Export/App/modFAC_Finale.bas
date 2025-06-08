@@ -9,6 +9,8 @@ Private lastRow As Long, lastResultRow As Long, resultRow As Long
 Sub shp_FAC_Finale_Save_Click()
 
     Call FAC_Finale_Save
+    
+    Call RestaurerFeuilleFinaleIntact
 
 End Sub
 
@@ -824,7 +826,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID As Long)
     Exit Sub
 
 eh:
-    MsgBox "An error occurred: " & Err.description, vbCritical, "Error # APP-001"
+    MsgBox "An error occurred: " & Err.Description, vbCritical, "Error # APP-001"
     If Not conn Is Nothing Then
         On Error Resume Next
         conn.Close
@@ -1023,8 +1025,8 @@ Sub FAC_Finale_Creation_PDF() '2025-05-06 @ 11:07
 
 GestionErreur:
     MsgBox "Une erreur est survenue à l'étape " & gFlagEtapeFacture & "." & vbCrLf & _
-           "Erreur: " & Err.Number & " - " & Err.description, vbCritical
-    Call Log_Record("modFAC_Finale:FAC_Finale_Creation_PDF", codeFacture & " ÉTAPE " & gFlagEtapeFacture & " > " & Err.description, startTime)
+           "Erreur: " & Err.Number & " - " & Err.Description, vbCritical
+    Call Log_Record("modFAC_Finale:FAC_Finale_Creation_PDF", codeFacture & " ÉTAPE " & gFlagEtapeFacture & " > " & Err.Description, startTime)
 
 Fin:
     'Restaurer l’environnement
@@ -1620,4 +1622,47 @@ Sub FAC_Finale_Disable_Save_Button()
     Set shp = Nothing
     
 End Sub
+
+Sub RestaurerFeuilleFinaleIntact() '2025-06-06 @ 18:38
+    
+    Dim wsSource As Worksheet, wsDest As Worksheet
+    Dim shp As Shape
+
+    Set wsSource = ThisWorkbook.Sheets("FAC_Finale_Intact")
+    Set wsDest = ThisWorkbook.Sheets("FAC_Finale")
+
+    Application.EnableEvents = False
+    Application.ScreenUpdating = False
+
+    '1. Effacer toutes les cellules, formules, formats
+    wsDest.Cells.Clear
+
+    '2. Effacer toutes les formes
+    For Each shp In wsDest.Shapes
+        shp.Delete
+    Next shp
+
+    '3. Copier tout le contenu cellules + formats + formules
+    wsSource.Cells.Copy
+    wsDest.Cells.PasteSpecial xlPasteAll 'Tout copier (valeurs, formules, formats, etc.)
+
+    '4. Copier chaque forme individuellement
+    For Each shp In wsSource.Shapes
+        shp.Copy
+        wsDest.Paste
+        'Optionnel : replacer la forme exactement
+        With wsDest.Shapes(wsDest.Shapes.count)
+            .Top = shp.Top
+            .Left = shp.Left
+            .Width = shp.Width
+            .Height = shp.Height
+        End With
+    Next shp
+
+    Application.CutCopyMode = False
+    Application.EnableEvents = True
+    Application.ScreenUpdating = True
+    
+End Sub
+
 

@@ -509,8 +509,8 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation", "", 0)
 
-    Dim montant As Double, dateDebours As Date
-    Dim descGL_Trans As String, source As String, deboursType As String
+    Dim Montant As Double, dateDebours As Date
+    Dim descGL_Trans As String, Source As String, deboursType As String
     Dim GL_TransNo As Long
     
     dateDebours = wshDEB_Saisie.Range("O4").value
@@ -520,9 +520,9 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
         descGL_Trans = descGL_Trans & " [" & wshDEB_Saisie.Range("M6").value & "]"
     End If
     If wshDEB_Saisie.Range("B7").value = False Then
-        source = "DÉBOURSÉ:" & Format$(wshDEB_Saisie.Range("B1").value, "00000")
+        Source = "DÉBOURSÉ:" & Format$(wshDEB_Saisie.Range("B1").value, "00000")
     Else
-        source = "RENV/DÉBOURSÉ:" & Format$(numeroDebourseARenverser, "00000")
+        Source = "RENV/DÉBOURSÉ:" & Format$(numeroDebourseARenverser, "00000")
     End If
     
     Dim MyArray() As String
@@ -530,7 +530,7 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
     
     'Based on Disbursement type, the CREDIT account will be different
     'Disbursement Total (wshDEB_Saisie.Range("O6"))
-    montant = wshDEB_Saisie.Range("O6").value
+    Montant = wshDEB_Saisie.Range("O6").value
     
     Dim GLNo_Credit As String
     
@@ -558,7 +558,7 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
             MyArray(1, 2) = "Encaisse"
     End Select
     
-    MyArray(1, 3) = -montant
+    MyArray(1, 3) = -Montant
     MyArray(1, 4) = ""
     
     'Process every lines
@@ -592,9 +592,9 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
     Next l
     
     Dim GLEntryNo As Long
-    Call GL_Posting_To_DB(dateDebours, descGL_Trans, source, MyArray, GLEntryNo)
+    Call GL_Posting_To_DB(dateDebours, descGL_Trans, Source, MyArray, GLEntryNo)
     
-    Call GL_Posting_Locally(dateDebours, descGL_Trans, source, MyArray, GLEntryNo)
+    Call GL_Posting_Locally(dateDebours, descGL_Trans, Source, MyArray, GLEntryNo)
     
     Call Log_Record("modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation", "", startTime)
 

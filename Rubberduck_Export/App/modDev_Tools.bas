@@ -846,14 +846,14 @@ Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
     
     'Copier le premier fichier
     If fso.fileExists(cheminSourcePROD & nomFichier1) Then
-        fso.CopyFile source:=cheminSourcePROD & nomFichier1, Destination:=nouveauDossier, OverwriteFiles:=False
+        fso.CopyFile Source:=cheminSourcePROD & nomFichier1, Destination:=nouveauDossier, OverwriteFiles:=False
     Else
         MsgBox "Fichier non trouvé : " & cheminSourcePROD & nomFichier1, vbExclamation, "Erreur"
     End If
     
     'Copier le deuxième fichier
     If fso.fileExists(cheminSourcePROD & nomFichier2) Then
-        fso.CopyFile source:=cheminSourcePROD & nomFichier2, Destination:=nouveauDossier, OverwriteFiles:=False
+        fso.CopyFile Source:=cheminSourcePROD & nomFichier2, Destination:=nouveauDossier, OverwriteFiles:=False
     Else
         MsgBox "Fichier non trouvé : " & cheminSourcePROD & nomFichier2, vbExclamation, "Erreur"
     End If
@@ -863,7 +863,7 @@ Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
     fichier = Dir(cheminSourcePROD & "*.log")
     Do While fichier <> ""
         'Copie du fichier PROD ---> Local
-        fso.CopyFile source:=cheminSourcePROD & fichier, Destination:=nouveauDossier, OverwriteFiles:=False
+        fso.CopyFile Source:=cheminSourcePROD & fichier, Destination:=nouveauDossier, OverwriteFiles:=False
         'Efface le fichier PROD (initialiation)
         Kill cheminSourcePROD & fichier
         'Fichier suivant à copier
@@ -877,14 +877,14 @@ Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
     
     'Copier le premier fichier
     If fso.fileExists(nouveauDossier & nomFichier1) Then
-        fso.CopyFile source:=cheminSourcePROD & nomFichier1, Destination:=dossierDEV, OverwriteFiles:=True
+        fso.CopyFile Source:=cheminSourcePROD & nomFichier1, Destination:=dossierDEV, OverwriteFiles:=True
     Else
         MsgBox "Fichier non trouvé : " & nouveauDossier & nomFichier1, vbExclamation, "Erreur"
     End If
     
     'Copier le deuxième fichier
     If fso.fileExists(nouveauDossier & nomFichier2) Then
-        fso.CopyFile source:=cheminSourcePROD & nomFichier2, Destination:=dossierDEV, OverwriteFiles:=True
+        fso.CopyFile Source:=cheminSourcePROD & nomFichier2, Destination:=dossierDEV, OverwriteFiles:=True
     Else
         MsgBox "Fichier non trouvé : " & nouveauDossier & nomFichier2, vbExclamation, "Erreur"
     End If
@@ -1532,75 +1532,6 @@ Sub CreerBorduresInterieures(rng As Variant) '2025-02-24 @ 16:40
             
 End Sub
 
-'CommentOut - 2025-05-28 @ 06:20
-'Sub AjustementAvantGit_Click() '2025-02-27 @ 11:22
-'
-'    Call UniformiserValeurVBA
-'
-'End Sub
-'
-'CommentOut - 2025-05-28 @ 06:20
-'Sub UniformiserValeurVBA() '2025-02-27 @ 10:56
-'
-'    Dim fso As Object
-'    Dim dossier As String
-'    Dim fichier As Object
-'    Dim fichierTexte As Object
-'    Dim contenu As String
-'    Dim toUpper As Boolean: toUpper = True 'True = mettre ".value", False = mettre ".value"
-'    toUpper = False
-'
-'    'Demander à l'utilisateur de sélectionner le dossier
-'    With Application.fileDialog(msoFileDialogFolderPicker)
-'        .Title = "Sélectionnez le dossier contenant les fichiers VBA"
-'        If .show = -1 Then
-'            dossier = .SelectedItems(1)
-'        Else
-'            Exit Sub 'Annuler l'opération si aucun dossier sélectionné
-'        End If
-'    End With
-'
-'    'Vérifier si le dossier est valide
-'    If Len(Dir(dossier, vbDirectory)) = 0 Then
-'        MsgBox "Dossier invalide.", vbExclamation
-'        Exit Sub
-'    End If
-'
-'    'Initialiser FileSystemObject
-'    Set fso = CreateObject("Scripting.FileSystemObject")
-'
-'    'Parcourir tous les fichiers .bas, .cls, .frm du dossier
-'    For Each fichier In fso.GetFolder(dossier).Files
-'        If fichier.Name Like "*.bas" Or fichier.Name Like "*.cls" Or fichier.Name Like "*.frm" Then
-'            'Lire le contenu du fichier
-'            Set fichierTexte = fso.OpenTextFile(fichier.path, 1) 'Mode lecture
-'            contenu = fichierTexte.ReadAll
-'            fichierTexte.Close
-'
-'            'Modifier le contenu pour plusieurs chaines
-'            If toUpper Then
-'                contenu = Replace(contenu, ".value", ".Value")
-'                contenu = Replace(contenu, "FSO", "FSO")
-'            Else
-'                contenu = Replace(contenu, ".Count", ".count")
-'                contenu = Replace(contenu, "FSO", "FSO")
-'            End If
-'
-'            'Réécrire le fichier modifié
-'            Set fichierTexte = fso.OpenTextFile(fichier.path, 2) 'Mode écriture
-'            fichierTexte.Write contenu
-'            fichierTexte.Close
-'        End If
-'    Next
-'
-'    'Nettoyage
-'    Set fichierTexte = Nothing
-'    Set fso = Nothing
-'
-'    MsgBox "Corrections terminées !", vbInformation
-'
-'End Sub
-'
 Sub DemarrerSauvegardeAutomatique() '2025-03-03 @ 07:19
 
     'Lancer l'export des modules VBA

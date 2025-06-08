@@ -50,18 +50,18 @@ Sub IdentifierEcartsComptesClientsEtGL() '2025-04-02 @ 07:46
 
     'Analyse TOUS les écritures au G/L
     Dim totalGL_Détails As Currency
-    Dim source As String, noEnc As Long
+    Dim Source As String, noEnc As Long
     For i = 2 To usedRowGL
-        source = wsGL.Cells(i, 4).value
+        Source = wsGL.Cells(i, 4).value
         If wsGL.Cells(i, 5).value = "1100" Then
-            If InStr(source, "ENCAISSEMENT:") = 1 Or InStr(source, "DÉPÔT DE CLIENT:") = 1 Then
+            If InStr(Source, "ENCAISSEMENT:") = 1 Or InStr(Source, "DÉPÔT DE CLIENT:") = 1 Then
                 totalGL_Détails = totalGL_Détails - wsGL.Cells(i, 7).value + wsGL.Cells(i, 8).value
-                noEnc = Mid$(source, InStr(source, ":") + 1, Len(source) - InStr(source, ":"))
+                noEnc = Mid$(Source, InStr(Source, ":") + 1, Len(Source) - InStr(Source, ":"))
                 
                 matENC(noEnc, 2) = matENC(noEnc, 2) - wsGL.Cells(i, 7).value + wsGL.Cells(i, 8).value
             Else
-                If InStr(source, "FACTURE:") = 1 Then
-                    noFact = Right(source, 5)
+                If InStr(Source, "FACTURE:") = 1 Then
+                    noFact = Right(Source, 5)
                     matFAC(noFact, 2) = matFAC(noFact, 2) + wsGL.Cells(i, 7).value - wsGL.Cells(i, 8).value
                 End If
             End If
@@ -110,7 +110,7 @@ Sub VérifierTousLesContrôlesFeuillesEtUserForms()
             If Err.Number <> 0 Then
                 rapport = rapport & "?? Feuille: " & ws.Name & _
                           " - Contrôle: " & ctrl.Name & _
-                          " ? Erreur : " & Err.description & vbCrLf
+                          " ? Erreur : " & Err.Description & vbCrLf
             End If
             Err.Clear
             On Error GoTo 0
@@ -123,7 +123,7 @@ Sub VérifierTousLesContrôlesFeuillesEtUserForms()
             On Error Resume Next
             Set uf = VBA.UserForms.Add(vbComp.Name)
             If Err.Number <> 0 Then
-                rapport = rapport & "? UserForm: " & vbComp.Name & " - Erreur d'ouverture : " & Err.description & vbCrLf
+                rapport = rapport & "? UserForm: " & vbComp.Name & " - Erreur d'ouverture : " & Err.Description & vbCrLf
                 Err.Clear
                 GoTo NextForm
             End If
@@ -134,7 +134,7 @@ Sub VérifierTousLesContrôlesFeuillesEtUserForms()
                 If Err.Number <> 0 Then
                     rapport = rapport & "?? UserForm: " & vbComp.Name & _
                               " - Contrôle: " & ctrlUF.Name & _
-                              " ? Erreur : " & Err.description & vbCrLf
+                              " ? Erreur : " & Err.Description & vbCrLf
                 End If
                 Err.Clear
                 On Error GoTo 0

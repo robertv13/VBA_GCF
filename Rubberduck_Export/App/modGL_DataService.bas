@@ -18,7 +18,7 @@ Function ConstruirePlanComptable() As Object '2025-06-01 @ 08:20
     
 End Function
 
-Function CréerCopieTemporaireSolide(onglet As String) As String
+Function CreerCopieTemporaireSolide(onglet As String) As String
 
     Dim wsSrc As Worksheet, wsDest As Worksheet
     Dim wbTmp As Workbook
@@ -31,7 +31,7 @@ Function CréerCopieTemporaireSolide(onglet As String) As String
     sPath = ThisWorkbook.path & DATA_PATH & "\"
     If Dir(sPath, vbDirectory) = "" Then
         MsgBox "Le répertoire n'existe pas : " & vbCrLf & sPath, vbCritical
-        CréerCopieTemporaireSolide = ""
+        CreerCopieTemporaireSolide = ""
         Exit Function
     End If
 
@@ -63,116 +63,64 @@ Function CréerCopieTemporaireSolide(onglet As String) As String
     Application.DisplayAlerts = True
 
     Application.ScreenUpdating = oldScreenUpdating
-    CréerCopieTemporaireSolide = sPath & sFichier
+    CreerCopieTemporaireSolide = sPath & sFichier
     Exit Function
 
 ErrHandler:
     Application.ScreenUpdating = oldScreenUpdating
-    MsgBox "Erreur lors de la création du fichier temporaire : " & Err.description, vbCritical
-    CréerCopieTemporaireSolide = ""
+    MsgBox "Erreur lors de la création du fichier temporaire : " & Err.Description, vbCritical
+    CreerCopieTemporaireSolide = ""
     
 End Function
 
-Function CréerCopieTemporaireSansFlash(onglet As String) As String '2025-06-03 @ 21:07
-
-    Dim wsSrc As Worksheet
-    Dim wbTmp As Workbook
-    Dim sPath As String, sFichier As String
-    Dim oldScreenUpdating As Boolean
-
-    On Error GoTo ErrHandler
-
-    ' Répertoire
-    sPath = ThisWorkbook.path & DATA_PATH & "\"
-    If Dir(sPath, vbDirectory) = "" Then
-        MsgBox "Le répertoire n'existe pas : " & vbCrLf & sPath, vbCritical
-        CréerCopieTemporaireSansFlash = ""
-        Exit Function
-    End If
-
-    ' Fichier temporaire
-    sFichier = "GL_Temp_" & Environ("Username") & "_" & Format(Now, "yyyymmdd_hhnnss") & ".xlsx"
-    oldScreenUpdating = Application.ScreenUpdating
-    Application.ScreenUpdating = False
-
-    'Feuille source
-    Set wsSrc = ThisWorkbook.Worksheets(onglet)
-    If wsSrc.ProtectContents Then wsSrc.Unprotect
-
-    ' Copier la feuille dans un nouveau classeur
-    wsSrc.Copy ' <-- Crée un nouveau classeur automatiquement !
-
-    'Ce nouveau classeur devient actif après le .Copy
-    Set wbTmp = ActiveWorkbook
-
-    ' Sauvegarde
-    Application.DisplayAlerts = False
-    wbTmp.SaveAs fileName:=sPath & sFichier, FileFormat:=xlOpenXMLWorkbook
-    wbTmp.Close SaveChanges:=False
-    Application.DisplayAlerts = True
-
-    Application.ScreenUpdating = oldScreenUpdating
-    CréerCopieTemporaireSansFlash = sPath & sFichier
-    Exit Function
-
-ErrHandler:
-    Application.ScreenUpdating = oldScreenUpdating
-    MsgBox "Erreur lors de la création du fichier temporaire : " & Err.description, vbCritical
-    CréerCopieTemporaireSansFlash = ""
-
-End Function
-
-'Function CréerCopieTemporaireInvisible() As String
+'CommentOut - 2025-06-06 @ 11:02
+'Function CréerCopieTemporaireSansFlash(onglet As String) As String '2025-06-03 @ 21:07
 '
 '    Dim wsSrc As Worksheet
 '    Dim wbTmp As Workbook
-'    Dim wsTmp As Worksheet
 '    Dim sPath As String, sFichier As String
-'    Dim wbActuel As Workbook
-'    Dim oldDisplayAlerts As Boolean, oldScreenUpdating As Boolean
+'    Dim oldScreenUpdating As Boolean
 '
 '    On Error GoTo ErrHandler
 '
-'    ' Sauvegarder les états
-'    Set wbActuel = ThisWorkbook
-'    oldScreenUpdating = Application.ScreenUpdating
-'    oldDisplayAlerts = Application.DisplayAlerts
+'    ' Répertoire
+'    sPath = ThisWorkbook.path & DATA_PATH & "\"
+'    If Dir(sPath, vbDirectory) = "" Then
+'        MsgBox "Le répertoire n'existe pas : " & vbCrLf & sPath, vbCritical
+'        CréerCopieTemporaireSansFlash = ""
+'        Exit Function
+'    End If
 '
-'    ' Répertoire du classeur actif
-'    sPath = wbActuel.path & DATA_PATH & "\"
+'    ' Fichier temporaire
 '    sFichier = "GL_Temp_" & Environ("Username") & "_" & Format(Now, "yyyymmdd_hhnnss") & ".xlsx"
-'
-'    ' Masquer toute activité visuelle
+'    oldScreenUpdating = Application.ScreenUpdating
 '    Application.ScreenUpdating = False
+'
+'    'Feuille source
+'    Set wsSrc = ThisWorkbook.Worksheets(onglet)
+'    If wsSrc.ProtectContents Then wsSrc.Unprotect
+'
+'    ' Copier la feuille dans un nouveau classeur
+'    wsSrc.Copy ' <-- Crée un nouveau classeur automatiquement !
+'
+'    'Ce nouveau classeur devient actif après le .Copy
+'    Set wbTmp = ActiveWorkbook
+'
+'    ' Sauvegarde
 '    Application.DisplayAlerts = False
-'
-'    ' Crée un nouveau classeur
-'    Set wbTmp = Application.Workbooks.Add(xlWBATWorksheet)
-'
-'    ' Copier la feuille sans activer le nouveau fichier
-'    wbActuel.Worksheets("GL_Trans").Copy Before:=wbTmp.Sheets(1)
-'
-'    ' Supprimer la feuille vide (attention, c’est Worksheets(2) maintenant)
-'    wbTmp.Sheets(2).Delete
-'
-'    ' Sauvegarder le nouveau fichier .xlsx
 '    wbTmp.SaveAs fileName:=sPath & sFichier, FileFormat:=xlOpenXMLWorkbook
 '    wbTmp.Close SaveChanges:=False
+'    Application.DisplayAlerts = True
 '
-'    ' Retourne le chemin complet
-'    CréerCopieTemporaireInvisible = sPath & sFichier
-'
-'Fin:
-'    ' Restaure les états
-'    Application.DisplayAlerts = oldDisplayAlerts
 '    Application.ScreenUpdating = oldScreenUpdating
-'    wbActuel.Activate
+'    CréerCopieTemporaireSansFlash = sPath & sFichier
 '    Exit Function
 '
 'ErrHandler:
-'    MsgBox "Erreur lors de la création du fichier temporaire: " & Err.description, vbCritical
-'    CréerCopieTemporaireInvisible = ""
-'    Resume Fin
+'    Application.ScreenUpdating = oldScreenUpdating
+'    MsgBox "Erreur lors de la création du fichier temporaire : " & Err.description, vbCritical
+'    CréerCopieTemporaireSansFlash = ""
 '
 'End Function
 '
+

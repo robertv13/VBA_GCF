@@ -1103,19 +1103,19 @@ Sub PreparerAfficherListeEcriture()
     Dim compteur As Long
     ReDim resultats(1 To Round(UBound(arrData, 1) / 2, 0), 1 To 5) 'Maximum = Nombre de lignes / 2
     
-    Dim strDejaVu As String, source As String
+    Dim strDejaVu As String, Source As String
     Dim i As Long
     compteur = 0
     For i = 2 To UBound(arrData, 1)
-        source = CStr(arrData(i, fGlTSource))
+        Source = CStr(arrData(i, fGlTSource))
         'Seulement les écritures de journal (exclure les autres)
-        If source = "" Or Not ExclureTransaction(source) = True Then
+        If Source = "" Or Not ExclureTransaction(Source) = True Then
             If InStr(strDejaVu, CStr(arrData(i, 1)) & ".|.") = 0 Then
                 compteur = compteur + 1
                 resultats(compteur, 1) = arrData(i, fGlTNoEntrée)
                 resultats(compteur, 2) = Format$(arrData(i, fGlTDate), wsdADMIN.Range("B1").value)
                 resultats(compteur, 3) = arrData(i, fGlTDescription)
-                resultats(compteur, 4) = source
+                resultats(compteur, 4) = Source
                 resultats(compteur, 5) = Format$(arrData(i, fGlTTimeStamp), wsdADMIN.Range("B1").value & " hh:mm:ss")
                 strDejaVu = strDejaVu & CStr(arrData(i, fGlTNoEntrée)) & ".|."
             End If

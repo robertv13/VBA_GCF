@@ -232,46 +232,86 @@ Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
     
 End Sub
 
-Sub HideDevShapesBasedOnUsername(ByVal userName As String)
+Sub HideDevShapesBasedOnUsername(ByVal userName As String) '2025-06-06 @ 11:17
     
-'    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:HideDevShapesBasedOnUsername", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:HideDevShapesBasedOnUsername", "", 0)
     
-    'Set the worksheet where the shapes are located
     Dim ws As Worksheet: Set ws = wshMenu
-    
-    'Loop through each shape in the worksheet
-    Dim shp As Shape
-    If userName = "Robert M. Vigneault" Or userName = "robertmv" Then
-        ws.Shapes("shpImporterCorrigerMASTER").Visible = msoTrue
-        ws.Shapes("shpVérificationIntégrité").Visible = msoTrue
-        ws.Shapes("shpTraitementFichiersLog").Visible = msoTrue
-        ws.Shapes("shpRechercherCode").Visible = msoTrue
-        ws.Shapes("shpCorrigerNomClientTEC").Visible = msoTrue
-        ws.Shapes("shpCorrigerNomClientCAR").Visible = msoTrue
-        ws.Shapes("shpChercherRéférencesCirculaires").Visible = msoTrue
-        ws.Shapes("shpChangerReferenceSystem").Visible = msoTrue
-        ws.Shapes("shpListerModulesEtRoutines").Visible = msoTrue
-        ws.Shapes("shpVérificationMacrosContrôles").Visible = msoTrue
-    Else
-        ws.Shapes("shpImporterCorrigerMASTER").Visible = msoFalse
-        ws.Shapes("shpVérificationIntégrité").Visible = msoFalse
-        ws.Shapes("shpTraitementFichiersLog").Visible = msoFalse
-        ws.Shapes("shpRechercherCode").Visible = msoFalse
-        ws.Shapes("shpCorrigerNomClientTEC").Visible = msoFalse
-        ws.Shapes("shpCorrigerNomClientCAR").Visible = msoFalse
-        ws.Shapes("shpChercherRéférencesCirculaires").Visible = msoFalse
-        ws.Shapes("shpChangerReferenceSystem").Visible = msoFalse
-        ws.Shapes("shpListerModulesEtRoutines").Visible = msoFalse
-        ws.Shapes("shpVérificationMacrosContrôles").Visible = msoFalse
-    End If
-    
-    'Libérer la mémoire
-    Set shp = Nothing
-    Set ws = Nothing
-    
-'    Call Log_Record("modMenu:HideDevShapesBasedOnUsername", "", startTime)
+    Dim devShapes As Variant
+    devShapes = Array( _
+        "shpImporterCorrigerMASTER", _
+        "shpVérificationIntégrité", _
+        "shpTraitementFichiersLog", _
+        "shpRechercherCode", _
+        "shpCorrigerNomClientTEC", _
+        "shpCorrigerNomClientCAR", _
+        "shpChercherRéférencesCirculaires", _
+        "shpChangerReferenceSystem", _
+        "shpListerModulesEtRoutines", _
+        "shpVérificationMacrosContrôles" _
+    )
+
+    Dim isDevUser As Boolean
+    isDevUser = (userName = "Robert M. Vigneault" Or userName = "robertmv")
+    Dim visibleState As MsoTriState
+    visibleState = IIf(isDevUser, msoTrue, msoFalse)
+
+    Dim i As Long
+    For i = LBound(devShapes) To UBound(devShapes)
+        On Error Resume Next 'Ignore erreur si Shape absent
+        ws.Shapes(devShapes(i)).Visible = visibleState
+        If Err.Number <> 0 Then
+            Debug.Print "Forme introuvable: " & devShapes(i)
+            Err.Clear
+        End If
+        On Error GoTo 0
+    Next i
+
+    Call Log_Record("modMenu:HideDevShapesBasedOnUsername", "", startTime)
 
 End Sub
+
+'CommentOut - 2025-06-06 @ 11:17
+'Sub HideDevShapesBasedOnUsername(ByVal userName As String)
+'
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:HideDevShapesBasedOnUsername", "", 0)
+'
+'    'Set the worksheet where the shapes are located
+'    Dim ws As Worksheet: Set ws = wshMenu
+'
+'    'Loop through each shape in the worksheet
+'    Dim shp As Shape
+'    If userName = "Robert M. Vigneault" Or userName = "robertmv" Then
+'        ws.Shapes("shpImporterCorrigerMASTER").Visible = msoTrue
+'        ws.Shapes("shpVérificationIntégrité").Visible = msoTrue
+'        ws.Shapes("shpTraitementFichiersLog").Visible = msoTrue
+'        ws.Shapes("shpRechercherCode").Visible = msoTrue
+'        ws.Shapes("shpCorrigerNomClientTEC").Visible = msoTrue
+'        ws.Shapes("shpCorrigerNomClientCAR").Visible = msoTrue
+'        ws.Shapes("shpChercherRéférencesCirculaires").Visible = msoTrue
+'        ws.Shapes("shpChangerReferenceSystem").Visible = msoTrue
+'        ws.Shapes("shpListerModulesEtRoutines").Visible = msoTrue
+'        ws.Shapes("shpVérificationMacrosContrôles").Visible = msoTrue
+'    Else
+'        ws.Shapes("shpImporterCorrigerMASTER").Visible = msoFalse
+'        ws.Shapes("shpVérificationIntégrité").Visible = msoFalse
+'        ws.Shapes("shpTraitementFichiersLog").Visible = msoFalse
+'        ws.Shapes("shpRechercherCode").Visible = msoFalse
+'        ws.Shapes("shpCorrigerNomClientTEC").Visible = msoFalse
+'        ws.Shapes("shpCorrigerNomClientCAR").Visible = msoFalse
+'        ws.Shapes("shpChercherRéférencesCirculaires").Visible = msoFalse
+'        ws.Shapes("shpChangerReferenceSystem").Visible = msoFalse
+'        ws.Shapes("shpListerModulesEtRoutines").Visible = msoFalse
+'        ws.Shapes("shpVérificationMacrosContrôles").Visible = msoFalse
+'    End If
+'
+'    'Libérer la mémoire
+'    Set shp = Nothing
+'    Set ws = Nothing
+'
+'    Call Log_Record("modMenu:HideDevShapesBasedOnUsername", "", startTime)
+'
+'End Sub
 
 Sub Delete_User_Active_File(ByVal userName As String)
 

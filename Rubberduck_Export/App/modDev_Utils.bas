@@ -1610,7 +1610,7 @@ Sub Log_Record(ByVal procedureName As String, param As String, Optional ByVal st
 ErrorHandler:
 
     MsgBox "Une erreur est survenue à l'ouverture du fichier 'LogMainApp.log' " & vbNewLine & vbNewLine & _
-                "Erreur : " & Err & " = " & Err.description, vbCritical, "Répertoire utilisé '" & wsdADMIN.Range("F5").value & "'"
+                "Erreur : " & Err & " = " & Err.Description, vbCritical, "Répertoire utilisé '" & wsdADMIN.Range("F5").value & "'"
     
     'Nettoyage : réactivation des événements, calculs, etc.
     Application.EnableEvents = True
@@ -1677,7 +1677,7 @@ Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boole
     
 Error_Handler:
 
-    MsgBox "Une erreur est survenue : " & Err.description, vbCritical, "Log_Saisie_Heures"
+    MsgBox "Une erreur est survenue : " & Err.Description, vbCritical, "Log_Saisie_Heures"
     'Sortir gracieusement de l'application
     Application.Quit 'No save...
     
@@ -1689,7 +1689,7 @@ Sub Test_Log_Saisie_Heures()
     
 End Sub
 
-Sub Settrace(source As String, module As String, procedure As String, variable As String, vType As String) '2024-09-26 @ 10:31
+Sub Settrace(Source As String, module As String, procedure As String, variable As String, vType As String) '2024-09-26 @ 10:31
 
     On Error GoTo Error_Handler
     
@@ -1712,7 +1712,7 @@ Sub Settrace(source As String, module As String, procedure As String, variable A
     
     Print #fileNum, timeStamp & " | " & _
                     GetNomUtilisateur() & " | " & _
-                    source & " | " & _
+                    Source & " | " & _
                     module & " | " & _
                     procedure & " | " & _
                     variable & " | " & _
@@ -1724,7 +1724,7 @@ Sub Settrace(source As String, module As String, procedure As String, variable A
     
 Error_Handler:
 
-    MsgBox "Une erreur est survenue : " & Err.description, vbCritical, "Log_Settrace"
+    MsgBox "Une erreur est survenue : " & Err.Description, vbCritical, "Log_Settrace"
     'Sortir gracieusement de l'application
     Application.Quit 'No save...
     

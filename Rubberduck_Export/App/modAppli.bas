@@ -362,21 +362,21 @@ Private Sub Auto_Open() '2024-12-28 @ 11:09
     
 End Sub
 
-Sub DemarrageApplication()
+Sub DemarrageApplication() '2025-06-06 @ 11:40
 
-    If Application.EnableEvents = False Then Application.EnableEvents = True
+    Dim startTime As Double: startTime = Timer: Call Log_Record("----- DÉBUT D'UNE NOUVELLE SESSION (modAppli:DemarrageApplication) -----", "", 0)
+    
+    'Quel est l'utilisateur Windows ?
+    gUtilisateurWindows = GetNomUtilisateur()
+    Debug.Print "DemarrageApplication - GetNomUtilisateur() = " & gUtilisateurWindows
     
     On Error GoTo ErrorHandler
     
-    'Réinitialiser les paramètres globaux d'Excel
-    Application.EnableEvents = True
+    If Application.EnableEvents = False Then Application.EnableEvents = True
     Application.Calculation = xlCalculationAutomatic
     Application.DisplayAlerts = True
     Application.ScreenUpdating = True
-    
-    'Quel est l'utilisateur Windows ?
-    gUtilisateurWindows = Fn_Get_Windows_Username
-    Debug.Print "DemarrageApplication - GetNomUtilisateur() = " & GetNomUtilisateur()
+    Application.EnableEvents = True
     
     Dim rootPath As String
     rootPath = FN_Get_Root_Path
@@ -385,7 +385,6 @@ Sub DemarrageApplication()
     wsdADMIN.Range("F5").value = rootPath
     Application.EnableEvents = True
    
-    'Vérification si le chemin est accessible
     Application.StatusBar = "Vérification de l'accès au répertoire principal"
     If Fn_Check_Server_Access(rootPath) = False Then
         MsgBox "Le répertoire principal '" & rootPath & "' n'est pas accessible." & vbNewLine & vbNewLine & _
@@ -394,32 +393,20 @@ Sub DemarrageApplication()
     End If
     Application.StatusBar = False
 
-    'Log initial activity
-    Dim startTime As Double: startTime = Timer: Call Log_Record("----- Début d'une nouvelle session (modAppli:DemarrageApplication) -----", "", 0)
-    Application.EnableEvents = True
-    
-    'Création d'un fichier qui indique de l'utilisateur utilise l'application
-    Call CreateUserActiveFile(GetNomUtilisateur())
-    
-    Call SetupUserDateFormat(GetNomUtilisateur())
-    
-    'Call the BackupMasterFile (GCF_BD_MASTER.xlsx) macro at each application startup
+    Call CreateUserActiveFile(gUtilisateurWindows)
+    Call SetupUserDateFormat(gUtilisateurWindows)
     Call BackupMasterFile
-    
-    Call EcrireInformationsConfigAuMenu(GetNomUtilisateur())
-    
+    Call EcrireInformationsConfigAuMenu(gUtilisateurWindows)
     wshMenu.Range("A1").value = wsdADMIN.Range("NomEntreprise").value
-    
-    Call HideDevShapesBasedOnUsername(GetNomUtilisateur())
+    Call HideDevShapesBasedOnUsername(gUtilisateurWindows)
     
     'Protection de la feuille wshMenu
     With wshMenu
         .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlUnlockedCells '2024-10-14 @ 11:28
+        .EnableSelection = xlUnlockedCells
     End With
     
     Dim wb As Workbook: Set wb = ActiveWorkbook
-   
     'Efface les feuilles dont le codename n'est pas wsh* -ET- dont le nom commence par 'Feuil'
     Dim ws As Worksheet
     Application.DisplayAlerts = False
@@ -432,22 +419,23 @@ Sub DemarrageApplication()
     
     wshMenu.Activate
 
+    If gUtilisateurWindows = "Robert M. Vigneault" Or gUtilisateurWindows = "robertmv" Then
+        Call DemarrerSauvegardeAutomatique
+    End If
+    
     'Libérer la mémoire
     Set wb = Nothing
     Set ws = Nothing
     
-    If GetNomUtilisateur() = "Robert M. Vigneault" Or GetNomUtilisateur() = "robertmv" Then
-'        Call ExporterCodeVBA 'Sauvegarde AUTOMATIQUE du code VBA en entrant
-        Call DemarrerSauvegardeAutomatique
-    End If
-    
     Call Log_Record("modAppli:DemarrageApplication", "", startTime)
-    
     Exit Sub
     
 ErrorHandler:
-    Call Log_Record("Erreur dans modAppli:DemarrageApplication : " & Err.description, Timer)
-
+    Application.EnableEvents = True 'On s'assure de toujours restaurer l'état
+    Application.DisplayAlerts = True
+    Application.StatusBar = False
+    Call Log_Record("modAppli:DemarrageApplication (ERREUR) : " & Err.Description, Timer)
+    
 End Sub
 
 Function FN_Get_Root_Path() As String '2025-03-03 @ 20:28
@@ -487,7 +475,7 @@ Error_Handling:
     MsgBox _
         Prompt:="Erreur en tentant d'accéder le répertoire" & vbNewLine & vbNewLine & _
                     "'" & traceFilePath & "'" & vbNewLine & vbNewLine & _
-                    "Erreur # " & Err.Number & " - " & Err.description, _
+                    "Erreur # " & Err.Number & " - " & Err.Description, _
         Title:="Accès à " & traceFilePath, _
         Buttons:=vbCritical
 
@@ -495,7 +483,7 @@ End Sub
 
 Sub SetupUserDateFormat(ByVal user As String)
 
-'    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:SetupUserDateFormat", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:SetupUserDateFormat", "", 0)
 
     Dim userDateFormat As String
     
@@ -514,7 +502,7 @@ Sub SetupUserDateFormat(ByVal user As String)
 
     wsdADMIN.Range("B1").value = userDateFormat
     
-'    Call Log_Record("modAppli:SetupUserDateFormat", "", startTime)
+    Call Log_Record("modAppli:SetupUserDateFormat", "", startTime)
     
 End Sub
 
@@ -543,39 +531,82 @@ MASTER_NOT_AVAILABLE:
     MsgBox _
         Prompt:="Le fichier GCF_MASTER.xlsx ne peut être accédé..." & vbNewLine & vbNewLine & _
                     "Le fichier nécessite une réparation manuelle", _
-        Title:="Situation anormale (" & Err.Number & " " & Err.description & ")", _
+        Title:="Situation anormale (" & Err.Number & " " & Err.Description & ")", _
         Buttons:=vbCritical
     Application.Quit
 
 End Sub
 
 Sub EcrireInformationsConfigAuMenu(ByVal user As String)
+    
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:EcrireInformationsConfigAuMenu", "", 0)
+    
+    Dim oldEnableEvents As Boolean
+    Dim heure As String, version As String, utilisateur As String
+    Dim environnement As String, formatDate As String
+    Dim valeurs As Variant
+    
+    oldEnableEvents = Application.EnableEvents
+    On Error GoTo CleanUp
 
-'    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:EcrireInformationsConfigAuMenu", "", 0)
-    
     wshMenu.Unprotect
-    
+
     Application.EnableEvents = False
-    
-    With wshMenu
-        .Range("A30").value = "Heure - " & Format$(Now(), wsdADMIN.Range("B1").value & " hh:mm:ss")
-        .Range("A31").value = "Version - " & ThisWorkbook.Name
-        .Range("A32").value = "Utilisateur - " & user
-        .Range("A33").value = "Environnement - " & wsdADMIN.Range("F5").value
-        .Range("A34").value = "Format de la date - " & wsdADMIN.Range("B1").value
-    End With
-    
-    Application.EnableEvents = True
-    
+
+    ' Récupération des valeurs
+    formatDate = wsdADMIN.Range("B1").value
+    environnement = wsdADMIN.Range("F5").value
+
+    valeurs = Array( _
+        "Heure - " & Format$(Now(), formatDate & " hh:mm:ss"), _
+        "Version - " & ThisWorkbook.Name, _
+        "Utilisateur - " & user, _
+        "Environnement - " & environnement, _
+        "Format de la date - " & formatDate)
+
+    ' Ecriture en une seule opération
+    wshMenu.Range("A30:A34").value = Application.WorksheetFunction.Transpose(valeurs)
+
     With wshMenu
         .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
-    
-'    Call Log_Record("modAppli:EcrireInformationsConfigAuMenu", "", startTime)
 
+CleanUp:
+    Application.EnableEvents = oldEnableEvents
+    
+    Call Log_Record("modAppli:EcrireInformationsConfigAuMenu", "", startTime)
+    
 End Sub
 
+'CommentOut - 2025-06-06 @ 11:09
+'Sub EcrireInformationsConfigAuMenu(ByVal user As String)
+'
+''    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:EcrireInformationsConfigAuMenu", "", 0)
+'
+'    wshMenu.Unprotect
+'
+'    Application.EnableEvents = False
+'
+'    With wshMenu
+'        .Range("A30").value = "Heure - " & Format$(Now(), wsdADMIN.Range("B1").value & " hh:mm:ss")
+'        .Range("A31").value = "Version - " & ThisWorkbook.Name
+'        .Range("A32").value = "Utilisateur - " & user
+'        .Range("A33").value = "Environnement - " & wsdADMIN.Range("F5").value
+'        .Range("A34").value = "Format de la date - " & wsdADMIN.Range("B1").value
+'    End With
+'
+'    Application.EnableEvents = True
+'
+'    With wshMenu
+'        .Protect UserInterfaceOnly:=True
+'        .EnableSelection = xlUnlockedCells
+'    End With
+'
+''    Call Log_Record("modAppli:EcrireInformationsConfigAuMenu", "", startTime)
+'
+'End Sub
+'
 'Mettre à jour à chaque activité
 Public Sub RafraichirActivite(Optional ByVal msg As String = "") '2025-05-30 @ 12:22
 
@@ -632,7 +663,7 @@ Public Sub VerifierInactivite() '2025-05-30 @ 12:22
     Exit Sub
     
 GestionErreur:
-    Debug.Print "Erreur dans procédure 'VerifierInactivite' : " & Err.Number & " - " & Err.description
+    Debug.Print "Erreur dans procédure 'VerifierInactivite' : " & Err.Number & " - " & Err.Description
     
 End Sub
 

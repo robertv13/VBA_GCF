@@ -220,9 +220,9 @@ Public Sub GenererRapportGL_Ecriture(wsRapport As Worksheet, noEcritureDebut As 
         Dim row As Range
         Dim i As Long
         Dim colDesc As Integer
-        Dim debit As Currency, credit As Currency
+        Dim Debit As Currency, Credit As Currency
         Dim tDebit As Currency, tCredit As Currency
-        Dim dateTrans As Date
+        Dim DateTrans As Date
         Dim currentEcriture As Long
         i = 1 'Numéro de ligne à traiter
         Debug.Print "X - ", ufGL_Rapport.chkDebourse, ufGL_Rapport.chkDepotClient, ufGL_Rapport.chkEJ, ufGL_Rapport.chkEncaissement, ufGL_Rapport.chkFacture, ufGL_Rapport.chkRegularisation
@@ -236,23 +236,23 @@ Public Sub GenererRapportGL_Ecriture(wsRapport As Worksheet, noEcritureDebut As 
                     If currentEcriture Mod 25 = 0 Then
                         Application.StatusBar = "Traitement de l'écriture numéro " & currentEcriture
                     End If
-                    dateTrans = row.Cells(1, fGlTDate).value
+                    DateTrans = row.Cells(1, fGlTDate).value
                     rowRapport = rowRapport + 1
                     'Ajouter la ligne d'entête pour le No. Écriture
                     wsRapport.Cells(rowRapport, 1).value = row.Cells(fGlTNoEntrée).value
-                    wsRapport.Cells(rowRapport, 2).value = dateTrans
+                    wsRapport.Cells(rowRapport, 2).value = DateTrans
                     wsRapport.Cells(rowRapport, 3).value = row.Cells(fGlTSource).value & ", " & row.Cells(fGlTDescription).value
                     wsRapport.Cells(rowRapport, 3).Font.Bold = True
                     rowRapport = rowRapport + 1 'Passer à la ligne suivante pour les détails
                 End If
                 'Détermine la colonne pour la description du GL et le montant
                 If row.Cells(fGlTDébit).value <> 0 Then
-                    debit = row.Cells(fGlTDébit).value
-                    credit = 0
+                    Debit = row.Cells(fGlTDébit).value
+                    Credit = 0
                     colDesc = 5
                 Else
-                    debit = 0
-                    credit = row.Cells(fGlTCrédit).value
+                    Debit = 0
+                    Credit = row.Cells(fGlTCrédit).value
                     colDesc = 6
                 End If
                 'Ajouter les lignes de détail pour chaque compte
@@ -260,12 +260,12 @@ Public Sub GenererRapportGL_Ecriture(wsRapport As Worksheet, noEcritureDebut As 
                 wsRapport.Cells(rowRapport, colDesc).value = row.Cells(fGlTCompte).value
                 wsRapport.Cells(rowRapport, 7).value = row.Cells(fGlTAutreRemarque).value
                 'Déterminer s'il y a un débit ou un crédit
-                If debit <> 0 Then
-                    wsRapport.Cells(rowRapport, 8).value = debit
-                    tDebit = tDebit + debit
+                If Debit <> 0 Then
+                    wsRapport.Cells(rowRapport, 8).value = Debit
+                    tDebit = tDebit + Debit
                 Else
-                    wsRapport.Cells(rowRapport, 9).value = credit
-                    tCredit = tCredit + credit
+                    wsRapport.Cells(rowRapport, 9).value = Credit
+                    tCredit = tCredit + Credit
                 End If
                 rowRapport = rowRapport + 1
                 i = i + 1
@@ -388,9 +388,9 @@ Public Sub GenererRapportGL_DateSaisie(wsRapport As Worksheet, dtSaisieDebut As 
         Dim row As Range
         Dim i As Long
         Dim colDesc As Integer
-        Dim debit As Currency, credit As Currency
+        Dim Debit As Currency, Credit As Currency
         Dim tDebit As Currency, tCredit As Currency
-        Dim dateTrans As Date
+        Dim DateTrans As Date
         Dim currentTimeStamp As Double
         Debug.Print "X - ", ufGL_Rapport.chkDebourse, ufGL_Rapport.chkDepotClient, ufGL_Rapport.chkEJ, ufGL_Rapport.chkEncaissement, ufGL_Rapport.chkFacture, ufGL_Rapport.chkRegularisation
         For Each row In filteredRange.Rows
@@ -404,25 +404,25 @@ Public Sub GenererRapportGL_DateSaisie(wsRapport As Worksheet, dtSaisieDebut As 
                     If i Mod 25 = 0 Then
                         Application.StatusBar = "Traitement de l'écriture saisie le " & currentTimeStamp
                     End If
-                    dateTrans = row.Cells(1, fGlTDate).value
+                    DateTrans = row.Cells(1, fGlTDate).value
                     rowRapport = rowRapport + 1
                     'Ajouter la ligne d'entête pour le No. Écriture
                     wsRapport.Cells(rowRapport, 1).value = currentTimeStamp
                     wsRapport.Cells(rowRapport, 1).NumberFormat = "yyyy-mm-dd hh:mm:ss"
                     wsRapport.Cells(rowRapport, 2).value = row.Cells(fGlTNoEntrée).value
-                    wsRapport.Cells(rowRapport, 3).value = dateTrans
+                    wsRapport.Cells(rowRapport, 3).value = DateTrans
                     wsRapport.Cells(rowRapport, 4).value = row.Cells(fGlTSource).value & ", " & row.Cells(fGlTDescription).value
                     wsRapport.Cells(rowRapport, 4).Font.Bold = True
                     rowRapport = rowRapport + 1 'Passer à la ligne suivante pour les détails
                 End If
                 'Détermine la colonne pour la description du GL et le montant
                 If row.Cells(fGlTDébit).value <> 0 Then
-                    debit = row.Cells(fGlTDébit).value
-                    credit = 0
+                    Debit = row.Cells(fGlTDébit).value
+                    Credit = 0
                     colDesc = 6
                 Else
-                    debit = 0
-                    credit = row.Cells(fGlTCrédit).value
+                    Debit = 0
+                    Credit = row.Cells(fGlTCrédit).value
                     colDesc = 7
                 End If
                 'Ajouter les lignes de détail pour chaque compte
@@ -430,12 +430,12 @@ Public Sub GenererRapportGL_DateSaisie(wsRapport As Worksheet, dtSaisieDebut As 
                 wsRapport.Cells(rowRapport, colDesc).value = row.Cells(fGlTCompte).value
                 wsRapport.Cells(rowRapport, 8).value = row.Cells(fGlTAutreRemarque).value
                 'Déterminer s'il y a un débit ou un crédit
-                If debit <> 0 Then
-                    wsRapport.Cells(rowRapport, 9).value = debit
-                    tDebit = tDebit + debit
+                If Debit <> 0 Then
+                    wsRapport.Cells(rowRapport, 9).value = Debit
+                    tDebit = tDebit + Debit
                 Else
-                    wsRapport.Cells(rowRapport, 10).value = credit
-                    tCredit = tCredit + credit
+                    wsRapport.Cells(rowRapport, 10).value = Credit
+                    tCredit = tCredit + Credit
                 End If
                 rowRapport = rowRapport + 1
                 i = i + 1
@@ -873,22 +873,22 @@ Sub GL_Rapport_Wrap_Up_DateSaisie(ws As Worksheet, h1 As String, h2 As String, h
 
 End Sub
 
-Function Fn_ValiderSiDoitImprimerTransaction(ByVal source As String) As Boolean '2025-03-03 @ 10:21
+Function Fn_ValiderSiDoitImprimerTransaction(ByVal Source As String) As Boolean '2025-03-03 @ 10:21
 
     'Variable pour vérifier si la transaction est valide
     Dim aImprimer As Boolean
     aImprimer = False
 
     'Traitement de la transaction selon fGlTSource et l'état des cases
-    If InStr(source, "DÉBOURSÉ:") = 1 Or InStr(source, "RENV/DÉBOURSÉ:") = 1 Then
+    If InStr(Source, "DÉBOURSÉ:") = 1 Or InStr(Source, "RENV/DÉBOURSÉ:") = 1 Then
         If ufGL_Rapport.chkDebourse.value = True Then aImprimer = True
-    ElseIf InStr(source, "DÉPÔT DE CLIENT:") = 1 Then
+    ElseIf InStr(Source, "DÉPÔT DE CLIENT:") = 1 Then
         If ufGL_Rapport.chkDepotClient.value = True Then aImprimer = True
-    ElseIf InStr(source, "ENCAISSEMENT:") = 1 Then
+    ElseIf InStr(Source, "ENCAISSEMENT:") = 1 Then
         If ufGL_Rapport.chkEncaissement.value = True Then aImprimer = True
-    ElseIf InStr(source, "FACTURE:") = 1 Then
+    ElseIf InStr(Source, "FACTURE:") = 1 Then
         If ufGL_Rapport.chkFacture.value = True Then aImprimer = True
-    ElseIf InStr(source, "RÉGULARISATION:") = 1 Then
+    ElseIf InStr(Source, "RÉGULARISATION:") = 1 Then
         If ufGL_Rapport.chkRegularisation.value = True Then aImprimer = True
     Else
         If ufGL_Rapport.chkEJ.value = True Then aImprimer = True

@@ -308,9 +308,9 @@ Sub Construire_GL_Posting_Confirmation(invoice As String) '2025-03-12 @ 12:42
         tps = ws.Cells(r, fFacEMntTPS).value
         tvq = ws.Cells(r, fFacEMntTVQ).value
         
-        Dim descGL_Trans As String, source As String
+        Dim descGL_Trans As String, Source As String
         descGL_Trans = ws.Cells(r, fFacENomClient).value
-        source = "FACTURE:" & invoice
+        Source = "FACTURE:" & invoice
         
         Dim MyArray(1 To 7, 1 To 4) As String
         
@@ -372,8 +372,8 @@ Sub Construire_GL_Posting_Confirmation(invoice As String) '2025-03-12 @ 12:42
         
         'Mise à jour du posting GL des confirmations de facture
         Dim GLEntryNo As Long
-        Call GL_Posting_To_DB(dateFact, descGL_Trans, source, MyArray, GLEntryNo)
-        Call GL_Posting_Locally(dateFact, descGL_Trans, source, MyArray, GLEntryNo)
+        Call GL_Posting_To_DB(dateFact, descGL_Trans, Source, MyArray, GLEntryNo)
+        Call GL_Posting_Locally(dateFact, descGL_Trans, Source, MyArray, GLEntryNo)
         
     Else
         MsgBox "La facture '" & invoice & "' n'existe pas dans FAC_Entête.", vbCritical

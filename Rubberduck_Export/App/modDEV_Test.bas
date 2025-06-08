@@ -68,7 +68,33 @@ Sub Test_Ouverture_ADO()
     Exit Sub
 
 ErreurADO:
-    MsgBox "Erreur de connexion ADO : " & Err.description, vbCritical
+    MsgBox "Erreur de connexion ADO : " & Err.Description, vbCritical
     
+End Sub
+
+Sub TestConnexionADO() '2025-06-08 @ 09:17
+    Dim cn As Object
+    Set cn = CreateObject("ADODB.Connection")
+    cn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx;Extended Properties='Excel 12.0 Xml;HDR=YES;'"
+    MsgBox "Connexion OK"
+    cn.Close
+End Sub
+
+Sub TestADO()
+    Dim cn As Object
+    Set cn = CreateObject("ADODB.Connection")
+    On Error GoTo ErrADO
+    Dim destinationFileName As String
+    destinationFileName = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx"
+    
+    cn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+
+'    cn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx;Extended Properties='Excel 12.0 Xml;HDR=YES;'"
+    MsgBox "Connexion OK"
+    cn.Close
+    Exit Sub
+
+ErrADO:
+    MsgBox "Erreur : " & Err.Description
 End Sub
 

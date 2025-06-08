@@ -2033,7 +2033,7 @@ Function ValiderDateDernierJourDuMois(Y As Integer, m As Integer, d As Integer) 
     
 End Function
 
-Function ExclureTransaction(source As String) As Boolean '2025-03-06 @ 08:04
+Function ExclureTransaction(Source As String) As Boolean '2025-03-06 @ 08:04
 
     'Liste des sources à exclure
     Dim Exclusions As Variant
@@ -2041,7 +2041,7 @@ Function ExclureTransaction(source As String) As Boolean '2025-03-06 @ 08:04
     
     Dim i As Integer
     For i = LBound(Exclusions) To UBound(Exclusions)
-        If Left$(source, Len(Exclusions(i))) = Exclusions(i) Then
+        If Left$(Source, Len(Exclusions(i))) = Exclusions(i) Then
             ExclureTransaction = True
             Exit Function
         End If
@@ -2106,24 +2106,25 @@ Function TableauContientDesDonnees(lo As ListObject) As Boolean '2025-06-01 @ 06
     
 End Function
 
-Public Function TransposeToRowColumn(ByVal arr As Variant) As Variant '2025-06-01 @ 11:15
-
-    Dim r As Long, c As Long
-    Dim result As Variant
-
-    If Not IsArray(arr) Then
-        TransposeToRowColumn = arr
-        Exit Function
-    End If
-
-    ReDim result(0 To UBound(arr, 2), 0 To UBound(arr, 1))
-    For r = 0 To UBound(arr, 2)
-        For c = 0 To UBound(arr, 1)
-            result(r, c) = arr(c, r)
-        Next c
-    Next r
-
-    TransposeToRowColumn = result
-    
-End Function
-
+'CommentOut - 2025-06-06 @ 11:03
+'Public Function TransposeToRowColumn(ByVal arr As Variant) As Variant '2025-06-01 @ 11:15
+'
+'    Dim r As Long, c As Long
+'    Dim result As Variant
+'
+'    If Not IsArray(arr) Then
+'        TransposeToRowColumn = arr
+'        Exit Function
+'    End If
+'
+'    ReDim result(0 To UBound(arr, 2), 0 To UBound(arr, 1))
+'    For r = 0 To UBound(arr, 2)
+'        For c = 0 To UBound(arr, 1)
+'            result(r, c) = arr(c, r)
+'        Next c
+'    Next r
+'
+'    TransposeToRowColumn = result
+'
+'End Function
+'

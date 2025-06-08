@@ -1,6 +1,25 @@
 Attribute VB_Name = "modGL_Stuff"
 Option Explicit
 
+'Structure pour une écriture comptable (données communes)
+Public Type cGL_Entry '2025-06-08 @ 06:59
+
+    DateTrans As Date
+    Source As String
+    NoCompte As String
+    AutreRemarque As String
+    
+End Type
+
+'Structure pour une écriture comptable (données spécifiques à chaque ligne)
+Public Type cGL_EntryLine '2025-06-08 @ 07:02
+
+    NoCompte As String
+    Description As String
+    Montant As Double
+    
+End Type
+
 Public Sub GL_Get_Account_Trans_AF(glNo As String, dateDeb As Date, dateFin As Date, ByRef rResult As Range)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Stuff:GL_Get_Account_Trans_AF", glNo & " - De " & dateDeb & " à " & dateFin, 0)
@@ -78,7 +97,7 @@ Public Sub GL_Get_Account_Trans_AF(glNo As String, dateDeb As Date, dateFin As D
 
 End Sub
 
-Sub GL_Posting_To_DB(df As Date, desc As String, source As String, arr As Variant, ByRef GLEntryNo As Long) 'Generic routine 2024-06-06 @ 07:00
+Sub GL_Posting_To_DB(df As Date, desc As String, Source As String, arr As Variant, ByRef GLEntryNo As Long) 'Generic routine 2024-06-06 @ 07:00
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Stuff:GL_Posting_To_DB", "", 0)
 
@@ -128,7 +147,7 @@ Sub GL_Posting_To_DB(df As Date, desc As String, source As String, arr As Varian
                 rs.Fields(fGlTNoEntrée - 1).value = GLEntryNo
                 rs.Fields(fGlTDate - 1).value = CDate(df)
                 rs.Fields(fGlTDescription - 1).value = desc
-                rs.Fields(fGlTSource - 1).value = source
+                rs.Fields(fGlTSource - 1).value = Source
                 rs.Fields(fGlTNoCompte - 1).value = arr(i, 1)
                 rs.Fields(fGlTCompte - 1).value = arr(i, 2)
                 If arr(i, 3) > 0 Then
@@ -158,7 +177,7 @@ Nothing_to_Post:
 
 End Sub
 
-Sub GL_Posting_Locally(df As Date, desc As String, source As String, arr As Variant, ByRef GLEntryNo As Long) 'Write records locally
+Sub GL_Posting_Locally(df As Date, desc As String, Source As String, arr As Variant, ByRef GLEntryNo As Long) 'Write records locally
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("*** modGL_Stuff:GL_Posting_Locally", "", 0)
     
@@ -180,7 +199,7 @@ Sub GL_Posting_Locally(df As Date, desc As String, source As String, arr As Vari
                 .Range("A" & rowToBeUsed).value = GLEntryNo
                 .Range("B" & rowToBeUsed).value = CDate(df)
                 .Range("C" & rowToBeUsed).value = desc
-                .Range("D" & rowToBeUsed).value = source
+                .Range("D" & rowToBeUsed).value = Source
                 .Range("E" & rowToBeUsed).value = arr(i, 1)
                 .Range("F" & rowToBeUsed).value = arr(i, 2)
                 If arr(i, 3) > 0 Then

@@ -40,6 +40,7 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
         .Range("D3").value = ""
         .Range("D6:L28").Clear
         .Shapes("Impression").Visible = False
+        .Shapes("EcritureGL").Visible = msoFalse
         .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
         Application.EnableEvents = False
