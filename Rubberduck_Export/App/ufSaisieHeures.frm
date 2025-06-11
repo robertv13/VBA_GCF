@@ -28,6 +28,7 @@ End Property
 Private Sub UserForm_Initialize() '2025-05-30 @ 13:26
 
     Call ConnectFormControls(Me)
+    Call VerifierEtatBoutonAjouter
     Call RafraichirActivite("Activité dans userForm '" & Me.Name & "'")
     
 End Sub
@@ -54,24 +55,9 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
         .CompareMethod = vbTextCompare
     End With
 
-    Call modTEC_Saisie.ActiverButtonsVraiOuFaux("UserFormActivate", False, False, False, False)
+    Call VerifierEtatBoutonAjouter '2025-06-09 @ 08:28
+'    Call ActiverButtonsVraiOuFaux("UserFormActivate", False, False, False, False)
 
-'    'Default Professionnal - 2024-08-19 @ 07:59
-'    Select Case GetNomUtilisateur()
-'        Case "Guillaume", "GuillaumeCharron", "gchar", "Robert M. Vigneault", "robertmv"
-'            cmbProfessionnel.value = "GC"
-'        Case "vgervais", "Vlad_Portable"
-'            cmbProfessionnel.value = "VG"
-'        Case "User"
-'            cmbProfessionnel.value = "ML"
-'        Case "Annie"
-'            cmbProfessionnel.value = "AR"
-'        Case "Oli_Portable"
-'            cmbProfessionnel.value = "OB"
-'        Case Else
-'            cmbProfessionnel.value = ""
-'    End Select
-    
     ufSaisieHeures.txtDate.value = "" 'On vide la date pour forcer la saisie
     
     On Error Resume Next
@@ -239,94 +225,7 @@ Private Sub cmbProfessionnel_AfterUpdate() '2025-05-31 @ 16:11
         End If
     End With
     
-'CommentOut - 2025-05-31 @ 15:31
-'    Dim initProfPermises As String
-'    initProfPermises = GetInitialesAutorises(GetNomUtilisateur())
-'
-'    Dim initialesObligatoires As String
-'
-'    'Restreindre l'accès au professionnel par défaut du code d'utilisateur
-'    Select Case GetNomUtilisateur()
-'        Case "Guillaume", "GuillaumeCharron", "gchar", "Robert M. Vigneault", "robertmv"
-'            'Accès à toutes les initiales de professionnel
-'            initialesObligatoires = ""
-'        Case "vgervais", "Vlad_Portable"
-'            initialesObligatoires = "VG"
-'        Case "User"
-'            initialesObligatoires = "ML"
-'        Case "Annie"
-'            initialesObligatoires = "AR"
-'        Case "Oli_Portable"
-'            initialesObligatoires = "OB"
-'        Case Else
-'            cmbProfessionnel.value = ""
-'            Exit Sub
-'    End Select
-'
-'    Select Case GetNomUtilisateur()
-'        Case "Guillaume", "GuillaumeCharron", "gchar", "Robert M. Vigneault", "robertmv"
-'            DoEvents
-'        Case "vgervais", "Vlad_Portable"
-'            If cmbProfessionnel.value <> "VG" Then
-'                MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
-'                    "Vous devez obligatoirement utiliser le code 'VG'", _
-'                    vbInformation
-'            End If
-'            cmbProfessionnel.value = "VG"
-'        Case "User"
-'            If cmbProfessionnel.value <> "ML" Then
-'                MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
-'                        "Vous devez obligatoirement utiliser le code 'ML'", _
-'                        vbInformation
-'            End If
-'            cmbProfessionnel.value = "ML"
-'        Case "Annie"
-'            If cmbProfessionnel.value <> "AR" Then
-'                MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
-'                    "Vous devez obligatoirement utiliser le code 'AR'", _
-'                    vbInformation
-'            End If
-'            cmbProfessionnel.value = "AR"
-'        Case "Oli_Portable"
-'            If cmbProfessionnel.value <> "OB" Then
-'                MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
-'                    "Vous devez obligatoirement utiliser le code 'OB'", _
-'                    vbInformation
-'            End If
-'            cmbProfessionnel.value = "OB"
-'        Case Else
-'            cmbProfessionnel.value = ""
-'    End Select
-'
-'    'Vérifier si une restriction s'applique
-'    If initialesObligatoires <> "" Then
-'        If cmbProfessionnel.value <> initialesObligatoires Then
-'            MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
-'                   "Vous devez obligatoirement utiliser le code '" & initialesObligatoires & "'", vbInformation
-'        End If
-'        cmbProfessionnel.value = initialesObligatoires
-'    End If
-'
-'    ' Mettre à jour l'ID du professionnel et charger les heures
-'    With ufSaisieHeures
-'        If .cmbProfessionnel.value <> "" Then
-'            .txtProfID.value = Fn_GetID_From_Initials(.cmbProfessionnel.value)
-'            If .txtDate.value <> "" Then
-'                Call TEC_Get_All_TEC_AF
-'                Call TEC_Refresh_ListBox_And_Add_Hours
-'            End If
-'        End If
-'    End With
-'
-'    If ufSaisieHeures.cmbProfessionnel.value <> "" Then
-'        ufSaisieHeures.txtProfID.value = Fn_GetID_From_Initials(ufSaisieHeures.cmbProfessionnel.value)
-'        If ufSaisieHeures.txtDate.value <> "" Then '2024-09-05 @ 20:50
-'            Call TEC_Get_All_TEC_AF
-'            Call TEC_Refresh_ListBox_And_Add_Hours
-'        End If
-'    End If
-'
-'    Call Log_Record("ufSaisieHeures:cmbProfessionnel_AfterUpdate", "", startTime)
+    Call VerifierEtatBoutonAjouter '2025-06-09 @ 08:25
 
 End Sub
 
@@ -407,6 +306,8 @@ Private Sub txtDate_AfterUpdate()
         Call TEC_Refresh_ListBox_And_Add_Hours
     End If
     
+    Call VerifierEtatBoutonAjouter '2025-06-09 @ 08:25
+    
     Call Log_Record("ufSaisieHeures:txtDate_AfterUpdate", "", startTime)
     
 End Sub
@@ -423,18 +324,20 @@ Private Sub txtClient_AfterUpdate()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtClient_AfterUpdate", ufSaisieHeures.txtClient.value, 0)
     
-    If Me.txtClient.value <> savedClient Then '2025-03-25 @ 13:05
-        If Me.txtTECID = "" Then
-            Call modTEC_Saisie.ActiverButtonsVraiOuFaux("txtClient_AfterUpdate", False, False, False, True)
-        Else
-            Call modTEC_Saisie.ActiverButtonsVraiOuFaux("txtClient_AfterUpdate", False, True, False, True)
-        End If
-    End If
+'    If Me.txtClient.value <> savedClient Then '2025-03-25 @ 13:05
+'        If Me.txtTECID = "" Then
+'            Call modTEC_Saisie.ActiverButtonsVraiOuFaux("txtClient_AfterUpdate", False, False, False, True)
+'        Else
+'            Call modTEC_Saisie.ActiverButtonsVraiOuFaux("txtClient_AfterUpdate", False, True, False, True)
+'        End If
+'    End If
 
     'Force à cacher le listbox pour les résultats de recherche
     On Error Resume Next
     Me.lstboxNomClient.Visible = False
     On Error GoTo 0
+    
+    Call VerifierEtatBoutonAjouter '2025-06-09 @ 08:25
     
     Call Log_Record("ufSaisieHeures:txtClient_AfterUpdate", Me.txtTECID, startTime)
     
@@ -444,15 +347,15 @@ Private Sub txtActivite_AfterUpdate()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtActivite_AfterUpdate", Me.txtActivite.value, 0)
     
-    If Me.txtActivite.value <> savedActivite Then '2025-03-25 @ 13:05
-'        Debug.Print "txtActivite_AfterUpdate : ", Me.txtActivite.value, " vs ", savedActivite, " - TECID=" & Me.txtTECID
-        If Me.txtTECID = "" Then
-            Call modTEC_Saisie.ActiverButtonsVraiOuFaux("txtActivite_AfterUpdate", False, False, False, True)
-        Else
-            Call modTEC_Saisie.ActiverButtonsVraiOuFaux("txtActivite_AfterUpdate", False, True, False, True)
-        End If
-    End If
-    
+'    If Me.txtActivite.value <> savedActivite Then '2025-03-25 @ 13:05
+''        Debug.Print "txtActivite_AfterUpdate : ", Me.txtActivite.value, " vs ", savedActivite, " - TECID=" & Me.txtTECID
+'        If Me.txtTECID = "" Then
+'            Call modTEC_Saisie.ActiverButtonsVraiOuFaux("txtActivite_AfterUpdate", False, False, False, True)
+'        Else
+'            Call modTEC_Saisie.ActiverButtonsVraiOuFaux("txtActivite_AfterUpdate", False, True, False, True)
+'        End If
+'    End If
+'
 '    If Me.txtActivite.value <> savedActivite Then '2025-01-16 @ 16:46
 '        If Me.txtHeures.value <> "" Then
 '            If CCur(Me.txtHeures.value) <> 0 Then
@@ -464,6 +367,8 @@ Private Sub txtActivite_AfterUpdate()
 '    End If
 
     Me.txtActivite.value = Fn_Nettoyer_Fin_Chaine(Me.txtActivite.value)
+    
+    Call VerifierEtatBoutonAjouter '2025-06-09 @ 08:25
     
     Call Log_Record("ufSaisieHeures:txtActivite_AfterUpdate", Me.txtTECID, startTime)
     
@@ -536,14 +441,16 @@ Sub txtHeures_AfterUpdate()
     
     Me.txtHeures.value = Format$(strHeures, "#0.00")
     
-    If CCur(Me.txtHeures.value) <> savedHeures Then '2025-03-25 @ 13:05
-'        Debug.Print "txtHeures_AfterUpdate : ", Me.txtHeures.value, " vs ", savedHeures, " - TECID=" & Me.txtTECID
-        If Me.txtTECID = "" Then 'Création d'une nouvelle charge
-            Call modTEC_Saisie.ActiverButtonsVraiOuFaux("txtHeures_AfterUpdate", True, False, False, True)
-        Else 'Modification d'une charge existante
-            Call modTEC_Saisie.ActiverButtonsVraiOuFaux("txtHeures_AfterUpdate", False, True, False, True)
-        End If
-    End If
+'    If CCur(Me.txtHeures.value) <> savedHeures Then '2025-03-25 @ 13:05
+''        Debug.Print "txtHeures_AfterUpdate : ", Me.txtHeures.value, " vs ", savedHeures, " - TECID=" & Me.txtTECID
+'        If Me.txtTECID = "" Then 'Création d'une nouvelle charge
+'            Call modTEC_Saisie.ActiverButtonsVraiOuFaux("txtHeures_AfterUpdate", True, False, False, True)
+'        Else 'Modification d'une charge existante
+'            Call modTEC_Saisie.ActiverButtonsVraiOuFaux("txtHeures_AfterUpdate", False, True, False, True)
+'        End If
+'    End If
+'
+    Call VerifierEtatBoutonAjouter '2025-06-09 @ 08:25
     
     Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate", Me.txtTECID, startTime)
     
@@ -562,6 +469,8 @@ Private Sub chbFacturable_AfterUpdate()
         End If
     End If
 
+    Call VerifierEtatBoutonAjouter '2025-06-09 @ 08:25
+    
     Call Log_Record("ufSaisieHeures:chbFacturable_AfterUpdate", Me.txtTECID, startTime)
     
 End Sub
@@ -579,6 +488,8 @@ Private Sub txtCommNote_AfterUpdate()
         End If
     End If
 
+    Call VerifierEtatBoutonAjouter '2025-06-09 @ 08:25
+    
     Call Log_Record("ufSaisieHeures:txtCommNote_AfterUpdate", Me.txtTECID, startTime)
     
 End Sub
@@ -749,4 +660,23 @@ Sub imgStats_Click()
 
 End Sub
 
+Private Sub VerifierEtatBoutonAjouter() '2025-06-09 @ 08:13
+    
+    If Me.txtTECID = "" Then 'Mode création: tous les champs obligatoires doivent être remplis
+        If _
+            Trim(Me.cmbProfessionnel.value) <> "" And _
+            Trim(Me.txtClient.value) <> "" And _
+            Trim(Me.txtActivite.value) <> "" And _
+            Trim(Me.txtHeures.value) <> "" Then
+            Me.cmdAdd.Enabled = True
+        Else
+            Me.cmdAdd.Enabled = False
+        End If
+    Else
+        'Mode modification: bouton Ajouter inactif, tu peux gérer le bouton Modifier ici
+        Me.cmdAdd.Enabled = False
+        'Par exemple : Me.btnModifier.Enabled = ...
+    End If
+
+End Sub
 
