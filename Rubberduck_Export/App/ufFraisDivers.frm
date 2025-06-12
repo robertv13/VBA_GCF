@@ -3,7 +3,7 @@ Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufFraisDivers
    Caption         =   "Frais divers pour ce client"
    ClientHeight    =   2220
    ClientLeft      =   180
-   ClientTop       =   690
+   ClientTop       =   696
    ClientWidth     =   4260
    OleObjectBlob   =   "ufFraisDivers.frx":0000
    StartUpPosition =   1  'CenterOwner

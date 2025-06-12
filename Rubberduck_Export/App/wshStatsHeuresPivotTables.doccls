@@ -41,7 +41,7 @@ Private Sub Worksheet_Activate()
     'Batir la liste des options valides en fonction de l'utilisateur
     Dim listeChoixValides As String
     Select Case GetNomUtilisateur()
-        Case "Guillaume", "GuillaumeCharron", "gchar", "Robert M. Vigneault", "robertmv"
+        Case "Guillaume", "GuillaumeCharron", "gchar", "RobertMV", "robertmv"
             listeChoixValides = "Tous,Guillaume,Vladimir,Michel,Annie"
         Case "vgervais", "Vlad_Portable"
             listeChoixValides = "Vladimir"

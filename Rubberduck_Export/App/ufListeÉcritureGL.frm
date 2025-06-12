@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufListe…critureGL 
    Caption         =   "Liste des Ècritures"
-   ClientHeight    =   7275
+   ClientHeight    =   7272
    ClientLeft      =   120
-   ClientTop       =   465
-   ClientWidth     =   13545
+   ClientTop       =   468
+   ClientWidth     =   13548
    OleObjectBlob   =   "ufListe…critureGL.frx":0000
    StartUpPosition =   1  'CenterOwner
 End

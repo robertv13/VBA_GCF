@@ -419,7 +419,7 @@ Sub DemarrageApplication() '2025-06-06 @ 11:40
     
     wshMenu.Activate
 
-    If gUtilisateurWindows = "Robert M. Vigneault" Or gUtilisateurWindows = "robertmv" Then
+    If gUtilisateurWindows = "RobertMV" Or gUtilisateurWindows = "robertmv" Then
         Call DemarrerSauvegardeAutomatique
     End If
     
@@ -442,7 +442,7 @@ Function FN_Get_Root_Path() As String '2025-03-03 @ 20:28
    
     DoEvents
     
-    If GetNomUtilisateur() = "Robert M. Vigneault" Or GetNomUtilisateur() = "robertmv" Then
+    If GetNomUtilisateur() = "RobertMV" Or GetNomUtilisateur() = "robertmv" Then
         FN_Get_Root_Path = "C:\VBA\GC_FISCALITÉ"
     Else
         FN_Get_Root_Path = "P:\Administration\APP\GCF"
@@ -494,7 +494,7 @@ Sub SetupUserDateFormat(ByVal user As String)
             userDateFormat = "dd/mm/yyyy"
         Case "Annie"
             userDateFormat = "yyyy/mm/dd"
-        Case "Robert M. Vigneault", "robertmv"
+        Case "RobertMV", "robertmv"
             userDateFormat = "dd/mm/yyyy"
         Case Else
             userDateFormat = "dd/mm/yyyy"
@@ -649,7 +649,7 @@ Public Sub VerifierInactivite() '2025-05-30 @ 12:22
         End If
     End If
 
-'    If GetNomUtilisateur() <> "Robert M. Vigneault" And GetNomUtilisateur() <> "Robertmv" Then
+'    If GetNomUtilisateur() <> "RobertMV" And GetNomUtilisateur() <> "Robertmv" Then
 '        If minutesInactive >= INTERVALLE_MAXIMUM_INACTIVITE Then
 '            Application.DisplayAlerts = False
 '            Call ApplicationFermetureNormale

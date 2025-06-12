@@ -1201,7 +1201,7 @@ Function Fn_Get_Windows_Username() As String '2025-06-01 @ 05:36
 
     '@Ignore UnassignedVariableUsage
     If GetUserName(buffer, size) Then
-        Fn_Get_Windows_Username = Left$(buffer, size - 1)
+        Fn_Get_Windows_Username = Trim(Left$(buffer, size - 1))
     Else
         Debug.Print "Fn_Get_Windows_Username : Incapable de déterminer l'utilisateur Windows !"
         Fn_Get_Windows_Username = "Unknown"

@@ -52,7 +52,7 @@ Public Function GetInitialesAutorises(ByVal userName As String) As String '2025-
     
     'Les utilisateurs avec toutes les autorisations retourne ""
     Select Case userName
-        Case "Guillaume", "GuillaumeCharron", "gchar", "Robert M. Vigneault", "robertmv"
+        Case "Guillaume", "GuillaumeCharron", "gchar", "RobertMV", "robertmv"
             GetInitialesAutorises = "" 'Toutes les initiales sont permises
         Case Else
             If dict.Exists(userName) Then

@@ -56,7 +56,7 @@ Sub Test_Ouverture_ADO()
     Dim cn As Object
     Dim f As String
     
-    f = "C:\VBA\GC_FISCALITÉ\DataFiles\GL_Temp_Robert M. Vigneault_20250601_120734.xlsx" ' <-- remplace par ton chemin exact
+    f = "C:\VBA\GC_FISCALITÉ\DataFiles\GL_Temp_RobertMV_20250601_120734.xlsx" ' <-- remplace par ton chemin exact
 
     Set cn = CreateObject("ADODB.Connection")
     
@@ -96,5 +96,12 @@ Sub TestADO()
 
 ErrADO:
     MsgBox "Erreur : " & Err.Description
+End Sub
+
+Sub TestAccesVBProject()
+    Dim vbComp As Object
+    For Each vbComp In ThisWorkbook.VBProject.VBComponents
+        Debug.Print vbComp.Name
+    Next vbComp
 End Sub
 

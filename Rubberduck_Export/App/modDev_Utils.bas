@@ -1870,7 +1870,7 @@ Sub Test_Fn_Get_A_Row_From_A_Worksheet() '2025-01-13 @ 08:49
     
     'Définir la feuille, la valeur à rechercher et la colonne
     feuille = "BD_Clients"
-    valeurRecherche = "9299-2585 Québec Inc. [Informat] Marie Guay Isablle Vigneault"
+    valeurRecherche = "9299-2585 Québec Inc. [Informat] Marie Guay Isabelle Vigneault"
     colRecherche = 17
     
     'Appeler la fonction de recherche

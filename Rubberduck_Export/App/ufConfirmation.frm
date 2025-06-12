@@ -2,9 +2,9 @@ VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufConfirmation 
    Caption         =   "Confirmation des factures"
    ClientHeight    =   9060.001
-   ClientLeft      =   195
+   ClientLeft      =   192
    ClientTop       =   780
-   ClientWidth     =   16545
+   ClientWidth     =   16548
    OleObjectBlob   =   "ufConfirmation.frx":0000
    StartUpPosition =   1  'CenterOwner
 End

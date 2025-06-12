@@ -13,7 +13,7 @@ Sub Main()
     
     'Setup path to Source files
     Dim pathSourceFile As String
-    pathSourceFile = "C:\Users\Robert M. Vigneault\Downloads"
+    pathSourceFile = "C:\Users\RobertMV\Downloads"
     
     Dim fileName As String
     

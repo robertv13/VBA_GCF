@@ -900,7 +900,7 @@ Sub AjusterEpurerTablesDeMaster() '2024-12-07 @ 06:47
     cheminClasseur = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx"
 
 'CommentOut - 2025-05-30 @ 07:29
-'    If GetNomUtilisateur() <> "Robert M. Vigneault" Then
+'    If GetNomUtilisateur() <> "RobertMV" Then
 '        Exit Sub
 '    End If
 '
@@ -1557,7 +1557,7 @@ Sub ExporterCodeVBA() '2025-03-11 @ 06:47
 
     'Définir le dossier où enregistrer les modules
     Dim dossierBackup As String
-    dossierBackup = "C:\Users\Robert M. Vigneault\OneDrive\_P E R S O N N E L\00_AU CAS OÙ\Backup_VBA\" & _
+    dossierBackup = "C:\Users\RobertMV\OneDrive\_P E R S O N N E L\00_AU CAS OÙ\Backup_VBA\" & _
                             Format$(Now, "yyyy-mm-dd_HHMMSS") & "-" & ThisWorkbook.Name & "\"
     
     'Vérifier si le dossier existe, sinon le créer

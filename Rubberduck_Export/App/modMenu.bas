@@ -32,7 +32,7 @@ Sub menuFacturation()
     If GetNomUtilisateur() = "Guillaume" Or _
             GetNomUtilisateur() = "GuillaumeCharron" Or _
             GetNomUtilisateur() = "gchar" Or _
-            GetNomUtilisateur() = "Robert M. Vigneault" Or _
+            GetNomUtilisateur() = "RobertMV" Or _
             GetNomUtilisateur() = "robertmv" Or _
             GetNomUtilisateur() = "User" Or _
             GetNomUtilisateur() = "vgervais" Or _
@@ -64,7 +64,7 @@ Sub menuComptabilité()
     If GetNomUtilisateur() = "Guillaume" Or _
             GetNomUtilisateur() = "GuillaumeCharron" Or _
             GetNomUtilisateur() = "gchar" Or _
-            GetNomUtilisateur() = "Robert M. Vigneault" Or _
+            GetNomUtilisateur() = "RobertMV" Or _
             GetNomUtilisateur() = "robertmv" Or _
             GetNomUtilisateur() = "User" Then
         wshMenuGL.Visible = xlSheetVisible
@@ -93,7 +93,7 @@ Sub Parametres()
     If GetNomUtilisateur() = "Guillaume" Or _
             GetNomUtilisateur() = "GuillaumeCharron" Or _
             GetNomUtilisateur() = "gchar" Or _
-            GetNomUtilisateur() = "Robert M. Vigneault" Or _
+            GetNomUtilisateur() = "RobertMV" Or _
             GetNomUtilisateur() = "robertmv" Then
         wsdADMIN.Visible = xlSheetVisible
         wsdADMIN.Select
@@ -148,7 +148,7 @@ Sub SauvegarderEtSortirApplication() '2024-08-30 @ 07:37
 '        ActiveWorkbook.Close SaveChanges:=True
 '        Application.EnableEvents = True
 '
-'        If GetNomUtilisateur() = "Robert M. Vigneault" Or GetNomUtilisateur() = "robertmv" Then
+'        If GetNomUtilisateur() = "RobertMV" Or GetNomUtilisateur() = "robertmv" Then
 '            Call StopperSauvegardeAutomatique
 '            Call ExporterCodeVBA 'Sauvegarde AUTOMATIQUE du code VBA
 '        End If
@@ -194,7 +194,7 @@ Sub ApplicationFermetureNormale(ByVal userName As String) 'Nouvelle procédure - 
     End If
 
     'Fermer la sauvegarde automtique du code VBA (seul le développeur déclenche la sauvegarde automtique)
-    If userName = "Robert M. Vigneault" Or userName = "robertmv" Then
+    If userName = "RobertMV" Or userName = "robertmv" Then
         Call StopperSauvegardeAutomatique
         Call ExporterCodeVBA
     End If
@@ -219,7 +219,7 @@ Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
     Dim ws As Worksheet
     For Each ws In ThisWorkbook.Worksheets
         If ws.CodeName <> "wshMenu" Then
-            If GetNomUtilisateur() <> "Robert M. Vigneault" Or InStr(ws.CodeName, "wshzDoc") = 0 Then
+            If GetNomUtilisateur() <> "RobertMV" Or InStr(ws.CodeName, "wshzDoc") = 0 Then
                 ws.Visible = xlSheetHidden
             End If
         End If
@@ -252,7 +252,7 @@ Sub HideDevShapesBasedOnUsername(ByVal userName As String) '2025-06-06 @ 11:17
     )
 
     Dim isDevUser As Boolean
-    isDevUser = (userName = "Robert M. Vigneault" Or userName = "robertmv")
+    isDevUser = (userName = "RobertMV" Or userName = "robertmv")
     Dim visibleState As MsoTriState
     visibleState = IIf(isDevUser, msoTrue, msoFalse)
 
@@ -281,7 +281,7 @@ End Sub
 '
 '    'Loop through each shape in the worksheet
 '    Dim shp As Shape
-'    If userName = "Robert M. Vigneault" Or userName = "robertmv" Then
+'    If userName = "RobertMV" Or userName = "robertmv" Then
 '        ws.Shapes("shpImporterCorrigerMASTER").Visible = msoTrue
 '        ws.Shapes("shpVérificationIntégrité").Visible = msoTrue
 '        ws.Shapes("shpTraitementFichiersLog").Visible = msoTrue
@@ -330,7 +330,7 @@ End Sub
 
 Sub shpImporterCorrigerMASTER_Click()
 
-    If GetNomUtilisateur() <> "Robert M. Vigneault" And GetNomUtilisateur() <> "robertmv" Then
+    If GetNomUtilisateur() <> "RobertMV" And GetNomUtilisateur() <> "robertmv" Then
         Exit Sub
     End If
     
