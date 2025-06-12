@@ -851,6 +851,7 @@
 2025-06-09 15:42:22.59 | Robert M. Vigneault | APP_v6.C.94.xlsb | ----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) ----- |  | 
 
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 2025-06-11 10:31:17.25 | Robert M. Vigneault | APP_v6.C.94.xlsb | ----- DÉBUT D'UNE NOUVELLE SESSION (modAppli:DemarrageApplication) ----- |  | 
 2025-06-11 10:31:17.51 | Robert M. Vigneault | APP_v6.C.94.xlsb | modAppli:CreateUserActiveFile |  | 
 2025-06-11 10:31:17.52 | Robert M. Vigneault | APP_v6.C.94.xlsb | modAppli:CreateUserActiveFile |  | 0,0078 secondes
@@ -896,6 +897,640 @@
 
 2025-06-11 10:35:19.14 | Robert M. Vigneault | APP_v6.C.94.xlsb | modMenu:SauvegarderEtSortirApplication |  | 
 2025-06-11 10:35:21.09 | Robert M. Vigneault | APP_v6.C.94.xlsb | ----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) ----- |  | 
+=======
+2025-06-11 06:45:18.87 | RobertMV | APP_v6.C.94.xlsb | ----- DÉBUT D'UNE NOUVELLE SESSION (modAppli:DemarrageApplication) ----- |  | 
+2025-06-11 20:37:17.16 | RobertMV | APP_v6.C95.xlsb | modAppli:CreateUserActiveFile |  | 
+2025-06-11 20:37:17.16 | RobertMV | APP_v6.C95.xlsb | modAppli:CreateUserActiveFile |  | 0,0000 secondes
+
+2025-06-11 20:37:17.16 | RobertMV | APP_v6.C95.xlsb | modAppli:SetupUserDateFormat |  | 
+2025-06-11 20:37:17.16 | RobertMV | APP_v6.C95.xlsb | modAppli:SetupUserDateFormat |  | 0,0078 secondes
+
+2025-06-11 20:37:17.16 | RobertMV | APP_v6.C95.xlsb | modAppli:BackupMasterFile |  | 
+2025-06-11 20:37:17.18 | RobertMV | APP_v6.C95.xlsb | modAppli:BackupMasterFile |  | 0,0156 secondes
+
+2025-06-11 20:37:17.18 | RobertMV | APP_v6.C95.xlsb | modAppli:EcrireInformationsConfigAuMenu |  | 
+2025-06-11 20:37:17.19 | RobertMV | APP_v6.C95.xlsb | modAppli:EcrireInformationsConfigAuMenu |  | 0,0078 secondes
+
+2025-06-11 20:37:17.20 | RobertMV | APP_v6.C95.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 
+2025-06-11 20:37:17.20 | RobertMV | APP_v6.C95.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 0,0000 secondes
+
+2025-06-11 20:37:17.22 | RobertMV | APP_v6.C95.xlsb | modAppli:DemarrageApplication (ERREUR) : L'accès par programme au projet Visual Basic n'est pas fiable
+ | 74237,22 | 
+2025-06-11 20:37:27.13 | RobertMV | APP_v6.C95.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-06-11 20:37:27.14 | RobertMV | APP_v6.C95.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0078 secondes
+
+2025-06-11 20:38:02.48 | RobertMV | APP_v6.C95.xlsb | modMenu:SauvegarderEtSortirApplication |  | 
+2025-06-11 20:38:04.30 | RobertMV | APP_v6.C95.xlsb | ----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) ----- |  | 
+
+2025-06-11 20:40:34.78 | RobertMV | APP_v6.C95.xlsb | modMenu:SauvegarderEtSortirApplication |  | 
+2025-06-11 20:40:36.37 | RobertMV | APP_v6.C95.xlsb | ----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) ----- |  | 
+
+2025-06-11 20:40:54.48 | RobertMV | APP_v6.C95.xlsb | modMenu:SauvegarderEtSortirApplication |  | 
+2025-06-11 20:40:56.66 | RobertMV | APP_v6.C95.xlsb | ----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) ----- |  | 
+
+2025-06-11 20:41:38.22 | RobertMV | APP_v6.C95.xlsb | modMenu:SauvegarderEtSortirApplication |  | 
+2025-06-11 20:42:56.81 | RobertMV | APP_v6.C95.xlsb | ----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) ----- |  | 
+
+2025-06-11 20:49:26.38 | RobertMV | APP_v6.C95.xlsb | ----- DÉBUT D'UNE NOUVELLE SESSION (modAppli:DemarrageApplication) ----- |  | 
+2025-06-11 20:49:26.48 | RobertMV | APP_v6.C95.xlsb | modAppli:CreateUserActiveFile |  | 
+2025-06-11 20:49:26.48 | RobertMV | APP_v6.C95.xlsb | modAppli:CreateUserActiveFile |  | 0,0000 secondes
+
+2025-06-11 20:49:26.48 | RobertMV | APP_v6.C95.xlsb | modAppli:SetupUserDateFormat |  | 
+2025-06-11 20:49:26.48 | RobertMV | APP_v6.C95.xlsb | modAppli:SetupUserDateFormat |  | 0,0078 secondes
+
+2025-06-11 20:49:26.48 | RobertMV | APP_v6.C95.xlsb | modAppli:BackupMasterFile |  | 
+2025-06-11 20:49:26.48 | RobertMV | APP_v6.C95.xlsb | modAppli:BackupMasterFile |  | 0,0000 secondes
+
+2025-06-11 20:49:26.48 | RobertMV | APP_v6.C95.xlsb | modAppli:EcrireInformationsConfigAuMenu |  | 
+2025-06-11 20:49:26.49 | RobertMV | APP_v6.C95.xlsb | modAppli:EcrireInformationsConfigAuMenu |  | 0,0078 secondes
+
+2025-06-11 20:49:26.50 | RobertMV | APP_v6.C95.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 
+2025-06-11 20:49:26.50 | RobertMV | APP_v6.C95.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 0,0000 secondes
+
+2025-06-11 20:49:26.50 | RobertMV | APP_v6.C95.xlsb | modAppli:DemarrageApplication (ERREUR) : L'accès par programme au projet Visual Basic n'est pas fiable
+ | 74966,5 | 
+2025-06-11 20:49:36.15 | RobertMV | APP_v6.C95.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-06-11 20:49:36.16 | RobertMV | APP_v6.C95.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0078 secondes
+
+2025-06-11 20:49:38.03 | RobertMV | APP_v6.C95.xlsb | modMenu:SauvegarderEtSortirApplication |  | 
+2025-06-11 20:49:40.51 | RobertMV | APP_v6.C95.xlsb | ----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) ----- |  | 
+
+2025-06-11 20:52:47.60 | RobertMV | APP_v6.C95.xlsb | modMenu:SauvegarderEtSortirApplication |  | 
+2025-06-11 20:52:49.18 | RobertMV | APP_v6.C95.xlsb | ----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) ----- |  | 
+
+2025-06-11 20:53:20.74 | RobertMV | APP_v6.C95.xlsb | ----- DÉBUT D'UNE NOUVELLE SESSION (modAppli:DemarrageApplication) ----- |  | 
+2025-06-11 20:53:20.85 | RobertMV | APP_v6.C95.xlsb | modAppli:CreateUserActiveFile |  | 
+2025-06-11 20:53:20.85 | RobertMV | APP_v6.C95.xlsb | modAppli:CreateUserActiveFile |  | 0,0000 secondes
+
+2025-06-11 20:53:20.85 | RobertMV | APP_v6.C95.xlsb | modAppli:SetupUserDateFormat |  | 
+2025-06-11 20:53:20.86 | RobertMV | APP_v6.C95.xlsb | modAppli:SetupUserDateFormat |  | 0,0078 secondes
+
+2025-06-11 20:53:20.86 | RobertMV | APP_v6.C95.xlsb | modAppli:BackupMasterFile |  | 
+2025-06-11 20:53:20.86 | RobertMV | APP_v6.C95.xlsb | modAppli:BackupMasterFile |  | 0,0078 secondes
+
+2025-06-11 20:53:20.87 | RobertMV | APP_v6.C95.xlsb | modAppli:EcrireInformationsConfigAuMenu |  | 
+2025-06-11 20:53:20.88 | RobertMV | APP_v6.C95.xlsb | modAppli:EcrireInformationsConfigAuMenu |  | 0,0078 secondes
+
+2025-06-11 20:53:20.88 | RobertMV | APP_v6.C95.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 
+2025-06-11 20:53:20.88 | RobertMV | APP_v6.C95.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 0,0078 secondes
+
+2025-06-11 20:53:20.88 | RobertMV | APP_v6.C95.xlsb | modAppli:DemarrageApplication (ERREUR) : L'accès par programme au projet Visual Basic n'est pas fiable
+ | 75200,88 | 
+2025-06-11 20:53:23.95 | RobertMV | APP_v6.C95.xlsb | modMenu:SauvegarderEtSortirApplication |  | 
+2025-06-11 20:53:25.53 | RobertMV | APP_v6.C95.xlsb | ----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) ----- |  | 
+
+2025-06-11 20:55:09.78 | RobertMV | APP_v6.C.95.xlsb | ----- DÉBUT D'UNE NOUVELLE SESSION (modAppli:DemarrageApplication) ----- |  | 
+2025-06-11 20:55:09.88 | RobertMV | APP_v6.C.95.xlsb | modAppli:CreateUserActiveFile |  | 
+2025-06-11 20:55:09.88 | RobertMV | APP_v6.C.95.xlsb | modAppli:CreateUserActiveFile |  | 0,0000 secondes
+
+2025-06-11 20:55:09.88 | RobertMV | APP_v6.C.95.xlsb | modAppli:SetupUserDateFormat |  | 
+2025-06-11 20:55:09.89 | RobertMV | APP_v6.C.95.xlsb | modAppli:SetupUserDateFormat |  | 0,0078 secondes
+
+2025-06-11 20:55:09.89 | RobertMV | APP_v6.C.95.xlsb | modAppli:BackupMasterFile |  | 
+2025-06-11 20:55:09.89 | RobertMV | APP_v6.C.95.xlsb | modAppli:BackupMasterFile |  | 0,0000 secondes
+
+2025-06-11 20:55:09.89 | RobertMV | APP_v6.C.95.xlsb | modAppli:EcrireInformationsConfigAuMenu |  | 
+2025-06-11 20:55:09.90 | RobertMV | APP_v6.C.95.xlsb | modAppli:EcrireInformationsConfigAuMenu |  | 0,0156 secondes
+
+2025-06-11 20:55:09.91 | RobertMV | APP_v6.C.95.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 
+2025-06-11 20:55:09.91 | RobertMV | APP_v6.C.95.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 0,0000 secondes
+
+2025-06-11 20:55:09.91 | RobertMV | APP_v6.C.95.xlsb | modAppli:DemarrageApplication (ERREUR) : L'accès par programme au projet Visual Basic n'est pas fiable
+ | 75309,91 | 
+2025-06-11 20:55:22.52 | RobertMV | APP_v6.C.95.xlsb | modMenu:SauvegarderEtSortirApplication |  | 
+2025-06-11 20:55:26.23 | RobertMV | APP_v6.C.95.xlsb | ----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) ----- |  | 
+
+2025-06-11 20:59:49.58 | RobertMV | APP_v6.C.95.xlsb | modMenu:SauvegarderEtSortirApplication |  | 
+2025-06-11 20:59:51.06 | RobertMV | APP_v6.C.95.xlsb | ----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) ----- |  | 
+
+2025-06-11 22:30:15.62 | RobertMV | APP_v6.C.95.xlsb | ----- DÉBUT D'UNE NOUVELLE SESSION (modAppli:DemarrageApplication) ----- |  | 
+2025-06-11 22:30:15.75 | RobertMV | APP_v6.C.95.xlsb | modAppli:CreateUserActiveFile |  | 
+2025-06-11 22:30:15.75 | RobertMV | APP_v6.C.95.xlsb | modAppli:CreateUserActiveFile |  | 0,0000 secondes
+
+2025-06-11 22:30:15.75 | RobertMV | APP_v6.C.95.xlsb | modAppli:SetupUserDateFormat |  | 
+2025-06-11 22:30:15.76 | RobertMV | APP_v6.C.95.xlsb | modAppli:SetupUserDateFormat |  | 0,0078 secondes
+
+2025-06-11 22:30:15.76 | RobertMV | APP_v6.C.95.xlsb | modAppli:BackupMasterFile |  | 
+2025-06-11 22:30:15.77 | RobertMV | APP_v6.C.95.xlsb | modAppli:BackupMasterFile |  | 0,0078 secondes
+
+2025-06-11 22:30:15.77 | RobertMV | APP_v6.C.95.xlsb | modAppli:EcrireInformationsConfigAuMenu |  | 
+2025-06-11 22:30:15.77 | RobertMV | APP_v6.C.95.xlsb | modAppli:EcrireInformationsConfigAuMenu |  | 0,0156 secondes
+
+2025-06-11 22:30:15.78 | RobertMV | APP_v6.C.95.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 
+2025-06-11 22:30:15.80 | RobertMV | APP_v6.C.95.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 0,0156 secondes
+
+2025-06-11 22:30:16.28 | RobertMV | APP_v6.C.95.xlsb | modAppli:DemarrageApplication |  | 0,6641 secondes
+
+2025-06-11 22:31:49.79 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierIntegriteTablesLocales |  | 
+2025-06-11 22:31:49.94 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierPlanComptable |  | 
+2025-06-11 22:31:49.97 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierPlanComptable |  | 0,0312 secondes
+
+2025-06-11 22:31:49.98 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierClients |  | 
+2025-06-11 22:31:49.98 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterClients |  | 
+2025-06-11 22:31:50.22 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterClients |  | 0,2344 secondes
+
+2025-06-11 22:31:50.47 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierClients |  | 0,4922 secondes
+
+2025-06-11 22:31:50.48 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierFournisseurs |  | 
+2025-06-11 22:31:50.48 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterFournisseurs |  | 
+2025-06-11 22:31:50.52 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterFournisseurs |  | 0,0469 secondes
+
+2025-06-11 22:31:50.55 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierFournisseurs |  | 0,0703 secondes
+
+2025-06-11 22:31:50.55 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierDEBRecurrent |  | 
+2025-06-11 22:31:50.56 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterDebRecurrent |  | 
+2025-06-11 22:31:50.56 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:DEB_Récurrent |  | 
+2025-06-11 22:31:50.61 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:DEB_Récurrent |  | 0,0469 secondes
+
+2025-06-11 22:31:50.61 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterDebRecurrent |  | 0,0469 secondes
+
+2025-06-11 22:31:50.63 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierDEBRecurrent |  | 0,0703 secondes
+
+2025-06-11 22:31:50.64 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierDEBTrans |  | 
+2025-06-11 22:31:50.64 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterDebTrans |  | 
+2025-06-11 22:31:50.64 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:DEB_Trans |  | 
+2025-06-11 22:31:50.71 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:DEB_Trans |  | 0,0703 secondes
+
+2025-06-11 22:31:50.71 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterDebTrans |  | 0,0703 secondes
+
+2025-06-11 22:31:50.84 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierDEBTrans |  | 0,2031 secondes
+
+2025-06-11 22:31:50.85 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierFACEntete |  | 
+2025-06-11 22:31:50.85 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterFacEntete |  | 
+2025-06-11 22:31:50.85 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:FAC_Entête |  | 
+2025-06-11 22:31:50.98 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:FAC_Entête |  | 0,1328 secondes
+
+2025-06-11 22:31:50.98 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterFacEntete |  | 0,1406 secondes
+
+2025-06-11 22:31:51.05 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierFACEntete |  | 0,2031 secondes
+
+2025-06-11 22:31:51.07 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierFACDetails |  | 
+2025-06-11 22:31:51.07 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterFacDetails |  | 
+2025-06-11 22:31:51.07 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:FAC_Détails |  | 
+2025-06-11 22:31:51.38 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:FAC_Détails |  | 0,3125 secondes
+
+2025-06-11 22:31:51.38 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterFacDetails |  | 0,3125 secondes
+
+2025-06-11 22:31:51.42 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierFACDetails |  | 0,3516 secondes
+
+2025-06-11 22:31:51.43 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierFACComptesClients |  | 
+2025-06-11 22:31:51.43 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterFacComptesClients |  | 
+2025-06-11 22:31:51.44 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:FAC_Comptes_Clients |  | 
+2025-06-11 22:31:51.52 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:FAC_Comptes_Clients |  | 0,0859 secondes
+
+2025-06-11 22:31:51.52 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterFacComptesClients |  | 0,0938 secondes
+
+2025-06-11 22:31:53.67 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierFACComptesClients |  | 2,2422 secondes
+
+2025-06-11 22:31:53.68 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierFACSommaireTaux |  | 
+2025-06-11 22:31:53.68 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterFacSommaireTaux |  | 
+2025-06-11 22:31:53.68 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:FAC_Sommaire_Taux |  | 
+2025-06-11 22:31:53.74 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:FAC_Sommaire_Taux |  | 0,0625 secondes
+
+2025-06-11 22:31:53.75 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterFacSommaireTaux |  | 0,0703 secondes
+
+2025-06-11 22:31:53.79 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierFACSommaireTaux |  | 0,1094 secondes
+
+2025-06-11 22:31:53.80 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierENCEntete |  | 
+2025-06-11 22:31:53.80 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterEncEntete |  | 
+2025-06-11 22:31:53.80 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:ENC_Entête |  | 
+2025-06-11 22:31:53.87 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:ENC_Entête |  | 0,0703 secondes
+
+2025-06-11 22:31:53.87 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterEncEntete |  | 0,0703 secondes
+
+2025-06-11 22:31:53.93 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierENCEntete |  | 0,1328 secondes
+
+2025-06-11 22:31:53.94 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierENCDetails |  | 
+2025-06-11 22:31:53.94 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterEncDetails |  | 
+2025-06-11 22:31:53.94 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:ENC_Détails |  | 
+2025-06-11 22:31:54.01 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:ENC_Détails |  | 0,0703 secondes
+
+2025-06-11 22:31:54.02 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterEncDetails |  | 0,0781 secondes
+
+2025-06-11 22:31:54.07 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierENCDetails |  | 0,1328 secondes
+
+2025-06-11 22:31:54.08 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VérifierCCRégularisations |  | 
+2025-06-11 22:31:54.08 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterCCRegularisations |  | 
+2025-06-11 22:31:54.08 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:CC_Régularisations |  | 
+2025-06-11 22:31:54.12 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:CC_Régularisations |  | 0,0391 secondes
+
+2025-06-11 22:31:54.13 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterCCRegularisations |  | 0,0469 secondes
+
+2025-06-11 22:31:54.17 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VérifierCCRégularisations |  | 0,1016 secondes
+
+2025-06-11 22:31:54.19 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierFACProjetsEntete |  | 
+2025-06-11 22:31:54.19 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterFacProjetsEntete |  | 
+2025-06-11 22:31:54.19 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:FAC_Projets_Entête |  | 
+2025-06-11 22:31:54.22 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:FAC_Projets_Entête |  | 0,0312 secondes
+
+2025-06-11 22:31:54.22 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterFacProjetsEntete |  | 0,0312 secondes
+
+2025-06-11 22:31:54.23 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierFACProjetsEntete |  | 0,0391 secondes
+
+2025-06-11 22:31:54.23 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierFACProjetsDetails |  | 
+2025-06-11 22:31:54.23 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterFacProjetsDetails |  | 
+2025-06-11 22:31:54.23 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:FAC_Projets_Détails |  | 
+2025-06-11 22:31:54.27 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:FAC_Projets_Détails |  | 0,0391 secondes
+
+2025-06-11 22:31:54.27 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterFacProjetsDetails |  | 0,0391 secondes
+
+2025-06-11 22:31:54.28 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierFACProjetsDetails |  | 0,0469 secondes
+
+2025-06-11 22:31:54.29 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierGLTrans |  | 
+2025-06-11 22:31:54.30 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterGLTransactions |  | 
+2025-06-11 22:31:54.30 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:GL_Trans |  | 
+2025-06-11 22:31:54.77 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:GL_Trans |  | 0,4688 secondes
+
+2025-06-11 22:31:54.77 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterGLTransactions |  | 0,4766 secondes
+
+2025-06-11 22:31:54.81 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierGLTrans |  | 0,5234 secondes
+
+2025-06-11 22:31:54.82 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierGLEJRecurrente |  | 
+2025-06-11 22:31:54.82 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterEJRecurrente |  | 
+2025-06-11 22:31:54.82 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:GL_EJ_Récurrente |  | 
+2025-06-11 22:31:54.86 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:GL_EJ_Récurrente |  | 0,0469 secondes
+
+2025-06-11 22:31:54.87 | RobertMV | APP_v6.C.95.xlsb | modGL_EJ:GL_EJ_Recurrente_Build_Summary |  | 
+2025-06-11 22:31:54.91 | RobertMV | APP_v6.C.95.xlsb | modGL_EJ:GL_EJ_Recurrente_Build_Summary |  | 0,0469 secondes
+
+2025-06-11 22:31:54.91 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterEJRecurrente |  | 0,0938 secondes
+
+2025-06-11 22:31:54.93 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierGLEJRecurrente |  | 0,1094 secondes
+
+2025-06-11 22:31:54.94 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierTECTdBData |  | 
+2025-06-11 22:31:54.94 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterTEC |  | 
+2025-06-11 22:31:54.94 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:TEC_Local |  | 
+2025-06-11 22:31:55.78 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:TEC_Local |  | 0,8438 secondes
+
+2025-06-11 22:31:55.79 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterTEC |  | 0,8516 secondes
+
+2025-06-11 22:31:55.79 | RobertMV | APP_v6.C.95.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-06-11 22:31:55.79 | RobertMV | APP_v6.C.95.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-06-11 22:31:55.95 | RobertMV | APP_v6.C.95.xlsb | wshTEC_TDB_Data:Worksheet_Change | $A$2:$K$7179 | 
+2025-06-11 22:31:55.95 | RobertMV | APP_v6.C.95.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,0000 secondes
+
+2025-06-11 22:31:55.95 | RobertMV | APP_v6.C.95.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,1562 secondes
+
+2025-06-11 22:31:55.95 | RobertMV | APP_v6.C.95.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-06-11 22:31:56.02 | RobertMV | APP_v6.C.95.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,0703 secondes
+
+2025-06-11 22:31:56.02 | RobertMV | APP_v6.C.95.xlsb | wshTEC_TDB:AjusteBordurePivotTable |  | 
+2025-06-11 22:31:56.03 | RobertMV | APP_v6.C.95.xlsb | wshTEC_TDB:AjusteBordurePivotTable |  | 0,0078 secondes
+
+2025-06-11 22:31:56.04 | RobertMV | APP_v6.C.95.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,2500 secondes
+
+2025-06-11 22:31:56.20 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierTECTdBData |  | 1,2578 secondes
+
+2025-06-11 22:31:56.20 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierTEC |  | 
+2025-06-11 22:32:18.03 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierTEC |  | 21,8359 secondes
+
+2025-06-11 22:32:18.05 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:NoterNombreLignesParFeuille |  | 
+2025-06-11 22:32:18.72 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:NoterNombreLignesParFeuille |  | 0,6719 secondes
+
+2025-06-11 22:32:21.48 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:VerifierIntegriteTablesLocales |  | 31,6875 secondes
+
+2025-06-11 22:33:56.07 | RobertMV | APP_v6.C.95.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-06-11 22:33:56.08 | RobertMV | APP_v6.C.95.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0078 secondes
+
+2025-06-11 22:33:57.30 | RobertMV | APP_v6.C.95.xlsb | modMenu:menuFacturation_Click |  | 
+2025-06-11 22:33:57.31 | RobertMV | APP_v6.C.95.xlsb | modMenu:menuFacturation_Click |  | 0,0234 secondes
+
+2025-06-11 22:33:58.66 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_Activate |  | 
+2025-06-11 22:33:58.66 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterClients |  | 
+2025-06-11 22:33:58.77 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterClients |  | 0,1172 secondes
+
+2025-06-11 22:33:58.77 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterFacEntete |  | 
+2025-06-11 22:33:58.77 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:FAC_Entête |  | 
+2025-06-11 22:33:58.89 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:FAC_Entête |  | 0,1172 secondes
+
+2025-06-11 22:33:58.90 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterFacEntete |  | 0,1250 secondes
+
+2025-06-11 22:33:58.90 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterFacComptesClients |  | 
+2025-06-11 22:33:58.90 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:FAC_Comptes_Clients |  | 
+2025-06-11 22:33:58.98 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:FAC_Comptes_Clients |  | 0,0859 secondes
+
+2025-06-11 22:33:58.99 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterFacComptesClients |  | 0,0938 secondes
+
+2025-06-11 22:33:58.99 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterEncDetails |  | 
+2025-06-11 22:33:58.99 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:ENC_Détails |  | 
+2025-06-11 22:33:59.06 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:ENC_Détails |  | 0,0703 secondes
+
+2025-06-11 22:33:59.07 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterEncDetails |  | 0,0781 secondes
+
+2025-06-11 22:33:59.07 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterEncEntete |  | 
+2025-06-11 22:33:59.07 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:ENC_Entête |  | 
+2025-06-11 22:33:59.14 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:ENC_Entête |  | 0,0703 secondes
+
+2025-06-11 22:33:59.15 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterEncEntete |  | 0,0781 secondes
+
+2025-06-11 22:33:59.15 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterCCRegularisations |  | 
+2025-06-11 22:33:59.15 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:CC_Régularisations |  | 
+2025-06-11 22:33:59.19 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:CC_Régularisations |  | 0,0391 secondes
+
+2025-06-11 22:33:59.19 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterCCRegularisations |  | 0,0469 secondes
+
+2025-06-11 22:33:59.25 | RobertMV | APP_v6.C.95.xlsb | modDev_Utils:SetTabOrder | wshCAR_Liste_Agée | 
+2025-06-11 22:33:59.26 | RobertMV | APP_v6.C.95.xlsb | modDev_Utils:SetTabOrder |  | 0,0078 secondes
+
+2025-06-11 22:33:59.27 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_Activate |  | 0,6094 secondes
+
+2025-06-11 22:34:00.32 | RobertMV | APP_v6.C.95.xlsb | modCAR_Liste_Agée:CreerListeAgee |  | 
+2025-06-11 22:34:04.64 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:AppliquerConditionalFormating |  | 
+2025-06-11 22:34:04.65 | RobertMV | APP_v6.C.95.xlsb | modAppli_Utils:AppliquerConditionalFormating |  | 0,0078 secondes
+
+2025-06-11 22:34:06.91 | RobertMV | APP_v6.C.95.xlsb | modCAR_Liste_Agée:CreerListeAgee |  | 6,5859 secondes
+
+2025-06-11 22:34:11.89 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | $B$5 | 
+2025-06-11 22:34:11.89 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange |  | 0,0000 secondes
+
+2025-06-11 22:34:12.41 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | $B$6 | 
+2025-06-11 22:34:12.41 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange |  | 0,0078 secondes
+
+2025-06-11 22:34:12.44 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | $B$7 | 
+2025-06-11 22:34:12.44 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange |  | 0,0000 secondes
+
+2025-06-11 22:34:12.47 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | $B$8 | 
+2025-06-11 22:34:12.47 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange |  | 0,0000 secondes
+
+2025-06-11 22:34:12.50 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | $B$9 | 
+2025-06-11 22:34:12.50 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange |  | 0,0000 secondes
+
+2025-06-11 22:34:12.53 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | $B$10 | 
+2025-06-11 22:34:12.53 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange |  | 0,0000 secondes
+
+2025-06-11 22:34:12.56 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | $B$11 | 
+2025-06-11 22:34:12.56 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange |  | 0,0000 secondes
+
+2025-06-11 22:34:12.59 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | $B$12 | 
+2025-06-11 22:34:12.59 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange |  | 0,0000 secondes
+
+2025-06-11 22:34:12.63 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | $B$13 | 
+2025-06-11 22:34:12.63 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange |  | 0,0000 secondes
+
+2025-06-11 22:34:12.66 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | $B$14 | 
+2025-06-11 22:34:12.66 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange |  | 0,0000 secondes
+
+2025-06-11 22:34:12.69 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | $B$15 | 
+2025-06-11 22:34:12.69 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange |  | 0,0000 secondes
+
+2025-06-11 22:34:12.72 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | $B$16 | 
+2025-06-11 22:34:12.72 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange |  | 0,0000 secondes
+
+2025-06-11 22:34:12.75 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | $B$17 | 
+2025-06-11 22:34:12.75 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange |  | 0,0000 secondes
+
+2025-06-11 22:34:12.77 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | $B$18 | 
+2025-06-11 22:34:12.78 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange |  | 0,0078 secondes
+
+2025-06-11 22:34:12.81 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | $B$19 | 
+2025-06-11 22:34:12.81 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange |  | 0,0078 secondes
+
+2025-06-11 22:34:12.84 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | $B$20 | 
+2025-06-11 22:34:12.84 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange |  | 0,0000 secondes
+
+2025-06-11 22:34:12.88 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | $B$21 | 
+2025-06-11 22:34:12.88 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange |  | 0,0000 secondes
+
+2025-06-11 22:34:12.91 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | $B$22 | 
+2025-06-11 22:34:12.91 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange |  | 0,0000 secondes
+
+2025-06-11 22:34:12.94 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | $B$23 | 
+2025-06-11 22:34:12.95 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange |  | 0,0078 secondes
+
+2025-06-11 22:34:12.97 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | $B$24 | 
+2025-06-11 22:34:12.97 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange |  | 0,0000 secondes
+
+2025-06-11 22:34:13.00 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | $B$25 | 
+2025-06-11 22:34:13.00 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange |  | 0,0000 secondes
+
+2025-06-11 22:34:13.03 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | $B$26 | 
+2025-06-11 22:34:13.04 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange |  | 0,0078 secondes
+
+2025-06-11 22:34:13.06 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | $B$27 | 
+2025-06-11 22:34:13.07 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange |  | 0,0078 secondes
+
+2025-06-11 22:34:13.09 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | $B$28 | 
+2025-06-11 22:34:13.10 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange |  | 0,0078 secondes
+
+2025-06-11 22:34:13.13 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | $B$29 | 
+2025-06-11 22:34:13.13 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange |  | 0,0000 secondes
+
+2025-06-11 22:34:13.16 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | $B$30 | 
+2025-06-11 22:34:13.16 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange |  | 0,0000 secondes
+
+2025-06-11 22:34:13.20 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | $B$31 | 
+2025-06-11 22:34:13.20 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange |  | 0,0000 secondes
+
+2025-06-11 22:34:13.23 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | $B$32 | 
+2025-06-11 22:34:13.23 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange |  | 0,0000 secondes
+
+2025-06-11 22:34:13.26 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange | $B$33 | 
+2025-06-11 22:34:13.27 | RobertMV | APP_v6.C.95.xlsb | wshCAR_Liste_Agée:Worksheet_SelectionChange |  | 0,0078 secondes
+
+2025-06-11 22:34:32.73 | RobertMV | APP_v6.C.95.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-06-11 22:34:32.73 | RobertMV | APP_v6.C.95.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0078 secondes
+
+2025-06-11 22:34:33.79 | RobertMV | APP_v6.C.95.xlsb | modMenu:menuComptabilité |  | 
+2025-06-11 22:34:33.82 | RobertMV | APP_v6.C.95.xlsb | modMenu:menuComptabilité |  | 0,0312 secondes
+
+2025-06-11 22:34:34.95 | RobertMV | APP_v6.C.95.xlsb | wshGL_BV:Worksheet_Activate |  | 
+2025-06-11 22:34:34.96 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterGLTransactions |  | 
+2025-06-11 22:34:34.96 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:GL_Trans |  | 
+2025-06-11 22:34:35.42 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:GL_Trans |  | 0,4609 secondes
+
+2025-06-11 22:34:35.43 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterGLTransactions |  | 0,4688 secondes
+
+2025-06-11 22:34:35.47 | RobertMV | APP_v6.C.95.xlsb | modFunctions:Fn_Complete_Date | 11/06/2025, 999, 15 | 
+2025-06-11 22:34:35.47 | RobertMV | APP_v6.C.95.xlsb | modFunctions:Fn_Complete_Date |  | 0,0000 secondes
+
+2025-06-11 22:34:35.49 | RobertMV | APP_v6.C.95.xlsb | wshGL_BV:Worksheet_Activate |  | 0,5391 secondes
+
+2025-06-11 22:34:58.34 | RobertMV | APP_v6.C.95.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-06-11 22:34:58.35 | RobertMV | APP_v6.C.95.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0078 secondes
+
+2025-06-11 22:34:59.68 | RobertMV | APP_v6.C.95.xlsb | modMenu:menuTEC_Click |  | 
+2025-06-11 22:34:59.70 | RobertMV | APP_v6.C.95.xlsb | modMenu:menuTEC_Click |  | 0,0234 secondes
+
+2025-06-11 22:35:00.66 | RobertMV | APP_v6.C.95.xlsb | modMENU_TEC:TEC_TDB_Click |  | 
+2025-06-11 22:35:00.67 | RobertMV | APP_v6.C.95.xlsb | wshTEC_TDB:Worksheet_Activate |  | 
+2025-06-11 22:35:00.67 | RobertMV | APP_v6.C.95.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 
+2025-06-11 22:35:00.67 | RobertMV | APP_v6.C.95.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 
+2025-06-11 22:35:00.77 | RobertMV | APP_v6.C.95.xlsb | wshTEC_TDB_Data:Worksheet_Change | $A$2:$K$7179 | 
+2025-06-11 22:35:00.77 | RobertMV | APP_v6.C.95.xlsb | wshTEC_TDB_Data:Worksheet_Change |  | 0,0000 secondes
+
+2025-06-11 22:35:00.77 | RobertMV | APP_v6.C.95.xlsb | modTEC_Saisie:TEC_Update_TDB_From_TEC_Local |  | 0,0938 secondes
+
+2025-06-11 22:35:00.77 | RobertMV | APP_v6.C.95.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 
+2025-06-11 22:35:00.83 | RobertMV | APP_v6.C.95.xlsb | modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables |  | 0,0547 secondes
+
+2025-06-11 22:35:00.83 | RobertMV | APP_v6.C.95.xlsb | wshTEC_TDB:AjusteBordurePivotTable |  | 
+2025-06-11 22:35:00.83 | RobertMV | APP_v6.C.95.xlsb | wshTEC_TDB:AjusteBordurePivotTable |  | 0,0000 secondes
+
+2025-06-11 22:35:00.84 | RobertMV | APP_v6.C.95.xlsb | modTEC_TDB:ActualiserTEC_TDB |  | 0,1641 secondes
+
+2025-06-11 22:35:00.84 | RobertMV | APP_v6.C.95.xlsb | wshTEC_TDB:AjusteBordurePivotTable |  | 
+2025-06-11 22:35:00.90 | RobertMV | APP_v6.C.95.xlsb | wshTEC_TDB:AjusteBordurePivotTable |  | 0,0625 secondes
+
+2025-06-11 22:35:00.90 | RobertMV | APP_v6.C.95.xlsb | wshTEC_TDB:Worksheet_Activate |  | 0,2344 secondes
+
+2025-06-11 22:35:00.91 | RobertMV | APP_v6.C.95.xlsb | modMENU_TEC:TEC_TDB_Click |  | 0,2500 secondes
+
+2025-06-11 22:35:11.42 | RobertMV | APP_v6.C.95.xlsb | modMENU_TEC:TEC_Analyse_Click |  | 
+2025-06-11 22:35:11.44 | RobertMV | APP_v6.C.95.xlsb | wshTEC_Analyse:Worksheet_Activate |  | 
+2025-06-11 22:35:11.44 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterClients |  | 
+2025-06-11 22:35:11.55 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterClients |  | 0,1172 secondes
+
+2025-06-11 22:35:11.55 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterTEC |  | 
+2025-06-11 22:35:11.55 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:TEC_Local |  | 
+2025-06-11 22:35:12.41 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:TEC_Local |  | 0,8516 secondes
+
+2025-06-11 22:35:12.41 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterTEC |  | 0,8594 secondes
+
+2025-06-11 22:35:12.45 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterFacProjetsDetails |  | 
+2025-06-11 22:35:12.45 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:FAC_Projets_Détails |  | 
+2025-06-11 22:35:12.48 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:FAC_Projets_Détails |  | 0,0391 secondes
+
+2025-06-11 22:35:12.48 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterFacProjetsDetails |  | 0,0391 secondes
+
+2025-06-11 22:35:12.49 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterFacProjetsEntete |  | 
+2025-06-11 22:35:12.49 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:FAC_Projets_Entête |  | 
+2025-06-11 22:35:12.52 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:FAC_Projets_Entête |  | 0,0312 secondes
+
+2025-06-11 22:35:12.52 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterFacProjetsEntete |  | 0,0312 secondes
+
+2025-06-11 22:35:12.63 | RobertMV | APP_v6.C.95.xlsb | wshTEC_Analyse:Worksheet_Change | $H$3 | 
+2025-06-11 22:35:12.63 | RobertMV | APP_v6.C.95.xlsb | modFunctions:Fn_Complete_Date | 11/06/2025, 45, 0 | 
+2025-06-11 22:35:12.63 | RobertMV | APP_v6.C.95.xlsb | modFunctions:Fn_Complete_Date |  | 0,0000 secondes
+
+2025-06-11 22:35:12.63 | RobertMV | APP_v6.C.95.xlsb | modTEC_Analyse:TEC_Sort_Group_And_Subtotal |  | 
+2025-06-11 22:35:12.65 | RobertMV | APP_v6.C.95.xlsb | modFAC_Brouillon:Get_TEC_For_Client_AF | ', 11/06/2025, VRAI, FAUX, FAUX | 
+2025-06-11 22:35:12.77 | RobertMV | APP_v6.C.95.xlsb | modFAC_Brouillon:Get_TEC_For_Client_AF |  | 0,1172 secondes
+
+2025-06-11 22:35:13.71 | RobertMV | APP_v6.C.95.xlsb | modTEC_Analyse:TEC_Sort_Group_And_Subtotal |  | 1,0781 secondes
+
+2025-06-11 22:35:13.71 | RobertMV | APP_v6.C.95.xlsb | wshTEC_Analyse:Worksheet_Change |  | 1,0859 secondes
+
+2025-06-11 22:35:13.71 | RobertMV | APP_v6.C.95.xlsb | modDev_Utils:SetTabOrder | wshTEC_Analyse | 
+2025-06-11 22:35:14.02 | RobertMV | APP_v6.C.95.xlsb | modDev_Utils:SetTabOrder |  | 0,3047 secondes
+
+2025-06-11 22:35:14.02 | RobertMV | APP_v6.C.95.xlsb | wshTEC_Analyse:Worksheet_Change | $B$2 | 
+2025-06-11 22:35:14.02 | RobertMV | APP_v6.C.95.xlsb | wshTEC_Analyse:Worksheet_Change |  | 0,0000 secondes
+
+2025-06-11 22:35:14.04 | RobertMV | APP_v6.C.95.xlsb | wshTEC_Analyse:Worksheet_Activate |  | 2,6016 secondes
+
+2025-06-11 22:35:14.04 | RobertMV | APP_v6.C.95.xlsb | modMENU_TEC:TEC_Analyse_Click |  | 2,6172 secondes
+
+2025-06-11 22:35:14.26 | RobertMV | APP_v6.C.95.xlsb | wshTEC_Analyse:Worksheet_SelectionChange | $C$59 | 
+2025-06-11 22:35:14.41 | RobertMV | APP_v6.C.95.xlsb | wshTEC_Analyse:Worksheet_SelectionChange |  | 0,1562 secondes
+
+2025-06-11 22:35:18.66 | RobertMV | APP_v6.C.95.xlsb | modTEC_Analyse:TEC_Analyse_Back_To_TEC_Menu |  | 
+2025-06-11 22:35:18.66 | RobertMV | APP_v6.C.95.xlsb | modTEC_Analyse:Clear_Fees_Summary_And_CheckBox |  | 
+2025-06-11 22:35:18.70 | RobertMV | APP_v6.C.95.xlsb | modTEC_Analyse:Clear_Fees_Summary_And_CheckBox |  | 0,0312 secondes
+
+2025-06-11 22:35:18.72 | RobertMV | APP_v6.C.95.xlsb | modTEC_Analyse:TEC_Analyse_Back_To_TEC_Menu |  | 0,0547 secondes
+
+2025-06-11 22:35:20.35 | RobertMV | APP_v6.C.95.xlsb | modMENU_TEC:TEC_Evaluation_Click |  | 
+2025-06-11 22:35:20.38 | RobertMV | APP_v6.C.95.xlsb | wshTEC_Evaluation:Worksheet_Activate |  | 
+2025-06-11 22:35:20.38 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterClients |  | 
+2025-06-11 22:35:20.49 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterClients |  | 0,1172 secondes
+
+2025-06-11 22:35:20.49 | RobertMV | APP_v6.C.95.xlsb | modDev_Utils:SetTabOrder | wshTEC_Evaluation | 
+2025-06-11 22:35:20.50 | RobertMV | APP_v6.C.95.xlsb | modDev_Utils:SetTabOrder |  | 0,0078 secondes
+
+2025-06-11 22:35:20.51 | RobertMV | APP_v6.C.95.xlsb | wshTEC_Evaluation:Worksheet_Change | $D$3 | 
+2025-06-11 22:35:20.52 | RobertMV | APP_v6.C.95.xlsb | wshTEC_Evaluation:Worksheet_Change |  | 0,0078 secondes
+
+2025-06-11 22:35:20.52 | RobertMV | APP_v6.C.95.xlsb | wshTEC_Evaluation:Worksheet_Change | $D$6:$L$28 | 
+2025-06-11 22:35:20.52 | RobertMV | APP_v6.C.95.xlsb | wshTEC_Evaluation:Worksheet_Change |  | 0,0000 secondes
+
+2025-06-11 22:35:20.52 | RobertMV | APP_v6.C.95.xlsb | wshTEC_Evaluation:Worksheet_Activate |  | 0,1562 secondes
+
+2025-06-11 22:35:20.53 | RobertMV | APP_v6.C.95.xlsb | modMENU_TEC:TEC_Evaluation_Click |  | 0,1875 secondes
+
+2025-06-11 22:35:24.50 | RobertMV | APP_v6.C.95.xlsb | wshTEC_Evaluation:Worksheet_Change | $L$3 | 
+2025-06-11 22:35:24.50 | RobertMV | APP_v6.C.95.xlsb | modFunctions:Fn_Complete_Date | 11, 99, 0 | 
+2025-06-11 22:35:24.50 | RobertMV | APP_v6.C.95.xlsb | modFunctions:Fn_Complete_Date |  | 0,0000 secondes
+
+2025-06-11 22:35:24.51 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterTEC |  | 
+2025-06-11 22:35:24.51 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:TEC_Local |  | 
+2025-06-11 22:35:25.34 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:TEC_Local |  | 0,8359 secondes
+
+2025-06-11 22:35:25.35 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterTEC |  | 0,8438 secondes
+
+2025-06-11 22:35:25.58 | RobertMV | APP_v6.C.95.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1210 - De 31/07/2024 à 11/06/2025 | 
+2025-06-11 22:35:25.64 | RobertMV | APP_v6.C.95.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0625 secondes
+
+2025-06-11 22:35:25.66 | RobertMV | APP_v6.C.95.xlsb | wshTEC_Evaluation:Worksheet_Change |  | 1,1562 secondes
+
+2025-06-11 22:35:31.34 | RobertMV | APP_v6.C.95.xlsb | modTEC_Evaluation:TEC_Evaluation_Back_To_TEC_Menu |  | 
+2025-06-11 22:35:31.34 | RobertMV | APP_v6.C.95.xlsb | modTEC_Evaluation:TEC_Evaluation_Back_To_TEC_Menu |  | 0,0078 secondes
+
+2025-06-11 22:35:33.83 | RobertMV | APP_v6.C.95.xlsb | modMENU_TEC:TEC_Evaluation_Click |  | 
+2025-06-11 22:35:33.84 | RobertMV | APP_v6.C.95.xlsb | wshTEC_Evaluation:Worksheet_Activate |  | 
+2025-06-11 22:35:33.84 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterClients |  | 
+2025-06-11 22:35:33.95 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterClients |  | 0,1094 secondes
+
+2025-06-11 22:35:33.96 | RobertMV | APP_v6.C.95.xlsb | modDev_Utils:SetTabOrder | wshTEC_Evaluation | 
+2025-06-11 22:35:33.97 | RobertMV | APP_v6.C.95.xlsb | modDev_Utils:SetTabOrder |  | 0,0078 secondes
+
+2025-06-11 22:35:33.98 | RobertMV | APP_v6.C.95.xlsb | wshTEC_Evaluation:Worksheet_Change | $D$3 | 
+2025-06-11 22:35:33.98 | RobertMV | APP_v6.C.95.xlsb | wshTEC_Evaluation:Worksheet_Change |  | 0,0078 secondes
+
+2025-06-11 22:35:33.98 | RobertMV | APP_v6.C.95.xlsb | wshTEC_Evaluation:Worksheet_Change | $D$6:$L$28 | 
+2025-06-11 22:35:33.98 | RobertMV | APP_v6.C.95.xlsb | wshTEC_Evaluation:Worksheet_Change |  | 0,0000 secondes
+
+2025-06-11 22:35:33.99 | RobertMV | APP_v6.C.95.xlsb | wshTEC_Evaluation:Worksheet_Activate |  | 0,1484 secondes
+
+2025-06-11 22:35:33.99 | RobertMV | APP_v6.C.95.xlsb | modMENU_TEC:TEC_Evaluation_Click |  | 0,1641 secondes
+
+2025-06-11 22:35:35.77 | RobertMV | APP_v6.C.95.xlsb | wshTEC_Evaluation:Worksheet_Change | $L$3 | 
+2025-06-11 22:35:35.77 | RobertMV | APP_v6.C.95.xlsb | modFunctions:Fn_Complete_Date | 11, 99, 0 | 
+2025-06-11 22:35:35.77 | RobertMV | APP_v6.C.95.xlsb | modFunctions:Fn_Complete_Date |  | 0,0000 secondes
+
+2025-06-11 22:35:35.77 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterTEC |  | 
+2025-06-11 22:35:35.77 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:TEC_Local |  | 
+2025-06-11 22:35:36.61 | RobertMV | APP_v6.C.95.xlsb | modImport:ImportGeneriqueDuMaster:TEC_Local |  | 0,8359 secondes
+
+2025-06-11 22:35:36.62 | RobertMV | APP_v6.C.95.xlsb | modImport:ImporterTEC |  | 0,8438 secondes
+
+2025-06-11 22:35:36.86 | RobertMV | APP_v6.C.95.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF | 1210 - De 31/07/2024 à 11/06/2025 | 
+2025-06-11 22:35:36.91 | RobertMV | APP_v6.C.95.xlsb | modGL_Stuff:GL_Get_Account_Trans_AF |  | 0,0469 secondes
+
+2025-06-11 22:35:36.92 | RobertMV | APP_v6.C.95.xlsb | wshTEC_Evaluation:Worksheet_Change |  | 1,1562 secondes
+
+2025-06-11 22:35:40.30 | RobertMV | APP_v6.C.95.xlsb | modTEC_Evaluation:TEC_Evaluation_Back_To_TEC_Menu |  | 
+2025-06-11 22:35:40.30 | RobertMV | APP_v6.C.95.xlsb | modTEC_Evaluation:TEC_Evaluation_Back_To_TEC_Menu |  | 0,0078 secondes
+
+2025-06-11 22:35:42.23 | RobertMV | APP_v6.C.95.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-06-11 22:35:42.23 | RobertMV | APP_v6.C.95.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0078 secondes
+
+2025-06-11 22:37:44.32 | RobertMV | APP_v6.C.95.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 
+2025-06-11 22:37:44.32 | RobertMV | APP_v6.C.95.xlsb | modMenu:Hide_All_Worksheets_Except_Menu |  | 0,0000 secondes
+
+2025-06-11 22:37:46.09 | RobertMV | APP_v6.C.95.xlsb | modMenu:SauvegarderEtSortirApplication |  | 
+2025-06-11 22:37:47.55 | RobertMV | APP_v6.C.95.xlsb | ----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) ----- |  | 
+
+2025-06-12 07:14:42.45 | RobertMV | APP_v6.C.95.xlsb | ----- DÉBUT D'UNE NOUVELLE SESSION (modAppli:DemarrageApplication) ----- |  | 
+2025-06-12 07:14:42.57 | RobertMV | APP_v6.C.95.xlsb | modAppli:CreateUserActiveFile |  | 
+2025-06-12 07:14:42.57 | RobertMV | APP_v6.C.95.xlsb | modAppli:CreateUserActiveFile |  | 0,0000 secondes
+
+2025-06-12 07:14:42.57 | RobertMV | APP_v6.C.95.xlsb | modAppli:SetupUserDateFormat |  | 
+2025-06-12 07:14:42.58 | RobertMV | APP_v6.C.95.xlsb | modAppli:SetupUserDateFormat |  | 0,0059 secondes
+
+2025-06-12 07:14:42.58 | RobertMV | APP_v6.C.95.xlsb | modAppli:BackupMasterFile |  | 
+2025-06-12 07:14:42.59 | RobertMV | APP_v6.C.95.xlsb | modAppli:BackupMasterFile |  | 0,0137 secondes
+
+2025-06-12 07:14:42.59 | RobertMV | APP_v6.C.95.xlsb | modAppli:EcrireInformationsConfigAuMenu |  | 
+2025-06-12 07:14:42.60 | RobertMV | APP_v6.C.95.xlsb | modAppli:EcrireInformationsConfigAuMenu |  | 0,0078 secondes
+
+2025-06-12 07:14:42.61 | RobertMV | APP_v6.C.95.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 
+2025-06-12 07:14:42.61 | RobertMV | APP_v6.C.95.xlsb | modMenu:HideDevShapesBasedOnUsername |  | 0,0059 secondes
+
+2025-06-12 07:14:43.08 | RobertMV | APP_v6.C.95.xlsb | modAppli:DemarrageApplication |  | 0,6328 secondes
+
+2025-06-12 07:15:08.88 | RobertMV | APP_v6.C.95.xlsb | modMenu:SauvegarderEtSortirApplication |  | 
+2025-06-12 07:15:11.11 | RobertMV | APP_v6.C.95.xlsb | ----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) ----- |  | 
+>>>>>>> Stashed changes
 =======
 2025-06-11 06:45:18.87 | RobertMV | APP_v6.C.94.xlsb | ----- DÉBUT D'UNE NOUVELLE SESSION (modAppli:DemarrageApplication) ----- |  | 
 2025-06-11 20:37:17.16 | RobertMV | APP_v6.C95.xlsb | modAppli:CreateUserActiveFile |  | 
