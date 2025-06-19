@@ -10,7 +10,7 @@ Sub ImporterPlanComptable() '2024-02-17 @ 07:21
 
     'Import Accounts List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
     Dim sourceWorkbook As String, sourceWorksheet As String
-    sourceWorkbook = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Entrée.xlsx"
     sourceWorksheet = "PlanComptable$"
 
@@ -61,7 +61,7 @@ Sub ImportGeneriqueDuMaster(sourceWb As String, ws As Worksheet, onglet As Strin
     
     '2. Importer les enregistrements de la source
     Dim fullPathSourceWb As String, sourceTab As String
-    fullPathSourceWb = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    fullPathSourceWb = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                        sourceWb
     sourceTab = onglet & "$"
                      
@@ -137,7 +137,7 @@ Sub ImporterClients() 'Using ADODB - 2024-02-25 @ 10:23
     
     'Import Clients List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Entrée.xlsx" '2024-02-14 @ 07:04
     sourceTab = "Clients$"
     
@@ -186,7 +186,7 @@ Sub ImporterDebRecurrent() '2025-05-07 @ 14:14
     Dim sourceWb As String
     sourceWb = "GCF_BD_MASTER.xlsx"
     Dim ws As Worksheet
-    Set ws = wsdDEB_Récurrent
+    Set ws = wsdDEB_Recurrent
     Dim onglet As String, table As String
     onglet = "DEB_Récurrent"
     table = "l_tbl_DEB_Recurrent"
@@ -230,7 +230,7 @@ Sub ImporterEncDetails() '2025-05-07 @ 14:45
     Dim sourceWb As String
     sourceWb = "GCF_BD_MASTER.xlsx"
     Dim ws As Worksheet
-    Set ws = wsdENC_Détails
+    Set ws = wsdENC_Details
     Dim onglet As String, table As String
     onglet = "ENC_Détails"
     table = "l_tbl_ENC_Détails"
@@ -252,7 +252,7 @@ Sub ImporterEncEntete() '2025-05-07 @ 14:50
     Dim sourceWb As String
     sourceWb = "GCF_BD_MASTER.xlsx"
     Dim ws As Worksheet
-    Set ws = wsdENC_Entête
+    Set ws = wsdENC_Entete
     Dim onglet As String, table As String
     onglet = "ENC_Entête"
     table = "l_tbl_ENC_Entête"
@@ -274,7 +274,7 @@ Sub ImporterCCRegularisations() '2025-05-07 @ 13:58
     Dim sourceWb As String
     sourceWb = "GCF_BD_MASTER.xlsx"
     Dim ws As Worksheet
-    Set ws = wsdCC_Régularisations
+    Set ws = wsdCC_Regularisations
     Dim onglet As String, table As String
     onglet = "CC_Régularisations"
     table = "l_tbl_CC_Régularisations"
@@ -318,7 +318,7 @@ Sub ImporterFacDetails() '2025-05-07 @ 14:59
     Dim sourceWb As String
     sourceWb = "GCF_BD_MASTER.xlsx"
     Dim ws As Worksheet
-    Set ws = wsdFAC_Détails
+    Set ws = wsdFAC_Details
     Dim onglet As String, table As String
     onglet = "FAC_Détails"
     table = "l_tbl_FAC_Détails"
@@ -340,7 +340,7 @@ Sub ImporterFacEntete() '2025-05-07 @ 15:02
     Dim sourceWb As String
     sourceWb = "GCF_BD_MASTER.xlsx"
     Dim ws As Worksheet
-    Set ws = wsdFAC_Entête
+    Set ws = wsdFAC_Entete
     Dim onglet As String, table As String
     onglet = "FAC_Entête"
     table = "l_tbl_FAC_Entête"
@@ -384,7 +384,7 @@ Sub ImporterFacProjetsDetails() '2025-05-07 @ 15:57
     Dim sourceWb As String
     sourceWb = "GCF_BD_MASTER.xlsx"
     Dim ws As Worksheet
-    Set ws = wsdFAC_Projets_Détails
+    Set ws = wsdFAC_Projets_Details
     Dim onglet As String, table As String
     onglet = "FAC_Projets_Détails"
     table = "l_tbl_FAC_Projets_Détails"
@@ -406,7 +406,7 @@ Sub ImporterFacProjetsEntete() '2025-05-07 @ 16:05
     Dim sourceWb As String
     sourceWb = "GCF_BD_MASTER.xlsx"
     Dim ws As Worksheet
-    Set ws = wsdFAC_Projets_Entête
+    Set ws = wsdFAC_Projets_Entete
     Dim onglet As String, table As String
     onglet = "FAC_Projets_Entête"
     table = "l_tbl_FAC_Projets_Entête"
@@ -434,7 +434,7 @@ Sub ImporterFournisseurs() 'Using ADODB - 2024-07-03 @ 15:43
 
     'Import Suppliers List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Entrée.xlsx" '2024-02-14 @ 07:04
     sourceTab = "Fournisseurs$"
     
@@ -525,9 +525,11 @@ Sub ImporterGLTransactions() '2025-05-07 @ 16:10
 
 End Sub
 
-Sub ImporterTEC()                             '2024-02-14 @ 06:19
+Sub ImporterTEC() '2024-02-14 @ 06:19
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ImporterTEC", "", 0)
+    
+    Application.StatusBar = "Importation des TEC à partir de GCF_MASTER.xlsx" '2025-06-13 @ 08:47
     
     'Mettre en place les variables (paramètres)
     Dim sourceWb As String
@@ -542,6 +544,8 @@ Sub ImporterTEC()                             '2024-02-14 @ 06:19
     
     'Libérer la mémoire
     Set ws = Nothing
+    
+    Application.StatusBar = False '2025-06-13 @ 08:47
     
     Call Log_Record("modImport:ImporterTEC", "", startTime)
 

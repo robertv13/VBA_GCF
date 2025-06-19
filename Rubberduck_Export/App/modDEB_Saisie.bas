@@ -15,7 +15,7 @@ End Sub
 
 Sub DEB_Saisie_Update()
 
-    If wshDEB_Saisie.Range("B7").value = True Then
+    If wshDEB_Saisie.Range("B7").Value = True Then
         Call DEB_Renversement_Update
         Exit Sub
     End If
@@ -23,12 +23,12 @@ Sub DEB_Saisie_Update()
     Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Saisie_Update", "", 0)
     
     'Remove highlight from last cell
-    If wshDEB_Saisie.Range("B4").value <> "" Then
-        wshDEB_Saisie.Range(wshDEB_Saisie.Range("B4").value).Interior.Color = xlNone
+    If wshDEB_Saisie.Range("B4").Value <> "" Then
+        wshDEB_Saisie.Range(wshDEB_Saisie.Range("B4").Value).Interior.Color = xlNone
     End If
     
     'Date is not valid OR the transaction does not balance
-    If Fn_Is_Date_Valide(wshDEB_Saisie.Range("O4").value) = False Or _
+    If Fn_Is_Date_Valide(wshDEB_Saisie.Range("O4").Value) = False Or _
         Fn_Is_Debours_Balance = False Then
             Exit Sub
     End If
@@ -39,7 +39,7 @@ Sub DEB_Saisie_Update()
     If Fn_Is_Deb_Saisie_Valid(rowDebSaisie) = False Then Exit Sub
     
     'Get the FournID
-    wshDEB_Saisie.Range("B5").value = Fn_GetID_From_Fourn_Name(wshDEB_Saisie.Range("J4").value)
+    wshDEB_Saisie.Range("B5").Value = Fn_GetID_From_Fourn_Name(wshDEB_Saisie.Range("J4").Value)
 
     'Transfert des données vers DEB_Trans
     Call DEB_Trans_Add_Record_To_DB(rowDebSaisie)
@@ -54,7 +54,7 @@ Sub DEB_Saisie_Update()
     
     'Retrieve the CurrentDebours number
     Dim CurrentDeboursNo As String
-    CurrentDeboursNo = wshDEB_Saisie.Range("B1").value
+    CurrentDeboursNo = wshDEB_Saisie.Range("B1").Value
     
     MsgBox "Le déboursé, numéro '" & CurrentDeboursNo & "' a été reporté avec succès"
     
@@ -78,7 +78,7 @@ Sub DEB_Renversement_Update()
     Set ws = wshDEB_Saisie
     
     'Est-ce que la transaction balance ?
-    If ws.Range("O6").value <> ws.Range("I26").value Then
+    If ws.Range("O6").Value <> ws.Range("I26").Value Then
         MsgBox "Le déboursé à renverser ne balance pas !!!", vbCritical
         Exit Sub
     End If
@@ -90,19 +90,19 @@ Sub DEB_Renversement_Update()
     End If
     
     'Get the FournID
-    ws.Range("B5").value = Fn_GetID_From_Fourn_Name(wshDEB_Saisie.Range("J4").value)
+    ws.Range("B5").Value = Fn_GetID_From_Fourn_Name(wshDEB_Saisie.Range("J4").Value)
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
     
     'Renverser les signes des montants
-    ws.Cells(6, "O").value = -ws.Cells(6, "O").value
+    ws.Cells(6, "O").Value = -ws.Cells(6, "O").Value
     Dim i As Integer
     For i = 9 To rowLastUsed
-        ws.Cells(i, 9).value = -ws.Cells(i, 9).value
-        ws.Cells(i, 12).value = -ws.Cells(i, 12).value
-        ws.Cells(i, 13).value = -ws.Cells(i, 13).value
-        ws.Cells(i, 14).value = -ws.Cells(i, 14).value
+        ws.Cells(i, 9).Value = -ws.Cells(i, 9).Value
+        ws.Cells(i, 12).Value = -ws.Cells(i, 12).Value
+        ws.Cells(i, 13).Value = -ws.Cells(i, 13).Value
+        ws.Cells(i, 14).Value = -ws.Cells(i, 14).Value
     Next i
     
     'Transfert des données vers wsdDEB_Trans
@@ -132,12 +132,12 @@ Sub DEB_Renversement_Update()
     Application.EnableEvents = False
     
     'Renverser les montants
-        ws.Cells(6, "O").value = -ws.Cells(6, "O").value
+        ws.Cells(6, "O").Value = -ws.Cells(6, "O").Value
     For i = 9 To rowLastUsed
-        ws.Cells(i, 9).value = -ws.Cells(i, 9).value
-        ws.Cells(i, 12).value = -ws.Cells(i, 12).value
-        ws.Cells(i, 13).value = -ws.Cells(i, 13).value
-        ws.Cells(i, 14).value = -ws.Cells(i, 14).value
+        ws.Cells(i, 9).Value = -ws.Cells(i, 9).Value
+        ws.Cells(i, 12).Value = -ws.Cells(i, 12).Value
+        ws.Cells(i, 13).Value = -ws.Cells(i, 13).Value
+        ws.Cells(i, 14).Value = -ws.Cells(i, 14).Value
     Next i
     
     ws.Range("F4, J4, O4, F6, M6, O6").Font.Color = vbBlack
@@ -150,7 +150,7 @@ Sub DEB_Renversement_Update()
     
     'Mode normal (pas renversement)
     numeroDebourseARenverser = -1
-    ws.Range("B7").value = False
+    ws.Range("B7").Value = False
 
     Application.ScreenUpdating = True
     Application.EnableEvents = True
@@ -170,7 +170,7 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "DEB_Trans$"
     
@@ -190,18 +190,18 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
     
     'Get the last used row
     Dim lastDebTrans As Long
-    If IsNull(rs.Fields("MaxDebTransNo").value) Then
+    If IsNull(rs.Fields("MaxDebTransNo").Value) Then
         'Handle empty table (assign a default value, e.g., 0)
         lastDebTrans = 0
     Else
-        lastDebTrans = rs.Fields("MaxDebTransNo").value
+        lastDebTrans = rs.Fields("MaxDebTransNo").Value
     End If
     
     'Calculate the new Debourse Number
     Dim currDebTransNo As Long
     currDebTransNo = lastDebTrans + 1
     Application.EnableEvents = False
-    wshDEB_Saisie.Range("B1").value = currDebTransNo
+    wshDEB_Saisie.Range("B1").Value = currDebTransNo
     Application.EnableEvents = True
     
     'timeStamp uniforme
@@ -218,28 +218,28 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
         rs.AddNew
             With wshDEB_Saisie
                 'Add fields to the recordset before updating it
-                rs.Fields(fDebTNoEntrée - 1).value = currDebTransNo
-                rs.Fields(fDebTDate - 1).value = .Range("O4").value
-                rs.Fields(fDebTType - 1).value = .Range("F4").value
-                rs.Fields(fDebTBeneficiaire - 1).value = .Range("J4").value
-                rs.Fields(fDebTFournID - 1).value = .Range("B5").value
-                rs.Fields(fDebTDescription - 1).value = .Range("F6").value & IIf(.Range("B7"), " (RENVERSEMENT de " & numeroDebourseARenverser & ")", "")
-                rs.Fields(fDebTReference - 1).value = .Range("M6").value
+                rs.Fields(fDebTNoEntrée - 1).Value = currDebTransNo
+                rs.Fields(fDebTDate - 1).Value = .Range("O4").Value
+                rs.Fields(fDebTType - 1).Value = .Range("F4").Value
+                rs.Fields(fDebTBeneficiaire - 1).Value = .Range("J4").Value
+                rs.Fields(fDebTFournID - 1).Value = .Range("B5").Value
+                rs.Fields(fDebTDescription - 1).Value = .Range("F6").Value & IIf(.Range("B7"), " (RENVERSEMENT de " & numeroDebourseARenverser & ")", "")
+                rs.Fields(fDebTReference - 1).Value = .Range("M6").Value
                 
-                rs.Fields(fDebTNoCompte - 1).value = .Range("Q" & l).value
-                rs.Fields(fDebTCompte - 1).value = .Range("E" & l).value
-                rs.Fields(fDebTCodeTaxe - 1).value = .Range("H" & l).value
-                rs.Fields(fDebTTotal - 1).value = CDbl(.Range("I" & l).value)
-                rs.Fields(fDebTTPS - 1).value = CDbl(.Range("J" & l).value)
-                rs.Fields(fDebTTVQ - 1).value = CDbl(.Range("K" & l).value)
-                rs.Fields(fDebTCréditTPS - 1).value = CDbl(.Range("L" & l).value)
-                rs.Fields(fDebTCréditTVQ - 1).value = CDbl(.Range("M" & l).value)
+                rs.Fields(fDebTNoCompte - 1).Value = .Range("Q" & l).Value
+                rs.Fields(fDebTCompte - 1).Value = .Range("E" & l).Value
+                rs.Fields(fDebTCodeTaxe - 1).Value = .Range("H" & l).Value
+                rs.Fields(fDebTTotal - 1).Value = CDbl(.Range("I" & l).Value)
+                rs.Fields(fDebTTPS - 1).Value = CDbl(.Range("J" & l).Value)
+                rs.Fields(fDebTTVQ - 1).Value = CDbl(.Range("K" & l).Value)
+                rs.Fields(fDebTCréditTPS - 1).Value = CDbl(.Range("L" & l).Value)
+                rs.Fields(fDebTCréditTVQ - 1).Value = CDbl(.Range("M" & l).Value)
                 'Montant de dépense (Total - creditTPS - creditTVQ)
-                rs.Fields(fDebTDépense - 1).value = CDbl(.Range("I" & l).value _
-                                                  - .Range("L" & l).value _
-                                                  - .Range("M" & l).value)
-                rs.Fields(fDebTAutreRemarque - 1).value = ""
-                rs.Fields(fDebTTimeStamp - 1).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+                rs.Fields(fDebTDépense - 1).Value = CDbl(.Range("I" & l).Value _
+                                                  - .Range("L" & l).Value _
+                                                  - .Range("M" & l).Value)
+                rs.Fields(fDebTAutreRemarque - 1).Value = ""
+                rs.Fields(fDebTTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
             End With
         rs.Update
     Next l
@@ -271,7 +271,7 @@ Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
     
     'Get the JE number
     Dim currentDebTransNo As Long
-    currentDebTransNo = wshDEB_Saisie.Range("B1").value
+    currentDebTransNo = wshDEB_Saisie.Range("B1").Value
     
     'What is the last used row in DEB_Trans ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
@@ -285,28 +285,28 @@ Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
     Dim i As Long
     For i = 9 To r
         With wshDEB_Saisie
-            ws.Cells(rowToBeUsed, fDebTNoEntrée).value = currentDebTransNo
-            ws.Cells(rowToBeUsed, fDebTDate).value = .Range("O4").value
-            ws.Cells(rowToBeUsed, fDebTType).value = .Range("F4").value
-            ws.Cells(rowToBeUsed, fDebTBeneficiaire).value = .Range("J4").value
-            ws.Cells(rowToBeUsed, fDebTFournID).value = .Range("B5").value
-            ws.Cells(rowToBeUsed, fDebTDescription).value = .Range("F6").value & IIf(.Range("B7"), " (RENVERSEMENT de " & numeroDebourseARenverser & ")", "")
-            ws.Cells(rowToBeUsed, fDebTReference).value = .Range("M6").value
+            ws.Cells(rowToBeUsed, fDebTNoEntrée).Value = currentDebTransNo
+            ws.Cells(rowToBeUsed, fDebTDate).Value = .Range("O4").Value
+            ws.Cells(rowToBeUsed, fDebTType).Value = .Range("F4").Value
+            ws.Cells(rowToBeUsed, fDebTBeneficiaire).Value = .Range("J4").Value
+            ws.Cells(rowToBeUsed, fDebTFournID).Value = .Range("B5").Value
+            ws.Cells(rowToBeUsed, fDebTDescription).Value = .Range("F6").Value & IIf(.Range("B7"), " (RENVERSEMENT de " & numeroDebourseARenverser & ")", "")
+            ws.Cells(rowToBeUsed, fDebTReference).Value = .Range("M6").Value
             
-            ws.Cells(rowToBeUsed, fDebTNoCompte).value = .Range("Q" & i).value
-            ws.Cells(rowToBeUsed, fDebTCompte).value = .Range("E" & i).value
-            ws.Cells(rowToBeUsed, fDebTCodeTaxe).value = .Range("H" & i).value
-            ws.Cells(rowToBeUsed, fDebTTotal).value = .Range("I" & i).value
-            ws.Cells(rowToBeUsed, fDebTTPS).value = .Range("J" & i).value
-            ws.Cells(rowToBeUsed, fDebTTVQ).value = .Range("K" & i).value
-            ws.Cells(rowToBeUsed, fDebTCréditTPS).value = .Range("L" & i).value
-            ws.Cells(rowToBeUsed, fDebTCréditTVQ).value = .Range("M" & i).value
+            ws.Cells(rowToBeUsed, fDebTNoCompte).Value = .Range("Q" & i).Value
+            ws.Cells(rowToBeUsed, fDebTCompte).Value = .Range("E" & i).Value
+            ws.Cells(rowToBeUsed, fDebTCodeTaxe).Value = .Range("H" & i).Value
+            ws.Cells(rowToBeUsed, fDebTTotal).Value = .Range("I" & i).Value
+            ws.Cells(rowToBeUsed, fDebTTPS).Value = .Range("J" & i).Value
+            ws.Cells(rowToBeUsed, fDebTTVQ).Value = .Range("K" & i).Value
+            ws.Cells(rowToBeUsed, fDebTCréditTPS).Value = .Range("L" & i).Value
+            ws.Cells(rowToBeUsed, fDebTCréditTVQ).Value = .Range("M" & i).Value
             '$ dépense = Total - creditTPS - creditTVQ
-            ws.Cells(rowToBeUsed, fDebTDépense).value = .Range("I" & i).value _
-                                                          - .Range("L" & i).value _
-                                                          - .Range("M" & i).value
-            ws.Cells(rowToBeUsed, fDebTAutreRemarque).value = ""
-            ws.Cells(rowToBeUsed, fDebTTimeStamp).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+            ws.Cells(rowToBeUsed, fDebTDépense).Value = .Range("I" & i).Value _
+                                                          - .Range("L" & i).Value _
+                                                          - .Range("M" & i).Value
+            ws.Cells(rowToBeUsed, fDebTAutreRemarque).Value = ""
+            ws.Cells(rowToBeUsed, fDebTTimeStamp).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
         End With
         rowToBeUsed = rowToBeUsed + 1
         Call Log_Record("    modDEB_Saisie:DEB_Trans_Add_Record_Locally", -1)
@@ -324,7 +324,7 @@ Sub DEB_Trans_MAJ_Debourse_Renverse_To_DB()
     
     'Définition des paramètres
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "DEB_Trans$"
 
@@ -347,8 +347,8 @@ Sub DEB_Trans_MAJ_Debourse_Renverse_To_DB()
         'Boucler à travers les enregistrements
         Do While Not rs.EOF
         ' Vérifier si Reference contient déjà "RENVERSÉ" pour éviter les doublons
-        If InStr(1, rs.Fields(fDebTDescription - 1).value, " (RENVERSÉ", vbTextCompare) = 0 Then
-            rs.Fields(fDebTDescription - 1).value = rs.Fields(fDebTDescription - 1).value & " (RENVERSÉ par " & wshDEB_Saisie.Range("B1").value & ")"
+        If InStr(1, rs.Fields(fDebTDescription - 1).Value, " (RENVERSÉ", vbTextCompare) = 0 Then
+            rs.Fields(fDebTDescription - 1).Value = rs.Fields(fDebTDescription - 1).Value & " (RENVERSÉ par " & wshDEB_Saisie.Range("B1").Value & ")"
             rs.Update
         End If
         'Passer à l'enregistrement suivant
@@ -386,11 +386,11 @@ Sub DEB_Trans_MAJ_Debourse_Renverse_Locally()
     'Boucler sur toutes les lignes pour trouver les correspondances
     Dim cell As Range
     For Each cell In ws.Range("A2:A" & lastUsedRow)
-        If cell.value = numeroDebourseARenverser Then
+        If cell.Value = numeroDebourseARenverser Then
             'Vérifier si "RENVERSÉ" est déjà présent pour éviter les doublons
-            If InStr(1, cell.offset(0, fDebTDescription - 1).value, " (RENVERSÉ par ", vbTextCompare) = 0 Then
+            If InStr(1, cell.offset(0, fDebTDescription - 1).Value, " (RENVERSÉ par ", vbTextCompare) = 0 Then
                 'Ajouter "RENVERSÉ" à la colonne "Reference" (colonne B)
-                cell.offset(0, fDebTDescription - 1).value = cell.offset(0, fDebTDescription - 1).value & " (RENVERSÉ par " & wshDEB_Saisie.Range("B1").value & ")"
+                cell.offset(0, fDebTDescription - 1).Value = cell.offset(0, fDebTDescription - 1).Value & " (RENVERSÉ par " & wshDEB_Saisie.Range("B1").Value & ")"
             End If
         End If
     Next cell
@@ -416,10 +416,10 @@ Sub Preparer_Liste_Debourses_Pour_Afficher()
     ufListeDebourse.show vbModal
     
     If numeroDebourseARenverser = -1 Then
-        wshDEB_Saisie.Range("F4").value = ""
+        wshDEB_Saisie.Range("F4").Value = ""
         wshDEB_Saisie.Range("F4").Select
     Else
-        wshDEB_Saisie.Range("B7").value = True
+        wshDEB_Saisie.Range("B7").Value = True
     End If
     
 End Sub
@@ -434,7 +434,7 @@ Sub DEB_Renverser_Ecriture() '2025-02-23 @ 16:56
     If numeroDebourseARenverser = -1 Then
         MsgBox "Vous n'avez sélectionné aucun déboursé à renverser", vbInformation, "Sélection d'un déboursé à renverser"
         Application.EnableEvents = True
-        wshDEB_Saisie.Range("F4").value = ""
+        wshDEB_Saisie.Range("F4").Value = ""
         wshDEB_Saisie.Range("F4").Select
         Application.EnableEvents = False
         GoTo Nettoyage
@@ -449,41 +449,41 @@ Sub DEB_Renverser_Ecriture() '2025-02-23 @ 16:56
     Dim totalDeb As Currency
     With wshDEB_Saisie
         'Entête
-        .Range("F4").value = debTransSubset(1, fDebTType)
-        .Range("J4").value = debTransSubset(1, fDebTBeneficiaire)
-        .Range("O4").value = Format$(debTransSubset(1, fDebTDate), wsdADMIN.Range("B1").value)
-        .Range("F6").value = debTransSubset(1, fDebTDescription)
-        .Range("M6").value = debTransSubset(1, fDebTReference)
+        .Range("F4").Value = debTransSubset(1, fDebTType)
+        .Range("J4").Value = debTransSubset(1, fDebTBeneficiaire)
+        .Range("O4").Value = Format$(debTransSubset(1, fDebTDate), wsdADMIN.Range("B1").Value)
+        .Range("F6").Value = debTransSubset(1, fDebTDescription)
+        .Range("M6").Value = debTransSubset(1, fDebTReference)
         'Détail
         Dim i As Long, r As Long
         r = 9
         Dim compteGL As String
         For i = 1 To UBound(debTransSubset, 1)
             compteGL = debTransSubset(i, fDebTCompte)
-            .Range("E" & r).value = compteGL
-            .Range("H" & r).value = debTransSubset(i, fDebTCodeTaxe)
+            .Range("E" & r).Value = compteGL
+            .Range("H" & r).Value = debTransSubset(i, fDebTCodeTaxe)
             With .Range("I" & r)
-                .value = CCur(debTransSubset(i, fDebTTotal))
+                .Value = CCur(debTransSubset(i, fDebTTotal))
                 .NumberFormat = "#,##0.00;-#,##0.00;0.00"
             End With
             With .Range("L" & r)
-                .value = CCur(debTransSubset(i, fDebTCréditTPS))
+                .Value = CCur(debTransSubset(i, fDebTCréditTPS))
                 .NumberFormat = "#,##0.00;-#,##0.00;0.00"
             End With
             With .Range("M" & r)
-                .value = CCur(debTransSubset(i, fDebTCréditTVQ))
+                .Value = CCur(debTransSubset(i, fDebTCréditTVQ))
                 .NumberFormat = "#,##0.00;-#,##0.00;0.00"
             End With
             With .Range("N" & r)
-                .value = CCur(debTransSubset(i, fDebTDépense))
+                .Value = CCur(debTransSubset(i, fDebTDépense))
                 .NumberFormat = "#,##0.00;-#,##0.00;0.00"
             End With
-            .Range("Q" & r).value = Fn_GetGL_Code_From_GL_Description(compteGL)
+            .Range("Q" & r).Value = Fn_GetGL_Code_From_GL_Description(compteGL)
             totalDeb = totalDeb + CCur(debTransSubset(i, fDebTTotal))
             r = r + 1
         Next i
         With .Range("O6")
-            .value = CCur(totalDeb)
+            .Value = CCur(totalDeb)
             .NumberFormat = "#,##0.00;-#,##0.00;0.00"
         End With
     End With
@@ -513,14 +513,14 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
     Dim descGL_Trans As String, Source As String, deboursType As String
     Dim GL_TransNo As Long
     
-    dateDebours = wshDEB_Saisie.Range("O4").value
-    deboursType = wshDEB_Saisie.Range("F4").value
-    descGL_Trans = deboursType & " - " & wshDEB_Saisie.Range("F6").value
-    If Trim$(wshDEB_Saisie.Range("M6").value) <> "" Then
-        descGL_Trans = descGL_Trans & " [" & wshDEB_Saisie.Range("M6").value & "]"
+    dateDebours = wshDEB_Saisie.Range("O4").Value
+    deboursType = wshDEB_Saisie.Range("F4").Value
+    descGL_Trans = deboursType & " - " & wshDEB_Saisie.Range("F6").Value
+    If Trim$(wshDEB_Saisie.Range("M6").Value) <> "" Then
+        descGL_Trans = descGL_Trans & " [" & wshDEB_Saisie.Range("M6").Value & "]"
     End If
-    If wshDEB_Saisie.Range("B7").value = False Then
-        Source = "DÉBOURSÉ:" & Format$(wshDEB_Saisie.Range("B1").value, "00000")
+    If wshDEB_Saisie.Range("B7").Value = False Then
+        Source = "DÉBOURSÉ:" & Format$(wshDEB_Saisie.Range("B1").Value, "00000")
     Else
         Source = "RENV/DÉBOURSÉ:" & Format$(numeroDebourseARenverser, "00000")
     End If
@@ -530,7 +530,7 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
     
     'Based on Disbursement type, the CREDIT account will be different
     'Disbursement Total (wshDEB_Saisie.Range("O6"))
-    Montant = wshDEB_Saisie.Range("O6").value
+    Montant = wshDEB_Saisie.Range("O6").Value
     
     Dim GLNo_Credit As String
     
@@ -568,24 +568,24 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
     Dim l As Long, arrRow As Long
     arrRow = 2 '1 is already used
     For l = 9 To lastUsedRow
-        MyArray(arrRow, 1) = wshDEB_Saisie.Range("Q" & l).value
-        MyArray(arrRow, 2) = wshDEB_Saisie.Range("E" & l).value
-        MyArray(arrRow, 3) = wshDEB_Saisie.Range("N" & l).value
+        MyArray(arrRow, 1) = wshDEB_Saisie.Range("Q" & l).Value
+        MyArray(arrRow, 2) = wshDEB_Saisie.Range("E" & l).Value
+        MyArray(arrRow, 3) = wshDEB_Saisie.Range("N" & l).Value
         MyArray(arrRow, 4) = ""
         arrRow = arrRow + 1
         
-        If wshDEB_Saisie.Range("L" & l).value <> 0 Then
+        If wshDEB_Saisie.Range("L" & l).Value <> 0 Then
             MyArray(arrRow, 1) = ObtenirNoGlIndicateur("TPS Payée")
             MyArray(arrRow, 2) = "TPS payées"
-            MyArray(arrRow, 3) = wshDEB_Saisie.Range("L" & l).value
+            MyArray(arrRow, 3) = wshDEB_Saisie.Range("L" & l).Value
             MyArray(arrRow, 4) = ""
             arrRow = arrRow + 1
         End If
 
-        If wshDEB_Saisie.Range("M" & l).value <> 0 Then
+        If wshDEB_Saisie.Range("M" & l).Value <> 0 Then
             MyArray(arrRow, 1) = ObtenirNoGlIndicateur("TVQ Payée")
             MyArray(arrRow, 2) = "TVQ payées"
-            MyArray(arrRow, 3) = wshDEB_Saisie.Range("M" & l).value
+            MyArray(arrRow, 3) = wshDEB_Saisie.Range("M" & l).Value
             MyArray(arrRow, 4) = ""
             arrRow = arrRow + 1
         End If
@@ -606,7 +606,7 @@ Sub ChargerDEBRecurrentDansSaisie(DEBAutoDesc As String, noDEBAuto As Long)
     
     'On copie l'écriture automatique vers wshDEB_Saisie
     Dim rowDEBAuto As Long, rowDEB As Long
-    rowDEBAuto = wsdDEB_Récurrent.Cells(wsdDEB_Récurrent.Rows.count, "C").End(xlUp).row  'Last Row used in wshDEB_Recurrent
+    rowDEBAuto = wsdDEB_Recurrent.Cells(wsdDEB_Recurrent.Rows.count, "C").End(xlUp).row  'Last Row used in wshDEB_Recurrent
     
     Call DEB_Saisie_Clear_All_Cells
     
@@ -615,28 +615,28 @@ Sub ChargerDEBRecurrentDansSaisie(DEBAutoDesc As String, noDEBAuto As Long)
     Application.EnableEvents = False
     Dim r As Long, totAmount As Currency, typeDEB As String
     For r = 2 To rowDEBAuto
-        If wsdDEB_Récurrent.Range("A" & r).value = noDEBAuto And wsdDEB_Récurrent.Range("F" & r).value <> "" Then
-            wshDEB_Saisie.Range("E" & rowDEB).value = wsdDEB_Récurrent.Range("G" & r).value
-            wshDEB_Saisie.Range("H" & rowDEB).value = wsdDEB_Récurrent.Range("H" & r).value
-            wshDEB_Saisie.Range("I" & rowDEB).value = wsdDEB_Récurrent.Range("I" & r).value
-            wshDEB_Saisie.Range("J" & rowDEB).value = wsdDEB_Récurrent.Range("J" & r).value
-            wshDEB_Saisie.Range("K" & rowDEB).value = wsdDEB_Récurrent.Range("K" & r).value
-            wshDEB_Saisie.Range("L" & rowDEB).value = wsdDEB_Récurrent.Range("L" & r).value
-            wshDEB_Saisie.Range("M" & rowDEB).value = wsdDEB_Récurrent.Range("M" & r).value
-            wshDEB_Saisie.Range("N" & rowDEB).value = wsdDEB_Récurrent.Range("I" & r).value _
-                                                      - wsdDEB_Récurrent.Range("L" & r).value _
-                                                      - wsdDEB_Récurrent.Range("M" & r).value
-            wshDEB_Saisie.Range("Q" & rowDEB).value = wsdDEB_Récurrent.Range("F" & r).value
-            totAmount = totAmount + wsdDEB_Récurrent.Range("I" & r).value
+        If wsdDEB_Recurrent.Range("A" & r).Value = noDEBAuto And wsdDEB_Recurrent.Range("F" & r).Value <> "" Then
+            wshDEB_Saisie.Range("E" & rowDEB).Value = wsdDEB_Recurrent.Range("G" & r).Value
+            wshDEB_Saisie.Range("H" & rowDEB).Value = wsdDEB_Recurrent.Range("H" & r).Value
+            wshDEB_Saisie.Range("I" & rowDEB).Value = wsdDEB_Recurrent.Range("I" & r).Value
+            wshDEB_Saisie.Range("J" & rowDEB).Value = wsdDEB_Recurrent.Range("J" & r).Value
+            wshDEB_Saisie.Range("K" & rowDEB).Value = wsdDEB_Recurrent.Range("K" & r).Value
+            wshDEB_Saisie.Range("L" & rowDEB).Value = wsdDEB_Recurrent.Range("L" & r).Value
+            wshDEB_Saisie.Range("M" & rowDEB).Value = wsdDEB_Recurrent.Range("M" & r).Value
+            wshDEB_Saisie.Range("N" & rowDEB).Value = wsdDEB_Recurrent.Range("I" & r).Value _
+                                                      - wsdDEB_Recurrent.Range("L" & r).Value _
+                                                      - wsdDEB_Recurrent.Range("M" & r).Value
+            wshDEB_Saisie.Range("Q" & rowDEB).Value = wsdDEB_Recurrent.Range("F" & r).Value
+            totAmount = totAmount + wsdDEB_Recurrent.Range("I" & r).Value
             If typeDEB = "" Then
-                typeDEB = wsdDEB_Récurrent.Range("C" & r).value
+                typeDEB = wsdDEB_Recurrent.Range("C" & r).Value
             End If
             rowDEB = rowDEB + 1
         End If
     Next r
-    wshDEB_Saisie.Range("F4").value = typeDEB
-    wshDEB_Saisie.Range("F6").value = "[Auto]-" & DEBAutoDesc
-    wshDEB_Saisie.Range("O6").value = Format$(totAmount, "#,##0.00")
+    wshDEB_Saisie.Range("F4").Value = typeDEB
+    wshDEB_Saisie.Range("F6").Value = "[Auto]-" & DEBAutoDesc
+    wshDEB_Saisie.Range("O6").Value = Format$(totAmount, "#,##0.00")
     
     Application.EnableEvents = True
     
@@ -668,7 +668,7 @@ Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "DEB_Récurrent$"
     
@@ -686,16 +686,16 @@ Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external
     
     'Get the last used row
     Dim lastDR As Long, nextDRNo As Long
-    If IsNull(rs.Fields("MaxDebRecNo").value) Then
+    If IsNull(rs.Fields("MaxDebRecNo").Value) Then
         ' Handle empty table (assign a default value, e.g., 1)
         lastDR = 0
     Else
-        lastDR = rs.Fields("MaxDebRecNo").value
+        lastDR = rs.Fields("MaxDebRecNo").Value
     End If
     
     'Calculate the new ID
     nextDRNo = lastDR + 1
-    wshDEB_Saisie.Range("B2").value = nextDRNo
+    wshDEB_Saisie.Range("B2").Value = nextDRNo
 
     'timeStamp uniforme
     Dim timeStamp As Date
@@ -710,20 +710,20 @@ Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external
         rs.AddNew
             With wshDEB_Saisie
                 'Add fields to the recordset before updating it
-                rs.Fields(fDebRNoDebRec - 1).value = nextDRNo
-                rs.Fields(fDebRDate - 1).value = .Range("O4").value
-                rs.Fields(fDebRType - 1).value = .Range("F4").value
-                rs.Fields(fDebRBeneficiaire - 1).value = .Range("J4").value
-                rs.Fields(fDebRReference - 1).value = .Range("M6").value
-                rs.Fields(fDebRNoCompte - 1).value = .Range("Q" & l).value
-                rs.Fields(fDebRCompte - 1).value = .Range("E" & l).value
-                rs.Fields(fDebRCodeTaxe - 1).value = .Range("H" & l).value
-                rs.Fields(fDebRTotal - 1).value = .Range("I" & l).value
-                rs.Fields(fDebRTPS - 1).value = .Range("J" & l).value
-                rs.Fields(fDebRTVQ - 1).value = .Range("K" & l).value
-                rs.Fields(fDebRCréditTPS - 1).value = .Range("L" & l).value
-                rs.Fields(fDebRCréditTVQ - 1).value = .Range("M" & l).value
-                rs.Fields(fDebRTimeStamp - 1).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+                rs.Fields(fDebRNoDebRec - 1).Value = nextDRNo
+                rs.Fields(fDebRDate - 1).Value = .Range("O4").Value
+                rs.Fields(fDebRType - 1).Value = .Range("F4").Value
+                rs.Fields(fDebRBeneficiaire - 1).Value = .Range("J4").Value
+                rs.Fields(fDebRReference - 1).Value = .Range("M6").Value
+                rs.Fields(fDebRNoCompte - 1).Value = .Range("Q" & l).Value
+                rs.Fields(fDebRCompte - 1).Value = .Range("E" & l).Value
+                rs.Fields(fDebRCodeTaxe - 1).Value = .Range("H" & l).Value
+                rs.Fields(fDebRTotal - 1).Value = .Range("I" & l).Value
+                rs.Fields(fDebRTPS - 1).Value = .Range("J" & l).Value
+                rs.Fields(fDebRTVQ - 1).Value = .Range("K" & l).Value
+                rs.Fields(fDebRCréditTPS - 1).Value = .Range("L" & l).Value
+                rs.Fields(fDebRCréditTVQ - 1).Value = .Range("M" & l).Value
+                rs.Fields(fDebRTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
             End With
         rs.Update
     Next l
@@ -752,11 +752,11 @@ Sub DEB_Recurrent_Add_Record_Locally(r As Long) 'Write records to local file
     
     'Get the JE number
     Dim DEBRecNo As Long
-    DEBRecNo = wshDEB_Saisie.Range("B2").value
+    DEBRecNo = wshDEB_Saisie.Range("B2").Value
     
     'What is the last used row in EJ_AUto ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wsdDEB_Récurrent.Cells(wsdDEB_Récurrent.Rows.count, "C").End(xlUp).row
+    lastUsedRow = wsdDEB_Recurrent.Cells(wsdDEB_Recurrent.Rows.count, "C").End(xlUp).row
     rowToBeUsed = lastUsedRow + 1
     
     'timeStamp uniforme
@@ -766,21 +766,21 @@ Sub DEB_Recurrent_Add_Record_Locally(r As Long) 'Write records to local file
     Dim i As Long
     For i = 9 To r
         With wshDEB_Saisie
-            wsdDEB_Récurrent.Range("A" & rowToBeUsed).value = DEBRecNo
-            wsdDEB_Récurrent.Range("B" & rowToBeUsed).value = .Range("O4").value
-            wsdDEB_Récurrent.Range("C" & rowToBeUsed).value = .Range("F4").value
-            wsdDEB_Récurrent.Range("D" & rowToBeUsed).value = .Range("J4").value
-            wsdDEB_Récurrent.Range("E" & rowToBeUsed).value = .Range("M6").value
+            wsdDEB_Recurrent.Range("A" & rowToBeUsed).Value = DEBRecNo
+            wsdDEB_Recurrent.Range("B" & rowToBeUsed).Value = .Range("O4").Value
+            wsdDEB_Recurrent.Range("C" & rowToBeUsed).Value = .Range("F4").Value
+            wsdDEB_Recurrent.Range("D" & rowToBeUsed).Value = .Range("J4").Value
+            wsdDEB_Recurrent.Range("E" & rowToBeUsed).Value = .Range("M6").Value
             
-            wsdDEB_Récurrent.Range("F" & rowToBeUsed).value = .Range("Q" & i).value
-            wsdDEB_Récurrent.Range("G" & rowToBeUsed).value = .Range("E" & i).value
-            wsdDEB_Récurrent.Range("H" & rowToBeUsed).value = .Range("H" & i).value
-            wsdDEB_Récurrent.Range("I" & rowToBeUsed).value = .Range("I" & i).value
-            wsdDEB_Récurrent.Range("J" & rowToBeUsed).value = .Range("J" & i).value
-            wsdDEB_Récurrent.Range("K" & rowToBeUsed).value = .Range("K" & i).value
-            wsdDEB_Récurrent.Range("L" & rowToBeUsed).value = .Range("L" & i).value
-            wsdDEB_Récurrent.Range("M" & rowToBeUsed).value = .Range("M" & i).value
-            wsdDEB_Récurrent.Range("N" & rowToBeUsed).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+            wsdDEB_Recurrent.Range("F" & rowToBeUsed).Value = .Range("Q" & i).Value
+            wsdDEB_Recurrent.Range("G" & rowToBeUsed).Value = .Range("E" & i).Value
+            wsdDEB_Recurrent.Range("H" & rowToBeUsed).Value = .Range("H" & i).Value
+            wsdDEB_Recurrent.Range("I" & rowToBeUsed).Value = .Range("I" & i).Value
+            wsdDEB_Recurrent.Range("J" & rowToBeUsed).Value = .Range("J" & i).Value
+            wsdDEB_Recurrent.Range("K" & rowToBeUsed).Value = .Range("K" & i).Value
+            wsdDEB_Recurrent.Range("L" & rowToBeUsed).Value = .Range("L" & i).Value
+            wsdDEB_Recurrent.Range("M" & rowToBeUsed).Value = .Range("M" & i).Value
+            wsdDEB_Recurrent.Range("N" & rowToBeUsed).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
         End With
         rowToBeUsed = rowToBeUsed + 1
     Next i
@@ -812,24 +812,24 @@ Sub DEB_Recurrent_Build_Summary()
     
     'Build the summary at column K & L
     Dim lastUsedRow1 As Long
-    lastUsedRow1 = wsdDEB_Récurrent.Cells(wsdDEB_Récurrent.Rows.count, "A").End(xlUp).row
+    lastUsedRow1 = wsdDEB_Recurrent.Cells(wsdDEB_Recurrent.Rows.count, "A").End(xlUp).row
     
     Dim lastUsedRow2 As Long
-    lastUsedRow2 = wsdDEB_Récurrent.Cells(wsdDEB_Récurrent.Rows.count, "P").End(xlUp).row
+    lastUsedRow2 = wsdDEB_Recurrent.Cells(wsdDEB_Recurrent.Rows.count, "P").End(xlUp).row
     If lastUsedRow2 > 1 Then
-        wsdDEB_Récurrent.Range("P2:S" & lastUsedRow2).ClearContents
+        wsdDEB_Recurrent.Range("P2:S" & lastUsedRow2).ClearContents
     End If
     
-    With wsdDEB_Récurrent
+    With wsdDEB_Recurrent
         Dim i As Long, k As Long, oldEntry As String
         k = 2
         For i = 2 To lastUsedRow1
-            If .Range("A" & i).value <> oldEntry Then
-                .Range("P" & k).value = .Range("A" & i).value
-                .Range("Q" & k).value = .Range("D" & i).value
-                .Range("R" & k).value = .Range("I" & i).value
-                .Range("S" & k).value = .Range("B" & i).value
-                oldEntry = .Range("A" & i).value
+            If .Range("A" & i).Value <> oldEntry Then
+                .Range("P" & k).Value = .Range("A" & i).Value
+                .Range("Q" & k).Value = .Range("D" & i).Value
+                .Range("R" & k).Value = .Range("I" & i).Value
+                .Range("S" & k).Value = .Range("B" & i).Value
+                oldEntry = .Range("A" & i).Value
                 k = k + 1
             End If
         Next i
@@ -851,7 +851,7 @@ Public Sub DEB_Saisie_Clear_All_Cells()
     
     With ws
         .Range("F4:H4, J4:M4, O4, F6:J6, M6, O6, E9:O23, Q9:Q29").ClearContents
-        .Range("O4").value = Format$(Date, wsdADMIN.Range("B1").value)
+        .Range("O4").Value = Format$(Date, wsdADMIN.Range("B1").Value)
         wshDEB_Saisie.ckbRecurrente = False
     End With
     
@@ -862,7 +862,7 @@ Public Sub DEB_Saisie_Clear_All_Cells()
     
     'Toutes les cellules sont sans surbrillance (élimine le vert pâle)
     With ws.Range("F4:H4, J4:M4, O4, F6:J6, M6, O6, E9:O23").Interior
-        .Pattern = xlNone
+        .pattern = xlNone
         .TintAndShade = 0
         .PatternTintAndShade = 0
     End With

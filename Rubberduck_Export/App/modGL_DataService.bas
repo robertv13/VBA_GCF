@@ -50,8 +50,8 @@ Function CreerCopieTemporaireSolide(onglet As String) As String
     End With
 
     ' Copier les valeurs uniquement
-    wsDest.Range(wsDest.Cells(1, 1), wsDest.Cells(lastRow, lastCol)).value = _
-        wsSrc.Range(wsSrc.Cells(1, 1), wsSrc.Cells(lastRow, lastCol)).value
+    wsDest.Range(wsDest.Cells(1, 1), wsDest.Cells(lastRow, lastCol)).Value = _
+        wsSrc.Range(wsSrc.Cells(1, 1), wsSrc.Cells(lastRow, lastCol)).Value
 
     ' Optionnel : nommer la feuille comme l’originale
     On Error Resume Next: wsDest.Name = wsSrc.Name: On Error GoTo 0
@@ -68,7 +68,7 @@ Function CreerCopieTemporaireSolide(onglet As String) As String
 
 ErrHandler:
     Application.ScreenUpdating = oldScreenUpdating
-    MsgBox "Erreur lors de la création du fichier temporaire : " & Err.Description, vbCritical
+    MsgBox "Erreur lors de la création du fichier temporaire : " & Err.description, vbCritical
     CreerCopieTemporaireSolide = ""
     
 End Function

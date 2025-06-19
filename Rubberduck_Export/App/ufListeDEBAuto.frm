@@ -1,9 +1,9 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufListeDEBAuto 
    Caption         =   "Choisir le déboursé récurrent parmi la liste"
-   ClientHeight    =   4416
+   ClientHeight    =   4425
    ClientLeft      =   180
-   ClientTop       =   696
+   ClientTop       =   690
    ClientWidth     =   9360.001
    OleObjectBlob   =   "ufListeDEBAuto.frx":0000
    StartUpPosition =   1  'CenterOwner
@@ -18,7 +18,7 @@ Option Explicit
 Private Sub UserForm_Initialize()
     
     Dim ws As Worksheet
-    Set ws = wsdDEB_Récurrent
+    Set ws = wsdDEB_Recurrent
     
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, "P").End(xlUp).row
@@ -28,14 +28,14 @@ Private Sub UserForm_Initialize()
     
     Application.ScreenUpdating = False
     
-    With wsdDEB_Récurrent
+    With wsdDEB_Recurrent
         Dim i As Long
         For i = 2 To lastUsedRow
-            arr(i - 1, 1) = .Range("P" & i).value      'Deb Récurrent Auto
-            arr(i - 1, 2) = .Range("Q" & i).value      'Description
-            arr(i - 1, 3) = Format$(.Range("R" & i).value, "#,##0.00")     'Montant
+            arr(i - 1, 1) = .Range("P" & i).Value      'Deb Récurrent Auto
+            arr(i - 1, 2) = .Range("Q" & i).Value      'Description
+            arr(i - 1, 3) = Format$(.Range("R" & i).Value, "#,##0.00")     'Montant
             arr(i - 1, 3) = Space(10 - Len(arr(i - 1, 3))) & arr(i - 1, 3)
-            arr(i - 1, 4) = .Range("S" & i).value      'Date
+            arr(i - 1, 4) = .Range("S" & i).Value      'Date
         Next i
     End With
     
@@ -64,7 +64,7 @@ Private Sub lsbDEB_AutoDesc_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     Dim descDEBAuto As String
     descDEBAuto = lsbDEB_AutoDesc.List(rowSelected, 1)
     
-    wshDEB_Saisie.Range("B3").value = rowSelected '2024-06-14 @ 07:23
+    wshDEB_Saisie.Range("B3").Value = rowSelected '2024-06-14 @ 07:23
     
     Unload ufListeDEBAuto
     

@@ -10,7 +10,7 @@ Sub shp_GL_BV_Actualiser_Click() '2025-06-03 @ 20:23
     
     Application.ScreenUpdating = True
     Application.EnableEvents = False
-    wshGL_BV.Range("C2").value = "Au " & Format$(ws.Range("J1").value, wsdADMIN.Range("B1").value)
+    wshGL_BV.Range("C2").Value = "Au " & Format$(ws.Range("J1").Value, wsdADMIN.Range("B1").Value)
     
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, "D").End(xlUp).row
@@ -21,7 +21,7 @@ Sub shp_GL_BV_Actualiser_Click() '2025-06-03 @ 20:23
     Application.ScreenUpdating = False
     
     Dim resumeGL As Variant
-    resumeGL = Get_Summary_By_GL_Account(#7/31/2024#, Range("J1").value)
+    resumeGL = Get_Summary_By_GL_Account(#7/31/2024#, Range("J1").Value)
     
     Call Afficher_BV_Summary(resumeGL)
     
@@ -62,21 +62,21 @@ Function Get_Summary_By_GL_Account(dateMin As Date, dateMax As Date) As Variant 
     Set dPlanComptable = CreateObject("Scripting.Dictionary")
     arrPC = Fn_Get_Plan_Comptable(2)
     For i = 1 To UBound(arrPC, 1)
-        If Not dPlanComptable.Exists(arrPC(i, 1)) Then
+        If Not dPlanComptable.exists(arrPC(i, 1)) Then
             dPlanComptable.Add arrPC(i, 1), arrPC(i, 2)
         End If
     Next i
 
     Set dSoldeParGL = CreateObject("Scripting.Dictionary")
     Do While Not rs.EOF
-        rsKey = rs.Fields("NoCompte").value
-        If Not dPlanComptable.Exists(rsKey) Then
+        rsKey = rs.Fields("NoCompte").Value
+        If Not dPlanComptable.exists(rsKey) Then
             dPlanComptable.Add rsKey, "Compte inconnu"
         End If
         tDebit = Nz(rs.Fields("TotalDébit"))
         tCredit = Nz(rs.Fields("TotalCrédit"))
         If tDebit <> 0 Or tCredit <> 0 Then
-            If Not dSoldeParGL.Exists(rsKey) Then
+            If Not dSoldeParGL.exists(rsKey) Then
                 dSoldeParGL.Add rsKey, Array(tDebit, tCredit)
             End If
         End If
@@ -87,7 +87,7 @@ Function Get_Summary_By_GL_Account(dateMin As Date, dateMax As Date) As Variant 
     i = 1
     For Each key In dPlanComptable.keys
         soldes = Array(0, 0)
-        If dSoldeParGL.Exists(key) Then
+        If dSoldeParGL.exists(key) Then
             soldes = dSoldeParGL(key)
             solde = soldes(0) - soldes(1)
         Else
@@ -354,7 +354,7 @@ Sub Afficher_BV_Summary(tblData As Variant, Optional ligneDépart As Long = 4) '2
 
     ' Écriture des lignes
     For i = 1 To UBound(tblData, 1)
-        wshGL_BV.Cells(ligne, 4).Resize(1, 4).value = Array( _
+        wshGL_BV.Cells(ligne, 4).Resize(1, 4).Value = Array( _
             tblData(i, COL_Code), _
             tblData(i, COL_Desc), _
             tblData(i, COL_Debit), _
@@ -367,11 +367,11 @@ Sub Afficher_BV_Summary(tblData As Variant, Optional ligneDépart As Long = 4) '2
     ' Écriture des totaux
     ligne = ligne + 1
     With wshGL_BV.Cells(ligne, 4)
-        .value = "TOTALS"
+        .Value = "TOTALS"
         .Font.Bold = True
     End With
-    wshGL_BV.Cells(ligne, 6).value = globalDebit
-    wshGL_BV.Cells(ligne, 7).value = globalCredit
+    wshGL_BV.Cells(ligne, 6).Value = globalDebit
+    wshGL_BV.Cells(ligne, 7).Value = globalCredit
 
     With wshGL_BV.Range("F" & ligne & ":G" & ligne)
         With .Borders(xlEdgeTop)
@@ -418,7 +418,7 @@ Private Sub Sort2DArray(arr As Variant, sortColumn As Long, ascending As Boolean
 
 End Sub
 
-Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, Description As String, dateMin As Date, dateMax As Date) '2025-05-27 @ 19:40 - v6.C.7 - ChatGPT
+Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As String, dateMin As Date, dateMax As Date) '2025-05-27 @ 19:40 - v6.C.7 - ChatGPT
 
     Dim cn As Object, rs As Object, rsInit As Object
     Dim wsTrans As Worksheet, wsResult As Worksheet
@@ -440,18 +440,18 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, Description As St
     Call GL_BV_EffacerZoneTransactionsDetaillees(wsResult)
     
     Application.EnableEvents = False
-    wsResult.Range("L2").value = "Du " & Format$(dateMin, wsdADMIN.Range("B1").value) & " au " & Format$(dateMax, wsdADMIN.Range("B1").value)
+    wsResult.Range("L2").Value = "Du " & Format$(dateMin, wsdADMIN.Range("B1").Value) & " au " & Format$(dateMax, wsdADMIN.Range("B1").Value)
     
     'Écrire NoCompte & Description en L4
     With wsResult.Range("L4")
-        .value = compte & IIf(Description <> "", " - " & Description, "")
+        .Value = compte & IIf(description <> "", " - " & description, "")
         .Font.Name = "Aptos Narrow"
         .Font.size = 10
         .Font.Bold = True
     End With
     'Sauvegarder le numéro du compte sélectionné ainsi que la description
-    wshGL_BV.Range("B6").value = compte
-    wshGL_BV.Range("B7").value = Description
+    wshGL_BV.Range("B6").Value = compte
+    wshGL_BV.Range("B7").Value = description
     Application.EnableEvents = True
     
     'Connexion ADO
@@ -464,7 +464,7 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, Description As St
     End With
 
     'Calcul du solde initial avant DateMin
-    dateMin = wsResult.Range("B8").value
+    dateMin = wsResult.Range("B8").Value
 '    wsResult.Range("L2").value = "Du " & Format$(dateMin, wsdADMIN.Range("B1").value) & " au " & Format$(dateMax, wsdADMIN.Range("B1").value)
     Set rsInit = CreateObject("ADODB.Recordset")
     
@@ -474,7 +474,7 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, Description As St
     
     rsInit.Open strSQL, cn, 1, 1
     If Not rsInit.EOF Then
-        soldeInitial = Nz(rsInit.Fields("TotalDebit").value) - Nz(rsInit.Fields("TotalCredit").value)
+        soldeInitial = Nz(rsInit.Fields("TotalDebit").Value) - Nz(rsInit.Fields("TotalCredit").Value)
     End If
     rsInit.Close: Set rsInit = Nothing
     
@@ -503,8 +503,8 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, Description As St
 
         'Solde d'ouverture
         Application.EnableEvents = False
-        wsResult.Range("P4").value = "Solde d'ouverture au " & Format(dateMin, wsdADMIN.Range("B1"))
-        wsResult.Range("S4").value = soldeInitial
+        wsResult.Range("P4").Value = "Solde d'ouverture au " & Format(dateMin, wsdADMIN.Range("B1"))
+        wsResult.Range("S4").Value = soldeInitial
         With wsResult.Range("P4:S4")
             .Font.Name = "Aptos Narrow"
             .Font.size = 9
@@ -515,14 +515,14 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, Description As St
         Application.EnableEvents = True
 
         Do While Not rs.EOF
-            Debit = Nz(rs.Fields("Débit").value)
-            Credit = Nz(rs.Fields("Crédit").value)
+            Debit = Nz(rs.Fields("Débit").Value)
+            Credit = Nz(rs.Fields("Crédit").Value)
             solde = solde + Debit - Credit
 
-            tableau(ligne, 1) = rs.Fields("Date").value
-            tableau(ligne, 2) = rs.Fields("NoEntrée").value
-            tableau(ligne, 3) = rs.Fields("Description").value
-            tableau(ligne, 4) = rs.Fields("Source").value
+            tableau(ligne, 1) = rs.Fields("Date").Value
+            tableau(ligne, 2) = rs.Fields("NoEntrée").Value
+            tableau(ligne, 3) = rs.Fields("Description").Value
+            tableau(ligne, 4) = rs.Fields("Source").Value
             tableau(ligne, 5) = IIf(Debit > 0, Debit, "")
             tableau(ligne, 6) = IIf(Credit > 0, Credit, "")
             tableau(ligne, 7) = solde
@@ -534,7 +534,7 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, Description As St
 
         'Écriture de tableau dans la plage, en commençant à M5
         Application.EnableEvents = False
-        wsResult.Range("M5").Resize(nbLignes, 8).value = tableau
+        wsResult.Range("M5").Resize(nbLignes, 8).Value = tableau
         With wsResult.Range("M5:T" & (4 + nbLignes)).Font
             .Name = "Aptos Narrow"
             .size = 9
@@ -546,7 +546,7 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, Description As St
         MsgBox "Aucune transaction à afficher pour ce" & vbNewLine & vbNewLine & _
                 "compte, avec la période choisie", vbExclamation, "Transactions pour la période"
         Application.EnableEvents = False
-        wsResult.Range("L4").value = ""
+        wsResult.Range("L4").Value = ""
         Application.EnableEvents = True
     End If
     
@@ -1101,7 +1101,7 @@ Sub GL_BV_SetUp_And_Print_Document(myPrintRange As Range, pagesTall As Long)
         
         'Page Header & Footer
 '        .LeftHeader = ""
-        .CenterHeader = "&""Aptos Narrow,Gras""&18 " & wsdADMIN.Range("NomEntreprise").value
+        .CenterHeader = "&""Aptos Narrow,Gras""&18 " & wsdADMIN.Range("NomEntreprise").Value
         Call Log_Record("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 1.A is completed", -1)
         
 '        .RightHeader = ""
@@ -1199,7 +1199,7 @@ Sub GL_BV_Adjust_The_Shape()
     If lastResultRow < 2 Then Exit Sub
     
     Dim rowSelected As Long
-    rowSelected = wshGL_BV.Range("B10").value
+    rowSelected = wshGL_BV.Range("B10").Value
     
     Dim texteOneLine As String, texteFull As String
     
@@ -1207,26 +1207,26 @@ Sub GL_BV_Adjust_The_Shape()
     With wsdGL_Trans
         For i = 2 To lastResultRow
             If i = 2 Then
-                texteFull = "Entrée #: " & .Range("AC2").value & vbCrLf
-                texteFull = texteFull & "Desc    : " & .Range("AE2").value & vbCrLf
-                If Trim$(.Range("AF2").value) <> "" Then
-                    texteFull = texteFull & "Source  : " & .Range("AF2").value & vbCrLf & vbCrLf
+                texteFull = "Entrée #: " & .Range("AC2").Value & vbCrLf
+                texteFull = texteFull & "Desc    : " & .Range("AE2").Value & vbCrLf
+                If Trim$(.Range("AF2").Value) <> "" Then
+                    texteFull = texteFull & "Source  : " & .Range("AF2").Value & vbCrLf & vbCrLf
                 Else
                     texteFull = texteFull & vbCrLf
                 End If
             End If
-            texteOneLine = Fn_Pad_A_String(.Range("AG" & i).value, " ", 5, "R") & _
-                            " - " & Fn_Pad_A_String(.Range("AH" & i).value, " ", 35, "R") & _
-                            "  " & Fn_Pad_A_String(Format$(.Range("AI" & i).value, "#,##0.00 $"), " ", 14, "L") & _
-                            "  " & Fn_Pad_A_String(Format$(.Range("AJ" & i).value, "#,##0.00 $"), " ", 14, "L")
-            If Trim$(.Range("AF" & i).value) = Trim$(wshGL_BV.Range("B6").value) Then
+            texteOneLine = Fn_Pad_A_String(.Range("AG" & i).Value, " ", 5, "R") & _
+                            " - " & Fn_Pad_A_String(.Range("AH" & i).Value, " ", 35, "R") & _
+                            "  " & Fn_Pad_A_String(Format$(.Range("AI" & i).Value, "#,##0.00 $"), " ", 14, "L") & _
+                            "  " & Fn_Pad_A_String(Format$(.Range("AJ" & i).Value, "#,##0.00 $"), " ", 14, "L")
+            If Trim$(.Range("AF" & i).Value) = Trim$(wshGL_BV.Range("B6").Value) Then
                 texteOneLine = " * " & texteOneLine
             Else
                 texteOneLine = "   " & texteOneLine
             End If
             texteOneLine = Fn_Pad_A_String(texteOneLine, " ", 79, "R")
-            If Trim$(.Range("AK" & i).value) <> "" Then
-                texteOneLine = texteOneLine & Trim$(.Range("AK" & i).value)
+            If Trim$(.Range("AK" & i).Value) <> "" Then
+                texteOneLine = texteOneLine & Trim$(.Range("AK" & i).Value)
             End If
             If Len(texteOneLine) > maxLength Then
                 maxLength = Len(texteOneLine)

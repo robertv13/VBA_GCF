@@ -49,10 +49,10 @@ Private Sub Worksheet_Activate()
     
     Application.GoTo Reference:=Me.Cells(1, 3), Scroll:=True
     
-    Me.Range("O3").value = Format$(Date, wsdADMIN.Range("B1").value)
-    Me.Range("B27").value = False '2024-09-03 @ 06:33
+    Me.Range("O3").Value = Format$(Date, wsdADMIN.Range("B1").Value)
+    Me.Range("B27").Value = False '2024-09-03 @ 06:33
 
-    Me.Range("E3").value = "" '2024-09-02 @ 23:36
+    Me.Range("E3").Value = "" '2024-09-02 @ 23:36
     Me.Range("E3").Select 'The first input is the customer name
     
     gFromMenu = False
@@ -70,9 +70,9 @@ Private Sub Worksheet_Activate()
 
 End Sub
 
-Private Sub Worksheet_SelectionChange(ByVal target As Range)
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_SelectionChange", target.Address, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_SelectionChange", Target.Address, 0)
     
     Call RafraichirActivite("Saisie de facture")
     
@@ -92,21 +92,21 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
     On Error GoTo 0
     
     'Client has been selected
-    If Not Intersect(target, wshFAC_Brouillon.Range("E3")) Is Nothing Then
-        target.Interior.Color = COULEUR_SAISIE
+    If Not Intersect(Target, wshFAC_Brouillon.Range("E3")) Is Nothing Then
+        Target.Interior.Color = COULEUR_SAISIE
     End If
 
     'Date has been selected
-    If Not Intersect(target, wshFAC_Brouillon.Range("O3")) Is Nothing Then
-        target.Interior.Color = COULEUR_SAISIE
+    If Not Intersect(Target, wshFAC_Brouillon.Range("O3")) Is Nothing Then
+        Target.Interior.Color = COULEUR_SAISIE
         Application.EnableEvents = True
     End If
 
     'WIP description has been selected
-    If Not Intersect(target, wshFAC_Brouillon.Range("F7:F999")) Is Nothing Then
+    If Not Intersect(Target, wshFAC_Brouillon.Range("F7:F999")) Is Nothing Then
         'Ajouter la forme si elle n'existe pas encore -ET- que le texte est assez long...
-        If target.Cells.count = 1 Then
-            If Len(target.value) > 58 Then
+        If Target.Cells.count = 1 Then
+            If Len(Target.Value) > 58 Then
                 If shapeTextBox Is Nothing Then
                     Set shapeTextBox = Me.Shapes.AddTextbox(msoTextOrientationHorizontal, _
                                                             100, 100, 650, 65)
@@ -115,13 +115,13 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
                 
                 'Définir le texte d'information en fonction de la cellule sélectionnée
                 Dim infoText As String
-                infoText = target.value
+                infoText = Target.Value
         
                 'Mettre à jour et afficher la forme
                 With shapeTextBox
                     .TextFrame.Characters.Text = infoText
-                    .Top = target.Top + target.Height
-                    .Left = target.Left + 25
+                    .Top = Target.Top + Target.Height
+                    .Left = Target.Left + 25
                     .Visible = msoTrue
                     .Fill.ForeColor.RGB = RGB(255, 255, 204) ' Fond de couleur douce pour visibilité
                     .TextFrame.Characters.Font.size = 10
@@ -131,18 +131,18 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
     End If
     
     'Template has been selected
-    If Not Intersect(target, wshFAC_Brouillon.Range("O9")) Is Nothing Then
-        target.Interior.Color = COULEUR_SAISIE
+    If Not Intersect(Target, wshFAC_Brouillon.Range("O9")) Is Nothing Then
+        Target.Interior.Color = COULEUR_SAISIE
     End If
 
     'Service description has been selected
-    If Not Intersect(target, wshFAC_Brouillon.Range("L11:L45")) Is Nothing Then
-        target.Interior.Color = COULEUR_SAISIE
+    If Not Intersect(Target, wshFAC_Brouillon.Range("L11:L45")) Is Nothing Then
+        Target.Interior.Color = COULEUR_SAISIE
     End If
     
     'Honoraires has been selected
-    If Not Intersect(target, wshFAC_Brouillon.Range("O47")) Is Nothing Then
-        target.Interior.Color = COULEUR_SAISIE
+    If Not Intersect(Target, wshFAC_Brouillon.Range("O47")) Is Nothing Then
+        Target.Interior.Color = COULEUR_SAISIE
         wshFAC_Brouillon.Unprotect
     End If
 
@@ -153,13 +153,13 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
 
 End Sub
 
-Private Sub Worksheet_Change(ByVal target As Range)
+Private Sub Worksheet_Change(ByVal Target As Range)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_Change", target.Address, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_Change", Target.Address, 0)
     
     Dim targetAddress As String
     On Error Resume Next
-    targetAddress = target.Address
+    targetAddress = Target.Address
     On Error GoTo 0
     
     Application.EnableEvents = False
@@ -168,69 +168,69 @@ Private Sub Worksheet_Change(ByVal target As Range)
     Dim rng As Range
     
     'Le nom du client a changé
-    If Not Intersect(target, Me.Range("E3")) Is Nothing And Me.Range("E3").value <> Empty Then
-        Call FAC_Brouillon_Client_Change(target.value)
+    If Not Intersect(Target, Me.Range("E3")) Is Nothing And Me.Range("E3").Value <> Empty Then
+        Call FAC_Brouillon_Client_Change(Target.Value)
         Set rng = Me.Range("O3")
     End If
     
     'Invoice Date has changed
-    If Not Intersect(target, Me.Range("O3")) Is Nothing Then
+    If Not Intersect(Target, Me.Range("O3")) Is Nothing Then
         Application.EnableEvents = False
-        fullDate = Fn_Complete_Date(target.Text, 30, 15)
+        fullDate = Fn_Complete_Date(Target.Text, 30, 15)
         If fullDate <> "Invalid Date" Then
-            target.value = Format$(fullDate, wsdADMIN.Range("B1").value)
+            Target.Value = Format$(fullDate, wsdADMIN.Range("B1").Value)
         Else
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshFAC_Brouillon_136")
             Application.EnableEvents = False
-            target.ClearContents
+            Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(target.Address)
+            Application.GoTo Range(Target.Address)
         End If
        
         'Future date ?
-        If CDate(Range("O3").value) > Date Then
+        If CDate(Range("O3").Value) > Date Then
             If MsgBox("En êtes-vous CERTAIN ?", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
                 Application.EnableEvents = False
-                target.ClearContents
+                Target.ClearContents
                 Application.EnableEvents = True
-                Application.GoTo Range(target.Address)
+                Application.GoTo Range(Target.Address)
             End If
         End If
 
-        Call FAC_Brouillon_Date_Change(CDate(wshFAC_Brouillon.Range("O3").value))
+        Call FAC_Brouillon_Date_Change(CDate(wshFAC_Brouillon.Range("O3").Value))
         
         Set rng = wshFAC_Brouillon.Range("O9")
         GoTo ExitSub
     End If
     
     'Template has changed
-    If Not Intersect(target, wshFAC_Brouillon.Range("O9")) Is Nothing Then
-        If target.value <> "" Then
-            Call Load_Invoice_Template(target.value)
+    If Not Intersect(Target, wshFAC_Brouillon.Range("O9")) Is Nothing Then
+        If Target.Value <> "" Then
+            Call Load_Invoice_Template(Target.Value)
         End If
         Set rng = wshFAC_Brouillon.Range("L11")
     End If
     
     'Services entry
-    If Not Intersect(target, Range("L11:L40")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
-        wshFAC_Finale.Range("B" & target.row + 23).value = "   - " & wshFAC_Brouillon.Range("L" & target.row).value
-        Set rng = wshFAC_Brouillon.Range("M" & target.row) 'Hours
+    If Not Intersect(Target, Range("L11:L40")) Is Nothing And Range("B24").Value = False And Range("B25").Value = False Then
+        wshFAC_Finale.Range("B" & Target.row + 23).Value = "   - " & wshFAC_Brouillon.Range("L" & Target.row).Value
+        Set rng = wshFAC_Brouillon.Range("M" & Target.row) 'Hours
 '        rng.Select
         GoTo ExitSub
     End If
   
     'Hours per service
-    If Not Intersect(target, Range("M11:M45")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
-        wshFAC_Brouillon.Range("N" & target.row).value = wsdADMIN.Range("TauxHoraireFacturation")
-        wshFAC_Brouillon.Range("O" & target.row).value = wshFAC_Brouillon.Range("M" & target.row).value * wshFAC_Brouillon.Range("N" & target.row).value
-        Set rng = wshFAC_Brouillon.Range("M" & target.row)
-        wshFAC_Finale.Range("C" & target.row + 23).value = wshFAC_Brouillon.Range("M" & target.row).value
-        wshFAC_Finale.Range("D" & target.row + 23).value = wshFAC_Brouillon.Range("N" & target.row).value
-        wshFAC_Finale.Range("E" & target.row + 23).value = wshFAC_Brouillon.Range("O" & target.row).value
+    If Not Intersect(Target, Range("M11:M45")) Is Nothing And Range("B24").Value = False And Range("B25").Value = False Then
+        wshFAC_Brouillon.Range("N" & Target.row).Value = wsdADMIN.Range("TauxHoraireFacturation")
+        wshFAC_Brouillon.Range("O" & Target.row).Value = wshFAC_Brouillon.Range("M" & Target.row).Value * wshFAC_Brouillon.Range("N" & Target.row).Value
+        Set rng = wshFAC_Brouillon.Range("M" & Target.row)
+        wshFAC_Finale.Range("C" & Target.row + 23).Value = wshFAC_Brouillon.Range("M" & Target.row).Value
+        wshFAC_Finale.Range("D" & Target.row + 23).Value = wshFAC_Brouillon.Range("N" & Target.row).Value
+        wshFAC_Finale.Range("E" & Target.row + 23).Value = wshFAC_Brouillon.Range("O" & Target.row).Value
 
         'MAXIMUM of 30 services lines per Invoice
-        If target.row < NB_MAX_LIGNE_FAC + 11 Then
-            wshFAC_Brouillon.Range("L" & target.row + 1).Select
+        If Target.row < NB_MAX_LIGNE_FAC + 11 Then
+            wshFAC_Brouillon.Range("L" & Target.row + 1).Select
         Else
             Set rng = wshFAC_Brouillon.Range("O47")
             wshFAC_Brouillon.Range("O47").Select
@@ -239,26 +239,26 @@ Private Sub Worksheet_Change(ByVal target As Range)
       End If
     
     'Fees summary has changed
-    If Not Intersect(target, Range("R44:T48")) Is Nothing Then
-        wshFAC_Brouillon.Range("B9").value = True
-        wshFAC_Brouillon.Range("O47").value = wshFAC_Brouillon.Range("U49").value
+    If Not Intersect(Target, Range("R44:T48")) Is Nothing Then
+        wshFAC_Brouillon.Range("B9").Value = True
+        wshFAC_Brouillon.Range("O47").Value = wshFAC_Brouillon.Range("U49").Value
     End If
     
     'Miscellaneous Amounts
-    If Not Intersect(target, Range("O48:O50")) Is Nothing And Range("B24").value = False And Range("B25").value = False Then
+    If Not Intersect(Target, Range("O48:O50")) Is Nothing And Range("B24").Value = False And Range("B25").Value = False Then
         With wshFAC_Finale
-            If target.row = 48 Then
+            If Target.row = 48 Then
                 Call Log_Record("wshFAC_Brouillon:Worksheet_Change" & ":" & _
-                    targetAddress & " - " & wshFAC_Brouillon.Range("O48").value, -1)
-                wshFAC_Finale.Range("E70").value = wshFAC_Brouillon.Range("O48").value
+                    targetAddress & " - " & wshFAC_Brouillon.Range("O48").Value, -1)
+                wshFAC_Finale.Range("E70").Value = wshFAC_Brouillon.Range("O48").Value
                 wshFAC_Brouillon.Range("O49").Select
             End If
-            If target.row = 49 Then
-                wshFAC_Finale.Range("E71").value = wshFAC_Brouillon.Range("O49").value
+            If Target.row = 49 Then
+                wshFAC_Finale.Range("E71").Value = wshFAC_Brouillon.Range("O49").Value
                 wshFAC_Brouillon.Range("O50").Select
             End If
-            If target.row = 50 Then
-                wshFAC_Finale.Range("E72").value = wshFAC_Brouillon.Range("O50").value
+            If Target.row = 50 Then
+                wshFAC_Finale.Range("E72").Value = wshFAC_Brouillon.Range("O50").Value
                 wshFAC_Brouillon.Range("O57").Select
             End If
         End With
@@ -268,7 +268,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
 ExitSub:
 
     'On s'assure d'enlever la couleur dans le champs qui a déclenché l'évènement _Change
-    target.Interior.Color = COULEUR_BASE_FACTURATION
+    Target.Interior.Color = COULEUR_BASE_FACTURATION
     
     Application.EnableEvents = True
     

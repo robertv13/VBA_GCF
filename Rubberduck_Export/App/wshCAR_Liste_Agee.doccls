@@ -1,0 +1,185 @@
+﻿'@Folder("Rapport_ListeAgéeCC")
+
+Option Explicit
+
+Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshCAR_Liste_Agee:Worksheet_Activate", "", 0)
+    
+    Call RafraichirActivite("Liste Agée des Comptes Clients")
+
+    Application.ScreenUpdating = False
+    Application.EnableEvents = False
+    
+    Dim ws As Worksheet: Set ws = wshCAR_Liste_Agee
+    
+    'Import transactions from MASTER file
+    Call modImport.ImporterClients
+    Call modImport.ImporterFacEntete
+    Call modImport.ImporterFacComptesClients
+    Call modImport.ImporterEncDetails
+    Call modImport.ImporterEncEntete
+    Call modImport.ImporterCCRegularisations '2025-03-04 @ 14:53
+    
+    'Set the zoom factor to 100% when this worksheet is activated
+    ActiveWindow.Zoom = 100
+
+    Me.Application.Calculation = xlCalculationAutomatic
+
+    ws.Unprotect
+
+    'Certaines cellules perdent la couleur du background
+    Dim cellsToColor As Range
+    Set cellsToColor = Union(ws.Range("B4"), ws.Range("D4"), ws.Range("F4"), ws.Range("H4"))
+    Call Remplir_Plage_Avec_Couleur(cellsToColor, -4142)
+    
+    wshCAR_Liste_Agee.Range("B4").Value = "Facture"
+    wshCAR_Liste_Agee.Range("D4").Value = "Numéro de facture"
+    wshCAR_Liste_Agee.Range("F4").Value = "Non"
+    wshCAR_Liste_Agee.Range("H4").Value = Format$(Date, wsdADMIN.Range("B1").Value)
+    
+    'Efface la liste précédente
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.Rows.count, "B").End(xlUp).row
+    If lastUsedRow > 7 Then
+        ws.Range("B8:J" & lastUsedRow + 2).Clear
+    End If
+    
+    Call SetTabOrder(ws)
+    
+    With ws
+        .Protect UserInterfaceOnly:=True
+'        .EnableSelection = xlUnlockedCells
+    End With
+    
+    Application.ScreenUpdating = True
+    
+    ws.Range("B4").Select
+    gPreviousCellAddress = ws.Range("B4").Address
+
+    'Libérer la mémoire
+    Set ws = Nothing
+    
+    Call Log_Record("wshCAR_Liste_Agee:Worksheet_Activate", "", startTime)
+
+End Sub
+
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshCAR_Liste_Agee:Worksheet_SelectionChange", Target.Address, 0)
+    
+    If gPreviousCellAddress <> "" Then
+        Range(gPreviousCellAddress).Interior.Color = COULEUR_BASE_FACTURATION
+    End If
+    
+    'Is Niveau de Détail been selected ?
+    If Not Intersect(Target, wshCAR_Liste_Agee.Range("B4")) Is Nothing Then
+        Target.Interior.Color = COULEUR_SAISIE
+    End If
+    
+    'Is Ordre de tri been selected ?
+    If Not Intersect(Target, wshCAR_Liste_Agee.Range("D4")) Is Nothing Then
+        If wshCAR_Liste_Agee.Range("B4").Value = "Client" Then
+            wshCAR_Liste_Agee.Range("D4").Value = "Nom de client"
+        End If
+        Target.Interior.Color = COULEUR_SAISIE
+    End If
+    
+    'Is Solde à 0,00 $ been selected ?
+    If Not Intersect(Target, wshCAR_Liste_Agee.Range("F4")) Is Nothing Then
+        Target.Interior.Color = COULEUR_SAISIE
+    End If
+    
+    'Is Date Limite been selected ?
+    If Not Intersect(Target, wshCAR_Liste_Agee.Range("H4")) Is Nothing Then
+        Target.Interior.Color = COULEUR_SAISIE
+    End If
+    
+    'Save the current cell Address
+    gPreviousCellAddress = Target.Address
+    
+    Call Log_Record("wshCAR_Liste_Agee:Worksheet_SelectionChange", "", startTime)
+    
+End Sub
+
+Private Sub Worksheet_Change(ByVal Target As Range)
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshCAR_Liste_Agee:Worksheet_Change", "", 0)
+    
+    Call RafraichirActivite("Liste Agée des Comptes Clients")
+    
+    Dim fullDate As Variant
+    
+    'Critère de tri has changed
+    If Not Intersect(Target, Range("D4")) Is Nothing Then
+        If Range("B4").Value = "Client" Then
+            If Target.Value = "Numéro de facture" Then
+                Target.Value = "Nom de client"
+            End If
+        End If
+    End If
+    
+    'CutOffDate has changed
+    If Not Intersect(Target, Range("H4")) Is Nothing Then
+        Application.EnableEvents = False
+        fullDate = Fn_Complete_Date(Target.Text, 365, 0)
+        If fullDate <> "Invalid Date" Then
+            Target.Value = Format$(fullDate, wsdADMIN.Range("B1").Value)
+            Application.EnableEvents = True
+        Else
+            Call modTEC_Saisie.AfficherMessageDateInvalide("wshCAR_Liste_Agee_125")
+            Application.EnableEvents = False
+            Target.ClearContents
+            Application.EnableEvents = True
+            Application.GoTo Range(Target.Address)
+        End If
+       
+        'Future date ?
+        If CDate(Range("H4").Value) > Date Then
+            If MsgBox("Il n'est pas permis d'utiliser une date dans le futur !", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
+                Application.EnableEvents = False
+                Target.ClearContents
+                Application.EnableEvents = True
+                Application.GoTo Range(Target.Address)
+            End If
+        End If
+    End If
+
+    Application.EnableEvents = True
+    
+    Call Log_Record("wshCAR_Liste_Agee:Worksheet_Change", "", startTime)
+  
+End Sub
+
+Private Sub Worksheet_BeforeRightClick(ByVal Target As Range, Cancel As Boolean)
+
+    'Déprotéger temporairement la feuille pour autoriser le changement de sélection
+    Dim feuilleProtegee As Boolean
+    feuilleProtegee = ActiveSheet.ProtectContents
+
+    If feuilleProtegee = True Then
+        ActiveSheet.Unprotect
+    End If
+
+    'Stocker la cellule cliquée dans une variable globale
+'    Set CelluleClicDroit = Target
+
+    'Forcer Excel à mettre à jour la cellule active
+    Target.Activate
+
+    'Debugging
+    Debug.Print "Cellule Active AVANT clic : " & ActiveCell.Address
+    Debug.Print "Cellule cliquée (Target) : " & Target.Address
+
+    ' Vérifier si la cellule cliquée est dans la plage
+    If Not Intersect(Target, Me.Range("B9:J999")) Is Nothing Then
+        Cancel = True ' Annuler le menu contextuel par défaut
+        Call CAR_ListeAgee_AfficherMenuContextuel(Target)
+    End If
+
+    'Réactiver la protection de la feuille si elle l'était
+    If feuilleProtegee Then
+        ActiveSheet.Protect
+    End If
+
+End Sub

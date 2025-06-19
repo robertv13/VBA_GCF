@@ -2,9 +2,9 @@
 
 Private isProcessing As Boolean
 
-Private Sub Worksheet_Change(ByVal target As Range)
+Private Sub Worksheet_Change(ByVal Target As Range)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_TDB_Data:Worksheet_Change", target.Address, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_TDB_Data:Worksheet_Change", Target.Address, 0)
     
     Dim ws As Worksheet: Set ws = wshTEC_TDB_Data
     
@@ -15,7 +15,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
     
     'On change le professionnel et/ou les dates pour un des quatre (4) Advanced Filter
     Dim intersectRange As Range
-    Set intersectRange = Intersect(target, cellRange)
+    Set intersectRange = Intersect(Target, cellRange)
     
     If Not intersectRange Is Nothing Then
     

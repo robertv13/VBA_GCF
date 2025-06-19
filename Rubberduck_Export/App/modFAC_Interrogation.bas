@@ -31,9 +31,9 @@ Sub Affiche_Liste_Factures()
     
     Application.ScreenUpdating = False
     
-    Dim clientName As String: clientName = ws.Range("D4").value
-    Dim dateFrom As Date: dateFrom = ws.Range("G6").value
-    Dim dateTo As Date: dateTo = ws.Range("I6").value
+    Dim clientName As String: clientName = ws.Range("D4").Value
+    Dim dateFrom As Date: dateFrom = ws.Range("G6").Value
+    Dim dateTo As Date: dateTo = ws.Range("I6").Value
     
     'What is the ID for the selected client ?
     Dim myInfo() As Variant
@@ -86,32 +86,32 @@ End Sub
 
 Sub FAC_Get_Invoice_Client_AF(codeClient As String) '2024-06-27 @ 15:27
 
-    Dim ws As Worksheet: Set ws = wsdFAC_Entête
+    Dim ws As Worksheet: Set ws = wsdFAC_Entete
     
-    'wsdFAC_Entête_AF#1
+    'wsdFAC_Entete_AF#1
 
     With ws
         'Effacer les données de la dernière utilisation
         .Range("Y6:Y10").ClearContents
-        .Range("Y6").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+        .Range("Y6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
         'Définir le range pour la source des données en utilisant un tableau
         Dim rngData As Range
         Set rngData = .Range("l_tbl_FAC_Entête[#All]")
-        .Range("Y7").value = rngData.Address
+        .Range("Y7").Value = rngData.Address
         
         'Définir le range des critères
         Dim rngCriteria As Range
         Set rngCriteria = .Range("Y2:Y3")
-        .Range("Y3").value = codeClient
-        .Range("Y8").value = rngCriteria.Address
+        .Range("Y3").Value = codeClient
+        .Range("Y8").Value = rngCriteria.Address
         
         'Définir le range des résultats et effacer avant le traitement
         Dim rngResult As Range
         Set rngResult = .Range("AA1").CurrentRegion
         rngResult.offset(2, 0).Clear
         Set rngResult = .Range("AA2:AV2")
-        .Range("Y9").value = rngResult.Address
+        .Range("Y9").Value = rngResult.Address
         
         rngData.AdvancedFilter _
                     action:=xlFilterCopy, _
@@ -122,7 +122,7 @@ Sub FAC_Get_Invoice_Client_AF(codeClient As String) '2024-06-27 @ 15:27
         'Quels sont les résultats ?
         Dim lastResultRow As Long
         lastResultRow = .Cells(.Rows.count, "AA").End(xlUp).row
-        .Range("Y10").value = lastResultRow - 2 & " lignes"
+        .Range("Y10").Value = lastResultRow - 2 & " lignes"
          
         'Est-il nécessaire de trier les résultats ?
         If lastResultRow < 4 Then Exit Sub
@@ -147,9 +147,9 @@ End Sub
 
 Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
 
-    Dim ws As Worksheet: Set ws = wsdFAC_Entête
+    Dim ws As Worksheet: Set ws = wsdFAC_Entete
     
-    'Détermine la dernière utilisée dans les résultats de AF_1 dans wsdFAC_Entête
+    'Détermine la dernière utilisée dans les résultats de AF_1 dans wsdFAC_Entete
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, "AA").End(xlUp).row
     If lastUsedRow < 3 Then Exit Sub 'Nothing to display
@@ -162,23 +162,23 @@ Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
         Dim i As Long, r As Long
         For i = 3 To lastUsedRow
             'Vérification de la date de facture -ET- si la facture est bel et bien confirmée
-            If .Range("AB" & i).value >= dateMin And .Range("AB" & i).value <= dateMax Then
+            If .Range("AB" & i).Value >= dateMin And .Range("AB" & i).Value <= dateMax Then
                 r = r + 1
-                arr(r, 0) = .Range("AC" & i).value 'ACouC
-                arr(r, 1) = .Range("AA" & i).value 'Invoice number
-                arr(r, 2) = .Range("AB" & i).value 'Invoice Date
-                arr(r, 3) = .Range("AJ" & i).value 'Fees
-                arr(r, 4) = .Range("AL" & i).value 'Misc. 1
-                arr(r, 5) = .Range("AN" & i).value 'Misc. 2
-                arr(r, 6) = .Range("AP" & i).value 'Misc. 3
-                arr(r, 7) = .Range("AR" & i).value 'GST $
-                arr(r, 8) = .Range("AT" & i).value 'PST $
-                arr(r, 9) = .Range("AV" & i).value 'Deposit
-                arr(r, 10) = .Range("AU" & i).value 'AR_Total
-                arr(r, 11) = Fn_Get_Invoice_Total_Payments_AF(.Range("AA" & i).value)
-                arr(r, 12) = CDate(Fn_Get_A_Cell_From_A_Worksheet("FAC_Comptes_Clients", .Range("AA" & i).value, fFacCCInvNo, fFacCCDueDate))
+                arr(r, 0) = .Range("AC" & i).Value 'ACouC
+                arr(r, 1) = .Range("AA" & i).Value 'Invoice number
+                arr(r, 2) = .Range("AB" & i).Value 'Invoice Date
+                arr(r, 3) = .Range("AJ" & i).Value 'Fees
+                arr(r, 4) = .Range("AL" & i).Value 'Misc. 1
+                arr(r, 5) = .Range("AN" & i).Value 'Misc. 2
+                arr(r, 6) = .Range("AP" & i).Value 'Misc. 3
+                arr(r, 7) = .Range("AR" & i).Value 'GST $
+                arr(r, 8) = .Range("AT" & i).Value 'PST $
+                arr(r, 9) = .Range("AV" & i).Value 'Deposit
+                arr(r, 10) = .Range("AU" & i).Value 'AR_Total
+                arr(r, 11) = Fn_Get_Invoice_Total_Payments_AF(.Range("AA" & i).Value)
+                arr(r, 12) = CDate(Fn_Get_A_Cell_From_A_Worksheet("FAC_Comptes_Clients", .Range("AA" & i).Value, fFacCCInvNo, fFacCCDueDate))
                 'Obtenir les TEC facturés par cette facture
-                arr(r, 13) = Fn_Get_TEC_Total_Invoice_AF(.Range("AA" & i).value, "Dollars")
+                arr(r, 13) = Fn_Get_TEC_Total_Invoice_AF(.Range("AA" & i).Value, "Dollars")
             End If
         Next i
     End With
@@ -197,27 +197,27 @@ Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
     With wshFAC_Interrogation
         For i = 1 To UBound(arr, 1)
             ACouC = arr(i, 0)
-            .Range("C" & i + 8).value = arr(i, 1)
-            .Range("D" & i + 8).value = Format$(arr(i, 2), wsdADMIN.Range("B1").value)
-            .Range("E" & i + 8).value = arr(i, 3)
-            .Range("F" & i + 8).value = arr(i, 13)
-            .Range("G" & i + 8).value = arr(i, 4)
-            .Range("H" & i + 8).value = arr(i, 5)
-            .Range("I" & i + 8).value = arr(i, 6)
-            .Range("J" & i + 8).value = arr(i, 7)
-            .Range("K" & i + 8).value = arr(i, 8)
-            .Range("L" & i + 8).value = arr(i, 9)
-            .Range("M" & i + 8).value = arr(i, 10)
+            .Range("C" & i + 8).Value = arr(i, 1)
+            .Range("D" & i + 8).Value = Format$(arr(i, 2), wsdADMIN.Range("B1").Value)
+            .Range("E" & i + 8).Value = arr(i, 3)
+            .Range("F" & i + 8).Value = arr(i, 13)
+            .Range("G" & i + 8).Value = arr(i, 4)
+            .Range("H" & i + 8).Value = arr(i, 5)
+            .Range("I" & i + 8).Value = arr(i, 6)
+            .Range("J" & i + 8).Value = arr(i, 7)
+            .Range("K" & i + 8).Value = arr(i, 8)
+            .Range("L" & i + 8).Value = arr(i, 9)
+            .Range("M" & i + 8).Value = arr(i, 10)
             If arr(i, 10) - arr(i, 11) > 0 Then
-                .Range("N" & i + 8).value = Format$(WorksheetFunction.Max(0, Date - arr(i, 12)), "# ###")
+                .Range("N" & i + 8).Value = Format$(WorksheetFunction.Max(0, Date - arr(i, 12)), "# ###")
             End If
-            .Range("O" & i + 8).value = arr(i, 10) - arr(i, 11) 'Balance
+            .Range("O" & i + 8).Value = arr(i, 10) - arr(i, 11) 'Balance
             If ACouC = "AC" Then
                 With wshFAC_Interrogation.Range("B" & i + 8 & ":O" & i + 8)
                     .Font.Color = vbRed
                     .Font.Bold = True
                 End With
-                wshFAC_Interrogation.Range("B" & i + 8).value = "AC"
+                wshFAC_Interrogation.Range("B" & i + 8).Value = "AC"
             End If
         Next i
     End With
@@ -285,9 +285,9 @@ Sub FAC_Historique_Montrer_Bouton_Afficher()
     
     Application.EnableEvents = False
     
-    If IsDate(wshFAC_Interrogation.Range("G6").value) And _
-        IsDate(wshFAC_Interrogation.Range("I6").value) And _
-        Trim$(wshFAC_Interrogation.Range("D4").value) <> "" Then
+    If IsDate(wshFAC_Interrogation.Range("G6").Value) And _
+        IsDate(wshFAC_Interrogation.Range("I6").Value) And _
+        Trim$(wshFAC_Interrogation.Range("D4").Value) <> "" Then
         shp.Top = 70
         shp.Visible = True
         Set shp = wshFAC_Interrogation.Shapes("shpAutreClient")
@@ -319,7 +319,7 @@ Sub FAC_Historique_Montrer_Bouton_AutreClient()
     
 End Sub
 
-Sub FAC_Interrogation_AfficherMenuContextuel(ByVal target As Range) '2025-01-28 @ 10:19
+Sub FAC_Interrogation_AfficherMenuContextuel(ByVal Target As Range) '2025-01-28 @ 10:19
 
     Dim menu As CommandBar
     Dim menuItem As CommandBarButton
@@ -331,10 +331,10 @@ Sub FAC_Interrogation_AfficherMenuContextuel(ByVal target As Range) '2025-01-28 
 
     'Détermine les coordonnées de la colonne qui a été cliquée
     Dim numeroLigne As Long, numeroColonne As Long
-    Call ExtraireLigneColonneCellule(target.Address, numeroLigne, numeroColonne)
+    Call ExtraireLigneColonneCellule(Target.Address, numeroLigne, numeroColonne)
     
     Dim numeroFacture As String
-    numeroFacture = ActiveSheet.Cells(numeroLigne, "C").value
+    numeroFacture = ActiveSheet.Cells(numeroLigne, "C").Value
     
     'Créer un nouveau menu contextuel
     Set menu = Application.CommandBars.Add(Name:="FactureMenu", position:=msoBarPopup, Temporary:=True)
@@ -347,17 +347,17 @@ Sub FAC_Interrogation_AfficherMenuContextuel(ByVal target As Range) '2025-01-28 
     'Ajout de l'option 2 au menu contextuel
     Set menuItem = menu.Controls.Add(Type:=msoControlButton)
         menuItem.Caption = "TEC + Honoraires de la facture"
-        menuItem.OnAction = "'TEC_HONO_Facture """ & target.Address & """'"
+        menuItem.OnAction = "'TEC_HONO_Facture """ & Target.Address & """'"
 
     'Ajout de l'option 3 au menu contextuel
     Set menuItem = menu.Controls.Add(Type:=msoControlButton)
         menuItem.Caption = "TEC détaillé pour la facture"
-        menuItem.OnAction = "'ObtenirListeTECFactures """ & target.Address & """'"
+        menuItem.OnAction = "'ObtenirListeTECFactures """ & Target.Address & """'"
 
     'Ajout de l'option 4 au menu contextuel
     Set menuItem = menu.Controls.Add(Type:=msoControlButton)
         menuItem.Caption = "Transactions des Comptes-Clients"
-        menuItem.OnAction = "'TransactionComptesClients """ & target.Address & """'"
+        menuItem.OnAction = "'TransactionComptesClients """ & Target.Address & """'"
 
     'Afficher le menu contextuel
     menu.ShowPopup
@@ -368,7 +368,7 @@ Sub VisualiserFacturePDF(noFact As String)
 
     'The invoice number is in column C (3rd column) pour les 2 feuilles...
     Dim fullPDFFileName As String
-    fullPDFFileName = wsdADMIN.Range("F5").value & FACT_PDF_PATH & _
+    fullPDFFileName = wsdADMIN.Range("F5").Value & FACT_PDF_PATH & _
                             Application.PathSeparator & noFact & ".pdf"
     
     'Ouvrir la version PDF de la facture, si elle existe
@@ -392,13 +392,13 @@ Sub TEC_HONO_Facture(adresse As String)
     
     'The invoice number is in column C (3rd column)
     Dim invNo As String
-    invNo = ws.Cells(numeroLigne, 3).value
+    invNo = ws.Cells(numeroLigne, 3).Value
     
     'Nom du client et date de facture
     Dim nomClient As String
-    nomClient = ws.Range("D4").value
+    nomClient = ws.Range("D4").Value
     Dim dateFacture As Date
-    dateFacture = Format$(ws.Cells(numeroLigne, 4).value, wsdADMIN.Range("B1").value)
+    dateFacture = Format$(ws.Cells(numeroLigne, 4).Value, wsdADMIN.Range("B1").Value)
     
     Call ObtenirFactureInfos(invNo, nomClient, dateFacture)
     
@@ -413,13 +413,13 @@ Sub TransactionComptesClients(adresse As String)
     
     'The invoice number is in column C (3rd column)
     Dim invNo As String
-    invNo = ws.Cells(numeroLigne, 3).value
+    invNo = ws.Cells(numeroLigne, 3).Value
     
     'Nom du client et date de facture
     Dim nomClient As String
-    nomClient = ws.Range("D4").value
+    nomClient = ws.Range("D4").Value
     Dim dateFacture As Date
-    dateFacture = ws.Cells(numeroLigne, 4).value
+    dateFacture = ws.Cells(numeroLigne, 4).Value
     
     Call ObtenirTransactionsCC(invNo, nomClient, dateFacture)
 
@@ -480,23 +480,23 @@ Sub AfficherNouvelleFeuille_Stats(invNo As String, nomClient As String, dateFact
     'Entête de la feuille
     ws.Range("B1:J1").Merge
     With ws.Range("B1")
-        .value = "Informations sur les TEC & les Honoraires"
+        .Value = "Informations sur les TEC & les Honoraires"
         .Font.size = 22
         .Font.Bold = True
         .HorizontalAlignment = xlCenter
     End With
     
-    ws.Range("D4").value = "No. de Facture:"
+    ws.Range("D4").Value = "No. de Facture:"
     ws.Range("D4").HorizontalAlignment = xlRight
     ws.Range("D4").Font.Italic = True
     ws.Range("D4").Font.size = 9
     
-    ws.Range("E4").value = invNo
+    ws.Range("E4").Value = invNo
     ws.Range("E4").HorizontalAlignment = xlCenter
     ws.Range("E4").Font.Bold = True
     ws.Range("E4").Font.size = 12
     
-    ws.Range("D6").value = "Nom du Client:"
+    ws.Range("D6").Value = "Nom du Client:"
     ws.Range("D6").HorizontalAlignment = xlRight
     ws.Range("D6").Font.Italic = True
     ws.Range("D6").Font.size = 9
@@ -504,18 +504,18 @@ Sub AfficherNouvelleFeuille_Stats(invNo As String, nomClient As String, dateFact
     If Len(nomClient) > 59 Then nomClient = Left$(nomClient, 59) & "..."
     
     With ws.Range("E6")
-        .value = nomClient
+        .Value = nomClient
         .HorizontalAlignment = xlLeft
         .Font.Bold = True
         .Font.size = 12
     End With
     
-    ws.Range("G4").value = "Date de Facture:"
+    ws.Range("G4").Value = "Date de Facture:"
     ws.Range("G4").HorizontalAlignment = xlRight
     ws.Range("G4").Font.Italic = True
     ws.Range("G4").Font.size = 9
     
-    ws.Range("H4").value = dateFacture
+    ws.Range("H4").Value = dateFacture
     ws.Range("H4").HorizontalAlignment = xlCenter
     ws.Range("H4").Font.Bold = True
     ws.Range("H4").Font.size = 12
@@ -526,7 +526,7 @@ Sub AfficherNouvelleFeuille_Stats(invNo As String, nomClient As String, dateFact
     Dim tableauHonoraires As Variant
     tableauHonoraires = ObtenirTableauHonoraires(invNo)
 
-    ws.Range("D8").value = "Travaux en cours"
+    ws.Range("D8").Value = "Travaux en cours"
     ws.Range("D8").Font.Italic = True
     ws.Range("D8").Font.Bold = True
     ws.Range("D8").Font.size = 11
@@ -543,9 +543,9 @@ Sub AfficherNouvelleFeuille_Stats(invNo As String, nomClient As String, dateFact
         If tableauTEC(i, 1) <> "" Then
             For j = 1 To UBound(tableauTEC, 2)
                 If j <> 1 Then
-                    ws.Cells(i + rOffset, j + cOffset).value = CCur(tableauTEC(i, j))
+                    ws.Cells(i + rOffset, j + cOffset).Value = CCur(tableauTEC(i, j))
                 Else
-                    ws.Cells(i + rOffset, j + cOffset).value = tableauTEC(i, j)
+                    ws.Cells(i + rOffset, j + cOffset).Value = tableauTEC(i, j)
                 End If
             Next j
             totHres = totHres + tableauTEC(i, 2)
@@ -572,9 +572,9 @@ Sub AfficherNouvelleFeuille_Stats(invNo As String, nomClient As String, dateFact
     
         'Totaux du premier tableau
         lastRowUsed = lastRowUsed + 1
-        ws.Cells(lastRowUsed, 2 + cOffset).value = totHres
+        ws.Cells(lastRowUsed, 2 + cOffset).Value = totHres
         ws.Range("F" & lastRowUsed).Font.Bold = True
-        ws.Cells(lastRowUsed, 4 + cOffset).value = totValeur
+        ws.Cells(lastRowUsed, 4 + cOffset).Value = totValeur
         ws.Range("H" & lastRowUsed).Font.Bold = True
         
         'Mise en forme du premier tableau
@@ -600,7 +600,7 @@ Sub AfficherNouvelleFeuille_Stats(invNo As String, nomClient As String, dateFact
     End If
     
     With ws.Range("D" & rOffset)
-        .value = "Honoraires"
+        .Value = "Honoraires"
         .Font.Italic = True
         .Font.Bold = True
         .Font.size = 11
@@ -615,7 +615,7 @@ Sub AfficherNouvelleFeuille_Stats(invNo As String, nomClient As String, dateFact
     For i = LBound(tableauHonoraires, 1) To UBound(tableauHonoraires, 1)
         If tableauHonoraires(i, 1) <> "" Then
             For j = 1 To UBound(tableauHonoraires, 2)
-                ws.Cells(i + rOffset, j + cOffset).value = tableauHonoraires(i, j)
+                ws.Cells(i + rOffset, j + cOffset).Value = tableauHonoraires(i, j)
             Next j
             lastRowUsed = i + rOffset
             nbItemHono = nbItemHono + 1
@@ -641,9 +641,9 @@ Sub AfficherNouvelleFeuille_Stats(invNo As String, nomClient As String, dateFact
         
         'Totaux du deuxième tableau
         lastRowUsed = lastRowUsed + 1
-        ws.Cells(lastRowUsed, 2 + cOffset).value = totHres
+        ws.Cells(lastRowUsed, 2 + cOffset).Value = totHres
         ws.Range("F" & lastRowUsed).Font.Bold = True
-        ws.Cells(lastRowUsed, 4 + cOffset).value = totValeur
+        ws.Cells(lastRowUsed, 4 + cOffset).Value = totValeur
         ws.Range("H" & lastRowUsed).Font.Bold = True
         
         'Mise en forme du deuxième tableau
@@ -761,7 +761,7 @@ Function ObtenirTableauTEC(numeroFacture As String) As Variant
 
     Dim tableauTEC(1 To 9, 1 To 4) As String
     
-    Dim ws As Worksheet: Set ws = wsdFAC_Détails
+    Dim ws As Worksheet: Set ws = wsdFAC_Details
     
     Dim hresTEC As Currency
     
@@ -776,13 +776,13 @@ Function ObtenirTableauTEC(numeroFacture As String) As Variant
         Dim hres As Currency, taux As Currency, valeur As Currency
         Dim prof As String
         For r = 2 To lastUsedRow
-            If InStr(ws.Cells(r, 11).value, "*** - [Sommaire des TEC] pour la facture") = 1 Then
+            If InStr(ws.Cells(r, 11).Value, "*** - [Sommaire des TEC] pour la facture") = 1 Then
                 'Exemple de remplissage du tableau TEC avec des données en fonction du numéro de facture
                 indice = indice + 1
-                prof = Trim$(Mid$(ws.Cells(r, 11).value, 44))
-                hres = ws.Cells(r, 12).value
-                taux = ws.Cells(r, 13).value
-                valeur = ws.Cells(r, 14).value
+                prof = Trim$(Mid$(ws.Cells(r, 11).Value, 44))
+                hres = ws.Cells(r, 12).Value
+                taux = ws.Cells(r, 13).Value
+                valeur = ws.Cells(r, 14).Value
                 tableauTEC(indice, 1) = prof
                 tableauTEC(indice, 2) = hres
                 tableauTEC(indice, 3) = taux
@@ -819,11 +819,11 @@ Function ObtenirTableauHonoraires(numeroFacture As String) As Variant
         Application.EnableEvents = False
         Do
             'Lire les données
-            If wsFees.Cells(cell.row, 4).value <> 0 Then
+            If wsFees.Cells(cell.row, 4).Value <> 0 Then
                 indice = indice + 1
-                prof = wsFees.Cells(cell.row, 3).value
-                hres = wsFees.Cells(cell.row, 4).value
-                taux = wsFees.Cells(cell.row, 5).value
+                prof = wsFees.Cells(cell.row, 3).Value
+                hres = wsFees.Cells(cell.row, 4).Value
+                taux = wsFees.Cells(cell.row, 5).Value
                 tableauHonoraires(indice, 1) = prof
                 tableauHonoraires(indice, 2) = hres
                 tableauHonoraires(indice, 3) = taux
@@ -849,17 +849,17 @@ Function ObtenirTransCC(numeroFacture As String) As Variant
     
     'Feuilles nécessaires
     Dim wsFactures As Worksheet: Set wsFactures = wsdFAC_Comptes_Clients
-    Dim wsPaiements As Worksheet: Set wsPaiements = wsdENC_Détails
-    Dim wsRégularisations As Worksheet: Set wsRégularisations = wsdCC_Régularisations
+    Dim wsPaiements As Worksheet: Set wsPaiements = wsdENC_Details
+    Dim wsRégularisations As Worksheet: Set wsRégularisations = wsdCC_Regularisations
     
     'Obtenir les informations sur la facture (wshComptes_Clients)
     Dim ligneFacture As Long
     ligneFacture = TrouverLigneFacture(wsFactures, numeroFacture)
     Dim montantFacture As Currency
     Dim dateFacture As Date, dateDue As Date
-    dateFacture = Format$(wsFactures.Cells(ligneFacture, fFacCCInvoiceDate).value, wsdADMIN.Range("B1").value)
-    montantFacture = wsFactures.Cells(ligneFacture, fFacCCTotal).value
-    dateDue = wsFactures.Cells(ligneFacture, fFacCCDueDate).value
+    dateFacture = Format$(wsFactures.Cells(ligneFacture, fFacCCInvoiceDate).Value, wsdADMIN.Range("B1").Value)
+    montantFacture = wsFactures.Cells(ligneFacture, fFacCCTotal).Value
+    dateDue = wsFactures.Cells(ligneFacture, fFacCCDueDate).Value
     
     'Obtenir les paiements et régularisations pour cette facture
     Dim montantPaye As Currency, montantRegul As Currency, montantRestant As Currency
@@ -906,8 +906,8 @@ Function ObtenirTransCC(numeroFacture As String) As Variant
         Do
             i = i + 1
             tableauCC(i, 1) = "Paiement"
-            tableauCC(i, 2) = CDbl(rngPaiementsAssoc.offset(0, 2).value)
-            tableauCC(i, 3) = -rngPaiementsAssoc.offset(0, 3).value 'Montant du paiement
+            tableauCC(i, 2) = CDbl(rngPaiementsAssoc.offset(0, 2).Value)
+            tableauCC(i, 3) = -rngPaiementsAssoc.offset(0, 3).Value 'Montant du paiement
             Set rngPaiementsAssoc = wsPaiements.Columns("B:B").FindNext(rngPaiementsAssoc)
         Loop While Not rngPaiementsAssoc Is Nothing And rngPaiementsAssoc.Address <> pmtFirstAddress
     End If
@@ -921,11 +921,11 @@ Function ObtenirTransCC(numeroFacture As String) As Variant
         Do
             i = i + 1
             tableauCC(i, 1) = "Régularisation"
-            tableauCC(i, 2) = Format$(rngRégularisationAssoc.offset(0, 1).value, wsdADMIN.Range("B1").value)
-            tableauCC(i, 3) = rngRégularisationAssoc.offset(0, 4).value + _
-                rngRégularisationAssoc.offset(0, 5).value + _
-                rngRégularisationAssoc.offset(0, 6).value + _
-                rngRégularisationAssoc.offset(0, 7).value
+            tableauCC(i, 2) = Format$(rngRégularisationAssoc.offset(0, 1).Value, wsdADMIN.Range("B1").Value)
+            tableauCC(i, 3) = rngRégularisationAssoc.offset(0, 4).Value + _
+                rngRégularisationAssoc.offset(0, 5).Value + _
+                rngRégularisationAssoc.offset(0, 6).Value + _
+                rngRégularisationAssoc.offset(0, 7).Value
             Set rngRégularisationAssoc = wsRégularisations.Columns("B:B").FindNext(rngRégularisationAssoc)
         Loop While Not rngRégularisationAssoc Is Nothing And rngRégularisationAssoc.Address <> regulFirstAddress
     End If
@@ -1117,13 +1117,13 @@ Sub ObtenirListeTECFactures(adresse As String)
     
     'The invoice number is in column C (3rd column)
     Dim invNo As String
-    invNo = ws.Cells(numeroLigne, 3).value
+    invNo = ws.Cells(numeroLigne, 3).Value
     
     'Nom du client et date de facture
     Dim nomClient As String
-    nomClient = ws.Range("D4").value
+    nomClient = ws.Range("D4").Value
     Dim dateFacture As Date
-    dateFacture = ws.Cells(numeroLigne, 4).value
+    dateFacture = ws.Cells(numeroLigne, 4).Value
     
     'Utilisation d'un AdvancedFilter directement dans TEC_Local (BI:BX)
     Call ObtenirListeTECFacturésFiltreAvancé(invNo)
@@ -1153,7 +1153,7 @@ Sub PreparerRapportTECFactures()
     'Assigner la feuille du rapport
     Dim strRapport As String
     strRapport = "Rapport TEC facturés"
-    Dim wsRapport As Worksheet: Set wsRapport = wshTECFacturé
+    Dim wsRapport As Worksheet: Set wsRapport = wshTECFacture
     wsRapport.Cells.Clear
     
     'Désactiver les mises à jour de l'écran et autres alertes
@@ -1164,20 +1164,20 @@ Sub PreparerRapportTECFactures()
     'Mettre en forme la feuille de rapport
     With wsRapport
         ' Titre du rapport
-        .Range("A1").value = "TEC facturés pour la facture '" & invNo & "'"
+        .Range("A1").Value = "TEC facturés pour la facture '" & invNo & "'"
         .Range("A1").Font.Bold = True
         .Range("A1").Font.size = 12
         
         'Ajouter une date de génération du rapport
-        .Range("A2").value = "Date de création : " & Format$(Date, wsdADMIN.Range("B1").value)
+        .Range("A2").Value = "Date de création : " & Format$(Date, wsdADMIN.Range("B1").Value)
         .Range("A2").Font.Italic = True
         .Range("A2").Font.size = 10
         
         'Entête du rapport (A4:D4)
-        .Range("A4").value = "Date"
-        .Range("B4").value = "Prof."
-        .Range("C4").value = "Description"
-        .Range("D4").value = "Heures"
+        .Range("A4").Value = "Date"
+        .Range("B4").Value = "Prof."
+        .Range("C4").Value = "Description"
+        .Range("D4").Value = "Heures"
         With .Range("A4:D4")
             .Font.size = 9
             .Font.Bold = True
@@ -1197,7 +1197,7 @@ Sub PreparerRapportTECFactures()
         Set rngResult = rngResult.Resize(rngResult.Rows.count - 2)
         'Transfert des données vers un tableau
         Dim tableau As Variant
-        tableau = rngResult.value
+        tableau = rngResult.Value
         
         'Créer un tableau pour les résultats
         Dim output() As Variant
@@ -1214,14 +1214,14 @@ Sub PreparerRapportTECFactures()
         Next i
 
         'Copier le tableau dans la feuille du rapport  partir de la ligne 5, colonne 1
-        .Range(.Cells(5, 1), .Cells(5 + UBound(output, 1) - 1, 1 + UBound(output, 2) - 1)).value = output
+        .Range(.Cells(5, 1), .Cells(5 + UBound(output, 1) - 1, 1 + UBound(output, 2) - 1)).Value = output
         'Ligne dans la feuille du rapport
         r = 5 + UBound(output, 1) - 1
         
         'Corps du rapport
         .Range("A5:D" & r).VerticalAlignment = xlCenter
         With .Range("A4:D4").Interior
-            .Pattern = xlSolid
+            .pattern = xlSolid
             .PatternColorIndex = xlAutomatic
             .Color = 12611584
             .TintAndShade = 0
@@ -1310,25 +1310,25 @@ Sub ObtenirListeTECFacturésFiltreAvancé(noFact As String) '2024-10-20 @ 11:11
     
     'Effacer les données de la dernière utilisation
     ws.Range("BH6:BH10").ClearContents
-    ws.Range("BH6").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("BH6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
     'Définir le range pour la source des données en utilisant un tableau
     Dim rngData As Range
     Set rngData = ws.Range("l_tbl_TEC_Local[#All]")
-    ws.Range("BH7").value = rngData.Address
+    ws.Range("BH7").Value = rngData.Address
     
     'Définir le range des critères
     Dim rngCriteria As Range
     Set rngCriteria = ws.Range("BH2:BH3")
-    ws.Range("BH3").value = CStr(noFact)
-    ws.Range("BH8").value = rngCriteria.Address
+    ws.Range("BH3").Value = CStr(noFact)
+    ws.Range("BH8").Value = rngCriteria.Address
     
     'Définir le range des résultats et effacer avant le traitement
     Dim rngResult As Range
     Set rngResult = ws.Range("BJ1").CurrentRegion
     rngResult.offset(2, 0).Clear
     Set rngResult = ws.Range("BJ2:BY2")
-    ws.Range("BH9").value = rngResult.Address
+    ws.Range("BH9").Value = rngResult.Address
     
     rngData.AdvancedFilter _
                 action:=xlFilterCopy, _
@@ -1339,7 +1339,7 @@ Sub ObtenirListeTECFacturésFiltreAvancé(noFact As String) '2024-10-20 @ 11:11
     'Qu'avons-nous comme résultat ?
     Dim lastResultRow As Long
     lastResultRow = ws.Cells(ws.Rows.count, "BJ").End(xlUp).row
-    ws.Range("BH10").value = lastResultRow - 2 & " lignes"
+    ws.Range("BH10").Value = lastResultRow - 2 & " lignes"
     
     'Est-il nécessaire de trier les résultats ?
     If lastResultRow > 3 Then
@@ -1433,23 +1433,23 @@ Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture
     'Entête de la feuille
     ws.Range("A1:K1").Merge
     With ws.Range("A1")
-        .value = "Transactions des Comptes-Clients"
+        .Value = "Transactions des Comptes-Clients"
         .Font.size = 22
         .Font.Bold = True
         .HorizontalAlignment = xlCenter
     End With
     
-    ws.Range("C4").value = "No. de Facture:"
+    ws.Range("C4").Value = "No. de Facture:"
     ws.Range("C4").HorizontalAlignment = xlRight
     ws.Range("C4").Font.Italic = True
     ws.Range("C4").Font.size = 9
     
-    ws.Range("D4").value = invNo
+    ws.Range("D4").Value = invNo
     ws.Range("D4").HorizontalAlignment = xlCenter
     ws.Range("D4").Font.Bold = True
     ws.Range("D4").Font.size = 12
     
-    ws.Range("C6").value = "Nom du Client:"
+    ws.Range("C6").Value = "Nom du Client:"
     ws.Range("C6").HorizontalAlignment = xlRight
     ws.Range("C6").Font.Italic = True
     ws.Range("C6").Font.size = 9
@@ -1457,29 +1457,29 @@ Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture
     If Len(nomClient) > 59 Then nomClient = Left$(nomClient, 59) & "..."
     
     With ws.Range("D6")
-        .value = nomClient
+        .Value = nomClient
         .HorizontalAlignment = xlLeft
         .Font.Bold = True
         .Font.size = 12
     End With
     
-    ws.Range("H4").value = "Date de Facture:"
+    ws.Range("H4").Value = "Date de Facture:"
     ws.Range("H4").HorizontalAlignment = xlRight
     ws.Range("H4").Font.Italic = True
     ws.Range("H4").Font.size = 9
     
-    ws.Range("I4").value = dateFacture
+    ws.Range("I4").Value = dateFacture
     ws.Range("I4").HorizontalAlignment = xlCenter
     ws.Range("I4").Font.Bold = True
     ws.Range("I4").Font.size = 12
     
-    ws.Range("C8").value = "Type trans."
-    ws.Range("D8").value = "Date trans."
-    ws.Range("E8").value = "Montant"
-    ws.Range("F8").value = "- 30 jours."
-    ws.Range("G8").value = "31 @ 60 jours"
-    ws.Range("H8").value = "61 @ 90 jours"
-    ws.Range("I8").value = "+ de 90 jours"
+    ws.Range("C8").Value = "Type trans."
+    ws.Range("D8").Value = "Date trans."
+    ws.Range("E8").Value = "Montant"
+    ws.Range("F8").Value = "- 30 jours."
+    ws.Range("G8").Value = "31 @ 60 jours"
+    ws.Range("H8").Value = "61 @ 90 jours"
+    ws.Range("I8").Value = "+ de 90 jours"
     ws.Range("C8:I8").HorizontalAlignment = xlCenter
     ws.Range("C8:I8").Font.Bold = True
     ws.Range("C8:I8").Font.Italic = True
@@ -1501,10 +1501,10 @@ Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture
         If tableauCC(i, 1) <> "" Then
             For j = 1 To UBound(tableauCC, 2)
                 If j = 2 Then
-                    ws.Cells(i + rOffset, j + cOffset).value = "'" & Format$(tableauCC(i, j), wsdADMIN.Range("B1").value)
-                    Debug.Print "#110 - " & ws.Cells(i + rOffset, j + cOffset).value
+                    ws.Cells(i + rOffset, j + cOffset).Value = "'" & Format$(tableauCC(i, j), wsdADMIN.Range("B1").Value)
+                    Debug.Print "#110 - " & ws.Cells(i + rOffset, j + cOffset).Value
                 Else
-                    ws.Cells(i + rOffset, j + cOffset).value = tableauCC(i, j)
+                    ws.Cells(i + rOffset, j + cOffset).Value = tableauCC(i, j)
                 End If
             Next j
             lastRowUsed = i + rOffset
@@ -1520,8 +1520,8 @@ Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture
     
     'Effacer les soldes à zéro sur la première ligne
     For i = 6 To 9
-        If ws.Cells(9, i).value = 0 Then
-            ws.Cells(9, i).value = ""
+        If ws.Cells(9, i).Value = 0 Then
+            ws.Cells(9, i).Value = ""
         End If
     Next i
 
@@ -1575,7 +1575,7 @@ Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture
 
     'Entête un peu plus foncé
     With ws.Range("C8:I8").Interior
-        .Pattern = xlSolid
+        .pattern = xlSolid
         .PatternColorIndex = xlAutomatic
         .ThemeColor = xlThemeColorAccent6
         .TintAndShade = 0.399975585192419
@@ -1584,7 +1584,7 @@ Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture
 
     'Zone de données sans couleur
     With ws.Range("C9:I" & lastRowUsed - 2).Interior
-        .Pattern = xlNone
+        .pattern = xlNone
         .TintAndShade = 0
         .PatternTintAndShade = 0
     End With
@@ -1645,7 +1645,7 @@ Sub PreparerRapportTECFacturés(numeroFacture As String)
     'Assigner la feuille du rapport
     Dim strRapport As String
     strRapport = "Rapport TEC facturés"
-    Dim wsRapport As Worksheet: Set wsRapport = wshTECFacturé
+    Dim wsRapport As Worksheet: Set wsRapport = wshTECFacture
     On Error Resume Next
     wsRapport.Unprotect
     On Error GoTo 0
@@ -1659,20 +1659,20 @@ Sub PreparerRapportTECFacturés(numeroFacture As String)
     'Mettre en forme la feuille de rapport
     With wsRapport
         ' Titre du rapport
-        .Range("A1").value = "TEC facturés pour la facture '" & numeroFacture & "'"
+        .Range("A1").Value = "TEC facturés pour la facture '" & numeroFacture & "'"
         .Range("A1").Font.Bold = True
         .Range("A1").Font.size = 12
         
         'Ajouter une date de génération du rapport
-        .Range("A2").value = "Date de création : " & Format$(Date, "dd/mm/yyyy")
+        .Range("A2").Value = "Date de création : " & Format$(Date, "dd/mm/yyyy")
         .Range("A2").Font.Italic = True
         .Range("A2").Font.size = 10
         
         'Entête du rapport (A4:D4)
-        .Range("A4").value = "Date"
-        .Range("B4").value = "Prof."
-        .Range("C4").value = "Description"
-        .Range("D4").value = "Heures"
+        .Range("A4").Value = "Date"
+        .Range("B4").Value = "Prof."
+        .Range("C4").Value = "Description"
+        .Range("D4").Value = "Heures"
         With .Range("A4:D4")
             .Font.size = 9
             .Font.Bold = True
@@ -1692,7 +1692,7 @@ Sub PreparerRapportTECFacturés(numeroFacture As String)
         Set rngResult = rngResult.Resize(rngResult.Rows.count - 2)
         'Transfert des données vers un tableau
         Dim tableau As Variant
-        tableau = rngResult.value
+        tableau = rngResult.Value
         
         'Créer un tableau pour les résultats
         Dim output() As Variant
@@ -1709,14 +1709,14 @@ Sub PreparerRapportTECFacturés(numeroFacture As String)
         Next i
 
         'Copier le tableau dans la feuille du rapport  partir de la ligne 5, colonne 1
-        .Range(.Cells(5, 1), .Cells(5 + UBound(output, 1) - 1, 1 + UBound(output, 2) - 1)).value = output
+        .Range(.Cells(5, 1), .Cells(5 + UBound(output, 1) - 1, 1 + UBound(output, 2) - 1)).Value = output
         'Ligne dans la feuille du rapport
         r = 5 + UBound(output, 1) - 1
         
         'Corps du rapport
         .Range("A5:D" & r).VerticalAlignment = xlCenter
         With .Range("A4:D4").Interior
-            .Pattern = xlSolid
+            .pattern = xlSolid
             .PatternColorIndex = xlAutomatic
             .Color = 12611584
             .TintAndShade = 0

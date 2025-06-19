@@ -382,7 +382,7 @@ Sub DemarrageApplication() '2025-06-06 @ 11:40
     rootPath = FN_Get_Root_Path
 
     Application.EnableEvents = False
-    wsdADMIN.Range("F5").value = rootPath
+    wsdADMIN.Range("F5").Value = rootPath
     Application.EnableEvents = True
    
     Application.StatusBar = "Vérification de l'accès au répertoire principal"
@@ -397,7 +397,7 @@ Sub DemarrageApplication() '2025-06-06 @ 11:40
     Call SetupUserDateFormat(gUtilisateurWindows)
     Call BackupMasterFile
     Call EcrireInformationsConfigAuMenu(gUtilisateurWindows)
-    wshMenu.Range("A1").value = wsdADMIN.Range("NomEntreprise").value
+    wshMenu.Range("A1").Value = wsdADMIN.Range("NomEntreprise").Value
     Call HideDevShapesBasedOnUsername(gUtilisateurWindows)
     
     'Protection de la feuille wshMenu
@@ -434,7 +434,7 @@ ErrorHandler:
     Application.EnableEvents = True 'On s'assure de toujours restaurer l'état
     Application.DisplayAlerts = True
     Application.StatusBar = False
-    Call Log_Record("modAppli:DemarrageApplication (ERREUR) : " & Err.Description, Timer)
+    Call Log_Record("modAppli:DemarrageApplication (ERREUR) : " & Err.description, Timer)
     
 End Sub
 
@@ -455,7 +455,7 @@ Sub CreateUserActiveFile(ByVal userName As String)
     Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:CreateUserActiveFile", "", 0)
     
     Dim traceFilePath As String
-    traceFilePath = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
+    traceFilePath = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
     
     Dim FileNumber As Long
     FileNumber = FreeFile
@@ -475,7 +475,7 @@ Error_Handling:
     MsgBox _
         Prompt:="Erreur en tentant d'accéder le répertoire" & vbNewLine & vbNewLine & _
                     "'" & traceFilePath & "'" & vbNewLine & vbNewLine & _
-                    "Erreur # " & Err.Number & " - " & Err.Description, _
+                    "Erreur # " & Err.Number & " - " & Err.description, _
         Title:="Accès à " & traceFilePath, _
         Buttons:=vbCritical
 
@@ -500,7 +500,7 @@ Sub SetupUserDateFormat(ByVal user As String)
             userDateFormat = "dd/mm/yyyy"
     End Select
 
-    wsdADMIN.Range("B1").value = userDateFormat
+    wsdADMIN.Range("B1").Value = userDateFormat
     
     Call Log_Record("modAppli:SetupUserDateFormat", "", startTime)
     
@@ -514,10 +514,10 @@ Sub BackupMasterFile()
     
     'Chemin source (fichier principal) et destination (sauvegarde)
     Dim masterFilePath As String
-    masterFilePath = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
+    masterFilePath = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
     
     Dim backupFilePath As String
-    backupFilePath = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    backupFilePath = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER_" & Format$(Now, "YYYYMMDD_HHMMSS") & ".xlsx"
     
     'Créer directement une copie du fichier sans ouvrir Excel
@@ -531,7 +531,7 @@ MASTER_NOT_AVAILABLE:
     MsgBox _
         Prompt:="Le fichier GCF_MASTER.xlsx ne peut être accédé..." & vbNewLine & vbNewLine & _
                     "Le fichier nécessite une réparation manuelle", _
-        Title:="Situation anormale (" & Err.Number & " " & Err.Description & ")", _
+        Title:="Situation anormale (" & Err.Number & " " & Err.description & ")", _
         Buttons:=vbCritical
     Application.Quit
 
@@ -554,8 +554,8 @@ Sub EcrireInformationsConfigAuMenu(ByVal user As String)
     Application.EnableEvents = False
 
     ' Récupération des valeurs
-    formatDate = wsdADMIN.Range("B1").value
-    environnement = wsdADMIN.Range("F5").value
+    formatDate = wsdADMIN.Range("B1").Value
+    environnement = wsdADMIN.Range("F5").Value
 
     valeurs = Array( _
         "Heure - " & Format$(Now(), formatDate & " hh:mm:ss"), _
@@ -565,7 +565,7 @@ Sub EcrireInformationsConfigAuMenu(ByVal user As String)
         "Format de la date - " & formatDate)
 
     ' Ecriture en une seule opération
-    wshMenu.Range("A30:A34").value = Application.WorksheetFunction.Transpose(valeurs)
+    wshMenu.Range("A30:A34").Value = Application.WorksheetFunction.Transpose(valeurs)
 
     With wshMenu
         .Protect UserInterfaceOnly:=True
@@ -663,7 +663,7 @@ Public Sub VerifierInactivite() '2025-05-30 @ 12:22
     Exit Sub
     
 GestionErreur:
-    Debug.Print "Erreur dans procédure 'VerifierInactivite' : " & Err.Number & " - " & Err.Description
+    Debug.Print "Erreur dans procédure 'VerifierInactivite' : " & Err.Number & " - " & Err.description
     
 End Sub
 

@@ -12,7 +12,7 @@ Sub CopieClientsEntreClasseursFermés() '2024-08-03 @ 09:40
     Dim sourceFilePath As String
     sourceFilePath = "C:\VBA\GC_FISCALITÉ\DataConversion\Clients.xlsx"
     Dim destinationFilePath As String
-    destinationFilePath = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & "GCF_BD_Entrée.xlsx"
+    destinationFilePath = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & "GCF_BD_Entrée.xlsx"
     
     'Declare le Workbook & le Worksheet (source)
     Dim sourceWorkbook As Workbook: Set sourceWorkbook = Workbooks.Open(sourceFilePath)
@@ -75,9 +75,9 @@ Sub AjusteNomClient()
     Dim i As Long
     For i = 2 To lastUsedRow
         'Load data into variables
-        client = ws.Cells(i, fClntFMClientNom).value
-        clientID = ws.Cells(i, fClntFMClientID).value
-        contactFacturation = ws.Cells(i, fClntFMContactFacturation).value
+        client = ws.Cells(i, fClntFMClientNom).Value
+        clientID = ws.Cells(i, fClntFMClientID).Value
+        contactFacturation = ws.Cells(i, fClntFMContactFacturation).Value
         
         'Process the data and make adjustments if necessary
         posOpenParenthesis = InStr(client, "(")
@@ -89,7 +89,7 @@ Sub AjusteNomClient()
             If posCloseParenthesis > posOpenParenthesis + 5 Then
                 client = Replace(client, "(", "[")
                 client = Replace(client, ")", "]")
-                ws.Cells(i, 1).value = client
+                ws.Cells(i, 1).Value = client
                 Debug.Print "#064 - " & i & " - " & client
             End If
         End If
@@ -126,9 +126,9 @@ Sub AjouteContactDansNomClient()
     Dim i As Long
     For i = 2 To lastUsedRow
         'Load data into variables
-        client = ws.Cells(i, fClntFMClientNom).value
-        clientID = ws.Cells(i, fClntFMClientID).value
-        contactFacturation = Trim$(ws.Cells(i, fClntFMContactFacturation).value)
+        client = ws.Cells(i, fClntFMClientNom).Value
+        clientID = ws.Cells(i, fClntFMClientID).Value
+        contactFacturation = Trim$(ws.Cells(i, fClntFMContactFacturation).Value)
         
         'Process the data and make adjustments if necessary
         posOpenSquareBracket = InStr(client, "[")
@@ -137,7 +137,7 @@ Sub AjouteContactDansNomClient()
         If posOpenSquareBracket = 0 And posCloseSquareBracket = 0 Then
             If contactFacturation <> "" And InStr(client, contactFacturation) = 0 Then
                 client = Trim$(client) & " [" & contactFacturation & "]"
-                ws.Cells(i, 1).value = client
+                ws.Cells(i, 1).Value = client
                 Debug.Print "#065 - " & i & " - " & client
             End If
         End If
@@ -203,13 +203,13 @@ Sub ImporterDonnéesDeClasseursFermés_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 16
     Dim totHres As Double
     Do Until rst.EOF
         rowNum = rowNum + 1
-        prof = Trim$(rst.Fields(0).value)
-        clientCode = Trim$(rst.Fields(2).value)
+        prof = Trim$(rst.Fields(0).Value)
+        clientCode = Trim$(rst.Fields(2).Value)
 '        clientCode = Left$(client, 10)
 '            clientCode = Left$(clientCode, InStr(clientCode, " -") - 1)
-        client = Trim$(rst.Fields(3).value)
+        client = Trim$(rst.Fields(3).Value)
 '        client = Mid$(client, InStr(client, " - ") + 3, Len(client))
-        totHres = totHres + CDbl(rst.Fields(5).value)
+        totHres = totHres + CDbl(rst.Fields(5).Value)
         
         'Is this a Valid Client ?
         Dim myInfo() As Variant
@@ -224,22 +224,22 @@ Sub ImporterDonnéesDeClasseursFermés_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 16
         End If
         
         tecID = tecID + 1
-        wsDest.Range("A" & rowNum).value = tecID
-        wsDest.Range("B" & rowNum).value = ObtenirProfIDAvecInitiales(prof)
-        wsDest.Range("C" & rowNum).value = prof
-        wsDest.Range("D" & rowNum).value = rst.Fields(1).value
-        wsDest.Range("E" & rowNum).value = clientCode
-        wsDest.Range("F" & rowNum).value = client
-        wsDest.Range("G" & rowNum).value = rst.Fields(4).value
-        wsDest.Range("H" & rowNum).value = rst.Fields(5).value
-        wsDest.Range("I" & rowNum).value = ""
-        wsDest.Range("J" & rowNum).value = "VRAI"
-        wsDest.Range("K" & rowNum).value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
-        wsDest.Range("L" & rowNum).value = "FAUX"
-        wsDest.Range("M" & rowNum).value = ""
-        wsDest.Range("N" & rowNum).value = "FAUX"
-        wsDest.Range("O" & rowNum).value = ThisWorkbook.Name
-        wsDest.Range("P" & rowNum).value = ""
+        wsDest.Range("A" & rowNum).Value = tecID
+        wsDest.Range("B" & rowNum).Value = ObtenirProfIDAvecInitiales(prof)
+        wsDest.Range("C" & rowNum).Value = prof
+        wsDest.Range("D" & rowNum).Value = rst.Fields(1).Value
+        wsDest.Range("E" & rowNum).Value = clientCode
+        wsDest.Range("F" & rowNum).Value = client
+        wsDest.Range("G" & rowNum).Value = rst.Fields(4).Value
+        wsDest.Range("H" & rowNum).Value = rst.Fields(5).Value
+        wsDest.Range("I" & rowNum).Value = ""
+        wsDest.Range("J" & rowNum).Value = "VRAI"
+        wsDest.Range("K" & rowNum).Value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
+        wsDest.Range("L" & rowNum).Value = "FAUX"
+        wsDest.Range("M" & rowNum).Value = ""
+        wsDest.Range("N" & rowNum).Value = "FAUX"
+        wsDest.Range("O" & rowNum).Value = ThisWorkbook.Name
+        wsDest.Range("P" & rowNum).Value = ""
         
         rst.MoveNext
         
@@ -290,7 +290,7 @@ Sub ImporterDonnéesDeClasseursFermésFournisseurs() '2024-08-03 @ 18:10
     Dim sourceFilePath As String
     sourceFilePath = "C:\VBA\GC_FISCALITÉ\DataConversion\Fournisseurs.xlsx"
     Dim destinationFilePath As String
-    destinationFilePath = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & "GCF_BD_Entrée.xlsx"
+    destinationFilePath = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & "GCF_BD_Entrée.xlsx"
     
     'Declare le Workbook & le Worksheet (source)
     Dim sourceWorkbook As Workbook: Set sourceWorkbook = Workbooks.Open(sourceFilePath)
@@ -383,28 +383,28 @@ Sub ImporterDonnéesDeClasseursFermés_GL_BV() '2024-08-03 @ 18:20
     
     Do Until rst.EOF
         rowNum = rowNum + 1
-        descriptionGL = rst.Fields(0).value
+        descriptionGL = rst.Fields(0).Value
         codeGL = Fn_GetGL_Code_From_GL_Description(descriptionGL)
-        amount = rst.Fields(1).value
+        amount = rst.Fields(1).Value
         If amount > 0 Then
             totalDT = totalDT + amount
         Else
             totalCT = totalCT - amount
         End If
         
-        wsDest.Range("A" & rowNum).value = No_Entrée
-        wsDest.Range("B" & rowNum).value = "07/31/2024"
-        wsDest.Range("C" & rowNum).value = "Solde de fermeture (conversion)"
-        wsDest.Range("D" & rowNum).value = "Conv."
-        wsDest.Range("E" & rowNum).value = codeGL
-        wsDest.Range("F" & rowNum).value = descriptionGL
+        wsDest.Range("A" & rowNum).Value = No_Entrée
+        wsDest.Range("B" & rowNum).Value = "07/31/2024"
+        wsDest.Range("C" & rowNum).Value = "Solde de fermeture (conversion)"
+        wsDest.Range("D" & rowNum).Value = "Conv."
+        wsDest.Range("E" & rowNum).Value = codeGL
+        wsDest.Range("F" & rowNum).Value = descriptionGL
         If amount >= 0 Then
-            wsDest.Range("G" & rowNum).value = amount
+            wsDest.Range("G" & rowNum).Value = amount
         Else
-            wsDest.Range("H" & rowNum).value = -amount
+            wsDest.Range("H" & rowNum).Value = -amount
         End If
-        wsDest.Range("I" & rowNum).value = ""
-        wsDest.Range("J" & rowNum).value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+        wsDest.Range("I" & rowNum).Value = ""
+        wsDest.Range("J" & rowNum).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
         
         rst.MoveNext
         
@@ -487,18 +487,18 @@ Sub ImporterDonnéesDeClasseursFermés_CAR() '2024-08-04 @ 07:31
     Dim totCAR As Double
     
     Do Until rst.EOF
-        client = rst.Fields(0).value
-        dateFact = rst.Fields(1).value
-        factNo = rst.Fields(2).value
-        totalFact = rst.Fields(3).value
-        recu = rst.Fields(4).value
+        client = rst.Fields(0).Value
+        dateFact = rst.Fields(1).Value
+        factNo = rst.Fields(2).Value
+        totalFact = rst.Fields(3).Value
+        recu = rst.Fields(4).Value
         regul = 0
-        If IsNull(rst.Fields(5).value) Then
+        If IsNull(rst.Fields(5).Value) Then
             dateRecu = ""
         Else
-            dateRecu = rst.Fields(5).value
+            dateRecu = rst.Fields(5).Value
         End If
-        solde = rst.Fields(6).value
+        solde = rst.Fields(6).Value
         
         clientCode = Left$(client, 10)
             clientCode = Left$(clientCode, InStr(clientCode, " -") - 1)
@@ -520,20 +520,20 @@ Sub ImporterDonnéesDeClasseursFermés_CAR() '2024-08-04 @ 07:31
             errorMesg = errorMesg & clientCode & " vs. " & clientCodeFromDB & vbNewLine
         End If
         
-        wsDest.Cells(rowNum, fFacCCInvNo).value = factNo
-        wsDest.Cells(rowNum, fFacCCInvoiceDate).value = dateFact
-        wsDest.Cells(rowNum, fFacCCCustomer).value = client
-        wsDest.Cells(rowNum, fFacCCCodeClient).value = clientCode
-        wsDest.Cells(rowNum, fFacCCStatus).value = "Unpaid"
-        wsDest.Cells(rowNum, fFacCCTerms).value = "Net"
+        wsDest.Cells(rowNum, fFacCCInvNo).Value = factNo
+        wsDest.Cells(rowNum, fFacCCInvoiceDate).Value = dateFact
+        wsDest.Cells(rowNum, fFacCCCustomer).Value = client
+        wsDest.Cells(rowNum, fFacCCCodeClient).Value = clientCode
+        wsDest.Cells(rowNum, fFacCCStatus).Value = "Unpaid"
+        wsDest.Cells(rowNum, fFacCCTerms).Value = "Net"
         dateDue = DateAdd("d", 30, CDate(dateFact))
-        wsDest.Cells(rowNum, fFacCCDueDate).value = Format$(CDate(dateDue), "mm/dd/yyyy")
-        wsDest.Cells(rowNum, fFacCCTotal).value = totalFact
-        wsDest.Cells(rowNum, fFacCCTotalPaid).value = recu
-        wsDest.Cells(rowNum, fFacCCTotalRegul).value = 0
-        wsDest.Cells(rowNum, fFacCCBalance).value = totalFact - recu + regul
+        wsDest.Cells(rowNum, fFacCCDueDate).Value = Format$(CDate(dateDue), "mm/dd/yyyy")
+        wsDest.Cells(rowNum, fFacCCTotal).Value = totalFact
+        wsDest.Cells(rowNum, fFacCCTotalPaid).Value = recu
+        wsDest.Cells(rowNum, fFacCCTotalRegul).Value = 0
+        wsDest.Cells(rowNum, fFacCCBalance).Value = totalFact - recu + regul
         joursDue = DateDiff("d", dateDue, Date)
-        wsDest.Cells(rowNum, fFacCCDaysOverdue).value = joursDue
+        wsDest.Cells(rowNum, fFacCCDaysOverdue).Value = joursDue
         rowNum = rowNum + 1
 
         rst.MoveNext
@@ -590,13 +590,13 @@ Sub Compare2ExcelFiles() '------------------------------------------ 2024-09-02 
     Dim wsDiff As Worksheet
     Call CreateOrReplaceWorksheet(wsNameStr)
     Set wsDiff = ThisWorkbook.Worksheets(wsNameStr)
-    wsDiff.Range("A1").value = "Ligne"
-    wsDiff.Range("B1").value = "Colonne"
-    wsDiff.Range("C1").value = "CodeClient"
-    wsDiff.Range("D1").value = "Nom du Client"
-    wsDiff.Range("E1").value = "Avant changement"
-    wsDiff.Range("F1").value = "Type"
-    wsDiff.Range("G1").value = "Après changement"
+    wsDiff.Range("A1").Value = "Ligne"
+    wsDiff.Range("B1").Value = "Colonne"
+    wsDiff.Range("C1").Value = "CodeClient"
+    wsDiff.Range("D1").Value = "Nom du Client"
+    wsDiff.Range("E1").Value = "Avant changement"
+    wsDiff.Range("F1").Value = "Type"
+    wsDiff.Range("G1").Value = "Après changement"
     Call Make_It_As_Header(wsDiff.Range("A1:G1"))
 
     Dim diffRow As Long
@@ -612,7 +612,7 @@ Sub Compare2ExcelFiles() '------------------------------------------ 2024-09-02 
     Dim readCells As Long
     Dim i As Long, j As Long
     For i = 1 To lastUsedRowWas
-        clientCode = CStr(wsWas.Cells(i, 2).value)
+        clientCode = CStr(wsWas.Cells(i, 2).Value)
         'Trouver la ligne correspondante dans la nouvelle version
         Set foundRow = wsNow.Columns(2).Find(What:=clientCode, LookIn:=xlValues, LookAt:=xlWhole)
         If Not foundRow Is Nothing Then
@@ -622,23 +622,23 @@ Sub Compare2ExcelFiles() '------------------------------------------ 2024-09-02 
                 readCells = readCells + 1
                 Set cellWas = wsWas.Cells(i, j)
                 Set cellNow = wsNow.Cells(foundRow.row, j)
-                If CStr(cellWas.value) <> CStr(cellNow.value) Then
-                    wsDiff.Cells(diffRow, 1).value = i
-                    wsDiff.Cells(diffRow, 2).value = j
-                    wsDiff.Cells(diffRow, 3).value = wsWas.Cells(i, 2).value
-                    wsDiff.Cells(diffRow, 4).value = wsWas.Cells(cellWas.row, 1).value
-                    wsDiff.Cells(diffRow, 5).value = cellWas.value
-                    wsDiff.Cells(diffRow, 6).value = "'--->"
-                    wsDiff.Cells(diffRow, 7).value = cellNow.value
+                If CStr(cellWas.Value) <> CStr(cellNow.Value) Then
+                    wsDiff.Cells(diffRow, 1).Value = i
+                    wsDiff.Cells(diffRow, 2).Value = j
+                    wsDiff.Cells(diffRow, 3).Value = wsWas.Cells(i, 2).Value
+                    wsDiff.Cells(diffRow, 4).Value = wsWas.Cells(cellWas.row, 1).Value
+                    wsDiff.Cells(diffRow, 5).Value = cellWas.Value
+                    wsDiff.Cells(diffRow, 6).Value = "'--->"
+                    wsDiff.Cells(diffRow, 7).Value = cellNow.Value
                     diffRow = diffRow + 1
                 End If
             Next j
         Else
-            wsDiff.Cells(diffRow, 1).value = i
-            wsDiff.Cells(diffRow, 3).value = wsWas.Cells(i, 2).value
-            wsDiff.Cells(diffRow, 4).value = wsWas.Cells(cellWas.row, 1).value
-            wsDiff.Cells(diffRow, 5).value = cellWas.value
-            wsDiff.Cells(diffRow, 6).value = "XXXX"
+            wsDiff.Cells(diffRow, 1).Value = i
+            wsDiff.Cells(diffRow, 3).Value = wsWas.Cells(i, 2).Value
+            wsDiff.Cells(diffRow, 4).Value = wsWas.Cells(cellWas.row, 1).Value
+            wsDiff.Cells(diffRow, 5).Value = cellWas.Value
+            wsDiff.Cells(diffRow, 6).Value = "XXXX"
             diffRow = diffRow + 1
         End If
     Next i
@@ -647,7 +647,7 @@ Sub Compare2ExcelFiles() '------------------------------------------ 2024-09-02 
     
     'Result print setup - 2024-08-05 @ 05:16
     diffRow = diffRow + 1
-    wsDiff.Range("A" & diffRow).value = "**** " & Format$(readCells, "###,##0") & _
+    wsDiff.Range("A" & diffRow).Value = "**** " & Format$(readCells, "###,##0") & _
                                         " cellules analysées dans l'ensemble du fichier ***"
                                     
     'Set conditional formatting for the worksheet (alternate colors)
@@ -718,16 +718,16 @@ Sub AdjustClientNameInTEC()  '2024-08-03 @ 09:40
     Set dictClients = New Dictionary
     Dim i As Long
     For i = 2 To lastUsedRowClient
-        dictClients.Add CStr(referenceSheet.Cells(i, 2).value), referenceSheet.Cells(i, 1).value
+        dictClients.Add CStr(referenceSheet.Cells(i, 2).Value), referenceSheet.Cells(i, 1).Value
     Next i
     
     Dim codeClient As String, nomClient As String, updatedNomClient As String
     For i = 2 To lastUsedRow
-        codeClient = sourceSheet.Cells(i, 5).value
-        nomClient = sourceSheet.Cells(i, 6).value
+        codeClient = sourceSheet.Cells(i, 5).Value
+        nomClient = sourceSheet.Cells(i, 6).Value
         updatedNomClient = dictClients(codeClient)
         Debug.Print "#069 - " & i & " : " & codeClient & " - " & nomClient & " ---> " & updatedNomClient
-        sourceSheet.Cells(i, 6).value = updatedNomClient
+        sourceSheet.Cells(i, 6).Value = updatedNomClient
     Next i
     
     'Save and close the destination workbook
@@ -779,16 +779,16 @@ Sub AdjustClientNameInCAR()  '2024-08-07 @ 17:11
     Set dictClients = New Dictionary
     Dim i As Long
     For i = 2 To lastUsedRowClient
-        dictClients.Add CStr(referenceSheet.Cells(i, 2).value), referenceSheet.Cells(i, 1).value
+        dictClients.Add CStr(referenceSheet.Cells(i, 2).Value), referenceSheet.Cells(i, 1).Value
     Next i
     
     Dim codeClient As String, nomClient As String, updatedNomClient As String
     For i = 3 To lastUsedRow
-        codeClient = sourceSheet.Cells(i, 4).value
-        nomClient = sourceSheet.Cells(i, 3).value
+        codeClient = sourceSheet.Cells(i, 4).Value
+        nomClient = sourceSheet.Cells(i, 3).Value
         updatedNomClient = dictClients(codeClient)
         Debug.Print "#071 - " & i & " : " & codeClient & " - " & nomClient & " ---> " & updatedNomClient
-        sourceSheet.Cells(i, 3).value = updatedNomClient
+        sourceSheet.Cells(i, 3).Value = updatedNomClient
     Next i
     
     'Save and close the destination workbook
@@ -824,9 +824,9 @@ Sub CheckClientName() '2024-08-10 @ 10:13
     Dim codeClient As String, nomClient As String, contactFact As String
     Dim i As Long
     For i = 2 To lastUsedRow
-        codeClient = sourceSheet.Cells(i, fClntFMClientID).value
-        nomClient = Trim$(sourceSheet.Cells(i, fClntFMClientNom).value)
-        contactFact = Trim$(sourceSheet.Cells(i, fClntFMContactFacturation).value)
+        codeClient = sourceSheet.Cells(i, fClntFMClientID).Value
+        nomClient = Trim$(sourceSheet.Cells(i, fClntFMClientNom).Value)
+        contactFact = Trim$(sourceSheet.Cells(i, fClntFMContactFacturation).Value)
         If InStr(nomClient, contactFact) = 0 Then
             Debug.Print "#072 - " & i & " : " & codeClient & " - " & nomClient & " on ajoute '" & contactFact & "'"
         End If
@@ -866,15 +866,15 @@ Sub ConstruireSommaireHeures() '2024-08-12 @ 21:09
     Dim hresNonDetruites As Double, hresFacturables As Double, hresNonFacturables As Double
     Dim i As Long
     For i = 2 To lastUsedRow
-        profID = sourceSheet.Cells(i, 2).value
-        prof = sourceSheet.Cells(i, 3).value
-        dateServ = sourceSheet.Cells(i, 4).value
-        codeClient = sourceSheet.Cells(i, 5).value
-        nomClient = Trim$(sourceSheet.Cells(i, 6).value)
-        hresSaisies = Trim$(sourceSheet.Cells(i, 8).value)
-        estFacturable = sourceSheet.Cells(i, 10).value
-        estFacturee = sourceSheet.Cells(i, 12).value
-        estDetruit = sourceSheet.Cells(i, 14).value
+        profID = sourceSheet.Cells(i, 2).Value
+        prof = sourceSheet.Cells(i, 3).Value
+        dateServ = sourceSheet.Cells(i, 4).Value
+        codeClient = sourceSheet.Cells(i, 5).Value
+        nomClient = Trim$(sourceSheet.Cells(i, 6).Value)
+        hresSaisies = Trim$(sourceSheet.Cells(i, 8).Value)
+        estFacturable = sourceSheet.Cells(i, 10).Value
+        estFacturee = sourceSheet.Cells(i, 12).Value
+        estDetruit = sourceSheet.Cells(i, 14).Value
         
         hresDetruites = 0
         If estDetruit = "VRAI" Then
@@ -912,7 +912,7 @@ Sub CorrigeNomClientInTEC()  '2025-03-04 @ 05:48
 
     'Source - Définir les chemins d'accès des fichiers, le Workbook, le Worksheet et le Range
     Dim sourceFilePath As String
-    sourceFilePath = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceFilePath = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Master.xlsx"
     Dim wbSource As Workbook: Set wbSource = Workbooks.Open(sourceFilePath)
     Dim wsSource As Worksheet: Set wsSource = wbSource.Worksheets("TEC_Local")
@@ -923,7 +923,7 @@ Sub CorrigeNomClientInTEC()  '2025-03-04 @ 05:48
     
     'Open the Master File Workbook
     Dim clientMFPath As String
-    clientMFPath = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    clientMFPath = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Entrée.xlsx"
     Dim wbMF As Workbook: Set wbMF = Workbooks.Open(clientMFPath)
     Dim wsMF As Worksheet: Set wsMF = wbMF.Worksheets("Clients")
@@ -935,12 +935,12 @@ Sub CorrigeNomClientInTEC()  '2025-03-04 @ 05:48
     strOutput = "X_TEC_Correction_Nom"
     Call CreateOrReplaceWorksheet(strOutput)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets(strOutput)
-    wsOutput.Range("A1").value = "TEC_Nom_Client"
-    wsOutput.Range("B1").value = "Code_de_Client"
-    wsOutput.Range("C1").value = "Nom_Client_Master"
-    wsOutput.Range("D1").value = "TECID"
-    wsOutput.Range("E1").value = "TEC_Prof"
-    wsOutput.Range("F1").value = "TEC_Date"
+    wsOutput.Range("A1").Value = "TEC_Nom_Client"
+    wsOutput.Range("B1").Value = "Code_de_Client"
+    wsOutput.Range("C1").Value = "Nom_Client_Master"
+    wsOutput.Range("D1").Value = "TECID"
+    wsOutput.Range("E1").Value = "TEC_Prof"
+    wsOutput.Range("F1").Value = "TEC_Date"
     Call Make_It_As_Header(wsOutput.Range("A1:F1"))
     
     'Build the dictionnary (Code, Nom du client) from Client's Master File
@@ -948,7 +948,7 @@ Sub CorrigeNomClientInTEC()  '2025-03-04 @ 05:48
     Set dictClients = New Dictionary
     Dim i As Long
     For i = 2 To lastUsedRowClient
-        dictClients.Add CStr(wsMF.Cells(i, 2).value), wsMF.Cells(i, 1).value
+        dictClients.Add CStr(wsMF.Cells(i, 2).Value), wsMF.Cells(i, 1).Value
     Next i
     
     'Parse TEC_Local to verify TEC's clientName vs. MasterFile's clientName
@@ -956,18 +956,18 @@ Sub CorrigeNomClientInTEC()  '2025-03-04 @ 05:48
     Dim casDelta As Long, rowOutput As Long
     rowOutput = 2
     For i = 2 To lastUsedRowTEC
-        codeClientTEC = wsSource.Cells(i, 5).value
-        nomClientTEC = wsSource.Cells(i, 6).value
+        codeClientTEC = wsSource.Cells(i, 5).Value
+        nomClientTEC = wsSource.Cells(i, 6).Value
         nomClientFromMF = dictClients(codeClientTEC)
         If nomClientTEC <> nomClientFromMF Then
             Debug.Print "#073 - " & i & " : " & codeClientTEC & " - " & nomClientTEC & " <---> " & nomClientFromMF
-            wsSource.Cells(i, 6).value = nomClientFromMF
-            wsOutput.Cells(rowOutput, 1).value = nomClientTEC
-            wsOutput.Cells(rowOutput, 2).value = codeClientTEC
-            wsOutput.Cells(rowOutput, 3).value = nomClientFromMF
-            wsOutput.Cells(rowOutput, 4).value = wsSource.Cells(i, 1).value
-            wsOutput.Cells(rowOutput, 5).value = wsSource.Cells(i, 3).value
-            wsOutput.Cells(rowOutput, 6).value = wsSource.Cells(i, 4).value
+            wsSource.Cells(i, 6).Value = nomClientFromMF
+            wsOutput.Cells(rowOutput, 1).Value = nomClientTEC
+            wsOutput.Cells(rowOutput, 2).Value = codeClientTEC
+            wsOutput.Cells(rowOutput, 3).Value = nomClientFromMF
+            wsOutput.Cells(rowOutput, 4).Value = wsSource.Cells(i, 1).Value
+            wsOutput.Cells(rowOutput, 5).Value = wsSource.Cells(i, 3).Value
+            wsOutput.Cells(rowOutput, 6).Value = wsSource.Cells(i, 4).Value
             rowOutput = rowOutput + 1
             casDelta = casDelta + 1
         End If
@@ -977,7 +977,7 @@ Sub CorrigeNomClientInTEC()  '2025-03-04 @ 05:48
 
     'Result print setup - 2024-08-05 @ 05:16
     rowOutput = rowOutput + 1
-    wsOutput.Range("A" & rowOutput).value = "**** " & Format$(lastUsedRowTEC - 1, "###,##0") & _
+    wsOutput.Range("A" & rowOutput).Value = "**** " & Format$(lastUsedRowTEC - 1, "###,##0") & _
                                         " lignes analysées dans l'ensemble du fichier ***"
                                     
     'Set conditional formatting for the worksheet (alternate colors)
@@ -1013,7 +1013,7 @@ Sub DetecterErreurCodeClientInTEC()  '2025-03-11 @ 08:29
 
     'Source - Définir les chemins d'accès des fichiers, le Workbook et le Worksheet
     Dim sourceFilePath As String
-    sourceFilePath = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceFilePath = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Master.xlsx"
     Dim wbSource As Workbook: Set wbSource = Workbooks.Open(sourceFilePath)
     Dim wsSource As Worksheet: Set wsSource = wbSource.Worksheets("TEC_Local")
@@ -1024,7 +1024,7 @@ Sub DetecterErreurCodeClientInTEC()  '2025-03-11 @ 08:29
     
     'Open the Master File Workbook
     Dim clientMFPath As String
-    clientMFPath = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    clientMFPath = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Entrée.xlsx"
     Dim wbMF As Workbook: Set wbMF = Workbooks.Open(clientMFPath)
     Dim wsMF As Worksheet: Set wsMF = wbMF.Worksheets("Clients")
@@ -1036,13 +1036,13 @@ Sub DetecterErreurCodeClientInTEC()  '2025-03-11 @ 08:29
     strOutput = "X_Détection_Cas_Erreur_Code_TEC"
     Call CreateOrReplaceWorksheet(strOutput)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets(strOutput)
-    wsOutput.Range("A1").value = "TEC_ID"
-    wsOutput.Range("B1").value = "Date"
-    wsOutput.Range("C1").value = "Prof"
-    wsOutput.Range("D1").value = "NomClientTEC"
-    wsOutput.Range("E1").value = "CodeClient"
-    wsOutput.Range("F1").value = "NomClientFM"
-    wsOutput.Range("G1").value = "DateSaisie"
+    wsOutput.Range("A1").Value = "TEC_ID"
+    wsOutput.Range("B1").Value = "Date"
+    wsOutput.Range("C1").Value = "Prof"
+    wsOutput.Range("D1").Value = "NomClientTEC"
+    wsOutput.Range("E1").Value = "CodeClient"
+    wsOutput.Range("F1").Value = "NomClientFM"
+    wsOutput.Range("G1").Value = "DateSaisie"
     Call Make_It_As_Header(wsOutput.Range("A1:G1"))
     
     'Build the dictionnary (Code, Nom du client) from Client's Master File
@@ -1050,7 +1050,7 @@ Sub DetecterErreurCodeClientInTEC()  '2025-03-11 @ 08:29
     Set dictClients = New Dictionary
     Dim i As Long
     For i = 2 To lastUsedRowClient
-        dictClients.Add CStr(wsMF.Cells(i, fClntFMClientID).value), wsMF.Cells(i, fClntFMClientNom).value
+        dictClients.Add CStr(wsMF.Cells(i, fClntFMClientID).Value), wsMF.Cells(i, fClntFMClientNom).Value
     Next i
     
     'Parse TEC_Local to verify TEC's clientName vs. MasterFile's clientName
@@ -1058,19 +1058,19 @@ Sub DetecterErreurCodeClientInTEC()  '2025-03-11 @ 08:29
     Dim casDelta As Long, rowOutput As Long
     rowOutput = 2
     For i = 2 To lastUsedRowTEC
-        codeClientTEC = wsSource.Cells(i, fTECClientID).value
-        nomClientTEC = wsSource.Cells(i, fTECTDBClientNom).value
+        codeClientTEC = wsSource.Cells(i, fTECClientID).Value
+        nomClientTEC = wsSource.Cells(i, fTECTDBClientNom).Value
         nomClientFromMF = dictClients(codeClientTEC)
         If Trim$(nomClientTEC) <> Trim$(nomClientFromMF) Then
             Debug.Print "#073 - " & i & " : " & codeClientTEC & " - " & nomClientTEC & " <---> " & nomClientFromMF
 '            wsSource.Cells(i, 6).value = nomClientFromMF
-            wsOutput.Cells(rowOutput, 1).value = wsSource.Cells(i, fTECTECID).value
-            wsOutput.Cells(rowOutput, 2).value = wsSource.Cells(i, fTECDate).value
-            wsOutput.Cells(rowOutput, 3).value = wsSource.Cells(i, fTECProf).value
-            wsOutput.Cells(rowOutput, 4).value = nomClientTEC
-            wsOutput.Cells(rowOutput, 5).value = codeClientTEC
-            wsOutput.Cells(rowOutput, 6).value = nomClientFromMF
-            wsOutput.Cells(rowOutput, 7).value = wsSource.Cells(i, fTECDateSaisie).value
+            wsOutput.Cells(rowOutput, 1).Value = wsSource.Cells(i, fTECTECID).Value
+            wsOutput.Cells(rowOutput, 2).Value = wsSource.Cells(i, fTECDate).Value
+            wsOutput.Cells(rowOutput, 3).Value = wsSource.Cells(i, fTECProf).Value
+            wsOutput.Cells(rowOutput, 4).Value = nomClientTEC
+            wsOutput.Cells(rowOutput, 5).Value = codeClientTEC
+            wsOutput.Cells(rowOutput, 6).Value = nomClientFromMF
+            wsOutput.Cells(rowOutput, 7).Value = wsSource.Cells(i, fTECDateSaisie).Value
             rowOutput = rowOutput + 1
             casDelta = casDelta + 1
         End If
@@ -1080,7 +1080,7 @@ Sub DetecterErreurCodeClientInTEC()  '2025-03-11 @ 08:29
 
     'Result print setup
     rowOutput = rowOutput + 1
-    wsOutput.Range("A" & rowOutput).value = "**** " & Format$(lastUsedRowTEC - 1, "###,##0") & _
+    wsOutput.Range("A" & rowOutput).Value = "**** " & Format$(lastUsedRowTEC - 1, "###,##0") & _
                                         " lignes analysées dans l'ensemble du fichier ***"
                                     
     'Set conditional formatting for the worksheet (alternate colors)
@@ -1119,14 +1119,14 @@ Public Sub CorrigeNomClientInCAR()  '2024-08-31 @ 06:52
 
     'Worksheets to be corrected - Open the workbook (worksheet will be determined later)
     Dim sourceFilePath As String
-    sourceFilePath = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    sourceFilePath = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Master.xlsx"
     Dim wbSource As Workbook
     Set wbSource = Workbooks.Open(sourceFilePath)
     
     'Client's Master File - Workbook & Worksheet
     Dim clientMFPath As String
-    clientMFPath = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    clientMFPath = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Entrée.xlsx"
     Dim wbMF As Workbook
     Set wbMF = Workbooks.Open(clientMFPath)
@@ -1142,11 +1142,11 @@ Public Sub CorrigeNomClientInCAR()  '2024-08-31 @ 06:52
     Dim i As Long
     For i = 2 To lastUsedRowClientMF
         'Enlève les informations de contact
-        clientName = wsMF.Cells(i, fClntFMClientNom).value
+        clientName = wsMF.Cells(i, fClntFMClientNom).Value
         Do While InStr(clientName, "[") > 0 And InStr(clientName, "]") > 0
             clientName = Fn_Strip_Contact_From_Client_Name(clientName)
         Loop
-        dictClients.Add CStr(wsMF.Cells(i, fClntFMClientID).value), clientName
+        dictClients.Add CStr(wsMF.Cells(i, fClntFMClientID).Value), clientName
     Next i
     
     'Setup output file
@@ -1154,11 +1154,11 @@ Public Sub CorrigeNomClientInCAR()  '2024-08-31 @ 06:52
     strOutput = "X_CAR_Correction_Nom"
     Call CreateOrReplaceWorksheet(strOutput)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets(strOutput)
-    wsOutput.Range("A1").value = "Feuille"
-    wsOutput.Range("B1").value = "No Facture"
-    wsOutput.Range("C1").value = "Nom de client (Facture)"
-    wsOutput.Range("D1").value = "Code_de_Client"
-    wsOutput.Range("E1").value = "Changé pour"
+    wsOutput.Range("A1").Value = "Feuille"
+    wsOutput.Range("B1").Value = "No Facture"
+    wsOutput.Range("C1").Value = "Nom de client (Facture)"
+    wsOutput.Range("D1").Value = "Code_de_Client"
+    wsOutput.Range("E1").Value = "Changé pour"
     Call Make_It_As_Header(wsOutput.Range("A1:E1"))
     Dim rowOutput As Long
     rowOutput = 2 'Skip the header
@@ -1181,17 +1181,17 @@ Public Sub CorrigeNomClientInCAR()  '2024-08-31 @ 06:52
         lastUsedRow = wsSource.Cells(wsSource.Rows.count, 1).End(xlUp).row
         Dim codeClientCAR As String, nomClientCAR As String, nomClientFromMF As String
         For i = 3 To lastUsedRow
-            codeClientCAR = wsSource.Cells(i, colClientID).value
-            nomClientCAR = wsSource.Cells(i, colClientName).value
+            codeClientCAR = wsSource.Cells(i, colClientID).Value
+            nomClientCAR = wsSource.Cells(i, colClientName).Value
             nomClientFromMF = dictClients(codeClientCAR)
             If nomClientCAR <> nomClientFromMF Then
                 Debug.Print "#074 - " & i & " : " & codeClientCAR & " - " & nomClientCAR & " <---> " & nomClientFromMF
-                wsSource.Cells(i, colClientName).value = nomClientFromMF
-                wsOutput.Cells(rowOutput, 1).value = wsSource.Name
-                wsOutput.Cells(rowOutput, 2).value = wsSource.Cells(i, 1).value
-                wsOutput.Cells(rowOutput, 3).value = nomClientCAR
-                wsOutput.Cells(rowOutput, 4).value = codeClientCAR
-                wsOutput.Cells(rowOutput, 5).value = nomClientFromMF
+                wsSource.Cells(i, colClientName).Value = nomClientFromMF
+                wsOutput.Cells(rowOutput, 1).Value = wsSource.Name
+                wsOutput.Cells(rowOutput, 2).Value = wsSource.Cells(i, 1).Value
+                wsOutput.Cells(rowOutput, 3).Value = nomClientCAR
+                wsOutput.Cells(rowOutput, 4).Value = codeClientCAR
+                wsOutput.Cells(rowOutput, 5).Value = nomClientFromMF
                 rowOutput = rowOutput + 1
                 casDelta = casDelta + 1
             End If
@@ -1202,7 +1202,7 @@ Public Sub CorrigeNomClientInCAR()  '2024-08-31 @ 06:52
 
     'Result print setup - 2024-08-05 @ 05:16
     rowOutput = rowOutput + 1
-    wsOutput.Range("A" & rowOutput).value = "**** " & Format$(lastUsedRow - 1, "###,##0") & _
+    wsOutput.Range("A" & rowOutput).Value = "**** " & Format$(lastUsedRow - 1, "###,##0") & _
                                         " lignes analysées dans l'ensemble du fichier ***"
                                     
     'Set conditional formatting for the worksheet (alternate colors)
@@ -1257,28 +1257,28 @@ Sub ImporterDonnéesManquantes_CAR() '2024-08-24 @ 15:58
     
     Dim i As Integer
     For i = 2 To lastUsedRow
-        If InStr(ws1.Range("A" & i).value, "24-") <> 1 Then
-            ws2.Range("A" & rowFAC_Entete).value = ws1.Range("A" & i)
-            ws2.Range("B" & rowFAC_Entete).value = ws1.Range("B" & i)
-            ws2.Range("C" & rowFAC_Entete).value = "C"
-            ws2.Range("D" & rowFAC_Entete).value = ws1.Range("D" & i)
-            ws2.Range("F" & rowFAC_Entete).value = ws1.Range("C" & i)
+        If InStr(ws1.Range("A" & i).Value, "24-") <> 1 Then
+            ws2.Range("A" & rowFAC_Entete).Value = ws1.Range("A" & i)
+            ws2.Range("B" & rowFAC_Entete).Value = ws1.Range("B" & i)
+            ws2.Range("C" & rowFAC_Entete).Value = "C"
+            ws2.Range("D" & rowFAC_Entete).Value = ws1.Range("D" & i)
+            ws2.Range("F" & rowFAC_Entete).Value = ws1.Range("C" & i)
             
-            ws2.Range("J" & rowFAC_Entete).value = ws1.Range("H" & i)
-            ws2.Range("K" & rowFAC_Entete).value = "Frais de poste"
-            ws2.Range("L" & rowFAC_Entete).value = 0
-            ws2.Range("M" & rowFAC_Entete).value = "Frais d'expert en taxes"
-            ws2.Range("N" & rowFAC_Entete).value = 0
-            ws2.Range("O" & rowFAC_Entete).value = "Autres frais"
-            ws2.Range("P" & rowFAC_Entete).value = 0
+            ws2.Range("J" & rowFAC_Entete).Value = ws1.Range("H" & i)
+            ws2.Range("K" & rowFAC_Entete).Value = "Frais de poste"
+            ws2.Range("L" & rowFAC_Entete).Value = 0
+            ws2.Range("M" & rowFAC_Entete).Value = "Frais d'expert en taxes"
+            ws2.Range("N" & rowFAC_Entete).Value = 0
+            ws2.Range("O" & rowFAC_Entete).Value = "Autres frais"
+            ws2.Range("P" & rowFAC_Entete).Value = 0
             
-            ws2.Range("Q" & rowFAC_Entete).value = Format$(CDbl(5), "#0.000")
-            ws2.Range("R" & rowFAC_Entete).value = 0
-            ws2.Range("S" & rowFAC_Entete).value = Format$(CDbl(9.975), "#0.000")
-            ws2.Range("T" & rowFAC_Entete).value = 0
+            ws2.Range("Q" & rowFAC_Entete).Value = Format$(CDbl(5), "#0.000")
+            ws2.Range("R" & rowFAC_Entete).Value = 0
+            ws2.Range("S" & rowFAC_Entete).Value = Format$(CDbl(9.975), "#0.000")
+            ws2.Range("T" & rowFAC_Entete).Value = 0
             
-            ws2.Range("U" & rowFAC_Entete).value = ws1.Range("H" & i)
-            ws2.Range("V" & rowFAC_Entete).value = 0
+            ws2.Range("U" & rowFAC_Entete).Value = ws1.Range("H" & i)
+            ws2.Range("V" & rowFAC_Entete).Value = 0
             rowFAC_Entete = rowFAC_Entete + 1
         End If
     Next i
@@ -1332,60 +1332,60 @@ Sub FusionnerDonnéesManquantes_CAR() '2024-08-29 @ 07:29
     Dim i As Integer, ii As Integer
     
     For i = 2 To lastUsedRow
-        invNo = ws1.Cells(i, 1).value
+        invNo = ws1.Cells(i, 1).Value
         
-        hono = ws1.Cells(i, 10).value
-        af1Str = ws1.Cells(i, 11).value
-        af1 = ws1.Cells(i, 12).value
-        af2Str = ws1.Cells(i, 13).value
-        af2 = ws1.Cells(i, 14).value
-        af3Str = ws1.Cells(i, 15).value
-        af3 = ws1.Cells(i, 16).value
-        tps = ws1.Cells(i, 18).value
-        tvq = ws1.Cells(i, 20).value
-        arTotal = ws1.Cells(i, 21).value
-        depot = ws1.Cells(i, 22).value
+        hono = ws1.Cells(i, 10).Value
+        af1Str = ws1.Cells(i, 11).Value
+        af1 = ws1.Cells(i, 12).Value
+        af2Str = ws1.Cells(i, 13).Value
+        af2 = ws1.Cells(i, 14).Value
+        af3Str = ws1.Cells(i, 15).Value
+        af3 = ws1.Cells(i, 16).Value
+        tps = ws1.Cells(i, 18).Value
+        tvq = ws1.Cells(i, 20).Value
+        arTotal = ws1.Cells(i, 21).Value
+        depot = ws1.Cells(i, 22).Value
 
         If hono + af1 + af2 + af3 + tps + tvq <> arTotal Then
             MsgBox "Une ligne (" & i & ") ne balance pas !!!", vbCritical
         End If
         
-        'Find the InvNo in wsdFAC_Entête
+        'Find the InvNo in wsdFAC_Entete
         Set foundCells = rngTarget.Columns(1).Find(What:=invNo, LookIn:=xlValues, LookAt:=xlWhole)
         If foundCells Is Nothing Then
-            MsgBox "**** Je n'ai pas trouvé la facture '" & invNo & "' dans wsdFAC_Entête", vbCritical
+            MsgBox "**** Je n'ai pas trouvé la facture '" & invNo & "' dans wsdFAC_Entete", vbCritical
         Else
             ii = foundCells.row
         End If
         
-        If ws2.Cells(ii, 21).value <> arTotal Then
+        If ws2.Cells(ii, 21).Value <> arTotal Then
             MsgBox "Problème d'intégrité pour la facture '" & invNo & "' au niveau de arTotal", vbCritical
         End If
         
         'Replace values in Target, with the Source info
-        ws2.Cells(ii, 10).value = hono
+        ws2.Cells(ii, 10).Value = hono
         If af1 <> 0 And af1Str <> ws2.Cells(ii, 11) Then
-            ws2.Cells(ii, 11).value = af1Str
+            ws2.Cells(ii, 11).Value = af1Str
         End If
-        ws2.Cells(ii, 12).value = af1
+        ws2.Cells(ii, 12).Value = af1
         
         If af2 <> 0 And af2Str <> ws2.Cells(ii, 13) Then
-            ws2.Cells(ii, 13).value = af2Str
+            ws2.Cells(ii, 13).Value = af2Str
         End If
-        ws2.Cells(ii, 14).value = af2
+        ws2.Cells(ii, 14).Value = af2
         
         If af3 <> 0 And af3Str <> ws2.Cells(ii, 15) Then
-            ws2.Cells(ii, 15).value = af3Str
+            ws2.Cells(ii, 15).Value = af3Str
         End If
-        ws2.Cells(ii, 16).value = af3
+        ws2.Cells(ii, 16).Value = af3
         
-        ws2.Cells(ii, 18).value = tps
-        ws2.Cells(ii, 20).value = tvq
+        ws2.Cells(ii, 18).Value = tps
+        ws2.Cells(ii, 20).Value = tvq
         
-        ws2.Cells(ii, 22).value = depot
+        ws2.Cells(ii, 22).Value = depot
         
         If ws2.Cells(ii, 10) + ws2.Cells(ii, 12) + ws2.Cells(ii, 14) + ws2.Cells(ii, 16) + _
-            ws2.Cells(ii, 18) + ws2.Cells(ii, 20) <> ws2.Cells(ii, 21).value Then
+            ws2.Cells(ii, 18) + ws2.Cells(ii, 20) <> ws2.Cells(ii, 21).Value Then
             MsgBox "Problème avec les assignations...", vbCritical
         End If
         

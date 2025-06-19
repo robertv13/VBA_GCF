@@ -70,7 +70,7 @@ Private Sub Worksheet_Activate()
     
     Call AjusteLibelléEncaissement("Banque")
     
-    ws.Range("K5").value = Format$(Date, wsdADMIN.Range("B1").value)
+    ws.Range("K5").Value = Format$(Date, wsdADMIN.Range("B1").Value)
 
     Application.ScreenUpdating = True
     Application.EnableEvents = True
@@ -84,7 +84,7 @@ Private Sub Worksheet_Activate()
 
 End Sub
 
-Private Sub Worksheet_SelectionChange(ByVal target As Range)
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     If gPreviousCellAddress <> "" Then
         Range(gPreviousCellAddress).Interior.Color = xlNone
@@ -93,32 +93,32 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
     Call RafraichirActivite("Saisie des encaissements")
     
     'Client has been selected
-    If Not Intersect(target, Me.Range("F5")) Is Nothing Then
-        target.Interior.Color = COULEUR_SAISIE
+    If Not Intersect(Target, Me.Range("F5")) Is Nothing Then
+        Target.Interior.Color = COULEUR_SAISIE
     End If
     
     'Date has been selected
-    If Not Intersect(target, Me.Range("K5")) Is Nothing Then
-        target.Interior.Color = COULEUR_SAISIE
+    If Not Intersect(Target, Me.Range("K5")) Is Nothing Then
+        Target.Interior.Color = COULEUR_SAISIE
     End If
     
     'Payment Type has been selected
-    If Not Intersect(target, Me.Range("F7")) Is Nothing Then
-        target.Interior.Color = COULEUR_SAISIE
+    If Not Intersect(Target, Me.Range("F7")) Is Nothing Then
+        Target.Interior.Color = COULEUR_SAISIE
     End If
     
     'Total deposit has been selected
-    If Not Intersect(target, Me.Range("K7")) Is Nothing Then
-        target.Interior.Color = COULEUR_SAISIE
+    If Not Intersect(Target, Me.Range("K7")) Is Nothing Then
+        Target.Interior.Color = COULEUR_SAISIE
     End If
 
     'Comments has been selected
-    If Not Intersect(target, Me.Range("F9")) Is Nothing Then
-        target.Interior.Color = COULEUR_SAISIE
+    If Not Intersect(Target, Me.Range("F9")) Is Nothing Then
+        Target.Interior.Color = COULEUR_SAISIE
     End If
     
     'Première case à cocher a été sélectionnée
-    If Not Intersect(target, Me.Range("E12")) Is Nothing Then
+    If Not Intersect(Target, Me.Range("E12")) Is Nothing Then
         Call ValiderEtLancerufEncRégularisation
     End If
     
@@ -129,31 +129,31 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
 '        Exit Sub
 '    End If
 '
-    If Not Intersect(target, Me.Range("G7")) Is Nothing Then
-        target.Interior.Color = COULEUR_BASE_COMPTABILITÉ
+    If Not Intersect(Target, Me.Range("G7")) Is Nothing Then
+        Target.Interior.Color = COULEUR_BASE_COMPTABILITÉ
         Me.Range("K7").Select
         Exit Sub
     End If
     
-    gPreviousCellAddress = target.Address
+    gPreviousCellAddress = Target.Address
     
 End Sub
 
-Private Sub Worksheet_Change(ByVal target As Range)
+Private Sub Worksheet_Change(ByVal Target As Range)
     
     Dim fullDate As Variant
     
     'On Customer Change and only on new payments
-    If Not Intersect(target, Me.Range("F5")) Is Nothing And _
-        Me.Range("F5").value <> Empty And _
-        Me.Range("B6").value = "" Then
+    If Not Intersect(Target, Me.Range("F5")) Is Nothing And _
+        Me.Range("F5").Value <> Empty And _
+        Me.Range("B6").Value = "" Then
         'Aller chercher le vrai nom du client
         Dim allCols As Variant
-        allCols = Fn_Get_A_Row_From_A_Worksheet("BD_Clients", target.value, fClntFMNomClientPlusNomClientSystème)
+        allCols = Fn_Get_A_Row_From_A_Worksheet("BD_Clients", Target.Value, fClntFMNomClientPlusNomClientSystème)
         'Vérifier les résultats
         If IsArray(allCols) Then
             Application.EnableEvents = False
-            target.value = allCols(1)
+            Target.Value = allCols(1)
             Application.EnableEvents = True
         Else
             MsgBox "Valeur non trouvée !!!", vbCritical
@@ -166,24 +166,24 @@ Private Sub Worksheet_Change(ByVal target As Range)
     End If
     
     'Date has changed
-    If Not Intersect(target, Me.Range("K5")) Is Nothing Then
+    If Not Intersect(Target, Me.Range("K5")) Is Nothing Then
         Application.EnableEvents = False
-        fullDate = Fn_Complete_Date(target.Text, 30, 0)
+        fullDate = Fn_Complete_Date(Target.Text, 30, 0)
         If fullDate <> "Invalid Date" Then
-            target.value = Format$(fullDate, wsdADMIN.Range("B1").value)
+            Target.Value = Format$(fullDate, wsdADMIN.Range("B1").Value)
         Else
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshENC_Saisie_115")
-            target.ClearContents
+            Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(target.Address)
+            Application.GoTo Range(Target.Address)
         End If
-        target.Interior.Color = xlNone
+        Target.Interior.Color = xlNone
         Application.EnableEvents = True
     End If
     
     'Type a changé
-    If Not Intersect(target, Me.Range("F7")) Is Nothing Then
-        Call AjusteLibelléEncaissement(target.value)
+    If Not Intersect(Target, Me.Range("F7")) Is Nothing Then
+        Call AjusteLibelléEncaissement(Target.Value)
     End If
     
 End Sub

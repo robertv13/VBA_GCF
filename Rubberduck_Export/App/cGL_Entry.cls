@@ -36,11 +36,11 @@ Public Property Let NoEcriture(val As Long)
 End Property
 
 'Description
-Public Property Get Description() As String
-    Description = pDescription
+Public Property Get description() As String
+    description = pDescription
 End Property
 
-Public Property Let Description(val As String)
+Public Property Let description(val As String)
     pDescription = val
 End Property
 
@@ -72,17 +72,17 @@ Public Property Let AutreRemarque(val As String)
 End Property
 
 'Accès aux lignes (Collection d'objets cGL_EntryLine)
-Public Property Get Lignes() As Collection
-    Set Lignes = pLignes
+Public Property Get lignes() As Collection
+    Set lignes = pLignes
 End Property
 
 'Méthode pour ajouter une ligne à l'écriture
-Public Sub AjouterLigne(NoCompte As String, Description As String, Montant As Currency)
+Public Sub AjouterLigne(NoCompte As String, description As String, Montant As Currency)
 
     Dim l As cGL_EntryLine
     Set l = New cGL_EntryLine
     l.NoCompte = NoCompte
-    l.Description = Description
+    l.description = description
     l.Montant = Montant
     pLignes.Add l
     

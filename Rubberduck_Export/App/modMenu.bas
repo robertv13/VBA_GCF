@@ -177,8 +177,8 @@ Sub ApplicationFermetureNormale(ByVal userName As String) 'Nouvelle procédure - 
     Dim ws As Worksheet
     Set ws = wsdADMIN
     With ws
-        .Range("B1").value = ""
-        .Range("B2").value = ""
+        .Range("B1").Value = ""
+        .Range("B2").Value = ""
     End With
     
     'Effacer fichier utilisateur actif + Fermeture de la journalisation
@@ -242,6 +242,7 @@ Sub HideDevShapesBasedOnUsername(ByVal userName As String) '2025-06-06 @ 11:17
         "shpImporterCorrigerMASTER", _
         "shpVérificationIntégrité", _
         "shpTraitementFichiersLog", _
+        "shpCompterLignesCode", _
         "shpRechercherCode", _
         "shpCorrigerNomClientTEC", _
         "shpCorrigerNomClientCAR", _
@@ -271,54 +272,12 @@ Sub HideDevShapesBasedOnUsername(ByVal userName As String) '2025-06-06 @ 11:17
 
 End Sub
 
-'CommentOut - 2025-06-06 @ 11:17
-'Sub HideDevShapesBasedOnUsername(ByVal userName As String)
-'
-'    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:HideDevShapesBasedOnUsername", "", 0)
-'
-'    'Set the worksheet where the shapes are located
-'    Dim ws As Worksheet: Set ws = wshMenu
-'
-'    'Loop through each shape in the worksheet
-'    Dim shp As Shape
-'    If userName = "RobertMV" Or userName = "robertmv" Then
-'        ws.Shapes("shpImporterCorrigerMASTER").Visible = msoTrue
-'        ws.Shapes("shpVérificationIntégrité").Visible = msoTrue
-'        ws.Shapes("shpTraitementFichiersLog").Visible = msoTrue
-'        ws.Shapes("shpRechercherCode").Visible = msoTrue
-'        ws.Shapes("shpCorrigerNomClientTEC").Visible = msoTrue
-'        ws.Shapes("shpCorrigerNomClientCAR").Visible = msoTrue
-'        ws.Shapes("shpChercherRéférencesCirculaires").Visible = msoTrue
-'        ws.Shapes("shpChangerReferenceSystem").Visible = msoTrue
-'        ws.Shapes("shpListerModulesEtRoutines").Visible = msoTrue
-'        ws.Shapes("shpVérificationMacrosContrôles").Visible = msoTrue
-'    Else
-'        ws.Shapes("shpImporterCorrigerMASTER").Visible = msoFalse
-'        ws.Shapes("shpVérificationIntégrité").Visible = msoFalse
-'        ws.Shapes("shpTraitementFichiersLog").Visible = msoFalse
-'        ws.Shapes("shpRechercherCode").Visible = msoFalse
-'        ws.Shapes("shpCorrigerNomClientTEC").Visible = msoFalse
-'        ws.Shapes("shpCorrigerNomClientCAR").Visible = msoFalse
-'        ws.Shapes("shpChercherRéférencesCirculaires").Visible = msoFalse
-'        ws.Shapes("shpChangerReferenceSystem").Visible = msoFalse
-'        ws.Shapes("shpListerModulesEtRoutines").Visible = msoFalse
-'        ws.Shapes("shpVérificationMacrosContrôles").Visible = msoFalse
-'    End If
-'
-'    'Libérer la mémoire
-'    Set shp = Nothing
-'    Set ws = Nothing
-'
-'    Call Log_Record("modMenu:HideDevShapesBasedOnUsername", "", startTime)
-'
-'End Sub
-
 Sub Delete_User_Active_File(ByVal userName As String)
 
 '    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:Delete_User_Active_File", "", 0)
     
     Dim traceFilePath As String
-    traceFilePath = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
+    traceFilePath = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
     
     If Dir(traceFilePath) <> "" Then
         Kill traceFilePath
@@ -350,7 +309,13 @@ End Sub
 
 Sub shpRechercherCode_Click()
 
-    Call Code_Search_Everywhere
+    Call RechercherCodeProjet
+
+End Sub
+
+Sub shpCompterLignesCodeProjet_Click()
+
+    Call CompterLignesCode
 
 End Sub
 

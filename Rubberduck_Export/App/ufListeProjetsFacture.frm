@@ -1,9 +1,9 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufListeProjetsFacture 
    Caption         =   "Facturation des projets de facture"
-   ClientHeight    =   7656
+   ClientHeight    =   7665
    ClientLeft      =   180
-   ClientTop       =   696
+   ClientTop       =   690
    ClientWidth     =   11520
    OleObjectBlob   =   "ufListeProjetsFacture.frx":0000
    StartUpPosition =   1  'CenterOwner
@@ -18,7 +18,7 @@ Option Explicit
 Private Sub UserForm_Initialize() '2025-06-01 @ 06:54
 
     Dim ws As Worksheet
-    Set ws = wsdFAC_Projets_Entête
+    Set ws = wsdFAC_Projets_Entete
 
     Dim lo As ListObject
     Set lo = ws.ListObjects("l_tbl_FAC_Projets_Entête")
@@ -41,14 +41,14 @@ Private Sub UserForm_Initialize() '2025-06-01 @ 06:54
         'Ignorer si toute la ligne est vide (ligne fantôme)
         If Application.WorksheetFunction.CountA(ligne) = 0 Then GoTo ProchaineLigne
 
-        estDetruite = ligne.Columns(lo.ListColumns("estDetruite").index).value
+        estDetruite = ligne.Columns(lo.ListColumns("estDetruite").index).Value
 
         If UCase$(estDetruite) <> "VRAI" Then
             nbRows = nbRows + 1
-            arr(nbRows, 1) = ligne.Columns(lo.ListColumns("nomClient").index).value
-            arr(nbRows, 2) = ligne.Columns(lo.ListColumns("date").index).value
-            arr(nbRows, 3) = Fn_Pad_A_String(Format$(ligne.Columns(lo.ListColumns("HonoTotal").index).value, "#,##0.00$"), " ", 11, "L")
-            arr(nbRows, 4) = ligne.Columns(lo.ListColumns("ProjetID").index).value
+            arr(nbRows, 1) = ligne.Columns(lo.ListColumns("nomClient").index).Value
+            arr(nbRows, 2) = ligne.Columns(lo.ListColumns("date").index).Value
+            arr(nbRows, 3) = Fn_Pad_A_String(Format$(ligne.Columns(lo.ListColumns("HonoTotal").index).Value, "#,##0.00$"), " ", 11, "L")
+            arr(nbRows, 4) = ligne.Columns(lo.ListColumns("ProjetID").index).Value
         End If
 
 ProchaineLigne:
@@ -93,7 +93,7 @@ End Sub
 'CommentOut - 2025-06-01 @ 06:44
 'Private Sub UserForm_Initialize()
 '
-'    Dim ws As Worksheet: Set ws = wsdFAC_Projets_Entête
+'    Dim ws As Worksheet: Set ws = wsdFAC_Projets_Entete
 '
 '    Dim lastUsedRow As Long
 '    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
@@ -163,10 +163,10 @@ Private Sub lsbProjetsFacture_DblClick(ByVal Cancel As MSForms.ReturnBoolean) '2
     
     Application.EnableEvents = False
     
-    wshFAC_Brouillon.Range("B51").value = nomClient
-    wshFAC_Brouillon.Range("B52").value = projetID
-    wshFAC_Brouillon.Range("B53").value = dte
-    wshFAC_Brouillon.Range("B54").value = honorairesTotal
+    wshFAC_Brouillon.Range("B51").Value = nomClient
+    wshFAC_Brouillon.Range("B52").Value = projetID
+    wshFAC_Brouillon.Range("B53").Value = dte
+    wshFAC_Brouillon.Range("B54").Value = honorairesTotal
     
     Application.EnableEvents = True
     

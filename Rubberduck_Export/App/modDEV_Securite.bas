@@ -15,8 +15,8 @@ Public Function GetInitialesObligatoiresFromADMIN(ByVal utilisateurWindows As St
     Dim nomWindows As String
     Dim i As Long
     For i = 1 To tblRange.Rows.count
-        nomWindows = Trim(tblRange.Cells(i, 1).value)
-        initialesPermises = Trim(tblRange.Cells(i, 3).value)
+        nomWindows = Trim(tblRange.Cells(i, 1).Value)
+        initialesPermises = Trim(tblRange.Cells(i, 3).Value)
 
         If nomWindows = "" Then Exit For 'Arrêter à la première ligne vide
         If nomWindows = utilisateurWindows Then
@@ -55,7 +55,7 @@ Public Function GetInitialesAutorises(ByVal userName As String) As String '2025-
         Case "Guillaume", "GuillaumeCharron", "gchar", "RobertMV", "robertmv"
             GetInitialesAutorises = "" 'Toutes les initiales sont permises
         Case Else
-            If dict.Exists(userName) Then
+            If dict.exists(userName) Then
                 GetInitialesAutorises = dict(userName)
             Else
                 GetInitialesAutorises = "INVALID"

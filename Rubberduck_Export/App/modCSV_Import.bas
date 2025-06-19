@@ -28,6 +28,7 @@ Sub Main()
     Set ws = Nothing
     
 End Sub
+
 Sub Import_CSV_File(ws As Worksheet, path As String, fn As String)
 
     'Does the file to process exist ?
@@ -64,20 +65,20 @@ Sub Fix_Columns(ws As Worksheet, first As Long, last As Long)
     Dim i As Long
     For i = first To last
         'Column B - Change the date format
-        ws.Range("D" & i).value = Fn_Correct_Date_Format(ws.Range("D" & i).value)
+        ws.Range("D" & i).Value = Fn_Correct_Date_Format(ws.Range("D" & i).Value)
         ws.Range("D" & i).NumberFormat = "dd/mm/yyyy"
         'Column H - Change the numeric format
-        ws.Range("H" & i).value = Replace(ws.Range("H" & i).value, ",", "")
-        ws.Range("H" & i).value = Replace(ws.Range("H" & i).value, ".", ",")
-        ws.Range("H" & i).value = CDbl(ws.Range("H" & i).value)
+        ws.Range("H" & i).Value = Replace(ws.Range("H" & i).Value, ",", "")
+        ws.Range("H" & i).Value = Replace(ws.Range("H" & i).Value, ".", ",")
+        ws.Range("H" & i).Value = CDbl(ws.Range("H" & i).Value)
         'Column H - Change the numeric format
-        ws.Range("I" & i).value = Replace(ws.Range("I" & i).value, ",", "")
-        ws.Range("I" & i).value = Replace(ws.Range("I" & i).value, ".", ",")
-        ws.Range("I" & i).value = CDbl(ws.Range("I" & i).value)
+        ws.Range("I" & i).Value = Replace(ws.Range("I" & i).Value, ",", "")
+        ws.Range("I" & i).Value = Replace(ws.Range("I" & i).Value, ".", ",")
+        ws.Range("I" & i).Value = CDbl(ws.Range("I" & i).Value)
         'Column N - Change the balance amount format
-        ws.Range("N" & i).value = Replace(ws.Range("N" & i).value, ",", "")
-        ws.Range("N" & i).value = Replace(ws.Range("N" & i).value, ".", ",")
-        ws.Range("N" & i).value = CDbl(ws.Range("N" & i).value)
+        ws.Range("N" & i).Value = Replace(ws.Range("N" & i).Value, ",", "")
+        ws.Range("N" & i).Value = Replace(ws.Range("N" & i).Value, ".", ",")
+        ws.Range("N" & i).Value = CDbl(ws.Range("N" & i).Value)
         
     Next i
     

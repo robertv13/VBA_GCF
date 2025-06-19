@@ -37,16 +37,16 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
     
     With ws
         .Range("A:B").EntireColumn.Hidden = True
-        .Range("D3").value = ""
+        .Range("D3").Value = ""
         .Range("D6:L28").Clear
         .Shapes("Impression").Visible = False
         .Shapes("EcritureGL").Visible = msoFalse
         .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
         Application.EnableEvents = False
-        .Range("L3").value = ""
+        .Range("L3").Value = ""
         With .Range("H6:H28").Interior
-            .Pattern = xlNone
+            .pattern = xlNone
             .TintAndShade = 0
             .PatternTintAndShade = 0
         End With
@@ -68,7 +68,7 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
 
 End Sub
 
-Private Sub Worksheet_SelectionChange(ByVal target As Range)
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Evaluation:Worksheet_SelectionChange", "", 0)
     
@@ -79,46 +79,46 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
     End If
     
     'Is date been selected ?
-    If Not Intersect(target, Me.Range("L3")) Is Nothing Then
-        target.Interior.Color = COULEUR_SAISIE
+    If Not Intersect(Target, Me.Range("L3")) Is Nothing Then
+        Target.Interior.Color = COULEUR_SAISIE
     End If
     
     Call Log_Record("wshTEC_Evaluation:Worksheet_SelectionChange", "", startTime)
     
 End Sub
 
-Private Sub Worksheet_Change(ByVal target As Range)
+Private Sub Worksheet_Change(ByVal Target As Range)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Evaluation:Worksheet_Change", target.Address, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Evaluation:Worksheet_Change", Target.Address, 0)
     
     Call RafraichirActivite("Évaluation des TEC")
     
     Dim fullDate As Variant
     
     'CutOffDate has changed
-    If Not Intersect(target, Range("L3")) Is Nothing Then
+    If Not Intersect(Target, Range("L3")) Is Nothing Then
         Application.EnableEvents = False
-        fullDate = Fn_Complete_Date(target.Text, 99, 0)
+        fullDate = Fn_Complete_Date(Target.Text, 99, 0)
         If fullDate <> "Invalid Date" Then
-            target.value = Format$(fullDate, wsdADMIN.Range("B1").value)
+            Target.Value = Format$(fullDate, wsdADMIN.Range("B1").Value)
         Else
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshTEC_Evaluation_75")
             Application.EnableEvents = False
-            target.ClearContents
+            Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(target.Address)
+            Application.GoTo Range(Target.Address)
         End If
        
         'Future date ?
-        If CDate(Range("L3").value) > Format$(Date, "dd/mm/yyyy") Then
+        If CDate(Range("L3").Value) > Format$(Date, "dd/mm/yyyy") Then
             If MsgBox("Il n'est pas permis d'utiliser une date dans le futur !", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
                 Application.EnableEvents = False
-                target.ClearContents
+                Target.ClearContents
                 Application.EnableEvents = True
-                Application.GoTo Range(target.Address)
+                Application.GoTo Range(Target.Address)
             End If
         Else
-            Call TEC_Evaluation_Procedure(target.value)
+            Call TEC_Evaluation_Procedure(Target.Value)
         End If
         GoTo ExitSub
     End If

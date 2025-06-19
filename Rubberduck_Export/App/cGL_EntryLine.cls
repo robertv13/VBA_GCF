@@ -27,11 +27,11 @@ Public Property Let NoCompte(val As String)
 End Property
 
 'Description
-Public Property Get Description() As String
-    Description = pDescription
+Public Property Get description() As String
+    description = pDescription
 End Property
 
-Public Property Let Description(val As String)
+Public Property Let description(val As String)
     pDescription = val
 End Property
 

@@ -36,15 +36,15 @@ Sub Actualiser_Stats_CA()
     dateFinMoisPrécédent = DateSerial(year(Date), month(Date), 0)
     
     Dim moisFinAnnéeFinancière As Integer
-    moisFinAnnéeFinancière = wsdADMIN.Range("MoisFinAnnéeFinancière").value
+    moisFinAnnéeFinancière = wsdADMIN.Range("MoisFinAnnéeFinancière").Value
     
     'Mémoriser les colonnes de la feuille pour chacun des 12 mois de l'année financière
     Dim colMois(1 To 12, 1 To 2) As String
     Dim annee As Integer, anneeMoisDebutAF As Integer, anneeMoisFinAF As Integer
     
     Dim m As Integer, noMois As Integer, col As Integer, saveCol As Integer
-    anneeMoisDebutAF = ws.Range("C9").value - 1
-    anneeMoisFinAF = ws.Range("C9").value
+    anneeMoisDebutAF = ws.Range("C9").Value - 1
+    anneeMoisFinAF = ws.Range("C9").Value
     'Le premier mois de l'année financière est en colonne 4 du tableau
     col = 4
     For m = 1 To 12
@@ -77,7 +77,7 @@ Sub Actualiser_Stats_CA()
             revenus_mois = -Fn_Get_GL_Month_Trans_Total(glREV(r), dateFinMois)
             revenus = revenus + revenus_mois
         Next r
-        ws.Cells(9, col).value = revenus
+        ws.Cells(9, col).Value = revenus
     Next m
     
     'Variation des TEC - Quelle est la valeur des TEC et le solde au G/L des TEC ? '2025-02-21 @ 14:10
@@ -125,7 +125,7 @@ Sub Actualiser_Stats_CA()
         .Bold = True
         .Italic = True
     End With
-    rng.value = ws.Cells(9, saveCol).value + (tecValeur - glTECSolde)
+    rng.Value = ws.Cells(9, saveCol).Value + (tecValeur - glTECSolde)
     
 '    Debug.Print "777 - " & tecValeur, glTECSolde, tecValeur - glTECSolde
     

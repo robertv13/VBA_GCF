@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufGL_Rapport 
    Caption         =   "Rapport des transactions du G/L"
-   ClientHeight    =   9096.001
+   ClientHeight    =   9105.001
    ClientLeft      =   120
-   ClientTop       =   468
-   ClientWidth     =   11196
+   ClientTop       =   465
+   ClientWidth     =   11190
    OleObjectBlob   =   "ufGL_Rapport.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
@@ -58,7 +58,7 @@ Private Sub UserForm_Initialize()
         'Ajouter chaque élément de la plage à la ComboBox
         Dim cellule As Range
         For Each cellule In plage
-            cmbPeriode.AddItem cellule.value
+            cmbPeriode.AddItem cellule.Value
         Next cellule
     Else
         MsgBox "La plage nommée 'dnrDateRange' est introuvable.", vbExclamation, "Contacter le développeur"
@@ -122,43 +122,43 @@ End Sub
 
 Private Sub cmbPeriode_Change()
 
-        Select Case cmbPeriode.value
+        Select Case cmbPeriode.Value
             Case "Aujourd'hui"
-                txtDateDebut.value = Format$(Date, wsdADMIN.Range("B1").value)
-                txtDateFin.value = Format$(Date, wsdADMIN.Range("B1").value)
+                txtDateDebut.Value = Format$(Date, wsdADMIN.Range("B1").Value)
+                txtDateFin.Value = Format$(Date, wsdADMIN.Range("B1").Value)
             Case "Mois Courant"
-                txtDateDebut.value = Format$(wsdADMIN.Range("MoisDe"), wsdADMIN.Range("B1").value)
-                txtDateFin.value = Format$(wsdADMIN.Range("MoisA"), wsdADMIN.Range("B1").value)
+                txtDateDebut.Value = Format$(wsdADMIN.Range("MoisDe"), wsdADMIN.Range("B1").Value)
+                txtDateFin.Value = Format$(wsdADMIN.Range("MoisA"), wsdADMIN.Range("B1").Value)
             Case "Mois Dernier"
-                txtDateDebut.value = Format$(wsdADMIN.Range("MoisPrecDe"), wsdADMIN.Range("B1").value)
-                txtDateFin.value = Format$(wsdADMIN.Range("MoisPrecA"), wsdADMIN.Range("B1").value)
+                txtDateDebut.Value = Format$(wsdADMIN.Range("MoisPrecDe"), wsdADMIN.Range("B1").Value)
+                txtDateFin.Value = Format$(wsdADMIN.Range("MoisPrecA"), wsdADMIN.Range("B1").Value)
             Case "Trimestre courant"
-                txtDateDebut.value = Format$(wsdADMIN.Range("TrimDe"), wsdADMIN.Range("B1").value)
-                txtDateFin.value = Format$(wsdADMIN.Range("TrimA"), wsdADMIN.Range("B1").value)
+                txtDateDebut.Value = Format$(wsdADMIN.Range("TrimDe"), wsdADMIN.Range("B1").Value)
+                txtDateFin.Value = Format$(wsdADMIN.Range("TrimA"), wsdADMIN.Range("B1").Value)
             Case "Trimestre précédent"
-                txtDateDebut.value = Format$(wsdADMIN.Range("TrimPrecDe"), wsdADMIN.Range("B1").value)
-                txtDateFin.value = Format$(wsdADMIN.Range("TrimPrecA"), wsdADMIN.Range("B1").value)
+                txtDateDebut.Value = Format$(wsdADMIN.Range("TrimPrecDe"), wsdADMIN.Range("B1").Value)
+                txtDateFin.Value = Format$(wsdADMIN.Range("TrimPrecA"), wsdADMIN.Range("B1").Value)
             Case "Année courante"
-                txtDateDebut.value = Format$(wsdADMIN.Range("AnneeDe"), wsdADMIN.Range("B1").value)
-                txtDateFin.value = Format$(wsdADMIN.Range("AnneeA"), wsdADMIN.Range("B1").value)
+                txtDateDebut.Value = Format$(wsdADMIN.Range("AnneeDe"), wsdADMIN.Range("B1").Value)
+                txtDateFin.Value = Format$(wsdADMIN.Range("AnneeA"), wsdADMIN.Range("B1").Value)
             Case "Année précédente"
-                txtDateDebut.value = Format$(wsdADMIN.Range("AnneePrecDe"), wsdADMIN.Range("B1").value)
-                txtDateFin.value = Format$(wsdADMIN.Range("AnneePrecA"), wsdADMIN.Range("B1").value)
+                txtDateDebut.Value = Format$(wsdADMIN.Range("AnneePrecDe"), wsdADMIN.Range("B1").Value)
+                txtDateFin.Value = Format$(wsdADMIN.Range("AnneePrecA"), wsdADMIN.Range("B1").Value)
             Case "7 derniers jours"
-                txtDateDebut.value = Format$(wsdADMIN.Range("SeptJoursDe"), wsdADMIN.Range("B1").value)
-                txtDateFin.value = Format$(wsdADMIN.Range("SeptJoursA"), wsdADMIN.Range("B1").value)
+                txtDateDebut.Value = Format$(wsdADMIN.Range("SeptJoursDe"), wsdADMIN.Range("B1").Value)
+                txtDateFin.Value = Format$(wsdADMIN.Range("SeptJoursA"), wsdADMIN.Range("B1").Value)
             Case "15 derniers jours"
-                txtDateDebut.value = Format$(wsdADMIN.Range("QuinzeJoursDe"), wsdADMIN.Range("B1").value)
-                txtDateFin.value = Format$(wsdADMIN.Range("QuinzeJoursA"), wsdADMIN.Range("B1").value)
+                txtDateDebut.Value = Format$(wsdADMIN.Range("QuinzeJoursDe"), wsdADMIN.Range("B1").Value)
+                txtDateFin.Value = Format$(wsdADMIN.Range("QuinzeJoursA"), wsdADMIN.Range("B1").Value)
             Case "Semaine"
-                txtDateDebut.value = Format$(wsdADMIN.Range("DateDebutSemaine"), wsdADMIN.Range("B1").value)
-                txtDateFin.value = Format$(wsdADMIN.Range("DateFinSemaine"), wsdADMIN.Range("B1").value)
+                txtDateDebut.Value = Format$(wsdADMIN.Range("DateDebutSemaine"), wsdADMIN.Range("B1").Value)
+                txtDateFin.Value = Format$(wsdADMIN.Range("DateFinSemaine"), wsdADMIN.Range("B1").Value)
             Case "Toutes les dates"
-                txtDateDebut.value = Format$(#1/1/2024#, wsdADMIN.Range("B1").value)
-                txtDateFin.value = Format$(wsdADMIN.Range("AnneeA"), wsdADMIN.Range("B1").value)
+                txtDateDebut.Value = Format$(#1/1/2024#, wsdADMIN.Range("B1").Value)
+                txtDateFin.Value = Format$(wsdADMIN.Range("AnneeA"), wsdADMIN.Range("B1").Value)
             Case Else
-                txtDateDebut.value = ""
-                txtDateFin.value = ""
+                txtDateDebut.Value = ""
+                txtDateFin.Value = ""
         End Select
 
 End Sub
@@ -259,7 +259,7 @@ Private Sub cmdGenerer_Click()
         MsgBox "Veuillez sélectionner un type de rapport.", vbExclamation, "Erreur"
         Exit Sub
     Else
-        TypeRapport = Me.cmbTypeRapport.value
+        TypeRapport = Me.cmbTypeRapport.Value
     End If
 
     'On efface/cree une feuille pour le rapport
@@ -273,9 +273,9 @@ Private Sub cmdGenerer_Click()
     If TypeRapport = "Par compte / par date" Then
         'Validation des dates
         Dim dateDebut As Date, dateFin As Date
-        If IsDate(Me.txtDateDebut.value) And IsDate(Me.txtDateFin.value) Then
-            dateDebut = CDate(Me.txtDateDebut.value)
-            dateFin = CDate(Me.txtDateFin.value)
+        If IsDate(Me.txtDateDebut.Value) And IsDate(Me.txtDateFin.Value) Then
+            dateDebut = CDate(Me.txtDateDebut.Value)
+            dateFin = CDate(Me.txtDateFin.Value)
             If dateDebut > dateFin Then
                 MsgBox "La date de début doit être antérieure ou égale à la date de fin.", vbExclamation, "Erreur dans les critères de date"
                 Exit Sub
@@ -299,9 +299,9 @@ Private Sub cmdGenerer_Click()
     ElseIf TypeRapport = "Par numéro d'écriture" Then
         'Validation des numéros d'écriture
         Dim noEcritureDebut As Long, noEcritureFin As Long
-        If IsNumeric(Me.txtNoEcritureDebut.value) And IsNumeric(Me.txtNoEcritureFin.value) Then
-            noEcritureDebut = CLng(Me.txtNoEcritureDebut.value)
-            noEcritureFin = CLng(Me.txtNoEcritureFin.value)
+        If IsNumeric(Me.txtNoEcritureDebut.Value) And IsNumeric(Me.txtNoEcritureFin.Value) Then
+            noEcritureDebut = CLng(Me.txtNoEcritureDebut.Value)
+            noEcritureFin = CLng(Me.txtNoEcritureFin.Value)
             
             'Vérification logique des numéros d'écriture
             If noEcritureDebut > noEcritureFin Then
@@ -334,9 +334,9 @@ Private Sub cmdGenerer_Click()
     Else
         'Validation des dates de saisie
         Dim dateSaisieDebut As Date, dateSaisieFin As Date
-        If IsDate(Me.txtDateSaisieDebut.value) And IsDate(Me.txtDateSaisieFin.value) Then
-            dateSaisieDebut = CDate(Me.txtDateSaisieDebut.value)
-            dateSaisieFin = CDate(Me.txtDateSaisieFin.value)
+        If IsDate(Me.txtDateSaisieDebut.Value) And IsDate(Me.txtDateSaisieFin.Value) Then
+            dateSaisieDebut = CDate(Me.txtDateSaisieDebut.Value)
+            dateSaisieFin = CDate(Me.txtDateSaisieFin.Value)
             If dateSaisieDebut > dateSaisieFin Then
                 MsgBox _
                     Prompt:="La date de début doit être antérieure ou égale à la date de fin.", _
@@ -501,7 +501,7 @@ Function EstDateCaractereValide(ByVal txt As String) As Boolean '2025-03-03 @ 09
     Set regex = CreateObject("VBScript.RegExp")
 
     'Expression régulière : accepte uniquement chiffres (0-9) et les séparateurs . / - et espace
-    regex.Pattern = "^[0-9./\-\s]+$"
+    regex.pattern = "^[0-9./\-\s]+$"
     regex.IgnoreCase = True
     regex.Global = False
 
@@ -519,7 +519,7 @@ Function EstSeulementChiffres(ByVal txt As String) As Boolean '2025-03-03 @ 09:4
     Set regex = CreateObject("VBScript.RegExp")
 
     'Expression régulière en fonction du nombre de caractères
-    regex.Pattern = "^\d{4}$|^\d{6}$|^\d{8}$"
+    regex.pattern = "^\d{4}$|^\d{6}$|^\d{8}$"
     regex.IgnoreCase = True
     regex.Global = False
 
@@ -534,14 +534,14 @@ End Function
 Private Sub chkToutesEcritures_Click() '2025-03-03 @ 08:36
 
     Dim Activer As Boolean
-    Activer = Me.chkToutesEcritures.value 'True si coché, False sinon
+    Activer = Me.chkToutesEcritures.Value 'True si coché, False sinon
 
     'Parcourir toutes les cases du Frame sauf "chkToutesEcritures"
     Dim ctrl As Control
     For Each ctrl In Me.fraTypeEcriture.Controls
         If TypeName(ctrl) = "CheckBox" And ctrl.Name <> "chkToutesEcritures" Then
             ctrl.Enabled = Not Activer 'Désactive si "Toutes les écritures" est cochée
-            ctrl.value = Activer       'Coche si "Toutes les écritures" est cochée
+            ctrl.Value = Activer       'Coche si "Toutes les écritures" est cochée
         End If
     Next ctrl
     
@@ -550,9 +550,9 @@ End Sub
 Private Sub CheckBox_Click() '2025-03-03 @ 08:37
 
     'Empêcher de décocher une case si "Toutes les écritures" est cochée
-    If Me.chkToutesEcritures.value = True Then
+    If Me.chkToutesEcritures.Value = True Then
         Application.EnableEvents = False
-        Me.chkToutesEcritures.value = False
+        Me.chkToutesEcritures.Value = False
         Application.EnableEvents = True
     End If
     

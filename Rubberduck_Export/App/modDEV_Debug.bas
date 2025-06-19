@@ -14,7 +14,7 @@ Sub IdentifierEcartsComptesClientsEtGL() '2025-04-02 @ 07:46
     usedRowGL = wsGL.Cells(wsGL.Rows.count, 1).End(xlUp).row
     
     Dim wsENC As Worksheet
-    Set wsENC = wsdENC_Détails
+    Set wsENC = wsdENC_Details
     Dim usedRowENC As Long
     usedRowENC = wsENC.Cells(wsENC.Rows.count, 1).End(xlUp).row
     
@@ -28,8 +28,8 @@ Sub IdentifierEcartsComptesClientsEtGL() '2025-04-02 @ 07:46
     Dim totalENC_Détails As Currency
     Dim i As Long
     For i = 2 To usedRowENC
-        totalENC_Détails = totalENC_Détails + wsENC.Cells(i, 5).value
-        matENC(wsENC.Cells(i, 1).value, 1) = matENC(wsENC.Cells(i, 1).value, 1) + wsENC.Cells(i, 5).value
+        totalENC_Détails = totalENC_Détails + wsENC.Cells(i, 5).Value
+        matENC(wsENC.Cells(i, 1).Value, 1) = matENC(wsENC.Cells(i, 1).Value, 1) + wsENC.Cells(i, 5).Value
     Next i
     Debug.Print "ENC_Détails        ", "Total des encaissements = " & Format$(totalENC_Détails, "#,##0.00 $") & " pour " & usedRowENC & " lignes"
 
@@ -37,13 +37,13 @@ Sub IdentifierEcartsComptesClientsEtGL() '2025-04-02 @ 07:46
     Dim totalCC_Détails As Currency
     Dim noFact As String
     For i = 3 To usedRowCC
-        totalCC_Détails = totalCC_Détails + wsCC.Cells(i, 9).value
-        noFact = wsCC.Cells(i, 1).value
+        totalCC_Détails = totalCC_Détails + wsCC.Cells(i, 9).Value
+        noFact = wsCC.Cells(i, 1).Value
         If InStr(noFact, "-") Then
             noFact = Right(noFact, 5)
         End If
         If noFact > 24474 Then 'Première facture créée par le logiciel
-            matFAC(noFact, 1) = matFAC(noFact, 1) + wsCC.Cells(i, 8).value
+            matFAC(noFact, 1) = matFAC(noFact, 1) + wsCC.Cells(i, 8).Value
         End If
     Next i
     Debug.Print "FAC_Comptes_Clients", "Total des encaissements = " & Format$(totalCC_Détails, "#,##0.00 $") & " pour " & usedRowCC & " lignes"
@@ -52,17 +52,17 @@ Sub IdentifierEcartsComptesClientsEtGL() '2025-04-02 @ 07:46
     Dim totalGL_Détails As Currency
     Dim Source As String, noEnc As Long
     For i = 2 To usedRowGL
-        Source = wsGL.Cells(i, 4).value
-        If wsGL.Cells(i, 5).value = "1100" Then
+        Source = wsGL.Cells(i, 4).Value
+        If wsGL.Cells(i, 5).Value = "1100" Then
             If InStr(Source, "ENCAISSEMENT:") = 1 Or InStr(Source, "DÉPÔT DE CLIENT:") = 1 Then
-                totalGL_Détails = totalGL_Détails - wsGL.Cells(i, 7).value + wsGL.Cells(i, 8).value
+                totalGL_Détails = totalGL_Détails - wsGL.Cells(i, 7).Value + wsGL.Cells(i, 8).Value
                 noEnc = Mid$(Source, InStr(Source, ":") + 1, Len(Source) - InStr(Source, ":"))
                 
-                matENC(noEnc, 2) = matENC(noEnc, 2) - wsGL.Cells(i, 7).value + wsGL.Cells(i, 8).value
+                matENC(noEnc, 2) = matENC(noEnc, 2) - wsGL.Cells(i, 7).Value + wsGL.Cells(i, 8).Value
             Else
                 If InStr(Source, "FACTURE:") = 1 Then
                     noFact = Right(Source, 5)
-                    matFAC(noFact, 2) = matFAC(noFact, 2) + wsGL.Cells(i, 7).value - wsGL.Cells(i, 8).value
+                    matFAC(noFact, 2) = matFAC(noFact, 2) + wsGL.Cells(i, 7).Value - wsGL.Cells(i, 8).Value
                 End If
             End If
             
@@ -106,11 +106,11 @@ Sub VérifierTousLesContrôlesFeuillesEtUserForms()
     For Each ws In ThisWorkbook.Worksheets
         For Each ctrl In ws.OLEObjects
             On Error Resume Next
-            testValue = ctrl.Object.value
+            testValue = ctrl.Object.Value
             If Err.Number <> 0 Then
                 rapport = rapport & "?? Feuille: " & ws.Name & _
                           " - Contrôle: " & ctrl.Name & _
-                          " ? Erreur : " & Err.Description & vbCrLf
+                          " ? Erreur : " & Err.description & vbCrLf
             End If
             Err.Clear
             On Error GoTo 0
@@ -123,18 +123,18 @@ Sub VérifierTousLesContrôlesFeuillesEtUserForms()
             On Error Resume Next
             Set uf = VBA.UserForms.Add(vbComp.Name)
             If Err.Number <> 0 Then
-                rapport = rapport & "? UserForm: " & vbComp.Name & " - Erreur d'ouverture : " & Err.Description & vbCrLf
+                rapport = rapport & "? UserForm: " & vbComp.Name & " - Erreur d'ouverture : " & Err.description & vbCrLf
                 Err.Clear
                 GoTo NextForm
             End If
 
             For Each ctrlUF In uf.Controls
                 On Error Resume Next
-                testValue = ctrlUF.value
+                testValue = ctrlUF.Value
                 If Err.Number <> 0 Then
                     rapport = rapport & "?? UserForm: " & vbComp.Name & _
                               " - Contrôle: " & ctrlUF.Name & _
-                              " ? Erreur : " & Err.Description & vbCrLf
+                              " ? Erreur : " & Err.description & vbCrLf
                 End If
                 Err.Clear
                 On Error GoTo 0

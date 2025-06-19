@@ -15,7 +15,7 @@ End Type
 Public Type cGL_EntryLine '2025-06-08 @ 07:02
 
     NoCompte As String
-    Description As String
+    description As String
     Montant As Double
     
 End Type
@@ -31,27 +31,27 @@ Public Sub GL_Get_Account_Trans_AF(glNo As String, dateDeb As Date, dateFin As D
 
     'Effacer les données de la dernière utilisation
     ws.Range("M6:M10").ClearContents
-    ws.Range("M6").value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("M6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
     'Définir le range pour la source des données en utilisant un tableau
     Dim rngData As Range
     Set rngData = ws.Range("l_tbl_GL_Trans[#All]")
-    ws.Range("M7").value = rngData.Address
+    ws.Range("M7").Value = rngData.Address
     
     'Définir le range des critères
     Dim rngCriteria As Range
     Set rngCriteria = ws.Range("L2:N3")
-    ws.Range("L3").value = glNo
-    ws.Range("M3").value = ">=" & CLng(dateDeb)
-    ws.Range("N3").value = "<=" & CLng(dateFin)
-    ws.Range("M8").value = rngCriteria.Address
+    ws.Range("L3").Value = glNo
+    ws.Range("M3").Value = ">=" & CLng(dateDeb)
+    ws.Range("N3").Value = "<=" & CLng(dateFin)
+    ws.Range("M8").Value = rngCriteria.Address
     
     'Définir le range des résultats et effacer avant le traitement
     Dim rngResult As Range
     Set rngResult = ws.Range("P1").CurrentRegion
     rngResult.offset(1, 0).Clear
     Set rngResult = ws.Range("P1:Y1")
-    ws.Range("M9").value = rngResult.Address
+    ws.Range("M9").Value = rngResult.Address
     
     rngData.AdvancedFilter _
                 action:=xlFilterCopy, _
@@ -62,7 +62,7 @@ Public Sub GL_Get_Account_Trans_AF(glNo As String, dateDeb As Date, dateFin As D
     'Quels sont les résultats ?
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, "P").End(xlUp).row
-    ws.Range("M10").value = lastUsedRow - 1 & " lignes"
+    ws.Range("M10").Value = lastUsedRow - 1 & " lignes"
     
     If lastUsedRow > 2 Then
         With ws.Sort
@@ -102,7 +102,7 @@ Sub GL_Posting_To_DB(df As Date, desc As String, Source As String, arr As Varian
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Stuff:GL_Posting_To_DB", "", 0)
 
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "GL_Trans$"
     
@@ -120,11 +120,11 @@ Sub GL_Posting_To_DB(df As Date, desc As String, Source As String, arr As Varian
     
     'Get the last used row
     Dim lastJE As Long
-    If IsNull(rs.Fields("MaxEJNo").value) Then
+    If IsNull(rs.Fields("MaxEJNo").Value) Then
         ' Handle empty table (assign a default value, e.g., 1)
         lastJE = 0
     Else
-        lastJE = rs.Fields("MaxEJNo").value
+        lastJE = rs.Fields("MaxEJNo").Value
     End If
     
     'Calculate the new JE number
@@ -144,19 +144,19 @@ Sub GL_Posting_To_DB(df As Date, desc As String, Source As String, arr As Varian
         If arr(i, 1) = "" Then GoTo Nothing_to_Post
             rs.AddNew
                 'RecordSet are ZERO base, and Enums are not, so the '-1' is mandatory !!!
-                rs.Fields(fGlTNoEntrée - 1).value = GLEntryNo
-                rs.Fields(fGlTDate - 1).value = CDate(df)
-                rs.Fields(fGlTDescription - 1).value = desc
-                rs.Fields(fGlTSource - 1).value = Source
-                rs.Fields(fGlTNoCompte - 1).value = arr(i, 1)
-                rs.Fields(fGlTCompte - 1).value = arr(i, 2)
+                rs.Fields(fGlTNoEntrée - 1).Value = GLEntryNo
+                rs.Fields(fGlTDate - 1).Value = CDate(df)
+                rs.Fields(fGlTDescription - 1).Value = desc
+                rs.Fields(fGlTSource - 1).Value = Source
+                rs.Fields(fGlTNoCompte - 1).Value = arr(i, 1)
+                rs.Fields(fGlTCompte - 1).Value = arr(i, 2)
                 If arr(i, 3) > 0 Then
-                    rs.Fields(fGlTDébit - 1).value = arr(i, 3)
+                    rs.Fields(fGlTDébit - 1).Value = arr(i, 3)
                 Else
-                    rs.Fields(fGlTCrédit - 1).value = -arr(i, 3)
+                    rs.Fields(fGlTCrédit - 1).Value = -arr(i, 3)
                 End If
-                rs.Fields(fGlTAutreRemarque - 1).value = arr(i, 4)
-                rs.Fields(fGlTTimeStamp - 1).value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+                rs.Fields(fGlTAutreRemarque - 1).Value = arr(i, 4)
+                rs.Fields(fGlTTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
             rs.Update
 Nothing_to_Post:
     Next i
@@ -196,19 +196,19 @@ Sub GL_Posting_Locally(df As Date, desc As String, Source As String, arr As Vari
     With wsdGL_Trans
         For i = LBound(arr, 1) To UBound(arr, 1)
             If arr(i, 1) <> "" Then
-                .Range("A" & rowToBeUsed).value = GLEntryNo
-                .Range("B" & rowToBeUsed).value = CDate(df)
-                .Range("C" & rowToBeUsed).value = desc
-                .Range("D" & rowToBeUsed).value = Source
-                .Range("E" & rowToBeUsed).value = arr(i, 1)
-                .Range("F" & rowToBeUsed).value = arr(i, 2)
+                .Range("A" & rowToBeUsed).Value = GLEntryNo
+                .Range("B" & rowToBeUsed).Value = CDate(df)
+                .Range("C" & rowToBeUsed).Value = desc
+                .Range("D" & rowToBeUsed).Value = Source
+                .Range("E" & rowToBeUsed).Value = arr(i, 1)
+                .Range("F" & rowToBeUsed).Value = arr(i, 2)
                 If arr(i, 3) > 0 Then
-                     .Range("G" & rowToBeUsed).value = CDbl(arr(i, 3))
+                     .Range("G" & rowToBeUsed).Value = CDbl(arr(i, 3))
                 Else
-                     .Range("H" & rowToBeUsed).value = -CDbl(arr(i, 3))
+                     .Range("H" & rowToBeUsed).Value = -CDbl(arr(i, 3))
                 End If
-                .Range("I" & rowToBeUsed).value = arr(i, 4)
-                .Range("J" & rowToBeUsed).value = Format$(timeStamp, "dd/mm/yyyy hh:mm:ss")
+                .Range("I" & rowToBeUsed).Value = arr(i, 4)
+                .Range("J" & rowToBeUsed).Value = Format$(timeStamp, "dd/mm/yyyy hh:mm:ss")
                 rowToBeUsed = rowToBeUsed + 1
                 Call Log_Record("   modGL_Stuff:GL_Posting_Locally", -1)
             End If

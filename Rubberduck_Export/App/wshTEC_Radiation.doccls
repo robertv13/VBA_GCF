@@ -61,7 +61,7 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
 
 End Sub
 
-Private Sub Worksheet_SelectionChange(ByVal target As Range)
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Radiation:Worksheet_SelectionChange", "", 0)
     
@@ -72,49 +72,49 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
     End If
     
     'Is client been selected ?
-    If Not Intersect(target, wshTEC_Radiation.Range("F3")) Is Nothing Then
-        target.Interior.Color = COULEUR_SAISIE
+    If Not Intersect(Target, wshTEC_Radiation.Range("F3")) Is Nothing Then
+        Target.Interior.Color = COULEUR_SAISIE
     End If
     
     'Is date been selected ?
-    If Not Intersect(target, wshTEC_Radiation.Range("K3")) Is Nothing Then
-        target.Interior.Color = COULEUR_SAISIE
+    If Not Intersect(Target, wshTEC_Radiation.Range("K3")) Is Nothing Then
+        Target.Interior.Color = COULEUR_SAISIE
     End If
     
-    gPreviousCellAddress = target.Address
+    gPreviousCellAddress = Target.Address
     
     Call Log_Record("wshTEC_Radiation:Worksheet_SelectionChange", "", startTime)
     
 End Sub
 
-Private Sub Worksheet_Change(ByVal target As Range)
+Private Sub Worksheet_Change(ByVal Target As Range)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Radiation:Worksheet_Change", target.Address, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Radiation:Worksheet_Change", Target.Address, 0)
     
     Call RafraichirActivite("Radiation des TEC")
     
     Dim fullDate As Variant
     
     'Le client a changé
-    If Not Intersect(target, Range("F3")) Is Nothing Then
+    If Not Intersect(Target, Range("F3")) Is Nothing Then
         'Aller chercher le vrai nom du client
         Dim allCols As Variant
-        allCols = Fn_Get_A_Row_From_A_Worksheet("BD_Clients", target.value, fClntFMNomClientPlusNomClientSystème)
+        allCols = Fn_Get_A_Row_From_A_Worksheet("BD_Clients", Target.Value, fClntFMNomClientPlusNomClientSystème)
         'Vérifier les résultats
         If IsArray(allCols) Then
             Application.EnableEvents = False
-            target.value = allCols(1)
+            Target.Value = allCols(1)
             Application.EnableEvents = True
         Else
             MsgBox "Valeur non trouvée !!!", vbCritical
         End If
         Application.EnableEvents = False
-        target.Interior.Color = COULEUR_BASE_TEC
+        Target.Interior.Color = COULEUR_BASE_TEC
         clientCode = allCols(fClntFMClientID)
         Application.EnableEvents = True
         If Fn_Is_Client_Facturable(clientCode) = False Then
             MsgBox "Ce client n'est pas un client facturable", vbInformation
-            target.Activate
+            Target.Activate
 '        Else
 '            wshTEC_Radiation.Range("K3").Select
         End If
@@ -122,30 +122,30 @@ Private Sub Worksheet_Change(ByVal target As Range)
     End If
     
     'CutOffDate has changed
-    If Not Intersect(target, Range("K3")) Is Nothing Then
+    If Not Intersect(Target, Range("K3")) Is Nothing Then
         Application.EnableEvents = False
-        fullDate = Fn_Complete_Date(target.Text, 99, 0)
+        fullDate = Fn_Complete_Date(Target.Text, 99, 0)
         If fullDate <> "Invalid Date" Then
-            target.value = Format$(fullDate, wsdADMIN.Range("B1").value)
-            target.Interior.Color = vbWhite
+            Target.Value = Format$(fullDate, wsdADMIN.Range("B1").Value)
+            Target.Interior.Color = vbWhite
        Else
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshTEC_Radiation_75")
             Application.EnableEvents = False
-            target.ClearContents
+            Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(target.Address)
+            Application.GoTo Range(Target.Address)
         End If
        
         'Future date ?
-        If CDate(Range("L3").value) > Date Then
+        If CDate(Range("L3").Value) > Date Then
             If MsgBox("Il n'est pas permis d'utiliser une date dans le futur !", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
                 Application.EnableEvents = False
-                target.ClearContents
+                Target.ClearContents
                 Application.EnableEvents = True
-                Application.GoTo Range(target.Address)
+                Application.GoTo Range(Target.Address)
             End If
         Else
-            Call TEC_Radiation_Procedure(clientCode, target.value)
+            Call TEC_Radiation_Procedure(clientCode, Target.Value)
         End If
         
     End If

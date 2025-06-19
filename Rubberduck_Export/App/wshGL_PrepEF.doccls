@@ -42,7 +42,7 @@ Private Sub Worksheet_Activate()
     
     'Date du jour par défaut
     gPreviousCellAddress = ws.Range("F3").Address
-    ws.Range("F3").value = ""
+    ws.Range("F3").Value = ""
 '    ws.Range("F3").value = Format$(Date, wsdADMIN.Range("B1").value)
     
     Application.ScreenUpdating = True
@@ -57,7 +57,7 @@ Private Sub Worksheet_Activate()
 
 End Sub
 
-Private Sub Worksheet_SelectionChange(ByVal target As Range)
+Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
     Call RafraichirActivite("États financiers")
     
@@ -66,31 +66,31 @@ Private Sub Worksheet_SelectionChange(ByVal target As Range)
     End If
 
     'Date limite est sélectionnée
-    If Not Intersect(target, Me.Range("F3")) Is Nothing Then
-        target.Interior.Color = COULEUR_SAISIE
+    If Not Intersect(Target, Me.Range("F3")) Is Nothing Then
+        Target.Interior.Color = COULEUR_SAISIE
     End If
     
 End Sub
 
-Private Sub Worksheet_Change(ByVal target As Range)
+Private Sub Worksheet_Change(ByVal Target As Range)
 
     Dim fullDate As Variant
     
     'Date limite a été changée
-    If Not Intersect(target, Range("F3")) Is Nothing Then
+    If Not Intersect(Target, Range("F3")) Is Nothing Then
         
         'Pour éviter des boucles infinies
         Application.EnableEvents = False
         
         'Validation de la date
-        fullDate = Fn_Complete_Date(target.value, 999, 15)
+        fullDate = Fn_Complete_Date(Target.Value, 999, 15)
         'Date est-elle valide ?
         If fullDate <> "Invalid Date" Then
-            target.value = Format$(fullDate, wsdADMIN.Range("B1").value)
+            Target.Value = Format$(fullDate, wsdADMIN.Range("B1").Value)
         Else
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshGL_PrepEF_139")
-            target.ClearContents
-            Application.GoTo Range(target.Address)
+            Target.ClearContents
+            Application.GoTo Range(Target.Address)
         End If
         
         Application.EnableEvents = True
@@ -98,7 +98,7 @@ Private Sub Worksheet_Change(ByVal target As Range)
         Dim ws As Worksheet
         Set ws = wshGL_PrepEF
         
-        Call Calculer_Soldes_Pour_EF(ws, Range("F3").value)
+        Call Calculer_Soldes_Pour_EF(ws, Range("F3").Value)
         
         'Afficher le bouton 'Actualiser'
         Dim shp As Shape

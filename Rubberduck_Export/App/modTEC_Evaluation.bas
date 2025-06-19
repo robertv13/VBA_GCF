@@ -35,7 +35,7 @@ Sub TEC_Evaluation_Calcul(cutoffDate As String, ByRef maxDate As Date)
     
     'Transfère la table en mémoire (arr)
     Dim arr As Variant
-    arr = wsSource.Range("A3:P" & lastUsedRow).value
+    arr = wsSource.Range("A3:P" & lastUsedRow).Value
     
     'Grande section
     Dim offset As Long
@@ -102,7 +102,7 @@ Sub TEC_Evaluation_Calcul(cutoffDate As String, ByRef maxDate As Date)
                         trancheAge = "Non défini"
                 End Select
                 
-                If Not gDictHours.Exists(profInit) Then
+                If Not gDictHours.exists(profInit) Then
                     gDictHours.Add profInit, Array(CCur(0), CCur(0), CCur(0), CCur(0), CCur(0), _
                                                   CCur(0), CCur(0), CCur(0), CCur(0), CCur(0), _
                                                   CCur(0), CCur(0), CCur(0), CCur(0), CCur(0))
@@ -115,6 +115,9 @@ Sub TEC_Evaluation_Calcul(cutoffDate As String, ByRef maxDate As Date)
                 Else
                     offset = 5
                 End If
+                
+                'Ne plus faire de distinction pour les clients de Michel - 2025-06-13 @ 08:33
+                offset = 0
                     
                 'Heures pour ce TEC
                 tableau(offset + 0) = tableau(offset + 0) + hresTEC
@@ -159,13 +162,17 @@ Sub TEC_Evaluation_Affichage(cutoffDate As String, maxDate As Date)
 
     Dim valeurTEC As Currency
     Dim i As Integer
-    For i = 0 To 10 Step 5
+    'Ne plus faire de distinction pour les clients de Michel - 2025-06-13 @ 08:33
+    For i = 0 To 0 Step 5
+'    For i = 0 To 10 Step 5
         If i = 0 Then
-            ws.Range("D" & currentRow).value = "EXCLUANT les clients '2000' (mais INCLUANT les heures de GC & VG de tous les clients)"
+            'Ne plus faire de distinction pour les clients de Michel - 2025-06-13 @ 08:33
+            ws.Range("D" & currentRow).Value = "TOUS LES CLIENTS"
+'            ws.Range("D" & currentRow).value = "EXCLUANT les clients '2000' (mais INCLUANT les heures de GC & VG de tous les clients)"
         ElseIf i = 5 Then
-            ws.Range("D" & currentRow).value = "SEULEMENT les clients '2000'"
+            ws.Range("D" & currentRow).Value = "SEULEMENT les clients '2000'"
         Else
-            ws.Range("D" & currentRow).value = "TOUS LES CLIENTS"
+            ws.Range("D" & currentRow).Value = "TOUS LES CLIENTS"
         End If
         ws.Range("D" & currentRow).Font.Bold = True
         Erase total
@@ -182,23 +189,23 @@ Sub TEC_Evaluation_Affichage(cutoffDate As String, maxDate As Date)
             nom = Fn_Get_Nom_From_Initials(strProf)
             prenom = prenom & " " & Left$(nom, 1) & "."
             If gDictHours(prof)(i) <> 0 Then
-                tauxHoraire = Fn_Get_Hourly_Rate(profID, ws.Range("L3").value)
+                tauxHoraire = Fn_Get_Hourly_Rate(profID, ws.Range("L3").Value)
 '                Debug.Print i, prof, gDictHours(prof)(i), tauxHoraire, gDictHours(prof)(i) * tauxHoraire
-                ws.Range("E" & currentRow).value = prenom
+                ws.Range("E" & currentRow).Value = prenom
                 ws.Range("F" & currentRow).HorizontalAlignment = xlRight
-                ws.Range("F" & currentRow).value = Format$(gDictHours(prof)(i), "#,##0.00")
+                ws.Range("F" & currentRow).Value = Format$(gDictHours(prof)(i), "#,##0.00")
                 ws.Range("G" & currentRow).HorizontalAlignment = xlRight
-                ws.Range("G" & currentRow).value = Format$(tauxHoraire, "#,##0.00 $")
+                ws.Range("G" & currentRow).Value = Format$(tauxHoraire, "#,##0.00 $")
                 ws.Range("H" & currentRow).HorizontalAlignment = xlRight
-                ws.Range("H" & currentRow).value = Format$(gDictHours(prof)(i) * tauxHoraire, "###,##0.00 $")
+                ws.Range("H" & currentRow).Value = Format$(gDictHours(prof)(i) * tauxHoraire, "###,##0.00 $")
                 ws.Range("I" & currentRow).HorizontalAlignment = xlRight
-                ws.Range("I" & currentRow).value = Format$(gDictHours(prof)(i + 1), "#,##0.00")
+                ws.Range("I" & currentRow).Value = Format$(gDictHours(prof)(i + 1), "#,##0.00")
                 ws.Range("J" & currentRow).HorizontalAlignment = xlRight
-                ws.Range("J" & currentRow).value = Format$(gDictHours(prof)(i + 2), "#,##0.00")
+                ws.Range("J" & currentRow).Value = Format$(gDictHours(prof)(i + 2), "#,##0.00")
                 ws.Range("K" & currentRow).HorizontalAlignment = xlRight
-                ws.Range("K" & currentRow).value = Format$(gDictHours(prof)(i + 3), "#,##0.00")
+                ws.Range("K" & currentRow).Value = Format$(gDictHours(prof)(i + 3), "#,##0.00")
                 ws.Range("L" & currentRow).HorizontalAlignment = xlRight
-                ws.Range("L" & currentRow).value = Format$(gDictHours(prof)(i + 4), "#,##0.00")
+                ws.Range("L" & currentRow).Value = Format$(gDictHours(prof)(i + 4), "#,##0.00")
                 currentRow = currentRow + 1
                 Dim ii As Integer
                 For ii = 0 To 4
@@ -216,22 +223,22 @@ Sub TEC_Evaluation_Affichage(cutoffDate As String, maxDate As Date)
         ws.Range("E" & currentRow & ":L" & currentRow).Font.Bold = True
         ws.Range("F" & currentRow & ":L" & currentRow).HorizontalAlignment = xlRight
 
-        ws.Range("E" & currentRow).value = "* Totaux *"
-        ws.Range("F" & currentRow).value = Format$(total(0), "#,##0.00")
-        ws.Range("H" & currentRow).value = Format$(totalValeurTEC, "###,##0.00 $")
+        ws.Range("E" & currentRow).Value = "* Totaux *"
+        ws.Range("F" & currentRow).Value = Format$(total(0), "#,##0.00")
+        ws.Range("H" & currentRow).Value = Format$(totalValeurTEC, "###,##0.00 $")
         If i = 0 Then
             With ws.Range("H" & currentRow).Interior
-                .Pattern = xlSolid
+                .pattern = xlSolid
                 .PatternColorIndex = xlAutomatic
                 .Color = 65535
                 .TintAndShade = 0
                 .PatternTintAndShade = 0
              End With
         End If
-        ws.Range("I" & currentRow).value = Format$(total(1), "#,##0.00")
-        ws.Range("J" & currentRow).value = Format$(total(2), "#,##0.00")
-        ws.Range("K" & currentRow).value = Format$(total(3), "#,##0.00")
-        ws.Range("L" & currentRow).value = Format$(total(4), "#,##0.00")
+        ws.Range("I" & currentRow).Value = Format$(total(1), "#,##0.00")
+        ws.Range("J" & currentRow).Value = Format$(total(2), "#,##0.00")
+        ws.Range("K" & currentRow).Value = Format$(total(3), "#,##0.00")
+        ws.Range("L" & currentRow).Value = Format$(total(4), "#,##0.00")
         currentRow = currentRow + 2
     Next i
 
@@ -252,11 +259,11 @@ Sub TEC_Evaluation_Affichage(cutoffDate As String, maxDate As Date)
     Else
         message = message & ", donc un Crédit de " & Format$(valeurTEC - solde, "###,##0.00 $")
     End If
-    ws.Range("D3").value = message
+    ws.Range("D3").Value = message
     
     If valeurTEC - solde <> 0 Then '2025-06-07 @ 13:58
         ws.Shapes("EcritureGL").Visible = msoTrue
-        ws.Range("B2").value = valeurTEC - solde
+        ws.Range("B2").Value = valeurTEC - solde
     End If
 
     Application.ScreenUpdating = True
@@ -545,7 +552,7 @@ Sub Evaluation_Apercu_Avant_Impression()
     
     DoEvents
 
-    Dim header1 As String: header1 = "Évaluation des TEC au  " & wshTEC_Evaluation.Range("L3").value
+    Dim header1 As String: header1 = "Évaluation des TEC au  " & wshTEC_Evaluation.Range("L3").Value
     Dim header2 As String: header2 = ""
     
     Call Simple_Print_Setup(wshTEC_Evaluation, rngToPrint, header1, header2, "$1:$1", "P")
@@ -575,7 +582,7 @@ Sub TEC_Evaluation_EcritureGL() '2025-06-08 @ 08:37
     '--- Initialisation ---
     Set ws = wshTEC_Evaluation
 
-    ajustementTEC = ws.Range("B2").value
+    ajustementTEC = ws.Range("B2").Value
     If ajustementTEC < 0 Then Stop
     glTEC = ObtenirNoGlIndicateur("Travaux en cours")
     glREVTEC = ObtenirNoGlIndicateur("Revenus - Travaux en cours")
@@ -584,8 +591,8 @@ Sub TEC_Evaluation_EcritureGL() '2025-06-08 @ 08:37
     Set ecr = New cGL_Entry
 
     '--- Remplissage des propriétés globales
-    ecr.DateEcriture = ws.Range("L3").value
-    ecr.Description = "Ajustement de la valeur des TEC"
+    ecr.DateEcriture = ws.Range("L3").Value
+    ecr.description = "Ajustement de la valeur des TEC"
     ecr.Source = ""
     ecr.AutreRemarque = "Écriture générée par l'application"
 
@@ -637,7 +644,7 @@ Sub AjouterEcritureGL(entry As cGL_Entry) '2025-06-08 @ 09:37
     On Error GoTo CleanUpADO
 
     'Chemin du classeur MASTER.xlsx
-    cheminMaster = wsdADMIN.Range("F5").value & DATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
+    cheminMaster = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
     
     'Ouvre connexion ADO
     Set cn = CreateObject("ADODB.Connection")
@@ -658,17 +665,17 @@ Sub AjouterEcritureGL(entry As cGL_Entry) '2025-06-08 @ 09:37
     ts = Format(Now, "yyyy-mm-dd hh:mm:ss")
 
     'Ajoute chaque ligne d'écriture dans le classeur MASTER.xlsx
-    For i = 1 To entry.Lignes.count
-        Set l = entry.Lignes(i)
+    For i = 1 To entry.lignes.count
+        Set l = entry.lignes(i)
         sql = "INSERT INTO [GL_Trans$] " & _
               "([NoEntrée],[Date],[Description],[Source],[NoCompte],[Compte],[Débit],[Crédit],[AutreRemarque],[TimeStamp]) " & _
               "VALUES (" & _
               entry.NoEcriture & "," & _
               "'" & Format(entry.DateEcriture, "yyyy-mm-dd") & "'," & _
-              "'" & Replace(entry.Description, "'", "''") & "'," & _
+              "'" & Replace(entry.description, "'", "''") & "'," & _
               "'" & Replace(entry.Source, "'", "''") & "'," & _
               "'" & l.NoCompte & "'," & _
-              "'" & Replace(l.Description, "'", "''") & "'," & _
+              "'" & Replace(l.description, "'", "''") & "'," & _
               IIf(l.Montant >= 0, Replace(l.Montant, ",", "."), "NULL") & "," & _
               IIf(l.Montant < 0, Replace(-l.Montant, ",", "."), "NULL") & "," & _
               "'" & Replace(entry.AutreRemarque, "'", "''") & "'," & _
@@ -698,24 +705,24 @@ Sub AjouterEcritureGL(entry As cGL_Entry) '2025-06-08 @ 09:37
     Set wsLocal = ThisWorkbook.Sheets("GL_Trans")
     lastRow = wsLocal.Cells(wsLocal.Rows.count, 1).End(xlUp).row
 
-    For i = 1 To entry.Lignes.count
-        Set l = entry.Lignes(i)
+    For i = 1 To entry.lignes.count
+        Set l = entry.lignes(i)
         With wsLocal
-            .Cells(lastRow + i, 1).value = entry.NoEcriture
-            .Cells(lastRow + i, 2).value = entry.DateEcriture
-            .Cells(lastRow + i, 3).value = entry.Description
-            .Cells(lastRow + i, 4).value = entry.Source
-            .Cells(lastRow + i, 5).value = l.NoCompte
-            .Cells(lastRow + i, 6).value = l.Description
+            .Cells(lastRow + i, 1).Value = entry.NoEcriture
+            .Cells(lastRow + i, 2).Value = entry.DateEcriture
+            .Cells(lastRow + i, 3).Value = entry.description
+            .Cells(lastRow + i, 4).Value = entry.Source
+            .Cells(lastRow + i, 5).Value = l.NoCompte
+            .Cells(lastRow + i, 6).Value = l.description
             If l.Montant >= 0 Then
-                .Cells(lastRow + i, 7).value = l.Montant
-                .Cells(lastRow + i, 8).value = ""
+                .Cells(lastRow + i, 7).Value = l.Montant
+                .Cells(lastRow + i, 8).Value = ""
             Else
-                .Cells(lastRow + i, 7).value = ""
-                .Cells(lastRow + i, 8).value = -l.Montant
+                .Cells(lastRow + i, 7).Value = ""
+                .Cells(lastRow + i, 8).Value = -l.Montant
             End If
-            .Cells(lastRow + i, 9).value = entry.AutreRemarque
-            .Cells(lastRow + i, 10).value = ts
+            .Cells(lastRow + i, 9).Value = entry.AutreRemarque
+            .Cells(lastRow + i, 10).Value = ts
         End With
     Next i
 
@@ -733,7 +740,7 @@ CleanUpADO:
     Application.DisplayAlerts = oldDisplayAlerts
     Application.Calculation = oldCalculation
     If Err.Number <> 0 Then
-        MsgBox "Erreur lors de l’écriture au G/L : " & Err.Description, vbCritical
+        MsgBox "Erreur lors de l’écriture au G/L : " & Err.description, vbCritical
     End If
     On Error GoTo 0
     
