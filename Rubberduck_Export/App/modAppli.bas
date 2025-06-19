@@ -579,44 +579,14 @@ CleanUp:
     
 End Sub
 
-'CommentOut - 2025-06-06 @ 11:09
-'Sub EcrireInformationsConfigAuMenu(ByVal user As String)
-'
-''    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:EcrireInformationsConfigAuMenu", "", 0)
-'
-'    wshMenu.Unprotect
-'
-'    Application.EnableEvents = False
-'
-'    With wshMenu
-'        .Range("A30").value = "Heure - " & Format$(Now(), wsdADMIN.Range("B1").value & " hh:mm:ss")
-'        .Range("A31").value = "Version - " & ThisWorkbook.Name
-'        .Range("A32").value = "Utilisateur - " & user
-'        .Range("A33").value = "Environnement - " & wsdADMIN.Range("F5").value
-'        .Range("A34").value = "Format de la date - " & wsdADMIN.Range("B1").value
-'    End With
-'
-'    Application.EnableEvents = True
-'
-'    With wshMenu
-'        .Protect UserInterfaceOnly:=True
-'        .EnableSelection = xlUnlockedCells
-'    End With
-'
-''    Call Log_Record("modAppli:EcrireInformationsConfigAuMenu", "", startTime)
-'
-'End Sub
-'
-'Mettre à jour à chaque activité
 Public Sub RafraichirActivite(Optional ByVal msg As String = "") '2025-05-30 @ 12:22
 
-'    Debug.Print "Activité détectée à " & Format(gDerniereActivite, "hh:nn:ss") & " - " & msg
     gDerniereActivite = Now
     Application.StatusBar = False
     
 End Sub
 
-'Vérifie l'inactivité et ferme si plus de 60 minutes
+'@Description "Vérifie l'inactivité et ferme si plus de 60 minutes"
 Public Sub VerifierInactivite() '2025-05-30 @ 12:22
 
     On Error GoTo GestionErreur

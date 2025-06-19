@@ -874,31 +874,6 @@ Sub Clear_Fees_Summary_And_CheckBox() 'RMV_15
     
 End Sub
 
-'CommentOut - 2025-06-17 @ 19:52 - Procédure orpheline
-'Sub Get_CheckBox_Position(cb As OLEObject)
-'
-'    'Set your worksheet (adjust this to match your worksheet name)
-'    Dim ws As Worksheet
-'    Set ws = wshTEC_Analyse
-'
-'    'Reference your checkbox by name
-'    Dim checkBox As OLEObject
-'    Set checkBox = ws.OLEObjects(cb)
-'
-'    'Get the cell that contains the top-left corner of the CheckBox
-'    Dim checkBoxCell As Range
-'    Set checkBoxCell = checkBox.TopLeftCell
-'
-'    ' Display the address of the cell
-'    MsgBox "The CheckBox is located at cell: " & checkBoxCell.Address
-'
-'    'Libérer la mémoire
-'    Set checkBox = Nothing
-'    Set checkBoxCell = Nothing
-'    Set ws = Nothing
-'
-'End Sub
-
 Sub TEC_Analyse_Delete_CheckBox()
 
     'Assigner la feuille à ws

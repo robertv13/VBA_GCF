@@ -886,11 +886,6 @@ Sub AjusterEpurerTablesDeMaster() '2024-12-07 @ 06:47
     Dim cheminClasseur As String
     cheminClasseur = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx"
 
-'CommentOut - 2025-05-30 @ 07:29
-'    If GetNomUtilisateur() <> "RobertMV" Then
-'        Exit Sub
-'    End If
-'
     'Ouvrir le classeur
     Dim wb As Workbook
     On Error Resume Next
