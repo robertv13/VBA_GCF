@@ -1,2 +1,0 @@
-2024-10-13 13:49:49.530 | vgervais | ADD    1710 | VG | 2024-10-13 | 5 | z_Administratif_Autres non chargeables | Lecture question APFF + voir ELP | 1,80 | VRAI |  | 2024-10-13 13:49:49 | 31
-2024-10-13 15:03:03.990 | vgervais | UPDATE 1710 | VG | 2024-10-13 | 5 | z_Administratif_Autres non chargeables | Lecture question APFF + voir ELP | 2,50 | FAUX |  | 2024-10-13 15:03:03 | 31

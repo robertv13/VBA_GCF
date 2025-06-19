@@ -1,3 +1,0 @@
-Annie|2024-09-11 16:11:44|Add|967|AR|2024-11-09|1051|Arthur Malouin Ltée [Yvan Malouin]|Rapport de gestion du mois d'août|0.25||VRAI
-Annie|2024-09-11 16:12:23|Add|968|AR|2024-11-09|2018|GAR10 Constructions Gilles Garry Inc|Comptabilité du trimestre juin-août et paies|2.00||VRAI
-Annie|2024-09-11 16:12:49|Add|969|AR|2024-11-09|1112|Vignoble Kobloth et fils Inc. [Thierry Kobloth]|Comptabilité du mois d'août|2.50||VRAI

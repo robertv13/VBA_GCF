@@ -1,4 +1,0 @@
-Apprantissage de Git
-
-Une autre modification...
-ligne de test

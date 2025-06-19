@@ -1,9 +1,0 @@
-User|2024-09-10 14:22:02|Add|958|ML|2024-09-09|1193|Solstice CNC Inc. [Alexandre Desmarais]|Prise de connaissance du dossier d'évaluation et liste des éléments manquants + discussion avec Vladimir|1,75||VRAI
-User|2024-09-10 14:22:44|Add|959|ML|2024-09-09|5|z_Adiministratif_Autres non chargeables|Travail dans la base de données des clients|5,50||FAUX
-User|2024-09-10 14:27:03|Add|960|ML|2024-10-09|1775|9513-1926 Québec Inc. [Francis Desgagnés]|Correction des roulements avec Vladimir|0,50||VRAI
-User|2024-09-10 14:27:39|Add|961|ML|2024-10-09|1051|Arthur Malouin Ltée [Yvan Malouin]|Correction des fichiers du mois d'août 2024.|2,00||VRAI
-User|2024-09-10 14:29:14|Add|962|ML|2024-10-09|1051|Arthur Malouin Ltée [Yvan Malouin]|Révision des élémnets à corriger sur les données avec Joannie et discussion sur lle budget 2025, l'intégration d'Épic, l'intégration des données du cabinet filiale Ducahrme et autres formations.|2,00||VRAI
-User|2024-09-10 14:30:23|Add|963|ML|2024-10-09|1051|Arthur Malouin Ltée [Yvan Malouin]|Montage des données (comptabilité et statistique du volume) du rapport de gestion d'août 2024 pour le transférer à Annie pour la production du fichier d'août 2024|1,25||VRAI
-Annie|2024-09-10 17:44:15|Add|964|AR|2024-10-09|5|z_Adiministratif_Autres non chargeables|Documentation sur les fins d'années vs Excellence|0.25||FAUX
-Annie|2024-09-10 17:45:11|Add|965|AR|2024-10-09|2030|MAR13  Larry Rumsby Maréchal-Ferrant Inc [Louise Mongeau]|Rapport TPS-TVQ à payer pour le triimestre de mai à août|0.75||VRAI
-Annie|2024-09-10 17:45:42|Add|966|AR|2024-10-09|2018|GAR10 Constructions Gilles Garry Inc|Comptabilité du trimestre mai à août|4.50||VRAI
