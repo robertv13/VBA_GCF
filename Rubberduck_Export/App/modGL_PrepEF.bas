@@ -64,7 +64,7 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
     Dim i As Long, glNo As String, MyValue As String, t1 As Currency, t2 As Currency
     For i = 2 To UBound(arrTrans, 1)
         glNo = arrTrans(i, 5)
-        If Not dictSoldesParGL.exists(glNo) Then
+        If Not dictSoldesParGL.Exists(glNo) Then
             rowID_to_arrSoldesParGL = rowID_to_arrSoldesParGL + 1
             dictSoldesParGL.Add glNo, rowID_to_arrSoldesParGL
             arrSoldesParGL(rowID_to_arrSoldesParGL, 1) = glNo
@@ -131,7 +131,7 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
                     ws.Range("N" & currRow).Value = glNo
                 End If
                 'Accumule les montants par ligne d'état financier (codeEF)
-                If Not gDictgSoldeCodeEF.exists(codeEF) Then
+                If Not gDictgSoldeCodeEF.Exists(codeEF) Then
                     rowID_to_gSoldeCodeEF = rowID_to_gSoldeCodeEF + 1
                     gDictgSoldeCodeEF.Add codeEF, rowID_to_gSoldeCodeEF
                     gSoldeCodeEF(rowID_to_gSoldeCodeEF, 1) = codeEF
@@ -146,14 +146,14 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
                 totalAP = totalAP + CCur(arrSoldesParGL(r, 3))
                 
                 'Preuve
-                If Not dictPreuve.exists(codeEF & "-" & glNo) Then
+                If Not dictPreuve.Exists(codeEF & "-" & glNo) Then
                     dictPreuve.Add codeEF & "-" & glNo, 0
                 End If
                 dictPreuve(codeEF & "-" & glNo) = dictPreuve(codeEF & "-" & glNo) + arrSoldesParGL(r, 2)
                 
                 'Preuve - Sous-total par section
                 section = Left$(codeEF, 1)
-                If Not dictSectionSub.exists(section) Then
+                If Not dictSectionSub.Exists(section) Then
                     dictSectionSub.Add section, 0
                 End If
                 dictSectionSub(section) = dictSectionSub(section) + arrSoldesParGL(r, 2)

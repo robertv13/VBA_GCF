@@ -3,10 +3,43 @@ Attribute VB_Name = "modAppli_Utils"
 
 Option Explicit
 
+'@Description "Structure pour VerifierTEC - 2025-06-19 @ 10:41"
+Public Type StatistiquesTEC
+    cas_doublon_TecID As Long
+    cas_date_invalide As Long
+    cas_date_future As Long
+    cas_hres_invalide As Long
+    cas_estFacturable_invalide As Long
+    cas_estFacturee_invalide As Long
+    cas_date_fact_invalide As Long
+    cas_date_facture_future As Long
+    cas_estDetruit_invalide As Long
+    nbValid As Long
+    nbInvalid As Long
+    totalHeures As Double
+    total_hres_inscrites As Double
+    total_hres_detruites As Double
+    total_hres_facturees As Double
+    total_hres_facturables As Double
+    total_hres_non_facturables As Double
+End Type
+
 'Variables globales pour le module
 Private verificationIntegriteOK As Boolean
 Private soldeComptesClients As Currency
 Private gValeursAComparer() As Variant
+
+'@Description "Routine pour ajouter des lignes de message à la feuille"
+Private Sub AjouterMessage(ws As Worksheet, ByRef r As Long, ByRef c As Long, message As String)
+
+    ws.Cells(r, c).Value = message
+    If c = 1 Then
+        ws.Cells(r, c).Font.Bold = True
+    End If
+    r = r + 1
+    
+End Sub
+
 
 Public Sub ConvertRangeBooleanToText(rng As Range)
 
@@ -239,7 +272,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     'Comparaison des valeurs - Total des factures (confirmées)
     If gValeursAComparer(1, 2) <> gValeursAComparer(1, 3) Then
         Call ImprimerEcartsVerificationIntegrite(wsOutput, r, CStr(gValeursAComparer(1, 1)), _
-                                                "FAC_Entête", CCur(gValeursAComparer(1, 2)), _
+                                                "FAC_Entete", CCur(gValeursAComparer(1, 2)), _
                                                 "FAC_Comptes_Clients", CCur(gValeursAComparer(1, 3)), _
                                                 "", 0)
         verificationIntegriteOK = False
@@ -248,7 +281,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     'Comparaison des valeurs - Total des factures (à confirmer)
     If gValeursAComparer(2, 2) <> gValeursAComparer(2, 3) Then
         Call ImprimerEcartsVerificationIntegrite(wsOutput, r, CStr(gValeursAComparer(2, 1)), _
-                                                "FAC_Entête", CCur(gValeursAComparer(2, 2)), _
+                                                "FAC_Entete", CCur(gValeursAComparer(2, 2)), _
                                                 "FAC_Comptes_Clients", CCur(gValeursAComparer(2, 3)), _
                                                 "", 0)
         verificationIntegriteOK = False
@@ -260,8 +293,8 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
         gValeursAComparer(3, 3) <> gValeursAComparer(3, 4) Then
         Call ImprimerEcartsVerificationIntegrite(wsOutput, r, CStr(gValeursAComparer(3, 1)), _
                                                 "FAC_Comptes_Clients", CCur(gValeursAComparer(3, 2)), _
-                                                "ENC_Entête", CCur(gValeursAComparer(3, 3)), _
-                                                "ENC_Détails", CCur(gValeursAComparer(3, 4)))
+                                                "ENC_Entete", CCur(gValeursAComparer(3, 3)), _
+                                                "ENC_Details", CCur(gValeursAComparer(3, 4)))
         verificationIntegriteOK = False
     End If
     
@@ -269,7 +302,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     If gValeursAComparer(4, 2) <> gValeursAComparer(4, 3) Then
         Call ImprimerEcartsVerificationIntegrite(wsOutput, r, CStr(gValeursAComparer(4, 1)), _
                                                 "FAC_Comptes_Clients", CCur(gValeursAComparer(4, 2)), _
-                                                "CC_Régularisations", CCur(gValeursAComparer(4, 3)), _
+                                                "CC_Regularisations", CCur(gValeursAComparer(4, 3)), _
                                                 "", 0)
         verificationIntegriteOK = False
     End If
@@ -398,18 +431,18 @@ Sub ImprimerEcartsVerificationIntegrite(ws As Worksheet, r As Long, t As String,
                                                         s3 As String, v3 As Currency)
 
     Dim str1 As String, str2 As String, str3 As String
-    str1 = Format$(v1, "##,###,##0.00 $")
-    str2 = Format$(v2, "##,###,##0.00 $")
-    str3 = Format$(v3, "##,###,##0.00 $")
+    str1 = Format$(v1, "##,###,##0.00")
+    str2 = Format$(v2, "##,###,##0.00")
+    str3 = Format$(v3, "##,###,##0.00")
     
     Call AddMessageToWorkSheet(ws, r, 2, t)
     r = r + 1
-    Call AddMessageToWorkSheet(ws, r, 2, Space(7) & Fn_Pad_A_String(s1, " ", 25, "R") & ":" & Space(16 - Len(str1)) & str1)
+    Call AddMessageToWorkSheet(ws, r, 2, Space(7) & Fn_Pad_A_String(s1, " ", 18, "R") & ":" & Space(14 - Len(str1)) & str1)
     r = r + 1
-    Call AddMessageToWorkSheet(ws, r, 2, Space(7) & Fn_Pad_A_String(s2, " ", 25, "R") & ":" & Space(16 - Len(str2)) & str2)
+    Call AddMessageToWorkSheet(ws, r, 2, Space(7) & Fn_Pad_A_String(s2, " ", 18, "R") & ":" & Space(14 - Len(str2)) & str2)
     r = r + 1
     If Not Trim(s3) = "" Then
-        Call AddMessageToWorkSheet(ws, r, 2, Space(7) & Fn_Pad_A_String(s3, " ", 25, "R") & ":" & Space(16 - Len(str3)) & str3)
+        Call AddMessageToWorkSheet(ws, r, 2, Space(7) & Fn_Pad_A_String(s3, " ", 18, "R") & ":" & Space(14 - Len(str3)) & str3)
         r = r + 1
     End If
     r = r + 1
@@ -583,7 +616,7 @@ Private Sub VerifierPlanComptable(ByRef r As Long, ByRef readRows As Long)
     For i = LBound(arr, 1) To UBound(arr, 1)
         codeGL = arr(i, 1)
         descrGL = arr(i, 2)
-        If dict_descr_GL.exists(descrGL) = False Then
+        If dict_descr_GL.Exists(descrGL) = False Then
             dict_descr_GL.Add descrGL, codeGL
         Else
             Call AddMessageToWorkSheet(wsOutput, r, 2, "La description '" & descrGL & "' est un doublon pour le code de G/L '" & codeGL & "'")
@@ -591,7 +624,7 @@ Private Sub VerifierPlanComptable(ByRef r As Long, ByRef readRows As Long)
             cas_doublon_descr = cas_doublon_descr + 1
         End If
         
-        If dict_code_GL.exists(codeGL) = False Then
+        If dict_code_GL.Exists(codeGL) = False Then
             dict_code_GL.Add codeGL, descrGL
         Else
             Call AddMessageToWorkSheet(wsOutput, r, 2, "Le code de G/L '" & codeGL & "' est un doublon pour la description '" & descrGL & "'")
@@ -700,7 +733,7 @@ Private Sub VerifierClients(ByRef r As Long, ByRef readRows As Long)
             nomClientSysteme = arr(i, 3)
             
             'Doublon sur le nom ?
-            If dict_nom_client.exists(nom) = False Then
+            If dict_nom_client.Exists(nom) = False Then
                 dict_nom_client.Add nom, code
             Else
                 Call AddMessageToWorkSheet(wsOutput, r, 2, "À la ligne " & i & ", le nom '" & nom & "' est un doublon pour le code '" & code & "'")
@@ -709,7 +742,7 @@ Private Sub VerifierClients(ByRef r As Long, ByRef readRows As Long)
             End If
             
             'Doublon sur le code de client ?
-            If dict_code_client.exists(code) = False Then
+            If dict_code_client.Exists(code) = False Then
                 dict_code_client.Add code, nom
             Else
                 Call AddMessageToWorkSheet(wsOutput, r, 2, "À la ligne " & i & ", le code '" & code & "' est un doublon pour le client '" & nom & "'")
@@ -827,14 +860,14 @@ Private Sub VerifierFournisseurs(ByRef r As Long, ByRef readRows As Long)
     For i = LBound(arr, 1) + 1 To UBound(arr, 1)
         nom = arr(i, 1)
         code = arr(i, 2)
-        If dict_nom_fournisseur.exists(nom) = False Then
+        If dict_nom_fournisseur.Exists(nom) = False Then
             dict_nom_fournisseur.Add nom, code
         Else
             Call AddMessageToWorkSheet(wsOutput, r, 2, "Le nom '" & nom & "' est un doublon pour le code '" & code & "'")
             r = r + 1
             cas_doublon_nom = cas_doublon_nom + 1
         End If
-        If dict_code_fournisseur.exists(code) = False Then
+        If dict_code_fournisseur.Exists(code) = False Then
             dict_code_fournisseur.Add code, nom
         Else
             Call AddMessageToWorkSheet(wsOutput, r, 2, "Le code '" & code & "' est un doublon pour le nom '" & nom & "'")
@@ -984,7 +1017,7 @@ Private Sub VérifierCCRégularisations(ByRef r As Long, ByRef readRows As Long)
             r = r + 1
             isRegularisationValid = False
         Else
-            If dictRegul.exists(Inv_No) Then
+            If dictRegul.Exists(Inv_No) Then
                 dictRegul(Inv_No) = dictRegul(Inv_No) + ws.Cells(i, fREGULHono).Value
             Else
                 dictRegul.Add Inv_No, ws.Cells(i, fREGULHono).Value
@@ -998,7 +1031,7 @@ Private Sub VérifierCCRégularisations(ByRef r As Long, ByRef readRows As Long)
             r = r + 1
             isRegularisationValid = False
         Else
-            If dictRegul.exists(Inv_No) Then
+            If dictRegul.Exists(Inv_No) Then
                 dictRegul(Inv_No) = dictRegul(Inv_No) + ws.Cells(i, fREGULFrais).Value
             Else
                 dictRegul.Add Inv_No, ws.Cells(i, fREGULFrais).Value
@@ -1012,7 +1045,7 @@ Private Sub VérifierCCRégularisations(ByRef r As Long, ByRef readRows As Long)
             r = r + 1
             isRegularisationValid = False
         Else
-            If dictRegul.exists(Inv_No) Then
+            If dictRegul.Exists(Inv_No) Then
                 dictRegul(Inv_No) = dictRegul(Inv_No) + ws.Cells(i, fREGULTPS).Value
             Else
                 dictRegul.Add Inv_No, ws.Cells(i, fREGULTPS).Value
@@ -1026,7 +1059,7 @@ Private Sub VérifierCCRégularisations(ByRef r As Long, ByRef readRows As Long)
             r = r + 1
             isRegularisationValid = False
         Else
-            If dictRegul.exists(Inv_No) Then
+            If dictRegul.Exists(Inv_No) Then
                 dictRegul(Inv_No) = dictRegul(Inv_No) + ws.Cells(i, fREGULTVQ).Value
             Else
                 dictRegul.Add Inv_No, ws.Cells(i, fREGULTVQ).Value
@@ -1486,7 +1519,7 @@ Private Sub VerifierENCDetails(ByRef r As Long, ByRef readRows As Long)
             r = r + 1
             isEncDétailsValid = False
         Else
-            If dictENC.exists(Inv_No) Then
+            If dictENC.Exists(Inv_No) Then
                 dictENC(Inv_No) = dictENC(Inv_No) + ws.Cells(i, fEncDPayAmount).Value
             Else
                 dictENC.Add Inv_No, ws.Cells(i, fEncDPayAmount).Value
@@ -2720,7 +2753,7 @@ Private Sub VerifierGLTrans(ByRef r As Long, ByRef readRows As Long)
     
     For i = LBound(arr, 1) To UBound(arr, 1)
         GL_Entry_No = arr(i, 1)
-        If dict_GL_Entry.exists(GL_Entry_No) = False Then
+        If dict_GL_Entry.Exists(GL_Entry_No) = False Then
             dict_GL_Entry.Add GL_Entry_No, row
             sum_arr(row, 1) = GL_Entry_No
             row = row + 1
@@ -3034,9 +3067,9 @@ Private Sub VerifierTECTdBData(ByRef r As Long, ByRef readRows As Long)
     Dim minDate As Date, maxDate As Date
     Dim hres As Double, hres_non_detruites As Double
     Dim estDetruit As Boolean, estFacturable As Boolean, estFacturee As Boolean
-    Dim cas_doublon_TECID As Long, cas_date_invalide As Long, cas_doublon_prof As Long, cas_doublon_client As Long
-    Dim cas_hres_invalide As Long, cas_estFacturable_invalide As Long, cas_estFacturee_invalide As Long
-    Dim cas_estDetruit_invalide As Long
+    Dim cas_doublon_TecID As Long, cas_date_invalide As Long, cas_doublon_prof As Long, cas_doublon_client As Long
+    Dim cas_hres_invalide As Long, cas_estFacturable_invalide As Long
+    Dim cas_estDetruit_invalide As Long, cas_estFacturee_invalide As Long
     Dim total_hres_inscrites As Double, total_hres_detruites As Double, total_hres_facturees As Double
     Dim total_hres_facturable As Double, total_hres_TEC As Double, total_hres_non_facturable As Double
     
@@ -3128,28 +3161,33 @@ Private Sub VerifierTECTdBData(ByRef r As Long, ByRef readRows As Long)
         End If
         
         'Dictionary
-        If dict_TECID.exists(tecID) = False Then
+        If dict_TECID.Exists(tecID) = False Then
             dict_TECID.Add tecID, 0
         Else
             Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le TECID '" & tecID & "' est un doublon pour la ligne '" & i & "'")
             r = r + 1
             isTECTDBValid = False
-           cas_doublon_TECID = cas_doublon_TECID + 1
+           cas_doublon_TecID = cas_doublon_TecID + 1
         End If
         
     Next i
     
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1) - HeaderRow, "##,##0") & " charges de temps ont été analysées!")
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " charges de temps ont été analysées!")
     r = r + 1
     
     'Add number of rows processed (read)
-    readRows = readRows + UBound(arr, 1) - HeaderRow
+    readRows = readRows + UBound(arr, 1)
     
-    If cas_doublon_TECID = 0 Then
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "       La date MINIMALE est '" & Format$(minDate, "dd/mm/yyyy") & "'")
+    r = r + 1
+    Call AddMessageToWorkSheet(wsOutput, r, 2, "       La date MAXIMALE est '" & Format$(maxDate, "dd/mm/yyyy") & "'")
+    r = r + 1
+    
+    If cas_doublon_TecID = 0 Then
         Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucun doublon de TECID")
         r = r + 1
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_doublon_TECID & " cas de doublons pour les TECID")
+        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_doublon_TecID & " cas de doublons pour les TECID")
         r = r + 1
         isTECTDBValid = False
     End If
@@ -3162,10 +3200,6 @@ Private Sub VerifierTECTdBData(ByRef r As Long, ByRef readRows As Long)
         r = r + 1
         isTECTDBValid = False
     End If
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "       La date MINIMALE est '" & Format$(minDate, "dd/mm/yyyy") & "'")
-    r = r + 1
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "       La date MAXIMALE est '" & Format$(maxDate, "dd/mm/yyyy") & "'")
-    r = r + 1
     
     If cas_hres_invalide = 0 Then
         Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucune heures INVALIDE")
@@ -3303,502 +3337,264 @@ Private Sub VerifierTEC(ByRef r As Long, ByRef readRows As Long)
     Dim ws As Worksheet: Set ws = wsdTEC_Local
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
+    Dim i As Long
+
+    'Réference au UserDefined structure 'StatistiquesTEC'
+    Dim stats As StatistiquesTEC
+    
     Dim lastTECIDReported As Long
-    lastTECIDReported = 7267 'What is the last TECID analyzed ?
+    lastTECIDReported = 7371 'What is the last TECID analyzed ?
     
     'Feuille contenant les données à analyser
     Dim HeaderRow As Long: HeaderRow = 2
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
     If lastUsedRow <= HeaderRow Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Cette feuille est vide !!!")
-        r = r + 2
+        Call AjouterMessage(wsOutput, r, 2, "********** Cette feuille est vide !!!")
         GoTo Clean_Exit
     End If
     
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Il y a " & Format$(lastUsedRow, "###,##0") & _
-        " lignes et " & Format$(ws.Range("A1").CurrentRegion.Columns.count, "#,##0") & " colonnes dans cette table")
-    r = r + 1
+    Call AjouterMessage(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wsdTEC_Local'")
     
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wsdTEC_Local'")
-    r = r + 1
+    Call AjouterMessage(wsOutput, r, 2, "Il y a " & Format$(lastUsedRow, "###,##0") & _
+        " lignes et " & Format$(ws.Range("A1").CurrentRegion.Columns.count, "#,##0") & _
+        " colonnes dans cette table")
     
-    'Identifier la plage de données dans wsdTEC_Local (exclus les entêtes)
-    Dim rngTEC_LocalData As Range
-    Set rngTEC_LocalData = ws.Range("A1").CurrentRegion.offset(2, 0)
-    Set rngTEC_LocalData = rngTEC_LocalData.Resize(rngTEC_LocalData.Rows.count - 2, rngTEC_LocalData.Columns.count)
-    
-    'Charger les données dans un tableau (arrTEC_LocalData)
+    'Créer un tableau 2D pour l'ensemble des lignes de TEC_Local
     Dim arrTEC_Local_Data As Variant
-    arrTEC_Local_Data = rngTEC_LocalData.Resize(rngTEC_LocalData.Rows.count, rngTEC_LocalData.Columns.count).Value
+    Dim rngTEC_LocalData As Range
+    Dim lastRow As Long, lastCol As Long
     
-    'Créer un dictionary pour tous les clients
+    With ws
+        lastRow = .Cells(.Rows.count, "A").End(xlUp).row
+        lastCol = .Cells(1, .Columns.count).End(xlToLeft).Column
+        'Définir la plage de données (en excluant l'entête, si HeaderRow > 0)
+        Set rngTEC_LocalData = .Range(.Cells(HeaderRow + 1, 1), .Cells(lastRow, lastCol))
+        arrTEC_Local_Data = rngTEC_LocalData.Value
+    End With
+    
+    'Créer un dictionnaire pour tous les clients (code & nom)
     Dim dictClient As New Dictionary
-    'Définir la feuille de calcul et la plage de données
-    Dim rngClient As Range
-    Set rngClient = wsdBD_Clients.Range("A1").CurrentRegion
-    Set rngClient = rngClient.offset(1, 0).Resize(rngClient.Rows.count - 1, 2)
-
-    'Charger les données dans un tableau (deux premières colonnes seulement)
     Dim arr As Variant
-    arr = rngClient.Value 'Charger les colonnes 1 et 2
-
-    'Créer un dictionnaire
-    Set dictClient = CreateObject("Scripting.Dictionary")
-
-    'Remplir le dictionnaire avec les données (clé = colonne 1, valeur = colonne 2)
-    Dim i As Long
+    
+    With wsdBD_Clients
+        lastRow = .Cells(.Rows.count, "A").End(xlUp).row
+        'Charger uniquement les deux premières colonnes, sans l'en-tête
+        arr = .Range("A2:B" & lastRow).Value
+    End With
+    
+    'Remplir le dictionnaire
     For i = 1 To UBound(arr, 1)
-        dictClient(arr(i, 2)) = arr(i, 1) 'Utilise la colonne 1 comme clé et la colonne 2 comme valeur
+        If Not dictClient.Exists(arr(i, 1)) Then
+            dictClient.Add arr(i, 2), arr(i, 1)
+        End If
     Next i
     
-    'Obtenir toutes les factures émises (wsdFAC_Entete) et utiliser un dictionary pour les mémoriser
-    Dim rngFAC_EntêteData As Range
-    Set rngFAC_EntêteData = wsdFAC_Entete.Range("A1").CurrentRegion
-    Set rngFAC_EntêteData = rngFAC_EntêteData.offset(2, 0).Resize(rngFAC_EntêteData.Rows.count - 2)
-    
-    'Calculer le nombre de lignes dans la plage
-    Dim lastRow As Long
-    lastRow = rngFAC_EntêteData.Rows.count
-
-    'Redimensionner le tableau pour contenir les données de 2 colonnes
-    ReDim arr(1 To lastRow, 1 To 2)
-
-    'Remplir le tableau avec les valeurs des colonnes 1 et 3
-    For i = 1 To lastRow
-        arr(i, 1) = rngFAC_EntêteData.Cells(i, 1).Value
-        arr(i, 2) = rngFAC_EntêteData.Cells(i, 3).Value
-    Next i
-
-    'Charger dans le dictionnaire dictFacture
+    'Créer un dictionnaire pour toutes les factures émises
     Dim dictFacture As New Dictionary
-    On Error Resume Next 'Empêcher les erreurs si doublons
+    
+    Dim lo As ListObject
+    Set lo = wsdFAC_Entete.ListObjects("l_tbl_FAC_Entête")
+    arr = lo.DataBodyRange.Value
+    
     For i = 1 To UBound(arr, 1)
-        dictFacture.Add key:=arr(i, 1), item:=arr(i, 2)
+        If Not dictFacture.Exists(arr(i, fFacCCInvNo)) Then
+            dictFacture.Add arr(i, fFacCCInvNo), arr(i, fFacCCInvoiceDate)
+        End If
     Next i
-    On Error GoTo 0 'Réactiver la gestion normale des erreurs
     
+    'Créer un dictionnaire pour vérifier l'unicité des TecID
+    Dim dictDict As New Dictionary
+    
+    'Créer un dictionnaire pour identifier les cas ProfID + Prof
+    Dim dictProf As New Dictionary
+    
+    'Créer un dictionnaire pour accumuler les heures facturées par Facture
     Dim dictFactureHres As New Dictionary
-    Dim dict_TECID As New Dictionary
-    Dim dict_prof As New Dictionary
     
-    Dim tecID As Long, profID As String, prof As String, dateTEC As Date, dateFact As Date, testDate As Boolean
+    Dim tecID As Long, profID As String, prof As String
+    Dim dateTEC As Date, dateFact As Date, testDate As Boolean
     Dim minDate As Date, maxDate As Date
-    Dim maxTECID As Long
-'    Dim d As Integer, m As Integer, y As Integer, p As Integer
-    Dim codeClient As String, nomClient As String, nomClientFromMF As String
-    Dim isClientValid As Boolean
-    Dim hres As Double, testHres As Boolean, estFacturable As Boolean
-    Dim estFacturee As Boolean, estDetruit As Boolean
+    Dim maxTecID As Long
+    Dim hres As Currency
+    Dim estFacturable As Boolean, estFacturee As Boolean, estDetruit As Boolean
     Dim invNo As String
-    Dim cas_doublon_TECID As Long, cas_date_invalide As Long, cas_doublon_prof As Long, cas_doublon_client As Long
-    Dim cas_date_fact_invalide As Long, cas_date_facture_future As Long, cas_date_future As Long
-    Dim cas_hres_invalide As Long, cas_estFacturable_invalide As Long, cas_estFacturee_invalide As Long
-    Dim cas_estDetruit_invalide As Long
-    Dim total_hres_inscrites As Double, total_hres_detruites As Double, total_hres_facturees As Double
-    Dim total_hres_facturable As Double, total_hres_TEC As Double, total_hres_non_facturable As Double
-    Dim keyDate As String
     
     minDate = "12/31/2999"
     
-    Dim isTECValid As Boolean
-    isTECValid = True
-    
-    'Sommaire par Date de charge (validation du format de date)
+    'Créer un dictionnaire pour les dates de charge
     Dim dictDateCharge As Object
     Set dictDateCharge = CreateObject("Scripting.Dictionary")
     Dim yy As Integer, mm As Integer, dd As Integer
     
-    'Sommaire par TimeStamp (validation du format de date)
+    'Créer un dictionnaire pour les dateStamp
     Dim dictTimeStamp As Object
     Set dictTimeStamp = CreateObject("Scripting.Dictionary")
     
-    Dim strDict As String
+    Dim strDateChargeFormate As String
 
-    'Lecture et analyse des TEC (TEC_Local)
-    For i = LBound(arrTEC_Local_Data, 1) To UBound(arrTEC_Local_Data, 1)
-        tecID = arrTEC_Local_Data(i, fTECTECID)
-        If tecID > maxTECID Then
-            maxTECID = tecID
-        End If
-        'ProfessionnelID
-        profID = arrTEC_Local_Data(i, fTECProfID)
-        'Professionnel
-        prof = arrTEC_Local_Data(i, fTECProf)
-        'Date
-        dateTEC = arrTEC_Local_Data(i, fTECDate)
-        testDate = IsDate(dateTEC)
-        If testDate = False Or dateTEC > Date Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID =" & tecID & " a une date INVALIDE '" & dateTEC & " !!!")
-            r = r + 1
-            isTECValid = False
-            cas_date_invalide = cas_date_invalide + 1
-        Else
-            If dateTEC < minDate Then minDate = dateTEC
-            If dateTEC > maxDate Then maxDate = dateTEC
-        End If
-        If dateTEC > Date Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID =" & tecID & " a une date FUTURE '" & dateTEC & " !!!")
-            r = r + 1
-            isTECValid = False
-            cas_date_future = cas_date_future + 1
-        End If
-        If dateTEC <> Int(dateTEC) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La date du TEC '" & dateTEC & "' n'est pas du bon format (H:M:S) pour le TECID =" & tecID)
-            r = r + 1
-            isTECValid = False
-        End If
-        
-        'Validate clientCode
-        codeClient = Trim$(arrTEC_Local_Data(i, fTECClientID))
-        If dictClient.exists(codeClient) = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le code de client '" & codeClient & "' est INVALIDE !!!")
-            r = r + 1
-            isTECValid = False
-        End If
-        
-        hres = arrTEC_Local_Data(i, fTECHeures)
-        testHres = IsNumeric(hres)
-        If testHres = False Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID = " & tecID & " la valeur des heures est INVALIDE '" & hres & " !!!")
-            r = r + 1
-            isTECValid = False
-            cas_hres_invalide = cas_hres_invalide + 1
-        End If
-        estFacturable = arrTEC_Local_Data(i, 10)
-        If InStr("Vrai^Faux^", estFacturable & "^") = 0 Or Len(estFacturable) <> 2 Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID = " & tecID & " la valeur de la colonne 'EstFacturable' est INVALIDE '" & estFacturable & "' !!!")
-            r = r + 1
-            isTECValid = False
-            cas_estFacturable_invalide = cas_estFacturable_invalide + 1
-        End If
-
-        'Analyse de la date de charge et du TimeStamp pour les dernières entrées
-        If arrTEC_Local_Data(i, 1) > lastTECIDReported And arrTEC_Local_Data(i, fTECEstDetruit) = "FAUX" Then
-            'Date de la charge
-            yy = year(arrTEC_Local_Data(i, 4))
-            mm = month(arrTEC_Local_Data(i, 4))
-            dd = day(arrTEC_Local_Data(i, 4))
-            If yy = 2024 And mm = 12 And dd = 27 Then Stop
-            strDict = Format$(DateSerial(yy, mm, dd), "yyyy-mm-dd") & " - " & _
-                                Fn_Pad_A_String(CStr(arrTEC_Local_Data(i, 3)), " ", 5, "R")
-            If dictDateCharge.exists(strDict) Then
-                dictDateCharge(strDict) = dictDateCharge(strDict) + arrTEC_Local_Data(i, 8)
-            Else
-                dictDateCharge.Add strDict, arrTEC_Local_Data(i, 8)
-            End If
-            'TimeStamp
-            yy = year(arrTEC_Local_Data(i, 11))
-            mm = month(arrTEC_Local_Data(i, 11))
-            dd = day(arrTEC_Local_Data(i, 11))
-            strDict = Format$(DateSerial(yy, mm, dd), "yyyy-mm-dd") & " - " & _
-                                Fn_Pad_A_String(CStr(arrTEC_Local_Data(i, 3)), " ", 5, "R")
-            If dictTimeStamp.exists(strDict) Then
-                dictTimeStamp(strDict) = dictTimeStamp(strDict) + 1
-            Else
-                dictTimeStamp.Add strDict, 1
-            End If
-        End If
-
-        estFacturee = UCase$(arrTEC_Local_Data(i, 12))
-        If InStr("Vrai^VRAI^Faux^FAUX^", estFacturee & "^") = 0 Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID = " & tecID & " la valeur de la colonne 'EstFacturee' est INVALIDE '" & estFacturee & "' !!!")
-            r = r + 1
-            isTECValid = False
-            cas_estFacturee_invalide = cas_estFacturee_invalide + 1
-        End If
-        
-        If arrTEC_Local_Data(i, 13) <> "" Then
-            dateFact = arrTEC_Local_Data(i, 13)
-            testDate = IsDate(dateFact)
-            If testDate = False Or arrTEC_Local_Data(i, 13) > Date Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID =" & tecID & " a une date de facture INVALIDE '" & dateFact & " !!!")
-                r = r + 1
-                isTECValid = False
-                cas_date_fact_invalide = cas_date_fact_invalide + 1
-            End If
-            If dateFact > Date Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID =" & tecID & " a une date de facture FUTURE '" & dateFact & " !!!")
-                r = r + 1
-                isTECValid = False
-                cas_date_facture_future = cas_date_facture_future + 1
-            End If
-            If dateFact <> Int(dateFact) Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** La date de la facture '" & dateFact & "' n'est pas du bon format (H:M:S) pour le TECID =" & tecID)
-                r = r + 1
-                isTECValid = False
-            End If
-        End If
-        
-        estDetruit = arrTEC_Local_Data(i, 14)
-        If InStr("Vrai^Faux^", estDetruit & "^") = 0 Or Len(estDetruit) <> 2 Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID = " & tecID & " la valeur de la colonne 'estDetruit' est INVALIDE '" & estDetruit & "' !!!")
-            r = r + 1
-            isTECValid = False
-            cas_estDetruit_invalide = cas_estDetruit_invalide + 1
-        End If
-        
-        invNo = CStr(arrTEC_Local_Data(i, 16))
-        If Len(invNo) > 0 Then
-            If estFacturee <> "VRAI" Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID = " & tecID & _
-                    " - Incongruité entre le numéro de facture '" & invNo & "' et " & _
-                    "'estFacture' qui vaut '" & estFacturee & "'")
-                r = r + 1
-                isTECValid = False
-            End If
-            If Not invNo = "Radiation" Then
-                If dictFacture.exists(invNo) = False Then
-                    Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID = " & tecID & _
-                        " - Le numéro de facture '" & invNo & "' " & _
-                        "n'existe pas dans le fichier FAC_Entête")
-                    r = r + 1
-                    isTECValid = False
-                Else 'Accumule les heures pour cette facture
-                    If dictFactureHres.exists(invNo) = True Then
-                        dictFactureHres(invNo) = dictFactureHres(invNo) + arrTEC_Local_Data(i, 8)
-                    Else
-                        dictFactureHres.Add invNo, arrTEC_Local_Data(i, 8)
-                    End If
-                End If
-            End If
-        Else
-            If estFacturee = "Vrai" Or estFacturee = "VRAI" Then
-                Call AddMessageToWorkSheet(wsOutput, r, 2, "********** TECID = " & tecID & _
-                    " - Incongruité entre le numéro de facture vide et " & _
-                    "'estFacture' qui vaut '" & estFacturee & "'")
-                r = r + 1
-                isTECValid = False
-            End If
-        End If
-
-        'Accumule les heures
-        Dim h(1 To 6) As Double
-        
-        'Heures INSCRITES
-        total_hres_inscrites = total_hres_inscrites + hres
-        h(1) = hres
-        
-        'Heures DÉTRUITES
-        h(2) = 0
-        If estDetruit = "Vrai" Then
-            total_hres_detruites = total_hres_detruites + hres
-            h(2) = hres
-            hres = 0 'Il ne reste plus d'heures...
-        End If
-        
-        'Heures FACTURABLES
-        h(3) = 0
-        If hres <> 0 And estFacturable = "Vrai" And Fn_Is_Client_Facturable(codeClient) = True Then
-                total_hres_facturable = total_hres_facturable + hres
-                h(3) = hres
-        End If
-        
-        'Heures NON-FACTURABLES
-        h(4) = 0
-        If hres <> 0 Then
-            total_hres_non_facturable = total_hres_non_facturable + hres - h(3)
-            h(4) = hres - h(3)
-        End If
-        
-        'Heures FACTURÉES
-        h(5) = 0
-        If estFacturee = "Vrai" And Fn_Is_Client_Facturable(codeClient) = True Then
-                total_hres_facturees = total_hres_facturees + hres
-                h(5) = hres
-        End If
-        
-        'Heures TEC = Heures Facturables - Heures facturées
-        If h(3) Then
-            h(6) = h(3) - h(5)
-        Else
-            h(6) = 0
-        End If
-        
-        If h(1) - h(2) <> h(3) + h(4) Then
-            Debug.Print "#020 - " & i & " Écart - " & tecID & " " & prof & " " & dateTEC & " " & h(1) & " " & h(2) & " vs. " & h(3) & " " & h(4)
-            Stop
-        End If
-        
-        'Dictionaries
-        If dict_TECID.exists(tecID) = False Then
-            dict_TECID.Add tecID, 0
-        Else
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Le TECID '" & tecID & "' est un doublon pour la ligne '" & i & "'")
-            r = r + 1
-            isTECValid = False
-            cas_doublon_TECID = cas_doublon_TECID + 1
-        End If
-        If dict_prof.exists(prof & "-" & profID) = False Then
-            dict_prof.Add prof & "-" & profID, 0
-        End If
-    Next i
+    'Boucle principale - Lecture et analyse des TEC (TEC_Local)
+    Dim isTECValid As Boolean
     
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arrTEC_Local_Data, 1) - HeaderRow, "##,##0") & " charges de temps ont été analysées!")
-    r = r + 1
+    For i = LBound(arrTEC_Local_Data, 1) To UBound(arrTEC_Local_Data, 1)
+    
+        isTECValid = True
+        If Not AnalyserLigneTEC(arrTEC_Local_Data, i, wsOutput, r, _
+                                dictClient, dictFacture, dictFactureHres, _
+                                dictDateCharge, dictTimeStamp, dictDict, dictProf, _
+                                stats, lastTECIDReported) Then
+            isTECValid = False
+            stats.nbInvalid = stats.nbInvalid + 1
+        Else
+            stats.nbValid = stats.nbValid + 1
+        End If
+        
+        'Détermine le plus grand TecID
+        If arrTEC_Local_Data(i, fTECTECID) > maxTecID Then
+            maxTecID = arrTEC_Local_Data(i, fTECTECID)
+        End If
+
+    Next i
+        
+    
+    Call AjouterMessage(wsOutput, r, 2, "Un total de " & Format$(UBound(arrTEC_Local_Data, 1), "##,##0") & " charges de temps ont été analysées!")
     
     'Add number of rows processed (read)
-    readRows = readRows + UBound(arrTEC_Local_Data, 1) - HeaderRow
+    readRows = readRows + UBound(arrTEC_Local_Data, 1)
     
-    If cas_doublon_TECID = 0 Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucun doublon de TECID")
-        r = r + 1
+    'Impression du sommaire de l'analyse
+    Call AjouterMessage(wsOutput, r, 2, "       La date MINIMALE est '" & Format$(minDate, "dd/mm/yyyy") & "'")
+    Call AjouterMessage(wsOutput, r, 2, "       La date MAXIMALE est '" & Format$(maxDate, "dd/mm/yyyy") & "'")
+    
+    If stats.cas_doublon_TecID = 0 Then
+        Call AjouterMessage(wsOutput, r, 2, "       Aucun doublon de TECID")
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_doublon_TECID & " cas de doublons pour les TECID")
-        r = r + 1
+        Call AjouterMessage(wsOutput, r, 2, "********** Il y a " & stats.cas_doublon_TecID & " cas de doublons pour les TecID")
         isTECValid = False
     End If
     
-    If cas_date_invalide = 0 Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucune date INVALIDE")
-        r = r + 1
+    If stats.cas_date_invalide = 0 Then
+        Call AjouterMessage(wsOutput, r, 2, "       Aucune date INVALIDE")
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_date_invalide & " cas de date INVALIDE")
-        r = r + 1
+        Call AjouterMessage(wsOutput, r, 2, "********** Il y a " & stats.cas_date_invalide & " cas de date INVALIDE")
         isTECValid = False
     End If
     
-    If cas_date_future = 0 Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucune date dans le futur")
-        r = r + 1
+    If stats.cas_date_future = 0 Then
+        Call AjouterMessage(wsOutput, r, 2, "       Aucune date dans le futur")
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_date_future & " cas de date FUTURE")
-        r = r + 1
+        Call AjouterMessage(wsOutput, r, 2, "********** Il y a " & stats.cas_date_future & " cas de date FUTURE")
         isTECValid = False
     End If
     
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "       La date MINIMALE est '" & Format$(minDate, "dd/mm/yyyy") & "'")
-    r = r + 1
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "       La date MAXIMALE est '" & Format$(maxDate, "dd/mm/yyyy") & "'")
-    r = r + 1
-    
-    If cas_hres_invalide = 0 Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucune heures INVALIDE")
-        r = r + 1
+    If stats.cas_hres_invalide = 0 Then
+        Call AjouterMessage(wsOutput, r, 2, "       Aucune heures INVALIDE")
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_hres_invalide & " cas d'heures INVALIDE")
-        r = r + 1
+        Call AjouterMessage(wsOutput, r, 2, "********** Il y a " & stats.cas_hres_invalide & " cas d'heures INVALIDE")
         isTECValid = False
     End If
     
-    If cas_estFacturable_invalide = 0 Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucune valeur 'estFacturable' n'est INVALIDE")
-        r = r + 1
+    If stats.cas_estFacturable_invalide = 0 Then
+        Call AjouterMessage(wsOutput, r, 2, "       Aucune valeur 'estFacturable' n'est INVALIDE")
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_estFacturable_invalide & " cas de valeur 'estFacturable' INVALIDE")
-        r = r + 1
+        Call AjouterMessage(wsOutput, r, 2, "********** Il y a " & stats.cas_estFacturable_invalide & " cas de valeur 'estFacturable' INVALIDE")
         isTECValid = False
     End If
     
-    If cas_estFacturee_invalide = 0 Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucune valeur 'estFacturee' n'est INVALIDE")
-        r = r + 1
+    If stats.cas_estFacturee_invalide = 0 Then
+        Call AjouterMessage(wsOutput, r, 2, "       Aucune valeur 'estFacturee' n'est INVALIDE")
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_estFacturee_invalide & " cas de valeur 'estFacturee' INVALIDE")
-        r = r + 1
+        Call AjouterMessage(wsOutput, r, 2, "********** Il y a " & stats.cas_estFacturee_invalide & " cas de valeur 'estFacturee' INVALIDE")
         isTECValid = False
     End If
     
-    If cas_date_fact_invalide = 0 Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucune date de facture INVALIDE")
-        r = r + 1
+    If stats.cas_estDetruit_invalide = 0 Then
+        Call AjouterMessage(wsOutput, r, 2, "       Aucune valeur 'estDetruit' n'est INVALIDE")
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_date_fact_invalide & " cas de date de facture INVALIDE")
-        r = r + 1
+        Call AjouterMessage(wsOutput, r, 2, "********** Il y a " & stats.cas_estDetruit_invalide & " cas de valeur 'estDetruit' INVALIDE")
         isTECValid = False
     End If
     
-    If cas_estDetruit_invalide = 0 Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "       Aucune valeur 'estDetruit' n'est INVALIDE")
-        r = r + 1
+    If stats.cas_date_fact_invalide = 0 Then
+        Call AjouterMessage(wsOutput, r, 2, "       Aucune date de facture INVALIDE")
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Il y a " & cas_estDetruit_invalide & " cas de valeur 'estDetruit' INVALIDE")
-        r = r + 1
+        Call AjouterMessage(wsOutput, r, 2, "********** Il y a " & stats.cas_date_fact_invalide & " cas de date de facture INVALIDE")
         isTECValid = False
     End If
     
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "Vérification des Heures Facturées par Facture")
-    r = r + 1
+    Call AjouterMessage(wsOutput, r, 2, "Vérification des Heures Facturées par Facture")
     
     'Vérification des heures facturées selon 2 sources (TEC_Local vs. FAC_Détails)
     Dim key As Variant
-    Dim totalHoursBilled As Double
+    Dim totalHoursBilled As Currency
+    Dim hresFactureesTEC_Local As Currency
     Dim cas_Heures_Differentes As Integer
     
     For Each key In dictFacture.keys
         totalHoursBilled = Fn_Get_TEC_Total_Invoice_AF(CStr(key), "Heures")
-        If Round(totalHoursBilled, 2) <> Round(dictFactureHres(key), 2) Then
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Facture '" & CStr(key) & _
+        hresFactureesTEC_Local = dictFactureHres(key)
+        If Not EgalCurrency(totalHoursBilled, hresFactureesTEC_Local) Then
+            Call AjouterMessage(wsOutput, r, 2, "********** Facture '" & CStr(key) & _
                     "', il y a un écart d'heures facturées entre TEC_Local & FAC_Détails - " & _
-                        Round(dictFactureHres(key), 2) & " vs. " & Round(totalHoursBilled, 2))
-            r = r + 1
+                        Round(hresFactureesTEC_Local, 2) & " vs. " & Round(totalHoursBilled, 2))
             isTECValid = False
             cas_Heures_Differentes = cas_Heures_Differentes + 1
         End If
     Next key
 
     If cas_Heures_Differentes = 0 Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "       Toutes les heures facturées balancent, selon les 2 sources")
-        r = r + 1
+        Call AjouterMessage(wsOutput, r, 2, "       Toutes les heures facturées balancent, selon les 2 sources")
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Certaines factures sont à vérifier pour que les heures facturées balancent, selon les 2 sources")
-        r = r + 1
+        Call AjouterMessage(wsOutput, r, 2, "********** Certaines factures sont à vérifier pour que les heures facturées balancent, selon les 2 sources")
         isTECValid = False
     End If
         
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "La somme des heures SAISIES donne ces résultats:")
-    r = r + 1
+    Call AjouterMessage(wsOutput, r, 2, "La somme des heures SAISIES donne ces résultats:")
     
     Dim formattedHours As String
-    formattedHours = Format$(total_hres_inscrites, "#,##0.00")
+    formattedHours = Format$(stats.total_hres_inscrites, "#,##0.00")
     If Len(formattedHours) < 10 Then
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "       Heures SAISIES         : " & formattedHours)
+    Call AjouterMessage(wsOutput, r, 2, "       Heures SAISIES         : " & formattedHours)
     gValeursAComparer(6, 3) = CCur(formattedHours)
-    r = r + 1
     
-    formattedHours = Format$(total_hres_detruites, "#,##0.00")
+    formattedHours = Format$(stats.total_hres_detruites, "#,##0.00")
     If Len(formattedHours) < 10 Then
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "       Heures détruites       : " & formattedHours)
+    Call AjouterMessage(wsOutput, r, 2, "       Heures détruites       : " & formattedHours)
     gValeursAComparer(7, 3) = CCur(formattedHours)
-    r = r + 1
     
-    formattedHours = Format$(total_hres_inscrites - total_hres_detruites, "#,##0.00")
+    formattedHours = Format$(stats.total_hres_inscrites - stats.total_hres_detruites, "#,##0.00")
     If Len(formattedHours) < 10 Then
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "       Heures NETTES          : " & formattedHours)
+    Call AjouterMessage(wsOutput, r, 2, "       Heures NETTES          : " & formattedHours)
     gValeursAComparer(8, 3) = CCur(formattedHours)
-    r = r + 1
     
-    formattedHours = Format$(total_hres_non_facturable, "#,##0.00")
+    formattedHours = Format$(stats.total_hres_non_facturables, "#,##0.00")
     If Len(formattedHours) < 10 Then
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "              Non_facturables : " & formattedHours)
+    Call AjouterMessage(wsOutput, r, 2, "              Non_facturables : " & formattedHours)
     gValeursAComparer(9, 3) = CCur(formattedHours)
-    r = r + 1
 
-    formattedHours = Format$(total_hres_facturable, "#,##0.00")
+    formattedHours = Format$(stats.total_hres_facturables, "#,##0.00")
     If Len(formattedHours) < 10 Then
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "              Facturables     : " & formattedHours)
+    Call AjouterMessage(wsOutput, r, 2, "              Facturables     : " & formattedHours)
     gValeursAComparer(10, 3) = CCur(formattedHours)
-    r = r + 1
     
-    formattedHours = Format$(total_hres_facturees, "#,##0.00")
+    formattedHours = Format$(stats.total_hres_facturees, "#,##0.00")
     If Len(formattedHours) < 10 Then
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
-    Call AddMessageToWorkSheet(wsOutput, r, 2, "       Heures facturées       : " & formattedHours)
+    Call AjouterMessage(wsOutput, r, 2, "       Heures facturées       : " & formattedHours)
     gValeursAComparer(11, 3) = CCur(formattedHours)
-    r = r + 1
 
-    formattedHours = Format$(total_hres_facturable - total_hres_facturees, "#,##0.00")
+    formattedHours = Format$(stats.total_hres_facturables - stats.total_hres_facturees, "#,##0.00")
     If Len(formattedHours) < 10 Then
         formattedHours = String(10 - Len(formattedHours), " ") & formattedHours
     End If
@@ -3809,19 +3605,19 @@ Private Sub VerifierTEC(ByRef r As Long, ByRef readRows As Long)
     rng.Characters(InStr(rng.Value, ":") + 2, Len(formattedHours)).Font.Color = vbRed
     rng.Characters(InStr(rng.Value, ":") + 2, Len(formattedHours)).Font.Bold = True
     gValeursAComparer(12, 3) = CCur(formattedHours)
-    r = r + 1
+    r = r + 2
     
     Dim keys() As Variant
     
     'Tri & impression de dictDateCharge
     If dictDateCharge.count > 0 Then
-        'Un peu de couleur
+        'Avec un peu de couleur
         Set rng = wsOutput.Range("B" & r)
-        rng.Value = "Sommaire des heures selon la DATE de la charge (" & maxTECID & ")"
-        rng.Characters(InStr(rng.Value, "(") + 1, Len(maxTECID)).Font.Color = vbGreen
-        rng.Characters(InStr(rng.Value, "(") + 1, Len(maxTECID)).Font.Bold = True
+        rng.Value = "Sommaire des heures selon la DATE de la charge (" & maxTecID & ")"
+        rng.Characters(InStr(rng.Value, "(") + 1, Len(maxTecID)).Font.Color = vbGreen
+        rng.Characters(InStr(rng.Value, "(") + 1, Len(maxTecID)).Font.Bold = True
         r = r + 1
-    
+        
         keys = dictDateCharge.keys
         Call Fn_Quick_Sort(keys, LBound(keys), UBound(keys))
         'Parcourir les clés triées et afficher les heures
@@ -3829,18 +3625,13 @@ Private Sub VerifierTEC(ByRef r As Long, ByRef readRows As Long)
             key = keys(i)
             formattedHours = Format$(dictDateCharge(key), "#0.00")
             formattedHours = String(6 - Len(formattedHours), " ") & formattedHours
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "       " & key & ":" & formattedHours & " heures")
-            r = r + 1
+            Call AjouterMessage(wsOutput, r, 2, "       " & key & ":" & formattedHours & " heures")
         Next i
-    Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "Aucune nouvelle saisie d'heures (TECID > " & lastTECIDReported & ") ")
-        r = r + 1
     End If
     
     'Tri & impression de dictTimeStamp
     If dictTimeStamp.count > 0 Then
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "Sommaire des heures saisies selon le 'TIMESTAMP'")
-        r = r + 1
+        Call AjouterMessage(wsOutput, r, 2, "Sommaire des heures saisies selon le 'TIMESTAMP'")
         keys = dictTimeStamp.keys
         Call Fn_Quick_Sort(keys, LBound(keys), UBound(keys))
         'Parcourir les clés triées et afficher les valeurs
@@ -3848,19 +3639,20 @@ Private Sub VerifierTEC(ByRef r As Long, ByRef readRows As Long)
             key = keys(i)
             formattedHours = Format$(dictTimeStamp(key), "##0")
             formattedHours = String(6 - Len(formattedHours), " ") & formattedHours
-            Call AddMessageToWorkSheet(wsOutput, r, 2, "       " & key & ":" & formattedHours & " entrée(s)")
-            r = r + 1
+            Call AjouterMessage(wsOutput, r, 2, "       " & key & ":" & formattedHours & " entrée(s)")
         Next i
     Else
-        Call AddMessageToWorkSheet(wsOutput, r, 2, "Aucune nouvelle saisie d'heures (TECID > " & lastTECIDReported & ") ")
+        Call AjouterMessage(wsOutput, r, 2, "Aucune nouvelle saisie d'heures (TECID > " & lastTECIDReported & ") ")
         r = r + 1
     End If
-    r = r + 1
     
     'Cas problème dans cette vérification ?
     If isTECValid = False Then
         verificationIntegriteOK = False
     End If
+    
+    AjouterMessage wsOutput, r, 2, "Temps d’exécution : " & Format(Timer - startTime, "0.00") & " seconde(s)"
+    r = r + 1
 
 Clean_Exit:
 
@@ -3869,8 +3661,8 @@ Clean_Exit:
     Set dictDateCharge = Nothing
     Set dictFacture = Nothing
     Set dictTimeStamp = Nothing
-    Set dict_prof = Nothing
-    Set dict_TECID = Nothing
+    Set dictProf = Nothing
+    Set dictDict = Nothing
     Set key = Nothing
     Set rng = Nothing
     Set rngTEC_LocalData = Nothing
@@ -4631,7 +4423,7 @@ Sub ChargerPlageDansDictionary(ByRef dict As Object, ByVal rng As Range, Optiona
         valeur = cell.offset(0, colValeurOffset).Value 'Colonne adjacente ou selon décalage
 
         'Ajouter au dictionnaire si la clé n'existe pas déjà
-        If Not dict.exists(clé) Then
+        If Not dict.Exists(clé) Then
             dict.Add clé, valeur
         End If
     Next cell
@@ -4729,4 +4521,243 @@ Sub Vérifier_Mix_ClientID_ClientNom_TEC()
     
 End Sub
 
+Private Function AnalyserLigneTEC(data As Variant, i As Long, ByRef wsOutput As Worksheet, ByRef r As Long, _
+                                  ByRef dictClient As Object, ByRef dictFacture As Object, _
+                                  ByRef dictFactureHres As Object, ByRef dictDateCharge As Object, _
+                                  ByRef dictTimeStamp As Object, ByRef dictDict As Object, dict_Prof As Object, _
+                                  ByRef stats As StatistiquesTEC, lastTECIDReported As Long) As Boolean
+                                  
+    Dim isValid As Boolean
+    isValid = True
+
+    '1. On teste le code de client
+    Dim codeClient As String
+    codeClient = Trim$(data(i, fTECClientID))
+    
+    Dim tecID As Long
+    tecID = data(i, fTECTECID)
+    
+    If Not dictClient.Exists(codeClient) Then
+        AjouterMessage wsOutput, r, 2, "********** TecID = '" & tecID & "', le code de client '" & codeClient & "' est INVALIDE !!!"
+        isValid = False
+    End If
+    
+    '2. On teste la date
+    Dim dateTEC As Variant
+    dateTEC = data(i, fTECDate)
+    
+    If Not IsDate(dateTEC) Or dateTEC > Date Then
+        AjouterMessage wsOutput, r, 2, "********** TECID =" & tecID & " a une date INVALIDE '" & dateTEC & "'"
+        stats.cas_date_invalide = stats.cas_date_invalide + 1
+        isValid = False
+    Else
+        If dateTEC <> Int(dateTEC) Then
+            AjouterMessage wsOutput, r, 2, "********** La date du TEC '" & dateTEC & "' n'est pas du bon format (H:M:S) pour le TECID =" & tecID
+            isValid = False
+        End If
+        If dateTEC > Date Then
+            AjouterMessage wsOutput, r, 2, "********** TECID =" & tecID & " a une date FUTURE '" & dateTEC & "'"
+            stats.cas_date_future = stats.cas_date_future + 1
+            isValid = False
+        End If
+    End If
+    
+    '3. Teste la valeur de 'estDetruit'
+    Dim estDetruit As String
+    estDetruit = UCase(Trim$(CStr(data(i, fTECEstDetruit))))
+    
+    If (estDetruit <> "VRAI" And estDetruit <> "FAUX") Or Len(estDetruit) <> 4 Then
+        AjouterMessage wsOutput, r, 2, "********** TecID = '" & tecID & "', la valeur de la colonne 'EstDetruit' est INVALIDE '" & estDetruit & "' !!!"
+        stats.cas_estDetruit_invalide = stats.cas_estDetruit_invalide + 1
+        isValid = False
+    End If
+    
+    '4. Teste la valeur 'estFacturable'
+    Dim estFacturable As String
+    estFacturable = UCase(Trim$(CStr(data(i, fTECEstFacturable))))
+    
+    If InStr("VRAI^FAUX^", estFacturable & "^") = 0 Or Len(estFacturable) <> 4 Then
+        AjouterMessage wsOutput, r, 2, "********** TecID = '" & tecID & "', la valeur de la colonne 'EstFacturable' est INVALIDE '" & estFacturable & "' !!!"
+        stats.cas_estFacturable_invalide = stats.cas_estFacturable_invalide + 1
+        isValid = False
+    End If
+    
+    '5. Teste la valeur de 'estFacturee'
+    Dim estFacturee As String
+    estFacturee = UCase(Trim$(data(i, fTECEstFacturee)))
+    
+    If estFacturee <> "VRAI" And estFacturee <> "FAUX" Then
+        AjouterMessage wsOutput, r, 2, "********** TecID = '" & tecID & "', la valeur de la colonne 'EstFacturee' est INVALIDE '" & estFacturee & "' !!!"
+        stats.cas_estFacturee_invalide = stats.cas_estFacturee_invalide + 1
+        isValid = False
+    End If
+    
+    '6. On teste & accumule les heures
+    Dim hres As Variant
+    hres = data(i, fTECHeures)
+    Dim prof As String
+    prof = data(i, fTECProf)
+    
+    If Not IsNumeric(hres) Then
+        AjouterMessage wsOutput, r, 2, "********** TecID = '" & tecID & "', la valeur des heures est INVALIDE '" & hres & "' !!!"
+        stats.cas_hres_invalide = stats.cas_hres_invalide + 1
+        isValid = False
+    Else
+        stats.total_hres_inscrites = stats.total_hres_inscrites + CCur(hres)
+    End If
+
+    'Accumule les heures
+    Dim h(1 To 6) As Currency
+
+    'Heures INSCRITES
+    h(1) = hres
+
+    'Heures DÉTRUITES
+    h(2) = 0
+    If estDetruit = "VRAI" Then
+        stats.total_hres_detruites = stats.total_hres_detruites + hres
+        h(2) = hres
+        hres = 0 'Il ne reste plus d'heures...
+    End If
+
+    'Heures FACTURABLES
+    h(3) = 0
+    If hres <> 0 And estFacturable = "VRAI" And Fn_Is_Client_Facturable(codeClient) = True Then
+            stats.total_hres_facturables = stats.total_hres_facturables + hres
+            h(3) = hres
+    End If
+
+    'Heures NON-FACTURABLES
+    h(4) = 0
+    If hres <> 0 Then
+        stats.total_hres_non_facturables = stats.total_hres_non_facturables + hres - h(3)
+        h(4) = hres - h(3)
+    End If
+
+    'Heures FACTURÉES
+    h(5) = 0
+    If estFacturee = "VRAI" And Fn_Is_Client_Facturable(codeClient) = True Then
+            stats.total_hres_facturees = stats.total_hres_facturees + hres
+            h(5) = hres
+    End If
+
+    'Heures TEC = Heures Facturables - Heures facturées
+    If h(3) Then
+        h(6) = h(3) - h(5)
+    Else
+        h(6) = 0
+    End If
+
+    If h(1) - h(2) <> h(3) + h(4) Then
+        Debug.Print "#020 - " & i & " Écart - " & tecID & " " & prof & " " & dateTEC & " " & h(1) & " " & h(2) & " vs. " & h(3) & " " & h(4)
+        Stop
+    End If
+    
+    '8. Teste la date de facture, si elle existe
+    Dim dateFact As Variant
+    dateFact = data(i, fTECDateFacturee)
+    
+    If Not IsEmpty(dateFact) And CStr(dateFact) <> "" Then
+        If Not IsDate(dateFact) Then
+            AjouterMessage wsOutput, r, 2, "********** TecID = '" & tecID & "', a une date de facture INVALIDE '" & dateFact & "' !!!"
+            stats.cas_date_fact_invalide = stats.cas_date_fact_invalide + 1
+            isValid = False
+        Else
+            If dateFact > Date Then
+                AjouterMessage wsOutput, r, 2, "********** TecID = '" & tecID & "', a une date de facture FUTURE '" & dateFact & "' !!!"
+                stats.cas_date_facture_future = stats.cas_date_facture_future + 1
+                isValid = False
+            End If
+            If dateFact <> Int(dateFact) Then
+                AjouterMessage wsOutput, r, 2, "********** TecID = '" & tecID & "', la date de la facture '" & dateFact & "' n'est pas du bon format (H:M:S) !!!"
+                isValid = False
+            End If
+        End If
+    End If
+
+    '7. On accumule les heures facturées par facture
+    Dim invNo As String
+    invNo = CStr(data(i, fTECNoFacture))
+
+    If Len(invNo) > 0 Then
+        If estFacturee <> "VRAI" Then
+            AjouterMessage wsOutput, r, 2, "********** TecID = '" & tecID & _
+                "', Incongruité entre le numéro de facture '" & invNo & "' et " & _
+                "'estFacturee' qui vaut '" & estFacturee & "'"
+            isValid = False
+        End If
+    
+        If invNo <> "Radiation" Then
+            If Not dictFacture.Exists(invNo) Then
+                AjouterMessage wsOutput, r, 2, "********** TecID = '" & tecID & _
+                    "', Le numéro de facture '" & invNo & "' n'existe pas dans le fichier FAC_Entête"
+                isValid = False
+            Else
+                'Accumuler les heures dans dictFactureHres
+                If dictFactureHres.Exists(invNo) Then
+                    dictFactureHres(invNo) = dictFactureHres(invNo) + data(i, fTECHeures)
+                Else
+                    dictFactureHres.Add invNo, data(i, fTECHeures)
+                End If
+            End If
+        End If
+    Else
+        If estFacturee = "VRAI" Then
+            AjouterMessage wsOutput, r, 2, "********** TecID = '" & tecID & _
+                "', Incongruité entre le numéro de facture vide et 'estFacturee' qui vaut '" & estFacturee & "'"
+            isValid = False
+        End If
+    End If
+
+    '8. On alimente les 2 dictionnaires pour les dates
+    Dim profID As Long
+    prof = data(i, fTECProf)
+    
+    If CLng(tecID) > lastTECIDReported And UCase$(estDetruit) = "FAUX" Then
+        Dim dCharge As Date, dStamp As Date, strCharge As String, strStamp As String
+        dCharge = data(i, fTECDate)
+        dStamp = data(i, fTECDateSaisie)
+    
+        strCharge = Format$(dCharge, "yyyy-mm-dd") & " - " & Fn_Pad_A_String(CStr(prof), " ", 5, "R")
+        strStamp = Format$(dStamp, "yyyy-mm-dd") & " - " & Fn_Pad_A_String(CStr(prof), " ", 5, "R")
+    
+        'Accumule dans un dictionary par Date de charge
+        If dictDateCharge.Exists(strCharge) Then
+            dictDateCharge(strCharge) = dictDateCharge(strCharge) + CCur(hres)
+        Else
+            dictDateCharge.Add strCharge, CCur(hres)
+        End If
+    
+        'Accumule dans un dictionary par TimeStamp
+        If dictTimeStamp.Exists(strStamp) Then
+            dictTimeStamp(strStamp) = dictTimeStamp(strStamp) + 1
+        Else
+            dictTimeStamp.Add strStamp, 1
+        End If
+    End If
+    
+    '10. Vérifie que chaque TecID est unique
+    If dictDict.Exists(tecID) = False Then
+        dictDict.Add tecID, 0
+    Else
+        Call AjouterMessage(wsOutput, r, 2, "********** Le TecID '" & tecID & "' est un doublon pour la ligne '" & i & "'")
+        isValid = False
+        stats.cas_doublon_TecID = stats.cas_doublon_TecID + 1
+    End If
+    
+    '11. Vérifie la combinaison ProfID + Prof
+    If dict_Prof.Exists(prof & "-" & profID) = False Then
+        dict_Prof.Add prof & "-" & profID, 0
+    End If
+    
+    'À la fin, retourner le résultat global pour cette ligne
+    AnalyserLigneTEC = isValid
+    
+End Function
+
+Public Function EgalCurrency(a As Currency, b As Currency, Optional epsilon As Currency = 0.01) As Boolean
+
+    EgalCurrency = Abs(a - b) <= epsilon
+    
+End Function
 

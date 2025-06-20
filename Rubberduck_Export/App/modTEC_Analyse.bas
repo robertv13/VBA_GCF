@@ -76,7 +76,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     
     For i = 1 To rowCount
         'Vérifier la condition d'exclusion
-        If dictClients.exists(sourceData(i, 5)) Then
+        If dictClients.Exists(sourceData(i, 5)) Then
             codeClient = sourceData(i, 5)
             nomClientFromMF = dictClients(codeClient)
             'Ajouter les données au tableau de sortie
@@ -325,7 +325,7 @@ Sub Build_Hours_Summary(rowSelected As Long)
     i = rowSelected
     Do Until ActiveSheet.Cells(i, 5) = ""
         If ActiveSheet.Cells(i, 6).Value <> "" Then
-            If dictHours.exists(ActiveSheet.Cells(i, 6).Value) Then
+            If dictHours.Exists(ActiveSheet.Cells(i, 6).Value) Then
                 dictHours(ActiveSheet.Cells(i, 6).Value) = dictHours(ActiveSheet.Cells(i, 6).Value) + ActiveSheet.Cells(i, 8).Value
             Else
                 dictHours.Add ActiveSheet.Cells(i, 6).Value, ActiveSheet.Cells(i, 8).Value

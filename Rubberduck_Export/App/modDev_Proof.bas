@@ -16,7 +16,7 @@ Sub ObtenirHeuresFacturÈesParFacture() '2025-04-07 @ 04:51
         If ws.Cells(i, 16).Value >= "24-24609" Then
             s = ws.Cells(i, 16).Value & "-" & Format$(ws.Cells(i, 2), "00")
             'Ajoute au sommaire par facture / par ProfID
-            If dict.exists(s) Then
+            If dict.Exists(s) Then
                 dict(s) = dict(s) + ws.Cells(i, 8).Value
             Else
                 dict.Add s, ws.Cells(i, 8).Value
@@ -150,7 +150,7 @@ Sub Identifier…cartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
     Dim rowRapport As Long
     rowRapport = 2
     For Each fact In dictEntete.keys
-        If dictComptesClients.exists(fact) Then
+        If dictComptesClients.Exists(fact) Then
             montantEntete = dictEntete(fact)
             montantCompte = dictComptesClients(fact)
             If montantEntete <> montantCompte Then
@@ -172,7 +172,7 @@ Sub Identifier…cartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
     
     'VÈrifier les factures manquantes dans wsdFAC_Entete
     For Each fact In dictComptesClients.keys
-        If Not dictEntete.exists(fact) Then
+        If Not dictEntete.Exists(fact) Then
             wsRapport.Cells(rowRapport, 1).Value = fact
             wsRapport.Cells(rowRapport, 2).Value = "Manquant"
             wsRapport.Cells(rowRapport, 3).Value = dictComptesClients(fact)

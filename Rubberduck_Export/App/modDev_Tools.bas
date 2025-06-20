@@ -1574,67 +1574,6 @@ Sub ExporterCodeVBA() '2025-03-11 @ 06:47
         
 End Sub
 
-'Sub CompterLignesCode()
-'
-'    Dim vbComp As VBComponent
-'    Dim ws As Worksheet
-'    Dim i As Integer
-'    Dim TotalLignes As Long
-'
-'    'Vérifier si l'accès au VBA est activé
-'    If Not VérifierAccesVBAAutorise() Then
-'        MsgBox "L'accès au projet VBA est bloqué. Activez-le dans les options de sécurité.", vbCritical
-'        Exit Sub
-'    End If
-'
-'    'Ajouter une nouvelle feuille pour stocker les résultats
-'    On Error Resume Next
-'    Set ws = ThisWorkbook.Sheets("NombreLignesCodeVBA")
-'    If ws Is Nothing Then
-'        Set ws = ThisWorkbook.Sheets.Add
-'        ws.Name = "NombreLignesCodeVBA"
-'    Else
-'        ws.Cells.Clear
-'    End If
-'    On Error GoTo 0
-'
-'    'En-têtes de colonne
-'    ws.Cells(1, 1).Value = "Type"
-'    ws.Cells(1, 2).Value = "Nom du Composant"
-'    ws.Cells(1, 3).Value = "Lignes de Code"
-'
-'    'Boucle sur tous les composants VBA
-'    i = 2
-'    TotalLignes = 0
-'    For Each vbComp In ThisWorkbook.VBProject.VBComponents
-'        ws.Cells(i, 2).Value = vbComp.Name
-'
-'        'Déterminer le type du composant
-'        Select Case vbComp.Type
-'            Case vbext_ct_StdModule
-'                ws.Cells(i, 1).Value = "Module Standard"
-'            Case vbext_ct_ClassModule
-'                ws.Cells(i, 1).Value = "Classe"
-'            Case vbext_ct_MSForm
-'                ws.Cells(i, 1).Value = "UserForm"
-'            Case vbext_ct_Document
-'                ws.Cells(i, 1).Value = "Feuille/Workbook"
-'            Case Else
-'                ws.Cells(i, 1).Value = "Autre"
-'        End Select
-'
-'        'Compter les lignes de code
-'        ws.Cells(i, 3).Value = vbComp.codeModule.CountOfLines
-'        TotalLignes = TotalLignes + vbComp.codeModule.CountOfLines
-'        i = i + 1
-'    Next vbComp
-'
-'    'Résumé dans MsgBox
-'    MsgBox "Analyse terminée !" & vbCrLf & _
-'           "Total de lignes de code : " & TotalLignes, vbInformation, "Résultat"
-'
-'End Sub
-
 Function VérifierAccesVBAAutorise() As Boolean
 
     Dim test As Object
@@ -1729,7 +1668,7 @@ Sub ComparerClasseursNiveauCellules()
             
             'Comparer les données cellule par cellule
             For Each key In dictOld.keys
-                If Not dictNew.exists(key) Then
+                If Not dictNew.Exists(key) Then
                     'Ligne supprimée
                     wsReport.Cells(reportRow, 1).Value = key
                     wsReport.Cells(reportRow, 2).Value = "Ligne entière"
@@ -1755,7 +1694,7 @@ Sub ComparerClasseursNiveauCellules()
             'Vérifier les ajouts
             reportRow = reportRow + 1
             For Each key In dictNew.keys
-                If Not dictOld.exists(key) Then
+                If Not dictOld.Exists(key) Then
                     wsReport.Cells(reportRow, 1).Value = key
                     wsReport.Cells(reportRow, 2).Value = "Ligne entière"
                     wsReport.Cells(reportRow, 3).Value = "Ajoutée"
@@ -1879,6 +1818,7 @@ Sub CompterLignesCode()
     
 End Sub
 
+'@Description "Appeler un AddIn - 2025-06-19 @ 06:54"
 Sub AppelerRoutineAddIn(nomFichier As String, nomMacro As String)
 
     On Error Resume Next

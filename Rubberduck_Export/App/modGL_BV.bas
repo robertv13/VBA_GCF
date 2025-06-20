@@ -62,7 +62,7 @@ Function Get_Summary_By_GL_Account(dateMin As Date, dateMax As Date) As Variant 
     Set dPlanComptable = CreateObject("Scripting.Dictionary")
     arrPC = Fn_Get_Plan_Comptable(2)
     For i = 1 To UBound(arrPC, 1)
-        If Not dPlanComptable.exists(arrPC(i, 1)) Then
+        If Not dPlanComptable.Exists(arrPC(i, 1)) Then
             dPlanComptable.Add arrPC(i, 1), arrPC(i, 2)
         End If
     Next i
@@ -70,13 +70,13 @@ Function Get_Summary_By_GL_Account(dateMin As Date, dateMax As Date) As Variant 
     Set dSoldeParGL = CreateObject("Scripting.Dictionary")
     Do While Not rs.EOF
         rsKey = rs.Fields("NoCompte").Value
-        If Not dPlanComptable.exists(rsKey) Then
+        If Not dPlanComptable.Exists(rsKey) Then
             dPlanComptable.Add rsKey, "Compte inconnu"
         End If
         tDebit = Nz(rs.Fields("TotalDébit"))
         tCredit = Nz(rs.Fields("TotalCrédit"))
         If tDebit <> 0 Or tCredit <> 0 Then
-            If Not dSoldeParGL.exists(rsKey) Then
+            If Not dSoldeParGL.Exists(rsKey) Then
                 dSoldeParGL.Add rsKey, Array(tDebit, tCredit)
             End If
         End If
@@ -87,7 +87,7 @@ Function Get_Summary_By_GL_Account(dateMin As Date, dateMax As Date) As Variant 
     i = 1
     For Each key In dPlanComptable.keys
         soldes = Array(0, 0)
-        If dSoldeParGL.exists(key) Then
+        If dSoldeParGL.Exists(key) Then
             soldes = dSoldeParGL(key)
             solde = soldes(0) - soldes(1)
         Else

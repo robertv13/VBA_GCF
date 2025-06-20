@@ -55,7 +55,7 @@ Public Function GetInitialesAutorises(ByVal userName As String) As String '2025-
         Case "Guillaume", "GuillaumeCharron", "gchar", "RobertMV", "robertmv"
             GetInitialesAutorises = "" 'Toutes les initiales sont permises
         Case Else
-            If dict.exists(userName) Then
+            If dict.Exists(userName) Then
                 GetInitialesAutorises = dict(userName)
             Else
                 GetInitialesAutorises = "INVALID"

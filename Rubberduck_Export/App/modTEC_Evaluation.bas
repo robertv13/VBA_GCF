@@ -102,7 +102,7 @@ Sub TEC_Evaluation_Calcul(cutoffDate As String, ByRef maxDate As Date)
                         trancheAge = "Non défini"
                 End Select
                 
-                If Not gDictHours.exists(profInit) Then
+                If Not gDictHours.Exists(profInit) Then
                     gDictHours.Add profInit, Array(CCur(0), CCur(0), CCur(0), CCur(0), CCur(0), _
                                                   CCur(0), CCur(0), CCur(0), CCur(0), CCur(0), _
                                                   CCur(0), CCur(0), CCur(0), CCur(0), CCur(0))

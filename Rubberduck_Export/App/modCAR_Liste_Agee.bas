@@ -141,7 +141,7 @@ Sub CreerListeAgee() '2024-09-08 @ 15:55
         'Ajouter les données au dictionnaire en fonction du niveau de détail
         Select Case LCase$(niveauDetail)
             Case "client"
-                If Not dictClients.exists(client) Then
+                If Not dictClients.Exists(client) Then
                     dictClients.Add client, Array(CCur(0), CCur(0), CCur(0), CCur(0), CCur(0))
                 End If
                 tableau = dictClients(client) 'Obtenir le tableau a partir du dictionary

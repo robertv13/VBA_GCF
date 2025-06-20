@@ -1524,7 +1524,7 @@ Sub FAC_Finale_Montrer_Sommaire_Taux()
         taux = wshFAC_Brouillon.Range("T" & i).Value
         hres = wshFAC_Brouillon.Range("S" & i).Value
         If taux <> 0 Then
-            If dictTaux.exists(taux) Then
+            If dictTaux.Exists(taux) Then
                 dictTaux(taux) = dictTaux(taux) + hres
             Else
                 dictTaux.Add taux, hres
