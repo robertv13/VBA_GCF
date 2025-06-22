@@ -1,12 +1,9 @@
 ﻿VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufListeProjetsFacture 
    Caption         =   "Facturation des projets de facture"
-   ClientHeight    =   7668
-   ClientLeft      =   108
-   ClientTop       =   420
-   ClientWidth     =   5892
+   ClientLeft      =   -15
+   ClientTop       =   -30
    OleObjectBlob   =   "ufListeProjetsFacture.frx":0000
-   StartUpPosition =   1  'CenterOwner
 End
 Attribute VB_Name = "ufListeProjetsFacture"
 Attribute VB_GlobalNameSpace = False

@@ -29,7 +29,7 @@ Private Sub Worksheet_Activate()
     
     'Clear the display area & display the account number & description
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "F").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "F").End(xlUp).Row
     If lastUsedRow > 5 Then
         ws.Range("C6:S" & lastUsedRow).ClearContents
     End If
@@ -43,7 +43,7 @@ Private Sub Worksheet_Activate()
     'Date du jour par défaut
     gPreviousCellAddress = ws.Range("F3").Address
     ws.Range("F3").Value = ""
-'    ws.Range("F3").value = Format$(Date, wsdADMIN.Range("B1").value)
+'    ws.Range("F3").Value = Format$(Date, wsdADMIN.Range("B1").Value)
     
     Application.ScreenUpdating = True
     Application.EnableEvents = True
@@ -108,3 +108,4 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     End If
 
 End Sub
+

@@ -40,7 +40,7 @@ Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
     
     'Efface la liste précédente
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "B").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "B").End(xlUp).Row
     If lastUsedRow > 7 Then
         ws.Range("B8:J" & lastUsedRow + 2).Clear
     End If
@@ -183,3 +183,4 @@ Private Sub Worksheet_BeforeRightClick(ByVal Target As Range, Cancel As Boolean)
     End If
 
 End Sub
+

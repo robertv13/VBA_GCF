@@ -295,7 +295,7 @@ Private Sub Process_Change(ByVal Target As Range)
                 End If
                 cell.offset(0, 5).Select 'Input NET amount
             Else
-'                If wshDEB_Saisie.Range("H" & target.row).value <> "M" Then
+'                If wshDEB_Saisie.Range("H" & target.row).Value <> "M" Then
                     Call Calculate_GST_PST_And_Credits(wshDEB_Saisie.Range("O4").Value, _
                                                        wshDEB_Saisie.Range("H" & Target.row).Value, _
                                                        Target.Value, _
@@ -407,4 +407,5 @@ Sub DEBSuggestedAmount(rowNumber As Long, suggestedAmount As Double)
     Set ws = Nothing
     
 End Sub
+
 

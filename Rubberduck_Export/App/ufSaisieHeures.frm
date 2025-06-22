@@ -1,12 +1,9 @@
 ﻿VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufSaisieHeures 
    Caption         =   "Gestion des heures travaillées"
-   ClientHeight    =   10308
-   ClientLeft      =   144
-   ClientTop       =   600
-   ClientWidth     =   10224
+   ClientLeft      =   30
+   ClientTop       =   -15
    OleObjectBlob   =   "ufSaisieHeures.frx":0000
-   StartUpPosition =   1  'CenterOwner
 End
 Attribute VB_Name = "ufSaisieHeures"
 Attribute VB_GlobalNameSpace = False

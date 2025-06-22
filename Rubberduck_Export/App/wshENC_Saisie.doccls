@@ -62,7 +62,7 @@ Private Sub Worksheet_Activate()
     
     'Efface les données du bordereau total
     Dim lastUsedBordereau As Long
-    lastUsedBordereau = ws.Cells(ws.Rows.count, "O").End(xlUp).row
+    lastUsedBordereau = ws.Cells(ws.Rows.count, "O").End(xlUp).Row
     If lastUsedBordereau < 6 Then
         lastUsedBordereau = 6
     End If
@@ -187,4 +187,5 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     End If
     
 End Sub
+
 

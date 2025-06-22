@@ -1,18 +1,16 @@
 ﻿VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufListeDEBAuto 
    Caption         =   "Choisir le déboursé récurrent parmi la liste"
-   ClientHeight    =   4416
-   ClientLeft      =   144
-   ClientTop       =   516
-   ClientWidth     =   5988
+   ClientLeft      =   30
+   ClientTop       =   -15
    OleObjectBlob   =   "ufListeDEBAuto.frx":0000
-   StartUpPosition =   1  'CenterOwner
 End
 Attribute VB_Name = "ufListeDEBAuto"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+
 Option Explicit
 
 Private Sub UserForm_Initialize()

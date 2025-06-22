@@ -76,7 +76,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     'An account, description, debit or credit has been selected from TB
     Dim lastUsedAccount As Long
-    lastUsedAccount = wshGL_BV.Cells(wshGL_BV.Rows.count, "D").End(xlUp).row
+    lastUsedAccount = wshGL_BV.Cells(wshGL_BV.Rows.count, "D").End(xlUp).Row
     If lastUsedAccount > 5 Then
         If Not Intersect(Target, wshGL_BV.Range("D4:G" & lastUsedAccount - 2)) Is Nothing Then
             If Target.CountLarge > 1 Then Exit Sub
@@ -92,7 +92,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
             wshGL_BV.Range("B9").Value = Format$(dateLimite, wsdADMIN.Range("B1").Value)
             Application.EnableEvents = True
             
-    '        wshGL_BV.Range("T2").value = "Mois"
+    '        wshGL_BV.Range("T2").Value = "Mois"
 '            DoEvents
             
             'Display all transactions for the selected G/L
@@ -224,4 +224,5 @@ Clean_Exit:
     Application.EnableEvents = True
 
 End Sub
+
 

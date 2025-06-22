@@ -1,12 +1,9 @@
 ﻿VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufStatsHeures 
    Caption         =   "Statistiques d'heures"
-   ClientHeight    =   6600
-   ClientLeft      =   168
-   ClientTop       =   624
-   ClientWidth     =   12048
+   ClientLeft      =   90
+   ClientTop       =   270
    OleObjectBlob   =   "ufStatsHeures.frx":0000
-   StartUpPosition =   1  'CenterOwner
 End
 Attribute VB_Name = "ufStatsHeures"
 Attribute VB_GlobalNameSpace = False
