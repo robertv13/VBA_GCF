@@ -1,4 +1,4 @@
-Attribute VB_Name = "modInactiviteUserForm"
+﻿Attribute VB_Name = "modInactiviteUserForm"
 Option Explicit
 
 Public colWrappers As Collection
@@ -15,7 +15,7 @@ Private Sub ConnectControlsRecursive(ctrls As MSForms.Controls) '2025-05-30 @ 13
     Dim ctrl As MSForms.Control
     For Each ctrl In ctrls
         If TypeName(ctrl) <> "Label" Then
-'            Debug.Print "Contr�le '" & ctrl.Name & "' de type '" & TypeName(ctrl)
+'            Debug.Print "Contrôle '" & ctrl.Name & "' de type '" & TypeName(ctrl)
             Select Case TypeName(ctrl)
                 Case "Frame", "TabStrip"
                     ConnectControlsRecursive ctrl.Controls
@@ -35,3 +35,4 @@ Private Sub ConnectControlsRecursive(ctrls As MSForms.Controls) '2025-05-30 @ 13
     Next ctrl
     
 End Sub
+

@@ -1,4 +1,4 @@
-Attribute VB_Name = "modMENU_FAC"
+﻿Attribute VB_Name = "modMENU_FAC"
 Option Explicit
 
 'Option # 1
@@ -87,4 +87,5 @@ Sub FAC_Confirmation_Click()
     Call Log_Record("modMENU_FAC:FAC_Confirmation_Click", "", startTime)
 
 End Sub
+
 

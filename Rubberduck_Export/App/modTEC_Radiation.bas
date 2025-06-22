@@ -1,4 +1,4 @@
-Attribute VB_Name = "modTEC_Radiation"
+ï»¿Attribute VB_Name = "modTEC_Radiation"
 Option Explicit
 
 Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
@@ -19,12 +19,12 @@ Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
     Dim ws As Worksheet: Set ws = wshTEC_Radiation
     Dim wsSource As Worksheet: Set wsSource = wsdTEC_Local
     
-    'AdvancedFilter # 2 avec TEC_Local (Heures Facturables, Non Facturées, Non Détruites à la date Limite)
+    'AdvancedFilter # 2 avec TEC_Local (Heures Facturables, Non FacturÃ©es, Non DÃ©truites Ã  la date Limite)
     Call Get_TEC_For_Client_AF(codeClient, CDate(cutoffDate), "VRAI", "FAUX", "FAUX")
     
-    'Avons-nous des résultats ?
+    'Avons-nous des rÃ©sultats ?
     Dim lastUsedRow As Long
-    lastUsedRow = wsSource.Cells(wsSource.Rows.count, "AQ").End(xlUp).row
+    lastUsedRow = wsSource.Cells(wsSource.Rows.count, "AQ").End(xlUp).Row
     If lastUsedRow < 3 Then
         MsgBox "Il n'y a aucune TEC pour ce client", vbInformation
         Call Prepare_Pour_Nouvelle_Radiation
@@ -32,7 +32,7 @@ Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
         GoTo ExitSub
     End If
     
-    'Transfère la table en mémoire (arr)
+    'TransfÃ¨re la table en mÃ©moire (arr)
     Dim arr As Variant
     arr = wsSource.Range("AQ3:BF" & lastUsedRow).Value
     
@@ -72,7 +72,7 @@ Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
         currRow = currRow + 1
     Next i
     
-    'La ligne maximum ne doit pas excéder 32
+    'La ligne maximum ne doit pas excÃ©der 32
     currRow = currRow + 1
     If currRow > 32 Then
         currRow = 32
@@ -81,13 +81,13 @@ Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
     If vueIncomplete Then
         MsgBox _
             Prompt:="L'affichage des heures n'est pas complet", _
-            Title:="Maximum de 30 lignes sont affichées", _
+            Title:="Maximum de 30 lignes sont affichÃ©es", _
             Buttons:=vbInformation
     End If
     
     'Affiche les totaux
     With ws
-        .Cells(currRow, 8).Value = "* TOTAUX des TEC qui seront RADIÉS *"
+        .Cells(currRow, 8).Value = "* TOTAUX des TEC qui seront RADIÃ‰S *"
         .Cells(currRow, 8).Font.Bold = True
         .Cells(currRow, 10).Font.Bold = True
         .Cells(currRow, 11).Font.Bold = True
@@ -103,7 +103,7 @@ Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
     
 ExitSub:
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
     Set wsSource = Nothing
     
@@ -118,12 +118,12 @@ Sub AjouterCheckBoxesAvecControleGlobal(lastUsedRow As Long)
     Dim chkBox As checkBox
     Dim headerChkBox As checkBox
 
-    'Supprimer les cases à cocher existantes (au cas où)
+    'Supprimer les cases Ã  cocher existantes (au cas oÃ¹)
     For Each chkBox In ws.CheckBoxes
         chkBox.Delete
     Next chkBox
 
-    'Ajouter une case à cocher dans l'en-tête pour tout cocher/décocher
+    'Ajouter une case Ã  cocher dans l'en-tÃªte pour tout cocher/dÃ©cocher
     Set headerChkBox = ws.CheckBoxes.Add(Left:=ws.Cells(5, 4).Left + 5, _
                                          Top:=ws.Cells(5, 4).Top, _
                                          Width:=ws.Cells(5, 4).Width, _
@@ -131,10 +131,10 @@ Sub AjouterCheckBoxesAvecControleGlobal(lastUsedRow As Long)
     With headerChkBox
         .Name = "chk_header"
         .Caption = ""
-        .OnAction = "ToutCocherOuDecocher" 'Associe la macro de contrôle global
+        .OnAction = "ToutCocherOuDecocher" 'Associe la macro de contrÃ´le global
     End With
 
-    'Ajouter une case à cocher pour chaque ligne du tableau
+    'Ajouter une case Ã  cocher pour chaque ligne du tableau
     For i = 6 To lastUsedRow
         Set chkBox = ws.CheckBoxes.Add(Left:=ws.Cells(i, 4).Left + 5, _
                                        Top:=ws.Cells(i, 4).Top, _
@@ -160,20 +160,20 @@ Sub ToutCocherOuDecocher()
     Dim newState As Boolean
     Dim allChecked As Boolean
     
-    'Déprotéger la feuille temporairement
+    'DÃ©protÃ©ger la feuille temporairement
     ws.Unprotect
     
-    'Trouver la case à cocher de l'en-tête
+    'Trouver la case Ã  cocher de l'en-tÃªte
     On Error Resume Next
     Set headerChkBox = ws.CheckBoxes("chk_header")
     On Error GoTo 0
-    'Vérifier si la case de l'en-tête existe
+    'VÃ©rifier si la case de l'en-tÃªte existe
     If headerChkBox Is Nothing Then
-        MsgBox "La case à cocher d'en-tête 'chk_header' n'existe pas.", vbExclamation
+        MsgBox "La case Ã  cocher d'en-tÃªte 'chk_header' n'existe pas.", vbExclamation
         Exit Sub
     End If
     
-    'Vérifier si toutes les cases sous-jacentes sont cochées
+    'VÃ©rifier si toutes les cases sous-jacentes sont cochÃ©es
     allChecked = True
     For Each chkBox In ws.CheckBoxes
         If chkBox.Name <> "chk_header" Then
@@ -184,17 +184,17 @@ Sub ToutCocherOuDecocher()
         End If
     Next chkBox
     
-    'Déterminer le nouvel état à appliquer aux cases sous-jacentes
-    newState = Not allChecked ' Si toutes sont cochées, on décoche tout, sinon on coche tout
+    'DÃ©terminer le nouvel Ã©tat Ã  appliquer aux cases sous-jacentes
+    newState = Not allChecked ' Si toutes sont cochÃ©es, on dÃ©coche tout, sinon on coche tout
 
-    'Désactiver les événements
+    'DÃ©sactiver les Ã©vÃ©nements
     Application.EnableEvents = False
 
-    'Réinitialiser l'état de la case à cocher de l'en-tête pour être sûr qu'elle peut être modifiée
-    headerChkBox.Value = xlOff 'On s'assure que la case est décochée avant de basculer
-    headerChkBox.Value = IIf(newState, xlOn, xlOff) 'Appliquer l'état approprié
+    'RÃ©initialiser l'Ã©tat de la case Ã  cocher de l'en-tÃªte pour Ãªtre sÃ»r qu'elle peut Ãªtre modifiÃ©e
+    headerChkBox.Value = xlOff 'On s'assure que la case est dÃ©cochÃ©e avant de basculer
+    headerChkBox.Value = IIf(newState, xlOn, xlOff) 'Appliquer l'Ã©tat appropriÃ©
     
-    'Parcourir toutes les cases à cocher et appliquer le nouvel état
+    'Parcourir toutes les cases Ã  cocher et appliquer le nouvel Ã©tat
     For Each chkBox In ws.CheckBoxes
         If chkBox.Name <> "chk_header" Then
             chkBox.Value = IIf(newState, xlOn, xlOff)
@@ -203,10 +203,10 @@ Sub ToutCocherOuDecocher()
         End If
     Next chkBox
 
-    'Réactiver les événements
+    'RÃ©activer les Ã©vÃ©nements
     Application.EnableEvents = True
 
-    'Protéger la feuille à nouveau
+    'ProtÃ©ger la feuille Ã  nouveau
     ws.Protect Password:="", DrawingObjects:=True, Contents:=True, Scenarios:=True, _
                 AllowFormattingCells:=True, AllowFormattingColumns:=True, AllowFormattingRows:=True, _
                 AllowInsertingColumns:=True, AllowInsertingRows:=True, AllowDeletingColumns:=True, _
@@ -229,9 +229,9 @@ Sub CalculerTotaux()
     rowNum = 6
     For Each chkBox In ws.CheckBoxes
         If chkBox.Name <> "chk_header" Then
-            'Vérifier si la case à cocher est cochée
+            'VÃ©rifier si la case Ã  cocher est cochÃ©e
             If chkBox.Value = xlOn Then
-                'Ajouter la valeur de la cellule correspondante à la somme totale
+                'Ajouter la valeur de la cellule correspondante Ã  la somme totale
                 totalHres = totalHres + ws.Cells(rowNum, "J").Value
                 totalValeur = totalValeur + ws.Cells(rowNum, "K").Value
                 
@@ -240,7 +240,7 @@ Sub CalculerTotaux()
         End If
     Next chkBox
     
-    ' Afficher le total dans une cellule spécifique (par exemple, cellule Z1)
+    ' Afficher le total dans une cellule spÃ©cifique (par exemple, cellule Z1)
     ws.Cells(rowNum + 1, 10).Value = Format$(totalHres, "###,##0.00")
     ws.Cells(rowNum + 1, 11).Value = Format$(totalValeur, "###,##0.00 $")
     
@@ -248,7 +248,7 @@ End Sub
 
 Sub shp_TEC_Radiation_GO_Click()
 
-    Call Radiation_Mise_À_Jour
+    Call Radiation_Mise_Ã€_Jour
     
     Call Prepare_Pour_Nouvelle_Radiation
     
@@ -256,18 +256,18 @@ Sub shp_TEC_Radiation_GO_Click()
 
 End Sub
 
-Sub Radiation_Mise_À_Jour()
+Sub Radiation_Mise_Ã€_Jour()
 
-    'Avons-nous des résultats ?
+    'Avons-nous des rÃ©sultats ?
     Dim lastUsedRow As Long
-    lastUsedRow = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "AQ").End(xlUp).row
+    lastUsedRow = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "AQ").End(xlUp).Row
     
     If lastUsedRow >= 3 Then
         Call TEC_Radiation_Update_As_Billed_To_DB(3, lastUsedRow)
         Call TEC_Radiation_Update_As_Billed_Locally(3, lastUsedRow)
     End If
     
-    MsgBox "Les TEC sélectionnés ont été radié avec succès", vbOKOnly, "Confirmation de traitement"
+    MsgBox "Les TEC sÃ©lectionnÃ©s ont Ã©tÃ© radiÃ© avec succÃ¨s", vbOKOnly, "Confirmation de traitement"
     
 End Sub
 
@@ -307,7 +307,7 @@ Sub TEC_Radiation_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Upd
                 rs.Update
             Else
                 'Handle the case where the specified ID is not found
-                MsgBox "L'enregistrement avec le TECID '" & r & "' ne peut être trouvé!", _
+                MsgBox "L'enregistrement avec le TECID '" & r & "' ne peut Ãªtre trouvÃ©!", _
                     vbExclamation
                 rs.Close
                 conn.Close
@@ -328,7 +328,7 @@ next_iteration:
     
     Application.ScreenUpdating = True
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set conn = Nothing
     Set rs = Nothing
     
@@ -357,7 +357,7 @@ Sub TEC_Radiation_Update_As_Billed_Locally(firstResultRow As Long, lastResultRow
         End If
     Next r
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set lookupRange = Nothing
     
     Call Log_Record("modTEC_Radiation:TEC_Radiation_Update_As_Billed_Locally", "", startTime)
@@ -390,7 +390,7 @@ Sub Radiation_Apercu_Avant_Impression()
 
     ws.PrintPreview
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set rngToPrint = Nothing
     Set ws = Nothing
     
@@ -436,7 +436,7 @@ Sub Prepare_Pour_Nouvelle_Radiation()
         .Range("F3").Select
     End With
 
-    'Supprimer les cases à cocher existantes (au cas où)
+    'Supprimer les cases Ã  cocher existantes (au cas oÃ¹)
     Dim chkBox As checkBox
     Dim headerChkBox As checkBox
     For Each chkBox In ws.CheckBoxes
@@ -444,4 +444,5 @@ Sub Prepare_Pour_Nouvelle_Radiation()
     Next chkBox
 
 End Sub
+
 

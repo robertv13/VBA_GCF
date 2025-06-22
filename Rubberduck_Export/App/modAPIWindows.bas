@@ -1,4 +1,4 @@
-Attribute VB_Name = "modAPIWindows"
+﻿Attribute VB_Name = "modAPIWindows"
 Option Explicit
 
 'API pour le nom de l'utilisateur Windows
@@ -24,4 +24,5 @@ Public Function ApplicationIsActive() As Boolean
     ApplicationIsActive = (pid = GetCurrentProcessId())
     
 End Function
+
 

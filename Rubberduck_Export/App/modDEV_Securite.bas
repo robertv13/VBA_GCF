@@ -1,4 +1,4 @@
-Attribute VB_Name = "modDEV_Securite"
+ï»¿Attribute VB_Name = "modDEV_Securite"
 Option Explicit
 
 Public Function GetInitialesObligatoiresFromADMIN(ByVal utilisateurWindows As String) As String '2025-05-31 @ 16:08
@@ -18,7 +18,7 @@ Public Function GetInitialesObligatoiresFromADMIN(ByVal utilisateurWindows As St
         nomWindows = Trim(tblRange.Cells(i, 1).Value)
         initialesPermises = Trim(tblRange.Cells(i, 3).Value)
 
-        If nomWindows = "" Then Exit For 'Arrêter à la première ligne vide
+        If nomWindows = "" Then Exit For 'ArrÃªter Ã  la premiÃ¨re ligne vide
         If nomWindows = utilisateurWindows Then
             If initialesPermises = "" Then
                 GetInitialesObligatoiresFromADMIN = "" 'Aucune restriction
@@ -43,7 +43,7 @@ Public Function GetInitialesAutorises(ByVal userName As String) As String '2025-
     Dim dict As Object
     Set dict = CreateObject("Scripting.Dictionary")
 
-    'Associer les utilisateurs Windows à leurs initiales autorisées
+    'Associer les utilisateurs Windows Ã  leurs initiales autorisÃ©es
     dict.Add "vgervais", "VG"
     dict.Add "Vlad_Portable", "VG"
     dict.Add "User", "ML"
@@ -63,5 +63,6 @@ Public Function GetInitialesAutorises(ByVal userName As String) As String '2025-
     End Select
     
 End Function
+
 
 

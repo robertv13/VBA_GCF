@@ -1,4 +1,4 @@
-Attribute VB_Name = "modENC_Saisie"
+ï»¿Attribute VB_Name = "modENC_Saisie"
 Option Explicit
 
 Public lastRow As Long
@@ -18,7 +18,7 @@ Sub ENC_Get_OS_Invoices(cc As String) '2024-08-21 @ 15:18
     
     'Bring the Result from AF into our List of Oustanding Invoices
     Dim lastResultRow As Long
-    lastResultRow = wsdFAC_Comptes_Clients.Cells(ws.Rows.count, "R").End(xlUp).row
+    lastResultRow = wsdFAC_Comptes_Clients.Cells(ws.Rows.count, "R").End(xlUp).Row
     
     Dim i As Integer
     'Unlock the required area
@@ -32,7 +32,7 @@ Sub ENC_Get_OS_Invoices(cc As String) '2024-08-21 @ 15:18
         End If
     End With
     
-    'Copy à partir du résultat de AF, dans la feuille de saisie des encaissements
+    'Copy Ã  partir du rÃ©sultat de AF, dans la feuille de saisie des encaissements
     Dim rr As Integer: rr = 12
     With wsdFAC_Comptes_Clients
         For i = 3 To lastResultRow
@@ -53,7 +53,7 @@ Sub ENC_Get_OS_Invoices(cc As String) '2024-08-21 @ 15:18
     
     Call ENC_Add_Check_Boxes(lastResultRow - 2)
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
     
     Call Log_Record("modENC_Saisie:ENC_Get_OS_Invoices", "", startTime)
@@ -66,22 +66,22 @@ Sub ENC_Get_OS_Invoices_With_AF(cc As String)
     
     Dim ws As Worksheet: Set ws = wsdFAC_Comptes_Clients
     
-    'Effacer les données de la dernière utilisation
+    'Effacer les donnÃ©es de la derniÃ¨re utilisation
     ws.Range("O6:O10").ClearContents
-    ws.Range("O6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("O6").Value = "DerniÃ¨re utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
 
-    'Définir le range pour la source des données en utilisant un tableau
+    'DÃ©finir le range pour la source des donnÃ©es en utilisant un tableau
     Dim rngData As Range
     Set rngData = ws.Range("l_tbl_FAC_Comptes_Clients[#All]")
     ws.Range("O7").Value = rngData.Address
     
-    'Définir le range des critères
+    'DÃ©finir le range des critÃ¨res
     Dim rngCriteria As Range
     Set rngCriteria = ws.Range("O2:P3")
     ws.Range("O3").Value = wshENC_Saisie.clientCode
     ws.Range("O8").Value = rngCriteria.Address
     
-    'Définir le range des résultats et effacer avant le traitement
+    'DÃ©finir le range des rÃ©sultats et effacer avant le traitement
     Dim rngResult As Range
 '    Set rngResult = ws.Range("P1").CurrentRegion
     Set rngResult = ws.Range("R1").CurrentRegion
@@ -96,13 +96,13 @@ Sub ENC_Get_OS_Invoices_With_AF(cc As String)
                 CopyToRange:=rngResult, _
                 Unique:=False
                                         
-    'Est-ce que nous avons des résultats ?
-'    lastResultRow = ws.Cells(ws.Rows.count, "P").End(xlUp).row
+    'Est-ce que nous avons des rÃ©sultats ?
+'    lastResultRow = ws.Cells(ws.Rows.count, "P").End(xlUp).Row
     Dim lastResultRow As Long
-    lastResultRow = ws.Cells(ws.Rows.count, "R").End(xlUp).row
+    lastResultRow = ws.Cells(ws.Rows.count, "R").End(xlUp).Row
     ws.Range("O10").Value = lastResultRow - 2 & " lignes"
     
-    'Est-il nécessaire de trier les résultats ?
+    'Est-il nÃ©cessaire de trier les rÃ©sultats ?
     If lastResultRow > 3 Then
         With ws.Sort 'Sort - InvNo
             .SortFields.Clear
@@ -122,7 +122,7 @@ Sub ENC_Get_OS_Invoices_With_AF(cc As String)
         ws.Range("X" & r).Value = ws.Range("U" & r).Value - ws.Range("V" & r).Value + ws.Range("W" & r).Value
     Next r
 
-    'libérer la mémoire
+    'libÃ©rer la mÃ©moire
     Set rngCriteria = Nothing
     Set rngData = Nothing
     Set rngResult = Nothing
@@ -152,26 +152,26 @@ Sub MAJ_Encaissement() '2024-08-22 @ 09:46
                 "1. Un client valide" & vbNewLine & _
                 "2. Une date d'encaissement" & vbNewLine & _
                 "3. Un type de paiement et" & vbNewLine & _
-                "4. Des montants appliqués" & vbNewLine & vbNewLine & _
+                "4. Des montants appliquÃ©s" & vbNewLine & vbNewLine & _
                 "AVANT de sauvegarder la transaction.", vbExclamation
             GoTo Clean_Exit
         End If
         
         'Check to make sure Payment Amount = Applied Amount
         If .Range("K9").Value <> 0 Then
-            MsgBox "Assurez-vous que le montant de l'encaissement soit ÉGAL" & vbNewLine & _
-                "à la somme des paiements appliqués", vbExclamation
+            MsgBox "Assurez-vous que le montant de l'encaissement soit Ã‰GAL" & vbNewLine & _
+                "Ã  la somme des paiements appliquÃ©s", vbExclamation
             GoTo Clean_Exit
         End If
         
-        'Create records for ENC_Entête
+        'Create records for ENC_EntÃªte
         Call ENC_Add_DB_Entete
         Call ENC_Add_Locally_Entete
         
         Dim lastOSRow As Integer
-        lastOSRow = .Cells(.Rows.count, "F").End(xlUp).row 'Last applied Item
+        lastOSRow = .Cells(.Rows.count, "F").End(xlUp).Row 'Last applied Item
         
-        'Create records for ENC_Détails
+        'Create records for ENC_DÃ©tails
         If lastOSRow > 11 Then
             Call ENC_Add_DB_Details(wshENC_Saisie.pmtNo, 12, lastOSRow)
             Call ENC_Add_Locally_Details(wshENC_Saisie.pmtNo, 12, lastOSRow)
@@ -183,9 +183,9 @@ Sub MAJ_Encaissement() '2024-08-22 @ 09:46
             Call ENC_Update_Locally_Comptes_Clients(12, lastOSRow)
         End If
                 
-        'Mise à jour du bordereau de dépôt
+        'Mise Ã  jour du bordereau de dÃ©pÃ´t
         Dim lastUsedBordereau As Long
-        lastUsedBordereau = .Cells(.Rows.count, "P").End(xlUp).row
+        lastUsedBordereau = .Cells(.Rows.count, "P").End(xlUp).Row
         lastUsedBordereau = lastUsedBordereau + 1
         Application.EnableEvents = False
         .Range("O" & lastUsedBordereau & ":Q" & lastUsedBordereau + 1).Clear
@@ -216,7 +216,7 @@ Sub MAJ_Encaissement() '2024-08-22 @ 09:46
         Call ENC_GL_Posting_DB(noEnc, dateEnc, nomClient, typeEnc, montantEnc, descEnc)  '2024-08-22 @ 16:08
         Call ENC_GL_Posting_Locally(noEnc, dateEnc, nomClient, typeEnc, montantEnc, descEnc)  '2024-08-22 @ 16:08
         
-        MsgBox "L'encaissement '" & wshENC_Saisie.pmtNo & "' a été enregistré avec succès", vbOKOnly + vbInformation
+        MsgBox "L'encaissement '" & wshENC_Saisie.pmtNo & "' a Ã©tÃ© enregistrÃ© avec succÃ¨s", vbOKOnly + vbInformation
         
         Call Encaissement_Add_New 'Reset the form
         
@@ -248,7 +248,7 @@ Sub ENC_Add_DB_Entete() 'Write to MASTER.xlsx
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "ENC_Entête$"
+    destinationTab = "ENC_EntÃªte$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object, rs As Object
@@ -325,7 +325,7 @@ Sub ENC_Add_Locally_Entete() '2024-08-22 @ 10:38
     
     'What is the last used row in DEB_Trans ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wsdENC_Entete.Cells(wsdENC_Entete.Rows.count, "A").End(xlUp).row
+    lastUsedRow = wsdENC_Entete.Cells(wsdENC_Entete.Rows.count, "A").End(xlUp).Row
     rowToBeUsed = lastUsedRow + 1
     
     wsdENC_Entete.Cells(rowToBeUsed, fEncEPayID).Value = currentPmtNo
@@ -352,7 +352,7 @@ Sub ENC_Add_DB_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow As Int
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "ENC_Détails$"
+    destinationTab = "ENC_DÃ©tails$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -405,9 +405,9 @@ Sub ENC_Add_Locally_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow A
     Dim timeStamp As Date
     timeStamp = Now
     
-    'What is the last used row in ENC_Détails ?
+    'What is the last used row in ENC_DÃ©tails ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wsdENC_Details.Cells(wsdENC_Details.Rows.count, 1).End(xlUp).row
+    lastUsedRow = wsdENC_Details.Cells(wsdENC_Details.Rows.count, 1).End(xlUp).Row
     rowToBeUsed = lastUsedRow + 1
     
     Dim r As Integer
@@ -459,9 +459,9 @@ Sub ENC_Update_DB_Comptes_Clients(firstRow As Integer, lastRow As Integer) 'Writ
             strSQL = "SELECT * FROM [" & destinationTab & "] WHERE InvNo = '" & Inv_No & "'"
             rs.Open strSQL, conn, 2, 3
             If Not rs.EOF Then
-                'Mettre à jour Amount_Paid
+                'Mettre Ã  jour Amount_Paid
                 rs.Fields(fFacCCTotalPaid - 1).Value = rs.Fields(fFacCCTotalPaid - 1).Value + CDbl(wshENC_Saisie.Range("K" & r).Value)
-                'Mettre à jour Status
+                'Mettre Ã  jour Status
                 If rs.Fields(fFacCCTotal - 1).Value - rs.Fields(fFacCCTotalPaid - 1).Value = 0 Then
                     On Error Resume Next
                     rs.Fields(fFacCCStatus - 1).Value = "Paid"
@@ -472,12 +472,12 @@ Sub ENC_Update_DB_Comptes_Clients(firstRow As Integer, lastRow As Integer) 'Writ
                 Else
                     rs.Fields(fFacCCStatus - 1).Value = "Unpaid"
                 End If
-                'Mettre à jour le solde de la facture
+                'Mettre Ã  jour le solde de la facture
                 rs.Fields(fFacCCBalance - 1).Value = rs.Fields(fFacCCTotal - 1).Value - rs.Fields(fFacCCTotalPaid - 1).Value + rs.Fields(fFacCCTotalRegul - 1).Value
                 rs.Update
             Else
                 'Handle the case where the specified ID is not found
-                MsgBox "L'enregistrement avec la facture '" & Inv_No & "' ne peut être retrouvé!", _
+                MsgBox "L'enregistrement avec la facture '" & Inv_No & "' ne peut Ãªtre retrouvÃ©!", _
                     vbExclamation
                 GoTo Clean_Exit
             End If
@@ -510,7 +510,7 @@ Sub ENC_Update_Locally_Comptes_Clients(firstRow As Integer, lastRow As Integer) 
     
     'Set the range to look for
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).Row
     Dim lookupRange As Range: Set lookupRange = ws.Range("A3:A" & lastUsedRow)
     
     Dim r As Integer
@@ -526,7 +526,7 @@ Sub ENC_Update_Locally_Comptes_Clients(firstRow As Integer, lastRow As Integer) 
             rowToBeUpdated = foundRange.row
             ws.Cells(rowToBeUpdated, fFacCCTotalPaid).Value = ws.Cells(rowToBeUpdated, fFacCCTotalPaid).Value + wshENC_Saisie.Range("K" & r).Value
             ws.Cells(rowToBeUpdated, fFacCCBalance).Value = ws.Cells(rowToBeUpdated, fFacCCBalance).Value - wshENC_Saisie.Range("K" & r).Value
-            'Est-ce que le solde de la facture est à 0,00 $ ?
+            'Est-ce que le solde de la facture est Ã  0,00 $ ?
             If ws.Cells(rowToBeUpdated, fFacCCBalance).Value = 0 Then
                 ws.Cells(rowToBeUpdated, fFacCCStatus) = "Paid"
             Else
@@ -539,7 +539,7 @@ Sub ENC_Update_Locally_Comptes_Clients(firstRow As Integer, lastRow As Integer) 
     
     Application.ScreenUpdating = True
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set foundRange = Nothing
     Set lookupRange = Nothing
     Set ws = Nothing
@@ -566,7 +566,7 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
 
     'SQL select command to find the next available ID
     Dim strSQL As String, MaxEJNo As Long
-    strSQL = "SELECT MAX(NoEntrée) AS MaxEJNo FROM [" & destinationTab & "]"
+    strSQL = "SELECT MAX(NoEntrÃ©e) AS MaxEJNo FROM [" & destinationTab & "]"
 
     'Open recordset to find out the MaxID
     rs.Open strSQL, conn
@@ -593,20 +593,20 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
     'Debit side
     rs.AddNew
         'Add fields to the recordset before updating it
-        rs.Fields(fGlTNoEntrée - 1).Value = gNextJENo
+        rs.Fields(fGlTNoEntrÃ©e - 1).Value = gNextJENo
         rs.Fields(fGlTDate - 1).Value = Format$(dt, "yyyy-mm-dd")
-        If wshENC_Saisie.Range("F7").Value = "Dépôt de client" Then
+        If wshENC_Saisie.Range("F7").Value = "DÃ©pÃ´t de client" Then
             rs.Fields(fGlTDescription - 1).Value = "Client:" & wshENC_Saisie.clientCode & " - " & nom
             rs.Fields(fGlTSource - 1).Value = UCase$(wshENC_Saisie.Range("F7").Value) & ":" & Format$(no, "00000")
-            rs.Fields(fGlTNoCompte - 1).Value = ObtenirNoGlIndicateur("Produit perçu d'avance")
-            rs.Fields(fGlTCompte - 1).Value = "Produit perçu d'avance" 'Hardcoded
+            rs.Fields(fGlTNoCompte - 1).Value = ObtenirNoGlIndicateur("Produit perÃ§u d'avance")
+            rs.Fields(fGlTCompte - 1).Value = "Produit perÃ§u d'avance" 'Hardcoded
         Else
             rs.Fields(fGlTDescription - 1).Value = nom
             rs.Fields(fGlTSource - 1).Value = "ENCAISSEMENT:" & Format$(no, "00000")
             rs.Fields(fGlTNoCompte - 1).Value = ObtenirNoGlIndicateur("Encaisse")
             rs.Fields(fGlTCompte - 1).Value = "Encaisse" 'Hardcoded
         End If
-        rs.Fields(fGlTDébit - 1).Value = Montant
+        rs.Fields(fGlTDÃ©bit - 1).Value = Montant
         rs.Fields(fGlTAutreRemarque - 1).Value = desc
         rs.Fields(fGlTTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
     rs.Update
@@ -614,9 +614,9 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
     'Credit side
     rs.AddNew
         'Add fields to the recordset before updating it
-        rs.Fields(fGlTNoEntrée - 1).Value = gNextJENo
+        rs.Fields(fGlTNoEntrÃ©e - 1).Value = gNextJENo
         rs.Fields(fGlTDate - 1).Value = Format$(dt, "yyyy-mm-dd")
-        If wshENC_Saisie.Range("F7").Value = "Dépôt de client" Then
+        If wshENC_Saisie.Range("F7").Value = "DÃ©pÃ´t de client" Then
             rs.Fields(fGlTDescription - 1).Value = "Client:" & wshENC_Saisie.clientCode & " - " & nom
             rs.Fields(fGlTSource - 1).Value = UCase$(wshENC_Saisie.Range("F7").Value) & ":" & Format$(no, "00000")
         Else
@@ -625,7 +625,7 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
         End If
         rs.Fields(fGlTNoCompte - 1).Value = ObtenirNoGlIndicateur("Comptes Clients")
         rs.Fields(fGlTCompte - 1).Value = "Comptes clients" 'Hardcoded
-        rs.Fields(fGlTCrédit - 1).Value = Montant
+        rs.Fields(fGlTCrÃ©dit - 1).Value = Montant
         rs.Fields(fGlTAutreRemarque - 1).Value = desc
         rs.Fields(fGlTTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
     rs.Update
@@ -638,7 +638,7 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
     
     Application.ScreenUpdating = True
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set conn = Nothing
     Set rs = Nothing
     
@@ -654,7 +654,7 @@ Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As Str
     
     'What is the last used row in GL_Trans ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wsdGL_Trans.Cells(wsdGL_Trans.Rows.count, 1).End(xlUp).row
+    lastUsedRow = wsdGL_Trans.Cells(wsdGL_Trans.Rows.count, 1).End(xlUp).Row
     rowToBeUsed = lastUsedRow + 1
     
     gNextJENo = wshENC_Saisie.Range("B10").Value
@@ -667,11 +667,11 @@ Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As Str
     'Debit side
         .Range("A" & rowToBeUsed).Value = gNextJENo
         .Range("B" & rowToBeUsed).Value = CDate(dt)
-        If wshENC_Saisie.Range("F7").Value = "Dépôt de client" Then
+        If wshENC_Saisie.Range("F7").Value = "DÃ©pÃ´t de client" Then
             .Range("C" & rowToBeUsed).Value = "Client:" & wshENC_Saisie.clientCode & " - " & nom
             .Range("D" & rowToBeUsed).Value = UCase$(wshENC_Saisie.Range("F7").Value) & ":" & Format$(no, "00000")
-            .Range("E" & rowToBeUsed).Value = ObtenirNoGlIndicateur("Produit perçu d'avance")
-            .Range("F" & rowToBeUsed).Value = "Produit perçu d'avance" 'Hardcoded
+            .Range("E" & rowToBeUsed).Value = ObtenirNoGlIndicateur("Produit perÃ§u d'avance")
+            .Range("F" & rowToBeUsed).Value = "Produit perÃ§u d'avance" 'Hardcoded
         Else
             .Range("C" & rowToBeUsed).Value = nom
             .Range("D" & rowToBeUsed).Value = "ENCAISSEMENT:" & Format$(no, "00000")
@@ -686,7 +686,7 @@ Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As Str
     'Credit side
         .Range("A" & rowToBeUsed).Value = gNextJENo
         .Range("B" & rowToBeUsed).Value = CDate(dt)
-        If wshENC_Saisie.Range("F7").Value = "Dépôt de client" Then
+        If wshENC_Saisie.Range("F7").Value = "DÃ©pÃ´t de client" Then
             .Range("C" & rowToBeUsed).Value = "Client:" & wshENC_Saisie.clientCode & " - " & nom
             .Range("D" & rowToBeUsed).Value = UCase$(wshENC_Saisie.Range("F7").Value) & ":" & Format$(no, "00000")
         Else
@@ -745,7 +745,7 @@ Sub ENC_Add_Check_Boxes(row As Long)
     
     Application.EnableEvents = True
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set cbx = Nothing
     Set cell = Nothing
     Set chkBoxRange = Nothing
@@ -773,7 +773,7 @@ Sub ENC_Remove_Check_Boxes(row As Long)
     Application.EnableEvents = True
     Application.ScreenUpdating = True
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set cbx = Nothing
     
     Call Log_Record("modENC_Saisie:ENC_Remove_Check_Boxes", "", startTime)
@@ -801,7 +801,7 @@ Sub ENC_Clear_Cells()
     
     'Note the lastUsedRow for checkBox deletion
     Dim lastUsedRow As Long
-    lastUsedRow = wshENC_Saisie.Cells(wshENC_Saisie.Rows.count, "F").End(xlUp).row
+    lastUsedRow = wshENC_Saisie.Cells(wshENC_Saisie.Rows.count, "F").End(xlUp).Row
     If lastUsedRow > 36 Then
         lastUsedRow = 36
     End If
@@ -852,7 +852,7 @@ Sub chkBox_Apply_Click()
         ActiveSheet.Range("K" & linkedCell.row).Value = 0
     End If
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set chkBox = Nothing
     Set linkedCell = Nothing
     
@@ -863,14 +863,14 @@ Sub shp_ENC_Exit_Click()
     If ActiveSheet.Range("K7").Value <> 0 Then
         Dim reponse As VbMsgBoxResult
         reponse = MsgBox("Voulez-vous vraiment quitter SANS enregistrer" & vbNewLine & vbNewLine & _
-                "l'encaissement qui n'a pas été mis à jour ?", _
+                "l'encaissement qui n'a pas Ã©tÃ© mis Ã  jour ?", _
                 vbExclamation + vbYesNo + vbDefaultButton2, "Confirmation avant de quitter SANS enregistrer")
         If reponse = vbYes Then
-            'Exemple d'action : retour à la feuille "MenuPrincipal"
+            'Exemple d'action : retour Ã  la feuille "MenuPrincipal"
             Call ENC_Back_To_GL_Menu
 '            Application.GoTo Worksheets("MenuPrincipal").Range("A1")
         Else
-            'L'utilisateur a annulé la sortie, donc on ne fait rien et il reste sur la feuille.
+            'L'utilisateur a annulÃ© la sortie, donc on ne fait rien et il reste sur la feuille.
         End If
     End If
     
@@ -899,19 +899,19 @@ Sub ENC_Back_To_GL_Menu()
 
 End Sub
 
-Sub AjusteLibelléEncaissement(typeTrans As String)
+Sub AjusteLibellÃ©Encaissement(typeTrans As String)
 
     Application.EnableEvents = False
     
-    If Not typeTrans = "Régularisations" Then
+    If Not typeTrans = "RÃ©gularisations" Then
         wshENC_Saisie.Range("J5").Value = "Date encaissement:"
         wshENC_Saisie.Range("J5").Font.Color = vbBlack
         wshENC_Saisie.Range("J7").Value = "Total encaissement:"
         wshENC_Saisie.Range("J7").Font.Color = vbBlack
     Else
-        wshENC_Saisie.Range("J5").Value = "Date RÉGULARISATION:"
+        wshENC_Saisie.Range("J5").Value = "Date RÃ‰GULARISATION:"
         wshENC_Saisie.Range("J5").Font.Color = vbRed
-        wshENC_Saisie.Range("J7").Value = "Total RÉGULARISATION:"
+        wshENC_Saisie.Range("J7").Value = "Total RÃ‰GULARISATION:"
         wshENC_Saisie.Range("J7").Font.Color = vbRed
     End If
 
@@ -919,12 +919,12 @@ Sub AjusteLibelléEncaissement(typeTrans As String)
 
 End Sub
 
-Sub ValiderEtLancerufEncRégularisation()
+Sub ValiderEtLancerufEncRÃ©gularisation()
 
     Dim ws As Worksheet
     Set ws = wshENC_Saisie
     
-    'Vérification des champs obligatoires
+    'VÃ©rification des champs obligatoires
     If IsEmpty(ws.Range("F5").Value) Then
         MsgBox "Le client est obligatoire. Veuillez le choisir avant de continuer.", vbExclamation
         Exit Sub
@@ -936,7 +936,7 @@ Sub ValiderEtLancerufEncRégularisation()
     End If
     
     If ws.Range("K7").Value = 0 Then
-        If Not ws.Range("F7").Value = "Régularisations" Then
+        If Not ws.Range("F7").Value = "RÃ©gularisations" Then
             MsgBox _
                 Prompt:="Le montant de l'encaissement est obligatoire." & vbNewLine & vbNewLine & _
                         "Veuillez le fournir avant de continuer.", _
@@ -944,7 +944,7 @@ Sub ValiderEtLancerufEncRégularisation()
                 Buttons:=vbExclamation
         Else
             MsgBox _
-                Prompt:="Le montant de la régularisation est obligatoire." & vbNewLine & vbNewLine & _
+                Prompt:="Le montant de la rÃ©gularisation est obligatoire." & vbNewLine & vbNewLine & _
                         "Veuillez le fournir avant de continuer.", _
                 Title:="Un montant est requis", _
                 Buttons:=vbExclamation
@@ -953,10 +953,11 @@ Sub ValiderEtLancerufEncRégularisation()
     End If
     
     'Condition pour lancer le UserForm
-    If ws.Range("F7").Value = "Régularisations" Then
+    If ws.Range("F7").Value = "RÃ©gularisations" Then
         ' Lancer le UserForm
-        ufEncRégularisation.show
+        ufEncRÃ©gularisation.show
     End If
     
 End Sub
+
 

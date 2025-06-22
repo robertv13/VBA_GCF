@@ -1,4 +1,4 @@
-Attribute VB_Name = "modDev_Tools"
+ï»¿Attribute VB_Name = "modDev_Tools"
 '@IgnoreModule UnassignedVariableUsage
 
 Option Explicit
@@ -6,23 +6,23 @@ Option Explicit
 Sub Get_Range_From_Dynamic_Named_Range(dynamicRangeName As String, ByRef rng As Range)
     
     On Error Resume Next
-    'Récupérer la formule associée au nom
+    'RÃ©cupÃ©rer la formule associÃ©e au nom
     Dim refersToFormula As String
     refersToFormula = ThisWorkbook.Names(dynamicRangeName).RefersTo
     On Error GoTo 0
     
     If refersToFormula = "" Then
-        MsgBox "La plage nommée '" & dynamicRangeName & "' n'existe pas ou est invalide.", vbExclamation
+        MsgBox "La plage nommÃ©e '" & dynamicRangeName & "' n'existe pas ou est invalide.", vbExclamation
         Exit Sub
     End If
     
-    'Tester et évaluer la plage
+    'Tester et Ã©valuer la plage
     On Error Resume Next
     Set rng = Application.Evaluate(refersToFormula)
     On Error GoTo 0
     
     If rng Is Nothing Then
-        MsgBox "Impossible de résoudre la plage nommée dynamique '" & dynamicRangeName & "'. Vérifiez la définition.", vbExclamation
+        MsgBox "Impossible de rÃ©soudre la plage nommÃ©e dynamique '" & dynamicRangeName & "'. VÃ©rifiez la dÃ©finition.", vbExclamation
         Exit Sub
     End If
     
@@ -59,12 +59,12 @@ Sub Detect_Circular_References_In_Workbook() '2024-07-24 @ 07:31
     Next ws
     
     If circRefCount > 0 Then
-        MsgBox "Il existe des références circulaires dans le Workbook dans les cellules suivantes:" & vbCrLf & circRef, vbExclamation
+        MsgBox "Il existe des rÃ©fÃ©rences circulaires dans le Workbook dans les cellules suivantes:" & vbCrLf & circRef, vbExclamation
     Else
-        MsgBox "Il n'existe aucune référence circulaire dans ce Workbook .", vbInformation
+        MsgBox "Il n'existe aucune rÃ©fÃ©rence circulaire dans ce Workbook .", vbInformation
     End If
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set cell = Nothing
     Set formulaCells = Nothing
     Set ws = Nothing
@@ -75,8 +75,8 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
 
     'Erase and create a new worksheet for differences
     Dim wsDiff As Worksheet
-    Call CreateOrReplaceWorksheet("Différences_Colonnes")
-    Set wsDiff = ThisWorkbook.Worksheets("Différences_Colonnes")
+    Call CreateOrReplaceWorksheet("DiffÃ©rences_Colonnes")
+    Set wsDiff = ThisWorkbook.Worksheets("DiffÃ©rences_Colonnes")
     wsDiff.Range("A1").Value = "Worksheet"
     wsDiff.Range("B1").Value = "Nb. colonnes"
     wsDiff.Range("C1").Value = "Colonne"
@@ -86,9 +86,9 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
 
     'Set your workbooks and worksheets here
     Dim wb1 As Workbook
-    Set wb1 = Workbooks.Open("C:\VBA\GC_FISCALITÉ\GCF_DataFiles\GCF_BD_MASTER_COPY.xlsx")
+    Set wb1 = Workbooks.Open("C:\VBA\GC_FISCALITÃ‰\GCF_DataFiles\GCF_BD_MASTER_COPY.xlsx")
     Dim wb2 As Workbook
-    Set wb2 = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx")
+    Set wb2 = Workbooks.Open("C:\VBA\GC_FISCALITÃ‰\DataFiles\GCF_BD_MASTER.xlsx")
     
     Dim wso As Worksheet
     Dim wsn As Worksheet
@@ -178,7 +178,7 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
     'Result print setup - 2024-08-05 @ 05:16
     diffRow = diffRow + 2
     wsDiff.Range("A" & diffRow).Value = "**** " & Format$(readColumns, "###,##0") & _
-                                        " colonnes analysées dans l'ensemble du fichier ***"
+                                        " colonnes analysÃ©es dans l'ensemble du fichier ***"
                                     
     'Set conditional formatting for the worksheet (alternate colors)
     Dim rngArea As Range: Set rngArea = wsDiff.Range("A2:E" & diffRow)
@@ -196,12 +196,12 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
     
     'Output differences
     If diffLog <> "" Then
-        MsgBox "Différences trouvées:" & vbCrLf & diffLog
+        MsgBox "DiffÃ©rences trouvÃ©es:" & vbCrLf & diffLog
     Else
-        MsgBox "Aucune différence dans les colonnes."
+        MsgBox "Aucune diffÃ©rence dans les colonnes."
     End If
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set col1 = Nothing
     Set col2 = Nothing
     Set rngArea = Nothing
@@ -218,8 +218,8 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
 
     'Erase and create a new worksheet for differences
     Dim wsDiff As Worksheet
-    Call CreateOrReplaceWorksheet("Différences_Lignes")
-    Set wsDiff = ThisWorkbook.Worksheets("Différences_Lignes")
+    Call CreateOrReplaceWorksheet("DiffÃ©rences_Lignes")
+    Set wsDiff = ThisWorkbook.Worksheets("DiffÃ©rences_Lignes")
     wsDiff.Range("A1").Value = "Worksheet"
     wsDiff.Range("B1").Value = "Prod_Cols"
     wsDiff.Range("C1").Value = "Dev_Cols"
@@ -233,9 +233,9 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
 
     'Set your workbooks and worksheets here
     Dim wb1 As Workbook
-    Set wb1 = Workbooks.Open("C:\VBA\GC_FISCALITÉ\GCF_DataFiles\GCF_BD_MASTER_COPY.xlsx")
+    Set wb1 = Workbooks.Open("C:\VBA\GC_FISCALITÃ‰\GCF_DataFiles\GCF_BD_MASTER_COPY.xlsx")
     Dim wb2 As Workbook
-    Set wb2 = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx")
+    Set wb2 = Workbooks.Open("C:\VBA\GC_FISCALITÃ‰\DataFiles\GCF_BD_MASTER.xlsx")
     
     Dim diffRow As Long
     diffRow = 1
@@ -265,7 +265,7 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
             Debug.Print "#044 - " & wsProd.Name, " Prod: ", wsProd.Cells(1, nbColProd).Value
         Loop Until wsProd.Cells(1, nbColProd).Value = ""
         nbColProd = nbColProd - 1
-        nbRowProd = wsProd.Cells(wsProd.Rows.count, 1).End(xlUp).row
+        nbRowProd = wsProd.Cells(wsProd.Rows.count, 1).End(xlUp).Row
         
         'Determine number of columns and rows in Dev Workbook
         Dim nbColDev As Integer, nbRowDev As Long
@@ -275,7 +275,7 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
             Debug.Print "#045 - " & wsDev.Name, " Dev : ", wsDev.Cells(1, nbColDev).Value
         Loop Until wsProd.Cells(1, nbColDev).Value = ""
         nbColDev = nbColDev - 1
-        nbRowDev = wsDev.Cells(wsDev.Rows.count, 1).End(xlUp).row
+        nbRowDev = wsDev.Cells(wsDev.Rows.count, 1).End(xlUp).Row
         
         diffRow = diffRow + 2
         wsDiff.Cells(diffRow, 1).Value = wsName
@@ -286,11 +286,11 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
         
         Dim nbRow As Long
         If nbRowProd > nbRowDev Then
-            wsDiff.Cells(diffRow, 6).Value = "Le client a ajouté " & nbRowProd - nbRowDev & " lignes dans la feuille"
+            wsDiff.Cells(diffRow, 6).Value = "Le client a ajoutÃ© " & nbRowProd - nbRowDev & " lignes dans la feuille"
             nbRow = nbRowProd
         End If
         If nbRowProd < nbRowDev Then
-            wsDiff.Cells(diffRow, 6).Value = "Le dev a ajouté " & nbRowDev - nbRowProd & " lignes dans la feuille"
+            wsDiff.Cells(diffRow, 6).Value = "Le dev a ajoutÃ© " & nbRowDev - nbRowProd & " lignes dans la feuille"
             nbRow = nbRowDev
         End If
         
@@ -328,7 +328,7 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
     'Result print setup - 2024-08-20 @ 05:48
     diffRow = diffRow + 2
     wsDiff.Range("A" & diffRow).Value = "**** " & Format$(readRows, "###,##0") & _
-                                        " lignes analysées dans l'ensemble du Workbook ***"
+                                        " lignes analysÃ©es dans l'ensemble du Workbook ***"
                                     
     'Set conditional formatting for the worksheet (alternate colors)
     Dim rngArea As Range: Set rngArea = wsDiff.Range("A2:I" & diffRow)
@@ -346,12 +346,12 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
     
     'Output differences
     If diffLogMess <> "" Then
-        MsgBox "Différences trouvées:" & vbCrLf & diffLogMess
+        MsgBox "DiffÃ©rences trouvÃ©es:" & vbCrLf & diffLogMess
     Else
-        MsgBox "Aucune différence dans les lignes."
+        MsgBox "Aucune diffÃ©rence dans les lignes."
     End If
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set rngArea = Nothing
     Set rngToPrint = Nothing
     Set rowDev = Nothing
@@ -366,38 +366,38 @@ End Sub
 
 Sub Fix_Date_Format()
     
-    'Initialisation de la boîte de dialogue FileDialog pour choisir le fichier Excel
+    'Initialisation de la boÃ®te de dialogue FileDialog pour choisir le fichier Excel
     Dim fd As fileDialog
     Set fd = Application.fileDialog(msoFileDialogFilePicker)
     
     'Configuration des filtres de fichiers (Excel uniquement)
-    fd.Title = "Sélectionnez un fichier Excel"
+    fd.Title = "SÃ©lectionnez un fichier Excel"
     fd.Filters.Clear
     fd.Filters.Add "Fichiers Excel", "*.xlsx; *.xlsm"
     
-    'Si l'utilisateur sélectionne un fichier, filePath contiendra son chemin
+    'Si l'utilisateur sÃ©lectionne un fichier, filePath contiendra son chemin
     Dim filePath As String
     Dim fileSelected As Boolean
     If fd.show = -1 Then
         filePath = fd.SelectedItems(1)
         fileSelected = True
     Else
-        MsgBox "Aucun fichier sélectionné.", vbExclamation
+        MsgBox "Aucun fichier sÃ©lectionnÃ©.", vbExclamation
         fileSelected = False
     End If
     
-    'Ouvrir le fichier sélectionné s'il y en a un
+    'Ouvrir le fichier sÃ©lectionnÃ© s'il y en a un
     Dim wb As Workbook
     If fileSelected Then
         Set wb = Workbooks.Open(filePath)
         
-        'Définir les colonnes spécifiques à nettoyer pour chaque feuille
+        'DÃ©finir les colonnes spÃ©cifiques Ã  nettoyer pour chaque feuille
         Dim colonnesANettoyer As Dictionary
         Set colonnesANettoyer = CreateObject("Scripting.Dictionary")
         
-        colonnesANettoyer.Add "TEC_Local", Array("M") 'Vérifier et corriger la colonne D
+        colonnesANettoyer.Add "TEC_Local", Array("M") 'VÃ©rifier et corriger la colonne D
         
-        'Parcourir chaque feuille définie dans le dictionnaire
+        'Parcourir chaque feuille dÃ©finie dans le dictionnaire
         Dim ws As Worksheet
         Dim cell As Range
         Dim dateOnly As Date
@@ -406,23 +406,23 @@ Sub Fix_Date_Format()
         Dim col As Variant
         
         For Each wsName In colonnesANettoyer.keys
-            'Vérifier si la feuille existe dans le classeur
+            'VÃ©rifier si la feuille existe dans le classeur
             On Error Resume Next
             Set ws = wb.Sheets(wsName)
             Debug.Print "#046 - " & wsName
             On Error GoTo 0
             
             If Not ws Is Nothing Then
-                'Récupérer les colonnes à traiter pour cette feuille
+                'RÃ©cupÃ©rer les colonnes Ã  traiter pour cette feuille
                 cols = colonnesANettoyer(wsName)
                 
-                'Parcourir chaque colonne spécifiée
+                'Parcourir chaque colonne spÃ©cifiÃ©e
                 For Each col In cols
-                    'Parcourir chaque cellule de la colonne spécifiée
+                    'Parcourir chaque cellule de la colonne spÃ©cifiÃ©e
                     For Each cell In ws.Columns(col).SpecialCells(xlCellTypeConstants)
-                        'Vérifier si la cellule contient une date avec une heure
+                        'VÃ©rifier si la cellule contient une date avec une heure
                         If IsDate(cell.Value) Then
-                            'Vérifier si la valeur contient des heures (fraction décimale)
+                            'VÃ©rifier si la valeur contient des heures (fraction dÃ©cimale)
                             If cell.Value <> Int(cell.Value) Then
                                 'Garde uniquement la partie date (sans heure)
                                 Debug.Print "#047 - ", wsName & " - " & col & " - " & cell.Value
@@ -441,7 +441,7 @@ Sub Fix_Date_Format()
         
     End If
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set cell = Nothing
     Set col = Nothing
     Set colonnesANettoyer = Nothing
@@ -450,29 +450,29 @@ Sub Fix_Date_Format()
     Set ws = Nothing
     Set wsName = Nothing
     
-    MsgBox "Les dates ont été corrigées pour les colonnes spécifiques.", vbInformation
+    MsgBox "Les dates ont Ã©tÃ© corrigÃ©es pour les colonnes spÃ©cifiques.", vbInformation
 
 End Sub
 
-Sub Debug_Écart_TEC_Local_vs_TEC_TDB_Data()
+Sub Debug_Ã‰cart_TEC_Local_vs_TEC_TDB_Data()
 
     Dim wsTEC As Worksheet: Set wsTEC = wsdTEC_Local
     Dim lurTEC As Long
-    lurTEC = wsTEC.Cells(wsTEC.Rows.count, 1).End(xlUp).row
+    lurTEC = wsTEC.Cells(wsTEC.Rows.count, 1).End(xlUp).Row
     
     Dim wsTDB As Worksheet: Set wsTDB = wshTEC_TDB_Data
     Dim lurTDB As Long
-    lurTDB = wsTDB.Cells(wsTDB.Rows.count, 1).End(xlUp).row
+    lurTDB = wsTDB.Cells(wsTDB.Rows.count, 1).End(xlUp).Row
     
     Dim wsOutput As Worksheet: Set wsOutput = wshzDocAnalyseEcartTEC
     Dim lastUsed As Long
-    lastUsed = wsOutput.Cells(wsOutput.Rows.count, 1).End(xlUp).row + 2
+    lastUsed = wsOutput.Cells(wsOutput.Rows.count, 1).End(xlUp).Row + 2
     wsOutput.Range("A2:D" & lastUsed).ClearContents
     
     wsOutput.Cells(1, 1).Value = "TECID"
     wsOutput.Cells(1, 2).Value = "TEC_Local"
     wsOutput.Cells(1, 3).Value = "TEC_TDB_Data"
-    wsOutput.Cells(1, 4).Value = "Vérification"
+    wsOutput.Cells(1, 4).Value = "VÃ©rification"
     
     Dim arr() As Variant
     ReDim arr(1 To 5000, 1 To 3)
@@ -484,7 +484,7 @@ Sub Debug_Écart_TEC_Local_vs_TEC_TDB_Data()
     
     Dim h As Currency, hTEC As Currency
     'Boucle dans TEC_Local
-    Debug.Print "#048 - Mise en mémoire TEC_LOCAL"
+    Debug.Print "#048 - Mise en mÃ©moire TEC_LOCAL"
     For i = 3 To lurTEC
         With wsTEC
             If .Range("D" & i).Value > dateCutOff Then Stop
@@ -511,7 +511,7 @@ Sub Debug_Écart_TEC_Local_vs_TEC_TDB_Data()
     
     'Boucle dans TEC_TDB
     Dim hTDB As Double
-    Debug.Print "#049 - Mise en mémoire TEC_TDB"
+    Debug.Print "#049 - Mise en mÃ©moire TEC_TDB"
     For i = 2 To lurTDB
         With wsTDB
             If .Range("D" & i).Value > dateCutOff Then Stop
@@ -521,7 +521,7 @@ Sub Debug_Écart_TEC_Local_vs_TEC_TDB_Data()
         End With
     Next i
     
-    Debug.Print "#050 - Analyse des écarts"
+    Debug.Print "#050 - Analyse des Ã©carts"
     Dim tTEC As Double, tTDB As Double
     Dim r As Long: r = 2
     wsOutput.Columns(2).EntireColumn.NumberFormat = "##0.00"
@@ -537,7 +537,7 @@ Sub Debug_Écart_TEC_Local_vs_TEC_TDB_Data()
             wsOutput.Cells(r, 2).Value = arr(i, 2)
             wsOutput.Cells(r, 3).Value = arr(i, 3)
             If arr(i, 2) <> arr(i, 3) Then
-                wsOutput.Cells(r, 4).Value = "Valeurs sont différentes"
+                wsOutput.Cells(r, 4).Value = "Valeurs sont diffÃ©rentes"
             End If
             r = r + 1
         End If
@@ -546,7 +546,7 @@ Sub Debug_Écart_TEC_Local_vs_TEC_TDB_Data()
     wsOutput.Cells(r + 1, 2).Value = Round(tTEC, 2)
     wsOutput.Cells(r + 1, 3).Value = Round(tTDB, 2)
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set wsOutput = Nothing
     Set wsTEC = Nothing
     Set wsTDB = Nothing
@@ -563,7 +563,7 @@ Sub Analyse_Search_For_Memory_Management()
     wsOutput.Range("A1").CurrentRegion.offset(1, 0).ClearContents
     
     Dim lastUsedRow As Long, r As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).Row
     r = 2
     
     Dim ligneCode As String, moduleName As String, procName As String
@@ -599,8 +599,8 @@ Sub Analyse_Search_For_Memory_Management()
         If InStr(ligneCode, ".Recordset") Then
             ligneCode = Replace(ligneCode, ".Recordset", ".RecordSET")
         End If
-        If InStr(ligneCode, ".offset") Then
-            ligneCode = Replace(ligneCode, ".offset", ".offSET")
+        If InStr(ligneCode, ".Offset") Then
+            ligneCode = Replace(ligneCode, ".Offset", ".offSET")
         End If
         If InStr(ligneCode, ".Offset") Then
             ligneCode = Replace(ligneCode, ".Offset", ".OffSET")
@@ -609,7 +609,7 @@ Sub Analyse_Search_For_Memory_Management()
         objetSet = ""
         objetForEach = ""
         objetNothing = ""
-        'Déclaration de l'objet avec Set...
+        'DÃ©claration de l'objet avec Set...
         If InStr(ligneCode, "Set ") <> 0 Then
             If Left$(ligneCode, 4) = "Set " Or InStr(ligneCode, ": Set") <> 0 Then
                 objetSet = Mid$(ligneCode, InStr(ligneCode, "Set ") + 4, Len(ligneCode))
@@ -622,7 +622,7 @@ Sub Analyse_Search_For_Memory_Management()
                 Debug.Print "#078 - " & ligneCode
             End If
         End If
-        'Déclaration de l'objet avec For Each...
+        'DÃ©claration de l'objet avec For Each...
         If InStr(ligneCode, "For Each ") <> 0 Then
             objetForEach = Mid$(ligneCode, InStr(ligneCode, "For Each ") + 9, Len(ligneCode))
             objetForEach = Left$(objetForEach, InStr(objetForEach, " ") - 1)
@@ -631,7 +631,7 @@ Sub Analyse_Search_For_Memory_Management()
                 added = added + objetForEach + "|"
             End If
         End If
-        'Libération de l'objet avec = Nothing
+        'LibÃ©ration de l'objet avec = Nothing
         If InStr(ligneCode, " = Nothing") <> 0 Then
             objetNothing = Mid$(ligneCode, InStr(ligneCode, "Set") + 4, Len(ligneCode))
             objetNothing = Left$(objetNothing, InStr(objetNothing, " ") - 1)
@@ -642,7 +642,7 @@ Sub Analyse_Search_For_Memory_Management()
 Next_For:
     Next i
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
     Set wsOutput = Nothing
     
@@ -650,7 +650,7 @@ End Sub
 
 Sub Sauvegarder_UserForms_Parameters() '2024-11-26 @ 07:42
 
-    'Utiliser la feuille 'Doc_UserForm_Params' ou la créer pour sauvegarder les paramètres
+    'Utiliser la feuille 'Doc_UserForm_Params' ou la crÃ©er pour sauvegarder les paramÃ¨tres
     On Error Resume Next
     Dim ws As Worksheet
     Set ws = wshzDocUserFormParams
@@ -660,7 +660,7 @@ Sub Sauvegarder_UserForms_Parameters() '2024-11-26 @ 07:42
     End If
     On Error GoTo 0
     
-    'En-têtes de colonnes
+    'En-tÃªtes de colonnes
     ws.Cells.Clear
     ws.Range("A1:D1").Value = Array("Nom_UserForm", "Largeur", "Hauteur", "Position_Left", "Position_Top")
     
@@ -685,17 +685,17 @@ Sub Sauvegarder_UserForms_Parameters() '2024-11-26 @ 07:42
                 ws.Cells(i, 4).Value = uf.Left
                 ws.Cells(i, 5).Value = uf.Top
                 i = i + 1
-                ' Décharger le UserForm pour libérer la mémoire
+                ' DÃ©charger le UserForm pour libÃ©rer la mÃ©moire
                 Unload uf
                 Set uf = Nothing
             End If
         End If
     Next vbComp
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set uf = Nothing
     
-    MsgBox "Paramètres des UserForms sauvegardés avec succès.", vbInformation
+    MsgBox "ParamÃ¨tres des UserForms sauvegardÃ©s avec succÃ¨s.", vbInformation
 
 End Sub
 
@@ -706,16 +706,16 @@ Sub Restaurer_UserForms_Parameters()
     Dim uf As Object
     Dim nomUF As String
 
-    'Vérifier si la feuille existe
+    'VÃ©rifier si la feuille existe
     On Error Resume Next
     Set ws = wshzDocUserFormParams
     If ws Is Nothing Then
-        MsgBox "La feuille 'Doc_UserForm_Params' n'existe pas. Sauvegardez d'abord les paramètres.", vbExclamation
+        MsgBox "La feuille 'Doc_UserForm_Params' n'existe pas. Sauvegardez d'abord les paramÃ¨tres.", vbExclamation
         Exit Sub
     End If
     On Error GoTo 0
 
-    'Parcourir la liste des paramètres sauvegardés
+    'Parcourir la liste des paramÃ¨tres sauvegardÃ©s
     i = 2
     Do While ws.Cells(i, 1).Value <> ""
         nomUF = ws.Cells(i, 1).Value
@@ -729,18 +729,18 @@ Sub Restaurer_UserForms_Parameters()
             uf.Height = ws.Cells(i, 3).Value
             uf.Left = ws.Cells(i, 4).Value
             uf.Top = ws.Cells(i, 5).Value
-            'Optionnel : afficher le UserForm pour vérifier
+            'Optionnel : afficher le UserForm pour vÃ©rifier
             'uf.Show
         End If
 
         i = i + 1
     Loop
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set uf = Nothing
     Set ws = Nothing
     
-    MsgBox "Paramètres des UserForms restaurés avec succès.", vbInformation
+    MsgBox "ParamÃ¨tres des UserForms restaurÃ©s avec succÃ¨s.", vbInformation
 
 End Sub
 
@@ -748,17 +748,17 @@ Sub Get_UsedRange_In_Active_Workbook()
 
     Dim output As String
     
-    'Feuille pour les résultats
+    'Feuille pour les rÃ©sultats
     Dim feuilleNom As String
-    feuilleNom = "X_Cellules_Utilisées"
+    feuilleNom = "X_Cellules_UtilisÃ©es"
     Call Erase_And_Create_Worksheet(feuilleNom)
     Dim wsOutput As Worksheet
     Set wsOutput = ThisWorkbook.Sheets(feuilleNom)
     Dim r As Long: r = 1
     wsOutput.Cells(r, 1).Value = "Feuille"
-    wsOutput.Cells(r, 2).Value = "Plage utilisée"
-    wsOutput.Cells(r, 3).Value = "Lignes utilisée"
-    wsOutput.Cells(r, 4).Value = "Colonnes utilisée"
+    wsOutput.Cells(r, 2).Value = "Plage utilisÃ©e"
+    wsOutput.Cells(r, 3).Value = "Lignes utilisÃ©e"
+    wsOutput.Cells(r, 4).Value = "Colonnes utilisÃ©e"
     wsOutput.Cells(r, 5).Value = "Nb. Cellules"
     r = r + 1
     
@@ -766,28 +766,28 @@ Sub Get_UsedRange_In_Active_Workbook()
     Dim ws As Worksheet
     Dim cellCount As Long
     For Each ws In ThisWorkbook.Worksheets
-        'Vérifier si UsedRange n'est pas vide
+        'VÃ©rifier si UsedRange n'est pas vide
         On Error Resume Next
         Dim usedRange As Range
         Set usedRange = ws.usedRange
         On Error GoTo 0
         
         If Not usedRange Is Nothing Then
-            ' Ajouter les informations à la sortie
+            ' Ajouter les informations Ã  la sortie
             wsOutput.Cells(r, 1).Value = ws.Name
             wsOutput.Cells(r, 2).Value = usedRange.Address
             wsOutput.Cells(r, 3).Value = usedRange.Rows.count
             wsOutput.Cells(r, 4).Value = usedRange.Columns.count
             wsOutput.Cells(r, 5).Value = usedRange.Cells.count
         Else
-            ' Si aucune cellule utilisée
+            ' Si aucune cellule utilisÃ©e
             wsOutput.Cells(r, 1).Value = ws.Name
             wsOutput.Cells(r, 2).Value = "Aucune"
         End If
         r = r + 1
     Next ws
     
-    MsgBox "Le traitement est complété. Voir la feuille '" & feuilleNom & "'", vbInformation
+    MsgBox "Le traitement est complÃ©tÃ©. Voir la feuille '" & feuilleNom & "'", vbInformation
     
 End Sub
 
@@ -797,7 +797,7 @@ Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
     Dim cheminSourcePROD As String
     cheminSourcePROD = "P:\Administration\APP\GCF\DataFiles\" ' Ajustez ce chemin
     
-    'Vérifier si des fichiers Actif_*.txt existent (utilisateurs encore présents)
+    'VÃ©rifier si des fichiers Actif_*.txt existent (utilisateurs encore prÃ©sents)
     Dim actifFile As String
     Dim actifExists As Boolean
     actifFile = Dir(cheminSourcePROD & "Actif_*.txt")
@@ -805,44 +805,44 @@ Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
     
     If actifExists Then
         MsgBox "Un ou plusieurs utilisateurs utilisent encore l'application." & vbNewLine & vbNewLine & _
-               "La copie est annulée.", vbExclamation
+               "La copie est annulÃ©e.", vbExclamation
         Exit Sub
     End If
     
-    'Définir le chemin racine (local) pour la création du nouveau dossier
+    'DÃ©finir le chemin racine (local) pour la crÃ©ation du nouveau dossier
     Dim cheminRacineDestination As String
-    cheminRacineDestination = "C:\VBA\GC_FISCALITÉ\GCF_DataFiles\"
+    cheminRacineDestination = "C:\VBA\GC_FISCALITÃ‰\GCF_DataFiles\"
     
-    'Construire le nom du répertoire basé sur la date et l'heure actuelle
+    'Construire le nom du rÃ©pertoire basÃ© sur la date et l'heure actuelle
     Dim dateHeure As String
     Dim nouveauDossier As String
     dateHeure = Format$(Now, "yyyy_mm_dd_hhnn")
     nouveauDossier = cheminRacineDestination & dateHeure & "\"
     
-    'Créer le répertoire s'il n'existe pas déjà (ne devrait pas exister)
+    'CrÃ©er le rÃ©pertoire s'il n'existe pas dÃ©jÃ  (ne devrait pas exister)
     Dim fso As Object
     Set fso = CreateObject("Scripting.FileSystemObject")
     If Not fso.folderExists(nouveauDossier) Then
         fso.CreateFolder nouveauDossier
     End If
     
-    'Noms des deux fichiers à copier (fixe)
+    'Noms des deux fichiers Ã  copier (fixe)
     Dim nomFichier1 As String, nomFichier2 As String
     nomFichier1 = "GCF_BD_MASTER.xlsx"
-    nomFichier2 = "GCF_BD_Entrée.xlsx"
+    nomFichier2 = "GCF_BD_EntrÃ©e.xlsx"
     
     'Copier le premier fichier
     If fso.fileExists(cheminSourcePROD & nomFichier1) Then
         fso.CopyFile Source:=cheminSourcePROD & nomFichier1, Destination:=nouveauDossier, OverwriteFiles:=False
     Else
-        MsgBox "Fichier non trouvé : " & cheminSourcePROD & nomFichier1, vbExclamation, "Erreur"
+        MsgBox "Fichier non trouvÃ© : " & cheminSourcePROD & nomFichier1, vbExclamation, "Erreur"
     End If
     
-    'Copier le deuxième fichier
+    'Copier le deuxiÃ¨me fichier
     If fso.fileExists(cheminSourcePROD & nomFichier2) Then
         fso.CopyFile Source:=cheminSourcePROD & nomFichier2, Destination:=nouveauDossier, OverwriteFiles:=False
     Else
-        MsgBox "Fichier non trouvé : " & cheminSourcePROD & nomFichier2, vbExclamation, "Erreur"
+        MsgBox "Fichier non trouvÃ© : " & cheminSourcePROD & nomFichier2, vbExclamation, "Erreur"
     End If
 
     'Copier les fichiers .log (variable)
@@ -853,38 +853,38 @@ Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
         fso.CopyFile Source:=cheminSourcePROD & fichier, Destination:=nouveauDossier, OverwriteFiles:=False
         'Efface le fichier PROD (initialiation)
         Kill cheminSourcePROD & fichier
-        'Fichier suivant à copier
+        'Fichier suivant Ã  copier
         fichier = Dir
     Loop
     
     'Copie des deux fichiers du dossier temporaire vers le dossier DEV (but ultime)
     
     Dim dossierDEV As String
-    dossierDEV = "C:\VBA\GC_FISCALITÉ\DataFiles\"
+    dossierDEV = "C:\VBA\GC_FISCALITÃ‰\DataFiles\"
     
     'Copier le premier fichier
     If fso.fileExists(nouveauDossier & nomFichier1) Then
         fso.CopyFile Source:=cheminSourcePROD & nomFichier1, Destination:=dossierDEV, OverwriteFiles:=True
     Else
-        MsgBox "Fichier non trouvé : " & nouveauDossier & nomFichier1, vbExclamation, "Erreur"
+        MsgBox "Fichier non trouvÃ© : " & nouveauDossier & nomFichier1, vbExclamation, "Erreur"
     End If
     
-    'Copier le deuxième fichier
+    'Copier le deuxiÃ¨me fichier
     If fso.fileExists(nouveauDossier & nomFichier2) Then
         fso.CopyFile Source:=cheminSourcePROD & nomFichier2, Destination:=dossierDEV, OverwriteFiles:=True
     Else
-        MsgBox "Fichier non trouvé : " & nouveauDossier & nomFichier2, vbExclamation, "Erreur"
+        MsgBox "Fichier non trouvÃ© : " & nouveauDossier & nomFichier2, vbExclamation, "Erreur"
     End If
 
-    MsgBox "Fichiers copiés dans le dossier : " & nouveauDossier, vbInformation, "Terminé"
+    MsgBox "Fichiers copiÃ©s dans le dossier : " & nouveauDossier, vbInformation, "TerminÃ©"
 
 End Sub
 
 Sub AjusterEpurerTablesDeMaster() '2024-12-07 @ 06:47
 
-    'Chemin du classeur à ajuster
+    'Chemin du classeur Ã  ajuster
     Dim cheminClasseur As String
-    cheminClasseur = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx"
+    cheminClasseur = "C:\VBA\GC_FISCALITÃ‰\DataFiles\GCF_BD_MASTER.xlsx"
 
     'Ouvrir le classeur
     Dim wb As Workbook
@@ -896,7 +896,7 @@ Sub AjusterEpurerTablesDeMaster() '2024-12-07 @ 06:47
     End If
     On Error GoTo 0
 
-    '1. Supprimer les lignes facturées dans FAC_Projets_Détails et FAC_Projets_Entête - 2025-05-30 @ 07:17
+    '1. Supprimer les lignes facturÃ©es dans FAC_Projets_DÃ©tails et FAC_Projets_EntÃªte - 2025-05-30 @ 07:17
     Dim i As Long
     Dim wsDetails As Worksheet, wsEntete As Worksheet
 
@@ -904,13 +904,13 @@ Sub AjusterEpurerTablesDeMaster() '2024-12-07 @ 06:47
     Dim lastUsedRow As Long
     
     On Error Resume Next
-    Set wsDetails = wb.Sheets("FAC_Projets_Détails")
-    Set wsEntete = wb.Sheets("FAC_Projets_Entête")
+    Set wsDetails = wb.Sheets("FAC_Projets_DÃ©tails")
+    Set wsEntete = wb.Sheets("FAC_Projets_EntÃªte")
     On Error GoTo 0
 
     If Not wsDetails Is Nothing Then
         With wsDetails
-            lastUsedRow = .Cells(.Rows.count, "A").End(xlUp).row
+            lastUsedRow = .Cells(.Rows.count, "A").End(xlUp).Row
             If lastUsedRow >= 2 Then
                 For i = lastUsedRow To 2 Step -1
                     If Trim(.Cells(i, "I").Value) = "-1" _
@@ -925,7 +925,7 @@ Sub AjusterEpurerTablesDeMaster() '2024-12-07 @ 06:47
 
     If Not wsEntete Is Nothing Then
         With wsEntete
-            lastUsedRow = .Cells(.Rows.count, "A").End(xlUp).row
+            lastUsedRow = .Cells(.Rows.count, "A").End(xlUp).Row
             If lastUsedRow >= 2 Then
                 For i = lastUsedRow To 2 Step -1
                     If Trim(.Cells(i, "Z").Value) = "-1" _
@@ -950,11 +950,11 @@ Sub AjusterEpurerTablesDeMaster() '2024-12-07 @ 06:47
         Set listeObjets = ws.ListObjects
         'Parcourir chaque tableau de la feuille
         For Each tableau In listeObjets
-            'Trouver la dernière ligne avec des données
-            DerniereLigne = ws.Cells(ws.Rows.count, tableau.Range.Column).End(xlUp).row
-            'Trouver la dernière colonne avec des données
+            'Trouver la derniÃ¨re ligne avec des donnÃ©es
+            DerniereLigne = ws.Cells(ws.Rows.count, tableau.Range.Column).End(xlUp).Row
+            'Trouver la derniÃ¨re colonne avec des donnÃ©es
             DerniereColonne = ws.Cells(tableau.HeaderRowRange.row, ws.Columns.count).End(xlToLeft).Column
-            'Redéfinir la plage du tableau
+            'RedÃ©finir la plage du tableau
             Set nouvellePlage = ws.Range(ws.Cells(tableau.HeaderRowRange.row, tableau.Range.Column), _
                                          ws.Cells(DerniereLigne, DerniereColonne))
             On Error Resume Next
@@ -967,7 +967,7 @@ Sub AjusterEpurerTablesDeMaster() '2024-12-07 @ 06:47
     wb.Save
     wb.Close
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set listeObjets = Nothing
     Set nouvellePlage = Nothing
     Set tableau = Nothing
@@ -975,7 +975,7 @@ Sub AjusterEpurerTablesDeMaster() '2024-12-07 @ 06:47
     Set wsDetails = Nothing
     Set wsEntete = Nothing
     
-    MsgBox "Tous les tableaux ont été ajustés avec succès.", vbInformation, "Traitement est terminé"
+    MsgBox "Tous les tableaux ont Ã©tÃ© ajustÃ©s avec succÃ¨s.", vbInformation, "Traitement est terminÃ©"
     
 End Sub
 
@@ -999,26 +999,26 @@ Sub VerifierControlesAssociesToutesFeuilles()
     
     ' Parcourir toutes les feuilles du classeur
     For Each ws In ThisWorkbook.Worksheets
-        Debug.Print "#079 - Vérification des contrôles sur la feuille : " & ws.Name
+        Debug.Print "#079 - VÃ©rification des contrÃ´les sur la feuille : " & ws.Name
         
-        ' Vérification des Shapes (Formulaires ou Boutons assignés)
+        ' VÃ©rification des Shapes (Formulaires ou Boutons assignÃ©s)
         For Each shp In ws.Shapes
             On Error Resume Next
             macroNameRaw = shp.OnAction
             On Error GoTo 0
             
             If macroNameRaw <> "" Then
-                ' Extraire uniquement le nom de la macro après le "!"
+                ' Extraire uniquement le nom de la macro aprÃ¨s le "!"
                 If InStr(1, macroNameRaw, "!") > 0 Then
                     macroName = Split(macroNameRaw, "!")(1)
                 Else
                     macroName = macroNameRaw
                 End If
                 
-                ' Vérifier si la macro existe
+                ' VÃ©rifier si la macro existe
                 found = VerifierMacroExiste(macroName)
                 
-                ' Résultat de la vérification
+                ' RÃ©sultat de la vÃ©rification
                 r = r + 1
                 wsOut.Cells(r, 1).Value = ws.Name
                 wsOut.Cells(r, 2).Value = shp.Name
@@ -1032,16 +1032,16 @@ Sub VerifierControlesAssociesToutesFeuilles()
             End If
         Next shp
         
-        ' Vérification des contrôles ActiveX
+        ' VÃ©rification des contrÃ´les ActiveX
         For Each oleObj In ws.OLEObjects
             If TypeOf oleObj.Object Is MSForms.CommandButton Then
-                ' Construire le nom de la macro à partir du nom du contrôle
+                ' Construire le nom de la macro Ã  partir du nom du contrÃ´le
                 macroName = oleObj.Name & "_Click"
                 
-                ' Vérifier si la macro existe
+                ' VÃ©rifier si la macro existe
                 found = VerifierMacroExiste(macroName, ws.CodeName)
                 
-                ' Résultat de la vérification
+                ' RÃ©sultat de la vÃ©rification
                 r = r + 1
                 wsOut.Cells(r, 1).Value = ws.Name
                 wsOut.Cells(r, 2).Value = oleObj.Name
@@ -1058,7 +1058,7 @@ Sub VerifierControlesAssociesToutesFeuilles()
 
     wsOut.Activate
     
-    MsgBox "Vérification terminée sur toutes les feuilles. Consultez la fenêtre Exécution pour les résultats.", vbInformation
+    MsgBox "VÃ©rification terminÃ©e sur toutes les feuilles. Consultez la fenÃªtre ExÃ©cution pour les rÃ©sultats.", vbInformation
     
 End Sub
 
@@ -1067,7 +1067,7 @@ Function VerifierMacroExiste(macroName As String, Optional moduleName As String 
     'Par defaut...
     VerifierMacroExiste = False
     
-    'Si un module spécifique est fourni, vérifier uniquement dans ce module
+    'Si un module spÃ©cifique est fourni, vÃ©rifier uniquement dans ce module
     Dim vbComp As Object
     Dim codeModule As Object
     Dim ligne As Long
@@ -1088,7 +1088,7 @@ Function VerifierMacroExiste(macroName As String, Optional moduleName As String 
         Exit Function
     End If
     
-    'Parcourir tous les modules si aucun module spécifique n'est fourni
+    'Parcourir tous les modules si aucun module spÃ©cifique n'est fourni
     For Each vbComp In ThisWorkbook.VBProject.VBComponents
         Set codeModule = vbComp.codeModule
         For ligne = 1 To codeModule.CountOfLines
@@ -1111,7 +1111,7 @@ Sub Main() '2024-12-25 @ 15:27
     Dim wsOut As Worksheet
     Set wsOut = ThisWorkbook.Worksheets(outputName)
     
-    'Tableau pour travailler en mémoire les résultats
+    'Tableau pour travailler en mÃ©moire les rÃ©sultats
     Dim outputArr() As String
     ReDim outputArr(1 To 500, 1 To 8)
     
@@ -1123,22 +1123,22 @@ Sub Main() '2024-12-25 @ 15:27
     Call ListeEnumsGenerique("BD_Clients", 1, outputArr, outputRow)
     Call ListeEnumsGenerique("BD_Fournisseurs", 1, outputArr, outputRow)
     
-    Call ListeEnumsGenerique("CC_Régularisations", 1, outputArr, outputRow)
+    Call ListeEnumsGenerique("CC_RÃ©gularisations", 1, outputArr, outputRow)
     
-    Call ListeEnumsGenerique("DEB_Récurrent", 1, outputArr, outputRow)
+    Call ListeEnumsGenerique("DEB_RÃ©current", 1, outputArr, outputRow)
     Call ListeEnumsGenerique("DEB_Trans", 1, outputArr, outputRow)
     
-    Call ListeEnumsGenerique("ENC_Détails", 1, outputArr, outputRow)
-    Call ListeEnumsGenerique("ENC_Entête", 1, outputArr, outputRow)
+    Call ListeEnumsGenerique("ENC_DÃ©tails", 1, outputArr, outputRow)
+    Call ListeEnumsGenerique("ENC_EntÃªte", 1, outputArr, outputRow)
     
     Call ListeEnumsGenerique("FAC_Comptes_Clients", 2, outputArr, outputRow)
-    Call ListeEnumsGenerique("FAC_Détails", 2, outputArr, outputRow)
-    Call ListeEnumsGenerique("FAC_Entête", 2, outputArr, outputRow)
-    Call ListeEnumsGenerique("FAC_Projets_Détails", 1, outputArr, outputRow)
-    Call ListeEnumsGenerique("FAC_Projets_Entête", 1, outputArr, outputRow)
+    Call ListeEnumsGenerique("FAC_DÃ©tails", 2, outputArr, outputRow)
+    Call ListeEnumsGenerique("FAC_EntÃªte", 2, outputArr, outputRow)
+    Call ListeEnumsGenerique("FAC_Projets_DÃ©tails", 1, outputArr, outputRow)
+    Call ListeEnumsGenerique("FAC_Projets_EntÃªte", 1, outputArr, outputRow)
     Call ListeEnumsGenerique("FAC_Sommaire_Taux", 1, outputArr, outputRow)
     
-    Call ListeEnumsGenerique("GL_EJ_Récurrente", 1, outputArr, outputRow)
+    Call ListeEnumsGenerique("GL_EJ_RÃ©currente", 1, outputArr, outputRow)
     Call ListeEnumsGenerique("GL_Trans", 1, outputArr, outputRow)
     
     Call ListeEnumsGenerique("TEC_Local", 2, outputArr, outputRow)
@@ -1146,7 +1146,7 @@ Sub Main() '2024-12-25 @ 15:27
     
     Application.ScreenUpdating = True
     
-    'Écriture des résultats (tableau) dans la feuille
+    'Ã‰criture des rÃ©sultats (tableau) dans la feuille
     With wsOut
         .Cells.Clear 'Efface tout le contenu de la feuille
         .Range("A1").Resize(outputRow, UBound(outputArr, 2)).Value = outputArr
@@ -1164,10 +1164,10 @@ Sub ListeEnumsGenerique(ByVal tableName As String, ByVal HeaderRow As Integer, B
     
     Dim wb As Workbook
     If tableName = "BD_Clients" Or tableName = "BD_Fournisseurs" Then
-        Set wb = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx")
+        Set wb = Workbooks.Open("C:\VBA\GC_FISCALITÃ‰\DataFiles\GCF_BD_EntrÃ©e.xlsx")
         tableName = Replace(tableName, "BD_", "")
     Else
-        Set wb = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx")
+        Set wb = Workbooks.Open("C:\VBA\GC_FISCALITÃ‰\DataFiles\GCF_BD_MASTER.xlsx")
     End If
     Dim wsMaster As Worksheet
     If tableName <> "TEC_TDB_Data" Then
@@ -1179,7 +1179,7 @@ Sub ListeEnumsGenerique(ByVal tableName As String, ByVal HeaderRow As Integer, B
     arrArg(outputRow, 1) = tableName
     outputRow = outputRow + 1
     
-    'Extraire la définition des Enum de la table à partir du code
+    'Extraire la dÃ©finition des Enum de la table Ã  partir du code
     Dim arr() As Variant
     Call ExtractEnumDefinition(tableName, arr)
     
@@ -1200,12 +1200,12 @@ Sub ListeEnumsGenerique(ByVal tableName As String, ByVal HeaderRow As Integer, B
                 arrArg(outputRow, 7) = "*"
             End If
         End If
-        'Valeurs des colonnes sur la première ligne de data
+        'Valeurs des colonnes sur la premiÃ¨re ligne de data
         arrArg(outputRow, 8) = ws.Cells(HeaderRow + 1, col).Value
         outputRow = outputRow + 1
     Next col
     
-    'Ligne pour séparer les tables
+    'Ligne pour sÃ©parer les tables
     outputRow = outputRow + 1
     
     'Fermer sans sauvegarder
@@ -1229,7 +1229,7 @@ Sub ExtractEnumDefinition(tableName As String, ByRef arr() As Variant)
     ReDim arr(1 To 50, 1 To 2)
     Dim e As Long
     
-    'Accéder au projet VBA actif
+    'AccÃ©der au projet VBA actif
     Dim VBProj As VBIDE.VBProject
     Set VBProj = ThisWorkbook.VBProject
 
@@ -1241,16 +1241,16 @@ Sub ExtractEnumDefinition(tableName As String, ByRef arr() As Variant)
         'Parcourir chaque ligne de code
         For LineNum = 1 To codeMod.CountOfLines
             codeLine = Trim$(codeMod.Lines(LineNum, 1))
-            'Détection du début d'un Enum
+            'DÃ©tection du dÃ©but d'un Enum
             If InStr(1, codeLine, "Enum " & tableName, vbTextCompare) > 0 Then
                 InEnumBlock = True
             ElseIf InEnumBlock Then
-                'Détection de la fin de l'Enum
+                'DÃ©tection de la fin de l'Enum
                 If InStr(1, codeLine, "End Enum", vbTextCompare) > 0 Then
                     InEnumBlock = False
-                    Exit For 'Terminer après l'extraction
+                    Exit For 'Terminer aprÃ¨s l'extraction
                 Else
-                    'Ajouter les lignes à l'intérieur du Enum
+                    'Ajouter les lignes Ã  l'intÃ©rieur du Enum
                     If Left$(codeLine, 1) <> "[" Then
                         If Right$(codeLine, 11) = " = [_First]" Then
                             codeLine = Left$(codeLine, Len(codeLine) - 11)
@@ -1274,7 +1274,7 @@ Function CouleurEnRGBTableau(ByVal couleur As Long) As Variant
 
     Dim rgbArray(1 To 3) As Integer
     
-    'Décomposer la couleur en composantes RGB
+    'DÃ©composer la couleur en composantes RGB
     rgbArray(1) = couleur Mod 256       ' Rouge
     rgbArray(2) = (couleur \ 256) Mod 256 ' Vert
     rgbArray(3) = (couleur \ 65536) Mod 256 ' Bleu
@@ -1288,7 +1288,7 @@ Function Convertir_Couleur_RGB_Hex(ByVal couleur As Long) As String
 
     Dim rouge As Integer, vert As Integer, bleu As Integer
     
-    ' Décomposer la couleur en composantes RGB
+    ' DÃ©composer la couleur en composantes RGB
     rouge = couleur Mod 256
     vert = (couleur \ 256) Mod 256
     bleu = (couleur \ 65536) Mod 256
@@ -1329,7 +1329,7 @@ Sub Test_Convertir_Couleur_RGB_Hex()
     ' Convertir en HEX
     couleurHex = Convertir_Couleur_RGB_Hex(couleur)
     
-    ' Afficher le résultat
+    ' Afficher le rÃ©sultat
     MsgBox "La couleur HEX de la cellule A1 est : " & couleurHex
     
 End Sub
@@ -1338,7 +1338,7 @@ Function Convertir_Couleur_OLE(ByVal couleur As Long) As String
 
     Dim rouge As Integer, vert As Integer, bleu As Integer
     
-    'Décomposer la couleur en composantes RGB
+    'DÃ©composer la couleur en composantes RGB
     rouge = couleur Mod 256
     vert = (couleur \ 256) Mod 256
     bleu = (couleur \ 65536) Mod 256
@@ -1388,7 +1388,7 @@ Sub ValideNomProcedureCallLog()
             procedure = Replace(procedure, "Function ", "")
             posPO = InStr(procedure, "(")
             posPF = InStr(procedure, ")")
-            'Paramètres au complet sur la ligne -OU- Début seulement sur cette ligne
+            'ParamÃ¨tres au complet sur la ligne -OU- DÃ©but seulement sur cette ligne
             If posPF > posPO Or (posPF = 0 And posPO <> 0) Then
                 procedure = Trim$(Left$(procedure, posPO - 1))
                 If InStr(procedure, "(") <> 0 Then Stop
@@ -1402,19 +1402,19 @@ Sub ValideNomProcedureCallLog()
         End If
     Next i
     
-    MsgBox "Traitement terminé"
+    MsgBox "Traitement terminÃ©"
     
 End Sub
 
 Function NumeroEnLettre(ByVal num As Long) As String
 
-    'Assurer que le nombre soit positif et supérieur à zéro
+    'Assurer que le nombre soit positif et supÃ©rieur Ã  zÃ©ro
     If num <= 0 Then
         NumeroEnLettre = ""
         Exit Function
     End If
     
-    'Construire la chaîne de caractères à partir du numéro
+    'Construire la chaÃ®ne de caractÃ¨res Ã  partir du numÃ©ro
     Do
         num = num - 1
         NumeroEnLettre = Chr$(65 + (num Mod 26)) & NumeroEnLettre
@@ -1432,7 +1432,7 @@ Sub ListerValidations()
     Dim lastRow As Long
     Dim rowIndex As Long
     
-    ' Vérifie s'il existe déjà une feuille de rapport, sinon la crée
+    ' VÃ©rifie s'il existe dÃ©jÃ  une feuille de rapport, sinon la crÃ©e
     On Error Resume Next
     Set wsReport = ThisWorkbook.Sheets("ListeValidations")
     On Error GoTo 0
@@ -1441,11 +1441,11 @@ Sub ListerValidations()
         Set wsReport = ThisWorkbook.Sheets.Add
         wsReport.Name = "ListeValidations"
     Else
-        ' Efface l'ancien contenu si la feuille existe déjà
+        ' Efface l'ancien contenu si la feuille existe dÃ©jÃ 
         wsReport.Cells.Clear
     End If
     
-    ' En-têtes de colonnes
+    ' En-tÃªtes de colonnes
     wsReport.Cells(1, 1).Value = "Feuille"
     wsReport.Cells(1, 2).Value = "Cellule"
     wsReport.Cells(1, 3).Value = "Type de Validation"
@@ -1467,7 +1467,7 @@ Sub ListerValidations()
                     wsReport.Cells(rowIndex, 2).Value = cell.Address(False, False)
                     wsReport.Cells(rowIndex, 3).Value = .Type
                     If .Type = xlValidateList Then
-                        wsReport.Cells(rowIndex, 4).Value = .Formula1 ' Affiche la liste ou la formule utilisée
+                        wsReport.Cells(rowIndex, 4).Value = .Formula1 ' Affiche la liste ou la formule utilisÃ©e
                     Else
                         wsReport.Cells(rowIndex, 4).Value = "Autre type"
                     End If
@@ -1479,13 +1479,13 @@ Sub ListerValidations()
         Set rngDV = Nothing
     Next ws
     
-    MsgBox "Liste des validations générée dans la feuille 'ListeValidations'.", vbInformation
+    MsgBox "Liste des validations gÃ©nÃ©rÃ©e dans la feuille 'ListeValidations'.", vbInformation
     
 End Sub
 
 Sub AppliquerGrille(ws As Worksheet, plages As Variant)
 
-    'Appliquer le grillage à chaque plage spécifiée
+    'Appliquer le grillage Ã  chaque plage spÃ©cifiÃ©e
     Dim i As Integer
     For i = LBound(plages) To UBound(plages)
         Call CreerBorduresInterieures(ws.Range(plages(i)))
@@ -1501,7 +1501,7 @@ Sub CreerBorduresInterieures(rng As Variant) '2025-02-24 @ 16:40
         .ColorIndex = xlAutomatic
     End With
 
-    'Appliquer les bordures intérieures (horizontales & verticales)
+    'Appliquer les bordures intÃ©rieures (horizontales & verticales)
     With rng.Borders(xlInsideHorizontal)
         .LineStyle = xlContinuous
         .Weight = xlHairline
@@ -1528,7 +1528,7 @@ End Sub
 
 Sub StopperSauvegardeAutomatique()
 
-    'Annuler la prochaine exécution prévue
+    'Annuler la prochaine exÃ©cution prÃ©vue
     On Error Resume Next
     Application.OnTime gNextBackupTime, "DemarrerSauvegardeAutomatique", , False
     On Error GoTo 0
@@ -1537,17 +1537,17 @@ End Sub
 
 Sub ExporterCodeVBA() '2025-03-11 @ 06:47
 
-    'Définir le dossier où enregistrer les modules
+    'DÃ©finir le dossier oÃ¹ enregistrer les modules
     Dim dossierBackup As String
-    dossierBackup = "C:\Users\RobertMV\OneDrive\_P E R S O N N E L\00_AU CAS OÙ\Backup_VBA\" & _
+    dossierBackup = "C:\Users\RobertMV\OneDrive\_P E R S O N N E L\00_AU CAS OÃ™\Backup_VBA\" & _
                             Format$(Now, "yyyy-mm-dd_HHMMSS") & "-" & ThisWorkbook.Name & "\"
     
-    'Vérifier si le dossier existe, sinon le créer
+    'VÃ©rifier si le dossier existe, sinon le crÃ©er
     If Dir(dossierBackup, vbDirectory) = "" Then
         MkDir dossierBackup
     End If
 
-    'Référence au projet VBA actif
+    'RÃ©fÃ©rence au projet VBA actif
     Dim ws As Workbook
     Set ws = ThisWorkbook
 
@@ -1560,7 +1560,7 @@ Sub ExporterCodeVBA() '2025-03-11 @ 06:47
             Case 2: ext = ".cls" 'Classe
             Case 3: ext = ".frm" 'UserForm
             Case vbext_ct_Document: ext = ".cls" 'Feuille de calcul et ThisWorkbook
-            Case Else: ext = ""  'Autres (ignorés)
+            Case Else: ext = ""  'Autres (ignorÃ©s)
         End Select
         
         If ext <> "" Then
@@ -1568,18 +1568,18 @@ Sub ExporterCodeVBA() '2025-03-11 @ 06:47
         End If
     Next vbComp
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set vbComp = Nothing
     Set ws = Nothing
         
 End Sub
 
-Function VérifierAccesVBAAutorise() As Boolean
+Function VÃ©rifierAccesVBAAutorise() As Boolean
 
     Dim test As Object
     On Error Resume Next
     Set test = ThisWorkbook.VBProject.VBComponents
-    VérifierAccesVBAAutorise = (Err.Number = 0)
+    VÃ©rifierAccesVBAAutorise = (Err.Number = 0)
     On Error GoTo 0
     
 End Function
@@ -1600,7 +1600,7 @@ Sub Tester_dnrProf_Initials_Only() '2025-03-14 @ 10:42
     If Not rng Is Nothing Then
         MsgBox "Plage correcte : " & rng.Address
     Else
-        MsgBox "Erreur : la plage nommée est invalide !", vbCritical
+        MsgBox "Erreur : la plage nommÃ©e est invalide !", vbCritical
     End If
     
 End Sub
@@ -1617,17 +1617,17 @@ Sub ComparerClasseursNiveauCellules()
     Dim diff As Boolean
     Dim fDialog As fileDialog
     
-    'Sélection des fichiers
+    'SÃ©lection des fichiers
     Set fDialog = Application.fileDialog(msoFileDialogFilePicker)
-    fDialog.Title = "Sélectionnez l'ancien classeur"
+    fDialog.Title = "SÃ©lectionnez l'ancien classeur"
     If fDialog.show <> -1 Then Exit Sub
     Set wbOld = Workbooks.Open(fDialog.SelectedItems(1))
     
-    fDialog.Title = "Sélectionnez le nouveau classeur"
+    fDialog.Title = "SÃ©lectionnez le nouveau classeur"
     If fDialog.show <> -1 Then Exit Sub
     Set wbNew = Workbooks.Open(fDialog.SelectedItems(1))
     
-    'Création du classeur de rapport
+    'CrÃ©ation du classeur de rapport
     Set wbReport = Workbooks.Add
     
     'Boucler sur les feuilles communes
@@ -1641,48 +1641,48 @@ Sub ComparerClasseursNiveauCellules()
             Set dictOld = CreateObject("Scripting.Dictionary")
             Set dictNew = CreateObject("Scripting.Dictionary")
             
-            'Déterminer la dernière ligne et colonne
-            lastRowOld = wsOld.Cells(wsOld.Rows.count, 1).End(xlUp).row
-            lastRowNew = wsNew.Cells(wsNew.Rows.count, 1).End(xlUp).row
+            'DÃ©terminer la derniÃ¨re ligne et colonne
+            lastRowOld = wsOld.Cells(wsOld.Rows.count, 1).End(xlUp).Row
+            lastRowNew = wsNew.Cells(wsNew.Rows.count, 1).End(xlUp).Row
             lastCol = wsOld.Cells(1, wsOld.Columns.count).End(xlToLeft).Column
             
-            'Charger les données de l'ancien classeur
+            'Charger les donnÃ©es de l'ancien classeur
             Set rngOld = wsOld.Range("A2:A" & lastRowOld)
             For Each row In rngOld.Rows
-                key = row.row & " - " & row.Cells(1, 1).Value & " " & row.Cells(1, 2).Value 'Clé unique (ajustez si nécessaire)
+                key = row.row & " - " & row.Cells(1, 1).Value & " " & row.Cells(1, 2).Value 'ClÃ© unique (ajustez si nÃ©cessaire)
                 dictOld(key) = row.EntireRow.Value
             Next row
             
-            'Charger les données du nouveau classeur
+            'Charger les donnÃ©es du nouveau classeur
             Set rngNew = wsNew.Range("A2:A" & lastRowNew)
             For Each row In rngNew.Rows
                 key = row.row & " - " & row.Cells(1, 1).Value & " " & row.Cells(1, 2).Value
                 dictNew(key) = row.EntireRow.Value
             Next row
             
-            'Créer une feuille pour le rapport
+            'CrÃ©er une feuille pour le rapport
             Set wsReport = wbReport.Sheets.Add
             wsReport.Name = "Diff " & wsOld.Name
-            wsReport.Range("A1:D1").Value = Array("Élément", "Colonne", "Ancienne", "Nouvelle")
+            wsReport.Range("A1:D1").Value = Array("Ã‰lÃ©ment", "Colonne", "Ancienne", "Nouvelle")
             reportRow = 2
             
-            'Comparer les données cellule par cellule
+            'Comparer les donnÃ©es cellule par cellule
             For Each key In dictOld.keys
                 If Not dictNew.Exists(key) Then
-                    'Ligne supprimée
+                    'Ligne supprimÃ©e
                     wsReport.Cells(reportRow, 1).Value = key
-                    wsReport.Cells(reportRow, 2).Value = "Ligne entière"
-                    wsReport.Cells(reportRow, 3).Value = "Supprimée"
+                    wsReport.Cells(reportRow, 2).Value = "Ligne entiÃ¨re"
+                    wsReport.Cells(reportRow, 3).Value = "SupprimÃ©e"
                     reportRow = reportRow + 1
                 Else
-                    'Vérifier chaque colonne individuellement
+                    'VÃ©rifier chaque colonne individuellement
                     oldValues = dictOld(key)
                     newValues = dictNew(key)
                     For col = 1 To lastCol
                         If oldValues(1, col) <> newValues(1, col) Then
                             wsReport.Cells(reportRow, 1).Value = key
                             wsReport.Cells(reportRow, 2).Value = wsOld.Cells(1, col).Value 'Nom de la colonne
-                            wsReport.Cells(reportRow, 3).Value = "Modifiée"
+                            wsReport.Cells(reportRow, 3).Value = "ModifiÃ©e"
                             wsReport.Cells(reportRow, 4).Value = oldValues(1, col)
                             wsReport.Cells(reportRow, 5).Value = newValues(1, col)
                             reportRow = reportRow + 1
@@ -1691,13 +1691,13 @@ Sub ComparerClasseursNiveauCellules()
                 End If
             Next key
             
-            'Vérifier les ajouts
+            'VÃ©rifier les ajouts
             reportRow = reportRow + 1
             For Each key In dictNew.keys
                 If Not dictOld.Exists(key) Then
                     wsReport.Cells(reportRow, 1).Value = key
-                    wsReport.Cells(reportRow, 2).Value = "Ligne entière"
-                    wsReport.Cells(reportRow, 3).Value = "Ajoutée"
+                    wsReport.Cells(reportRow, 2).Value = "Ligne entiÃ¨re"
+                    wsReport.Cells(reportRow, 3).Value = "AjoutÃ©e"
                     reportRow = reportRow + 1
                 End If
             Next key
@@ -1708,11 +1708,11 @@ Sub ComparerClasseursNiveauCellules()
     wbOld.Close False
     wbNew.Close False
     
-    MsgBox "Comparaison terminée ! Consultez le classeur de rapport.", vbInformation
+    MsgBox "Comparaison terminÃ©e ! Consultez le classeur de rapport.", vbInformation
     
 End Sub
 
-Sub AnalyserImagesEntêteFactureExcel() '2025-05-27 @ 14:40
+Sub AnalyserImagesEntÃªteFactureExcel() '2025-05-27 @ 14:40
 
     Dim dossier As String, fichier As String
     Dim wb As Workbook, ws As Worksheet
@@ -1722,15 +1722,15 @@ Sub AnalyserImagesEntêteFactureExcel() '2025-05-27 @ 14:40
     Dim cheminComplet As String
     Dim nomImageCible As String
 
-    'Demande à l'utilisateur de choisir un dossier
+    'Demande Ã  l'utilisateur de choisir un dossier
     With Application.fileDialog(msoFileDialogFolderPicker)
         .Title = "Choisissez un dossier contenant les fichiers Excel"
         If .show <> -1 Then Exit Sub 'Annuler
         dossier = .SelectedItems(1)
     End With
 
-    'Nom exact de l'image à trouver (ou utiliser un critère partiel)
-    nomImageCible = "Image 1" '? Modifier si nécessaire
+    'Nom exact de l'image Ã  trouver (ou utiliser un critÃ¨re partiel)
+    nomImageCible = "Image 1" '? Modifier si nÃ©cessaire
 
     'Recherche tous les fichiers .xlsx dans le dossier
     Dim dateSeuilMinimum As Date
@@ -1747,7 +1747,7 @@ Sub AnalyserImagesEntêteFactureExcel() '2025-05-27 @ 14:40
 
         On Error Resume Next
         Set ws = wb.Worksheets(wb.Worksheets.count)
-        If ws.Name = "Activités" Then
+        If ws.Name = "ActivitÃ©s" Then
             GoTo SkipFile
         End If
         On Error GoTo 0
@@ -1759,7 +1759,7 @@ Sub AnalyserImagesEntêteFactureExcel() '2025-05-27 @ 14:40
                         largeurActuelle = img.Width
                         hauteurActuelle = img.Height
 
-                        'Lire la taille originale estimée
+                        'Lire la taille originale estimÃ©e
                         Call LireTailleOriginaleImage(img, largeurOrig, hauteurOrig)
 
                         Debug.Print "Fichier : " & fichier
@@ -1777,7 +1777,7 @@ Sub AnalyserImagesEntêteFactureExcel() '2025-05-27 @ 14:40
 SkipFile:
     Loop
 
-    MsgBox "Analyse terminée."
+    MsgBox "Analyse terminÃ©e."
     
 End Sub
 
@@ -1790,7 +1790,7 @@ Sub LireTailleOriginaleImage(img As Shape, ByRef largeurOrig As Double, ByRef ha
     Set ws = img.Parent
     img.Copy
     ws.Paste
-    Set copie = ws.Shapes(ws.Shapes.count) 'la dernière collée
+    Set copie = ws.Shapes(ws.Shapes.count) 'la derniÃ¨re collÃ©e
 
     With copie
         .ScaleWidth 1, msoTrue, msoScaleFromTopLeft
@@ -1839,4 +1839,5 @@ Sub AppelerRoutineAddIn(nomFichier As String, nomMacro As String)
     Application.Run "'" & nomFichier & "'!" & nomMacro
     
 End Sub
+
 

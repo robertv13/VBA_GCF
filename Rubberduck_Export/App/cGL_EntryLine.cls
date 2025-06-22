@@ -1,4 +1,4 @@
-VERSION 1.0 CLASS
+ï»¿VERSION 1.0 CLASS
 BEGIN
   MultiUse = -1  'True
 END
@@ -15,7 +15,7 @@ Private pNoCompte As String
 Private pDescription As String
 Private pMontant As Currency
 
-'Propriétés publiques pour accéder aux variables privées - Get & Let pour chaque variable
+'PropriÃ©tÃ©s publiques pour accÃ©der aux variables privÃ©es - Get & Let pour chaque variable
 
 'NoCompte
 Public Property Get NoCompte() As String
@@ -43,4 +43,5 @@ End Property
 Public Property Let Montant(val As Double)
     pMontant = val
 End Property
+
 

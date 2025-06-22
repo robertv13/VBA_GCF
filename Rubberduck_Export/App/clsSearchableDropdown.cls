@@ -1,4 +1,4 @@
-VERSION 1.0 CLASS
+﻿VERSION 1.0 CLASS
 BEGIN
   MultiUse = -1  'True
 END
@@ -180,7 +180,7 @@ Private Sub UpdateListBox(items As Variant)
         'Set the listbox size
         If IsEmpty(items) Then
             'No items found
-            .List = Array("Malheureusement, je n'ai rien trouv�!")
+            .List = Array("Malheureusement, je n'ai rien trouvé!")
             .ForeColor = rgbRed
         Else
             'Items found
@@ -426,4 +426,5 @@ Private Function FilterData() As Variant
     FilterData = finalItems
 
 End Function
+
 

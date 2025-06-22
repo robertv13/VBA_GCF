@@ -1,10 +1,10 @@
-VERSION 5.00
+ï»¿VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufNonBillableTime 
-   Caption         =   "Temps non facturable pour ce client - Veuillez sélectionner les lignes à convertir en temps FACTURABLE"
+   Caption         =   "Temps non facturable pour ce client - Veuillez sÃ©lectionner les lignes Ã  convertir en temps FACTURABLE"
    ClientHeight    =   4068
-   ClientLeft      =   96
-   ClientTop       =   276
-   ClientWidth     =   8448.001
+   ClientLeft      =   84
+   ClientTop       =   180
+   ClientWidth     =   6756
    OleObjectBlob   =   "ufNonBillableTime.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
@@ -17,10 +17,10 @@ Option Explicit
 
 Private Sub UserForm_Initialize()
 
-    'Définir la couleur de fond du UserForm en utilisant le code RGB (198,224,190)
+    'DÃ©finir la couleur de fond du UserForm en utilisant le code RGB (198,224,190)
     Me.BackColor = RGB(198, 224, 190)
     
-    'Définir la couleur de fond du bouton en utilisant le code RGB (118,181,75)
+    'DÃ©finir la couleur de fond du bouton en utilisant le code RGB (118,181,75)
     btnConvertir.BackColor = RGB(118, 181, 75)
     
 End Sub
@@ -29,26 +29,26 @@ Private Sub btnConvertir_Click()
 
     Dim tecID As Long
     
-    'Y a-t-il des lignes sélectionnées (donc à convertir en temps Facturable) ?
-    Dim i As Integer, nbLigneSélectionnée As Integer
+    'Y a-t-il des lignes sÃ©lectionnÃ©es (donc Ã  convertir en temps Facturable) ?
+    Dim i As Integer, nbLigneSÃ©lectionnÃ©e As Integer
     For i = 0 To lsbNonBillable.ListCount - 1
         If lsbNonBillable.Selected(i) Then
-            nbLigneSélectionnée = nbLigneSélectionnée + 1
+            nbLigneSÃ©lectionnÃ©e = nbLigneSÃ©lectionnÃ©e + 1
             
             tecID = lsbNonBillable.List(i, 0)
             
             Call Convertir_NF_en_Facturable_Dans_BD(tecID)
             Call Convertir_NF_en_Facturable_Locally(tecID)
             
-            Debug.Print "#096 - La ligne # " & i + 1 & " a été sélectionné - " & lsbNonBillable.List(i, 0)
+            Debug.Print "#096 - La ligne # " & i + 1 & " a Ã©tÃ© sÃ©lectionnÃ© - " & lsbNonBillable.List(i, 0)
         End If
     Next i
 
     'Informer du nombre de ligne convertie
-    MsgBox "J'ai converti " & nbLigneSélectionnée & " ligne(s) en temps facturable", vbOKOnly + vbInformation, _
-           "Sur une possibilité de " & lsbNonBillable.ListCount & " ligne(s)..."
+    MsgBox "J'ai converti " & nbLigneSÃ©lectionnÃ©e & " ligne(s) en temps facturable", vbOKOnly + vbInformation, _
+           "Sur une possibilitÃ© de " & lsbNonBillable.ListCount & " ligne(s)..."
     
-    'La conversion est terminée
+    'La conversion est terminÃ©e
     Unload Me
     
 End Sub
@@ -68,4 +68,5 @@ Private Sub lsbNonBillable_Change()
     btnConvertir.Visible = (selectedCount > 0)
     
 End Sub
+
 

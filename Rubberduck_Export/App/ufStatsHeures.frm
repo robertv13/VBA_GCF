@@ -1,10 +1,10 @@
-VERSION 5.00
+ï»¿VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufStatsHeures 
    Caption         =   "Statistiques d'heures"
-   ClientHeight    =   8256.001
-   ClientLeft      =   192
-   ClientTop       =   708
-   ClientWidth     =   15072
+   ClientHeight    =   6600
+   ClientLeft      =   168
+   ClientTop       =   624
+   ClientWidth     =   12048
    OleObjectBlob   =   "ufStatsHeures.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
@@ -56,28 +56,28 @@ Private Sub lbxDatesSemaines_Click_or_DblClick(ByVal valeur As Variant) '2024-12
     
     Dim selectedWeek As String
     
-    'Vérifier qu'un élément est bien sélectionné
+    'VÃ©rifier qu'un Ã©lÃ©ment est bien sÃ©lectionnÃ©
     If lbxDatesSemaines.ListIndex <> -1 Then
-        'Récupérer la semaine sélectionnée
+        'RÃ©cupÃ©rer la semaine sÃ©lectionnÃ©e
         selectedWeek = lbxDatesSemaines.List(lbxDatesSemaines.ListIndex)
         Dim dateLundi As Date, dateDimanche As Date
         dateLundi = Left$(selectedWeek, InStr(selectedWeek, " au ") - 1)
         dateDimanche = Right$(selectedWeek, InStr(selectedWeek, " au ") - 1)
         
-        'Il doit y avoir un écart de 6 entre les deux dates (semaine)
+        'Il doit y avoir un Ã©cart de 6 entre les deux dates (semaine)
         If dateDimanche - dateLundi <> 6 Then
-            MsgBox "Il semble y avoir un problème de format de date", vbCritical, _
+            MsgBox "Il semble y avoir un problÃ¨me de format de date", vbCritical, _
                    "Dates de semaine NON VALIDES (" & dateLundi & " au " & dateDimanche & ")"
         End If
         
         'Initialisation du listBox et des totaux
         ufStatsHeures.MultiPage1.Pages("pSemaine").lbxSemaine.RowSource = ""
         ufStatsHeures.MultiPage1.Pages("pSemaine").lbxSemaine.Clear
-        ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresNettes.Value = Format$(0, "##0.00") 'Formatage du total en deux décimales
-        ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresFact.Value = Format$(0, "##0.00") 'Formatage du total en deux décimales
-        ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresNF.Value = Format$(0, "##0.00") 'Formatage du total en deux décimales
+        ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresNettes.Value = Format$(0, "##0.00") 'Formatage du total en deux dÃ©cimales
+        ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresFact.Value = Format$(0, "##0.00") 'Formatage du total en deux dÃ©cimales
+        ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresNF.Value = Format$(0, "##0.00") 'Formatage du total en deux dÃ©cimales
 
-        'Envoie les deux dates à wshTEC_TDB_Data pour les AdvancedFilters
+        'Envoie les deux dates Ã  wshTEC_TDB_Data pour les AdvancedFilters
         Dim rngCriteriaDate1 As Range
         Dim formule1 As String
         Set rngCriteriaDate1 = wshTEC_TDB_Data.Range("T7")
@@ -94,31 +94,31 @@ Private Sub lbxDatesSemaines_Click_or_DblClick(ByVal valeur As Variant) '2024-12
         rngCriteriaDate2.Value = dateValue(dateDimanche)
         
         If wshTEC_TDB_Data.Range("W2").Value <> "" Then
-            'Force une mise à jour du listBox en changeant le RowSource
+            'Force une mise Ã  jour du listBox en changeant le RowSource
             ufStatsHeures.MultiPage1.Pages("pSemaine").lbxSemaine.RowSource = ""
             Dim lastUsedRow As Long
-            lastUsedRow = wshTEC_TDB_Data.Cells(wshTEC_TDB_Data.Rows.count, "W").End(xlUp).row
+            lastUsedRow = wshTEC_TDB_Data.Cells(wshTEC_TDB_Data.Rows.count, "W").End(xlUp).Row
             ufStatsHeures.MultiPage1.Pages("pSemaine").lbxSemaine.RowSource = wshTEC_TDB_Data.Name & "!" & "StatsHeuresSemaine_uf"
 '            ufStatsHeures.MultiPage1.Pages("pSemaine").lbxSemaine.RowSource = wshTEC_TDB_Data.Range("W2:AD" & lastUsedRow).Address(external:=True)
 '            Debug.Print wshTEC_TDB_Data.Name & "!" & "StatsHeuresSemaine_uf"
             
             DoEvents
         Else
-            MsgBox "Il n'y a aucune heure d'enregistrée pour cette semaine", vbInformation
+            MsgBox "Il n'y a aucune heure d'enregistrÃ©e pour cette semaine", vbInformation
         End If
         
         Call AddColonnesSemaine
        
-        'Rétablir les formules d'origine
+        'RÃ©tablir les formules d'origine
         Application.EnableEvents = False
         rngCriteriaDate1.formula = "=DateDebutSemaine"
         rngCriteriaDate2.formula = "=DateFinSemaine"
         Application.EnableEvents = True
     Else
-        MsgBox "Aucun élément sélectionné."
+        MsgBox "Aucun Ã©lÃ©ment sÃ©lectionnÃ©."
     End If
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set rngCriteriaDate1 = Nothing
     Set rngCriteriaDate2 = Nothing
     
@@ -135,7 +135,7 @@ Sub AddColonnesSemaine()
     Dim t1 As Currency, t2 As Currency, t3 As Currency
     
     Dim lastUsedResult As Long
-    lastUsedResult = ws.Cells(ws.Rows.count, "W").End(xlUp).row
+    lastUsedResult = ws.Cells(ws.Rows.count, "W").End(xlUp).Row
     Dim rngResult As Range
     Set rngResult = ws.Range("W2:AD" & lastUsedResult)
     
@@ -147,11 +147,11 @@ Sub AddColonnesSemaine()
         Format$(wshTEC_TDB_Data.Range("T7").Value, wsdADMIN.Range("B1").Value) & " au " & _
         Format$(wshTEC_TDB_Data.Range("U7").Value, wsdADMIN.Range("B1").Value) & ") *"
     
-    ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresNettes.Value = Format$(t1, "#,##0.00") 'Formatage du total en deux décimales
-    ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresFact.Value = Format$(t2, "#,##0.00") 'Formatage du total en deux décimales
-    ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresNF.Value = Format$(t3, "#,##0.00") 'Formatage du total en deux décimales
+    ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresNettes.Value = Format$(t1, "#,##0.00") 'Formatage du total en deux dÃ©cimales
+    ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresFact.Value = Format$(t2, "#,##0.00") 'Formatage du total en deux dÃ©cimales
+    ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresNF.Value = Format$(t3, "#,##0.00") 'Formatage du total en deux dÃ©cimales
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set rngResult = Nothing
     Set ws = Nothing
     
@@ -168,7 +168,7 @@ Sub AddColonnesMois()
     Dim t1 As Currency, t2 As Currency, t3 As Currency
     
     Dim lastUsedResult As Long
-    lastUsedResult = ws.Cells(ws.Rows.count, "AJ").End(xlUp).row
+    lastUsedResult = ws.Cells(ws.Rows.count, "AJ").End(xlUp).Row
     Dim rngResult As Range
     Set rngResult = ws.Range("AJ2:AQ" & lastUsedResult)
     
@@ -177,11 +177,11 @@ Sub AddColonnesMois()
     t3 = Application.WorksheetFunction.Sum(rngResult.Columns(8))
     
     'Affiche le total dans la TextBox
-    ufStatsHeures.MultiPage1.Pages("pMois").txtMoisHresNettes.Value = Format$(t1, "#,##0.00") 'Formatage du total en deux décimales
-    ufStatsHeures.MultiPage1.Pages("pMois").txtMoisHresFact.Value = Format$(t2, "#,##0.00") 'Formatage du total en deux décimales
-    ufStatsHeures.MultiPage1.Pages("pMois").txtMoisHresNF.Value = Format$(t3, "#,##0.00") 'Formatage du total en deux décimales
+    ufStatsHeures.MultiPage1.Pages("pMois").txtMoisHresNettes.Value = Format$(t1, "#,##0.00") 'Formatage du total en deux dÃ©cimales
+    ufStatsHeures.MultiPage1.Pages("pMois").txtMoisHresFact.Value = Format$(t2, "#,##0.00") 'Formatage du total en deux dÃ©cimales
+    ufStatsHeures.MultiPage1.Pages("pMois").txtMoisHresNF.Value = Format$(t3, "#,##0.00") 'Formatage du total en deux dÃ©cimales
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set rngResult = Nothing
     Set ws = Nothing
     
@@ -198,7 +198,7 @@ Sub AddColonnesTrimestre()
     Dim t1 As Currency, t2 As Currency, t3 As Currency
     
     Dim lastUsedResult As Long
-    lastUsedResult = ws.Cells(ws.Rows.count, "AW").End(xlUp).row
+    lastUsedResult = ws.Cells(ws.Rows.count, "AW").End(xlUp).Row
     Dim rngResult As Range
     Set rngResult = ws.Range("AW2:BD" & lastUsedResult)
     
@@ -207,11 +207,11 @@ Sub AddColonnesTrimestre()
     t3 = Application.WorksheetFunction.Sum(rngResult.Columns(8))
     
     'Affiche le total dans la TextBox
-    ufStatsHeures.MultiPage1.Pages("pTrimestre").txtTrimHresNettes.Value = Format$(t1, "#,##0.00") 'Formatage du total en deux décimales
-    ufStatsHeures.MultiPage1.Pages("pTrimestre").txtTrimHresFact.Value = Format$(t2, "#,##0.00") 'Formatage du total en deux décimales
-    ufStatsHeures.MultiPage1.Pages("pTrimestre").txtTrimHresNF.Value = Format$(t3, "#,##0.00") 'Formatage du total en deux décimales
+    ufStatsHeures.MultiPage1.Pages("pTrimestre").txtTrimHresNettes.Value = Format$(t1, "#,##0.00") 'Formatage du total en deux dÃ©cimales
+    ufStatsHeures.MultiPage1.Pages("pTrimestre").txtTrimHresFact.Value = Format$(t2, "#,##0.00") 'Formatage du total en deux dÃ©cimales
+    ufStatsHeures.MultiPage1.Pages("pTrimestre").txtTrimHresNF.Value = Format$(t3, "#,##0.00") 'Formatage du total en deux dÃ©cimales
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set rngResult = Nothing
     Set ws = Nothing
     
@@ -228,7 +228,7 @@ Sub AddColonnesAnneeFinanciere()
     Dim t1 As Currency, t2 As Currency, t3 As Currency
     
     Dim lastUsedResult As Long
-    lastUsedResult = ws.Cells(ws.Rows.count, "BJ").End(xlUp).row
+    lastUsedResult = ws.Cells(ws.Rows.count, "BJ").End(xlUp).Row
     Dim rngResult As Range
     Set rngResult = ws.Range("BJ2:BQ" & lastUsedResult)
     
@@ -237,11 +237,11 @@ Sub AddColonnesAnneeFinanciere()
     t3 = Application.WorksheetFunction.Sum(rngResult.Columns(8))
     
     'Affiche le total dans la TextBox
-    ufStatsHeures.MultiPage1.Pages("pAnneeFinanciere").txtAnneeFinanciereHresNettes.Value = Format$(t1, "#,##0.00") 'Formatage du total en deux décimales
-    ufStatsHeures.MultiPage1.Pages("pAnneeFinanciere").txtAnneeFinanciereHresFact.Value = Format$(t2, "#,##0.00") 'Formatage du total en deux décimales
-    ufStatsHeures.MultiPage1.Pages("pAnneeFinanciere").txtAnneeFinanciereHresNF.Value = Format$(t3, "#,##0.00") 'Formatage du total en deux décimales
+    ufStatsHeures.MultiPage1.Pages("pAnneeFinanciere").txtAnneeFinanciereHresNettes.Value = Format$(t1, "#,##0.00") 'Formatage du total en deux dÃ©cimales
+    ufStatsHeures.MultiPage1.Pages("pAnneeFinanciere").txtAnneeFinanciereHresFact.Value = Format$(t2, "#,##0.00") 'Formatage du total en deux dÃ©cimales
+    ufStatsHeures.MultiPage1.Pages("pAnneeFinanciere").txtAnneeFinanciereHresNF.Value = Format$(t3, "#,##0.00") 'Formatage du total en deux dÃ©cimales
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set rngResult = Nothing
     Set ws = Nothing
     
@@ -257,17 +257,17 @@ Sub ChargerListBoxAvec52DernieresSemaines()
     Dim dtLundi As Date
     Dim dtDimanche As Date
     
-    'Référence à la ListBox
+    'RÃ©fÃ©rence Ã  la ListBox
     Dim lstSemaines As Control
     Set lstSemaines = ufStatsHeures.MultiPage1.Pages("pSemaine").Controls("lbxDatesSemaines")
     
-    'Nettoyer la ListBox avant d'ajouter des éléments
+    'Nettoyer la ListBox avant d'ajouter des Ã©lÃ©ments
     lstSemaines.Clear
     
     'Calculer la date du lundi de la semaine actuelle
     dtLundi = Date - Weekday(Date, vbMonday) + 1
     
-    'Boucle pour charger les 52 dernières semaines
+    'Boucle pour charger les 52 derniÃ¨res semaines
     Dim semaines(1 To 53) As String
     For i = 53 To 1 Step -1
         'Calculer la date du dimanche de la semaine correspondante
@@ -276,23 +276,24 @@ Sub ChargerListBoxAvec52DernieresSemaines()
         'Ajouter l'intervalle dans la ListBox
         semaines(i) = Format$(CLng(dtLundi), wsdADMIN.Range("B1").Value) & " au " & Format$(CLng(dtDimanche), wsdADMIN.Range("B1").Value)
         
-        'Passer à la semaine précédente
+        'Passer Ã  la semaine prÃ©cÃ©dente
         dtLundi = dtLundi - 7
     Next i
     
-    'Charger les éléments dans la ListBox (les plus anciens en premier)
+    'Charger les Ã©lÃ©ments dans la ListBox (les plus anciens en premier)
     For i = 1 To 53
         lstSemaines.AddItem semaines(i)
     Next i
     
-    'On se positionne à la fin de la liste (évite de monter/descendre)
+    'On se positionne Ã  la fin de la liste (Ã©vite de monter/descendre)
     lstSemaines.TopIndex = lstSemaines.ListCount - 1
     lstSemaines.ListIndex = lstSemaines.ListCount - 1 '2024-12-04 @ 07:49
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
 '    Set lstSemaines = Nothing
     
     Call Log_Record("ufStatsHeures:ChargerListBoxAvec52DernieresSemaines", "", startTime)
     
 End Sub
+
 

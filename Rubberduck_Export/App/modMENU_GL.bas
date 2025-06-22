@@ -1,4 +1,4 @@
-Attribute VB_Name = "modMENU_GL"
+﻿Attribute VB_Name = "modMENU_GL"
 Option Explicit
 
 'Option # 1
@@ -104,4 +104,5 @@ Sub Stats_CA_Click()
     Application.ScreenUpdating = True
 
 End Sub
+
 

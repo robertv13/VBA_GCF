@@ -1,4 +1,4 @@
-Attribute VB_Name = "modMenu"
+ï»¿Attribute VB_Name = "modMenu"
 Option Explicit
 
 Sub shpMenuTEC_Click()
@@ -51,15 +51,15 @@ Sub menuFacturation()
 
 End Sub
 
-Sub shpMenuComptabilité_Click()
+Sub shpMenuComptabilitÃ©_Click()
 
-    Call menuComptabilité
+    Call menuComptabilitÃ©
     
 End Sub
 
-Sub menuComptabilité()
+Sub menuComptabilitÃ©()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:menuComptabilité", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:menuComptabilitÃ©", "", 0)
     
     If GetNomUtilisateur() = "Guillaume" Or _
             GetNomUtilisateur() = "GuillaumeCharron" Or _
@@ -76,11 +76,11 @@ Sub menuComptabilité()
         Application.EnableEvents = True
     End If
 
-    Call Log_Record("modMenu:menuComptabilité", "", startTime)
+    Call Log_Record("modMenu:menuComptabilitÃ©", "", startTime)
 
 End Sub
 
-Sub shpParamètres_Click()
+Sub shpParamÃ¨tres_Click()
 
     Call Parametres
     
@@ -121,7 +121,7 @@ Sub SauvegarderEtSortirApplication() '2024-08-30 @ 07:37
     Application.ScreenUpdating = False
     
     Dim confirmation As VbMsgBoxResult
-    confirmation = MsgBox("Êtes-vous certain de vouloir quitter" & vbNewLine & vbNewLine & _
+    confirmation = MsgBox("ÃŠtes-vous certain de vouloir quitter" & vbNewLine & vbNewLine & _
                         "l'application de gestion (sauvegarde automatique) ?", vbYesNo + vbQuestion, "Confirmation de sortie")
     
     If confirmation = vbYes Then
@@ -129,14 +129,14 @@ Sub SauvegarderEtSortirApplication() '2024-08-30 @ 07:37
     End If
     
 '        Application.EnableEvents = False
-'        wsdADMIN.Range("B1").value = ""
-'        wsdADMIN.Range("B2").value = ""
+'        wsdADMIN.Range("B1").Value = ""
+'        wsdADMIN.Range("B2").Value = ""
 '        Application.EnableEvents = True
 '
 '        Call Delete_User_Active_File
 '
 '        On Error Resume Next
-'        Call Log_Record("----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) -----", "", 0)
+'        Call Log_Record("----- Session terminÃ©e NORMALEMENT (modMenu:SauvegarderEtSortirApplication) -----", "", 0)
 '        Call Log_Record("", "", -1)
 '        On Error GoTo 0
 '
@@ -160,12 +160,12 @@ Sub SauvegarderEtSortirApplication() '2024-08-30 @ 07:37
 '
 '    End If
 '
-'    'Libérer la mémoire
+'    'LibÃ©rer la mÃ©moire
 '    Set wb = Nothing
     
 End Sub
 
-Sub ApplicationFermetureNormale(ByVal userName As String) 'Nouvelle procédure - 2025-05-30 @ 11:07
+Sub ApplicationFermetureNormale(ByVal userName As String) 'Nouvelle procÃ©dure - 2025-05-30 @ 11:07
 
     On Error GoTo ExitPoint
     
@@ -183,17 +183,17 @@ Sub ApplicationFermetureNormale(ByVal userName As String) 'Nouvelle procédure - 
     
     'Effacer fichier utilisateur actif + Fermeture de la journalisation
     Call Delete_User_Active_File(GetNomUtilisateur())
-    Call Log_Record("----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) -----", "", 0)
+    Call Log_Record("----- Session terminÃ©e NORMALEMENT (modMenu:SauvegarderEtSortirApplication) -----", "", 0)
     Call Log_Record("", "", -1)
 
-    'Fermer la vérification d'inactivité
+    'Fermer la vÃ©rification d'inactivitÃ©
     If gProchaineVerification > 0 Then
         On Error Resume Next
         Application.OnTime gProchaineVerification, "VerifierInactivite", , False
         On Error GoTo 0
     End If
 
-    'Fermer la sauvegarde automtique du code VBA (seul le développeur déclenche la sauvegarde automtique)
+    'Fermer la sauvegarde automtique du code VBA (seul le dÃ©veloppeur dÃ©clenche la sauvegarde automtique)
     If userName = "RobertMV" Or userName = "robertmv" Then
         Call StopperSauvegardeAutomatique
         Call ExporterCodeVBA
@@ -225,7 +225,7 @@ Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
         End If
     Next ws
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
     
     Call Log_Record("modMenu:Hide_All_Worksheets_Except_Menu", "", startTime)
@@ -240,16 +240,16 @@ Sub HideDevShapesBasedOnUsername(ByVal userName As String) '2025-06-06 @ 11:17
     Dim devShapes As Variant
     devShapes = Array( _
         "shpImporterCorrigerMASTER", _
-        "shpVérificationIntégrité", _
+        "shpVÃ©rificationIntÃ©gritÃ©", _
         "shpTraitementFichiersLog", _
         "shpCompterLignesCode", _
         "shpRechercherCode", _
         "shpCorrigerNomClientTEC", _
         "shpCorrigerNomClientCAR", _
-        "shpChercherRéférencesCirculaires", _
+        "shpChercherRÃ©fÃ©rencesCirculaires", _
         "shpChangerReferenceSystem", _
         "shpListerModulesEtRoutines", _
-        "shpVérificationMacrosContrôles" _
+        "shpVÃ©rificationMacrosContrÃ´les" _
     )
 
     Dim isDevUser As Boolean
@@ -293,7 +293,7 @@ Sub shpImporterCorrigerMASTER_Click()
         Exit Sub
     End If
     
-    'Crée un répertoire local et importe les fichiers à analyser
+    'CrÃ©e un rÃ©pertoire local et importe les fichiers Ã  analyser
     Call CreerRepertoireEtImporterFichiers
     
     'Ajuste les tableaux (tables) de toutes les feuilles de GCF_BD_MASTER.xlsx
@@ -331,7 +331,7 @@ Sub shpCorrigerNomClientCAR_Click()
     
 End Sub
 
-Sub shpChercherRéférencesCirculaires_Click() '2024-11-22 @ 13:33
+Sub shpChercherRÃ©fÃ©rencesCirculaires_Click() '2024-11-22 @ 13:33
 
     Call Detect_Circular_References_In_Workbook
     
@@ -349,7 +349,7 @@ Sub shpListerModulesEtRoutines_Click() '2024-11-22 @ 13:33
     
 End Sub
 
-Sub shpVérificationMacrosContrôles_Click()
+Sub shpVÃ©rificationMacrosContrÃ´les_Click()
 
     Call VerifierControlesAssociesToutesFeuilles
 
@@ -375,8 +375,9 @@ Sub RetourMenuPrincipal()
         .Range("A1").Select
     End With
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
     
 End Sub
+
 

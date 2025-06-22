@@ -1,5 +1,5 @@
-Attribute VB_Name = "modDEB_Saisie"
-'@Folder("Saisie_Déboursé")
+ï»¿Attribute VB_Name = "modDEB_Saisie"
+'@Folder("Saisie_DÃ©boursÃ©")
 
 Option Explicit
 
@@ -35,13 +35,13 @@ Sub DEB_Saisie_Update()
     
     'Is every line of the transaction well entered ?
     Dim rowDebSaisie As Long
-    rowDebSaisie = wshDEB_Saisie.Range("E23").End(xlUp).row  'Last Used Row in wshDEB_Saisie
+    rowDebSaisie = wshDEB_Saisie.Range("E23").End(xlUp).Row  'Last Used Row in wshDEB_Saisie
     If Fn_Is_Deb_Saisie_Valid(rowDebSaisie) = False Then Exit Sub
     
     'Get the FournID
     wshDEB_Saisie.Range("B5").Value = Fn_GetID_From_Fourn_Name(wshDEB_Saisie.Range("J4").Value)
 
-    'Transfert des données vers DEB_Trans
+    'Transfert des donnÃ©es vers DEB_Trans
     Call DEB_Trans_Add_Record_To_DB(rowDebSaisie)
     Call DEB_Trans_Add_Record_Locally(rowDebSaisie)
     
@@ -56,7 +56,7 @@ Sub DEB_Saisie_Update()
     Dim CurrentDeboursNo As String
     CurrentDeboursNo = wshDEB_Saisie.Range("B1").Value
     
-    MsgBox "Le déboursé, numéro '" & CurrentDeboursNo & "' a été reporté avec succès"
+    MsgBox "Le dÃ©boursÃ©, numÃ©ro '" & CurrentDeboursNo & "' a Ã©tÃ© reportÃ© avec succÃ¨s"
     
     'Get ready for a new one
     Call DEB_Saisie_Clear_All_Cells
@@ -79,12 +79,12 @@ Sub DEB_Renversement_Update()
     
     'Est-ce que la transaction balance ?
     If ws.Range("O6").Value <> ws.Range("I26").Value Then
-        MsgBox "Le déboursé à renverser ne balance pas !!!", vbCritical
+        MsgBox "Le dÃ©boursÃ© Ã  renverser ne balance pas !!!", vbCritical
         Exit Sub
     End If
     
     Dim rowLastUsed As Long
-    rowLastUsed = ws.Range("E24").End(xlUp).row  'Last Used Row in wshDEB_Saisie
+    rowLastUsed = ws.Range("E24").End(xlUp).Row  'Last Used Row in wshDEB_Saisie
     If rowLastUsed < 9 Then
         Exit Sub
     End If
@@ -105,18 +105,18 @@ Sub DEB_Renversement_Update()
         ws.Cells(i, 14).Value = -ws.Cells(i, 14).Value
     Next i
     
-    'Transfert des données vers wsdDEB_Trans
+    'Transfert des donnÃ©es vers wsdDEB_Trans
     Call DEB_Trans_Add_Record_To_DB(rowLastUsed)
     Call DEB_Trans_Add_Record_Locally(rowLastUsed)
     
-    'Mettre à jour le débouré renversé
+    'Mettre Ã  jour le dÃ©bourÃ© renversÃ©
     Call DEB_Trans_MAJ_Debourse_Renverse_To_DB
     Call DEB_Trans_MAJ_Debourse_Renverse_Locally
     
     'GL posting
     Call DEB_Saisie_GL_Posting_Preparation
     
-    MsgBox "Le déboursé a été RENVERSÉ avec succès", vbInformation, "Confirmation de traitement"
+    MsgBox "Le dÃ©boursÃ© a Ã©tÃ© RENVERSÃ‰ avec succÃ¨s", vbInformation, "Confirmation de traitement"
     
     Application.ScreenUpdating = True
     Application.EnableEvents = True
@@ -143,7 +143,7 @@ Sub DEB_Renversement_Update()
     ws.Range("F4, J4, O4, F6, M6, O6").Font.Color = vbBlack
     ws.Range("E9:O23").Font.Color = vbBlack
 
-    'Retour à la source
+    'Retour Ã  la source
     ws.Range("F4").Select
     
     DoEvents
@@ -155,7 +155,7 @@ Sub DEB_Renversement_Update()
     Application.ScreenUpdating = True
     Application.EnableEvents = True
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set shp = Nothing
     Set ws = Nothing
     
@@ -183,7 +183,7 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
 
     'SQL select command to find the next available ID
     Dim strSQL As String
-    strSQL = "SELECT MAX(NoEntrée) AS MaxDebTransNo FROM [" & destinationTab & "]"
+    strSQL = "SELECT MAX(NoEntrÃ©e) AS MaxDebTransNo FROM [" & destinationTab & "]"
 
     'Open recordset to find out the MaxID
     rs.Open strSQL, conn
@@ -218,7 +218,7 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
         rs.AddNew
             With wshDEB_Saisie
                 'Add fields to the recordset before updating it
-                rs.Fields(fDebTNoEntrée - 1).Value = currDebTransNo
+                rs.Fields(fDebTNoEntrÃ©e - 1).Value = currDebTransNo
                 rs.Fields(fDebTDate - 1).Value = .Range("O4").Value
                 rs.Fields(fDebTType - 1).Value = .Range("F4").Value
                 rs.Fields(fDebTBeneficiaire - 1).Value = .Range("J4").Value
@@ -232,10 +232,10 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
                 rs.Fields(fDebTTotal - 1).Value = CDbl(.Range("I" & l).Value)
                 rs.Fields(fDebTTPS - 1).Value = CDbl(.Range("J" & l).Value)
                 rs.Fields(fDebTTVQ - 1).Value = CDbl(.Range("K" & l).Value)
-                rs.Fields(fDebTCréditTPS - 1).Value = CDbl(.Range("L" & l).Value)
-                rs.Fields(fDebTCréditTVQ - 1).Value = CDbl(.Range("M" & l).Value)
-                'Montant de dépense (Total - creditTPS - creditTVQ)
-                rs.Fields(fDebTDépense - 1).Value = CDbl(.Range("I" & l).Value _
+                rs.Fields(fDebTCrÃ©ditTPS - 1).Value = CDbl(.Range("L" & l).Value)
+                rs.Fields(fDebTCrÃ©ditTVQ - 1).Value = CDbl(.Range("M" & l).Value)
+                'Montant de dÃ©pense (Total - creditTPS - creditTVQ)
+                rs.Fields(fDebTDÃ©pense - 1).Value = CDbl(.Range("I" & l).Value _
                                                   - .Range("L" & l).Value _
                                                   - .Range("M" & l).Value)
                 rs.Fields(fDebTAutreRemarque - 1).Value = ""
@@ -252,7 +252,7 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
     
     Application.ScreenUpdating = True
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set conn = Nothing
     Set rs = Nothing
     
@@ -275,7 +275,7 @@ Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
     
     'What is the last used row in DEB_Trans ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wsdDEB_Trans.Cells(wsdDEB_Trans.Rows.count, "A").End(xlUp).row
+    lastUsedRow = wsdDEB_Trans.Cells(wsdDEB_Trans.Rows.count, "A").End(xlUp).Row
     rowToBeUsed = lastUsedRow + 1
     
     'timeStamp uniforme
@@ -285,7 +285,7 @@ Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
     Dim i As Long
     For i = 9 To r
         With wshDEB_Saisie
-            ws.Cells(rowToBeUsed, fDebTNoEntrée).Value = currentDebTransNo
+            ws.Cells(rowToBeUsed, fDebTNoEntrÃ©e).Value = currentDebTransNo
             ws.Cells(rowToBeUsed, fDebTDate).Value = .Range("O4").Value
             ws.Cells(rowToBeUsed, fDebTType).Value = .Range("F4").Value
             ws.Cells(rowToBeUsed, fDebTBeneficiaire).Value = .Range("J4").Value
@@ -299,10 +299,10 @@ Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
             ws.Cells(rowToBeUsed, fDebTTotal).Value = .Range("I" & i).Value
             ws.Cells(rowToBeUsed, fDebTTPS).Value = .Range("J" & i).Value
             ws.Cells(rowToBeUsed, fDebTTVQ).Value = .Range("K" & i).Value
-            ws.Cells(rowToBeUsed, fDebTCréditTPS).Value = .Range("L" & i).Value
-            ws.Cells(rowToBeUsed, fDebTCréditTVQ).Value = .Range("M" & i).Value
-            '$ dépense = Total - creditTPS - creditTVQ
-            ws.Cells(rowToBeUsed, fDebTDépense).Value = .Range("I" & i).Value _
+            ws.Cells(rowToBeUsed, fDebTCrÃ©ditTPS).Value = .Range("L" & i).Value
+            ws.Cells(rowToBeUsed, fDebTCrÃ©ditTVQ).Value = .Range("M" & i).Value
+            '$ dÃ©pense = Total - creditTPS - creditTVQ
+            ws.Cells(rowToBeUsed, fDebTDÃ©pense).Value = .Range("I" & i).Value _
                                                           - .Range("L" & i).Value _
                                                           - .Range("M" & i).Value
             ws.Cells(rowToBeUsed, fDebTAutreRemarque).Value = ""
@@ -322,7 +322,7 @@ Sub DEB_Trans_MAJ_Debourse_Renverse_To_DB()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_To_DB", "", 0)
     
-    'Définition des paramètres
+    'DÃ©finition des paramÃ¨tres
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
@@ -333,25 +333,25 @@ Sub DEB_Trans_MAJ_Debourse_Renverse_To_DB()
     conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
     Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
-    'Requête SQL pour rechercher la ligne correspondante
+    'RequÃªte SQL pour rechercher la ligne correspondante
     Dim strSQL As String
-    strSQL = "SELECT * FROM [" & destinationTab & "] WHERE [NoEntrée] = " & numeroDebourseARenverser
+    strSQL = "SELECT * FROM [" & destinationTab & "] WHERE [NoEntrÃ©e] = " & numeroDebourseARenverser
 
     'Ouvrir le Recordset
-    rs.Open strSQL, conn, 1, 3 'adOpenKeyset (1) + adLockOptimistic (3) pour modifier les données
+    rs.Open strSQL, conn, 1, 3 'adOpenKeyset (1) + adLockOptimistic (3) pour modifier les donnÃ©es
 
-    'Vérifier si des enregistrements existent
+    'VÃ©rifier si des enregistrements existent
     If rs.EOF Then
-        MsgBox "Aucun enregistrement trouvé.", vbCritical, "Impossible de mettre à jour les déboursés RENVERSÉS"
+        MsgBox "Aucun enregistrement trouvÃ©.", vbCritical, "Impossible de mettre Ã  jour les dÃ©boursÃ©s RENVERSÃ‰S"
     Else
-        'Boucler à travers les enregistrements
+        'Boucler Ã  travers les enregistrements
         Do While Not rs.EOF
-        ' Vérifier si Reference contient déjà "RENVERSÉ" pour éviter les doublons
-        If InStr(1, rs.Fields(fDebTDescription - 1).Value, " (RENVERSÉ", vbTextCompare) = 0 Then
-            rs.Fields(fDebTDescription - 1).Value = rs.Fields(fDebTDescription - 1).Value & " (RENVERSÉ par " & wshDEB_Saisie.Range("B1").Value & ")"
+        ' VÃ©rifier si Reference contient dÃ©jÃ  "RENVERSÃ‰" pour Ã©viter les doublons
+        If InStr(1, rs.Fields(fDebTDescription - 1).Value, " (RENVERSÃ‰", vbTextCompare) = 0 Then
+            rs.Fields(fDebTDescription - 1).Value = rs.Fields(fDebTDescription - 1).Value & " (RENVERSÃ‰ par " & wshDEB_Saisie.Range("B1").Value & ")"
             rs.Update
         End If
-        'Passer à l'enregistrement suivant
+        'Passer Ã  l'enregistrement suivant
         rs.MoveNext
         Loop
     End If
@@ -362,7 +362,7 @@ Sub DEB_Trans_MAJ_Debourse_Renverse_To_DB()
     On Error GoTo 0
     conn.Close
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set conn = Nothing
     Set rs = Nothing
 
@@ -379,25 +379,25 @@ Sub DEB_Trans_MAJ_Debourse_Renverse_Locally()
     Dim ws As Worksheet
     Set ws = wsdDEB_Trans
     
-    'Dernière ligne de la table
+    'DerniÃ¨re ligne de la table
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).Row
     
     'Boucler sur toutes les lignes pour trouver les correspondances
     Dim cell As Range
     For Each cell In ws.Range("A2:A" & lastUsedRow)
         If cell.Value = numeroDebourseARenverser Then
-            'Vérifier si "RENVERSÉ" est déjà présent pour éviter les doublons
-            If InStr(1, cell.offset(0, fDebTDescription - 1).Value, " (RENVERSÉ par ", vbTextCompare) = 0 Then
-                'Ajouter "RENVERSÉ" à la colonne "Reference" (colonne B)
-                cell.offset(0, fDebTDescription - 1).Value = cell.offset(0, fDebTDescription - 1).Value & " (RENVERSÉ par " & wshDEB_Saisie.Range("B1").Value & ")"
+            'VÃ©rifier si "RENVERSÃ‰" est dÃ©jÃ  prÃ©sent pour Ã©viter les doublons
+            If InStr(1, cell.offset(0, fDebTDescription - 1).Value, " (RENVERSÃ‰ par ", vbTextCompare) = 0 Then
+                'Ajouter "RENVERSÃ‰" Ã  la colonne "Reference" (colonne B)
+                cell.offset(0, fDebTDescription - 1).Value = cell.offset(0, fDebTDescription - 1).Value & " (RENVERSÃ‰ par " & wshDEB_Saisie.Range("B1").Value & ")"
             End If
         End If
     Next cell
     
     Application.ScreenUpdating = True
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
 
     Call Log_Record("modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_Locally", "", startTime)
@@ -428,11 +428,11 @@ Sub DEB_Renverser_Ecriture() '2025-02-23 @ 16:56
 
     Dim ws As Worksheet: Set ws = wsdDEB_Trans
     
-    '1. Quelle écriture doit-on renverser (à partir d'un ListBox)
+    '1. Quelle Ã©criture doit-on renverser (Ã  partir d'un ListBox)
     Call Preparer_Liste_Debourses_Pour_Afficher
     
     If numeroDebourseARenverser = -1 Then
-        MsgBox "Vous n'avez sélectionné aucun déboursé à renverser", vbInformation, "Sélection d'un déboursé à renverser"
+        MsgBox "Vous n'avez sÃ©lectionnÃ© aucun dÃ©boursÃ© Ã  renverser", vbInformation, "SÃ©lection d'un dÃ©boursÃ© Ã  renverser"
         Application.EnableEvents = True
         wshDEB_Saisie.Range("F4").Value = ""
         wshDEB_Saisie.Range("F4").Select
@@ -440,7 +440,7 @@ Sub DEB_Renverser_Ecriture() '2025-02-23 @ 16:56
         GoTo Nettoyage
     End If
     
-    '2. Aller chercher les debourses pour le numero choisi (0 à n lignes)
+    '2. Aller chercher les debourses pour le numero choisi (0 Ã  n lignes)
     Dim debTransSubset As Variant
     debTransSubset = RechercherLignesTableau(ws, numeroDebourseARenverser)
     
@@ -448,13 +448,13 @@ Sub DEB_Renverser_Ecriture() '2025-02-23 @ 16:56
 
     Dim totalDeb As Currency
     With wshDEB_Saisie
-        'Entête
+        'EntÃªte
         .Range("F4").Value = debTransSubset(1, fDebTType)
         .Range("J4").Value = debTransSubset(1, fDebTBeneficiaire)
         .Range("O4").Value = Format$(debTransSubset(1, fDebTDate), wsdADMIN.Range("B1").Value)
         .Range("F6").Value = debTransSubset(1, fDebTDescription)
         .Range("M6").Value = debTransSubset(1, fDebTReference)
-        'Détail
+        'DÃ©tail
         Dim i As Long, r As Long
         r = 9
         Dim compteGL As String
@@ -467,15 +467,15 @@ Sub DEB_Renverser_Ecriture() '2025-02-23 @ 16:56
                 .NumberFormat = "#,##0.00;-#,##0.00;0.00"
             End With
             With .Range("L" & r)
-                .Value = CCur(debTransSubset(i, fDebTCréditTPS))
+                .Value = CCur(debTransSubset(i, fDebTCrÃ©ditTPS))
                 .NumberFormat = "#,##0.00;-#,##0.00;0.00"
             End With
             With .Range("M" & r)
-                .Value = CCur(debTransSubset(i, fDebTCréditTVQ))
+                .Value = CCur(debTransSubset(i, fDebTCrÃ©ditTVQ))
                 .NumberFormat = "#,##0.00;-#,##0.00;0.00"
             End With
             With .Range("N" & r)
-                .Value = CCur(debTransSubset(i, fDebTDépense))
+                .Value = CCur(debTransSubset(i, fDebTDÃ©pense))
                 .NumberFormat = "#,##0.00;-#,##0.00;0.00"
             End With
             .Range("Q" & r).Value = Fn_GetGL_Code_From_GL_Description(compteGL)
@@ -489,17 +489,17 @@ Sub DEB_Renverser_Ecriture() '2025-02-23 @ 16:56
     End With
     Application.EnableEvents = True
 
-    'On affiche le déboursé à renverser en rouge
+    'On affiche le dÃ©boursÃ© Ã  renverser en rouge
     wshDEB_Saisie.Range("F4, J4, O4, F6, M6, O6, E9:N" & r - 1).Font.Color = vbRed
 
-    'Change le libellé du Bouton & caractéristiques
+    'Change le libellÃ© du Bouton & caractÃ©ristiques
     Dim shp As Shape
     Set shp = wshDEB_Saisie.Shapes("btnUpdate")
     Call DEB_Forme_Modifier(shp)
 
 Nettoyage:
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set shp = Nothing
     Set ws = Nothing
     
@@ -520,9 +520,9 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
         descGL_Trans = descGL_Trans & " [" & wshDEB_Saisie.Range("M6").Value & "]"
     End If
     If wshDEB_Saisie.Range("B7").Value = False Then
-        Source = "DÉBOURSÉ:" & Format$(wshDEB_Saisie.Range("B1").Value, "00000")
+        Source = "DÃ‰BOURSÃ‰:" & Format$(wshDEB_Saisie.Range("B1").Value, "00000")
     Else
-        Source = "RENV/DÉBOURSÉ:" & Format$(numeroDebourseARenverser, "00000")
+        Source = "RENV/DÃ‰BOURSÃ‰:" & Format$(numeroDebourseARenverser, "00000")
     End If
     
     Dim MyArray() As String
@@ -535,21 +535,21 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
     Dim GLNo_Credit As String
     
     Select Case deboursType
-        Case "Chèque", "Virement", "Paiement pré-autorisé"
+        Case "ChÃ¨que", "Virement", "Paiement prÃ©-autorisÃ©"
             MyArray(1, 1) = ObtenirNoGlIndicateur("Encaisse")
             MyArray(1, 2) = "Encaisse"
-        Case "Carte de crédit"
-            MyArray(1, 1) = ObtenirNoGlIndicateur("Carte de crédit")
-            MyArray(1, 2) = "Carte de crédit"
+        Case "Carte de crÃ©dit"
+            MyArray(1, 1) = ObtenirNoGlIndicateur("Carte de crÃ©dit")
+            MyArray(1, 2) = "Carte de crÃ©dit"
         Case "Avances avec Guillaume Charron"
             MyArray(1, 1) = ObtenirNoGlIndicateur("Avances Guillaume Charron")
             MyArray(1, 2) = "Avances avec Guillaume Charron"
-        Case "Avances avec 9249-3626 Québec inc."
-            MyArray(1, 1) = ObtenirNoGlIndicateur("Avances 9249-3626 Québec inc.")
-            MyArray(1, 2) = "Avances avec 9249-3626 Québec inc."
-        Case "Avances avec 9333-4829 Québec inc."
-            MyArray(1, 1) = ObtenirNoGlIndicateur("Avances 9333-4829 Québec inc.")
-            MyArray(1, 2) = "Avances avec 9333-4829 Québec inc."
+        Case "Avances avec 9249-3626 QuÃ©bec inc."
+            MyArray(1, 1) = ObtenirNoGlIndicateur("Avances 9249-3626 QuÃ©bec inc.")
+            MyArray(1, 2) = "Avances avec 9249-3626 QuÃ©bec inc."
+        Case "Avances avec 9333-4829 QuÃ©bec inc."
+            MyArray(1, 1) = ObtenirNoGlIndicateur("Avances 9333-4829 QuÃ©bec inc.")
+            MyArray(1, 2) = "Avances avec 9333-4829 QuÃ©bec inc."
         Case "Autre"
             MyArray(1, 1) = ObtenirNoGlIndicateur("Encaisse")
             MyArray(1, 2) = "Encaisse"
@@ -563,7 +563,7 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
     
     'Process every lines
     Dim lastUsedRow As Long
-    lastUsedRow = wshDEB_Saisie.Cells(wshDEB_Saisie.Rows.count, "E").End(xlUp).row
+    lastUsedRow = wshDEB_Saisie.Cells(wshDEB_Saisie.Rows.count, "E").End(xlUp).Row
 
     Dim l As Long, arrRow As Long
     arrRow = 2 '1 is already used
@@ -575,16 +575,16 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
         arrRow = arrRow + 1
         
         If wshDEB_Saisie.Range("L" & l).Value <> 0 Then
-            MyArray(arrRow, 1) = ObtenirNoGlIndicateur("TPS Payée")
-            MyArray(arrRow, 2) = "TPS payées"
+            MyArray(arrRow, 1) = ObtenirNoGlIndicateur("TPS PayÃ©e")
+            MyArray(arrRow, 2) = "TPS payÃ©es"
             MyArray(arrRow, 3) = wshDEB_Saisie.Range("L" & l).Value
             MyArray(arrRow, 4) = ""
             arrRow = arrRow + 1
         End If
 
         If wshDEB_Saisie.Range("M" & l).Value <> 0 Then
-            MyArray(arrRow, 1) = ObtenirNoGlIndicateur("TVQ Payée")
-            MyArray(arrRow, 2) = "TVQ payées"
+            MyArray(arrRow, 1) = ObtenirNoGlIndicateur("TVQ PayÃ©e")
+            MyArray(arrRow, 2) = "TVQ payÃ©es"
             MyArray(arrRow, 3) = wshDEB_Saisie.Range("M" & l).Value
             MyArray(arrRow, 4) = ""
             arrRow = arrRow + 1
@@ -604,9 +604,9 @@ Sub ChargerDEBRecurrentDansSaisie(DEBAutoDesc As String, noDEBAuto As Long)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:ChargerDEBRecurrentDansSaisie", "", 0)
     
-    'On copie l'écriture automatique vers wshDEB_Saisie
+    'On copie l'Ã©criture automatique vers wshDEB_Saisie
     Dim rowDEBAuto As Long, rowDEB As Long
-    rowDEBAuto = wsdDEB_Recurrent.Cells(wsdDEB_Recurrent.Rows.count, "C").End(xlUp).row  'Last Row used in wshDEB_Recurrent
+    rowDEBAuto = wsdDEB_Recurrent.Cells(wsdDEB_Recurrent.Rows.count, "C").End(xlUp).Row  'Last Row used in wshDEB_Recurrent
     
     Call DEB_Saisie_Clear_All_Cells
     
@@ -652,7 +652,7 @@ Sub Save_DEB_Recurrent(ll As Long)
     Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:Save_DEB_Recurrent", "", 0)
     
     Dim rowDEBLast As Long
-    rowDEBLast = wshDEB_Saisie.Cells(wshDEB_Saisie.Rows.count, "E").End(xlUp).row  'Last Used Row in wshDEB_Saisie
+    rowDEBLast = wshDEB_Saisie.Cells(wshDEB_Saisie.Rows.count, "E").End(xlUp).Row  'Last Used Row in wshDEB_Saisie
     
     Call DEB_Recurrent_Add_Record_To_DB(rowDEBLast)
     Call DEB_Recurrent_Add_Record_Locally(rowDEBLast)
@@ -670,7 +670,7 @@ Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "DEB_Récurrent$"
+    destinationTab = "DEB_RÃ©current$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -721,8 +721,8 @@ Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external
                 rs.Fields(fDebRTotal - 1).Value = .Range("I" & l).Value
                 rs.Fields(fDebRTPS - 1).Value = .Range("J" & l).Value
                 rs.Fields(fDebRTVQ - 1).Value = .Range("K" & l).Value
-                rs.Fields(fDebRCréditTPS - 1).Value = .Range("L" & l).Value
-                rs.Fields(fDebRCréditTVQ - 1).Value = .Range("M" & l).Value
+                rs.Fields(fDebRCrÃ©ditTPS - 1).Value = .Range("L" & l).Value
+                rs.Fields(fDebRCrÃ©ditTVQ - 1).Value = .Range("M" & l).Value
                 rs.Fields(fDebRTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
             End With
         rs.Update
@@ -736,7 +736,7 @@ Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external
     
     Application.ScreenUpdating = True
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set conn = Nothing
     Set rs = Nothing
     
@@ -756,7 +756,7 @@ Sub DEB_Recurrent_Add_Record_Locally(r As Long) 'Write records to local file
     
     'What is the last used row in EJ_AUto ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wsdDEB_Recurrent.Cells(wsdDEB_Recurrent.Rows.count, "C").End(xlUp).row
+    lastUsedRow = wsdDEB_Recurrent.Cells(wsdDEB_Recurrent.Rows.count, "C").End(xlUp).Row
     rowToBeUsed = lastUsedRow + 1
     
     'timeStamp uniforme
@@ -795,7 +795,7 @@ End Sub
 
 Sub DEB_Forme_Modifier(forme As Shape)
 
-    'Appliquer des modifications à la forme
+    'Appliquer des modifications Ã  la forme
     Application.ScreenUpdating = True
     forme.Fill.ForeColor.RGB = RGB(255, 0, 0)  ' Rouge
     forme.Line.ForeColor.RGB = RGB(255, 255, 255) ' Noir
@@ -812,10 +812,10 @@ Sub DEB_Recurrent_Build_Summary()
     
     'Build the summary at column K & L
     Dim lastUsedRow1 As Long
-    lastUsedRow1 = wsdDEB_Recurrent.Cells(wsdDEB_Recurrent.Rows.count, "A").End(xlUp).row
+    lastUsedRow1 = wsdDEB_Recurrent.Cells(wsdDEB_Recurrent.Rows.count, "A").End(xlUp).Row
     
     Dim lastUsedRow2 As Long
-    lastUsedRow2 = wsdDEB_Recurrent.Cells(wsdDEB_Recurrent.Rows.count, "P").End(xlUp).row
+    lastUsedRow2 = wsdDEB_Recurrent.Cells(wsdDEB_Recurrent.Rows.count, "P").End(xlUp).Row
     If lastUsedRow2 > 1 Then
         wsdDEB_Recurrent.Range("P2:S" & lastUsedRow2).ClearContents
     End If
@@ -855,12 +855,12 @@ Public Sub DEB_Saisie_Clear_All_Cells()
         wshDEB_Saisie.ckbRecurrente = False
     End With
     
-    'Toutes les cellules sont en noir (élimine le mode renversement)
+    'Toutes les cellules sont en noir (Ã©limine le mode renversement)
     With ws.Range("F4:H4, J4:M4, O4, F6:J6, M6, O6, E9:O23").Font
         .Color = vbBlack
     End With
     
-    'Toutes les cellules sont sans surbrillance (élimine le vert pâle)
+    'Toutes les cellules sont sans surbrillance (Ã©limine le vert pÃ¢le)
     With ws.Range("F4:H4, J4:M4, O4, F6:J6, M6, O6, E9:O23").Interior
         .pattern = xlNone
         .TintAndShade = 0
@@ -875,13 +875,13 @@ Public Sub DEB_Saisie_Clear_All_Cells()
     Application.EnableEvents = True
     Application.ScreenUpdating = True
     
-    'Protection de la feuille, seules les cellules non-verrouillées peuvent être sélectionnées
+    'Protection de la feuille, seules les cellules non-verrouillÃ©es peuvent Ãªtre sÃ©lectionnÃ©es
     With wshDEB_Saisie
         .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
     
     Call Log_Record("modDEB_Saisie:DEB_Saisie_Clear_All_Cells", "", startTime)
@@ -896,7 +896,7 @@ End Sub
 
 Sub DEB_Back_To_Menu()
     
-    'Rétablir la forme du bouton (Mettre à jour / Renverser)
+    'RÃ©tablir la forme du bouton (Mettre Ã  jour / Renverser)
     Dim shp As Shape
     Set shp = wshDEB_Saisie.Shapes("btnUpdate")
     Call DEB_Forme_Restaurer(shp)
@@ -987,12 +987,12 @@ End Sub
 
 Sub DEB_Forme_Sauvegarder(forme As Shape)
 
-    ' Vérifier si le Dictionary est déjà instancié, sinon le créer
+    ' VÃ©rifier si le Dictionary est dÃ©jÃ  instanciÃ©, sinon le crÃ©er
     If sauvegardesCaracteristiquesForme Is Nothing Then
         Set sauvegardesCaracteristiquesForme = CreateObject("Scripting.Dictionary")
     End If
 
-    ' Sauvegarder les caractéristiques originales de la forme
+    ' Sauvegarder les caractÃ©ristiques originales de la forme
     sauvegardesCaracteristiquesForme("Left") = forme.Left
     sauvegardesCaracteristiquesForme("Width") = forme.Width
     sauvegardesCaracteristiquesForme("Height") = forme.Height
@@ -1005,12 +1005,12 @@ End Sub
 
 Sub DEB_Forme_Restaurer(forme As Shape)
 
-    'Vérifiez si les caractéristiques originales sont sauvegardées
+    'VÃ©rifiez si les caractÃ©ristiques originales sont sauvegardÃ©es
     If sauvegardesCaracteristiquesForme Is Nothing Then
         Exit Sub
     End If
 
-    'Restaurer les caractéristiques de la forme
+    'Restaurer les caractÃ©ristiques de la forme
     forme.Left = sauvegardesCaracteristiquesForme("Left")
     forme.Width = sauvegardesCaracteristiquesForme("Width")
     forme.Height = sauvegardesCaracteristiquesForme("Height")
@@ -1020,3 +1020,4 @@ Sub DEB_Forme_Restaurer(forme As Shape)
     forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB = sauvegardesCaracteristiquesForme("TextColor")
 
 End Sub
+

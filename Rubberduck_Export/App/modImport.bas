@@ -1,4 +1,4 @@
-Attribute VB_Name = "modImport"
+ï»¿Attribute VB_Name = "modImport"
 Option Explicit
 
 Sub ImporterPlanComptable() '2024-02-17 @ 07:21
@@ -8,10 +8,10 @@ Sub ImporterPlanComptable() '2024-02-17 @ 07:21
     'Clear all cells, but the headers, in the target worksheet
     wsdADMIN.Range("T10").CurrentRegion.offset(2, 0).ClearContents
 
-    'Import Accounts List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
+    'Import Accounts List from 'GCF_BD_EntrÃ©e.xlsx, in order to always have the LATEST version
     Dim sourceWorkbook As String, sourceWorksheet As String
     sourceWorkbook = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
-                     "GCF_BD_Entrée.xlsx"
+                     "GCF_BD_EntrÃ©e.xlsx"
     sourceWorksheet = "PlanComptable$"
 
     'ADODB connection
@@ -42,7 +42,7 @@ Sub ImporterPlanComptable() '2024-02-17 @ 07:21
 
     Call RedefinirDnrPlanComptable
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set connStr = Nothing
     Set recSet = Nothing
 
@@ -92,10 +92,10 @@ Sub ImportGeneriqueDuMaster(sourceWb As String, ws As Worksheet, onglet As Strin
     Dim targetCell As Range
     If Not recSet.EOF Then
         If Not tbl.DataBodyRange Is Nothing Then
-            'Si la table a déjà des lignes, on remplace à partir de la première
+            'Si la table a dÃ©jÃ  des lignes, on remplace Ã  partir de la premiÃ¨re
             Set targetCell = tbl.DataBodyRange.Cells(1, 1)
         Else
-            'Si la table est vide, on commence une ligne après l’en-tête
+            'Si la table est vide, on commence une ligne aprÃ¨s lâ€™en-tÃªte
             Set targetCell = tbl.HeaderRowRange.offset(1, 0).Cells(1, 1)
         End If
         targetCell.CopyFromRecordset recSet
@@ -109,7 +109,7 @@ Sub ImportGeneriqueDuMaster(sourceWb As String, ws As Worksheet, onglet As Strin
     
     Application.ScreenUpdating = True
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set rng = Nothing
     Set targetCell = Nothing
     Set tbl = Nothing
@@ -135,10 +135,10 @@ Sub ImporterClients() 'Using ADODB - 2024-02-25 @ 10:23
     Dim ws As Worksheet
     Set ws = wsdBD_Clients
     
-    'Import Clients List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
+    'Import Clients List from 'GCF_BD_EntrÃ©e.xlsx, in order to always have the LATEST version
     Dim sourceWorkbook As String, sourceTab As String
     sourceWorkbook = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
-                     "GCF_BD_Entrée.xlsx" '2024-02-14 @ 07:04
+                     "GCF_BD_EntrÃ©e.xlsx" '2024-02-14 @ 07:04
     sourceTab = "Clients$"
     
     'ADODB connection
@@ -169,7 +169,7 @@ Sub ImporterClients() 'Using ADODB - 2024-02-25 @ 10:23
     recSet.Close
     connStr.Close
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set connStr = Nothing
     Set recSet = Nothing
     Set ws = Nothing
@@ -182,18 +182,18 @@ Sub ImporterDebRecurrent() '2025-05-07 @ 14:14
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ImporterDebRecurrent", "", 0)
     
-    'Mettre en place les variables (paramètres)
+    'Mettre en place les variables (paramÃ¨tres)
     Dim sourceWb As String
     sourceWb = "GCF_BD_MASTER.xlsx"
     Dim ws As Worksheet
     Set ws = wsdDEB_Recurrent
     Dim onglet As String, table As String
-    onglet = "DEB_Récurrent"
+    onglet = "DEB_RÃ©current"
     table = "l_tbl_DEB_Recurrent"
 
     Call ImportGeneriqueDuMaster(sourceWb, ws, onglet, table)
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
     
     Call Log_Record("modImport:ImporterDebRecurrent", "", startTime)
@@ -204,7 +204,7 @@ Sub ImporterDebTrans() '2025-05-07 @ 14:25
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ImporterDebTrans", "", 0)
     
-    'Mettre en place les variables (paramètres)
+    'Mettre en place les variables (paramÃ¨tres)
     Dim sourceWb As String
     sourceWb = "GCF_BD_MASTER.xlsx"
     Dim ws As Worksheet
@@ -215,7 +215,7 @@ Sub ImporterDebTrans() '2025-05-07 @ 14:25
 
     Call ImportGeneriqueDuMaster(sourceWb, ws, onglet, table)
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
     
     Call Log_Record("modImport:ImporterDebTrans", "", startTime)
@@ -226,18 +226,18 @@ Sub ImporterEncDetails() '2025-05-07 @ 14:45
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ImporterEncDetails", "", 0)
     
-    'Mettre en place les variables (paramètres)
+    'Mettre en place les variables (paramÃ¨tres)
     Dim sourceWb As String
     sourceWb = "GCF_BD_MASTER.xlsx"
     Dim ws As Worksheet
     Set ws = wsdENC_Details
     Dim onglet As String, table As String
-    onglet = "ENC_Détails"
-    table = "l_tbl_ENC_Détails"
+    onglet = "ENC_DÃ©tails"
+    table = "l_tbl_ENC_DÃ©tails"
 
     Call ImportGeneriqueDuMaster(sourceWb, ws, onglet, table)
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
     
     Call Log_Record("modImport:ImporterEncDetails", "", startTime)
@@ -248,18 +248,18 @@ Sub ImporterEncEntete() '2025-05-07 @ 14:50
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ImporterEncEntete", "", 0)
     
-    'Mettre en place les variables (paramètres)
+    'Mettre en place les variables (paramÃ¨tres)
     Dim sourceWb As String
     sourceWb = "GCF_BD_MASTER.xlsx"
     Dim ws As Worksheet
     Set ws = wsdENC_Entete
     Dim onglet As String, table As String
-    onglet = "ENC_Entête"
-    table = "l_tbl_ENC_Entête"
+    onglet = "ENC_EntÃªte"
+    table = "l_tbl_ENC_EntÃªte"
 
     Call ImportGeneriqueDuMaster(sourceWb, ws, onglet, table)
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
     
     Call Log_Record("modImport:ImporterEncEntete", "", startTime)
@@ -270,18 +270,18 @@ Sub ImporterCCRegularisations() '2025-05-07 @ 13:58
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ImporterCCRegularisations", "", 0)
     
-    'Mettre en place les variables (paramètres)
+    'Mettre en place les variables (paramÃ¨tres)
     Dim sourceWb As String
     sourceWb = "GCF_BD_MASTER.xlsx"
     Dim ws As Worksheet
     Set ws = wsdCC_Regularisations
     Dim onglet As String, table As String
-    onglet = "CC_Régularisations"
-    table = "l_tbl_CC_Régularisations"
+    onglet = "CC_RÃ©gularisations"
+    table = "l_tbl_CC_RÃ©gularisations"
 
     Call ImportGeneriqueDuMaster(sourceWb, ws, onglet, table)
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
     
     Call Log_Record("modImport:ImporterCCRegularisations", "", startTime)
@@ -292,7 +292,7 @@ Sub ImporterFacComptesClients() '2025-05-07 @ 14:52
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ImporterFacComptesClients", "", 0)
     
-    'Mettre en place les variables (paramètres)
+    'Mettre en place les variables (paramÃ¨tres)
     Dim sourceWb As String
     sourceWb = "GCF_BD_MASTER.xlsx"
     Dim ws As Worksheet
@@ -303,7 +303,7 @@ Sub ImporterFacComptesClients() '2025-05-07 @ 14:52
 
     Call ImportGeneriqueDuMaster(sourceWb, ws, onglet, table)
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
     
     Call Log_Record("modImport:ImporterFacComptesClients", "", startTime)
@@ -314,18 +314,18 @@ Sub ImporterFacDetails() '2025-05-07 @ 14:59
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ImporterFacDetails", "", 0)
     
-    'Mettre en place les variables (paramètres)
+    'Mettre en place les variables (paramÃ¨tres)
     Dim sourceWb As String
     sourceWb = "GCF_BD_MASTER.xlsx"
     Dim ws As Worksheet
     Set ws = wsdFAC_Details
     Dim onglet As String, table As String
-    onglet = "FAC_Détails"
-    table = "l_tbl_FAC_Détails"
+    onglet = "FAC_DÃ©tails"
+    table = "l_tbl_FAC_DÃ©tails"
 
     Call ImportGeneriqueDuMaster(sourceWb, ws, onglet, table)
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
     
     Call Log_Record("modImport:ImporterFacDetails", "", startTime)
@@ -336,18 +336,18 @@ Sub ImporterFacEntete() '2025-05-07 @ 15:02
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ImporterFacEntete", "", 0)
     
-    'Mettre en place les variables (paramètres)
+    'Mettre en place les variables (paramÃ¨tres)
     Dim sourceWb As String
     sourceWb = "GCF_BD_MASTER.xlsx"
     Dim ws As Worksheet
     Set ws = wsdFAC_Entete
     Dim onglet As String, table As String
-    onglet = "FAC_Entête"
-    table = "l_tbl_FAC_Entête"
+    onglet = "FAC_EntÃªte"
+    table = "l_tbl_FAC_EntÃªte"
 
     Call ImportGeneriqueDuMaster(sourceWb, ws, onglet, table)
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
     
     Call Log_Record("modImport:ImporterFacEntete", "", startTime)
@@ -358,7 +358,7 @@ Sub ImporterFacSommaireTaux() '2025-05-07 @ 16:08
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ImporterFacSommaireTaux", "", 0)
     
-    'Mettre en place les variables (paramètres)
+    'Mettre en place les variables (paramÃ¨tres)
     Dim sourceWb As String
     sourceWb = "GCF_BD_MASTER.xlsx"
     Dim ws As Worksheet
@@ -369,7 +369,7 @@ Sub ImporterFacSommaireTaux() '2025-05-07 @ 16:08
 
     Call ImportGeneriqueDuMaster(sourceWb, ws, onglet, table)
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
     
     Call Log_Record("modImport:ImporterFacSommaireTaux", "", startTime)
@@ -380,18 +380,18 @@ Sub ImporterFacProjetsDetails() '2025-05-07 @ 15:57
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ImporterFacProjetsDetails", "", 0)
     
-    'Mettre en place les variables (paramètres)
+    'Mettre en place les variables (paramÃ¨tres)
     Dim sourceWb As String
     sourceWb = "GCF_BD_MASTER.xlsx"
     Dim ws As Worksheet
     Set ws = wsdFAC_Projets_Details
     Dim onglet As String, table As String
-    onglet = "FAC_Projets_Détails"
-    table = "l_tbl_FAC_Projets_Détails"
+    onglet = "FAC_Projets_DÃ©tails"
+    table = "l_tbl_FAC_Projets_DÃ©tails"
 
     Call ImportGeneriqueDuMaster(sourceWb, ws, onglet, table)
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
     
     Call Log_Record("modImport:ImporterFacProjetsDetails", "", startTime)
@@ -402,21 +402,21 @@ Sub ImporterFacProjetsEntete() '2025-05-07 @ 16:05
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ImporterFacProjetsEntete", "", 0)
     
-    'Mettre en place les variables (paramètres)
+    'Mettre en place les variables (paramÃ¨tres)
     Dim sourceWb As String
     sourceWb = "GCF_BD_MASTER.xlsx"
     Dim ws As Worksheet
     Set ws = wsdFAC_Projets_Entete
     Dim onglet As String, table As String
-    onglet = "FAC_Projets_Entête"
-    table = "l_tbl_FAC_Projets_Entête"
+    onglet = "FAC_Projets_EntÃªte"
+    table = "l_tbl_FAC_Projets_EntÃªte"
 
     Call ImportGeneriqueDuMaster(sourceWb, ws, onglet, table)
     
     Dim lastRow As Long
-    lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+    lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).Row
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
     
     Call Log_Record("modImport:ImporterFacProjetsEntete", "", startTime)
@@ -432,10 +432,10 @@ Sub ImporterFournisseurs() 'Using ADODB - 2024-07-03 @ 15:43
     'Clear all cells, but the headers, in the destination worksheet
     wsdBD_Fournisseurs.Range("A1").CurrentRegion.offset(1, 0).ClearContents
 
-    'Import Suppliers List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
+    'Import Suppliers List from 'GCF_BD_EntrÃ©e.xlsx, in order to always have the LATEST version
     Dim sourceWorkbook As String, sourceTab As String
     sourceWorkbook = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
-                     "GCF_BD_Entrée.xlsx" '2024-02-14 @ 07:04
+                     "GCF_BD_EntrÃ©e.xlsx" '2024-02-14 @ 07:04
     sourceTab = "Fournisseurs$"
     
     'ADODB connection
@@ -470,7 +470,7 @@ Sub ImporterFournisseurs() 'Using ADODB - 2024-07-03 @ 15:43
     
     Application.ScreenUpdating = True
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set connStr = Nothing
     Set recSet = Nothing
     Set rng = Nothing
@@ -483,20 +483,20 @@ Sub ImporterEJRecurrente() '2025-05-07 @ 14:35
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ImporterEJRecurrente", "", 0)
     
-    'Mettre en place les variables (paramètres)
+    'Mettre en place les variables (paramÃ¨tres)
     Dim sourceWb As String
     sourceWb = "GCF_BD_MASTER.xlsx"
     Dim ws As Worksheet
     Set ws = wsdGL_EJ_Recurrente
     Dim onglet As String, table As String
-    onglet = "GL_EJ_Récurrente"
+    onglet = "GL_EJ_RÃ©currente"
     table = "l_tbl_GL_EJ_Auto"
 
     Call ImportGeneriqueDuMaster(sourceWb, ws, onglet, table)
     
     Call GL_EJ_Recurrente_Build_Summary '2024-03-14 @ 07:38
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
     
     Call Log_Record("modImport:ImporterEJRecurrente", "", startTime)
@@ -507,7 +507,7 @@ Sub ImporterGLTransactions() '2025-05-07 @ 16:10
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ImporterGLTransactions", "", 0)
     
-    'Mettre en place les variables (paramètres)
+    'Mettre en place les variables (paramÃ¨tres)
     Dim sourceWb As String
     sourceWb = "GCF_BD_MASTER.xlsx"
     Dim ws As Worksheet
@@ -518,7 +518,7 @@ Sub ImporterGLTransactions() '2025-05-07 @ 16:10
 
     Call ImportGeneriqueDuMaster(sourceWb, ws, onglet, table)
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
     
     Call Log_Record("modImport:ImporterGLTransactions", "", startTime)
@@ -529,9 +529,9 @@ Sub ImporterTEC() '2024-02-14 @ 06:19
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modImport:ImporterTEC", "", 0)
     
-    Application.StatusBar = "Importation des TEC à partir de GCF_MASTER.xlsx" '2025-06-13 @ 08:47
+    Application.StatusBar = "Importation des TEC Ã  partir de GCF_MASTER.xlsx" '2025-06-13 @ 08:47
     
-    'Mettre en place les variables (paramètres)
+    'Mettre en place les variables (paramÃ¨tres)
     Dim sourceWb As String
     sourceWb = "GCF_BD_MASTER.xlsx"
     Dim ws As Worksheet
@@ -542,7 +542,7 @@ Sub ImporterTEC() '2024-02-14 @ 06:19
 
     Call ImportGeneriqueDuMaster(sourceWb, ws, onglet, table)
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
     
     Application.StatusBar = False '2025-06-13 @ 08:47
@@ -564,4 +564,5 @@ Sub ViderTableau(nomFeuille As String, nomTableau As String) '2025-05-07 @ 10:13
     End If
 
 End Sub
+
 

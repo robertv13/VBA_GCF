@@ -1,4 +1,4 @@
-Attribute VB_Name = "modFAC_Interrogation"
+ï»¿Attribute VB_Name = "modFAC_Interrogation"
 '@IgnoreModule SetAssignmentWithIncompatibleObjectType
 
 Option Explicit
@@ -65,7 +65,7 @@ Sub Affiche_Liste_Factures()
 
 Clean_Exit:
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set rng = Nothing
     Set shp = Nothing
     Set ws = Nothing
@@ -91,22 +91,22 @@ Sub FAC_Get_Invoice_Client_AF(codeClient As String) '2024-06-27 @ 15:27
     'wsdFAC_Entete_AF#1
 
     With ws
-        'Effacer les données de la dernière utilisation
+        'Effacer les donnÃ©es de la derniÃ¨re utilisation
         .Range("Y6:Y10").ClearContents
-        .Range("Y6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+        .Range("Y6").Value = "DerniÃ¨re utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
-        'Définir le range pour la source des données en utilisant un tableau
+        'DÃ©finir le range pour la source des donnÃ©es en utilisant un tableau
         Dim rngData As Range
-        Set rngData = .Range("l_tbl_FAC_Entête[#All]")
+        Set rngData = .Range("l_tbl_FAC_EntÃªte[#All]")
         .Range("Y7").Value = rngData.Address
         
-        'Définir le range des critères
+        'DÃ©finir le range des critÃ¨res
         Dim rngCriteria As Range
         Set rngCriteria = .Range("Y2:Y3")
         .Range("Y3").Value = codeClient
         .Range("Y8").Value = rngCriteria.Address
         
-        'Définir le range des résultats et effacer avant le traitement
+        'DÃ©finir le range des rÃ©sultats et effacer avant le traitement
         Dim rngResult As Range
         Set rngResult = .Range("AA1").CurrentRegion
         rngResult.offset(2, 0).Clear
@@ -119,12 +119,12 @@ Sub FAC_Get_Invoice_Client_AF(codeClient As String) '2024-06-27 @ 15:27
                     CopyToRange:=rngResult, _
                     Unique:=False
           
-        'Quels sont les résultats ?
+        'Quels sont les rÃ©sultats ?
         Dim lastResultRow As Long
-        lastResultRow = .Cells(.Rows.count, "AA").End(xlUp).row
+        lastResultRow = .Cells(.Rows.count, "AA").End(xlUp).Row
         .Range("Y10").Value = lastResultRow - 2 & " lignes"
          
-        'Est-il nécessaire de trier les résultats ?
+        'Est-il nÃ©cessaire de trier les rÃ©sultats ?
         If lastResultRow < 4 Then Exit Sub
         With .Sort 'Sort - Invoice Date
             .SortFields.Clear
@@ -137,7 +137,7 @@ Sub FAC_Get_Invoice_Client_AF(codeClient As String) '2024-06-27 @ 15:27
          End With
      End With
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set rngCriteria = Nothing
     Set rngData = Nothing
     Set rngResult = Nothing
@@ -149,9 +149,9 @@ Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
 
     Dim ws As Worksheet: Set ws = wsdFAC_Entete
     
-    'Détermine la dernière utilisée dans les résultats de AF_1 dans wsdFAC_Entete
+    'DÃ©termine la derniÃ¨re utilisÃ©e dans les rÃ©sultats de AF_1 dans wsdFAC_Entete
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "AA").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "AA").End(xlUp).Row
     If lastUsedRow < 3 Then Exit Sub 'Nothing to display
     
     Dim arr() As Variant
@@ -161,7 +161,7 @@ Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
     With ws
         Dim i As Long, r As Long
         For i = 3 To lastUsedRow
-            'Vérification de la date de facture -ET- si la facture est bel et bien confirmée
+            'VÃ©rification de la date de facture -ET- si la facture est bel et bien confirmÃ©e
             If .Range("AB" & i).Value >= dateMin And .Range("AB" & i).Value <= dateMax Then
                 r = r + 1
                 arr(r, 0) = .Range("AC" & i).Value 'ACouC
@@ -177,14 +177,14 @@ Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
                 arr(r, 10) = .Range("AU" & i).Value 'AR_Total
                 arr(r, 11) = Fn_Get_Invoice_Total_Payments_AF(.Range("AA" & i).Value)
                 arr(r, 12) = CDate(Fn_Get_A_Cell_From_A_Worksheet("FAC_Comptes_Clients", .Range("AA" & i).Value, fFacCCInvNo, fFacCCDueDate))
-                'Obtenir les TEC facturés par cette facture
+                'Obtenir les TEC facturÃ©s par cette facture
                 arr(r, 13) = Fn_Get_TEC_Total_Invoice_AF(.Range("AA" & i).Value, "Dollars")
             End If
         Next i
     End With
     
     If r = 0 Then
-        MsgBox "Il n'y a aucune facture pour la période recherchée", vbExclamation
+        MsgBox "Il n'y a aucune facture pour la pÃ©riode recherchÃ©e", vbExclamation
         GoTo Clean_Exit
     End If
     
@@ -228,7 +228,7 @@ Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
 
 Clean_Exit:
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
     
 End Sub
@@ -298,7 +298,7 @@ Sub FAC_Historique_Montrer_Bouton_Afficher()
     
     Application.EnableEvents = True
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set shp = Nothing
     
 End Sub
@@ -314,7 +314,7 @@ Sub FAC_Historique_Montrer_Bouton_AutreClient()
     
     Application.EnableEvents = True
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set shp = Nothing
     
 End Sub
@@ -324,19 +324,19 @@ Sub FAC_Interrogation_AfficherMenuContextuel(ByVal Target As Range) '2025-01-28 
     Dim menu As CommandBar
     Dim menuItem As CommandBarButton
 
-    'Supprimer le menu contextuel personnalisé s'il existe déjà
+    'Supprimer le menu contextuel personnalisÃ© s'il existe dÃ©jÃ 
     On Error Resume Next
     Application.CommandBars("FactureMenu").Delete
     On Error GoTo 0
 
-    'Détermine les coordonnées de la colonne qui a été cliquée
+    'DÃ©termine les coordonnÃ©es de la colonne qui a Ã©tÃ© cliquÃ©e
     Dim numeroLigne As Long, numeroColonne As Long
     Call ExtraireLigneColonneCellule(Target.Address, numeroLigne, numeroColonne)
     
     Dim numeroFacture As String
     numeroFacture = ActiveSheet.Cells(numeroLigne, "C").Value
     
-    'Créer un nouveau menu contextuel
+    'CrÃ©er un nouveau menu contextuel
     Set menu = Application.CommandBars.Add(Name:="FactureMenu", position:=msoBarPopup, Temporary:=True)
 
     'Ajout de l'option 1 au menu contextuel
@@ -351,7 +351,7 @@ Sub FAC_Interrogation_AfficherMenuContextuel(ByVal Target As Range) '2025-01-28 
 
     'Ajout de l'option 3 au menu contextuel
     Set menuItem = menu.Controls.Add(Type:=msoControlButton)
-        menuItem.Caption = "TEC détaillé pour la facture"
+        menuItem.Caption = "TEC dÃ©taillÃ© pour la facture"
         menuItem.OnAction = "'ObtenirListeTECFactures """ & Target.Address & """'"
 
     'Ajout de l'option 4 au menu contextuel
@@ -456,11 +456,11 @@ Sub AfficherNouvelleFeuille_Stats(invNo As String, nomClient As String, dateFact
     Dim sheetName As String
     sheetName = "FactureInfo_" & invNo
     
-    ' Référence à la première feuille
+    ' RÃ©fÃ©rence Ã  la premiÃ¨re feuille
     Dim wsSelection As Worksheet
     Set wsSelection = wshFAC_Interrogation
     
-    'Vérifier si la feuille existe déjà
+    'VÃ©rifier si la feuille existe dÃ©jÃ 
     Dim ws As Worksheet
     On Error Resume Next
     Set ws = ActiveWorkbook.Worksheets(sheetName)
@@ -473,11 +473,11 @@ Sub AfficherNouvelleFeuille_Stats(invNo As String, nomClient As String, dateFact
         Application.DisplayAlerts = True
     End If
     
-    ' Créer une nouvelle feuille
+    ' CrÃ©er une nouvelle feuille
     Set ws = ActiveWorkbook.Worksheets.Add
     ws.Name = sheetName
     
-    'Entête de la feuille
+    'EntÃªte de la feuille
     ws.Range("B1:J1").Merge
     With ws.Range("B1")
         .Value = "Informations sur les TEC & les Honoraires"
@@ -583,7 +583,7 @@ Sub AfficherNouvelleFeuille_Stats(invNo As String, nomClient As String, dateFact
         ws.Range("F9:F" & lastRowUsed).NumberFormat = "##0.00"
         ws.Range("G9:H" & lastRowUsed).NumberFormat = "###,##0.00 $"
         
-        'S'assurer que les valeurs sont de vrais valeurs numériques ???
+        'S'assurer que les valeurs sont de vrais valeurs numÃ©riques ???
         Dim rng As Range
         Set rng = ws.Range("F9:F" & lastRowUsed)
         Call ConvertirEnNumerique(rng)
@@ -639,21 +639,21 @@ Sub AfficherNouvelleFeuille_Stats(invNo As String, nomClient As String, dateFact
             .Weight = xlThin
         End With
         
-        'Totaux du deuxième tableau
+        'Totaux du deuxiÃ¨me tableau
         lastRowUsed = lastRowUsed + 1
         ws.Cells(lastRowUsed, 2 + cOffset).Value = totHres
         ws.Range("F" & lastRowUsed).Font.Bold = True
         ws.Cells(lastRowUsed, 4 + cOffset).Value = totValeur
         ws.Range("H" & lastRowUsed).Font.Bold = True
         
-        'Mise en forme du deuxième tableau
+        'Mise en forme du deuxiÃ¨me tableau
         ws.Range("E" & premiereLigne & ":E" & lastRowUsed).HorizontalAlignment = xlCenter
         ws.Range("F" & premiereLigne & ":H" & lastRowUsed).HorizontalAlignment = xlRight
         ws.Range("F" & premiereLigne & ":F" & lastRowUsed).NumberFormat = "##0.00"
         ws.Range("G" & premiereLigne & ":G" & lastRowUsed).NumberFormat = "###,##0.00 $"
         ws.Range("H" & premiereLigne & ":H" & lastRowUsed).NumberFormat = "###,##0.00 $"
         
-        'S'assurer que les valeurs sont de vrais valeurs numériques ???
+        'S'assurer que les valeurs sont de vrais valeurs numÃ©riques ???
         Set rng = ws.Range("F" & premiereLigne & ":F" & lastRowUsed)
         Call ConvertirEnNumerique(rng)
         Set rng = ws.Range("G" & premiereLigne & ":G" & lastRowUsed - 1)
@@ -666,7 +666,7 @@ Sub AfficherNouvelleFeuille_Stats(invNo As String, nomClient As String, dateFact
         vbOKOnly, "Facture '" & "" & invNo & "'"
     End If
     
-    'Rien d'imprimé
+    'Rien d'imprimÃ©
     If nbItemTEC = 0 And nbItemHono = 0 Then
         Call RetourFeuilleSelection_Stats
         Exit Sub
@@ -747,10 +747,10 @@ Sub AfficherNouvelleFeuille_Stats(invNo As String, nomClient As String, dateFact
     Set rngRetour = ws.Range("H" & lastRowUsed + 1)
     Call AjouterBoutons_Stats(ws, wsSelection, rngImprimer, rngRetour)
     
-    'Afficher la feuille nouvellement créée
+    'Afficher la feuille nouvellement crÃ©Ã©e
     ws.Activate
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set rng = Nothing
     
     Call Log_Record("modFAC_Interrogation:AfficherNouvelleFeuille_Stats", "", startTime)
@@ -767,9 +767,9 @@ Function ObtenirTableauTEC(numeroFacture As String) As Variant
     
     hresTEC = Fn_Get_TEC_Total_Invoice_AF(numeroFacture, "Heures")
     
-    'Utilisation du AF#1 généré dans la procédure précédente
+    'Utilisation du AF#1 gÃ©nÃ©rÃ© dans la procÃ©dure prÃ©cÃ©dente
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "K").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "K").End(xlUp).Row
     If lastUsedRow > 2 Then
         Dim r As Integer
         Dim indice As Integer
@@ -777,7 +777,7 @@ Function ObtenirTableauTEC(numeroFacture As String) As Variant
         Dim prof As String
         For r = 2 To lastUsedRow
             If InStr(ws.Cells(r, 11).Value, "*** - [Sommaire des TEC] pour la facture") = 1 Then
-                'Exemple de remplissage du tableau TEC avec des données en fonction du numéro de facture
+                'Exemple de remplissage du tableau TEC avec des donnÃ©es en fonction du numÃ©ro de facture
                 indice = indice + 1
                 prof = Trim$(Mid$(ws.Cells(r, 11).Value, 44))
                 hres = ws.Cells(r, 12).Value
@@ -801,15 +801,15 @@ Function ObtenirTableauHonoraires(numeroFacture As String) As Variant
     
     Dim wsFees As Worksheet: Set wsFees = wsdFAC_Sommaire_Taux
     
-    'Déterminer la dernière ligne utilisée
+    'DÃ©terminer la derniÃ¨re ligne utilisÃ©e
     Dim lastUsedRow As Long
-    lastUsedRow = wsFees.Cells(wsFees.Rows.count, 1).End(xlUp).row
+    lastUsedRow = wsFees.Cells(wsFees.Rows.count, 1).End(xlUp).Row
     
-    'Création d'une plage qui contient toutes les lignes pour la facture
+    'CrÃ©ation d'une plage qui contient toutes les lignes pour la facture
     Dim cell As Range
     Set cell = wsFees.Range("A2:A" & lastUsedRow).Find(What:=numeroFacture, LookIn:=xlValues, LookAt:=xlWhole)
     
-    'Avons-nous trouvé quelque chose ?
+    'Avons-nous trouvÃ© quelque chose ?
     Dim firstAddress As String
     Dim indice As Integer
     Dim prof As String
@@ -818,7 +818,7 @@ Function ObtenirTableauHonoraires(numeroFacture As String) As Variant
         firstAddress = cell.Address
         Application.EnableEvents = False
         Do
-            'Lire les données
+            'Lire les donnÃ©es
             If wsFees.Cells(cell.row, 4).Value <> 0 Then
                 indice = indice + 1
                 prof = wsFees.Cells(cell.row, 3).Value
@@ -829,13 +829,13 @@ Function ObtenirTableauHonoraires(numeroFacture As String) As Variant
                 tableauHonoraires(indice, 3) = taux
                 tableauHonoraires(indice, 4) = Round(hres * taux, 2)
             End If
-            'On passe à la ligne suivante de la plage
+            'On passe Ã  la ligne suivante de la plage
             Set cell = wsFees.Range("A2:A" & lastUsedRow).FindNext(After:=cell)
         Loop While Not cell Is Nothing And cell.Address <> firstAddress
         Application.EnableEvents = True
     End If
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set cell = Nothing
     Set wsFees = Nothing
     
@@ -847,10 +847,10 @@ Function ObtenirTransCC(numeroFacture As String) As Variant
 
     Dim tableauCC(1 To 25, 1 To 7) As String
     
-    'Feuilles nécessaires
+    'Feuilles nÃ©cessaires
     Dim wsFactures As Worksheet: Set wsFactures = wsdFAC_Comptes_Clients
     Dim wsPaiements As Worksheet: Set wsPaiements = wsdENC_Details
-    Dim wsRégularisations As Worksheet: Set wsRégularisations = wsdCC_Regularisations
+    Dim wsRÃ©gularisations As Worksheet: Set wsRÃ©gularisations = wsdCC_Regularisations
     
     'Obtenir les informations sur la facture (wshComptes_Clients)
     Dim ligneFacture As Long
@@ -861,18 +861,18 @@ Function ObtenirTransCC(numeroFacture As String) As Variant
     montantFacture = wsFactures.Cells(ligneFacture, fFacCCTotal).Value
     dateDue = wsFactures.Cells(ligneFacture, fFacCCDueDate).Value
     
-    'Obtenir les paiements et régularisations pour cette facture
+    'Obtenir les paiements et rÃ©gularisations pour cette facture
     Dim montantPaye As Currency, montantRegul As Currency, montantRestant As Currency
     montantPaye = Fn_Obtenir_Paiements_Facture(numeroFacture, #12/31/2999#)
-    montantRegul = Fn_Obtenir_Régularisations_Facture(numeroFacture, #12/31/2999#)
+    montantRegul = Fn_Obtenir_RÃ©gularisations_Facture(numeroFacture, #12/31/2999#)
     
     montantRestant = montantFacture - montantPaye + montantRegul
     
-    'Date actuelle pour le calcul de l'âge des factures
+    'Date actuelle pour le calcul de l'Ã¢ge des factures
     Dim dateAujourdhui As Date
     dateAujourdhui = Date
     
-    'Calcul de l'âge de la facture et de la tranche d'âge
+    'Calcul de l'Ã¢ge de la facture et de la tranche d'Ã¢ge
     Dim ageFacture As Long
     ageFacture = WorksheetFunction.Max(dateAujourdhui - dateDue, 0)
            
@@ -912,22 +912,22 @@ Function ObtenirTransCC(numeroFacture As String) As Variant
         Loop While Not rngPaiementsAssoc Is Nothing And rngPaiementsAssoc.Address <> pmtFirstAddress
     End If
     
-    'Obtenir toutes les régularisations pour la facture
-    Dim rngRégularisationAssoc As Range
+    'Obtenir toutes les rÃ©gularisations pour la facture
+    Dim rngRÃ©gularisationAssoc As Range
     Dim regulFirstAddress As String
-    Set rngRégularisationAssoc = wsRégularisations.Range("B:B").Find(numeroFacture, LookIn:=xlValues, LookAt:=xlWhole)
-    If Not rngRégularisationAssoc Is Nothing Then
-        regulFirstAddress = rngRégularisationAssoc.Address
+    Set rngRÃ©gularisationAssoc = wsRÃ©gularisations.Range("B:B").Find(numeroFacture, LookIn:=xlValues, LookAt:=xlWhole)
+    If Not rngRÃ©gularisationAssoc Is Nothing Then
+        regulFirstAddress = rngRÃ©gularisationAssoc.Address
         Do
             i = i + 1
-            tableauCC(i, 1) = "Régularisation"
-            tableauCC(i, 2) = Format$(rngRégularisationAssoc.offset(0, 1).Value, wsdADMIN.Range("B1").Value)
-            tableauCC(i, 3) = rngRégularisationAssoc.offset(0, 4).Value + _
-                rngRégularisationAssoc.offset(0, 5).Value + _
-                rngRégularisationAssoc.offset(0, 6).Value + _
-                rngRégularisationAssoc.offset(0, 7).Value
-            Set rngRégularisationAssoc = wsRégularisations.Columns("B:B").FindNext(rngRégularisationAssoc)
-        Loop While Not rngRégularisationAssoc Is Nothing And rngRégularisationAssoc.Address <> regulFirstAddress
+            tableauCC(i, 1) = "RÃ©gularisation"
+            tableauCC(i, 2) = Format$(rngRÃ©gularisationAssoc.offset(0, 1).Value, wsdADMIN.Range("B1").Value)
+            tableauCC(i, 3) = rngRÃ©gularisationAssoc.offset(0, 4).Value + _
+                rngRÃ©gularisationAssoc.offset(0, 5).Value + _
+                rngRÃ©gularisationAssoc.offset(0, 6).Value + _
+                rngRÃ©gularisationAssoc.offset(0, 7).Value
+            Set rngRÃ©gularisationAssoc = wsRÃ©gularisations.Columns("B:B").FindNext(rngRÃ©gularisationAssoc)
+        Loop While Not rngRÃ©gularisationAssoc Is Nothing And rngRÃ©gularisationAssoc.Address <> regulFirstAddress
     End If
     
     ObtenirTransCC = tableauCC
@@ -938,7 +938,7 @@ Sub AjouterBoutons_Stats(ws As Worksheet, wsSelection As Worksheet, rngImprimer 
     Dim btnImprimer As Shape
     Dim btnRetour As Shape
     
-    ' Ajouter un bouton pour imprimer à la position de rngImprimer
+    ' Ajouter un bouton pour imprimer Ã  la position de rngImprimer
     Set btnImprimer = ws.Shapes.AddFormControl(xlButtonControl, rngImprimer.Left, rngImprimer.Top, 103, 30)
     With btnImprimer
         .Name = "btnImprimer"
@@ -948,7 +948,7 @@ Sub AjouterBoutons_Stats(ws As Worksheet, wsSelection As Worksheet, rngImprimer 
         .OnAction = "BoutonImprimer_Stats"
     End With
     
-    ' Ajouter un bouton pour retourner à la feuille de sélection à la position de rngRetour
+    ' Ajouter un bouton pour retourner Ã  la feuille de sÃ©lection Ã  la position de rngRetour
     Set btnRetour = ws.Shapes.AddFormControl(xlButtonControl, rngRetour.Left, rngRetour.Top, 103, 30)
     With btnRetour
         .Name = "btnRetour"
@@ -964,7 +964,7 @@ Sub AjouterBoutons_CC(ws As Worksheet, wsSelection As Worksheet, rngImprimer As 
     Dim btnImprimer As Shape
     Dim btnRetour As Shape
     
-    ' Ajouter un bouton pour imprimer à la position de rngImprimer
+    ' Ajouter un bouton pour imprimer Ã  la position de rngImprimer
     Set btnImprimer = ws.Shapes.AddFormControl(xlButtonControl, rngImprimer.Left, rngImprimer.Top, 103, 30)
     With btnImprimer
         .Name = "btnImprimer"
@@ -974,7 +974,7 @@ Sub AjouterBoutons_CC(ws As Worksheet, wsSelection As Worksheet, rngImprimer As 
         .OnAction = "BoutonImprimer_CC"
     End With
     
-    ' Ajouter un bouton pour retourner à la feuille de sélection à la position de rngRetour
+    ' Ajouter un bouton pour retourner Ã  la feuille de sÃ©lection Ã  la position de rngRetour
     Set btnRetour = ws.Shapes.AddFormControl(xlButtonControl, rngRetour.Left, rngRetour.Top, 103, 30)
     With btnRetour
         .Name = "btnRetour"
@@ -992,7 +992,7 @@ Sub BoutonImprimer_Stats()
     Set ws = ActiveSheet
     
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "E").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "E").End(xlUp).Row
     lastUsedRow = lastUsedRow + 6
     Dim plage As Range
     Set plage = ws.Range("B1:J" & lastUsedRow)
@@ -1007,7 +1007,7 @@ Sub BoutonImprimer_CC()
     Set ws = ActiveSheet
     
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "C").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "C").End(xlUp).Row
     lastUsedRow = lastUsedRow + 5
     Dim plage As Range
     Set plage = ws.Range("A1:K" & lastUsedRow)
@@ -1033,7 +1033,7 @@ Sub ImprimerInfosTECetHonoraires(ByVal plage As Range)
         .BottomMargin = Application.InchesToPoints(0.25)
     End With
 
-    'Afficher un aperçu avant impression
+    'Afficher un aperÃ§u avant impression
     plage.Worksheet.PrintPreview
     
 End Sub
@@ -1055,7 +1055,7 @@ Sub ImprimerTransCC(ByVal plage As Range)
         .BottomMargin = Application.InchesToPoints(0.25)
     End With
 
-    'Afficher un aperçu avant impression
+    'Afficher un aperÃ§u avant impression
     plage.Worksheet.PrintPreview
     
 End Sub
@@ -1126,20 +1126,20 @@ Sub ObtenirListeTECFactures(adresse As String)
     dateFacture = ws.Cells(numeroLigne, 4).Value
     
     'Utilisation d'un AdvancedFilter directement dans TEC_Local (BI:BX)
-    Call ObtenirListeTECFacturésFiltreAvancé(invNo)
+    Call ObtenirListeTECFacturÃ©sFiltreAvancÃ©(invNo)
 
     Set ws = wsdTEC_Local
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "BJ").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "BJ").End(xlUp).Row
     
     'Est-ce que nous avons des TEC pour cette facture ?
     If lastUsedRow < 3 Then
-        MsgBox "Il n'y a aucun TEC associé à la facture '" & invNo & "'"
+        MsgBox "Il n'y a aucun TEC associÃ© Ã  la facture '" & invNo & "'"
     Else
-        Call PreparerRapportTECFacturés(invNo)
+        Call PreparerRapportTECFacturÃ©s(invNo)
     End If
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
     
     Call Log_Record("modFAC_Interrogation:ObtenirListeTECFactures", "", startTime)
@@ -1152,11 +1152,11 @@ Sub PreparerRapportTECFactures()
     
     'Assigner la feuille du rapport
     Dim strRapport As String
-    strRapport = "Rapport TEC facturés"
+    strRapport = "Rapport TEC facturÃ©s"
     Dim wsRapport As Worksheet: Set wsRapport = wshTECFacture
     wsRapport.Cells.Clear
     
-    'Désactiver les mises à jour de l'écran et autres alertes
+    'DÃ©sactiver les mises Ã  jour de l'Ã©cran et autres alertes
     Application.ScreenUpdating = False
     Application.EnableEvents = False
     Application.DisplayAlerts = False
@@ -1164,16 +1164,16 @@ Sub PreparerRapportTECFactures()
     'Mettre en forme la feuille de rapport
     With wsRapport
         ' Titre du rapport
-        .Range("A1").Value = "TEC facturés pour la facture '" & invNo & "'"
+        .Range("A1").Value = "TEC facturÃ©s pour la facture '" & invNo & "'"
         .Range("A1").Font.Bold = True
         .Range("A1").Font.size = 12
         
-        'Ajouter une date de génération du rapport
-        .Range("A2").Value = "Date de création : " & Format$(Date, wsdADMIN.Range("B1").Value)
+        'Ajouter une date de gÃ©nÃ©ration du rapport
+        .Range("A2").Value = "Date de crÃ©ation : " & Format$(Date, wsdADMIN.Range("B1").Value)
         .Range("A2").Font.Italic = True
         .Range("A2").Font.size = 10
         
-        'Entête du rapport (A4:D4)
+        'EntÃªte du rapport (A4:D4)
         .Range("A4").Value = "Date"
         .Range("B4").Value = "Prof."
         .Range("C4").Value = "Description"
@@ -1188,18 +1188,18 @@ Sub PreparerRapportTECFactures()
         
         'Utilisation du AdvancedFilter # 3 sur la feuille TEC_Local
         Dim wsSource As Worksheet
-        Set wsSource = wsdTEC_Local 'Utilisation des résultats du AF (BJ:BY)
+        Set wsSource = wsdTEC_Local 'Utilisation des rÃ©sultats du AF (BJ:BY)
         
-        'Copier quelques données de la source
+        'Copier quelques donnÃ©es de la source
         Dim rngResult As Range
         Set rngResult = wsSource.Range("BJ1").CurrentRegion.offset(2, 0)
-        'Redimensionner la plage après l'offset pour avoir que les données (pas d'entête)
+        'Redimensionner la plage aprÃ¨s l'offset pour avoir que les donnÃ©es (pas d'entÃªte)
         Set rngResult = rngResult.Resize(rngResult.Rows.count - 2)
-        'Transfert des données vers un tableau
+        'Transfert des donnÃ©es vers un tableau
         Dim tableau As Variant
         tableau = rngResult.Value
         
-        'Créer un tableau pour les résultats
+        'CrÃ©er un tableau pour les rÃ©sultats
         Dim output() As Variant
         ReDim output(1 To UBound(tableau, 1), 1 To 4)
         Dim r As Long
@@ -1228,7 +1228,7 @@ Sub PreparerRapportTECFactures()
             .PatternTintAndShade = 0
         End With
         
-        'Ajouter une bordure aux données
+        'Ajouter une bordure aux donnÃ©es
         .Range("A4:D" & r).Borders.LineStyle = xlContinuous
         With .Range("A5:D" & r).Borders(xlInsideVertical)
             .LineStyle = xlContinuous
@@ -1267,25 +1267,25 @@ Sub PreparerRapportTECFactures()
         .LeftMargin = Application.CentimetersToPoints(0.5)
         .RightMargin = Application.CentimetersToPoints(0.5)
         
-        'Ajuster la marge des en-têtes et pieds de page (1 cm)
+        'Ajuster la marge des en-tÃªtes et pieds de page (1 cm)
         .HeaderMargin = Application.CentimetersToPoints(1)
         .FooterMargin = Application.CentimetersToPoints(1)
         
         .Orientation = xlPortrait 'Portrait
         .FitToPagesWide = 1 'Ajuster sur une page en largeur
         .FitToPagesTall = False ' Ne pas ajuster en hauteur
-        .PrintArea = "A1:D" & r ' Définir la zone d'impression
+        .PrintArea = "A1:D" & r ' DÃ©finir la zone d'impression
         .CenterHorizontally = True ' Centrer horizontalement
         .CenterVertically = False ' Centrer verticalement
     End With
     
-    'On se déplace à la feuille contenant le rapport
+    'On se dÃ©place Ã  la feuille contenant le rapport
     wsRapport.Visible = xlSheetVisible
     wsRapport.Activate
     
-    MsgBox "Le rapport a été généré sur la feuille " & strRapport
+    MsgBox "Le rapport a Ã©tÃ© gÃ©nÃ©rÃ© sur la feuille " & strRapport
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set rngResult = Nothing
     Set wsRapport = Nothing
     Set wsSource = Nothing
@@ -1294,9 +1294,9 @@ Sub PreparerRapportTECFactures()
     
 End Sub
 
-Sub ObtenirListeTECFacturésFiltreAvancé(noFact As String) '2024-10-20 @ 11:11
+Sub ObtenirListeTECFacturÃ©sFiltreAvancÃ©(noFact As String) '2024-10-20 @ 11:11
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Interrogation:ObtenirListeTECFacturésFiltreAvancé", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Interrogation:ObtenirListeTECFacturÃ©sFiltreAvancÃ©", "", 0)
 
     'Utilisation de la feuille TEC_Local
     Dim ws As Worksheet: Set ws = wsdTEC_Local
@@ -1306,24 +1306,24 @@ Sub ObtenirListeTECFacturésFiltreAvancé(noFact As String) '2024-10-20 @ 11:11
     Application.ScreenUpdating = False
     Application.EnableEvents = False
     
-    'AdvancedFilter par Numéro de Facture
+    'AdvancedFilter par NumÃ©ro de Facture
     
-    'Effacer les données de la dernière utilisation
+    'Effacer les donnÃ©es de la derniÃ¨re utilisation
     ws.Range("BH6:BH10").ClearContents
-    ws.Range("BH6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("BH6").Value = "DerniÃ¨re utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
-    'Définir le range pour la source des données en utilisant un tableau
+    'DÃ©finir le range pour la source des donnÃ©es en utilisant un tableau
     Dim rngData As Range
     Set rngData = ws.Range("l_tbl_TEC_Local[#All]")
     ws.Range("BH7").Value = rngData.Address
     
-    'Définir le range des critères
+    'DÃ©finir le range des critÃ¨res
     Dim rngCriteria As Range
     Set rngCriteria = ws.Range("BH2:BH3")
     ws.Range("BH3").Value = CStr(noFact)
     ws.Range("BH8").Value = rngCriteria.Address
     
-    'Définir le range des résultats et effacer avant le traitement
+    'DÃ©finir le range des rÃ©sultats et effacer avant le traitement
     Dim rngResult As Range
     Set rngResult = ws.Range("BJ1").CurrentRegion
     rngResult.offset(2, 0).Clear
@@ -1336,12 +1336,12 @@ Sub ObtenirListeTECFacturésFiltreAvancé(noFact As String) '2024-10-20 @ 11:11
                 CopyToRange:=rngResult, _
                 Unique:=False
         
-    'Qu'avons-nous comme résultat ?
+    'Qu'avons-nous comme rÃ©sultat ?
     Dim lastResultRow As Long
-    lastResultRow = ws.Cells(ws.Rows.count, "BJ").End(xlUp).row
+    lastResultRow = ws.Cells(ws.Rows.count, "BJ").End(xlUp).Row
     ws.Range("BH10").Value = lastResultRow - 2 & " lignes"
     
-    'Est-il nécessaire de trier les résultats ?
+    'Est-il nÃ©cessaire de trier les rÃ©sultats ?
     If lastResultRow > 3 Then
         With ws.Sort 'Sort - Date, ProfID, TECID
             .SortFields.Clear
@@ -1374,7 +1374,7 @@ Sub ObtenirListeTECFacturésFiltreAvancé(noFact As String) '2024-10-20 @ 11:11
     Set rngResult = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modFAC_Interrogation:ObtenirListeTECFacturésFiltreAvancé", "", startTime)
+    Call Log_Record("modFAC_Interrogation:ObtenirListeTECFacturÃ©sFiltreAvancÃ©", "", startTime)
     
 End Sub
 
@@ -1409,11 +1409,11 @@ Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture
     Dim sheetName As String
     sheetName = "FactureCC_" & invNo
     
-    ' Référence à la première feuille
+    ' RÃ©fÃ©rence Ã  la premiÃ¨re feuille
     Dim wsSelection As Worksheet
     Set wsSelection = wshFAC_Interrogation
     
-    'Vérifier si la feuille existe déjà
+    'VÃ©rifier si la feuille existe dÃ©jÃ 
     Dim ws As Worksheet
     On Error Resume Next
     Set ws = ActiveWorkbook.Worksheets(sheetName)
@@ -1426,11 +1426,11 @@ Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture
         Application.DisplayAlerts = True
     End If
     
-    ' Créer une nouvelle feuille
+    ' CrÃ©er une nouvelle feuille
     Set ws = ActiveWorkbook.Worksheets.Add
     ws.Name = sheetName
     
-    'Entête de la feuille
+    'EntÃªte de la feuille
     ws.Range("A1:K1").Merge
     With ws.Range("A1")
         .Value = "Transactions des Comptes-Clients"
@@ -1489,7 +1489,7 @@ Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture
     Dim tableauCC As Variant
     tableauCC = ObtenirTransCC(invNo)
 
-    'Transférer le tableauCC dans la plage
+    'TransfÃ©rer le tableauCC dans la plage
     Dim rOffset As Integer
     rOffset = 8
     Dim cOffset As Integer
@@ -1513,19 +1513,19 @@ Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture
         End If
     Next i
 
-    'S'assurer que les valeurs sont de vrais valeurs numériques ???
+    'S'assurer que les valeurs sont de vrais valeurs numÃ©riques ???
     Dim rng As Range
     Set rng = ws.Range("E9:I" & lastRowUsed)
     Call ConvertirEnNumerique(rng)
     
-    'Effacer les soldes à zéro sur la première ligne
+    'Effacer les soldes Ã  zÃ©ro sur la premiÃ¨re ligne
     For i = 6 To 9
         If ws.Cells(9, i).Value = 0 Then
             ws.Cells(9, i).Value = ""
         End If
     Next i
 
-    'Efface l'âge des transactions
+    'Efface l'Ã¢ge des transactions
     ws.Range("F10:I" & lastRowUsed).Clear
     
     'Mise en forme du tableau
@@ -1544,7 +1544,7 @@ Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture
 
     lastRowUsed = lastRowUsed + 2
 
-    'Couleur de fond de feuille & cadre extérieur
+    'Couleur de fond de feuille & cadre extÃ©rieur
     With ws.Range("A1:K" & lastRowUsed + 3)
         .Interior.Color = COULEUR_BASE_FACTURATION
         With .Borders(xlEdgeLeft)
@@ -1573,7 +1573,7 @@ Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture
         End With
     End With
 
-    'Entête un peu plus foncé
+    'EntÃªte un peu plus foncÃ©
     With ws.Range("C8:I8").Interior
         .pattern = xlSolid
         .PatternColorIndex = xlAutomatic
@@ -1582,7 +1582,7 @@ Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture
         .PatternTintAndShade = 0
     End With
 
-    'Zone de données sans couleur
+    'Zone de donnÃ©es sans couleur
     With ws.Range("C9:I" & lastRowUsed - 2).Interior
         .pattern = xlNone
         .TintAndShade = 0
@@ -1624,10 +1624,10 @@ Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture
     Set rngRetour = ws.Range("I" & lastRowUsed + 1)
     Call AjouterBoutons_CC(ws, wsSelection, rngImprimer, rngRetour)
 
-    'Afficher la feuille nouvellement créée
+    'Afficher la feuille nouvellement crÃ©Ã©e
     ws.Activate
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set rng = Nothing
     Set rngImprimer = Nothing
     Set rngRetour = Nothing
@@ -1638,20 +1638,20 @@ Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture
 
 End Sub
 
-Sub PreparerRapportTECFacturés(numeroFacture As String)
+Sub PreparerRapportTECFacturÃ©s(numeroFacture As String)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Interrogation:PreparerRapportTECFacturés", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Interrogation:PreparerRapportTECFacturÃ©s", "", 0)
     
     'Assigner la feuille du rapport
     Dim strRapport As String
-    strRapport = "Rapport TEC facturés"
+    strRapport = "Rapport TEC facturÃ©s"
     Dim wsRapport As Worksheet: Set wsRapport = wshTECFacture
     On Error Resume Next
     wsRapport.Unprotect
     On Error GoTo 0
     wsRapport.Cells.Clear
     
-    'Désactiver les mises à jour de l'écran et autres alertes
+    'DÃ©sactiver les mises Ã  jour de l'Ã©cran et autres alertes
     Application.ScreenUpdating = False
     Application.EnableEvents = False
     Application.DisplayAlerts = False
@@ -1659,16 +1659,16 @@ Sub PreparerRapportTECFacturés(numeroFacture As String)
     'Mettre en forme la feuille de rapport
     With wsRapport
         ' Titre du rapport
-        .Range("A1").Value = "TEC facturés pour la facture '" & numeroFacture & "'"
+        .Range("A1").Value = "TEC facturÃ©s pour la facture '" & numeroFacture & "'"
         .Range("A1").Font.Bold = True
         .Range("A1").Font.size = 12
         
-        'Ajouter une date de génération du rapport
-        .Range("A2").Value = "Date de création : " & Format$(Date, "dd/mm/yyyy")
+        'Ajouter une date de gÃ©nÃ©ration du rapport
+        .Range("A2").Value = "Date de crÃ©ation : " & Format$(Date, "dd/mm/yyyy")
         .Range("A2").Font.Italic = True
         .Range("A2").Font.size = 10
         
-        'Entête du rapport (A4:D4)
+        'EntÃªte du rapport (A4:D4)
         .Range("A4").Value = "Date"
         .Range("B4").Value = "Prof."
         .Range("C4").Value = "Description"
@@ -1683,18 +1683,18 @@ Sub PreparerRapportTECFacturés(numeroFacture As String)
         
         'Utilisation du AdvancedFilter # 3 sur la feuille TEC_Local
         Dim wsSource As Worksheet
-        Set wsSource = wsdTEC_Local 'Utilisation des résultats du AF (BJ:BY)
+        Set wsSource = wsdTEC_Local 'Utilisation des rÃ©sultats du AF (BJ:BY)
         
-        'Copier quelques données de la source
+        'Copier quelques donnÃ©es de la source
         Dim rngResult As Range
         Set rngResult = wsSource.Range("BJ1").CurrentRegion.offset(2, 0)
-        'Redimensionner la plage après l'offset pour avoir que les données (pas d'entête)
+        'Redimensionner la plage aprÃ¨s l'offset pour avoir que les donnÃ©es (pas d'entÃªte)
         Set rngResult = rngResult.Resize(rngResult.Rows.count - 2)
-        'Transfert des données vers un tableau
+        'Transfert des donnÃ©es vers un tableau
         Dim tableau As Variant
         tableau = rngResult.Value
         
-        'Créer un tableau pour les résultats
+        'CrÃ©er un tableau pour les rÃ©sultats
         Dim output() As Variant
         ReDim output(1 To UBound(tableau, 1), 1 To 4)
         Dim r As Long
@@ -1723,7 +1723,7 @@ Sub PreparerRapportTECFacturés(numeroFacture As String)
             .PatternTintAndShade = 0
         End With
         
-        'Ajouter une bordure aux données
+        'Ajouter une bordure aux donnÃ©es
         .Range("A4:D" & r).Borders.LineStyle = xlContinuous
         With .Range("A5:D" & r).Borders(xlInsideVertical)
             .LineStyle = xlContinuous
@@ -1762,30 +1762,30 @@ Sub PreparerRapportTECFacturés(numeroFacture As String)
         .LeftMargin = Application.CentimetersToPoints(0.5)
         .RightMargin = Application.CentimetersToPoints(0.5)
         
-        'Ajuster la marge des en-têtes et pieds de page (1 cm)
+        'Ajuster la marge des en-tÃªtes et pieds de page (1 cm)
         .HeaderMargin = Application.CentimetersToPoints(1)
         .FooterMargin = Application.CentimetersToPoints(1)
         
         .Orientation = xlPortrait 'Portrait
         .FitToPagesWide = 1 'Ajuster sur une page en largeur
         .FitToPagesTall = False ' Ne pas ajuster en hauteur
-        .PrintArea = "A1:D" & r ' Définir la zone d'impression
+        .PrintArea = "A1:D" & r ' DÃ©finir la zone d'impression
         .CenterHorizontally = True ' Centrer horizontalement
         .CenterVertically = False ' Centrer verticalement
     End With
     
-    'On se déplace à la feuille contenant le rapport
+    'On se dÃ©place Ã  la feuille contenant le rapport
     wsRapport.Visible = xlSheetVisible
     wsRapport.Activate
     
-    MsgBox "Le rapport a été généré sur la feuille " & strRapport
+    MsgBox "Le rapport a Ã©tÃ© gÃ©nÃ©rÃ© sur la feuille " & strRapport
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set rngResult = Nothing
     Set wsRapport = Nothing
     Set wsSource = Nothing
     
-    Call Log_Record("modFAC_Interrogation:PreparerRapportTECFacturés", "", startTime)
+    Call Log_Record("modFAC_Interrogation:PreparerRapportTECFacturÃ©s", "", startTime)
     
 End Sub
 
@@ -1794,4 +1794,5 @@ Sub shpExitDetailTEC_Click()
     ActiveSheet.Visible = xlSheetHidden
 
 End Sub
+
 

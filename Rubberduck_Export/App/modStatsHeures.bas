@@ -1,4 +1,4 @@
-Attribute VB_Name = "modStatsHeures"
+ï»¿Attribute VB_Name = "modStatsHeures"
 Option Explicit
 
 Sub Stats_Heures_AF()
@@ -12,13 +12,13 @@ Sub Stats_Heures_AF()
     Application.ScreenUpdating = False
     Application.EnableEvents = False
     
-    'Exécuter les 4 filtres AdvancedFilter
+    'ExÃ©cuter les 4 filtres AdvancedFilter
     Call ExecuterAdvancedFilter(ws, "S2:U3", "W1", "T10:T14", Array("W2", "Y2", "Z2"), "W2:AD")
     Call ExecuterAdvancedFilter(ws, "AF2:AH3", "AJ1", "AG10:AG14", Array("AJ2", "AL2", "AM2"), "AJ2:AQ")
     Call ExecuterAdvancedFilter(ws, "AS2:AU3", "AW1", "AT10:AT14", Array("AW2", "AY2", "AZ2"), "AW2:BD")
     Call ExecuterAdvancedFilter(ws, "BF2:BH3", "BJ1", "BG10:BG14", Array("BJ2", "BL2", "BM2"), "BJ2:BQ")
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
     
     Call Log_Record("modStatsHeures:Stats_Heures_AF", "", startTime)
@@ -32,17 +32,17 @@ Sub ExecuterAdvancedFilter(ws As Worksheet, criteriaRange As String, resultStart
     
     'Journaliser le temps de traitement
     ws.Range(logRange).ClearContents
-    ws.Range(logRange).Cells(1, 1).Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range(logRange).Cells(1, 1).Value = "DerniÃ¨re utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
-    'Définir le range source des données
+    'DÃ©finir le range source des donnÃ©es
     Set rngData = ws.Range("l_tbl_TEC_TDB_data[#All]")
     ws.Range(logRange).Cells(2, 1).Value = rngData.Address
     
-    'Définir les critères
+    'DÃ©finir les critÃ¨res
     Set rngCriteria = ws.Range(criteriaRange)
     ws.Range(logRange).Cells(3, 1).Value = rngCriteria.Address
     
-    'Effacer les résultats précédents
+    'Effacer les rÃ©sultats prÃ©cÃ©dents
     Set rngResult = ws.Range(resultStartCell).CurrentRegion
     If rngResult.Rows.count > 1 Then
         rngResult.offset(1, 0).Clear
@@ -58,10 +58,10 @@ Sub ExecuterAdvancedFilter(ws As Worksheet, criteriaRange As String, resultStart
                 Unique:=False
     
     'Compter les lignes
-    lastResultRow = ws.Cells(ws.Rows.count, rngResult.Cells(1, 1).Column).End(xlUp).row
+    lastResultRow = ws.Cells(ws.Rows.count, rngResult.Cells(1, 1).Column).End(xlUp).Row
     ws.Range(logRange).Cells(5, 1).Value = lastResultRow - 1 & " lignes"
     
-    'Trier les résultats
+    'Trier les rÃ©sultats
     Dim i As Long
     If lastResultRow > 2 Then
         With ws.Sort
@@ -97,4 +97,5 @@ Sub Back_To_ufSaisieHeures()
     Call Log_Record("modStatsHeures:Back_To_ufSaisieHeures", "", startTime)
 
 End Sub
+
 

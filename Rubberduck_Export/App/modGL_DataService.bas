@@ -1,4 +1,4 @@
-Attribute VB_Name = "modGL_DataService"
+ï»¿Attribute VB_Name = "modGL_DataService"
 Option Explicit
 
 Function ConstruirePlanComptable() As Object '2025-06-01 @ 08:20
@@ -30,7 +30,7 @@ Function CreerCopieTemporaireSolide(onglet As String) As String
 
     sPath = ThisWorkbook.path & DATA_PATH & "\"
     If Dir(sPath, vbDirectory) = "" Then
-        MsgBox "Le répertoire n'existe pas : " & vbCrLf & sPath, vbCritical
+        MsgBox "Le rÃ©pertoire n'existe pas : " & vbCrLf & sPath, vbCritical
         CreerCopieTemporaireSolide = ""
         Exit Function
     End If
@@ -43,9 +43,9 @@ Function CreerCopieTemporaireSolide(onglet As String) As String
     Set wbTmp = Workbooks.Add(xlWBATWorksheet)
     Set wsDest = wbTmp.Sheets(1)
 
-    ' Déterminer la zone utilisée
+    ' DÃ©terminer la zone utilisÃ©e
     With wsSrc
-        lastRow = .Cells(.Rows.count, 1).End(xlUp).row
+        lastRow = .Cells(.Rows.count, 1).End(xlUp).Row
         lastCol = .Cells(1, .Columns.count).End(xlToLeft).Column
     End With
 
@@ -53,7 +53,7 @@ Function CreerCopieTemporaireSolide(onglet As String) As String
     wsDest.Range(wsDest.Cells(1, 1), wsDest.Cells(lastRow, lastCol)).Value = _
         wsSrc.Range(wsSrc.Cells(1, 1), wsSrc.Cells(lastRow, lastCol)).Value
 
-    ' Optionnel : nommer la feuille comme l’originale
+    ' Optionnel : nommer la feuille comme lâ€™originale
     On Error Resume Next: wsDest.Name = wsSrc.Name: On Error GoTo 0
 
     ' Sauvegarde
@@ -68,7 +68,8 @@ Function CreerCopieTemporaireSolide(onglet As String) As String
 
 ErrHandler:
     Application.ScreenUpdating = oldScreenUpdating
-    MsgBox "Erreur lors de la création du fichier temporaire : " & Err.description, vbCritical
+    MsgBox "Erreur lors de la crÃ©ation du fichier temporaire : " & Err.description, vbCritical
     CreerCopieTemporaireSolide = ""
     
 End Function
+

@@ -1,10 +1,10 @@
-VERSION 5.00
+ï»¿VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufExitDisable 
-   Caption         =   "Sortie non autorisée via le fermeture d'Excel"
+   Caption         =   "Sortie non autorisÃ©e via le fermeture d'Excel"
    ClientHeight    =   2280
-   ClientLeft      =   156
-   ClientTop       =   600
-   ClientWidth     =   6024
+   ClientLeft      =   132
+   ClientTop       =   504
+   ClientWidth     =   4812
    OleObjectBlob   =   "ufExitDisable.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
@@ -24,6 +24,7 @@ End Sub
 Private Sub UserForm_Initialize()
 
     Me.Label1.Caption = "Pour quitter cette application, vous devez OBLIGATOIREMENT" & vbCrLf & vbCrLf & _
-                     "utiliser l'option prévue à cet effet (en bas à gauche, du menu principal)"
+                     "utiliser l'option prÃ©vue Ã  cet effet (en bas Ã  gauche, du menu principal)"
 
 End Sub
+

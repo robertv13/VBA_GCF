@@ -1,4 +1,4 @@
-Attribute VB_Name = "modTEC_TDB"
+ï»¿Attribute VB_Name = "modTEC_TDB"
 Option Explicit
 
 Sub shpTEC_TDB_BackToMenu_Click()
@@ -47,13 +47,13 @@ Sub AjusteBordurePivotTable() '2025-02-01 @ 05:49
     Set ws = wshTEC_TDB
     
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).Row
     
     Dim rng As Range
     Set rng = ws.Range("A10:B" & lastUsedRow - 1) 'Exclure la ligne TOTAL
     
     With rng
-        'Bordures extérieures (4)
+        'Bordures extÃ©rieures (4)
         With .Borders(xlEdgeLeft)
             .LineStyle = xlContinuous
             .ColorIndex = 0
@@ -78,7 +78,7 @@ Sub AjusteBordurePivotTable() '2025-02-01 @ 05:49
             .TintAndShade = 0
             .Weight = xlMedium
         End With
-        'Bordures intérieures (2)
+        'Bordures intÃ©rieures (2)
         With .Borders(xlInsideVertical)
             .LineStyle = xlContinuous
             .ColorIndex = 0
@@ -102,11 +102,12 @@ Sub AjusteBordurePivotTable() '2025-02-01 @ 05:49
         .PatternTintAndShade = 0
     End With
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set rng = Nothing
     Set ws = Nothing
 
     Call Log_Record("wshTEC_TDB:AjusteBordurePivotTable", "", startTime)
 
 End Sub
+
 

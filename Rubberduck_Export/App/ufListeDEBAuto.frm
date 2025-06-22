@@ -1,10 +1,10 @@
-VERSION 5.00
+ï»¿VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufListeDEBAuto 
-   Caption         =   "Choisir le déboursé récurrent parmi la liste"
+   Caption         =   "Choisir le dÃ©boursÃ© rÃ©current parmi la liste"
    ClientHeight    =   4416
-   ClientLeft      =   168
-   ClientTop       =   600
-   ClientWidth     =   7488
+   ClientLeft      =   144
+   ClientTop       =   516
+   ClientWidth     =   5988
    OleObjectBlob   =   "ufListeDEBAuto.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
@@ -21,7 +21,7 @@ Private Sub UserForm_Initialize()
     Set ws = wsdDEB_Recurrent
     
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "P").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "P").End(xlUp).Row
     If lastUsedRow < 2 Then Exit Sub 'Empty List
     Dim arr() As Variant
     ReDim arr(1 To (lastUsedRow - 1), 1 To 4) As Variant
@@ -31,7 +31,7 @@ Private Sub UserForm_Initialize()
     With wsdDEB_Recurrent
         Dim i As Long
         For i = 2 To lastUsedRow
-            arr(i - 1, 1) = .Range("P" & i).Value      'Deb Récurrent Auto
+            arr(i - 1, 1) = .Range("P" & i).Value      'Deb RÃ©current Auto
             arr(i - 1, 2) = .Range("Q" & i).Value      'Description
             arr(i - 1, 3) = Format$(.Range("R" & i).Value, "#,##0.00")     'Montant
             arr(i - 1, 3) = Space(10 - Len(arr(i - 1, 3))) & arr(i - 1, 3)
@@ -50,7 +50,7 @@ Private Sub UserForm_Initialize()
         .List = arr
     End With
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
     
 End Sub
@@ -77,4 +77,5 @@ Private Sub UserForm_Terminate()
     Unload Me
     
 End Sub
+
 

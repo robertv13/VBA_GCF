@@ -1,4 +1,4 @@
-Attribute VB_Name = "modGL_Stats_CA"
+ï»¿Attribute VB_Name = "modGL_Stats_CA"
 Option Explicit
 
 Sub shp_GL_PrepEF_Actualiser_Click()
@@ -22,33 +22,33 @@ Sub Actualiser_Stats_CA()
         End If
     Next cell
     
-    'Postes de revenus à considérer dans les REVENUS
+    'Postes de revenus Ã  considÃ©rer dans les REVENUS
     Dim glREV(1 To 2) As String
     Dim GL_Revenus_Consultation As String
     glREV(1) = ObtenirNoGlIndicateur("Revenus de consultation")
     Dim GL_Revenus_TEC As String
     glREV(2) = ObtenirNoGlIndicateur("Revenus - Travaux en cours")
     
-    'Déterminer le dernier mois complété
-    Dim moisPrécédent As Integer
-    moisPrécédent = month(DateSerial(year(Date), month(Date), 0))
-    Dim dateFinMoisPrécédent As Date
-    dateFinMoisPrécédent = DateSerial(year(Date), month(Date), 0)
+    'DÃ©terminer le dernier mois complÃ©tÃ©
+    Dim moisPrÃ©cÃ©dent As Integer
+    moisPrÃ©cÃ©dent = month(DateSerial(year(Date), month(Date), 0))
+    Dim dateFinMoisPrÃ©cÃ©dent As Date
+    dateFinMoisPrÃ©cÃ©dent = DateSerial(year(Date), month(Date), 0)
     
-    Dim moisFinAnnéeFinancière As Integer
-    moisFinAnnéeFinancière = wsdADMIN.Range("MoisFinAnnéeFinancière").Value
+    Dim moisFinAnnÃ©eFinanciÃ¨re As Integer
+    moisFinAnnÃ©eFinanciÃ¨re = wsdADMIN.Range("MoisFinAnnÃ©eFinanciÃ¨re").Value
     
-    'Mémoriser les colonnes de la feuille pour chacun des 12 mois de l'année financière
+    'MÃ©moriser les colonnes de la feuille pour chacun des 12 mois de l'annÃ©e financiÃ¨re
     Dim colMois(1 To 12, 1 To 2) As String
     Dim annee As Integer, anneeMoisDebutAF As Integer, anneeMoisFinAF As Integer
     
     Dim m As Integer, noMois As Integer, col As Integer, saveCol As Integer
     anneeMoisDebutAF = ws.Range("C9").Value - 1
     anneeMoisFinAF = ws.Range("C9").Value
-    'Le premier mois de l'année financière est en colonne 4 du tableau
+    'Le premier mois de l'annÃ©e financiÃ¨re est en colonne 4 du tableau
     col = 4
     For m = 1 To 12
-        noMois = m + moisFinAnnéeFinancière
+        noMois = m + moisFinAnnÃ©eFinanciÃ¨re
         If noMois <= 12 Then
             annee = anneeMoisDebutAF
         Else
@@ -82,7 +82,7 @@ Sub Actualiser_Stats_CA()
     
     'Variation des TEC - Quelle est la valeur des TEC et le solde au G/L des TEC ? '2025-02-21 @ 14:10
     Dim maxDate As Date
-    Call TEC_Evaluation_Calcul(Date, maxDate) 'Génère gDictHours
+    Call TEC_Evaluation_Calcul(Date, maxDate) 'GÃ©nÃ¨re gDictHours
     
     Dim prof As Variant
     Dim profID As Long
@@ -90,7 +90,7 @@ Sub Actualiser_Stats_CA()
     Dim tauxHoraire As Currency
     Dim tecValeur As Currency
 
-    'Parcourir chacun des professionnels à partir de gDictHours
+    'Parcourir chacun des professionnels Ã  partir de gDictHours
     For Each prof In gDictHours
         strProf = Mid$(prof, 4)
         profID = Fn_GetID_From_Initials(strProf)
@@ -108,7 +108,7 @@ Sub Actualiser_Stats_CA()
     glTEC = ObtenirNoGlIndicateur("Travaux en cours")
     glTECSolde = Fn_Get_GL_Account_Balance(glTEC, maxDate)
 
-    'Ajoute un note à la cellule
+    'Ajoute un note Ã  la cellule
     Dim rng As Range
     Set rng = ws.Cells(9, saveCol)
     rng.AddComment
@@ -129,7 +129,7 @@ Sub Actualiser_Stats_CA()
     
 '    Debug.Print "777 - " & tecValeur, glTECSolde, tecValeur - glTECSolde
     
-    'Libérer les objets
+    'LibÃ©rer les objets
     Set prof = Nothing
     Set rng = Nothing
     Set ws = Nothing
@@ -150,4 +150,5 @@ Sub GL_Stats_CA_Back_To_Menu()
     wshMenuGL.Range("A1").Select
     
 End Sub
+
 

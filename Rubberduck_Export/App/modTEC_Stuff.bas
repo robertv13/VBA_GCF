@@ -1,4 +1,4 @@
-Attribute VB_Name = "modTEC_Stuff"
+ï»¿Attribute VB_Name = "modTEC_Stuff"
 Option Explicit
 
 Public Sub Convertir_NF_en_Facturable_Dans_BD(tecID As Long) '2025-01-15 @ 09:44
@@ -7,7 +7,7 @@ Public Sub Convertir_NF_en_Facturable_Dans_BD(tecID As Long) '2025-01-15 @ 09:44
 
     Application.ScreenUpdating = False
     
-    'Classeur & feuille à mettre à jour
+    'Classeur & feuille Ã  mettre Ã  jour
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
@@ -28,7 +28,7 @@ Public Sub Convertir_NF_en_Facturable_Dans_BD(tecID As Long) '2025-01-15 @ 09:44
         rs.Fields(fTECEstFacturable - 1).Value = "VRAI"
     Else
         'On ne trouve pas le tecID - ANORMAL !!!
-        MsgBox "L'enregistrement avec le TECID '" & tecID & "' ne peut être trouvé!", vbOK + vbCritical, "Problème avec la convertion (N/FACT ---> FACT)"
+        MsgBox "L'enregistrement avec le TECID '" & tecID & "' ne peut Ãªtre trouvÃ©!", vbOK + vbCritical, "ProblÃ¨me avec la convertion (N/FACT ---> FACT)"
         rs.Close
         conn.Close
         Exit Sub
@@ -43,7 +43,7 @@ Public Sub Convertir_NF_en_Facturable_Dans_BD(tecID As Long) '2025-01-15 @ 09:44
     
     Application.ScreenUpdating = True
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set conn = Nothing
     Set rs = Nothing
     
@@ -58,18 +58,19 @@ Public Sub Convertir_NF_en_Facturable_Locally(tecID As Long) '2025-01-15 @ 09:44
     Dim ws As Worksheet
     Set ws = wsdTEC_Local
     
-    'Déterminer la plage à rechercher dans TEC_Local
+    'DÃ©terminer la plage Ã  rechercher dans TEC_Local
     Dim lastTECRow As Long
-    lastTECRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
+    lastTECRow = ws.Cells(ws.Rows.count, "A").End(xlUp).Row
     Dim lookupRange As Range
     Set lookupRange = ws.Range("A3:A" & lastTECRow)
     
     Dim rowToBeUpdated As Long
     rowToBeUpdated = Fn_Find_Row_Number_TECID(tecID, lookupRange)
     
-    'Convertir à Facturable
+    'Convertir Ã  Facturable
     ws.Cells(rowToBeUpdated, fTECEstFacturable).Value = "VRAI"
 
     Call Log_Record("modTEC_Stuff:Convertir_NF_en_Facturable_Locally", "", startTime)
 
 End Sub
+

@@ -1,4 +1,4 @@
-Attribute VB_Name = "modCSV_Import"
+ï»¿Attribute VB_Name = "modCSV_Import"
 Option Explicit
 
 Sub Main()
@@ -6,7 +6,7 @@ Sub Main()
     'Setup the receiving worksheet and clear the previous results
     Dim ws As Worksheet: Set ws = wshzCSV_File
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).Row
     If lastUsedRow > 1 Then
         ws.Range("A2:P" & lastUsedRow).ClearContents
     End If
@@ -24,7 +24,7 @@ Sub Main()
     'Fix columns width
     Call Set_Column_Width(ws)
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
     
 End Sub
@@ -35,12 +35,12 @@ Sub Import_CSV_File(ws As Worksheet, path As String, fn As String)
     Dim fullFileName As String
     fullFileName = path & Application.PathSeparator & fn
     If Dir(fullFileName) = "" Then
-        MsgBox "Le fichier n'a pas été trouvé", vbExclamation
+        MsgBox "Le fichier n'a pas Ã©tÃ© trouvÃ©", vbExclamation
         Exit Sub
     End If
     
     Dim lastUsedRow As Long, firstAvailRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).Row
     firstAvailRow = lastUsedRow + 1
     
     'Import data from external file into the worksheet
@@ -53,10 +53,10 @@ Sub Import_CSV_File(ws As Worksheet, path As String, fn As String)
     End With
     
     'Correct all formats
-    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).Row
     Call Fix_Columns(ws, firstAvailRow, lastUsedRow)
     
-    Debug.Print "#023 - " & fn & " a été importée avec succès, " & lastUsedRow - firstAvailRow & " lignes"
+    Debug.Print "#023 - " & fn & " a Ã©tÃ© importÃ©e avec succÃ¨s, " & lastUsedRow - firstAvailRow & " lignes"
 
 End Sub
 
@@ -118,4 +118,5 @@ Function Fn_Correct_Date_Format(wrongFormatDate As String) As Date
     Debug.Print "#025 - " & DateSerial(year, month, day)
 
 End Function
+
 

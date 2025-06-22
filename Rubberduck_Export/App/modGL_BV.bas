@@ -1,4 +1,4 @@
-Attribute VB_Name = "modGL_BV"
+ï»¿Attribute VB_Name = "modGL_BV"
 Option Explicit
 
 Public dynamicShape As Shape
@@ -13,7 +13,7 @@ Sub shp_GL_BV_Actualiser_Click() '2025-06-03 @ 20:23
     wshGL_BV.Range("C2").Value = "Au " & Format$(ws.Range("J1").Value, wsdADMIN.Range("B1").Value)
     
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "D").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "D").End(xlUp).Row
     If lastUsedRow > 3 Then
         ws.Range("D4:G" & lastUsedRow).Clear
     End If
@@ -25,7 +25,7 @@ Sub shp_GL_BV_Actualiser_Click() '2025-06-03 @ 20:23
     
     Call Afficher_BV_Summary(resumeGL)
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
 
 End Sub
@@ -42,12 +42,12 @@ Function Get_Summary_By_GL_Account(dateMin As Date, dateMax As Date) As Variant 
 
     On Error GoTo ErrHandler
 
-    'Copier les données vers un fichier temporaire (silencieusement)
+    'Copier les donnÃ©es vers un fichier temporaire (silencieusement)
     tmpFile = CreerCopieTemporaireSolide("GL_Trans")
-'    tmpFile = CréerCopieTemporaireSansFlash("GL_Trans")
+'    tmpFile = CrÃ©erCopieTemporaireSansFlash("GL_Trans")
     If tmpFile = "" Then Exit Function
 
-    sql = "SELECT [NoCompte], SUM([Débit]) AS TotalDébit, SUM([Crédit]) AS TotalCrédit " & _
+    sql = "SELECT [NoCompte], SUM([DÃ©bit]) AS TotalDÃ©bit, SUM([CrÃ©dit]) AS TotalCrÃ©dit " & _
           "FROM [GL_Trans$] " & _
           "WHERE [Date] >= #" & Format(dateMin, "yyyy-mm-dd") & "# " & _
           "AND [Date] <= #" & Format(dateMax, "yyyy-mm-dd") & "# " & _
@@ -73,8 +73,8 @@ Function Get_Summary_By_GL_Account(dateMin As Date, dateMax As Date) As Variant 
         If Not dPlanComptable.Exists(rsKey) Then
             dPlanComptable.Add rsKey, "Compte inconnu"
         End If
-        tDebit = Nz(rs.Fields("TotalDébit"))
-        tCredit = Nz(rs.Fields("TotalCrédit"))
+        tDebit = Nz(rs.Fields("TotalDÃ©bit"))
+        tCredit = Nz(rs.Fields("TotalCrÃ©dit"))
         If tDebit <> 0 Or tCredit <> 0 Then
             If Not dSoldeParGL.Exists(rsKey) Then
                 dSoldeParGL.Add rsKey, Array(tDebit, tCredit)
@@ -105,7 +105,7 @@ Function Get_Summary_By_GL_Account(dateMin As Date, dateMax As Date) As Variant 
         End If
     Next key
 
-    If i = 1 Then GoTo CleanUp ' Aucune ligne à afficher
+    If i = 1 Then GoTo CleanUp ' Aucune ligne Ã  afficher
     ReDim tblFinal(1 To i - 1, 1 To 4)
     For i = 1 To UBound(tblFinal, 1)
         tblFinal(i, COL_Code) = tblData(i, COL_Code)
@@ -139,12 +139,12 @@ End Function
 '    On Error GoTo ErrHandler
 '
 '    'Copie temporaire de la feuille GL_Trans
-'    tmpFile = CréerCopieTemporaireSansFlash("GL_Trans")
+'    tmpFile = CrÃ©erCopieTemporaireSansFlash("GL_Trans")
 '    If tmpFile = "" Then Exit Function
 '
-'    ' Requête SQL pour résumer les débits et crédits par compte
+'    ' RequÃªte SQL pour rÃ©sumer les dÃ©bits et crÃ©dits par compte
 '    sql = "SELECT [NoCompte], " & _
-'          "SUM([Débit]) AS TotalDébit, SUM([Crédit]) AS TotalCrédit " & _
+'          "SUM([DÃ©bit]) AS TotalDÃ©bit, SUM([CrÃ©dit]) AS TotalCrÃ©dit " & _
 '          "FROM [GL_Trans$] " & _
 '          "WHERE [Date] >= #" & Format(dateMin, "yyyy-mm-dd") & "# " & _
 '          "AND [Date] <= #" & Format(dateMax, "yyyy-mm-dd") & "# " & _
@@ -178,13 +178,13 @@ End Function
 '
 '    Dim rsKey As String
 '    Do While Not rs.EOF
-'        rsKey = rs.Fields("NoCompte").value
-'        'S'assurer que tous les comptes du résultat SQL sont présents dans le plan comptable
+'        rsKey = rs.Fields("NoCompte").Value
+'        'S'assurer que tous les comptes du rÃ©sultat SQL sont prÃ©sents dans le plan comptable
 '        If Not dPlanComptable.Exists(rsKey) Then
 '            dPlanComptable.Add rsKey, "Compte inconnu"
 '        End If
-'        tDebit = Nz(rs.Fields("TotalDébit"))
-'        tCredit = Nz(rs.Fields("TotalCrédit"))
+'        tDebit = Nz(rs.Fields("TotalDÃ©bit"))
+'        tCredit = Nz(rs.Fields("TotalCrÃ©dit"))
 '        If tDebit <> 0 Or tCredit <> 0 Then
 '            If Not dSoldeParGL.Exists(rsKey) Then
 '                dSoldeParGL.Add rsKey, Array(tDebit, tCredit)
@@ -193,7 +193,7 @@ End Function
 '        rs.MoveNext
 '    Loop
 '
-'    'Création d'un tableau pour emmagasiner les informations
+'    'CrÃ©ation d'un tableau pour emmagasiner les informations
 '    Dim soldes As Variant
 '    Dim tblData() As Variant
 '    ReDim tblData(1 To dPlanComptable.count, 1 To 4)
@@ -221,7 +221,7 @@ End Function
 '        End If
 '    Next key
 '
-'    'Enlève les lignes qui n'ont pas MINIMALEMENT un débit ou un crédit
+'    'EnlÃ¨ve les lignes qui n'ont pas MINIMALEMENT un dÃ©bit ou un crÃ©dit
 '    Dim tblFinal() As Variant
 '    Dim j As Long
 '    If i > 1 Then
@@ -232,7 +232,7 @@ End Function
 '            tblFinal(j, COL_Debit) = tblData(j, COL_Debit)
 '            tblFinal(j, COL_Credit) = tblData(j, COL_Credit)
 '        Next j
-'        'Utilisez tblFinal à la place de tblData
+'        'Utilisez tblFinal Ã  la place de tblData
 '        tblData = tblFinal
 '    Else
 '        Erase tblData
@@ -240,13 +240,13 @@ End Function
 '    End If
 '    Erase tblFinal
 '
-'    'Écrire résultats + calculer totaux
+'    'Ã‰crire rÃ©sultats + calculer totaux
 '    Dim ligne As Long
 '    ligne = 4
 '    Dim globalDebit As Currency, globalCredit As Currency
 '    Application.EnableEvents = False
 '    For i = 1 To UBound(tblData, 1)
-'        wshGL_BV.Cells(ligne, 4).Resize(1, 4).value = Array(tblData(i, COL_Code), tblData(i, COL_Desc), tblData(i, COL_Debit), tblData(i, COL_Credit))
+'        wshGL_BV.Cells(ligne, 4).Resize(1, 4).Value = Array(tblData(i, COL_Code), tblData(i, COL_Desc), tblData(i, COL_Debit), tblData(i, COL_Credit))
 '        globalDebit = globalDebit + tblData(i, COL_Debit)
 '        globalCredit = globalCredit + tblData(i, COL_Credit)
 '        ligne = ligne + 1
@@ -255,11 +255,11 @@ End Function
 '   'Afficher les totaux
 '    ligne = ligne + 1
 '    With wshGL_BV.Cells(ligne, 4)
-'        .value = "TOTALS"
+'        .Value = "TOTALS"
 '        .Font.Bold = True
 '    End With
-'    wshGL_BV.Cells(ligne, 6).value = globalDebit
-'    wshGL_BV.Cells(ligne, 7).value = globalCredit
+'    wshGL_BV.Cells(ligne, 6).Value = globalDebit
+'    wshGL_BV.Cells(ligne, 7).Value = globalCredit
 '
 '    With wshGL_BV.Range("F" & ligne & ":" & "G" & ligne)
 '        With .Borders(xlEdgeTop)
@@ -280,9 +280,9 @@ End Function
 '
 '    wshGL_BV.Range("D4:D" & ligne).HorizontalAlignment = xlCenter
 '
-'    'Vérification intégrité (DT ?= CT)
+'    'VÃ©rification intÃ©gritÃ© (DT ?= CT)
 '    If Round(globalDebit, 2) <> Round(globalCredit, 2) Then
-'        MsgBox "Il y a une différence entre le total des débits et le total des crédits : " & Format(globalDebit - globalCredit, "0.00"), vbExclamation
+'        MsgBox "Il y a une diffÃ©rence entre le total des dÃ©bits et le total des crÃ©dits : " & Format(globalDebit - globalCredit, "0.00"), vbExclamation
 '    End If
 '
 '    Exit Function
@@ -307,10 +307,10 @@ End Function
 '    Dim sWBPath As String
 '    sWBPath = ThisWorkbook.FullName
 '
-'    'Requête SQL
+'    'RequÃªte SQL
 '    strSQL = "SELECT [NoCompte], " & _
-'           "SUM([Débit]) AS TotalDébit, " & _
-'           "SUM([Crédit]) AS TotalCrédit " & _
+'           "SUM([DÃ©bit]) AS TotalDÃ©bit, " & _
+'           "SUM([CrÃ©dit]) AS TotalCrÃ©dit " & _
 '           "FROM [GL_Trans$] " & _
 '           "WHERE [Date] >= #" & Format(dateMin, "yyyy-mm-dd") & "# " & _
 '           "AND [Date] <= #" & Format(dateMax, "yyyy-mm-dd") & "# " & _
@@ -334,14 +334,14 @@ End Function
 '    'Retour
 '    Set Get_Summary_By_GL_Account = rs
 '
-'    'Libérer
+'    'LibÃ©rer
 '    Set cn = Nothing
 '
 '    Call Log_Record("modGL_BV:Get_Summary_By_GL_Account", "", startTime)
 '
 'End Function
 
-Sub Afficher_BV_Summary(tblData As Variant, Optional ligneDépart As Long = 4) '2025-06-03 @ 20:18
+Sub Afficher_BV_Summary(tblData As Variant, Optional ligneDÃ©part As Long = 4) '2025-06-03 @ 20:18
 
     Dim i As Long, ligne As Long
     Dim globalDebit As Currency, globalCredit As Currency
@@ -349,10 +349,10 @@ Sub Afficher_BV_Summary(tblData As Variant, Optional ligneDépart As Long = 4) '2
 
     If IsEmpty(tblData) Then Exit Sub
 
-    ligne = ligneDépart
+    ligne = ligneDÃ©part
     Application.EnableEvents = False
 
-    ' Écriture des lignes
+    ' Ã‰criture des lignes
     For i = 1 To UBound(tblData, 1)
         wshGL_BV.Cells(ligne, 4).Resize(1, 4).Value = Array( _
             tblData(i, COL_Code), _
@@ -364,7 +364,7 @@ Sub Afficher_BV_Summary(tblData As Variant, Optional ligneDépart As Long = 4) '2
         ligne = ligne + 1
     Next i
 
-    ' Écriture des totaux
+    ' Ã‰criture des totaux
     ligne = ligne + 1
     With wshGL_BV.Cells(ligne, 4)
         .Value = "TOTALS"
@@ -386,10 +386,10 @@ Sub Afficher_BV_Summary(tblData As Variant, Optional ligneDépart As Long = 4) '2
         .NumberFormat = "#,##0.00 $"
     End With
 
-    wshGL_BV.Range("D" & ligneDépart & ":D" & ligne).HorizontalAlignment = xlCenter
+    wshGL_BV.Range("D" & ligneDÃ©part & ":D" & ligne).HorizontalAlignment = xlCenter
 
     If Round(globalDebit, 2) <> Round(globalCredit, 2) Then
-        MsgBox "Il y a une différence entre le total des débits et des crédits : " & _
+        MsgBox "Il y a une diffÃ©rence entre le total des dÃ©bits et des crÃ©dits : " & _
                Format(globalDebit - globalCredit, "0.00"), vbExclamation
     End If
 
@@ -430,26 +430,26 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
     Set wsTrans = wsdGL_Trans
     Set wsResult = wshGL_BV
 
-    'Compte & description (passés en paramètre)
+    'Compte & description (passÃ©s en paramÃ¨tre)
     If compte = "" Then
-        MsgBox "Aucun compte sélectionné.", vbExclamation
+        MsgBox "Aucun compte sÃ©lectionnÃ©.", vbExclamation
         Exit Sub
     End If
 
-    'Nettoyer la zone existante (M5 vers le bas) & ajuster l'entête
+    'Nettoyer la zone existante (M5 vers le bas) & ajuster l'entÃªte
     Call GL_BV_EffacerZoneTransactionsDetaillees(wsResult)
     
     Application.EnableEvents = False
     wsResult.Range("L2").Value = "Du " & Format$(dateMin, wsdADMIN.Range("B1").Value) & " au " & Format$(dateMax, wsdADMIN.Range("B1").Value)
     
-    'Écrire NoCompte & Description en L4
+    'Ã‰crire NoCompte & Description en L4
     With wsResult.Range("L4")
         .Value = compte & IIf(description <> "", " - " & description, "")
         .Font.Name = "Aptos Narrow"
         .Font.size = 10
         .Font.Bold = True
     End With
-    'Sauvegarder le numéro du compte sélectionné ainsi que la description
+    'Sauvegarder le numÃ©ro du compte sÃ©lectionnÃ© ainsi que la description
     wshGL_BV.Range("B6").Value = compte
     wshGL_BV.Range("B7").Value = description
     Application.EnableEvents = True
@@ -465,10 +465,10 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
 
     'Calcul du solde initial avant DateMin
     dateMin = wsResult.Range("B8").Value
-'    wsResult.Range("L2").value = "Du " & Format$(dateMin, wsdADMIN.Range("B1").value) & " au " & Format$(dateMax, wsdADMIN.Range("B1").value)
+'    wsResult.Range("L2").Value = "Du " & Format$(dateMin, wsdADMIN.Range("B1").Value) & " au " & Format$(dateMax, wsdADMIN.Range("B1").Value)
     Set rsInit = CreateObject("ADODB.Recordset")
     
-    strSQL = "SELECT SUM(Débit) AS TotalDebit, SUM(Crédit) AS TotalCredit FROM [GL_Trans$] " & _
+    strSQL = "SELECT SUM(DÃ©bit) AS TotalDebit, SUM(CrÃ©dit) AS TotalCredit FROM [GL_Trans$] " & _
              "WHERE NoCompte = '" & compte & "' AND Date < #" & Format(dateMin, "mm/dd/yyyy") & "#"
     Debug.Print "GL_BV_Display_Trans_For_Selected_Account - strSQL1 = " & strSQL
     
@@ -478,15 +478,15 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
     End If
     rsInit.Close: Set rsInit = Nothing
     
-    'Requête SQL complète (toutes les dates) pour le compte
-    strSQL = "SELECT Date, NoEntrée, Description, Source, Débit, Crédit, AutreRemarque FROM [GL_Trans$] " & _
+    'RequÃªte SQL complÃ¨te (toutes les dates) pour le compte
+    strSQL = "SELECT Date, NoEntrÃ©e, Description, Source, DÃ©bit, CrÃ©dit, AutreRemarque FROM [GL_Trans$] " & _
              "WHERE NoCompte = '" & Replace(compte, "'", "''") & "'" & _
              "AND Date >= #" & Format(dateMin, "yyyy-mm-dd") & "# " & _
              "AND Date <= #" & Format(dateMax, "yyyy-mm-dd") & "# " & _
-             "ORDER BY Date, NoEntrée"
+             "ORDER BY Date, NoEntrÃ©e"
     Debug.Print "GL_BV_Display_Trans_For_Selected_Account - strSQL2 = " & strSQL
     
-    'Exécuter la requête
+    'ExÃ©cuter la requÃªte
     Set rs = CreateObject("ADODB.Recordset")
     rs.Open strSQL, cn, 1, 1
 
@@ -497,9 +497,9 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
         nbLignes = rs.RecordCount
         rs.MoveFirst
 
-        'Tableau recevra les données à partir du rs
+        'Tableau recevra les donnÃ©es Ã  partir du rs
         Dim tableau() As Variant
-        ReDim tableau(1 To nbLignes, 1 To 8) 'Colonnes M à S
+        ReDim tableau(1 To nbLignes, 1 To 8) 'Colonnes M Ã  S
 
         'Solde d'ouverture
         Application.EnableEvents = False
@@ -511,16 +511,16 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
             .Font.Bold = True
         End With
         solde = soldeInitial
-        ligne = 1 'Commencer les écritures de transactions à la 1ère ligne du tableau
+        ligne = 1 'Commencer les Ã©critures de transactions Ã  la 1Ã¨re ligne du tableau
         Application.EnableEvents = True
 
         Do While Not rs.EOF
-            Debit = Nz(rs.Fields("Débit").Value)
-            Credit = Nz(rs.Fields("Crédit").Value)
+            Debit = Nz(rs.Fields("DÃ©bit").Value)
+            Credit = Nz(rs.Fields("CrÃ©dit").Value)
             solde = solde + Debit - Credit
 
             tableau(ligne, 1) = rs.Fields("Date").Value
-            tableau(ligne, 2) = rs.Fields("NoEntrée").Value
+            tableau(ligne, 2) = rs.Fields("NoEntrÃ©e").Value
             tableau(ligne, 3) = rs.Fields("Description").Value
             tableau(ligne, 4) = rs.Fields("Source").Value
             tableau(ligne, 5) = IIf(Debit > 0, Debit, "")
@@ -532,7 +532,7 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
             rs.MoveNext
         Loop
 
-        'Écriture de tableau dans la plage, en commençant à M5
+        'Ã‰criture de tableau dans la plage, en commenÃ§ant Ã  M5
         Application.EnableEvents = False
         wsResult.Range("M5").Resize(nbLignes, 8).Value = tableau
         With wsResult.Range("M5:T" & (4 + nbLignes)).Font
@@ -543,8 +543,8 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
         wsResult.Range("S" & (4 + nbLignes)).Font.Bold = True
         Application.EnableEvents = True
     Else
-        MsgBox "Aucune transaction à afficher pour ce" & vbNewLine & vbNewLine & _
-                "compte, avec la période choisie", vbExclamation, "Transactions pour la période"
+        MsgBox "Aucune transaction Ã  afficher pour ce" & vbNewLine & vbNewLine & _
+                "compte, avec la pÃ©riode choisie", vbExclamation, "Transactions pour la pÃ©riode"
         Application.EnableEvents = False
         wsResult.Range("L4").Value = ""
         Application.EnableEvents = True
@@ -568,14 +568,14 @@ Sub GL_BV_AjustementAffichageTransactionsDetaillees()
     
     Dim rng As Range
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "M").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "M").End(xlUp).Row
     
     'Date
     Set rng = ws.Range("M5:M" & lastUsedRow)
     rng.ColumnWidth = 9
     rng.HorizontalAlignment = xlCenter
     
-    'No écriture
+    'No Ã©criture
     Set rng = ws.Range("N5:N" & lastUsedRow)
     rng.ColumnWidth = 7
     
@@ -587,7 +587,7 @@ Sub GL_BV_AjustementAffichageTransactionsDetaillees()
     Set rng = ws.Range("P5:P" & lastUsedRow)
     rng.ColumnWidth = 20
     
-    'Débit & Crédit
+    'DÃ©bit & CrÃ©dit
     Set rng = ws.Range("Q5:R" & lastUsedRow)
     rng.ColumnWidth = 14
     
@@ -636,7 +636,7 @@ Sub GL_BV_Setup_And_Print()
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_BV_Setup_And_Print", "", 0)
     
     Dim lastRow As Long
-    lastRow = wshGL_BV.Cells(wshGL_BV.Rows.count, "D").End(xlUp).row + 2
+    lastRow = wshGL_BV.Cells(wshGL_BV.Rows.count, "D").End(xlUp).Row + 2
     If lastRow < 4 Then Exit Sub
     
     Dim printRange As Range
@@ -652,7 +652,7 @@ Sub GL_BV_Setup_And_Print()
     
     shp.Visible = msoTrue
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set printRange = Nothing
     Set shp = Nothing
     
@@ -675,7 +675,7 @@ Sub GL_BV_Setup_And_Print_Trans()
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_BV_Setup_And_Print_Trans", "", 0)
     
     Dim lastRow As Long
-    lastRow = wshGL_BV.Cells(wshGL_BV.Rows.count, "M").End(xlUp).row
+    lastRow = wshGL_BV.Cells(wshGL_BV.Rows.count, "M").End(xlUp).Row
     If lastRow < 4 Then Exit Sub
     
     Dim printRange As Range
@@ -691,7 +691,7 @@ Sub GL_BV_Setup_And_Print_Trans()
     
     shp.Visible = msoTrue
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set printRange = Nothing
     Set shp = Nothing
     
@@ -774,7 +774,7 @@ Sub Erase_Non_Required_Shapes() '2024-08-15 @ 14:42
         End If
     Next shp
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set shp = Nothing
     Set ws = Nothing
     
@@ -784,7 +784,7 @@ Sub Test_Get_All_Shapes() '2024-08-15 @ 14:42
 
     Dim ws As Worksheet: Set ws = wshGL_BV
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
     
 End Sub
@@ -813,7 +813,7 @@ Sub GL_BV_Adjust_The_Shape()
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_BV_Adjust_The_Shape", "", 0)
     
     Dim lastResultRow As Long
-    lastResultRow = wsdGL_Trans.Cells(wsdGL_Trans.Rows.count, "AC").End(xlUp).row
+    lastResultRow = wsdGL_Trans.Cells(wsdGL_Trans.Rows.count, "AC").End(xlUp).Row
     If lastResultRow < 2 Then Exit Sub
     
     Dim rowSelected As Long
@@ -825,7 +825,7 @@ Sub GL_BV_Adjust_The_Shape()
     With wsdGL_Trans
         For i = 2 To lastResultRow
             If i = 2 Then
-                texteFull = "Entrée #: " & .Range("AC2").Value & vbCrLf
+                texteFull = "EntrÃ©e #: " & .Range("AC2").Value & vbCrLf
                 texteFull = texteFull & "Desc    : " & .Range("AE2").Value & vbCrLf
                 If Trim$(.Range("AF2").Value) <> "" Then
                     texteFull = texteFull & "Source  : " & .Range("AF2").Value & vbCrLf & vbCrLf
@@ -879,7 +879,7 @@ Sub GL_BV_Adjust_The_Shape()
         .Top = wshGL_BV.Range("N" & rowSelected + 1).Top + 4
     End With
         
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set dynamicShape = Nothing
       
     Call Log_Record("modGL_BV:GL_BV_Adjust_The_Shape", "", startTime)
@@ -891,7 +891,7 @@ Sub GL_BV_Show_Dynamic_Shape()
     Dim shp As Shape: Set shp = wshGL_BV.Shapes("JE_Detail_Trans")
     shp.Visible = msoTrue
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set shp = Nothing
     
 End Sub
@@ -901,7 +901,7 @@ Sub GL_BV_Hide_Dynamic_Shape()
     Dim shp As Shape: Set shp = wshGL_BV.Shapes("JE_Detail_Trans")
     shp.Visible = msoFalse
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set shp = Nothing
     
 End Sub
@@ -926,7 +926,7 @@ Sub shp_GL_BV_Exit_Click()
     Call GL_BV_SupprimerToutesLesFormes_shpRetour(ws)
     DoEvents
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
     
     Call GL_BV_Back_To_Menu
@@ -943,4 +943,5 @@ Sub GL_BV_Back_To_Menu()
     wshMenuGL.Range("A1").Select
     
 End Sub
+
 

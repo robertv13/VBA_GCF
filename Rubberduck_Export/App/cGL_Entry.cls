@@ -1,4 +1,4 @@
-VERSION 1.0 CLASS
+ï»¿VERSION 1.0 CLASS
 BEGIN
   MultiUse = -1  'True
 END
@@ -19,12 +19,12 @@ Private pAutreRemarque As String
 
 Private pLignes As Collection
 
-'Constructeur (s'exécute à la création)
+'Constructeur (s'exÃ©cute Ã  la crÃ©ation)
 Sub Class_Initialize()
     Set pLignes = New Collection
 End Sub
 
-'Propriétés communes
+'PropriÃ©tÃ©s communes
 
 'NoEcriture
 Public Property Get NoEcriture() As Long
@@ -44,7 +44,7 @@ Public Property Let description(val As String)
     pDescription = val
 End Property
 
-'Date écriture
+'Date Ã©criture
 Public Property Get DateEcriture() As Date
     DateEcriture = pDateEcriture
 End Property
@@ -71,12 +71,12 @@ Public Property Let AutreRemarque(val As String)
     pAutreRemarque = val
 End Property
 
-'Accès aux lignes (Collection d'objets cGL_EntryLine)
+'AccÃ¨s aux lignes (Collection d'objets cGL_EntryLine)
 Public Property Get lignes() As Collection
     Set lignes = pLignes
 End Property
 
-'Méthode pour ajouter une ligne à l'écriture
+'MÃ©thode pour ajouter une ligne Ã  l'Ã©criture
 Public Sub AjouterLigne(NoCompte As String, description As String, Montant As Currency)
 
     Dim l As cGL_EntryLine
@@ -87,3 +87,4 @@ Public Sub AjouterLigne(NoCompte As String, description As String, Montant As Cu
     pLignes.Add l
     
 End Sub
+

@@ -1,4 +1,4 @@
-Attribute VB_Name = "modFAC_Brouillon"
+ï»¿Attribute VB_Name = "modFAC_Brouillon"
 '@Folder("Saisie_Facture")
 
 Option Explicit
@@ -19,7 +19,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
     Application.EnableEvents = False
     Application.ScreenUpdating = False
     
-    'Masquer la forme (détail TEC) si elle est présente
+    'Masquer la forme (dÃ©tail TEC) si elle est prÃ©sente
     On Error Resume Next
     Dim shapeTextBox As Shape
     Set shapeTextBox = wshFAC_Brouillon.Shapes("shpTECInfo")
@@ -89,7 +89,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
 
         'Do we have pending requests to invoice ?
         Dim lo As ListObject '2025-06-01 @ 06:07
-        Set lo = wsdFAC_Projets_Entete.ListObjects("l_tbl_FAC_Projets_Entête")
+        Set lo = wsdFAC_Projets_Entete.ListObjects("l_tbl_FAC_Projets_EntÃªte")
         
         Dim liveOne As Long
         Dim i As Long
@@ -121,9 +121,9 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         If wshFAC_Brouillon.Range("B51").Value <> "" Then
             Application.EnableEvents = False
             projetID = CLng(wshFAC_Brouillon.Range("B52").Value)
-            'Obtenir l'entête pour ce projet de facture
+            'Obtenir l'entÃªte pour ce projet de facture
             Dim lastUsedRow As Long
-            lastUsedRow = wsdFAC_Projets_Entete.Cells(wsdFAC_Projets_Entete.Rows.count, 1).End(xlUp).row
+            lastUsedRow = wsdFAC_Projets_Entete.Cells(wsdFAC_Projets_Entete.Rows.count, 1).End(xlUp).Row
             Dim rngToSearch As Range: Set rngToSearch = wsdFAC_Projets_Entete.Range("A1:A" & lastUsedRow)
             Dim result As Variant
             result = Application.WorksheetFunction.XLookup(projetID, _
@@ -199,7 +199,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
     Application.ScreenUpdating = True
     Application.EnableEvents = True
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set rngToSearch = Nothing
     Set shapeTextBox = Nothing
     
@@ -214,12 +214,12 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
     'Aller chercher le vrai nom de client de 2 sources selon le mode de facturation
     Dim allCols As Variant
     If wshFAC_Brouillon.Range("B52").Value = "" Then
-        allCols = Fn_Get_A_Row_From_A_Worksheet("BD_Clients", clientName, fClntFMNomClientPlusNomClientSystème)
+        allCols = Fn_Get_A_Row_From_A_Worksheet("BD_Clients", clientName, fClntFMNomClientPlusNomClientSystÃ¨me)
     Else
         allCols = Fn_Get_A_Row_From_A_Worksheet("BD_Clients", clientName, fClntFMClientNom)
     End If
     
-    'Vérifier le résultat retourné
+    'VÃ©rifier le rÃ©sultat retournÃ©
     If IsArray(allCols) Then
         Application.EnableEvents = False
         clientName = allCols(1)
@@ -227,7 +227,7 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
         Application.EnableEvents = True
     Else
         wshFAC_Brouillon.Range("E3").Value = ""
-        MsgBox "Valeur non trouvée !!!", vbCritical
+        MsgBox "Valeur non trouvÃ©e !!!", vbCritical
         wshFAC_Brouillon.Range("E3").Select
     End If
     
@@ -318,7 +318,7 @@ Sub FAC_Brouillon_Date_Change(d As String)
         
     'Adjust hourly rate base on the date
     Dim lastUsedProfInSummary As Long
-    lastUsedProfInSummary = wshFAC_Brouillon.Cells(wshFAC_Brouillon.Rows.count, "W").End(xlUp).row
+    lastUsedProfInSummary = wshFAC_Brouillon.Cells(wshFAC_Brouillon.Rows.count, "W").End(xlUp).Row
     
     Dim dateTauxHoraire As Date
     dateTauxHoraire = CDate(d)
@@ -344,7 +344,7 @@ Sub FAC_Brouillon_Date_Change(d As String)
     
     Application.EnableEvents = True
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set rng = Nothing
     
 End Sub
@@ -410,7 +410,7 @@ Sub FAC_Brouillon_Setup_All_Cells()
         .Range("O57").Value = ""
         .Range("O59").formula = "=O55-O57"                              'Deposit Amount
         
-        'ON élimine les cellules qui pourraient avoir du vert pâle...
+        'ON Ã©limine les cellules qui pourraient avoir du vert pÃ¢le...
         With .Range("E3:F3,O3,O9,L11:N45,O48:O50,M48:M50").Interior
             .pattern = xlNone
             .TintAndShade = 0
@@ -437,22 +437,22 @@ Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
 
     'Step 1 - Open the Excel file
     Dim filePath As String
-    filePath = Application.GetOpenFilename("Excel Files (*.xlsx), *.xlsx", , "Fichier Excel à ouvrir")
+    filePath = Application.GetOpenFilename("Excel Files (*.xlsx), *.xlsx", , "Fichier Excel Ã  ouvrir")
     If filePath = "False" Then Exit Sub 'User canceled
 
     Dim wbSource As Workbook: Set wbSource = Workbooks.Open(filePath)
     Dim wsSource As Worksheet: Set wsSource = wbSource.Sheets(wbSource.Sheets.count) 'Position to the last worksheet
 
     'Step 2 - Let the user selects the cells to be copied
-    MsgBox "SVP, sélectionnez les cellules à copier," & vbNewLine & vbNewLine _
+    MsgBox "SVP, sÃ©lectionnez les cellules Ã  copier," & vbNewLine & vbNewLine _
          & "et par la suite, pesez sur <Enter>.", vbInformation
     On Error Resume Next
     Dim rngSource As Range
-    Set rngSource = Application.InputBox("Sélectionnez les cellules à copier", Type:=8)
+    Set rngSource = Application.InputBox("SÃ©lectionnez les cellules Ã  copier", Type:=8)
     On Error GoTo 0
 
     If rngSource Is Nothing Then
-        MsgBox "Aucune cellule de sélectionnée. L'Opération est annulée.", vbExclamation
+        MsgBox "Aucune cellule de sÃ©lectionnÃ©e. L'OpÃ©ration est annulÃ©e.", vbExclamation
         wbSource.Close SaveChanges:=False
         GoTo Exit_Sub
     End If
@@ -483,7 +483,7 @@ Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
 
 Exit_Sub:
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     On Error Resume Next
     Set rngSource = Nothing
     Set wbSource = Nothing
@@ -511,7 +511,7 @@ Sub FAC_Brouillon_Clear_All_TEC_Displayed()
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed", "", 0)
     
     Dim lastRow As Long
-    lastRow = wshFAC_Brouillon.Cells(wshFAC_Brouillon.Rows.count, "F").End(xlUp).row 'First line of data is at row 7
+    lastRow = wshFAC_Brouillon.Cells(wshFAC_Brouillon.Rows.count, "F").End(xlUp).Row 'First line of data is at row 7
     If lastRow > 6 Then
         Application.EnableEvents = False
         'Verrouiller les cellules des descriptions des TEC - 2025-03-02 @ 21:53
@@ -566,7 +566,7 @@ Sub FAC_Brouillon_Get_All_Non_Billable_TEC_By_Client()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Get_All_Non_Billable_TEC_By_Client", "", 0)
     
-    'Mettre en place les critères pour aller chercher le temps NON-FACTURABLE pour le client avec AF#
+    'Mettre en place les critÃ¨res pour aller chercher le temps NON-FACTURABLE pour le client avec AF#
     Dim c1 As String, c3 As String, c4 As String, c5 As String
     Dim c2 As Date
     c1 = wshFAC_Brouillon.Range("B18").Value
@@ -587,7 +587,7 @@ Sub FAC_Brouillon_Load_Non_Billable_Into_Userform()
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Load_Non_Billable_Into_Userform", "", 0)
 
     Dim lastUsedRow As Long
-    lastUsedRow = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "AQ").End(xlUp).row
+    lastUsedRow = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "AQ").End(xlUp).Row
     If lastUsedRow < 3 Then Exit Sub 'No rows
     
     Application.ScreenUpdating = False
@@ -651,21 +651,21 @@ Sub Get_TEC_For_Client_AF(clientID As String, _
     Application.ScreenUpdating = False
 
     With ws
-        'Y a-t-il des données à filtrer ?
+        'Y a-t-il des donnÃ©es Ã  filtrer ?
         Dim lastSourceRow As Long, lastResultRow As Long
-        lastSourceRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row 'Last TEC Entry row
+        lastSourceRow = ws.Cells(ws.Rows.count, 1).End(xlUp).Row 'Last TEC Entry row
         If lastSourceRow < 3 Then Exit Sub 'Nothing to filter
         
-        'Effacer les données de la dernière utilisation
+        'Effacer les donnÃ©es de la derniÃ¨re utilisation
         ws.Range("AM6:AM10").ClearContents
-        ws.Range("AM6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+        ws.Range("AM6").Value = "DerniÃ¨re utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
         
-        'Définir le range pour la source des données en utilisant un tableau
+        'DÃ©finir le range pour la source des donnÃ©es en utilisant un tableau
         Dim rngData As Range
         Set rngData = ws.Range("l_tbl_TEC_Local[#All]")
         ws.Range("AM7").Value = rngData.Address
         
-        'Définir le range des critères
+        'DÃ©finir le range des critÃ¨res
         Dim rngCriteria As Range
         Set rngCriteria = ws.Range("AK2:AO3")
         .Range("AK3").Value = clientID
@@ -680,7 +680,7 @@ Sub Get_TEC_For_Client_AF(clientID As String, _
         .Range("AO3").Value = isDeleted
         .Range("AM8").Value = rngCriteria.Address
         
-        'Définir le range des résultats et effacer avant le traitement
+        'DÃ©finir le range des rÃ©sultats et effacer avant le traitement
         Dim rngResult As Range
         Set rngResult = ws.Range("AQ1").CurrentRegion
         rngResult.offset(2, 0).Clear
@@ -693,11 +693,11 @@ Sub Get_TEC_For_Client_AF(clientID As String, _
                     CopyToRange:=rngResult, _
                     Unique:=True
         
-        'Combien avons-nous de lignes en résultat ?
-        lastResultRow = .Cells(.Rows.count, "AQ").End(xlUp).row
+        'Combien avons-nous de lignes en rÃ©sultat ?
+        lastResultRow = .Cells(.Rows.count, "AQ").End(xlUp).Row
         .Range("AM10").Value = lastResultRow - 2 & " lignes"
 
-        'Est-il nécessaire de trier les résultats ?
+        'Est-il nÃ©cessaire de trier les rÃ©sultats ?
         If lastResultRow < 3 Then
             Application.ScreenUpdating = True
             Exit Sub
@@ -726,7 +726,7 @@ No_Sort_Required:
     
     Application.ScreenUpdating = True
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set rngCriteria = Nothing
     Set rngData = Nothing
     Set rngResult = Nothing
@@ -741,7 +741,7 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon", "", 0)
 
     Dim lastUsedRow As Long
-    lastUsedRow = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "AQ").End(xlUp).row
+    lastUsedRow = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "AQ").End(xlUp).Row
     If lastUsedRow < 3 Then Exit Sub 'No rows
     
     Application.ScreenUpdating = False
@@ -761,9 +761,9 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
             arr(i - 2, 3) = .Range("AW" & i).Value 'Description
             arr(i - 2, 4) = .Range("AX" & i).Value 'Heures
             totalHres = totalHres + .Range("AX" & i).Value
-            arr(i - 2, 5) = .Range("BB" & i).Value 'Facturée ou pas
+            arr(i - 2, 5) = .Range("BB" & i).Value 'FacturÃ©e ou pas
             arr(i - 2, 6) = .Range("AQ" & i).Value 'TECID
-            'Commentaires doivent être affichés
+            'Commentaires doivent Ãªtre affichÃ©s
             If Trim$(.Range("AY" & i).Value) <> "" Then
                 fraisDiversMsg = Trim$(.Range("AY" & i).Value)
                 collFraisDivers.Add fraisDiversMsg
@@ -776,31 +776,31 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
         rng.Value = arr 'RMV
     End With
     
-    'Déverrouiller les cellules des descriptions des TEC - 2025-03-02 @ 21:53
+    'DÃ©verrouiller les cellules des descriptions des TEC - 2025-03-02 @ 21:53
     wshFAC_Brouillon.Unprotect
     If lastUsedRow >= 7 Then
         wshFAC_Brouillon.Range("F7:F" & lastUsedRow).Locked = False
     End If
     wshFAC_Brouillon.Protect UserInterfaceOnly:=True
     
-    'Création du userForm s'il y a quelque chose à afficher
+    'CrÃ©ation du userForm s'il y a quelque chose Ã  afficher
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
-        'Nettoyer le userForm avant d'ajouter des éléments
+        'Nettoyer le userForm avant d'ajouter des Ã©lÃ©ments
         ufFraisDivers.listBox1.Clear
-        'Ajouter les éléments dans le listBox
+        'Ajouter les Ã©lÃ©ments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
             ufFraisDivers.listBox1.AddItem item
         Next item
-        'Afficher le userForm de façon non modale
+        'Afficher le userForm de faÃ§on non modale
         ufFraisDivers.show vbModeless
     End If
     
-    lastUsedRow = wshFAC_Brouillon.Cells(wshFAC_Brouillon.Rows.count, "D").End(xlUp).row
+    lastUsedRow = wshFAC_Brouillon.Cells(wshFAC_Brouillon.Rows.count, "D").End(xlUp).Row
     If lastUsedRow < 7 Then Exit Sub 'No rows
 
-    'Section des TEC pour le client à une date données
+    'Section des TEC pour le client Ã  une date donnÃ©es
     With wshFAC_Brouillon
         .Range("D7:H" & lastUsedRow + 2).Font.Color = vbBlack
         .Range("D7:H" & lastUsedRow + 2).Font.Bold = False
@@ -818,7 +818,7 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
     
     Application.ScreenUpdating = True
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set collFraisDivers = Nothing
     Set item = Nothing
     Set ufFraisDivers = Nothing
@@ -840,18 +840,18 @@ Sub FAC_Brouillon_Goto_Onglet_FAC_Finale()
    
     Application.ScreenUpdating = False
     
-    'Vérification des montants reçus en dépôt pour le client
+    'VÃ©rification des montants reÃ§us en dÃ©pÃ´t pour le client
     If wshFAC_Brouillon.Range("B5").Value = "VRAI" Then
         GoTo Depot_Checked
     End If
     
-    'Y a-t-il des montants en dépôt ? - 2024-11-12 @ 11:25
-    Dim soldeDépôt As Currency
-    soldeDépôt = Fn_Get_GL_Account_Balance(ObtenirNoGlIndicateur("Produit perçu d'avance"), wshFAC_Brouillon.Range("O3").Value)
+    'Y a-t-il des montants en dÃ©pÃ´t ? - 2024-11-12 @ 11:25
+    Dim soldeDÃ©pÃ´t As Currency
+    soldeDÃ©pÃ´t = Fn_Get_GL_Account_Balance(ObtenirNoGlIndicateur("Produit perÃ§u d'avance"), wshFAC_Brouillon.Range("O3").Value)
     
-    'Les résultats du AvancedFilter sont dans GL_Trans - Colonnes P @ Y
+    'Les rÃ©sultats du AvancedFilter sont dans GL_Trans - Colonnes P @ Y
     Dim lastUsedRowResult As Double
-    lastUsedRowResult = wsdGL_Trans.Cells(wsdGL_Trans.Rows.count, "P").End(xlUp).row
+    lastUsedRowResult = wsdGL_Trans.Cells(wsdGL_Trans.Rows.count, "P").End(xlUp).Row
     Dim soldeDepotClient As Double
     Dim i As Long
     For i = 2 To lastUsedRowResult
@@ -861,7 +861,7 @@ Sub FAC_Brouillon_Goto_Onglet_FAC_Finale()
     Next i
     
     If soldeDepotClient > 0 Then
-        MsgBox "Il y a un dépôt de client de disponible de " & Format$(soldeDepotClient, "###,##0.00 $") & vbNewLine & vbNewLine & _
+        MsgBox "Il y a un dÃ©pÃ´t de client de disponible de " & Format$(soldeDepotClient, "###,##0.00 $") & vbNewLine & vbNewLine & _
             "Le total de la facture est de " & Format$(wshFAC_Brouillon.Range("O55").Value, "###,##0.00 $"), vbInformation
 
         Application.EnableEvents = False
@@ -882,14 +882,14 @@ Sub FAC_Brouillon_Goto_Onglet_FAC_Finale()
         Dim reponse As VbMsgBoxResult
         Do
             DoEvents
-            'Si le montant a changé, demande confirmation
+            'Si le montant a changÃ©, demande confirmation
             If wshFAC_Brouillon.Range("O57").Value <> montantInitial Then
-                reponse = MsgBox("Veuillez confirmer le montant du dépôt de client à appliquer" & vbNewLine & _
+                reponse = MsgBox("Veuillez confirmer le montant du dÃ©pÃ´t de client Ã  appliquer" & vbNewLine & _
                                     "sur cette facture." & vbNewLine & vbNewLine & _
-                                    "Appuyez sur OK pour accepter le montant suggéré," & vbNewLine & _
-                                    "ou Annuler pour modifier le montant du dépôt.", _
-                                    vbOKCancel + vbInformation, "Confirmation de l'imputation du dépôt de client")
-               'Si l'utilisateur sélectionne Annuler, lui permet de modifier le montant
+                                    "Appuyez sur OK pour accepter le montant suggÃ©rÃ©," & vbNewLine & _
+                                    "ou Annuler pour modifier le montant du dÃ©pÃ´t.", _
+                                    vbOKCancel + vbInformation, "Confirmation de l'imputation du dÃ©pÃ´t de client")
+               'Si l'utilisateur sÃ©lectionne Annuler, lui permet de modifier le montant
                 If reponse = vbCancel Then
                     montantInitial = wshFAC_Brouillon.Range("O57").Value
                     wshFAC_Brouillon.Range("O57").Select
@@ -903,7 +903,7 @@ Sub FAC_Brouillon_Goto_Onglet_FAC_Finale()
 
     End If
     
-    'Indique que la vérification a bel et bien étét faite déjà
+    'Indique que la vÃ©rification a bel et bien Ã©tÃ©t faite dÃ©jÃ 
     wshFAC_Brouillon.Range("B5").Value = "VRAI"
     
 Depot_Checked:
@@ -978,7 +978,7 @@ Sub FAC_Brouillon_Back_To_FAC_Menu()
     
     wshFAC_Brouillon.Range("B27").Value = False
     
-    'Masquer la forme (détail TEC) si elle est présente
+    'Masquer la forme (dÃ©tail TEC) si elle est prÃ©sente
     On Error Resume Next
     Dim shapeTextBox As Shape
     Set shapeTextBox = wshFAC_Brouillon.Shapes("shpTECInfo")
@@ -995,7 +995,7 @@ Sub FAC_Brouillon_Back_To_FAC_Menu()
     
     wshMenuFAC.Range("A1").Select
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set shapeTextBox = Nothing
     
     Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Back_To_FAC_Menu", "", startTime)
@@ -1072,12 +1072,12 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(row As Long, dateCutOffProjet As Date)
     DoEvents
     
     If newTECapresProjet = True Then
-        MsgBox "ATTENTION - Des charges se sont ajoutées après le projet de facture" & vbNewLine & vbNewLine & _
+        MsgBox "ATTENTION - Des charges se sont ajoutÃ©es aprÃ¨s le projet de facture" & vbNewLine & vbNewLine & _
                 "VOUS DEVEZ EN TENIR COMPTE DANS VOTRE FACTURE", vbInformation + vbExclamation, _
                 "Le date limite du projet de facture < Date de la facture"
     End If
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set cbx = Nothing
     Set cell = Nothing
     Set chkBoxRange = Nothing
@@ -1124,7 +1124,7 @@ Sub FAC_Brouillon_TEC_Remove_Check_Boxes(row As Long)
     
     Application.EnableEvents = True
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set cbx = Nothing
     Set ws = Nothing
     
@@ -1186,12 +1186,12 @@ Sub Adjust_Formulas_In_The_Summary(lur As Long)
     Next i
     Application.EnableEvents = True
 
-    'Une fois le sommaire des TEC à facturer rempli, trier en ordre descendant de la valeur
+    'Une fois le sommaire des TEC Ã  facturer rempli, trier en ordre descendant de la valeur
     Dim rngTECSummary As Range
     Set rngTECSummary = wshFAC_Brouillon.Range("R25:U34")
     Call FAC_Brouillon_Sort_TEC_Summary(rngTECSummary)
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set rngTECSummary = Nothing
     
 End Sub
@@ -1205,32 +1205,32 @@ Sub FAC_Brouillon_Sort_TEC_Summary(r As Range)
     Dim cell As Range
     For Each cell In r
         If cell.HasFormula Then
-            formules.Add cell.Address, cell.formula 'Utiliser l'adresse comme clé
+            formules.Add cell.Address, cell.formula 'Utiliser l'adresse comme clÃ©
             cell.Value = cell.Value 'Remplacer la formule par sa valeur temporairement
         End If
     Next cell
     
-    'Tri descendant sur la 4ème colonne
+    'Tri descendant sur la 4Ã¨me colonne
     r.Sort Key1:=r.Columns(4), Order1:=xlDescending, Header:=xlNo
     
-    'Parcourir chaque ligne pour vider les cellules non utilisées
+    'Parcourir chaque ligne pour vider les cellules non utilisÃ©es
     Dim i As Long
     For i = 1 To r.Rows.count
         If r.Cells(i, 2).Value = 0 Then
-            'Vider toutes les cellules de la ligne si la valeur de la 2ème colonne est 0
+            'Vider toutes les cellules de la ligne si la valeur de la 2Ã¨me colonne est 0
             r.Rows(i).ClearContents
         End If
     Next i
     
-    'Réinsérer les formules dans les cellules concernées uniquement si la colonne 2 n'est pas zéro
+    'RÃ©insÃ©rer les formules dans les cellules concernÃ©es uniquement si la colonne 2 n'est pas zÃ©ro
     Dim addr As Variant
     Dim ligne As Integer
     Application.EnableEvents = False
     For Each addr In formules.keys
-        ligne = r.Worksheet.Range(addr).row 'Obtenir le numéro de la ligne de l'adresse
-        'Vérifier la valeur de la 2ème colonne dans la ligne correspondante
+        ligne = r.Worksheet.Range(addr).Row 'Obtenir le numÃ©ro de la ligne de l'adresse
+        'VÃ©rifier la valeur de la 2Ã¨me colonne dans la ligne correspondante
         If r.Worksheet.Cells(ligne, 19).Value <> 0 Then
-            'Vérifier si l'adresse est dans la colonne 2 ou 4
+            'VÃ©rifier si l'adresse est dans la colonne 2 ou 4
             If r.Worksheet.Range(addr).Column = 19 Or r.Worksheet.Range(addr).Column = 21 Then
                 r.Worksheet.Range(addr).formula = formules(addr)
             End If
@@ -1238,7 +1238,7 @@ Sub FAC_Brouillon_Sort_TEC_Summary(r As Range)
     Next addr
     Application.EnableEvents = True
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set addr = Nothing
     Set cell = Nothing
     Set formules = Nothing
@@ -1254,7 +1254,7 @@ Sub Load_Invoice_Template(t As String)
     
     'Confirm use of Template
     Dim userResponse As String
-    userResponse = MsgBox("Êtes-vous CERTAIN de vouloir utiliser le gabarit '" & t & "'" & vbNewLine & "pour cette facture ?", vbYesNo + vbQuestion, "Confirmation d'utilisation de gabarit")
+    userResponse = MsgBox("ÃŠtes-vous CERTAIN de vouloir utiliser le gabarit '" & t & "'" & vbNewLine & "pour cette facture ?", vbYesNo + vbQuestion, "Confirmation d'utilisation de gabarit")
     'If user confirms, delete the worksheets
     If userResponse <> vbYes Then
         Exit Sub
@@ -1265,7 +1265,7 @@ Sub Load_Invoice_Template(t As String)
     wshFAC_Finale.Range("B34:E63").ClearContents
     
     Dim lastUsedRow As Long
-    lastUsedRow = wsdADMIN.Cells(wsdADMIN.Rows.count, "Z").End(xlUp).row
+    lastUsedRow = wsdADMIN.Cells(wsdADMIN.Rows.count, "Z").End(xlUp).Row
     
     'Get the services with the appropriate template letter
     Dim strServices As String
@@ -1299,4 +1299,5 @@ Sub Load_Invoice_Template(t As String)
     Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
+
 

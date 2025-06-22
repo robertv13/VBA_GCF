@@ -1,32 +1,32 @@
-Attribute VB_Name = "modLog_Analysis"
+ï»¿Attribute VB_Name = "modLog_Analysis"
 Option Explicit
 
 Sub Main_OuvrirRepertoireEtTraiterFichiers()
 
-    'Initialisation du FileDialog pour sélectionner un répertoire
+    'Initialisation du FileDialog pour sÃ©lectionner un rÃ©pertoire
     Dim fileDialog As fileDialog
     Set fileDialog = Application.fileDialog(msoFileDialogFolderPicker)
     With fileDialog
-        .Title = "Sélectionnez un répertoire à traiter"
-        .InitialFileName = "C:\VBA\GC_FISCALITÉ\GCF_DataFiles\"
+        .Title = "SÃ©lectionnez un rÃ©pertoire Ã  traiter"
+        .InitialFileName = "C:\VBA\GC_FISCALITÃ‰\GCF_DataFiles\"
     End With
     
-    'Un répertoire a-t-il été sélectionné ?
+    'Un rÃ©pertoire a-t-il Ã©tÃ© sÃ©lectionnÃ© ?
     Dim folderPath As String
     If fileDialog.show = -1 Then
         folderPath = fileDialog.SelectedItems(1)
     Else
-        MsgBox "Aucun répertoire sélectionné.", vbExclamation
+        MsgBox "Aucun rÃ©pertoire sÃ©lectionnÃ©.", vbExclamation
         Exit Sub
     End If
     
-    'Vérification de l'existence du répertoire
+    'VÃ©rification de l'existence du rÃ©pertoire
     If Dir(folderPath, vbDirectory) = "" Then
-        MsgBox "Répertoire invalide.", vbCritical
+        MsgBox "RÃ©pertoire invalide.", vbCritical
         Exit Sub
     End If
     
-    'Lecture des fichiers dans le répertoire
+    'Lecture des fichiers dans le rÃ©pertoire
     Dim fileSystem As Object
     Set fileSystem = CreateObject("Scripting.FileSystemObject")
     Dim file As Object
@@ -42,12 +42,12 @@ Sub Main_OuvrirRepertoireEtTraiterFichiers()
         End Select
     Next file
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set file = Nothing
     Set fileDialog = Nothing
     Set fileSystem = Nothing
     
-    MsgBox "Le traitement des fichiers LOG est terminé !", vbInformation
+    MsgBox "Le traitement des fichiers LOG est terminÃ© !", vbInformation
     
 End Sub
 
@@ -60,9 +60,9 @@ Sub Lire_LogClientsApp(filePath As String)
     fileNum = FreeFile
     Open filePath For Input As #fileNum
     
-    'Détermine l'environnement (DEV/PROD) ?
+    'DÃ©termine l'environnement (DEV/PROD) ?
     Dim env As String
-    If Not InStr(filePath, "C:\VBA\GC_FISCALITÉ\DataFiles\") = 1 Then
+    If Not InStr(filePath, "C:\VBA\GC_FISCALITÃ‰\DataFiles\") = 1 Then
         env = "PROD"
     Else
         env = "DEV"
@@ -86,8 +86,8 @@ Sub Lire_LogClientsApp(filePath As String)
         End If
         If InStr(lineContent, " | ") <> 0 Then
             Dim Fields() As String
-            Fields = Split(lineContent, " | ") 'Diviser la ligne en champs avec le délimiteur "|"
-            'Insérer les données dans le tableau
+            Fields = Split(lineContent, " | ") 'Diviser la ligne en champs avec le dÃ©limiteur "|"
+            'InsÃ©rer les donnÃ©es dans le tableau
             ligne = ligne + 1
             output(ligne, 1) = env
             output(ligne, 2) = CStr(Left$(Fields(0), 10))
@@ -110,14 +110,14 @@ Sub Lire_LogClientsApp(filePath As String)
         End If
     Loop
 
-    'Réduit la taille du tableau output
+    'RÃ©duit la taille du tableau output
     Call Array_2D_Resizer(output, ligne, UBound(output, 2))
     
     'Fermer le fichier
     Close #fileNum
     
-    'Ajout du tableau à un classeur fermé
-    Call AjouterTableauClasseurFerme(output, "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_Logs_Data.xlsb", "Log_Clients")
+    'Ajout du tableau Ã  un classeur fermÃ©
+    Call AjouterTableauClasseurFerme(output, "C:\VBA\GC_FISCALITÃ‰\DataFiles\GCF_Logs_Data.xlsb", "Log_Clients")
     
     'S'il s'agit du fichier DEV, on l'efface (on garde les fichiers logs de la PROD)
     Debug.Print env, filePath
@@ -127,8 +127,8 @@ Sub Lire_LogClientsApp(filePath As String)
 
     Application.StatusBar = ""
     
-    'Afficher le nombre de lignes ajoutées au fichier LOG
-    MsgBox "Le fichier '" & ExtraireNomFichier(filePath) & "' a ajouté " & Format$(UBound(output, 1), "###,##0") & " lignes au fichier cumulatif", vbInformation
+    'Afficher le nombre de lignes ajoutÃ©es au fichier LOG
+    MsgBox "Le fichier '" & ExtraireNomFichier(filePath) & "' a ajoutÃ© " & Format$(UBound(output, 1), "###,##0") & " lignes au fichier cumulatif", vbInformation
     
 End Sub
 
@@ -141,9 +141,9 @@ Sub Lire_LogMainApp(filePath As String)
     fileNum = FreeFile
     Open filePath For Input As #fileNum
     
-    'Détermine l'environnement (DEV/PROD) ?
+    'DÃ©termine l'environnement (DEV/PROD) ?
     Dim env As String
-    If Not InStr(filePath, "C:\VBA\GC_FISCALITÉ\DataFiles\") = 1 Then
+    If Not InStr(filePath, "C:\VBA\GC_FISCALITÃ‰\DataFiles\") = 1 Then
         env = "PROD"
     Else
         env = "DEV"
@@ -164,8 +164,8 @@ Sub Lire_LogMainApp(filePath As String)
         lineNo = lineNo + 1
         If InStr(lineContent, " | ") <> 0 Then
             Dim Fields() As String
-            Fields = Split(lineContent, " | ") 'Diviser la ligne en champs avec le délimiteur " | "
-            'Insérer les données dans le tableau
+            Fields = Split(lineContent, " | ") 'Diviser la ligne en champs avec le dÃ©limiteur " | "
+            'InsÃ©rer les donnÃ©es dans le tableau
             ligne = ligne + 1
             If ligne Mod 250 = 0 Then
                 Application.StatusBar = "Traitement de '" & ExtraireNomFichier(filePath) & "' - " & Format$(ligne, "###,##0") & " lignes"
@@ -218,14 +218,14 @@ Sub Lire_LogMainApp(filePath As String)
 
     Application.StatusBar = "Traitement de '" & ExtraireNomFichier(filePath) & "' - " & Format$(lineNo, "###,##0") & " lignes"
 
-    'Réduit la taille du tableau output
+    'RÃ©duit la taille du tableau output
     Call Array_2D_Resizer(output, ligne, UBound(output, 2))
     
     'Fermer le fichier
     Close #fileNum
     
     'Ajout du tableau au classeur des logs
-    Call AjouterTableauClasseurFerme(output, "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_Logs_Data.xlsb", "Log_Application")
+    Call AjouterTableauClasseurFerme(output, "C:\VBA\GC_FISCALITÃ‰\DataFiles\GCF_Logs_Data.xlsb", "Log_Application")
     
     'S'il s'agit du fichier DEV, on l'efface (on garde les fichiers logs de la PROD)
     If env = "DEV" Then
@@ -234,8 +234,8 @@ Sub Lire_LogMainApp(filePath As String)
     
     Application.StatusBar = ""
     
-    'Afficher le nombre de lignes ajoutées au fichier LOG
-    MsgBox "Le fichier '" & ExtraireNomFichier(filePath) & "' a ajouté " & Format$(UBound(output, 1), "###,##0") & " lignes au fichier cumulatif", vbInformation
+    'Afficher le nombre de lignes ajoutÃ©es au fichier LOG
+    MsgBox "Le fichier '" & ExtraireNomFichier(filePath) & "' a ajoutÃ© " & Format$(UBound(output, 1), "###,##0") & " lignes au fichier cumulatif", vbInformation
     
 End Sub
 
@@ -248,9 +248,9 @@ Sub Lire_LogSaisieHeures(filePath As String)
     fileNum = FreeFile
     Open filePath For Input As #fileNum
     
-    'Détermine l'environnement (DEV/PROD) ?
+    'DÃ©termine l'environnement (DEV/PROD) ?
     Dim env As String
-    If Not InStr(filePath, "C:\VBA\GC_FISCALITÉ\DataFiles\") = 1 Then
+    If Not InStr(filePath, "C:\VBA\GC_FISCALITÃ‰\DataFiles\") = 1 Then
         env = "PROD"
     Else
         env = "DEV"
@@ -274,8 +274,8 @@ Sub Lire_LogSaisieHeures(filePath As String)
         End If
         If InStr(lineContent, " | ") <> 0 Then
             Dim Fields() As String
-            Fields = Split(lineContent, " | ") 'Diviser la ligne en champs avec le délimiteur "|"
-            'Insérer les données dans le tableau
+            Fields = Split(lineContent, " | ") 'Diviser la ligne en champs avec le dÃ©limiteur "|"
+            'InsÃ©rer les donnÃ©es dans le tableau
             ligne = ligne + 1
             output(ligne, 1) = env
             output(ligne, 2) = CStr(Left$(Fields(0), 10))
@@ -303,14 +303,14 @@ Sub Lire_LogSaisieHeures(filePath As String)
         End If
     Loop
 
-    'Réduit la taille du tableau output
+    'RÃ©duit la taille du tableau output
     Call Array_2D_Resizer(output, ligne, UBound(output, 2))
     
     'Fermer le fichier
     Close #fileNum
     
-    'Ajout du tableau à un classeur fermé
-    Call AjouterTableauClasseurFerme(output, "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_Logs_Data.xlsb", "Log_Heures")
+    'Ajout du tableau Ã  un classeur fermÃ©
+    Call AjouterTableauClasseurFerme(output, "C:\VBA\GC_FISCALITÃ‰\DataFiles\GCF_Logs_Data.xlsb", "Log_Heures")
     
     'S'il s'agit du fichier DEV, on l'efface (on garde les fichiers logs de la PROD)
     Debug.Print env, filePath
@@ -320,8 +320,8 @@ Sub Lire_LogSaisieHeures(filePath As String)
     
     Application.StatusBar = ""
     
-    'Afficher le nombre de lignes ajoutées au fichier LOG
-    MsgBox "Le fichier '" & ExtraireNomFichier(filePath) & "' a ajouté " & Format$(UBound(output, 1), "###,##0") & " lignes au fichier cumulatif", vbInformation
+    'Afficher le nombre de lignes ajoutÃ©es au fichier LOG
+    MsgBox "Le fichier '" & ExtraireNomFichier(filePath) & "' a ajoutÃ© " & Format$(UBound(output, 1), "###,##0") & " lignes au fichier cumulatif", vbInformation
     
 End Sub
 
@@ -332,19 +332,19 @@ Sub AjouterTableauClasseurFerme(ByVal tableau As Variant, ByVal cheminFichier As
     Application.ScreenUpdating = False
     Application.DisplayAlerts = False
     
-    'Ouvrir le classeur cible en arrière-plan
+    'Ouvrir le classeur cible en arriÃ¨re-plan
     Dim wbTarget As Workbook
     Set wbTarget = Workbooks.Open(cheminFichier)
     Dim wsTarget As Worksheet
     Set wsTarget = wbTarget.Sheets(feuilleNom)
 
-    'Déterminer la première ligne vide dans la colonne A et définir le range
+    'DÃ©terminer la premiÃ¨re ligne vide dans la colonne A et dÃ©finir le range
     Dim premiereLigneVide As Long
-    premiereLigneVide = wsTarget.Cells(wsTarget.Rows.count, 1).End(xlUp).row + 1
+    premiereLigneVide = wsTarget.Cells(wsTarget.Rows.count, 1).End(xlUp).Row + 1
     Dim cible As Range
     Set cible = wsTarget.Cells(premiereLigneVide, 1)
 
-    'Copier les données en une seule opération
+    'Copier les donnÃ©es en une seule opÃ©ration
     Application.EnableEvents = False
     cible.Resize(UBound(tableau, 1), UBound(tableau, 2)).Value = tableau
     Application.EnableEvents = True
@@ -352,7 +352,7 @@ Sub AjouterTableauClasseurFerme(ByVal tableau As Variant, ByVal cheminFichier As
     'Sauvegarder et fermer le fichier Target
     wbTarget.Close SaveChanges:=True
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set cible = Nothing
     Set wbTarget = Nothing
     Set wsTarget = Nothing
@@ -361,3 +361,4 @@ Sub AjouterTableauClasseurFerme(ByVal tableau As Variant, ByVal cheminFichier As
     Application.DisplayAlerts = True
     
 End Sub
+

@@ -1,4 +1,4 @@
-Attribute VB_Name = "modDev_Utils"
+ÔªøAttribute VB_Name = "modDev_Utils"
 Option Explicit
 
 Sub Add_Columns_To_Active_Worksheet()
@@ -18,7 +18,7 @@ Sub Add_Columns_To_Active_Worksheet()
     
     Debug.Print "#026 - " & colToAdd & " columns added to the worksheet."
     
-    'LibÈrer la mÈmoire
+    'Lib√©rer la m√©moire
     Set ws = Nothing
     
 End Sub
@@ -133,7 +133,7 @@ Sub Check_Invoice_Template()
     Dim ws As Worksheet: Set ws = wsdADMIN
     Dim firstUsedRow As Long, lastUsedRow As Long
     firstUsedRow = 12
-    lastUsedRow = ws.Cells(ws.Rows.count, "Z").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "Z").End(xlUp).Row
     Dim rng As Range
     Set rng = ws.Range("Z" & firstUsedRow & ":AA" & lastUsedRow)
     
@@ -273,7 +273,7 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
     wsOutput.Range("A" & lastUsedRow).Value = "*** " & Format$(f, "###,##0") & _
                                     " feuilles pour le workbook '" & wbName & "' ***"
     
-    lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "A").End(xlUp).row
+    lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "A").End(xlUp).Row
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:C" & lastUsedRow)
     Dim header1 As String: header1 = "Liste des feuilles d'un classeur"
     Dim header2 As String: header2 = wbName
@@ -281,7 +281,7 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
     
     ThisWorkbook.Worksheets("X_Feuilles_du_Classeur").Activate
     
-    'LibÈrer la mÈmoire
+    'Lib√©rer la m√©moire
     Set rngToPrint = Nothing
     Set wb = Nothing
     Set ws = Nothing
@@ -346,7 +346,7 @@ Sub RechercherCodeProjet() '2024-10-26 @ 10:41
     
     Call Search_Every_Lines_Of_Code(allLinesOfCode, lignesLues, search1, search2, search3)
     
-    'LibÈrer la mÈmoire
+    'Lib√©rer la m√©moire
     Set vbComp = Nothing
     Set vbCodeMod = Nothing
     
@@ -410,7 +410,7 @@ Sub List_Conditional_Formatting_All() '2024-06-23 @ 18:37
     'Setup and prepare the output worksheet
     Dim wsOutput As Worksheet: Set wsOutput = wshzDocConditionalFormatting
     Dim lastUsedRow As Long
-    lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "A").End(xlUp).row
+    lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "A").End(xlUp).Row
     If lastUsedRow > 1 Then
         wsOutput.Range("A2:F" & lastUsedRow).ClearContents
     End If
@@ -419,9 +419,9 @@ Sub List_Conditional_Formatting_All() '2024-06-23 @ 18:37
     wsOutput.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2)).Value = arr
     wsOutput.Range("A:A").EntireColumn.Hidden = True 'Do not show the SortKey
    
-    MsgBox "J'ai trouvÈ " & i & " Conditional Formatting"
+    MsgBox "J'ai trouv√© " & i & " Conditional Formatting"
     
-    'LibÈrer la mÈmoire
+    'Lib√©rer la m√©moire
     Set area = Nothing
     Set cf = Nothing
     Set rng = Nothing
@@ -521,7 +521,7 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
         wsOutput.Columns(8).NumberFormat = "dd/mm/yyyy hh:mm:ss"
         
         Dim lastUsedRow As Long
-        lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "B").End(xlUp).row
+        lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "B").End(xlUp).Row
         Dim j As Long, oldWorksheet As String
         oldWorksheet = wsOutput.Range("B" & lastUsedRow).Value
         For j = lastUsedRow To 2 Step -1
@@ -532,7 +532,7 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
         Next j
         
         'Since we might have inserted new row, let's update the lastUsedRow
-        lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "B").End(xlUp).row
+        lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "B").End(xlUp).Row
         With wsOutput.Range("B2:H" & lastUsedRow)
             On Error Resume Next
             ActiveSheet.Cells.FormatConditions.Delete
@@ -559,7 +559,7 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
     'Result print setup - 2024-07-15 @ 09:22
     lastUsedRow = lastUsedRow + 2
     wsOutput.Range("B" & lastUsedRow).Value = "*** " & Format$(xAnalyzed, "###,##0") & _
-                                    " cellules analysÈes dans l'application ***"
+                                    " cellules analys√©es dans l'application ***"
     Dim header1 As String: header1 = "Cells Data Validations"
     Dim header2 As String: header2 = "All worksheets"
     Call Simple_Print_Setup(wsOutput, wsOutput.Range("B2:H" & lastUsedRow), _
@@ -568,7 +568,7 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
                            "$1:$1", _
                            "L")
     
-    'LibÈrer la mÈmoire
+    'Lib√©rer la m√©moire
     Set cell = Nothing
     Set ws = Nothing
     Set wsOutput = Nothing
@@ -602,7 +602,7 @@ Sub Erase_And_Create_Worksheet(sheetName As String)
     Set ws = ThisWorkbook.Worksheets.Add(Before:=wshMenu)
     ws.Name = sheetName
     
-    'LibÈrer la mÈmoire
+    'Lib√©rer la m√©moire
     Set ws = Nothing
     
 End Sub
@@ -613,7 +613,7 @@ Sub List_Formulas_All() '2024-06-22 @ 15:42
     
     'Prepare existing worksheet to receive data
     Dim lastUsedRow As Long
-    lastUsedRow = wshzDocFormulas.Cells(wshzDocFormulas.Rows.count, "A").End(xlUp).row 'Last used row
+    lastUsedRow = wshzDocFormulas.Cells(wshzDocFormulas.Rows.count, "A").End(xlUp).Row 'Last used row
     If lastUsedRow > 1 Then wshzDocFormulas.Range("A2:G" & lastUsedRow).ClearContents
     
     'Create an Array to receive the formulas informations
@@ -640,7 +640,7 @@ Sub List_Formulas_All() '2024-06-22 @ 15:42
             If Left$(cell.formula, 1) = "=" Then
                 'Write formula information to the destination worksheet
                 i = i + 1
-                If i Mod 50 Then Application.StatusBar = "J'ai traitÈ " & i & " formules"
+                If i Mod 50 Then Application.StatusBar = "J'ai trait√© " & i & " formules"
                 outputArray(i, 1) = ws.CodeName & Chr$(0) & cell.Address
                 outputArray(i, 2) = ws.CodeName
                 outputArray(i, 3) = Name
@@ -661,9 +661,9 @@ nextIteration:
     wshzDocFormulas.Range("A2").Resize(UBound(outputArray, 1), UBound(outputArray, 2)).Value = outputArray
     wshzDocFormulas.Range("A:A").EntireColumn.Hidden = True 'Do not show the outputArray
 
-    MsgBox "J'ai trouvÈ " & Format$(i, "#,##0") & " formules"
+    MsgBox "J'ai trouv√© " & Format$(i, "#,##0") & " formules"
     
-    'LibÈrer la mÈmoire
+    'Lib√©rer la m√©moire
     Set cell = Nothing
     Set wb = Nothing
     Set ws = Nothing
@@ -750,7 +750,7 @@ Sub List_All_Shapes_Properties() '2024-08-07 @ 19:37
     
     Application.EnableEvents = True
     
-    'LibÈrer la mÈmoire
+    'Lib√©rer la m√©moire
     Set shp = Nothing
     Set ws = Nothing
     
@@ -768,7 +768,7 @@ Sub List_All_Tables()
         Next lo
     Next ws
     
-    'LibÈrer la mÈmoire
+    'Lib√©rer la m√©moire
     Set lo = Nothing
     Set ws = Nothing
     
@@ -779,7 +779,7 @@ Sub List_Named_Ranges_All() '2024-06-23 @ 07:40
     'Setup and clear the output worksheet
     Dim ws As Worksheet: Set ws = wshzDocNamedRange
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).Row
     ws.Range("A2:I" & lastUsedRow).ClearContents
     
     'Loop through each named range in the workbook
@@ -834,9 +834,9 @@ Sub List_Named_Ranges_All() '2024-06-23 @ 07:40
                                "L")
     End If
    
-    MsgBox "J'ai trouvÈ " & i & " named ranges"
+    MsgBox "J'ai trouv√© " & i & " named ranges"
     
-    'LibÈrer la mÈmoire
+    'Lib√©rer la m√©moire
     Set nr = Nothing
     Set rng = Nothing
     Set ws = Nothing
@@ -855,7 +855,7 @@ Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
     
     Dim ws As Worksheet: Set ws = wshzDocTests_And_Todos
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).Row
     Dim rng As Range: Set rng = ws.Range("A1:E" & lastUsedRow)
     
     With ws.ListObjects("tblTests_And_Todo").Sort
@@ -872,7 +872,7 @@ Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
             Order:=xlAscending, _
             DataOption:=xlSortNormal
         .SortFields.Add2 _
-            key:=ActiveSheet.Range("tblTests_And_Todo[PrioritÈ]"), _
+            key:=ActiveSheet.Range("tblTests_And_Todo[Priorit√©]"), _
             SortOn:=xlSortOnValues, _
             Order:=xlAscending, _
             DataOption:=xlSortNormal
@@ -910,7 +910,7 @@ Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
     
     Application.ScreenUpdating = True
     
-    'LibÈrer la mÈmoire
+    'Lib√©rer la m√©moire
     Set rng = Nothing
     Set rowToMove = Nothing
     Set tbl = Nothing
@@ -1015,7 +1015,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, lignesLues, search1 As String, se
         wsOutput.Columns(7).NumberFormat = "dd/mm/yyyy hh:mm:ss"
         
         Dim lastUsedRow As Long
-        lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "B").End(xlUp).row
+        lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "B").End(xlUp).Row
         Dim j As Long, oldProcedure As String
         oldProcedure = wsOutput.Range("C" & lastUsedRow).Value & wsOutput.Range("E" & lastUsedRow).Value
         For j = lastUsedRow To 2 Step -1
@@ -1026,7 +1026,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, lignesLues, search1 As String, se
         Next j
         
         'Since we might have inserted new row, let's update the lastUsedRow
-        lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "B").End(xlUp).row
+        lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "B").End(xlUp).Row
         With wsOutput.Range("B2:G" & lastUsedRow)
             On Error Resume Next
             ActiveSheet.Cells.FormatConditions.Delete
@@ -1062,16 +1062,16 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, lignesLues, search1 As String, se
     
     'Display the final message
     If xr Then
-        MsgBox "J'ai trouvÈ " & xr & " lignes avec les chaines '" & search1 & "'" & vbNewLine & _
-                vbNewLine & "aprËs avoir analysÈ un total de " & _
+        MsgBox "J'ai trouv√© " & xr & " lignes avec les chaines '" & search1 & "'" & vbNewLine & _
+                vbNewLine & "apr√®s avoir analys√© un total de " & _
                 Format$(lignesLues, "#,##0") & " lignes de code"
     Else
-        MsgBox "Je n'ai trouvÈ aucune occurences avec les chaines '" & search1 & "'" & vbNewLine & _
-                vbNewLine & "aprËs avoir analysÈ un total de " & _
+        MsgBox "Je n'ai trouv√© aucune occurences avec les chaines '" & search1 & "'" & vbNewLine & _
+                vbNewLine & "apr√®s avoir analys√© un total de " & _
                 Format$(lignesLues, "#,##0") & " lignes de code"
     End If
     
-    'LibÈrer la mÈmoire
+    'Lib√©rer la m√©moire
     Set wsOutput = Nothing
     
 End Sub
@@ -1090,7 +1090,7 @@ Sub List_All_Columns() '2024-08-09 @ 11:52
         .Cells(1, 2).Value = "No. col."
         .Cells(1, 3).Value = "Lettre col."
         .Cells(1, 4).Value = "Nom Col."
-        .Cells(1, 5).Value = "Type donnÈes"
+        .Cells(1, 5).Value = "Type donn√©es"
         .Cells(1, 6).Value = "Largeur"
     End With
     
@@ -1132,12 +1132,12 @@ Sub List_All_Columns() '2024-08-09 @ 11:52
         .Apply
     End With
     
-    'LibÈrer la mÈmoire
+    'Lib√©rer la m√©moire
     Set col = Nothing
     Set reportSheet = Nothing
     Set ws = Nothing
     
-    MsgBox "Le rapport des colonnes a ÈtÈ gÈnÈrÈ avec succËs !", vbInformation
+    MsgBox "Le rapport des colonnes a √©t√© g√©n√©r√© avec succ√®s !", vbInformation
     
 End Sub
 
@@ -1224,20 +1224,20 @@ Sub List_All_Macros_Used_With_Objects() '2024-11-26 @ 20:14
     End If
     
     'Set conditional formatting for the worksheet (alternate colors)
-    outputRow = wsOutputSheet.Cells(wsOutputSheet.Rows.count, "A").End(xlUp).row
+    outputRow = wsOutputSheet.Cells(wsOutputSheet.Rows.count, "A").End(xlUp).Row
     Dim rngArea As Range: Set rngArea = wsOutputSheet.Range("A2:D" & outputRow)
     Call modAppli_Utils.AppliquerConditionalFormating(rngArea, 1, True) 'There are blankrows to account for
     
-    outputRow = wsOutputSheet.Cells(wsOutputSheet.Rows.count, "A").End(xlUp).row
+    outputRow = wsOutputSheet.Cells(wsOutputSheet.Rows.count, "A").End(xlUp).Row
     Dim rngToPrint As Range: Set rngToPrint = wsOutputSheet.Range("A2:D" & outputRow)
-    Dim header1 As String: header1 = "Liste des macros associÈes ‡ des contrÙles"
+    Dim header1 As String: header1 = "Liste des macros associ√©es √† des contr√¥les"
     Dim header2 As String: header2 = ThisWorkbook.Name
     Call Simple_Print_Setup(wsOutputSheet, rngToPrint, header1, header2, "$1:$1", "P")
     
-    MsgBox "La liste des macros assignÈes ‡ des contrÙles est dans " & _
+    MsgBox "La liste des macros assign√©es √† des contr√¥les est dans " & _
                 vbNewLine & vbNewLine & "la feuille 'Doc_All_Macros_Used_With_Object'.", vbInformation
                 
-    'LibÈrer la mÈmoire
+    'Lib√©rer la m√©moire
     Set obj = Nothing
     Set wsOutputSheet = Nothing
     Set rngArea = Nothing
@@ -1359,7 +1359,7 @@ Sub List_Subs_And_Functions_All() '2024-11-26 @ 20:02
     
     'Prepare the output worksheet
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).Row
     ws.Range("A2:J" & lastUsedRow).ClearContents
 
     Call Array_2D_Resizer(arr, i, UBound(arr, 2))
@@ -1373,11 +1373,11 @@ Sub List_Subs_And_Functions_All() '2024-11-26 @ 20:02
     
     ws.Activate
     
-    MsgBox "J'ai trouvÈ " & i & " lignes Sub or Function" & vbNewLine & _
-                vbNewLine & "aprËs avoir analysÈ un total de " & _
+    MsgBox "J'ai trouv√© " & i & " lignes Sub or Function" & vbNewLine & _
+                vbNewLine & "apr√®s avoir analys√© un total de " & _
                 Format$(lread, "#,##0") & " Lignes de code"
     
-    'LibÈrer la mÈmoire
+    'Lib√©rer la m√©moire
     Set vbComp = Nothing
     Set vbCodeMod = Nothing
     Set ws = Nothing
@@ -1400,7 +1400,7 @@ Sub Test_Array_To_Range() '2024-03-18 @ 17:34
     
     ws.Range("A1").Resize(UBound(arr, 1), UBound(arr, 2)).Value = arr
     
-    'LibÈrer la mÈmoire
+    'Lib√©rer la m√©moire
     Set ws = Nothing
     
 End Sub
@@ -1496,7 +1496,7 @@ Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
     wsOutput.Range("A" & lastUsedRow).Value = "*** " & Format$(f, "###,##0") & _
                                     " feuilles pour le workbook '" & ThisWorkbook.Name & "' ***"
     
-    lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "A").End(xlUp).row
+    lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "A").End(xlUp).Row
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:C" & lastUsedRow)
     Dim header1 As String: header1 = "Liste des feuilles d'un classeur"
     Dim header2 As String: header2 = ThisWorkbook.Name
@@ -1504,7 +1504,7 @@ Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
     
     ThisWorkbook.Worksheets("X_Feuilles_du_Classeur").Activate
     
-    'LibÈrer la mÈmoire
+    'Lib√©rer la m√©moire
     Set rngToPrint = Nothing
     Set ws = Nothing
     Set wsOutput = Nothing
@@ -1548,7 +1548,7 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
     Application.ScreenUpdating = True
     Application.EnableEvents = True
 
-    'LibÈrer la mÈmoire
+    'Lib√©rer la m√©moire
     Set cell = Nothing
     Set unprotectedCells = Nothing
     Set sortedCells = Nothing
@@ -1559,15 +1559,15 @@ End Sub
 
 Sub Log_Record(ByVal procedureName As String, param As String, Optional ByVal startTime As Double = 0) '2025-02-03 @ 17:17
 
-    'En attendant de trouver la problÈmatique... 2025-06-01 @ 05:06
+    'En attendant de trouver la probl√©matique... 2025-06-01 @ 05:06
     If gUtilisateurWindows = "" Then
         gUtilisateurWindows = Fn_Get_Windows_Username
-        Debug.Print "RÈinitialisation forcÈe de gUtilisateurWindows - " & Format$(Now, "yyyy-mm-dd hh:nn:ss")
+        Debug.Print "R√©initialisation forc√©e de gUtilisateurWindows - " & Format$(Now, "yyyy-mm-dd hh:nn:ss")
     End If
     
     On Error GoTo ErrorHandler
     
-    'TimeStamp avec centiËmes de seconde
+    'TimeStamp avec centi√®mes de seconde
     Dim timeStamp As String
     timeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & Right$(Format$(Timer, "0.00"), 2)
     
@@ -1583,19 +1583,19 @@ Sub Log_Record(ByVal procedureName As String, param As String, Optional ByVal st
     'On laisse une ligne blanche dans le fichier Log
     If Trim$(procedureName) = "" Then
         Print #fileNum, ""
-    ElseIf startTime = 0 Then 'On marque le dÈpart d'une procÈdure/fonction
+    ElseIf startTime = 0 Then 'On marque le d√©part d'une proc√©dure/fonction
         Print #fileNum, timeStamp & " | " & _
                         GetNomUtilisateur() & " | " & _
                         ThisWorkbook.Name & " | " & _
                         procedureName & " | " & _
                         param & " | "
-    ElseIf startTime < 0 Then 'On enregistre une entrÈe intermÈdiaire (au coeur d'un procÈdure/fonction)
+    ElseIf startTime < 0 Then 'On enregistre une entr√©e interm√©diaire (au coeur d'un proc√©dure/fonction)
         Print #fileNum, timeStamp & " | " & _
                         GetNomUtilisateur() & " | " & _
                         ThisWorkbook.Name & " | " & _
                         procedureName & " | " & _
                         param & " | "
-    Else 'On marque la fin d'une procÈdure/fonction
+    Else 'On marque la fin d'une proc√©dure/fonction
         Dim elapsedTime As Double
         elapsedTime = Round(Timer - startTime, 4) 'Calculate elapsed time
         Print #fileNum, timeStamp & " | " & _
@@ -1612,15 +1612,15 @@ Sub Log_Record(ByVal procedureName As String, param As String, Optional ByVal st
     
 ErrorHandler:
 
-    MsgBox "Une erreur est survenue ‡ l'ouverture du fichier 'LogMainApp.log' " & vbNewLine & vbNewLine & _
-                "Erreur : " & Err & " = " & Err.description, vbCritical, "RÈpertoire utilisÈ '" & wsdADMIN.Range("F5").Value & "'"
+    MsgBox "Une erreur est survenue √† l'ouverture du fichier 'LogMainApp.log' " & vbNewLine & vbNewLine & _
+                "Erreur : " & Err & " = " & Err.description, vbCritical, "R√©pertoire utilis√© '" & wsdADMIN.Range("F5").Value & "'"
     
-    'Nettoyage : rÈactivation des ÈvÈnements, calculs, etc.
+    'Nettoyage : r√©activation des √©v√©nements, calculs, etc.
     Application.EnableEvents = True
     Application.ScreenUpdating = True
     Application.Calculation = xlCalculationAutomatic
 
-    'Fermeture des classeurs sans sauvegarde si nÈcessaire
+    'Fermeture des classeurs sans sauvegarde si n√©cessaire
     On Error Resume Next 'Ignorer les erreurs pendant la fermeture des fichiers
     ThisWorkbook.Close SaveChanges:=False
 
@@ -1641,7 +1641,7 @@ Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boole
 
     On Error GoTo Error_Handler
     
-    'DÈtermine si cette entrÈe sera ou non sauvegardÈe dans le log
+    'D√©termine si cette entr√©e sera ou non sauvegard√©e dans le log
     If InStr(oper, "ADD") = 0 And _
         InStr(oper, "UPDATE") = 0 And _
         InStr(oper, "DELETE") = 0 Then
@@ -1650,7 +1650,7 @@ Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boole
         End If
     End If
     
-    'TimeStamp avec les centiËmes de secondes
+    'TimeStamp avec les centi√®mes de secondes
     Dim ms As String
     Dim timeStamp As String
     timeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & Right$(Format$(Timer, "0.00"), 2)
@@ -1705,8 +1705,8 @@ Sub Settrace(Source As String, module As String, procedure As String, variable A
     Dim fileNum As Integer
     fileNum = FreeFile
     
-    'Ajoute les millisecondes ‡ la chaÓne de temps
-    ms = Right$(Format$(Timer, "0.00"), 2) 'RÈcupËre les millisecondes sous forme de texte
+    'Ajoute les millisecondes √† la cha√Æne de temps
+    ms = Right$(Format$(Timer, "0.00"), 2) 'R√©cup√®re les millisecondes sous forme de texte
     
     Dim timeStamp As String
     timeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & ms
@@ -1806,8 +1806,8 @@ Sub LogMainApp_Analysis() '2025-01-10 @ 17:10
         End If
         Dim subString As String
         Dim e As Double
-        If InStr(arr(4), "Temps ÈcoulÈ: ") > 0 Then
-            subString = Mid$(arr(4), InStr(arr(4), "Temps ÈcoulÈ: ") + 14)
+        If InStr(arr(4), "Temps √©coul√©: ") > 0 Then
+            subString = Mid$(arr(4), InStr(arr(4), "Temps √©coul√©: ") + 14)
             subString = Replace(subString, ".", ",")
             e = Left$(subString, InStr(subString, " ") - 1)
             If e <= 0.2 Then
@@ -1871,22 +1871,23 @@ Sub Test_Fn_Get_A_Row_From_A_Worksheet() '2025-01-13 @ 08:49
     Dim resultat As Variant
     Dim i As Long
     
-    'DÈfinir la feuille, la valeur ‡ rechercher et la colonne
+    'D√©finir la feuille, la valeur √† rechercher et la colonne
     feuille = "BD_Clients"
-    valeurRecherche = "9299-2585 QuÈbec Inc. [Informat] Marie Guay Isabelle Vigneault"
+    valeurRecherche = "9299-2585 Qu√©bec Inc. [Informat] Marie Guay Isabelle Vigneault"
     colRecherche = 17
     
     'Appeler la fonction de recherche
-    resultat = Fn_Get_A_Row_From_A_Worksheet(feuille, valeurRecherche, fClntFMNomClientPlusNomClientSystËme)
+    resultat = Fn_Get_A_Row_From_A_Worksheet(feuille, valeurRecherche, fClntFMNomClientPlusNomClientSyst√®me)
     
-    'VÈrifier le rÈsultat
+    'V√©rifier le r√©sultat
     If IsArray(resultat) Then
-        Debug.Print "#080 - Valeur trouvÈe :"
+        Debug.Print "#080 - Valeur trouv√©e :"
         For i = LBound(resultat) To UBound(resultat)
             Debug.Print "#081 - " & i; Tab(13); resultat(i)
         Next i
     Else
-        MsgBox "Valeur non trouvÈe", vbInformation
+        MsgBox "Valeur non trouv√©e", vbInformation
     End If
     
 End Sub
+

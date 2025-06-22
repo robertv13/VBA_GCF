@@ -1,10 +1,10 @@
-VERSION 5.00
+ï»¿VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufSaisieHeures 
-   Caption         =   "Gestion des heures travaillées"
+   Caption         =   "Gestion des heures travaillÃ©es"
    ClientHeight    =   10308
-   ClientLeft      =   168
-   ClientTop       =   696
-   ClientWidth     =   12780
+   ClientLeft      =   144
+   ClientTop       =   600
+   ClientWidth     =   10224
    OleObjectBlob   =   "ufSaisieHeures.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
@@ -29,7 +29,7 @@ Private Sub UserForm_Initialize() '2025-05-30 @ 13:26
 
     Call ConnectFormControls(Me)
     Call VerifierEtatBoutonAjouter
-    Call RafraichirActivite("Activité dans userForm '" & Me.Name & "'")
+    Call RafraichirActivite("ActivitÃ© dans userForm '" & Me.Name & "'")
     
 End Sub
 
@@ -40,12 +40,12 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
     gLogSaisieHeuresVeryDetailed = False
     
     Call ImporterClients
-    'L'importation des TEC se fait maintenant à chaque changement de professionnel - 2025-06-13 @ 08:55
+    'L'importation des TEC se fait maintenant Ã  chaque changement de professionnel - 2025-06-13 @ 08:55
 '    Call ImporterTEC
     
-    'Mise en place de la colonne à rechercher dans BD_Clients
+    'Mise en place de la colonne Ã  rechercher dans BD_Clients
     Dim lastUsedRow As Long
-    lastUsedRow = wsdBD_Clients.Cells(wsdBD_Clients.Rows.count, 1).End(xlUp).row
+    lastUsedRow = wsdBD_Clients.Cells(wsdBD_Clients.Rows.count, 1).End(xlUp).Row
     ufSaisieHeures.ListData = wsdBD_Clients.Range("Q1:Q" & lastUsedRow) '2025-01-11 @ 18:00
     
     With oEventHandler
@@ -89,7 +89,7 @@ Private Sub lstboxNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
         Next i
     End With
     
-    'Force à cacher le listbox pour les résultats de recherche
+    'Force Ã  cacher le listbox pour les rÃ©sultats de recherche
     On Error Resume Next
     Me.lstboxNomClient.Visible = False
     On Error GoTo 0
@@ -104,7 +104,7 @@ Private Sub UserForm_Terminate()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:UserForm_Terminate", "", 0)
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set oEventHandler = Nothing
     
     ufSaisieHeures.Hide
@@ -140,7 +140,7 @@ Private Sub cmbProfessionnel_Enter() '2025-05-31 @ 16:31
     Dim toutesInitiales As Boolean
 
     Set ws = wsdADMIN
-    ' Plage de la table WindowsUser_Initials : colonnes D à F, lignes 63 à 78
+    ' Plage de la table WindowsUser_Initials : colonnes D Ã  F, lignes 63 Ã  78
     Set plageInitiales = ws.Range("D63:D78")
     
     utilisateur = GetNomUtilisateur() ' Variable globale utilisateur Windows
@@ -148,25 +148,25 @@ Private Sub cmbProfessionnel_Enter() '2025-05-31 @ 16:31
     Set listeInitiales = New Collection
     toutesInitiales = False
     
-    ' Chercher utilisateur dans la liste et récupérer initiales permises
+    ' Chercher utilisateur dans la liste et rÃ©cupÃ©rer initiales permises
     For Each cell In plageInitiales
         If Trim(cell.Value) <> "" Then
             If StrComp(cell.Value, utilisateur, vbTextCompare) = 0 Then
                 If Trim(cell.offset(0, 2).Value) <> "" Then
-                    'Initiales spécifiques autorisées pour cet utilisateur
+                    'Initiales spÃ©cifiques autorisÃ©es pour cet utilisateur
                     listeInitiales.Add Trim(cell.offset(0, 2).Value)
                 Else
                     'Pas de restriction, on doit autoriser toutes les initiales
                     toutesInitiales = True
                 End If
-                Exit For ' Utilisateur trouvé, on peut sortir
+                Exit For ' Utilisateur trouvÃ©, on peut sortir
             End If
         End If
     Next cell
 
-    'Si toutes les initiales sont permises, on ajoute toutes celles listées en colonne F
+    'Si toutes les initiales sont permises, on ajoute toutes celles listÃ©es en colonne F
     If toutesInitiales Then
-        'Ajoute GC qui est la valeur par défut
+        'Ajoute GC qui est la valeur par dÃ©fut
         listeInitiales.Add "GC", "GC"
         For Each cellInit In plageInitiales.offset(, 2).Resize(, 1)
             If Trim(cellInit.Value) <> "" Then
@@ -187,7 +187,7 @@ Private Sub cmbProfessionnel_Enter() '2025-05-31 @ 16:31
         For Each item In listeInitiales
             .AddItem item
         Next item
-        ' Optionnel : sélection automatique de la première initiale
+        ' Optionnel : sÃ©lection automatique de la premiÃ¨re initiale
         If .ListCount > 0 Then .ListIndex = 0
     End With
 
@@ -207,7 +207,7 @@ Private Sub cmbProfessionnel_AfterUpdate() '2025-05-31 @ 16:11
             cmbProfessionnel.Value = ""
             Exit Sub
         Case ""
-            'Aucune restriction sur les initiales à utiliser
+            'Aucune restriction sur les initiales Ã  utiliser
         Case Else
             If cmbProfessionnel.Value <> initProfAutorises Then
                 MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _
@@ -229,7 +229,7 @@ Private Sub cmbProfessionnel_AfterUpdate() '2025-05-31 @ 16:11
 '    Stop '2025-06-13 @ 08:43
     'Lorsqu'on change de professionnel, on force l'importation des TEC - 2025-06-13 @ 08:46
     Call ImporterTEC
-    Me.txtLastImport.Value = "Les TEC ont été importés à " & Format$(Now, "hh:mm:ss")
+    Me.txtLastImport.Value = "Les TEC ont Ã©tÃ© importÃ©s Ã  " & Format$(Now, "hh:mm:ss")
     
     Call VerifierEtatBoutonAjouter '2025-06-09 @ 08:25
 
@@ -278,14 +278,14 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
         Cancel = True
         With ufSaisieHeures.txtDate
             .SetFocus 'Remettre le focus sur la TextBox
-            .SelStart = 0 'Début de la sélection
-            .SelLength = Len(.Text) 'Sélectionner tout le texte
+            .SelStart = 0 'DÃ©but de la sÃ©lection
+            .SelLength = Len(.Text) 'SÃ©lectionner tout le texte
         End With
         Exit Sub
     End If
     
     If fullDate > DateSerial(year(Date), month(Date), day(Date)) Then
-        If MsgBox("En êtes-vous CERTAIN de vouloir cette date ?" & vbNewLine & vbNewLine & _
+        If MsgBox("En Ãªtes-vous CERTAIN de vouloir cette date ?" & vbNewLine & vbNewLine & _
                     "La date saisie est '" & Format$(fullDate, wsdADMIN.Range("B1").Value) & "'", vbYesNo + vbQuestion, _
                     "Utilisation d'une date FUTURE") = vbNo Then
             txtDate.SelStart = 0
@@ -351,7 +351,7 @@ Private Sub txtClient_AfterUpdate()
 '        End If
 '    End If
 
-    'Force à cacher le listbox pour les résultats de recherche
+    'Force Ã  cacher le listbox pour les rÃ©sultats de recherche
     On Error Resume Next
     Me.lstboxNomClient.Visible = False
     On Error GoTo 0
@@ -404,8 +404,8 @@ Private Sub txtHeures_Exit(ByVal Cancel As MSForms.ReturnBoolean)
     On Error GoTo 0
     
     If Not IsNumeric(Me.txtHeures.Value) Then
-        MsgBox Prompt:="La valeur saisie ne peut être utilisée comme valeur numérique!", _
-                Title:="Validation d'une valeur numérique", _
+        MsgBox Prompt:="La valeur saisie ne peut Ãªtre utilisÃ©e comme valeur numÃ©rique!", _
+                Title:="Validation d'une valeur numÃ©rique", _
                 Buttons:=vbCritical
 '        Cancel = True
         Me.txtHeures.SelStart = 0
@@ -417,9 +417,9 @@ Private Sub txtHeures_Exit(ByVal Cancel As MSForms.ReturnBoolean)
 
     If heure < 0 Or heure > 24 Then
         MsgBox _
-            Prompt:="Le nombre d'heures ne peut être une valeur négative" & vbNewLine & vbNewLine & _
-                    "ou dépasser 24 heures pour une charge", _
-            Title:="Validation d'une valeur numérique", _
+            Prompt:="Le nombre d'heures ne peut Ãªtre une valeur nÃ©gative" & vbNewLine & vbNewLine & _
+                    "ou dÃ©passer 24 heures pour une charge", _
+            Title:="Validation d'une valeur numÃ©rique", _
             Buttons:=vbCritical
         Cancel = True
         Me.txtHeures.SetFocus
@@ -432,12 +432,12 @@ Private Sub txtHeures_Exit(ByVal Cancel As MSForms.ReturnBoolean)
     If Fn_Valider_Portion_Heures(heure) = False Then
         MsgBox _
             Prompt:="La portion fractionnaire (" & heure & ") des heures est invalide" & vbNewLine & vbNewLine & _
-                    "Seules les valeurs de dixième et de quart d'heure sont" & vbNewLine & vbNewLine & _
+                    "Seules les valeurs de dixiÃ¨me et de quart d'heure sont" & vbNewLine & vbNewLine & _
                     "acceptables", _
-            Title:="Les valeurs permises sont les dixièmes et les quarts d'heure seulement", _
+            Title:="Les valeurs permises sont les dixiÃ¨mes et les quarts d'heure seulement", _
             Buttons:=vbCritical
             
-        Cancel = True  'Empêche de quitter le TextBox
+        Cancel = True  'EmpÃªche de quitter le TextBox
         DoEvents
         Me.txtHeures.SetFocus 'Remet le focus explicitement
         Me.txtHeures.SelStart = 0
@@ -462,7 +462,7 @@ Sub txtHeures_AfterUpdate()
     
 '    If CCur(Me.txtHeures.value) <> savedHeures Then '2025-03-25 @ 13:05
 ''        Debug.Print "txtHeures_AfterUpdate : ", Me.txtHeures.value, " vs ", savedHeures, " - TECID=" & Me.txtTECID
-'        If Me.txtTECID = "" Then 'Création d'une nouvelle charge
+'        If Me.txtTECID = "" Then 'CrÃ©ation d'une nouvelle charge
 '            Call modTEC_Saisie.ActiverButtonsVraiOuFaux("txtHeures_AfterUpdate", True, False, False, True)
 '        Else 'Modification d'une charge existante
 '            Call modTEC_Saisie.ActiverButtonsVraiOuFaux("txtHeures_AfterUpdate", False, True, False, True)
@@ -541,7 +541,7 @@ Private Sub cmdUpdate_Click()
     If ufSaisieHeures.txtTECID.Value <> "" Then
         Call TEC_Modifie_Ligne
     Else
-        MsgBox Prompt:="Vous devez choisir un enregistrement à modifier !", _
+        MsgBox Prompt:="Vous devez choisir un enregistrement Ã  modifier !", _
                Title:="", _
                Buttons:=vbCritical
     End If
@@ -557,7 +557,7 @@ Private Sub cmdDelete_Click()
     If ufSaisieHeures.txtTECID.Value <> "" Then
         Call TEC_Efface_Ligne
     Else
-        MsgBox Prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
+        MsgBox Prompt:="Vous devez choisir un enregistrement Ã  DÃ‰TRUIRE !", _
                Title:="", _
                Buttons:=vbCritical
     End If
@@ -581,14 +581,14 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
         
         'Retrieve the record in wsdTEC_Local
         Dim lookupRange As Range, lastTECRow As Long, rowTECID As Long
-        lastTECRow = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "A").End(xlUp).row
+        lastTECRow = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "A").End(xlUp).Row
         Set lookupRange = wsdTEC_Local.Range("A3:A" & lastTECRow)
         rowTECID = Fn_Find_Row_Number_TECID(tecID, lookupRange)
         
         Dim isBilled As Boolean
         isBilled = wsdTEC_Local.Range("L" & rowTECID).Value
 
-        'Remplir le userForm, si cette charge n'a pas été facturée
+        'Remplir le userForm, si cette charge n'a pas Ã©tÃ© facturÃ©e
         If Not isBilled Then
             Application.EnableEvents = False
             .cmbProfessionnel.Value = .lsbHresJour.List(.lsbHresJour.ListIndex, 1)
@@ -620,8 +620,8 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
             Application.EnableEvents = True
 
         Else
-            MsgBox "Il est impossible de modifier ou de détruire" & vbNewLine & _
-                        vbNewLine & "une charge déjà FACTURÉE", vbExclamation
+            MsgBox "Il est impossible de modifier ou de dÃ©truire" & vbNewLine & _
+                        vbNewLine & "une charge dÃ©jÃ  FACTURÃ‰E", vbExclamation
         End If
         
     End With
@@ -630,7 +630,7 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
     
     rmv_state = rmv_modeModification
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set lookupRange = Nothing
     
     Call Log_Record("ufSaisieHeures:lsbHresJour_dblClick[" & tecID & "]", "", startTime)
@@ -648,7 +648,7 @@ Sub imgLogoGCF_Click()
             
             Call Stats_Heures_AF
             
-            'Mettre à jour les 4 tableaux croisés dynamiques (Semaine, Mois, Trimestre & Année Financière)
+            'Mettre Ã  jour les 4 tableaux croisÃ©s dynamiques (Semaine, Mois, Trimestre & AnnÃ©e FinanciÃ¨re)
             Call UpdatePivotTables
             
             Application.EnableEvents = True
@@ -681,7 +681,7 @@ End Sub
 
 Private Sub VerifierEtatBoutonAjouter() '2025-06-09 @ 08:13
     
-    If Me.txtTECID = "" Then 'Mode création: tous les champs obligatoires doivent être remplis
+    If Me.txtTECID = "" Then 'Mode crÃ©ation: tous les champs obligatoires doivent Ãªtre remplis
         If _
             Trim(Me.cmbProfessionnel.Value) <> "" And _
             Trim(Me.txtClient.Value) <> "" And _
@@ -692,10 +692,11 @@ Private Sub VerifierEtatBoutonAjouter() '2025-06-09 @ 08:13
             Me.cmdAdd.Enabled = False
         End If
     Else
-        'Mode modification: bouton Ajouter inactif, tu peux gérer le bouton Modifier ici
+        'Mode modification: bouton Ajouter inactif, tu peux gÃ©rer le bouton Modifier ici
         Me.cmdAdd.Enabled = False
-        'Par exemple : Me.btnModifier.Enabled = ...
+        'Par exempleÂ : Me.btnModifier.Enabled = ...
     End If
 
 End Sub
+
 

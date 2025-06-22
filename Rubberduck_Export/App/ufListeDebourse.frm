@@ -1,10 +1,10 @@
-VERSION 5.00
+ï»¿VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufListeDebourse 
-   Caption         =   "Liste des déboursés"
+   Caption         =   "Liste des dÃ©boursÃ©s"
    ClientHeight    =   5580
-   ClientLeft      =   96
-   ClientTop       =   384
-   ClientWidth     =   19008
+   ClientLeft      =   72
+   ClientTop       =   300
+   ClientWidth     =   15204
    OleObjectBlob   =   "ufListeDebourse.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
@@ -16,8 +16,8 @@ Attribute VB_Exposed = False
 Option Explicit
 
 Private dataArray() As Variant     'Tous les renregistrements DEB_Trans
-Private recentArray() As Variant   'Enregistrements récents (< 75 jours)
-Private filteredArray() As Variant 'Enregistrements filtrés (si filtre)
+Private recentArray() As Variant   'Enregistrements rÃ©cents (< 75 jours)
+Private filteredArray() As Variant 'Enregistrements filtrÃ©s (si filtre)
 '
 
 Private Sub UserForm_Initialize()
@@ -28,40 +28,40 @@ End Sub
 
 Private Sub ChargerDebDonnees()
 
-    'Définir la feuille source et la plage des données
+    'DÃ©finir la feuille source et la plage des donnÃ©es
     Dim ws As Worksheet
     Set ws = wsdDEB_Trans
-    dataArray = ws.Range("A2:S" & ws.Cells(ws.Rows.count, 1).End(xlUp).row).Value
+    dataArray = ws.Range("A2:S" & ws.Cells(ws.Rows.count, 1).End(xlUp).Row).Value
     
-    'Définir la date limite (75 jours avant aujourd'hui)
+    'DÃ©finir la date limite (75 jours avant aujourd'hui)
     Dim dateLimite As Date
     dateLimite = Date - 75
     
-    'Définir les indices des colonnes à afficher
+    'DÃ©finir les indices des colonnes Ã  afficher
     Dim columnsToShow As Variant
     columnsToShow = Array(fDebTDate, fDebTBeneficiaire, fDebTDescription, fDebTCodeTaxe, fDebTTotal, _
-                            fDebTCréditTPS, fDebTCréditTVQ, fDebTDépense, fDebTCompte, fDebTType, 0)
+                            fDebTCrÃ©ditTPS, fDebTCrÃ©ditTVQ, fDebTDÃ©pense, fDebTCompte, fDebTType, 0)
     
-    'Déterminer le nombre de colonnes à afficher
+    'DÃ©terminer le nombre de colonnes Ã  afficher
     Dim nbColonnesAffichees As Long
     nbColonnesAffichees = UBound(columnsToShow) - LBound(columnsToShow) + 1
 
-    'Déterminer le nombre de lignes requises dans recentArray
+    'DÃ©terminer le nombre de lignes requises dans recentArray
     On Error GoTo 0
     Dim rowCount As Long
     Dim i As Long
     For i = 1 To UBound(dataArray, 1)
         If dataArray(i, fDebTDate) >= dateLimite And _
-            InStr(dataArray(i, fDebTDescription), " (RENVERSÉ par ") = 0 And _
+            InStr(dataArray(i, fDebTDescription), " (RENVERSÃ‰ par ") = 0 And _
             InStr(dataArray(i, fDebTDescription), " (RENVERSEMENT de ") = 0 Then
             rowCount = rowCount + 1
         End If
     Next i
     
-    'Tableau des données filtrées
+    'Tableau des donnÃ©es filtrÃ©es
     If rowCount > 0 Then
         ReDim recentArray(1 To rowCount, 1 To nbColonnesAffichees)
-        'Définir la largeur des colonnes du listBox
+        'DÃ©finir la largeur des colonnes du listBox
         Me.lsbListeDebourse.ColumnWidths = "60;160;190;55;72;72;72;72;190;160;20"
 
         'Filtrer les enregistrements de moins de 75 jours
@@ -70,15 +70,15 @@ Private Sub ChargerDebDonnees()
             For i = LBound(dataArray, 1) To UBound(dataArray, 1)
             If IsDate(dataArray(i, 2)) Then
                 If dataArray(i, fDebTDate) >= dateLimite And _
-                InStr(dataArray(i, fDebTDescription), " (RENVERSÉ par ") = 0 And _
+                InStr(dataArray(i, fDebTDescription), " (RENVERSÃ‰ par ") = 0 And _
                 InStr(dataArray(i, fDebTDescription), " (RENVERSEMENT de ") = 0 Then
                     rowCount = rowCount + 1
-                    'Copier uniquement les colonnes sélectionnées
+                    'Copier uniquement les colonnes sÃ©lectionnÃ©es
                     For j = LBound(columnsToShow) To UBound(columnsToShow)
                         If j < 10 Then
                             recentArray(rowCount, j + 1) = dataArray(i, columnsToShow(j))
                         Else
-                            'Emmagasine le numéro de déboursé pour retrouver les informations
+                            'Emmagasine le numÃ©ro de dÃ©boursÃ© pour retrouver les informations
                             recentArray(rowCount, j + 1) = CLng(dataArray(i, 1))
                         End If
                     Next j
@@ -86,14 +86,14 @@ Private Sub ChargerDebDonnees()
             End If
         Next i
         
-        'Charger dans le ListBox après avoir effectué un tri sur la date et formater les colonnes
+        'Charger dans le ListBox aprÃ¨s avoir effectuÃ© un tri sur la date et formater les colonnes
         Call Array_2D_Bubble_Sort(recentArray)
         
         Call FormatArrayBeforeAddingToDebListBox(recentArray)
         
         Me.lsbListeDebourse.List = recentArray
         
-        'Positionne à la dernière entrée
+        'Positionne Ã  la derniÃ¨re entrÃ©e
         If Me.lsbListeDebourse.ListCount > 0 Then
             Me.lsbListeDebourse.ListIndex = Me.lsbListeDebourse.ListCount - 1
         End If
@@ -108,18 +108,18 @@ End Sub
 
 Private Sub txtFiltre_Change()
 
-    'Filtrer les données à chaque changement dans le TextBox
+    'Filtrer les donnÃ©es Ã  chaque changement dans le TextBox
     Call UpdateFilteredArray(Me.txtFiltre.Text)
     
 End Sub
 
 Private Sub UpdateFilteredArray(filtre As String)
 
-    'Récupérer le texte du TextBox pour filtrer
+    'RÃ©cupÃ©rer le texte du TextBox pour filtrer
     Dim filterText As String
     filterText = Me.txtFiltre.Text
 
-    'Initialiser rowCount pour les résultats filtrés
+    'Initialiser rowCount pour les rÃ©sultats filtrÃ©s
     Dim rowCount As Long
     rowCount = 0
     
@@ -135,11 +135,11 @@ Private Sub UpdateFilteredArray(filtre As String)
     Next i
 '    Debug.Print "'" & filterText & "' - " & rowCount
 
-    'Si des lignes valides sont trouvées, créer filteredArray
+    'Si des lignes valides sont trouvÃ©es, crÃ©er filteredArray
     Dim j As Long, k As Long
     If rowCount > 0 Then
         ReDim filteredArray(1 To rowCount, 1 To UBound(recentArray, 2))
-        'Copier les données filtrées de recentArray vers filteredArray
+        'Copier les donnÃ©es filtrÃ©es de recentArray vers filteredArray
         j = 0
         For i = 1 To UBound(recentArray, 1)
             If InStr(1, recentArray(i, 2), filterText, vbTextCompare) > 0 Or _
@@ -147,7 +147,7 @@ Private Sub UpdateFilteredArray(filtre As String)
                 InStr(1, recentArray(i, 9), filterText, vbTextCompare) > 0 Or _
                 InStr(1, recentArray(i, 10), filterText, vbTextCompare) > 0 Then
                     j = j + 1
-                    'Copier les données dans filteredArray
+                    'Copier les donnÃ©es dans filteredArray
                     For k = 1 To UBound(recentArray, 2)
                         filteredArray(j, k) = recentArray(i, k)
                     Next k
@@ -169,9 +169,9 @@ Private Sub lsbListeDebourse_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim selectedRow As Long
     
-    'Vérifier si une ligne a été sélectionnée
+    'VÃ©rifier si une ligne a Ã©tÃ© sÃ©lectionnÃ©e
     If lsbListeDebourse.ListIndex <> -1 Then
-        'Récupérer le numéro de déboursé à renverser
+        'RÃ©cupÃ©rer le numÃ©ro de dÃ©boursÃ© Ã  renverser
         selectedRow = lsbListeDebourse.ListIndex
         numeroDebourseARenverser = lsbListeDebourse.List(selectedRow, 10)
         wshDEB_Saisie.Range("B7").Value = True
@@ -186,12 +186,12 @@ End Sub
 
 Sub FormatArrayBeforeAddingToDebListBox(ByRef arrData As Variant)
     
-    'Supposons que la première colonne (1) est une date
+    'Supposons que la premiÃ¨re colonne (1) est une date
     Dim i As Long, j As Long
     For i = 1 To UBound(arrData, 1)
-        'Formater la première colonne comme date
+        'Formater la premiÃ¨re colonne comme date
         arrData(i, 1) = Format$(arrData(i, 1), wsdADMIN.Range("B1").Value)
-        'Formater les colonnes contenant des montants, alignées à droite avec espaces
+        'Formater les colonnes contenant des montants, alignÃ©es Ã  droite avec espaces
         For j = 5 To 8
             arrData(i, j) = Format$(arrData(i, j), "#,##0.00;-#,##0.00;-")
             arrData(i, j) = Space(11 - Len(arrData(i, j))) & arrData(i, j)
@@ -209,5 +209,6 @@ Private Sub cmdFermer_Click()
     Unload Me
     
 End Sub
+
 
 

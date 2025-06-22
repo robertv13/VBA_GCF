@@ -1,15 +1,15 @@
-Attribute VB_Name = "modGL_Rapport_Nouveau"
+ï»¿Attribute VB_Name = "modGL_Rapport_Nouveau"
 Option Explicit
 
 Public Sub GenererRapportGL_Compte(wsRapport As Worksheet, dateDebut As Date, dateFin As Date)
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport_Nouveau:GenererRapportGL_Compte", dateDebut & " @ " & dateFin, 0)
    
-    'Crée une collection pour tous les postes de GL sélectionnés
+    'CrÃ©e une collection pour tous les postes de GL sÃ©lectionnÃ©s
     Dim collGL_Selectionnes As Collection
     Set collGL_Selectionnes = New Collection
 
-    'Construction de la chaîne avec séparateur ".|."
+    'Construction de la chaÃ®ne avec sÃ©parateur ".|."
     Dim i As Integer
     For i = 0 To ufGL_Rapport.lsbComptes.ListCount - 1
         If ufGL_Rapport.lsbComptes.Selected(i) Then
@@ -50,7 +50,7 @@ Public Sub GenererRapportGL_Compte(wsRapport As Worksheet, dateDebut As Date, da
             r = 0
             For i = 1 To UBound(arr, 1)
                 If arr(i, fGlTDate) < dateDebut Then
-                    soldeOuverture = soldeOuverture + arr(i, fGlTDébit) - arr(i, fGlTCrédit)
+                    soldeOuverture = soldeOuverture + arr(i, fGlTDÃ©bit) - arr(i, fGlTCrÃ©dit)
                 Else
                     If r = 0 Then
                         ReDim arrTrans(1 To UBound(arr, 1), 1 To UBound(arr, 2))
@@ -117,7 +117,7 @@ Public Sub GenererRapportGL_Compte(wsRapport As Worksheet, dateDebut As Date, da
         
         'Ajoute le formatage conditionnel pour les transactions
         If saveFirstRow <> -1 Then
-            Dim isPair As Integer 'Touujours laisser la première ligne de détail sans surbrillance
+            Dim isPair As Integer 'Touujours laisser la premiÃ¨re ligne de dÃ©tail sans surbrillance
             isPair = IIf(saveFirstRow Mod 2 = 0, 1, 0)
             With ActiveSheet.Range("B" & saveFirstRow & ":H" & rowRapport - 1)
                 .FormatConditions.Add Type:=xlExpression, Formula1:="=MOD(LIGNE();2)=" & isPair
@@ -155,7 +155,7 @@ Public Sub GenererRapportGL_Compte(wsRapport As Worksheet, dateDebut As Date, da
     
     Call Log_Record("modGL_Rapport_Nouveau:GenererRapportGL_Compte", "", startTime)
     
-    MsgBox "Le rapport a été généré avec succès", vbInformation, "Rapport des transactions du Grand Livre"
+    MsgBox "Le rapport a Ã©tÃ© gÃ©nÃ©rÃ© avec succÃ¨s", vbInformation, "Rapport des transactions du Grand Livre"
 
     wsRapport.Visible = xlSheetVisible
     wsRapport.Activate
@@ -163,7 +163,7 @@ Public Sub GenererRapportGL_Compte(wsRapport As Worksheet, dateDebut As Date, da
     'Placer le curseur en haut du rapport (par exemple, cellule A3)
     wsRapport.Range("A3").Select
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set collGL_Selectionnes = Nothing
     Set wsRapport = Nothing
     
@@ -171,9 +171,9 @@ End Sub
 
 Public Sub GenererRapportGL_Ecriture(wsRapport As Worksheet, noEcritureDebut As Long, noEcritureFin As Long)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport_Nouveau:GenererRapportGL_Ecriture", noEcritureDebut & " à " & noEcritureFin, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport_Nouveau:GenererRapportGL_Ecriture", noEcritureDebut & " Ã  " & noEcritureFin, 0)
    
-    'Référence à la feuille source (les données de base)
+    'RÃ©fÃ©rence Ã  la feuille source (les donnÃ©es de base)
     Dim wsSource As Worksheet
     Set wsSource = wsdGL_Trans
     
@@ -183,13 +183,13 @@ Public Sub GenererRapportGL_Ecriture(wsRapport As Worksheet, noEcritureDebut As 
     Application.ScreenUpdating = False
     
     Dim rowRapport As Long
-    rowRapport = 2 'Commencer à remplir les données à partir de la 2ème ligne
+    rowRapport = 2 'Commencer Ã  remplir les donnÃ©es Ã  partir de la 2Ã¨me ligne
 
-    'Trouver la dernière ligne de données dans la source
+    'Trouver la derniÃ¨re ligne de donnÃ©es dans la source
     Dim lastUsedRow As Long
-    lastUsedRow = wsSource.Cells(wsSource.Rows.count, "A").End(xlUp).row
+    lastUsedRow = wsSource.Cells(wsSource.Rows.count, "A").End(xlUp).Row
 
-    'Filtrer les données par numéro d'écriture
+    'Filtrer les donnÃ©es par numÃ©ro d'Ã©criture
     On Error Resume Next
     wsSource.AutoFilterMode = False
     On Error GoTo 0
@@ -197,19 +197,19 @@ Public Sub GenererRapportGL_Ecriture(wsRapport As Worksheet, noEcritureDebut As 
         .Range.AutoFilter Field:=1, Criteria1:=">=" & noEcritureDebut, Operator:=xlAnd, Criteria2:="<=" & noEcritureFin
     End With
     
-    'Assigner le résultat à un range
+    'Assigner le rÃ©sultat Ã  un range
     Dim filteredRange As Range
     On Error Resume Next
     Set filteredRange = wsSource.ListObjects("l_tbl_GL_Trans").DataBodyRange.SpecialCells(xlCellTypeVisible)
     On Error GoTo 0
     
-    'Appliquer le tri uniquement sur les lignes visibles (par No. Écriture et Débit (D) et Crédit (D)
+    'Appliquer le tri uniquement sur les lignes visibles (par No. Ã‰criture et DÃ©bit (D) et CrÃ©dit (D)
     If Not filteredRange Is Nothing Then
         With wsSource.Sort
             .SortFields.Clear
-            .SortFields.Add2 key:=filteredRange.Columns(1), Order:=xlAscending ' Numéro d'Écriture
-            .SortFields.Add2 key:=filteredRange.Columns(7), Order:=xlDescending ' Montant Débit
-            .SortFields.Add2 key:=filteredRange.Columns(8), Order:=xlDescending ' Montant Crédit
+            .SortFields.Add2 key:=filteredRange.Columns(1), Order:=xlAscending ' NumÃ©ro d'Ã‰criture
+            .SortFields.Add2 key:=filteredRange.Columns(7), Order:=xlDescending ' Montant DÃ©bit
+            .SortFields.Add2 key:=filteredRange.Columns(8), Order:=xlDescending ' Montant CrÃ©dit
             .SetRange filteredRange
             .Header = xlNo
             .Orientation = xlTopToBottom
@@ -224,42 +224,42 @@ Public Sub GenererRapportGL_Ecriture(wsRapport As Worksheet, noEcritureDebut As 
         Dim tDebit As Currency, tCredit As Currency
         Dim DateTrans As Date
         Dim currentEcriture As Long
-        i = 1 'Numéro de ligne à traiter
+        i = 1 'NumÃ©ro de ligne Ã  traiter
         Debug.Print "X - ", ufGL_Rapport.chkDebourse, ufGL_Rapport.chkDepotClient, ufGL_Rapport.chkEJ, ufGL_Rapport.chkEncaissement, ufGL_Rapport.chkFacture, ufGL_Rapport.chkRegularisation
         For Each row In filteredRange.Rows
-'            If InStr(row.Cells(fGlTSource).value, "DÉBOURSÉ:") Or InStr(row.Cells(fGlTSource).value, "ENCAISSEMENT:") Or InStr(row.Cells(fGlTSource).value, "FACTURE:") Then Stop
+'            If InStr(row.Cells(fGlTSource).Value, "DÃ‰BOURSÃ‰:") Or InStr(row.Cells(fGlTSource).Value, "ENCAISSEMENT:") Or InStr(row.Cells(fGlTSource).Value, "FACTURE:") Then Stop
             If Not row.Hidden And Fn_ValiderSiDoitImprimerTransaction(row.Cells(fGlTSource).Value) = True Then
-                'Traitement des données visibles seulement
+                'Traitement des donnÃ©es visibles seulement
                 If row.Cells(1).Value <> currentEcriture Then
-                    currentEcriture = row.Cells(1, fGlTNoEntrée).Value
+                    currentEcriture = row.Cells(1, fGlTNoEntrÃ©e).Value
                     'Informe l'utilisateur de la progression
                     If currentEcriture Mod 25 = 0 Then
-                        Application.StatusBar = "Traitement de l'écriture numéro " & currentEcriture
+                        Application.StatusBar = "Traitement de l'Ã©criture numÃ©ro " & currentEcriture
                     End If
                     DateTrans = row.Cells(1, fGlTDate).Value
                     rowRapport = rowRapport + 1
-                    'Ajouter la ligne d'entête pour le No. Écriture
-                    wsRapport.Cells(rowRapport, 1).Value = row.Cells(fGlTNoEntrée).Value
+                    'Ajouter la ligne d'entÃªte pour le No. Ã‰criture
+                    wsRapport.Cells(rowRapport, 1).Value = row.Cells(fGlTNoEntrÃ©e).Value
                     wsRapport.Cells(rowRapport, 2).Value = DateTrans
                     wsRapport.Cells(rowRapport, 3).Value = row.Cells(fGlTSource).Value & ", " & row.Cells(fGlTDescription).Value
                     wsRapport.Cells(rowRapport, 3).Font.Bold = True
-                    rowRapport = rowRapport + 1 'Passer à la ligne suivante pour les détails
+                    rowRapport = rowRapport + 1 'Passer Ã  la ligne suivante pour les dÃ©tails
                 End If
-                'Détermine la colonne pour la description du GL et le montant
-                If row.Cells(fGlTDébit).Value <> 0 Then
-                    Debit = row.Cells(fGlTDébit).Value
+                'DÃ©termine la colonne pour la description du GL et le montant
+                If row.Cells(fGlTDÃ©bit).Value <> 0 Then
+                    Debit = row.Cells(fGlTDÃ©bit).Value
                     Credit = 0
                     colDesc = 5
                 Else
                     Debit = 0
-                    Credit = row.Cells(fGlTCrédit).Value
+                    Credit = row.Cells(fGlTCrÃ©dit).Value
                     colDesc = 6
                 End If
-                'Ajouter les lignes de détail pour chaque compte
+                'Ajouter les lignes de dÃ©tail pour chaque compte
                 wsRapport.Cells(rowRapport, 4).Value = row.Cells(fGlTNoCompte).Value
                 wsRapport.Cells(rowRapport, colDesc).Value = row.Cells(fGlTCompte).Value
                 wsRapport.Cells(rowRapport, 7).Value = row.Cells(fGlTAutreRemarque).Value
-                'Déterminer s'il y a un débit ou un crédit
+                'DÃ©terminer s'il y a un dÃ©bit ou un crÃ©dit
                 If Debit <> 0 Then
                     wsRapport.Cells(rowRapport, 8).Value = Debit
                     tDebit = tDebit + Debit
@@ -278,7 +278,7 @@ Public Sub GenererRapportGL_Ecriture(wsRapport As Worksheet, noEcritureDebut As 
     'Impression des totaux
     rowRapport = rowRapport + 1
     
-    'Total Débit
+    'Total DÃ©bit
     With wsRapport.Cells(rowRapport, 8)
         .Value = tDebit
         .Font.Bold = True
@@ -290,7 +290,7 @@ Public Sub GenererRapportGL_Ecriture(wsRapport As Worksheet, noEcritureDebut As 
         End With
     End With
     
-    'Total Crédit
+    'Total CrÃ©dit
     With wsRapport.Cells(rowRapport, 9)
         .Value = tCredit
         .Font.Bold = True
@@ -302,7 +302,7 @@ Public Sub GenererRapportGL_Ecriture(wsRapport As Worksheet, noEcritureDebut As 
         End With
     End With
     
-    'Désactiver le filtre
+    'DÃ©sactiver le filtre
     wsSource.AutoFilterMode = False
     DoEvents
     
@@ -310,15 +310,15 @@ Public Sub GenererRapportGL_Ecriture(wsRapport As Worksheet, noEcritureDebut As 
     
     Dim h1 As String, h2 As String, h3 As String
     h1 = wsdADMIN.Range("NomEntreprise")
-    h2 = "Rapport des transactions du Grand Livre par numéro d'écriture"
-    h3 = "(Pour les numéros d'écriture de " & noEcritureDebut & " à " & noEcritureFin & ")"
+    h2 = "Rapport des transactions du Grand Livre par numÃ©ro d'Ã©criture"
+    h3 = "(Pour les numÃ©ros d'Ã©criture de " & noEcritureDebut & " Ã  " & noEcritureFin & ")"
     Call GL_Rapport_Wrap_Up_Ecriture(wsRapport, h1, h2, h3)
     
     Call Log_Record("modGL_Rapport_Nouveau:GenererRapportGL_Ecriture", "", startTime)
     
     Unload ufGL_Rapport
     
-    MsgBox "Le rapport a été généré avec succès", vbInformation, "Rapport des transactions du Grand Livre"
+    MsgBox "Le rapport a Ã©tÃ© gÃ©nÃ©rÃ© avec succÃ¨s", vbInformation, "Rapport des transactions du Grand Livre"
     
 '    wsdGL_Trans.Visible = xlSheetVisible
     wsRapport.Visible = xlSheetVisible
@@ -327,7 +327,7 @@ Public Sub GenererRapportGL_Ecriture(wsRapport As Worksheet, noEcritureDebut As 
     'Placer le curseur en haut du rapport (par exemple, cellule A3)
     wsRapport.Range("A3").Select
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set wsRapport = Nothing
     Set wsSource = Nothing
     
@@ -335,9 +335,9 @@ End Sub
 
 Public Sub GenererRapportGL_DateSaisie(wsRapport As Worksheet, dtSaisieDebut As Date, dtSaisieFin As Date)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport_Nouveau:GenererRapportGL_DateSaisie", dtSaisieDebut & " à " & dtSaisieFin, 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport_Nouveau:GenererRapportGL_DateSaisie", dtSaisieDebut & " Ã  " & dtSaisieFin, 0)
    
-    'Référence à la feuille source (les données de base)
+    'RÃ©fÃ©rence Ã  la feuille source (les donnÃ©es de base)
     Dim wsSource As Worksheet
     Set wsSource = wsdGL_Trans
     
@@ -347,13 +347,13 @@ Public Sub GenererRapportGL_DateSaisie(wsRapport As Worksheet, dtSaisieDebut As 
     Application.ScreenUpdating = False
     
     Dim rowRapport As Long
-    rowRapport = 2 'Commencer à remplir les données à partir de la 2ème ligne
+    rowRapport = 2 'Commencer Ã  remplir les donnÃ©es Ã  partir de la 2Ã¨me ligne
 
-    'Trouver la dernière ligne de données dans la source
+    'Trouver la derniÃ¨re ligne de donnÃ©es dans la source
     Dim lastUsedRow As Long
-    lastUsedRow = wsSource.Cells(wsSource.Rows.count, "A").End(xlUp).row
+    lastUsedRow = wsSource.Cells(wsSource.Rows.count, "A").End(xlUp).Row
 
-    'Filtrer les données par numéro d'écriture
+    'Filtrer les donnÃ©es par numÃ©ro d'Ã©criture
     On Error Resume Next
     wsSource.AutoFilterMode = False
     On Error GoTo 0
@@ -364,20 +364,20 @@ Public Sub GenererRapportGL_DateSaisie(wsRapport As Worksheet, dtSaisieDebut As 
                           Criteria2:="<" & CLng(dtSaisieFin) + 1
     End With
     
-    'Assigner le résultat à un range
+    'Assigner le rÃ©sultat Ã  un range
     Dim filteredRange As Range
     On Error Resume Next
     Set filteredRange = wsSource.ListObjects("l_tbl_GL_Trans").DataBodyRange.SpecialCells(xlCellTypeVisible)
     On Error GoTo 0
     
-    'Appliquer le tri uniquement sur les lignes visibles (par No. Écriture et Débit (D) et Crédit (D)
+    'Appliquer le tri uniquement sur les lignes visibles (par No. Ã‰criture et DÃ©bit (D) et CrÃ©dit (D)
     If Not filteredRange Is Nothing Then
         With wsSource.Sort
             .SortFields.Clear
             .SortFields.Add2 key:=filteredRange.Columns(10), Order:=xlAscending ' Date de saisie
-            .SortFields.Add2 key:=filteredRange.Columns(1), Order:=xlAscending  ' Numéro d'Écriture
-            .SortFields.Add2 key:=filteredRange.Columns(7), Order:=xlDescending ' Montant Débit
-            .SortFields.Add2 key:=filteredRange.Columns(8), Order:=xlDescending ' Montant Crédit
+            .SortFields.Add2 key:=filteredRange.Columns(1), Order:=xlAscending  ' NumÃ©ro d'Ã‰criture
+            .SortFields.Add2 key:=filteredRange.Columns(7), Order:=xlDescending ' Montant DÃ©bit
+            .SortFields.Add2 key:=filteredRange.Columns(8), Order:=xlDescending ' Montant CrÃ©dit
             .SetRange filteredRange
             .Header = xlNo
             .Orientation = xlTopToBottom
@@ -394,42 +394,42 @@ Public Sub GenererRapportGL_DateSaisie(wsRapport As Worksheet, dtSaisieDebut As 
         Dim currentTimeStamp As Double
         Debug.Print "X - ", ufGL_Rapport.chkDebourse, ufGL_Rapport.chkDepotClient, ufGL_Rapport.chkEJ, ufGL_Rapport.chkEncaissement, ufGL_Rapport.chkFacture, ufGL_Rapport.chkRegularisation
         For Each row In filteredRange.Rows
-'            If InStr(row.Cells(fGlTSource).value, "DÉBOURSÉ:") Or InStr(row.Cells(fGlTSource).value, "ENCAISSEMENT:") Or InStr(row.Cells(fGlTSource).value, "FACTURE:") Then Stop
+'            If InStr(row.Cells(fGlTSource).Value, "DÃ‰BOURSÃ‰:") Or InStr(row.Cells(fGlTSource).Value, "ENCAISSEMENT:") Or InStr(row.Cells(fGlTSource).Value, "FACTURE:") Then Stop
             If Not row.Hidden And Fn_ValiderSiDoitImprimerTransaction(row.Cells(fGlTSource).Value) = True Then
-                'Traitement des données visibles seulement
+                'Traitement des donnÃ©es visibles seulement
                 If CDbl(row.Cells(10).Value) <> currentTimeStamp Then
                     currentTimeStamp = CDbl(row.Cells(1, fGlTTimeStamp).Value)
                     'Informe l'utilisateur de la progression
                     i = i + 1
                     If i Mod 25 = 0 Then
-                        Application.StatusBar = "Traitement de l'écriture saisie le " & currentTimeStamp
+                        Application.StatusBar = "Traitement de l'Ã©criture saisie le " & currentTimeStamp
                     End If
                     DateTrans = row.Cells(1, fGlTDate).Value
                     rowRapport = rowRapport + 1
-                    'Ajouter la ligne d'entête pour le No. Écriture
+                    'Ajouter la ligne d'entÃªte pour le No. Ã‰criture
                     wsRapport.Cells(rowRapport, 1).Value = currentTimeStamp
                     wsRapport.Cells(rowRapport, 1).NumberFormat = "yyyy-mm-dd hh:mm:ss"
-                    wsRapport.Cells(rowRapport, 2).Value = row.Cells(fGlTNoEntrée).Value
+                    wsRapport.Cells(rowRapport, 2).Value = row.Cells(fGlTNoEntrÃ©e).Value
                     wsRapport.Cells(rowRapport, 3).Value = DateTrans
                     wsRapport.Cells(rowRapport, 4).Value = row.Cells(fGlTSource).Value & ", " & row.Cells(fGlTDescription).Value
                     wsRapport.Cells(rowRapport, 4).Font.Bold = True
-                    rowRapport = rowRapport + 1 'Passer à la ligne suivante pour les détails
+                    rowRapport = rowRapport + 1 'Passer Ã  la ligne suivante pour les dÃ©tails
                 End If
-                'Détermine la colonne pour la description du GL et le montant
-                If row.Cells(fGlTDébit).Value <> 0 Then
-                    Debit = row.Cells(fGlTDébit).Value
+                'DÃ©termine la colonne pour la description du GL et le montant
+                If row.Cells(fGlTDÃ©bit).Value <> 0 Then
+                    Debit = row.Cells(fGlTDÃ©bit).Value
                     Credit = 0
                     colDesc = 6
                 Else
                     Debit = 0
-                    Credit = row.Cells(fGlTCrédit).Value
+                    Credit = row.Cells(fGlTCrÃ©dit).Value
                     colDesc = 7
                 End If
-                'Ajouter les lignes de détail pour chaque compte
+                'Ajouter les lignes de dÃ©tail pour chaque compte
                 wsRapport.Cells(rowRapport, 5).Value = row.Cells(fGlTNoCompte).Value
                 wsRapport.Cells(rowRapport, colDesc).Value = row.Cells(fGlTCompte).Value
                 wsRapport.Cells(rowRapport, 8).Value = row.Cells(fGlTAutreRemarque).Value
-                'Déterminer s'il y a un débit ou un crédit
+                'DÃ©terminer s'il y a un dÃ©bit ou un crÃ©dit
                 If Debit <> 0 Then
                     wsRapport.Cells(rowRapport, 9).Value = Debit
                     tDebit = tDebit + Debit
@@ -448,7 +448,7 @@ Public Sub GenererRapportGL_DateSaisie(wsRapport As Worksheet, dtSaisieDebut As 
     'Impression des totaux
     rowRapport = rowRapport + 1
     
-    'Total Débit
+    'Total DÃ©bit
     With wsRapport.Cells(rowRapport, 9)
         .Value = tDebit
         .Font.Bold = True
@@ -460,7 +460,7 @@ Public Sub GenererRapportGL_DateSaisie(wsRapport As Worksheet, dtSaisieDebut As 
         End With
     End With
     
-    'Total Crédit
+    'Total CrÃ©dit
     With wsRapport.Cells(rowRapport, 10)
         .Value = tCredit
         .Font.Bold = True
@@ -472,7 +472,7 @@ Public Sub GenererRapportGL_DateSaisie(wsRapport As Worksheet, dtSaisieDebut As 
         End With
     End With
     
-    'Désactiver le filtre
+    'DÃ©sactiver le filtre
     wsSource.AutoFilterMode = False
     
     DoEvents
@@ -482,14 +482,14 @@ Public Sub GenererRapportGL_DateSaisie(wsRapport As Worksheet, dtSaisieDebut As 
     Dim h1 As String, h2 As String, h3 As String
     h1 = wsdADMIN.Range("NomEntreprise")
     h2 = "Rapport des transactions du Grand Livre par date de saisie"
-    h3 = "(Pour les écritures saisies entre le " & dtSaisieDebut & " et le " & dtSaisieFin & ")"
+    h3 = "(Pour les Ã©critures saisies entre le " & dtSaisieDebut & " et le " & dtSaisieFin & ")"
     Call GL_Rapport_Wrap_Up_DateSaisie(wsRapport, h1, h2, h3)
     
     Call Log_Record("modGL_Rapport_Nouveau:GenererRapportGL_DateSaisie", "", startTime)
     
     Unload ufGL_Rapport
     
-    MsgBox "Le rapport a été généré avec succès", vbInformation, "Rapport des transactions du Grand Livre"
+    MsgBox "Le rapport a Ã©tÃ© gÃ©nÃ©rÃ© avec succÃ¨s", vbInformation, "Rapport des transactions du Grand Livre"
     
 '    wsdGL_Trans.Visible = xlSheetVisible
     wsRapport.Visible = xlSheetVisible
@@ -498,7 +498,7 @@ Public Sub GenererRapportGL_DateSaisie(wsRapport As Worksheet, dtSaisieDebut As 
     'Placer le curseur en haut du rapport (par exemple, cellule A3)
     wsRapport.Range("A3").Select
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set wsRapport = Nothing
     Set wsSource = Nothing
     
@@ -515,9 +515,9 @@ Sub SetUpGLReportHeadersAndColumns_Compte(ws As Worksheet)
         .Cells(1, 2) = "Date"
         .Cells(1, 3) = "Description"
         .Cells(1, 4) = "Source"
-        .Cells(1, 5) = "No.Écr."
-        .Cells(1, 6) = "Débit"
-        .Cells(1, 7) = "Crédit"
+        .Cells(1, 5) = "No.Ã‰cr."
+        .Cells(1, 6) = "DÃ©bit"
+        .Cells(1, 7) = "CrÃ©dit"
         .Cells(1, 8) = "SOLDE"
         With .Range("A1:H1")
             .Font.Italic = True
@@ -580,13 +580,13 @@ Sub SetUpGLReportHeadersAndColumns_Ecriture(ws As Worksheet)
     ws.Cells.VerticalAlignment = xlCenter
     
     With ws
-        .Cells(1, 1).Value = "# Écriture"
+        .Cells(1, 1).Value = "# Ã‰criture"
         .Cells(1, 2).Value = "Date"
         .Cells(1, 4).Value = "# G/L"
         .Cells(1, 5).Value = "Description"
         .Cells(1, 7).Value = "Autre Remarque"
-        .Cells(1, 8).Value = "Débits"
-        .Cells(1, 9).Value = "Crédits"
+        .Cells(1, 8).Value = "DÃ©bits"
+        .Cells(1, 9).Value = "CrÃ©dits"
         With .Range("A1:I1")
             .Font.Italic = True
             .Font.Bold = True
@@ -661,13 +661,13 @@ Sub SetUpGLReportHeadersAndColumns_DateSaisie(ws As Worksheet)
     
     With ws
         .Cells(1, 1).Value = "Date Saisie"
-        .Cells(1, 2).Value = "# Écriture"
+        .Cells(1, 2).Value = "# Ã‰criture"
         .Cells(1, 3).Value = "Date"
         .Cells(1, 5).Value = "# G/L"
         .Cells(1, 6).Value = "Description"
         .Cells(1, 8).Value = "Autre Remarque"
-        .Cells(1, 9).Value = "Débits"
-        .Cells(1, 10).Value = "Crédits"
+        .Cells(1, 9).Value = "DÃ©bits"
+        .Cells(1, 10).Value = "CrÃ©dits"
         With .Range("A1:J1")
             .Font.Italic = True
             .Font.Bold = True
@@ -747,7 +747,7 @@ Sub GL_Rapport_Wrap_Up_Compte(ws As Worksheet, h1 As String, h2 As String, h3 As
     
     'Determine the active cells & setup Print Area
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "H").End(xlUp).row + 1
+    lastUsedRow = ws.Cells(ws.Rows.count, "H").End(xlUp).Row + 1
     ActiveSheet.Range("A3:H" & lastUsedRow).Select
     
     With ws.PageSetup
@@ -789,7 +789,7 @@ Sub GL_Rapport_Wrap_Up_Ecriture(ws As Worksheet, h1 As String, h2 As String, h3 
     
     'Determine the active cells & setup Print Area
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "H").End(xlUp).row + 1
+    lastUsedRow = ws.Cells(ws.Rows.count, "H").End(xlUp).Row + 1
     ActiveSheet.Range("A3:I" & lastUsedRow).Select
     
     ActiveSheet.Range("A3:I" & lastUsedRow).Font.Name = "Aptos Narrow"
@@ -835,7 +835,7 @@ Sub GL_Rapport_Wrap_Up_DateSaisie(ws As Worksheet, h1 As String, h2 As String, h
     
     'Determine the active cells & setup Print Area
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "I").End(xlUp).row + 1
+    lastUsedRow = ws.Cells(ws.Rows.count, "I").End(xlUp).Row + 1
     ActiveSheet.Range("A3:J" & lastUsedRow).Select
     
     ActiveSheet.Range("A3:J" & lastUsedRow).Font.Name = "Aptos Narrow"
@@ -875,27 +875,28 @@ End Sub
 
 Function Fn_ValiderSiDoitImprimerTransaction(ByVal Source As String) As Boolean '2025-03-03 @ 10:21
 
-    'Variable pour vérifier si la transaction est valide
+    'Variable pour vÃ©rifier si la transaction est valide
     Dim aImprimer As Boolean
     aImprimer = False
 
-    'Traitement de la transaction selon fGlTSource et l'état des cases
-    If InStr(Source, "DÉBOURSÉ:") = 1 Or InStr(Source, "RENV/DÉBOURSÉ:") = 1 Then
+    'Traitement de la transaction selon fGlTSource et l'Ã©tat des cases
+    If InStr(Source, "DÃ‰BOURSÃ‰:") = 1 Or InStr(Source, "RENV/DÃ‰BOURSÃ‰:") = 1 Then
         If ufGL_Rapport.chkDebourse.Value = True Then aImprimer = True
-    ElseIf InStr(Source, "DÉPÔT DE CLIENT:") = 1 Then
+    ElseIf InStr(Source, "DÃ‰PÃ”T DE CLIENT:") = 1 Then
         If ufGL_Rapport.chkDepotClient.Value = True Then aImprimer = True
     ElseIf InStr(Source, "ENCAISSEMENT:") = 1 Then
         If ufGL_Rapport.chkEncaissement.Value = True Then aImprimer = True
     ElseIf InStr(Source, "FACTURE:") = 1 Then
         If ufGL_Rapport.chkFacture.Value = True Then aImprimer = True
-    ElseIf InStr(Source, "RÉGULARISATION:") = 1 Then
+    ElseIf InStr(Source, "RÃ‰GULARISATION:") = 1 Then
         If ufGL_Rapport.chkRegularisation.Value = True Then aImprimer = True
     Else
         If ufGL_Rapport.chkEJ.Value = True Then aImprimer = True
     End If
 
-    'Retourne True si la transaction doit être traitée, sinon False
+    'Retourne True si la transaction doit Ãªtre traitÃ©e, sinon False
     Fn_ValiderSiDoitImprimerTransaction = aImprimer
     
 End Function
+
 

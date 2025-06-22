@@ -1,4 +1,4 @@
-Attribute VB_Name = "modTEC_Saisie"
+ï»¿Attribute VB_Name = "modTEC_Saisie"
 Option Explicit
 
 Public Const rmv_modeInitial As Long = 1
@@ -19,7 +19,7 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Ajoute_Ligne", "", 0)
 
-    'Obtenir le ID du client pur (à partir de son nom pur)
+    'Obtenir le ID du client pur (Ã  partir de son nom pur)
     ufSaisieHeures.txtClientID.Value = Fn_Cell_From_BD_Client(ufSaisieHeures.txtClient.Value, 1, 2)
         
     If Fn_TEC_Is_Data_Valid() = True Then
@@ -72,7 +72,7 @@ Sub TEC_Modifie_Ligne() '2023-12-23 @ 07:04
 
     If Fn_TEC_Is_Data_Valid() = False Then Exit Sub
 
-    'Obtenir le ID du client pur (à partir de son nom pur) - 2025-03-04 @ 08:02
+    'Obtenir le ID du client pur (Ã  partir de son nom pur) - 2025-03-04 @ 08:02
     ufSaisieHeures.txtClientID.Value = Fn_Cell_From_BD_Client(ufSaisieHeures.txtClient.Value, 1, 2)
         
     Call TEC_Record_Add_Or_Update_To_DB(ufSaisieHeures.txtTECID.Value)
@@ -106,23 +106,23 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
     Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Efface_Ligne", "", 0)
 
     If ufSaisieHeures.txtTECID.Value = "" Then
-        MsgBox Prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
+        MsgBox Prompt:="Vous devez choisir un enregistrement Ã  DÃ‰TRUIRE !", _
             Buttons:=vbCritical
         GoTo Clean_Exit
     End If
     
     Dim answerYesNo As Long
-    answerYesNo = MsgBox("Êtes-vous certain de vouloir DÉTRUIRE cet enregistrement ? ", _
+    answerYesNo = MsgBox("ÃŠtes-vous certain de vouloir DÃ‰TRUIRE cet enregistrement ? ", _
                          vbYesNo + vbQuestion, "Confirmation de DESTRUCTION")
     If answerYesNo = vbNo Then
         MsgBox _
-        Prompt:="Cet enregistrement ne sera PAS détruit ! ", _
+        Prompt:="Cet enregistrement ne sera PAS dÃ©truit ! ", _
         Title:="Confirmation", _
         Buttons:=vbCritical
         GoTo Clean_Exit
     End If
     
-    Call Log_Record("modTEC_Saisie:TEC_Efface_Ligne - Le DELETE est confirmé - " & CStr(-ufSaisieHeures.txtTECID.Value), -1) '2024-10-05 @ 07:21
+    Call Log_Record("modTEC_Saisie:TEC_Efface_Ligne - Le DELETE est confirmÃ© - " & CStr(-ufSaisieHeures.txtTECID.Value), -1) '2024-10-05 @ 07:21
     
     Dim sh As Worksheet: Set sh = wsdTEC_Local
     
@@ -143,7 +143,7 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
     End With
     
     MsgBox _
-        Prompt:="L'enregistrement a été DÉTRUIT !", _
+        Prompt:="L'enregistrement a Ã©tÃ© DÃ‰TRUIT !", _
         Title:="Confirmation", _
         Buttons:=vbCritical
         
@@ -160,7 +160,7 @@ Clean_Exit:
     ufSaisieHeures.txtTECID.Value = ""
     ufSaisieHeures.txtClient.SetFocus
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set sh = Nothing
 
     Call Log_Record("modTEC_Saisie:TEC_Efface_Ligne", "", startTime)
@@ -190,21 +190,21 @@ Sub TEC_Get_All_TEC_AF() '2024-11-19 @ 10:39
         .Range("T3").Value = "FAUX"
     End With
     
-    'Effacer les données de la dernière utilisation
+    'Effacer les donnÃ©es de la derniÃ¨re utilisation
     ws.Range("S6:S10").ClearContents
-    ws.Range("S6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("S6").Value = "DerniÃ¨re utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
-    'Définir le range pour la source des données en utilisant un tableau
+    'DÃ©finir le range pour la source des donnÃ©es en utilisant un tableau
     Dim rngData As Range
     Set rngData = ws.Range("l_tbl_TEC_Local[#All]")
     ws.Range("S7").Value = rngData.Address
     
-    'Définir le range des critères
+    'DÃ©finir le range des critÃ¨res
     Dim rngCriteria As Range
     Set rngCriteria = ws.Range("R2:T3")
     ws.Range("S8").Value = rngCriteria.Address
     
-    'Définir le range des résultats et effacer avant le traitement
+    'DÃ©finir le range des rÃ©sultats et effacer avant le traitement
     Dim rngResult As Range
     Set rngResult = ws.Range("V1").CurrentRegion
     rngResult.offset(2, 0).Clear
@@ -218,7 +218,7 @@ Sub TEC_Get_All_TEC_AF() '2024-11-19 @ 10:39
                 Unique:=False
 
     Dim lastResultRow As Long
-    lastResultRow = ws.Cells(ws.Rows.count, "V").End(xlUp).row
+    lastResultRow = ws.Cells(ws.Rows.count, "V").End(xlUp).Row
     ws.Range("S10").Value = (lastResultRow - 2) & " lignes"
         
     If lastResultRow < 4 Then GoTo No_Sort_Required
@@ -255,7 +255,7 @@ No_Sort_Required:
     
     Application.ScreenUpdating = True
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set r = Nothing
     Set rngCriteria = Nothing
     Set rngData = Nothing
@@ -329,9 +329,9 @@ Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to
     dateValue = ufSaisieHeures.txtDate.Value
     'Special log to debug Date Format issue... 2024-09-06 @ 16:32
     If tecID = 0 And Date - dateValue > 30 Then
-        MsgBox "La date saisie est plus de 30 jours dans le passé..." & vbNewLine & vbNewLine & _
-                "Veuillez aviser le développeur de cette situation SVP", vbInformation
-        Call Log_Saisie_Heures("Future   ", "Plus de 30 jours dans le passé - dateValue = " & dateValue & "  type = " & TypeName(dateValue))
+        MsgBox "La date saisie est plus de 30 jours dans le passÃ©..." & vbNewLine & vbNewLine & _
+                "Veuillez aviser le dÃ©veloppeur de cette situation SVP", vbInformation
+        Call Log_Saisie_Heures("Future   ", "Plus de 30 jours dans le passÃ© - dateValue = " & dateValue & "  type = " & TypeName(dateValue))
     End If
     
     If tecID < 0 Then 'Soft delete a record
@@ -358,7 +358,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to
 
         Else 'Handle the case where the specified ID is not found - PROBLEM !!!
             
-            MsgBox "L'enregistrement avec le TECID '" & tecID & "' ne peut être trouvé!", _
+            MsgBox "L'enregistrement avec le TECID '" & tecID & "' ne peut Ãªtre trouvÃ©!", _
                 vbExclamation
                 
             rs.Close
@@ -459,8 +459,8 @@ Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to
             
                 'Handle the case where the specified ID is not found - PROBLEM !!!
                 
-                MsgBox "L'enregistrement avec le TECID '" & tecID & "' ne peut être trouvé!", vbExclamation
-                Call Log_Record("ERREUR - N'a pas trouvé le TECID '", CStr(saveLogTECID), -1)   '2024-09-13 @ 09:09
+                MsgBox "L'enregistrement avec le TECID '" & tecID & "' ne peut Ãªtre trouvÃ©!", vbExclamation
+                Call Log_Record("ERREUR - N'a pas trouvÃ© le TECID '", CStr(saveLogTECID), -1)   '2024-09-13 @ 09:09
                 Call Log_Saisie_Heures("Erreur  ", "@00495 - Impossible de trouver le TECID = " & CStr(saveLogTECID)) '2024-09-02 @ 10:35
                 rs.Close
                 conn.Close
@@ -479,7 +479,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to
     
     Application.ScreenUpdating = True
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set conn = Nothing
     Set rs = Nothing
     
@@ -490,9 +490,9 @@ Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to
 ErrorHandler:
      'Si une erreur survient, cela signifie que le fichier est en lecture seule
     MsgBox "Le fichier 'MASTER' est en lecture seule" & vbNewLine & vbNewLine & _
-           "ou déjà ouvert par un autre utilisateur ou" & vbNewLine & vbNewLine & _
-           "ou un autre type de problème" & vbNewLine & vbNewLine & _
-           "COMMUNIQUER AVEC LE DÉVELOPPEUR IMMÉDIATEMENT", vbCritical, "Erreur = " & Err & " - " & Err.description
+           "ou dÃ©jÃ  ouvert par un autre utilisateur ou" & vbNewLine & vbNewLine & _
+           "ou un autre type de problÃ¨me" & vbNewLine & vbNewLine & _
+           "COMMUNIQUER AVEC LE DÃ‰VELOPPEUR IMMÃ‰DIATEMENT", vbCritical, "Erreur = " & Err & " - " & Err.description
     If Not rs Is Nothing Then
         rs.Close
     End If
@@ -531,7 +531,7 @@ Sub TEC_Record_Add_Or_Update_Locally(tecID As Long) 'Write -OR- Update a record 
         'Get the next available row in TEC_Local
         Dim nextRowNumber As Long
         With wsdTEC_Local
-            nextRowNumber = .Cells(.Rows.count, 1).End(xlUp).row + 1
+            nextRowNumber = .Cells(.Rows.count, 1).End(xlUp).Row + 1
             .Range("A" & nextRowNumber).Value = ufSaisieHeures.txtTECID.Value
             .Range("B" & nextRowNumber).Value = ufSaisieHeures.txtProfID.Value
             .Range("C" & nextRowNumber).Value = ufSaisieHeures.cmbProfessionnel.Value
@@ -551,13 +551,13 @@ Sub TEC_Record_Add_Or_Update_Locally(tecID As Long) 'Write -OR- Update a record 
         End With
     Else
         'What is the row number for the TECID
-        lastUsedRow = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "A").End(xlUp).row
+        lastUsedRow = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "A").End(xlUp).Row
         Dim lookupRange As Range: Set lookupRange = wsdTEC_Local.Range("A3:A" & lastUsedRow)
         Dim rowToBeUpdated As Long
         rowToBeUpdated = Fn_Find_Row_Number_TECID(Abs(tecID), lookupRange)
         If rowToBeUpdated < 1 Then
             'Handle the case where the specified TecID is not found !!
-            MsgBox "L'enregistrement avec le TECID '" & tecID & "' ne peut être trouvé!", _
+            MsgBox "L'enregistrement avec le TECID '" & tecID & "' ne peut Ãªtre trouvÃ©!", _
                 vbExclamation
             Exit Sub
         End If
@@ -588,7 +588,7 @@ Sub TEC_Record_Add_Or_Update_Locally(tecID As Long) 'Write -OR- Update a record 
     
     Application.ScreenUpdating = True
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set lookupRange = Nothing
     
     Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_Locally", CStr(tecID), startTime)
@@ -627,7 +627,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     
     'Manually add to listBox (because some tests have to be made)
     Dim lastRow As Long
-    lastRow = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "V").End(xlUp).row
+    lastRow = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "V").End(xlUp).Row
     Dim rng As Range
     Set rng = wsdTEC_Local.Range("V3:AI" & lastRow)
      
@@ -665,16 +665,16 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
         Next i
     End If
 
-    'Mise à jour des totaux
+    'Mise Ã  jour des totaux
     ufSaisieHeures.txtTotalHeures.Value = Format$(totalHeures, "#0.00")
     ufSaisieHeures.txtHresFact.Value = Format$(totalHresFact, "#0.00")
     ufSaisieHeures.txtHresNF.Value = Format$(totalHresNonFact, "#0.00")
     
-    'Maintenant, on traite la semaine à partir de wshTEC_TDB_Data
+    'Maintenant, on traite la semaine Ã  partir de wshTEC_TDB_Data
     Dim totalHresFactSemaine As Currency
     Dim totalHresNonFactSemaine As Currency
     
-    'Modifie les critères pour forcer une execution du AdvancedFilter dans wshTEC_TDB_Data
+    'Modifie les critÃ¨res pour forcer une execution du AdvancedFilter dans wshTEC_TDB_Data
     Dim dateCharge As Date, dateLundi As Date, dateDimanche As Date
     dateCharge = ufSaisieHeures.txtDate.Value
     dateLundi = Fn_Obtenir_Date_Lundi(dateCharge)
@@ -687,7 +687,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     
     DoEvents
     
-    lastRow = wshTEC_TDB_Data.Cells(wshTEC_TDB_Data.Rows.count, "W").End(xlUp).row
+    lastRow = wshTEC_TDB_Data.Cells(wshTEC_TDB_Data.Rows.count, "W").End(xlUp).Row
     If lastRow > 1 Then
         Set rngResult = wshTEC_TDB_Data.Range("W2:AD" & lastRow)
         totalHresFactSemaine = Application.WorksheetFunction.Sum(rngResult.Columns(7))
@@ -709,7 +709,7 @@ EndOfProcedure:
 
     ufSaisieHeures.txtClient.SetFocus
     
-    'Libération et fin
+    'LibÃ©ration et fin
     Application.ScreenUpdating = True
     Application.EnableEvents = True
 '    Application.Calculation = xlCalculationAutomatic
@@ -733,13 +733,13 @@ Sub TEC_Update_TDB_From_TEC_Local()
 
     Dim wsFrom As Worksheet: Set wsFrom = wsdTEC_Local
     Dim lastUsedRow As Long
-    lastUsedRow = wsFrom.Cells(wsFrom.Rows.count, 1).End(xlUp).row
+    lastUsedRow = wsFrom.Cells(wsFrom.Rows.count, 1).End(xlUp).Row
     
-    'Charger en mémoire toutes les données source
+    'Charger en mÃ©moire toutes les donnÃ©es source
     Dim rawData As Variant
     rawData = wsFrom.Range("A3:N" & lastUsedRow).Value
     
-    'Préparer le tableau des données à la sortie
+    'PrÃ©parer le tableau des donnÃ©es Ã  la sortie
     Dim arr() As Variant
     Dim numRows As Long: numRows = UBound(rawData, 1)
     ReDim arr(1 To numRows, 1 To 11)
@@ -759,12 +759,12 @@ Sub TEC_Update_TDB_From_TEC_Local()
         arr(i, 11) = rawData(i, 14) 'isDeleted
     Next i
     
-    ' Mettre à jour la feuille TEC_TDB_Data
+    ' Mettre Ã  jour la feuille TEC_TDB_Data
     Dim rngTo As Range
     Set rngTo = wshTEC_TDB_Data.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2))
     rngTo.Value = arr
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set rngTo = Nothing
     Set wsFrom = Nothing
     
@@ -781,7 +781,7 @@ Sub TEC_TdB_Refresh_All_Pivot_Tables()
         pt.RefreshTable
     Next pt
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set pt = Nothing
     
     Call Log_Record("modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables", "", startTime)
@@ -803,8 +803,8 @@ End Sub
 
 Sub AfficherMessageDateInvalide(location As String) '2024-06-13 @ 12:40
 
-    MsgBox "La date saisie ne peut être acceptée tel qu'elle est entrée." & vbNewLine & vbNewLine & _
-           "Elle doit être obligatoirement de format:" & vbNewLine & _
+    MsgBox "La date saisie ne peut Ãªtre acceptÃ©e tel qu'elle est entrÃ©e." & vbNewLine & vbNewLine & _
+           "Elle doit Ãªtre obligatoirement de format:" & vbNewLine & _
            "     'j', jj', " & vbNewLine & _
            "     'jj-mm', 'jj/mm' ou " & vbNewLine & _
            "     'j-m-aa', 'j-m-aaaa', 'jj-mm-aaaa'" & vbNewLine & vbNewLine & _
@@ -830,11 +830,12 @@ Sub UpdatePivotTables()
         On Error GoTo 0
     Next pt
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set pt = Nothing
     Set ws = Nothing
     
     Call Log_Record("modTEC_Saisie:UpdatePivotTables", "", startTime)
     
 End Sub
+
 

@@ -1,4 +1,4 @@
-VERSION 1.0 CLASS
+﻿VERSION 1.0 CLASS
 BEGIN
   MultiUse = -1  'True
 END
@@ -55,4 +55,5 @@ Private Sub ctrl_MouseDown(ByVal Button As Integer, ByVal Shift As Integer, ByVa
     RafraichirActivite (ctrl.Name & "-" & TypeName(ctrl))
     
 End Sub
+
 

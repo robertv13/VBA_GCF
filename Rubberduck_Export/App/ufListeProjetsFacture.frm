@@ -1,10 +1,10 @@
-VERSION 5.00
+ï»¿VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufListeProjetsFacture 
    Caption         =   "Facturation des projets de facture"
    ClientHeight    =   7668
-   ClientLeft      =   132
-   ClientTop       =   504
-   ClientWidth     =   7368
+   ClientLeft      =   108
+   ClientTop       =   420
+   ClientWidth     =   5892
    OleObjectBlob   =   "ufListeProjetsFacture.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
@@ -21,9 +21,9 @@ Private Sub UserForm_Initialize() '2025-06-01 @ 06:54
     Set ws = wsdFAC_Projets_Entete
 
     Dim lo As ListObject
-    Set lo = ws.ListObjects("l_tbl_FAC_Projets_Entête")
+    Set lo = ws.ListObjects("l_tbl_FAC_Projets_EntÃªte")
 
-    'Vérifier qu’il y a des données réelles dans le tableau (ignore les lignes vides)
+    'VÃ©rifier quâ€™il y a des donnÃ©es rÃ©elles dans le tableau (ignore les lignes vides)
     If Not TableauContientDesDonnees(lo) Then
         Unload Me
         Exit Sub
@@ -38,7 +38,7 @@ Private Sub UserForm_Initialize() '2025-06-01 @ 06:54
 
     For i = 1 To lo.ListRows.count
         Set ligne = lo.ListRows(i).Range
-        'Ignorer si toute la ligne est vide (ligne fantôme)
+        'Ignorer si toute la ligne est vide (ligne fantÃ´me)
         If Application.WorksheetFunction.CountA(ligne) = 0 Then GoTo ProchaineLigne
 
         estDetruite = ligne.Columns(lo.ListColumns("estDetruite").index).Value
@@ -62,10 +62,10 @@ ProchaineLigne:
     'Redimensionner proprement
     Call Array_2D_Resizer(arr, nbRows, 4)
 
-    'Trier les données (si souhaité)
+    'Trier les donnÃ©es (si souhaitÃ©)
     Call Array_2D_Bubble_Sort(arr)
 
-    ' Préparer la ListBox
+    ' PrÃ©parer la ListBox
     With Me.lsbProjetsFacture
         .Clear
         .ColumnHeads = True
@@ -112,4 +112,5 @@ Private Sub UserForm_Terminate()
     Unload ufListeProjetsFacture
     
 End Sub
+
 

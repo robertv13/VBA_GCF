@@ -1,6 +1,6 @@
-Attribute VB_Name = "modCAR_Liste_Agee"
+ï»¿Attribute VB_Name = "modCAR_Liste_Agee"
 '@IgnoreModule SetAssignmentWithIncompatibleObjectType
-'@Folder("Rapport_ListeAgéeCC")
+'@Folder("Rapport_ListeAgÃ©eCC")
 
 Option Explicit
 
@@ -16,19 +16,19 @@ Sub CreerListeAgee() '2024-09-08 @ 15:55
    
     Application.ScreenUpdating = False
     
-    'Débloque la feuille
+    'DÃ©bloque la feuille
     ActiveSheet.Unprotect
     
-    'Initialiser les feuilles nécessaires
+    'Initialiser les feuilles nÃ©cessaires
     Dim wsFactures As Worksheet: Set wsFactures = wsdFAC_Comptes_Clients
     Dim wsPaiements As Worksheet: Set wsPaiements = wsdENC_Details
-    Dim wsRégularisations As Worksheet: Set wsRégularisations = wsdCC_Regularisations
+    Dim wsRÃ©gularisations As Worksheet: Set wsRÃ©gularisations = wsdCC_Regularisations
     
-    'Utilisation de la même feuille
+    'Utilisation de la mÃªme feuille
     Dim rngResultat As Range
     Set rngResultat = wshCAR_Liste_Agee.Range("B8")
     Dim lastUsedRow As Long
-    lastUsedRow = wshCAR_Liste_Agee.Cells(wshCAR_Liste_Agee.Rows.count, "B").End(xlUp).row
+    lastUsedRow = wshCAR_Liste_Agee.Cells(wshCAR_Liste_Agee.Rows.count, "B").End(xlUp).Row
     If lastUsedRow > 7 Then
         Application.EnableEvents = False
         wshCAR_Liste_Agee.Unprotect
@@ -37,25 +37,25 @@ Sub CreerListeAgee() '2024-09-08 @ 15:55
         Application.EnableEvents = True
     End If
     
-    'Niveau de détail
+    'Niveau de dÃ©tail
     Dim niveauDetail As String
     niveauDetail = wshCAR_Liste_Agee.Range("B4").Value
     
     Application.EnableEvents = False
     
-    'Entêtes de colonnes en fonction du niveau de détail
+    'EntÃªtes de colonnes en fonction du niveau de dÃ©tail
     If LCase$(niveauDetail) = "client" Then
         wshCAR_Liste_Agee.Range("B8:G8").Value = Array("Client", "Solde", "- de 30 jours", "31 @ 60 jours", "61 @ 90 jours", "+ de 90 jours")
         Call Make_It_As_Header(wshCAR_Liste_Agee.Range("B8:G8"))
     End If
 
-    'Entêtes de colonnes en fonction du niveau de détail (Facture)
+    'EntÃªtes de colonnes en fonction du niveau de dÃ©tail (Facture)
     If LCase$(niveauDetail) = "facture" Then
         wshCAR_Liste_Agee.Range("B8:I8").Value = Array("Client", "No. Facture", "Date Facture", "Solde", "- de 30 jours", "31 @ 60 jours", "61 @ 90 jours", "+ de 90 jours")
         Call Make_It_As_Header(wshCAR_Liste_Agee.Range("B8:I8"))
     End If
 
-    'Entêtes de colonnes en fonction du niveau de détail (Transaction)
+    'EntÃªtes de colonnes en fonction du niveau de dÃ©tail (Transaction)
     If LCase$(niveauDetail) = "transaction" Then
         wshCAR_Liste_Agee.Range("B8:J8").Value = Array("Client", "No. Facture", "Type", "Date", "Montant", "- de 30 jours", "31 @ 60 jours", "61 @ 90 jours", "+ de 90 jours")
         Call Make_It_As_Header(wshCAR_Liste_Agee.Range("B8:J8"))
@@ -63,19 +63,19 @@ Sub CreerListeAgee() '2024-09-08 @ 15:55
 
     Application.EnableEvents = True
 
-    'Initialiser le dictionnaire pour les résultats (Nom du client, Solde)
-    Dim dictClients As Object 'Utilisez un dictionnaire pour stocker les résultats
+    'Initialiser le dictionnaire pour les rÃ©sultats (Nom du client, Solde)
+    Dim dictClients As Object 'Utilisez un dictionnaire pour stocker les rÃ©sultats
     Set dictClients = CreateObject("Scripting.Dictionary")
     
-    'Date actuelle pour le calcul de l'âge des factures
+    'Date actuelle pour le calcul de l'Ã¢ge des factures
     Dim dateAujourdhui As Date
     dateAujourdhui = Date
     
     'Boucle sur les factures
     Dim DerniereLigne As Long
-    DerniereLigne = wsFactures.Cells(wsFactures.Rows.count, 1).End(xlUp).row
+    DerniereLigne = wsFactures.Cells(wsFactures.Rows.count, 1).End(xlUp).Row
     Dim rngFactures As Range
-    Set rngFactures = wsFactures.Range("A3:A" & DerniereLigne) '2 lignes d'entête
+    Set rngFactures = wsFactures.Range("A3:A" & DerniereLigne) '2 lignes d'entÃªte
     
     Dim client As String, numFacture As String
     Dim dateFacture As Date, dateDue As Date
@@ -87,14 +87,14 @@ Sub CreerListeAgee() '2024-09-08 @ 15:55
 
     r = 8
     For i = 1 To rngFactures.Rows.count
-        'Récupérer les données de la facture directement du Range
+        'RÃ©cupÃ©rer les donnÃ©es de la facture directement du Range
         numFacture = CStr(rngFactures.Cells(i, fFacCCInvNo).Value)
         'Do not process non Confirmed invoice
         If Fn_Get_Invoice_Type(numFacture) <> "C" Then
             GoTo Next_Invoice
         End If
         
-        'Est-ce que la facture est à l'intérieur de la date limite ?
+        'Est-ce que la facture est Ã  l'intÃ©rieur de la date limite ?
         dateFacture = rngFactures.Cells(i, fFacCCInvoiceDate).Value
         If rngFactures.Cells(i, fFacCCInvoiceDate).Value > CDate(wshCAR_Liste_Agee.Range("H4").Value) Then
             Debug.Print "#022 - Comparaison de date - " & rngFactures.Cells(i, fFacCCInvoiceDate).Value & " .vs. " & wshCAR_Liste_Agee.Range("H4").Value
@@ -102,26 +102,26 @@ Sub CreerListeAgee() '2024-09-08 @ 15:55
         End If
         
         client = rngFactures.Cells(i, fFacCCCodeClient).Value
-        'Obtenir le nom du client (MF) pour trier par nom de client plutôt que par code de client
+        'Obtenir le nom du client (MF) pour trier par nom de client plutÃ´t que par code de client
         client = Fn_Get_Client_Name(client)
         dateDue = rngFactures.Cells(i, fFacCCDueDate).Value
         montantFacture = CCur(rngFactures.Cells(i, fFacCCTotal).Value)
         
-        'Obtenir les paiements et régularisations pour cette facture
+        'Obtenir les paiements et rÃ©gularisations pour cette facture
         montantPaye = Fn_Obtenir_Paiements_Facture(numFacture, wshCAR_Liste_Agee.Range("H4").Value)
-        montantRegul = Fn_Obtenir_Régularisations_Facture(numFacture, wshCAR_Liste_Agee.Range("H4").Value)
+        montantRegul = Fn_Obtenir_RÃ©gularisations_Facture(numFacture, wshCAR_Liste_Agee.Range("H4").Value)
         
         montantRestant = montantFacture - montantPaye + montantRegul
         
-        'Exclus les soldes de facture à 0,00 $ SI ET SEULMENT SI F4 = "NON"
+        'Exclus les soldes de facture Ã  0,00 $ SI ET SEULMENT SI F4 = "NON"
         If UCase$(wshCAR_Liste_Agee.Range("F4").Value) = "NON" And montantRestant = 0 Then
             GoTo Next_Invoice
         End If
         
-        'Calcul de l'âge de la facture
+        'Calcul de l'Ã¢ge de la facture
         ageFacture = WorksheetFunction.Max(dateAujourdhui - dateDue, 0)
         
-        'Détermine la trancheAge d'âge
+        'DÃ©termine la trancheAge d'Ã¢ge
         Select Case ageFacture
             Case 0 To 30
                 trancheAge = "- de 30 jours"
@@ -132,13 +132,13 @@ Sub CreerListeAgee() '2024-09-08 @ 15:55
             Case Is > 90
                 trancheAge = "+ de 90 jours"
             Case Else
-                trancheAge = "Non défini"
+                trancheAge = "Non dÃ©fini"
         End Select
         
         Dim rngPaiements As Range
         Dim RowOffset As Long
         Dim tableau As Variant
-        'Ajouter les données au dictionnaire en fonction du niveau de détail
+        'Ajouter les donnÃ©es au dictionnaire en fonction du niveau de dÃ©tail
         Select Case LCase$(niveauDetail)
             Case "client"
                 If Not dictClients.Exists(client) Then
@@ -149,7 +149,7 @@ Sub CreerListeAgee() '2024-09-08 @ 15:55
                 'Ajouter le solde de la facture au total (0)
                 tableau(0) = tableau(0) + montantRestant
                 
-                'Ajouter le montant restant à la trancheAge correspondante (1 @ 4)
+                'Ajouter le montant restant Ã  la trancheAge correspondante (1 @ 4)
                 Select Case trancheAge
                     Case "- de 30 jours"
                         tableau(1) = tableau(1) + montantRestant
@@ -163,7 +163,7 @@ Sub CreerListeAgee() '2024-09-08 @ 15:55
                 dictClients(client) = tableau ' Replacer le tableau dans le dictionnaire
             
             Case "facture"
-                'Ajouter chaque facture avec son montant restant dû
+                'Ajouter chaque facture avec son montant restant dÃ»
                 r = r + 1
                 wshCAR_Liste_Agee.Cells(r, 2).Value = client
                 wshCAR_Liste_Agee.Cells(r, 3).Value = numFacture
@@ -220,27 +220,27 @@ Sub CreerListeAgee() '2024-09-08 @ 15:55
                         Set rngPaiementsAssoc = wsPaiements.Columns("B:B").FindNext(rngPaiementsAssoc)
                     Loop While Not rngPaiementsAssoc Is Nothing And rngPaiementsAssoc.Address <> pmtFirstAddress
                 End If
-                'Transactions de régularisations par la suite
-                Dim rngRégularisationAssoc As Range
+                'Transactions de rÃ©gularisations par la suite
+                Dim rngRÃ©gularisationAssoc As Range
                 Dim regulFirstAddress As String
-                'Obtenir toutes les régularisations pour la facture
-                Set rngRégularisationAssoc = wsRégularisations.Range("B:B").Find(numFacture, LookIn:=xlValues, LookAt:=xlWhole)
-                If Not rngRégularisationAssoc Is Nothing Then
-                    regulFirstAddress = rngRégularisationAssoc.Address
+                'Obtenir toutes les rÃ©gularisations pour la facture
+                Set rngRÃ©gularisationAssoc = wsRÃ©gularisations.Range("B:B").Find(numFacture, LookIn:=xlValues, LookAt:=xlWhole)
+                If Not rngRÃ©gularisationAssoc Is Nothing Then
+                    regulFirstAddress = rngRÃ©gularisationAssoc.Address
                     Do
-                        If rngRégularisationAssoc.offset(0, 1).Value <= CDate(wshCAR_Liste_Agee.Range("H4").Value) Then
+                        If rngRÃ©gularisationAssoc.offset(0, 1).Value <= CDate(wshCAR_Liste_Agee.Range("H4").Value) Then
                             r = r + 1
                             wshCAR_Liste_Agee.Cells(r, 2).Value = client
                             wshCAR_Liste_Agee.Cells(r, 3).Value = numFacture
-                            wshCAR_Liste_Agee.Cells(r, 4).Value = "Régularisation"
-                            wshCAR_Liste_Agee.Cells(r, 5).Value = rngRégularisationAssoc.offset(0, 1).Value
-                            wshCAR_Liste_Agee.Cells(r, 6).Value = rngRégularisationAssoc.offset(0, 4).Value + _
-                                rngRégularisationAssoc.offset(0, 5).Value + _
-                                rngRégularisationAssoc.offset(0, 6).Value + _
-                                rngRégularisationAssoc.offset(0, 7).Value
+                            wshCAR_Liste_Agee.Cells(r, 4).Value = "RÃ©gularisation"
+                            wshCAR_Liste_Agee.Cells(r, 5).Value = rngRÃ©gularisationAssoc.offset(0, 1).Value
+                            wshCAR_Liste_Agee.Cells(r, 6).Value = rngRÃ©gularisationAssoc.offset(0, 4).Value + _
+                                rngRÃ©gularisationAssoc.offset(0, 5).Value + _
+                                rngRÃ©gularisationAssoc.offset(0, 6).Value + _
+                                rngRÃ©gularisationAssoc.offset(0, 7).Value
                         End If
-                        Set rngRégularisationAssoc = wsRégularisations.Columns("B:B").FindNext(rngRégularisationAssoc)
-                    Loop While Not rngRégularisationAssoc Is Nothing And rngRégularisationAssoc.Address <> regulFirstAddress
+                        Set rngRÃ©gularisationAssoc = wsRÃ©gularisations.Columns("B:B").FindNext(rngRÃ©gularisationAssoc)
+                    Loop While Not rngRÃ©gularisationAssoc Is Nothing And rngRÃ©gularisationAssoc.Address <> regulFirstAddress
                 End If
         End Select
 
@@ -249,7 +249,7 @@ Next_Invoice:
     
     Application.EnableEvents = True
     
-    'Si niveau de détail est "client", ajouter les soldes du client (dictionary) au tableau final
+    'Si niveau de dÃ©tail est "client", ajouter les soldes du client (dictionary) au tableau final
     If LCase$(niveauDetail) = "client" Then
         r = 8
         Dim cle As Variant
@@ -270,14 +270,14 @@ Next_Invoice:
 
     End If
     
-    'Tri alphabétique par nom de client
-    DerniereLigne = wshCAR_Liste_Agee.Cells(wshCAR_Liste_Agee.Rows.count, "B").End(xlUp).row
+    'Tri alphabÃ©tique par nom de client
+    DerniereLigne = wshCAR_Liste_Agee.Cells(wshCAR_Liste_Agee.Rows.count, "B").End(xlUp).Row
     Set rngResultat = wshCAR_Liste_Agee.Range("B8:J" & DerniereLigne)
     
     Application.EnableEvents = False
     
     Dim ordreTri As String
-    If DerniereLigne > 9 Then 'Le tri n'est peut-être pas nécessaire
+    If DerniereLigne > 9 Then 'Le tri n'est peut-Ãªtre pas nÃ©cessaire
         With wshCAR_Liste_Agee.Sort
             .SortFields.Clear
             If wshCAR_Liste_Agee.Range("D4").Value = "Nom de client" Then
@@ -292,13 +292,13 @@ Next_Invoice:
                     key:=wshCAR_Liste_Agee.Range("C8"), _
                     SortOn:=xlSortOnValues, _
                     Order:=xlAscending, _
-                    DataOption:=xlSortNormal 'Trier par numéro de facture
+                    DataOption:=xlSortNormal 'Trier par numÃ©ro de facture
                 .SortFields.Add _
                     key:=wshCAR_Liste_Agee.Range("D8"), _
                     SortOn:=xlSortOnValues, _
                     Order:=xlAscending, _
                     DataOption:=xlSortNormal 'Trier date de transaction
-                ordreTri = "Ordre de numéro de facture"
+                ordreTri = "Ordre de numÃ©ro de facture"
             End If
             .SetRange rngResultat
             .Header = xlYes
@@ -417,7 +417,7 @@ Next_Invoice:
 
     Call modAppli_Utils.AppliquerConditionalFormating(rngToPrint, 0, False)
     
-    'Caractères pour le rapport
+    'CaractÃ¨res pour le rapport
     With rngToPrint.Font
         .Name = "Aptos Narrow"
         .size = 10
@@ -427,7 +427,7 @@ Next_Invoice:
     
     DoEvents
 
-    Dim header1 As String: header1 = "Liste âgée des comptes clients au " & wshCAR_Liste_Agee.Range("H4").Value
+    Dim header1 As String: header1 = "Liste Ã¢gÃ©e des comptes clients au " & wshCAR_Liste_Agee.Range("H4").Value
     Dim header2 As String
     If LCase$(niveauDetail) = "client" Then
         header2 = "1 ligne par client"
@@ -442,11 +442,11 @@ Next_Invoice:
     
     Application.ScreenUpdating = True
     
-    MsgBox "La préparation de la liste âgée est terminée", vbInformation
+    MsgBox "La prÃ©paration de la liste Ã¢gÃ©e est terminÃ©e", vbInformation
     
     Application.EnableEvents = True
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set cle = Nothing
     Set dictClients = Nothing
     Set rngFactures = Nothing
@@ -465,12 +465,12 @@ Sub CAR_ListeAgee_AfficherMenuContextuel(ByVal Target As Range) '2025-02-21 @ 19
     Dim menu As CommandBar
     Dim menuItem As CommandBarButton
 
-    'Supprimer le menu contextuel personnalisé s'il existe déjà
+    'Supprimer le menu contextuel personnalisÃ© s'il existe dÃ©jÃ 
     On Error Resume Next
     Application.CommandBars("FactureMenu").Delete
     On Error GoTo 0
     
-    'Détermine les coordonnées de la colonne qui a été cliquée
+    'DÃ©termine les coordonnÃ©es de la colonne qui a Ã©tÃ© cliquÃ©e
     Dim numeroLigne As Long, numeroColonne As Long
     Call ExtraireLigneColonneCellule(Target.Address, numeroLigne, numeroColonne)
     
@@ -480,7 +480,7 @@ Sub CAR_ListeAgee_AfficherMenuContextuel(ByVal Target As Range) '2025-02-21 @ 19
         Exit Sub
     End If
     
-    'Créer un nouveau menu contextuel
+    'CrÃ©er un nouveau menu contextuel
     Set menu = Application.CommandBars.Add(Name:="FactureMenu", position:=msoBarPopup, Temporary:=True)
 
     'Option # 1 - Visualiser la facture
@@ -506,18 +506,18 @@ Sub EnvoyerRappelParCourriel(noFact As String)
     Dim codeClient As String
     Dim dateFact As Date
     Dim allCols As Variant
-    allCols = Fn_Get_A_Row_From_A_Worksheet("FAC_Entête", noFact, fFacEInvNo)
-    'Vérifier les résultats
+    allCols = Fn_Get_A_Row_From_A_Worksheet("FAC_EntÃªte", noFact, fFacEInvNo)
+    'VÃ©rifier les rÃ©sultats
     If IsArray(allCols) Then
         codeClient = allCols(fFacECustID)
         dateFact = allCols(fFacEDateFacture)
     Else
-        MsgBox "Enregistrement '" & noFact & "' non trouvée !!!", vbCritical
+        MsgBox "Enregistrement '" & noFact & "' non trouvÃ©e !!!", vbCritical
         Exit Sub
     End If
     
     If codeClient = "" Then
-        MsgBox "Le code client pour cette facture est INVALIDE", vbCritical, "Information erronée / manquante"
+        MsgBox "Le code client pour cette facture est INVALIDE", vbCritical, "Information erronÃ©e / manquante"
         Exit Sub
     End If
     
@@ -526,42 +526,42 @@ Sub EnvoyerRappelParCourriel(noFact As String)
     Dim clientContactFact As String
     Dim clientCourriel As String
     allCols = Fn_Get_A_Row_From_A_Worksheet("BD_Clients", codeClient, fClntFMClientID)
-    'Vérifier les résultats
+    'VÃ©rifier les rÃ©sultats
     If IsArray(allCols) Then
         clientNom = allCols(fClntFMClientNom)
-        'Élimine le ou les nom(s) de contact
+        'Ã‰limine le ou les nom(s) de contact
         clientNom = Fn_Strip_Contact_From_Client_Name(clientNom)
         clientContactFact = Trim$(allCols(fClntFMContactFacturation)) + " "
-        '0 à 2 adresses courriel
+        '0 Ã  2 adresses courriel
         clientCourriel = allCols(fClntFMCourrielFacturation)
     Else
-        MsgBox "Enregistrement '" & codeClient & "' non trouvée !!!", vbCritical
+        MsgBox "Enregistrement '" & codeClient & "' non trouvÃ©e !!!", vbCritical
         Exit Sub
     End If
     
-    'Retrouver le solde de la facture, le total des paiements & le total des régularisations
+    'Retrouver le solde de la facture, le total des paiements & le total des rÃ©gularisations
     Dim factSolde As Currency
     Dim factSommePmts As Currency
     Dim factSommeRegul As Currency
     allCols = Fn_Get_A_Row_From_A_Worksheet("FAC_Comptes_Clients", noFact, fFacCCInvNo)
-    'Vérifier les résultats
+    'VÃ©rifier les rÃ©sultats
     If IsArray(allCols) Then
         factSolde = allCols(fFacCCBalance)
         factSommePmts = allCols(fFacCCTotalPaid)
         factSommeRegul = allCols(fFacCCTotalRegul)
     Else
-        MsgBox "Enregistrement '" & noFact & "' non trouvée !!!", vbCritical
+        MsgBox "Enregistrement '" & noFact & "' non trouvÃ©e !!!", vbCritical
         Exit Sub
     End If
     
-    'Vérification pour éviter d'envoyer un rappel pour une facture à 0 $ ou créditeur
+    'VÃ©rification pour Ã©viter d'envoyer un rappel pour une facture Ã  0 $ ou crÃ©diteur
     If factSolde <= 0 Then
         MsgBox "Il n'y a pas lieu d'envoyer un rappel" & vbNewLine & vbNewLine & _
-                "pour cette facture. Solde à " & Format$(factSolde, "#,##0.00 $"), vbCritical, "Solde à 0,00 $ ou créditeur"
+                "pour cette facture. Solde Ã  " & Format$(factSolde, "#,##0.00 $"), vbCritical, "Solde Ã  0,00 $ ou crÃ©diteur"
         Exit Sub
     End If
     
-    'Vérifier si l'email est valide
+    'VÃ©rifier si l'email est valide
     If Fn_ValiderCourriel(clientCourriel) = False Then
         MsgBox "L'adresse courriel est vide OU invalide" & vbNewLine & vbNewLine & _
                 "pour ce client.", vbExclamation, "Impossible d'envoyer un rappel (Adresse courriel invalide)"
@@ -573,12 +573,12 @@ Sub EnvoyerRappelParCourriel(noFact As String)
     attachmentFullPathName = wsdADMIN.Range("F5").Value & FACT_PDF_PATH & Application.PathSeparator & _
                      noFact & ".pdf"
     
-    'Vérification de l'existence de la pièce jointe
+    'VÃ©rification de l'existence de la piÃ¨ce jointe
     Dim fileExists As Boolean
     fileExists = Dir(attachmentFullPathName) <> ""
     If Not fileExists Then
-        MsgBox "La pièce jointe (Facture en format PDF) n'existe pas à" & vbNewLine & _
-                    "l'emplacement spécifié, soit " & attachmentFullPathName, vbCritical
+        MsgBox "La piÃ¨ce jointe (Facture en format PDF) n'existe pas Ã " & vbNewLine & _
+                    "l'emplacement spÃ©cifiÃ©, soit " & attachmentFullPathName, vbCritical
         GoTo Exit_Sub
     End If
     
@@ -586,11 +586,11 @@ Sub EnvoyerRappelParCourriel(noFact As String)
     Dim templateFullPathName As String
     templateFullPathName = Environ$("appdata") & "\Microsoft\Templates\GCF_Rappel.oft"
 
-    'Vérification de l'existence du template
+    'VÃ©rification de l'existence du template
     fileExists = Dir(templateFullPathName) <> ""
     If Not fileExists Then
         MsgBox "Le gabarit 'GCF_Rappel.oft' est introuvable " & _
-                    "à l'emplacement spécifié, soit " & Environ$("appdata") & "\Microsoft\Templates", _
+                    "Ã  l'emplacement spÃ©cifiÃ©, soit " & Environ$("appdata") & "\Microsoft\Templates", _
                     vbCritical
         GoTo Exit_Sub
     End If
@@ -603,9 +603,9 @@ Sub EnvoyerRappelParCourriel(noFact As String)
         Set OutlookApp = CreateObject("Outlook.Application")
     End If
     
-    'Vérifier si Outlook est bien ouvert
+    'VÃ©rifier si Outlook est bien ouvert
     If OutlookApp Is Nothing Then
-        MsgBox "Impossible d'ouvrir Outlook. Vérifiez votre installation.", vbCritical
+        MsgBox "Impossible d'ouvrir Outlook. VÃ©rifiez votre installation.", vbCritical
         Exit Sub
     End If
 
@@ -615,7 +615,7 @@ Sub EnvoyerRappelParCourriel(noFact As String)
 
     mailItem.Attachments.Add attachmentFullPathName
 
-    'Ajuster les derniers paramètres du courriel
+    'Ajuster les derniers paramÃ¨tres du courriel
     Dim adresseEmail  As Variant
     adresseEmail = Split(clientCourriel, "; ") '2025-03-02 @ 16:36
     Dim nbAdresseCourriel As Integer
@@ -631,7 +631,7 @@ Sub EnvoyerRappelParCourriel(noFact As String)
             Case Else
         End Select
         
-        .Subject = wsdADMIN.Range("NomEntreprise") & " - Rappel pour facture impayée - " & clientNom & " - Facture # " & noFact
+        .Subject = wsdADMIN.Range("NomEntreprise") & " - Rappel pour facture impayÃ©e - " & clientNom & " - Facture # " & noFact
         .Display  'Pour afficher le mail avant envoi (remplacez par .Send pour envoyer directement)
     End With
 
@@ -657,5 +657,6 @@ Sub RetourMenuFacturation()
     wshMenuFAC.Range("A1").Select
 
 End Sub
+
 
 

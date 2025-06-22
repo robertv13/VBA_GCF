@@ -1,5 +1,5 @@
-Attribute VB_Name = "modGL_EJ"
-'@Folder("Saisie_Entrée_Journal")
+ï»¿Attribute VB_Name = "modGL_EJ"
+'@Folder("Saisie_EntrÃ©e_Journal")
 
 Option Explicit
 
@@ -26,10 +26,10 @@ Sub GL_EJ_Update()
     If Fn_Is_Ecriture_Balance = False Then Exit Sub
     
     Dim rowEJLast As Long
-    rowEJLast = wshGL_EJ.Range("E23").End(xlUp).row  'Last Used Row in wshGL_EJ
+    rowEJLast = wshGL_EJ.Range("E23").End(xlUp).Row  'Last Used Row in wshGL_EJ
     If Fn_Is_JE_Valid(rowEJLast) = False Then Exit Sub
     
-    'Transfert des données vers wshGL, entête d'abord puis une ligne à la fois
+    'Transfert des donnÃ©es vers wshGL, entÃªte d'abord puis une ligne Ã  la fois
     Call GL_Trans_Add_Record_To_DB(rowEJLast)
     Call GL_Trans_Add_Record_Locally(rowEJLast)
     
@@ -52,7 +52,7 @@ Sub GL_EJ_Update()
         .Range("F4").Activate
     End With
     
-    MsgBox "L'écriture numéro '" & strCurrentJE & "' a été reporté avec succès", vbInformation, "Confirmation de traitement"
+    MsgBox "L'Ã©criture numÃ©ro '" & strCurrentJE & "' a Ã©tÃ© reportÃ© avec succÃ¨s", vbInformation, "Confirmation de traitement"
     
     Call Log_Record("modGL_EJ:GL_EJ_Update", "", startTime)
     
@@ -63,12 +63,12 @@ Sub JE_Renversement_Update()
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:JE_Renversement_Update", "", 0)
     
     If Fn_Is_Ecriture_Balance = False Then
-        MsgBox "L'écriture à renverser ne balance pas !!!", vbCritical
+        MsgBox "L'Ã©criture Ã  renverser ne balance pas !!!", vbCritical
         Exit Sub
     End If
     
     Dim rowEJLast As Long
-    rowEJLast = wshGL_EJ.Range("E23").End(xlUp).row  'Last Used Row in wshGL_EJ
+    rowEJLast = wshGL_EJ.Range("E23").End(xlUp).Row  'Last Used Row in wshGL_EJ
     If Fn_Is_JE_Valid(rowEJLast) = False Then Exit Sub
     
     'Renverser les montants (DT --> CT & CT ---> DT)
@@ -91,16 +91,16 @@ Sub JE_Renversement_Update()
     saveDescription = wshGL_EJ.Range("F6").Value
     wshGL_EJ.Range("F6").Value = "RENV. - " & wshGL_EJ.Range("F6").Value
     
-    'Transfert des données vers wshGL, entête d'abord puis une ligne à la fois
+    'Transfert des donnÃ©es vers wshGL, entÃªte d'abord puis une ligne Ã  la fois
     Call GL_Trans_Add_Record_To_DB(rowEJLast)
     Call GL_Trans_Add_Record_Locally(rowEJLast)
     
-    'Indiquer dans l'écriture originale qu'elle a été renversée par
+    'Indiquer dans l'Ã©criture originale qu'elle a Ã©tÃ© renversÃ©e par
     Call EJ_Trans_Update_Ecriture_Renversee_To_DB
     Call EJ_Trans_Update_Ecriture_Renversee_Locally
     
     MsgBox _
-        Prompt:="L'écriture numéro '" & gNumeroEcritureARenverser & "' a été RENVERSÉE avec succès", _
+        Prompt:="L'Ã©criture numÃ©ro '" & gNumeroEcritureARenverser & "' a Ã©tÃ© RENVERSÃ‰E avec succÃ¨s", _
         Title:="Confirmation de traitement", _
         Buttons:=vbInformation
 
@@ -127,7 +127,7 @@ Sub JE_Renversement_Update()
     wshGL_EJ.Range("F4, K4, F6:k6").Font.Color = vbBlack
     wshGL_EJ.Range("E9:K23").Font.Color = vbBlack
 
-    'Retour à la source
+    'Retour Ã  la source
     wshGL_EJ.Range("F4").Value = ""
     wshGL_EJ.Range("F6").Value = saveDescription
     wshGL_EJ.Range("F4").Select
@@ -135,7 +135,7 @@ Sub JE_Renversement_Update()
     Application.ScreenUpdating = True
     DoEvents
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set shp = Nothing
     
     Call Log_Record("modGL_EJ:JE_Renversement_Update", "", startTime)
@@ -147,7 +147,7 @@ Sub Save_EJ_Recurrente(ll As Long)
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:Save_EJ_Recurrente", "", 0)
     
     Dim rowEJLast As Long
-    rowEJLast = wshGL_EJ.Cells(wshGL_EJ.Rows.count, "E").End(xlUp).row  'Last Used Row in wshGL_EJ
+    rowEJLast = wshGL_EJ.Cells(wshGL_EJ.Rows.count, "E").End(xlUp).Row  'Last Used Row in wshGL_EJ
     
     Call GL_EJ_Recurrente_Add_Record_To_DB(ll)
     Call GL_EJ_Recurrente_Add_Record_Locally(ll)
@@ -162,7 +162,7 @@ Sub Load_JEAuto_Into_JE(EJAutoDesc As String, NoEJAuto As Long)
     
     'On copie l'E/J automatique vers wshEJ
     Dim rowJEAuto As Long, rowJE As Long
-    rowJEAuto = wsdGL_EJ_Recurrente.Cells(wsdGL_EJ_Recurrente.Rows.count, 1).End(xlUp).row  'Last Row used in wshGL_EJRecuurente
+    rowJEAuto = wsdGL_EJ_Recurrente.Cells(wsdGL_EJ_Recurrente.Rows.count, 1).End(xlUp).Row  'Last Row used in wshGL_EJRecuurente
     
     Call GL_EJ_Clear_All_Cells
     rowJE = 9
@@ -206,7 +206,7 @@ Sub GL_EJ_Clear_All_Cells()
         wshGL_EJ.Range("F4").Select
     End With
     
-    'Envlève la validation sur la cellule description/client
+    'EnvlÃ¨ve la validation sur la cellule description/client
     Dim cell As Range
     Set cell = wshGL_EJ.Range("F6:K6")
     Call AnnulerValidation(cell)
@@ -216,7 +216,7 @@ Sub GL_EJ_Clear_All_Cells()
         .EnableSelection = xlUnlockedCells
     End With
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set cell = Nothing
     
     Call Log_Record("modGL_EJ:GL_EJ_Clear_All_Cells", "", startTime)
@@ -230,22 +230,22 @@ Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
     
     'Remplir la description, si elle est vide
     If wshGL_EJ.Range("F6").Value = "" Then
-        wshGL_EJ.Range("F6").Value = "Déclaration TPS/TVQ - Du " & _
-            Format$(Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), wsdADMIN.Range("B1").Value) & " au " & _
+        wshGL_EJ.Range("F6").Value = "DÃ©claration TPS/TVQ - Du " & _
+            Format$(Fn_Calcul_Date_Premier_Jour_Trois_Mois_ArriÃ¨re(dateFin), wsdADMIN.Range("B1").Value) & " au " & _
             Format$(dateFin, wsdADMIN.Range("B1").Value)
     End If
     
     Dim cases() As Currency
     ReDim cases(101 To 213)
     
-    'Remplir le formulaire de déclaration
-    wshGL_EJ.Range("T5").Value = "du " & Format$(Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), wsdADMIN.Range("B1").Value)
-    wshGL_EJ.Range("V5").Value = "du " & Format$(Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), wsdADMIN.Range("B1").Value)
+    'Remplir le formulaire de dÃ©claration
+    wshGL_EJ.Range("T5").Value = "du " & Format$(Fn_Calcul_Date_Premier_Jour_Trois_Mois_ArriÃ¨re(dateFin), wsdADMIN.Range("B1").Value)
+    wshGL_EJ.Range("V5").Value = "du " & Format$(Fn_Calcul_Date_Premier_Jour_Trois_Mois_ArriÃ¨re(dateFin), wsdADMIN.Range("B1").Value)
     wshGL_EJ.Range("T6").Value = "du " & Format$(dateFin, wsdADMIN.Range("B1").Value)
     wshGL_EJ.Range("V6").Value = "du " & Format$(dateFin, wsdADMIN.Range("B1").Value)
     
     Dim rngResultAF As Range
-    Call GL_Get_Account_Trans_AF(ObtenirNoGlIndicateur("Revenus de consultation"), Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), dateFin, rngResultAF)
+    Call GL_Get_Account_Trans_AF(ObtenirNoGlIndicateur("Revenus de consultation"), Fn_Calcul_Date_Premier_Jour_Trois_Mois_ArriÃ¨re(dateFin), dateFin, rngResultAF)
     cases(101) = -Application.WorksheetFunction.Sum(rngResultAF.Columns(7)) _
                     - Application.WorksheetFunction.Sum(rngResultAF.Columns(8))
 
@@ -258,7 +258,7 @@ Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
     End With
     
     'TPS percues
-    cases(105) = Fn_Get_GL_Account_Balance(ObtenirNoGlIndicateur("TPS Facturée"), dateFin)
+    cases(105) = Fn_Get_GL_Account_Balance(ObtenirNoGlIndicateur("TPS FacturÃ©e"), dateFin)
     wshGL_EJ.Range("E" & r).Value = "TPS percues"
     If cases(105) <= 0 Then
         wshGL_EJ.Range("H" & r).Value = -cases(105)
@@ -275,7 +275,7 @@ Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
     End With
     
     'TVQ percues
-    cases(205) = Fn_Get_GL_Account_Balance(ObtenirNoGlIndicateur("TVQ Facturée"), dateFin)
+    cases(205) = Fn_Get_GL_Account_Balance(ObtenirNoGlIndicateur("TVQ FacturÃ©e"), dateFin)
     wshGL_EJ.Range("E" & r).Value = "TVQ percues"
     If cases(205) <= 0 Then
         wshGL_EJ.Range("H" & r).Value = -cases(205)
@@ -291,8 +291,8 @@ Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
         .Value = -cases(205)
     End With
     
-    cases(108) = Fn_Get_GL_Account_Balance(ObtenirNoGlIndicateur("TPS Payée"), dateFin)
-    wshGL_EJ.Range("E" & r).Value = "TPS payées"
+    cases(108) = Fn_Get_GL_Account_Balance(ObtenirNoGlIndicateur("TPS PayÃ©e"), dateFin)
+    wshGL_EJ.Range("E" & r).Value = "TPS payÃ©es"
     If cases(108) <= 0 Then
         wshGL_EJ.Range("H" & r).Value = -cases(108)
     Else
@@ -307,8 +307,8 @@ Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
         .Value = cases(108)
     End With
     
-    cases(208) = Fn_Get_GL_Account_Balance(ObtenirNoGlIndicateur("TVQ Payée"), dateFin)
-    wshGL_EJ.Range("E" & r).Value = "TVQ payées"
+    cases(208) = Fn_Get_GL_Account_Balance(ObtenirNoGlIndicateur("TVQ PayÃ©e"), dateFin)
+    wshGL_EJ.Range("E" & r).Value = "TVQ payÃ©es"
     If cases(208) <= 0 Then
         wshGL_EJ.Range("H" & r).Value = -cases(208)
     Else
@@ -382,15 +382,15 @@ Sub GL_EJ_Renverser_Ecriture()
 
     Dim ws As Worksheet: Set ws = wsdGL_Trans
     
-    '1. Demande le numéro d'écriture à partir d'un ListBox
+    '1. Demande le numÃ©ro d'Ã©criture Ã  partir d'un ListBox
     Call PreparerAfficherListeEcriture
     Dim no_Ecriture As Long
     If ActiveSheet.Range("B3").Value <> -1 Then
         no_Ecriture = ActiveSheet.Range("B3").Value
     Else
         MsgBox _
-            Prompt:="Vous n'avez sélectionné aucune écriture à renverser", _
-            Title:="Sélection d'une écriture à renverser", _
+            Prompt:="Vous n'avez sÃ©lectionnÃ© aucune Ã©criture Ã  renverser", _
+            Title:="SÃ©lection d'une Ã©criture Ã  renverser", _
             Buttons:=vbInformation
         Application.EnableEvents = False
         wshGL_EJ.Range("F4").Value = ""
@@ -399,39 +399,39 @@ Sub GL_EJ_Renverser_Ecriture()
         Exit Sub
     End If
     
-    '2. Affiche l'écriture à renverser
+    '2. Affiche l'Ã©criture Ã  renverser
     Call GL_Get_JE_Detail_Trans_AF(no_Ecriture)
     Dim lastUsedRowResult As Long
-    lastUsedRowResult = ws.Cells(ws.Rows.count, "AC").End(xlUp).row
+    lastUsedRowResult = ws.Cells(ws.Rows.count, "AC").End(xlUp).Row
     If lastUsedRowResult < 2 Then
-        MsgBox "Je ne retrouve pas l'écriture '" & no_Ecriture & "'" & vbNewLine & vbNewLine & _
-                "Veuillez vérifier votre numéro et reessayez", vbInformation, "Numéro d'écriture invalide"
+        MsgBox "Je ne retrouve pas l'Ã©criture '" & no_Ecriture & "'" & vbNewLine & vbNewLine & _
+                "Veuillez vÃ©rifier votre numÃ©ro et reessayez", vbInformation, "NumÃ©ro d'Ã©criture invalide"
         Exit Sub
     End If
     Dim rngResult As Range
     Set rngResult = ws.Range("AC1").CurrentRegion.offset(1, 0)
     If InStr(rngResult.Cells(1, 4).Value, "ENCAISSEMENT:") <> 0 Or _
-        InStr(rngResult.Cells(1, 4).Value, "DÉBOURSÉ:") <> 0 Or _
+        InStr(rngResult.Cells(1, 4).Value, "DÃ‰BOURSÃ‰:") <> 0 Or _
         InStr(rngResult.Cells(1, 4).Value, "FACTURE:") <> 0 Or _
         InStr(rngResult.Cells(1, 4).Value, "RENVERSEMENT:") <> 0 Then
-        MsgBox "Je ne peux renverser ce type d'écriture '" & _
+        MsgBox "Je ne peux renverser ce type d'Ã©criture '" & _
                 Left$(rngResult.Cells(1, 4).Value, InStr(rngResult.Cells(1, 4).Value, ":") - 1) & _
                 "'" & vbNewLine & vbNewLine & _
-                "Veuillez vérifier votre numéro et reessayez", _
-                vbInformation, "Type d'écriture impossible à renverser"
+                "Veuillez vÃ©rifier votre numÃ©ro et reessayez", _
+                vbInformation, "Type d'Ã©criture impossible Ã  renverser"
         wshGL_EJ.Range("F4").Value = ""
         wshGL_EJ.Range("F4").Select
         Exit Sub
     End If
     
-    'Cette écriture a-t-elle déjà été RENVERSÉE ?
+    'Cette Ã©criture a-t-elle dÃ©jÃ  Ã©tÃ© RENVERSÃ‰E ?
     Dim rng As Range
     Set rng = ws.Columns("D")
     Dim trouve As Range
     Set trouve = rng.Find(What:="RENVERSEMENT:" & no_Ecriture, LookIn:=xlValues, LookAt:=xlWhole)
     If Not trouve Is Nothing Then
-        MsgBox "Cette écriture a déjà été RENVERSÉE..." & vbNewLine & vbNewLine & _
-               "Avec le numéro d'écriture '" & ws.Cells(trouve.row, 1).Value & "'" & vbNewLine & vbNewLine & _
+        MsgBox "Cette Ã©criture a dÃ©jÃ  Ã©tÃ© RENVERSÃ‰E..." & vbNewLine & vbNewLine & _
+               "Avec le numÃ©ro d'Ã©criture '" & ws.Cells(trouve.row, 1).Value & "'" & vbNewLine & vbNewLine & _
                "En date du " & Format$(ws.Cells(trouve.row, 2).Value, wsdADMIN.Range("B1").Value) & ".", vbInformation
         Exit Sub
     End If
@@ -455,16 +455,16 @@ Sub GL_EJ_Renverser_Ecriture()
     Next ligne
     Application.EnableEvents = True
     
-    'On affiche l'écriture à renverser en rouge
+    'On affiche l'Ã©criture Ã  renverser en rouge
     wshGL_EJ.Range("F4, K4, F6:k6").Font.Color = vbRed
     wshGL_EJ.Range("E9:K23").Font.Color = vbRed
     
-    'Change le libellé du Bouton & caractéristiques
+    'Change le libellÃ© du Bouton & caractÃ©ristiques
     Dim shp As Shape
     Set shp = wshGL_EJ.Shapes("btnUpdate")
     Call GL_EJ_Forme_Modifier(shp)
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ligne = Nothing
     Set rngResult = Nothing
     Set shp = Nothing
@@ -479,28 +479,28 @@ Sub GL_EJ_Depot_Client()
     'Ajuster le formulaire
     ws.Range("E6").Value = "Client:"
             
-    'Ajouter la validation des données
+    'Ajouter la validation des donnÃ©es
     Dim cell As Range: Set cell = wshGL_EJ.Range("F6:K6")
     
     Dim condition As Boolean
-    condition = (wshGL_EJ.Range("F4").Value = "Dépôt de client")
+    condition = (wshGL_EJ.Range("F4").Value = "DÃ©pÃ´t de client")
     
-    Call GérerValidation(cell, "dnrClients_Search_Field_Only", condition)
+    Call GÃ©rerValidation(cell, "dnrClients_Search_Field_Only", condition)
     
-    'Force l'écriture
+    'Force l'Ã©criture
     wshGL_EJ.Range("E9").Value = "Encaisse"
-    wshGL_EJ.Range("E10").Value = "Produit perçu d'avance"
+    wshGL_EJ.Range("E10").Value = "Produit perÃ§u d'avance"
     
-    'Saisie du montant du dépôt
+    'Saisie du montant du dÃ©pÃ´t
     wshGL_EJ.Range("K4").Select
 
-    'Libérer les objects
+    'LibÃ©rer les objects
     Set cell = Nothing
     Set ws = Nothing
     
 End Sub
 
-Sub GérerValidation(cell As Range, nomPlage As String, condition As Boolean)
+Sub GÃ©rerValidation(cell As Range, nomPlage As String, condition As Boolean)
     
     If condition Then
         'Condition remplie, appliquer la validation de liste
@@ -516,22 +516,22 @@ Sub AjouterValidation(cell As Range, nomPlage As String)
 
     Dim ws As Worksheet: Set ws = wshGL_EJ
     
-    Dim feuilleProtégée As Boolean
-    feuilleProtégée = ws.ProtectContents
+    Dim feuilleProtÃ©gÃ©e As Boolean
+    feuilleProtÃ©gÃ©e = ws.ProtectContents
     
-    If feuilleProtégée Then ws.Unprotect
+    If feuilleProtÃ©gÃ©e Then ws.Unprotect
     
     On Error Resume Next
     cell.Validation.Delete 'Supprimer toute validation existante
     On Error GoTo 0
     
-    'Ajouter la validation de données
+    'Ajouter la validation de donnÃ©es
     cell.Validation.Add Type:=xlValidateList, _
                         AlertStyle:=xlValidAlertStop, _
                         Operator:=xlBetween, _
                         Formula1:="=" & ThisWorkbook.Names(nomPlage).Name
 
-    'Configurer les propriétés de la validation de données
+    'Configurer les propriÃ©tÃ©s de la validation de donnÃ©es
     If Not cell.Validation Is Nothing Then
         cell.Validation.IgnoreBlank = True
         cell.Validation.InCellDropdown = True
@@ -539,14 +539,14 @@ Sub AjouterValidation(cell As Range, nomPlage As String)
         cell.Validation.ShowError = True
     End If
     
-    If feuilleProtégée Then
+    If feuilleProtÃ©gÃ©e Then
         With ws
             .Protect UserInterfaceOnly:=True
             .EnableSelection = xlUnlockedCells
         End With
     End If
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
     
 End Sub
@@ -563,10 +563,10 @@ Sub GL_EJ_Recurrente_Build_Summary()
     
     'Build the summary at column K & L
     Dim lastUsedRow1 As Long
-    lastUsedRow1 = wsdGL_EJ_Recurrente.Cells(wsdGL_EJ_Recurrente.Rows.count, 1).End(xlUp).row
+    lastUsedRow1 = wsdGL_EJ_Recurrente.Cells(wsdGL_EJ_Recurrente.Rows.count, 1).End(xlUp).Row
     
     Dim lastUsedRow2 As Long
-    lastUsedRow2 = wsdGL_EJ_Recurrente.Cells(wsdGL_EJ_Recurrente.Rows.count, "J").End(xlUp).row
+    lastUsedRow2 = wsdGL_EJ_Recurrente.Cells(wsdGL_EJ_Recurrente.Rows.count, "J").End(xlUp).Row
     If lastUsedRow2 > 1 Then
         wsdGL_EJ_Recurrente.Range("J2:K" & lastUsedRow2).Clear
     End If
@@ -596,22 +596,22 @@ Sub GL_Get_JE_Detail_Trans_AF(noEJ As Long) '2024-11-17 @ 12:08
     
     'wsdGL_Trans_AF#2
 
-    'Effacer les données de la dernière utilisation
+    'Effacer les donnÃ©es de la derniÃ¨re utilisation
     ws.Range("AA6:AA10").ClearContents
-    ws.Range("AA6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("AA6").Value = "DerniÃ¨re utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
-    'Définir le range pour la source des données en utilisant un tableau
+    'DÃ©finir le range pour la source des donnÃ©es en utilisant un tableau
     Dim rngData As Range
     Set rngData = ws.Range("l_tbl_GL_Trans[#All]")
     ws.Range("AA7").Value = rngData.Address
     
-    'Définir le range des critères
+    'DÃ©finir le range des critÃ¨res
     Dim rngCriteria As Range
     Set rngCriteria = ws.Range("AA2:AA3")
     ws.Range("AA3").Value = noEJ
     ws.Range("AA8").Value = rngCriteria.Address
     
-    'Définir le range des résultats et effacer avant le traitement
+    'DÃ©finir le range des rÃ©sultats et effacer avant le traitement
     Dim rngResult As Range
     Set rngResult = ws.Range("AC1").CurrentRegion
     rngResult.offset(1, 0).Clear
@@ -624,26 +624,26 @@ Sub GL_Get_JE_Detail_Trans_AF(noEJ As Long) '2024-11-17 @ 12:08
                 CopyToRange:=rngResult, _
                 Unique:=False
         
-    'Quels sont les résultats ?
+    'Quels sont les rÃ©sultats ?
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "AC").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "AC").End(xlUp).Row
     ws.Range("AA10").Value = lastUsedRow - 1 & " lignes"
 
-    'On tri les résultats par noGL / par date?
+    'On tri les rÃ©sultats par noGL / par date?
     If lastUsedRow > 2 Then
-        With ws.Sort 'Sort - NoEntrée, Débit(D) et Crédit (D)
+        With ws.Sort 'Sort - NoEntrÃ©e, DÃ©bit(D) et CrÃ©dit (D)
         .SortFields.Clear
-            'First sort On NoEntrée
+            'First sort On NoEntrÃ©e
             .SortFields.Add key:=ws.Range("AC2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlAscending, _
                 DataOption:=xlSortNormal
-            'Second, sort On Débit(D)
+            'Second, sort On DÃ©bit(D)
             .SortFields.Add key:=ws.Range("AI2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlDescending, _
                 DataOption:=xlSortNormal
-            'Third, sort On Crédit(D)
+            'Third, sort On CrÃ©dit(D)
             .SortFields.Add key:=ws.Range("AJ2"), _
                 SortOn:=xlSortOnValues, _
                 Order:=xlDescending, _
@@ -653,7 +653,7 @@ Sub GL_Get_JE_Detail_Trans_AF(noEJ As Long) '2024-11-17 @ 12:08
          End With
     End If
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set rngCriteria = Nothing
     Set rngData = Nothing
     Set rngResult = Nothing
@@ -681,7 +681,7 @@ Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xls
 
     'SQL select command to find the next available ID
     Dim strSQL As String
-    strSQL = "SELECT MAX(NoEntrée) AS MaxEJNo FROM [" & destinationTab & "]"
+    strSQL = "SELECT MAX(NoEntrÃ©e) AS MaxEJNo FROM [" & destinationTab & "]"
 
     'Open recordset to find out the MaxID
     rs.Open strSQL, conn
@@ -712,9 +712,9 @@ Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xls
     For l = 9 To r
         rs.AddNew
             'Add fields to the recordset before updating it
-            rs.Fields(fGlTNoEntrée - 1).Value = gNextJENo
+            rs.Fields(fGlTNoEntrÃ©e - 1).Value = gNextJENo
             rs.Fields(fGlTDate - 1).Value = Format$(CDate(wshGL_EJ.Range("K4").Value), "yyyy-mm-dd")
-            If wshGL_EJ.Range("F4").Value <> "Dépôt de client" Then
+            If wshGL_EJ.Range("F4").Value <> "DÃ©pÃ´t de client" Then
                 rs.Fields(fGlTDescription - 1).Value = wshGL_EJ.Range("F6").Value
                 rs.Fields(fGlTSource - 1).Value = wshGL_EJ.Range("F4").Value
             Else
@@ -724,10 +724,10 @@ Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xls
             rs.Fields(fGlTNoCompte - 1).Value = wshGL_EJ.Range("L" & l).Value
             rs.Fields(fGlTCompte - 1).Value = wshGL_EJ.Range("E" & l).Value
             If wshGL_EJ.Range("H" & l).Value <> "" <> 0 Then
-                rs.Fields(fGlTDébit - 1).Value = CDbl(Replace(wshGL_EJ.Range("H" & l).Value, ".", ","))
+                rs.Fields(fGlTDÃ©bit - 1).Value = CDbl(Replace(wshGL_EJ.Range("H" & l).Value, ".", ","))
             End If
             If wshGL_EJ.Range("I" & l).Value <> "" Then
-                rs.Fields(fGlTCrédit - 1).Value = CDbl(Replace(wshGL_EJ.Range("I" & l).Value, ".", ","))
+                rs.Fields(fGlTCrÃ©dit - 1).Value = CDbl(Replace(wshGL_EJ.Range("I" & l).Value, ".", ","))
             End If
             rs.Fields(fGlTAutreRemarque - 1).Value = wshGL_EJ.Range("J" & l).Value
             rs.Fields(fGlTTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
@@ -742,7 +742,7 @@ Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xls
     
     Application.ScreenUpdating = True
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set conn = Nothing
     Set rs = Nothing
     
@@ -766,7 +766,7 @@ Sub GL_Trans_Add_Record_Locally(r As Long) 'Write records locally
     
     'What is the last used row in GL_Trans ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wsdGL_Trans.Cells(wsdGL_Trans.Rows.count, "A").End(xlUp).row
+    lastUsedRow = wsdGL_Trans.Cells(wsdGL_Trans.Rows.count, "A").End(xlUp).Row
     rowToBeUsed = lastUsedRow + 1
     
     Call Log_Record("modGL_EJ:GL_Trans_Add_Record_Locally - r = " & r, -1)
@@ -775,7 +775,7 @@ Sub GL_Trans_Add_Record_Locally(r As Long) 'Write records locally
     For i = 9 To r
         wsdGL_Trans.Range("A" & rowToBeUsed).Value = JENo
         wsdGL_Trans.Range("B" & rowToBeUsed).Value = CDate(wshGL_EJ.Range("K4").Value)
-        If wshGL_EJ.Range("F4").Value <> "Dépôt de client" Then
+        If wshGL_EJ.Range("F4").Value <> "DÃ©pÃ´t de client" Then
             wsdGL_Trans.Range("C" & rowToBeUsed).Value = wshGL_EJ.Range("F6").Value
             wsdGL_Trans.Range("D" & rowToBeUsed).Value = wshGL_EJ.Range("F4").Value
         Else
@@ -808,7 +808,7 @@ Sub EJ_Trans_Update_Ecriture_Renversee_To_DB()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:EJ_Trans_Update_Ecriture_Renversee_To_DB", "", 0)
     
-    'Définition des paramètres
+    'DÃ©finition des paramÃ¨tres
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
@@ -819,22 +819,22 @@ Sub EJ_Trans_Update_Ecriture_Renversee_To_DB()
     conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
     Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
 
-    'Requête SQL pour rechercher la ligne correspondante
+    'RequÃªte SQL pour rechercher la ligne correspondante
     Dim strSQL As String
-    strSQL = "SELECT * FROM [" & destinationTab & "] WHERE [NoEntrée] = " & gNumeroEcritureARenverser
+    strSQL = "SELECT * FROM [" & destinationTab & "] WHERE [NoEntrÃ©e] = " & gNumeroEcritureARenverser
 
     'Ouvrir le Recordset
-    rs.Open strSQL, conn, 1, 3 'adOpenKeyset (1) + adLockOptimistic (3) pour modifier les données
+    rs.Open strSQL, conn, 1, 3 'adOpenKeyset (1) + adLockOptimistic (3) pour modifier les donnÃ©es
 
-    'Vérifier si des enregistrements existent
+    'VÃ©rifier si des enregistrements existent
     If rs.EOF Then
-        MsgBox "Aucun enregistrement trouvé.", vbCritical, "Impossible de mettre à jour les écritures RENVERSÉES"
+        MsgBox "Aucun enregistrement trouvÃ©.", vbCritical, "Impossible de mettre Ã  jour les Ã©critures RENVERSÃ‰ES"
     Else
-        'Boucler à travers les enregistrements
+        'Boucler Ã  travers les enregistrements
         Do While Not rs.EOF
-            rs.Fields(fGlTSource - 1).Value = "RENVERSÉE par " & wshGL_EJ.Range("B1").Value
+            rs.Fields(fGlTSource - 1).Value = "RENVERSÃ‰E par " & wshGL_EJ.Range("B1").Value
             rs.Update
-        'Passer à l'enregistrement suivant
+        'Passer Ã  l'enregistrement suivant
         rs.MoveNext
         Loop
     End If
@@ -845,7 +845,7 @@ Sub EJ_Trans_Update_Ecriture_Renversee_To_DB()
     On Error GoTo 0
     conn.Close
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set conn = Nothing
     Set rs = Nothing
 
@@ -862,21 +862,21 @@ Sub EJ_Trans_Update_Ecriture_Renversee_Locally()
     Dim ws As Worksheet
     Set ws = wsdGL_Trans
     
-    'Dernière ligne de la table
+    'DerniÃ¨re ligne de la table
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).Row
     
     'Boucler sur toutes les lignes pour trouver les correspondances
     Dim cell As Range
     For Each cell In ws.Range("A2:A" & lastUsedRow)
         If cell.Value = gNumeroEcritureARenverser Then
-            cell.offset(0, fGlTSource - 1).Value = "RENVERSÉE par " & wshGL_EJ.Range("B1").Value
+            cell.offset(0, fGlTSource - 1).Value = "RENVERSÃ‰E par " & wshGL_EJ.Range("B1").Value
         End If
     Next cell
     
     Application.ScreenUpdating = True
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
 
     Call Log_Record("modEJ_Saisie:EJ_Trans_Update_Ecriture_Renversee_Locally", "", startTime)
@@ -892,7 +892,7 @@ Sub GL_EJ_Recurrente_Add_Record_To_DB(r As Long) 'Write/Update a record to exter
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "GL_EJ_Récurrente$"
+    destinationTab = "GL_EJ_RÃ©currente$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -936,10 +936,10 @@ Sub GL_EJ_Recurrente_Add_Record_To_DB(r As Long) 'Write/Update a record to exter
             rs.Fields(fGlEjRNoCompte - 1).Value = wshGL_EJ.Range("L" & l).Value
             rs.Fields(fGlEjRCompte - 1).Value = wshGL_EJ.Range("E" & l).Value
             If wshGL_EJ.Range("H" & l).Value <> "" Then
-                rs.Fields(fGlEjRDébit - 1).Value = CDbl(Replace(wshGL_EJ.Range("H" & l).Value, ".", ","))
+                rs.Fields(fGlEjRDÃ©bit - 1).Value = CDbl(Replace(wshGL_EJ.Range("H" & l).Value, ".", ","))
             End If
             If wshGL_EJ.Range("I" & l).Value <> "" Then
-                rs.Fields(fGlEjRCrédit - 1).Value = CDbl(Replace(wshGL_EJ.Range("I" & l).Value, ".", ","))
+                rs.Fields(fGlEjRCrÃ©dit - 1).Value = CDbl(Replace(wshGL_EJ.Range("I" & l).Value, ".", ","))
             End If
             rs.Fields(fGlEjRAutreRemarque - 1).Value = wshGL_EJ.Range("J" & l).Value
             rs.Fields(fGlEjRTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
@@ -954,7 +954,7 @@ Sub GL_EJ_Recurrente_Add_Record_To_DB(r As Long) 'Write/Update a record to exter
     
     Application.ScreenUpdating = True
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set conn = Nothing
     Set rs = Nothing
     
@@ -978,7 +978,7 @@ Sub GL_EJ_Recurrente_Add_Record_Locally(r As Long) 'Write records to local file
     
     'What is the last used row in EJ_AUto ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wsdGL_EJ_Recurrente.Cells(wsdGL_EJ_Recurrente.Rows.count, "C").End(xlUp).row
+    lastUsedRow = wsdGL_EJ_Recurrente.Cells(wsdGL_EJ_Recurrente.Rows.count, "C").End(xlUp).Row
     rowToBeUsed = lastUsedRow + 1
     
     Dim i As Long
@@ -1017,12 +1017,12 @@ Sub GL_EJ_Back_To_Menu()
     
     ActiveSheet.Unprotect
     
-    'Rétablir la forme du bouton (Mettre à jour / Renverser)
+    'RÃ©tablir la forme du bouton (Mettre Ã  jour / Renverser)
     Dim shp As Shape
     Set shp = wshGL_EJ.Shapes("btnUpdate")
     Call GL_EJ_Forme_Restaurer(shp)
 
-    'Nouvelle façon de faire
+    'Nouvelle faÃ§on de faire
     wshGL_EJ.Visible = xlSheetHidden
     
     wshMenuGL.Activate
@@ -1030,19 +1030,19 @@ Sub GL_EJ_Back_To_Menu()
     
     gFromMenu = True
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set shp = Nothing
     
 End Sub
 
 Sub GL_EJ_Forme_Sauvegarder(forme As Shape)
 
-    'Vérifier si le Dictionary est déjà instancié, sinon le créer
+    'VÃ©rifier si le Dictionary est dÃ©jÃ  instanciÃ©, sinon le crÃ©er
     If gSauvegardesCaracteristiquesForme Is Nothing Then
         Set gSauvegardesCaracteristiquesForme = CreateObject("Scripting.Dictionary")
     End If
 
-    'Sauvegarder les caractéristiques originales de la forme
+    'Sauvegarder les caractÃ©ristiques originales de la forme
     gSauvegardesCaracteristiquesForme("Left") = forme.Left
     gSauvegardesCaracteristiquesForme("Width") = forme.Width
     gSauvegardesCaracteristiquesForme("Height") = forme.Height
@@ -1055,7 +1055,7 @@ End Sub
 
 Sub GL_EJ_Forme_Modifier(forme As Shape)
 
-    'Appliquer des modifications à la forme
+    'Appliquer des modifications Ã  la forme
     Application.ScreenUpdating = True
     With forme
         .Left = 470
@@ -1075,12 +1075,12 @@ End Sub
 
 Sub GL_EJ_Forme_Restaurer(forme As Shape)
 
-    'Vérifiez si les caractéristiques originales sont sauvegardées
+    'VÃ©rifiez si les caractÃ©ristiques originales sont sauvegardÃ©es
     If gSauvegardesCaracteristiquesForme Is Nothing Then
         Exit Sub
     End If
 
-    'Restaurer les caractéristiques de la forme
+    'Restaurer les caractÃ©ristiques de la forme
     forme.Left = gSauvegardesCaracteristiquesForme("Left")
     forme.Width = gSauvegardesCaracteristiquesForme("Width")
     forme.Height = gSauvegardesCaracteristiquesForme("Height")
@@ -1093,12 +1093,12 @@ End Sub
 
 Sub PreparerAfficherListeEcriture()
 
-    'Charger la liste des écritures au G/L en mémoire
+    'Charger la liste des Ã©critures au G/L en mÃ©moire
     Dim ws As Worksheet: Set ws = wsdGL_Trans
     Dim arrData As Variant
     arrData = ws.Range("A1").CurrentRegion.Value
     
-    'Initialiser le tableau des résultats
+    'Initialiser le tableau des rÃ©sultats
     Dim resultats() As Variant
     Dim compteur As Long
     ReDim resultats(1 To Round(UBound(arrData, 1) / 2, 0), 1 To 5) 'Maximum = Nombre de lignes / 2
@@ -1108,30 +1108,30 @@ Sub PreparerAfficherListeEcriture()
     compteur = 0
     For i = 2 To UBound(arrData, 1)
         Source = CStr(arrData(i, fGlTSource))
-        'Seulement les écritures de journal (exclure les autres)
+        'Seulement les Ã©critures de journal (exclure les autres)
         If Source = "" Or Not ExclureTransaction(Source) = True Then
             If InStr(strDejaVu, CStr(arrData(i, 1)) & ".|.") = 0 Then
                 compteur = compteur + 1
-                resultats(compteur, 1) = arrData(i, fGlTNoEntrée)
+                resultats(compteur, 1) = arrData(i, fGlTNoEntrÃ©e)
                 resultats(compteur, 2) = Format$(arrData(i, fGlTDate), wsdADMIN.Range("B1").Value)
                 resultats(compteur, 3) = arrData(i, fGlTDescription)
                 resultats(compteur, 4) = Source
                 resultats(compteur, 5) = Format$(arrData(i, fGlTTimeStamp), wsdADMIN.Range("B1").Value & " hh:mm:ss")
-                strDejaVu = strDejaVu & CStr(arrData(i, fGlTNoEntrée)) & ".|."
+                strDejaVu = strDejaVu & CStr(arrData(i, fGlTNoEntrÃ©e)) & ".|."
             End If
         End If
     Next i
     
-    'Est-ce que nous avons des résultats
+    'Est-ce que nous avons des rÃ©sultats
     If compteur = 0 Then
-        MsgBox "Aucune écriture à renverser.", vbInformation
+        MsgBox "Aucune Ã©criture Ã  renverser.", vbInformation
         Exit Sub
     End If
    
-    'Réduire la taille du tableau resultats
+    'RÃ©duire la taille du tableau resultats
     Call Array_2D_Resizer(resultats, compteur, UBound(resultats, 2))
     
-    'Charger les résultats dans la ListBox
+    'Charger les rÃ©sultats dans la ListBox
     With ufListeEcritureGL.lsbListeEcritureGL
         .ColumnCount = 5
         .ColumnWidths = "35;62;310;125;92"
@@ -1151,7 +1151,7 @@ Sub PreparerAfficherListeEcriture()
         i = i + 1
     Loop
 
-    'Déplacer le focus sur la dernière ligne
+    'DÃ©placer le focus sur la derniÃ¨re ligne
     If ufListeEcritureGL.lsbListeEcritureGL.ListCount > 0 Then
         ufListeEcritureGL.lsbListeEcritureGL.ListIndex = ufListeEcritureGL.lsbListeEcritureGL.ListCount - 1
     End If
@@ -1170,4 +1170,5 @@ Sub ckbRecurrente_Click()
     End If
 
 End Sub
+
 

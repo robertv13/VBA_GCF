@@ -1,12 +1,12 @@
-Attribute VB_Name = "modDev_Proof"
+ÔªøAttribute VB_Name = "modDev_Proof"
 Option Explicit
 
-Sub ObtenirHeuresFacturÈesParFacture() '2025-04-07 @ 04:51
+Sub ObtenirHeuresFactur√©esParFacture() '2025-04-07 @ 04:51
 
-    '1. Obtenir toutes les charges facturÈes
+    '1. Obtenir toutes les charges factur√©es
     Dim ws As Worksheet: Set ws = wsdTEC_Local
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).Row
     
     Dim s As String
     Dim dict As Object
@@ -24,13 +24,13 @@ Sub ObtenirHeuresFacturÈesParFacture() '2025-04-07 @ 04:51
         End If
     Next i
 
-    'CrÈation/Initialisation d'une feuille
+    'Cr√©ation/Initialisation d'une feuille
     Dim feuilleNom As String
-    feuilleNom = "X_Heures_FacturÈes_Par_Facture"
+    feuilleNom = "X_Heures_Factur√©es_Par_Facture"
     Call Erase_And_Create_Worksheet(feuilleNom)
     Dim wsOutput As Worksheet
     Set wsOutput = ThisWorkbook.Sheets(feuilleNom)
-    wsOutput.Cells(1, 1).Value = "NumÈroFact"
+    wsOutput.Cells(1, 1).Value = "Num√©roFact"
     wsOutput.Cells(1, 2).Value = "Prof"
     wsOutput.Cells(1, 3).Value = "HeuresFact"
     
@@ -83,7 +83,7 @@ Sub SoustotalHeures(ws As Worksheet, saveInv As String, ByRef r As Long, ByRef s
 
 End Sub
 
-Sub Identifier…cartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
+Sub Identifier√âcartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
 
     'Initialisation
     Dim wsEntete As Worksheet
@@ -93,21 +93,21 @@ Sub Identifier…cartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
     Dim wsRapport As Worksheet
     
     On Error Resume Next
-    Set wsRapport = ThisWorkbook.Worksheets("Rapport…cartsFactures")
+    Set wsRapport = ThisWorkbook.Worksheets("Rapport√âcartsFactures")
     On Error GoTo 0
     If wsRapport Is Nothing Then
         Set wsRapport = ThisWorkbook.Worksheets.Add
-        wsRapport.Name = "Rapport…cartsFactures"
+        wsRapport.Name = "Rapport√âcartsFactures"
     End If
     
     'Effacer le contenu du rapport
     wsRapport.Cells.Clear
-    wsRapport.Cells(1, 1).Value = "NumÈro de facture"
-    wsRapport.Cells(1, 2).Value = "$ FAC_EntÍte"
+    wsRapport.Cells(1, 1).Value = "Num√©ro de facture"
+    wsRapport.Cells(1, 2).Value = "$ FAC_Ent√™te"
     wsRapport.Cells(1, 3).Value = "$ FAC_Comptes_Clients"
-    wsRapport.Cells(1, 4).Value = "DiffÈrence"
+    wsRapport.Cells(1, 4).Value = "Diff√©rence"
     
-    'Charger les donnÈes dans des dictionnaires
+    'Charger les donn√©es dans des dictionnaires
     Dim dictEntete As Object
     Set dictEntete = CreateObject("Scripting.Dictionary")
     Dim dictComptesClients As Object
@@ -116,36 +116,36 @@ Sub Identifier…cartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
     'Lire wsdFAC_Entete
     Dim Facture As String
     Dim lastRowEntete As Long, lastRowComptes As Long
-    lastRowEntete = wsEntete.Cells(wsEntete.Rows.count, 1).End(xlUp).row
-    Dim montantEntete As Currency, totalEntÍteCC As Currency
+    lastRowEntete = wsEntete.Cells(wsEntete.Rows.count, 1).End(xlUp).Row
+    Dim montantEntete As Currency, totalEnt√™teCC As Currency
     Dim i As Long
     For i = 3 To lastRowEntete
         Facture = wsEntete.Cells(i, fFacEInvNo).Value
         montantEntete = wsEntete.Cells(i, fFacEARTotal).Value
-        totalEntÍteCC = totalEntÍteCC + montantEntete
+        totalEnt√™teCC = totalEnt√™teCC + montantEntete
         If Len(Facture) > 0 Then dictEntete(Facture) = montantEntete
     Next i
     
     'Lire wsdFAC_Comptes_Clients
     Dim montantCompte As Currency, totalComptesClients As Currency
-    Dim montantPayÈ As Currency, montantRÈgul As Currency
+    Dim montantPay√© As Currency, montantR√©gul As Currency
     Dim solde As Currency, soldeCC1 As Currency, soldeCC2 As Currency
-    lastRowComptes = wsComptesClients.Cells(wsComptesClients.Rows.count, 1).End(xlUp).row
+    lastRowComptes = wsComptesClients.Cells(wsComptesClients.Rows.count, 1).End(xlUp).Row
     For i = 3 To lastRowComptes
         Facture = wsComptesClients.Cells(i, fFacCCInvNo).Value
         montantCompte = wsComptesClients.Cells(i, fFacCCTotal).Value
         totalComptesClients = totalComptesClients + montantCompte
-        montantPayÈ = wsComptesClients.Cells(i, fFacCCTotalPaid).Value
-        montantRÈgul = wsComptesClients.Cells(i, fFacCCTotalRegul).Value
+        montantPay√© = wsComptesClients.Cells(i, fFacCCTotalPaid).Value
+        montantR√©gul = wsComptesClients.Cells(i, fFacCCTotalRegul).Value
         solde = wsComptesClients.Cells(i, fFacCCBalance).Value
-        If solde <> montantCompte - montantPayÈ - montantRÈgul Then Stop
+        If solde <> montantCompte - montantPay√© - montantR√©gul Then Stop
         soldeCC1 = soldeCC1 + solde
-        soldeCC2 = soldeCC2 + montantCompte - montantPayÈ - montantRÈgul
+        soldeCC2 = soldeCC2 + montantCompte - montantPay√© - montantR√©gul
         If soldeCC1 <> soldeCC2 Then Stop
         If Len(Facture) > 0 Then dictComptesClients(Facture) = montantCompte
     Next i
     
-    'Comparer et gÈnÈrer le rapport
+    'Comparer et g√©n√©rer le rapport
     Dim fact As Variant
     Dim rowRapport As Long
     rowRapport = 2
@@ -170,7 +170,7 @@ Sub Identifier…cartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
         End If
     Next fact
     
-    'VÈrifier les factures manquantes dans wsdFAC_Entete
+    'V√©rifier les factures manquantes dans wsdFAC_Entete
     For Each fact In dictComptesClients.keys
         If Not dictEntete.Exists(fact) Then
             wsRapport.Cells(rowRapport, 1).Value = fact
@@ -181,7 +181,7 @@ Sub Identifier…cartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
         End If
     Next fact
     
-    wsRapport.Cells(rowRapport, 1).Value = "Total des factures (selon FAC_EntÍte) est de " & Format$(totalEntÍteCC, "###,##0.00$")
+    wsRapport.Cells(rowRapport, 1).Value = "Total des factures (selon FAC_Ent√™te) est de " & Format$(totalEnt√™teCC, "###,##0.00$")
     rowRapport = rowRapport + 1
     wsRapport.Cells(rowRapport, 1).Value = "Total des factures (selon FAC_Comptes_Clients) est de " & Format$(totalComptesClients, "###,##0.00$")
     rowRapport = rowRapport + 1
@@ -190,7 +190,7 @@ Sub Identifier…cartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
     ' Ajuster la mise en forme
     wsRapport.Columns.AutoFit
     
-    MsgBox "La comparaison est terminÈe. VÈrifiez l'onglet 'Rapport…cartsFactures'.", vbInformation
+    MsgBox "La comparaison est termin√©e. V√©rifiez l'onglet 'Rapport√âcartsFactures'.", vbInformation
     
 End Sub
 
@@ -211,4 +211,5 @@ Function CompterOccurrences(texte As String, motif As String) As Long
     CompterOccurrences = compteur
     
 End Function
+
 

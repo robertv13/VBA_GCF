@@ -1,14 +1,14 @@
-VERSION 5.00
-Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufEncRégularisation 
-   Caption         =   "Régularisation des Comptes Clients"
+ï»¿VERSION 5.00
+Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufEncRÃ©gularisation 
+   Caption         =   "RÃ©gularisation des Comptes Clients"
    ClientHeight    =   5748
-   ClientLeft      =   96
-   ClientTop       =   384
-   ClientWidth     =   8064
-   OleObjectBlob   =   "ufEncRégularisation.frx":0000
+   ClientLeft      =   84
+   ClientTop       =   288
+   ClientWidth     =   6444
+   OleObjectBlob   =   "ufEncRÃ©gularisation.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
-Attribute VB_Name = "ufEncRégularisation"
+Attribute VB_Name = "ufEncRÃ©gularisation"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
@@ -23,23 +23,23 @@ Private Sub UserForm_Initialize()
     Dim factureRange As Range
     Set factureRange = ws.Range("F12:F36")
     
-    'Vider le ComboBox avant de charger de nouvelles données
-    ufEncRégularisation.cbbNoFacture.Clear
+    'Vider le ComboBox avant de charger de nouvelles donnÃ©es
+    ufEncRÃ©gularisation.cbbNoFacture.Clear
 
     'Parcourir la plage et charger les factures
     Dim row As Range
     For Each row In factureRange.Rows
         If row.Cells(1, 1).Value <> "" Then
-            ufEncRégularisation.cbbNoFacture.AddItem row.Cells(1, 1).Value
+            ufEncRÃ©gularisation.cbbNoFacture.AddItem row.Cells(1, 1).Value
         End If
     Next row
 
-    Call EffaceDonnéesRégularisation
+    Call EffaceDonnÃ©esRÃ©gularisation
     
-    'Vérifier les éléments dans le ComboBox
+    'VÃ©rifier les Ã©lÃ©ments dans le ComboBox
     If Me.cbbNoFacture.ListCount >= 1 Then
-        Me.cbbNoFacture.ListIndex = 0 'Sélectionne automatiquement le premier (et unique) élément
-        Call cbbNoFacture_AfterUpdate ' Appelle explicitement l'événement AfterUpdate
+        Me.cbbNoFacture.ListIndex = 0 'SÃ©lectionne automatiquement le premier (et unique) Ã©lÃ©ment
+        Call cbbNoFacture_AfterUpdate ' Appelle explicitement l'Ã©vÃ©nement AfterUpdate
     Else
         MsgBox "Aucune facture, avec solde, n'existe pour ce client.", vbExclamation
         Exit Sub
@@ -59,7 +59,7 @@ Private Sub cbbNoFacture_AfterUpdate()
     Set wsCC = wsdFAC_Comptes_Clients
     
     Dim invNo As String
-    invNo = ufEncRégularisation.cbbNoFacture.Value
+    invNo = ufEncRÃ©gularisation.cbbNoFacture.Value
     
     Dim rngTrouve As Range
     Set rngTrouve = wsCC.Columns(fFacCCInvNo).Find(What:=invNo, LookIn:=xlValues, LookAt:=xlWhole)
@@ -68,36 +68,36 @@ Private Sub cbbNoFacture_AfterUpdate()
     Dim dateFacture As String
     
     If Not rngTrouve Is Nothing Then
-        'Si la valeur est trouvée, récupérer d'autres colonnes
+        'Si la valeur est trouvÃ©e, rÃ©cupÃ©rer d'autres colonnes
         soldeFacture = CCur(rngTrouve.offset(0, 10).Value)
         dateFacture = Format$(rngTrouve.offset(0, 1).Value, wsdADMIN.Range("B1").Value)
-        ufEncRégularisation.lblDateFactureData.Caption = dateFacture
-        ufEncRégularisation.lblTotalFactureValue.Caption = FormatCurrency(soldeFacture, 2)
+        ufEncRÃ©gularisation.lblDateFactureData.Caption = dateFacture
+        ufEncRÃ©gularisation.lblTotalFactureValue.Caption = FormatCurrency(soldeFacture, 2)
         
-        ufEncRégularisation.txtTotalFacture.Value = ""
-        ufEncRégularisation.txtHonoraires.Value = ""
-        ufEncRégularisation.txtFraisDivers.Value = ""
-        ufEncRégularisation.txtTPS.Value = ""
-        ufEncRégularisation.txtTVQ.Value = ""
+        ufEncRÃ©gularisation.txtTotalFacture.Value = ""
+        ufEncRÃ©gularisation.txtHonoraires.Value = ""
+        ufEncRÃ©gularisation.txtFraisDivers.Value = ""
+        ufEncRÃ©gularisation.txtTPS.Value = ""
+        ufEncRÃ©gularisation.txtTVQ.Value = ""
         
-        ufEncRégularisation.lblTotalFactureAjuste.Caption = Format$(soldeFacture, "###,##0.00 $")
+        ufEncRÃ©gularisation.lblTotalFactureAjuste.Caption = Format$(soldeFacture, "###,##0.00 $")
     Else
-        'Si la valeur n'est pas trouvée
-        MsgBox "La facture " & invNo & " n'a pas été trouvée.", vbExclamation
+        'Si la valeur n'est pas trouvÃ©e
+        MsgBox "La facture " & invNo & " n'a pas Ã©tÃ© trouvÃ©e.", vbExclamation
     End If
     
-    ufEncRégularisation.cmbAccepte.Visible = False
-    ufEncRégularisation.cmbRejete.Visible = False
+    ufEncRÃ©gularisation.cmbAccepte.Visible = False
+    ufEncRÃ©gularisation.cmbRejete.Visible = False
     
 End Sub
 
 Private Sub txtTotalFacture_Exit(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim totalFacture As Currency
-    ufEncRégularisation.txtTotalFacture.Text = Replace(ufEncRégularisation.txtTotalFacture.Text, ".", ",")
+    ufEncRÃ©gularisation.txtTotalFacture.Text = Replace(ufEncRÃ©gularisation.txtTotalFacture.Text, ".", ",")
     
-    If ufEncRégularisation.txtTotalFacture.Text <> "" And IsNumeric(ufEncRégularisation.txtTotalFacture.Value) = True Then
-        totalFacture = CCur(ufEncRégularisation.txtTotalFacture.Text)
+    If ufEncRÃ©gularisation.txtTotalFacture.Text <> "" And IsNumeric(ufEncRÃ©gularisation.txtTotalFacture.Value) = True Then
+        totalFacture = CCur(ufEncRÃ©gularisation.txtTotalFacture.Text)
         Debug.Print "#093 - totalFacture = " & totalFacture
     
         Dim honoraires As Currency, fraisDivers As Currency
@@ -119,65 +119,65 @@ Private Sub txtTotalFacture_Exit(ByVal Cancel As MSForms.ReturnBoolean)
             honoraires = honoraires + ecartArrondissement
         End If
         
-        ufEncRégularisation.txtTotalFacture.Value = Format$(totalFacture, "###,##0.00 $")
-        ufEncRégularisation.lblTotalFactureAjuste.Caption = Format$(lblTotalFactureValue + totalFacture, "###,##0.00 $")
-        ufEncRégularisation.txtHonoraires.Value = Format$(honoraires, "###,##0.00 $")
-        ufEncRégularisation.txtFraisDivers.Value = Format$(fraisDivers, "###,##0.00 $")
-        ufEncRégularisation.txtTPS.Value = Format$(tps, "###,##0.00 $")
-        ufEncRégularisation.txtTVQ.Value = Format$(tvq, "###,##0.00 $")
+        ufEncRÃ©gularisation.txtTotalFacture.Value = Format$(totalFacture, "###,##0.00 $")
+        ufEncRÃ©gularisation.lblTotalFactureAjuste.Caption = Format$(lblTotalFactureValue + totalFacture, "###,##0.00 $")
+        ufEncRÃ©gularisation.txtHonoraires.Value = Format$(honoraires, "###,##0.00 $")
+        ufEncRÃ©gularisation.txtFraisDivers.Value = Format$(fraisDivers, "###,##0.00 $")
+        ufEncRÃ©gularisation.txtTPS.Value = Format$(tps, "###,##0.00 $")
+        ufEncRÃ©gularisation.txtTVQ.Value = Format$(tvq, "###,##0.00 $")
         
-        ufEncRégularisation.cmbAccepte.Visible = True
-        ufEncRégularisation.cmbRejete.Visible = True
+        ufEncRÃ©gularisation.cmbAccepte.Visible = True
+        ufEncRÃ©gularisation.cmbRejete.Visible = True
     End If
     
 End Sub
 
 Private Sub txtHonoraires_AfterUpdate()
 
-    ufEncRégularisation.txtHonoraires.Text = Replace(ufEncRégularisation.txtHonoraires.Text, ".", ",")
-    ufEncRégularisation.txtHonoraires.Text = Format$(ufEncRégularisation.txtHonoraires.Text, "###,##0.00 $")
+    ufEncRÃ©gularisation.txtHonoraires.Text = Replace(ufEncRÃ©gularisation.txtHonoraires.Text, ".", ",")
+    ufEncRÃ©gularisation.txtHonoraires.Text = Format$(ufEncRÃ©gularisation.txtHonoraires.Text, "###,##0.00 $")
     Call VerifieMontantsSaisis
     
 End Sub
 
 Private Sub txtFraisDivers_AfterUpdate()
 
-    ufEncRégularisation.txtFraisDivers.Text = Replace(ufEncRégularisation.txtFraisDivers.Text, ".", ",")
-    ufEncRégularisation.txtFraisDivers.Text = Format$(ufEncRégularisation.txtFraisDivers.Text, "###,##0.00 $")
+    ufEncRÃ©gularisation.txtFraisDivers.Text = Replace(ufEncRÃ©gularisation.txtFraisDivers.Text, ".", ",")
+    ufEncRÃ©gularisation.txtFraisDivers.Text = Format$(ufEncRÃ©gularisation.txtFraisDivers.Text, "###,##0.00 $")
     Call VerifieMontantsSaisis
 
 End Sub
 
 Private Sub txtTPS_AfterUpdate()
 
-    ufEncRégularisation.txtTPS.Text = Replace(ufEncRégularisation.txtTPS.Text, ".", ",")
-    ufEncRégularisation.txtTPS.Text = Format$(ufEncRégularisation.txtTPS.Text, "###,##0.00 $")
+    ufEncRÃ©gularisation.txtTPS.Text = Replace(ufEncRÃ©gularisation.txtTPS.Text, ".", ",")
+    ufEncRÃ©gularisation.txtTPS.Text = Format$(ufEncRÃ©gularisation.txtTPS.Text, "###,##0.00 $")
     Call VerifieMontantsSaisis
 
 End Sub
 
 Private Sub txtTVQ_AfterUpdate()
 
-    ufEncRégularisation.txtTVQ.Text = Replace(ufEncRégularisation.txtTVQ.Text, ".", ",")
-    ufEncRégularisation.txtTVQ.Text = Format$(ufEncRégularisation.txtTVQ.Text, "###,##0.00 $")
+    ufEncRÃ©gularisation.txtTVQ.Text = Replace(ufEncRÃ©gularisation.txtTVQ.Text, ".", ",")
+    ufEncRÃ©gularisation.txtTVQ.Text = Format$(ufEncRÃ©gularisation.txtTVQ.Text, "###,##0.00 $")
     Call VerifieMontantsSaisis
 
 End Sub
 
 Private Sub VerifieMontantsSaisis()
 
-    If ufEncRégularisation.txtTotalFacture.Text <> "" Then
-        With ufEncRégularisation
+    If ufEncRÃ©gularisation.txtTotalFacture.Text <> "" Then
+        With ufEncRÃ©gularisation
             Debug.Print "#095 - " & CCur(.txtTotalFacture.Text) & " <> ? " & CCur(.txtHonoraires.Text) & "+" & CCur(.txtFraisDivers.Text) & "+" & CCur(.txtTPS.Text) & "+" & CCur(.txtTVQ.Text)
             If CCur(.txtTotalFacture.Text) = CCur(.txtHonoraires.Text) + _
                                         CCur(.txtFraisDivers.Text) + _
                                         CCur(.txtTPS.Text) + _
                                         CCur(.txtTVQ.Text) Then
                 .txtTotalFacture.ForeColor = vbBlack
-                ufEncRégularisation.cmbAccepte.Visible = True
+                ufEncRÃ©gularisation.cmbAccepte.Visible = True
             Else
                 .txtTotalFacture.ForeColor = vbRed
-                ufEncRégularisation.cmbAccepte.Visible = False
+                ufEncRÃ©gularisation.cmbAccepte.Visible = False
             End If
         End With
     End If
@@ -186,7 +186,7 @@ End Sub
 
 Private Sub cmbRejete_Click()
 
-    Call EffaceDonnéesRégularisation
+    Call EffaceDonnÃ©esRÃ©gularisation
     cmbAccepte.Visible = False
     cmbRejete.Visible = False
     txtTotalFacture.SetFocus
@@ -197,10 +197,10 @@ Private Sub cmbAccepte_Click()
 
     Dim reponse As VbMsgBoxResult
 
-    'Afficher une boîte de message avec les boutons Oui et Non
-    reponse = MsgBox("Toujours prêt à continuer le traitement ?", vbYesNo + vbQuestion, "Confirmation avant traitement")
+    'Afficher une boÃ®te de message avec les boutons Oui et Non
+    reponse = MsgBox("Toujours prÃªt Ã  continuer le traitement ?", vbYesNo + vbQuestion, "Confirmation avant traitement")
     
-    'Vérifie la réponse de l'utilisateur
+    'VÃ©rifie la rÃ©ponse de l'utilisateur
     If reponse = vbYes Then
         Call MAJ_Regularisation
     Else
@@ -209,11 +209,11 @@ Private Sub cmbAccepte_Click()
     
 End Sub
 
-Sub EffaceDonnéesRégularisation()
+Sub EffaceDonnÃ©esRÃ©gularisation()
 
-    With ufEncRégularisation
+    With ufEncRÃ©gularisation
         
-        'Montants de la régularisation
+        'Montants de la rÃ©gularisation
         .txtTotalFacture.Value = ""
         .txtHonoraires.Value = ""
         .txtFraisDivers.Value = ""
@@ -223,3 +223,4 @@ Sub EffaceDonnéesRégularisation()
     End With
     
 End Sub
+

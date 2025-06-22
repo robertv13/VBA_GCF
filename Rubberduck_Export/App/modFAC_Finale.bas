@@ -1,4 +1,4 @@
-Attribute VB_Name = "modFAC_Finale"
+ï»¿Attribute VB_Name = "modFAC_Finale"
 '@Folder("Saisie_Facture")
 
 Option Explicit
@@ -35,7 +35,7 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
         
         'Check For Mandatory Fields - Date de facture
         If Len(Trim$(.Range("O6").Value)) <> 8 Then
-            MsgBox "Il faut corriger le numéro de facture AVANT de sauvegarder la facture"
+            MsgBox "Il faut corriger le numÃ©ro de facture AVANT de sauvegarder la facture"
             GoTo Fast_Exit_Sub
         End If
     End With
@@ -57,22 +57,22 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
     Call FAC_Finale_Add_Comptes_Clients_Locally
     
     Dim lastResultRow As Long
-    lastResultRow = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "AQ").End(xlUp).row
+    lastResultRow = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "AQ").End(xlUp).Row
         
     If lastResultRow > 2 Then
         Call FAC_Finale_TEC_Update_As_Billed_To_DB(3, lastResultRow)
         Call FAC_Finale_TEC_Update_As_Billed_Locally(3, lastResultRow)
     End If
     
-    'Update FAC_Projets_Entête & FAC_Projets_Détails, if necessary
+    'Update FAC_Projets_EntÃªte & FAC_Projets_DÃ©tails, if necessary
     Dim projetID As Long
     projetID = wshFAC_Brouillon.Range("B52").Value
     If projetID <> 0 Then
-        Call FAC_Finale_Softdelete_Projets_Détails_To_DB(projetID)
-        Call FAC_Finale_Softdelete_Projets_Détails_Locally(projetID)
+        Call FAC_Finale_Softdelete_Projets_DÃ©tails_To_DB(projetID)
+        Call FAC_Finale_Softdelete_Projets_DÃ©tails_Locally(projetID)
         
-        Call FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID)
-        Call FAC_Finale_Softdelete_Projets_Entête_Locally(projetID)
+        Call FAC_Finale_Softdelete_Projets_EntÃªte_To_DB(projetID)
+        Call FAC_Finale_Softdelete_Projets_EntÃªte_Locally(projetID)
     End If
         
     'Save Invoice total amount
@@ -89,7 +89,7 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
     
     Application.ScreenUpdating = True
     
-    MsgBox "La facture '" & wshFAC_Brouillon.Range("O6").Value & "' est enregistrée." & _
+    MsgBox "La facture '" & wshFAC_Brouillon.Range("O6").Value & "' est enregistrÃ©e." & _
         vbNewLine & vbNewLine & "Le total de la facture est " & _
         Trim$(Format$(invoice_Total, "### ##0.00 $")) & _
         " (avant les taxes)", vbOKOnly, "Confirmation d'enregistrement"
@@ -120,7 +120,7 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "FAC_Entête$"
+    destinationTab = "FAC_EntÃªte$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -166,7 +166,7 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
         
         rs.Fields(fFacEARTotal - 1).Value = Format$(.Range("E77").Value, "0.00")
         
-        rs.Fields(fFacEDépôt - 1).Value = Format$(.Range("E79").Value, "0.00")
+        rs.Fields(fFacEDÃ©pÃ´t - 1).Value = Format$(.Range("E79").Value, "0.00")
         rs.Fields(fFacETimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss") '2025-01-25 @ 15:01
     End With
     'Update the recordset (create the record)
@@ -180,7 +180,7 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
     
     Application.ScreenUpdating = True
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set rs = Nothing
     Set conn = Nothing
     
@@ -201,7 +201,7 @@ Sub FAC_Finale_Add_Invoice_Header_Locally() '2024-03-11 @ 08:19 - Write records 
     
     'Get the first free row
     Dim firstFreeRow As Long
-    firstFreeRow = wsdFAC_Entete.Cells(wsdFAC_Entete.Rows.count, "A").End(xlUp).row + 1
+    firstFreeRow = wsdFAC_Entete.Cells(wsdFAC_Entete.Rows.count, "A").End(xlUp).Row + 1
     
     With wsdFAC_Entete
         .Range("A" & firstFreeRow).Value = wshFAC_Finale.Range("E28")
@@ -252,13 +252,13 @@ Sub FAC_Finale_Add_Invoice_Details_to_DB()
     Application.ScreenUpdating = False
     
     Dim rowLastService As Long
-    rowLastService = wshFAC_Finale.Range("B64").End(xlUp).row
+    rowLastService = wshFAC_Finale.Range("B64").End(xlUp).Row
     If rowLastService < 34 Then GoTo nothing_to_update
     
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "FAC_Détails$"
+    destinationTab = "FAC_DÃ©tails$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -327,7 +327,7 @@ nothing_to_update:
 
     Application.ScreenUpdating = True
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set conn = Nothing
     Set rs = Nothing
     
@@ -344,7 +344,7 @@ Sub FAC_Finale_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records
     
     'Get the last entered service
     Dim lastEnteredService As Long
-    lastEnteredService = wshFAC_Finale.Range("B64").End(xlUp).row
+    lastEnteredService = wshFAC_Finale.Range("B64").End(xlUp).Row
     If lastEnteredService < 34 Then GoTo nothing_to_update
     
     Dim ws As Worksheet
@@ -356,7 +356,7 @@ Sub FAC_Finale_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records
     
     'Get the first free row
     Dim firstFreeRow As Long
-    firstFreeRow = wsdFAC_Details.Cells(wsdFAC_Details.Rows.count, "A").End(xlUp).row + 1
+    firstFreeRow = wsdFAC_Details.Cells(wsdFAC_Details.Rows.count, "A").End(xlUp).Row + 1
    
     Dim i As Long
     For i = 34 To lastEnteredService
@@ -437,7 +437,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_to_DB()
             rs.AddNew
             With wshFAC_Finale
                 rs.Fields(fFacSTInvNo - 1).Value = noFacture
-                rs.Fields(fFacSTSéquence - 1).Value = seq
+                rs.Fields(fFacSTSÃ©quence - 1).Value = seq
                 rs.Fields(fFacSTProf - 1).Value = wshFAC_Brouillon.Range("R" & r).Value
                 rs.Fields(fFacSTHeures - 1).Value = wshFAC_Brouillon.Range("S" & r).Value
                 rs.Fields(fFacSTTaux - 1).Value = wshFAC_Brouillon.Range("T" & r).Value
@@ -457,7 +457,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_to_DB()
    
     Application.ScreenUpdating = True
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set conn = Nothing
     Set rs = Nothing
     
@@ -479,7 +479,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_Locally()
     
     'Get the first free row
     Dim firstFreeRow As Long
-    firstFreeRow = wsdFAC_Sommaire_Taux.Cells(wsdFAC_Sommaire_Taux.Rows.count, "A").End(xlUp).row + 1
+    firstFreeRow = wsdFAC_Sommaire_Taux.Cells(wsdFAC_Sommaire_Taux.Rows.count, "A").End(xlUp).Row + 1
    
     'timeStamnp uniforme
     Dim timeStamp As Date
@@ -493,7 +493,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_Locally()
         If wshFAC_Brouillon.Range("R" & i).Value <> "" Then
             With wsdFAC_Sommaire_Taux
                 .Cells(firstFreeRow, fFacSTInvNo).Value = noFacture
-                .Cells(firstFreeRow, fFacSTSéquence).Value = seq
+                .Cells(firstFreeRow, fFacSTSÃ©quence).Value = seq
                 .Cells(firstFreeRow, fFacSTProf).Value = wshFAC_Brouillon.Range("R" & i).Value
                 .Cells(firstFreeRow, fFacSTHeures).Value = CCur(wshFAC_Brouillon.Range("S" & i).Value)
                 .Cells(firstFreeRow, fFacSTHeures).NumberFormat = "#,##0.00"
@@ -550,7 +550,7 @@ Sub FAC_Finale_Add_Comptes_Clients_to_DB()
         rs.Fields(fFacCCStatus - 1).Value = "Unpaid"
         rs.Fields(fFacCCTerms - 1).Value = "Net"
         rs.Fields(fFacCCDueDate - 1).Value = CDate(wshFAC_Brouillon.Range("O3").Value)
-        rs.Fields(fFacCCTotal - 1).Value = .Range("E77").Value 'Le dépôt s'il y en a un n'est pas comptabilisé ici!
+        rs.Fields(fFacCCTotal - 1).Value = .Range("E77").Value 'Le dÃ©pÃ´t s'il y en a un n'est pas comptabilisÃ© ici!
         rs.Fields(fFacCCTotalPaid - 1).Value = 0
         rs.Fields(fFacCCTotalRegul - 1).Value = 0
         rs.Fields(fFacCCBalance - 1).Value = .Range("E77").Value
@@ -569,7 +569,7 @@ Sub FAC_Finale_Add_Comptes_Clients_to_DB()
     
     Application.ScreenUpdating = True
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set conn = Nothing
     Set rs = Nothing
     
@@ -590,7 +590,7 @@ Sub FAC_Finale_Add_Comptes_Clients_Locally() '2024-03-11 @ 08:49 - Write records
     
     'Get the first free row
     Dim firstFreeRow As Long
-    firstFreeRow = wsdFAC_Comptes_Clients.Cells(wsdFAC_Comptes_Clients.Rows.count, "A").End(xlUp).row + 1
+    firstFreeRow = wsdFAC_Comptes_Clients.Cells(wsdFAC_Comptes_Clients.Rows.count, "A").End(xlUp).Row + 1
    
     With wsdFAC_Comptes_Clients
         .Cells(firstFreeRow, fFacCCInvNo).Value = wshFAC_Finale.Range("E28")
@@ -653,7 +653,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Up
             rs.Update
         Else
             'Handle the case where the specified ID is not found
-            MsgBox "L'enregistrement avec le TECID '" & r & "' ne peut être trouvé!", _
+            MsgBox "L'enregistrement avec le TECID '" & r & "' ne peut Ãªtre trouvÃ©!", _
                 vbExclamation
             rs.Close
             conn.Close
@@ -673,7 +673,7 @@ next_iteration:
     
     Application.ScreenUpdating = True
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set conn = Nothing
     Set rs = Nothing
     
@@ -687,7 +687,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Long, lastResultRo
     
     'Set the range to look for
     Dim lastTECRow As Long
-    lastTECRow = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "A").End(xlUp).row
+    lastTECRow = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "A").End(xlUp).Row
     Dim lookupRange As Range: Set lookupRange = wsdTEC_Local.Range("A3:A" & lastTECRow)
     
     Dim r As Long, rowToBeUpdated As Long, tecID As Long
@@ -703,23 +703,23 @@ Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Long, lastResultRo
         End If
     Next r
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set lookupRange = Nothing
     
     Call Log_Record("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally", "", startTime)
 
 End Sub
 
-Sub FAC_Finale_Softdelete_Projets_Détails_To_DB(projetID As Long)
+Sub FAC_Finale_Softdelete_Projets_DÃ©tails_To_DB(projetID As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_To_DB", CStr(projetID), 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_DÃ©tails_To_DB", CStr(projetID), 0)
 
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "FAC_Projets_Détails$"
+    destinationTab = "FAC_Projets_DÃ©tails$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -742,27 +742,27 @@ Sub FAC_Finale_Softdelete_Projets_Détails_To_DB(projetID As Long)
     
     Application.ScreenUpdating = True
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_To_DB", "", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_DÃ©tails_To_DB", "", startTime)
 
 End Sub
 
-Sub FAC_Finale_Softdelete_Projets_Détails_Locally(projetID As Long)
+Sub FAC_Finale_Softdelete_Projets_DÃ©tails_Locally(projetID As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_Locally", CStr(projetID), 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_DÃ©tails_Locally", CStr(projetID), 0)
     
     Dim ws As Worksheet: Set ws = wsdFAC_Projets_Details
     
-    Dim projetIDColumn As String, isDétruiteColumn As String
+    Dim projetIDColumn As String, isDÃ©truiteColumn As String
     projetIDColumn = "A"
-    isDétruiteColumn = "I"
+    isDÃ©truiteColumn = "I"
 
     'Find the last used row
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).Row
     
     'Use Range.Find to locate the first cell with the projetID
     Dim cell As Range
@@ -773,31 +773,31 @@ Sub FAC_Finale_Softdelete_Projets_Détails_Locally(projetID As Long)
     If Not cell Is Nothing Then
         firstAddress = cell.Address
         Do
-            'Update the isDétruite column for the found projetID
-            ws.Cells(cell.row, isDétruiteColumn).Value = "VRAI"
+            'Update the isDÃ©truite column for the found projetID
+            ws.Cells(cell.row, isDÃ©truiteColumn).Value = "VRAI"
             'Find the next cell with the projetID
             Set cell = ws.Range(projetIDColumn & "2:" & projetIDColumn & lastUsedRow).FindNext(After:=cell)
         Loop While Not cell Is Nothing And cell.Address <> firstAddress
     End If
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set cell = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_Locally", "", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_DÃ©tails_Locally", "", startTime)
 
 End Sub
 
-Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID As Long)
+Sub FAC_Finale_Softdelete_Projets_EntÃªte_To_DB(projetID As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_To_DB", CStr(projetID), 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_EntÃªte_To_DB", CStr(projetID), 0)
 
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "FAC_Projets_Entête$"
+    destinationTab = "FAC_Projets_EntÃªte$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -820,10 +820,10 @@ Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID As Long)
     
     Application.ScreenUpdating = True
 
-    'Libérer la mémoire (Normal)
+    'LibÃ©rer la mÃ©moire (Normal)
     Set conn = Nothing
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_To_DB", "", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_EntÃªte_To_DB", "", startTime)
     Exit Sub
 
 eh:
@@ -837,19 +837,19 @@ eh:
     
 End Sub
 
-Sub FAC_Finale_Softdelete_Projets_Entête_Locally(projetID As Long)
+Sub FAC_Finale_Softdelete_Projets_EntÃªte_Locally(projetID As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally", CStr(projetID), 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_EntÃªte_Locally", CStr(projetID), 0)
     
     Dim ws As Worksheet: Set ws = wsdFAC_Projets_Entete
     
-    Dim projetIDColumn As String, isDétruiteColumn As String
+    Dim projetIDColumn As String, isDÃ©truiteColumn As String
     projetIDColumn = "A"
-    isDétruiteColumn = "Z"
+    isDÃ©truiteColumn = "Z"
 
     'Find the last used row
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).Row
     
     'Use Range.Find to locate the first cell with the projetID
     Dim cell As Range
@@ -860,22 +860,22 @@ Sub FAC_Finale_Softdelete_Projets_Entête_Locally(projetID As Long)
     If Not cell Is Nothing Then
         firstAddress = cell.Address
         Do
-            'Update the isDétruite column for the found projetID
-            ws.Cells(cell.row, isDétruiteColumn).Value = "VRAI"
+            'Update the isDÃ©truite column for the found projetID
+            ws.Cells(cell.row, isDÃ©truiteColumn).Value = "VRAI"
             'Find the next cell with the projetID
             Set cell = ws.Range(projetIDColumn & "2:" & projetIDColumn & lastUsedRow).FindNext(After:=cell)
         Loop While Not cell Is Nothing And cell.Address <> firstAddress
     End If
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set cell = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally", "", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_EntÃªte_Locally", "", startTime)
 
 End Sub
 
-'Fonction pour vérifier si un nom de feuille existe déjà dans un classeur
+'Fonction pour vÃ©rifier si un nom de feuille existe dÃ©jÃ  dans un classeur
 Function NomFeuilleExiste(nom As String) As Boolean
     
     On Error Resume Next
@@ -944,7 +944,7 @@ Sub FAC_Finale_Preview_PDF() '2024-03-02 @ 16:18
     Dim ws As Worksheet
     Set ws = wshFAC_Finale
     
-    'Imprimante PDF à utiliser
+    'Imprimante PDF Ã  utiliser
     Dim imprimantePDF As String
     If GetNomUtilisateur() = "RobertMV" Or GetNomUtilisateur() = "robertmv" Then
         imprimantePDF = "Adobe PDF"
@@ -953,10 +953,10 @@ Sub FAC_Finale_Preview_PDF() '2024-03-02 @ 16:18
     End If
     
     Dim imprimanteCourante As String
-    'Vérifiez si l'imprimante existe
+    'VÃ©rifiez si l'imprimante existe
     On Error Resume Next
     If Len(Application.ActivePrinter) > 0 Then
-        'Mémoriser l'imprimante actuelle pour la réinitialiser après
+        'MÃ©moriser l'imprimante actuelle pour la rÃ©initialiser aprÃ¨s
         imprimanteCourante = Application.ActivePrinter
     End If
     On Error GoTo 0
@@ -965,14 +965,14 @@ Sub FAC_Finale_Preview_PDF() '2024-03-02 @ 16:18
     'On imprime la facture
     wshFAC_Finale.PrintOut , , 1, True, True, , , , False
    
-    'Restaurer l'imprimante précédente après l'impression
+    'Restaurer l'imprimante prÃ©cÃ©dente aprÃ¨s l'impression
     If imprimanteCourante <> "" Then
         On Error Resume Next
         Application.ActivePrinter = imprimanteCourante
         On Error GoTo 0
     End If
     
-    Debug.Print "#084 - Imprimante restaurée : " & Application.ActivePrinter
+    Debug.Print "#084 - Imprimante restaurÃ©e : " & Application.ActivePrinter
 
 End Sub
 
@@ -990,11 +990,11 @@ Sub FAC_Finale_Creation_PDF() '2025-05-06 @ 11:07
     Dim nomFichier As String: nomFichier = wshFAC_Finale.Range("L81").Value
     Dim dateFacture As String: dateFacture = Format$(wshFAC_Brouillon.Range("O3").Value, "yyyy-mm-dd")
     
-    'État initial
+    'Ã‰tat initial
     gFlagEtapeFacture = 1
     Call Log_Record("modFAC_Finale:FAC_Finale_Creation_PDF", codeFacture, 0)
     
-    'Sécuriser l’environnement
+    'SÃ©curiser lâ€™environnement
     With Application
         .ScreenUpdating = False
         .EnableEvents = False
@@ -1004,33 +1004,33 @@ Sub FAC_Finale_Creation_PDF() '2025-05-06 @ 11:07
     
     On Error GoTo GestionErreur
 
-    'Étape 1 - Création du document PDF
+    'Ã‰tape 1 - CrÃ©ation du document PDF
     Call FAC_Finale_Create_PDF(codeFacture)
     DoEvents: Application.Wait Now + TimeValue("0:00:01")
     
-    'Étape 2 - Copie vers fichier Excel client
+    'Ã‰tape 2 - Copie vers fichier Excel client
     Call FAC_Finale_Copie_Vers_Excel(nomClient, nomFichier, codeFacture, dateFacture)
     DoEvents: Application.Wait Now + TimeValue("0:00:01")
     gFlagEtapeFacture = 3
 
-    'Étape 3 - Création du courriel avec pièce jointe PDF
+    'Ã‰tape 3 - CrÃ©ation du courriel avec piÃ¨ce jointe PDF
     Call FAC_Finale_Creation_Courriel(codeFacture, nomClient)
     DoEvents: Application.Wait Now + TimeValue("0:00:01")
     gFlagEtapeFacture = 4
 
-    'Étape 4 - Activation du bouton Sauvegarde
+    'Ã‰tape 4 - Activation du bouton Sauvegarde
     Call FAC_Finale_Enable_Save_Button
     gFlagEtapeFacture = 5
 
     GoTo Fin
 
 GestionErreur:
-    MsgBox "Une erreur est survenue à l'étape " & gFlagEtapeFacture & "." & vbCrLf & _
+    MsgBox "Une erreur est survenue Ã  l'Ã©tape " & gFlagEtapeFacture & "." & vbCrLf & _
            "Erreur: " & Err.Number & " - " & Err.description, vbCritical
-    Call Log_Record("modFAC_Finale:FAC_Finale_Creation_PDF", codeFacture & " ÉTAPE " & gFlagEtapeFacture & " > " & Err.description, startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Creation_PDF", codeFacture & " Ã‰TAPE " & gFlagEtapeFacture & " > " & Err.description, startTime)
 
 Fin:
-    'Restaurer l’environnement
+    'Restaurer lâ€™environnement
     With Application
         .CutCopyMode = False
         .EnableEvents = True
@@ -1046,7 +1046,7 @@ Sub FAC_Finale_Create_PDF(noFacture As String)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Create_PDF", noFacture, 0)
     
-    'Création du fichier (NoFacture).PDF dans le répertoire de factures PDF de GCF
+    'CrÃ©ation du fichier (NoFacture).PDF dans le rÃ©pertoire de factures PDF de GCF
     Dim result As Boolean
     result = FAC_Finale_Create_PDF_Func(noFacture, "SaveOnly")
     
@@ -1080,9 +1080,9 @@ Function FAC_Finale_Create_PDF_Func(noFacture As String, Optional action As Stri
     'If the file exists, prompt the user for confirmation
     Dim reponse As VbMsgBoxResult
     If fileExists Then
-        reponse = MsgBox("La facture (PDF) numéro '" & noFacture & "' existe déja." & _
+        reponse = MsgBox("La facture (PDF) numÃ©ro '" & noFacture & "' existe dÃ©ja." & _
                           "Voulez-vous la remplacer ?", vbYesNo + vbQuestion, _
-                          "Cette facture existe déjà en formt PDF")
+                          "Cette facture existe dÃ©jÃ  en formt PDF")
         If reponse = vbNo Then
             GoTo EndMacro
         End If
@@ -1114,7 +1114,7 @@ SaveOnly:
     GoTo EndMacro
     
 RefLibError:
-    MsgBox "Incapable de préparer le courriel. La librairie n'est pas disponible"
+    MsgBox "Incapable de prÃ©parer le courriel. La librairie n'est pas disponible"
     FAC_Finale_Create_PDF_Func = False 'Function return value
 '    FAC_Finale_Create_Email = False 'Function return value
 
@@ -1140,33 +1140,33 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
         clientNamePurged = Fn_Strip_Contact_From_Client_Name(clientNamePurged)
     Loop
     
-    'Définir le chemin complet du répertoire des fichiers Excel
+    'DÃ©finir le chemin complet du rÃ©pertoire des fichiers Excel
     Dim ExcelFilesFullPath As String
     ExcelFilesFullPath = wsdADMIN.Range("F5").Value & FACT_EXCEL_PATH
     ChDir ExcelFilesFullPath
     
-    'Définir la feuille source et la plage à copier
+    'DÃ©finir la feuille source et la plage Ã  copier
     Dim wbSource As Workbook: Set wbSource = ThisWorkbook
     Dim wsSource As Worksheet: Set wsSource = wshFAC_Finale
     Dim plageSource As Range: Set plageSource = wsSource.Range("A1:F88")
 
-    'Désactiver les événements pour éviter Workbook_Activate
+    'DÃ©sactiver les Ã©vÃ©nements pour Ã©viter Workbook_Activate
     Application.EnableEvents = False
     
     'Ouvrir un nouveau Workbook (ou choisir un workbook existant)
     On Error Resume Next
     Dim strCible As Variant
-    strCible = Application.GetOpenFilename("Excel Files (*.xlsx), *.xlsx") 'Sélectionner un classeur cible
+    strCible = Application.GetOpenFilename("Excel Files (*.xlsx), *.xlsx") 'SÃ©lectionner un classeur cible
     On Error GoTo 0
     
-    'Si l'utilisateur annule la sélection du fichier ou il y a une erreur
+    'Si l'utilisateur annule la sÃ©lection du fichier ou il y a une erreur
     Dim wbCible As Workbook
     If strCible = "Faux" Or strCible = "False" Or strCible = "" Then
-        'Créer un nouveau workbook
+        'CrÃ©er un nouveau workbook
         Set wbCible = Workbooks.Add
         strCible = ""
     Else
-        'Ouvrir le workbook sélectionné
+        'Ouvrir le workbook sÃ©lectionnÃ©
         Set wbCible = Workbooks.Open(strCible)
     End If
     
@@ -1176,37 +1176,37 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     strNameBase = invDate & " - " & invNo
     strName = strNameBase
     
-    'On vérifie si le nom de la nouvelle feuille à ajouter existe déjà
+    'On vÃ©rifie si le nom de la nouvelle feuille Ã  ajouter existe dÃ©jÃ 
     Dim wsExist As Boolean
     wsExist = False
     On Error Resume Next
     wsExist = Not wbCible.Worksheets(strNameBase) Is Nothing
     On Error GoTo 0
     
-    'Si le worksheet existe déjà avec ce nom, demander à l'utilisateur ce qu'il souhaite faire
+    'Si le worksheet existe dÃ©jÃ  avec ce nom, demander Ã  l'utilisateur ce qu'il souhaite faire
     Dim wsCible As Worksheet
     Dim suffixe As Integer
     Dim reponse As String
     
     If wsExist Then
-        reponse = MsgBox("La feuille '" & strNameBase & "' existe déjà dans ce fichier" & vbCrLf & vbCrLf & _
+        reponse = MsgBox("La feuille '" & strNameBase & "' existe dÃ©jÃ  dans ce fichier" & vbCrLf & vbCrLf & _
                          "Voulez-vous :" & vbCrLf & vbCrLf & _
                          "1. Remplacer l'onglet existant par la facture courante ?" & vbCrLf & vbCrLf & _
-                         "2. Créer un nouvel onglet avec un suffixe ?" & vbCrLf & vbCrLf & _
-                         "Cliquez sur Oui pour remplacer, ou sur Non pour créer un nouvel onglet.", _
-                         vbYesNoCancel + vbQuestion, "Le nouvel onglet à créer existe déjà")
+                         "2. CrÃ©er un nouvel onglet avec un suffixe ?" & vbCrLf & vbCrLf & _
+                         "Cliquez sur Oui pour remplacer, ou sur Non pour crÃ©er un nouvel onglet.", _
+                         vbYesNoCancel + vbQuestion, "Le nouvel onglet Ã  crÃ©er existe dÃ©jÃ ")
 
         Select Case reponse
             Case vbYes 'Remplacer l'onglet existant
-                Application.DisplayAlerts = False ' Désactiver les alertes pour écraser sans confirmation
+                Application.DisplayAlerts = False ' DÃ©sactiver les alertes pour Ã©craser sans confirmation
                 wbCible.Worksheets(strNameBase).Delete
                 Application.DisplayAlerts = True
                 
-                'Créer une nouvelle feuille avec le même nom
+                'CrÃ©er une nouvelle feuille avec le mÃªme nom
                 Set wsCible = wbCible.Worksheets.Add(After:=wbCible.Sheets(wbCible.Sheets.count))
                 wsCible.Name = strNameBase 'Attribuer le nom d'origine
 
-            Case vbNo 'L'utilisateur souhaite créer une nouvelle feuille
+            Case vbNo 'L'utilisateur souhaite crÃ©er une nouvelle feuille
                 suffixe = 1
                 'Boucle pour trouver un nom unique de feuille (worksheet)
                 Do
@@ -1218,14 +1218,14 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
                     suffixe = suffixe + 1
                 Loop
                 
-                'Créer une nouvelle feuille avec ce nom directement lors de la création
-                Application.DisplayAlerts = False ' Désactiver les alertes pour éviter Feuil1
+                'CrÃ©er une nouvelle feuille avec ce nom directement lors de la crÃ©ation
+                Application.DisplayAlerts = False ' DÃ©sactiver les alertes pour Ã©viter Feuil1
                 Set wsCible = wbCible.Worksheets.Add(After:=wbCible.Sheets(wbCible.Sheets.count))
                 wsCible.Name = strName ' Attribuer le nouveau nom avec suffixe
-                Application.DisplayAlerts = True ' Réactiver les alertes après la création
+                Application.DisplayAlerts = True ' RÃ©activer les alertes aprÃ¨s la crÃ©ation
         End Select
     Else
-        'Si la feuille n'existe pas, on peut directement la créer
+        'Si la feuille n'existe pas, on peut directement la crÃ©er
         Set wsCible = wbCible.Worksheets.Add(After:=wbCible.Sheets(wbCible.Sheets.count))
         wsCible.Name = strNameBase
     End If
@@ -1252,15 +1252,15 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
         wsCible.Columns(i).ColumnWidth = plageSource.Columns(i).ColumnWidth
     Next i
 
-    '4. Ajuster les hauteurs de lignes (optionnel si nécessaire)
+    '4. Ajuster les hauteurs de lignes (optionnel si nÃ©cessaire)
     For i = 1 To plageSource.Rows.count
         wsCible.Rows(i).RowHeight = plageSource.Rows(i).RowHeight
     Next i
 
-    '5. Copier l'entête de la facture (logo)
-    Call CopierFormeEnteteEnTouteSécurité(wsSource, wsCible) '2025-05-06 @ 10:59
+    '5. Copier l'entÃªte de la facture (logo)
+    Call CopierFormeEnteteEnTouteSÃ©curitÃ©(wsSource, wsCible) '2025-05-06 @ 10:59
 
-    '6. Copier les paramètres d'impression
+    '6. Copier les paramÃ¨tres d'impression
     With wsCible.PageSetup
         .Orientation = wsSource.PageSetup.Orientation
         On Error Resume Next '2024-10-15 @ 06:51
@@ -1282,25 +1282,25 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
         .CenterVertically = wsSource.PageSetup.CenterVertically
     End With
     
-    'Désactiver le mode copier-coller pour libérer la mémoire
+    'DÃ©sactiver le mode copier-coller pour libÃ©rer la mÃ©moire
     Application.CutCopyMode = False
     
-    'Optionnel : Sauvegarder le workbook cible sous un nouveau nom si nécessaire
+    'Optionnel : Sauvegarder le workbook cible sous un nouveau nom si nÃ©cessaire
     If strCible = "" Then
         wbCible.SaveAs ExcelFilesFullPath & Application.PathSeparator & clientID & " - " & clientNamePurged & ".xlsx"
         MsgBox "Un nouveau fichier Excel (" & clientID & " - " & clientNamePurged & ".xlsx" & ")" & vbNewLine & vbNewLine & _
-                "A été créé pour sauvegarder la facture", vbInformation
+                "A Ã©tÃ© crÃ©Ã© pour sauvegarder la facture", vbInformation
     End If
     
-    'Réactiver les événements après l'ouverture
+    'RÃ©activer les Ã©vÃ©nements aprÃ¨s l'ouverture
     Application.EnableEvents = True
     
-    'La facture a été sauvegardé en format EXCEL
+    'La facture a Ã©tÃ© sauvegardÃ© en format EXCEL
     gFlagEtapeFacture = 3
     
     Application.ScreenUpdating = True
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set plageSource = Nothing
     Set wbCible = Nothing
     Set wbSource = Nothing
@@ -1311,15 +1311,15 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
 
 End Sub
 
-Sub CopierFormeEnteteEnTouteSécurité(wsSource As Worksheet, wsCible As Worksheet) '2025-05-06 @ 11:12
+Sub CopierFormeEnteteEnTouteSÃ©curitÃ©(wsSource As Worksheet, wsCible As Worksheet) '2025-05-06 @ 11:12
 
     Dim forme As Shape, newForme As Shape
     On Error Resume Next
-    Set forme = wsSource.Shapes("GCF_Entête")
+    Set forme = wsSource.Shapes("GCF_EntÃªte")
     On Error GoTo 0
 
     If Not forme Is Nothing Then
-        'Mémoriser la taille et la position exacte de la forme source
+        'MÃ©moriser la taille et la position exacte de la forme source
         Dim topPos As Double, leftPos As Double, heightVal As Double, widthVal As Double
         topPos = forme.Top
         leftPos = forme.Left
@@ -1330,14 +1330,14 @@ Sub CopierFormeEnteteEnTouteSécurité(wsSource As Worksheet, wsCible As Worksheet
         DoEvents
         Application.Wait Now + TimeValue("0:00:01")
         
-        'Coller en tant qu'image (Enhanced Metafile pour plus de compatibilité)
+        'Coller en tant qu'image (Enhanced Metafile pour plus de compatibilitÃ©)
         wsCible.PasteSpecial Format:="Picture (Enhanced Metafile)"
         DoEvents
 
-        'Récupérer la dernière forme collée
+        'RÃ©cupÃ©rer la derniÃ¨re forme collÃ©e
         Set newForme = wsCible.Shapes(wsCible.Shapes.count)
         
-        'Réappliquer taille et position exactes
+        'RÃ©appliquer taille et position exactes
         With newForme
             .Top = topPos
             .Left = leftPos
@@ -1347,7 +1347,7 @@ Sub CopierFormeEnteteEnTouteSécurité(wsSource As Worksheet, wsCible As Worksheet
 
         Application.CutCopyMode = False
     Else
-        Debug.Print "Forme 'GCF_Entête' introuvable sur la feuille source."
+        Debug.Print "Forme 'GCF_EntÃªte' introuvable sur la feuille source."
     End If
     
 End Sub
@@ -1359,16 +1359,16 @@ Sub FAC_Finale_Creation_Courriel(noFacture As String, clientID As String) '2024-
     
     Dim fileExists As Boolean
     
-    '1a. Chemin de la pièce jointe (Facture en format PDF)
+    '1a. Chemin de la piÃ¨ce jointe (Facture en format PDF)
     Dim attachmentFullPathName As String
     attachmentFullPathName = wsdADMIN.Range("F5").Value & FACT_PDF_PATH & Application.PathSeparator & _
                      noFacture & ".pdf" '2024-09-03 @ 16:43
     
-    '1b. Vérification de l'existence de la pièce jointe
+    '1b. VÃ©rification de l'existence de la piÃ¨ce jointe
     fileExists = Dir(attachmentFullPathName) <> ""
     If Not fileExists Then
-        MsgBox "La pièce jointe (Facture en format PDF) n'existe pas" & _
-                    "à l'emplacement spécifié, soit " & attachmentFullPathName, vbCritical
+        MsgBox "La piÃ¨ce jointe (Facture en format PDF) n'existe pas" & _
+                    "Ã  l'emplacement spÃ©cifiÃ©, soit " & attachmentFullPathName, vbCritical
         GoTo Exit_Sub
     End If
     
@@ -1376,11 +1376,11 @@ Sub FAC_Finale_Creation_Courriel(noFacture As String, clientID As String) '2024-
     Dim templateFullPathName As String
     templateFullPathName = Environ$("appdata") & "\Microsoft\Templates\GCF_Facturation.oft"
 
-    '2b. Vérification de l'existence du template
+    '2b. VÃ©rification de l'existence du template
     fileExists = Dir(templateFullPathName) <> ""
     If Not fileExists Then
         MsgBox "Le gabarit 'GCF_Facturation.oft' est introuvable " & _
-                    "à l'emplacement spécifié, soit " & Environ$("appdata") & "\Microsoft\Templates", _
+                    "Ã  l'emplacement spÃ©cifiÃ©, soit " & Environ$("appdata") & "\Microsoft\Templates", _
                     vbCritical
         GoTo Exit_Sub
     End If
@@ -1394,11 +1394,11 @@ Sub FAC_Finale_Creation_Courriel(noFacture As String, clientID As String) '2024-
     End If
     On Error GoTo 0
 
-    '4. Création de l'email à partir du template
+    '4. CrÃ©ation de l'email Ã  partir du template
     Dim mailItem As Object
     Set mailItem = OutlookApp.CreateItemFromTemplate(templateFullPathName)
 
-    '5. Ajout de la pièce jointe
+    '5. Ajout de la piÃ¨ce jointe
     mailItem.Attachments.Add attachmentFullPathName
 
     '6. Obtenir l'adresse courriel pour le client
@@ -1428,7 +1428,7 @@ Sub FAC_Finale_Creation_Courriel(noFacture As String, clientID As String) '2024-
 
 Exit_Sub:
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set mailItem = Nothing
     Set OutlookApp = Nothing
     Set ws = Nothing
@@ -1496,7 +1496,7 @@ Sub FAC_Finale_Cacher_Sommaire_Taux()
         rngFeesSummary.ClearContents
     End If
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set rngFeesSummary = Nothing
     
 End Sub
@@ -1509,7 +1509,7 @@ End Sub
 
 Sub FAC_Finale_Montrer_Sommaire_Taux()
 
-    'Épure le sommaire des honoraires
+    'Ã‰pure le sommaire des honoraires
     Dim hres As Currency
     Dim taux As Currency
     Dim nbTaux As Integer
@@ -1573,7 +1573,7 @@ Sub FAC_Finale_Montrer_Sommaire_Taux()
         
     End If
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set dictTaux = Nothing
     Set rngFeesSummary = Nothing
     Set t = Nothing
@@ -1609,7 +1609,7 @@ Sub FAC_Finale_Enable_Save_Button()
     
     gFlagEtapeFacture = 3
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set shp = Nothing
     
 End Sub
@@ -1619,7 +1619,7 @@ Sub FAC_Finale_Disable_Save_Button()
     Dim shp As Shape: Set shp = wshFAC_Finale.Shapes("shpSauvegarde")
     shp.Visible = False
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set shp = Nothing
     
 End Sub
@@ -1651,7 +1651,7 @@ Sub RestaurerFeuilleFinaleIntact() '2025-06-06 @ 18:38
     For Each shp In wsSource.Shapes
         shp.Copy
         wsDest.Paste
-        'Optionnel : replacer la forme exactement
+        'OptionnelÂ : replacer la forme exactement
         With wsDest.Shapes(wsDest.Shapes.count)
             .Top = shp.Top
             .Left = shp.Left
@@ -1665,5 +1665,6 @@ Sub RestaurerFeuilleFinaleIntact() '2025-06-06 @ 18:38
     Application.ScreenUpdating = True
     
 End Sub
+
 
 

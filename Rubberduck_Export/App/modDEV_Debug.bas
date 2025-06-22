@@ -1,4 +1,4 @@
-Attribute VB_Name = "modDEV_Debug"
+ï»¿Attribute VB_Name = "modDEV_Debug"
 Option Explicit
 
 Sub IdentifierEcartsComptesClientsEtGL() '2025-04-02 @ 07:46
@@ -6,56 +6,56 @@ Sub IdentifierEcartsComptesClientsEtGL() '2025-04-02 @ 07:46
     Dim wsCC As Worksheet
     Set wsCC = wsdFAC_Comptes_Clients
     Dim usedRowCC As Long
-    usedRowCC = wsCC.Cells(wsCC.Rows.count, 1).End(xlUp).row
+    usedRowCC = wsCC.Cells(wsCC.Rows.count, 1).End(xlUp).Row
     
     Dim wsGL As Worksheet
     Set wsGL = wsdGL_Trans
     Dim usedRowGL As Long
-    usedRowGL = wsGL.Cells(wsGL.Rows.count, 1).End(xlUp).row
+    usedRowGL = wsGL.Cells(wsGL.Rows.count, 1).End(xlUp).Row
     
     Dim wsENC As Worksheet
     Set wsENC = wsdENC_Details
     Dim usedRowENC As Long
-    usedRowENC = wsENC.Cells(wsENC.Rows.count, 1).End(xlUp).row
+    usedRowENC = wsENC.Cells(wsENC.Rows.count, 1).End(xlUp).Row
     
-    'Matrice pour comparer les dépôts
+    'Matrice pour comparer les dÃ©pÃ´ts
     Dim matENC() As Currency
     ReDim matENC(1 To 500, 1 To 2)
     Dim matFAC() As Currency
     ReDim matFAC(24475 To 26000, 1 To 2)
     
-    'Additionne TOUS les encaissements à partir de ENC_Détails et accumule dans dictionary
-    Dim totalENC_Détails As Currency
+    'Additionne TOUS les encaissements Ã  partir de ENC_DÃ©tails et accumule dans dictionary
+    Dim totalENC_DÃ©tails As Currency
     Dim i As Long
     For i = 2 To usedRowENC
-        totalENC_Détails = totalENC_Détails + wsENC.Cells(i, 5).Value
+        totalENC_DÃ©tails = totalENC_DÃ©tails + wsENC.Cells(i, 5).Value
         matENC(wsENC.Cells(i, 1).Value, 1) = matENC(wsENC.Cells(i, 1).Value, 1) + wsENC.Cells(i, 5).Value
     Next i
-    Debug.Print "ENC_Détails        ", "Total des encaissements = " & Format$(totalENC_Détails, "#,##0.00 $") & " pour " & usedRowENC & " lignes"
+    Debug.Print "ENC_DÃ©tails        ", "Total des encaissements = " & Format$(totalENC_DÃ©tails, "#,##0.00 $") & " pour " & usedRowENC & " lignes"
 
-    'Additionne TOUS les encaissements à partir de FAC_Comptes_Clients
-    Dim totalCC_Détails As Currency
+    'Additionne TOUS les encaissements Ã  partir de FAC_Comptes_Clients
+    Dim totalCC_DÃ©tails As Currency
     Dim noFact As String
     For i = 3 To usedRowCC
-        totalCC_Détails = totalCC_Détails + wsCC.Cells(i, 9).Value
+        totalCC_DÃ©tails = totalCC_DÃ©tails + wsCC.Cells(i, 9).Value
         noFact = wsCC.Cells(i, 1).Value
         If InStr(noFact, "-") Then
             noFact = Right(noFact, 5)
         End If
-        If noFact > 24474 Then 'Première facture créée par le logiciel
+        If noFact > 24474 Then 'PremiÃ¨re facture crÃ©Ã©e par le logiciel
             matFAC(noFact, 1) = matFAC(noFact, 1) + wsCC.Cells(i, 8).Value
         End If
     Next i
-    Debug.Print "FAC_Comptes_Clients", "Total des encaissements = " & Format$(totalCC_Détails, "#,##0.00 $") & " pour " & usedRowCC & " lignes"
+    Debug.Print "FAC_Comptes_Clients", "Total des encaissements = " & Format$(totalCC_DÃ©tails, "#,##0.00 $") & " pour " & usedRowCC & " lignes"
 
-    'Analyse TOUS les écritures au G/L
-    Dim totalGL_Détails As Currency
+    'Analyse TOUS les Ã©critures au G/L
+    Dim totalGL_DÃ©tails As Currency
     Dim Source As String, noEnc As Long
     For i = 2 To usedRowGL
         Source = wsGL.Cells(i, 4).Value
         If wsGL.Cells(i, 5).Value = "1100" Then
-            If InStr(Source, "ENCAISSEMENT:") = 1 Or InStr(Source, "DÉPÔT DE CLIENT:") = 1 Then
-                totalGL_Détails = totalGL_Détails - wsGL.Cells(i, 7).Value + wsGL.Cells(i, 8).Value
+            If InStr(Source, "ENCAISSEMENT:") = 1 Or InStr(Source, "DÃ‰PÃ”T DE CLIENT:") = 1 Then
+                totalGL_DÃ©tails = totalGL_DÃ©tails - wsGL.Cells(i, 7).Value + wsGL.Cells(i, 8).Value
                 noEnc = Mid$(Source, InStr(Source, ":") + 1, Len(Source) - InStr(Source, ":"))
                 
                 matENC(noEnc, 2) = matENC(noEnc, 2) - wsGL.Cells(i, 7).Value + wsGL.Cells(i, 8).Value
@@ -68,7 +68,7 @@ Sub IdentifierEcartsComptesClientsEtGL() '2025-04-02 @ 07:46
             
         End If
     Next i
-    Debug.Print "GL_Trans          ", "Total des encaissements = " & Format$(totalGL_Détails, "#,##0.00 $") & " pour " & usedRowGL & " lignes"
+    Debug.Print "GL_Trans          ", "Total des encaissements = " & Format$(totalGL_DÃ©tails, "#,##0.00 $") & " pour " & usedRowGL & " lignes"
 
     'Compare les deux valeurs de matENC
     For i = 1 To UBound(matENC, 1)
@@ -81,35 +81,35 @@ Sub IdentifierEcartsComptesClientsEtGL() '2025-04-02 @ 07:46
     'Compare les deux valeurs de matFAC
     For i = LBound(matFAC, 1) To UBound(matFAC, 1)
         If matFAC(i, 1) <> matFAC(i, 2) Then
-            Debug.Print "Facture # " & i & " - FAC_Comptes_Clients = " & Format$(matFAC(i, 1), "#,##0.00 $") & " vs. GL = " & Format$(matFAC(i, 2), "#,##0.00 $") & " n'est pas comptabilisée !!!"
+            Debug.Print "Facture # " & i & " - FAC_Comptes_Clients = " & Format$(matFAC(i, 1), "#,##0.00 $") & " vs. GL = " & Format$(matFAC(i, 2), "#,##0.00 $") & " n'est pas comptabilisÃ©e !!!"
         End If
     Next i
     
-    MsgBox "Fin de la vérification"
+    MsgBox "Fin de la vÃ©rification"
     
 End Sub
 
-Sub VérifierTousLesContrôlesFeuillesEtUserForms()
+Sub VÃ©rifierTousLesContrÃ´lesFeuillesEtUserForms()
 
     Dim ws As Worksheet
     Dim ctrl As OLEObject
     Dim rapport As String
     Dim testValue As Variant
-    Dim erreurTrouvée As Boolean
+    Dim erreurTrouvÃ©e As Boolean
     Dim vbComp As Object
     Dim uf As Object
     Dim ctrlUF As MSForms.Control
 
-    rapport = "?? Contrôles ActiveX corrompus (feuilles + UserForms)" & vbCrLf & String(60, "-") & vbCrLf
+    rapport = "?? ContrÃ´les ActiveX corrompus (feuilles + UserForms)" & vbCrLf & String(60, "-") & vbCrLf
 
-    ' Vérification des feuilles
+    ' VÃ©rification des feuilles
     For Each ws In ThisWorkbook.Worksheets
         For Each ctrl In ws.OLEObjects
             On Error Resume Next
             testValue = ctrl.Object.Value
             If Err.Number <> 0 Then
                 rapport = rapport & "?? Feuille: " & ws.Name & _
-                          " - Contrôle: " & ctrl.Name & _
+                          " - ContrÃ´le: " & ctrl.Name & _
                           " ? Erreur : " & Err.description & vbCrLf
             End If
             Err.Clear
@@ -117,7 +117,7 @@ Sub VérifierTousLesContrôlesFeuillesEtUserForms()
         Next ctrl
     Next ws
 
-    ' Vérification des UserForms
+    ' VÃ©rification des UserForms
     For Each vbComp In ThisWorkbook.VBProject.VBComponents
         If vbComp.Type = 3 Then ' 3 = vbext_ct_MSForm (UserForm)
             On Error Resume Next
@@ -133,7 +133,7 @@ Sub VérifierTousLesContrôlesFeuillesEtUserForms()
                 testValue = ctrlUF.Value
                 If Err.Number <> 0 Then
                     rapport = rapport & "?? UserForm: " & vbComp.Name & _
-                              " - Contrôle: " & ctrlUF.Name & _
+                              " - ContrÃ´le: " & ctrlUF.Name & _
                               " ? Erreur : " & Err.description & vbCrLf
                 End If
                 Err.Clear
@@ -146,10 +146,11 @@ NextForm:
     Next vbComp
 
     If InStr(rapport, "? Erreur") > 0 Or InStr(rapport, "?") > 0 Then
-        MsgBox rapport, vbExclamation, "?? Problèmes détectés"
+        MsgBox rapport, vbExclamation, "?? ProblÃ¨mes dÃ©tectÃ©s"
     Else
-        MsgBox "? Aucun contrôle problématique trouvé sur les feuilles ou les UserForms.", vbInformation, "Tout est OK"
+        MsgBox "? Aucun contrÃ´le problÃ©matique trouvÃ© sur les feuilles ou les UserForms.", vbInformation, "Tout est OK"
     End If
 End Sub
+
 
 

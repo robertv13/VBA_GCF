@@ -1,10 +1,10 @@
-VERSION 5.00
+ï»¿VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufGL_Rapport 
    Caption         =   "Rapport des transactions du G/L"
    ClientHeight    =   9108.001
-   ClientLeft      =   96
-   ClientTop       =   372
-   ClientWidth     =   8952.001
+   ClientLeft      =   72
+   ClientTop       =   288
+   ClientWidth     =   7152
    OleObjectBlob   =   "ufGL_Rapport.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
@@ -19,9 +19,9 @@ Private Sub UserForm_Initialize()
 
     Call modImport.ImporterGLTransactions
     
-    'Noter l'activité
+    'Noter l'activitÃ©
     Call ConnectFormControls(Me)
-    Call RafraichirActivite("Activité dans userForm '" & Me.Name & "'")
+    Call RafraichirActivite("ActivitÃ© dans userForm '" & Me.Name & "'")
     
     'Efface le contenu de la listBox
     Me.lsbComptes.Clear
@@ -30,7 +30,7 @@ Private Sub UserForm_Initialize()
     Dim arr As Variant
     arr = Fn_Get_Plan_Comptable(2) 'Returns an array with 2 columns
         
-    'Ajoute les comptes, un à un dans la listBox
+    'Ajoute les comptes, un Ã  un dans la listBox
     Dim i As Long
     For i = LBound(arr, 1) To UBound(arr, 1)
         Me.lsbComptes.AddItem arr(i, 1) & " " & arr(i, 2)
@@ -40,35 +40,35 @@ Private Sub UserForm_Initialize()
     With Me.cmbTypeRapport
         .Clear
         .AddItem "Par compte / par date"
-        .AddItem "Par numéro d'écriture"
+        .AddItem "Par numÃ©ro d'Ã©criture"
         .AddItem "Par date de saisie"
-        .ListIndex = 0 ' Sélection par défaut
+        .ListIndex = 0 ' SÃ©lection par dÃ©faut
     End With
     
-    'Options du comboBox pour les périodes
+    'Options du comboBox pour les pÃ©riodes
     cmbPeriode.Clear
     
-    'Vérifier si la plage nommée existe
+    'VÃ©rifier si la plage nommÃ©e existe
     On Error Resume Next
     Dim plage As Range
     Set plage = wsdADMIN.Range("dnrDateRange")
     On Error GoTo 0
     
     If Not plage Is Nothing Then
-        'Ajouter chaque élément de la plage à la ComboBox
+        'Ajouter chaque Ã©lÃ©ment de la plage Ã  la ComboBox
         Dim cellule As Range
         For Each cellule In plage
             cmbPeriode.AddItem cellule.Value
         Next cellule
     Else
-        MsgBox "La plage nommée 'dnrDateRange' est introuvable.", vbExclamation, "Contacter le développeur"
+        MsgBox "La plage nommÃ©e 'dnrDateRange' est introuvable.", vbExclamation, "Contacter le dÃ©veloppeur"
         Exit Sub
     End If
     
-    'Valeur sélectionnée par défaut
+    'Valeur sÃ©lectionnÃ©e par dÃ©faut
     cmbPeriode.ListIndex = 1
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set cellule = Nothing
     Set plage = Nothing
     
@@ -76,7 +76,7 @@ End Sub
 
 Private Sub cmbTypeRapport_Change()
 
-    'Masquer/Afficher les contrôles selon le type de rapport
+    'Masquer/Afficher les contrÃ´les selon le type de rapport
     If cmbTypeRapport.ListIndex = 0 Then
         'Mode "Par compte / par date"
         fraParDate.Visible = True
@@ -84,12 +84,12 @@ Private Sub cmbTypeRapport_Change()
         fraParDateSaisie.Visible = False
         fraTypeEcriture.Visible = False
         fraParDate.Top = 50
-        'Activer la sélection de comptes
+        'Activer la sÃ©lection de comptes
         lsbComptes.Enabled = True
         cmdSelectAll.Enabled = True
         cmdDeselectAll.Enabled = True
     ElseIf cmbTypeRapport.ListIndex = 1 Then
-        'Mode "Par numéro d'écriture"
+        'Mode "Par numÃ©ro d'Ã©criture"
         fraParDate.Visible = False
         fraParEcriture.Visible = True
         fraParEcriture.Top = 50
@@ -100,7 +100,7 @@ Private Sub cmbTypeRapport_Change()
         Dim maxNumeroEcriture As Long
         maxNumeroEcriture = Application.WorksheetFunction.Max(wsdGL_Trans.Range("A:A"))
         txtNoEcritureFin = maxNumeroEcriture
-        'Désactiver la sélection de comptes (car non applicable)
+        'DÃ©sactiver la sÃ©lection de comptes (car non applicable)
         lsbComptes.Enabled = False
         cmdSelectAll.Enabled = False
         cmdDeselectAll.Enabled = False
@@ -112,7 +112,7 @@ Private Sub cmbTypeRapport_Change()
         fraParDateSaisie.Top = 50
         fraTypeEcriture.Visible = True
         fraTypeEcriture.Top = 145
-        'Désactiver la sélection de comptes (car non applicable)
+        'DÃ©sactiver la sÃ©lection de comptes (car non applicable)
         lsbComptes.Enabled = False
         cmdSelectAll.Enabled = False
         cmdDeselectAll.Enabled = False
@@ -135,13 +135,13 @@ Private Sub cmbPeriode_Change()
             Case "Trimestre courant"
                 txtDateDebut.Value = Format$(wsdADMIN.Range("TrimDe"), wsdADMIN.Range("B1").Value)
                 txtDateFin.Value = Format$(wsdADMIN.Range("TrimA"), wsdADMIN.Range("B1").Value)
-            Case "Trimestre précédent"
+            Case "Trimestre prÃ©cÃ©dent"
                 txtDateDebut.Value = Format$(wsdADMIN.Range("TrimPrecDe"), wsdADMIN.Range("B1").Value)
                 txtDateFin.Value = Format$(wsdADMIN.Range("TrimPrecA"), wsdADMIN.Range("B1").Value)
-            Case "Année courante"
+            Case "AnnÃ©e courante"
                 txtDateDebut.Value = Format$(wsdADMIN.Range("AnneeDe"), wsdADMIN.Range("B1").Value)
                 txtDateFin.Value = Format$(wsdADMIN.Range("AnneeA"), wsdADMIN.Range("B1").Value)
-            Case "Année précédente"
+            Case "AnnÃ©e prÃ©cÃ©dente"
                 txtDateDebut.Value = Format$(wsdADMIN.Range("AnneePrecDe"), wsdADMIN.Range("B1").Value)
                 txtDateFin.Value = Format$(wsdADMIN.Range("AnneePrecA"), wsdADMIN.Range("B1").Value)
             Case "7 derniers jours"
@@ -172,8 +172,8 @@ Private Sub txtDateDebut_Exit(ByVal Cancel As MSForms.ReturnBoolean)
         If dateCorrigee = "" Then
             MsgBox "La date saisie est invalide, veuillez saisir une date sous un" & vbNewLine & vbNewLine & _
                     "format valide (jj ou jj/mm ou jj/mm/aaaa ou aaaa/mm/jj)" & vbNewLine & vbNewLine & _
-                    "Notez que le séparateur peut être '-' ou '/' ou ' '", vbExclamation, _
-                    "Impossible d'interpréter la date saisie"
+                    "Notez que le sÃ©parateur peut Ãªtre '-' ou '/' ou ' '", vbExclamation, _
+                    "Impossible d'interprÃ©ter la date saisie"
             Cancel = True
             txtDateDebut.SelStart = 0
             txtDateDebut.SelLength = Len(txtDateDebut.Text)
@@ -192,8 +192,8 @@ Private Sub txtDateFin_Exit(ByVal Cancel As MSForms.ReturnBoolean)
         If dateCorrigee = "" Then
             MsgBox "La date saisie est invalide, veuillez saisir une date sous un" & vbNewLine & vbNewLine & _
                     "format valide (jj ou jj/mm ou jj/mm/aaaa ou aaaa/mm/jj)" & vbNewLine & vbNewLine & _
-                    "Notez que le séparateur peut être '-' ou '/' ou ' '", vbExclamation, _
-                    "Impossible d'interpréter la date saisie"
+                    "Notez que le sÃ©parateur peut Ãªtre '-' ou '/' ou ' '", vbExclamation, _
+                    "Impossible d'interprÃ©ter la date saisie"
             Cancel = True
             txtDateFin.SelStart = 0
             txtDateFin.SelLength = Len(txtDateFin.Text)
@@ -212,8 +212,8 @@ Private Sub txtDateSaisieDebut_Exit(ByVal Cancel As MSForms.ReturnBoolean)
         If dateCorrigee = "" Then
             MsgBox "La date saisie est invalide, veuillez saisir une date sous un" & vbNewLine & vbNewLine & _
                     "format valide (jj ou jj/mm ou jj/mm/aaaa ou aaaa/mm/jj)" & vbNewLine & vbNewLine & _
-                    "Notez que le séparateur peut être '-' ou '/' ou ' '", vbExclamation, _
-                    "Impossible d'interpréter la date saisie"
+                    "Notez que le sÃ©parateur peut Ãªtre '-' ou '/' ou ' '", vbExclamation, _
+                    "Impossible d'interprÃ©ter la date saisie"
             Cancel = True
             txtDateSaisieDebut.SelStart = 0
             txtDateSaisieDebut.SelLength = Len(txtDateSaisieDebut.Text)
@@ -225,7 +225,7 @@ End Sub
 
 Private Sub txtDateSaisieFin_Exit(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Debug.Print "DateSaisieFin_Exit déclenché"
+    Debug.Print "DateSaisieFin_Exit dÃ©clenchÃ©"
     
     Dim dateCorrigee As String
     
@@ -234,8 +234,8 @@ Private Sub txtDateSaisieFin_Exit(ByVal Cancel As MSForms.ReturnBoolean)
         If dateCorrigee = "" Then
             MsgBox "La date saisie est invalide, veuillez saisir une date sous un" & vbNewLine & vbNewLine & _
                     "format valide (jj ou jj/mm ou jj/mm/aaaa ou aaaa/mm/jj)" & vbNewLine & vbNewLine & _
-                    "Notez que le séparateur peut être '-' ou '/' ou ' '", vbExclamation, _
-                    "Impossible d'interpréter la date saisie"
+                    "Notez que le sÃ©parateur peut Ãªtre '-' ou '/' ou ' '", vbExclamation, _
+                    "Impossible d'interprÃ©ter la date saisie"
             Cancel = True
             txtDateSaisieFin.SelStart = 0
             txtDateSaisieFin.SelLength = Len(txtDateSaisieFin.Text)
@@ -253,10 +253,10 @@ End Sub
 
 Private Sub cmdGenerer_Click()
 
-    'Vérification que le type de rapport est sélectionné
+    'VÃ©rification que le type de rapport est sÃ©lectionnÃ©
     Dim TypeRapport As String
     If Me.cmbTypeRapport.ListIndex = -1 Then
-        MsgBox "Veuillez sélectionner un type de rapport.", vbExclamation, "Erreur"
+        MsgBox "Veuillez sÃ©lectionner un type de rapport.", vbExclamation, "Erreur"
         Exit Sub
     Else
         TypeRapport = Me.cmbTypeRapport.Value
@@ -269,7 +269,7 @@ Private Sub cmdGenerer_Click()
     Dim wsRapport As Worksheet
     Set wsRapport = ThisWorkbook.Sheets(strWsRapport)
     
-    'Vérification des critères selon le type de rapport
+    'VÃ©rification des critÃ¨res selon le type de rapport
     If TypeRapport = "Par compte / par date" Then
         'Validation des dates
         Dim dateDebut As Date, dateFin As Date
@@ -277,45 +277,45 @@ Private Sub cmdGenerer_Click()
             dateDebut = CDate(Me.txtDateDebut.Value)
             dateFin = CDate(Me.txtDateFin.Value)
             If dateDebut > dateFin Then
-                MsgBox "La date de début doit être antérieure ou égale à la date de fin.", vbExclamation, "Erreur dans les critères de date"
+                MsgBox "La date de dÃ©but doit Ãªtre antÃ©rieure ou Ã©gale Ã  la date de fin.", vbExclamation, "Erreur dans les critÃ¨res de date"
                 Exit Sub
             End If
         Else
-            MsgBox "Veuillez entrer des dates valides.", vbExclamation, "Erreur dans les critères de date"
+            MsgBox "Veuillez entrer des dates valides.", vbExclamation, "Erreur dans les critÃ¨res de date"
             Exit Sub
         End If
         
-        'Vérification qu'au moins un compte est sélectionné
-        Dim ligneSélectionnée As Boolean
-        ligneSélectionnée = EstLigneSelectionnee(Me.lsbComptes)
-        If ligneSélectionnée = False Then
-            MsgBox "Veuillez sélectionner au moins un numéro de compte.", vbExclamation, "Erreur"
+        'VÃ©rification qu'au moins un compte est sÃ©lectionnÃ©
+        Dim ligneSÃ©lectionnÃ©e As Boolean
+        ligneSÃ©lectionnÃ©e = EstLigneSelectionnee(Me.lsbComptes)
+        If ligneSÃ©lectionnÃ©e = False Then
+            MsgBox "Veuillez sÃ©lectionner au moins un numÃ©ro de compte.", vbExclamation, "Erreur"
             Exit Sub
         End If
         
-        'Les validations sont terminées, on appelle la procédure pour le rapport par compte
+        'Les validations sont terminÃ©es, on appelle la procÃ©dure pour le rapport par compte
         Call GenererRapportGL_Compte(wsRapport, dateDebut, dateFin)
 
-    ElseIf TypeRapport = "Par numéro d'écriture" Then
-        'Validation des numéros d'écriture
+    ElseIf TypeRapport = "Par numÃ©ro d'Ã©criture" Then
+        'Validation des numÃ©ros d'Ã©criture
         Dim noEcritureDebut As Long, noEcritureFin As Long
         If IsNumeric(Me.txtNoEcritureDebut.Value) And IsNumeric(Me.txtNoEcritureFin.Value) Then
             noEcritureDebut = CLng(Me.txtNoEcritureDebut.Value)
             noEcritureFin = CLng(Me.txtNoEcritureFin.Value)
             
-            'Vérification logique des numéros d'écriture
+            'VÃ©rification logique des numÃ©ros d'Ã©criture
             If noEcritureDebut > noEcritureFin Then
-                MsgBox "Le numéro d'écriture de début doit être inférieur ou égal au numéro de fin.", _
-                            vbExclamation, "Erreur dans les critères de numéro d'écriture"
+                MsgBox "Le numÃ©ro d'Ã©criture de dÃ©but doit Ãªtre infÃ©rieur ou Ã©gal au numÃ©ro de fin.", _
+                            vbExclamation, "Erreur dans les critÃ¨res de numÃ©ro d'Ã©criture"
                 Exit Sub
             End If
         Else
-            MsgBox "Veuillez entrer des numéros d'écriture valides.", vbExclamation, _
-                        "Erreur dans les critères de numéro d'écriture"
+            MsgBox "Veuillez entrer des numÃ©ros d'Ã©criture valides.", vbExclamation, _
+                        "Erreur dans les critÃ¨res de numÃ©ro d'Ã©criture"
             Exit Sub
         End If
         
-        'As-t-on MINIMALEMENT un type de transaction à imprimer ?
+        'As-t-on MINIMALEMENT un type de transaction Ã  imprimer ?
         If Not chkDebourse And _
             Not chkEncaissement And _
             Not chkDepotClient And _
@@ -324,12 +324,12 @@ Private Sub cmdGenerer_Click()
             Not chkRegularisation Then
             MsgBox _
                 Prompt:="Vous devez MINIMALEMENT choisir un type de transaction", _
-                Title:="Selon les critères choisis, rien ne sera imprimé", _
+                Title:="Selon les critÃ¨res choisis, rien ne sera imprimÃ©", _
                 Buttons:=vbInformation
             Exit Sub
         End If
         
-        'Les validations sont terminées, on appelle la procédure pour le rapport par compte
+        'Les validations sont terminÃ©es, on appelle la procÃ©dure pour le rapport par compte
         Call GenererRapportGL_Ecriture(wsRapport, noEcritureDebut, noEcritureFin)
     Else
         'Validation des dates de saisie
@@ -339,20 +339,20 @@ Private Sub cmdGenerer_Click()
             dateSaisieFin = CDate(Me.txtDateSaisieFin.Value)
             If dateSaisieDebut > dateSaisieFin Then
                 MsgBox _
-                    Prompt:="La date de début doit être antérieure ou égale à la date de fin.", _
-                    Title:="Erreur dans les critères de date", _
+                    Prompt:="La date de dÃ©but doit Ãªtre antÃ©rieure ou Ã©gale Ã  la date de fin.", _
+                    Title:="Erreur dans les critÃ¨res de date", _
                     Buttons:=vbExclamation
                 Exit Sub
             End If
         Else
             MsgBox _
                 Prompt:="Veuillez entrer des dates valides.", _
-                Title:="rreur dans les critères de date", _
+                Title:="rreur dans les critÃ¨res de date", _
                 Buttons:=vbExclamation
             Exit Sub
         End If
         
-        'As-t-on MINIMALEMENT un type de transaction à imprimer ?
+        'As-t-on MINIMALEMENT un type de transaction Ã  imprimer ?
         If Not chkDebourse And _
             Not chkEncaissement And _
             Not chkDepotClient And _
@@ -361,7 +361,7 @@ Private Sub cmdGenerer_Click()
             Not chkRegularisation Then
             MsgBox _
                 Prompt:="Vous devez MINIMALEMENT choisir un type de transaction", _
-                Title:="Selon les critères choisis, rien ne sera imprimé", _
+                Title:="Selon les critÃ¨res choisis, rien ne sera imprimÃ©", _
                 Buttons:=vbInformation
             Exit Sub
         End If
@@ -370,7 +370,7 @@ Private Sub cmdGenerer_Click()
         dateSaisieDebut = DateSerial(year(dateSaisieDebut), month(dateSaisieDebut), day(dateSaisieDebut))
         dateSaisieFin = DateSerial(year(dateSaisieFin), month(dateSaisieFin), day(dateSaisieFin))
         
-        'Les validations sont terminées, on appelle la procédure pour le rapport par date de saisie
+        'Les validations sont terminÃ©es, on appelle la procÃ©dure pour le rapport par date de saisie
         Call GenererRapportGL_DateSaisie(wsRapport, dateSaisieDebut, dateSaisieFin)
        
     End If
@@ -379,7 +379,7 @@ End Sub
 
 Private Sub cmdSelectAll_Click()
 
-    'Boucle à travers tous les éléments du ListBox et les sélectionne
+    'Boucle Ã  travers tous les Ã©lÃ©ments du ListBox et les sÃ©lectionne
     Dim i As Integer
     For i = 0 To lsbComptes.ListCount - 1
         lsbComptes.Selected(i) = True
@@ -389,7 +389,7 @@ End Sub
 
 Private Sub cmdDeselectAll_Click()
 
-    'Boucle à travers tous les éléments du ListBox et les désélectionne
+    'Boucle Ã  travers tous les Ã©lÃ©ments du ListBox et les dÃ©sÃ©lectionne
     Dim i As Integer
     For i = 0 To lsbComptes.ListCount - 1
         lsbComptes.Selected(i) = False
@@ -406,30 +406,30 @@ Function CorrigerDate(txtDate As String) As String
     Dim maxDayInMonth As Integer
     On Error GoTo ErrorHandler
 
-    'Récupérer la date actuelle
+    'RÃ©cupÃ©rer la date actuelle
     currentDate = Date
 
-    'Supprimer les espaces & n'accepter que les caractères valides
+    'Supprimer les espaces & n'accepter que les caractÃ¨res valides
     txtDate = Trim$(txtDate)
     If Not EstDateCaractereValide(txtDate) Then
         CorrigerDate = ""
         Exit Function
     End If
-    'Uniformiser les séparateurs
+    'Uniformiser les sÃ©parateurs
     txtDate = Replace(txtDate, "-", "/")
     txtDate = Replace(txtDate, ".", "/")
     txtDate = Replace(txtDate, " ", "/")
 
-    'Si la saisie est uniquement un jour (par exemple '5' ou '12'), on prend le mois et l'année actuels
+    'Si la saisie est uniquement un jour (par exemple '5' ou '12'), on prend le mois et l'annÃ©e actuels
     If IsNumeric(txtDate) And Len(txtDate) <= 2 Then
-        'Si l'utilisateur entre un chiffre seul, c'est le jour du mois courant avec le mois et l'année courants
+        'Si l'utilisateur entre un chiffre seul, c'est le jour du mois courant avec le mois et l'annÃ©e courants
         d = CInt(txtDate)
         m = month(currentDate)
         Y = year(currentDate)
         GoTo DerniereValidation
     End If
 
-    'Cas particulier 4, 6 ou 8 caractères sans séparateur
+    'Cas particulier 4, 6 ou 8 caractÃ¨res sans sÃ©parateur
     If EstSeulementChiffres(txtDate) Then
         If Len(txtDate) = 4 Then
             txtDate = Left$(txtDate, 2) & "/" & Right$(txtDate, 2)
@@ -440,10 +440,10 @@ Function CorrigerDate(txtDate As String) As String
         End If
     End If
     
-    'S'il y a un séparateur, on décompose la chaîne dans arr()
+    'S'il y a un sÃ©parateur, on dÃ©compose la chaÃ®ne dans arr()
     arr = Split(txtDate, "/")
     
-    'S'il n'y a qu'une partie dans la date et que le nombre de caractères est de 4, on insère un séparateur
+    'S'il n'y a qu'une partie dans la date et que le nombre de caractÃ¨res est de 4, on insÃ¨re un sÃ©parateur
     If UBound(arr) = 0 And Len(arr(0)) = 4 Then
         arr(0) = Left$(arr(0), 2) & "/" & Right$(arr(0), 2)
     End If
@@ -476,14 +476,14 @@ Function CorrigerDate(txtDate As String) As String
             'Format jj/mm
             d = CInt(arr(0))
             m = CInt(arr(1))
-            Y = year(currentDate) 'L'année courante par défaut
+            Y = year(currentDate) 'L'annÃ©e courante par dÃ©faut
             GoTo DerniereValidation
         End If
     End If
     
 DerniereValidation:
     If ValiderDateDernierJourDuMois(Y, m, d) <> "" Then
-        'Conversion en date (Toutes les validations sont terminées)
+        'Conversion en date (Toutes les validations sont terminÃ©es)
         dt = DateSerial(Y, m, d)
         CorrigerDate = Format$(dt, "dd/mm/yyyy")
     Else
@@ -492,7 +492,7 @@ DerniereValidation:
     Exit Function
 
 ErrorHandler:
-    CorrigerDate = "" ' Retourne une chaîne vide si une erreur se produit
+    CorrigerDate = "" ' Retourne une chaÃ®ne vide si une erreur se produit
 End Function
 
 Function EstDateCaractereValide(ByVal txt As String) As Boolean '2025-03-03 @ 09:49
@@ -500,15 +500,15 @@ Function EstDateCaractereValide(ByVal txt As String) As Boolean '2025-03-03 @ 09
     Dim regex As Object
     Set regex = CreateObject("VBScript.RegExp")
 
-    'Expression régulière : accepte uniquement chiffres (0-9) et les séparateurs . / - et espace
+    'Expression rÃ©guliÃ¨re : accepte uniquement chiffres (0-9) et les sÃ©parateurs . / - et espace
     regex.pattern = "^[0-9./\-\s]+$"
     regex.IgnoreCase = True
     regex.Global = False
 
-    'Teste si la chaîne correspond au modèle
+    'Teste si la chaÃ®ne correspond au modÃ¨le
     EstDateCaractereValide = regex.test(txt)
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set regex = Nothing
     
 End Function
@@ -518,15 +518,15 @@ Function EstSeulementChiffres(ByVal txt As String) As Boolean '2025-03-03 @ 09:4
     Dim regex As Object
     Set regex = CreateObject("VBScript.RegExp")
 
-    'Expression régulière en fonction du nombre de caractères
+    'Expression rÃ©guliÃ¨re en fonction du nombre de caractÃ¨res
     regex.pattern = "^\d{4}$|^\d{6}$|^\d{8}$"
     regex.IgnoreCase = True
     regex.Global = False
 
-    'Teste si la chaîne correspond au modèle
+    'Teste si la chaÃ®ne correspond au modÃ¨le
     EstSeulementChiffres = regex.test(txt)
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set regex = Nothing
     
 End Function
@@ -534,14 +534,14 @@ End Function
 Private Sub chkToutesEcritures_Click() '2025-03-03 @ 08:36
 
     Dim Activer As Boolean
-    Activer = Me.chkToutesEcritures.Value 'True si coché, False sinon
+    Activer = Me.chkToutesEcritures.Value 'True si cochÃ©, False sinon
 
     'Parcourir toutes les cases du Frame sauf "chkToutesEcritures"
     Dim ctrl As Control
     For Each ctrl In Me.fraTypeEcriture.Controls
         If TypeName(ctrl) = "CheckBox" And ctrl.Name <> "chkToutesEcritures" Then
-            ctrl.Enabled = Not Activer 'Désactive si "Toutes les écritures" est cochée
-            ctrl.Value = Activer       'Coche si "Toutes les écritures" est cochée
+            ctrl.Enabled = Not Activer 'DÃ©sactive si "Toutes les Ã©critures" est cochÃ©e
+            ctrl.Value = Activer       'Coche si "Toutes les Ã©critures" est cochÃ©e
         End If
     Next ctrl
     
@@ -549,7 +549,7 @@ End Sub
 
 Private Sub CheckBox_Click() '2025-03-03 @ 08:37
 
-    'Empêcher de décocher une case si "Toutes les écritures" est cochée
+    'EmpÃªcher de dÃ©cocher une case si "Toutes les Ã©critures" est cochÃ©e
     If Me.chkToutesEcritures.Value = True Then
         Application.EnableEvents = False
         Me.chkToutesEcritures.Value = False
@@ -557,4 +557,5 @@ Private Sub CheckBox_Click() '2025-03-03 @ 08:37
     End If
     
 End Sub
+
 

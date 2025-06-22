@@ -1,4 +1,4 @@
-Attribute VB_Name = "modTEC_Analyse"
+ï»¿Attribute VB_Name = "modTEC_Analyse"
 Option Explicit
 
 Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
@@ -11,22 +11,22 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     
     'Remove existing subtotals in the destination worksheet
     wsDest.Cells.RemoveSubtotal
-'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - Les anciens SubTotal ont été effacés", -1)
+'    Call Log_Record("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - Les anciens SubTotal ont Ã©tÃ© effacÃ©s", -1)
     
     'Clear the worksheet from row 6 until the last row used
     Dim destLastUsedRow As Long
-    destLastUsedRow = wsDest.Cells(wsDest.Rows.count, "B").End(xlUp).row
+    destLastUsedRow = wsDest.Cells(wsDest.Rows.count, "B").End(xlUp).Row
     If destLastUsedRow < 6 Then destLastUsedRow = 6
     wsDest.Range("A6:I" & destLastUsedRow).Clear
     
-    'Créer un dict pour tous les clients FACTURABLES
+    'CrÃ©er un dict pour tous les clients FACTURABLES
     Dim wsClientsMF As Worksheet: Set wsClientsMF = wsdBD_Clients
     Dim lastUsedRowClient As Long
-    lastUsedRowClient = wsClientsMF.Cells(wsClientsMF.Rows.count, "B").End(xlUp).row
+    lastUsedRowClient = wsClientsMF.Cells(wsClientsMF.Rows.count, "B").End(xlUp).Row
     Dim dictClients As Dictionary
     Set dictClients = New Dictionary
     Dim clientData As Variant
-    'Charger toutes les données des clients dans un tableau
+    'Charger toutes les donnÃ©es des clients dans un tableau
     clientData = wsClientsMF.Range(wsClientsMF.Cells(2, fClntFMClientID), _
                                wsClientsMF.Cells(lastUsedRowClient, fClntFMClientNom)).Value
 
@@ -43,7 +43,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     'Set the source worksheet, lastUsedRow and lastUsedCol
     Dim wsSource As Worksheet: Set wsSource = wsdTEC_Local
     'Find the last row with data in the source worksheet
-    lastUsedRow = wsSource.Cells(wsSource.Rows.count, 1).End(xlUp).row
+    lastUsedRow = wsSource.Cells(wsSource.Rows.count, 1).End(xlUp).Row
     'Find the first empty column from the left in the source worksheet
     firstEmptyCol = 1
     Do Until IsEmpty(wsSource.Cells(2, firstEmptyCol))
@@ -54,20 +54,20 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     
     Application.EnableEvents = False
     
-    'Appel à AdvancedFilter # 2 dans TEC_Local
+    'Appel Ã  AdvancedFilter # 2 dans TEC_Local
     Call Get_TEC_For_Client_AF("", CLng(CDate(wsDest.Range("H3").Value)), "VRAI", "FAUX", "FAUX")
     
     Dim lastUsedResult As Long
-    lastUsedResult = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "AQ").End(xlUp).row
+    lastUsedResult = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "AQ").End(xlUp).Row
     
-    'Charger les données sources dans un tableau (beaucoup plus rapide)
+    'Charger les donnÃ©es sources dans un tableau (beaucoup plus rapide)
     Dim sourceData As Variant
     Dim rowCount As Long
-'    Debug.Print "Il y a " & lastUsedResult & " rangées dans le tableau"
+'    Debug.Print "Il y a " & lastUsedResult & " rangÃ©es dans le tableau"
     sourceData = wsSource.Range("AQ3:AX" & lastUsedResult).Value
     rowCount = UBound(sourceData, 1)
 
-    'Initialiser un tableau pour les données de sortie (beaucoup plus rapide)
+    'Initialiser un tableau pour les donnÃ©es de sortie (beaucoup plus rapide)
     Dim outputData() As Variant
     ReDim outputData(1 To rowCount, 1 To 8)
     
@@ -75,11 +75,11 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Dim codeClient As String, nomClientFromMF As String
     
     For i = 1 To rowCount
-        'Vérifier la condition d'exclusion
+        'VÃ©rifier la condition d'exclusion
         If dictClients.Exists(sourceData(i, 5)) Then
             codeClient = sourceData(i, 5)
             nomClientFromMF = dictClients(codeClient)
-            'Ajouter les données au tableau de sortie
+            'Ajouter les donnÃ©es au tableau de sortie
             outputData(r, 1) = sourceData(i, 1)
             outputData(r, 2) = sourceData(i, 2)
             outputData(r, 3) = nomClientFromMF
@@ -91,7 +91,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
         End If
     Next i
     
-    'Écrire les données de sortie dans la feuille & formater quelques colonnes
+    'Ã‰crire les donnÃ©es de sortie dans la feuille & formater quelques colonnes
     If r > 1 Then
         wsDest.Range("A7:H" & r - 1 + 6).Value = outputData
         'Formats
@@ -102,7 +102,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Application.EnableEvents = False
    
     'Find the last row in the destination worksheet
-    destLastUsedRow = wsDest.Cells(wsDest.Rows.count, 1).End(xlUp).row
+    destLastUsedRow = wsDest.Cells(wsDest.Rows.count, 1).End(xlUp).Row
 
     'Sort by ClientID (column E) and Date (column D) in the destination worksheet
     wsDest.Sort.SortFields.Clear
@@ -120,7 +120,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     End With
     
     'Add subtotals for hours (column H) at each change in nomClientMF (column C) in the destination worksheet
-    destLastUsedRow = wsDest.Cells(wsDest.Rows.count, 1).End(xlUp).row
+    destLastUsedRow = wsDest.Cells(wsDest.Rows.count, 1).End(xlUp).Row
     Application.DisplayAlerts = False
     wsDest.Range("A6:H" & destLastUsedRow).Subtotal GroupBy:=3, Function:=xlSum, _
             TotalList:=Array(8), Replace:=True, PageBreaks:=False, SummaryBelowData:=False
@@ -128,7 +128,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     wsDest.Range("A:B").EntireColumn.Hidden = True
 
     'Group the data to show subtotals in the destination worksheet
-    destLastUsedRow = wsDest.Cells(wsDest.Rows.count, 1).End(xlUp).row
+    destLastUsedRow = wsDest.Cells(wsDest.Rows.count, 1).End(xlUp).Row
     wsDest.Outline.ShowLevels RowLevels:=2
     
     'Add a formula to sum the billed amounts at the top row
@@ -190,10 +190,10 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
                 .TintAndShade = 0
             End With
             With wsDest.Range("C" & r)
-'                If InStr(.value, "Total ") = 1 Then
-'                    .value = Mid$(.value, 7)
+'                If InStr(.Value, "Total ") = 1 Then
+'                    .Value = Mid$(.Value, 7)
 '                End If
-                If .Value = "Total général" Then
+                If .Value = "Total gÃ©nÃ©ral" Then
                     .Value = "G r a n d   T o t a l"
                 End If
             End With
@@ -221,7 +221,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Application.ScreenUpdating = True
     Application.EnableEvents = True
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set dictClients = Nothing
     Set rngTotals = Nothing
     Set wsClientsMF = Nothing
@@ -274,31 +274,31 @@ Sub Apply_Conditional_Formatting_Alternate_On_Column_H(rng As Range, lastUsedRow
     
             'Rule for values > 50 (Highest priority)
             .Add Type:=xlCellValue, Operator:=xlGreater, Formula1:="50"
-            With .item(.count)
+            With .item(.Count)
                 .Interior.Color = RGB(255, 0, 0) 'Red color
             End With
     
             'Rule for values > 25
             .Add Type:=xlCellValue, Operator:=xlGreater, Formula1:="25"
-            With .item(.count)
+            With .item(.Count)
                 .Interior.Color = RGB(255, 165, 0) 'Orange color
             End With
     
             'Rule for values > 10
             .Add Type:=xlCellValue, Operator:=xlGreater, Formula1:="10"
-            With .item(.count)
+            With .item(.Count)
                 .Interior.Color = RGB(255, 255, 0) 'Yellow color
             End With
     
             'Rule for values > 5
             .Add Type:=xlCellValue, Operator:=xlGreater, Formula1:="5"
-            With .item(.count)
+            With .item(.Count)
                 .Interior.Color = RGB(144, 238, 144) 'Light green color
             End With
         End With
     End If
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set cell = Nothing
     Set totalRange = Nothing
     Set ws = Nothing
@@ -313,7 +313,7 @@ Sub Build_Hours_Summary(rowSelected As Long)
     
     'Determine the last row used
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).row
+    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).Row
     
     'Clear the Hours Summary area
     Call Clean_Up_Summary_Area(ws)
@@ -371,14 +371,14 @@ Sub Build_Hours_Summary(rowSelected As Long)
     With ActiveSheet.Cells(rTotal, "K")
         .HorizontalAlignment = xlRight
         .FormulaR1C1 = "=SUM(R" & saveR & "C:R[-1]C)"
-'        .value = Format$(t, "#,##0.00")
+'        .Value = Format$(t, "#,##0.00")
         .Font.Bold = True
     End With
     
     'Fees Total
     With ActiveSheet.Cells(rowSelected, "M")
         .HorizontalAlignment = xlRight
-'        .value = Format$(tdollars, "#,##0.00$")
+'        .Value = Format$(tdollars, "#,##0.00$")
         .FormulaR1C1 = "=SUM(R" & saveR & "C:R[-1]C)"
         .Font.Bold = True
     End With
@@ -428,7 +428,7 @@ Sub Build_Hours_Summary(rowSelected As Long)
     
     Application.EnableEvents = True
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set dictHours = Nothing
     Set prof = Nothing
     Set rngSort = Nothing
@@ -440,7 +440,7 @@ Sub Bring_In_Existing_Invoice_Requests(activeLastUsedRow As Long)
 
     Dim wsSource As Worksheet: Set wsSource = wsdFAC_Projets_Entete
     Dim sourceLastUsedRow As Long
-    sourceLastUsedRow = wsSource.Cells(wsSource.Rows.count, "A").End(xlUp).row
+    sourceLastUsedRow = wsSource.Cells(wsSource.Rows.count, "A").End(xlUp).Row
     
     Dim wsActive As Worksheet: Set wsActive = wshTEC_Analyse
     Dim rngTotal As Range: Set rngTotal = wsActive.Range("C1:C" & activeLastUsedRow)
@@ -473,23 +473,23 @@ Sub Bring_In_Existing_Invoice_Requests(activeLastUsedRow As Long)
         End If
     Next i
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set rngTotal = Nothing
     Set wsActive = Nothing
     Set wsSource = Nothing
     
 End Sub
 
-Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As Long, ByRef projetID As Long) 'Write a record to MASTER.xlsx file
+Sub FAC_Projets_DÃ©tails_Add_Record_To_DB(clientID As String, fr As Long, lr As Long, ByRef projetID As Long) 'Write a record to MASTER.xlsx file
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:FAC_Projets_Détails_Add_Record_To_DB", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:FAC_Projets_DÃ©tails_Add_Record_To_DB", "", 0)
     
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "FAC_Projets_Détails$"
+    destinationTab = "FAC_Projets_DÃ©tails$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -552,23 +552,23 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As L
     
     Application.ScreenUpdating = True
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modTEC_Analyse:FAC_Projets_Détails_Add_Record_To_DB", "", startTime)
+    Call Log_Record("modTEC_Analyse:FAC_Projets_DÃ©tails_Add_Record_To_DB", "", startTime)
 
 End Sub
 
-Sub FAC_Projets_Détails_Add_Record_Locally(clientID As String, fr As Long, lr As Long, projetID As Long) 'Write records locally
+Sub FAC_Projets_DÃ©tails_Add_Record_Locally(clientID As String, fr As Long, lr As Long, projetID As Long) 'Write records locally
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:FAC_Projets_Détails_Add_Record_Locally", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:FAC_Projets_DÃ©tails_Add_Record_Locally", "", 0)
     
     Application.ScreenUpdating = False
     
-    'What is the last used row in FAC_Projets_Détails?
+    'What is the last used row in FAC_Projets_DÃ©tails?
     Dim lastUsedRow As Long, rn As Long
-    lastUsedRow = wsdFAC_Projets_Details.Cells(wsdFAC_Projets_Details.Rows.count, "A").End(xlUp).row
+    lastUsedRow = wsdFAC_Projets_Details.Cells(wsdFAC_Projets_Details.Rows.count, "A").End(xlUp).Row
     rn = lastUsedRow + 1
     
     'timeStamp uniforme
@@ -594,7 +594,7 @@ Sub FAC_Projets_Détails_Add_Record_Locally(clientID As String, fr As Long, lr As
     
     Application.ScreenUpdating = True
 
-    Call Log_Record("modTEC_Analyse:FAC_Projets_Détails_Add_Record_Locally", "", startTime)
+    Call Log_Record("modTEC_Analyse:FAC_Projets_DÃ©tails_Add_Record_Locally", "", startTime)
 
 End Sub
 
@@ -618,21 +618,21 @@ Sub Soft_Delete_If_Value_Is_Found_In_Master_Details(filePath As String, _
     
 End Sub
 
-Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
+Sub FAC_Projets_EntÃªte_Add_Record_To_DB(projetID As Long, _
                                         nomClient As String, _
                                         clientID As String, _
                                         dte As String, _
                                         hono As Double, _
                                         ByRef arr As Variant) 'Write a record to MASTER.xlsx file
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:FAC_Projets_Entête_Add_Record_To_DB", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:FAC_Projets_EntÃªte_Add_Record_To_DB", "", 0)
     
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "FAC_Projets_Entête$"
+    destinationTab = "FAC_Projets_EntÃªte$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -704,23 +704,23 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
     
     Application.ScreenUpdating = True
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modTEC_Analyse:FAC_Projets_Entête_Add_Record_To_DB", "", startTime)
+    Call Log_Record("modTEC_Analyse:FAC_Projets_EntÃªte_Add_Record_To_DB", "", startTime)
 
 End Sub
 
-Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String, clientID As String, dte As String, hono As Double, ByRef arr As Variant) 'Write records locally
+Sub FAC_Projets_EntÃªte_Add_Record_Locally(projetID As Long, nomClient As String, clientID As String, dte As String, hono As Double, ByRef arr As Variant) 'Write records locally
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:FAC_Projets_Entête_Add_Record_Locally", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:FAC_Projets_EntÃªte_Add_Record_Locally", "", 0)
     
     Application.ScreenUpdating = False
     
-    'What is the last used row in FAC_Projets_Détails?
+    'What is the last used row in FAC_Projets_DÃ©tails?
     Dim lastUsedRow As Long, rn As Long
-    lastUsedRow = wsdFAC_Projets_Entete.Cells(wsdFAC_Projets_Entete.Rows.count, "A").End(xlUp).row
+    lastUsedRow = wsdFAC_Projets_Entete.Cells(wsdFAC_Projets_Entete.Rows.count, "A").End(xlUp).Row
     rn = lastUsedRow + 1
     
     'timeStamp uniforme
@@ -745,7 +745,7 @@ Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String,
     
     Application.ScreenUpdating = True
 
-    Call Log_Record("modTEC_Analyse:FAC_Projets_Entête_Add_Record_Locally", "", startTime)
+    Call Log_Record("modTEC_Analyse:FAC_Projets_EntÃªte_Add_Record_Locally", "", startTime)
 
 End Sub
 
@@ -802,7 +802,7 @@ Sub Add_And_Modify_Checkbox(StartRow As Long, lastRow As Long)
     Application.EnableEvents = True
     Application.ScreenUpdating = True
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set checkBox = Nothing
     Set summaryRange = Nothing
     Set ws = Nothing
@@ -822,7 +822,7 @@ Sub Delete_CheckBox()
         End If
     Next sh
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set sh = Nothing
     Set ws = Nothing
     
@@ -843,7 +843,7 @@ Sub Groups_SubTotals_Collapse_A_Client(r As Long)
     r = r - 1
     ws.Rows(saveR & ":" & r).EntireRow.Hidden = True
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set ws = Nothing
     
 End Sub
@@ -866,7 +866,7 @@ Sub Clear_Fees_Summary_And_CheckBox() 'RMV_15
         End If
     Next sh
 
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set sh = Nothing
     Set ws = Nothing
     
@@ -876,7 +876,7 @@ End Sub
 
 Sub TEC_Analyse_Delete_CheckBox()
 
-    'Assigner la feuille à ws
+    'Assigner la feuille Ã  ws
     Dim ws As Worksheet: Set ws = wshTEC_Analyse
     
     'Si CheckBox* existe, l'effacer
@@ -892,7 +892,7 @@ Sub TEC_Analyse_Delete_CheckBox()
         On Error GoTo 0
     Next i
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set checkBox = Nothing
     Set ws = Nothing
     
@@ -911,7 +911,7 @@ Sub TEC_Analyse_Back_To_TEC_Menu()
     Call Clear_Fees_Summary_And_CheckBox
     
     Dim usedLastRow As Long
-    usedLastRow = wshTEC_Analyse.Cells(wshTEC_Analyse.Rows.count, "C").End(xlUp).row
+    usedLastRow = wshTEC_Analyse.Cells(wshTEC_Analyse.Rows.count, "C").End(xlUp).Row
     Application.EnableEvents = False
     wshTEC_Analyse.Range("C6:O" & usedLastRow).Clear
     Application.EnableEvents = True
@@ -924,4 +924,5 @@ Sub TEC_Analyse_Back_To_TEC_Menu()
     Call Log_Record("modTEC_Analyse:TEC_Analyse_Back_To_TEC_Menu", "", startTime)
 
 End Sub
+
 

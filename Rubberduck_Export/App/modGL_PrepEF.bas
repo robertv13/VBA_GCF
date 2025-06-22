@@ -1,16 +1,16 @@
-Attribute VB_Name = "modGL_PrepEF"
+ï»¿Attribute VB_Name = "modGL_PrepEF"
 Option Explicit
 
 Public gDictgSoldeCodeEF As Object
 Public gSoldeCodeEF() As Variant
 Public gSavePremiereLigne As Integer
 Public gLigneTotalPassif As Integer, gLigneTotalADA As Integer
-Public gLigneTotalRevenus As Integer, gLigneTotalDépenses As Integer
+Public gLigneTotalRevenus As Integer, gLigneTotalDÃ©penses As Integer
 Public gLigneAutresRevenus As Integer
-Public gLigneRevenuNetAvantImpôts As Integer
+Public gLigneRevenuNetAvantImpÃ´ts As Integer
 Public gTotalRevenuNet_AC As Currency, gTotalRevenuNet_AP As Currency
-Public gBNR_Début_Année_AC As Currency, gBNR_Début_Année_AP As Currency
-Public gDividendes_Année_AC As Currency, gDividendes_Année_AP As Currency
+Public gBNR_DÃ©but_AnnÃ©e_AC As Currency, gBNR_DÃ©but_AnnÃ©e_AP As Currency
+Public gDividendes_AnnÃ©e_AC As Currency, gDividendes_AnnÃ©e_AP As Currency
 
 Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 04:26
     
@@ -19,18 +19,18 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
     Application.EnableEvents = False
     Application.ScreenUpdating = False
     
-    'Qui exécute ce programme ?
+    'Qui exÃ©cute ce programme ?
     Dim isDeveloppeur As Boolean
     If GetNomUtilisateur() = "RobertMV" Or GetNomUtilisateur() = "robertmv" Then
         isDeveloppeur = True
     End If
     
-    'Déterminer la date de cutoff pour l'an passé
-    Dim cutOffAnPassé As Date
-    cutOffAnPassé = dateCutOff
-    cutOffAnPassé = DateAdd("yyyy", -1, cutOffAnPassé)
+    'DÃ©terminer la date de cutoff pour l'an passÃ©
+    Dim cutOffAnPassÃ© As Date
+    cutOffAnPassÃ© = dateCutOff
+    cutOffAnPassÃ© = DateAdd("yyyy", -1, cutOffAnPassÃ©)
     ws.Range("F5").Value = Format$(dateCutOff, wsdADMIN.Range("B1").Value)
-    ws.Range("H5").Value = Format$(cutOffAnPassé, wsdADMIN.Range("B1").Value)
+    ws.Range("H5").Value = Format$(cutOffAnPassÃ©, wsdADMIN.Range("B1").Value)
     
     'The Chart of Account will drive the results, so the sort order is determined by COA
     Dim arr As Variant
@@ -49,17 +49,17 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
     lastUsedRow = rngResultAF.Rows.count
     If lastUsedRow < 2 Then Exit Sub
     
-    'Charge en mémoire (matrice) toutes les transactions du G/L
+    'Charge en mÃ©moire (matrice) toutes les transactions du G/L
     Dim arrTrans As Variant
     arrTrans = rngResultAF.Value2
     
-    'Dictionary par code d'état financier, pointe vers une matrice
+    'Dictionary par code d'Ã©tat financier, pointe vers une matrice
     Dim dictSoldesParGL As Dictionary: Set dictSoldesParGL = New Dictionary
-    Dim rowID_to_arrSoldesParGL As Long 'Pointeur à la matrice
-    Dim arrSoldesParGL() As Variant 'Soldes Année Courante & Année précédente
+    Dim rowID_to_arrSoldesParGL As Long 'Pointeur Ã  la matrice
+    Dim arrSoldesParGL() As Variant 'Soldes AnnÃ©e Courante & AnnÃ©e prÃ©cÃ©dente
     ReDim arrSoldesParGL(1 To UBound(arr, 1), 1 To 3)
     
-    'Lire chacune des lignes de transaction du résultat (GL_Trans_AF#1)
+    'Lire chacune des lignes de transaction du rÃ©sultat (GL_Trans_AF#1)
     Dim currRowID As Long
     Dim i As Long, glNo As String, MyValue As String, t1 As Currency, t2 As Currency
     For i = 2 To UBound(arrTrans, 1)
@@ -70,9 +70,9 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
             arrSoldesParGL(rowID_to_arrSoldesParGL, 1) = glNo
         End If
         currRowID = dictSoldesParGL(glNo)
-        'Mettre à jour la matrice des soldes
+        'Mettre Ã  jour la matrice des soldes
         arrSoldesParGL(currRowID, 2) = arrSoldesParGL(currRowID, 2) + arrTrans(i, 7) - arrTrans(i, 8)
-        If CDate(arrTrans(i, 2)) <= cutOffAnPassé Then
+        If CDate(arrTrans(i, 2)) <= cutOffAnPassÃ© Then
             arrSoldesParGL(currRowID, 3) = arrSoldesParGL(currRowID, 3) + arrTrans(i, 7) - arrTrans(i, 8)
         End If
     Next i
@@ -85,7 +85,7 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
     ws.Range("C6:H" & UBound(arr, 1) + 7).Font.Name = "Aptos Narrow"
     ws.Range("C6:H" & UBound(arr, 1) + 7).Font.size = 10
     
-    'Maintenant on affiche des résulats, piloté par le plan comptable
+    'Maintenant on affiche des rÃ©sulats, pilotÃ© par le plan comptable
     'Utilisation d'un dictionary pour sommariser les lignes de EF
     If Not gDictgSoldeCodeEF Is Nothing Then
         gDictgSoldeCodeEF.RemoveAll
@@ -130,7 +130,7 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
                     ws.Range("M" & currRow).Value = codeEF
                     ws.Range("N" & currRow).Value = glNo
                 End If
-                'Accumule les montants par ligne d'état financier (codeEF)
+                'Accumule les montants par ligne d'Ã©tat financier (codeEF)
                 If Not gDictgSoldeCodeEF.Exists(codeEF) Then
                     rowID_to_gSoldeCodeEF = rowID_to_gSoldeCodeEF + 1
                     gDictgSoldeCodeEF.Add codeEF, rowID_to_gSoldeCodeEF
@@ -160,13 +160,13 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
             End If
         End If
         
-        'Sauvegarde des BNR au début de l'année et Dividendes
+        'Sauvegarde des BNR au dÃ©but de l'annÃ©e et Dividendes
         If glNo = "3100" Then
-            gBNR_Début_Année_AC = ws.Range("F" & currRow).Value
-            gBNR_Début_Année_AP = ws.Range("H" & currRow).Value
+            gBNR_DÃ©but_AnnÃ©e_AC = ws.Range("F" & currRow).Value
+            gBNR_DÃ©but_AnnÃ©e_AP = ws.Range("H" & currRow).Value
         ElseIf glNo = "3200" Then
-            gDividendes_Année_AC = ws.Range("F" & currRow).Value
-            gDividendes_Année_AP = ws.Range("H" & currRow).Value
+            gDividendes_AnnÃ©e_AC = ws.Range("F" & currRow).Value
+            gDividendes_AnnÃ©e_AP = ws.Range("H" & currRow).Value
         End If
     
         If isDeveloppeur = True Then
@@ -197,7 +197,7 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
     ws.Range("C6").Select
     Application.EnableEvents = True
     
-    'Libérer la mémoire
+    'LibÃ©rer la mÃ©moire
     Set dictPreuve = Nothing
     Set dictSoldesParGL = Nothing
     
@@ -210,7 +210,7 @@ Sub shp_GL_PrepEF_Preparer_Click()
     Dim ws As Worksheet
     Set ws = wshGL_PrepEF
     
-    Call Assembler_États_Financiers
+    Call Assembler_Ã‰tats_Financiers
     
 End Sub
 
@@ -229,15 +229,15 @@ Sub GL_PrepEF_Back_To_Menu()
     
 End Sub
 
-Sub Assembler_États_Financiers()
+Sub Assembler_Ã‰tats_Financiers()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_États_Financiers", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_Ã‰tats_Financiers", "", 0)
     
     Dim dateAC As Date, dateAP As Date
     dateAC = wshGL_PrepEF.Range("F5").Value
     dateAP = wshGL_PrepEF.Range("H5").Value
     
-    Call CréerFeuillesEtFormat
+    Call CrÃ©erFeuillesEtFormat
     
     Call Assembler_Page_Titre_0_Main(dateAC, dateAP)
     Call Assembler_TM_0_Main(dateAC, dateAP)
@@ -246,56 +246,56 @@ Sub Assembler_États_Financiers()
     Call Assembler_Bilan_0_Main(dateAC, dateAP)
     
     Dim nomsFeuilles As Variant
-    nomsFeuilles = Array("Page titre", "Table des Matières", "État des Résultats", "BNR", "Bilan")
+    nomsFeuilles = Array("Page titre", "Table des MatiÃ¨res", "Ã‰tat des RÃ©sultats", "BNR", "Bilan")
     
     Dim ws As Worksheet
     Dim i As Integer
     For i = UBound(nomsFeuilles) To LBound(nomsFeuilles) Step -1
-        Set ws = ThisWorkbook.Sheets(nomsFeuilles(i)) 'Vérifier si la feuille existe déjà
+        Set ws = ThisWorkbook.Sheets(nomsFeuilles(i)) 'VÃ©rifier si la feuille existe dÃ©jÃ 
         With ws
-            'Sélectionner la feuille
+            'SÃ©lectionner la feuille
             .Activate
             .Visible = xlSheetVisible
-            'Affichage de la feuille à 87 %
+            'Affichage de la feuille Ã  87 %
             ActiveWindow.Zoom = 87
-            'Afficher en mode aperçu des sauts de page
+            'Afficher en mode aperÃ§u des sauts de page
             ActiveWindow.View = xlPageBreakPreview
             'Remplir toutes les cellules avec la couleur blanche
             .Cells.Interior.Color = RGB(255, 255, 255) 'Blanc
-'            .Cells.Interior.Color = RGB(255, 255, 204) ' Jaune pâle
+'            .Cells.Interior.Color = RGB(255, 255, 204) ' Jaune pÃ¢le
         End With
     Next i
     
-    'On se déplace à la première page des états financiers
+    'On se dÃ©place Ã  la premiÃ¨re page des Ã©tats financiers
     ActiveWorkbook.Sheets("Page Titre").Activate
     
-    MsgBox "Les états financiers ont été produits" & vbNewLine & vbNewLine & _
+    MsgBox "Les Ã©tats financiers ont Ã©tÃ© produits" & vbNewLine & vbNewLine & _
             "Voir les onglets respectifs au bas du classeur", vbOKOnly, "Fin de traitement"
     
-    Call Log_Record("modGL_PrepEF:Assembler_États_Financiers", "", startTime)
+    Call Log_Record("modGL_PrepEF:Assembler_Ã‰tats_Financiers", "", startTime)
 
 End Sub
 
-Sub CréerFeuillesEtFormat()
+Sub CrÃ©erFeuillesEtFormat()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:CréerFeuillesEtFormat", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:CrÃ©erFeuillesEtFormat", "", 0)
     
-    'Liste des feuilles à créer
+    'Liste des feuilles Ã  crÃ©er
     Dim nomsFeuilles As Variant
-    nomsFeuilles = Array("Page titre", "Table des Matières", "État des Résultats", "BNR", "Bilan")
+    nomsFeuilles = Array("Page titre", "Table des MatiÃ¨res", "Ã‰tat des RÃ©sultats", "BNR", "Bilan")
 
     Application.ScreenUpdating = False
     
-    'Création des feuilles et application des formats
+    'CrÃ©ation des feuilles et application des formats
     Dim ws As Worksheet
     Dim i As Integer
     For i = LBound(nomsFeuilles) To UBound(nomsFeuilles)
         On Error Resume Next
-        Application.StatusBar = "Création de " & nomsFeuilles(i)
-        Set ws = ThisWorkbook.Sheets(nomsFeuilles(i)) 'Vérifier si la feuille existe déjà
+        Application.StatusBar = "CrÃ©ation de " & nomsFeuilles(i)
+        Set ws = ThisWorkbook.Sheets(nomsFeuilles(i)) 'VÃ©rifier si la feuille existe dÃ©jÃ 
         On Error GoTo 0
         
-        If ws Is Nothing Then ' Si la feuille n'existe pas, la créer
+        If ws Is Nothing Then ' Si la feuille n'existe pas, la crÃ©er
             Set ws = ThisWorkbook.Sheets.Add(After:=ThisWorkbook.Sheets(ThisWorkbook.Sheets.count)) 'ThisWorkbook.Sheets()(Sheets.count))
             ws.Name = nomsFeuilles(i)
         End If
@@ -320,7 +320,7 @@ Sub CréerFeuillesEtFormat()
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modGL_PrepEF:CréerFeuillesEtFormat", "", startTime)
+    Call Log_Record("modGL_PrepEF:CrÃ©erFeuillesEtFormat", "", startTime)
     
 End Sub
 
@@ -336,7 +336,7 @@ Sub Assembler_Page_Titre_0_Main(dateAC As Date, dateAP As Date)
     
     Application.StatusBar = "Construction de la page titre"
         
-    Call Assembler_Page_Titre_1_Arrière_Plan_Et_Entête(ws, dateAC, dateAP)
+    Call Assembler_Page_Titre_1_ArriÃ¨re_Plan_Et_EntÃªte(ws, dateAC, dateAP)
     
     Application.StatusBar = ""
     
@@ -346,9 +346,9 @@ Sub Assembler_Page_Titre_0_Main(dateAC As Date, dateAP As Date)
 
 End Sub
 
-Sub Assembler_Page_Titre_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateAP As Date)
+Sub Assembler_Page_Titre_1_ArriÃ¨re_Plan_Et_EntÃªte(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_Page_Titre_1_Arrière_Plan_Et_Entête", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_Page_Titre_1_ArriÃ¨re_Plan_Et_EntÃªte", "", 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -356,7 +356,7 @@ Sub Assembler_Page_Titre_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Dat
     ws.Cells.VerticalAlignment = xlCenter
     
     Call PositionnerCellule(ws, UCase$(wsdADMIN.Range("NomEntreprise")), 8, 2, 20, True, xlCenter)
-    Call PositionnerCellule(ws, UCase$("États Financiers"), 15, 2, 20, True, xlCenter)
+    Call PositionnerCellule(ws, UCase$("Ã‰tats Financiers"), 15, 2, 20, True, xlCenter)
     Call PositionnerCellule(ws, UCase$(Format$(dateAC, "dd mmmm yyyy")), 28, 2, 20, True, xlCenter)
     
     'Ajuster la largeur des colonnes et la hauteur de lignes
@@ -373,9 +373,9 @@ Sub Assembler_Page_Titre_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Dat
     End With
 
     'Fixer le printArea selon le nombre de lignes ET 3 colonnes
-    ActiveSheet.PageSetup.PrintArea = "$A1:$C" & ws.Cells(ws.Rows.count, 2).End(xlUp).row + 3
+    ActiveSheet.PageSetup.PrintArea = "$A1:$C" & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3
 
-    Call Log_Record("modGL_PrepEF:Assembler_Page_Titre_1_Arrière_Plan_Et_Entête", "", startTime)
+    Call Log_Record("modGL_PrepEF:Assembler_Page_Titre_1_ArriÃ¨re_Plan_Et_EntÃªte", "", startTime)
 
 End Sub
 
@@ -386,11 +386,11 @@ Sub Assembler_TM_0_Main(dateAC As Date, dateAP As Date)
     Application.ScreenUpdating = False
     
     Dim ws As Worksheet
-    Set ws = ThisWorkbook.Sheets("Table des Matières")
+    Set ws = ThisWorkbook.Sheets("Table des MatiÃ¨res")
     
-    Application.StatusBar = "Construction de la table des matières"
+    Application.StatusBar = "Construction de la table des matiÃ¨res"
     
-    Call Assembler_TM_1_Arrière_Plan_Et_Entête(ws, dateAC, dateAP)
+    Call Assembler_TM_1_ArriÃ¨re_Plan_Et_EntÃªte(ws, dateAC, dateAP)
     Call Assembler_TM_2_Lignes(ws)
     
     Application.StatusBar = ""
@@ -401,18 +401,18 @@ Sub Assembler_TM_0_Main(dateAC As Date, dateAP As Date)
 
 End Sub
 
-Sub Assembler_TM_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateAP As Date)
+Sub Assembler_TM_1_ArriÃ¨re_Plan_Et_EntÃªte(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_TM_1_Arrière_Plan_Et_Entête", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_TM_1_ArriÃ¨re_Plan_Et_EntÃªte", "", 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
     ws.Cells.VerticalAlignment = xlCenter
     
-    'Appliquer le format d'en-tête
+    'Appliquer le format d'en-tÃªte
     Call PositionnerCellule(ws, UCase$(wsdADMIN.Range("NomEntreprise")), 1, 2, 12, True, xlLeft)
-    Call PositionnerCellule(ws, UCase$("Table des Matières"), 2, 2, 12, True, xlLeft)
-    Call PositionnerCellule(ws, UCase$("États Financiers"), 3, 2, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$("Table des MatiÃ¨res"), 2, 2, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$("Ã‰tats Financiers"), 3, 2, 12, True, xlLeft)
     Call PositionnerCellule(ws, UCase$("Au " & Format$(dateAC, "dd mmmm yyyy")), 4, 2, 12, True, xlLeft)
     
     With ws.Range("B5:C5").Borders(xlEdgeBottom)
@@ -431,9 +431,9 @@ Sub Assembler_TM_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateA
     ws.Rows("1:25").RowHeight = 15
     
     'Fixer le printArea selon le nombre de lignes ET 3 colonnes
-    ActiveSheet.PageSetup.PrintArea = "$A1:$D" & ws.Cells(ws.Rows.count, "B").End(xlUp).row + 3
+    ActiveSheet.PageSetup.PrintArea = "$A1:$D" & ws.Cells(ws.Rows.count, "B").End(xlUp).Row + 3
     
-    Call Log_Record("modGL_PrepEF:Assembler_TM_1_Arrière_Plan_Et_Entête", "", startTime)
+    Call Log_Record("modGL_PrepEF:Assembler_TM_1_ArriÃ¨re_Plan_Et_EntÃªte", "", startTime)
 
 End Sub
 
@@ -441,7 +441,7 @@ Sub Assembler_TM_2_Lignes(ws As Worksheet)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_TM_2_Lignes", "", 0)
     
-    'Première ligne
+    'PremiÃ¨re ligne
     Dim currRow As Integer
     currRow = 15
     
@@ -449,11 +449,11 @@ Sub Assembler_TM_2_Lignes(ws As Worksheet)
         .Range("C" & currRow).Value = "Page"
         currRow = currRow + 3
         
-        .Range("B" & currRow).Value = "États des résultats"
+        .Range("B" & currRow).Value = "Ã‰tats des rÃ©sultats"
         .Range("C" & currRow).Value = "2"
         currRow = currRow + 2
         
-        .Range("B" & currRow).Value = "États des Bénéfices non répartis"
+        .Range("B" & currRow).Value = "Ã‰tats des BÃ©nÃ©fices non rÃ©partis"
         .Range("C" & currRow).Value = "3"
         currRow = currRow + 2
         
@@ -473,7 +473,7 @@ Sub Assembler_TM_2_Lignes(ws As Worksheet)
     End With
     
     'Fixer le printArea selon le nombre de lignes ET 3 colonnes
-    ActiveSheet.PageSetup.PrintArea = "$A1:$D" & ws.Cells(ws.Rows.count, "B").End(xlUp).row
+    ActiveSheet.PageSetup.PrintArea = "$A1:$D" & ws.Cells(ws.Rows.count, "B").End(xlUp).Row
     
     Call Log_Record("modGL_PrepEF:Assembler_TM_2_Lignes", "", startTime)
 
@@ -486,11 +486,11 @@ Sub Assembler_ER_0_Main(dateAC As Date, dateAP As Date)
     Application.ScreenUpdating = False
     
     Dim ws As Worksheet
-    Set ws = ThisWorkbook.Sheets("État des résultats")
+    Set ws = ThisWorkbook.Sheets("Ã‰tat des rÃ©sultats")
     
-    Application.StatusBar = "Construction de l'état des résultats"
+    Application.StatusBar = "Construction de l'Ã©tat des rÃ©sultats"
     
-    Call Assembler_ER_1_Arrière_Plan_Et_Entête(ws, dateAC, dateAP)
+    Call Assembler_ER_1_ArriÃ¨re_Plan_Et_EntÃªte(ws, dateAC, dateAP)
     Call Assembler_ER_2_Lignes(ws)
     
     'On ajoute le Revenu Net au BNR du bilan via variables Globales
@@ -507,36 +507,36 @@ Sub Assembler_ER_0_Main(dateAC As Date, dateAP As Date)
 
 End Sub
 
-Sub Assembler_ER_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateAP As Date)
+Sub Assembler_ER_1_ArriÃ¨re_Plan_Et_EntÃªte(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_ER_1_Arrière_Plan_Et_Entête", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_ER_1_ArriÃ¨re_Plan_Et_EntÃªte", "", 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
     ws.Cells.VerticalAlignment = xlCenter
     
-    'Titre de l'état des résultats
+    'Titre de l'Ã©tat des rÃ©sultats
     Dim jourAC As Integer, moisAC As Integer, anneeAC As Integer
     jourAC = day(dateAC)
     moisAC = month(dateAC)
     anneeAC = year(dateAC)
     Dim titre As String
     Dim nbMois As Integer
-    If moisAC > wsdADMIN.Range("MoisFinAnnéeFinancière") Then
-        nbMois = moisAC - wsdADMIN.Range("MoisFinAnnéeFinancière")
+    If moisAC > wsdADMIN.Range("MoisFinAnnÃ©eFinanciÃ¨re") Then
+        nbMois = moisAC - wsdADMIN.Range("MoisFinAnnÃ©eFinanciÃ¨re")
     Else
-        nbMois = moisAC + 12 - wsdADMIN.Range("MoisFinAnnéeFinancière")
+        nbMois = moisAC + 12 - wsdADMIN.Range("MoisFinAnnÃ©eFinanciÃ¨re")
     End If
-    If moisAC = wsdADMIN.Range("MoisFinAnnéeFinancière") And jourAC = DateSerial(anneeAC, moisAC + 1, 0) Then
+    If moisAC = wsdADMIN.Range("MoisFinAnnÃ©eFinanciÃ¨re") And jourAC = DateSerial(anneeAC, moisAC + 1, 0) Then
         titre = "Pour l'exercice financier se terminant le "
     Else
-        titre = "Pour la période de " & nbMois & " mois terminée le "
+        titre = "Pour la pÃ©riode de " & nbMois & " mois terminÃ©e le "
     End If
     titre = titre & Format$(dateAC, "dd mmmm yyyy")
     
-    'Appliquer le format d'en-tête
+    'Appliquer le format d'en-tÃªte
     Call PositionnerCellule(ws, UCase$(wsdADMIN.Range("NomEntreprise")), 1, 2, 12, True, xlLeft)
-    Call PositionnerCellule(ws, UCase$("État des Résultats"), 2, 2, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$("Ã‰tat des RÃ©sultats"), 2, 2, 12, True, xlLeft)
     Call PositionnerCellule(ws, UCase$(titre), 3, 2, 12, True, xlLeft)
     ws.Range("C5:E6").HorizontalAlignment = xlRight
     ws.Range("C5").Value = year(dateAC)
@@ -564,7 +564,7 @@ Sub Assembler_ER_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateA
 
     ws.PageSetup.CenterFooter = 2
      
-    Call Log_Record("modGL_PrepEF:Assembler_ER_1_Arrière_Plan_Et_Entête", "", startTime)
+    Call Log_Record("modGL_PrepEF:Assembler_ER_1_ArriÃ¨re_Plan_Et_EntÃªte", "", startTime)
 
 End Sub
 
@@ -576,18 +576,18 @@ Sub Assembler_ER_2_Lignes(ws As Worksheet)
     Set wsAdmin = wsdADMIN
     
     Dim tbl As ListObject
-    Set tbl = wsAdmin.ListObjects("tblÉtatsFinanciersCodes")
+    Set tbl = wsAdmin.ListObjects("tblÃ‰tatsFinanciersCodes")
     
     Dim LigneEF As String, codeEF As String, typeLigne As String, gras As String, souligne As String
     Dim size As Long
-    'Première ligne
+    'PremiÃ¨re ligne
     Dim currRow As Integer
     currRow = 8
     Dim rngRow As ListRow
     For Each rngRow In tbl.ListRows
         LigneEF = rngRow.Range.Cells(1, 1).Value
         codeEF = UCase$(rngRow.Range.Cells(1, 2).Value)
-        'On ne traite que les lignes de l'État des résultats (R, D, X & I)
+        'On ne traite que les lignes de l'Ã‰tat des rÃ©sultats (R, D, X & I)
         If InStr("RDXI", Left$(codeEF, 1)) <> 0 Then
             typeLigne = UCase$(rngRow.Range.Cells(1, 3).Value)
             gras = UCase$(rngRow.Range.Cells(1, 4).Value)
@@ -605,7 +605,7 @@ Sub Assembler_ER_2_Lignes(ws As Worksheet)
         .Font.Color = RGB(98, 88, 80)
     End With
 
-    'Transfère les montants NON arrondis dans les cellules sans les cents
+    'TransfÃ¨re les montants NON arrondis dans les cellules sans les cents
     Dim i As Integer
     For i = 7 To currRow
         If ws.Range("G" & i).Value <> "" Then
@@ -628,7 +628,7 @@ Sub Assembler_ER_2_Lignes(ws As Worksheet)
     End With
     
     'Fixer le printArea selon le nombre de lignes ET colonnes
-    ActiveSheet.PageSetup.PrintArea = "$A1:$F" & ws.Cells(ws.Rows.count, 2).End(xlUp).row + 3
+    ActiveSheet.PageSetup.PrintArea = "$A1:$F" & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3
     
     Call Log_Record("modGL_PrepEF:Assembler_ER_2_Lignes", "", startTime)
 
@@ -645,7 +645,7 @@ Sub Assembler_Bilan_0_Main(dateAC As Date, dateAP As Date)
     
     Application.StatusBar = "Construction du bilan"
     
-    Call Assembler_Bilan_1_Arrière_Plan_Et_Entête(ws, dateAC, dateAP)
+    Call Assembler_Bilan_1_ArriÃ¨re_Plan_Et_EntÃªte(ws, dateAC, dateAP)
     Call Assembler_Bilan_2_Lignes(ws)
     
     Application.StatusBar = ""
@@ -656,15 +656,15 @@ Sub Assembler_Bilan_0_Main(dateAC As Date, dateAP As Date)
     
 End Sub
 
-Sub Assembler_Bilan_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateAP As Date)
+Sub Assembler_Bilan_1_ArriÃ¨re_Plan_Et_EntÃªte(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_Bilan_1_Arrière_Plan_Et_Entête", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_Bilan_1_ArriÃ¨re_Plan_Et_EntÃªte", "", 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
     ws.Cells.VerticalAlignment = xlCenter
     
-    'Appliquer le format d'en-tête
+    'Appliquer le format d'en-tÃªte
     Call PositionnerCellule(ws, UCase$(wsdADMIN.Range("NomEntreprise")), 1, 2, 12, True, xlLeft)
     Call PositionnerCellule(ws, UCase$("Bilan"), 2, 2, 12, True, xlLeft)
     Call PositionnerCellule(ws, UCase$("Au " & Format$(dateAC, "dd mmmm yyyy")), 3, 2, 12, True, xlLeft)
@@ -696,7 +696,7 @@ Sub Assembler_Bilan_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, da
     
     ws.PageSetup.CenterFooter = 4
     
-    Call Log_Record("modGL_PrepEF:Assembler_Bilan_1_Arrière_Plan_Et_Entête", "", startTime)
+    Call Log_Record("modGL_PrepEF:Assembler_Bilan_1_ArriÃ¨re_Plan_Et_EntÃªte", "", startTime)
 
 End Sub
 
@@ -708,7 +708,7 @@ Sub Assembler_Bilan_2_Lignes(ws As Worksheet)
     Set wsAdmin = wsdADMIN
     
     Dim tbl As ListObject
-    Set tbl = wsAdmin.ListObjects("tblÉtatsFinanciersCodes")
+    Set tbl = wsAdmin.ListObjects("tblÃ‰tatsFinanciersCodes")
     
     Dim LigneEF As String, codeEF As String, typeLigne As String, gras As String, souligne As String
     Dim size As Long
@@ -736,7 +736,7 @@ Sub Assembler_Bilan_2_Lignes(ws As Worksheet)
         .Font.Color = RGB(98, 88, 80)
     End With
 
-    'Transfère les montants NON arrondis dans les cellules sans les cents
+    'TransfÃ¨re les montants NON arrondis dans les cellules sans les cents
     Dim i As Integer
     For i = 7 To currRow
         If ws.Range("G" & i).Value <> "" Then
@@ -747,7 +747,7 @@ Sub Assembler_Bilan_2_Lignes(ws As Worksheet)
     ws.Range("G7:I38").Clear
     
     'Fixer le printArea selon le nombre de lignes ET colonnes
-    ActiveSheet.PageSetup.PrintArea = "$A1:$F" & ws.Cells(ws.Rows.count, 2).End(xlUp).row + 3
+    ActiveSheet.PageSetup.PrintArea = "$A1:$F" & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3
     
     Call Log_Record("modGL_PrepEF:Assembler_Bilan_2_Lignes", "", startTime)
 
@@ -762,9 +762,9 @@ Sub Assembler_BNR_0_Main(dateAC As Date, dateAP As Date)
     Dim ws As Worksheet
     Set ws = ThisWorkbook.Sheets("BNR")
     
-    Application.StatusBar = "Construction de l'état des bénéfices non répartis"
+    Application.StatusBar = "Construction de l'Ã©tat des bÃ©nÃ©fices non rÃ©partis"
     
-    Call Assembler_BNR_1_Arrière_Plan_Et_Entête(ws, dateAC, dateAP)
+    Call Assembler_BNR_1_ArriÃ¨re_Plan_Et_EntÃªte(ws, dateAC, dateAP)
     Call Assembler_BNR_2_Lignes(ws)
     
     Application.StatusBar = ""
@@ -775,36 +775,36 @@ Sub Assembler_BNR_0_Main(dateAC As Date, dateAP As Date)
     
 End Sub
 
-Sub Assembler_BNR_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateAP As Date)
+Sub Assembler_BNR_1_ArriÃ¨re_Plan_Et_EntÃªte(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_BNR_1_Arrière_Plan_Et_Entête", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_BNR_1_ArriÃ¨re_Plan_Et_EntÃªte", "", 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
     ws.Cells.VerticalAlignment = xlCenter
     
-    'Titre de l'état des résultats
+    'Titre de l'Ã©tat des rÃ©sultats
     Dim jourAC As Integer, moisAC As Integer, anneeAC As Integer
     jourAC = day(dateAC)
     moisAC = month(dateAC)
     anneeAC = year(dateAC)
     Dim titre As String
     Dim nbMois As Integer
-    If moisAC > wsdADMIN.Range("MoisFinAnnéeFinancière") Then
-        nbMois = moisAC - wsdADMIN.Range("MoisFinAnnéeFinancière")
+    If moisAC > wsdADMIN.Range("MoisFinAnnÃ©eFinanciÃ¨re") Then
+        nbMois = moisAC - wsdADMIN.Range("MoisFinAnnÃ©eFinanciÃ¨re")
     Else
-        nbMois = moisAC + 12 - wsdADMIN.Range("MoisFinAnnéeFinancière")
+        nbMois = moisAC + 12 - wsdADMIN.Range("MoisFinAnnÃ©eFinanciÃ¨re")
     End If
-    If moisAC = wsdADMIN.Range("MoisFinAnnéeFinancière") And jourAC = DateSerial(anneeAC, moisAC + 1, 0) Then
+    If moisAC = wsdADMIN.Range("MoisFinAnnÃ©eFinanciÃ¨re") And jourAC = DateSerial(anneeAC, moisAC + 1, 0) Then
         titre = "Pour l'exercice financier se terminant le "
     Else
-        titre = "Pour la période de " & nbMois & " mois terminée le "
+        titre = "Pour la pÃ©riode de " & nbMois & " mois terminÃ©e le "
     End If
     titre = titre & Format$(dateAC, "dd mmmm yyyy")
     
-    'Appliquer le format d'en-tête
+    'Appliquer le format d'en-tÃªte
     Call PositionnerCellule(ws, UCase$(wsdADMIN.Range("NomEntreprise")), 1, 2, 12, True, xlLeft)
-    Call PositionnerCellule(ws, UCase$("Bénéfices non répartis"), 2, 2, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$("BÃ©nÃ©fices non rÃ©partis"), 2, 2, 12, True, xlLeft)
     Call PositionnerCellule(ws, UCase$(titre), 3, 2, 12, True, xlLeft)
     ws.Range("C5:E6").HorizontalAlignment = xlRight
     ws.Range("C5").Value = year(dateAC)
@@ -831,7 +831,7 @@ Sub Assembler_BNR_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, date
     
     ws.PageSetup.CenterFooter = 3
     
-    Call Log_Record("modGL_PrepEF:Assembler_BNR_1_Arrière_Plan_Et_Entête", "", startTime)
+    Call Log_Record("modGL_PrepEF:Assembler_BNR_1_ArriÃ¨re_Plan_Et_EntÃªte", "", startTime)
 
 End Sub
 
@@ -843,7 +843,7 @@ Sub Assembler_BNR_2_Lignes(ws As Worksheet)
     Set wsAdmin = wsdADMIN
     
     Dim tbl As ListObject
-    Set tbl = wsAdmin.ListObjects("tblÉtatsFinanciersCodes")
+    Set tbl = wsAdmin.ListObjects("tblÃ‰tatsFinanciersCodes")
     
     Dim LigneEF As String, codeEF As String, typeLigne As String, gras As String, souligne As String
     Dim size As Long
@@ -872,7 +872,7 @@ Sub Assembler_BNR_2_Lignes(ws As Worksheet)
     End With
 
     
-    'Transfère les montants NON arrondis dans les cellules sans les cents
+    'TransfÃ¨re les montants NON arrondis dans les cellules sans les cents
     Dim i As Integer
     For i = 7 To currRow
         If ws.Range("G" & i).Value <> "" Then
@@ -883,7 +883,7 @@ Sub Assembler_BNR_2_Lignes(ws As Worksheet)
     ws.Range("G7:I25").Clear
     
     'Fixer le printArea selon le nombre de lignes ET colonnes
-    ActiveSheet.PageSetup.PrintArea = "$A1:$F" & ws.Cells(ws.Rows.count, 2).End(xlUp).row + 3
+    ActiveSheet.PageSetup.PrintArea = "$A1:$F" & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3
     
     Call Log_Record("modGL_PrepEF:Assembler_BNR_2_Lignes", "", startTime)
 
@@ -924,7 +924,7 @@ Function ChercherSoldes(valeur As String, colonne As Integer) As Currency
     Set ws = wshGL_PrepEF
     
     Dim r As Range
-    Set r = ws.Range("C6:C" & ws.Cells(ws.Rows.count, "C").End(xlUp).row).Find(valeur, LookAt:=xlWhole)
+    Set r = ws.Range("C6:C" & ws.Cells(ws.Rows.count, "C").End(xlUp).Row).Find(valeur, LookAt:=xlWhole)
     
     If Not r Is Nothing Then
         ChercherSoldes = r.offset(0, 3).Value
@@ -947,13 +947,13 @@ Sub Imprime_Ligne_EF(ws As Worksheet, ByRef currRow As Integer, LigneEF As Strin
     Dim index As Integer
     Select Case typeLigne
     
-        Case "E" 'Entête
+        Case "E" 'EntÃªte
             If InStr("E00^D00^", codeEF & "^") = 0 Then 'Saute une ligne AVANT d'imprimer
                 currRow = currRow + 1
             End If
             If codeEF = "B00" Then
-                ws.Range("G" & currRow).Value = gBNR_Début_Année_AC * correcteurSigne
-                ws.Range("I" & currRow).Value = gBNR_Début_Année_AP * correcteurSigne
+                ws.Range("G" & currRow).Value = gBNR_DÃ©but_AnnÃ©e_AC * correcteurSigne
+                ws.Range("I" & currRow).Value = gBNR_DÃ©but_AnnÃ©e_AP * correcteurSigne
                 gSavePremiereLigne = currRow
             Else
                 gSavePremiereLigne = currRow + 1
@@ -996,11 +996,11 @@ Sub Imprime_Ligne_EF(ws As Worksheet, ByRef currRow As Integer, LigneEF As Strin
                 ws.Range("G" & currRow).formula = "=sum(G" & gLigneTotalPassif & ", G" & gLigneTotalADA & ")"
                 ws.Range("I" & currRow).formula = "=sum(I" & gLigneTotalPassif & ", I" & gLigneTotalADA & ")"
             ElseIf codeEF = "I01" Then
-                ws.Range("G" & currRow).formula = "=sum(G" & gLigneTotalRevenus & " - G" & gLigneTotalDépenses & " + G" & gLigneAutresRevenus & ")"
-                ws.Range("I" & currRow).formula = "=sum(I" & gLigneTotalRevenus & " - I" & gLigneTotalDépenses & " + I" & gLigneAutresRevenus & ")"
+                ws.Range("G" & currRow).formula = "=sum(G" & gLigneTotalRevenus & " - G" & gLigneTotalDÃ©penses & " + G" & gLigneAutresRevenus & ")"
+                ws.Range("I" & currRow).formula = "=sum(I" & gLigneTotalRevenus & " - I" & gLigneTotalDÃ©penses & " + I" & gLigneAutresRevenus & ")"
             ElseIf codeEF = "I03" Then
-                ws.Range("G" & currRow).formula = "=sum(G" & gLigneRevenuNetAvantImpôts & ":G" & currRow - 1 & ")"
-                ws.Range("I" & currRow).formula = "=sum(I" & gLigneRevenuNetAvantImpôts & ":I" & currRow - 1 & ")"
+                ws.Range("G" & currRow).formula = "=sum(G" & gLigneRevenuNetAvantImpÃ´ts & ":G" & currRow - 1 & ")"
+                ws.Range("I" & currRow).formula = "=sum(I" & gLigneRevenuNetAvantImpÃ´ts & ":I" & currRow - 1 & ")"
             Else
                 ws.Range("G" & currRow).formula = "=sum(G" & gSavePremiereLigne & ":G" & currRow - 1 & ")"
                 ws.Range("I" & currRow).formula = "=sum(I" & gSavePremiereLigne & ":I" & currRow - 1 & ")"
@@ -1019,18 +1019,18 @@ Sub Imprime_Ligne_EF(ws As Worksheet, ByRef currRow As Integer, LigneEF As Strin
                 End With
             End If
             
-            'Partir un nouveau sous-total, sans entête
+            'Partir un nouveau sous-total, sans entÃªte
             If codeEF = "B10" Then gSavePremiereLigne = currRow
             
     End Select
         
-    'Certaines lignes ont besoin d'être notées pour utilisation particulière
+    'Certaines lignes ont besoin d'Ãªtre notÃ©es pour utilisation particuliÃ¨re
     If codeEF = "P99" Then gLigneTotalPassif = currRow
     If codeEF = "E50" Then gLigneTotalADA = currRow
     If codeEF = "R99" Then gLigneTotalRevenus = currRow
-    If codeEF = "D99" Then gLigneTotalDépenses = currRow
+    If codeEF = "D99" Then gLigneTotalDÃ©penses = currRow
     If codeEF = "R04" Then gLigneAutresRevenus = currRow
-    If codeEF = "I01" Then gLigneRevenuNetAvantImpôts = currRow
+    If codeEF = "I01" Then gLigneRevenuNetAvantImpÃ´ts = currRow
     
     'Sauvegarder les 2 montants de Revenu Net
     If codeEF = "I03" Then
@@ -1054,7 +1054,7 @@ Sub Imprime_Ligne_EF(ws As Worksheet, ByRef currRow As Integer, LigneEF As Strin
         ws.Range("C" & currRow & ":E" & currRow).Font.Bold = False
     End If
     
-    If codeEF = "B01" Then 'Bénéfice net / Revenu net
+    If codeEF = "B01" Then 'BÃ©nÃ©fice net / Revenu net
         ws.Range("G" & currRow).Value = gTotalRevenuNet_AC
         ws.Range("I" & currRow).Value = gTotalRevenuNet_AP
         With ws.Range("C" & currRow).Borders(xlEdgeBottom)
@@ -1070,8 +1070,8 @@ Sub Imprime_Ligne_EF(ws As Worksheet, ByRef currRow As Integer, LigneEF As Strin
     End If
     
     If codeEF = "B20" Then 'Dividendes
-        ws.Range("G" & currRow).Value = -gDividendes_Année_AC
-        ws.Range("I" & currRow).Value = -gDividendes_Année_AP
+        ws.Range("G" & currRow).Value = -gDividendes_AnnÃ©e_AC
+        ws.Range("I" & currRow).Value = -gDividendes_AnnÃ©e_AP
     End If
     
     If codeEF = "B50" Then 'Solde de fin (BNR)
@@ -1106,23 +1106,23 @@ End Sub
 
 Sub TrierDictionaryParCle(ByRef dict As Object)
 
-    'Récupérer les clés dans un tableau
+    'RÃ©cupÃ©rer les clÃ©s dans un tableau
     Dim keys() As Variant, values() As Variant
     keys = dict.keys
     values = dict.items
     
-    'Trier les clés et réarranger les valeurs
+    'Trier les clÃ©s et rÃ©arranger les valeurs
     Dim i As Integer, j As Integer
     Dim tempKey As Variant, tempValue As Variant
     For i = LBound(keys) To UBound(keys) - 1
         For j = i + 1 To UBound(keys)
             If keys(i) > keys(j) Then ' Tri ascendant (A ? Z)
-                ' Échanger les clés
+                ' Ã‰changer les clÃ©s
                 tempKey = keys(i)
                 keys(i) = keys(j)
                 keys(j) = tempKey
                 
-                ' Échanger les valeurs correspondantes
+                ' Ã‰changer les valeurs correspondantes
                 tempValue = values(i)
                 values(i) = values(j)
                 values(j) = tempValue
@@ -1130,10 +1130,11 @@ Sub TrierDictionaryParCle(ByRef dict As Object)
         Next j
     Next i
 
-    'Afficher le dictionnaire trié
-    Debug.Print "Dictionnaire trié par clé :"
+    'Afficher le dictionnaire triÃ©
+    Debug.Print "Dictionnaire triÃ© par clÃ© :"
     For i = LBound(keys) To UBound(keys)
         Debug.Print keys(i) & " - " & Format$(values(i), "###,##0.00")
     Next i
 End Sub
+
 
