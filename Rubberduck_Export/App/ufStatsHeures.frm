@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufStatsHeures 
    Caption         =   "Statistiques d'heures"
-   ClientHeight    =   8250.001
-   ClientLeft      =   210
-   ClientTop       =   795
-   ClientWidth     =   18840
+   ClientHeight    =   8256.001
+   ClientLeft      =   192
+   ClientTop       =   708
+   ClientWidth     =   15072
    OleObjectBlob   =   "ufStatsHeures.frx":0000
    StartUpPosition =   1  'CenterOwner
 End

@@ -3343,7 +3343,7 @@ Private Sub VerifierTEC(ByRef r As Long, ByRef readRows As Long)
     Dim stats As StatistiquesTEC
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 7371 'What is the last TECID analyzed ?
+    lastTECIDReported = 7402 'What is the last TECID analyzed ?
     
     'Feuille contenant les données à analyser
     Dim HeaderRow As Long: HeaderRow = 2

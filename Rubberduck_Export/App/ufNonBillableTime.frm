@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufNonBillableTime 
    Caption         =   "Temps non facturable pour ce client - Veuillez sélectionner les lignes à convertir en temps FACTURABLE"
-   ClientHeight    =   4065
-   ClientLeft      =   120
-   ClientTop       =   465
-   ClientWidth     =   13200
+   ClientHeight    =   4068
+   ClientLeft      =   96
+   ClientTop       =   276
+   ClientWidth     =   8448.001
    OleObjectBlob   =   "ufNonBillableTime.frx":0000
    StartUpPosition =   1  'CenterOwner
 End

@@ -6,6 +6,7 @@ Option Explicit
 Private invRow As Long, itemDBRow As Long, invitemRow As Long, invNumb As Long
 Private lastRow As Long, lastResultRow As Long, resultRow As Long
 
+'@Description "Clic sur le bouton Sauvegarde - 2025-06-21 @ 08:20"
 Sub shp_FAC_Finale_Save_Click()
 
     Call FAC_Finale_Save

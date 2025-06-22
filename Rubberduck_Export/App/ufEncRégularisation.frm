@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufEncRégularisation 
    Caption         =   "Régularisation des Comptes Clients"
-   ClientHeight    =   5745
-   ClientLeft      =   120
-   ClientTop       =   465
-   ClientWidth     =   10080
+   ClientHeight    =   5748
+   ClientLeft      =   96
+   ClientTop       =   384
+   ClientWidth     =   8064
    OleObjectBlob   =   "ufEncRégularisation.frx":0000
    StartUpPosition =   1  'CenterOwner
 End

@@ -2,9 +2,9 @@ VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufListeDebourse 
    Caption         =   "Liste des déboursés"
    ClientHeight    =   5580
-   ClientLeft      =   120
-   ClientTop       =   465
-   ClientWidth     =   23760
+   ClientLeft      =   96
+   ClientTop       =   384
+   ClientWidth     =   19008
    OleObjectBlob   =   "ufListeDebourse.frx":0000
    StartUpPosition =   1  'CenterOwner
 End

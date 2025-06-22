@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufListeDEBAuto 
    Caption         =   "Choisir le déboursé récurrent parmi la liste"
-   ClientHeight    =   4425
-   ClientLeft      =   180
-   ClientTop       =   690
-   ClientWidth     =   9360.001
+   ClientHeight    =   4416
+   ClientLeft      =   168
+   ClientTop       =   600
+   ClientWidth     =   7488
    OleObjectBlob   =   "ufListeDEBAuto.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
