@@ -25,8 +25,8 @@ Public Type StatistiquesTEC
 End Type
 
 'Variables globales pour le module
-Private verificationIntegriteOK As Boolean
-Private soldeComptesClients As Currency
+Private gverificationIntegriteOK As Boolean
+Private gsoldeComptesClients As Currency
 Private gValeursAComparer() As Variant
 
 '@Description "Routine pour ajouter des lignes de message à la feuille"
@@ -67,7 +67,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     Application.ScreenUpdating = False
     
     'Variable pour déterminer à la fin s'il y a des erreurs...
-    verificationIntegriteOK = True
+    gverificationIntegriteOK = True
     
     Call Erase_And_Create_Worksheet("X_Analyse_Intégrité")
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
@@ -275,7 +275,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
                                                 "FAC_Entete", CCur(gValeursAComparer(1, 2)), _
                                                 "FAC_Comptes_Clients", CCur(gValeursAComparer(1, 3)), _
                                                 "", 0)
-        verificationIntegriteOK = False
+        gverificationIntegriteOK = False
     End If
     
     'Comparaison des valeurs - Total des factures (à confirmer)
@@ -284,7 +284,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
                                                 "FAC_Entete", CCur(gValeursAComparer(2, 2)), _
                                                 "FAC_Comptes_Clients", CCur(gValeursAComparer(2, 3)), _
                                                 "", 0)
-        verificationIntegriteOK = False
+        gverificationIntegriteOK = False
     End If
         
     'Comparaison des valeurs - Montant encaissé à date
@@ -295,7 +295,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
                                                 "FAC_Comptes_Clients", CCur(gValeursAComparer(3, 2)), _
                                                 "ENC_Entete", CCur(gValeursAComparer(3, 3)), _
                                                 "ENC_Details", CCur(gValeursAComparer(3, 4)))
-        verificationIntegriteOK = False
+        gverificationIntegriteOK = False
     End If
     
     'Comparaison des valeurs - Montant régularisé à date
@@ -304,7 +304,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
                                                 "FAC_Comptes_Clients", CCur(gValeursAComparer(4, 2)), _
                                                 "CC_Regularisations", CCur(gValeursAComparer(4, 3)), _
                                                 "", 0)
-        verificationIntegriteOK = False
+        gverificationIntegriteOK = False
     End If
     
     'Comparaison des valeurs - Solde à recevoir
@@ -313,7 +313,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
                                                 "FAC_Comptes_Clients", CCur(gValeursAComparer(5, 2)), _
                                                 "GL_Trans", CCur(gValeursAComparer(5, 3)), _
                                                 "", 0)
-        verificationIntegriteOK = False
+        gverificationIntegriteOK = False
     End If
     
     'Comparaison des valeurs - Heures saisies
@@ -322,7 +322,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
                                                 "TEC_TdB_Data", CCur(gValeursAComparer(6, 2)), _
                                                 "TEC_Local", CCur(gValeursAComparer(6, 3)), _
                                                 "", 0)
-        verificationIntegriteOK = False
+        gverificationIntegriteOK = False
     End If
     
     'Comparaison des valeurs - Heures détruites
@@ -331,7 +331,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
                                                 "TEC_TdB_Data", CCur(gValeursAComparer(7, 2)), _
                                                 "TEC_Local", CCur(gValeursAComparer(7, 3)), _
                                                 "", 0)
-        verificationIntegriteOK = False
+        gverificationIntegriteOK = False
     End If
     
     'Comparaison des valeurs - Heures NETTES
@@ -340,7 +340,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
                                                 "TEC_TdB_Data", CCur(gValeursAComparer(8, 2)), _
                                                 "TEC_Local", CCur(gValeursAComparer(8, 3)), _
                                                 "", 0)
-        verificationIntegriteOK = False
+        gverificationIntegriteOK = False
     End If
 
     'Comparaison des valeurs - Heures Non-Facturables
@@ -349,7 +349,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
                                                 "TEC_TdB_Data", CCur(gValeursAComparer(9, 2)), _
                                                 "TEC_Local", CCur(gValeursAComparer(9, 3)), _
                                                 "", 0)
-        verificationIntegriteOK = False
+        gverificationIntegriteOK = False
     End If
 
     'Comparaison des valeurs - Heures Facturables
@@ -358,7 +358,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
                                                 "TEC_TdB_Data", CCur(gValeursAComparer(10, 2)), _
                                                 "TEC_Local", CCur(gValeursAComparer(10, 3)), _
                                                 "", 0)
-        verificationIntegriteOK = False
+        gverificationIntegriteOK = False
     End If
 
     'Comparaison des valeurs - Heures facturées
@@ -367,7 +367,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
                                                 "TEC_TdB_Data", CCur(gValeursAComparer(11, 2)), _
                                                 "TEC_Local", CCur(gValeursAComparer(11, 3)), _
                                                 "", 0)
-        verificationIntegriteOK = False
+        gverificationIntegriteOK = False
     End If
 
     'Comparaison des valeurs - Heures TEC
@@ -376,10 +376,10 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
                                                 "TEC_TdB_Data", CCur(gValeursAComparer(12, 2)), _
                                                 "TEC_Local", CCur(gValeursAComparer(12, 3)), _
                                                 "", 0)
-        verificationIntegriteOK = False
+        gverificationIntegriteOK = False
     End If
 
-    If verificationIntegriteOK Then
+    If gverificationIntegriteOK Then
         Call AddMessageToWorkSheet(wsOutput, r, 2, "Tous les montants balancent entre eux")
         r = r + 2
     End If
@@ -406,7 +406,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     Dim header2 As String: header2 = ""
     Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
     
-    If verificationIntegriteOK = True Then
+    If gverificationIntegriteOK = True Then
         MsgBox "La vérification d'intégrité est terminé SANS PROBLÈME" & vbNewLine & vbNewLine & "Voir la feuille 'X_Analyse_Intégrité'", vbInformation
     Else
         MsgBox "La vérification a détecté AU MOINS UN PROBLÈME" & vbNewLine & vbNewLine & "Voir la feuille 'X_Analyse_Intégrité'", vbInformation
@@ -678,7 +678,7 @@ Private Sub VerifierPlanComptable(ByRef r As Long, ByRef readRows As Long)
     
     'Cas problème dans cette vérification ?
     If cas_doublon_descr <> 0 Or cas_doublon_descr <> 0 Or cas_type <> 0 Then
-        verificationIntegriteOK = False
+        gverificationIntegriteOK = False
     End If
     
 Clean_Exit:
@@ -808,7 +808,7 @@ Private Sub VerifierClients(ByRef r As Long, ByRef readRows As Long)
         cas_doublon_code <> 0 Or _
         cas_courriel_invalide <> 0 Or _
         UBound(arr, 1) - 1 <> ligneNonVides Then
-            verificationIntegriteOK = False
+            gverificationIntegriteOK = False
     End If
     
 Clean_Exit:
@@ -905,7 +905,7 @@ Private Sub VerifierFournisseurs(ByRef r As Long, ByRef readRows As Long)
     
     'Cas problème dans cette vérification ?
     If cas_doublon_nom <> 0 Or cas_doublon_code <> 0 Then
-        verificationIntegriteOK = False
+        gverificationIntegriteOK = False
     End If
 
 Clean_Exit:
@@ -1103,7 +1103,7 @@ Private Sub VérifierCCRégularisations(ByRef r As Long, ByRef readRows As Long)
     
     'Cas problème dans cette vérification ?
     If isRegularisationValid = False Then
-        verificationIntegriteOK = False
+        gverificationIntegriteOK = False
     End If
     
 Clean_Exit:
@@ -1254,7 +1254,7 @@ Private Sub VerifierDEBRecurrent(ByRef r As Long, ByRef readRows As Long)
     
     'Cas problème dans cette vérification ?
     If isDebRécurrentValid = False Then
-        verificationIntegriteOK = False
+        gverificationIntegriteOK = False
     End If
 
 Clean_Exit:
@@ -1407,7 +1407,7 @@ Private Sub VerifierDEBTrans(ByRef r As Long, ByRef readRows As Long)
     
     'Cas problème dans cette vérification ?
     If isDebTransValid = False Then
-        verificationIntegriteOK = False
+        gverificationIntegriteOK = False
     End If
 
 Clean_Exit:
@@ -1562,7 +1562,7 @@ Private Sub VerifierENCDetails(ByRef r As Long, ByRef readRows As Long)
     
     'Cas problème dans cette vérification ?
     If isEncDétailsValid = False Then
-        verificationIntegriteOK = False
+        gverificationIntegriteOK = False
     End If
     
 Clean_Exit:
@@ -1678,7 +1678,7 @@ Private Sub VerifierENCEntete(ByRef r As Long, ByRef readRows As Long)
     
     'Cas problème dans cette vérification ?
     If isEncEntêteValid = False Then
-        verificationIntegriteOK = False
+        gverificationIntegriteOK = False
     End If
     
 Clean_Exit:
@@ -1790,7 +1790,7 @@ Private Sub VerifierFACDetails(ByRef r As Long, ByRef readRows As Long)
     
     'Cas problème dans cette vérification ?
     If isFACDétailsValid = False Then
-        verificationIntegriteOK = False
+        gverificationIntegriteOK = False
     End If
     
 Clean_Exit:
@@ -1992,7 +1992,7 @@ Private Sub VerifierFACEntete(ByRef r As Long, ByRef readRows As Long)
     
     'Cas problème dans cette vérification ?
     If isFACEntêteValid = False Then
-        verificationIntegriteOK = False
+        gverificationIntegriteOK = False
     End If
     
 Clean_Exit:
@@ -2212,7 +2212,7 @@ Private Sub VerifierFACComptesClients(ByRef r As Long, ByRef readRows As Long)
     gValeursAComparer(5, 1) = "Solde à recevoir"
     gValeursAComparer(5, 2) = CCur(totals(4, 1))
     r = r + 2
-    soldeComptesClients = totals(4, 1)
+    gsoldeComptesClients = totals(4, 1)
     
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
@@ -2234,7 +2234,7 @@ Private Sub VerifierFACComptesClients(ByRef r As Long, ByRef readRows As Long)
     
     'Cas problème dans cette vérification ?
     If isFACCCValid = False Then
-        verificationIntegriteOK = False
+        gverificationIntegriteOK = False
     End If
 
 Clean_Exit:
@@ -2346,7 +2346,7 @@ Private Sub VerifierFACSommaireTaux(ByRef r As Long, ByRef readRows As Long)
     
     'Cas problème dans cette vérification ?
     If isFACSTValid = False Then
-        verificationIntegriteOK = False
+        gverificationIntegriteOK = False
     End If
 
 Clean_Exit:
@@ -2519,7 +2519,7 @@ Private Sub VerifierFACProjetsEntete(ByRef r As Long, ByRef readRows As Long)
     
     'Cas problème dans cette vérification ?
     If isFacProjetEntêteValid = False Then
-        verificationIntegriteOK = False
+        gverificationIntegriteOK = False
     End If
 
 Clean_Exit:
@@ -2640,7 +2640,7 @@ Private Sub VerifierFACProjetsDetails(ByRef r As Long, ByRef readRows As Long)
     
     'Est-ce qu'il y a eu des messages de générés ?
     If saveR <> r Then
-        verificationIntegriteOK = False
+        gverificationIntegriteOK = False
     End If
     
     Call AddMessageToWorkSheet(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " lignes ont été analysées")
@@ -2651,7 +2651,7 @@ Private Sub VerifierFACProjetsDetails(ByRef r As Long, ByRef readRows As Long)
     
     'Cas problème dans cette vérification ?
     If isFacProjetDetailValid = False Then
-        verificationIntegriteOK = False
+        gverificationIntegriteOK = False
     End If
 
 Clean_Exit:
@@ -2868,14 +2868,14 @@ Private Sub VerifierGLTrans(ByRef r As Long, ByRef readRows As Long)
     rng.Characters(InStr(rng.Value, Left$(arTotal, 1)), 15).Font.Bold = True
     gValeursAComparer(5, 3) = CCur(arTotal)
     r = r + 2
-    If soldeComptesClients <> arTotal Then
+    If gsoldeComptesClients <> arTotal Then
         MsgBox "ATTENTION, le solde des Comptes-Clients" & vbNewLine & vbNewLine & _
                 "diffère entre les 2 sources...", vbCritical, "FAC_Comptes_Clients <> Solde au Grand-Livre !!!"
     End If
     
     'Cas problème dans cette vérification ?
     If isGLTransValid = False Then
-        verificationIntegriteOK = False
+        gverificationIntegriteOK = False
     End If
     
 Clean_Exit:
@@ -3002,7 +3002,7 @@ Private Sub VerifierGLEJRecurrente(ByRef r As Long, ByRef readRows As Long)
     
     'Cas problème dans cette vérification ?
     If isGlEjRécurrenteValid = False Then
-        verificationIntegriteOK = False
+        gverificationIntegriteOK = False
     End If
     
 Clean_Exit:
@@ -3310,7 +3310,7 @@ Private Sub VerifierTECTdBData(ByRef r As Long, ByRef readRows As Long)
 
     'Cas problème dans cette vérification ?
     If isTECTDBValid = False Then
-        verificationIntegriteOK = False
+        gverificationIntegriteOK = False
     End If
 
 Clean_Exit:
@@ -3337,130 +3337,145 @@ Private Sub VerifierTEC(ByRef r As Long, ByRef readRows As Long)
     Dim ws As Worksheet: Set ws = wsdTEC_Local
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
-    Dim i As Long
-
+    Dim lastTECIDReported As Long
+    lastTECIDReported = 7423 'What is the last TECID analyzed ?
+    
     'Réference au UserDefined structure 'StatistiquesTEC'
     Dim stats As StatistiquesTEC
     
-    Dim lastTECIDReported As Long
-    lastTECIDReported = 7402 'What is the last TECID analyzed ?
-    
     'Feuille contenant les données à analyser
-    Dim HeaderRow As Long: HeaderRow = 2
-    Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).Row
-    If lastUsedRow <= HeaderRow Then
-        Call AjouterMessage(wsOutput, r, 2, "********** Cette feuille est vide !!!")
-        GoTo Clean_Exit
+    Dim lo As ListObject
+    Set lo = ws.ListObjects("l_tbl_TEC_Local")
+    
+    'Vérifier que le tableau existe bien
+    If lo Is Nothing Then
+        Call AjouterMessage(wsOutput, r, 2, "Tableau structuré 'tblTEC_Local' introuvable.")
+        Exit Sub
+    End If
+    
+    'Vérifier que le tableau contient au moins une ligne de données
+    If lo.DataBodyRange Is Nothing Then
+        Call AjouterMessage(wsOutput, r, 2, "Aucune donnée dans le tableau 'tblTEC_Local'.")
+        Exit Sub
     End If
     
     Call AjouterMessage(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wsdTEC_Local'")
-    
-    Call AjouterMessage(wsOutput, r, 2, "Il y a " & Format$(lastUsedRow, "###,##0") & _
-        " lignes et " & Format$(ws.Range("A1").CurrentRegion.Columns.count, "#,##0") & _
+    Call AjouterMessage(wsOutput, r, 2, "Il y a " & Format$(lo.ListRows.count, "###,##0") & _
+        " lignes et " & Format$(lo.ListColumns.count, "#,##0") & _
         " colonnes dans cette table")
     
-    'Créer un tableau 2D pour l'ensemble des lignes de TEC_Local
+    'Charger les données dans le tableau 2D
     Dim arrTEC_Local_Data As Variant
-    Dim rngTEC_LocalData As Range
-    Dim lastRow As Long, lastCol As Long
+    arrTEC_Local_Data = lo.DataBodyRange.Value
     
-    With ws
-        lastRow = .Cells(.Rows.count, "A").End(xlUp).Row
-        lastCol = .Cells(1, .Columns.count).End(xlToLeft).Column
-        'Définir la plage de données (en excluant l'entête, si HeaderRow > 0)
-        Set rngTEC_LocalData = .Range(.Cells(HeaderRow + 1, 1), .Cells(lastRow, lastCol))
-        arrTEC_Local_Data = rngTEC_LocalData.Value
-    End With
-    
-    'Créer un dictionnaire pour tous les clients (code & nom)
-    Dim dictClient As New Dictionary
+    'Création de quelques dictionnaires pour accumuler les données
     Dim arr As Variant
     
-    With wsdBD_Clients
-        lastRow = .Cells(.Rows.count, "A").End(xlUp).Row
-        'Charger uniquement les deux premières colonnes, sans l'en-tête
-        arr = .Range("A2:B" & lastRow).Value
-    End With
+    '1. Remplir le dictionnaire dictClient
+    Set lo = wsdBD_Clients.ListObjects("l_tbl_BD_Clients")
+    arr = lo.DataBodyRange.Value
     
-    'Remplir le dictionnaire
+    Dim dictClient As New Dictionary 'Dictionnaire pour tous les clients (code & nom)
+    Dim i As Long
     For i = 1 To UBound(arr, 1)
         If Not dictClient.Exists(arr(i, 1)) Then
             dictClient.Add arr(i, 2), arr(i, 1)
         End If
     Next i
     
-    'Créer un dictionnaire pour toutes les factures émises
-    Dim dictFacture As New Dictionary
-    
-    Dim lo As ListObject
+    '2. Remplir le dictionnaire (dictFacture) pour toutes les factures émises
     Set lo = wsdFAC_Entete.ListObjects("l_tbl_FAC_Entête")
     arr = lo.DataBodyRange.Value
     
+    Dim dictFacture As New Dictionary 'Dictionnaire pour toutes les factures émises
     For i = 1 To UBound(arr, 1)
         If Not dictFacture.Exists(arr(i, fFacCCInvNo)) Then
             dictFacture.Add arr(i, fFacCCInvNo), arr(i, fFacCCInvoiceDate)
         End If
     Next i
     
-    'Créer un dictionnaire pour vérifier l'unicité des TecID
+    'Créer des dictionnaires vides pour accumuler des informations
+    Dim dictDateCharge As New Dictionary
     Dim dictDict As New Dictionary
-    
-    'Créer un dictionnaire pour identifier les cas ProfID + Prof
-    Dim dictProf As New Dictionary
-    
-    'Créer un dictionnaire pour accumuler les heures facturées par Facture
     Dim dictFactureHres As New Dictionary
+    Dim dictProf As New Dictionary
+    Dim dictTimeStamp As New Dictionary
     
-    Dim tecID As Long, profID As String, prof As String
-    Dim dateTEC As Date, dateFact As Date, testDate As Boolean
     Dim minDate As Date, maxDate As Date
-    Dim maxTecID As Long
-    Dim hres As Currency
-    Dim estFacturable As Boolean, estFacturee As Boolean, estDetruit As Boolean
-    Dim invNo As String
-    
+    Dim maxTECID As Long
+    Dim isTECvalid As Boolean
+
     minDate = "12/31/2999"
     
-    'Créer un dictionnaire pour les dates de charge
-    Dim dictDateCharge As Object
-    Set dictDateCharge = CreateObject("Scripting.Dictionary")
-    Dim yy As Integer, mm As Integer, dd As Integer
-    
-    'Créer un dictionnaire pour les dateStamp
-    Dim dictTimeStamp As Object
-    Set dictTimeStamp = CreateObject("Scripting.Dictionary")
-    
-    Dim strDateChargeFormate As String
-
     'Boucle principale - Lecture et analyse des TEC (TEC_Local)
-    Dim isTECValid As Boolean
-    
     For i = LBound(arrTEC_Local_Data, 1) To UBound(arrTEC_Local_Data, 1)
     
-        isTECValid = True
+        isTECvalid = True
         If Not AnalyserLigneTEC(arrTEC_Local_Data, i, wsOutput, r, _
                                 dictClient, dictFacture, dictFactureHres, _
                                 dictDateCharge, dictTimeStamp, dictDict, dictProf, _
                                 stats, lastTECIDReported) Then
-            isTECValid = False
+            isTECvalid = False
             stats.nbInvalid = stats.nbInvalid + 1
         Else
             stats.nbValid = stats.nbValid + 1
         End If
         
         'Détermine le plus grand TecID
-        If arrTEC_Local_Data(i, fTECTECID) > maxTecID Then
-            maxTecID = arrTEC_Local_Data(i, fTECTECID)
+        If arrTEC_Local_Data(i, fTECTECID) > maxTECID Then
+            maxTECID = arrTEC_Local_Data(i, fTECTECID)
         End If
 
     Next i
         
-    
-    Call AjouterMessage(wsOutput, r, 2, "Un total de " & Format$(UBound(arrTEC_Local_Data, 1), "##,##0") & " charges de temps ont été analysées!")
-    
     'Add number of rows processed (read)
     readRows = readRows + UBound(arrTEC_Local_Data, 1)
+    
+    'Imprimer la conclusion des tests
+    Call ImprimerCasProbleme(arrTEC_Local_Data, wsOutput, r, minDate, maxDate, _
+                             stats, isTECvalid)
+                                
+    Call ComparerHeuresFactureesSelon2Sources(wsOutput, r, dictFacture, dictFactureHres, isTECvalid)
+    
+    Call ImprimerSommaireHeuresTEC(wsOutput, r, stats, isTECvalid)
+    
+    Call ImprimerSommaireDateProf(wsOutput, r, dictDateCharge, maxTECID, isTECvalid)
+    
+    Call ImprimerSommaireTimeStampProf(wsOutput, r, dictTimeStamp, lastTECIDReported, isTECvalid)
+    
+    'Cas problème dans cette vérification ?
+    If isTECvalid = False Then
+        gverificationIntegriteOK = False
+    End If
+    
+    AjouterMessage wsOutput, r, 2, "Temps d’exécution : " & Format(Timer - startTime, "0.00") & " seconde(s)"
+    r = r + 1
+
+Clean_Exit:
+
+    'Libérer la mémoire
+    On Error Resume Next
+    Set dictClient = Nothing
+    Set dictDateCharge = Nothing
+    Set dictFacture = Nothing
+    Set dictTimeStamp = Nothing
+    Set dictProf = Nothing
+    Set dictDict = Nothing
+    Set ws = Nothing
+    Set wsOutput = Nothing
+    On Error GoTo 0
+    
+    Application.ScreenUpdating = True
+    
+    Call Log_Record("modAppli_Utils:VerifierTEC", "", startTime)
+
+End Sub
+
+Sub ImprimerCasProbleme(data As Variant, ByRef wsOutput As Worksheet, ByRef r As Long, _
+                        ByRef minDate As Date, ByRef maxDate As Date, _
+                        ByRef stats As StatistiquesTEC, isTECvalid As Boolean)
+
+    Call AjouterMessage(wsOutput, r, 2, "Un total de " & Format$(UBound(data, 1), "##,##0") & " charges de temps ont été analysées!")
     
     'Impression du sommaire de l'analyse
     Call AjouterMessage(wsOutput, r, 2, "       La date MINIMALE est '" & Format$(minDate, "dd/mm/yyyy") & "'")
@@ -3470,60 +3485,66 @@ Private Sub VerifierTEC(ByRef r As Long, ByRef readRows As Long)
         Call AjouterMessage(wsOutput, r, 2, "       Aucun doublon de TECID")
     Else
         Call AjouterMessage(wsOutput, r, 2, "********** Il y a " & stats.cas_doublon_TecID & " cas de doublons pour les TecID")
-        isTECValid = False
+        isTECvalid = False
     End If
     
     If stats.cas_date_invalide = 0 Then
         Call AjouterMessage(wsOutput, r, 2, "       Aucune date INVALIDE")
     Else
         Call AjouterMessage(wsOutput, r, 2, "********** Il y a " & stats.cas_date_invalide & " cas de date INVALIDE")
-        isTECValid = False
+        isTECvalid = False
     End If
     
     If stats.cas_date_future = 0 Then
         Call AjouterMessage(wsOutput, r, 2, "       Aucune date dans le futur")
     Else
         Call AjouterMessage(wsOutput, r, 2, "********** Il y a " & stats.cas_date_future & " cas de date FUTURE")
-        isTECValid = False
+        isTECvalid = False
     End If
     
     If stats.cas_hres_invalide = 0 Then
         Call AjouterMessage(wsOutput, r, 2, "       Aucune heures INVALIDE")
     Else
         Call AjouterMessage(wsOutput, r, 2, "********** Il y a " & stats.cas_hres_invalide & " cas d'heures INVALIDE")
-        isTECValid = False
+        isTECvalid = False
     End If
     
     If stats.cas_estFacturable_invalide = 0 Then
         Call AjouterMessage(wsOutput, r, 2, "       Aucune valeur 'estFacturable' n'est INVALIDE")
     Else
         Call AjouterMessage(wsOutput, r, 2, "********** Il y a " & stats.cas_estFacturable_invalide & " cas de valeur 'estFacturable' INVALIDE")
-        isTECValid = False
+        isTECvalid = False
     End If
     
     If stats.cas_estFacturee_invalide = 0 Then
         Call AjouterMessage(wsOutput, r, 2, "       Aucune valeur 'estFacturee' n'est INVALIDE")
     Else
         Call AjouterMessage(wsOutput, r, 2, "********** Il y a " & stats.cas_estFacturee_invalide & " cas de valeur 'estFacturee' INVALIDE")
-        isTECValid = False
+        isTECvalid = False
     End If
     
     If stats.cas_estDetruit_invalide = 0 Then
         Call AjouterMessage(wsOutput, r, 2, "       Aucune valeur 'estDetruit' n'est INVALIDE")
     Else
         Call AjouterMessage(wsOutput, r, 2, "********** Il y a " & stats.cas_estDetruit_invalide & " cas de valeur 'estDetruit' INVALIDE")
-        isTECValid = False
+        isTECvalid = False
     End If
     
     If stats.cas_date_fact_invalide = 0 Then
         Call AjouterMessage(wsOutput, r, 2, "       Aucune date de facture INVALIDE")
     Else
         Call AjouterMessage(wsOutput, r, 2, "********** Il y a " & stats.cas_date_fact_invalide & " cas de date de facture INVALIDE")
-        isTECValid = False
+        isTECvalid = False
     End If
-    
+
+End Sub
+
+Sub ComparerHeuresFactureesSelon2Sources(ByRef wsOutput As Worksheet, ByRef r As Long, _
+                                         ByRef dictFacture As Object, ByRef dictFactureHres As Object, _
+                                         ByRef isTECvalid As Boolean)
+
     Call AjouterMessage(wsOutput, r, 2, "Vérification des Heures Facturées par Facture")
-    
+
     'Vérification des heures facturées selon 2 sources (TEC_Local vs. FAC_Détails)
     Dim key As Variant
     Dim totalHoursBilled As Currency
@@ -3537,7 +3558,7 @@ Private Sub VerifierTEC(ByRef r As Long, ByRef readRows As Long)
             Call AjouterMessage(wsOutput, r, 2, "********** Facture '" & CStr(key) & _
                     "', il y a un écart d'heures facturées entre TEC_Local & FAC_Détails - " & _
                         Round(hresFactureesTEC_Local, 2) & " vs. " & Round(totalHoursBilled, 2))
-            isTECValid = False
+            isTECvalid = False
             cas_Heures_Differentes = cas_Heures_Differentes + 1
         End If
     Next key
@@ -3546,9 +3567,15 @@ Private Sub VerifierTEC(ByRef r As Long, ByRef readRows As Long)
         Call AjouterMessage(wsOutput, r, 2, "       Toutes les heures facturées balancent, selon les 2 sources")
     Else
         Call AjouterMessage(wsOutput, r, 2, "********** Certaines factures sont à vérifier pour que les heures facturées balancent, selon les 2 sources")
-        isTECValid = False
+        isTECvalid = False
     End If
         
+End Sub
+
+Sub ImprimerSommaireHeuresTEC(ByRef wsOutput As Worksheet, ByRef r As Long, _
+                              ByRef stats As StatistiquesTEC, _
+                              ByRef isTECvalid As Boolean)
+    
     Call AjouterMessage(wsOutput, r, 2, "La somme des heures SAISIES donne ces résultats:")
     
     Dim formattedHours As String
@@ -3607,20 +3634,30 @@ Private Sub VerifierTEC(ByRef r As Long, ByRef readRows As Long)
     gValeursAComparer(12, 3) = CCur(formattedHours)
     r = r + 2
     
+End Sub
+
+Sub ImprimerSommaireDateProf(ByRef wsOutput As Worksheet, ByRef r As Long, _
+                             ByRef dictDateCharge, maxTECID As Long, _
+                             ByRef isTECvalid As Boolean)
+    
+    Dim formattedHours As String
+    Dim key As Variant
     Dim keys() As Variant
+    Dim rng As Range
     
     'Tri & impression de dictDateCharge
     If dictDateCharge.count > 0 Then
         'Avec un peu de couleur
         Set rng = wsOutput.Range("B" & r)
-        rng.Value = "Sommaire des heures selon la DATE de la charge (" & maxTecID & ")"
-        rng.Characters(InStr(rng.Value, "(") + 1, Len(maxTecID)).Font.Color = vbGreen
-        rng.Characters(InStr(rng.Value, "(") + 1, Len(maxTecID)).Font.Bold = True
+        rng.Value = "Sommaire des heures selon la DATE de la charge (" & maxTECID & ")"
+        rng.Characters(InStr(rng.Value, "(") + 1, Len(maxTECID)).Font.Color = vbGreen
+        rng.Characters(InStr(rng.Value, "(") + 1, Len(maxTECID)).Font.Bold = True
         r = r + 1
         
         keys = dictDateCharge.keys
         Call Fn_Quick_Sort(keys, LBound(keys), UBound(keys))
         'Parcourir les clés triées et afficher les heures
+        Dim i As Long
         For i = LBound(keys) To UBound(keys)
             key = keys(i)
             formattedHours = Format$(dictDateCharge(key), "#0.00")
@@ -3628,13 +3665,23 @@ Private Sub VerifierTEC(ByRef r As Long, ByRef readRows As Long)
             Call AjouterMessage(wsOutput, r, 2, "       " & key & ":" & formattedHours & " heures")
         Next i
     End If
+
+End Sub
+
+Sub ImprimerSommaireTimeStampProf(ByRef wsOutput As Worksheet, ByRef r As Long, _
+                                  ByRef dictTimeStamp As Object, lastTECIDReported As Long, _
+                                  ByRef isTECvalid As Boolean)
     
+    Dim keys As Variant
+    Dim key As Variant
+    Dim formattedHours As String
     'Tri & impression de dictTimeStamp
     If dictTimeStamp.count > 0 Then
         Call AjouterMessage(wsOutput, r, 2, "Sommaire des heures saisies selon le 'TIMESTAMP'")
         keys = dictTimeStamp.keys
         Call Fn_Quick_Sort(keys, LBound(keys), UBound(keys))
         'Parcourir les clés triées et afficher les valeurs
+        Dim i As Long
         For i = LBound(keys) To UBound(keys)
             key = keys(i)
             formattedHours = Format$(dictTimeStamp(key), "##0")
@@ -3645,37 +3692,8 @@ Private Sub VerifierTEC(ByRef r As Long, ByRef readRows As Long)
         Call AjouterMessage(wsOutput, r, 2, "Aucune nouvelle saisie d'heures (TECID > " & lastTECIDReported & ") ")
         r = r + 1
     End If
-    
-    'Cas problème dans cette vérification ?
-    If isTECValid = False Then
-        verificationIntegriteOK = False
-    End If
-    
-    AjouterMessage wsOutput, r, 2, "Temps d’exécution : " & Format(Timer - startTime, "0.00") & " seconde(s)"
-    r = r + 1
-
-Clean_Exit:
-
-    'Libérer la mémoire
-    On Error Resume Next
-    Set dictDateCharge = Nothing
-    Set dictFacture = Nothing
-    Set dictTimeStamp = Nothing
-    Set dictProf = Nothing
-    Set dictDict = Nothing
-    Set key = Nothing
-    Set rng = Nothing
-    Set rngTEC_LocalData = Nothing
-    Set ws = Nothing
-    Set wsOutput = Nothing
-    On Error GoTo 0
-    
-    Application.ScreenUpdating = True
-    
-    Call Log_Record("modAppli_Utils:VerifierTEC", "", startTime)
 
 End Sub
-
 Sub Make_It_As_Header(r As Range)
 
     With r
