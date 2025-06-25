@@ -58,4 +58,15 @@ if ($files.Count -eq 0) {
     }
 }
 
+# Supprimer tous les fichiers .frx dans le dossier d'export (et sous-dossiers) - 2025-06-25 @ 07:16
+$frxFiles = Get-ChildItem -Recurse -Path $folder -Filter *.frx
+if ($frxFiles.Count -gt 0) {
+    foreach ($file in $frxFiles) {
+        Remove-Item $file.FullName -Force
+        Write-Host "🗑️ Supprimé : $($file.FullName)" -ForegroundColor DarkGray
+    }
+} else {
+    Write-Host "✅ Aucun fichier .frx à supprimer" -ForegroundColor Green
+}
+
 pause
