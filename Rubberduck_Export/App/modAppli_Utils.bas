@@ -3453,7 +3453,7 @@ Private Sub VerifierTEC(ByRef r As Long, ByRef readRows As Long)
 
 Clean_Exit:
 
-    'Libérer la mémoire
+    'Libérer la mémoire (test)
     On Error Resume Next
     Set dictClient = Nothing
     Set dictDateCharge = Nothing

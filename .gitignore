@@ -1,35 +1,37 @@
-/Rubberduck_Export/5_Hacks
-/Rubberduck_Export/Constat
-/Rubberduck_Export/ContactManager
-/Rubberduck_Export/EJ
-/Rubberduck_Export/Email
-/Rubberduck_Export/ExcelForFreelancers
-/Rubberduck_Export/GC_App
-/Rubberduck_Export/Payments
-/Rubberduck_Export/RiskManagement
-/Rubberduck_Export/TEMP
-/Rubberduck_Export/Utils
-/z_Archives
-Rubberduck_Export/BillEntries.doccls
-Rubberduck_Export/BillingItem_Macros.bas
-Rubberduck_Export/CodeReset_Macs.bas
-# Ignorer les fichiers de données
+# =====================================================
+# FICHIERS DE DONNÉES À NE PAS COMMETTRE
+# (feuilles Excel, Access, CSV, etc.)
+# =====================================================
 *.xlsx
+*.xls
 *.csv
 *.mdb
 *.accdb
 
-# Ignorer les fichiers temporaires de VBA
-*.frx
-*.suo
-*.log
+# =====================================================
+# FICHIERS TEMPORAIRES, LOGS ET BINAIRES NON UTILES
+# =====================================================
+*.xlsx
+*.xls
+*.csv
+*.mdb
+*.accdb
+*.frx       # Fichiers binaires UserForm (recréés automatiquement)
+*.suo       # Visual Studio/IDE user options
+*.log       # Fichiers de journalisation
+*.tmp       # Temp files
+*.bak       # Fichiers de sauvegarde
+~$*         # Temporaire Office (Word, Excel, etc.)
 
-# Ignorer les fichiers exportés sauf ceux du code source
-!*.bas
-!*.cls
-!*.frm
+# =====================================================
+# CONSERVER UNIQUEMENT LE CODE SOURCE VBA
+# =====================================================
+!*.bas      # Modules standard
+!*.cls      # Classes
+!*.frm      # UserForms (sans .frx)
+!*.doccls   # Feuilles et ThisWorkbook (code derrière les objets Excel)
 
-# Ignorer les fichiers de sauvegarde
-*.bak
-*.tmp
-~$*
+# =====================================================
+# S’ASSURER QUE CE FICHIER .gitignore EST VERSIONNÉ
+# =====================================================
+!.gitignore

@@ -1,0 +1,38 @@
+# =============================================
+# NORMALISATION DU CODE VBA
+# Force Git à traiter tous les fichiers source VBA comme texte
+# avec des fins de ligne CRLF et sans BOM
+# =============================================
+
+# Modules standard
+*.bas     text eol=crlf working-tree-encoding=UTF-8
+
+# Modules de classe
+*.cls     text eol=crlf working-tree-encoding=UTF-8
+
+# UserForms (fichier texte)
+*.frm     text eol=crlf working-tree-encoding=UTF-8
+
+# Feuilles Excel / ThisWorkbook (via Rubberduck)
+*.doccls  text eol=crlf working-tree-encoding=UTF-8
+
+# =============================================
+# OPTIONS DE DIFF POUR UN MEILLEUR AFFICHAGE SUR GITHUB
+# =============================================
+
+# Traite les fichiers VBA comme texte diffable
+*.bas     diff
+*.cls     diff
+*.frm     diff
+*.doccls  diff
+
+# =============================================
+# IGNORE LES FICHIERS BINAIRE NON DIFFABLE
+# (Git essaie de ne pas les afficher comme texte)
+# =============================================
+
+# Ne jamais tenter de diff ces fichiers binaires
+*.frx     binary
+*.xls*    binary
+*.accdb   binary
+*.mdb     binary
