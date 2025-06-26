@@ -295,15 +295,11 @@ Sub CodeSearchMain() '2024-10-26 @ 11:27
     Dim allLinesOfCode As Variant
     ReDim allLinesOfCode(1 To 30000, 1 To 4)
     
-'    Application.ScreenUpdating = False
-    
     'Allows up to 3 search strings
     Dim search1 As String, search2 As String, search3 As String
     search1 = InputBox("Enter the search string ? ", "Search1")
     search2 = InputBox("Enter the search string ? ", "Search2")
     search3 = InputBox("Enter the search string ? ", "Search3")
-    
-'    Application.ScreenUpdating = True
     
     'Loop through all VBcomponents (modules, class and forms) in the active workbook
     Dim lineNum As Long
@@ -386,7 +382,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
 
     'Declare arr() to keep results in memory
     Dim arrResult() As Variant
-    ReDim arrResult(1 To 2000, 1 To 7)
+    ReDim arrResult(1 To 3000, 1 To 7)
 
     Dim posProcedure As Long, posFunction As Long
     Dim saveLineOfCode As String, trimmedLineOfCode As String, procedureName As String

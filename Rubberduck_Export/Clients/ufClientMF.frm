@@ -1,6 +1,6 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufClientMF 
-   Caption         =   "Gestion du fichier Clients (version 5.4)"
+   Caption         =   "Gestion du fichier Clients (version 5.8)"
    ClientHeight    =   12930
    ClientLeft      =   6615
    ClientTop       =   2460
