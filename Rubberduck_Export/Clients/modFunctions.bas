@@ -1,7 +1,28 @@
 Attribute VB_Name = "modFunctions"
-'@IgnoreModule UnassignedVariableUsage
 '@Folder("Gestion_Clients")
 Option Explicit
+
+'Définition structurée des Donnees client
+Public Type DonneesClient
+    ClientNom As String
+    ClientID As String
+    NomClientSystème As String
+    ContactFacturation As String
+    TitreContact As String
+    CourrielFacturation As String
+    Adresse1 As String
+    Adresse2 As String
+    Ville As String
+    Province As String
+    CodePostal As String
+    Pays As String
+    ReferePar As String
+    FinAnnee As String
+    Comptable As String
+    NotaireAvocat As String
+    NomClientPlusNomClientSystème As String
+    TimeStamp As String
+End Type
 
 Function Fn_Is_Client_Code_Already_Used() As Boolean
 
@@ -73,6 +94,35 @@ Function Fn_Fix_Txt_Fin_Annee(fyem As String) As String
 
 End Function
 
+Public Function LireClientDepuisFormulaire(uf As Object) As DonneesClient '2025-06-27 @ 08:30
+
+    Dim d As DonneesClient
+    
+    With uf
+        d.ClientNom = .txtNomClient.Value
+        d.ClientID = .txtCodeClient.Value
+        d.NomClientSystème = .txtNomClientSysteme.Value
+        d.ContactFacturation = .txtContactFact.Value
+        d.TitreContact = .txtTitreContact.Value
+        d.CourrielFacturation = .txtCourrielFact.Value
+        d.Adresse1 = .txtAdresse1.Value
+        d.Adresse2 = .txtAdresse2.Value
+        d.Ville = .txtVille.Value
+        d.Province = .txtProvince.Value
+        d.CodePostal = .txtCodePostal.Value
+        d.Pays = .txtPays.Value
+        d.ReferePar = .txtReferePar.Value
+        d.FinAnnee = .txtFinAnnee.Value
+        d.Comptable = .txtComptable.Value
+        d.NotaireAvocat = .txtNotaireAvocat.Value
+        d.NomClientPlusNomClientSystème = .txtNomClientPlusNomClientSysteme.Value
+        d.TimeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    End With
+    
+    LireClientDepuisFormulaire = d
+    
+End Function
+
 Function Fn_Get_Windows_Username() As String 'Function to retrieve the Windows username using the API
 
     Dim buffer As String * 255
@@ -122,8 +172,8 @@ Function Fn_Selected_List() As Long
     Fn_Selected_List = 0
     
     Dim i As Long
-    For i = 0 To ufClientMF.lstDonnées.ListCount - 1
-        If ufClientMF.lstDonnées.Selected(i) = True Then
+    For i = 0 To ufClientMF.lstDonnees.ListCount - 1
+        If ufClientMF.lstDonnees.Selected(i) = True Then
             Fn_Selected_List = i + 1
             ufClientMF.cmdEdit.Enabled = True
             Exit For
@@ -141,7 +191,7 @@ Function Fn_ValidateEntries() As Boolean
     
     Fn_ValidateEntries = True
     
-    Dim sh As Worksheet: Set sh = ThisWorkbook.Worksheets("Données")
+    Dim sh As Worksheet: Set sh = ThisWorkbook.Worksheets("Donnees")
     
     Dim iCodeClient As Variant
     iCodeClient = ufClientMF.txtCodeClient.Value
@@ -164,7 +214,7 @@ Function Fn_ValidateEntries() As Boolean
         .txtFinAnnee.BackColor = vbWhite
         .txtComptable.BackColor = vbWhite
         .txtNotaireAvocat.BackColor = vbWhite
-        .txtNomClientPlusNomClientSystème = vbWhite
+        .txtNomClientPlusNomClientSysteme = vbWhite
         
         'Valeur OBLIGATOIRE
         If Trim(.txtCodeClient.Value) = "" Then

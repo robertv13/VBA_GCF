@@ -20,7 +20,7 @@ Private Sub Workbook_Open()
     wshMENU.Range("A34").Font.Color = vbRed
     
     Dim destinationFileName As String, destinationFileNamePath As String
-    If Not Fn_Get_Windows_Username = "Robert M. Vigneault" Then
+    If Not Fn_Get_Windows_Username = "RobertMV" Then
         destinationFileNamePath = "P:\Administration\APP\GCF\DataFiles"
     Else
         destinationFileNamePath = "C:\VBA\GC_FISCALITÉ\DataFiles"

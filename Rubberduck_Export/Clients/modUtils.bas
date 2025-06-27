@@ -15,7 +15,7 @@ Sub CM_Log_Activities(moduleProcName As String, param1 As String, Optional ByVal
     
     'Determine the location of the Log file
     Dim rootPath As String
-    If Fn_Get_Windows_Username <> "Robert M. Vigneault" Then
+    If Fn_Get_Windows_Username <> "RobertMV" Then
         rootPath = "P:\Administration\APP\GCF"
     Else
         rootPath = "C:\VBA\GC_FISCALITÉ"
@@ -109,7 +109,7 @@ Sub Max_Code_Values_From_GCF_Entree(ByRef maxSmallCodes As String, ByRef maxLarg
 
     'Analyze Clients List from 'GCF_BD_Entrée.xlsx
     Dim strFilePath As String, strSheet As String
-    If Not Fn_Get_Windows_Username = "Robert M. Vigneault" Then
+    If Not Fn_Get_Windows_Username = "RobertMV" Then
         strFilePath = "P:\Administration\APP\GCF\DataFiles\GCF_BD_Entrée.xlsx"
     Else
         strFilePath = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx"
@@ -187,14 +187,14 @@ Sub Max_Code_Values_From_GCF_Entree(ByRef maxSmallCodes As String, ByRef maxLarg
     
 End Sub
 
-Sub Valider_Client_Avant_Effacement(clientID As String, Optional ByRef clientExiste As Boolean = False) '2024-08-30 @ 18:15
+Sub Valider_Client_Avant_Effacement(ClientID As String, Optional ByRef clientExiste As Boolean = False) '2024-08-30 @ 18:15
     
     'Liste des workbooks à vérifier (à adapter selon vos besoins)
     Dim listeWorkbooks As Variant
     listeWorkbooks = Array("GCF_BD_MASTER.xlsx")
     
     Dim dataFilesPath As String
-    If Not Fn_Get_Windows_Username = "Robert M. Vigneault" Then
+    If Not Fn_Get_Windows_Username = "RobertMV" Then
         dataFilesPath = "P:\Administration\APP\GCF\DataFiles"
     Else
         dataFilesPath = "C:\VBA\GC_FISCALITÉ\DataFiles"
@@ -230,11 +230,11 @@ Sub Valider_Client_Avant_Effacement(clientID As String, Optional ByRef clientExi
                 plageRechercher = feuilleName & "$"
                 
                 ' Construire la requête SQL pour chercher le client
-                sql = "SELECT * FROM [" & plageRechercher & "] WHERE [" & colName & "] = '" & clientID & "'"
+                sql = "SELECT * FROM [" & plageRechercher & "] WHERE [" & colName & "] = '" & ClientID & "'"
                 
                 Set rs = conn.Execute(sql)
                 If Not rs.EOF Then
-                    message1 = message1 & "Le client '" & clientID & "' existe dans la feuille '" & feuilleName & "' " & vbNewLine & vbNewLine & _
+                    message1 = message1 & "Le client '" & ClientID & "' existe dans la feuille '" & feuilleName & "' " & vbNewLine & vbNewLine & _
                                           "du classeur '" & listeWorkbooks(i) & "'" & vbCrLf
                     Debug.Print message1
                     clientExiste = True
@@ -257,12 +257,12 @@ Sub Valider_Client_Avant_Effacement(clientID As String, Optional ByRef clientExi
         Dim ws As Worksheet
         For Each ws In wb.Worksheets
             Dim foundCell As Range
-            If ws.Name = "Données" Or ws.Name = "DonnéesRecherche" Or ws.Name = "Clients" Then
+            If ws.Name = "Donnees" Or ws.Name = "DonneesRecherche" Or ws.Name = "Clients" Then
                 GoTo Next_Worksheet
             End If
-            Set foundCell = ws.Cells.Find(What:=clientID, LookIn:=xlValues, LookAt:=xlWhole)
+            Set foundCell = ws.Cells.Find(What:=ClientID, LookIn:=xlValues, LookAt:=xlWhole)
             If Not foundCell Is Nothing Then
-                message2 = message2 & "Le client '" & clientID & "' existe dans la feuille '" & ws.Name & "' du Workbook '" & wb.Name & "'" & vbCrLf
+                message2 = message2 & "Le client '" & ClientID & "' existe dans la feuille '" & ws.Name & "' du Workbook '" & wb.Name & "'" & vbCrLf
                 Debug.Print message2
                 clientExiste = True
 '                GoTo Exit_Sub
@@ -386,7 +386,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
 
     Dim posProcedure As Long, posFunction As Long
     Dim saveLineOfCode As String, trimmedLineOfCode As String, procedureName As String
-    Dim timeStamp As String
+    Dim TimeStamp As String
     Dim X As Long, xr As Long
     For X = LBound(arr, 1) To UBound(arr, 1)
         trimmedLineOfCode = arr(X, 4)
@@ -437,8 +437,8 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
                 arrResult(xr, 4) = arr(X, 3) 'LineNum
                 arrResult(xr, 5) = procedureName
                 arrResult(xr, 6) = "'" & saveLineOfCode
-                timeStamp = Format$(Now(), "mm/dd/yyyy hh:mm:ss")
-                arrResult(xr, 7) = timeStamp
+                TimeStamp = Format$(Now(), "mm/dd/yyyy hh:mm:ss")
+                arrResult(xr, 7) = TimeStamp
                 arrResult(xr, 1) = UCase(arr(X, 1)) & Chr(0) & UCase(arr(X, 2)) & Chr(0) & Format$(arr(X, 3), "0000") & Chr(0) & procedureName 'Future sort key
             End If
         End If
