@@ -35,7 +35,7 @@ Public Const INTERVALLE_MINUTES_SAUVEGARDE As Double = 10
 Public gDerniereActivite As Date
 Public gProchaineVerification As Date
 Public Const FREQUENCE_VERIFICATION_INACTIVITE As Long = 5
-Public Const INTERVALLE_MAXIMUM_INACTIVITE As Long = 15
+Public Const INTERVALLE_MAXIMUM_INACTIVITE As Long = 60
 
 'Pour capturer év`nements sur tous les controls des userForm - 2025-05-30 @ 13:11
 Public colWrappers As Collection
