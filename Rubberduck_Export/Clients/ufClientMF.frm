@@ -211,20 +211,6 @@ Private Sub MAJ_Fichier_Client()
     Dim modeAction As String: modeAction = IIf(clientExists, "UPDATE", "NEW_RECORD")
     Call CM_Ecrire_Client(modeAction)
     
-'    Dim modeAction As String
-'    modeAction = IIf(clientExists, "UPDATE", "NEW_RECORD")
-'
-'    Call CM_Ecrire_Client(modeAction, "EXTERNE")
-'    Call CM_Ecrire_Client(modeAction, "LOCAL")
-'
-'    If clientExists = True Then
-'        Call CM_Update_External_GCF_Entrée_BD("UPDATE")
-'        Call CM_Update_Locally_GCF_BD_Entrée("UPDATE")
-'    Else
-'        Call CM_Update_External_GCF_Entrée_BD("NEW_RECORD")
-'        Call CM_Update_Locally_GCF_BD_Entrée("NEW_RECORD")
-'    End If
-    
     Call CM_Reset_UserForm
     
     ufClientMF.cmdSave.Enabled = False
@@ -270,7 +256,7 @@ Private Sub Delete_Client(ClientID As String)
         If Not foundCell Is Nothing Then
             ws.Rows(foundCell.Row).Delete
         Else
-            MsgBox "Le client '" & ClientID & "' ne peut être trouvé dans Clients", vbCritical
+            MsgBox "Le client '" & ClientID & "'ne peut être trouvé dans Clients", vbCritical
             msgValue = vbNo
         End If
         
@@ -280,7 +266,7 @@ Private Sub Delete_Client(ClientID As String)
         If Not foundCell Is Nothing Then
             ws.Rows(foundCell.Row).Delete
         Else
-            MsgBox "Le client '" & ClientID & "' ne peut être trouvé dans Donnees", vbCritical
+            MsgBox "Le client '" & ClientID & "'ne peut être trouvé dans Donnees", vbCritical
             msgValue = vbNo
         End If
         
@@ -291,7 +277,7 @@ Private Sub Delete_Client(ClientID As String)
             ws.Rows(foundCell.Row).Delete
         End If
         
-        MsgBox "Le client '" & Me.txtCodeClient.Value & "' a été détruit" & vbNewLine & _
+        MsgBox "Le client '" & Me.txtCodeClient.Value & "'a été détruit" & vbNewLine & _
                 vbNewLine & "de façon PERMANENTE", vbInformation
     End If
     
@@ -428,7 +414,7 @@ Private Sub txtCodeClient_Exit(ByVal Cancel As MSForms.ReturnBoolean)
     
     If clientExists = True And NouveauClient = True Then
         ufClientMF.txtCodeClient.BackColor = vbRed
-        MsgBox "Ce code de client '" & ufClientMF.txtCodeClient.Value & "' existe déjà en base de Donnees." & vbNewLine & vbNewLine & _
+        MsgBox "Ce code de client '" & ufClientMF.txtCodeClient.Value & "'existe déjà en base de Donnees." & vbNewLine & vbNewLine & _
                "Veuillez choisir un AUTRE code qui n'existe pas, SVP", vbCritical + vbOKOnly, "Doublon de code de client"
         ufClientMF.txtCodeClient.BackColor = vbWhite
         ufClientMF.txtCodeClient.Value = ""

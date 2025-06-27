@@ -94,7 +94,7 @@ Function Fn_Fix_Txt_Fin_Annee(fyem As String) As String
 
 End Function
 
-Public Function LireClientDepuisFormulaire(uf As Object) As DonneesClient '2025-06-27 @ 08:30
+Public Function LireClientDepuisFormulaire(uf As Object) As DonneesClient '2025-06-27 @ 10:05
 
     Dim d As DonneesClient
     
@@ -155,7 +155,7 @@ Function Fn_Incremente_Code(c As String) As String
     'Si la partie numérique est valide, on ajoute 1
     Dim newCode As String
     If Len(numericPart) > 0 Then
-        newCode = CStr(CLng(numericPart) + 1) ' Convertir la partie numérique en nombre et ajouter 1
+        newCode = CStr(CLng(numericPart) + 1) 'Convertir la partie numérique en nombre et ajouter 1
     Else
         newCode = "" 'Si aucun chiffre n'a été trouvé, laisser la nouvelle valeur vide
     End If
@@ -276,8 +276,8 @@ Function Fn_ValiderCourriel(courriel As String) As Boolean
         .Global = False
     End With
     
-'    'Normaliser le champs s'il contient plus d'une adresse courriel
-'    courriel = Fn_NormaliserAdressesCourriel(courriel)
+'   'Normaliser le champs s'il contient plus d'une adresse courriel
+'   courriel = Fn_NormaliserAdressesCourriel(courriel)
 
     'Diviser le paremètre (courriel) en adresses individuelles
     Dim arrAdresse() As String
@@ -321,7 +321,7 @@ Function Fn_NormaliserAdressesCourriel(ByVal strEmails As String) As String
     Set regex = CreateObject("VBScript.RegExp")
     
     'Expression régulière pour capturer les adresses email
-    regex.Pattern = "[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}" ' Format d'une adresse courriel
+    regex.Pattern = "[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}" 'Format d'une adresse courriel
     regex.IgnoreCase = True
     regex.Global = True
     

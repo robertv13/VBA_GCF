@@ -106,7 +106,7 @@ no_change:
 
 End Sub
 
-Sub CM_Ecrire_Client(action As String) '2025-06-27 @ 09:15
+Sub CM_Ecrire_Client(action As String) '2025-06-27 @ 10:04
 
     Dim startTime As Double: startTime = Timer
     Call CM_Log_Activities("modMain:CM_Ecrire_Client", action, 0)
@@ -124,7 +124,7 @@ Sub CM_Ecrire_Client(action As String) '2025-06-27 @ 09:15
 
 End Sub
 
-Sub CM_Update_External_GCF_Entree_BD(action As String, client As DonneesClient) '2025-06-27 @ 09:21
+Sub CM_Update_External_GCF_Entree_BD(action As String, client As DonneesClient) '2025-06-27 @ 10:05
 
     Dim startTime As Double: startTime = Timer
     Call CM_Log_Activities("modMain:Update_External_GCF_BD_Entree", action, 0)
@@ -139,7 +139,7 @@ Sub CM_Update_External_GCF_Entree_BD(action As String, client As DonneesClient) 
     End If
     destinationTab = "Clients$"
 
-    ' Vérifie si le fichier est ouvert
+    'Vérifie si le fichier est ouvert
     If FichierEstOuvert(destinationFileName) Then
         MsgBox "Le classeur (GCF_BD_Entrée.xlsx) est actuellement utilisé." & vbNewLine & vbNewLine & _
                "Vous devez obligatoirement le fermer" & vbNewLine & vbNewLine & "avant de continuer.", _
@@ -147,11 +147,7 @@ Sub CM_Update_External_GCF_Entree_BD(action As String, client As DonneesClient) 
         Exit Sub
     End If
 
-'    ' Extraction centralisée des Donnees
-'    Dim client As DonneesClient
-'    client = LireClientDepuisFormulaire(ufClientMF)
-'
-    ' Connexion ADO
+    'Connexion ADO
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
     conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
               ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
@@ -163,13 +159,13 @@ Sub CM_Update_External_GCF_Entree_BD(action As String, client As DonneesClient) 
     Else
         rs.Open "SELECT * FROM [" & destinationTab & "] WHERE ClientID='" & client.ClientID & "'", conn, 2, 3
         If rs.EOF Then
-            MsgBox "Le client '" & client.ClientID & "' n'a pas été ajouté au fichier!" & vbNewLine & vbNewLine & _
+            MsgBox "Le client '" & client.ClientID & "'n'a pas été ajouté au fichier!" & vbNewLine & vbNewLine & _
                    "Veuillez le saisir à nouveau", vbCritical, "ERREUR dans la mise à jour du fichier client"
             GoTo Nettoyage
         End If
     End If
 
-    ' Remplissage des champs
+    'Remplissage des champs
     With rs
         .Fields("ClientNom").Value = client.ClientNom
         .Fields("ClientID").Value = client.ClientID
@@ -198,7 +194,7 @@ Nettoyage:
     If Not conn Is Nothing Then If conn.State = 1 Then conn.Close: Set conn = Nothing
     On Error GoTo 0
 
-    ' Forcer Excel à enregistrer pour fiabilité
+    'Forcer Excel à enregistrer pour fiabilité
     Dim xlApp As Object, wb As Workbook
     Set xlApp = CreateObject("Excel.Application")
     xlApp.DisplayAlerts = False
@@ -215,7 +211,7 @@ Nettoyage:
 
     DoEvents
 
-    ' Vérification réelle de l’écriture sur disque
+    'Vérification réelle de l’écriture sur disque
     Dim ddm As Date, jours As Long, heures As Long, minutes As Long, secondes As Long
     Call CM_Get_Date_Derniere_Modification(destinationFileName, ddm, jours, heures, minutes, secondes)
 
@@ -233,13 +229,10 @@ Nettoyage:
 
 End Sub
 
-Sub CM_Update_Locally_GCF_BD_Entree(action As String, client As DonneesClient) '2025-06-27 @ 09:18
+Sub CM_Update_Locally_GCF_BD_Entree(action As String, client As DonneesClient) '2025-06-27 @ 10:05
 
-    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("modMain:CM_Update_Locally_GCF_BD_Entrée", "", 0)
+    Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("modMain:CM_Update_Locally_GCF_BD_Entree", "", 0)
 
-'    Dim client As DonneesClient
-'    client = LireClientDepuisFormulaire(ufClientMF)
-'
     Dim iRow As Long
     If ufClientMF.txtRowNumber.Value = "" Then
         iRow = Application.WorksheetFunction.CountA(Sheets("Donnees").Range("A:A")) + 1
@@ -268,7 +261,7 @@ Sub CM_Update_Locally_GCF_BD_Entree(action As String, client As DonneesClient) '
         .Cells(iRow, 18) = client.TimeStamp
     End With
 
-    Call CM_Log_Activities("modMain:CM_Update_Locally_GCF_BD_Entrée", action & " " & ufClientMF.txtCodeClient.Value, startTime)
+    Call CM_Log_Activities("modMain:CM_Update_Locally_GCF_BD_Entree", action & " " & ufClientMF.txtCodeClient.Value, startTime)
 
 End Sub
 
@@ -305,7 +298,7 @@ Sub CM_Add_SearchColumn()
     
     ufClientMF.txtSearch.Value = ""
     ufClientMF.txtSearch.Enabled = True
-'    ufClientMF.txtSearch.Enabled = False
+'   ufClientMF.txtSearch.Enabled = False
     ufClientMF.cmdSearch.Enabled = False
 
     Call CM_Log_Activities("modMain:CM_Add_SearchColumn", "", startTime)

@@ -80,7 +80,7 @@ Sub CM_Get_Date_Derniere_Modification(fileName As String, ByRef ddm As Date, _
     minutes = Int(((diff - jours) * 24 - heures) * 60)
     secondes = Int(((((diff - jours) * 24 - heures) * 60) - minutes) * 60)
     
-    ' Libérer les objets
+    'Libérer les objets
     Set fichier = Nothing
     Set FSO = Nothing
     
@@ -114,7 +114,7 @@ Sub Max_Code_Values_From_GCF_Entree(ByRef maxSmallCodes As String, ByRef maxLarg
     Else
         strFilePath = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx"
     End If
-    strSheet = "Clients$" 'Ne pas oublier le '$' à la fin du nom de la feuille
+    strSheet = "Clients$" 'Ne pas oublier le '$'à la fin du nom de la feuille
     
     'Crée une connexion à ADO
     Dim cn As Object: Set cn = CreateObject("ADODB.Connection")
@@ -229,16 +229,16 @@ Sub Valider_Client_Avant_Effacement(ClientID As String, Optional ByRef clientExi
                 feuilleName = Left(feuilleRechercher, InStr(feuilleRechercher, "|") - 1)
                 plageRechercher = feuilleName & "$"
                 
-                ' Construire la requête SQL pour chercher le client
+                'Construire la requête SQL pour chercher le client
                 sql = "SELECT * FROM [" & plageRechercher & "] WHERE [" & colName & "] = '" & ClientID & "'"
                 
                 Set rs = conn.Execute(sql)
                 If Not rs.EOF Then
-                    message1 = message1 & "Le client '" & ClientID & "' existe dans la feuille '" & feuilleName & "' " & vbNewLine & vbNewLine & _
+                    message1 = message1 & "Le client '" & ClientID & "'existe dans la feuille '" & feuilleName & "'" & vbNewLine & vbNewLine & _
                                           "du classeur '" & listeWorkbooks(i) & "'" & vbCrLf
                     Debug.Print message1
                     clientExiste = True
-'                GoTo Exit_Sub
+'               GoTo Exit_Sub
                 End If
                 rs.Close
             Next feuilleRechercher
@@ -262,10 +262,10 @@ Sub Valider_Client_Avant_Effacement(ClientID As String, Optional ByRef clientExi
             End If
             Set foundCell = ws.Cells.Find(What:=ClientID, LookIn:=xlValues, LookAt:=xlWhole)
             If Not foundCell Is Nothing Then
-                message2 = message2 & "Le client '" & ClientID & "' existe dans la feuille '" & ws.Name & "' du Workbook '" & wb.Name & "'" & vbCrLf
+                message2 = message2 & "Le client '" & ClientID & "'existe dans la feuille '" & ws.Name & "'du Workbook '" & wb.Name & "'" & vbCrLf
                 Debug.Print message2
                 clientExiste = True
-'                GoTo Exit_Sub
+'               GoTo Exit_Sub
             End If
 Next_Worksheet:
         Next ws
@@ -365,7 +365,7 @@ Sub Array_2D_Resizer(ByRef inputArray As Variant, ByVal nRows As Long, ByVal nCo
     Dim tempArray() As Variant
     ReDim tempArray(1 To nRows, 1 To nCols)
     
-    ' Copy the relevant data from the input array to the new array
+    'Copy the relevant data from the input array to the new array
     Dim i As Long, j As Long
     For i = 1 To nRows
         For j = 1 To nCols
@@ -373,7 +373,7 @@ Sub Array_2D_Resizer(ByRef inputArray As Variant, ByVal nRows As Long, ByVal nCo
         Next j
     Next i
     
-    ' Assign the trimmed array back to the input array
+    'Assign the trimmed array back to the input array
     inputArray = tempArray
     
 End Sub
@@ -463,7 +463,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, search1 As String, search2 As Str
     If xr > 0 Then
     
         'Data starts at row 2
-'        Dim r As Long: r = 2
+'       Dim r As Long: r = 2
 
         Call Array_2D_Resizer(arrResult, xr, UBound(arrResult, 2))
         
@@ -557,7 +557,7 @@ Function HandleComments(ByVal codeLine As String, action As String) As String '2
             inString = Not inString
         End If
         
-        'If the current character is ' and we are not within a string...
+        'If the current character is 'and we are not within a string...
         If char = "'" Then
             If Not inString Then
                 commentPart = Mid(codeLine, i)
