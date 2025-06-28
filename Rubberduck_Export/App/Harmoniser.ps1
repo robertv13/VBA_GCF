@@ -5,6 +5,7 @@
     '.column' = '.Column'
     '.count' = '.Count'
     '.font' = '.Font'
+    '.goto' = '.GoTo'
     '.interior' = '.Interior'
     '.list' = '.List'
     '.name' = '.Name'

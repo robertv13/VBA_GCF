@@ -31,6 +31,10 @@
 !*.frm      # UserForms (sans .frx)
 !*.doccls   # Feuilles et ThisWorkbook (code derrière les objets Excel)
 
+# Ne jamais reprendre ces modules de feuille (artefacts)
+Rubberduck_Export/App/Feuil2.doccls
+Rubberduck_Export/App/Feuil6.doccls
+
 # =====================================================
 # S’ASSURER QUE CE FICHIER .gitignore EST VERSIONNÉ
 # =====================================================

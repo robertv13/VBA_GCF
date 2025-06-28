@@ -90,7 +90,9 @@ Sub Back_To_ufSaisieHeures()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("modStatsHeures:Back_To_ufSaisieHeures", "", 0)
    
+    On Error Resume Next
     wshStatsHeuresPivotTables.Visible = xlSheetHidden
+    On Error GoTo 0
     
     ufSaisieHeures.show vbModeless
 
