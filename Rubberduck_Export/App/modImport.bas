@@ -10,7 +10,7 @@ Sub ImporterPlanComptable() '2024-02-17 @ 07:21
 
     'Import Accounts List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
     Dim sourceWorkbook As String, sourceWorksheet As String
-    sourceWorkbook = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Entrée.xlsx"
     sourceWorksheet = "PlanComptable$"
 
@@ -61,7 +61,7 @@ Sub ImportGeneriqueDuMaster(sourceWb As String, ws As Worksheet, onglet As Strin
     
     '2. Importer les enregistrements de la source
     Dim fullPathSourceWb As String, sourceTab As String
-    fullPathSourceWb = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    fullPathSourceWb = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                        sourceWb
     sourceTab = onglet & "$"
                      
@@ -137,7 +137,7 @@ Sub ImporterClients() 'Using ADODB - 2024-02-25 @ 10:23
     
     'Import Clients List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Entrée.xlsx" '2024-02-14 @ 07:04
     sourceTab = "Clients$"
     
@@ -434,7 +434,7 @@ Sub ImporterFournisseurs() 'Using ADODB - 2024-07-03 @ 15:43
 
     'Import Suppliers List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    sourceWorkbook = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Entrée.xlsx" '2024-02-14 @ 07:04
     sourceTab = "Fournisseurs$"
     

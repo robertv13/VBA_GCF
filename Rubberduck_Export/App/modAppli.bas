@@ -1,16 +1,16 @@
 ﻿Attribute VB_Name = "modAppli"
 Option Explicit
 
-Public Const DATA_PATH As String = "\DataFiles"
-Public Const FACT_PDF_PATH As String = "\Factures_PDF"
-Public Const FACT_EXCEL_PATH As String = "\Factures_Excel"
+Public Const gDATA_PATH As String = "\DataFiles"
+Public Const gFACT_PDF_PATH As String = "\Factures_PDF"
+Public Const gFACT_EXCEL_PATH As String = "\Factures_Excel"
 
-Public Const NB_MAX_LIGNE_FAC As Long = 35 '2024-06-18 @ 12:18
+Public Const gNB_MAX_LIGNE_FAC As Long = 35 '2024-06-18 @ 12:18
 
-Public Const COULEUR_SAISIE As String = &HCCFFCC 'Light green (Pastel Green)
-Public Const COULEUR_BASE_TEC As Long = 6740479
-Public Const COULEUR_BASE_FACTURATION As Long = 11854022
-Public Const COULEUR_BASE_COMPTABILITÉ As Long = 14277081
+Public Const gCOULEUR_SAISIE As String = &HCCFFCC 'Light green (Pastel Green)
+Public Const gCOULEUR_BASE_TEC As Long = 6740479
+Public Const gCOULEUR_BASE_FACTURATION As Long = 11854022
+Public Const gCOULEUR_BASE_COMPTABILITE As Long = 14277081
 
 'Variable qui contient le code d'utilisateur Windows
 Public gUtilisateurWindows As String
@@ -402,7 +402,7 @@ Sub DemarrageApplication() '2025-06-06 @ 11:40
     
     'Protection de la feuille wshMenu
     With wshMenu
-        .Protect UserInterfaceOnly:=True
+        .Protect userInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
     
@@ -455,7 +455,7 @@ Sub CreateUserActiveFile(ByVal userName As String)
     Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:CreateUserActiveFile", "", 0)
     
     Dim traceFilePath As String
-    traceFilePath = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
+    traceFilePath = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
     
     Dim FileNumber As Long
     FileNumber = FreeFile
@@ -514,10 +514,10 @@ Sub BackupMasterFile()
     
     'Chemin source (fichier principal) et destination (sauvegarde)
     Dim masterFilePath As String
-    masterFilePath = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
+    masterFilePath = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
     
     Dim backupFilePath As String
-    backupFilePath = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    backupFilePath = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER_" & Format$(Now, "YYYYMMDD_HHMMSS") & ".xlsx"
     
     'Créer directement une copie du fichier sans ouvrir Excel
@@ -568,7 +568,7 @@ Sub EcrireInformationsConfigAuMenu(ByVal user As String)
     wshMenu.Range("A30:A34").Value = Application.WorksheetFunction.Transpose(valeurs)
 
     With wshMenu
-        .Protect UserInterfaceOnly:=True
+        .Protect userInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
 
@@ -579,10 +579,18 @@ CleanUp:
     
 End Sub
 
-Public Sub RafraichirActivite(Optional ByVal msg As String = "") '2025-05-30 @ 12:22
+Public Sub RafraichirActivite(Optional ByVal msg As String = "") '2025-06-28 @ 12:13
 
+    Dim activeEvents As Boolean
+    activeEvents = Application.EnableEvents
+    
+    If activeEvents = True Then Application.EnableEvents = False
     gDerniereActivite = Now
     Application.StatusBar = False
+    
+    If activeEvents <> Application.EnableEvents Then
+        Application.EnableEvents = activeEvents
+    End If
     
 End Sub
 

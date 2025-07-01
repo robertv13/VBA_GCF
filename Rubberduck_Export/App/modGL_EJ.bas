@@ -212,7 +212,7 @@ Sub GL_EJ_Clear_All_Cells()
     Call AnnulerValidation(cell)
     
     With ActiveSheet
-        .Protect UserInterfaceOnly:=True
+        .Protect userInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
     
@@ -541,7 +541,7 @@ Sub AjouterValidation(cell As Range, nomPlage As String)
     
     If feuilleProtégée Then
         With ws
-            .Protect UserInterfaceOnly:=True
+            .Protect userInterfaceOnly:=True
             .EnableSelection = xlUnlockedCells
         End With
     End If
@@ -670,7 +670,7 @@ Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xls
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "GL_Trans$"
     
@@ -810,7 +810,7 @@ Sub EJ_Trans_Update_Ecriture_Renversee_To_DB()
     
     'Définition des paramètres
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "GL_Trans$"
 
@@ -890,7 +890,7 @@ Sub GL_EJ_Recurrente_Add_Record_To_DB(r As Long) 'Write/Update a record to exter
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "GL_EJ_Récurrente$"
     
@@ -1164,7 +1164,7 @@ End Sub
 Sub ckbRecurrente_Click()
 
     If wshGL_EJ.ckbRecurrente.Value = True Then
-        wshGL_EJ.ckbRecurrente.BackColor = COULEUR_SAISIE
+        wshGL_EJ.ckbRecurrente.BackColor = gCOULEUR_SAISIE
     Else
         wshGL_EJ.ckbRecurrente.BackColor = RGB(217, 217, 217)
     End If

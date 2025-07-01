@@ -600,7 +600,7 @@ Sub GL_BV_AjustementAffichageTransactionsDetaillees()
     rng.ColumnWidth = 30
 
     Dim visibleRows As Long
-    visibleRows = ActiveWindow.visibleRange.Rows.count
+    visibleRows = ActiveWindow.VisibleRange.Rows.count
     If lastUsedRow > visibleRows Then
         ActiveWindow.ScrollRow = lastUsedRow - visibleRows + 5 'Move to the bottom of the worksheet
     Else

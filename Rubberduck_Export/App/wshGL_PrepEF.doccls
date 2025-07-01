@@ -36,7 +36,7 @@ Private Sub Worksheet_Activate()
     
     'Protection de la feuille
     With ws
-        .Protect UserInterfaceOnly:=True
+        .Protect userInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
     
@@ -67,7 +67,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
     'Date limite est sélectionnée
     If Not Intersect(Target, Me.Range("F3")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
     End If
     
 End Sub

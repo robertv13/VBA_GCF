@@ -138,7 +138,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     'Change the format of the top row (Total General)
     With wsDest.Range("C7:D7")
         With .Interior
-            .pattern = xlSolid
+            .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
             .Color = 65535
             .TintAndShade = 0
@@ -155,7 +155,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     'Change the format of the top row (Hours)
     With wsDest.Range("H7")
         With .Interior
-            .pattern = xlSolid
+            .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
             .Color = 255
             .TintAndShade = 0
@@ -384,7 +384,7 @@ Sub Build_Hours_Summary(rowSelected As Long)
     End With
     
     With ActiveSheet.Range("J" & saveR & ":M" & rowSelected).Interior
-        .pattern = xlSolid
+        .Pattern = xlSolid
         .PatternColorIndex = xlAutomatic
         .ThemeColor = xlThemeColorAccent1
         .TintAndShade = 0.799981688894314
@@ -487,7 +487,7 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As 
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Projets_Détails$"
     
@@ -532,7 +532,7 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As 
             'RecordSet are ZERO base, and Enums are not, so the '-1' is mandatory !!!
             rs.Fields(fFacPDProjetID - 1).Value = projetID
             rs.Fields(fFacPDNomClient - 1).Value = wshTEC_Analyse.Range("C" & l).Value
-            rs.Fields(fFacPDClientID - 1).Value = clientID
+            rs.Fields(fFacPDClientID - 1).Value = CStr(clientID)
             rs.Fields(fFacPDTECID - 1).Value = wshTEC_Analyse.Range("A" & l).Value
             rs.Fields(fFacPDProfID - 1).Value = wshTEC_Analyse.Range("B" & l).Value
             dateTEC = Format$(wshTEC_Analyse.Range("E" & l).Value, "yyyy-mm-dd")
@@ -630,7 +630,7 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Projets_Entête$"
     
@@ -651,11 +651,19 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
     Dim c As Long
     Dim l As Long
     rs.AddNew
+        Debug.Print "rs.State = " & rs.state
+        Debug.Print "rs.EOF = " & rs.EOF
+        Debug.Print "rs.BOF = " & rs.BOF
+        Debug.Print "rs.RecordCount = " & rs.RecordCount
+        Debug.Print "rs.Fields.Count = " & rs.Fields.count
+        Debug.Print "Field 2 - Name: " & rs.Fields(2).Name
+        Debug.Print "Field 2 - Type: " & rs.Fields(2).Type
+        Debug.Print "Field 2 - Attributes: " & rs.Fields(2).Attributes
         'Add fields to the recordset before updating it
         'RecordSet are ZERO base, and Enums are not, so the '-1' is mandatory !!!
         rs.Fields(fFacPEProjetID - 1).Value = projetID
         rs.Fields(fFacPENomClient - 1).Value = nomClient
-        rs.Fields(fFacPEClientID - 1).Value = clientID
+        rs.Fields(2).Value = CStr(clientID)
         rs.Fields(fFacPEDate - 1).Value = dte
         rs.Fields(fFacPEHonoTotal - 1).Value = hono
         

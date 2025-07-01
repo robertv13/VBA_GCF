@@ -7,9 +7,30 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
 
     Dim maxDate As Date
     
+    Call TEC_EvaluationViderFeuille
+    
     Call TEC_Evaluation_Calcul(cutoffDate, maxDate)
     
     Call TEC_Evaluation_Affichage(cutoffDate, maxDate)
+    
+End Sub
+
+Sub TEC_EvaluationViderFeuille()
+
+    Dim ws As Worksheet
+    Set ws = wshTEC_Evaluation
+    
+    With ws
+        .Range("D3").Value = "" 'Message pour écriture de G/L
+        .Range("D6:L28").Clear
+        .Shapes("Impression").Visible = msoFalse
+        .Shapes("EcritureGL").Visible = msoFalse
+        .Protect userInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+    End With
+
+    'Libérer la mémoire
+    Set ws = Nothing
     
 End Sub
 
@@ -228,7 +249,7 @@ Sub TEC_Evaluation_Affichage(cutoffDate As String, maxDate As Date)
         ws.Range("H" & currentRow).Value = Format$(totalValeurTEC, "###,##0.00 $")
         If i = 0 Then
             With ws.Range("H" & currentRow).Interior
-                .pattern = xlSolid
+                .Pattern = xlSolid
                 .PatternColorIndex = xlAutomatic
                 .Color = 65535
                 .TintAndShade = 0
@@ -396,7 +417,7 @@ Sub AjouterEcritureGL(entry As cGL_Entry) '2025-06-08 @ 09:37
     On Error GoTo CleanUpADO
 
     'Chemin du classeur MASTER.xlsx
-    cheminMaster = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
+    cheminMaster = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
     
     'Ouvre connexion ADO
     Set cn = CreateObject("ADODB.Connection")
@@ -521,7 +542,7 @@ End Sub
 '    Application.DisplayAlerts = False
 '    Application.Calculation = xlCalculationManual
 '
-'    cheminMaster = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
+'    cheminMaster = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
 '    Set wbLocal = ThisWorkbook
 '    Set wsLocal = wbLocal.Sheets("GL_Trans")
 '

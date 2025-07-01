@@ -42,7 +42,7 @@ Private Sub Worksheet_Activate()
     Dim listeChoixValides As String
     Select Case GetNomUtilisateur()
         Case "Guillaume", "GuillaumeCharron", "gchar", "RobertMV", "robertmv"
-            listeChoixValides = "Tous,Guillaume,Vladimir,Michel,Annie"
+            listeChoixValides = "Tous,Guillaume,Vladimir,Olivier,Michel,Annie"
         Case "vgervais", "Vlad_Portable"
             listeChoixValides = "Vladimir"
         Case "User"
@@ -69,7 +69,7 @@ Private Sub Worksheet_Activate()
     plageValide.Validation.InCellDropdown = True
     
     With ws
-        .Protect UserInterfaceOnly:=True
+        .Protect userInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
     

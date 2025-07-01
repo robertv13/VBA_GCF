@@ -12,7 +12,7 @@ Sub CopieClientsEntreClasseursFermés() '2024-08-03 @ 09:40
     Dim sourceFilePath As String
     sourceFilePath = "C:\VBA\GC_FISCALITÉ\DataConversion\Clients.xlsx"
     Dim destinationFilePath As String
-    destinationFilePath = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & "GCF_BD_Entrée.xlsx"
+    destinationFilePath = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & "GCF_BD_Entrée.xlsx"
     
     'Declare le Workbook & le Worksheet (source)
     Dim sourceWorkbook As Workbook: Set sourceWorkbook = Workbooks.Open(sourceFilePath)
@@ -290,7 +290,7 @@ Sub ImporterDonnéesDeClasseursFermésFournisseurs() '2024-08-03 @ 18:10
     Dim sourceFilePath As String
     sourceFilePath = "C:\VBA\GC_FISCALITÉ\DataConversion\Fournisseurs.xlsx"
     Dim destinationFilePath As String
-    destinationFilePath = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & "GCF_BD_Entrée.xlsx"
+    destinationFilePath = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & "GCF_BD_Entrée.xlsx"
     
     'Declare le Workbook & le Worksheet (source)
     Dim sourceWorkbook As Workbook: Set sourceWorkbook = Workbooks.Open(sourceFilePath)
@@ -597,10 +597,10 @@ Sub Compare2ExcelFiles() '------------------------------------------ 2024-09-02 
     wsDiff.Range("E1").Value = "Avant changement"
     wsDiff.Range("F1").Value = "Type"
     wsDiff.Range("G1").Value = "Après changement"
-    Call Make_It_As_Header(wsDiff.Range("A1:G1"))
+    Call Make_It_As_Header(wsDiff.Range("A1:G1"), RGB(0, 112, 192))
 
     Dim diffRow As Long
-    diffRow = 2                                  'Take into consideration the Header
+    diffRow = 2 'Take into consideration the Header
     Dim diffCol As Long
     diffCol = 1
 
@@ -652,7 +652,7 @@ Sub Compare2ExcelFiles() '------------------------------------------ 2024-09-02 
                                     
     'Set conditional formatting for the worksheet (alternate colors)
     Dim rngArea As Range: Set rngArea = wsDiff.Range("A2:G" & diffRow)
-    Call modAppli_Utils.AppliquerConditionalFormating(rngArea, 1, True)
+    Call modAppli_Utils.AppliquerConditionalFormating(rngArea, 1, RGB(173, 216, 230))
 
     'Setup print parameters
     Dim rngToPrint As Range: Set rngToPrint = wsDiff.Range("A2:DC" & diffRow)
@@ -912,7 +912,7 @@ Sub CorrigeNomClientInTEC()  '2025-03-04 @ 05:48
 
     'Source - Définir les chemins d'accès des fichiers, le Workbook, le Worksheet et le Range
     Dim sourceFilePath As String
-    sourceFilePath = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    sourceFilePath = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Master.xlsx"
     Dim wbSource As Workbook: Set wbSource = Workbooks.Open(sourceFilePath)
     Dim wsSource As Worksheet: Set wsSource = wbSource.Worksheets("TEC_Local")
@@ -923,7 +923,7 @@ Sub CorrigeNomClientInTEC()  '2025-03-04 @ 05:48
     
     'Open the Master File Workbook
     Dim clientMFPath As String
-    clientMFPath = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    clientMFPath = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Entrée.xlsx"
     Dim wbMF As Workbook: Set wbMF = Workbooks.Open(clientMFPath)
     Dim wsMF As Worksheet: Set wsMF = wbMF.Worksheets("Clients")
@@ -941,7 +941,7 @@ Sub CorrigeNomClientInTEC()  '2025-03-04 @ 05:48
     wsOutput.Range("D1").Value = "TECID"
     wsOutput.Range("E1").Value = "TEC_Prof"
     wsOutput.Range("F1").Value = "TEC_Date"
-    Call Make_It_As_Header(wsOutput.Range("A1:F1"))
+    Call Make_It_As_Header(wsOutput.Range("A1:F1"), RGB(0, 112, 192))
     
     'Build the dictionnary (Code, Nom du client) from Client's Master File
     Dim dictClients As Dictionary
@@ -982,7 +982,7 @@ Sub CorrigeNomClientInTEC()  '2025-03-04 @ 05:48
                                     
     'Set conditional formatting for the worksheet (alternate colors)
     Dim rngArea As Range: Set rngArea = wsOutput.Range("A2:F" & rowOutput)
-    Call modAppli_Utils.AppliquerConditionalFormating(rngArea, 1, True)
+    Call modAppli_Utils.AppliquerConditionalFormating(rngArea, 1, RGB(173, 216, 230))
 
     'Setup print parameters
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:E" & rowOutput)
@@ -1013,7 +1013,7 @@ Sub DetecterErreurCodeClientInTEC()  '2025-03-11 @ 08:29
 
     'Source - Définir les chemins d'accès des fichiers, le Workbook et le Worksheet
     Dim sourceFilePath As String
-    sourceFilePath = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    sourceFilePath = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Master.xlsx"
     Dim wbSource As Workbook: Set wbSource = Workbooks.Open(sourceFilePath)
     Dim wsSource As Worksheet: Set wsSource = wbSource.Worksheets("TEC_Local")
@@ -1024,7 +1024,7 @@ Sub DetecterErreurCodeClientInTEC()  '2025-03-11 @ 08:29
     
     'Open the Master File Workbook
     Dim clientMFPath As String
-    clientMFPath = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    clientMFPath = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Entrée.xlsx"
     Dim wbMF As Workbook: Set wbMF = Workbooks.Open(clientMFPath)
     Dim wsMF As Worksheet: Set wsMF = wbMF.Worksheets("Clients")
@@ -1043,7 +1043,7 @@ Sub DetecterErreurCodeClientInTEC()  '2025-03-11 @ 08:29
     wsOutput.Range("E1").Value = "CodeClient"
     wsOutput.Range("F1").Value = "NomClientFM"
     wsOutput.Range("G1").Value = "DateSaisie"
-    Call Make_It_As_Header(wsOutput.Range("A1:G1"))
+    Call Make_It_As_Header(wsOutput.Range("A1:G1"), RGB(0, 112, 192))
     
     'Build the dictionnary (Code, Nom du client) from Client's Master File
     Dim dictClients As Dictionary
@@ -1085,7 +1085,7 @@ Sub DetecterErreurCodeClientInTEC()  '2025-03-11 @ 08:29
                                     
     'Set conditional formatting for the worksheet (alternate colors)
     Dim rngArea As Range: Set rngArea = wsOutput.Range("A2:G" & rowOutput)
-    Call modAppli_Utils.AppliquerConditionalFormating(rngArea, 1, True)
+    Call modAppli_Utils.AppliquerConditionalFormating(rngArea, 1, RGB(173, 216, 230))
 
     'Setup print parameters
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:G" & rowOutput)
@@ -1119,14 +1119,14 @@ Public Sub CorrigeNomClientInCAR()  '2024-08-31 @ 06:52
 
     'Worksheets to be corrected - Open the workbook (worksheet will be determined later)
     Dim sourceFilePath As String
-    sourceFilePath = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    sourceFilePath = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Master.xlsx"
     Dim wbSource As Workbook
     Set wbSource = Workbooks.Open(sourceFilePath)
     
     'Client's Master File - Workbook & Worksheet
     Dim clientMFPath As String
-    clientMFPath = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    clientMFPath = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                      "GCF_BD_Entrée.xlsx"
     Dim wbMF As Workbook
     Set wbMF = Workbooks.Open(clientMFPath)
@@ -1159,7 +1159,7 @@ Public Sub CorrigeNomClientInCAR()  '2024-08-31 @ 06:52
     wsOutput.Range("C1").Value = "Nom de client (Facture)"
     wsOutput.Range("D1").Value = "Code_de_Client"
     wsOutput.Range("E1").Value = "Changé pour"
-    Call Make_It_As_Header(wsOutput.Range("A1:E1"))
+    Call Make_It_As_Header(wsOutput.Range("A1:E1"), RGB(0, 112, 192))
     Dim rowOutput As Long
     rowOutput = 2 'Skip the header
     
@@ -1207,7 +1207,7 @@ Public Sub CorrigeNomClientInCAR()  '2024-08-31 @ 06:52
                                     
     'Set conditional formatting for the worksheet (alternate colors)
     Dim rngArea As Range: Set rngArea = wsOutput.Range("A2:F" & rowOutput)
-    Call modAppli_Utils.AppliquerConditionalFormating(rngArea, 1, True)
+    Call modAppli_Utils.AppliquerConditionalFormating(rngArea, 1, RGB(173, 216, 230))
 
     'Setup print parameters
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:E" & rowOutput)

@@ -71,7 +71,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
     'Date selected
     If Not Intersect(Target, wshGL_BV.Range("J1")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
     End If
     
     'An account, description, debit or credit has been selected from TB

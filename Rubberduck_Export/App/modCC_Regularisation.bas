@@ -92,7 +92,7 @@ Sub REGUL_Add_DB() 'Write to MASTER.xlsx
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "CC_Régularisations$"
     
@@ -204,7 +204,7 @@ Sub REGUL_Update_Comptes_Clients_DB() 'Write to MASTER.xlsx
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Comptes_Clients$"
     
@@ -317,7 +317,7 @@ Sub REGUL_GL_Posting_DB(no As Long, dt As Date, nom As String, desc As String)
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "GL_Trans$"
     

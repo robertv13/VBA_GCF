@@ -6,6 +6,11 @@ Option Explicit
 
 Sub CC_PreparerListeAgee_Click()
 
+    Dim ws As Worksheet
+    Set ws = wshCAR_Liste_Agee
+    
+    Call EffacerResultatAnterieur(ws)
+    
     Call CreerListeAgee
 
 End Sub
@@ -24,19 +29,11 @@ Sub CreerListeAgee() '2024-09-08 @ 15:55
     Dim wsPaiements As Worksheet: Set wsPaiements = wsdENC_Details
     Dim wsRégularisations As Worksheet: Set wsRégularisations = wsdCC_Regularisations
     
-    'Utilisation de la même feuille
-    Dim rngResultat As Range
-    Set rngResultat = wshCAR_Liste_Agee.Range("B8")
-    Dim lastUsedRow As Long
-    lastUsedRow = wshCAR_Liste_Agee.Cells(wshCAR_Liste_Agee.Rows.count, "B").End(xlUp).Row
-    If lastUsedRow > 7 Then
-        Application.EnableEvents = False
-        wshCAR_Liste_Agee.Unprotect
-        wshCAR_Liste_Agee.Range("B8:J" & lastUsedRow + 5).Clear
-        wshCAR_Liste_Agee.Protect UserInterfaceOnly:=True
-        Application.EnableEvents = True
-    End If
+    'Cache les 2 formes de navigation (shpVersBas & shpVersHaut)
+    Call GererBoutonsNavigation(False)
     
+    Application.ScreenUpdating = False
+
     'Niveau de détail
     Dim niveauDetail As String
     niveauDetail = wshCAR_Liste_Agee.Range("B4").Value
@@ -46,19 +43,19 @@ Sub CreerListeAgee() '2024-09-08 @ 15:55
     'Entêtes de colonnes en fonction du niveau de détail
     If LCase$(niveauDetail) = "client" Then
         wshCAR_Liste_Agee.Range("B8:G8").Value = Array("Client", "Solde", "- de 30 jours", "31 @ 60 jours", "61 @ 90 jours", "+ de 90 jours")
-        Call Make_It_As_Header(wshCAR_Liste_Agee.Range("B8:G8"))
+        Call Make_It_As_Header(wshCAR_Liste_Agee.Range("B8:G8"), RGB(84, 130, 53))
     End If
 
     'Entêtes de colonnes en fonction du niveau de détail (Facture)
     If LCase$(niveauDetail) = "facture" Then
         wshCAR_Liste_Agee.Range("B8:I8").Value = Array("Client", "No. Facture", "Date Facture", "Solde", "- de 30 jours", "31 @ 60 jours", "61 @ 90 jours", "+ de 90 jours")
-        Call Make_It_As_Header(wshCAR_Liste_Agee.Range("B8:I8"))
+        Call Make_It_As_Header(wshCAR_Liste_Agee.Range("B8:I8"), RGB(84, 130, 53))
     End If
 
     'Entêtes de colonnes en fonction du niveau de détail (Transaction)
     If LCase$(niveauDetail) = "transaction" Then
         wshCAR_Liste_Agee.Range("B8:J8").Value = Array("Client", "No. Facture", "Type", "Date", "Montant", "- de 30 jours", "31 @ 60 jours", "61 @ 90 jours", "+ de 90 jours")
-        Call Make_It_As_Header(wshCAR_Liste_Agee.Range("B8:J8"))
+        Call Make_It_As_Header(wshCAR_Liste_Agee.Range("B8:J8"), RGB(84, 130, 53))
     End If
 
     Application.EnableEvents = True
@@ -271,8 +268,9 @@ Next_Invoice:
     End If
     
     'Tri alphabétique par nom de client
-    DerniereLigne = wshCAR_Liste_Agee.Cells(wshCAR_Liste_Agee.Rows.count, "B").End(xlUp).Row
+    Dim rngResultat As Range
     Set rngResultat = wshCAR_Liste_Agee.Range("B8:J" & DerniereLigne)
+    DerniereLigne = wshCAR_Liste_Agee.Cells(wshCAR_Liste_Agee.Rows.count, "B").End(xlUp).Row
     
     Application.EnableEvents = False
     
@@ -396,11 +394,15 @@ Next_Invoice:
         End If
     End With
     
+    Call GererBoutonsNavigation(True)
+    
+    Application.ScreenUpdating = True
     Application.EnableEvents = True
 
     DoEvents
-    
+   
     'Result print setup - 2024-08-31 @ 12:19
+    Dim lastUsedRow As Long
     lastUsedRow = DerniereLigne
     
     Dim rngToPrint As Range:
@@ -415,7 +417,7 @@ Next_Invoice:
     
     Application.EnableEvents = False
 
-    Call modAppli_Utils.AppliquerConditionalFormating(rngToPrint, 0, False)
+    Call modAppli_Utils.AppliquerConditionalFormating(rngToPrint, 0, RGB(198, 224, 180))
     
     'Caractères pour le rapport
     With rngToPrint.Font
@@ -570,7 +572,7 @@ Sub EnvoyerRappelParCourriel(noFact As String)
 
     'Ajouter la copie de la facture (format PDF)
     Dim attachmentFullPathName As String
-    attachmentFullPathName = wsdADMIN.Range("F5").Value & FACT_PDF_PATH & Application.PathSeparator & _
+    attachmentFullPathName = wsdADMIN.Range("F5").Value & gFACT_PDF_PATH & Application.PathSeparator & _
                      noFact & ".pdf"
     
     'Vérification de l'existence de la pièce jointe
@@ -643,8 +645,163 @@ Exit_Sub:
     
 End Sub
 
+Sub EffacerResultatAnterieur(ws As Worksheet)
+
+    ws.Unprotect
+    
+    'Efface les résultats antérieurs
+    Dim lastUsedRow As Long
+    With ws
+        lastUsedRow = .Cells(.Rows.count, "B").End(xlUp).Row
+        If lastUsedRow > 9 Then
+            Application.EnableEvents = False
+            'Effacement du contenu + marges (B8:J + 3 lignes de totaux)
+            .Range("B8:J" & lastUsedRow + 3).Clear
+            Application.EnableEvents = True
+        End If
+    End With
+    
+    With ws
+        .Shapes("shpVersBas").Visible = False
+        .Shapes("shpVersHaut").Visible = False
+    End With
+    
+    ws.Activate
+    DoEvents
+    Application.ScreenUpdating = True
+    
+    ws.Protect userInterfaceOnly:=True
+
+End Sub
+
+Sub shpVersBas_Click() '2025-06-30 @ 10:59
+
+    Call AllerAuCentreDesResultats
+
+End Sub
+
+Sub AllerAuCentreDesResultats() '2025-06-30@ 11:02
+
+    Dim derLigne As Long
+    Dim nbLignesVisibles As Long
+    Dim ligneCible As Long
+
+    With ActiveWindow.VisibleRange
+        nbLignesVisibles = .Rows.count
+    End With
+
+    With ActiveSheet
+        'Trouve la dernière ligne avec données sur colonne B
+        derLigne = .Cells(.Rows.count, 2).End(xlUp).Row
+        
+        'Centre la ligne dans la fenêtre visible si possible
+        ligneCible = Application.Max(1, derLigne - Int(nbLignesVisibles / 2))
+        
+        Application.Goto Reference:=.Cells(ligneCible, 1), Scroll:=True
+    End With
+    
+End Sub
+
+Sub shpVersHaut_Click() '2025-06-30 @ 10:59
+
+    Call RetourAuDebut
+
+End Sub
+
+Sub RetourAuDebut() '2025-06-30 @ 11:08
+
+    Application.Goto Reference:=Cells(1, 1), Scroll:=True
+    
+End Sub
+
+Sub GererBoutonsNavigation(totauxImprimes As Boolean) '2025-06-30 @ 11:40
+
+    Dim f As Worksheet: Set f = ActiveSheet
+    Dim colDerniere As Long, colBoutons As Long
+    Dim ligneTotaux As Long
+    Dim shpVersHaut As Shape, shpVersBas As Shape
+
+    'Déterminer la dernière colonne utilisée, selon le niveau de détail
+    colDerniere = f.Range("B8").End(xlToRight).Column
+
+    'Position des boutons (deuxième colonne après la dernière colonne utilisée)
+    colBoutons = colDerniere + 1
+
+    'Déterminer la ligne des totaux
+    ligneTotaux = f.Cells(f.Rows.count, "B").End(xlUp).Row
+
+    'Récupérer les formes déjà présentes
+    On Error Resume Next
+    Set shpVersHaut = f.Shapes("shpVersHaut")
+    Set shpVersBas = f.Shapes("shpVersBas")
+    On Error GoTo 0
+
+    If Not shpVersBas Is Nothing Then
+        If totauxImprimes Then
+            With f.Cells(9, colBoutons)
+                shpVersBas.Top = .Top
+                shpVersBas.Left = f.Cells(9, colBoutons).Left + 15
+            End With
+        End If
+        shpVersBas.Visible = totauxImprimes
+    End If
+
+    If Not shpVersHaut Is Nothing Then
+        If totauxImprimes Then
+            With f.Cells(ligneTotaux - 1, colBoutons)
+                shpVersHaut.Top = .Top
+                shpVersHaut.Left = f.Cells(ligneTotaux - 1, colBoutons).Left + 15
+            End With
+        End If
+        shpVersHaut.Visible = totauxImprimes
+    End If
+    
+    'Libérer la mémoire
+    Set shpVersBas = Nothing
+    Set shpVersHaut = Nothing
+    
+End Sub
+
+'Sub AjouterBoutonRetourHaut() '2025-06-30 @ 11:06
+'
+'    Dim f As Worksheet: Set f = ActiveSheet
+'    Dim forme As Shape
+'    Dim derLigne As Long
+'    Dim topPosition As Double
+'    Dim leftPosition As Long
+'    Dim existe As Boolean
+'
+'    'Recherche de la forme existante
+'    On Error Resume Next
+'    Set forme = f.Shapes("shpHaut")
+'    existe = Not forme Is Nothing
+'    On Error GoTo 0
+'
+'    'Détermination de la dernière ligne utilisée
+'    derLigne = f.Cells(f.Rows.count, 2).End(xlUp).Row
+'    topPosition = f.Rows(derLigne).Top
+'    leftPosition = f.Cells(derLigne - 2, 11).Left
+'
+'    'Crée ou déplace le bouton
+'    If Not existe Then
+'        Set forme = f.Shapes.AddShape(msoShapeRoundedRectangle, 10, topPosition, 100, 25)
+'        With forme
+'            .Name = "shpHaut"
+'            .TextFrame.Characters.Text = "Retour en haut"
+'            .OnAction = "RetourAuDébut"
+'            .Fill.ForeColor.RGB = RGB(200, 200, 255)
+'        End With
+'    Else
+'        forme.Top = topPosition
+'        forme.Left = leftPosition
+'    End If
+'
+'End Sub
+
 Sub shpRetourMenuFacturation_Click()
 
+    Call EffacerResultatAnterieur(wshCAR_Liste_Agee)
+    
     Call RetourMenuFacturation
 
 End Sub

@@ -37,7 +37,7 @@ Private Sub Worksheet_Activate()
     Set cellsToColor = Union(ws.Range("E4"), ws.Range("I4"), ws.Range("N4"), ws.Range("F5"), _
                                 ws.Range("G5"), ws.Range("J5"), ws.Range("E6"), _
                                 ws.Range("L6"), ws.Range("N6"))
-    Call Remplir_Plage_Avec_Couleur(cellsToColor, COULEUR_BASE_COMPTABILITÉ)
+    Call Remplir_Plage_Avec_Couleur(cellsToColor, gCOULEUR_BASE_COMPTABILITE)
     
     Call SetTabOrder(ws)
     
@@ -59,7 +59,7 @@ Private Sub Worksheet_Activate()
     
     'Protect the Worksheet
     With ws
-        .Protect UserInterfaceOnly:=True
+        .Protect userInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
     
@@ -96,43 +96,43 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
     'Type is selected
     If Not Intersect(Target, Range("F4")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
         Exit Sub
     End If
     
     'Beneficiaire is selected
     If Not Intersect(Target, Range("J4")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
         Exit Sub
     End If
     
     'Date is selected
     If Not Intersect(Target, Range("O4")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
         Exit Sub
     End If
     
     'Description is selected
     If Not Intersect(Target, Range("$F$6")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
         Exit Sub
     End If
     
     'Reference is selected
     If Not Intersect(Target, Range("M6")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
         Exit Sub
     End If
     
     'Total Amount is selected
     If Not Intersect(Target, Range("O6")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
         Exit Sub
     End If
     
     'Account is selected
     If Not Intersect(Target, Range("F9:F23")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
         Application.EnableEvents = False
         wshDEB_Saisie.Range("B4").Value = Target.Address
         Application.EnableEvents = True
@@ -141,7 +141,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     'Tax code is selected (TPS/TVQ is the default)
     If Not Intersect(Target, Range("H9:H23")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
         Target.Value = "TPS/TVQ"
         Exit Sub
     End If
@@ -157,31 +157,31 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
             End If
             Application.EnableEvents = True
         End If
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
         Exit Sub
     End If
    
    'Force GST/TPS calculation with a formula, but also accept user input
     If Not Intersect(Target, Range("J9:J23")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
         Exit Sub
     End If
     
     'Force PST/TVQ calculation with a formula, but also accept user input
     If Not Intersect(Target, Range("K9:K23")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
         Exit Sub
     End If
     
     'Credit GST/TPS
     If Not Intersect(Target, Range("L9:L23")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
         Exit Sub
     End If
     
     'Credit PST/TVQ
     If Not Intersect(Target, Range("M9:M23")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
         Exit Sub
     End If
 
@@ -191,7 +191,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
             Range("H" & Target.row).Value <> "M" Then
                 Range("N" & Target.row).formula = "=round(RC[-5]-RC[-2]-RC[-1],2)"
         End If
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
          Exit Sub
     End If
     

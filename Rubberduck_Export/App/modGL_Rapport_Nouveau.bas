@@ -159,7 +159,7 @@ Public Sub GenererRapportGL_Compte(wsRapport As Worksheet, dateDebut As Date, da
 
     wsRapport.Visible = xlSheetVisible
     wsRapport.Activate
-    ActiveWindow.SplitRow = 2
+'    ActiveWindow.SplitRow = 2
     'Placer le curseur en haut du rapport (par exemple, cellule A3)
     wsRapport.Range("A3").Select
     
@@ -216,6 +216,10 @@ Public Sub GenererRapportGL_Ecriture(wsRapport As Worksheet, noEcritureDebut As 
             .Apply
         End With
     
+        'Enlever le filtre - 2025-06-30 @ 20:08
+        wsSource.ListObjects("l_tbl_GL_Trans").AutoFilter.ShowAllData
+        DoEvents
+
         'Parcourir chaque ligne visible de filteredRange
         Dim row As Range
         Dim i As Long
@@ -323,7 +327,7 @@ Public Sub GenererRapportGL_Ecriture(wsRapport As Worksheet, noEcritureDebut As 
 '    wsdGL_Trans.Visible = xlSheetVisible
     wsRapport.Visible = xlSheetVisible
     wsRapport.Activate
-    ActiveWindow.SplitRow = 2
+'    ActiveWindow.SplitRow = 2
     'Placer le curseur en haut du rapport (par exemple, cellule A3)
     wsRapport.Range("A3").Select
     
@@ -494,7 +498,7 @@ Public Sub GenererRapportGL_DateSaisie(wsRapport As Worksheet, dtSaisieDebut As 
 '    wsdGL_Trans.Visible = xlSheetVisible
     wsRapport.Visible = xlSheetVisible
     wsRapport.Activate
-    ActiveWindow.SplitRow = 2
+'    ActiveWindow.SplitRow = 2
     'Placer le curseur en haut du rapport (par exemple, cellule A3)
     wsRapport.Range("A3").Select
     
@@ -526,7 +530,7 @@ Sub SetUpGLReportHeadersAndColumns_Compte(ws As Worksheet)
             .Font.size = 9
             .HorizontalAlignment = xlCenter
             With .Interior
-                .pattern = xlSolid
+                .Pattern = xlSolid
                 .PatternColorIndex = xlAutomatic
                 .ThemeColor = xlThemeColorDark1
                 .TintAndShade = -0.149998474074526
@@ -594,7 +598,7 @@ Sub SetUpGLReportHeadersAndColumns_Ecriture(ws As Worksheet)
             .Font.size = 9
             .HorizontalAlignment = xlCenter
             With .Interior
-                .pattern = xlSolid
+                .Pattern = xlSolid
                 .PatternColorIndex = xlAutomatic
                 .ThemeColor = xlThemeColorDark1
                 .TintAndShade = -0.149998474074526
@@ -675,7 +679,7 @@ Sub SetUpGLReportHeadersAndColumns_DateSaisie(ws As Worksheet)
             .Font.size = 9
             .HorizontalAlignment = xlCenter
             With .Interior
-                .pattern = xlSolid
+                .Pattern = xlSolid
                 .PatternColorIndex = xlAutomatic
                 .ThemeColor = xlThemeColorDark1
                 .TintAndShade = -0.149998474074526
@@ -773,9 +777,18 @@ Sub GL_Rapport_Wrap_Up_Compte(ws As Worksheet, h1 As String, h2 As String, h3 As
     
     Application.PrintCommunication = True
 
-    'Keep header rows always displayed
-    ActiveWindow.SplitRow = 2
-    ws.Range("A" & lastUsedRow).Select
+'    With ws '2025-06-30 @ 20:11
+'        .Activate
+'        .Range("A3").Select
+'        .Application.ActiveWindow.FreezePanes = False
+'        .Application.ActiveWindow.SplitColumn = 0
+'        .Application.ActiveWindow.SplitRow = 2 'ligne au-dessus de la 3e
+'        .Application.ActiveWindow.FreezePanes = True
+'    End With
+'
+'    'Keep header rows always displayed
+'    ActiveWindow.SplitRow = 2
+'    ws.Range("A" & lastUsedRow).Select
     
     Call Log_Record("modGL_Rapport_Nouveau:GL_Rapport_Wrap_Up_Compte", "", startTime)
 
@@ -818,9 +831,9 @@ Sub GL_Rapport_Wrap_Up_Ecriture(ws As Worksheet, h1 As String, h2 As String, h3 
     
     Application.PrintCommunication = True
 
-    'Keep header rows always displayed
-    ActiveWindow.SplitRow = 2
-
+'    'Keep header rows always displayed
+'    ActiveWindow.SplitRow = 2
+'
     ws.Range("A" & lastUsedRow).Select
     
     Call Log_Record("modGL_Rapport_Nouveau:GL_Rapport_Wrap_Up_Ecriture", "", startTime)
@@ -864,9 +877,9 @@ Sub GL_Rapport_Wrap_Up_DateSaisie(ws As Worksheet, h1 As String, h2 As String, h
     
     Application.PrintCommunication = True
 
-    'Keep header rows always displayed
-    ActiveWindow.SplitRow = 2
-
+'    'Keep header rows always displayed
+'    ActiveWindow.SplitRow = 2
+'
     ws.Range("A" & lastUsedRow).Select
     
     Call Log_Record("modGL_Rapport_Nouveau:GL_Rapport_Wrap_Up_DateSaisie", "", startTime)

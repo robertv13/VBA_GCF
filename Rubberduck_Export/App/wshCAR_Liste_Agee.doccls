@@ -45,11 +45,13 @@ Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
         ws.Range("B8:J" & lastUsedRow + 2).Clear
     End If
     
+    Call GererBoutonsNavigation(False)
+    
     Call SetTabOrder(ws)
     
     With ws
-        .Protect UserInterfaceOnly:=True
-'        .EnableSelection = xlUnlockedCells
+        .Protect userInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
     End With
     
     Application.ScreenUpdating = True
@@ -69,12 +71,12 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshCAR_Liste_Agee:Worksheet_SelectionChange", Target.Address, 0)
     
     If gPreviousCellAddress <> "" Then
-        Range(gPreviousCellAddress).Interior.Color = COULEUR_BASE_FACTURATION
+        Range(gPreviousCellAddress).Interior.Color = gCOULEUR_BASE_FACTURATION
     End If
     
     'Is Niveau de Détail been selected ?
     If Not Intersect(Target, wshCAR_Liste_Agee.Range("B4")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
     End If
     
     'Is Ordre de tri been selected ?
@@ -82,17 +84,17 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         If wshCAR_Liste_Agee.Range("B4").Value = "Client" Then
             wshCAR_Liste_Agee.Range("D4").Value = "Nom de client"
         End If
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
     End If
     
     'Is Solde à 0,00 $ been selected ?
     If Not Intersect(Target, wshCAR_Liste_Agee.Range("F4")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
     End If
     
     'Is Date Limite been selected ?
     If Not Intersect(Target, wshCAR_Liste_Agee.Range("H4")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
     End If
     
     'Save the current cell Address

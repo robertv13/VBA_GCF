@@ -9,7 +9,7 @@ Public Sub Convertir_NF_en_Facturable_Dans_BD(tecID As Long) '2025-01-15 @ 09:44
     
     'Classeur & feuille à mettre à jour
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "TEC_Local$"
     

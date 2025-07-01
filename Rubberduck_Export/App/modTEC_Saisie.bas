@@ -303,7 +303,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "TEC_Local$"
     

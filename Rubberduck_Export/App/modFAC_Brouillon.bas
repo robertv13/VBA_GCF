@@ -95,19 +95,18 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
         Dim i As Long
         
         If TableauContientDesDonnees(lo) Then
-            If Application.WorksheetFunction.CountA(lo.DataBodyRange) > 0 Then
-                Dim nomColonne As ListColumn
-                Set nomColonne = lo.ListColumns("estDetruite")
-            
-                For i = 1 To lo.ListRows.count
-                    Dim val As Variant
+            Dim nomColonne As ListColumn
+            Set nomColonne = lo.ListColumns("estDetruite")
+        
+            For i = 2 To lo.ListRows.count
+                Dim val As Variant
+                If lo.Range(i, 1).Value <> "" Then 'Ligne 1 du data est TOUJOURS vide (ADO vs Tableau structuré) '2025-06-30 @ 09:18
                     val = nomColonne.DataBodyRange.Cells(i, 1).Value
-            
                     If UCase$(val) = "FAUX" Or val = 0 Then
                         liveOne = liveOne + 1
                     End If
-                Next i
-            End If
+                End If
+            Next i
         End If
         
         'Bring the visible area to the top
@@ -154,7 +153,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
                         wshFAC_Brouillon.Range("S" & r).Value = arr(ii - 43, 2)
                         If wshFAC_Brouillon.Range("S" & r).Value <> 0 Then
                             With wshFAC_Brouillon.Range("S" & r).Interior
-                                .pattern = xlNone
+                                .Pattern = xlNone
                                 .TintAndShade = 0
                                 .PatternTintAndShade = 0
                             End With
@@ -412,7 +411,7 @@ Sub FAC_Brouillon_Setup_All_Cells()
         
         'ON élimine les cellules qui pourraient avoir du vert pâle...
         With .Range("E3:F3,O3,O9,L11:N45,O48:O50,M48:M50").Interior
-            .pattern = xlNone
+            .Pattern = xlNone
             .TintAndShade = 0
             .PatternTintAndShade = 0
         End With
@@ -433,6 +432,7 @@ Sub shp_FAC_Open_Copy_Paste_Click()
     Call FAC_Brouillon_Open_Copy_Paste
     
 End Sub
+
 Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
 
     'Step 1 - Open the Excel file
@@ -470,7 +470,7 @@ Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
     With wshFAC_Brouillon
         .Unprotect
         .Range("L11:L" & 11 + rngSource.Rows.count - 1).Value = rngSource.Value
-        .Protect UserInterfaceOnly:=True
+        .Protect userInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
 '        .EnableSelection = xlUnlockedCells
     End With
@@ -517,7 +517,7 @@ Sub FAC_Brouillon_Clear_All_TEC_Displayed()
         'Verrouiller les cellules des descriptions des TEC - 2025-03-02 @ 21:53
         wshFAC_Brouillon.Unprotect
         wshFAC_Brouillon.Range("F7:F" & lastRow).Locked = True
-        wshFAC_Brouillon.Protect UserInterfaceOnly:=True
+        wshFAC_Brouillon.Protect userInterfaceOnly:=True
         wshFAC_Brouillon.Range("D7:I" & lastRow + 2).ClearContents
         Call FAC_Brouillon_TEC_Remove_Check_Boxes(lastRow - 2)
         Application.EnableEvents = True
@@ -548,8 +548,6 @@ Sub FAC_Brouillon_Get_All_TEC_By_Client(d As Date, includeBilledTEC As Boolean)
     c5 = Fn_Convert_Value_Boolean_To_Text(False)
 
     Call FAC_Brouillon_Clear_All_TEC_Displayed
-    
-'    Call FAC_Brouillon_Filtre_Manuel_TEC(c1, c2, c3, c4, c5)
     
     Call Get_TEC_For_Client_AF(c1, c2, c3, c4, c5)
     
@@ -773,15 +771,17 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
         Dim rng As Range
         'Set rng = .Range("D8").Resize(UBound(arr, 1), UBound(arr, 2))
         Set rng = wshFAC_Brouillon.Range("D7").Resize(lastUsedRow - 2, UBound(arr, 2))
-        rng.Value = arr 'RMV
+        rng.Value = arr
     End With
     
-    'Déverrouiller les cellules des descriptions des TEC - 2025-03-02 @ 21:53
+    'Déverrouiller les cellules des descriptions des TEC - 2025-06-30 @ 07:40
     wshFAC_Brouillon.Unprotect
-    If lastUsedRow >= 7 Then
-        wshFAC_Brouillon.Range("F7:F" & lastUsedRow).Locked = False
+    Dim lastDisplayedRow As Long
+    lastDisplayedRow = wshFAC_Brouillon.Cells(wshFAC_Brouillon.Rows.count, 5).End(xlUp).Row
+    If lastDisplayedRow >= 7 Then
+        wshFAC_Brouillon.Range("F7:F" & lastDisplayedRow).Locked = False
     End If
-    wshFAC_Brouillon.Protect UserInterfaceOnly:=True
+    wshFAC_Brouillon.Protect userInterfaceOnly:=True
     
     'Création du userForm s'il y a quelque chose à afficher
     If collFraisDivers.count > 0 Then
@@ -1061,7 +1061,7 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(row As Long, dateCutOffProjet As Date)
         
         .Range("B19").formula = "=SUMIF(C7:C" & row + 5 & ",True,G7:G" & row + 5 & ")"
         
-        .Protect UserInterfaceOnly:=True
+        .Protect userInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
 '        .EnableSelection = xlUnlockedCells
     End With
@@ -1114,7 +1114,7 @@ Sub FAC_Brouillon_TEC_Remove_Check_Boxes(row As Long)
     
     'Protect the worksheet
     With ws
-        .Protect UserInterfaceOnly:=True
+        .Protect userInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
     

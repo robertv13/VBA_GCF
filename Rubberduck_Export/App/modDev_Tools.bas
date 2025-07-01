@@ -82,7 +82,7 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
     wsDiff.Range("C1").Value = "Colonne"
     wsDiff.Range("D1").Value = "Valeur originale"
     wsDiff.Range("E1").Value = "Nouvelle valeur"
-    Call Make_It_As_Header(wsDiff.Range("A1:E1"))
+    Call Make_It_As_Header(wsDiff.Range("A1:E1"), RGB(0, 112, 192))
 
     'Set your workbooks and worksheets here
     Dim wb1 As Workbook
@@ -182,7 +182,7 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
                                     
     'Set conditional formatting for the worksheet (alternate colors)
     Dim rngArea As Range: Set rngArea = wsDiff.Range("A2:E" & diffRow)
-    Call modAppli_Utils.AppliquerConditionalFormating(rngArea, 1, True)
+    Call modAppli_Utils.AppliquerConditionalFormating(rngArea, 1, RGB(173, 216, 230))
 
     'Setup print parameters
     Dim rngToPrint As Range: Set rngToPrint = wsDiff.Range("A2:E" & diffRow)
@@ -229,7 +229,7 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
     wsDiff.Range("G1").Value = "Colonne"
     wsDiff.Range("H1").Value = "Prod_Value"
     wsDiff.Range("I1").Value = "Dev_Value"
-    Call Make_It_As_Header(wsDiff.Range("A1:I1"))
+    Call Make_It_As_Header(wsDiff.Range("A1:I1"), RGB(0, 112, 192))
 
     'Set your workbooks and worksheets here
     Dim wb1 As Workbook
@@ -332,7 +332,7 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
                                     
     'Set conditional formatting for the worksheet (alternate colors)
     Dim rngArea As Range: Set rngArea = wsDiff.Range("A2:I" & diffRow)
-    Call modAppli_Utils.AppliquerConditionalFormating(rngArea, 1, True)
+    Call modAppli_Utils.AppliquerConditionalFormating(rngArea, 1, RGB(173, 216, 230))
 
     'Setup print parameters
     Dim rngToPrint As Range: Set rngToPrint = wsDiff.Range("A2:I" & diffRow)
@@ -1309,7 +1309,7 @@ Sub test_CouleurEnRGBTableau()
     wshMenuFAC.Range("A3").Select
     
     couleur = wshMenuFAC.Range("A3").Interior.Color
-    couleur = COULEUR_BASE_FACTURATION
+    couleur = gCOULEUR_BASE_FACTURATION
     
     rgbArray = CouleurEnRGBTableau(couleur)
     
@@ -1356,7 +1356,7 @@ Sub Test_Convertir_Couleur_OLE()
     Dim couleurOLE As String
     
     ' Exemple : couleur de la cellule A1
-    couleur = COULEUR_BASE_FACTURATION
+    couleur = gCOULEUR_BASE_FACTURATION
     
     ' Convertir en format OLE
     couleurOLE = Convertir_Couleur_OLE(couleur)

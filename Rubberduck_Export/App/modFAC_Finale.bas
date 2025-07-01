@@ -118,7 +118,7 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Entête$"
     
@@ -256,7 +256,7 @@ Sub FAC_Finale_Add_Invoice_Details_to_DB()
     If rowLastService < 34 Then GoTo nothing_to_update
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Détails$"
     
@@ -410,7 +410,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_to_DB()
     lastRow = 48
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Sommaire_Taux$"
     
@@ -523,7 +523,7 @@ Sub FAC_Finale_Add_Comptes_Clients_to_DB()
     Dim formula As String
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Comptes_Clients$"
     
@@ -623,7 +623,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Up
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "TEC_Local$"
     
@@ -717,7 +717,7 @@ Sub FAC_Finale_Softdelete_Projets_Détails_To_DB(projetID As Long)
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Projets_Détails$"
     
@@ -795,7 +795,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID As Long)
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Projets_Entête$"
     
@@ -1070,7 +1070,7 @@ Function FAC_Finale_Create_PDF_Func(noFacture As String, Optional action As Stri
     Application.ScreenUpdating = False
 
     'Construct the SaveAs filename
-    SaveAs = wsdADMIN.Range("F5").Value & FACT_PDF_PATH & Application.PathSeparator & _
+    SaveAs = wsdADMIN.Range("F5").Value & gFACT_PDF_PATH & Application.PathSeparator & _
                      noFacture & ".pdf" '2023-12-19 @ 07:28
 
     'Check if the file already exists
@@ -1142,7 +1142,7 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     
     'Définir le chemin complet du répertoire des fichiers Excel
     Dim ExcelFilesFullPath As String
-    ExcelFilesFullPath = wsdADMIN.Range("F5").Value & FACT_EXCEL_PATH
+    ExcelFilesFullPath = wsdADMIN.Range("F5").Value & gFACT_EXCEL_PATH
     ChDir ExcelFilesFullPath
     
     'Définir la feuille source et la plage à copier
@@ -1361,7 +1361,7 @@ Sub FAC_Finale_Creation_Courriel(noFacture As String, clientID As String) '2024-
     
     '1a. Chemin de la pièce jointe (Facture en format PDF)
     Dim attachmentFullPathName As String
-    attachmentFullPathName = wsdADMIN.Range("F5").Value & FACT_PDF_PATH & Application.PathSeparator & _
+    attachmentFullPathName = wsdADMIN.Range("F5").Value & gFACT_PDF_PATH & Application.PathSeparator & _
                      noFacture & ".pdf" '2024-09-03 @ 16:43
     
     '1b. Vérification de l'existence de la pièce jointe

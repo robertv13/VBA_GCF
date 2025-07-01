@@ -211,7 +211,7 @@ Sub MAJ_Statut_Facture_Entête_BD_MASTER(invoice As String) '2025-03-12 @ 12:40
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Entête$"
     

@@ -83,12 +83,12 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     Call RafraichirActivite("Projet de facture")
     
     If gPreviousCellAddress <> "" Then
-        Range(gPreviousCellAddress).Interior.Color = COULEUR_BASE_TEC
+        Range(gPreviousCellAddress).Interior.Color = gCOULEUR_BASE_TEC
     End If
     
     'Is date been selected ?
     If Not Intersect(Target, wshTEC_Analyse.Range("H3")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
     End If
     
     'Check if the selected cell is in column C, D or H

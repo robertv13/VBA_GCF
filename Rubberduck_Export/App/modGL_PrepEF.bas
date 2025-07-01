@@ -186,7 +186,7 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
     ws.Range("F6:F" & currRow).NumberFormat = "###,###,##0.00 ;(###,###,##0.00);0.00"
     ws.Range("H6:H" & currRow).NumberFormat = "###,###,##0.00 ;(###,###,##0.00);0.00"
     
-    ws.Protect UserInterfaceOnly:=True
+    ws.Protect userInterfaceOnly:=True
     ws.EnableSelection = xlUnlockedCells
     
     Application.EnableEvents = True

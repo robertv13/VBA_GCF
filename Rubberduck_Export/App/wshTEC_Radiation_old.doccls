@@ -162,3 +162,47 @@ ExitSub:
   
 End Sub
 
+Sub SupprimerFormesFantômesImprimables()
+    Dim shp As Shape
+    Dim nomsProtegés As Variant
+    Dim n As Variant
+    Dim nomForme As String
+    Dim estProtégée As Boolean  ' ? Déclaration manquante ajoutée ici
+
+    nomsProtegés = Array("Impression", "Radiation", "Retour au menu")
+
+    For Each shp In ActiveSheet.Shapes
+        estProtégée = False
+
+        ' Tente d'accéder au nom de la forme
+        On Error Resume Next
+        nomForme = shp.Name
+        Debug.Print nomForme
+        On Error GoTo 0
+
+        For Each n In nomsProtegés
+            If nomForme = n Then
+                estProtégée = True
+                Exit For
+            End If
+        Next n
+
+        If Not estProtégée Then
+            On Error Resume Next
+            
+            If shp.Type = msoAutoShape Or shp.Type = msoTextBox Or shp.Type = msoPicture Then
+                If shp.Visible = msoFalse _
+                Or (Not shp.Fill Is Nothing And shp.Fill.Transparency = 1) _
+                Or (shp.PrintObject = True And shp.Type <> msoPicture And shp.Type <> msoTextBox) Then
+                    shp.Delete
+                End If
+            End If
+            
+            On Error GoTo 0
+        End If
+    Next shp
+
+    MsgBox "Nettoyage terminé. Les 3 formes officielles ont été préservées ??", vbInformation
+End Sub
+
+

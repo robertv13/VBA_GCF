@@ -327,7 +327,7 @@ Function Fn_Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hon
                 
                 'Update rows from MASTER file (details)
                 Dim destinationFileName As String, destinationTab As String
-                destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+                destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                                       "GCF_BD_MASTER.xlsx"
                 destinationTab = "FAC_Projets_Détails$"
                 
@@ -339,7 +339,7 @@ Function Fn_Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hon
                                                                      valueToFind)
                                                                      
                 'Update row from MASTER file (entête)
-                destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+                destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                                       "GCF_BD_MASTER.xlsx"
                 destinationTab = "FAC_Projets_Entête$"
                 Call Soft_Delete_If_Value_Is_Found_In_Master_Entete(destinationFileName, _
@@ -756,7 +756,7 @@ Function Fn_ValiderCourriel(ByVal adresses As String) As Boolean '2024-10-26 @ 1
     
     'Initialisation de l'expression régulière pour valider une adresse courriel
     With regex
-        .pattern = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+        .Pattern = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
         .IgnoreCase = True
         .Global = False
     End With

@@ -127,8 +127,6 @@ Sub Actualiser_Stats_CA()
     End With
     rng.Value = ws.Cells(9, saveCol).Value + (tecValeur - glTECSolde)
     
-'    Debug.Print "777 - " & tecValeur, glTECSolde, tecValeur - glTECSolde
-    
     'Libérer les objets
     Set prof = Nothing
     Set rng = Nothing

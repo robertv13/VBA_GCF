@@ -252,7 +252,7 @@ Sub FAC_Historique_Clear_All_Cells()
     End With
     
     With ActiveSheet
-        .Protect UserInterfaceOnly:=True
+        .Protect userInterfaceOnly:=True
 '        .EnableSelection = xlUnlockedCells
     End With
 
@@ -368,7 +368,7 @@ Sub VisualiserFacturePDF(noFact As String)
 
     'The invoice number is in column C (3rd column) pour les 2 feuilles...
     Dim fullPDFFileName As String
-    fullPDFFileName = wsdADMIN.Range("F5").Value & FACT_PDF_PATH & _
+    fullPDFFileName = wsdADMIN.Range("F5").Value & gFACT_PDF_PATH & _
                             Application.PathSeparator & noFact & ".pdf"
     
     'Ouvrir la version PDF de la facture, si elle existe
@@ -685,7 +685,7 @@ Sub AfficherNouvelleFeuille_Stats(invNo As String, nomClient As String, dateFact
     
     'Couleur de fond de feuille
     With ws.Range("B1:J" & lastRowUsed + 3)
-        .Interior.Color = COULEUR_BASE_FACTURATION
+        .Interior.Color = gCOULEUR_BASE_FACTURATION
         With .Borders(xlEdgeLeft)
             .LineStyle = xlContinuous
             .ColorIndex = xlAutomatic
@@ -1221,7 +1221,7 @@ Sub PreparerRapportTECFactures()
         'Corps du rapport
         .Range("A5:D" & r).VerticalAlignment = xlCenter
         With .Range("A4:D4").Interior
-            .pattern = xlSolid
+            .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
             .Color = 12611584
             .TintAndShade = 0
@@ -1546,7 +1546,7 @@ Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture
 
     'Couleur de fond de feuille & cadre extérieur
     With ws.Range("A1:K" & lastRowUsed + 3)
-        .Interior.Color = COULEUR_BASE_FACTURATION
+        .Interior.Color = gCOULEUR_BASE_FACTURATION
         With .Borders(xlEdgeLeft)
             .LineStyle = xlContinuous
             .ColorIndex = xlAutomatic
@@ -1575,7 +1575,7 @@ Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture
 
     'Entête un peu plus foncé
     With ws.Range("C8:I8").Interior
-        .pattern = xlSolid
+        .Pattern = xlSolid
         .PatternColorIndex = xlAutomatic
         .ThemeColor = xlThemeColorAccent6
         .TintAndShade = 0.399975585192419
@@ -1584,7 +1584,7 @@ Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture
 
     'Zone de données sans couleur
     With ws.Range("C9:I" & lastRowUsed - 2).Interior
-        .pattern = xlNone
+        .Pattern = xlNone
         .TintAndShade = 0
         .PatternTintAndShade = 0
     End With
@@ -1716,7 +1716,7 @@ Sub PreparerRapportTECFacturés(numeroFacture As String)
         'Corps du rapport
         .Range("A5:D" & r).VerticalAlignment = xlCenter
         With .Range("A4:D4").Interior
-            .pattern = xlSolid
+            .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
             .Color = 12611584
             .TintAndShade = 0

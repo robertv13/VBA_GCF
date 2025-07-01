@@ -38,7 +38,7 @@ Private Sub Worksheet_Activate()
     Call SetTabOrder(ws)
     
     With ws
-        .Protect UserInterfaceOnly:=True
+        .Protect userInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
     
@@ -79,7 +79,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     '@Ignore UnassignedVariableUsage
     If gPreviousCellAddress <> "" Then
         '@Ignore UnassignedVariableUsage
-        Range(gPreviousCellAddress).Interior.Color = COULEUR_BASE_FACTURATION
+        Range(gPreviousCellAddress).Interior.Color = gCOULEUR_BASE_FACTURATION
     End If
     
     'Masquer la forme (détail TEC) si elle est présente
@@ -93,12 +93,12 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     'Client has been selected
     If Not Intersect(Target, wshFAC_Brouillon.Range("E3")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
     End If
 
     'Date has been selected
     If Not Intersect(Target, wshFAC_Brouillon.Range("O3")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
         Application.EnableEvents = True
     End If
 
@@ -123,7 +123,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
                     .Top = Target.Top + Target.Height
                     .Left = Target.Left + 25
                     .Visible = msoTrue
-                    .Fill.ForeColor.RGB = RGB(255, 255, 204) ' Fond de couleur douce pour visibilité
+                    .Fill.ForeColor.RGB = RGB(255, 255, 204) 'Fond de couleur douce pour visibilité
                     .TextFrame.Characters.Font.size = 10
                 End With
             End If
@@ -132,17 +132,17 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     'Template has been selected
     If Not Intersect(Target, wshFAC_Brouillon.Range("O9")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
     End If
 
     'Service description has been selected
     If Not Intersect(Target, wshFAC_Brouillon.Range("L11:L45")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
     End If
     
     'Honoraires has been selected
     If Not Intersect(Target, wshFAC_Brouillon.Range("O47")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
         wshFAC_Brouillon.Unprotect
     End If
 
@@ -229,7 +229,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         wshFAC_Finale.Range("E" & Target.row + 23).Value = wshFAC_Brouillon.Range("O" & Target.row).Value
 
         'MAXIMUM of 30 services lines per Invoice
-        If Target.row < NB_MAX_LIGNE_FAC + 11 Then
+        If Target.row < gNB_MAX_LIGNE_FAC + 11 Then
             wshFAC_Brouillon.Range("L" & Target.row + 1).Select
         Else
             Set rng = wshFAC_Brouillon.Range("O47")
@@ -268,7 +268,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
 ExitSub:
 
     'On s'assure d'enlever la couleur dans le champs qui a déclenché l'évènement _Change
-    Target.Interior.Color = COULEUR_BASE_FACTURATION
+    Target.Interior.Color = gCOULEUR_BASE_FACTURATION
     
     Application.EnableEvents = True
     

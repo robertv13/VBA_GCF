@@ -48,11 +48,11 @@ Private Sub Worksheet_Activate()
     'Certaines cellules perdent la couleur du background
     Dim cellsToColor As Range
     Set cellsToColor = Union(ws.Range("E5"), ws.Range("I5"), ws.Range("F6"), ws.Range("G7"))
-    Call Remplir_Plage_Avec_Couleur(cellsToColor, COULEUR_BASE_COMPTABILITÉ)
+    Call Remplir_Plage_Avec_Couleur(cellsToColor, gCOULEUR_BASE_COMPTABILITE)
     
     'Protect the Worksheet
     With ws
-        .Protect UserInterfaceOnly:=True
+        .Protect userInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
     
@@ -94,27 +94,27 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     'Client has been selected
     If Not Intersect(Target, Me.Range("F5")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
     End If
     
     'Date has been selected
     If Not Intersect(Target, Me.Range("K5")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
     End If
     
     'Payment Type has been selected
     If Not Intersect(Target, Me.Range("F7")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
     End If
     
     'Total deposit has been selected
     If Not Intersect(Target, Me.Range("K7")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
     End If
 
     'Comments has been selected
     If Not Intersect(Target, Me.Range("F9")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
     End If
     
     'Première case à cocher a été sélectionnée
@@ -124,13 +124,13 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
 '    'Ne devrait pas passer ici...
 '    If Not Intersect(target, Me.Range("I5")) Is Nothing Then
-'        target.Interior.Color = COULEUR_BASE_COMPTABILITÉ
+'        target.Interior.Color = gCOULEUR_BASE_COMPTABILITE
 '        Me.Range("K5").Select
 '        Exit Sub
 '    End If
 '
     If Not Intersect(Target, Me.Range("G7")) Is Nothing Then
-        Target.Interior.Color = COULEUR_BASE_COMPTABILITÉ
+        Target.Interior.Color = gCOULEUR_BASE_COMPTABILITE
         Me.Range("K7").Select
         Exit Sub
     End If

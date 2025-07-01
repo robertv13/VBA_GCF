@@ -35,29 +35,20 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
     
     Call SetTabOrder(ws)
     
+    Call TEC_EvaluationViderFeuille '2025-06-28 @ 11:13
+    
     With ws
-        .Range("A:B").EntireColumn.Hidden = True
-        .Range("D3").Value = ""
-        .Range("D6:L28").Clear
-        .Shapes("Impression").Visible = False
-        .Shapes("EcritureGL").Visible = msoFalse
-        .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlUnlockedCells
         Application.EnableEvents = False
+        .Range("A:B").EntireColumn.Hidden = True
         .Range("L3").Value = ""
-        With .Range("H6:H28").Interior
-            .pattern = xlNone
-            .TintAndShade = 0
-            .PatternTintAndShade = 0
-        End With
-        Application.EnableEvents = True
         gPreviousCellAddress = .Range("L3").Address
         .Range("L3").Select
+        Application.EnableEvents = True
     End With
 
     ws.Visible = xlSheetVisible
     
-    Application.EnableEvents = True
+    Application.ScreenUpdating = True
     
     gFromMenu = True
     
@@ -75,12 +66,12 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     Call RafraichirActivite("Évaluation des TEC")
     
     If gPreviousCellAddress <> "" Then
-        Range(gPreviousCellAddress).Interior.Color = COULEUR_BASE_TEC
+        Range(gPreviousCellAddress).Interior.Color = gCOULEUR_BASE_TEC
     End If
     
     'Is date been selected ?
     If Not Intersect(Target, Me.Range("L3")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
     End If
     
     Call Log_Record("wshTEC_Evaluation:Worksheet_SelectionChange", "", startTime)

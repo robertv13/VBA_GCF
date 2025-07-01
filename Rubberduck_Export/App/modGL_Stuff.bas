@@ -102,7 +102,7 @@ Sub GL_Posting_To_DB(df As Date, desc As String, Source As String, arr As Varian
     Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Stuff:GL_Posting_To_DB", "", 0)
 
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "GL_Trans$"
     

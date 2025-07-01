@@ -188,7 +188,7 @@ Sub Check_Invoice_Template()
     
     With wsOutput.Range("A1:C1")
         With .Interior
-            .pattern = xlSolid
+            .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
             .Color = 12611584
             .TintAndShade = 0
@@ -223,11 +223,11 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
     wsOutput.Range("A1").Value = "Feuille"
     wsOutput.Range("B1").Value = "CodeName"
     wsOutput.Range("C1").Value = "TimeStamp"
-    Call Make_It_As_Header(wsOutput.Range("A1:C1"))
+    Call Make_It_As_Header(wsOutput.Range("A1:C1"), RGB(0, 112, 192))
 
     'Specify the full path and name of the closed workbook
     Dim wbPath As String
-    wbPath = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    wbPath = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER.xlsx"
     
     'Open the workbook in read-only mode
@@ -445,7 +445,7 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
     wsOutput.Cells(1, 7).Value = "Operator"
     wsOutput.Cells(1, 8).Value = "TimeStamp"
     
-    Call Make_It_As_Header(wsOutput.Range("A1:H1"))
+    Call Make_It_As_Header(wsOutput.Range("A1:H1"), RGB(0, 112, 192))
     
     'Create the Array to store results in memory
     Dim arr() As Variant
@@ -995,7 +995,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, lignesLues, search1 As String, se
     wsOutput.Range("F1").Value = "Code"
     wsOutput.Range("G1").Value = "TimeStamp"
     
-    Call Make_It_As_Header(wsOutput.Range("A1:G1"))
+    Call Make_It_As_Header(wsOutput.Range("A1:G1"), RGB(0, 112, 192))
     
     'Is there anything to show ?
     If xr > 0 Then
@@ -1154,7 +1154,7 @@ Sub List_All_Macros_Used_With_Objects() '2024-11-26 @ 20:14
     wsOutputSheet.Cells(1, 3).Value = "Object Name"
     wsOutputSheet.Cells(1, 4).Value = "Macro Name"
     
-    Call Make_It_As_Header(wsOutputSheet.Range("A1:D1"))
+    Call Make_It_As_Header(wsOutputSheet.Range("A1:D1"), RGB(0, 112, 192))
 
     Dim outputRow As Long
     outputRow = 2 'Start writing from the second row
@@ -1226,7 +1226,7 @@ Sub List_All_Macros_Used_With_Objects() '2024-11-26 @ 20:14
     'Set conditional formatting for the worksheet (alternate colors)
     outputRow = wsOutputSheet.Cells(wsOutputSheet.Rows.count, "A").End(xlUp).Row
     Dim rngArea As Range: Set rngArea = wsOutputSheet.Range("A2:D" & outputRow)
-    Call modAppli_Utils.AppliquerConditionalFormating(rngArea, 1, True) 'There are blankrows to account for
+    Call modAppli_Utils.AppliquerConditionalFormating(rngArea, 1, RGB(173, 216, 230)) 'There are blankrows to account for
     
     outputRow = wsOutputSheet.Cells(wsOutputSheet.Rows.count, "A").End(xlUp).Row
     Dim rngToPrint As Range: Set rngToPrint = wsOutputSheet.Range("A2:D" & outputRow)
@@ -1459,7 +1459,7 @@ Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
     wsOutput.Range("A1").Value = "Feuille"
     wsOutput.Range("B1").Value = "CodeName"
     wsOutput.Range("C1").Value = "TimeStamp"
-    Call Make_It_As_Header(wsOutput.Range("A1:C1"))
+    Call Make_It_As_Header(wsOutput.Range("A1:C1"), RGB(0, 112, 192))
 
     'Loop through all worksheets in the active workbook
     Dim arr() As Variant
@@ -1517,7 +1517,7 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
 
     'Clear previous settings AND protect the worksheet
     With ws
-        .Protect UserInterfaceOnly:=True
+        .Protect userInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
 
@@ -1572,7 +1572,7 @@ Sub Log_Record(ByVal procedureName As String, param As String, Optional ByVal st
     timeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & Right$(Format$(Timer, "0.00"), 2)
     
     Dim logFile As String
-    logFile = wsdADMIN.Range("F5").Value & DATA_PATH & _
+    logFile = wsdADMIN.Range("F5").Value & gDATA_PATH & _
                                     Application.PathSeparator & "LogMainApp.log"
     
     Dim fileNum As Integer
@@ -1657,7 +1657,7 @@ Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boole
     
     'Path complet du fichier LogSaisieHeures.txt
     Dim logSaisieHeuresFile As String
-    logSaisieHeuresFile = wsdADMIN.Range("F5").Value & DATA_PATH & _
+    logSaisieHeuresFile = wsdADMIN.Range("F5").Value & gDATA_PATH & _
                                 Application.PathSeparator & "LogSaisieHeures.log"
     
     Dim fileNum As Integer
@@ -1699,7 +1699,7 @@ Sub Settrace(Source As String, module As String, procedure As String, variable A
     Dim ms As String
     
     Dim settraceFile As String
-    settraceFile = wsdADMIN.Range("F5").Value & DATA_PATH & _
+    settraceFile = wsdADMIN.Range("F5").Value & gDATA_PATH & _
         Application.PathSeparator & "LogSettrace.txt"
     
     Dim fileNum As Integer

@@ -41,7 +41,7 @@ Private Sub Worksheet_Activate()
     'Certaines cellules perdent la couleur du background
     Dim cellsToColor As Range
     Set cellsToColor = Union(ws.Range("I4"), ws.Range("D5"), ws.Range("F6"), ws.Range("J6"))
-    Call Remplir_Plage_Avec_Couleur(cellsToColor, COULEUR_BASE_FACTURATION)
+    Call Remplir_Plage_Avec_Couleur(cellsToColor, gCOULEUR_BASE_FACTURATION)
     'Grille
     Set cellsToColor = Union(ws.Range("C9:O33"), ws.Range("I6"))
     Call Remplir_Plage_Avec_Couleur(cellsToColor, 16777215) 'Blanc
@@ -49,7 +49,7 @@ Private Sub Worksheet_Activate()
     Application.EnableEvents = True
     
     With ws
-        .Protect UserInterfaceOnly:=True
+        .Protect userInterfaceOnly:=True
     End With
     
     With ws
@@ -86,22 +86,22 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     'Client has been selected
     If Not Intersect(Target, wshFAC_Interrogation.Range("D4")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
     End If
 
     'Dates period has been selected
     If Not Intersect(Target, wshFAC_Interrogation.Range("D6")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
     End If
 
     'Dates from has been selected
     If Not Intersect(Target, wshFAC_Interrogation.Range("G6")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
     End If
 
     'Dates to has been selected
     If Not Intersect(Target, wshFAC_Interrogation.Range("I6")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
     End If
 
     'Save the current cell Address

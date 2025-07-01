@@ -277,7 +277,7 @@ Sub Delete_User_Active_File(ByVal userName As String)
 '    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:Delete_User_Active_File", "", 0)
     
     Dim traceFilePath As String
-    traceFilePath = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
+    traceFilePath = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
     
     If Dir(traceFilePath) <> "" Then
         Kill traceFilePath
@@ -369,7 +369,7 @@ Sub RetourMenuPrincipal()
     Next ws
     
     With wshMenu
-        .Protect UserInterfaceOnly:=True
+        .Protect userInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
         .Activate
         .Range("A1").Select

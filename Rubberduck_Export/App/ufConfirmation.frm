@@ -78,7 +78,7 @@ Private Sub ListView1_ItemClick(ByVal item As MSComctlLib.listItem)
     noFacture = Trim$(item.SubItems(1))
     
     Dim PDFInvoicePath As String
-    PDFInvoicePath = wsdADMIN.Range("F5").Value & FACT_PDF_PATH & _
+    PDFInvoicePath = wsdADMIN.Range("F5").Value & gFACT_PDF_PATH & _
                      Application.PathSeparator & noFacture & ".pdf"
                      
     'Open the invoice using Adobe Acrobat Reader

@@ -267,6 +267,15 @@ Private Sub cmdGenerer_Click()
     Dim wsRapport As Worksheet
     Set wsRapport = ThisWorkbook.Sheets(strWsRapport)
     
+    With wsRapport '2025-06-30 @ 20:11
+        .Activate
+        .Range("A3").Select
+        .Application.ActiveWindow.FreezePanes = False
+        .Application.ActiveWindow.SplitColumn = 0
+        .Application.ActiveWindow.SplitRow = 2 'ligne au-dessus de la 3e
+        .Application.ActiveWindow.FreezePanes = True
+    End With
+
     'Vérification des critères selon le type de rapport
     If TypeRapport = "Par compte / par date" Then
         'Validation des dates
@@ -499,7 +508,7 @@ Function EstDateCaractereValide(ByVal txt As String) As Boolean '2025-03-03 @ 09
     Set regex = CreateObject("VBScript.RegExp")
 
     'Expression régulière : accepte uniquement chiffres (0-9) et les séparateurs . / - et espace
-    regex.pattern = "^[0-9./\-\s]+$"
+    regex.Pattern = "^[0-9./\-\s]+$"
     regex.IgnoreCase = True
     regex.Global = False
 
@@ -517,7 +526,7 @@ Function EstSeulementChiffres(ByVal txt As String) As Boolean '2025-03-03 @ 09:4
     Set regex = CreateObject("VBScript.RegExp")
 
     'Expression régulière en fonction du nombre de caractères
-    regex.pattern = "^\d{4}$|^\d{6}$|^\d{8}$"
+    regex.Pattern = "^\d{4}$|^\d{6}$|^\d{8}$"
     regex.IgnoreCase = True
     regex.Global = False
 

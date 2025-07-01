@@ -47,6 +47,7 @@ Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
     vueIncomplete = False
     currRow = 6
     For i = 1 To UBound(arr, 1)
+        Debug.Print currRow
         If currRow <= 30 Then
             tecID = CLng(arr(i, fTECTECID))
             dateTEC = Format$(arr(i, fTECDate), wsdADMIN.Range("B1").Value)
@@ -81,12 +82,13 @@ Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
     If vueIncomplete Then
         MsgBox _
             Prompt:="L'affichage des heures n'est pas complet", _
-            Title:="Maximum de 30 lignes sont affichées", _
+            Title:="Maximum de 25 lignes sont affichées", _
             Buttons:=vbInformation
     End If
     
     'Affiche les totaux
     With ws
+        .Cells(3, 9).Value = "Total heures TEC = " & Format$(totalHresTEC, "#,##0.00")
         .Cells(currRow, 8).Value = "* TOTAUX des TEC qui seront RADIÉS *"
         .Cells(currRow, 8).Font.Bold = True
         .Cells(currRow, 10).Font.Bold = True
@@ -278,7 +280,7 @@ Sub TEC_Radiation_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Upd
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "TEC_Local$"
     
@@ -374,15 +376,15 @@ Sub Radiation_Apercu_Avant_Impression()
 
     Dim ws As Worksheet: Set ws = wshTEC_Radiation
     
+    Dim shp As Shape
+    For Each shp In ws.Shapes
+        Debug.Print shp.Name, shp.Type, shp.Width, shp.Left
+        If shp.Name = "Drop Down 193" Then shp.Delete
+    Next shp
+    
     Dim rngToPrint As Range
     Set rngToPrint = ws.Range("C1:L35")
     
-    Application.EnableEvents = False
-
-    Application.EnableEvents = True
-    
-    DoEvents
-
     Dim header1 As String: header1 = "Radiation des TEC au  " & wshTEC_Radiation.Range("K3").Value
     Dim header2 As String: header2 = wshTEC_Radiation.Range("F3").Value
     

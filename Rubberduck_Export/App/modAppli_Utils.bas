@@ -79,7 +79,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
         .Range("B1").Value = "Message"
         .Range("C1").Value = "TimeStamp"
         .Columns("C").NumberFormat = wsdADMIN.Range("B1").Value & " hh:mm:ss"
-        Call Make_It_As_Header(.Range("A1:C1"))
+        Call Make_It_As_Header(.Range("A1:C1"), RGB(0, 112, 192))
     End With
 
     'Data starts at row 2
@@ -91,7 +91,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
 
     'Répertoire de données
     Call AddMessageToWorkSheet(wsOutput, r, 1, "Répertoire utilisé")
-    Call AddMessageToWorkSheet(wsOutput, r, 2, wsdADMIN.Range("FolderSharedData").Value & DATA_PATH)
+    Call AddMessageToWorkSheet(wsOutput, r, 2, wsdADMIN.Range("FolderSharedData").Value & gDATA_PATH)
     r = r + 1
 
     'Fichier utilisé
@@ -103,7 +103,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     
     'Date dernière modification du fichier MAÎTRE
     Dim fullFileName As String
-    fullFileName = wsdADMIN.Range("FolderSharedData").Value & DATA_PATH & Application.PathSeparator & masterFileName
+    fullFileName = wsdADMIN.Range("FolderSharedData").Value & gDATA_PATH & Application.PathSeparator & masterFileName
     Dim ddm As Date
     Dim j As Long, h As Long, m As Long, s As Long
     Call Get_Date_Derniere_Modification(fullFileName, ddm, j, h, m, s)
@@ -3694,13 +3694,22 @@ Sub ImprimerSommaireTimeStampProf(ByRef wsOutput As Worksheet, ByRef r As Long, 
     End If
 
 End Sub
-Sub Make_It_As_Header(r As Range)
+
+Sub Make_It_As_Header(r As Range, couleurFond As Long) '2025-06-30 @ 14:08
+
+    On Error GoTo GestionErreur
+
+    'La plage 'r' est-elle valide ?
+    If r Is Nothing Then Exit Sub
+
+    'Vérifier que la couleur est numérique (couleur RGB valide)
+    If Not IsNumeric(couleurFond) Or couleurFond < 0 Then Exit Sub
 
     With r
         With .Interior
-            .pattern = xlSolid
+            .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
-            .Color = 12611584
+            .Color = couleurFond
             .TintAndShade = 0
             .PatternTintAndShade = 0
         End With
@@ -3713,16 +3722,17 @@ Sub Make_It_As_Header(r As Range)
         End With
         .HorizontalAlignment = xlCenter
     End With
-    
-    Dim wsName As String
-    wsName = r.Worksheet.Name
-    Dim ws As Worksheet: Set ws = ThisWorkbook.Sheets(wsName)
-    ws.Columns.AutoFit
-    
-    'Libérer la mémoire
-    Set r = Nothing
-    Set ws = Nothing
 
+    'Auto-ajustement des colonnes concernées
+    Dim ws As Worksheet
+    Set ws = r.Worksheet
+    ws.Columns(r.Columns(1).Column).Resize(, r.Columns.count).AutoFit
+
+    Exit Sub
+
+GestionErreur:
+    MsgBox "Erreur dans Make_It_As_Header : " & Err.description, vbExclamation, "Erreur VBA"
+    
 End Sub
 
 Sub AddMessageToWorkSheet(ws As Worksheet, r As Long, c As Long, m As String)
@@ -3734,7 +3744,7 @@ Sub AddMessageToWorkSheet(ws As Worksheet, r As Long, c As Long, m As String)
 
 End Sub
 
-Sub AppliquerConditionalFormating(rng As Range, headerRows As Long, Optional EmptyLine As Boolean = False)
+Sub AppliquerConditionalFormating(rng As Range, headerRows As Long, couleurFond As Long)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:AppliquerConditionalFormating", "", 0)
     
@@ -3758,7 +3768,7 @@ Sub AppliquerConditionalFormating(rng As Range, headerRows As Long, Optional Emp
     For i = 1 To dataRange.Rows.count
         'Vérifier la position réelle de la ligne dans la feuille
         If (dataRange.Rows(i).Row + headerRows) Mod 2 = 0 Then
-            dataRange.Rows(i).Interior.Color = RGB(173, 216, 230) ' Bleu pâle
+            dataRange.Rows(i).Interior.Color = couleurFond
         End If
     Next i
     
@@ -4103,7 +4113,7 @@ Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
     wsOutput.Range("I1").Value = "CodePostal"
     wsOutput.Range("J1").Value = "DistanceKM"
     wsOutput.Range("K1").Value = "Montant"
-    Call Make_It_As_Header(wsOutput.Range("A1:K1"))
+    Call Make_It_As_Header(wsOutput.Range("A1:K1"), RGB(0, 112, 192))
     
     'Feuille pour les clients
     Dim wsMF As Worksheet: Set wsMF = wsdBD_Clients
@@ -4240,7 +4250,7 @@ Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
                                     
     'Set conditional formatting for the worksheet (alternate colors)
     Dim rngArea As Range: Set rngArea = wsOutput.Range("B2:K" & rowOutput)
-    Call AppliquerConditionalFormating(rngArea, 1, True)
+    Call AppliquerConditionalFormating(rngArea, 1, RGB(173, 216, 230))
 
     Application.ScreenUpdating = True
     Application.EnableEvents = True
@@ -4344,7 +4354,7 @@ Sub Paint_A_Range(rng As Range, colorRGB As String)
    
     Dim cell As Variant
     With rng.Interior
-        .pattern = xlSolid
+        .Pattern = xlSolid
         .PatternColorIndex = xlAutomatic
         .ThemeColor = xlThemeColorAccent6
         .TintAndShade = 0.599993896298105
@@ -4359,9 +4369,9 @@ Sub NoterNombreLignesParFeuille() '2025-01-22 @ 16:19
     
     'Spécifiez les chemins des classeurs
     Dim cheminClasseurUsage As String
-    cheminClasseurUsage = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & "GCF_File_Usage.xlsx"
+    cheminClasseurUsage = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & "GCF_File_Usage.xlsx"
     Dim cheminClasseurMASTER As String
-    cheminClasseurMASTER = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
+    cheminClasseurMASTER = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
     
     Application.ScreenUpdating = False
     
@@ -4778,5 +4788,25 @@ Public Function EgalCurrency(a As Currency, b As Currency, Optional epsilon As C
     EgalCurrency = Abs(a - b) <= epsilon
     
 End Function
+
+Sub ExtraireCouleurCellule()
+
+    Dim couleur As Long
+    Dim rouge As Long, vert As Long, bleu As Long
+
+    ' récupère la couleur de fond de la cellule active
+    couleur = Range("B8").Interior.Color
+    
+    ' extrait les composantes RGB
+    rouge = couleur Mod 256
+    vert = (couleur \ 256) Mod 256
+    bleu = (couleur \ 65536) Mod 256
+
+    ' affiche les valeurs
+    MsgBox "Rouge: " & rouge & vbCrLf & _
+           "Vert: " & vert & vbCrLf & _
+           "Bleu: " & bleu
+End Sub
+
 
 

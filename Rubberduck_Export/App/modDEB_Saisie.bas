@@ -170,7 +170,7 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "DEB_Trans$"
     
@@ -324,7 +324,7 @@ Sub DEB_Trans_MAJ_Debourse_Renverse_To_DB()
     
     'Définition des paramètres
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "DEB_Trans$"
 
@@ -668,7 +668,7 @@ Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "DEB_Récurrent$"
     
@@ -862,7 +862,7 @@ Public Sub DEB_Saisie_Clear_All_Cells()
     
     'Toutes les cellules sont sans surbrillance (élimine le vert pâle)
     With ws.Range("F4:H4, J4:M4, O4, F6:J6, M6, O6, E9:O23").Interior
-        .pattern = xlNone
+        .Pattern = xlNone
         .TintAndShade = 0
         .PatternTintAndShade = 0
     End With
@@ -877,7 +877,7 @@ Public Sub DEB_Saisie_Clear_All_Cells()
     
     'Protection de la feuille, seules les cellules non-verrouillées peuvent être sélectionnées
     With wshDEB_Saisie
-        .Protect UserInterfaceOnly:=True
+        .Protect userInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
     

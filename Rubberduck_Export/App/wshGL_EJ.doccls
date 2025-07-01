@@ -39,7 +39,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     'Certaines cellules perdent la couleur du background
     Dim cellsToColor As Range
     Set cellsToColor = Me.Range("G4:H4")
-    Call Remplir_Plage_Avec_Couleur(cellsToColor, COULEUR_BASE_COMPTABILITÉ)
+    Call Remplir_Plage_Avec_Couleur(cellsToColor, gCOULEUR_BASE_COMPTABILITE)
     
     Call SetTabOrder(ws)
     
@@ -69,7 +69,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     
     'Protection de la feuille
     With ws
-        .Protect UserInterfaceOnly:=True
+        .Protect userInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
 
@@ -105,14 +105,14 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     'Source has been selected
     If Not Intersect(Target, Me.Range("F4")) Is Nothing Then
         On Error Resume Next
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
         On Error GoTo 0
     End If
 
     'Date has been selected
     If Not Intersect(Target, Me.Range("K4")) Is Nothing Then
         On Error Resume Next
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
         On Error GoTo 0
     End If
 
@@ -123,12 +123,12 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
                    vbNewLine & vbNewLine & "qui effectue le dépôt de client (perçu d'avance)", _
                    vbOKOnly, "Enregistrement d'un dépôt de client"
         End If
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
     End If
 
     'Compte has been selected
     If Not Intersect(Target, Me.Range("E9:E23")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
         If Target.row = 9 And Me.Range("F4").Value = "Remise TPS/TVQ" Then
             Call GL_EJ_Construire_Remise_TPS_TVQ(Target.row)
         End If
@@ -136,23 +136,23 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     'Debit amount has been selected
     If Not Intersect(Target, Me.Range("H9:H23")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
     End If
     
     'Credit amount has been selected
     If Not Intersect(Target, Me.Range("I9:I23")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
     End If
     
     'Extra description has been selected
     If Not Intersect(Target, Me.Range("J9:J23")) Is Nothing Then
-        Target.Interior.Color = COULEUR_SAISIE
+        Target.Interior.Color = gCOULEUR_SAISIE
     End If
     
     'Save the current cell Address
     gPreviousCellAddress = Target.Address
     
-    ActiveSheet.Protect UserInterfaceOnly:=True
+    ActiveSheet.Protect userInterfaceOnly:=True
     
 '    'Passe à la cellule suivante
 '    Application.EnableEvents = False
@@ -283,7 +283,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         End If
         If Range("H26").Value <> Range("I26").Value Then
             With Range("H26:I26").Interior
-                .pattern = xlSolid
+                .Pattern = xlSolid
                 .PatternColorIndex = xlAutomatic
                 .Color = 65535
                 .TintAndShade = 0
@@ -291,7 +291,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             End With
         Else
             With Range("H26:I26").Interior
-                .pattern = xlNone
+                .Pattern = xlNone
                 .TintAndShade = 0
                 .PatternTintAndShade = 0
             End With

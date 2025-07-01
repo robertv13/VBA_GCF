@@ -27,7 +27,7 @@ Sub ENC_Get_OS_Invoices(cc As String) '2024-08-21 @ 15:18
             .Unprotect
             .Range("B12:B" & 11 + lastResultRow - 2).Locked = False
             .Range("E12:E" & 11 + lastResultRow - 2).Locked = False
-            .Protect UserInterfaceOnly:=True
+            .Protect userInterfaceOnly:=True
             .EnableSelection = xlUnlockedCells
         End If
     End With
@@ -246,7 +246,7 @@ Sub ENC_Add_DB_Entete() 'Write to MASTER.xlsx
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "ENC_Entête$"
     
@@ -350,7 +350,7 @@ Sub ENC_Add_DB_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow As Int
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "ENC_Détails$"
     
@@ -437,7 +437,7 @@ Sub ENC_Update_DB_Comptes_Clients(firstRow As Integer, lastRow As Integer) 'Writ
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "FAC_Comptes_Clients$"
     
@@ -555,7 +555,7 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & DATA_PATH & Application.PathSeparator & _
+    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
     destinationTab = "GL_Trans$"
     
@@ -739,7 +739,7 @@ Sub ENC_Add_Check_Boxes(row As Long)
 
     'Protect the worksheet
     With ws
-        .Protect UserInterfaceOnly:=True
+        .Protect userInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
     
@@ -810,7 +810,7 @@ Sub ENC_Clear_Cells()
     End If
         
     With wshENC_Saisie.Range("F5:H5, K5, F7, K7, F9:I9").Interior '2024-08-25 @ 09:21
-            .pattern = xlNone
+            .Pattern = xlNone
             .TintAndShade = 0
             .PatternTintAndShade = 0
     End With
@@ -821,7 +821,7 @@ Sub ENC_Clear_Cells()
     Application.EnableEvents = True
     
     With wshENC_Saisie
-        .Protect UserInterfaceOnly:=True
+        .Protect userInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
 
@@ -872,6 +872,8 @@ Sub shp_ENC_Exit_Click()
         Else
             'L'utilisateur a annulé la sortie, donc on ne fait rien et il reste sur la feuille.
         End If
+    Else
+        Call ENC_Back_To_GL_Menu
     End If
     
 End Sub
@@ -954,7 +956,6 @@ Sub ValiderEtLancerufEncRégularisation()
     
     'Condition pour lancer le UserForm
     If ws.Range("F7").Value = "Régularisations" Then
-        ' Lancer le UserForm
         ufEncRégularisation.show
     End If
     
