@@ -10,7 +10,7 @@ Private Sub Worksheet_Activate()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshDEB_Saisie:Worksheet_Activate", "", 0)
     
-    Call RafraichirActivite("Liste Agée des Comptes Clients")
+'    Call RafraichirActivite("Liste Agée des Comptes Clients")
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -84,7 +84,7 @@ End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
-    Call RafraichirActivite("Liste Agée des Comptes Clients")
+'    Call RafraichirActivite("Liste Agée des Comptes Clients")
     
     'Remove the background color of the previous Cell
     If gPreviousCellAddress <> "" Then
@@ -262,7 +262,7 @@ Private Sub Process_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
         Application.EnableEvents = True
         Exit Sub

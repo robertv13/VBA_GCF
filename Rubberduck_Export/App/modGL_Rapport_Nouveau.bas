@@ -116,7 +116,7 @@ Public Sub GenererRapportGL_Compte(wsRapport As Worksheet, dateDebut As Date, da
         wsRapport.Range("G" & rowRapport).Value = sumCT
         
         'Ajoute le formatage conditionnel pour les transactions
-        If saveFirstRow <> -1 Then
+        If saveFirstRow > 1 Then
             Dim isPair As Integer 'Touujours laisser la première ligne de détail sans surbrillance
             isPair = IIf(saveFirstRow Mod 2 = 0, 1, 0)
             With ActiveSheet.Range("B" & saveFirstRow & ":H" & rowRapport - 1)
@@ -144,6 +144,8 @@ Public Sub GenererRapportGL_Compte(wsRapport As Worksheet, dateDebut As Date, da
     Application.StatusBar = ""
     
     Application.ScreenUpdating = True
+    
+    Call InsererBoutonRetourMenu
     
     Dim h1 As String, h2 As String, h3 As String
     h1 = wsdADMIN.Range("NomEntreprise")
@@ -311,6 +313,8 @@ Public Sub GenererRapportGL_Ecriture(wsRapport As Worksheet, noEcritureDebut As 
     DoEvents
     
     Application.ScreenUpdating = True
+    
+    Call InsererBoutonRetourMenu
     
     Dim h1 As String, h2 As String, h3 As String
     h1 = wsdADMIN.Range("NomEntreprise")
@@ -483,6 +487,8 @@ Public Sub GenererRapportGL_DateSaisie(wsRapport As Worksheet, dtSaisieDebut As 
     
     Application.ScreenUpdating = True
     
+    Call InsererBoutonRetourMenu
+    
     Dim h1 As String, h2 As String, h3 As String
     h1 = wsdADMIN.Range("NomEntreprise")
     h2 = "Rapport des transactions du Grand Livre par date de saisie"
@@ -505,6 +511,45 @@ Public Sub GenererRapportGL_DateSaisie(wsRapport As Worksheet, dtSaisieDebut As 
     'Libérer la mémoire
     Set wsRapport = Nothing
     Set wsSource = Nothing
+    
+End Sub
+
+Sub InsererBoutonRetourMenu() '2025-07-01 @ 08:54
+
+    Dim ws As Worksheet
+    Set ws = ActiveSheet
+    
+    'Détecter la première colonne vide sur la ligne 1
+    Dim colLibre As Long
+    colLibre = ws.Cells(1, ws.Columns.count).End(xlToLeft).Column + 1
+    If colLibre > ws.Columns.count Then colLibre = 1 'Si toute la ligne est vide
+
+    'Ajouter la forme
+    Dim shp As Shape
+    Set shp = ws.Shapes.AddShape(Type:=msoShapeRoundedRectangle, _
+                                  Left:=ws.Cells(1, colLibre).Left + 5, _
+                                  Top:=ws.Cells(1, colLibre).Top, _
+                                  Width:=28, Height:=28) '+/- 1 cm
+
+    With shp
+        .Name = "shpRetourMenu"
+        .Fill.ForeColor.RGB = RGB(192, 0, 0) 'Rouge foncé
+        .Line.Visible = msoFalse
+        .TextFrame2.TextRange.Text = "X"
+        .TextFrame2.VerticalAnchor = msoAnchorMiddle
+        .TextFrame2.HorizontalAnchor = msoAnchorCenter
+        .TextFrame2.TextRange.Font.size = 16
+        .TextFrame2.TextRange.Font.Bold = True
+        .TextFrame2.TextRange.Font.Fill.ForeColor.RGB = RGB(255, 255, 255) 'Blanc
+        .Placement = xlFreeFloating
+        .OnAction = "shpRetourMenu_Click"
+    End With
+
+End Sub
+
+Sub shpRetourMenu_Click()
+
+    wshMenuGL.Activate 'Adapte le nom de ta feuille menu si nécessaire
     
 End Sub
 

@@ -1,7 +1,7 @@
 ﻿Attribute VB_Name = "modInactiviteUserForm"
 Option Explicit
 
-Public colWrappers As Collection
+'Public colWrappers As Collection
 
 Public Sub ConnectFormControls(frm As Object) '2025-05-30 @ 13:22
 

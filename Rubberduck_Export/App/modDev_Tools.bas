@@ -1101,7 +1101,7 @@ Function VerifierMacroExiste(macroName As String, Optional moduleName As String 
     
 End Function
 
-Sub Main() '2024-12-25 @ 15:27
+Sub main() '2024-12-25 @ 15:27
 
     'Feuille pour la sortie
     Dim outputName As String

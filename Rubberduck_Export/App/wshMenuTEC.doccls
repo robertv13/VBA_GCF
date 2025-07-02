@@ -4,8 +4,6 @@ Option Explicit
 
 Private Sub Worksheet_Activate()
 
-    Call RafraichirActivite("Menu TEC")
-    
     Dim ws As Worksheet: Set ws = wshMenuTEC
     
     With ws

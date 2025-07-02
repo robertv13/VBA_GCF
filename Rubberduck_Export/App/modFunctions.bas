@@ -2170,4 +2170,20 @@ Erreur:
     
 End Function
 
+Function MinutesDepuisDerniereActivite() As Double '2025-07-01 @ 14:06
+    
+    If gDerniereActivite = 0 Then
+        MinutesDepuisDerniereActivite = 0
+    Else
+        MinutesDepuisDerniereActivite = DateDiff("s", gDerniereActivite, Now) / 60
+    End If
+    
+End Function
+
+Public Function GetProchaineFermeture() As Date '2025-07-02 @ 09:38
+
+    GetProchaineFermeture = Now + TimeSerial(0, 0, gDELAI_GRACE_SECONDES)
+
+End Function
+
 

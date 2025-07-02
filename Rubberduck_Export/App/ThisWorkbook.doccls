@@ -1,5 +1,35 @@
 ﻿Option Explicit
 
+Private Sub Workbook_SheetChange(ByVal Sh As Object, ByVal Target As Range) '2025-07-01 @ 14:50
+
+    Call RafraichirActivite
+    
+End Sub
+
+Private Sub Workbook_SheetSelectionChange(ByVal Sh As Object, ByVal Target As Range) '2025-07-01 @ 14:50
+
+    Call RafraichirActivite
+    
+End Sub
+
+Private Sub Workbook_SheetActivate(ByVal Sh As Object) '2025-07-01 @ 14:50
+
+    Call RafraichirActivite
+    
+End Sub
+
+Private Sub Workbook_SheetDeactivate(ByVal Sh As Object) '2025-07-01 @ 14:50
+
+    Call RafraichirActivite
+    
+End Sub
+
+Private Sub Workbook_SheetFollowHyperlink(ByVal Sh As Object, ByVal Target As Hyperlink) '2025-07-01 @ 14:50
+
+    Call RafraichirActivite
+    
+End Sub
+
 Private Sub Workbook_BeforeClose(Cancel As Boolean)
     
     'La sortie du classeur ne peut se faire par le X rouge à droite en haut de EXCEL

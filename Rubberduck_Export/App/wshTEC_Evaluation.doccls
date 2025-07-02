@@ -4,7 +4,7 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Evaluation:Worksheet_Activate", "", 0)
     
-    Call RafraichirActivite("Évaluation des TEC")
+'    Call RafraichirActivite("Évaluation des TEC")
     
     If gFromMenu = False Then
         Exit Sub
@@ -63,7 +63,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Evaluation:Worksheet_SelectionChange", "", 0)
     
-    Call RafraichirActivite("Évaluation des TEC")
+'    Call RafraichirActivite("Évaluation des TEC")
     
     If gPreviousCellAddress <> "" Then
         Range(gPreviousCellAddress).Interior.Color = gCOULEUR_BASE_TEC
@@ -82,7 +82,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Evaluation:Worksheet_Change", Target.Address, 0)
     
-    Call RafraichirActivite("Évaluation des TEC")
+'    Call RafraichirActivite("Évaluation des TEC")
     
     Dim fullDate As Variant
     
@@ -97,7 +97,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
        
         'Future date ?
@@ -106,7 +106,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.Goto Range(Target.Address)
+                Application.GoTo Range(Target.Address)
             End If
         Else
             Call TEC_Evaluation_Procedure(Target.Value)

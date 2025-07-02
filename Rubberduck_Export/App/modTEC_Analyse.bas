@@ -663,7 +663,7 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
         'RecordSet are ZERO base, and Enums are not, so the '-1' is mandatory !!!
         rs.Fields(fFacPEProjetID - 1).Value = projetID
         rs.Fields(fFacPENomClient - 1).Value = nomClient
-        rs.Fields(2).Value = CStr(clientID)
+        rs.Fields(fFacPEClientID).Value = CStr(clientID)
         rs.Fields(fFacPEDate - 1).Value = dte
         rs.Fields(fFacPEHonoTotal - 1).Value = hono
         
@@ -823,15 +823,15 @@ Sub Delete_CheckBox()
     Dim ws As Worksheet: Set ws = wshTEC_Analyse
     
     'Check if any CheckBox exists and then delete it/them
-    Dim sh As Shape
-    For Each sh In ws.Shapes
-        If InStr(sh.Name, "CheckBox") Then
-            sh.Delete
+    Dim Sh As Shape
+    For Each Sh In ws.Shapes
+        If InStr(Sh.Name, "CheckBox") Then
+            Sh.Delete
         End If
-    Next sh
+    Next Sh
     
     'Libérer la mémoire
-    Set sh = Nothing
+    Set Sh = Nothing
     Set ws = Nothing
     
 End Sub
@@ -867,15 +867,15 @@ Sub Clear_Fees_Summary_And_CheckBox() 'RMV_15
     Application.EnableEvents = True
     
     'Clear any leftover CheckBox
-    Dim sh As Shape
-    For Each sh In ws.Shapes
-        If InStr(sh.Name, "CheckBox") Then
-            sh.Delete
+    Dim Sh As Shape
+    For Each Sh In ws.Shapes
+        If InStr(Sh.Name, "CheckBox") Then
+            Sh.Delete
         End If
-    Next sh
+    Next Sh
 
     'Libérer la mémoire
-    Set sh = Nothing
+    Set Sh = Nothing
     Set ws = Nothing
     
     Call Log_Record("modTEC_Analyse:Clear_Fees_Summary_And_CheckBox", "", startTime)

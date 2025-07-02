@@ -1,362 +1,17 @@
 ﻿Attribute VB_Name = "modAppli"
 Option Explicit
 
-Public Const gDATA_PATH As String = "\DataFiles"
-Public Const gFACT_PDF_PATH As String = "\Factures_PDF"
-Public Const gFACT_EXCEL_PATH As String = "\Factures_Excel"
-
-Public Const gNB_MAX_LIGNE_FAC As Long = 35 '2024-06-18 @ 12:18
-
-Public Const gCOULEUR_SAISIE As String = &HCCFFCC 'Light green (Pastel Green)
-Public Const gCOULEUR_BASE_TEC As Long = 6740479
-Public Const gCOULEUR_BASE_FACTURATION As Long = 11854022
-Public Const gCOULEUR_BASE_COMPTABILITE As Long = 14277081
-
-'Variable qui contient le code d'utilisateur Windows
-Public gUtilisateurWindows As String
-
-'Variable qui contient l'addresse de la dernière cellule sélectionnée
-Public gPreviousCellAddress As String
-
-'Variable utilisée pour éviter l'évènement Activate à chaque fois que l'on revient dans une feuille
-Public gFromMenu As Boolean '2024-09-03 @ 06:14
-
-'Niveau de détail pour le log de SaisieHeures
-Public gLogSaisieHeuresVeryDetailed As Boolean
-
-'Pour assurer un contrôle dans Facture Finale
-Public gFlagEtapeFacture As Long
-
-'Sauvegarde AUTOMATIQUE du code VBA - 2025-03-03 @ 07:18
-Public gNextBackupTime As Date
-Public Const INTERVALLE_MINUTES_SAUVEGARDE As Double = 10
-
-'Fermeture AUTOMATIQUE de l'application - 2025-05-30 @ 11:36
-Public gDerniereActivite As Date
-Public gProchaineVerification As Date
-Public Const FREQUENCE_VERIFICATION_INACTIVITE As Long = 5
-Public Const INTERVALLE_MAXIMUM_INACTIVITE As Long = 60
-
-'Pour capturer év`nements sur tous les controls des userForm - 2025-05-30 @ 13:11
-Public colWrappers As Collection
-
-'Using Enum to specify the column number of worksheets (data)
-Public Enum BD_Clients '2024-10-26 @ 17:41
-    [_First] = 1
-    fClntFMClientNom = [_First]
-    fClntFMClientID
-    fClntFMNomClientSystème
-    fClntFMContactFacturation
-    fClntFMTitreContactFacturation
-    fClntFMCourrielFacturation
-    fClntFMAdresse1
-    fClntFMAdresse2
-    fClntFMVille
-    fClntFMProvince
-    fClntFMCodePostal
-    fClntFMPays
-    fClntFMRéféréPar
-    fClntFMFinAnnée
-    fClntFMComptable
-    fClntFMNotaireAvocat
-    fClntFMNomClientPlusNomClientSystème
-    fClntFMTimeStamp
-    [_Last]
-End Enum
-
-Public Enum BD_Fournisseurs '2024-12-24 @ 07:34
-    [_First] = 1
-    fFourFMNomFournisseur = [_First]
-    fFourFMFournID
-    fFourFMContact
-    fFourFMCourrielContact
-    fFourFMAdresse1
-    fFourFMAdresse2
-    fFourFMVille
-    fFourFMProvince
-    fFourFMCodePostal
-    fFourFMPays
-    fFourFMNoTPS
-    fFourFMNoTVQ
-    [_Last]
-End Enum
-
-Public Enum CC_Régularisations
-    [_First] = 1
-    fREGULRegulID = [_First]
-    fREGULInvNo
-    fREGULDate
-    fREGULClientID
-    fREGULClientNom
-    fREGULHono
-    fREGULFrais
-    fREGULTPS
-    fREGULTVQ
-    fREGULDescription
-    fREGULTimeStamp
-    [_Last]
-End Enum
-
-Public Enum DEB_Récurrent
-    [_First] = 1
-    fDebRNoDebRec = [_First]
-    fDebRDate
-    fDebRType
-    fDebRBeneficiaire
-    fDebRReference
-    fDebRNoCompte
-    fDebRCompte
-    fDebRCodeTaxe
-    fDebRTotal
-    fDebRTPS
-    fDebRTVQ
-    fDebRCréditTPS
-    fDebRCréditTVQ
-    fDebRTimeStamp
-    [_Last]
-End Enum
-
-Public Enum DEB_Trans
-    [_First] = 1
-    fDebTNoEntrée = [_First]
-    fDebTDate
-    fDebTType
-    fDebTBeneficiaire
-    fDebTFournID
-    fDebTDescription
-    fDebTReference
-    fDebTNoCompte
-    fDebTCompte
-    fDebTCodeTaxe
-    fDebTTotal
-    fDebTTPS
-    fDebTTVQ
-    fDebTCréditTPS
-    fDebTCréditTVQ
-    fDebTDépense
-    fDebTAutreRemarque
-    fDebTTimeStamp
-    [_Last]
-End Enum
-
-Public Enum ENC_Détails
-    [_First] = 1
-    fEncDPayID = [_First]
-    fEncDInvNo
-    fEncDCustomer
-    fEncDPayDate
-    fEncDPayAmount
-    fEncDTimeStamp
-    [_Last]
-End Enum
-
-Public Enum ENC_Entête
-    [_First] = 1
-    fEncEPayID = [_First]
-    fEncEPayDate
-    fEncECustomer
-    fEncECodeClient
-    fEncEPayType
-    fEncEAmount
-    fEncENotes
-    fEncETimeStamp
-    [_Last]
-End Enum
-
-Public Enum FAC_Comptes_Clients
-    [_First] = 1
-    fFacCCInvNo = [_First]
-    fFacCCInvoiceDate
-    fFacCCCustomer
-    fFacCCCodeClient
-    fFacCCStatus
-    fFacCCTerms
-    fFacCCDueDate
-    fFacCCTotal
-    fFacCCTotalPaid
-    fFacCCTotalRegul
-    fFacCCBalance
-    fFacCCDaysOverdue
-    fFacCCTimeStamp
-    [_Last]
-End Enum
-
-Public Enum FAC_Détails
-    [_First] = 1
-    fFacDInvNo = [_First]
-    fFacDDescription
-    fFacDHeures
-    fFacDTaux
-    fFacDHonoraires
-    fFacDInvRow
-    fFacDTimeStamp
-    [_Last]
-End Enum
-
-Public Enum FAC_Entête
-    [_First] = 1
-    fFacEInvNo = [_First]
-    fFacEDateFacture
-    fFacEACouC
-    fFacECustID
-    fFacEContact
-    fFacENomClient
-    fFacEAdresse1
-    fFacEAdresse2
-    fFacEAdresse3
-    fFacEHonoraires
-    fFacEAF1Desc
-    fFacEAutresFrais1
-    fFacEAF2Desc
-    fFacEAutresFrais2
-    fFacEAF3Desc
-    fFacEAutresFrais3
-    fFacETauxTPS
-    fFacEMntTPS
-    fFacETauxTVQ
-    fFacEMntTVQ
-    fFacEARTotal
-    fFacEDépôt
-    fFacETimeStamp
-    [_Last]
-End Enum
-
-Public Enum FAC_Projets_Détails
-    [_First] = 1
-    fFacPDProjetID = [_First]
-    fFacPDNomClient
-    fFacPDClientID
-    fFacPDTECID
-    fFacPDProfID
-    fFacPDDate
-    fFacPDProf
-    fFacPDHeures
-    fFacPDestDetruite
-    fFacPDTimeStamp
-    [_Last]
-End Enum
-
-Public Enum FAC_Projets_Entête
-    [_First] = 1
-    fFacPEProjetID = [_First]
-    fFacPENomClient
-    fFacPEClientID
-    fFacPEDate
-    fFacPEHonoTotal
-    fFacPEProf1
-    fFacPEHres1
-    fFacPETauxH1
-    fFacPEHono1
-    fFacPEProf2
-    fFacPEHres2
-    fFacPETauxH2
-    fFacPEHono2
-    fFacPEProf3
-    fFacPEHres3
-    fFacPETauxH3
-    fFacPEHono3
-    fFacPEProf4
-    fFacPEHres4
-    fFacPETauxH4
-    fFacPEHono4
-    fFacPEProf5
-    fFacPEHres5
-    fFacPETauxH5
-    fFacPEHono5
-    fFacPEestDetruite
-    fFacPETimeStamp
-    [_Last]
-End Enum
-
-Public Enum FAC_Sommaire_Taux
-    [_First] = 1
-    fFacSTInvNo = [_First]
-    fFacSTSéquence
-    fFacSTProf
-    fFacSTHeures
-    fFacSTTaux
-    fFacSTTimeStamp
-    [_Last]
-End Enum
-
-Public Enum GL_EJ_Récurrente
-    [_First] = 1
-    fGlEjRNoEjR = [_First]
-    fGlEjRDescription
-    fGlEjRNoCompte
-    fGlEjRCompte
-    fGlEjRDébit
-    fGlEjRCrédit
-    fGlEjRAutreRemarque
-    fGlEjRTimeStamp
-    [_Last]
-End Enum
-
-Public Enum GL_Trans
-    [_First] = 1
-    fGlTNoEntrée = [_First]
-    fGlTDate
-    fGlTDescription
-    fGlTSource
-    fGlTNoCompte
-    fGlTCompte
-    fGlTDébit
-    fGlTCrédit
-    fGlTAutreRemarque
-    fGlTTimeStamp
-    [_Last]
-End Enum
-
-Public Enum TEC_Local
-    [_First] = 1
-    fTECTECID = [_First]
-    fTECProfID
-    fTECProf
-    fTECDate
-    fTECClientID
-    fTECClientNom
-    fTECDescription
-    fTECHeures
-    fTECCommentaireNote
-    fTECEstFacturable
-    fTECDateSaisie
-    fTECEstFacturee
-    fTECDateFacturee
-    fTECEstDetruit
-    fTECVersionApp
-    fTECNoFacture
-    [_Last]
-End Enum
-
-Public Enum TEC_TDB_Data
-    [_First] = 1
-    fTECTDBTECID = [_First]
-    fTECTDBProfID
-    fTECTDBProf
-    fTECTDBDate
-    fTECTDBClientID
-    fTECTDBClientNom
-    fTECTDBEstClntFact
-    fTECTDBH_Saisies
-    fTECTDBEstFacturable
-    fTECTDBEstFacturee
-    fTECTDBEstDetruite
-    fTECTDBH_Détruites
-    fTECTDBH_ND
-    fTECTDBH_Facturables
-    fTECTDBH_NonFact
-    fTECTDBH_Facturées
-    fTECTDBH_TEC
-    [_Last]
-End Enum
-
 Private Sub Auto_Open() '2024-12-28 @ 11:09
 
     gDerniereActivite = Now
-'    Debug.Print "L'application a démarré à " & gDerniereActivite
-    gProchaineVerification = Now + TimeSerial(0, FREQUENCE_VERIFICATION_INACTIVITE, 0)
-'    Debug.Print "La prochaine vérification est prévue à " & gProchaineVerification
+
+    'Mise en placedu mécanisme pour sortir automatiquement de l'application, s'il n'y a pas d'activité
+    gProchaineVerification = Now + TimeSerial(0, gFREQUENCE_VERIFICATION_INACTIVITE, 0)
     Application.OnTime gProchaineVerification, "VerifierInactivite"
+    Application.EnableEvents = False
+    wsdADMIN.Range("B3").Value = gFREQUENCE_VERIFICATION_INACTIVITE
+    wsdADMIN.Range("B4").Value = gMAXIMUM_MINUTES_INACTIVITE
+    Application.EnableEvents = True
 
     Call DemarrageApplication
     
@@ -579,72 +234,6 @@ CleanUp:
     
 End Sub
 
-Public Sub RafraichirActivite(Optional ByVal msg As String = "") '2025-06-28 @ 12:13
-
-    Dim activeEvents As Boolean
-    activeEvents = Application.EnableEvents
-    
-    If activeEvents = True Then Application.EnableEvents = False
-    gDerniereActivite = Now
-    Application.StatusBar = False
-    
-    If activeEvents <> Application.EnableEvents Then
-        Application.EnableEvents = activeEvents
-    End If
-    
-End Sub
-
-'@Description "Vérifie l'inactivité et ferme si plus de 60 minutes"
-Public Sub VerifierInactivite() '2025-05-30 @ 12:22
-
-    On Error GoTo GestionErreur
-    
-    Dim heureActuelle As Double
-    heureActuelle = Time
-    
-    'Vérifier si on est dans la plage 18:00 à 23:59
-    If heureActuelle < TimeValue("06:00:00") Then
-        'Replanifier tout de même la prochaine vérification
-        gProchaineVerification = Now + TimeSerial(0, FREQUENCE_VERIFICATION_INACTIVITE, 0)
-        Application.OnTime gProchaineVerification, "VerifierInactivite"
-        Exit Sub
-    End If
-    
-    If gDerniereActivite = 0 Then
-        Debug.Print "gDerniereActivite n'est pas initialisée..."
-        Exit Sub
-    End If
-    
-    'Déterminer le moment précis la dernière activité en minutes
-    Dim minutesInactive As Double
-    minutesInactive = (Now - gDerniereActivite) * 24 * 60 'Convertir en minutes
-    Application.StatusBar = "Aucune activité depuis " & Format(minutesInactive, "#0") & " minute(s)"
-
-    If minutesInactive >= INTERVALLE_MAXIMUM_INACTIVITE Then
-        If Not ApplicationIsActive Then
-            Application.DisplayAlerts = False
-            Call ApplicationFermetureNormale(GetNomUtilisateur())
-        End If
-    End If
-
-'    If GetNomUtilisateur() <> "RobertMV" And GetNomUtilisateur() <> "Robertmv" Then
-'        If minutesInactive >= INTERVALLE_MAXIMUM_INACTIVITE Then
-'            Application.DisplayAlerts = False
-'            Call ApplicationFermetureNormale
-'        End If
-'    End If
-    
-    'Reprogrammer la vérification
-    gProchaineVerification = Now + TimeSerial(0, FREQUENCE_VERIFICATION_INACTIVITE, 0) 'Vérifie toutes les 5 minutes
-    Application.OnTime gProchaineVerification, "VerifierInactivite"
-
-    Exit Sub
-    
-GestionErreur:
-    Debug.Print "Erreur dans procédure 'VerifierInactivite' : " & Err.Number & " - " & Err.description
-    
-End Sub
-
 Private Sub ConnectControlsRecursive(ctrls As MSForms.Controls) '2025-05-30 @ 13:12
 
     Dim ctrl As MSForms.Control
@@ -672,5 +261,160 @@ Private Sub ConnectControlsRecursive(ctrls As MSForms.Controls) '2025-05-30 @ 13
     
 End Sub
 
+Public Sub RafraichirActivite(Optional ByVal msg As String = "") '2025-07-01 @ 14:31
+    
+    If gMODE_DEBUG Then Debug.Print "[modAppli:RafraichirActivite] Activité détectée - " & msg
+    
+    Dim activeEvents As Boolean
+    activeEvents = Application.EnableEvents
+    If activeEvents = True Then Application.EnableEvents = False
+
+    gDerniereActivite = Now
+    Application.StatusBar = False
+    wsdADMIN.Range("B6").Value = Format$(Now, "hh:mm:ss")
+    
+    If activeEvents <> Application.EnableEvents Then
+        Application.EnableEvents = activeEvents
+    End If
+
+End Sub
+
+'@Description "Vérifie l'inactivité et ferme si plus de x minutes"
+Public Sub VerifierInactivite() '2025-07-02 @ 06:50
+
+    'Mettre à jour une trace de vérification d'activité
+    Application.EnableEvents = False
+    wsdADMIN.Range("B5").Value = Format$(Now, "hh:mm:ss")
+    Application.EnableEvents = True
+    
+    On Error GoTo GestionErreur
+
+    Dim heureActuelle As Double
+    heureActuelle = Time
+
+    'Ne rien faire avant 06:00:00
+    If heureActuelle < TimeValue("09:00:00") Then
+        Call PlanifierVerificationInactivite
+        Exit Sub
+    End If
+
+    'Vérification de l'initialisation
+    If gDerniereActivite = 0 Then
+        If gMODE_DEBUG Then Debug.Print "[modAppli:VerifierInactivite] gDerniereActivite non initialisée"
+        Exit Sub
+    End If
+
+    'Calcul du temps d'inactivité en minutes
+    Dim minutesInactives As Double
+    minutesInactives = Round(MinutesDepuisDerniereActivite(), 1)
+
+    If gMODE_DEBUG Then Debug.Print "[modAppli:VerifierInactivite] Vérification après " & minutesInactives & " minutes" & _
+                                    "Fréquence vérification = "; gFREQUENCE_VERIFICATION_INACTIVITE & " minutes" & _
+                                    "Durée maximale sans activité = " & gMAXIMUM_MINUTES_INACTIVITE & " minutes" & _
+                                    "Délai de grâce (dernière chance) = " & gDELAI_GRACE_SECONDES & " secondes"
+    
+    'Barre d’état informative
+    Dim minute1 As String
+    Dim minute2 As String
+    'Minute ou minutes (minute1)
+    If minutesInactives <= 1 Then
+        minute1 = "minute"
+    Else
+        minute1 = "minutes"
+    End If
+    'Minute ou minutes (minute2)
+    If gMAXIMUM_MINUTES_INACTIVITE - minutesInactives <= 1 Then
+        minute2 = "minute"
+    Else
+        minute2 = "minutes"
+    End If
+    If minutesInactives < gMAXIMUM_MINUTES_INACTIVITE Then
+        Application.StatusBar = "Aucune activité dans l'application depuis " & _
+            Format$(minutesInactives, "0") & " " & minute1 & " - Fermeture planifiée dans " & _
+            Format$(gMAXIMUM_MINUTES_INACTIVITE - minutesInactives, "0") & " " & minute2 & " - " & _
+            Format$(Now, "hh:mm:ss")
+    Else
+        Application.StatusBar = False
+    End If
+
+    'Fermeture si délai dépassé, on passe à la dernier chance...
+    If minutesInactives >= gMAXIMUM_MINUTES_INACTIVITE Then
+        If gMODE_DEBUG Then Debug.Print "[modAppli:VerifierInactivite] Inactivité trop longue (" & Format$(minutesInactives, "0") & " minutes) — fermeture de l'application"
+        gFermeturePlanifiee = GetProchaineFermeture()
+        If gMODE_DEBUG Then Debug.Print "[modAppli:VerifierInactivite] Avant l'ajout de " & gDELAI_GRACE_SECONDES & " secondes, gFermeture = " & Format(gFermeturePlanifiee, "; hh: mm: ss "); ""
+        gFermeturePlanifiee = Now + TimeSerial(0, 0, gDELAI_GRACE_SECONDES)
+        If gMODE_DEBUG Then Debug.Print "[modAppli:VerifierInactivite] Après l'ajout de " & gDELAI_GRACE_SECONDES & " secondes, gFermeture = " & Format(gFermeturePlanifiee, "hh:mm:ss")
+        
+        On Error Resume Next
+        If gMODE_DEBUG Then Debug.Print "[modAppli:VerifierInactivite] OnTime prévu pour : " & Format(gFermeturePlanifiee, "hh:mm:ss")
+        Application.OnTime gFermeturePlanifiee, "FermetureAutomatiqueParInactivite"
+        On Error GoTo 0
+        
+        Unload ufConfirmationFermeture '2025-07-02 @ 07:54
+        
+        Call ufConfirmationFermeture.AfficherMessage(minutesInactives)
+        Exit Sub
+    End If
+
+    'Replanification
+    Call PlanifierVerificationInactivite
+    Exit Sub
+
+GestionErreur:
+    Debug.Print "[modAppli:VerifierInactivite] Erreur dans VerifierInactivite : " & Err.Number & " - " & Err.description
+
+End Sub
+
+Public Sub PlanifierVerificationInactivite() '2025-07-01 @ 13:53
+    
+    gProchaineVerification = Now + TimeSerial(0, gFREQUENCE_VERIFICATION_INACTIVITE, 0)
+    Application.OnTime gProchaineVerification, "VerifierInactivite"
+    If gMODE_DEBUG Then Debug.Print "[modAppli:PlanifierVerificationInactivite] Prochaine vérification à " & Format(gProchaineVerification, "hh:mm:ss")
+    
+End Sub
+
+Sub TEST_ClignotementTimer()
+
+    Call ufConfirmationFermeture.RafraichirTimer
+    
+End Sub
+
+Public Sub FermetureAutomatiqueParInactivite() '2025-07-02 @ 06:19
+
+    'Ajoute un log pour vérification
+    If gMODE_DEBUG Then Debug.Print "[modAppli:FermetureAutomatiqueParInactivite] Fermeture automatique déclenchée à : " & Format(Now, "hh:mm:ss")
+
+'    'Optionnel : message d'adieu ou confirmation
+'    MsgBox "L’application va se fermer automatiquement suite à une période d’inactivité.", vbExclamation
+'
+    'Appel direct à ta procédure de fermeture
+    Call FermerApplicationNormalement(GetNomUtilisateur())
+    
+End Sub
+
+Public Sub RelancerTimer() '2025-07-02 @ 06:43
+
+    If gMODE_DEBUG Then Debug.Print "[modAppli:RelancerTimer] Appel de 'ufConfirmationFermeture.RafraichirTimer'"
+    ufConfirmationFermeture.RafraichirTimer
+    
+End Sub
+
+Public Sub RedemarrerSurveillance() '2025-07-02 @ 07:41
+
+    If gMODE_DEBUG Then Debug.Print "[modAppli:RedemarrerSurveillance] *** Surveillance relancée manuellement à " & Format(Now, "hh:mm:ss")
+    
+    On Error Resume Next
+    If gFermeturePlanifiee = 0 Then
+        If gMODE_DEBUG Then Debug.Print "[modAppli:RedemarrerSurveillance] gFermeturePlanifiee est nul — aucun OnTime à annuler"
+    End If
+
+    Application.OnTime gFermeturePlanifiee, "FermetureAutomatiqueParInactivite", , False
+    Application.OnTime ufConfirmationFermeture.ProchainTick, "RelancerTimer", , False
+    On Error GoTo 0
+
+    gDerniereActivite = Now
+    VerifierInactivite
+
+End Sub
 
 

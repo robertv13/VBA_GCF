@@ -124,7 +124,7 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
     
     Call Log_Record("modTEC_Saisie:TEC_Efface_Ligne - Le DELETE est confirmé - " & CStr(-ufSaisieHeures.txtTECID.Value), -1) '2024-10-05 @ 07:21
     
-    Dim sh As Worksheet: Set sh = wsdTEC_Local
+    Dim Sh As Worksheet: Set Sh = wsdTEC_Local
     
     Dim tecID As Long
     'With a negative ID value, it means to soft delete this record
@@ -161,7 +161,7 @@ Clean_Exit:
     ufSaisieHeures.txtClient.SetFocus
 
     'Libérer la mémoire
-    Set sh = Nothing
+    Set Sh = Nothing
 
     Call Log_Record("modTEC_Saisie:TEC_Efface_Ligne", "", startTime)
 

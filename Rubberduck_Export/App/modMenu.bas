@@ -125,47 +125,12 @@ Sub SauvegarderEtSortirApplication() '2024-08-30 @ 07:37
                         "l'application de gestion (sauvegarde automatique) ?", vbYesNo + vbQuestion, "Confirmation de sortie")
     
     If confirmation = vbYes Then
-        Call ApplicationFermetureNormale(GetNomUtilisateur())
+        Call FermerApplicationNormalement(GetNomUtilisateur())
     End If
-    
-'        Application.EnableEvents = False
-'        wsdADMIN.Range("B1").Value = ""
-'        wsdADMIN.Range("B2").Value = ""
-'        Application.EnableEvents = True
-'
-'        Call Delete_User_Active_File
-'
-'        On Error Resume Next
-'        Call Log_Record("----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) -----", "", 0)
-'        Call Log_Record("", "", -1)
-'        On Error GoTo 0
-'
-'        Application.ScreenUpdating = True
-'
-'       'On termine ici...
-'        Dim wb As Workbook: Set wb = ActiveWorkbook
-'        Application.EnableEvents = False
-'        ActiveWorkbook.Close SaveChanges:=True
-'        Application.EnableEvents = True
-'
-'        If GetNomUtilisateur() = "RobertMV" Or GetNomUtilisateur() = "robertmv" Then
-'            Call StopperSauvegardeAutomatique
-'            Call ExporterCodeVBA 'Sauvegarde AUTOMATIQUE du code VBA
-'        End If
-'
-'        DoEvents
-'
-'        'On tente de quitter l'application EXCEL
-'        Application.Application.Quit
-'
-'    End If
-'
-'    'Libérer la mémoire
-'    Set wb = Nothing
     
 End Sub
 
-Sub ApplicationFermetureNormale(ByVal userName As String) 'Nouvelle procédure - 2025-05-30 @ 11:07
+Sub FermerApplicationNormalement(ByVal userName As String) 'Nouvelle procédure - 2025-05-30 @ 11:07
 
     On Error GoTo ExitPoint
     
@@ -180,6 +145,8 @@ Sub ApplicationFermetureNormale(ByVal userName As String) 'Nouvelle procédure -
         .Range("B1").Value = ""
         .Range("B2").Value = ""
     End With
+    
+    Call ViderTableauxStructures
     
     'Effacer fichier utilisateur actif + Fermeture de la journalisation
     Call Delete_User_Active_File(GetNomUtilisateur())
@@ -284,6 +251,56 @@ Sub Delete_User_Active_File(ByVal userName As String)
     End If
 
 '    Call Log_Record("modMenu:Delete_User_Active_File", userName, startTime)
+
+End Sub
+
+Sub ViderTableauxStructures() '2025-07-01 @ 10:38
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:ViderTableauxStructures", "", 0)
+    
+    Dim feuilles As Variant, tableaux As Variant
+    Dim ws As Worksheet
+    Dim lo As ListObject
+
+    'Feuilles & noms de tableaux à vider
+    feuilles = Array("BD_Clients", _
+                     "ENC_Détails", _
+                     "ENC_Entête", _
+                     "FAC_Comptes_Clients", _
+                     "FAC_Détails", _
+                     "FAC_Entête", _
+                     "FAC_Sommaire_Taux", _
+                     "GL_Trans", _
+                     "TEC_Local")
+    tableaux = Array("l_tbl_BD_Clients", _
+                     "l_tbl_ENC_Détails", _
+                     "l_tbl_ENC_Entête", _
+                     "l_tbl_FAC_Comptes_Clients", _
+                     "l_tbl_FAC_Détails", _
+                     "l_tbl_FAC_Entête", _
+                     "l_tbl_FAC_Sommaire_Taux", _
+                     "l_tbl_GL_Trans", _
+                     "l_tbl_TEC_Local")
+
+    On Error Resume Next
+
+    Dim i As Long
+    For i = LBound(feuilles) To UBound(feuilles)
+        Set ws = ThisWorkbook.Sheets(Trim$(feuilles(i)))
+        Set lo = ws.ListObjects(tableaux(i))
+
+        If Not lo Is Nothing Then
+            If Not lo.DataBodyRange Is Nothing Then
+                lo.DataBodyRange.Delete
+            End If
+        Else
+            Debug.Print "Tableau '" & tableaux(i) & "' est introuvable dans '" & Trim(feuilles(i)) & "'"
+        End If
+    Next i
+
+    On Error GoTo 0
+
+    Call Log_Record("modMenu:ViderTableauxStructures", "", startTime)
 
 End Sub
 

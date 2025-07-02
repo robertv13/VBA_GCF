@@ -26,7 +26,7 @@ Private Sub UserForm_Initialize() '2025-05-30 @ 13:26
 
     Call ConnectFormControls(Me)
     Call VerifierEtatBoutonAjouter
-    Call RafraichirActivite("Activité dans userForm '" & Me.Name & "'")
+'    Call RafraichirActivite("Activité dans userForm '" & Me.Name & "'")
     
 End Sub
 

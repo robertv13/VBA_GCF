@@ -1,7 +1,7 @@
 ﻿Attribute VB_Name = "modCSV_Import"
 Option Explicit
 
-Sub Main()
+Sub main()
 
     'Setup the receiving worksheet and clear the previous results
     Dim ws As Worksheet: Set ws = wshzCSV_File

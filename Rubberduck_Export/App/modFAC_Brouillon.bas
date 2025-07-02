@@ -787,11 +787,11 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.listBox1.Clear
+        ufFraisDivers.ListBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.listBox1.AddItem item
+            ufFraisDivers.ListBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless
@@ -1296,7 +1296,7 @@ Sub Load_Invoice_Template(t As String)
         facRow = facRow + 2
     Next i
         
-    Application.Goto wshFAC_Brouillon.Range("L" & facRow)
+    Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
 

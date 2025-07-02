@@ -2381,7 +2381,7 @@ Private Sub VerifierFACProjetsEntete(ByRef r As Long, ByRef readRows As Long)
     Dim HeaderRow As Long: HeaderRow = 1
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).Row
-    If lastUsedRow <= HeaderRow Then
+    If lastUsedRow <= HeaderRow + 1 Then
         Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Cette feuille est vide !!!")
         r = r + 2
         GoTo Clean_Exit
@@ -2550,7 +2550,7 @@ Private Sub VerifierFACProjetsDetails(ByRef r As Long, ByRef readRows As Long)
     Dim HeaderRow As Long: HeaderRow = 1
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).Row
-    If lastUsedRow <= HeaderRow Then
+    If lastUsedRow <= HeaderRow + 1 Then
         Call AddMessageToWorkSheet(wsOutput, r, 2, "********** Cette feuille est vide !!!")
         r = r + 2
         GoTo Clean_Exit
@@ -3338,7 +3338,7 @@ Private Sub VerifierTEC(ByRef r As Long, ByRef readRows As Long)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 7461 'What is the last TECID analyzed ?
+    lastTECIDReported = 7488 'What is the last TECID analyzed ?
     
     'Réference au UserDefined structure 'StatistiquesTEC'
     Dim stats As StatistiquesTEC
