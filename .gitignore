@@ -33,6 +33,7 @@
 
 # Ne jamais reprendre ces modules de feuille (artefacts)
 Rubberduck_Export/App/Feuil2.doccls
+Rubberduck_Export/App/Feuil5.doccls
 Rubberduck_Export/App/Feuil6.doccls
 
 # =====================================================

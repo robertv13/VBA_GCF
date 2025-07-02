@@ -8,13 +8,6 @@ Public Const rmv_modeModification As Long = 4
 
 Public rmv_state As Long
 
-'Sauvegarde des valeurs
-Public savedClient As String
-Public savedActivite As String
-Public savedHeures As Currency
-Public savedFacturable As String
-Public savedCommNote As String
-
 Sub TEC_Ajoute_Ligne() 'Add an entry to DB
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Ajoute_Ligne", "", 0)
@@ -34,7 +27,6 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
         On Error GoTo 0
         
         Call TEC_Record_Add_Or_Update_To_DB(0)
-        
         Call TEC_Record_Add_Or_Update_Locally(0)
         
         'Clear the userForm fields after saving
@@ -49,14 +41,13 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
 '            .txtSavedHeures.value = ""
         End With
         
-        savedHeures = 0 '2025-05-07 @ 16:54
+        ufSaisieHeures.savedHeures = 0 '2025-05-07 @ 16:54
         
         Call TEC_Get_All_TEC_AF
-        
         Call TEC_Refresh_ListBox_And_Add_Hours
         
         'Reset command buttons
-        Call ActiverButtonsVraiOuFaux("TEC_Ajoute_Ligne", False, False, False, False)
+        Call ActiverButtonsVraiOuFaux(False, False, False, False)
         
         'Back to client
         ufSaisieHeures.txtClient.SetFocus
@@ -90,6 +81,9 @@ Sub TEC_Modifie_Ligne() '2023-12-23 @ 07:04
         .chbFacturable = True
     End With
 
+    'Tous les boutons sont Disabled
+    Call ActiverButtonsVraiOuFaux(False, False, False, False)
+    
     Call TEC_Get_All_TEC_AF
     Call TEC_Refresh_ListBox_And_Add_Hours
     
@@ -282,13 +276,13 @@ Sub TEC_Efface_Formulaire() 'Clear all fields on the userForm
         .txtDate.Enabled = True
     End With
     
-    savedHeures = 0 '2025-05-07 @ 17:03
+    ufSaisieHeures.savedHeures = 0 '2025-05-07 @ 17:03
     
     Call TEC_Get_All_TEC_AF
     
     Call TEC_Refresh_ListBox_And_Add_Hours
     
-    Call ActiverButtonsVraiOuFaux("TEC_Efface_Formulaire", False, False, False, False)
+'    Call ActiverButtonsVraiOuFaux("TEC_Efface_Formulaire", False, False, False, False)
         
     ufSaisieHeures.txtClient.SetFocus
     
@@ -638,7 +632,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     Dim rngResult As Range
     Dim i As Long, ColIndex As Long
     
-    'Remplissage du listBox
+    'Remplissage du listBox - @TODO(2025-07-02)
     Dim hresFormat As String
     If lastRow >= 3 Then
         Set rng = wsdTEC_Local.Range("V3:AI" & lastRow)
@@ -705,7 +699,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
 
 EndOfProcedure:
 
-    Call ActiverButtonsVraiOuFaux("TEC_Refresh_ListBox_And_Add_Hours", False, False, False, False)
+'    Call ActiverButtonsVraiOuFaux("TEC_Refresh_ListBox_And_Add_Hours", False, False, False, False)
 
     ufSaisieHeures.txtClient.SetFocus
     
@@ -746,20 +740,20 @@ Sub TEC_Update_TDB_From_TEC_Local()
     
     Dim i As Long
     For i = 1 To numRows
-        arr(i, 1) = rawData(i, 1) 'TECID
-        arr(i, 2) = Format$(rawData(i, 2), "000") 'ProfID
-        arr(i, 3) = rawData(i, 3) 'Prof
-        arr(i, 4) = rawData(i, 4) 'Date
-        arr(i, 5) = rawData(i, 5) 'Client's ID
-        arr(i, 6) = rawData(i, 6) 'Client's Name
-        arr(i, 7) = IIf(Fn_Is_Client_Facturable(rawData(i, 5)), "VRAI", "FAUX") 'Facturable
-        arr(i, 8) = rawData(i, 8) 'Hours
-        arr(i, 9) = rawData(i, 10) 'isBillable
-        arr(i, 10) = rawData(i, 12) 'isInvoiced
-        arr(i, 11) = rawData(i, 14) 'isDeleted
+        arr(i, 1) = rawData(i, fTECTECID)
+        arr(i, 2) = Format$(rawData(i, fTECProfID), "000")
+        arr(i, 3) = rawData(i, fTECProf)
+        arr(i, 4) = rawData(i, fTECDate)
+        arr(i, 5) = rawData(i, fTECClientID)
+        arr(i, 6) = rawData(i, fTECClientNom)
+        arr(i, 7) = IIf(Fn_Is_Client_Facturable(rawData(i, fTECClientID)), "VRAI", "FAUX")
+        arr(i, 8) = rawData(i, fTECHeures)
+        arr(i, 9) = rawData(i, fTECEstFacturable)
+        arr(i, 10) = rawData(i, fTECEstFacturee)
+        arr(i, 11) = rawData(i, fTECEstDetruit)
     Next i
     
-    ' Mettre à jour la feuille TEC_TDB_Data
+    'Mettre à jour la feuille TEC_TDB_Data
     Dim rngTo As Range
     Set rngTo = wshTEC_TDB_Data.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2))
     rngTo.Value = arr
@@ -788,9 +782,7 @@ Sub TEC_TdB_Refresh_All_Pivot_Tables()
     
 End Sub
 
-Sub ActiverButtonsVraiOuFaux(where As String, a As Boolean, u As Boolean, _
-                                  d As Boolean, c As Boolean)
-'    Debug.Print "077# - " & where, a, u, d, c
+Sub ActiverButtonsVraiOuFaux(a As Boolean, u As Boolean, d As Boolean, c As Boolean)
                                   
     With ufSaisieHeures
         .cmdAdd.Enabled = a

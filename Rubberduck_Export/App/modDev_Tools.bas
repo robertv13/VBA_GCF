@@ -791,11 +791,11 @@ Sub Get_UsedRange_In_Active_Workbook()
     
 End Sub
 
-Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
+Sub CreerRepertoireEtImporterFichiers() '2025-07-02 @ 13:57
 
     'Chemin du dossier contenant les fichiers PROD
     Dim cheminSourcePROD As String
-    cheminSourcePROD = "P:\Administration\APP\GCF\DataFiles\" ' Ajustez ce chemin
+    cheminSourcePROD = "P:\Administration\APP\GCF\DataFiles\"
     
     'Vérifier si des fichiers Actif_*.txt existent (utilisateurs encore présents)
     Dim actifFile As String
@@ -831,6 +831,24 @@ Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
     nomFichier1 = "GCF_BD_MASTER.xlsx"
     nomFichier2 = "GCF_BD_Entrée.xlsx"
     
+    'Mise en place d'un fichier .lock chez le client - 2025-07-02 @ 14:03
+    Dim fichierLock As String
+    fichierLock = cheminSourcePROD & "GCF_BD_MASTER.lock"
+    
+    If fso.fileExists(fichierLock) Then
+        MsgBox "Le fichier est déjà verrouillé sur l'environnement client." & vbNewLine & vbNewLine & _
+               "L'import est annulée.", vbCritical
+        Exit Sub
+    Else
+        'Écriture du fichier .lock avec infos utiles
+        Dim fluxLock As Object
+        Set fluxLock = fso.CreateTextFile(fichierLock, True)
+        fluxLock.WriteLine "Fichier verrouillé par : Robert"
+        fluxLock.WriteLine "Date : " & Format(Now, "yyyy-mm-dd hh:nn:ss")
+        fluxLock.WriteLine "Machine : " & Environ("COMPUTERNAME")
+        fluxLock.Close
+    End If
+    
     'Copier le premier fichier
     If fso.fileExists(cheminSourcePROD & nomFichier1) Then
         fso.CopyFile Source:=cheminSourcePROD & nomFichier1, Destination:=nouveauDossier, OverwriteFiles:=False
@@ -852,7 +870,7 @@ Sub CreerRepertoireEtImporterFichiers() '2024-12-09 @ 22:26
         'Copie du fichier PROD ---> Local
         fso.CopyFile Source:=cheminSourcePROD & fichier, Destination:=nouveauDossier, OverwriteFiles:=False
         'Efface le fichier PROD (initialiation)
-        Kill cheminSourcePROD & fichier
+        If fso.fileExists(cheminSourcePROD & fichier) Then Kill cheminSourcePROD & fichier
         'Fichier suivant à copier
         fichier = Dir
     Loop

@@ -3,6 +3,21 @@ Option Explicit
 
 Private Sub Auto_Open() '2024-12-28 @ 11:09
 
+    'Chemin du dossier contenant les fichiers PROD - 2025-07-02 @ 14:24
+    Dim cheminSourcePROD As String
+    cheminSourcePROD = "P:\Administration\APP\GCF\DataFiles\"
+    
+    If Fn_Get_Windows_Username <> "RobertMV" And Fn_Get_Windows_Username <> "Robertmv" Then
+        If Dir(cheminSourcePROD & "\GCF_BD_MASTER.lock") <> "" Then
+            MsgBox "Cette application est actuellement en maintenance." & vbNewLine & vbNewLine & _
+                   "Le fichier principal est verrouillé par le développeur." & vbNewLine & vbNewLine & _
+                   "Veuillez ressayer dans 5 à 10 minutes SVP", _
+                   vbCritical, _
+                   "L'application APP n'est pas disponible"
+            Call FermerApplicationNormalement(GetNomUtilisateur())
+        End If
+    End If
+    
     gDerniereActivite = Now
 
     'Mise en placedu mécanisme pour sortir automatiquement de l'application, s'il n'y a pas d'activité
@@ -261,15 +276,21 @@ Private Sub ConnectControlsRecursive(ctrls As MSForms.Controls) '2025-05-30 @ 13
     
 End Sub
 
-Public Sub RafraichirActivite(Optional ByVal msg As String = "") '2025-07-01 @ 14:31
+Public Sub RafraichirActivite(Optional ByVal msg As String = "") '2025-07-02 @ 15:19
     
-    If gMODE_DEBUG Then Debug.Print "[modAppli:RafraichirActivite] Activité détectée - " & msg
+    If TimeValue(Now) < TimeSerial(gHEURE_DEBUT_SURVEILLANCE, 0, 0) Then
+        Exit Sub
+    End If
     
     Dim activeEvents As Boolean
     activeEvents = Application.EnableEvents
     If activeEvents = True Then Application.EnableEvents = False
 
+    If gMODE_DEBUG Then Debug.Print "[modAppli:RafraichirActivite] Activité détectée @ '" & Format$(Now, "hh:mm:ss") & "'"
+    
     gDerniereActivite = Now
+    If gMODE_DEBUG Then Debug.Print "     Activité détectée à '" & Format(gDerniereActivite, "hh:mm:ss") & "'" & _
+                                    ", prochaine vérification prévue pour '" & Format$(gProchaineVerification, "hh:mm:ss") & "'"
     Application.StatusBar = False
     wsdADMIN.Range("B6").Value = Format$(Now, "hh:mm:ss")
     
@@ -280,7 +301,7 @@ Public Sub RafraichirActivite(Optional ByVal msg As String = "") '2025-07-01 @ 1
 End Sub
 
 '@Description "Vérifie l'inactivité et ferme si plus de x minutes"
-Public Sub VerifierInactivite() '2025-07-02 @ 06:50
+Public Sub VerifierInactivite() '2025-07-02 @ 12:10
 
     'Mettre à jour une trace de vérification d'activité
     Application.EnableEvents = False
@@ -289,11 +310,9 @@ Public Sub VerifierInactivite() '2025-07-02 @ 06:50
     
     On Error GoTo GestionErreur
 
-    Dim heureActuelle As Double
-    heureActuelle = Time
-
     'Ne rien faire avant 06:00:00
-    If heureActuelle < TimeValue("09:00:00") Then
+    If TimeValue(Now) < TimeSerial(gHEURE_DEBUT_SURVEILLANCE, 0, 0) Then
+        If gMODE_DEBUG Then Debug.Print "Période hors surveillance"
         Call PlanifierVerificationInactivite
         Exit Sub
     End If
@@ -308,10 +327,10 @@ Public Sub VerifierInactivite() '2025-07-02 @ 06:50
     Dim minutesInactives As Double
     minutesInactives = Round(MinutesDepuisDerniereActivite(), 1)
 
-    If gMODE_DEBUG Then Debug.Print "[modAppli:VerifierInactivite] Vérification après " & minutesInactives & " minutes" & _
-                                    "Fréquence vérification = "; gFREQUENCE_VERIFICATION_INACTIVITE & " minutes" & _
-                                    "Durée maximale sans activité = " & gMAXIMUM_MINUTES_INACTIVITE & " minutes" & _
-                                    "Délai de grâce (dernière chance) = " & gDELAI_GRACE_SECONDES & " secondes"
+    If gMODE_DEBUG Then Debug.Print "[modAppli:VerifierInactivite] Vérification @ " & minutesInactives & " min. - " & _
+                                    "Fréq. vérification = "; gFREQUENCE_VERIFICATION_INACTIVITE & " min., " & _
+                                    "Durée max. sans activité = " & gMAXIMUM_MINUTES_INACTIVITE & " min., " & _
+                                    "Délai de grâce (dernière chance) = " & gDELAI_GRACE_SECONDES & " sec."
     
     'Barre d’état informative
     Dim minute1 As String
@@ -367,6 +386,10 @@ End Sub
 
 Public Sub PlanifierVerificationInactivite() '2025-07-01 @ 13:53
     
+    On Error Resume Next
+    Application.OnTime gProchaineVerification, "VerifierInactivite", , False
+    On Error GoTo 0
+    
     gProchaineVerification = Now + TimeSerial(0, gFREQUENCE_VERIFICATION_INACTIVITE, 0)
     Application.OnTime gProchaineVerification, "VerifierInactivite"
     If gMODE_DEBUG Then Debug.Print "[modAppli:PlanifierVerificationInactivite] Prochaine vérification à " & Format(gProchaineVerification, "hh:mm:ss")
@@ -381,6 +404,8 @@ End Sub
 
 Public Sub FermetureAutomatiqueParInactivite() '2025-07-02 @ 06:19
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:FermetureAutomatiqueParInactivite", "", 0)
+    
     'Ajoute un log pour vérification
     If gMODE_DEBUG Then Debug.Print "[modAppli:FermetureAutomatiqueParInactivite] Fermeture automatique déclenchée à : " & Format(Now, "hh:mm:ss")
 

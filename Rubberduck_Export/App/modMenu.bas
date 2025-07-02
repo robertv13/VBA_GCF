@@ -132,6 +132,8 @@ End Sub
 
 Sub FermerApplicationNormalement(ByVal userName As String) 'Nouvelle procédure - 2025-05-30 @ 11:07
 
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:FermerApplicationNormalement", "", startTime)
+    
     On Error GoTo ExitPoint
     
     Application.EnableEvents = False

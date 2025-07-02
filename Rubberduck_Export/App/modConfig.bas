@@ -41,9 +41,10 @@ Public Const INTERVALLE_MINUTES_SAUVEGARDE As Double = 15
 Public gDerniereActivite As Date
 Public gProchaineVerification As Date
 Public gFermeturePlanifiee As Date
-Public Const gFREQUENCE_VERIFICATION_INACTIVITE As Long = 1
-Public Const gMAXIMUM_MINUTES_INACTIVITE As Long = 4
+Public Const gFREQUENCE_VERIFICATION_INACTIVITE As Long = 15
+Public Const gMAXIMUM_MINUTES_INACTIVITE As Long = 60
 Public Const gDELAI_GRACE_SECONDES As Long = 300
+Public Const gHEURE_DEBUT_SURVEILLANCE As Long = 19
 
 'On affiche ou pas certains Debug.print
 Public Const gMODE_DEBUG As Boolean = True
