@@ -164,8 +164,8 @@ Private Sub txtDateDebut_Exit(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim dateCorrigee As String
     
-    If Trim$(txtDateDebut.Text) <> "" Then
-        dateCorrigee = CorrigerDate(txtDateDebut.Text)
+    If Trim$(txtDateDebut.text) <> "" Then
+        dateCorrigee = CorrigerDate(txtDateDebut.text)
         If dateCorrigee = "" Then
             MsgBox "La date saisie est invalide, veuillez saisir une date sous un" & vbNewLine & vbNewLine & _
                     "format valide (jj ou jj/mm ou jj/mm/aaaa ou aaaa/mm/jj)" & vbNewLine & vbNewLine & _
@@ -173,9 +173,9 @@ Private Sub txtDateDebut_Exit(ByVal Cancel As MSForms.ReturnBoolean)
                     "Impossible d'interpréter la date saisie"
             Cancel = True
             txtDateDebut.SelStart = 0
-            txtDateDebut.SelLength = Len(txtDateDebut.Text)
+            txtDateDebut.SelLength = Len(txtDateDebut.text)
         Else
-            txtDateDebut.Text = dateCorrigee
+            txtDateDebut.text = dateCorrigee
         End If
     End If
 End Sub
@@ -184,8 +184,8 @@ Private Sub txtDateFin_Exit(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim dateCorrigee As String
     
-    If Trim$(txtDateFin.Text) <> "" Then
-        dateCorrigee = CorrigerDate(txtDateFin.Text)
+    If Trim$(txtDateFin.text) <> "" Then
+        dateCorrigee = CorrigerDate(txtDateFin.text)
         If dateCorrigee = "" Then
             MsgBox "La date saisie est invalide, veuillez saisir une date sous un" & vbNewLine & vbNewLine & _
                     "format valide (jj ou jj/mm ou jj/mm/aaaa ou aaaa/mm/jj)" & vbNewLine & vbNewLine & _
@@ -193,9 +193,9 @@ Private Sub txtDateFin_Exit(ByVal Cancel As MSForms.ReturnBoolean)
                     "Impossible d'interpréter la date saisie"
             Cancel = True
             txtDateFin.SelStart = 0
-            txtDateFin.SelLength = Len(txtDateFin.Text)
+            txtDateFin.SelLength = Len(txtDateFin.text)
         Else
-            txtDateFin.Text = dateCorrigee
+            txtDateFin.text = dateCorrigee
         End If
     End If
 End Sub
@@ -204,8 +204,8 @@ Private Sub txtDateSaisieDebut_Exit(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim dateCorrigee As String
     
-    If Trim$(txtDateSaisieDebut.Text) <> "" Then
-        dateCorrigee = CorrigerDate(txtDateSaisieDebut.Text)
+    If Trim$(txtDateSaisieDebut.text) <> "" Then
+        dateCorrigee = CorrigerDate(txtDateSaisieDebut.text)
         If dateCorrigee = "" Then
             MsgBox "La date saisie est invalide, veuillez saisir une date sous un" & vbNewLine & vbNewLine & _
                     "format valide (jj ou jj/mm ou jj/mm/aaaa ou aaaa/mm/jj)" & vbNewLine & vbNewLine & _
@@ -213,9 +213,9 @@ Private Sub txtDateSaisieDebut_Exit(ByVal Cancel As MSForms.ReturnBoolean)
                     "Impossible d'interpréter la date saisie"
             Cancel = True
             txtDateSaisieDebut.SelStart = 0
-            txtDateSaisieDebut.SelLength = Len(txtDateSaisieDebut.Text)
+            txtDateSaisieDebut.SelLength = Len(txtDateSaisieDebut.text)
         Else
-            txtDateSaisieDebut.Text = dateCorrigee
+            txtDateSaisieDebut.text = dateCorrigee
         End If
     End If
 End Sub
@@ -226,8 +226,8 @@ Private Sub txtDateSaisieFin_Exit(ByVal Cancel As MSForms.ReturnBoolean)
     
     Dim dateCorrigee As String
     
-    If Trim$(txtDateSaisieFin.Text) <> "" Then
-        dateCorrigee = CorrigerDate(txtDateSaisieFin.Text)
+    If Trim$(txtDateSaisieFin.text) <> "" Then
+        dateCorrigee = CorrigerDate(txtDateSaisieFin.text)
         If dateCorrigee = "" Then
             MsgBox "La date saisie est invalide, veuillez saisir une date sous un" & vbNewLine & vbNewLine & _
                     "format valide (jj ou jj/mm ou jj/mm/aaaa ou aaaa/mm/jj)" & vbNewLine & vbNewLine & _
@@ -235,9 +235,9 @@ Private Sub txtDateSaisieFin_Exit(ByVal Cancel As MSForms.ReturnBoolean)
                     "Impossible d'interpréter la date saisie"
             Cancel = True
             txtDateSaisieFin.SelStart = 0
-            txtDateSaisieFin.SelLength = Len(txtDateSaisieFin.Text)
+            txtDateSaisieFin.SelLength = Len(txtDateSaisieFin.text)
         Else
-            txtDateSaisieFin.Text = dateCorrigee
+            txtDateSaisieFin.text = dateCorrigee
         End If
     End If
 End Sub

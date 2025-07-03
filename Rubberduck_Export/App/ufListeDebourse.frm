@@ -106,7 +106,7 @@ End Sub
 Private Sub txtFiltre_Change()
 
     'Filtrer les données à chaque changement dans le TextBox
-    Call UpdateFilteredArray(Me.txtFiltre.Text)
+    Call UpdateFilteredArray(Me.txtFiltre.text)
     
 End Sub
 
@@ -114,7 +114,7 @@ Private Sub UpdateFilteredArray(filtre As String)
 
     'Récupérer le texte du TextBox pour filtrer
     Dim filterText As String
-    filterText = Me.txtFiltre.Text
+    filterText = Me.txtFiltre.text
 
     'Initialiser rowCount pour les résultats filtrés
     Dim rowCount As Long

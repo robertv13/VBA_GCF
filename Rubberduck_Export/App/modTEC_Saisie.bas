@@ -657,14 +657,6 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
         Next i
     End If
     
-    For i = 0 To ufSaisieHeures.lsbHresJour.ListCount - 1 '2025-07-03 @ 08:39
-        If i Mod 2 = 0 Then
-            ufSaisieHeures.lsbHresJour.BackColor = RGB(255, 255, 255) ' blanc
-        Else
-            ufSaisieHeures.lsbHresJour.BackColor = RGB(240, 240, 240) ' gris clair
-        End If
-    Next i
-
     'Mise à jour des totaux
     ufSaisieHeures.txtTotalHeures.Value = Format$(totalHeures, "#0.00")
     ufSaisieHeures.txtHresFact.Value = Format$(totalHresFact, "#0.00")

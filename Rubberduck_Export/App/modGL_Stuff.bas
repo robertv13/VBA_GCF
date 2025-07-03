@@ -245,7 +245,7 @@ Sub GL_BV_Ajouter_Shape_Retour()
                                                         Width:=90, Height:=30)
         With btn
             .Name = "shpRetour"
-            .TextFrame2.TextRange.Text = "Retour"
+            .TextFrame2.TextRange.text = "Retour"
             .TextFrame2.TextRange.Font.Fill.ForeColor.RGB = RGB(0, 0, 0)
             .TextFrame2.TextRange.Font.size = 14
             .TextFrame2.TextRange.Font.Bold = True

@@ -112,7 +112,7 @@ Sub Actualiser_Stats_CA()
     Dim rng As Range
     Set rng = ws.Cells(9, saveCol)
     rng.AddComment
-    rng.Comment.Text "Inclut un montant de " & Format$(tecValeur - glTECSolde, "###,##0.00 $") & vbLf & "pour la variation des TEC"
+    rng.Comment.text "Inclut un montant de " & Format$(tecValeur - glTECSolde, "###,##0.00 $") & vbLf & "pour la variation des TEC"
     With rng.Comment.Shape
         .Width = 135 'Largeur en points
         .Height = 27 'Hauteur en points

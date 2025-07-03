@@ -92,10 +92,10 @@ End Sub
 Private Sub txtTotalFacture_Exit(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim totalFacture As Currency
-    ufEncRégularisation.txtTotalFacture.Text = Replace(ufEncRégularisation.txtTotalFacture.Text, ".", ",")
+    ufEncRégularisation.txtTotalFacture.text = Replace(ufEncRégularisation.txtTotalFacture.text, ".", ",")
     
-    If ufEncRégularisation.txtTotalFacture.Text <> "" And IsNumeric(ufEncRégularisation.txtTotalFacture.Value) = True Then
-        totalFacture = CCur(ufEncRégularisation.txtTotalFacture.Text)
+    If ufEncRégularisation.txtTotalFacture.text <> "" And IsNumeric(ufEncRégularisation.txtTotalFacture.Value) = True Then
+        totalFacture = CCur(ufEncRégularisation.txtTotalFacture.text)
         Debug.Print "#093 - totalFacture = " & totalFacture
     
         Dim honoraires As Currency, fraisDivers As Currency
@@ -132,45 +132,45 @@ End Sub
 
 Private Sub txtHonoraires_AfterUpdate()
 
-    ufEncRégularisation.txtHonoraires.Text = Replace(ufEncRégularisation.txtHonoraires.Text, ".", ",")
-    ufEncRégularisation.txtHonoraires.Text = Format$(ufEncRégularisation.txtHonoraires.Text, "###,##0.00 $")
+    ufEncRégularisation.txtHonoraires.text = Replace(ufEncRégularisation.txtHonoraires.text, ".", ",")
+    ufEncRégularisation.txtHonoraires.text = Format$(ufEncRégularisation.txtHonoraires.text, "###,##0.00 $")
     Call VerifieMontantsSaisis
     
 End Sub
 
 Private Sub txtFraisDivers_AfterUpdate()
 
-    ufEncRégularisation.txtFraisDivers.Text = Replace(ufEncRégularisation.txtFraisDivers.Text, ".", ",")
-    ufEncRégularisation.txtFraisDivers.Text = Format$(ufEncRégularisation.txtFraisDivers.Text, "###,##0.00 $")
+    ufEncRégularisation.txtFraisDivers.text = Replace(ufEncRégularisation.txtFraisDivers.text, ".", ",")
+    ufEncRégularisation.txtFraisDivers.text = Format$(ufEncRégularisation.txtFraisDivers.text, "###,##0.00 $")
     Call VerifieMontantsSaisis
 
 End Sub
 
 Private Sub txtTPS_AfterUpdate()
 
-    ufEncRégularisation.txtTPS.Text = Replace(ufEncRégularisation.txtTPS.Text, ".", ",")
-    ufEncRégularisation.txtTPS.Text = Format$(ufEncRégularisation.txtTPS.Text, "###,##0.00 $")
+    ufEncRégularisation.txtTPS.text = Replace(ufEncRégularisation.txtTPS.text, ".", ",")
+    ufEncRégularisation.txtTPS.text = Format$(ufEncRégularisation.txtTPS.text, "###,##0.00 $")
     Call VerifieMontantsSaisis
 
 End Sub
 
 Private Sub txtTVQ_AfterUpdate()
 
-    ufEncRégularisation.txtTVQ.Text = Replace(ufEncRégularisation.txtTVQ.Text, ".", ",")
-    ufEncRégularisation.txtTVQ.Text = Format$(ufEncRégularisation.txtTVQ.Text, "###,##0.00 $")
+    ufEncRégularisation.txtTVQ.text = Replace(ufEncRégularisation.txtTVQ.text, ".", ",")
+    ufEncRégularisation.txtTVQ.text = Format$(ufEncRégularisation.txtTVQ.text, "###,##0.00 $")
     Call VerifieMontantsSaisis
 
 End Sub
 
 Private Sub VerifieMontantsSaisis()
 
-    If ufEncRégularisation.txtTotalFacture.Text <> "" Then
+    If ufEncRégularisation.txtTotalFacture.text <> "" Then
         With ufEncRégularisation
-            Debug.Print "#095 - " & CCur(.txtTotalFacture.Text) & " <> ? " & CCur(.txtHonoraires.Text) & "+" & CCur(.txtFraisDivers.Text) & "+" & CCur(.txtTPS.Text) & "+" & CCur(.txtTVQ.Text)
-            If CCur(.txtTotalFacture.Text) = CCur(.txtHonoraires.Text) + _
-                                        CCur(.txtFraisDivers.Text) + _
-                                        CCur(.txtTPS.Text) + _
-                                        CCur(.txtTVQ.Text) Then
+            Debug.Print "#095 - " & CCur(.txtTotalFacture.text) & " <> ? " & CCur(.txtHonoraires.text) & "+" & CCur(.txtFraisDivers.text) & "+" & CCur(.txtTPS.text) & "+" & CCur(.txtTVQ.text)
+            If CCur(.txtTotalFacture.text) = CCur(.txtHonoraires.text) + _
+                                        CCur(.txtFraisDivers.text) + _
+                                        CCur(.txtTPS.text) + _
+                                        CCur(.txtTVQ.text) Then
                 .txtTotalFacture.ForeColor = vbBlack
                 ufEncRégularisation.cmbAccepte.Visible = True
             Else

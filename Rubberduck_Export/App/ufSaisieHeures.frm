@@ -406,7 +406,7 @@ Private Sub txtHeures_Exit(ByVal Cancel As MSForms.ReturnBoolean)
         DoEvents
         Me.txtHeures.SetFocus 'Remet le focus explicitement
         Me.txtHeures.SelStart = 0
-        Me.txtHeures.SelLength = Len(Me.txtHeures.Text)
+        Me.txtHeures.SelLength = Len(Me.txtHeures.text)
     End If
     
     Call Log_Record("ufSaisieHeures:txtHeures_Exit", "", startTime)

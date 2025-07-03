@@ -863,7 +863,7 @@ Sub GL_BV_Adjust_The_Shape()
         .Fill.ForeColor.RGB = RGB(249, 255, 229)
         .Line.Weight = 2
         .Line.ForeColor.RGB = vbBlue
-        .TextFrame.Characters.Text = texteFull
+        .TextFrame.Characters.text = texteFull
         .TextFrame.Characters.Font.Color = vbBlack
         .TextFrame.Characters.Font.Name = "Consolas"
         .TextFrame.Characters.Font.size = 10

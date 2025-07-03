@@ -1858,4 +1858,85 @@ Sub AppelerRoutineAddIn(nomFichier As String, nomMacro As String)
     
 End Sub
 
+Sub ScannerAppelsSubsImplicites() '2025-07-03 @ 17:49
+
+    Dim comp As Object, codeMod As Object, dictSubs As Object
+    Dim ligne As String, nomModule As String, lignes() As String
+    Dim i As Long
+    Dim nomProc As Variant
+
+    Set dictSubs = BatirDictionnaireProcedures()
+
+    Debug.Print "Appels implicites aux Sub sans 'Call'"
+
+    For Each comp In ThisWorkbook.VBProject.VBComponents
+        If comp.Type = vbext_ct_StdModule Or _
+           comp.Type = vbext_ct_ClassModule Or _
+           comp.Type = vbext_ct_MSForm Then
+
+            nomModule = comp.Name
+            lignes = Split(comp.codeModule.Lines(1, comp.codeModule.CountOfLines), vbCrLf)
+
+            For i = 0 To UBound(lignes)
+                ligne = Trim(lignes(i))
+
+                'Ignore les commentaires, les lignes vides & les "Debug.Print"
+                If ligne = "" Or Left(ligne, 1) = "'" Then GoTo LigneSuivante
+                If Left(ligne, 12) = "Debug.Print " Then GoTo LigneSuivante
+                If Left(ligne, 7) = "MsgBox " Then GoTo LigneSuivante
+
+                For Each nomProc In dictSubs.keys
+                    'Vérifie présence d'un nom de Sub et absence du mot 'Call' juste avant
+                    If InStr(" " & ligne & " ", " " & nomProc & " ") > 0 And _
+                        InStr(LCase(ligne), "call " & LCase(nomProc)) = 0 And _
+                        InStr(LCase(ligne), "set " & LCase(nomProc)) = 0 Then
+                        Stop
+                        Debug.Print Pad(nomModule, 25) & " # " & Format(i + 1, "###0") & "   " & ligne
+                    End If
+                Next nomProc
+
+LigneSuivante:
+            Next i
+        End If
+    Next comp
+
+    Debug.Print "Recherche terminée"
+End Sub
+
+Function BatirDictionnaireProcedures() As Object '2025-07-03 @ 17:53
+
+    Dim comp As Object, codeMod As Object, dict As Object
+    Dim ligne As String, nomSub As String
+    Dim i As Long
+
+    Set dict = CreateObject("Scripting.Dictionary")
+
+    For Each comp In ThisWorkbook.VBProject.VBComponents
+        Set codeMod = comp.codeModule
+
+        For i = 1 To codeMod.CountOfLines
+            ligne = Trim(codeMod.Lines(i, 1))
+            'Ignore les commentaires ou les Functions
+            If Left(ligne, 1) = "'" Then GoTo NextLigne
+            If InStr(ligne, "Function") > 0 Then GoTo NextLigne
+
+            If InStr(ligne, "Sub ") > 0 Then
+                nomSub = codeMod.ProcOfLine(i, vbext_pk_Proc)
+                If Not dict.Exists(nomSub) Then dict.Add nomSub, comp.Name
+            End If
+
+NextLigne:
+        Next i
+    Next comp
+
+    Set BatirDictionnaireProcedures = dict
+    
+End Function
+
+Function Pad(text As String, longueur As Integer) As String '2025-07-03 @ 17:54
+
+    Pad = Left(text & Space(longueur), longueur)
+    
+End Function
+
 

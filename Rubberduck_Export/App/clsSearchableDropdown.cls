@@ -67,10 +67,10 @@ Public Property Let MaxRows(ByVal Value As Long)
 End Property
 
 'Set the text to be displayed in the textbox before the search
-Public Property Let StartText(ByVal Text As String)
+Public Property Let StartText(ByVal text As String)
     
-    m_startText = Text
-    SetTextboxValue (m_startText)
+    m_startText = text
+    Call SetTextboxValue(m_startText)
 
 End Property
 
@@ -126,7 +126,7 @@ Private Sub myListBox_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shif
         m_UpdateControl = True
     ElseIf KeyCode = vbKeyUp Then
         m_UpdateControl = True
-        CheckListBoxFirstItem
+        Call CheckListBoxFirstItem
     ElseIf KeyCode = vbKeyReturn Or KeyCode = vbKeyTab Then
         'Swallow the enter keycode as it passes on to the ok button
         KeyCode = 0
@@ -228,7 +228,7 @@ Public Sub CheckListBoxFirstItem()
     
     If MyListBox.ListIndex = 0 Then
         m_UpdateControl = False
-        SelectTextBox
+        Call SelectTextBox
     End If
 
 End Sub
@@ -311,14 +311,14 @@ Private Sub myTextBox_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shif
 
 End Sub
 
-Private Sub SetTextboxValue(ByVal Text As String)
+Private Sub SetTextboxValue(ByVal text As String)
 
     If m_UpdateControl = False Then
         With MyListBox
             m_UpdateControl = True
             'Set the listbox selected value to the textbox and hide the listbox
             myTextBox.TextAlign = fmTextAlignLeft
-            myTextBox.Value = Text
+            myTextBox.Value = text
             
             Call SelectTextBox
             
@@ -334,7 +334,7 @@ Private Sub InitializeTextBox()
     m_textboxStartingState = True
     
     If m_UpdateControl = True Then
-        SetTextboxValue m_startText
+        Call SetTextboxValue(m_startText)
     End If
     myTextBox.SelStart = 0
 '    myTextBox.ForeColor = rgbBlue

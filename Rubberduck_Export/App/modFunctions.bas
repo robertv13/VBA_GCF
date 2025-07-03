@@ -1528,7 +1528,7 @@ Function Fn_Rechercher_Client_Par_ID(codeClient As String, ws As Worksheet) As V
     
 End Function
 
-Function Fn_Remove_All_Accents(ByVal Text As String) As String
+Function Fn_Remove_All_Accents(ByVal text As String) As String
 
     'Liste des caractères accentués et leurs équivalents sans accents
     Dim AccChars As String
@@ -1539,10 +1539,10 @@ Function Fn_Remove_All_Accents(ByVal Text As String) As String
     'Remplacer les accents par des caractères non accentués
     Dim i As Long
     For i = 1 To Len(AccChars)
-        Text = Replace(Text, Mid$(AccChars, i, 1), Mid$(RegChars, i, 1))
+        text = Replace(text, Mid$(AccChars, i, 1), Mid$(RegChars, i, 1))
     Next i
 
-    Fn_Remove_All_Accents = Text
+    Fn_Remove_All_Accents = text
     
 End Function
 
@@ -1624,8 +1624,8 @@ Sub Fn_Quick_Sort(arr As Variant, ByVal first As Long, ByVal last As Long) '2024
                 j = j - 1
             End If
         Loop While i <= j
-        If first < j Then Fn_Quick_Sort arr, first, j
-        If i < last Then Fn_Quick_Sort arr, i, last
+        If first < j Then Call Fn_Quick_Sort(arr, first, j)
+        If i < last Then Call Fn_Quick_Sort(arr, i, last)
     End If
     
 End Sub

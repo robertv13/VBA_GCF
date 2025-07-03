@@ -1048,7 +1048,7 @@ Sub GL_EJ_Forme_Sauvegarder(forme As Shape)
     gSauvegardesCaracteristiquesForme("Height") = forme.Height
     gSauvegardesCaracteristiquesForme("FillColor") = forme.Fill.ForeColor.RGB
     gSauvegardesCaracteristiquesForme("LineColor") = forme.Line.ForeColor.RGB
-    gSauvegardesCaracteristiquesForme("Text") = forme.TextFrame2.TextRange.Text
+    gSauvegardesCaracteristiquesForme("Text") = forme.TextFrame2.TextRange.text
     gSauvegardesCaracteristiquesForme("TextColor") = forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB
     
 End Sub
@@ -1063,7 +1063,7 @@ Sub GL_EJ_Forme_Modifier(forme As Shape)
         .Height = 30
         .Fill.ForeColor.RGB = RGB(255, 0, 0)  'Rouge
         .Line.ForeColor.RGB = RGB(255, 255, 255) 'Blanc pur
-        .TextFrame2.TextRange.Text = "Renversement"
+        .TextFrame2.TextRange.text = "Renversement"
         .TextFrame2.TextRange.Font.Fill.ForeColor.RGB = RGB(255, 255, 255) 'Blanc pur
     End With
     
@@ -1086,7 +1086,7 @@ Sub GL_EJ_Forme_Restaurer(forme As Shape)
     forme.Height = gSauvegardesCaracteristiquesForme("Height")
     forme.Fill.ForeColor.RGB = gSauvegardesCaracteristiquesForme("FillColor")
     forme.Line.ForeColor.RGB = gSauvegardesCaracteristiquesForme("LineColor")
-    forme.TextFrame2.TextRange.Text = gSauvegardesCaracteristiquesForme("Text")
+    forme.TextFrame2.TextRange.text = gSauvegardesCaracteristiquesForme("Text")
     forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB = gSauvegardesCaracteristiquesForme("TextColor")
 
 End Sub

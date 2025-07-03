@@ -535,7 +535,7 @@ Sub InsererBoutonRetourMenu() '2025-07-01 @ 08:54
         .Name = "shpRetourMenu"
         .Fill.ForeColor.RGB = RGB(192, 0, 0) 'Rouge foncé
         .Line.Visible = msoFalse
-        .TextFrame2.TextRange.Text = "X"
+        .TextFrame2.TextRange.text = "X"
         .TextFrame2.VerticalAnchor = msoAnchorMiddle
         .TextFrame2.HorizontalAnchor = msoAnchorCenter
         .TextFrame2.TextRange.Font.size = 16

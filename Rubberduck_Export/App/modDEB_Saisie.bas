@@ -799,7 +799,7 @@ Sub DEB_Forme_Modifier(forme As Shape)
     Application.ScreenUpdating = True
     forme.Fill.ForeColor.RGB = RGB(255, 0, 0)  ' Rouge
     forme.Line.ForeColor.RGB = RGB(255, 255, 255) ' Noir
-    forme.TextFrame2.TextRange.Text = "Renversement"
+    forme.TextFrame2.TextRange.text = "Renversement"
     forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB = RGB(255, 255, 255)
     
     DoEvents
@@ -998,7 +998,7 @@ Sub DEB_Forme_Sauvegarder(forme As Shape)
     sauvegardesCaracteristiquesForme("Height") = forme.Height
     sauvegardesCaracteristiquesForme("FillColor") = forme.Fill.ForeColor.RGB
     sauvegardesCaracteristiquesForme("LineColor") = forme.Line.ForeColor.RGB
-    sauvegardesCaracteristiquesForme("Text") = forme.TextFrame2.TextRange.Text
+    sauvegardesCaracteristiquesForme("Text") = forme.TextFrame2.TextRange.text
     sauvegardesCaracteristiquesForme("TextColor") = forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB
     
 End Sub
@@ -1016,7 +1016,7 @@ Sub DEB_Forme_Restaurer(forme As Shape)
     forme.Height = sauvegardesCaracteristiquesForme("Height")
     forme.Fill.ForeColor.RGB = sauvegardesCaracteristiquesForme("FillColor")
     forme.Line.ForeColor.RGB = sauvegardesCaracteristiquesForme("LineColor")
-    forme.TextFrame2.TextRange.Text = sauvegardesCaracteristiquesForme("Text")
+    forme.TextFrame2.TextRange.text = sauvegardesCaracteristiquesForme("Text")
     forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB = sauvegardesCaracteristiquesForme("TextColor")
 
 End Sub

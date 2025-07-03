@@ -3448,7 +3448,7 @@ Private Sub VerifierTEC(ByRef r As Long, ByRef readRows As Long)
         gverificationIntegriteOK = False
     End If
     
-    AjouterMessage wsOutput, r, 2, "Temps d’exécution : " & Format(Timer - startTime, "0.00") & " seconde(s)"
+    Call AjouterMessage(wsOutput, r, 2, "Temps d’exécution : " & Format(Timer - startTime, "0.00") & " seconde(s)")
     r = r + 1
 
 Clean_Exit:
@@ -4566,7 +4566,7 @@ Private Function AnalyserLigneTEC(data As Variant, i As Long, ByRef wsOutput As 
     tecID = data(i, fTECTECID)
     
     If Not dictClient.Exists(codeClient) Then
-        AjouterMessage wsOutput, r, 2, "********** TecID = '" & tecID & "', le code de client '" & codeClient & "' est INVALIDE !!!"
+        Call AjouterMessage(wsOutput, r, 2, "********** TecID = '" & tecID & "', le code de client '" & codeClient & "' est INVALIDE !!!")
         isValid = False
     End If
     
@@ -4575,16 +4575,16 @@ Private Function AnalyserLigneTEC(data As Variant, i As Long, ByRef wsOutput As 
     dateTEC = data(i, fTECDate)
     
     If Not IsDate(dateTEC) Or dateTEC > Date Then
-        AjouterMessage wsOutput, r, 2, "********** TECID =" & tecID & " a une date INVALIDE '" & dateTEC & "'"
+        Call AjouterMessage(wsOutput, r, 2, "********** TECID =" & tecID & " a une date INVALIDE '" & dateTEC & "'")
         stats.cas_date_invalide = stats.cas_date_invalide + 1
         isValid = False
     Else
         If dateTEC <> Int(dateTEC) Then
-            AjouterMessage wsOutput, r, 2, "********** La date du TEC '" & dateTEC & "' n'est pas du bon format (H:M:S) pour le TECID =" & tecID
+            Call AjouterMessage(wsOutput, r, 2, "********** La date du TEC '" & dateTEC & "' n'est pas du bon format (H:M:S) pour le TECID =" & tecID)
             isValid = False
         End If
         If dateTEC > Date Then
-            AjouterMessage wsOutput, r, 2, "********** TECID =" & tecID & " a une date FUTURE '" & dateTEC & "'"
+            Call AjouterMessage(wsOutput, r, 2, "********** TECID =" & tecID & " a une date FUTURE '" & dateTEC & "'")
             stats.cas_date_future = stats.cas_date_future + 1
             isValid = False
         End If
@@ -4595,7 +4595,7 @@ Private Function AnalyserLigneTEC(data As Variant, i As Long, ByRef wsOutput As 
     estDetruit = UCase(Trim$(CStr(data(i, fTECEstDetruit))))
     
     If (estDetruit <> "VRAI" And estDetruit <> "FAUX") Or Len(estDetruit) <> 4 Then
-        AjouterMessage wsOutput, r, 2, "********** TecID = '" & tecID & "', la valeur de la colonne 'EstDetruit' est INVALIDE '" & estDetruit & "' !!!"
+        Call AjouterMessage(wsOutput, r, 2, "********** TecID = '" & tecID & "', la valeur de la colonne 'EstDetruit' est INVALIDE '" & estDetruit & "' !!!")
         stats.cas_estDetruit_invalide = stats.cas_estDetruit_invalide + 1
         isValid = False
     End If
@@ -4605,7 +4605,7 @@ Private Function AnalyserLigneTEC(data As Variant, i As Long, ByRef wsOutput As 
     estFacturable = UCase(Trim$(CStr(data(i, fTECEstFacturable))))
     
     If InStr("VRAI^FAUX^", estFacturable & "^") = 0 Or Len(estFacturable) <> 4 Then
-        AjouterMessage wsOutput, r, 2, "********** TecID = '" & tecID & "', la valeur de la colonne 'EstFacturable' est INVALIDE '" & estFacturable & "' !!!"
+        Call AjouterMessage(wsOutput, r, 2, "********** TecID = '" & tecID & "', la valeur de la colonne 'EstFacturable' est INVALIDE '" & estFacturable & "' !!!")
         stats.cas_estFacturable_invalide = stats.cas_estFacturable_invalide + 1
         isValid = False
     End If
@@ -4615,7 +4615,7 @@ Private Function AnalyserLigneTEC(data As Variant, i As Long, ByRef wsOutput As 
     estFacturee = UCase(Trim$(data(i, fTECEstFacturee)))
     
     If estFacturee <> "VRAI" And estFacturee <> "FAUX" Then
-        AjouterMessage wsOutput, r, 2, "********** TecID = '" & tecID & "', la valeur de la colonne 'EstFacturee' est INVALIDE '" & estFacturee & "' !!!"
+        Call AjouterMessage(wsOutput, r, 2, "********** TecID = '" & tecID & "', la valeur de la colonne 'EstFacturee' est INVALIDE '" & estFacturee & "' !!!")
         stats.cas_estFacturee_invalide = stats.cas_estFacturee_invalide + 1
         isValid = False
     End If
@@ -4627,7 +4627,7 @@ Private Function AnalyserLigneTEC(data As Variant, i As Long, ByRef wsOutput As 
     prof = data(i, fTECProf)
     
     If Not IsNumeric(hres) Then
-        AjouterMessage wsOutput, r, 2, "********** TecID = '" & tecID & "', la valeur des heures est INVALIDE '" & hres & "' !!!"
+        Call AjouterMessage(wsOutput, r, 2, "********** TecID = '" & tecID & "', la valeur des heures est INVALIDE '" & hres & "' !!!")
         stats.cas_hres_invalide = stats.cas_hres_invalide + 1
         isValid = False
     Else
@@ -4687,17 +4687,17 @@ Private Function AnalyserLigneTEC(data As Variant, i As Long, ByRef wsOutput As 
     
     If Not IsEmpty(dateFact) And CStr(dateFact) <> "" Then
         If Not IsDate(dateFact) Then
-            AjouterMessage wsOutput, r, 2, "********** TecID = '" & tecID & "', a une date de facture INVALIDE '" & dateFact & "' !!!"
+            Call AjouterMessage(wsOutput, r, 2, "********** TecID = '" & tecID & "', a une date de facture INVALIDE '" & dateFact & "' !!!")
             stats.cas_date_fact_invalide = stats.cas_date_fact_invalide + 1
             isValid = False
         Else
             If dateFact > Date Then
-                AjouterMessage wsOutput, r, 2, "********** TecID = '" & tecID & "', a une date de facture FUTURE '" & dateFact & "' !!!"
+                Call AjouterMessage(wsOutput, r, 2, "********** TecID = '" & tecID & "', a une date de facture FUTURE '" & dateFact & "' !!!")
                 stats.cas_date_facture_future = stats.cas_date_facture_future + 1
                 isValid = False
             End If
             If dateFact <> Int(dateFact) Then
-                AjouterMessage wsOutput, r, 2, "********** TecID = '" & tecID & "', la date de la facture '" & dateFact & "' n'est pas du bon format (H:M:S) !!!"
+                Call AjouterMessage(wsOutput, r, 2, "********** TecID = '" & tecID & "', la date de la facture '" & dateFact & "' n'est pas du bon format (H:M:S) !!!")
                 isValid = False
             End If
         End If
@@ -4709,16 +4709,16 @@ Private Function AnalyserLigneTEC(data As Variant, i As Long, ByRef wsOutput As 
 
     If Len(invNo) > 0 Then
         If estFacturee <> "VRAI" Then
-            AjouterMessage wsOutput, r, 2, "********** TecID = '" & tecID & _
+            Call AjouterMessage(wsOutput, r, 2, "********** TecID = '" & tecID & _
                 "', Incongruité entre le numéro de facture '" & invNo & "' et " & _
-                "'estFacturee' qui vaut '" & estFacturee & "'"
+                "'estFacturee' qui vaut '" & estFacturee & "'")
             isValid = False
         End If
     
         If invNo <> "Radiation" Then
             If Not dictFacture.Exists(invNo) Then
-                AjouterMessage wsOutput, r, 2, "********** TecID = '" & tecID & _
-                    "', Le numéro de facture '" & invNo & "' n'existe pas dans le fichier FAC_Entête"
+                Call AjouterMessage(wsOutput, r, 2, "********** TecID = '" & tecID & _
+                    "', Le numéro de facture '" & invNo & "' n'existe pas dans le fichier FAC_Entête")
                 isValid = False
             Else
                 'Accumuler les heures dans dictFactureHres
@@ -4731,8 +4731,8 @@ Private Function AnalyserLigneTEC(data As Variant, i As Long, ByRef wsOutput As 
         End If
     Else
         If estFacturee = "VRAI" Then
-            AjouterMessage wsOutput, r, 2, "********** TecID = '" & tecID & _
-                "', Incongruité entre le numéro de facture vide et 'estFacturee' qui vaut '" & estFacturee & "'"
+            Call AjouterMessage(wsOutput, r, 2, "********** TecID = '" & tecID & _
+                "', Incongruité entre le numéro de facture vide et 'estFacturee' qui vaut '" & estFacturee & "'")
             isValid = False
         End If
     End If

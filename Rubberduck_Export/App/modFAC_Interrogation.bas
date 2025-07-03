@@ -942,7 +942,7 @@ Sub AjouterBoutons_Stats(ws As Worksheet, wsSelection As Worksheet, rngImprimer 
     Set btnImprimer = ws.Shapes.AddFormControl(xlButtonControl, rngImprimer.Left, rngImprimer.Top, 103, 30)
     With btnImprimer
         .Name = "btnImprimer"
-        .TextFrame.Characters.Text = "Imprimer"
+        .TextFrame.Characters.text = "Imprimer"
         .TextFrame.Characters.Font.size = 14
         .TextFrame.Characters.Font.Bold = True
         .OnAction = "BoutonImprimer_Stats"
@@ -952,7 +952,7 @@ Sub AjouterBoutons_Stats(ws As Worksheet, wsSelection As Worksheet, rngImprimer 
     Set btnRetour = ws.Shapes.AddFormControl(xlButtonControl, rngRetour.Left, rngRetour.Top, 103, 30)
     With btnRetour
         .Name = "btnRetour"
-        .TextFrame.Characters.Text = "Retour"
+        .TextFrame.Characters.text = "Retour"
         .TextFrame.Characters.Font.size = 14
         .TextFrame.Characters.Font.Bold = True
         .OnAction = "RetourFeuilleSelection_Stats"
@@ -968,7 +968,7 @@ Sub AjouterBoutons_CC(ws As Worksheet, wsSelection As Worksheet, rngImprimer As 
     Set btnImprimer = ws.Shapes.AddFormControl(xlButtonControl, rngImprimer.Left, rngImprimer.Top, 103, 30)
     With btnImprimer
         .Name = "btnImprimer"
-        .TextFrame.Characters.Text = "Imprimer"
+        .TextFrame.Characters.text = "Imprimer"
         .TextFrame.Characters.Font.size = 14
         .TextFrame.Characters.Font.Bold = True
         .OnAction = "BoutonImprimer_CC"
@@ -978,7 +978,7 @@ Sub AjouterBoutons_CC(ws As Worksheet, wsSelection As Worksheet, rngImprimer As 
     Set btnRetour = ws.Shapes.AddFormControl(xlButtonControl, rngRetour.Left, rngRetour.Top, 103, 30)
     With btnRetour
         .Name = "btnRetour"
-        .TextFrame.Characters.Text = "Retour"
+        .TextFrame.Characters.text = "Retour"
         .TextFrame.Characters.Font.size = 14
         .TextFrame.Characters.Font.Bold = True
         .OnAction = "RetourFeuilleSelection_CC"

@@ -200,7 +200,7 @@ Sub ToutCocherOuDecocher()
     For Each chkBox In ws.CheckBoxes
         If chkBox.Name <> "chk_header" Then
             chkBox.Value = IIf(newState, xlOn, xlOff)
-            chkBox.Characters.Text = ""
+            chkBox.Characters.text = ""
             chkBox.Characters.Caption = ""
         End If
     Next chkBox

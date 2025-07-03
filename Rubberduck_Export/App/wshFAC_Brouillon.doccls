@@ -115,7 +115,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         
                 'Mettre à jour et afficher la forme
                 With shapeTextBox
-                    .TextFrame.Characters.Text = infoText
+                    .TextFrame.Characters.text = infoText
                     .Top = Target.Top + Target.Height
                     .Left = Target.Left + 25
                     .Visible = msoTrue
@@ -172,7 +172,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'Invoice Date has changed
     If Not Intersect(Target, Me.Range("O3")) Is Nothing Then
         Application.EnableEvents = False
-        fullDate = Fn_Complete_Date(Target.Text, 30, 15)
+        fullDate = Fn_Complete_Date(Target.text, 30, 15)
         If fullDate <> "Invalid Date" Then
             Target.Value = Format$(fullDate, wsdADMIN.Range("B1").Value)
         Else

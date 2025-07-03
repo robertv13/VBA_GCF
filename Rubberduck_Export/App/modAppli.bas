@@ -465,7 +465,7 @@ Public Sub RedemarrerSurveillance() '2025-07-02 @ 07:41
     On Error GoTo 0
 
     gDerniereActivite = Now
-    VerifierInactivite
+    Call VerifierInactivite
 
 End Sub
 

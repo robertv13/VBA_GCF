@@ -52,7 +52,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
         .Width = 115
         .Height = 30
         .Fill.ForeColor.RGB = 12566463
-        .TextFrame2.TextRange.Text = "Mettre à jour"
+        .TextFrame2.TextRange.text = "Mettre à jour"
         .TextFrame2.TextRange.Font.Fill.ForeColor.RGB = RGB(0, 0, 0) 'Noir
     End With
     
@@ -221,7 +221,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'Si la cellule de la DATE change, alors on essaie de construire une date
     If Not Intersect(Target, Range("K4")) Is Nothing Then
         Application.EnableEvents = False
-        fullDate = Fn_Complete_Date(Target.Text, 999, 15)
+        fullDate = Fn_Complete_Date(Target.text, 999, 15)
         
         'Update the cell with the full date, if valid
         If fullDate <> "Invalid Date" Then

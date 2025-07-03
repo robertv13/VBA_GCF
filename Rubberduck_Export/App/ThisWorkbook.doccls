@@ -9,7 +9,7 @@ End Sub
 Private Sub Workbook_SheetSelectionChange(ByVal Sh As Object, ByVal Target As Range) '2025-07-03 @ 10:58
 
     Call RafraichirActivite("SelectionChange [" & Sh.Name & "] Plage = " & Target.Address & _
-                            " NbCellules = " & Target.Cells.count & " Valeur = '" & Target.Text & "'")
+                            " NbCellules = " & Target.Cells.count & " Valeur = '" & Target.text & "'")
     
 End Sub
 
