@@ -6,8 +6,6 @@ Private Sub Worksheet_Activate()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_BV:Worksheet_Activate", "", 0)
 
-'    Call RafraichirActivite("Balance de vérification")
-    
     DoEvents
     
     'Import transactions from MASTER file
@@ -55,8 +53,6 @@ End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
-'    Call RafraichirActivite("Balance de vérification")
-    
     If Not dynamicShape Is Nothing Then
         On Error Resume Next
         If dynamicShape.Visible = True Then
@@ -175,7 +171,7 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
         
         Range("B8").Value = DateSerial(year(Range("J1").Value), month(Range("J1").Value), 1)

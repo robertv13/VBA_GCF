@@ -10,8 +10,6 @@ Private Sub Worksheet_Activate()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshDEB_Saisie:Worksheet_Activate", "", 0)
     
-'    Call RafraichirActivite("Liste Agée des Comptes Clients")
-    
     Application.ScreenUpdating = False
     Application.EnableEvents = False
     Application.Calculation = xlCalculationAutomatic
@@ -37,7 +35,7 @@ Private Sub Worksheet_Activate()
     Set cellsToColor = Union(ws.Range("E4"), ws.Range("I4"), ws.Range("N4"), ws.Range("F5"), _
                                 ws.Range("G5"), ws.Range("J5"), ws.Range("E6"), _
                                 ws.Range("L6"), ws.Range("N6"))
-    Call Remplir_Plage_Avec_Couleur(cellsToColor, gCOULEUR_BASE_COMPTABILITE)
+    Call modAppli_Utils.Remplir_Plage_Avec_Couleur(cellsToColor, gCOULEUR_BASE_COMPTABILITE)
     
     Call SetTabOrder(ws)
     
@@ -84,12 +82,12 @@ End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
-'    Call RafraichirActivite("Liste Agée des Comptes Clients")
-    
     'Remove the background color of the previous Cell
     If gPreviousCellAddress <> "" Then
         Range(gPreviousCellAddress).Interior.Color = xlNone
     End If
+    
+    Dim ws As Worksheet: Set ws = wshDEB_Saisie
     
     'Save the current cell Address for next Selection change
     gPreviousCellAddress = Target.Address
@@ -134,7 +132,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     If Not Intersect(Target, Range("F9:F23")) Is Nothing Then
         Target.Interior.Color = gCOULEUR_SAISIE
         Application.EnableEvents = False
-        wshDEB_Saisie.Range("B4").Value = Target.Address
+        ws.Range("B4").Value = Target.Address
         Application.EnableEvents = True
         Exit Sub
     End If
@@ -151,7 +149,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         If Target.Value = "" Then
             Application.EnableEvents = False
             Dim suggestedAmount As Double
-            suggestedAmount = wshDEB_Saisie.Range("O6").Value - wshDEB_Saisie.Range("I26").Value
+            suggestedAmount = ws.Range("O6").Value - ws.Range("I26").Value
             If suggestedAmount > 0 Then
                 Call DEBSuggestedAmount(Target.row, suggestedAmount)
             End If
@@ -194,7 +192,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         Target.Interior.Color = gCOULEUR_SAISIE
          Exit Sub
     End If
-    
+
 End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
@@ -262,7 +260,7 @@ Private Sub Process_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
         Application.EnableEvents = True
         Exit Sub

@@ -6,8 +6,6 @@ Private Sub Worksheet_Activate()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_PrepEF:Worksheet_Activate", "", 0)
 
-'    Call RafraichirActivite("États financiers")
-    
     Dim ws As Worksheet: Set ws = wshGL_PrepEF
     
     ws.Unprotect
@@ -59,8 +57,6 @@ End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
-'    Call RafraichirActivite("États financiers")
-    
     If gPreviousCellAddress <> "" Then
         Range(gPreviousCellAddress).Interior.Color = xlNone
     End If
@@ -90,7 +86,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         Else
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshGL_PrepEF_139")
             Target.ClearContents
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
         
         Application.EnableEvents = True

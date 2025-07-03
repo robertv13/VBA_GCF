@@ -2,14 +2,14 @@
 BEGIN
   MultiUse = -1  'True
 END
-Attribute VB_Name = "cGL_Entry"
+Attribute VB_Name = "clsGL_Entry"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
 
-'Module de classe: cGL_Entry - 2025-06-08 @ 07:35
+'Module de classe: clsGL_Entry - 2025-06-08 @ 07:35
 
 Private pNoEcriture As Long
 Private pDateEcriture As Date
@@ -71,7 +71,7 @@ Public Property Let AutreRemarque(val As String)
     pAutreRemarque = val
 End Property
 
-'Accès aux lignes (Collection d'objets cGL_EntryLine)
+'Accès aux lignes (Collection d'objets clsGL_EntryLine)
 Public Property Get lignes() As Collection
     Set lignes = pLignes
 End Property
@@ -79,13 +79,12 @@ End Property
 'Méthode pour ajouter une ligne à l'écriture
 Public Sub AjouterLigne(NoCompte As String, description As String, Montant As Currency)
 
-    Dim l As cGL_EntryLine
-    Set l = New cGL_EntryLine
+    Dim l As clsGL_EntryLine
+    Set l = New clsGL_EntryLine
     l.NoCompte = NoCompte
     l.description = description
     l.Montant = Montant
     pLignes.Add l
     
 End Sub
-
 

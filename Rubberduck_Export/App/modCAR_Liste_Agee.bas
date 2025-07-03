@@ -697,7 +697,7 @@ Sub AllerAuCentreDesResultats() '2025-06-30@ 11:02
         'Centre la ligne dans la fenêtre visible si possible
         ligneCible = Application.Max(1, derLigne - Int(nbLignesVisibles / 2))
         
-        Application.GoTo Reference:=.Cells(ligneCible, 1), Scroll:=True
+        Application.Goto Reference:=.Cells(ligneCible, 1), Scroll:=True
     End With
     
 End Sub
@@ -710,7 +710,7 @@ End Sub
 
 Sub RetourAuDebut() '2025-06-30 @ 11:08
 
-    Application.GoTo Reference:=Cells(1, 1), Scroll:=True
+    Application.Goto Reference:=Cells(1, 1), Scroll:=True
     
 End Sub
 

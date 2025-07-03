@@ -6,8 +6,6 @@ Private Sub Worksheet_Activate()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_Activate", "", 0)
 
-'    Call RafraichirActivite("Saisie de Facture")
-    
     If gFromMenu = False Then
         Exit Sub
     End If
@@ -47,7 +45,7 @@ Private Sub Worksheet_Activate()
     
     Application.EnableEvents = False
     
-    Application.GoTo Reference:=Me.Cells(1, 3), Scroll:=True
+    Application.Goto Reference:=Me.Cells(1, 3), Scroll:=True
     
     Me.Range("O3").Value = Format$(Date, wsdADMIN.Range("B1").Value)
     Me.Range("B27").Value = False '2024-09-03 @ 06:33
@@ -73,8 +71,6 @@ End Sub
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_SelectionChange", Target.Address, 0)
-    
-'    Call RafraichirActivite("Saisie de facture")
     
     '@Ignore UnassignedVariableUsage
     If gPreviousCellAddress <> "" Then
@@ -184,7 +180,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
        
         'Future date ?
@@ -193,7 +189,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.GoTo Range(Target.Address)
+                Application.Goto Range(Target.Address)
             End If
         End If
 

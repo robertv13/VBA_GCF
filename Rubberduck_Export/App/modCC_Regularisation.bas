@@ -59,7 +59,7 @@ Sub MAJ_Regularisation() '2025-01-14 @ 12:00
     
         Call Régularisation_Add_New 'Reset the form
         
-        Call AjusteLibelléEncaissement("Banque")
+        Call AjusteLibelleEncaissement("Banque")
     
         .Range("K5").Value = Format$(Date, wsdADMIN.Range("B1").Value)
         .Range("B1").Select

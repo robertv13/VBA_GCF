@@ -629,20 +629,21 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     Dim rngResult As Range
     Dim i As Long, ColIndex As Long
     
-    'Remplissage du listBox - @TODO(2025-07-02)
+    'Remplissage du listBox '2025-07-03 @ 08:37
     Dim hresFormat As String
     If lastRow >= 3 Then
         Set rng = wsdTEC_Local.Range("V3:AI" & lastRow)
         For i = 1 To rng.Rows.count
             With ufSaisieHeures.lsbHresJour
                 .AddItem rng.Cells(i, 1).Value
+                Dim idx As Long: idx = .ListCount - 1
                 For ColIndex = 2 To 9
                     If ColIndex <> 6 Then '2025-01-31 @ 14:42
-                        .List(.ListCount - 1, ColIndex - 1) = rng.Cells(i, ColIndex).Value
+                        .List(idx, ColIndex - 1) = rng.Cells(i, ColIndex).Value
                     Else
                         hresFormat = Format$(rng.Cells(i, ColIndex).Value, "#0.00")
                         hresFormat = Space(5 - Len(hresFormat)) & hresFormat
-                        .List(.ListCount - 1, ColIndex - 1) = hresFormat
+                        .List(idx, ColIndex - 1) = hresFormat
                     End If
                 Next ColIndex
             End With
@@ -655,6 +656,14 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
             End If
         Next i
     End If
+    
+    For i = 0 To ufSaisieHeures.lsbHresJour.ListCount - 1 '2025-07-03 @ 08:39
+        If i Mod 2 = 0 Then
+            ufSaisieHeures.lsbHresJour.BackColor = RGB(255, 255, 255) ' blanc
+        Else
+            ufSaisieHeures.lsbHresJour.BackColor = RGB(240, 240, 240) ' gris clair
+        End If
+    Next i
 
     'Mise à jour des totaux
     ufSaisieHeures.txtTotalHeures.Value = Format$(totalHeures, "#0.00")

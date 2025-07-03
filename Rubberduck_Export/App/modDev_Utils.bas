@@ -1539,7 +1539,7 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
     'Sort to ensure cells are sorted left-to-right, top-to-bottom
     If Not unprotectedCells Is Nothing Then
         Dim sortedCells As Range: Set sortedCells = unprotectedCells
-        Debug.Print "SetTabOrder (" & ws.Name & ") - Unprotected; Cells; are '" & sortedCells.Address & "' - " & sortedCells.count & " cellule(s) - " & Format$(Now(), "dd/mm/yyyy hh:mm:ss")
+        Debug.Print "(" & ws.Name & ") - SetTabOrder - Protected cells are '" & sortedCells.Address & "' - " & sortedCells.count & " cellule(s) - " & Format$(Now(), "dd/mm/yyyy hh:mm:ss")
 
         'Enable TAB through unprotected cells
         Application.EnableEvents = False

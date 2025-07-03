@@ -497,8 +497,6 @@ End Sub
 
 Private Sub cmdDelete_Click()
 
-    Debug.Print "[TRACE] cmdDelete_Click déclenché à " & Now
-
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdDelete_Click", ufSaisieHeures.txtTECID.Value, 0)
 
     If ufSaisieHeures.txtTECID.Value <> "" Then
@@ -518,6 +516,8 @@ Private Sub cmdClear_Click()
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdClear_Click", "", 0)
     
     Call TEC_Efface_Formulaire
+    
+    Call MettreAJourEtatBoutons
 
     Call Log_Record("ufSaisieHeures:cmdClear_Click", "", startTime)
 

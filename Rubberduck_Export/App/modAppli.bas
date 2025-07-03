@@ -249,51 +249,83 @@ CleanUp:
     
 End Sub
 
-Private Sub ConnectControlsRecursive(ctrls As MSForms.Controls) '2025-05-30 @ 13:12
+Public Sub ConnectFormControls(frm As Object) '2025-05-30 @ 13:22
+
+    Set colWrappers = New Collection
+    Call ConnectControlsRecursive(frm.Controls)
+    
+End Sub
+
+Private Sub ConnectControlsRecursive(ctrls As MSForms.Controls) '2025-05-30 @ 13:22
 
     Dim ctrl As MSForms.Control
     For Each ctrl In ctrls
-        Debug.Print "Contrôle : " & ctrl.Name & " - Type : " & TypeName(ctrl)
-
-        Select Case TypeName(ctrl)
-            Case "Frame", "TabStrip"
-                ConnectControlsRecursive ctrl.Controls 'Récursif pour atteindre tous les niveaux
-            Case "MultiPage"
-                Dim i As Integer
-                For i = 0 To ctrl.Pages.count - 1
-                    ConnectControlsRecursive ctrl.Pages(i).Controls
-                Next i
-            Case "Label"
-                'Ignorer les labels (contrôles passifs)
-            Case Else
-                On Error Resume Next
-                Dim wrapper As New clsControlWrapper
-                Set wrapper.ctrl = ctrl
-                colWrappers.Add wrapper, ctrl.Name
-                On Error GoTo 0
-        End Select
+        If TypeName(ctrl) <> "Label" Then
+'            Debug.Print "Contrôle '" & ctrl.Name & "' de type '" & TypeName(ctrl)
+            Select Case TypeName(ctrl)
+                Case "Frame", "TabStrip"
+                    Call ConnectControlsRecursive(ctrl.Controls)
+                Case "MultiPage"
+                    Dim i As Integer
+                    For i = 0 To ctrl.Pages.count - 1
+                        Call ConnectControlsRecursive(ctrl.Pages(i).Controls)
+                    Next i
+                Case Else
+                    On Error Resume Next
+                    Dim wrapper As New clsControlWrapper
+                    Set wrapper.ctrl = ctrl
+                    colWrappers.Add wrapper, ctrl.Name
+                    On Error GoTo 0
+            End Select
+        End If
     Next ctrl
     
 End Sub
 
+'Private Sub ConnectControlsRecursive(ctrls As MSForms.Controls) '2025-05-30 @ 13:12
+'
+'    Dim ctrl As MSForms.Control
+'    For Each ctrl In ctrls
+'        Debug.Print "Contrôle : " & ctrl.Name & " - Type : " & TypeName(ctrl)
+'
+'        Select Case TypeName(ctrl)
+'            Case "Frame", "TabStrip"
+'                Call ConnectControlsRecursive(ctrl.Controls) 'Récursif pour atteindre tous les niveaux
+'            Case "MultiPage"
+'                Dim i As Integer
+'                For i = 0 To ctrl.Pages.count - 1
+'                    Call ConnectControlsRecursive(ctrl.Pages(i).Controls)
+'                Next i
+'            Case "Label"
+'                'Ignorer les labels (contrôles passifs)
+'            Case Else
+'                On Error Resume Next
+'                Dim wrapper As New clsControlWrapper
+'                Set wrapper.ctrl = ctrl
+'                colWrappers.Add wrapper, ctrl.Name
+'                On Error GoTo 0
+'        End Select
+'    Next ctrl
+'
+'End Sub
+'
 Public Sub RafraichirActivite(Optional ByVal msg As String = "") '2025-07-02 @ 15:19
     
-    If TimeValue(Now) < TimeSerial(gHEURE_DEBUT_SURVEILLANCE, 0, 0) Then
-        Exit Sub
-    End If
-    
+'    If TimeValue(Now) < TimeSerial(gHEURE_DEBUT_SURVEILLANCE, 0, 0) Then @TODO(2025-07-03)
+'        Exit Sub
+'    End If
+'
+    'Noter état de EnableEvents
     Dim activeEvents As Boolean
     activeEvents = Application.EnableEvents
     If activeEvents = True Then Application.EnableEvents = False
 
-    If gMODE_DEBUG Then Debug.Print "[modAppli:RafraichirActivite] Activité détectée @ '" & Format$(Now, "hh:mm:ss") & "'"
-    
+    'Mettre à jour le moment de la dernière activité
     gDerniereActivite = Now
-    If gMODE_DEBUG Then Debug.Print "     Activité détectée à '" & Format(gDerniereActivite, "hh:mm:ss") & "'" & _
-                                    ", prochaine vérification prévue pour '" & Format$(gProchaineVerification, "hh:mm:ss") & "'"
-    Application.StatusBar = False
-    wsdADMIN.Range("B6").Value = Format$(Now, "hh:mm:ss")
+'    If gMODE_DEBUG Then Debug.Print "[modAppli:RafraichirActivite] Une activité a été détectée (" & msg & ") à '" & Format(gDerniereActivite, "hh:mm:ss") & "'"
+    Call LogActivite("[modAppli:RafraichirActivite] " & msg) '2025-07-03 @ 10:31
     
+    'Rétablir l'état de EnableEvents
     If activeEvents <> Application.EnableEvents Then
         Application.EnableEvents = activeEvents
     End If
@@ -303,14 +335,9 @@ End Sub
 '@Description "Vérifie l'inactivité et ferme si plus de x minutes"
 Public Sub VerifierInactivite() '2025-07-02 @ 12:10
 
-    'Mettre à jour une trace de vérification d'activité
-    Application.EnableEvents = False
-    wsdADMIN.Range("B5").Value = Format$(Now, "hh:mm:ss")
-    Application.EnableEvents = True
-    
     On Error GoTo GestionErreur
 
-    'Ne rien faire avant 06:00:00
+    'Ne rien faire avant l'heure de début de la surveillance
     If TimeValue(Now) < TimeSerial(gHEURE_DEBUT_SURVEILLANCE, 0, 0) Then
         If gMODE_DEBUG Then Debug.Print "Période hors surveillance"
         Call PlanifierVerificationInactivite
@@ -440,6 +467,20 @@ Public Sub RedemarrerSurveillance() '2025-07-02 @ 07:41
     gDerniereActivite = Now
     VerifierInactivite
 
+End Sub
+
+Public Sub LogActivite(ByVal message As String) '2025-07-03 @ 10:29
+
+    Dim cheminLog As String
+    cheminLog = ThisWorkbook.path & gDATA_PATH & "\ActiviteDurantSurveillance.txt"
+
+    Dim fileNum As Integer
+    fileNum = FreeFile
+
+    Open cheminLog For Append As #fileNum
+    Print #fileNum, "[" & Format(Now, "yyyy-mm-dd hh:nn:ss") & "] [" & Fn_Get_Windows_Username & "] " & message
+    Close #fileNum
+    
 End Sub
 
 

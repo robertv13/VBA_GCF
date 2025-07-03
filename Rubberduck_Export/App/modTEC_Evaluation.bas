@@ -350,7 +350,7 @@ Sub TEC_Evaluation_EcritureGL() '2025-06-08 @ 08:37
     Dim ws As Worksheet
     Dim ajustementTEC As Currency
     Dim glTEC As String, glREVTEC As String
-    Dim ecr As cGL_Entry
+    Dim ecr As clsGL_Entry
 
     '--- Initialisation ---
     Set ws = wshTEC_Evaluation
@@ -361,7 +361,7 @@ Sub TEC_Evaluation_EcritureGL() '2025-06-08 @ 08:37
     glREVTEC = ObtenirNoGlIndicateur("Revenus - Travaux en cours")
     
     '--- Instanciation d'un objet GL_Entry
-    Set ecr = New cGL_Entry
+    Set ecr = New clsGL_Entry
 
     '--- Remplissage des propriétés globales
     ecr.DateEcriture = ws.Range("L3").Value
@@ -402,7 +402,7 @@ Sub TEC_Evaluation_Back_To_TEC_Menu()
 
 End Sub
 
-Sub AjouterEcritureGL(entry As cGL_Entry) '2025-06-08 @ 09:37
+Sub AjouterEcritureGL(entry As clsGL_Entry) '2025-06-08 @ 09:37
 
     '=== BLOC 1 : Écriture dans GCF_BD_MASTER.xslx en utilisant ADO ===
     Dim cn As Object
@@ -411,7 +411,7 @@ Sub AjouterEcritureGL(entry As cGL_Entry) '2025-06-08 @ 09:37
     Dim nextNoEntree As Long
     Dim ts As String
     Dim i As Long
-    Dim l As cGL_EntryLine
+    Dim l As clsGL_EntryLine
     Dim sql As String
 
     On Error GoTo CleanUpADO
@@ -526,7 +526,7 @@ End Sub
 '    Dim lastRow As Long, nextNoEntree As Long
 '    Dim ts As String
 '    Dim i As Long
-'    Dim l As cGL_EntryLine
+'    Dim l As clsGL_EntryLine
 '
 '    On Error GoTo CleanUp
 '

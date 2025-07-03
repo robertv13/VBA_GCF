@@ -19,7 +19,6 @@ Private Sub UserForm_Initialize()
     
     'Noter l'activité
     Call ConnectFormControls(Me)
-'    Call RafraichirActivite("Activité dans userForm '" & Me.Name & "'")
     
     'Efface le contenu de la listBox
     Me.lsbComptes.Clear

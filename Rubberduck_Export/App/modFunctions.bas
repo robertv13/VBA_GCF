@@ -2192,4 +2192,12 @@ Public Function EstChampModifie(champ As String, valeurOrigine As String) As Boo
     
 End Function
 
+Public Function Fn_NomFeuilleActive() As String '2025-07-03 @ 10:18
+
+    On Error Resume Next
+    Fn_NomFeuilleActive = ActiveSheet.Name
+    On Error GoTo 0
+    
+End Function
+
 

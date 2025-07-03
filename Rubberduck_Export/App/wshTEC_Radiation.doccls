@@ -6,8 +6,6 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Radiation:Worksheet_Activate", "", 0)
     
-'    Call RafraichirActivite("Radiation des TEC")
-    
     If gFromMenu = False Then
         Exit Sub
     End If
@@ -67,8 +65,6 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Radiation:Worksheet_SelectionChange", "", 0)
     
-'    Call RafraichirActivite("Radiation des TEC")
-    
     If gPreviousCellAddress <> "" Then
         Range(gPreviousCellAddress).Interior.Color = vbWhite
     End If
@@ -92,8 +88,6 @@ End Sub
 Private Sub Worksheet_Change(ByVal Target As Range)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Radiation:Worksheet_Change", Target.Address, 0)
-    
-'    Call RafraichirActivite("Radiation des TEC")
     
     Dim fullDate As Variant
     
@@ -137,7 +131,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
        
         'Future date ?
@@ -146,7 +140,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.GoTo Range(Target.Address)
+                Application.Goto Range(Target.Address)
             End If
         Else
             Call TEC_Radiation_Procedure(clientCode, Target.Value)

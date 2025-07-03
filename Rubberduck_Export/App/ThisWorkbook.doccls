@@ -1,32 +1,33 @@
 ﻿Option Explicit
 
-Private Sub Workbook_SheetChange(ByVal Sh As Object, ByVal Target As Range) '2025-07-01 @ 14:50
+Private Sub Workbook_SheetChange(ByVal Sh As Object, ByVal Target As Range) '2025-07-03 @ 10:58
 
-    Call RafraichirActivite
+    Call RafraichirActivite("SheetChange [" & Sh.Name & "] Plage = " & Target.Address)
     
 End Sub
 
-Private Sub Workbook_SheetSelectionChange(ByVal Sh As Object, ByVal Target As Range) '2025-07-01 @ 14:50
+Private Sub Workbook_SheetSelectionChange(ByVal Sh As Object, ByVal Target As Range) '2025-07-03 @ 10:58
 
-    Call RafraichirActivite
+    Call RafraichirActivite("SelectionChange [" & Sh.Name & "] Plage = " & Target.Address & _
+                            " NbCellules = " & Target.Cells.count & " Valeur = '" & Target.Text & "'")
     
 End Sub
 
-Private Sub Workbook_SheetActivate(ByVal Sh As Object) '2025-07-01 @ 14:50
+Private Sub Workbook_SheetActivate(ByVal Sh As Object) '2025-07-03 @ 10:58
 
-    Call RafraichirActivite
+    Call RafraichirActivite("SheetActivate [" & Sh.Name & "]")
     
 End Sub
 
-Private Sub Workbook_SheetDeactivate(ByVal Sh As Object) '2025-07-01 @ 14:50
+Private Sub Workbook_SheetDeactivate(ByVal Sh As Object) '2025-07-03 @ 10:58
 
-    Call RafraichirActivite
+    Call RafraichirActivite("SheetDeactivate [" & Sh.Name & "]")
     
 End Sub
 
-Private Sub Workbook_SheetFollowHyperlink(ByVal Sh As Object, ByVal Target As Hyperlink) '2025-07-01 @ 14:50
+Private Sub Workbook_SheetFollowHyperlink(ByVal Sh As Object, ByVal Target As Hyperlink) '2025-07-03 @ 10:58
 
-    Call RafraichirActivite
+    Call RafraichirActivite("SheetFollowHyperlink [" & Sh.Name & "]")
     
 End Sub
 

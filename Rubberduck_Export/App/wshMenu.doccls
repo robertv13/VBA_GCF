@@ -4,8 +4,6 @@ Option Explicit
 
 Private Sub Worksheet_Activate()
 
-'    Call RafraichirActivite("Menu Principal")
-    
     Call Hide_All_Worksheets_Except_Menu
 
     With wshMenu

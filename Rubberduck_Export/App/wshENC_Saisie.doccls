@@ -14,8 +14,6 @@ Private Sub Worksheet_Activate()
     
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshENC_Saisie:Worksheet_Activate", "", 0)
     
-'    Call RafraichirActivite("Début des encaissements")
-    
     Dim ws As Worksheet: Set ws = wshENC_Saisie
     
     Application.ScreenUpdating = False
@@ -48,7 +46,7 @@ Private Sub Worksheet_Activate()
     'Certaines cellules perdent la couleur du background
     Dim cellsToColor As Range
     Set cellsToColor = Union(ws.Range("E5"), ws.Range("I5"), ws.Range("F6"), ws.Range("G7"))
-    Call Remplir_Plage_Avec_Couleur(cellsToColor, gCOULEUR_BASE_COMPTABILITE)
+    Call modAppli_Utils.Remplir_Plage_Avec_Couleur(cellsToColor, gCOULEUR_BASE_COMPTABILITE)
     
     'Protect the Worksheet
     With ws
@@ -56,7 +54,7 @@ Private Sub Worksheet_Activate()
         .EnableSelection = xlUnlockedCells
     End With
     
-    Call SetTabOrder(ws)
+    Call modDev_Utils.SetTabOrder(ws)
     
     Call ENC_Remove_Check_Boxes(36)
     
@@ -68,7 +66,7 @@ Private Sub Worksheet_Activate()
     End If
     ws.Range("O6:Q" & lastUsedBordereau + 2).Clear
     
-    Call AjusteLibelléEncaissement("Banque")
+    Call AjusteLibelleEncaissement("Banque")
     
     ws.Range("K5").Value = Format$(Date, wsdADMIN.Range("B1").Value)
 
@@ -89,8 +87,6 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     If gPreviousCellAddress <> "" Then
         Range(gPreviousCellAddress).Interior.Color = xlNone
     End If
-    
-'    Call RafraichirActivite("Saisie des encaissements")
     
     'Client has been selected
     If Not Intersect(Target, Me.Range("F5")) Is Nothing Then
@@ -122,13 +118,6 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         Call ValiderEtLancerufEncRégularisation
     End If
     
-'    'Ne devrait pas passer ici...
-'    If Not Intersect(target, Me.Range("I5")) Is Nothing Then
-'        target.Interior.Color = gCOULEUR_BASE_COMPTABILITE
-'        Me.Range("K5").Select
-'        Exit Sub
-'    End If
-'
     If Not Intersect(Target, Me.Range("G7")) Is Nothing Then
         Target.Interior.Color = gCOULEUR_BASE_COMPTABILITE
         Me.Range("K7").Select
@@ -149,7 +138,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         Me.Range("B6").Value = "" Then
         'Aller chercher le vrai nom du client
         Dim allCols As Variant
-        allCols = Fn_Get_A_Row_From_A_Worksheet("BD_Clients", Target.Value, fClntFMNomClientPlusNomClientSystème)
+        allCols = modFunctions.Fn_Get_A_Row_From_A_Worksheet("BD_Clients", Target.Value, fClntFMNomClientPlusNomClientSystème)
         'Vérifier les résultats
         If IsArray(allCols) Then
             Application.EnableEvents = False
@@ -175,7 +164,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshENC_Saisie_115")
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
         Target.Interior.Color = xlNone
         Application.EnableEvents = True
@@ -183,7 +172,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     
     'Type a changé
     If Not Intersect(Target, Me.Range("F7")) Is Nothing Then
-        Call AjusteLibelléEncaissement(Target.Value)
+        Call AjusteLibelleEncaissement(Target.Value)
     End If
     
 End Sub

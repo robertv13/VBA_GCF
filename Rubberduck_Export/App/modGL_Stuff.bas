@@ -2,7 +2,7 @@
 Option Explicit
 
 'Structure pour une écriture comptable (données communes)
-Public Type cGL_Entry '2025-06-08 @ 06:59
+Public Type clsGL_Entry '2025-06-08 @ 06:59
 
     DateTrans As Date
     Source As String
@@ -12,7 +12,7 @@ Public Type cGL_Entry '2025-06-08 @ 06:59
 End Type
 
 'Structure pour une écriture comptable (données spécifiques à chaque ligne)
-Public Type cGL_EntryLine '2025-06-08 @ 07:02
+Public Type clsGL_EntryLine '2025-06-08 @ 07:02
 
     NoCompte As String
     description As String

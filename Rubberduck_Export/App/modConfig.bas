@@ -46,7 +46,7 @@ Public Const gMAXIMUM_MINUTES_INACTIVITE As Long = 60
 Public Const gDELAI_GRACE_SECONDES As Long = 300
 Public Const gHEURE_DEBUT_SURVEILLANCE As Long = 19
 
-'On affiche ou pas certains Debug.print
+'On affiche ou pas certains Debug.print (mécanisme de fermeture automatique de l'application
 Public Const gMODE_DEBUG As Boolean = True
 
 'Pour capturer évènements sur tous les controls des userForm - 2025-05-30 @ 13:11

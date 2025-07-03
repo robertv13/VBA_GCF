@@ -2,14 +2,14 @@
 BEGIN
   MultiUse = -1  'True
 END
-Attribute VB_Name = "cGL_EntryLine"
+Attribute VB_Name = "clsGL_EntryLine"
 Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
 
-'Module de classe: cGL_EntryLine - 2025-06-08 @ 07:28
+'Module de classe: clsGL_EntryLine - 2025-06-08 @ 07:28
 
 Private pNoCompte As String
 Private pDescription As String
@@ -43,6 +43,5 @@ End Property
 Public Property Let Montant(val As Double)
     pMontant = val
 End Property
-
 
 
