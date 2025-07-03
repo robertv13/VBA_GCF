@@ -1171,13 +1171,13 @@ Public Function Fn_Get_Tax_Rate(d As Date, taxType As String) As Double
     
 End Function
 
-Public Function Fn_Is_Client_Facturable(ByVal clientID As String) As Boolean
+Public Function Fn_Is_Client_Facturable(ByVal clientID As String) As Boolean '2025-07-03 @ 07:41
 
-    Fn_Is_Client_Facturable = False
-    
     'Les clients NON FACTURABLES sont compris entre 1 et 99
     If Len(clientID) > 2 Then
         Fn_Is_Client_Facturable = True
+    Else
+        Fn_Is_Client_Facturable = False
     End If
         
 End Function
@@ -2184,6 +2184,12 @@ Public Function GetProchaineFermeture() As Date '2025-07-02 @ 09:38
 
     GetProchaineFermeture = Now + TimeSerial(0, 0, gDELAI_GRACE_SECONDES)
 
+End Function
+
+Public Function EstChampModifie(champ As String, valeurOrigine As String) As Boolean '2025-07-03 @ 07:15
+
+    EstChampModifie = (Trim(champ & "") <> Trim(valeurOrigine & ""))
+    
 End Function
 
 

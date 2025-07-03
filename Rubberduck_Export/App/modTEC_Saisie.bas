@@ -38,16 +38,15 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
             .txtHeures.Value = ""
             .txtCommNote.Value = ""
             .chbFacturable = True
-'            .txtSavedHeures.value = ""
         End With
         
-        ufSaisieHeures.savedHeures = 0 '2025-05-07 @ 16:54
+        ufSaisieHeures.valeurSauveeHeures = 0 '2025-05-07 @ 16:54
         
         Call TEC_Get_All_TEC_AF
         Call TEC_Refresh_ListBox_And_Add_Hours
         
         'Reset command buttons
-        Call ActiverButtonsVraiOuFaux(False, False, False, False)
+'        Call ActiverButtonsVraiOuFaux(False, False, False, False)
         
         'Back to client
         ufSaisieHeures.txtClient.SetFocus
@@ -81,8 +80,8 @@ Sub TEC_Modifie_Ligne() '2023-12-23 @ 07:04
         .chbFacturable = True
     End With
 
-    'Tous les boutons sont Disabled
-    Call ActiverButtonsVraiOuFaux(False, False, False, False)
+'    'Tous les boutons sont Disabled
+'    Call ActiverButtonsVraiOuFaux(False, False, False, False)
     
     Call TEC_Get_All_TEC_AF
     Call TEC_Refresh_ListBox_And_Add_Hours
@@ -260,7 +259,7 @@ No_Sort_Required:
 
 End Sub
 
-Sub TEC_Efface_Formulaire() 'Clear all fields on the userForm
+Sub TEC_Efface_Formulaire() '2025-07-03 @ 07:31
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Efface_Formulaire", "", 0)
 
@@ -276,13 +275,11 @@ Sub TEC_Efface_Formulaire() 'Clear all fields on the userForm
         .txtDate.Enabled = True
     End With
     
-    ufSaisieHeures.savedHeures = 0 '2025-05-07 @ 17:03
-    
     Call TEC_Get_All_TEC_AF
     
     Call TEC_Refresh_ListBox_And_Add_Hours
     
-    Call ActiverButtonsVraiOuFaux(False, False, False, False)
+'    Call ActiverButtonsVraiOuFaux(False, False, False, False)
         
     ufSaisieHeures.txtClient.SetFocus
     
@@ -650,7 +647,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
                 Next ColIndex
             End With
             totalHeures = totalHeures + CCur(rng.Cells(i, 6).Value)
-            ' Calcul des heures facturables
+            'Calcul des heures facturables
             If Fn_Is_Client_Facturable(rng.Cells(i, 14).Value) Then
                 totalHresFact = totalHresFact + CCur(rng.Cells(i, 6).Value)
             Else
@@ -699,7 +696,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
 
 EndOfProcedure:
 
-    Call ActiverButtonsVraiOuFaux(False, False, False, False)
+'    Call ActiverButtonsVraiOuFaux(False, False, False, False)
 
     ufSaisieHeures.txtClient.SetFocus
     
