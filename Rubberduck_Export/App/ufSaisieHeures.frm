@@ -10,7 +10,6 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-
 Option Explicit
 
 Private oEventHandler As New clsSearchableDropdown '2023-03-21 @ 09:16
@@ -29,15 +28,11 @@ Public Property Let ListData(ByVal rg As Range)
 
 End Property
 
-Private Sub cmdTest_Click()
-    MsgBox "cmdTest a été cliqué !"
-End Sub
-
 Private Sub UserForm_Initialize() '2025-05-30 @ 13:26
 
     Call ConnectFormControls(Me)
     Call VerifierEtatBoutonAjouter
-    Call VerifierEtatBoutonModifier
+'    Call VerifierEtatBoutonModifier
     
 End Sub
 
@@ -63,7 +58,7 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
     End With
 
     Call VerifierEtatBoutonAjouter '2025-06-09 @ 08:28
-    Call VerifierEtatBoutonModifier
+'    Call VerifierEtatBoutonModifier
 
     ufSaisieHeures.txtDate.Value = "" 'On vide la date pour forcer la saisie
     
@@ -238,7 +233,7 @@ Private Sub cmbProfessionnel_AfterUpdate() '2025-05-31 @ 16:11
     Me.txtLastImport.Value = "Les TEC ont été importés à " & Format$(Now, "hh:mm:ss")
     
     Call VerifierEtatBoutonAjouter '2025-06-09 @ 08:25
-    Call VerifierEtatBoutonModifier
+'    Call VerifierEtatBoutonModifier
 
 End Sub
 
@@ -333,7 +328,7 @@ Private Sub txtDate_AfterUpdate()
     End If
     
     Call VerifierEtatBoutonAjouter '2025-06-09 @ 08:25
-    Call VerifierEtatBoutonModifier
+'    Call VerifierEtatBoutonModifier
     
     Call Log_Record("ufSaisieHeures:txtDate_AfterUpdate", "", startTime)
     
@@ -365,7 +360,7 @@ Private Sub txtClient_AfterUpdate()
     On Error GoTo 0
     
     Call VerifierEtatBoutonAjouter '2025-06-09 @ 08:25
-    Call VerifierEtatBoutonModifier
+'    Call VerifierEtatBoutonModifier
     
     Call Log_Record("ufSaisieHeures:txtClient_AfterUpdate", Me.txtTECID, startTime)
     
@@ -397,7 +392,7 @@ Private Sub txtActivite_AfterUpdate()
     Me.txtActivite.Value = Fn_Nettoyer_Fin_Chaine(Me.txtActivite.Value)
     
     Call VerifierEtatBoutonAjouter '2025-06-09 @ 08:25
-    Call VerifierEtatBoutonModifier
+'    Call VerifierEtatBoutonModifier
     
     Call Log_Record("ufSaisieHeures:txtActivite_AfterUpdate", Me.txtTECID, startTime)
     
@@ -480,7 +475,7 @@ Sub txtHeures_AfterUpdate()
 '    End If
 '
     Call VerifierEtatBoutonAjouter '2025-06-09 @ 08:25
-    Call VerifierEtatBoutonModifier
+'    Call VerifierEtatBoutonModifier
     
     Call Log_Record("ufSaisieHeures:txtHeures_AfterUpdate", Me.txtTECID, startTime)
     
@@ -490,17 +485,17 @@ Private Sub chbFacturable_AfterUpdate()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:chbFacturable_AfterUpdate", "", 0)
     
-'    If Me.chbFacturable.Value <> savedFacturable Then '2025-03-25 @ 13:05
-'        Debug.Print "chbFacturable_AfterUpdate : ", Me.chbFacturable.Value, " vs ", savedFacturable, " - TECID=" & Me.txtTECID
-'        If Me.txtTECID = "" Then
-'            Call modTEC_Saisie.ActiverButtonsVraiOuFaux("chbFacturable_AfterUpdate", True, False, False, True) '2024-10-06 @ 14:33
-'        Else
-'            Call modTEC_Saisie.ActiverButtonsVraiOuFaux("chbFacturable_AfterUpdate", False, True, False, True)
-'        End If
-'    End If
+    If Me.chbFacturable.Value <> savedFacturable Then '2025-03-25 @ 13:05
+        Debug.Print "chbFacturable_AfterUpdate : ", Me.chbFacturable.Value, " vs ", savedFacturable, " - TECID=" & Me.txtTECID
+        If Me.txtTECID = "" Then
+            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True) '2024-10-06 @ 14:33
+        Else
+            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, True, False, True)
+        End If
+    End If
 
     Call VerifierEtatBoutonAjouter '2025-06-09 @ 08:25
-    Call VerifierEtatBoutonModifier
+'    Call VerifierEtatBoutonModifier
     
     Call Log_Record("ufSaisieHeures:chbFacturable_AfterUpdate", Me.txtTECID, startTime)
     
@@ -510,17 +505,17 @@ Private Sub txtCommNote_AfterUpdate()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtCommNote_AfterUpdate", Me.txtCommNote.Value, 0)
     
-'    If Me.txtCommNote.Value <> savedCommNote Then '2025-03-25 @ 13:05
-'        Debug.Print "txtCommNote_AfterUpdate : ", Me.txtCommNote.Value, " vs ", savedCommNote, " - TECID=" & Me.txtTECID
-'        If Me.txtTECID = "" Then
-'            Call modTEC_Saisie.ActiverButtonsVraiOuFaux("txtCommNote_AfterUpdate", True, False, False, True) '2024-10-06 @ 14:33
-'        Else
-'            Call modTEC_Saisie.ActiverButtonsVraiOuFaux("txtCommNote_AfterUpdate", False, True, True, True)
-'        End If
-'    End If
-'
+    If Me.txtCommNote.Value <> savedCommNote Then '2025-03-25 @ 13:05
+        Debug.Print "txtCommNote_AfterUpdate : ", Me.txtCommNote.Value, " vs ", savedCommNote, " - TECID=" & Me.txtTECID
+        If Me.txtTECID = "" Then
+            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True) '2024-10-06 @ 14:33
+        Else
+            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, True, True, True)
+        End If
+    End If
+
     Call VerifierEtatBoutonAjouter '2025-06-09 @ 08:25
-    Call VerifierEtatBoutonModifier
+'    Call VerifierEtatBoutonModifier
     
     Call Log_Record("ufSaisieHeures:txtCommNote_AfterUpdate", Me.txtTECID, startTime)
     
@@ -563,24 +558,24 @@ Private Sub cmdUpdate_Click()
 
 End Sub
 
-'Private Sub cmdDelete_Click()
-'
-'    Debug.Print "[TRACE] cmdDelete_Click déclenché à " & Now
-'
-''    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdDelete_Click", ufSaisieHeures.txtTECID.Value, 0)
-'
-'    If ufSaisieHeures.txtTECID.Value <> "" Then
-'        Call TEC_Efface_Ligne
-'    Else
-'        MsgBox Prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
-'               Title:="", _
-'               Buttons:=vbCritical
-'    End If
-'
+Private Sub cmdDelete_Click()
+
+    MsgBox "[TRACE] cmdDelete_Click déclenché à " & Now
+
+'    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdDelete_Click", ufSaisieHeures.txtTECID.Value, 0)
+
+    If ufSaisieHeures.txtTECID.Value <> "" Then
+        Call TEC_Efface_Ligne
+    Else
+        MsgBox Prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
+               Title:="", _
+               Buttons:=vbCritical
+    End If
+
 '    Call Log_Record("ufSaisieHeures:cmdDelete_Click", "", startTime)
-'
-'End Sub
-'
+
+End Sub
+
 'Get a specific row from listBox and display it in the userform
 Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
@@ -641,11 +636,7 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
         
     End With
     
-    'Ajustement des boutons
-    cmdAdd.Enabled = False
-    cmdUpdate.Enabled = False
-    cmdDelete.Enabled = True
-    cmdClear.Enabled = True
+    Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, False, True, True)
     
     rmv_state = rmv_modeModification
     
@@ -700,38 +691,43 @@ End Sub
 
 Private Sub VerifierEtatBoutonAjouter() '2025-06-09 @ 08:13
     
-    'Modification ?
-    If Not Me.txtTECID = "" Then
-        Exit Sub
+    If Me.txtTECID = "" Then 'Mode création: tous les champs obligatoires doivent être remplis
+        If _
+            Trim(Me.cmbProfessionnel.Value) <> "" And _
+            Trim(Me.txtClient.Value) <> "" And _
+            Trim(Me.txtActivite.Value) <> "" And _
+            Trim(Me.txtHeures.Value) <> "" Then
+            Me.cmdAdd.Enabled = True
+        Else
+            Me.cmdAdd.Enabled = False
+        End If
+    Else
+        'Mode modification: bouton Ajouter inactif, tu peux gérer le bouton Modifier ici
+        Me.cmdAdd.Enabled = False
+        'Par exemple : Me.btnModifier.Enabled = ...
     End If
-    
-    If _
-        Trim(Me.cmbProfessionnel.Value) <> "" And _
-        Trim(Me.txtClient.Value) <> "" And _
-        Trim(Me.txtActivite.Value) <> "" And _
-        Trim(Me.txtHeures.Value) <> "" Then
-            Call ActiverButtonsVraiOuFaux(True, False, False, True)
-    End If
-
 End Sub
 
-Private Sub VerifierEtatBoutonModifier() '2025-07-02 @ 14:36
+'Private Sub VerifierEtatBoutonModifier() '2025-07-02 @ 14:36
+'
+'    'Addition ?
+'    If Me.txtTECID = "" Then
+'        Exit Sub
+'    End If
+'
+'    Dim modifie As Boolean: modifie = False
+'
+'    If Trim(txtClient.Value) <> savedClient Then modifie = True
+'    If Trim(txtActivite.Value) <> savedActivite Then modifie = True
+'    If Trim(txtHeures.Value) <> savedHeures Then modifie = True
+'    If Trim(chbFacturable.Value) <> savedFacturable Then modifie = True
+'    If Trim(txtCommNote.Value) <> savedCommNote Then modifie = True
+'
+'    Call ActiverButtonsVraiOuFaux(False, modifie, False, True)
+'
+'End Sub
+'
 
-    'Addition ?
-    If Me.txtTECID = "" Then
-        Exit Sub
-    End If
-    
-    Dim modifie As Boolean: modifie = False
-    
-    If Trim(txtClient.Value) <> savedClient Then modifie = True
-    If Trim(txtActivite.Value) <> savedActivite Then modifie = True
-    If Trim(txtHeures.Value) <> savedHeures Then modifie = True
-    If Trim(chbFacturable.Value) <> savedFacturable Then modifie = True
-    If Trim(txtCommNote.Value) <> savedCommNote Then modifie = True
 
-    Call ActiverButtonsVraiOuFaux(False, modifie, False, True)
-
-End Sub
 
 

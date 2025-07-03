@@ -282,7 +282,7 @@ Sub TEC_Efface_Formulaire() 'Clear all fields on the userForm
     
     Call TEC_Refresh_ListBox_And_Add_Hours
     
-'    Call ActiverButtonsVraiOuFaux("TEC_Efface_Formulaire", False, False, False, False)
+    Call ActiverButtonsVraiOuFaux(False, False, False, False)
         
     ufSaisieHeures.txtClient.SetFocus
     
@@ -699,7 +699,7 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
 
 EndOfProcedure:
 
-'    Call ActiverButtonsVraiOuFaux("TEC_Refresh_ListBox_And_Add_Hours", False, False, False, False)
+    Call ActiverButtonsVraiOuFaux(False, False, False, False)
 
     ufSaisieHeures.txtClient.SetFocus
     
