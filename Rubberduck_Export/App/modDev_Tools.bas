@@ -1879,18 +1879,15 @@ Sub ScannerAppelsSubsImplicites() '2025-07-03 @ 17:49
 
             For i = 0 To UBound(lignes)
                 ligne = Trim(lignes(i))
-
                 'Ignore les commentaires, les lignes vides & les "Debug.Print"
                 If ligne = "" Or Left(ligne, 1) = "'" Then GoTo LigneSuivante
                 If Left(ligne, 12) = "Debug.Print " Then GoTo LigneSuivante
                 If Left(ligne, 7) = "MsgBox " Then GoTo LigneSuivante
-
                 For Each nomProc In dictSubs.keys
                     'Vérifie présence d'un nom de Sub et absence du mot 'Call' juste avant
                     If InStr(" " & ligne & " ", " " & nomProc & " ") > 0 And _
                         InStr(LCase(ligne), "call " & LCase(nomProc)) = 0 And _
                         InStr(LCase(ligne), "set " & LCase(nomProc)) = 0 Then
-                        Stop
                         Debug.Print Pad(nomModule, 25) & " # " & Format(i + 1, "###0") & "   " & ligne
                     End If
                 Next nomProc

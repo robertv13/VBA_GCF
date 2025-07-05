@@ -1578,7 +1578,7 @@ End Function
 Function Fn_Is_String_Valid(searchString As String, rng As Range) As Boolean
 
     On Error Resume Next
-    Fn_Is_String_Valid = Not IsError(Application.match(searchString, rng, 0))
+    Fn_Is_String_Valid = Not IsError(Application.Match(searchString, rng, 0))
     On Error GoTo 0
     
 End Function

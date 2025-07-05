@@ -466,7 +466,7 @@ Sub Bring_In_Existing_Invoice_Requests(activeLastUsedRow As Long)
                                                            1)
             
             If result <> "Not Found" Then
-                r = Application.WorksheetFunction.match(result, rngTotal, 0)
+                r = Application.WorksheetFunction.Match(result, rngTotal, 0)
                 wsActive.Cells(r, 4).Value = honoTotal
                 wsActive.Cells(r, 4).NumberFormat = "#,##0.00 $"
             End If
