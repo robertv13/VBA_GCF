@@ -14,7 +14,7 @@ Private Sub Worksheet_Activate()
     Application.EnableEvents = False
     
     Dim ws As Worksheet: Set ws = wshFAC_Brouillon
-    
+
     Call modImport.ImporterClients
     Call modImport.ImporterTEC
     Call modImport.ImporterFacEntete
