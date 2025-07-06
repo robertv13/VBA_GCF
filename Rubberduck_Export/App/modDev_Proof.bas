@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modDev_Proof"
+Attribute VB_Name = "modDev_Proof"
 Option Explicit
 
 Sub ObtenirHeuresFacturéesParFacture() '2025-04-07 @ 04:51
@@ -211,5 +211,4 @@ Function CompterOccurrences(texte As String, motif As String) As Long
     CompterOccurrences = compteur
     
 End Function
-
 

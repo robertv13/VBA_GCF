@@ -1,4 +1,4 @@
-﻿'@Folder("Saisie_Entrée_Journal")
+'@Folder("Saisie_Entrée_Journal")
 
 Option Explicit
 
@@ -294,5 +294,4 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         End If
     End If
 End Sub
-
 

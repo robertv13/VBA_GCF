@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modFAC_Interrogation"
+Attribute VB_Name = "modFAC_Interrogation"
 '@IgnoreModule SetAssignmentWithIncompatibleObjectType
 
 Option Explicit
@@ -1795,5 +1795,4 @@ Sub shpExitDetailTEC_Click()
     ActiveSheet.Visible = xlSheetHidden
 
 End Sub
-
 

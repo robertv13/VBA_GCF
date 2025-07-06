@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modGL_DataService"
+Attribute VB_Name = "modGL_DataService"
 Option Explicit
 
 Function ConstruirePlanComptable() As Object '2025-06-01 @ 08:20
@@ -72,4 +72,3 @@ ErrHandler:
     CreerCopieTemporaireSolide = ""
     
 End Function
-

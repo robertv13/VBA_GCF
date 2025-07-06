@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modTEC_TDB"
+Attribute VB_Name = "modTEC_TDB"
 Option Explicit
 
 Sub shpTEC_TDB_BackToMenu_Click()
@@ -109,5 +109,4 @@ Sub AjusteBordurePivotTable() '2025-02-01 @ 05:49
     Call Log_Record("wshTEC_TDB:AjusteBordurePivotTable", "", startTime)
 
 End Sub
-
 

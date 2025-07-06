@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modStatsHeures"
+Attribute VB_Name = "modStatsHeures"
 Option Explicit
 
 Sub Stats_Heures_AF()
@@ -99,5 +99,4 @@ Sub Back_To_ufSaisieHeures()
     Call Log_Record("modStatsHeures:Back_To_ufSaisieHeures", "", startTime)
 
 End Sub
-
 

@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modDev_Utils"
+Attribute VB_Name = "modDev_Utils"
 Option Explicit
 
 Sub Add_Columns_To_Active_Worksheet()
@@ -1890,4 +1890,3 @@ Sub Test_Fn_Get_A_Row_From_A_Worksheet() '2025-01-13 @ 08:49
     End If
     
 End Sub
-

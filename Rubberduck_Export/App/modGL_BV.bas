@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modGL_BV"
+Attribute VB_Name = "modGL_BV"
 Option Explicit
 
 Public dynamicShape As Shape
@@ -943,5 +943,4 @@ Sub GL_BV_Back_To_Menu()
     wshMenuGL.Range("A1").Select
     
 End Sub
-
 

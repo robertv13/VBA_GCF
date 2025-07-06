@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modTEC_Saisie"
+Attribute VB_Name = "modTEC_Saisie"
 Option Explicit
 
 Public Const rmv_modeInitial As Long = 1
@@ -827,5 +827,4 @@ Sub UpdatePivotTables()
     Call Log_Record("modTEC_Saisie:UpdatePivotTables", "", startTime)
     
 End Sub
-
 

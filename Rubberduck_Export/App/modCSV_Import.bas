@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modCSV_Import"
+Attribute VB_Name = "modCSV_Import"
 Option Explicit
 
 Sub main()
@@ -118,5 +118,4 @@ Function Fn_Correct_Date_Format(wrongFormatDate As String) As Date
     Debug.Print "#025 - " & DateSerial(year, month, day)
 
 End Function
-
 

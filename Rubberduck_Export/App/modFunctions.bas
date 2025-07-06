@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modFunctions"
+Attribute VB_Name = "modFunctions"
 Option Explicit
 
 Function Fn_GetID_From_Initials(i As String)
@@ -2199,5 +2199,4 @@ Public Function Fn_NomFeuilleActive() As String '2025-07-03 @ 10:18
     On Error GoTo 0
     
 End Function
-
 

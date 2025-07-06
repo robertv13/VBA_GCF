@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modFAC_Confirmation"
+Attribute VB_Name = "modFAC_Confirmation"
 Option Explicit
 
 Public invNo As String
@@ -389,5 +389,4 @@ Sub Construire_GL_Posting_Confirmation(invoice As String) '2025-03-12 @ 12:42
     Call Log_Record("modFAC_Confirmation:Construire_GL_Posting_Confirmation", "", startTime)
 
 End Sub
-
 

@@ -1,4 +1,4 @@
-﻿Option Explicit
+Option Explicit
 
 Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
 

@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modCC_Regularisation"
+Attribute VB_Name = "modCC_Regularisation"
 '@Folder("Saisie_Encaissement")
 
 Option Explicit
@@ -551,5 +551,4 @@ Sub REGUL_GL_Posting_Locally(no As Long, dt As Date, nom As String, desc As Stri
     Call Log_Record("modCC_Regularisation:REGUL_GL_Posting_Locally", "", startTime)
 
 End Sub
-
 

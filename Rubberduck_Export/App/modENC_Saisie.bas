@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modENC_Saisie"
+Attribute VB_Name = "modENC_Saisie"
 Option Explicit
 
 Public lastRow As Long
@@ -960,5 +960,4 @@ Sub ValiderEtLancerufEncRégularisation()
     End If
     
 End Sub
-
 

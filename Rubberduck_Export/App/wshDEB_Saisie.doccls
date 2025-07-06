@@ -1,4 +1,4 @@
-﻿'@Folder("Saisie_Déboursé")
+'@Folder("Saisie_Déboursé")
 
 Option Explicit
 
@@ -405,5 +405,4 @@ Sub DEBSuggestedAmount(rowNumber As Long, suggestedAmount As Double)
     Set ws = Nothing
     
 End Sub
-
 

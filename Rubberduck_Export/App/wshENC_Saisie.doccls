@@ -1,4 +1,4 @@
-﻿'@Folder("Saisie_Encaissement")
+'@Folder("Saisie_Encaissement")
 
 Option Explicit
 
@@ -176,5 +176,4 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     End If
     
 End Sub
-
 

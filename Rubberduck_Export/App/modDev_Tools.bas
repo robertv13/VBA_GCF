@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modDev_Tools"
+Attribute VB_Name = "modDev_Tools"
 '@IgnoreModule UnassignedVariableUsage
 
 Option Explicit
@@ -1935,5 +1935,4 @@ Function Pad(text As String, longueur As Integer) As String '2025-07-03 @ 17:54
     Pad = Left(text & Space(longueur), longueur)
     
 End Function
-
 

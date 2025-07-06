@@ -1,4 +1,4 @@
-﻿VERSION 1.0 CLASS
+VERSION 1.0 CLASS
 BEGIN
   MultiUse = -1  'True
 END
@@ -87,4 +87,3 @@ Public Sub AjouterLigne(NoCompte As String, description As String, Montant As Cu
     pLignes.Add l
     
 End Sub
-

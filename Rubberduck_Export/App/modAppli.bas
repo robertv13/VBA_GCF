@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modAppli"
+Attribute VB_Name = "modAppli"
 Option Explicit
 
 Private Sub Auto_Open() '2024-12-28 @ 11:09
@@ -482,5 +482,4 @@ Public Sub LogActivite(ByVal message As String) '2025-07-03 @ 10:29
     Close #fileNum
     
 End Sub
-
 

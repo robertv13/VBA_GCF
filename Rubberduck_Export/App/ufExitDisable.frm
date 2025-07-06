@@ -1,4 +1,4 @@
-﻿VERSION 5.00
+VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufExitDisable 
    Caption         =   "Sortie non autorisée via le fermeture d'Excel"
    ClientLeft      =   -30
@@ -26,4 +26,3 @@ Private Sub UserForm_Initialize()
                      "utiliser l'option prévue à cet effet (en bas à gauche, du menu principal)"
 
 End Sub
-

@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modTEC_Analyse"
+Attribute VB_Name = "modTEC_Analyse"
 Option Explicit
 
 Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
@@ -932,5 +932,4 @@ Sub TEC_Analyse_Back_To_TEC_Menu()
     Call Log_Record("modTEC_Analyse:TEC_Analyse_Back_To_TEC_Menu", "", startTime)
 
 End Sub
-
 

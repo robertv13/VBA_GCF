@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modDEV_Debug"
+Attribute VB_Name = "modDEV_Debug"
 Option Explicit
 
 Sub IdentifierEcartsComptesClientsEtGL() '2025-04-02 @ 07:46
@@ -187,6 +187,5 @@ Sub ScannerSuppressionAmbigue_VersFenetreImmediate() '2025-07-01 @ 09:36
 
     Debug.Print "? --- Scan terminé ---"
 End Sub
-
 
 

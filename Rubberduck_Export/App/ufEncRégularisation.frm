@@ -1,4 +1,4 @@
-﻿VERSION 5.00
+VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufEncRégularisation 
    Caption         =   "Régularisation des Comptes Clients"
    ClientLeft      =   -60
@@ -221,4 +221,3 @@ Sub EffaceDonnéesRégularisation()
     End With
     
 End Sub
-

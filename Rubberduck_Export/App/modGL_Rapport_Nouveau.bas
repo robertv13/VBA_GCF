@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modGL_Rapport_Nouveau"
+Attribute VB_Name = "modGL_Rapport_Nouveau"
 Option Explicit
 
 Public Sub GenererRapportGL_Compte(wsRapport As Worksheet, dateDebut As Date, dateFin As Date)
@@ -956,5 +956,4 @@ Function Fn_ValiderSiDoitImprimerTransaction(ByVal Source As String) As Boolean 
     Fn_ValiderSiDoitImprimerTransaction = aImprimer
     
 End Function
-
 

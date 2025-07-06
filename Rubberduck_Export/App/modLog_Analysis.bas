@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modLog_Analysis"
+Attribute VB_Name = "modLog_Analysis"
 Option Explicit
 
 Sub Main_OuvrirRepertoireEtTraiterFichiers()
@@ -361,4 +361,3 @@ Sub AjouterTableauClasseurFerme(ByVal tableau As Variant, ByVal cheminFichier As
     Application.DisplayAlerts = True
     
 End Sub
-

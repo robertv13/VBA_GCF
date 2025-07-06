@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modzDataConversion"
+Attribute VB_Name = "modzDataConversion"
 Option Explicit
 
 'Importation des clients à partir de ... \DataConversion\Clients.xlsx
@@ -1421,6 +1421,5 @@ Sub FusionnerDonnéesManquantes_CAR() '2024-08-29 @ 07:29
     MsgBox "Le traitement est complété", vbInformation
            
 End Sub
-
 
 

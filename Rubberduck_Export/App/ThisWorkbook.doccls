@@ -1,4 +1,4 @@
-﻿Option Explicit
+Option Explicit
 
 Private Sub Workbook_SheetChange(ByVal Sh As Object, ByVal Target As Range) '2025-07-03 @ 10:58
 

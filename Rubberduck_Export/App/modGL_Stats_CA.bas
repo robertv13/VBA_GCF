@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modGL_Stats_CA"
+Attribute VB_Name = "modGL_Stats_CA"
 Option Explicit
 
 Sub shp_GL_PrepEF_Actualiser_Click()
@@ -148,5 +148,4 @@ Sub GL_Stats_CA_Back_To_Menu()
     wshMenuGL.Range("A1").Select
     
 End Sub
-
 

@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modDEV_Securite"
+Attribute VB_Name = "modDEV_Securite"
 Option Explicit
 
 Public Function GetInitialesObligatoiresFromADMIN(ByVal utilisateurWindows As String) As String '2025-05-31 @ 16:08
@@ -63,6 +63,5 @@ Public Function GetInitialesAutorises(ByVal userName As String) As String '2025-
     End Select
     
 End Function
-
 
 

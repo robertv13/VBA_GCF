@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modConfig"
+Attribute VB_Name = "modConfig"
 '=======================================================
 ' modConfig.bas - 2025-07-02 @ 09:49
 ' Déclaration des constantes et des variables globales
@@ -361,4 +361,3 @@ Public Enum TEC_TDB_Data
     fTECTDBH_TEC
     [_Last]
 End Enum
-

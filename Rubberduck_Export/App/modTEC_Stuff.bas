@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modTEC_Stuff"
+Attribute VB_Name = "modTEC_Stuff"
 Option Explicit
 
 Public Sub Convertir_NF_en_Facturable_Dans_BD(tecID As Long) '2025-01-15 @ 09:44
@@ -73,4 +73,3 @@ Public Sub Convertir_NF_en_Facturable_Locally(tecID As Long) '2025-01-15 @ 09:44
     Call Log_Record("modTEC_Stuff:Convertir_NF_en_Facturable_Locally", "", startTime)
 
 End Sub
-

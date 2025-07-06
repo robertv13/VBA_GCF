@@ -1,4 +1,4 @@
-﻿VERSION 1.0 CLASS
+VERSION 1.0 CLASS
 BEGIN
   MultiUse = -1  'True
 END
@@ -426,5 +426,4 @@ Private Function FilterData() As Variant
     FilterData = finalItems
 
 End Function
-
 

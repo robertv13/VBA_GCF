@@ -1,4 +1,4 @@
-﻿Option Explicit
+Option Explicit
 
 Public clientCode As String
 
@@ -155,4 +155,3 @@ ExitSub:
     Call Log_Record("wshTEC_Radiation:Worksheet_Change", "", startTime)
   
 End Sub
-

@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modAppli_Utils"
+Attribute VB_Name = "modAppli_Utils"
 '@Folder("Général")
 
 Option Explicit
@@ -4807,6 +4807,5 @@ Sub ExtraireCouleurCellule()
            "Vert: " & vert & vbCrLf & _
            "Bleu: " & bleu
 End Sub
-
 
 

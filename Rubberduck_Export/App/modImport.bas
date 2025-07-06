@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modImport"
+Attribute VB_Name = "modImport"
 Option Explicit
 
 Sub ImporterPlanComptable() '2024-02-17 @ 07:21
@@ -564,5 +564,4 @@ Sub ViderTableau(nomFeuille As String, nomTableau As String) '2025-05-07 @ 10:13
     End If
 
 End Sub
-
 

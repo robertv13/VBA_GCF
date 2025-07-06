@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modTEC_Evaluation"
+Attribute VB_Name = "modTEC_Evaluation"
 Option Explicit
 
 Public gDictHours As Object 'Déclaration globale
@@ -620,5 +620,4 @@ End Sub
 '    End If
 '
 'End Sub
-
 

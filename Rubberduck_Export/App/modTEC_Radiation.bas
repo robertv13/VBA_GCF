@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modTEC_Radiation"
+Attribute VB_Name = "modTEC_Radiation"
 Option Explicit
 
 Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
@@ -446,5 +446,4 @@ Sub Prepare_Pour_Nouvelle_Radiation()
     Next chkBox
 
 End Sub
-
 

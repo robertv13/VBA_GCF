@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modCAR_Liste_Agee"
+Attribute VB_Name = "modCAR_Liste_Agee"
 '@IgnoreModule SetAssignmentWithIncompatibleObjectType
 '@Folder("Rapport_ListeAgéeCC")
 
@@ -814,6 +814,5 @@ Sub RetourMenuFacturation()
     wshMenuFAC.Range("A1").Select
 
 End Sub
-
 
 

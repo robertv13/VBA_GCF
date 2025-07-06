@@ -1,4 +1,4 @@
-﻿VERSION 5.00
+VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufSaisieHeures 
    Caption         =   "Gestion des heures travaillées"
    ClientLeft      =   30
@@ -670,6 +670,5 @@ Private Sub MettreAJourEtatBoutons() '2025-07-03 @ 07:09
     Me.cmdClear.Enabled = Me.cmdAdd.Enabled Or Me.cmdUpdate.Enabled
 
 End Sub
-
 
 

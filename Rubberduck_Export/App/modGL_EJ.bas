@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modGL_EJ"
+Attribute VB_Name = "modGL_EJ"
 '@Folder("Saisie_Entrée_Journal")
 
 Option Explicit
@@ -1170,5 +1170,4 @@ Sub ckbRecurrente_Click()
     End If
 
 End Sub
-
 

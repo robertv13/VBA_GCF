@@ -1,4 +1,4 @@
-﻿VERSION 5.00
+VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufConfirmation 
    Caption         =   "Confirmation des factures"
    ClientLeft      =   120
@@ -232,5 +232,4 @@ Exit_Sub:
     Call Log_Record("ufConfirmation:UserForm_Terminate", "", startTime)
 
 End Sub
-
 

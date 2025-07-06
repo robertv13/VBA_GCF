@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modFAC_Finale"
+Attribute VB_Name = "modFAC_Finale"
 '@Folder("Saisie_Facture")
 
 Option Explicit
@@ -1665,6 +1665,5 @@ Sub RestaurerFeuilleFinaleIntact() '2025-06-06 @ 18:38
     Application.ScreenUpdating = True
     
 End Sub
-
 
 

@@ -1,4 +1,4 @@
-﻿VERSION 5.00
+VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufConfirmationFermeture 
    Caption         =   "Confirmation de fermeture de l'application"
    ClientLeft      =   120
@@ -142,5 +142,4 @@ Public Function ProchainTick() As Date '2025-07-02 @ 08:19
     ProchainTick = tProchainTick
     
 End Function
-
 

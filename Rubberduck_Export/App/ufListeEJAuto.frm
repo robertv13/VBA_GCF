@@ -1,4 +1,4 @@
-﻿VERSION 5.00
+VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufListeEJAuto 
    Caption         =   "Choisir l'entrée récurrente à utiliser"
    ClientLeft      =   7065
@@ -44,5 +44,4 @@ Private Sub UserForm_Terminate()
     Unload Me
 
 End Sub
-
 

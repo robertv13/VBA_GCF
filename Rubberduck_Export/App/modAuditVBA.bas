@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modAuditVBA"
+Attribute VB_Name = "modAuditVBA"
 Option Explicit
 
 Sub AnalyserToutesLesProcedures()
@@ -10,17 +10,17 @@ Sub AnalyserToutesLesProcedures()
 
     Debug.Print "Début du traitement : analyse des procédures VBA"
 
-    'Étape 1 : Construction du tableau
+    'Étape 1 - Construction du tableau
     Call BatirTableProcedures(dictIndex, tableProc, indexMax)
 
-    'Étape 2 : Comptage des appels dans le code
-    Call IncrementeAppelsViaIndex(dictIndex, tableProc, indexMax)
+    'Étape 2 - Comptage des appels dans le code
+    Call IncrementerAppelsCodeDirect(dictIndex, tableProc, indexMax)
 
     'Étape 3 : Analyse des objets Excel (formes, boutons, etc.)
-    Call ScannerObjetsExcelPourOnAction(dictIndex, tableProc)
+    Call IncrementerAppelsIndirect(dictIndex, tableProc)
     
     'Étape 4 : Export vers Excel trié et structuré
-    Call ExporterToutesLesProcedures(tableProc, indexMax)
+    Call ExporterResultatsFeuille(tableProc, indexMax)
 
     Debug.Print "Traitement terminé (" & indexMax & " procédures analysées)"
     
@@ -74,7 +74,7 @@ NextLigne:
     
 End Sub
 
-Sub IncrementeAppelsViaIndex(dictIndex As Object, tableProc() As Variant, indexMax As Long)
+Sub IncrementerAppelsCodeDirect(dictIndex As Object, tableProc() As Variant, indexMax As Long)
 
     Debug.Print "   2. Comptage des appels aux procédures (dans le code)"
     
@@ -101,7 +101,7 @@ Sub IncrementeAppelsViaIndex(dictIndex As Object, tableProc() As Variant, indexM
                 End If
 
                 For Each nomProc In dictIndex.keys
-'                    If nomProc = "BoutonImprimer_CC" Then Stop
+'                   If nomProc = "BoutonImprimer_CC" Then Stop
 
                     'Appels préfixés (Module.nomProc)
                     If InStr(ligne, "." & nomProc) > 0 Then
@@ -118,18 +118,6 @@ Sub IncrementeAppelsViaIndex(dictIndex As Object, tableProc() As Variant, indexM
                         End If
                     End If
                     
-'                    'Appels indirects via .OnAction
-'                    If InStr(LCase(ligne), ".onaction") > 0 And InStr(ligne, "=") > 0 Then
-'                        posEq = InStr(ligne, "=")
-'                        valeur = Trim(Mid(ligne, posEq + 1)) 'Extrait le texte après le signe égal
-'                        valeur = Replace(valeur, Chr(34), "")
-'                        valeur = Replace(valeur, "'", "")
-'                        valeur = Split(valeur, " ")(0) 'Garde le premier mot (souvent le nom de procédure)
-'                        If LCase(valeur) = LCase(nomProc) Then
-'                            tableProc(dictIndex(nomProc), 6) = tableProc(dictIndex(nomProc), 6) + 1
-'                        End If
-'                    End If
-
                     'Appels indirects dynamiques : Application.Run, Evaluate, Excel4Macro
                     If (InStr(LCase(ligne), "application.run") > 0 Or _
                         InStr(LCase(ligne), "evaluate(") > 0 Or _
@@ -141,7 +129,7 @@ Sub IncrementeAppelsViaIndex(dictIndex As Object, tableProc() As Variant, indexM
                             If pos2 > pos1 Then
                                 valeur = Mid(ligne, pos1 + 1, pos2 - pos1 - 1)
                                 valeur = Replace(valeur, "()", "")
-                                valeur = Trim(Split(valeur, "!")(UBound(Split(valeur, "!")))) ' garde le nom après ! s'il est là
+                                valeur = Trim(Split(valeur, "!")(UBound(Split(valeur, "!")))) 'garde le nom après ! s'il est là
                                 If LCase(valeur) = LCase(nomProc) Then
                                     tableProc(dictIndex(nomProc), 6) = tableProc(dictIndex(nomProc), 6) + 1
                                 End If
@@ -157,7 +145,7 @@ LigneSuivante:
     
 End Sub
 
-Sub ScannerObjetsExcelPourOnAction(dictIndex As Object, tableProc() As Variant)
+Sub IncrementerAppelsIndirect(dictIndex As Object, tableProc() As Variant)
 
     Debug.Print "   3. Comptage des appels aux procédures (via Objets)"
     
@@ -208,7 +196,7 @@ Sub ScannerObjetsExcelPourOnAction(dictIndex As Object, tableProc() As Variant)
     
 End Sub
 
-Sub ExporterToutesLesProcedures(tableProc() As Variant, indexMax As Long)
+Sub ExporterResultatsFeuille(tableProc() As Variant, indexMax As Long)
 
     Debug.Print "   4. Exportation des résultats vers une feuille"
 
@@ -243,9 +231,9 @@ Sub ExporterToutesLesProcedures(tableProc() As Variant, indexMax As Long)
             .Cells(i + 1, 1).Value = tableProc(i, 1)
             .Cells(i + 1, 2).Value = tableProc(i, 2)
             .Cells(i + 1, 3).Value = tableProc(i, 3)
-            .Cells(i + 1, 4).Value = tableProc(i, 4) ' directs
-            .Cells(i + 1, 5).Value = tableProc(i, 5) ' préfixés
-            .Cells(i + 1, 6).Value = tableProc(i, 6) ' indirects
+            .Cells(i + 1, 4).Value = tableProc(i, 4) 'directs
+            .Cells(i + 1, 5).Value = tableProc(i, 5) 'préfixés
+            .Cells(i + 1, 6).Value = tableProc(i, 6) 'indirects
             .Cells(i + 1, 7).FormulaR1C1 = "=RC[-3]+RC[-2]+RC[-1]"
             .Cells(i + 1, 8).Value = tableProc(i, 7)
             If tableProc(i, 8) <> "" Then
@@ -310,7 +298,7 @@ Sub ExporterToutesLesProcedures(tableProc() As Variant, indexMax As Long)
         'Légende des non-conformités à la fin
         Dim lastRow As Long: lastRow = indexMax + 3
         .Cells(lastRow, 1).Value = "Légende des non-conformités :"
-        .Cells(lastRow + 1, 1).Value = "R1 - Usage non autorisé de '_' sauf pour événements (_Click, _Change, etc)"
+        .Cells(lastRow + 1, 1).Value = "R1 - Usage non autorisé de '_'sauf pour événements (_Click, _Change, etc)"
         .Cells(lastRow + 2, 1).Value = "R2 - Le nom contient un caractère accentué"
         .Cells(lastRow + 3, 1).Value = "R3 - Le nom ne commence pas par une majuscule"
         .Cells(lastRow + 4, 1).Value = "R4 - Le nom ne commence pas par un verbe d’action reconnu"
@@ -441,5 +429,4 @@ Function NouveauDict() As Object
     Set NouveauDict = CreateObject("Scripting.Dictionary")
     
 End Function
-
 

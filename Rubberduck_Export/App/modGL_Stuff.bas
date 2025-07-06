@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modGL_Stuff"
+Attribute VB_Name = "modGL_Stuff"
 Option Explicit
 
 'Structure pour une écriture comptable (données communes)
@@ -334,5 +334,4 @@ Sub GL_BV_SupprimerToutesLesFormes_shpRetour(w As Worksheet)
     Next shp
     
 End Sub
-
 

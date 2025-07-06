@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modDEB_Saisie"
+Attribute VB_Name = "modDEB_Saisie"
 '@Folder("Saisie_Déboursé")
 
 Option Explicit
@@ -1020,4 +1020,3 @@ Sub DEB_Forme_Restaurer(forme As Shape)
     forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB = sauvegardesCaracteristiquesForme("TextColor")
 
 End Sub
-

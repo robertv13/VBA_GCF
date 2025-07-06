@@ -1,4 +1,4 @@
-﻿Option Explicit
+Option Explicit
 
 Public celluleSélectionnée As Range
 
@@ -240,4 +240,3 @@ Private Sub Worksheet_BeforeRightClick(ByVal Target As Range, Cancel As Boolean)
     End If
 
 End Sub
-

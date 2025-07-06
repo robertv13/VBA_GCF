@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modMENU_TEC"
+Attribute VB_Name = "modMENU_TEC"
 Option Explicit
 
 'Option # 1
@@ -108,7 +108,6 @@ Sub shp_Get_Deplacements_From_TEC_Click()
     Call Get_Deplacements_From_TEC
     
 End Sub
-
 
 
 

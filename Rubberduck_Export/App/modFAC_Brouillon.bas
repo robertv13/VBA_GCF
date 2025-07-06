@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modFAC_Brouillon"
+Attribute VB_Name = "modFAC_Brouillon"
 '@Folder("Saisie_Facture")
 
 Option Explicit
@@ -1299,5 +1299,4 @@ Sub Load_Invoice_Template(t As String)
     Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
-
 

@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modGL_PrepEF"
+Attribute VB_Name = "modGL_PrepEF"
 Option Explicit
 
 Public gDictgSoldeCodeEF As Object
@@ -1136,5 +1136,4 @@ Sub TrierDictionaryParCle(ByRef dict As Object)
         Debug.Print keys(i) & " - " & Format$(values(i), "###,##0.00")
     Next i
 End Sub
-
 

@@ -1,4 +1,4 @@
-﻿Option Explicit
+Option Explicit
 
 Private Sub Worksheet_Activate()
 
@@ -18,4 +18,3 @@ Private Sub Worksheet_Activate()
     Call Log_Record("wshTEC_TDB:Worksheet_Activate", "", startTime)
 
 End Sub
-

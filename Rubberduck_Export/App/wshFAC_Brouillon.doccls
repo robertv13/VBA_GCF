@@ -1,4 +1,4 @@
-﻿'@Folder("Saisie_Facture")
+'@Folder("Saisie_Facture")
 
 Option Explicit
 
@@ -274,5 +274,4 @@ ExitSub:
     Call Log_Record("wshFAC_Brouillon:Worksheet_Change", targetAddress, startTime)
   
 End Sub
-
 

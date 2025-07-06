@@ -1,4 +1,4 @@
-﻿'@Folder("TEC - Pivot tables")
+'@Folder("TEC - Pivot tables")
 
 Option Explicit
 
@@ -130,5 +130,4 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     Call Log_Record("wshStatsHeuresPivotTables:Worksheet_Change", "", startTime)
 
 End Sub
-
 

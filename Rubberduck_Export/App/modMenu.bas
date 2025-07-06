@@ -1,4 +1,4 @@
-﻿Attribute VB_Name = "modMenu"
+Attribute VB_Name = "modMenu"
 Option Explicit
 
 Sub shpMenuTEC_Click()
@@ -398,5 +398,4 @@ Sub RetourMenuPrincipal()
     Set ws = Nothing
     
 End Sub
-
 

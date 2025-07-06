@@ -1,4 +1,4 @@
-﻿'@Folder("Rapport_ÉtatsFinanciers")
+'@Folder("Rapport_ÉtatsFinanciers")
 
 Option Explicit
 
@@ -104,4 +104,3 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     End If
 
 End Sub
-
