@@ -845,7 +845,7 @@ End Function
 
 Function ObtenirTransCC(numeroFacture As String) As Variant
 
-    Dim tableauCC(1 To 25, 1 To 7) As String
+    Dim tableauCC(1 To 100, 1 To 7) As String
     
     'Feuilles nécessaires
     Dim wsFactures As Worksheet: Set wsFactures = wsdFAC_Comptes_Clients
@@ -961,6 +961,7 @@ Sub AjouterBoutons_Stats(ws As Worksheet, wsSelection As Worksheet, rngImprimer 
 End Sub
 
 Sub AjouterBoutons_CC(ws As Worksheet, wsSelection As Worksheet, rngImprimer As Range, rngRetour As Range)
+
     Dim btnImprimer As Shape
     Dim btnRetour As Shape
     
