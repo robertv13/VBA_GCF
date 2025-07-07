@@ -283,6 +283,7 @@ Sub ExporterResultatsFeuille(tableProc() As Variant, indexMax As Long) '2025-07-
         .Range("A2:I2").AutoFilter
     
         'Volet figé entre ligne 2 et 3
+        .Activate
         .Range("B3").Select
         ActiveWindow.FreezePanes = True
     
