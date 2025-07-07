@@ -2122,7 +2122,7 @@ Function NormaliserDate(chaine As String) As Variant '2025-06-12 @ 08:22
     parties = Split(Replace(chaine, "-", "/"), "/")
     nbParties = UBound(parties) - LBound(parties) + 1
 
-    On Error GoTo Erreur
+    On Error GoTo erreur
 
     Select Case nbParties
         Case 1 ' Juste le jour
@@ -2165,7 +2165,7 @@ Function NormaliserDate(chaine As String) As Variant '2025-06-12 @ 08:22
     NormaliserDate = resultDate
     Exit Function
 
-Erreur:
+erreur:
     NormaliserDate = CVErr(xlErrValue)
     
 End Function

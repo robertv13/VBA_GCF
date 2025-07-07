@@ -1409,17 +1409,17 @@ Sub TestArray_2D_Resizer()
     Dim originalArray() As Variant
     Dim i As Long, j As Long
     
-    ' Dimension the original array to a fixed size (e.g., 10 rows and 5 columns)
+    'Dimension the original array to a fixed size (e.g., 10 rows and 5 columns)
     ReDim originalArray(1 To 10, 1 To 5)
     
-    ' Fill the original array with some example data
+    'Fill the original array with some example data
     For i = 1 To 10
         For j = 1 To 5
             originalArray(i, j) = "R" & i & "C" & j
         Next j
     Next i
     
-    ' Output the original array to the immediate window
+    'Output the original array to the immediate window
     Debug.Print "#030 - Original Array:"
     For i = 1 To 10
         For j = 1 To 5
@@ -1890,3 +1890,24 @@ Sub Test_Fn_Get_A_Row_From_A_Worksheet() '2025-01-13 @ 08:49
     End If
     
 End Sub
+
+Sub ScannerProcedures()
+
+    Dim vbComp As VBComponent, ligne As Long
+    Dim procName As String, cm As codeModule
+
+    Debug.Print "?? Procédures visibles dans le projet VBA :"
+    For Each vbComp In ThisWorkbook.VBProject.VBComponents
+        If vbComp.Type = vbext_ct_StdModule Then
+            Set cm = vbComp.codeModule
+            Debug.Print vbComp.Name & " :"
+            For ligne = 1 To cm.CountOfLines
+                procName = cm.ProcOfLine(ligne, vbext_pk_Proc)
+                If procName <> "" Then Debug.Print "   ? " & procName
+            Next ligne
+            Debug.Print ""
+        End If
+    Next vbComp
+    
+End Sub
+

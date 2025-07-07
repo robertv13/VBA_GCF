@@ -1,0 +1,25 @@
+Option Explicit
+
+Private Sub Worksheet_BeforeDoubleClick(ByVal Target As Range, Cancel As Boolean)
+
+    Dim nomProc As String, nomModule As String
+    
+    If Target.row < 3 Then Exit Sub
+    If Target.Column <> 1 Then Exit Sub
+
+    nomProc = Trim(Target.Value)
+    nomModule = Trim(Cells(Target.row, 2).Value)
+
+    If nomProc <> "" And nomModule <> "" Then
+        Cancel = True
+        Dim success As Boolean
+        success = AllerVersCode(nomModule, nomProc)
+    End If
+    
+    If success Then
+        Target.Interior.Color = RGB(200, 255, 200) 'vert clair ?
+    Else
+        Target.Interior.Color = RGB(255, 200, 200) 'rouge clair ?
+    End If
+    
+End Sub

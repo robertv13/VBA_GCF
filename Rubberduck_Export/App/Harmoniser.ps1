@@ -41,13 +41,27 @@ if ($files.Count -eq 0) {
         # Lire le contenu
         $content = Get-Content $file.FullName -Raw
         
-        # Appliquer les remplacements typographiques
+        # Appliquer les remplacements typographiques principaux
         foreach ($pair in $keywords.GetEnumerator()) {
             $pattern = '(?<![\w])' + [regex]::Escape($pair.Key) + '(?![\w])'
             if ($content -match $pattern) {
                 Add-Content -Path $journal -Value "   Remplacé : $($pair.Key) ➜ $($pair.Value)"
             }
             $content = [regex]::Replace($content, $pattern, $pair.Value)
+        }
+
+        # 🔒 Verrouiller la casse stricte pour objets sensibles
+        $verrouilles = @{
+            '.listbox' = '.ListBox'
+            '.goto'    = '.GoTo'
+        }
+
+        foreach ($pair in $verrouilles.GetEnumerator()) {
+            $pattern = '(?<![\w])' + [regex]::Escape($pair.Key) + '(?![\w])'
+            if ($content -match $pattern) {
+                Add-Content -Path $journal -Value "   Verrouillé : $($pair.Key) ➜ $($pair.Value)"
+            }
+            $content = [regex]::Replace($content, $pattern, $pair.Value, 'IgnoreCase')
         }
 
         # Nettoyer visuellement les fichiers .frm

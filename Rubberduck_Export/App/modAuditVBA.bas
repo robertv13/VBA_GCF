@@ -1,7 +1,7 @@
 Attribute VB_Name = "modAuditVBA"
 Option Explicit
 
-Sub AnalyserToutesLesProcedures()
+Sub AnalyserToutesLesProcedures() '2025-07-07 @ 09:27
 
     Dim tableProc(1 To 1000, 1 To 8) As Variant '[Nom, Module, Type, Direct, Préfixé, Indirect, Object, NonConformite]
     Dim indexMax As Long
@@ -25,11 +25,11 @@ Sub AnalyserToutesLesProcedures()
     Debug.Print "Traitement terminé (" & indexMax & " procédures analysées)"
     
     Application.ScreenUpdating = True
-    Worksheets("ToutesLesProcedures").Activate
+    Worksheets("DocAuditVBA").Activate
 
 End Sub
 
-Sub BatirTableProcedures(ByRef dictIndex As Object, ByRef tableProc() As Variant, ByRef index As Long)
+Sub BatirTableProcedures(ByRef dictIndex As Object, ByRef tableProc() As Variant, ByRef index As Long) '2025-07-07 @ 09:27
 
     Debug.Print "   1. Construction de la liste des Procédures"
     
@@ -74,7 +74,7 @@ NextLigne:
     
 End Sub
 
-Sub IncrementerAppelsCodeDirect(dictIndex As Object, tableProc() As Variant, indexMax As Long)
+Sub IncrementerAppelsCodeDirect(dictIndex As Object, tableProc() As Variant, indexMax As Long) '2025-07-07 @ 09:27
 
     Debug.Print "   2. Comptage des appels aux procédures (dans le code)"
     
@@ -101,8 +101,6 @@ Sub IncrementerAppelsCodeDirect(dictIndex As Object, tableProc() As Variant, ind
                 End If
 
                 For Each nomProc In dictIndex.keys
-'                   If nomProc = "BoutonImprimer_CC" Then Stop
-
                     'Appels préfixés (Module.nomProc)
                     If InStr(ligne, "." & nomProc) > 0 Then
                         tableProc(dictIndex(nomProc), 5) = tableProc(dictIndex(nomProc), 5) + 1
@@ -145,7 +143,7 @@ LigneSuivante:
     
 End Sub
 
-Sub IncrementerAppelsIndirect(dictIndex As Object, tableProc() As Variant)
+Sub IncrementerAppelsIndirect(dictIndex As Object, tableProc() As Variant) '2025-07-07 @ 09:27
 
     Debug.Print "   3. Comptage des appels aux procédures (via Objets)"
     
@@ -158,10 +156,8 @@ Sub IncrementerAppelsIndirect(dictIndex As Object, tableProc() As Variant)
     For Each ws In ThisWorkbook.Worksheets
         'Formes dessinées (Shapes)
         For Each shp In ws.Shapes
-            If ws.Name = "FAC_Interrogation" Then Debug.Print shp.Name & " " & shp.OnAction: Stop
             If shp.OnAction <> "" Then
                 nomMacro = shp.OnAction
-                If nomMacro = "BoutonImprimer_CC" Then Stop
                 If InStr(nomMacro, "!") > 0 Then
                     nomMacro = Split(nomMacro, "!")(1)
                 End If
@@ -185,9 +181,9 @@ Sub IncrementerAppelsIndirect(dictIndex As Object, tableProc() As Variant)
                 idx = dictIndex(nomMacro)
                     tableProc(idx, 6) = tableProc(idx, 6) + 1
                     If tableProc(idx, 7) = "" Then
-                        tableProc(idx, 7) = obj.Name & " (" & ws.Name & ")" 'nom de l’objet appelant
+                        tableProc(idx, 7) = obj.Name & " (" & ws.Name & ")"
                     Else
-                        tableProc(idx, 7) = tableProc(idx, 7) & vbCrLf & obj.Name & " (" & ws.Name & ")" 'nom de l’objet appelant
+                        tableProc(idx, 7) = tableProc(idx, 7) & vbCrLf & obj.Name & " (" & ws.Name & ")"
                     End If
                 End If
             End If
@@ -196,59 +192,63 @@ Sub IncrementerAppelsIndirect(dictIndex As Object, tableProc() As Variant)
     
 End Sub
 
-Sub ExporterResultatsFeuille(tableProc() As Variant, indexMax As Long)
+Sub ExporterResultatsFeuille(tableProc() As Variant, indexMax As Long) '2025-07-07 @ 09:27
 
     Debug.Print "   4. Exportation des résultats vers une feuille"
 
     Application.EnableEvents = False
     
+    'Utilisation de la feuille DocAuditVBA (permanente)
     Dim ws As Worksheet
-    On Error Resume Next
-    Application.DisplayAlerts = False
-    Set ws = Worksheets("ToutesLesProcedures")
-    If Not ws Is Nothing Then ws.Delete
-    Application.DisplayAlerts = True
-    On Error GoTo 0
+    Set ws = Worksheets("DocAuditVBA")
+    ws.Cells.Clear 'Efface le contenu, mais garde les événements
 
-    Set ws = Worksheets.Add(After:=Worksheets(Worksheets.count))
-    ws.Name = "ToutesLesProcedures"
-
-    Dim i As Long
     With ws
+        'Légende interactive
+        .Cells(1, 1).Value = "?? Double-cliquez sur un nom de procédure (colonne A) pour accéder directement au code VBA"
+        .Cells(1, 1).Font.size = 10
+        .Cells(1, 1).Font.Bold = True
+        .Cells(1, 1).Font.Color = RGB(0, 102, 204) 'Bleu
+        .Cells(1, 1).Interior.Color = RGB(235, 247, 255) 'Bleu pâle
+        .Cells(1, 1).HorizontalAlignment = xlCenter
+        .Cells(1, 1).VerticalAlignment = xlCenter
+        .Cells(1, 1).WrapText = True
+        .Rows(1).RowHeight = 30
         'Entêtes
-        .Cells(1, 1).Value = "Nom Procédure"
-        .Cells(1, 2).Value = "Module"
-        .Cells(1, 3).Value = "Type Module"
-        .Cells(1, 4).Value = "Appels directs"
-        .Cells(1, 5).Value = "Appels préfixés"
-        .Cells(1, 6).Value = "Appels indirects"
-        .Cells(1, 7).Value = "Total appels"
-        .Cells(1, 8).Value = "Objet .OnAction"
-        .Cells(1, 9).Value = "Non conformité"
+        .Cells(2, 1).Value = "Nom Procédure"
+        .Cells(2, 2).Value = "Module"
+        .Cells(2, 3).Value = "Type Module"
+        .Cells(2, 4).Value = "Appels directs"
+        .Cells(2, 5).Value = "Appels préfixés"
+        .Cells(2, 6).Value = "Appels indirects"
+        .Cells(2, 7).Value = "Total appels"
+        .Cells(2, 8).Value = "Objet .OnAction"
+        .Cells(2, 9).Value = "Non conformité"
 
         'Contenu
+        Dim i As Long
         For i = 1 To indexMax
-            .Cells(i + 1, 1).Value = tableProc(i, 1)
-            .Cells(i + 1, 2).Value = tableProc(i, 2)
-            .Cells(i + 1, 3).Value = tableProc(i, 3)
-            .Cells(i + 1, 4).Value = tableProc(i, 4) 'directs
-            .Cells(i + 1, 5).Value = tableProc(i, 5) 'préfixés
-            .Cells(i + 1, 6).Value = tableProc(i, 6) 'indirects
-            .Cells(i + 1, 7).FormulaR1C1 = "=RC[-3]+RC[-2]+RC[-1]"
-            .Cells(i + 1, 8).Value = tableProc(i, 7)
+            .Cells(i + 2, 1).Value = tableProc(i, 1)
+            .Cells(i + 2, 2).Value = tableProc(i, 2)
+            .Cells(i + 2, 3).Value = tableProc(i, 3)
+            .Cells(i + 2, 4).Value = tableProc(i, 4) 'directs
+            .Cells(i + 2, 5).Value = tableProc(i, 5) 'préfixés
+            .Cells(i + 2, 6).Value = tableProc(i, 6) 'indirects
+            .Cells(i + 2, 7).FormulaR1C1 = "=RC[-3]+RC[-2]+RC[-1]"
+            .Cells(i + 2, 8).Value = tableProc(i, 7)
             If tableProc(i, 8) <> "" Then
-                .Cells(i + 1, 9).Interior.Color = RGB(255, 230, 230) 'Rouge pâle
+                .Cells(i + 2, 9).Interior.Color = RGB(255, 230, 230) 'Rouge pâle
             End If
-            .Cells(i + 1, 9).Value = tableProc(i, 8)
+            .Cells(i + 2, 9).Value = tableProc(i, 8)
         Next i
 
         'Tri multicritère
         With .Sort
             .SortFields.Clear
-            .SortFields.Add key:=ws.Range("A2:A" & indexMax + 1), Order:=xlAscending
-            .SortFields.Add key:=ws.Range("B2:B" & indexMax + 1), Order:=xlAscending
-            .SortFields.Add key:=ws.Range("C2:C" & indexMax + 1), Order:=xlAscending
-            .SetRange ws.Range("A1:G" & indexMax + 1)
+            .SortFields.Add key:=ws.Range("A3:A" & indexMax + 1), Order:=xlAscending
+            .SortFields.Add key:=ws.Range("B3:B" & indexMax + 1), Order:=xlAscending
+            .SortFields.Add key:=ws.Range("C3:C" & indexMax + 1), Order:=xlAscending
+            .SetRange ws.Range("A2:I" & indexMax + 2)
             .Header = xlYes
             .Apply
         End With
@@ -262,8 +262,8 @@ Sub ExporterResultatsFeuille(tableProc() As Variant, indexMax As Long)
         
         .Cells.VerticalAlignment = xlTop
     
-        'Entêtes centrées, surbrillance bleue, texte blanc, gras, italique, taille réduite
-        With .Range("A1:I1")
+        'Entêtes
+        With .Range("A2:I2")
             .HorizontalAlignment = xlCenter
             .Interior.Color = RGB(0, 102, 204) 'Bleu vif
             .Font.Color = vbWhite
@@ -272,7 +272,7 @@ Sub ExporterResultatsFeuille(tableProc() As Variant, indexMax As Long)
             .Font.size = 9
         End With
     
-        'Colonnes spécifiques centrées horizontalement
+        'Colonnes spécifiques
         .Columns("D").HorizontalAlignment = xlCenter
         .Columns("E").HorizontalAlignment = xlCenter
         .Columns("F").HorizontalAlignment = xlCenter
@@ -280,23 +280,23 @@ Sub ExporterResultatsFeuille(tableProc() As Variant, indexMax As Long)
         .Columns("I").HorizontalAlignment = xlCenter
     
         'Filtre sur toutes les colonnes
-        .Range("A1:I1").AutoFilter
+        .Range("A2:I2").AutoFilter
     
-        'Volet figé entre ligne 1 et 2
-        .Range("B2").Select
+        'Volet figé entre ligne 2 et 3
+        .Range("B3").Select
         ActiveWindow.FreezePanes = True
     
-        'Lignes zébrées gris pâle/blanc
-        For i = 2 To indexMax + 1
+        'Lignes zébrées bleu pâle/blanc
+        For i = 3 To indexMax + 2
             If i Mod 2 = 0 Then
-                .Rows(i).Interior.Color = RGB(242, 242, 242) 'Gris très pâle
+                .Rows(i).Interior.Color = RGB(220, 230, 241)
             Else
                 .Rows(i).Interior.ColorIndex = xlNone
             End If
         Next i
         
         'Légende des non-conformités à la fin
-        Dim lastRow As Long: lastRow = indexMax + 3
+        Dim lastRow As Long: lastRow = indexMax + 4
         .Cells(lastRow, 1).Value = "Légende des non-conformités :"
         .Cells(lastRow + 1, 1).Value = "R1 - Usage non autorisé de '_'sauf pour événements (_Click, _Change, etc)"
         .Cells(lastRow + 2, 1).Value = "R2 - Le nom contient un caractère accentué"
@@ -308,6 +308,25 @@ Sub ExporterResultatsFeuille(tableProc() As Variant, indexMax As Long)
         .Range(.Cells(lastRow, 1), .Cells(lastRow + 5, 1)).Font.Italic = True
     End With
     
+    With ws.PageSetup
+        .Orientation = xlLandscape
+        .Zoom = False
+        .FitToPagesWide = 1
+        .FitToPagesTall = False
+    
+        .LeftFooter = Format(Now, "yyyy-mm-dd") & " " & Format(Now, "hh:mm:ss")
+        
+        .CenterFooter = ws.Name
+    
+        .RightFooter = "Page &P de &N"
+    
+        'Marges serrées pour optimiser l’espace
+        .TopMargin = Application.InchesToPoints(0.25)
+        .BottomMargin = Application.InchesToPoints(0.25)
+        .LeftMargin = Application.InchesToPoints(0.25)
+        .RightMargin = Application.InchesToPoints(0.25)
+    End With
+    
     ws.Activate
     ws.Select
     
@@ -315,7 +334,7 @@ Sub ExporterResultatsFeuille(tableProc() As Variant, indexMax As Long)
     
 End Sub
 
-Sub DiagnostiquerConformite(ws As Worksheet, tableProc() As Variant)
+Sub DiagnostiquerConformite(ws As Worksheet, tableProc() As Variant) '2025-07-07 @ 09:27
 
     Dim i As Long, nom As String, totalAppels As Long
     Dim diagnostics As String
@@ -323,7 +342,7 @@ Sub DiagnostiquerConformite(ws As Worksheet, tableProc() As Variant)
     Dim dernLigneUtilisee As Long
     dernLigneUtilisee = ws.Cells(ws.Rows.count, "A").End(xlUp).Row
 
-    For i = 2 To dernLigneUtilisee
+    For i = 3 To dernLigneUtilisee
         nom = Trim(ws.Cells(i, 1).Value)
         
         diagnostics = ""
@@ -356,7 +375,7 @@ Sub DiagnostiquerConformite(ws As Worksheet, tableProc() As Variant)
     
 End Sub
 
-Function ContientAccent(texte As String) As Boolean
+Function ContientAccent(texte As String) As Boolean '2025-07-07 @ 09:27
 
     Dim i As Long, code As Integer
     Const accents As String = "àâéèêîôùûäëïöüçÀÂÉÈÊÎÔÙÛÄËÏÖÜÇ"
@@ -372,18 +391,21 @@ Function ContientAccent(texte As String) As Boolean
     
 End Function
 
-Function EstSuffixeEvenement(nom As String) As Boolean
+Function EstSuffixeEvenement(nom As String) As Boolean '2025-07-07 @ 09:27
 
     Dim suffixes As Variant
-    suffixes = Array("_AfterUpdate", "_BeforeClose", "_BeforeUpdate", "_Change", _
-                     "_Click", "_Enter", "_Exit", "_SheetActivate", "_SheetChange")
+    suffixes = Array("_Activate", "_AfterUpdate", "_BeforeClose", "_BeforeDoubleClick", _
+                     "_BeforeRightClick", "_BeforeUpdate", "_Change", "_Click", _
+                     "_Enter", "_Exit", "_Initialize", "_QueryClose", "_SelectionChange", _
+                     "_SheetActivate", "_SheetChange", "_SheetDeactivate", "_SheetFollowHyperlink", _
+                     "_SheetSelectionChange", "_Terminate")
                      
     Dim s As Variant
     Dim nbUnderscore As Long
 
     nbUnderscore = Len(nom) - Len(Replace(nom, "_", ""))
 
-    'Si plus d'un underscore : rejet immédiat
+    'Plus d'un underscore = rejet immédiat
     If nbUnderscore > 1 Then
         EstSuffixeEvenement = False
         Exit Function
@@ -401,7 +423,7 @@ Function EstSuffixeEvenement(nom As String) As Boolean
     
 End Function
 
-Function CommenceParVerbe(nom As String) As Boolean
+Function CommenceParVerbe(nom As String) As Boolean '2025-07-07 @ 09:27
 
     Dim verbesAction As Variant
     verbesAction = Array("Activer", "Actualiser", "Afficher", "Ajouter", "Ajuster", _
@@ -424,9 +446,58 @@ Function CommenceParVerbe(nom As String) As Boolean
     
 End Function
 
-Function NouveauDict() As Object
+Function NouveauDict() As Object '2025-07-07 @ 09:27
 
     Set NouveauDict = CreateObject("Scripting.Dictionary")
+    
+End Function
+
+Function AllerVersCode(nomModule As String, Optional nomProcedure As String = "") As Boolean '2025-07-07 @ 09:27
+
+    On Error GoTo erreur
+
+    Dim comp As VBComponent
+    Dim cm As codeModule
+    Dim cpane As CodePane
+    Dim startLine As Long, numLines As Long
+
+    'Recherche du module dans le projet VBA actif
+    For Each comp In ThisWorkbook.VBProject.VBComponents
+        If Trim(comp.Name) = Trim(nomModule) Then Exit For
+    Next
+
+    If comp Is Nothing Then GoTo erreur
+
+    comp.Activate
+
+    'Si aucune procédure demandée, c'est terminé
+    If nomProcedure = "" Then
+        AllerVersCode = True
+        Exit Function
+    End If
+
+    'Recherche de la procédure dans le module
+    Set cm = comp.codeModule
+    startLine = cm.ProcStartLine(nomProcedure, vbext_pk_Proc)
+    If startLine < 1 Then GoTo erreur
+
+    numLines = cm.ProcCountLines(nomProcedure, vbext_pk_Proc)
+
+    'Saut vers le bon CodePane
+    For Each cpane In Application.VBE.CodePanes
+        If cpane.codeModule Is cm Then
+            With cpane
+                .Window.Visible = True
+                .SetSelection startLine, 1, startLine, 1
+            End With
+
+            AllerVersCode = True
+            Exit Function
+        End If
+    Next
+
+erreur:
+    AllerVersCode = False
     
 End Function
 

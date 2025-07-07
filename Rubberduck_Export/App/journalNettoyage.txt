@@ -1,4 +1,4 @@
-﻿📘 Journal de nettoyage typographique — 07/06/2025 08:45:29
+﻿📘 Journal de nettoyage typographique — 07/07/2025 09:35:00
 
 🔧 clsControlWrapper.cls
 
@@ -264,6 +264,8 @@
    Remplacé : .borders ➜ .Borders
    Remplacé : .row ➜ .Row
 
+🔧 modTestJump.bas
+
 🔧 modzDataConversion.bas
    Remplacé : .value ➜ .Value
    Remplacé : .column ➜ .Column
@@ -445,6 +447,9 @@
 🔧 wshzCSV_File.doccls
 
 🔧 wshzDocAnalyseEcartTEC.doccls
+
+🔧 wshzDocAuditVBA.doccls
+   Remplacé : .value ➜ .Value
 
 🔧 wshzDocConditionalFormatting.doccls
 
