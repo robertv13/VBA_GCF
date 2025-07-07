@@ -396,8 +396,8 @@ Function EstSuffixeEvenement(nom As String) As Boolean '2025-07-07 @ 09:27
 
     Dim suffixes As Variant
     suffixes = Array("_Activate", "_AfterUpdate", "_BeforeClose", "_BeforeDoubleClick", _
-                     "_BeforeRightClick", "_BeforeUpdate", "_Change", "_Click", _
-                     "_Enter", "_Exit", "_Initialize", "_QueryClose", "_SelectionChange", _
+                     "_BeforeRightClick", "_BeforeUpdate", "_Change", "_Click", "_DblClick", _
+                     "_Enter", "_Exit", "_Initialize", "_KeyDown", "_KeyUp", "_QueryClose", "_SelectionChange", _
                      "_SheetActivate", "_SheetChange", "_SheetDeactivate", "_SheetFollowHyperlink", _
                      "_SheetSelectionChange", "_Terminate")
                      
@@ -427,7 +427,7 @@ End Function
 Function CommenceParVerbe(nom As String) As Boolean '2025-07-07 @ 09:27
 
     Dim verbesAction As Variant
-    verbesAction = Array("Activer", "Actualiser", "Afficher", "Ajouter", "Ajuster", _
+    verbesAction = Array("Activer", "Actualiser", "Additionner", "Afficher", "Ajouter", "Ajuster", _
                          "Aller", "Analyser", "Appliquer", "Assembler", "Batir", _
                          "Calculer", "Convertir", "Creer", "Effacer", "Executer", _
                          "Exporter", "Extraire", "Generer", "Importer", "Imprimer", _

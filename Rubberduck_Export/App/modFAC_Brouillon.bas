@@ -286,7 +286,7 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
     
     Call FAC_Brouillon_Clear_All_TEC_Displayed
     
-    Call FAC_Brouillon_Get_All_Non_Billable_TEC_By_Client
+    Call ObtenirTECNonFacturablePourClient
     
     Call FAC_Brouillon_Load_Non_Billable_Into_Userform
     
@@ -554,15 +554,15 @@ Sub FAC_Brouillon_Get_All_TEC_By_Client(d As Date, includeBilledTEC As Boolean)
     Dim cutOffDateProjet As Date
     cutOffDateProjet = wshFAC_Brouillon.Range("B53").Value
     
-    Call FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet)
+    Call CopierTECFiltresVersFACBrouillon(cutOffDateProjet)
     
     Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client", "", startTime)
 
 End Sub
 
-Sub FAC_Brouillon_Get_All_Non_Billable_TEC_By_Client()
+Sub ObtenirTECNonFacturablePourClient()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Get_All_Non_Billable_TEC_By_Client", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:ObtenirTECNonFacturablePourClient", "", 0)
     
     'Mettre en place les critères pour aller chercher le temps NON-FACTURABLE pour le client avec AF#
     Dim c1 As String, c3 As String, c4 As String, c5 As String
@@ -575,7 +575,7 @@ Sub FAC_Brouillon_Get_All_Non_Billable_TEC_By_Client()
 
     Call Get_TEC_For_Client_AF(c1, c2, c3, c4, c5)
     
-    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Get_All_Non_Billable_TEC_By_Client", "", startTime)
+    Call Log_Record("modFAC_Brouillon:ObtenirTECNonFacturablePourClient", "", startTime)
 
 End Sub
 
@@ -734,9 +734,9 @@ No_Sort_Required:
 
 End Sub
 
-Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As Date) '2024-03-21 @ 07:10
+Sub CopierTECFiltresVersFACBrouillon(cutOffDateProjet As Date) '2024-03-21 @ 07:10
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:CopierTECFiltresVersFACBrouillon", "", 0)
 
     Dim lastUsedRow As Long
     lastUsedRow = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "AQ").End(xlUp).Row
@@ -814,7 +814,7 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
     Call FAC_Brouillon_TEC_Add_Check_Boxes(lastUsedRow, cutOffDateProjet) 'Exclude totals row
 
     'Adjust the formula in the hours summary
-    Call Adjust_Formulas_In_The_Summary(lastUsedRow)
+    Call AjusterFormulesDansSommaireParIndividu(lastUsedRow)
     
     Application.ScreenUpdating = True
     
@@ -824,7 +824,7 @@ Sub FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon(cutOffDateProjet As
     Set ufFraisDivers = Nothing
     Set rng = Nothing
 
-    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_TEC_Filtered_Entries_Copy_To_FAC_Brouillon", "", startTime)
+    Call Log_Record("modFAC_Brouillon:CopierTECFiltresVersFACBrouillon", "", startTime)
     
 End Sub
  
@@ -1168,7 +1168,7 @@ Sub Setup_Hours_Summary()
     
 End Sub
 
-Sub Adjust_Formulas_In_The_Summary(lur As Long)
+Sub AjusterFormulesDansSommaireParIndividu(lur As Long)
 
     Dim i As Long, p As Long
     Application.EnableEvents = False

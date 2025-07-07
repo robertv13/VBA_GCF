@@ -16,15 +16,15 @@ Sub TEC_TDB_BackToMenu()
 
 End Sub
 
-Sub shpActualiserTEC_TDB_Click()
+Sub shpActualiserTECTableauDeBord_Click()
 
-    Call ActualiserTEC_TDB
+    Call ActualiserTECTableauDeBord
 
 End Sub
 
-Sub ActualiserTEC_TDB()
+Sub ActualiserTECTableauDeBord()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_TDB:ActualiserTEC_TDB", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_TDB:ActualiserTECTableauDeBord", "", 0)
     
     Application.ScreenUpdating = False
     
@@ -35,7 +35,7 @@ Sub ActualiserTEC_TDB()
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modTEC_TDB:ActualiserTEC_TDB", "", startTime)
+    Call Log_Record("modTEC_TDB:ActualiserTECTableauDeBord", "", startTime)
 
 End Sub
 

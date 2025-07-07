@@ -333,7 +333,7 @@ Function Fn_Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hon
                 
                 Dim columnName As String
                 columnName = "NomClient"
-                Call Soft_Delete_If_Value_Is_Found_In_Master_Details(destinationFileName, _
+                Call DetruireDetailSiEnteteEstDetruite(destinationFileName, _
                                                                      destinationTab, _
                                                                      columnName, _
                                                                      valueToFind)
@@ -342,7 +342,7 @@ Function Fn_Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hon
                 destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                                       "GCF_BD_MASTER.xlsx"
                 destinationTab = "FAC_Projets_Entête$"
-                Call Soft_Delete_If_Value_Is_Found_In_Master_Entete(destinationFileName, _
+                Call DetruireEnteteSiEnteteEstDetruite(destinationFileName, _
                                                                     destinationTab, _
                                                                     columnName, _
                                                                     valueToFind) '2024-07-19 @ 15:31

@@ -424,7 +424,7 @@ Sub Build_Hours_Summary(rowSelected As Long)
         Application.EnableEvents = True
     End With
     
-    Call Add_And_Modify_Checkbox(saveR, rowSelected)
+    Call AjouterCaseACocherOnFacture(saveR, rowSelected)
     
     Application.EnableEvents = True
 
@@ -598,10 +598,12 @@ Sub FAC_Projets_Détails_Add_Record_Locally(clientID As String, fr As Long, lr A
 
 End Sub
 
-Sub Soft_Delete_If_Value_Is_Found_In_Master_Details(filePath As String, _
+Sub DetruireDetailSiEnteteEstDetruite(filePath As String, _
                                                     sheetName As String, _
                                                     columnName As String, _
                                                     valueToFind As Variant) '2024-07-19 @ 15:31
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:DetruireDetailSiEnteteEstDetruite", "", 0)
+    
     'Create a new ADODB connection
     Dim cn As Object: Set cn = CreateObject("ADODB.Connection")
     'Open the connection to the closed workbook
@@ -616,6 +618,8 @@ Sub Soft_Delete_If_Value_Is_Found_In_Master_Details(filePath As String, _
     cn.Close
     Set cn = Nothing
     
+    Call Log_Record("modTEC_Analyse:DetruireDetailSiEnteteEstDetruite", "", startTime)
+
 End Sub
 
 Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
@@ -757,10 +761,12 @@ Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String
 
 End Sub
 
-Sub Soft_Delete_If_Value_Is_Found_In_Master_Entete(filePath As String, _
+Sub DetruireEnteteSiEnteteEstDetruite(filePath As String, _
                                                    sheetName As String, _
                                                    columnName As String, _
                                                    valueToFind As Variant) '2024-07-19 @ 15:31
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:DetruireEnteteSiEnteteEstDetruite", "", 0)
+    
     'Create a new ADODB connection
     Dim cn As Object: Set cn = CreateObject("ADODB.Connection")
     'Open the connection to the closed workbook
@@ -775,9 +781,11 @@ Sub Soft_Delete_If_Value_Is_Found_In_Master_Entete(filePath As String, _
     cn.Close
     Set cn = Nothing
     
+    Call Log_Record("modTEC_Analyse:DetruireEnteteSiEnteteEstDetruite", "", startTime)
+
 End Sub
 
-Sub Add_And_Modify_Checkbox(StartRow As Long, lastRow As Long)
+Sub AjouterCaseACocherOnFacture(StartRow As Long, lastRow As Long)
     
     'Set your worksheet (adjust this to match your worksheet name)
     Dim ws As Worksheet: Set ws = wshTEC_Analyse

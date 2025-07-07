@@ -18,10 +18,10 @@ Private Sub UserForm_Initialize()
 
     Call ChargerListBoxAvec52DernieresSemaines
     
-    Call AddColonnesSemaine
-    Call AddColonnesMois
-    Call AddColonnesTrimestre
-    Call AddColonnesAnneeFinanciere
+    Call AdditionnerAjouterColonnesDeSemaine
+    Call AdditionnerAjouterColonnesDuMois
+    Call AdditionnerAjouterColonnesDuTrimestre
+    Call AdditionnerColonnesDeAnneeFinanciere
     
     Call Log_Record("ufStatsHeures:UserForm_Initialize", "", startTime)
     
@@ -104,7 +104,7 @@ Private Sub lbxDatesSemaines_Click_or_DblClick(ByVal valeur As Variant) '2024-12
             MsgBox "Il n'y a aucune heure d'enregistrée pour cette semaine", vbInformation
         End If
         
-        Call AddColonnesSemaine
+        Call AdditionnerAjouterColonnesDeSemaine
        
         'Rétablir les formules d'origine
         Application.EnableEvents = False
@@ -123,9 +123,9 @@ Private Sub lbxDatesSemaines_Click_or_DblClick(ByVal valeur As Variant) '2024-12
 
 End Sub
 
-Sub AddColonnesSemaine()
+Sub AdditionnerAjouterColonnesDeSemaine()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufStatsHeures:AddColonnesSemaine", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufStatsHeures:AdditionnerAjouterColonnesDeSemaine", "", 0)
     
     Dim ws As Worksheet: Set ws = wshTEC_TDB_Data
     
@@ -152,13 +152,13 @@ Sub AddColonnesSemaine()
     Set rngResult = Nothing
     Set ws = Nothing
     
-    Call Log_Record("ufStatsHeures:AddColonnesSemaine", "", startTime)
+    Call Log_Record("ufStatsHeures:AdditionnerAjouterColonnesDeSemaine", "", startTime)
 
 End Sub
 
-Sub AddColonnesMois()
+Sub AdditionnerAjouterColonnesDuMois()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufStatsHeures:AddColonnesMois", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufStatsHeures:AdditionnerAjouterColonnesDuMois", "", 0)
     
     Dim ws As Worksheet: Set ws = wshTEC_TDB_Data
     
@@ -182,13 +182,13 @@ Sub AddColonnesMois()
     Set rngResult = Nothing
     Set ws = Nothing
     
-    Call Log_Record("ufStatsHeures:AddColonnesMois", "", startTime)
+    Call Log_Record("ufStatsHeures:AdditionnerAjouterColonnesDuMois", "", startTime)
 
 End Sub
 
-Sub AddColonnesTrimestre()
+Sub AdditionnerAjouterColonnesDuTrimestre()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufStatsHeures:AddColonnesTrimestre", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufStatsHeures:AdditionnerAjouterColonnesDuTrimestre", "", 0)
     
     Dim ws As Worksheet: Set ws = wshTEC_TDB_Data
     
@@ -212,13 +212,13 @@ Sub AddColonnesTrimestre()
     Set rngResult = Nothing
     Set ws = Nothing
     
-    Call Log_Record("ufStatsHeures:AddColonnesTrimestre", "", startTime)
+    Call Log_Record("ufStatsHeures:AdditionnerAjouterColonnesDuTrimestre", "", startTime)
 
 End Sub
 
-Sub AddColonnesAnneeFinanciere()
+Sub AdditionnerColonnesDeAnneeFinanciere()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufStatsHeures:AddColonnesAnneeFinanciere", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufStatsHeures:AdditionnerColonnesDeAnneeFinanciere", "", 0)
     
     Dim ws As Worksheet: Set ws = wshTEC_TDB_Data
     
@@ -242,7 +242,7 @@ Sub AddColonnesAnneeFinanciere()
     Set rngResult = Nothing
     Set ws = Nothing
     
-    Call Log_Record("ufStatsHeures:AddColonnesAnneeFinanciere", "", startTime)
+    Call Log_Record("ufStatsHeures:AdditionnerColonnesDeAnneeFinanciere", "", startTime)
 
 End Sub
 

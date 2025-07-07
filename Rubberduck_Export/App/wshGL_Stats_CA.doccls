@@ -6,6 +6,6 @@ Private Sub Worksheet_Activate()
 
     Call modImport.ImporterGLTransactions
     
-    Call Actualiser_Stats_CA
+    Call ActualiserStatsChiffreAffaires
     
 End Sub

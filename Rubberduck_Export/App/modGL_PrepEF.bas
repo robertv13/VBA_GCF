@@ -336,7 +336,7 @@ Sub Assembler_Page_Titre_0_Main(dateAC As Date, dateAP As Date)
     
     Application.StatusBar = "Construction de la page titre"
         
-    Call Assembler_Page_Titre_1_Arrière_Plan_Et_Entête(ws, dateAC, dateAP)
+    Call AssemblerPageTitre1EtArrièrePlanEtEntête(ws, dateAC, dateAP)
     
     Application.StatusBar = ""
     
@@ -346,9 +346,9 @@ Sub Assembler_Page_Titre_0_Main(dateAC As Date, dateAP As Date)
 
 End Sub
 
-Sub Assembler_Page_Titre_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateAP As Date)
+Sub AssemblerPageTitre1EtArrièrePlanEtEntête(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_Page_Titre_1_Arrière_Plan_Et_Entête", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:AssemblerPageTitre1EtArrièrePlanEtEntête", "", 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -375,7 +375,7 @@ Sub Assembler_Page_Titre_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As D
     'Fixer le printArea selon le nombre de lignes ET 3 colonnes
     ActiveSheet.PageSetup.PrintArea = "$A1:$C" & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3
 
-    Call Log_Record("modGL_PrepEF:Assembler_Page_Titre_1_Arrière_Plan_Et_Entête", "", startTime)
+    Call Log_Record("modGL_PrepEF:AssemblerPageTitre1EtArrièrePlanEtEntête", "", startTime)
 
 End Sub
 

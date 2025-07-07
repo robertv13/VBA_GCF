@@ -27,7 +27,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             
             'Mettre à jour la feuille wshTEC_TDB_Data
-            Call ActualiserTEC_TDB
+            Call ActualiserTECTableauDeBord
             
             'Appliquer les 4 Advanced Filters (Semaine, Mois, Trimestre & Année Financière)
             Call Stats_Heures_AF

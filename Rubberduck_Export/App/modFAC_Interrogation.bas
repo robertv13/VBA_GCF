@@ -3,21 +3,21 @@ Attribute VB_Name = "modFAC_Interrogation"
 
 Option Explicit
 
-Sub shp_Affiche_Factures_Click()
+Sub shpAfficherFactures_Click()
 
-    Call Affiche_Liste_Factures
-
-End Sub
-
-Sub shp_Autre_Client_Click()
-
-    Call Autre_Client
+    Call AfficherListeDesFactures
 
 End Sub
 
-Sub Affiche_Liste_Factures()
+Sub shpSaisirAutreClient_Click()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Interrogation:Affiche_Liste_Factures", "", 0)
+    Call SaisirAutreClient
+
+End Sub
+
+Sub AfficherListeDesFactures()
+
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Interrogation:AfficherListeDesFactures", "", 0)
     
     Application.EnableEvents = False
     With wshFAC_Interrogation.Range("B9:O33")
@@ -53,15 +53,15 @@ Sub Affiche_Liste_Factures()
     
     'Ajuste les 2 boutons
     Dim shp As Shape
-    Set shp = wshFAC_Interrogation.Shapes("shpAfficheFactures")
+    Set shp = wshFAC_Interrogation.Shapes("shpAfficherFactures")
     shp.Visible = False
-    Set shp = wshFAC_Interrogation.Shapes("shpAutreClient")
+    Set shp = wshFAC_Interrogation.Shapes("shpSaisirAutreClient")
     shp.Top = 70
     shp.Visible = True
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modFAC_Interrogation:Affiche_Liste_Factures", "", startTime)
+    Call Log_Record("modFAC_Interrogation:AfficherListeDesFactures", "", startTime)
 
 Clean_Exit:
     
@@ -74,12 +74,12 @@ Clean_Exit:
     
 End Sub
 
-Sub Autre_Client()
+Sub SaisirAutreClient()
 
     Call FAC_Historique_Clear_All_Cells
     
     Dim shp As Shape
-    Set shp = wshFAC_Interrogation.Shapes("shpAutreClient")
+    Set shp = wshFAC_Interrogation.Shapes("shpSaisirAutreClient")
     shp.Visible = False
 
 End Sub
@@ -281,7 +281,7 @@ End Sub
 
 Sub FAC_Historique_Montrer_Bouton_Afficher()
 
-    Dim shp As Shape: Set shp = wshFAC_Interrogation.Shapes("shpAfficheFactures")
+    Dim shp As Shape: Set shp = wshFAC_Interrogation.Shapes("shpAfficherFactures")
     
     Application.EnableEvents = False
     
@@ -290,7 +290,7 @@ Sub FAC_Historique_Montrer_Bouton_Afficher()
         Trim$(wshFAC_Interrogation.Range("D4").Value) <> "" Then
         shp.Top = 70
         shp.Visible = True
-        Set shp = wshFAC_Interrogation.Shapes("shpAutreClient")
+        Set shp = wshFAC_Interrogation.Shapes("shpSaisirAutreClient")
         shp.Visible = False
     Else
         shp.Visible = False
@@ -305,7 +305,7 @@ End Sub
 
 Sub FAC_Historique_Montrer_Bouton_AutreClient()
 
-    Dim shp As Shape: Set shp = wshFAC_Interrogation.Shapes("shpAutreClient")
+    Dim shp As Shape: Set shp = wshFAC_Interrogation.Shapes("shpSaisirAutreClient")
     
     Application.EnableEvents = False
     

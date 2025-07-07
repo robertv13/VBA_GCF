@@ -6,11 +6,11 @@ Sub shp_GL_PrepEF_Actualiser_Click()
     Dim ws As Worksheet
     Set ws = wshGL_PrepEF
     
-    Call Actualiser_Stats_CA
+    Call ActualiserStatsChiffreAffaires
     
 End Sub
 
-Sub Actualiser_Stats_CA()
+Sub ActualiserStatsChiffreAffaires()
 
     Dim ws As Worksheet
     Set ws = wshGL_Stats_CA

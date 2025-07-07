@@ -454,7 +454,7 @@ Sub Fix_Date_Format()
 
 End Sub
 
-Sub Debug_Écart_TEC_Local_vs_TEC_TDB_Data()
+Sub ComparerValeursTECLocalVsTECTDBData()
 
     Dim wsTEC As Worksheet: Set wsTEC = wsdTEC_Local
     Dim lurTEC As Long

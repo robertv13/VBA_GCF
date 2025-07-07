@@ -596,7 +596,7 @@ Sub imgLogoGCF_Click()
             
             wshTEC_TDB_Data.Range("S7").Value = ufSaisieHeures.cmbProfessionnel.Value
         
-            Call ActualiserTEC_TDB
+            Call ActualiserTECTableauDeBord
             
             Call Stats_Heures_AF
             

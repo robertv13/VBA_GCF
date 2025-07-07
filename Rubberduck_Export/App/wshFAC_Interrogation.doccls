@@ -14,6 +14,7 @@ Private Sub Worksheet_Activate()
     Application.EnableEvents = False
     
     'Import transactions from MASTER file
+    Call modImport.ImporterClients
     Call modImport.ImporterFacComptesClients
     Call modImport.ImporterFacEntete
     Call modImport.ImporterFacDetails
@@ -22,9 +23,9 @@ Private Sub Worksheet_Activate()
     
     'Cache les deux boutons
     Dim shp As Shape
-    Set shp = wshFAC_Interrogation.Shapes("shpAfficheFactures")
+    Set shp = wshFAC_Interrogation.Shapes("shpAfficherFactures")
     shp.Visible = False
-    Set shp = wshFAC_Interrogation.Shapes("shpAutreClient")
+    Set shp = wshFAC_Interrogation.Shapes("shpSaisirAutreClient")
     shp.Visible = False
     
     'Set the zoom factor to 100% when this worksheet is activated
@@ -125,7 +126,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         
         Call FAC_Historique_Montrer_Bouton_Afficher
         Range(Target.Address).Interior.Color = xlNone
-        Application.GoTo Range("D6")
+        Application.GoTo Me.Range("D6"), True
      End If
    
     'Dates Period change

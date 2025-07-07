@@ -556,7 +556,7 @@ Sub ImporterDonnéesDeClasseursFermés_CAR() '2024-08-04 @ 07:31
     
 End Sub
 
-Sub Compare2ExcelFiles() '------------------------------------------ 2024-09-02 @ 06:24
+Sub Compare2ExcelFiles()
     
     Application.ScreenUpdating = False
     
@@ -686,6 +686,7 @@ Sub Compare2ExcelFiles() '------------------------------------------ 2024-09-02 
            
 End Sub
 
+'@Description - Utilitaire pour ajuster le nom du client dans la table TEC_Local
 Sub AdjustClientNameInTEC()  '2024-08-03 @ 09:40
 
     'Définir les chemins d'accès des fichiers (source & destination)
@@ -746,42 +747,43 @@ Sub AdjustClientNameInTEC()  '2024-08-03 @ 09:40
     
 End Sub
 
+'@Description - Utilitaire pour corriger le nom du client dans la table CAR ?
 Sub AdjustClientNameInCAR()  '2024-08-07 @ 17:11
 
     Dim sourceRange As Range
-    
+
     'Définir les chemins d'accès des fichiers (source & destination)
     Dim sourceFilePath As String
     sourceFilePath = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx"
     Dim clientMF As String
     clientMF = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx"
-    
+
     'Declare le Workbook & le Worksheet (source)
     Dim sourceWorkbook As Workbook: Set sourceWorkbook = Workbooks.Open(sourceFilePath)
     Dim sourceSheet As Worksheet: Set sourceSheet = sourceWorkbook.Worksheets("CAR")
-    
+
     'Détermine la dernière rangée utilisée dans le fichier Source
     Dim lastUsedRow As Long
     lastUsedRow = sourceSheet.Cells(sourceSheet.Rows.count, 1).End(xlUp).Row
     Dim lastUsedCol As Long
     lastUsedCol = sourceSheet.Cells(1, sourceSheet.Columns.count).End(xlToLeft).Column
-    
+
     'Define the range to copy
     Set sourceRange = sourceSheet.Range(sourceSheet.Cells(1, 1), sourceSheet.Cells(lastUsedRow, lastUsedCol))
-    
+
     ' Open the destination workbook
     Dim referenceWorkbook As Workbook: Set referenceWorkbook = Workbooks.Open(clientMF)
     Dim referenceSheet As Worksheet: Set referenceSheet = referenceWorkbook.Worksheets("Clients")
     Dim lastUsedRowClient As Long
     lastUsedRowClient = referenceSheet.Range("A9999").End(xlUp).Row
-    
+
     Dim dictClients As Dictionary 'Code, Nomdu Client
     Set dictClients = New Dictionary
     Dim i As Long
     For i = 2 To lastUsedRowClient
         dictClients.Add CStr(referenceSheet.Cells(i, 2).Value), referenceSheet.Cells(i, 1).Value
     Next i
-    
+
     Dim codeClient As String, nomClient As String, updatedNomClient As String
     For i = 3 To lastUsedRow
         codeClient = sourceSheet.Cells(i, 4).Value
@@ -790,11 +792,11 @@ Sub AdjustClientNameInCAR()  '2024-08-07 @ 17:11
         Debug.Print "#071 - " & i & " : " & codeClient & " - " & nomClient & " ---> " & updatedNomClient
         sourceSheet.Cells(i, 3).Value = updatedNomClient
     Next i
-    
+
     'Save and close the destination workbook
     sourceWorkbook.Save
     sourceWorkbook.Close
-    
+
     'Libérer la mémoire
     Set dictClients = Nothing
     Set sourceSheet = Nothing
@@ -802,9 +804,9 @@ Sub AdjustClientNameInCAR()  '2024-08-07 @ 17:11
     Set sourceWorkbook = Nothing
     Set referenceSheet = Nothing
     Set referenceWorkbook = Nothing
-    
+
     MsgBox "Les données ont été copiées avec succès dans le fichier destination."
-    
+
 End Sub
 
 Sub CheckClientName() '2024-08-10 @ 10:13

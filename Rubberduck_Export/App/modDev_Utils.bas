@@ -1,28 +1,29 @@
 Attribute VB_Name = "modDev_Utils"
 Option Explicit
 
-Sub Add_Columns_To_Active_Worksheet()
-
-    Dim colToAdd As Long
-    colToAdd = 5
-    
-    'Set the worksheet
-    Dim ws As Worksheet: Set ws = ActiveSheet
-    
-    'Find the last column with data
-    Dim lastColumn As Long
-    lastColumn = ws.Cells(1, ws.Columns.count).End(xlToLeft).Column
-    
-    'Add columns to the right of the last column
-    ws.Columns(lastColumn + 1).Resize(, colToAdd).Insert Shift:=xlToRight
-    
-    Debug.Print "#026 - " & colToAdd & " columns added to the worksheet."
-    
-    'Libérer la mémoire
-    Set ws = Nothing
-    
-End Sub
-
+'@TODO - Enlever la procédure ci-dessous - 2025-07-07 @ 15:49
+'Sub Add_Columns_To_Active_Worksheet()
+'
+'    Dim colToAdd As Long
+'    colToAdd = 5
+'
+'    'Set the worksheet
+'    Dim ws As Worksheet: Set ws = ActiveSheet
+'
+'    'Find the last column with data
+'    Dim lastColumn As Long
+'    lastColumn = ws.Cells(1, ws.Columns.count).End(xlToLeft).Column
+'
+'    'Add columns to the right of the last column
+'    ws.Columns(lastColumn + 1).Resize(, colToAdd).Insert Shift:=xlToRight
+'
+'    Debug.Print "#026 - " & colToAdd & " columns added to the worksheet."
+'
+'    'Libérer la mémoire
+'    Set ws = Nothing
+'
+'End Sub
+'
 Sub Array_2D_Bubble_Sort(ByRef arr() As Variant) '2024-06-23 @ 07:05
     
     Dim i As Long, j As Long, numRows As Long, numCols As Long
