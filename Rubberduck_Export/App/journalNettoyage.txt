@@ -1,4 +1,4 @@
-﻿📘 Journal de nettoyage typographique — 07/08/2025 08:59:10
+﻿📘 Journal de nettoyage typographique — 07/08/2025 14:25:38
 
 🔧 clsControlWrapper.cls
 
@@ -206,6 +206,8 @@
 🔧 modLog_Analysis.bas
    Remplacé : .value ➜ .Value
    Remplacé : .row ➜ .Row
+
+🔧 modMain.bas
 
 🔧 modMenu.bas
    Remplacé : .value ➜ .Value

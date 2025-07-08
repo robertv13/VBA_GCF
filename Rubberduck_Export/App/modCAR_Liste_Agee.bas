@@ -396,6 +396,16 @@ Next_Invoice:
     
     Call GererBoutonsNavigation(True)
     
+    Dim ligneVolet As Long
+    ligneVolet = ActiveWindow.SplitRow
+    Dim saveDerniereLigne As Long
+    saveDerniereLigne = DerniereLigne
+    
+    If DerniereLigne > (20 + ligneVolet) Then
+        DerniereLigne = DerniereLigne - 20
+        Application.GoTo wshCAR_Liste_Agee.Cells(DerniereLigne, 1), Scroll:=True '2025-07-08 @ 13:39
+    End If
+    
     Application.ScreenUpdating = True
     Application.EnableEvents = True
 
@@ -403,7 +413,7 @@ Next_Invoice:
    
     'Result print setup - 2024-08-31 @ 12:19
     Dim lastUsedRow As Long
-    lastUsedRow = DerniereLigne
+    lastUsedRow = saveDerniereLigne
     
     Dim rngToPrint As Range:
     Select Case LCase$(niveauDetail)

@@ -2395,18 +2395,10 @@ Private Sub VerifierFACProjetsEntete(ByRef r As Long, ByRef readRows As Long)
     r = r + 1
     
     'Establish the number of rows before transferring it to an Array
-    Dim numRows As Long
-    numRows = ws.Range("A1").CurrentRegion.Rows.count
-    If numRows <= HeaderRow Then
-        Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Cette feuille est vide !!!")
-        r = r + 2
-        GoTo Clean_Exit
-    End If
     Dim arr As Variant
-    arr = ws.Range("A1").CurrentRegion.offset(1, 0).Resize(numRows - 1, ws.Range("A1").CurrentRegion.Columns.count).Value
+    arr = ws.Range("A1").CurrentRegion.offset(2, 0).Resize(lastUsedRow - 2, ws.Range("A1").CurrentRegion.Columns.count).Value
     
     'Array pointer
-'    Dim row As Long: row = 1
     Dim currentRow As Long
         
     Dim i As Long
@@ -2560,24 +2552,17 @@ Private Sub VerifierFACProjetsDetails(ByRef r As Long, ByRef readRows As Long)
         " lignes et " & Format$(ws.Range("A1").CurrentRegion.Columns.count, "#,##0") & " colonnes dans cette table")
     r = r + 1
     
+    Dim lastUsedRowEntete As Long
     Dim wsMaster As Worksheet: Set wsMaster = wsdFAC_Projets_Entete
-    lastUsedRow = wsMaster.Cells(wsMaster.Rows.count, 1).End(xlUp).Row
-    Dim rngMaster As Range: Set rngMaster = wsMaster.Range("A2:A" & lastUsedRow)
+    lastUsedRowEntete = wsMaster.Cells(wsMaster.Rows.count, 1).End(xlUp).Row
+    Dim rngMaster As Range: Set rngMaster = wsMaster.Range("A2:A" & lastUsedRowEntete)
     
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wsdFAC_Projets_Details'")
     r = r + 1
     
-    'Transfer data from Worksheet into an Array (arr)
-    Dim numRows As Long
-    numRows = ws.Range("A1").CurrentRegion.Rows.count - 1 'Remove header
-    If numRows < 1 Then
-        r = r + 1
-        GoTo Clean_Exit
-    End If
-    
     'Charge le contenu de 'wsdFAC_Projets_Details' en mémoire (Array)
     Dim arr As Variant
-    arr = ws.Range("A1").CurrentRegion.offset(1, 0).Resize(numRows, ws.Range("A1").CurrentRegion.Columns.count).Value
+    arr = ws.Range("A1").CurrentRegion.offset(2, 0).Resize(lastUsedRow - 2, ws.Range("A1").CurrentRegion.Columns.count).Value
     
     Dim currentRow As Long
         

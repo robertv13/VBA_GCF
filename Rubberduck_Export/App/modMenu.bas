@@ -266,20 +266,30 @@ Sub ViderTableauxStructures() '2025-07-01 @ 10:38
 
     'Feuilles & noms de tableaux à vider
     feuilles = Array("BD_Clients", _
+                     "BD_Fournisseurs", _
+                     "CC_Régularisations", _
+                     "DEB_Trans", _
                      "ENC_Détails", _
                      "ENC_Entête", _
                      "FAC_Comptes_Clients", _
                      "FAC_Détails", _
                      "FAC_Entête", _
+                     "FAC_Projets_Détails", _
+                     "FAC_Projets_Entête", _
                      "FAC_Sommaire_Taux", _
                      "GL_Trans", _
                      "TEC_Local")
     tableaux = Array("l_tbl_BD_Clients", _
+                     "l_tbl_Fournisseur_FM", _
+                     "l_tbl_CC_Régularisations", _
+                     "l_tbl_DEB_Trans", _
                      "l_tbl_ENC_Détails", _
                      "l_tbl_ENC_Entête", _
                      "l_tbl_FAC_Comptes_Clients", _
                      "l_tbl_FAC_Détails", _
                      "l_tbl_FAC_Entête", _
+                     "l_tbl_FAC_Projets_Détails", _
+                     "l_tbl_FAC_Projets_Entête", _
                      "l_tbl_FAC_Sommaire_Taux", _
                      "l_tbl_GL_Trans", _
                      "l_tbl_TEC_Local")

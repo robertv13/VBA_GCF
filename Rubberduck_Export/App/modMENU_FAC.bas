@@ -80,6 +80,7 @@ Sub FAC_Confirmation_Click()
     Call modImport.ImporterFacDetails
     Call modImport.ImporterFacEntete
     Call modImport.ImporterFacSommaireTaux
+    Call modImport.ImporterGLTransactions
     Call modImport.ImporterTEC
     
     Call Afficher_ufConfirmation
