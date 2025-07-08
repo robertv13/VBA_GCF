@@ -1944,23 +1944,23 @@ Function ExtraireTransactionsPourUnCompte(rngResultAll As Range, compte As Strin
     
     'Définir une cellule pour le critère de filtrage temporaire
     Dim Critere As Range
-    Set Critere = ws.Range("AM2:AM3") 'A/F # 3 dans Gl_Trans
+    Set Critere = ws.Range("AN2:AN3") 'A/F # 3 dans Gl_Trans
     'Nettoyer les anciennes valeurs du critère
     Critere.Cells.ClearContents
     Critere.Cells(1, 1).Value = "NoCompte" 'Titre de la colonne à filtrer (Adapter si nécessaire)
     Critere.Cells(2, 1).Value = compte
     
     'Nettoyer la plage pour recevoir la copie
-    ws.Range("AO1").CurrentRegion.offset(1, 0).Clear
+    ws.Range("AP1").CurrentRegion.offset(1, 0).Clear
     
     'Appliquer AdvancedFilter pour obtenir uniquement les lignes correspondant au compte
     rngResultAll.AdvancedFilter action:=xlFilterCopy, _
                                 criteriaRange:=Critere, _
-                                CopyToRange:=ws.Range("AO1:AW1"), _
+                                CopyToRange:=ws.Range("AP1:AX1"), _
                                 Unique:=False
     
     'Récupérer la plage filtrée
-    Set rFiltre = ws.Range("AO1").CurrentRegion
+    Set rFiltre = ws.Range("AP1").CurrentRegion
     
     'Vérifier qu'il y a des lignes filtrées
     Dim LignesCorrespondantes() As Variant

@@ -615,7 +615,7 @@ Sub GL_Get_JE_Detail_Trans_AF(noEJ As Long) '2024-11-17 @ 12:08
     Dim rngResult As Range
     Set rngResult = ws.Range("AC1").CurrentRegion
     rngResult.offset(1, 0).Clear
-    Set rngResult = ws.Range("AC1:AK1")
+    Set rngResult = ws.Range("AC1:AL1")
     ws.Range("AA9").Value = rngResult.Address
     
     rngData.AdvancedFilter _
@@ -648,7 +648,7 @@ Sub GL_Get_JE_Detail_Trans_AF(noEJ As Long) '2024-11-17 @ 12:08
                 SortOn:=xlSortOnValues, _
                 Order:=xlDescending, _
                 DataOption:=xlSortNormal
-            .SetRange wsdGL_Trans.Range("AC2:AK" & lastUsedRow)
+            .SetRange wsdGL_Trans.Range("AC2:AL" & lastUsedRow)
             .Apply 'Apply Sort
          End With
     End If

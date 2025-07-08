@@ -360,8 +360,6 @@ End Sub
 
 Private Sub txtHeures_Exit(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtHeures_Exit", Me.txtHeures.Value, 0)
-    
     Dim heure As Currency
     
     On Error Resume Next
@@ -408,8 +406,6 @@ Private Sub txtHeures_Exit(ByVal Cancel As MSForms.ReturnBoolean)
         Me.txtHeures.SelStart = 0
         Me.txtHeures.SelLength = Len(Me.txtHeures.text)
     End If
-    
-    Call Log_Record("ufSaisieHeures:txtHeures_Exit", "", startTime)
     
 End Sub
 
@@ -670,5 +666,4 @@ Private Sub MettreAJourEtatBoutons() '2025-07-03 @ 07:09
     Me.cmdClear.Enabled = Me.cmdAdd.Enabled Or Me.cmdUpdate.Enabled
 
 End Sub
-
 

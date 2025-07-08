@@ -825,7 +825,7 @@ Sub GL_BV_Adjust_The_Shape()
     With wsdGL_Trans
         For i = 2 To lastResultRow
             If i = 2 Then
-                texteFull = "Entrée #: " & .Range("AC2").Value & vbCrLf
+                texteFull = "Entrée #: " & .Range("AC2").Value & Space$(10) & "(" & .Range("AL2").Value & ")" & vbCrLf
                 texteFull = texteFull & "Desc    : " & .Range("AE2").Value & vbCrLf
                 If Trim$(.Range("AF2").Value) <> "" Then
                     texteFull = texteFull & "Source  : " & .Range("AF2").Value & vbCrLf & vbCrLf

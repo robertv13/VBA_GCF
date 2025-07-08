@@ -667,7 +667,7 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
         'RecordSet are ZERO base, and Enums are not, so the '-1' is mandatory !!!
         rs.Fields(fFacPEProjetID - 1).Value = projetID
         rs.Fields(fFacPENomClient - 1).Value = nomClient
-        rs.Fields(fFacPEClientID).Value = CStr(clientID)
+        rs.Fields(fFacPEClientID - 1).Value = CStr(clientID)
         rs.Fields(fFacPEDate - 1).Value = dte
         rs.Fields(fFacPEHonoTotal - 1).Value = hono
         

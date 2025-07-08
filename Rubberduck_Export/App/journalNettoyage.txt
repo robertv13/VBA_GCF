@@ -1,4 +1,4 @@
-﻿📘 Journal de nettoyage typographique — 07/07/2025 16:17:56
+﻿📘 Journal de nettoyage typographique — 07/08/2025 08:59:10
 
 🔧 clsControlWrapper.cls
 
@@ -10,6 +10,8 @@
    Remplacé : .value ➜ .Value
    Remplacé : .text ➜ .Text
    Remplacé : .list ➜ .List
+
+🔧 Feuil1.doccls
 
 🔧 modAPIWindows.bas
 
