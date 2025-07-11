@@ -1560,7 +1560,6 @@ End Sub
 
 Sub Log_Record(ByVal procedureName As String, param As String, Optional ByVal startTime As Double = 0) '2025-02-03 @ 17:17
 
-  
     'En attendant de trouver la problématique... 2025-06-01 @ 05:06
     If gUtilisateurWindows = "" Then
         gUtilisateurWindows = Fn_Get_Windows_Username

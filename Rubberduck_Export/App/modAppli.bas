@@ -28,11 +28,11 @@ Private Sub Auto_Open() '2024-12-28 @ 11:09
     wsdADMIN.Range("B4").Value = gMAXIMUM_MINUTES_INACTIVITE
     Application.EnableEvents = True
 
-    Call DemarrageApplication
+    Call DemarrerApplication
     
 End Sub
 
-Sub DemarrageApplication() '2025-06-06 @ 11:40
+Sub DemarrerApplication() '2025-07-11 @ 15:16
 
     Dim rootPath As String
     rootPath = FN_Get_Root_Path
@@ -41,11 +41,11 @@ Sub DemarrageApplication() '2025-06-06 @ 11:40
     wsdADMIN.Range("F5").Value = rootPath
     Application.EnableEvents = True
    
-    Dim startTime As Double: startTime = Timer: Call Log_Record("----- DÉBUT D'UNE NOUVELLE SESSION (modAppli:DemarrageApplication) -----", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("----- DÉBUT D'UNE NOUVELLE SESSION (modAppli:DemarrerApplication) -----", "", 0)
     
     'Quel est l'utilisateur Windows ?
     gUtilisateurWindows = GetNomUtilisateur()
-    Debug.Print "DemarrageApplication - GetNomUtilisateur() = " & gUtilisateurWindows
+    Debug.Print "DemarrerApplication - GetNomUtilisateur() = " & gUtilisateurWindows
     
     On Error GoTo ErrorHandler
     
@@ -97,14 +97,14 @@ Sub DemarrageApplication() '2025-06-06 @ 11:40
     Set wb = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modAppli:DemarrageApplication", "", startTime)
+    Call Log_Record("modAppli:DemarrerApplication", "", startTime)
     Exit Sub
     
 ErrorHandler:
     Application.EnableEvents = True 'On s'assure de toujours restaurer l'état
     Application.DisplayAlerts = True
     Application.StatusBar = False
-    Call Log_Record("modAppli:DemarrageApplication (ERREUR) : " & Err.description, Timer)
+    Call Log_Record("modAppli:DemarrerApplication (ERREUR) : " & Err.description, Timer)
     
 End Sub
 

@@ -28,7 +28,7 @@ Function CreerCopieTemporaireSolide(onglet As String) As String
 
     On Error GoTo ErrHandler
 
-    sPath = ThisWorkbook.path & gDATA_PATH & "\"
+    sPath = wsdADMIN.Range("F5").Value & gDATA_PATH & "\"
     If Dir(sPath, vbDirectory) = "" Then
         MsgBox "Le répertoire n'existe pas : " & vbCrLf & sPath, vbCritical
         CreerCopieTemporaireSolide = ""
