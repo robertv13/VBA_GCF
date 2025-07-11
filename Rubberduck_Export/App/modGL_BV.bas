@@ -873,7 +873,7 @@ Sub GL_BV_Adjust_The_Shape()
         .TextFrame.MarginTop = 3
         .TextFrame.MarginBottom = 3
         If maxLength < 80 Then maxLength = 80
-        .Width = ((maxLength * 6#))
+        .Width = ((maxLength * 6))
 '            .Height = ((lastResultRow + 4) * 12) + 3 + 3
         .TextFrame2.AutoSize = msoAutoSizeShapeToFitText
         .Left = wshGL_BV.Range("N" & rowSelected).Left + 4
