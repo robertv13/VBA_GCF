@@ -274,33 +274,39 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
 
 End Function
 
-Function Fn_Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hono As Double) As String '2024-07-18 @ 16:32
+Function Fn_Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hono As Double) As String '2025-07-11 @ 01:12
     
     'Define the worksheet
     Dim ws As Worksheet: Set ws = wsdFAC_Projets_Details
     
-    'Define the range to search in (Column 1)
-    Dim searchRange As Range: Set searchRange = ws.Columns(2)
-    
-    'Search for the first occurrence of the value
-    Dim cell As Range
-    Set cell = searchRange.Find(What:=valueToFind, _
-                                LookIn:=xlValues, _
-                                LookAt:=xlWhole)
-    
-    'Check if the value is found
-    Dim firstAddress As String
     Dim rowsToDelete As Collection: Set rowsToDelete = New Collection
+    Dim lastUsedRow As Long
+    Dim i As Long
+    
+    With ws
+        lastUsedRow = .Cells(.Rows.count, 1).End(xlUp).Row
+        For i = 2 To lastUsedRow
+            If .Cells(i, 2).Value = valueToFind And (UCase(.Cells(i, 9).Value) = "FAUX" Or .Cells(i, 9).Value = 0) Then
+                rowsToDelete.Add i
+            End If
+        Next i
+    End With
+    
+'    'Define the range to search in (Column 1)
+'    Dim searchRange As Range: Set searchRange = ws.Columns(2)
+'
+'    'Search for the first occurrence of the value
+'    Dim cell As Range
+'    Set cell = searchRange.Find(What:=valueToFind, _
+'                                LookIn:=xlValues, _
+'                                LookAt:=xlWhole)
+'
+'    'Check if the value is found
+'    Dim firstAddress As String
 
-    If Not cell Is Nothing Then
-        firstAddress = cell.Address
-        Fn_Verify_And_Delete_Rows_If_Value_Is_Found = firstAddress
-        
-        'Loop to collect all rows with the value
-        Do
-            rowsToDelete.Add cell.row
-            Set cell = searchRange.FindNext(cell)
-        Loop While Not cell Is Nothing And cell.Address <> firstAddress
+    If rowsToDelete.count > 0 Then
+'    If Not cell Is Nothing Then
+'        Fn_Verify_And_Delete_Rows_If_Value_Is_Found = firstAddress
         
         'Confirm with the user
         Dim reponse As Long
@@ -319,12 +325,31 @@ Function Fn_Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hon
                     Fn_Verify_And_Delete_Rows_If_Value_Is_Found = "SUPPRIMER"
                 End If
                 
-                'Delete all collected rows from wsdFAC_Projets_Details (locally)
-                Dim i As Long
+                'Soft delete all collected rows from wsdFAC_Projets_Details (locally) - 2025-07-11 @ 00:58
+                Dim lo As ListObject
+                Set lo = ws.ListObjects("l_tbl_FAC_Projets_Détails")
+                
                 For i = rowsToDelete.count To 1 Step -1
-                    ws.Rows(rowsToDelete(i)).Delete
+                    ws.Cells(rowsToDelete(i), 9).Value = -1
                 Next i
                 
+                'Soft Delete FAC_Projets_Entête
+                Set lo = wsdFAC_Projets_Entete.ListObjects("l_tbl_FAC_Projets_Entête")
+                
+                For i = 1 To lo.ListRows.count
+                    If lo.ListRows(i).Range.Cells(1, 2).Value = valueToFind Then
+                        lo.ListRows(i).Range(1, 26).Value = -1
+                    End If
+                Next i
+                
+'                Set cell = lo.ListColumns(2).DataBodyRange.Find(valueToFind, LookIn:=xlValues, LookAt:=xlWhole)
+'
+'                If Not cell Is Nothing Then
+'                    lo.ListRows(cell.row).Range.Cells(1, 26).Value = -1
+'                Else
+'                    MsgBox "Valeur non trouvée"
+'                End If
+'
                 'Update rows from MASTER file (details)
                 Dim destinationFileName As String, destinationTab As String
                 destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
@@ -334,18 +359,18 @@ Function Fn_Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hon
                 Dim columnName As String
                 columnName = "NomClient"
                 Call DetruireDetailSiEnteteEstDetruite(destinationFileName, _
-                                                                     destinationTab, _
-                                                                     columnName, _
-                                                                     valueToFind)
+                                                        destinationTab, _
+                                                        columnName, _
+                                                        valueToFind)
                                                                      
                 'Update row from MASTER file (entête)
                 destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                                       "GCF_BD_MASTER.xlsx"
                 destinationTab = "FAC_Projets_Entête$"
                 Call DetruireEnteteSiEnteteEstDetruite(destinationFileName, _
-                                                                    destinationTab, _
-                                                                    columnName, _
-                                                                    valueToFind) '2024-07-19 @ 15:31
+                                                        destinationTab, _
+                                                        columnName, _
+                                                        valueToFind) '2024-07-19 @ 15:31
             Case vbNo
                 Fn_Verify_And_Delete_Rows_If_Value_Is_Found = "RIEN_CHANGER"
         End Select
@@ -354,9 +379,8 @@ Function Fn_Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hon
     End If
     
     'Libérer la mémoire
-    Set cell = Nothing
+    Set lo = Nothing
     Set rowsToDelete = Nothing
-    Set searchRange = Nothing
     Set ws = Nothing
     
 End Function

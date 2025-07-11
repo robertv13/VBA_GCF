@@ -40,7 +40,7 @@ Private Sub UserForm_Initialize() '2025-06-01 @ 06:54
 
         estDetruite = ligne.Columns(lo.ListColumns("estDetruite").index).Value
 
-        If UCase$(estDetruite) <> "VRAI" Then
+        If UCase$(estDetruite) <> "VRAI" And estDetruite <> -1 Then
             nbRows = nbRows + 1
             arr(nbRows, 1) = ligne.Columns(lo.ListColumns("nomClient").index).Value
             arr(nbRows, 2) = ligne.Columns(lo.ListColumns("date").index).Value

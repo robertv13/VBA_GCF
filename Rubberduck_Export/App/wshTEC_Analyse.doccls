@@ -14,13 +14,9 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     
     'Import transactions from MASTER file
     Call modImport.ImporterClients
-    DoEvents
     Call modImport.ImporterTEC
-    DoEvents
     Call modImport.ImporterFacProjetsDetails
-    DoEvents
     Call modImport.ImporterFacProjetsEntete
-    DoEvents
     
     'Set the zoom factor to 100% when this worksheet is activated
     ActiveWindow.Zoom = 100
@@ -45,22 +41,15 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
         gPreviousCellAddress = .Range("H3").Address
     End With
     
-    ws.Outline.ShowLevels RowLevels:=2
-    
-    'Active le volet inférieur (Pane 2) et défile pour positionner la ligne 7 en haut de ce volet
-    With ActiveWindow.Panes(2)
-        .ScrollRow = 8
-    End With
-
-    Dim currentScrollRow As Long
-    currentScrollRow = ActiveWindow.Panes(2).ScrollRow
-    
-    With ActiveWindow.Panes(1)
-        Activate
+    'Fige le volet à la ligne 8 (première ligne de détail) - 2025-07-09 @ 06:54
+    With ws
+        .Activate
+        ActiveWindow.FreezePanes = False
+        .Range("A8").Select 'Ligne 8 devient le haut du volet inférieur
+        ActiveWindow.FreezePanes = True
     End With
     
-    'Réapplique la position du volet inférieur pour maintenir l'affichage à la ligne 7
-    ActiveWindow.Panes(2).ScrollRow = currentScrollRow
+    Application.Goto ws.Range("A8"), Scroll:=True
     
     'Reactive les événements
     Application.EnableEvents = True
@@ -154,7 +143,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
        
         'Future date ?
@@ -163,7 +152,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.GoTo Range(Target.Address)
+                Application.Goto Range(Target.Address)
             End If
         End If
 
@@ -265,7 +254,9 @@ Sub CheckBox1_Click() '2024-07-18 @ 18:53
                 Application.EnableEvents = True
                 
             Case "SUPPRIMER"
+                Application.EnableEvents = False
                 ws.Range("D" & totalRow).Value = 0
+                Application.EnableEvents = True
                 firstRow = totalRow + 1
                 Call Groups_SubTotals_Collapse_A_Client(firstRow)
                 

@@ -532,7 +532,7 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
             rs.MoveNext
         Loop
 
-        'Écriture de tableau dans la plage, en commençant à M5
+        'Écriture de tableau dans la plage, en commençant à M5 - @TODO - 2025-07-11 @ 03:14
         Application.EnableEvents = False
         wsResult.Range("M5").Resize(nbLignes, 8).Value = tableau
         With wsResult.Range("M5:T" & (4 + nbLignes)).Font
@@ -825,7 +825,7 @@ Sub GL_BV_Adjust_The_Shape()
     With wsdGL_Trans
         For i = 2 To lastResultRow
             If i = 2 Then
-                texteFull = "Entrée #: " & .Range("AC2").Value & Space$(10) & "(" & .Range("AL2").Value & ")" & vbCrLf
+                texteFull = "Entrée #: " & .Range("AC2").Value & Space$(43) & "(" & .Range("AL2").Value & ")" & vbCrLf
                 texteFull = texteFull & "Desc    : " & .Range("AE2").Value & vbCrLf
                 If Trim$(.Range("AF2").Value) <> "" Then
                     texteFull = texteFull & "Source  : " & .Range("AF2").Value & vbCrLf & vbCrLf
@@ -861,6 +861,7 @@ Sub GL_BV_Adjust_The_Shape()
     'Set shape properties
     With dynamicShape
         .Fill.ForeColor.RGB = RGB(249, 255, 229)
+        .Fill.Transparency = 0
         .Line.Weight = 2
         .Line.ForeColor.RGB = vbBlue
         .TextFrame.Characters.text = texteFull
@@ -872,7 +873,7 @@ Sub GL_BV_Adjust_The_Shape()
         .TextFrame.MarginTop = 3
         .TextFrame.MarginBottom = 3
         If maxLength < 80 Then maxLength = 80
-        .Width = ((maxLength * 6.1))
+        .Width = ((maxLength * 6#))
 '            .Height = ((lastResultRow + 4) * 12) + 3 + 3
         .TextFrame2.AutoSize = msoAutoSizeShapeToFitText
         .Left = wshGL_BV.Range("N" & rowSelected).Left + 4

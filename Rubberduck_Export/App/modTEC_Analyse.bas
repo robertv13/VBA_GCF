@@ -30,7 +30,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     clientData = wsClientsMF.Range(wsClientsMF.Cells(2, fClntFMClientID), _
                                wsClientsMF.Cells(lastUsedRowClient, fClntFMClientNom)).Value
 
-    ' Parcourir le tableau pour ajouter les clients facturables au dictionnaire
+    'Parcourir le tableau pour ajouter les clients facturables au dictionnaire
     Dim i As Long
     For i = 1 To UBound(clientData, 1)
         If Fn_Is_Client_Facturable(clientData(i, 2)) = True Then
@@ -453,7 +453,7 @@ Sub Bring_In_Existing_Invoice_Requests(activeLastUsedRow As Long)
     Dim result As Variant
     Dim i As Long, r As Long
     For i = 2 To sourceLastUsedRow
-        If wsSource.Cells(i, 26).Value <> "True" Then
+        If wsSource.Cells(i, 26).Value <> "True" And wsSource.Cells(i, 26).Value <> -1 Then
             clientName = wsSource.Cells(i, 2).Value
             clientID = wsSource.Cells(i, 3).Value
             honoTotal = wsSource.Cells(i, 5).Value
@@ -569,7 +569,11 @@ Sub FAC_Projets_Détails_Add_Record_Locally(clientID As String, fr As Long, lr A
     'What is the last used row in FAC_Projets_Détails?
     Dim lastUsedRow As Long, rn As Long
     lastUsedRow = wsdFAC_Projets_Details.Cells(wsdFAC_Projets_Details.Rows.count, "A").End(xlUp).Row
-    rn = lastUsedRow + 1
+    If wsdFAC_Projets_Details.Cells(2, 1).Value = "" Then
+        rn = lastUsedRow
+    Else
+        rn = lastUsedRow + 1
+    End If
     
     'timeStamp uniforme
     Dim timeStamp As Date
@@ -733,7 +737,11 @@ Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String
     'What is the last used row in FAC_Projets_Détails?
     Dim lastUsedRow As Long, rn As Long
     lastUsedRow = wsdFAC_Projets_Entete.Cells(wsdFAC_Projets_Entete.Rows.count, "A").End(xlUp).Row
-    rn = lastUsedRow + 1
+    If wsdFAC_Projets_Entete.Cells(2, 1).Value = "" Then
+        rn = lastUsedRow
+    Else
+        rn = lastUsedRow + 1
+    End If
     
     'timeStamp uniforme
     Dim timeStamp As Date
@@ -914,6 +922,32 @@ Sub TEC_Analyse_Delete_CheckBox()
     
 End Sub
 
+Sub NettoyerProjetsDetruits(loDetails As ListObject, loEntete As ListObject) '2025-07-11 @ 01:50
+
+    Dim i As Long
+    Dim colDetruite_Entete As Long: colDetruite_Entete = 26
+    Dim colDetruite_Detail As Long: colDetruite_Detail = 9
+
+    'D'abord les DÉTAILS — important de commencer par les enfants
+    For i = loDetails.ListRows.count To 1 Step -1
+        With loDetails.ListRows(i).Range.Cells(1, colDetruite_Detail)
+            If LCase(Trim(.Value)) = "vrai" Or .Value = True Or .Value = -1 Then
+                loDetails.ListRows(i).Delete
+            End If
+        End With
+    Next i
+
+    'Ensuite les ENTÊTES
+    For i = loEntete.ListRows.count To 1 Step -1
+        With loEntete.ListRows(i).Range.Cells(1, colDetruite_Entete)
+            If LCase(Trim(.Value)) = "vrai" Or .Value = True Or .Value = -1 Then
+                loEntete.ListRows(i).Delete
+            End If
+        End With
+    Next i
+
+End Sub
+
 Sub shp_TEC_Analyse_Back_To_TEC_Menu_Click()
 
     Call TEC_Analyse_Back_To_TEC_Menu
@@ -924,12 +958,19 @@ Sub TEC_Analyse_Back_To_TEC_Menu()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:TEC_Analyse_Back_To_TEC_Menu", "", 0)
     
+    Dim loDetails As ListObject
+    Set loDetails = wsdFAC_Projets_Details.ListObjects("l_tbl_FAC_Projets_Détails")
+    Dim loEntete As ListObject
+    Set loEntete = wsdFAC_Projets_Entete.ListObjects("l_tbl_FAC_Projets_Entête")
+    
+    Call NettoyerProjetsDetruits(loDetails, loEntete)
+    
     Call Clear_Fees_Summary_And_CheckBox
     
     Dim usedLastRow As Long
     usedLastRow = wshTEC_Analyse.Cells(wshTEC_Analyse.Rows.count, "C").End(xlUp).Row
     Application.EnableEvents = False
-    wshTEC_Analyse.Range("C6:O" & usedLastRow).Clear
+    wshTEC_Analyse.Range("C7:O" & usedLastRow).Clear
     Application.EnableEvents = True
     
     wshTEC_Analyse.Visible = xlSheetVeryHidden

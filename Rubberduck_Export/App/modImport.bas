@@ -59,7 +59,7 @@ Sub ImportGeneriqueDuMaster(sourceWb As String, ws As Worksheet, onglet As Strin
     '1. Vider la table locale
     Call ViderTableau(onglet, table)
     
-    '2. Importer les enregistrements de la source
+    '2. Importer les enregistrements de la source via ADO
     Dim fullPathSourceWb As String, sourceTab As String
     fullPathSourceWb = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                        sourceWb
@@ -84,13 +84,14 @@ Sub ImportGeneriqueDuMaster(sourceWb As String, ws As Worksheet, onglet As Strin
         .Open
     End With
     
-    'Utilisation de la table de la feuille
+    'Déclaration du tableau structuré de la feuille
     Dim tbl As ListObject
     Set tbl = ws.ListObjects(table)
     
     'Copy to local worksheet
     Dim targetCell As Range
     If Not recSet.EOF Then
+        Debug.Print sourceTab
         If Not tbl.DataBodyRange Is Nothing Then
             'Si la table a déjà des lignes, on remplace à partir de la première
             Set targetCell = tbl.DataBodyRange.Cells(1, 1)
@@ -99,12 +100,13 @@ Sub ImportGeneriqueDuMaster(sourceWb As String, ws As Worksheet, onglet As Strin
             Set targetCell = tbl.HeaderRowRange.offset(1, 0).Cells(1, 1)
         End If
         targetCell.CopyFromRecordset recSet
+        Debug.Print "J'ai importé " & recSet.RecordCount & " dans " & ws.Name
     End If
     
-'    tbl.tableStyle = "TableStyleMedium2"
-    If tbl.ShowTableStyleRowStripes = False Then tbl.ShowTableStyleRowStripes = True
+'    If tbl.ShowTableStyleRowStripes = False Then tbl.ShowTableStyleRowStripes = True
     
     Dim rng As Range: Set rng = ws.Range("A1").CurrentRegion
+    Debug.Print ws.Name & " - " & rng.Address
     Call AppliquerFormatColonnesParTable(ws, rng, tbl.HeaderRowRange.row)
     
     Application.ScreenUpdating = True
@@ -391,7 +393,24 @@ Sub ImporterFacProjetsDetails() '2025-05-07 @ 15:57
 
     Call ImportGeneriqueDuMaster(sourceWb, ws, onglet, table)
     
+    'Enlever la ligne fantôme associé à ADO avec fichier source vide... 2025-07-09 @ 07:27
+    Dim ligne2Vide As Boolean
+    Dim donneesEnLignes3EtPlus As Boolean
+    
+    ligne2Vide = (Application.WorksheetFunction.CountA(ws.Rows(2)) = 0)
+    donneesEnLignes3EtPlus = (Application.WorksheetFunction.CountA(ws.Range("3:" & ws.Rows.count)) > 0)
+    
+    If ligne2Vide And donneesEnLignes3EtPlus Then
+        Dim lo As ListObject
+        Set lo = ws.ListObjects(1)
+        If Application.WorksheetFunction.CountA(ws.Rows(2)) = 0 Then
+            'Suppression via la table directement
+            lo.ListRows(1).Delete
+        End If
+    End If
+    
     'Libérer la mémoire
+    Set lo = Nothing
     Set ws = Nothing
     
     Call Log_Record("modImport:ImporterFacProjetsDetails", "", startTime)
@@ -413,10 +432,24 @@ Sub ImporterFacProjetsEntete() '2025-05-07 @ 16:05
 
     Call ImportGeneriqueDuMaster(sourceWb, ws, onglet, table)
     
-    Dim lastRow As Long
-    lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).Row
+    'Enlever la ligne fantôme associé à ADO avec fichier source vide... 2025-07-09 @ 07:46
+    Dim ligne2Vide As Boolean
+    Dim donneesEnLignes3EtPlus As Boolean
+    
+    ligne2Vide = (Application.WorksheetFunction.CountA(ws.Rows(2)) = 0)
+    donneesEnLignes3EtPlus = (Application.WorksheetFunction.CountA(ws.Range("3:" & ws.Rows.count)) > 0)
+    
+    If ligne2Vide And donneesEnLignes3EtPlus Then
+        Dim lo As ListObject
+        Set lo = ws.ListObjects(1)
+        If Application.WorksheetFunction.CountA(ws.Rows(2)) = 0 Then
+            'Suppression via la table directement
+            lo.ListRows(1).Delete
+        End If
+    End If
     
     'Libérer la mémoire
+    Set lo = Nothing
     Set ws = Nothing
     
     Call Log_Record("modImport:ImporterFacProjetsEntete", "", startTime)

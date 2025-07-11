@@ -2381,7 +2381,7 @@ Private Sub VerifierFACProjetsEntete(ByRef r As Long, ByRef readRows As Long)
     Dim HeaderRow As Long: HeaderRow = 1
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).Row
-    If lastUsedRow <= HeaderRow + 1 Then
+    If lastUsedRow <= HeaderRow Or ws.Cells(2, 1).Value = "" Then
         Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Cette feuille est vide !!!")
         r = r + 2
         GoTo Clean_Exit
@@ -2396,7 +2396,7 @@ Private Sub VerifierFACProjetsEntete(ByRef r As Long, ByRef readRows As Long)
     
     'Establish the number of rows before transferring it to an Array
     Dim arr As Variant
-    arr = ws.Range("A1").CurrentRegion.offset(2, 0).Resize(lastUsedRow - 2, ws.Range("A1").CurrentRegion.Columns.count).Value
+    arr = ws.Range("A1").CurrentRegion.offset(1, 0).Resize(lastUsedRow - 1, ws.Range("A1").CurrentRegion.Columns.count).Value
     
     'Array pointer
     Dim currentRow As Long
@@ -2408,98 +2408,100 @@ Private Sub VerifierFACProjetsEntete(ByRef r As Long, ByRef readRows As Long)
     Dim isFacProjetEntêteValid As Boolean
     isFacProjetEntêteValid = True
     
-    For i = LBound(arr, 1) To UBound(arr, 1) 'One line of header !
-        projetID = arr(i, 1)
-        'Client valide ?
-        codeClient = Trim$(arr(i, 3))
-        If Fn_Validate_Client_Number(codeClient) = False Then
-            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le Code de Client est INVALIDE '" & arr(i, 3) & "'")
-            r = r + 1
-            isFacProjetEntêteValid = False
-        End If
-        If IsDate(arr(i, 4)) = False Or arr(i, 4) > Date Then
-            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " la date est INVALIDE '" & arr(i, 4) & "'")
-            r = r + 1
-            isFacProjetEntêteValid = False
-        End If
-        If IsNumeric(arr(i, 5)) = False Then
-            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le total des honoraires est INVALIDE '" & arr(i, 5) & "'")
-            r = r + 1
-            isFacProjetEntêteValid = False
-        End If
-        If IsNumeric(arr(i, 7)) = False Then
-            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les heures du premier sommaire sont INVALIDES '" & arr(i, 7) & "'")
-            r = r + 1
-            isFacProjetEntêteValid = False
-        End If
-        If IsNumeric(arr(i, 8)) = False Then
-            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le taux horaire du premier sommaire est INVALIDE '" & arr(i, 8) & "'")
-            r = r + 1
-            isFacProjetEntêteValid = False
-        End If
-        If IsNumeric(arr(i, 9)) = False Then
-            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les Honoraires du premier sommaire sont INVALIDES '" & arr(i, 9) & "'")
-            r = r + 1
-            isFacProjetEntêteValid = False
-        End If
-        If arr(i, 11) <> "" And IsNumeric(arr(i, 11)) = False Then
-            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les heures du second sommaire sont INVALIDES '" & arr(i, 11) & "'")
-            r = r + 1
-            isFacProjetEntêteValid = False
-        End If
-        If arr(i, 12) <> "" And IsNumeric(arr(i, 12)) = False Then
-            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le taux horaire du second sommaire est INVALIDE '" & arr(i, 12) & "'")
-            r = r + 1
-        End If
-        If arr(i, 13) <> "" And IsNumeric(arr(i, 13)) = False Then
-            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les Honoraires du second sommaire sont INVALIDES '" & arr(i, 13) & "'")
-            r = r + 1
-            isFacProjetEntêteValid = False
-        End If
-        If arr(i, 15) <> "" And IsNumeric(arr(i, 15)) = False Then
-            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les heures du troisième sommaire sont INVALIDES '" & arr(i, 15) & "'")
-            r = r + 1
-            isFacProjetEntêteValid = False
-        End If
-        If arr(i, 16) <> "" And IsNumeric(arr(i, 16)) = False Then
-            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le taux horaire du troisième sommaire est INVALIDE '" & arr(i, 16) & "'")
-            r = r + 1
-            isFacProjetEntêteValid = False
-        End If
-        If arr(i, 17) <> "" And IsNumeric(arr(i, 17)) = False Then
-            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les Honoraires du troisième sommaire sont INVALIDES '" & arr(i, 17) & "'")
-            r = r + 1
-            isFacProjetEntêteValid = False
-        End If
-        If arr(i, 19) <> "" And IsNumeric(arr(i, 19)) = False Then
-            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les heures du quatrième sommaire sont INVALIDES '" & arr(i, 19) & "'")
-            r = r + 1
-            isFacProjetEntêteValid = False
-        End If
-        If arr(i, 20) <> "" And IsNumeric(arr(i, 20)) = False Then
-            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le taux horaire du quatrième sommaire est INVALIDE '" & arr(i, 20) & "'")
-            r = r + 1
-            isFacProjetEntêteValid = False
-        End If
-        If arr(i, 21) <> "" And IsNumeric(arr(i, 21)) = False Then
-            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les Honoraires du quatrième sommaire sont INVALIDES '" & arr(i, 21) & "'")
-            r = r + 1
-            isFacProjetEntêteValid = False
-        End If
-        If arr(i, 23) <> "" And IsNumeric(arr(i, 23)) = False Then
-            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les heures du cinquième sommaire sont INVALIDES '" & arr(i, 23) & "'")
-            r = r + 1
-            isFacProjetEntêteValid = False
-        End If
-        If arr(i, 24) <> "" And IsNumeric(arr(i, 24)) = False Then
-            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le taux horaire du cinquième sommaire est INVALIDE '" & arr(i, 24) & "'")
-            r = r + 1
-            isFacProjetEntêteValid = False
-        End If
-        If arr(i, 25) <> "" And IsNumeric(arr(i, 25)) = False Then
-            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les Honoraires du cinquième sommaire sont INVALIDES '" & arr(i, 25) & "'")
-            r = r + 1
-            isFacProjetEntêteValid = False
+    For i = LBound(arr, 1) To UBound(arr, 1)
+        If arr(i, 1) <> "" Then
+            projetID = arr(i, 1)
+            'Client valide ?
+            codeClient = Trim$(arr(i, 3))
+            If Fn_Validate_Client_Number(codeClient) = False Then
+                Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le Code de Client est INVALIDE '" & arr(i, 3) & "'")
+                r = r + 1
+                isFacProjetEntêteValid = False
+            End If
+            If IsDate(arr(i, 4)) = False Or arr(i, 4) > Date Then
+                Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " la date est INVALIDE '" & arr(i, 4) & "'")
+                r = r + 1
+                isFacProjetEntêteValid = False
+            End If
+            If IsNumeric(arr(i, 5)) = False Then
+                Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le total des honoraires est INVALIDE '" & arr(i, 5) & "'")
+                r = r + 1
+                isFacProjetEntêteValid = False
+            End If
+            If IsNumeric(arr(i, 7)) = False Then
+                Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les heures du premier sommaire sont INVALIDES '" & arr(i, 7) & "'")
+                r = r + 1
+                isFacProjetEntêteValid = False
+            End If
+            If IsNumeric(arr(i, 8)) = False Then
+                Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le taux horaire du premier sommaire est INVALIDE '" & arr(i, 8) & "'")
+                r = r + 1
+                isFacProjetEntêteValid = False
+            End If
+            If IsNumeric(arr(i, 9)) = False Then
+                Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les Honoraires du premier sommaire sont INVALIDES '" & arr(i, 9) & "'")
+                r = r + 1
+                isFacProjetEntêteValid = False
+            End If
+            If arr(i, 11) <> "" And IsNumeric(arr(i, 11)) = False Then
+                Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les heures du second sommaire sont INVALIDES '" & arr(i, 11) & "'")
+                r = r + 1
+                isFacProjetEntêteValid = False
+            End If
+            If arr(i, 12) <> "" And IsNumeric(arr(i, 12)) = False Then
+                Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le taux horaire du second sommaire est INVALIDE '" & arr(i, 12) & "'")
+                r = r + 1
+            End If
+            If arr(i, 13) <> "" And IsNumeric(arr(i, 13)) = False Then
+                Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les Honoraires du second sommaire sont INVALIDES '" & arr(i, 13) & "'")
+                r = r + 1
+                isFacProjetEntêteValid = False
+            End If
+            If arr(i, 15) <> "" And IsNumeric(arr(i, 15)) = False Then
+                Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les heures du troisième sommaire sont INVALIDES '" & arr(i, 15) & "'")
+                r = r + 1
+                isFacProjetEntêteValid = False
+            End If
+            If arr(i, 16) <> "" And IsNumeric(arr(i, 16)) = False Then
+                Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le taux horaire du troisième sommaire est INVALIDE '" & arr(i, 16) & "'")
+                r = r + 1
+                isFacProjetEntêteValid = False
+            End If
+            If arr(i, 17) <> "" And IsNumeric(arr(i, 17)) = False Then
+                Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les Honoraires du troisième sommaire sont INVALIDES '" & arr(i, 17) & "'")
+                r = r + 1
+                isFacProjetEntêteValid = False
+            End If
+            If arr(i, 19) <> "" And IsNumeric(arr(i, 19)) = False Then
+                Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les heures du quatrième sommaire sont INVALIDES '" & arr(i, 19) & "'")
+                r = r + 1
+                isFacProjetEntêteValid = False
+            End If
+            If arr(i, 20) <> "" And IsNumeric(arr(i, 20)) = False Then
+                Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le taux horaire du quatrième sommaire est INVALIDE '" & arr(i, 20) & "'")
+                r = r + 1
+                isFacProjetEntêteValid = False
+            End If
+            If arr(i, 21) <> "" And IsNumeric(arr(i, 21)) = False Then
+                Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les Honoraires du quatrième sommaire sont INVALIDES '" & arr(i, 21) & "'")
+                r = r + 1
+                isFacProjetEntêteValid = False
+            End If
+            If arr(i, 23) <> "" And IsNumeric(arr(i, 23)) = False Then
+                Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les heures du cinquième sommaire sont INVALIDES '" & arr(i, 23) & "'")
+                r = r + 1
+                isFacProjetEntêteValid = False
+            End If
+            If arr(i, 24) <> "" And IsNumeric(arr(i, 24)) = False Then
+                Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le taux horaire du cinquième sommaire est INVALIDE '" & arr(i, 24) & "'")
+                r = r + 1
+                isFacProjetEntêteValid = False
+            End If
+            If arr(i, 25) <> "" And IsNumeric(arr(i, 25)) = False Then
+                Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les Honoraires du cinquième sommaire sont INVALIDES '" & arr(i, 25) & "'")
+                r = r + 1
+                isFacProjetEntêteValid = False
+            End If
         End If
     Next i
     
@@ -2542,7 +2544,7 @@ Private Sub VerifierFACProjetsDetails(ByRef r As Long, ByRef readRows As Long)
     Dim HeaderRow As Long: HeaderRow = 1
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).Row
-    If lastUsedRow <= HeaderRow + 1 Then
+    If lastUsedRow <= HeaderRow Or ws.Cells(2, 1).Value = "" Then
         Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Cette feuille est vide !!!")
         r = r + 2
         GoTo Clean_Exit
@@ -2562,7 +2564,7 @@ Private Sub VerifierFACProjetsDetails(ByRef r As Long, ByRef readRows As Long)
     
     'Charge le contenu de 'wsdFAC_Projets_Details' en mémoire (Array)
     Dim arr As Variant
-    arr = ws.Range("A1").CurrentRegion.offset(2, 0).Resize(lastUsedRow - 2, ws.Range("A1").CurrentRegion.Columns.count).Value
+    arr = ws.Range("A1").CurrentRegion.offset(1, 0).Resize(lastUsedRow - 1, ws.Range("A1").CurrentRegion.Columns.count).Value
     
     Dim currentRow As Long
         
@@ -2580,46 +2582,48 @@ Private Sub VerifierFACProjetsDetails(ByRef r As Long, ByRef readRows As Long)
     
     'À partir de la mémoire (Array)
     For i = LBound(arr, 1) To UBound(arr, 1)
-        projetID = CLng(arr(i, 1))
-        If projetID <> oldProjetID Then
-            result = Application.WorksheetFunction.XLookup(projetID, _
-                                rngMaster, _
-                                rngMaster, _
-                                "Not Found", _
-                                0, _
-                                1)
-            oldProjetID = projetID
-        End If
-        If result = "Not Found" Then
-            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " n'existe pas dans FAC_Projets_Entête")
-            r = r + 1
-            isFacProjetDetailValid = False
-        End If
-        'Client valide ?
-        codeClient = Trim$(arr(i, 3))
-        If Fn_Validate_Client_Number(codeClient) = False Then
-            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le Code de Client est INVALIDE '" & arr(i, 3) & "'")
-            r = r + 1
-            isFacProjetDetailValid = False
-       End If
-        If IsNumeric(arr(i, 4)) = False Then
-            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " le TECID est INVALIDE '" & arr(i, 4) & "'")
-            r = r + 1
-        End If
-        If IsNumeric(arr(i, 5)) = False Then
-            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " le ProfID est INVALIDE '" & arr(i, 5) & "'")
-            r = r + 1
-            isFacProjetDetailValid = False
-        End If
-        If IsDate(arr(i, 6)) = False Or arr(i, 6) > Date Then
-            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " la Date est INVALIDE '" & arr(i, 6) & "'")
-            r = r + 1
-            isFacProjetDetailValid = False
-        End If
-        If IsNumeric(arr(i, 8)) = False Then
-            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " les Heures sont INVALIDES '" & arr(i, 8) & "'")
-            r = r + 1
-            isFacProjetDetailValid = False
+        If arr(i, 1) <> "" Then
+            projetID = CLng(arr(i, 1))
+            If projetID <> oldProjetID Then
+                result = Application.WorksheetFunction.XLookup(projetID, _
+                                     rngMaster, _
+                                     rngMaster, _
+                                     "Not Found", _
+                                     0, _
+                                     1)
+                oldProjetID = projetID
+            End If
+            If result = "Not Found" Then
+                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " n'existe pas dans FAC_Projets_Entête")
+                 r = r + 1
+                 isFacProjetDetailValid = False
+            End If
+            'Client valide ?
+            codeClient = Trim$(arr(i, 3))
+            If Fn_Validate_Client_Number(codeClient) = False Then
+                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le Code de Client est INVALIDE '" & arr(i, 3) & "'")
+                 r = r + 1
+                 isFacProjetDetailValid = False
+            End If
+            If IsNumeric(arr(i, 4)) = False Then
+                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " le TECID est INVALIDE '" & arr(i, 4) & "'")
+                 r = r + 1
+            End If
+            If IsNumeric(arr(i, 5)) = False Then
+                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " le ProfID est INVALIDE '" & arr(i, 5) & "'")
+                 r = r + 1
+                 isFacProjetDetailValid = False
+            End If
+            If IsDate(arr(i, 6)) = False Or CDate(arr(i, 6)) > Date Then
+                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " la Date est INVALIDE '" & arr(i, 6) & "'")
+                 r = r + 1
+                 isFacProjetDetailValid = False
+            End If
+            If IsNumeric(arr(i, 8)) = False Then
+                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " les Heures sont INVALIDES '" & arr(i, 8) & "'")
+                 r = r + 1
+                 isFacProjetDetailValid = False
+            End If
         End If
     Next i
     
@@ -3769,7 +3773,7 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
 
     'Conditional Formatting (many steps)
     '1) Remove existing conditional formatting
-        rng.Cells.FormatConditions.Delete 'Remove the worksheet conditional formatting
+'        rng.Cells.FormatConditions.Delete 'Remove the worksheet conditional formatting
     
     '2) Define the usedRange to data only (exclude header row(s))
         Dim numRows As Long
@@ -3794,10 +3798,6 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
         firstDataRow = HeaderRow + 1
         
         Select Case rng.Worksheet.CodeName
-'            Case "wsdBD_Clients"
-'
-'            Case "wsdBD_Fournisseurs"
-'
             Case "wsdCC_Regularisations" '2025-02-12 @ 07:58
                 With wsdCC_Regularisations
                     .Range(.Cells(2, fREGULRegulID), .Cells(lastUsedRow, fREGULTimeStamp)).HorizontalAlignment = xlCenter
@@ -3830,12 +3830,10 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                         .Range(ws.Cells(2, fDebTType), ws.Cells(lastUsedRow, fDebTBeneficiaire)), _
                         .Range(ws.Cells(2, fDebTDescription), ws.Cells(lastUsedRow, fDebTReference)), _
                         .Range(ws.Cells(2, fDebTCompte), ws.Cells(lastUsedRow, fDebTCompte)), _
-                        .Range(ws.Cells(2, fDebTAutreRemarque), ws.Cells(lastUsedRow, fDebTAutreRemarque)) _
-                        )
+                        .Range(ws.Cells(2, fDebTAutreRemarque), ws.Cells(lastUsedRow, fDebTAutreRemarque)))
                     If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlLeft
                     .Range(.Cells(2, fDebTNoEntrée), .Cells(lastUsedRow, fDebTDate)).HorizontalAlignment = xlCenter
                     .Range(.Cells(2, fDebTDate), .Cells(lastUsedRow, fDebTDate)).NumberFormat = "yyyy-mm-dd"
-                    'Appliquer l'alignement à gauche sur les plages combinées
                     With .Range(.Cells(2, fDebTTotal), .Cells(lastUsedRow, fDebTDépense))
                         .HorizontalAlignment = xlRight
                         .NumberFormat = "#,##0.00"
@@ -3849,8 +3847,7 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                     Set rngUnion = Application.Union( _
                         .Range(.Cells(2, fEncDPayID), .Cells(lastUsedRow, fEncDPayID)), _
                         .Range(.Cells(2, fEncDInvNo), .Cells(lastUsedRow, fEncDInvNo)), _
-                        .Range(.Cells(2, fEncDPayDate), .Cells(lastUsedRow, fEncDPayDate)) _
-                        )
+                        .Range(.Cells(2, fEncDPayDate), .Cells(lastUsedRow, fEncDPayDate)))
                     If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlCenter
                     .Range(.Cells(2, fEncDCustomer), .Cells(lastUsedRow, fEncDCustomer)).HorizontalAlignment = xlLeft
                     With .Range(.Cells(2, fEncDPayAmount), .Cells(lastUsedRow, fEncDPayAmount))
@@ -3867,17 +3864,14 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                     Set rngUnion = Application.Union( _
                         .Range(.Cells(2, fEncEPayID), .Cells(lastUsedRow, fEncEPayID)), _
                         .Range(.Cells(2, fEncEPayDate), .Cells(lastUsedRow, fEncEPayDate)), _
-                        .Range(.Cells(2, fEncECodeClient), .Cells(lastUsedRow, fEncECodeClient)) _
-                        )
+                        .Range(.Cells(2, fEncECodeClient), .Cells(lastUsedRow, fEncECodeClient)))
                     If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlCenter
                     Set rngUnion = Application.Union( _
                         .Range(.Cells(2, fEncECustomer), .Cells(lastUsedRow, fEncECustomer)), _
                         .Range(.Cells(2, fEncEPayType), .Cells(lastUsedRow, fEncEPayType)), _
-                        .Range(.Cells(2, fEncENotes), .Cells(lastUsedRow, fEncENotes)) _
-                        )
+                        .Range(.Cells(2, fEncENotes), .Cells(lastUsedRow, fEncENotes)))
                     If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlLeft
                     .Range(.Cells(2, fEncEAmount), .Cells(lastUsedRow, fEncEAmount)).HorizontalAlignment = xlRight
-                    
                     .Range(.Cells(2, fEncEPayID), .Cells(lastUsedRow, fEncEPayID)).NumberFormat = "0"
                     .Range(.Cells(2, fEncEPayDate), .Cells(lastUsedRow, fEncEPayDate)).NumberFormat = "yyyy-mm-dd"
                     .Range(.Cells(2, fEncEAmount), .Cells(lastUsedRow, fEncEAmount)).NumberFormat = "#,##0.00"
@@ -3901,8 +3895,7 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                     Set rngUnion = Application.Union( _
                         .Range(.Cells(3, fFacDInvNo), .Cells(lastUsedRow, fFacDInvNo)), _
                         .Range(.Cells(3, fFacDInvRow), .Cells(lastUsedRow, fFacDInvRow)), _
-                        .Range(.Cells(3, fFacDTimeStamp), .Cells(lastUsedRow, fFacDTimeStamp)) _
-                        )
+                        .Range(.Cells(3, fFacDTimeStamp), .Cells(lastUsedRow, fFacDTimeStamp)))
                     If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlCenter
                     .Range(.Cells(3, fFacDDescription), .Cells(lastUsedRow, fFacDDescription)).HorizontalAlignment = xlLeft
                     .Range(.Cells(3, fFacDHeures), .Cells(lastUsedRow, fFacDHonoraires)).HorizontalAlignment = xlRight
@@ -3947,12 +3940,10 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                     Set rngUnion = Application.Union( _
                         .Range(.Cells(2, fFacPDProjetID), .Cells(lastUsedRow, fFacPDProjetID)) _
                         .Range(.Cells(2, fFacPDClientID), .Cells(lastUsedRow, fFacPDProf)), _
-                        .Range(.Cells(2, fFacPDestDetruite), .Cells(lastUsedRow, fFacPDTimeStamp)) _
-                        )
+                        .Range(.Cells(2, fFacPDestDetruite), .Cells(lastUsedRow, fFacPDTimeStamp)))
                     If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlCenter
                     .Range(.Cells(2, fFacPDNomClient), .Cells(lastUsedRow, fFacPDNomClient)).HorizontalAlignment = xlLeft
                     .Range(.Cells(2, fFacPDHeures), .Cells(lastUsedRow, fFacPDHeures)).HorizontalAlignment = xlRight
-                    
                     .Range(.Cells(2, fFacPDDate), .Cells(lastUsedRow, fFacPDDate)).NumberFormat = "yyyy-mm-dd"
                     .Range(.Cells(2, fFacPDHeures), .Cells(lastUsedRow, fFacPDHeures)).NumberFormat = "#,##0.00"
                     .Range(.Cells(2, fFacPDTimeStamp), .Cells(lastUsedRow, fFacPDTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
@@ -3968,19 +3959,16 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                         .Range(.Cells(2, fFacPEProf3), .Cells(lastUsedRow, fFacPEProf3)), _
                         .Range(.Cells(2, fFacPEProf4), .Cells(lastUsedRow, fFacPEProf4)), _
                         .Range(.Cells(2, fFacPEProf5), .Cells(lastUsedRow, fFacPEProf5)), _
-                        .Range(.Cells(2, fFacPEestDetruite), .Cells(lastUsedRow, fFacPETimeStamp)) _
-                        )
+                        .Range(.Cells(2, fFacPEestDetruite), .Cells(lastUsedRow, fFacPETimeStamp)))
                     If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlCenter
                     .Range(.Cells(2, fFacPENomClient), .Cells(lastUsedRow, fFacPENomClient)).HorizontalAlignment = xlLeft
-                    
                     Set rngUnion = Application.Union( _
                         .Range(.Cells(2, fFacPEHonoTotal), .Cells(lastUsedRow, fFacPEHonoTotal)) _
                         .Range(.Cells(2, fFacPEHres1), .Cells(lastUsedRow, fFacPEHono1)), _
                         .Range(.Cells(2, fFacPEHres2), .Cells(lastUsedRow, fFacPEHono2)), _
                         .Range(.Cells(2, fFacPEHres3), .Cells(lastUsedRow, fFacPEHono3)), _
                         .Range(.Cells(2, fFacPEHres4), .Cells(lastUsedRow, fFacPEHono4)), _
-                        .Range(.Cells(2, fFacPEHres5), .Cells(lastUsedRow, fFacPEHono5)) _
-                        )
+                        .Range(.Cells(2, fFacPEHres5), .Cells(lastUsedRow, fFacPEHono5)))
                      If Not rngUnion Is Nothing Then
                         rngUnion.HorizontalAlignment = xlRight
                         rngUnion.NumberFormat = "###,##0.00"
@@ -3990,7 +3978,6 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
             Case "wsdFAC_Sommaire_Taux" '2025-02-12 @ 12:50
                 With wsdFAC_Sommaire_Taux
                     .Range(.Cells(2, fFacSTInvNo), .Cells(lastUsedRow, fFacSTProf)).HorizontalAlignment = xlCenter
-                    
                     .Range(.Cells(2, fFacSTHeures), .Cells(lastUsedRow, fFacSTTaux)).HorizontalAlignment = xlRight
                     .Range(.Cells(2, fFacSTHeures), .Cells(lastUsedRow, fFacSTTaux)).NumberFormat = "#,##0.00"
                     .Range(.Cells(2, fFacSTTimeStamp), .Cells(lastUsedRow, fFacSTTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
@@ -4001,14 +3988,12 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                     Set rngUnion = Application.Union( _
                         .Range(.Cells(2, fGlEjRNoEjR), .Cells(lastUsedRow, fGlEjRNoEjR)) _
                         .Range(.Cells(2, fGlEjRNoCompte), .Cells(lastUsedRow, fGlEjRNoCompte)), _
-                        .Range(.Cells(2, fGlEjRTimeStamp), .Cells(lastUsedRow, fGlEjRTimeStamp)) _
-                        )
+                        .Range(.Cells(2, fGlEjRTimeStamp), .Cells(lastUsedRow, fGlEjRTimeStamp)))
                     If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlCenter
                     Set rngUnion = Application.Union( _
                         .Range(.Cells(2, fGlEjRDescription), .Cells(lastUsedRow, fGlEjRDescription)) _
                         .Range(.Cells(2, fGlEjRCompte), .Cells(lastUsedRow, fGlEjRCompte)), _
-                        .Range(.Cells(2, fGlEjRAutreRemarque), .Cells(lastUsedRow, fGlEjRAutreRemarque)) _
-                        )
+                        .Range(.Cells(2, fGlEjRAutreRemarque), .Cells(lastUsedRow, fGlEjRAutreRemarque)))
                     If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlLeft
                     .Range(.Cells(2, fGlEjRDébit), .Cells(lastUsedRow, fGlEjRCrédit)).HorizontalAlignment = xlRight
                     .Range(.Cells(2, fGlEjRDébit), .Cells(lastUsedRow, fGlEjRCrédit)).NumberFormat = "###,##0.00 $"
@@ -4021,12 +4006,10 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                     Set rngUnion = Application.Union( _
                         .Range(.Cells(2, fGlTDate), .Cells(lastUsedRow, fGlTSource)), _
                         .Range(.Cells(2, fGlTCompte), .Cells(lastUsedRow, fGlTCompte)), _
-                        .Range(.Cells(2, fGlTAutreRemarque), .Cells(lastUsedRow, fGlTAutreRemarque)) _
-                        )
+                        .Range(.Cells(2, fGlTAutreRemarque), .Cells(lastUsedRow, fGlTAutreRemarque)))
                     If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlLeft
                     .Range(.Cells(2, fGlTDébit), .Cells(lastUsedRow, fGlTCrédit)).HorizontalAlignment = xlRight
                     .Range(.Cells(2, fGlTDébit), .Cells(lastUsedRow, fGlTCrédit)).NumberFormat = "###,##0.00"
-                    
                     .Range(.Cells(2, fGlTDate), .Cells(lastUsedRow, fGlTDate)).NumberFormat = "yyyy-mm-dd"
                     .Range(.Cells(2, fGlTTimeStamp), .Cells(lastUsedRow, fGlTTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
                 End With
@@ -4037,8 +4020,7 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                     Set rngUnion = Application.Union( _
                         .Range(.Cells(3, fTECClientNom), .Cells(lastUsedRow, fTECDescription)), _
                         .Range(.Cells(3, fTECCommentaireNote), .Cells(lastUsedRow, fTECCommentaireNote)), _
-                        .Range(.Cells(3, fTECVersionApp), .Cells(lastUsedRow, fTECVersionApp)) _
-                        )
+                        .Range(.Cells(3, fTECVersionApp), .Cells(lastUsedRow, fTECVersionApp)))
                     If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlLeft
                     .Range(.Cells(3, fTECHeures), .Cells(lastUsedRow, fTECHeures)).NumberFormat = "#0.00"
                     .Range(.Cells(3, fTECDate), .Cells(lastUsedRow, fTECDate)).NumberFormat = "yyyy-mm-dd"
@@ -4051,8 +4033,17 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
         End Select
 
     '4) Common stuff to all worksheets
-        rng.EntireColumn.AutoFit 'Autofit all columns
+        rng.EntireColumn.AutoFit
         rng.RowHeight = 15
+        
+        'Exceptions pour la largeur de colonne - 2025-07-09 @ 06:32
+        If rng.Worksheet.CodeName = "wsdTEC_Local" Then
+            With wsdTEC_Local
+                .Columns(fTECClientNom).ColumnWidth = 45
+                .Columns(fTECDescription).ColumnWidth = 65
+                .Columns(fTECCommentaireNote).ColumnWidth = 30
+            End With
+        End If
     
     'Libérer la mémoire
     On Error Resume Next

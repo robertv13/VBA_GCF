@@ -98,14 +98,14 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
             Dim nomColonne As ListColumn
             Set nomColonne = lo.ListColumns("estDetruite")
         
-            For i = 2 To lo.ListRows.count
+            For i = 1 To lo.ListRows.count
                 Dim val As Variant
-                If lo.Range(i, 1).Value <> "" Then 'Ligne 1 du data est TOUJOURS vide (ADO vs Tableau structuré) '2025-06-30 @ 09:18
+'                If lo.Range(i, 1).Value <> "" Then 'Ligne 1 du data est TOUJOURS vide (ADO vs Tableau structuré) '2025-06-30 @ 09:18
                     val = nomColonne.DataBodyRange.Cells(i, 1).Value
                     If UCase$(val) = "FAUX" Or val = 0 Then
                         liveOne = liveOne + 1
                     End If
-                End If
+'                End If
             Next i
         End If
         
@@ -1138,14 +1138,13 @@ Sub Setup_Hours_Summary()
     
     Application.EnableEvents = False
     ws.Range("R25:U34").ClearContents
-    Application.EnableEvents = False
     
     Dim r As Long
     r = 11
     With wsdADMIN
         Do While .Range("D" & r).Value <> ""
-            ws.Range("R" & r + 14).Value = .Range("D" & r).Value
-            ws.Range("W" & r + 14).Value = .Range("E" & r).Value
+            ws.Range("R" & r + 14).Value = .Range("D" & r).Value 'Initiales
+            ws.Range("W" & r + 14).Value = .Range("E" & r).Value 'Taux horaire
             r = r + 1
         Loop
         ws.Range("R35").Value = "Totals"
@@ -1235,6 +1234,7 @@ Sub FAC_Brouillon_Sort_TEC_Summary(r As Range)
                 r.Worksheet.Range(addr).formula = formules(addr)
             End If
         End If
+        
     Next addr
     Application.EnableEvents = True
     
@@ -1296,7 +1296,7 @@ Sub Load_Invoice_Template(t As String)
         facRow = facRow + 2
     Next i
         
-    Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
+    Application.Goto wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
 

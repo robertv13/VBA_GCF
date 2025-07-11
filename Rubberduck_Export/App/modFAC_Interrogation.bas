@@ -253,7 +253,7 @@ Sub FAC_Historique_Clear_All_Cells()
     
     With ActiveSheet
         .Protect userInterfaceOnly:=True
-'        .EnableSelection = xlUnlockedCells
+        .EnableSelection = xlUnlockedCells
     End With
 
     Call Log_Record("modFAC_Interrogation:FAC_Historique_Clear_All_Cells", "", startTime)
