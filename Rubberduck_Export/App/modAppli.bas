@@ -34,6 +34,13 @@ End Sub
 
 Sub DemarrageApplication() '2025-06-06 @ 11:40
 
+    Dim rootPath As String
+    rootPath = FN_Get_Root_Path
+
+    Application.EnableEvents = False
+    wsdADMIN.Range("F5").Value = rootPath
+    Application.EnableEvents = True
+   
     Dim startTime As Double: startTime = Timer: Call Log_Record("----- DÉBUT D'UNE NOUVELLE SESSION (modAppli:DemarrageApplication) -----", "", 0)
     
     'Quel est l'utilisateur Windows ?
@@ -48,13 +55,6 @@ Sub DemarrageApplication() '2025-06-06 @ 11:40
     Application.ScreenUpdating = True
     Application.EnableEvents = True
     
-    Dim rootPath As String
-    rootPath = FN_Get_Root_Path
-
-    Application.EnableEvents = False
-    wsdADMIN.Range("F5").Value = rootPath
-    Application.EnableEvents = True
-   
     Application.StatusBar = "Vérification de l'accès au répertoire principal"
     If Fn_Check_Server_Access(rootPath) = False Then
         MsgBox "Le répertoire principal '" & rootPath & "' n'est pas accessible." & vbNewLine & vbNewLine & _
@@ -472,7 +472,7 @@ End Sub
 Public Sub LogActivite(ByVal message As String) '2025-07-03 @ 10:29
 
     Dim cheminLog As String
-    cheminLog = ThisWorkbook.path & gDATA_PATH & "\ActiviteDurantSurveillance.txt"
+    cheminLog = wsdADMIN.Range("F5").Value & gDATA_PATH & "\ActiviteDurantSurveillance.txt"
 
     Dim fileNum As Integer
     fileNum = FreeFile
