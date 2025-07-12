@@ -33,12 +33,12 @@ Sub Main_OuvrirRepertoireEtTraiterFichiers()
     For Each file In fileSystem.GetFolder(folderPath).Files
         'Appliquer les traitements en fonction des fichiers
         Select Case file.Name
-            Case "LogClientsApp.log"
-                Call Lire_LogClientsApp(file.path)
-            Case "LogMainApp.log"
-                Call Lire_LogMainApp(file.path)
             Case "LogSaisieHeures.log"
                 Call Lire_LogSaisieHeures(file.path)
+            Case "LogMainApp.log"
+                Call Lire_LogMainApp(file.path)
+            Case "LogClientsApp.log"
+                Call Lire_LogClientsApp(file.path)
         End Select
     Next file
     
@@ -53,7 +53,7 @@ End Sub
 
 Sub Lire_LogClientsApp(filePath As String)
 
-    Application.StatusBar = "Traitement de '" & ExtraireNomFichier(filePath) & "' - 0 ligne"
+    Application.StatusBar = "Traitement de '" & ExtraireNomFichier(filePath) & "'"
     
     'Ouvrir le fichier 'LogClientsApp.log'
     Dim fileNum As Integer
@@ -81,9 +81,9 @@ Sub Lire_LogClientsApp(filePath As String)
     Do While Not EOF(fileNum)
         Line Input #fileNum, lineContent
         lineNo = lineNo + 1
-        If lineNo Mod 25 = 0 Then
-            Application.StatusBar = "Traitement de '" & ExtraireNomFichier(filePath) & "' - " & Format$(lineNo, "###,##0") & " lignes"
-        End If
+'        If lineNo Mod 25 = 0 Then
+'            Application.StatusBar = "Traitement de '" & ExtraireNomFichier(filePath) & "' - " & Format$(lineNo, "###,##0") & " lignes"
+'        End If
         If InStr(lineContent, " | ") <> 0 Then
             Dim Fields() As String
             Fields = Split(lineContent, " | ") 'Diviser la ligne en champs avec le délimiteur "|"
@@ -125,11 +125,11 @@ Sub Lire_LogClientsApp(filePath As String)
         Kill filePath
     End If
 
-    Application.StatusBar = ""
+    Application.StatusBar = False
     
-    'Afficher le nombre de lignes ajoutées au fichier LOG
-    MsgBox "Le fichier '" & ExtraireNomFichier(filePath) & "' a ajouté " & Format$(UBound(output, 1), "###,##0") & " lignes au fichier cumulatif", vbInformation
-    
+'    'Afficher le nombre de lignes ajoutées au fichier LOG
+'    MsgBox "Le fichier '" & ExtraireNomFichier(filePath) & "' a ajouté " & Format$(UBound(output, 1), "###,##0") & " lignes au fichier cumulatif", vbInformation
+'
 End Sub
 
 Sub Lire_LogMainApp(filePath As String)
@@ -151,7 +151,7 @@ Sub Lire_LogMainApp(filePath As String)
     
     'Lire le fichier ligne par ligne et emmagasiner les champs dans un tableau
     Dim output() As Variant
-    ReDim output(1 To 100000, 1 To 10)
+    ReDim output(1 To 125000, 1 To 10)
     Dim ligne As Long
     Dim lineNo As Long
     Dim lineContent As String
@@ -167,9 +167,9 @@ Sub Lire_LogMainApp(filePath As String)
             Fields = Split(lineContent, " | ") 'Diviser la ligne en champs avec le délimiteur " | "
             'Insérer les données dans le tableau
             ligne = ligne + 1
-            If ligne Mod 250 = 0 Then
-                Application.StatusBar = "Traitement de '" & ExtraireNomFichier(filePath) & "' - " & Format$(ligne, "###,##0") & " lignes"
-            End If
+'            If ligne Mod 250 = 0 Then
+'                Application.StatusBar = "Traitement de '" & ExtraireNomFichier(filePath) & "' - " & Format$(ligne, "###,##0") & " lignes"
+'            End If
             If UBound(Fields) = 5 Then
                 output(ligne, 1) = env
                 output(ligne, 2) = CStr(Left$(Fields(0), 10))
@@ -216,8 +216,6 @@ Sub Lire_LogMainApp(filePath As String)
         End If
     Loop
 
-    Application.StatusBar = "Traitement de '" & ExtraireNomFichier(filePath) & "' - " & Format$(lineNo, "###,##0") & " lignes"
-
     'Réduit la taille du tableau output
     Call Array_2D_Resizer(output, ligne, UBound(output, 2))
     
@@ -232,11 +230,11 @@ Sub Lire_LogMainApp(filePath As String)
         Kill filePath
     End If
     
-    Application.StatusBar = ""
+    Application.StatusBar = False
     
-    'Afficher le nombre de lignes ajoutées au fichier LOG
-    MsgBox "Le fichier '" & ExtraireNomFichier(filePath) & "' a ajouté " & Format$(UBound(output, 1), "###,##0") & " lignes au fichier cumulatif", vbInformation
-    
+'    'Afficher le nombre de lignes ajoutées au fichier LOG
+'    MsgBox "Le fichier '" & ExtraireNomFichier(filePath) & "' a ajouté " & Format$(UBound(output, 1), "###,##0") & " lignes au fichier cumulatif", vbInformation
+'
 End Sub
 
 Sub Lire_LogSaisieHeures(filePath As String)
@@ -269,9 +267,9 @@ Sub Lire_LogSaisieHeures(filePath As String)
     Do While Not EOF(fileNum)
         Line Input #fileNum, lineContent
         lineNo = lineNo + 1
-        If lineNo Mod 25 = 0 Then
-            Application.StatusBar = "Traitement de '" & ExtraireNomFichier(filePath) & "' - " & Format$(lineNo, "###,##0") & " lignes"
-        End If
+'        If lineNo Mod 25 = 0 Then
+'            Application.StatusBar = "Traitement de '" & ExtraireNomFichier(filePath) & "' - " & Format$(lineNo, "###,##0") & " lignes"
+'        End If
         If InStr(lineContent, " | ") <> 0 Then
             Dim Fields() As String
             Fields = Split(lineContent, " | ") 'Diviser la ligne en champs avec le délimiteur "|"
@@ -318,11 +316,11 @@ Sub Lire_LogSaisieHeures(filePath As String)
         Kill filePath
     End If
     
-    Application.StatusBar = ""
+    Application.StatusBar = False
     
-    'Afficher le nombre de lignes ajoutées au fichier LOG
-    MsgBox "Le fichier '" & ExtraireNomFichier(filePath) & "' a ajouté " & Format$(UBound(output, 1), "###,##0") & " lignes au fichier cumulatif", vbInformation
-    
+'    'Afficher le nombre de lignes ajoutées au fichier LOG
+'    MsgBox "Le fichier '" & ExtraireNomFichier(filePath) & "' a ajouté " & Format$(UBound(output, 1), "###,##0") & " lignes au fichier cumulatif", vbInformation
+'
 End Sub
 
 Sub AjouterTableauClasseurFerme(ByVal tableau As Variant, ByVal cheminFichier As String, ByVal feuilleNom As String)

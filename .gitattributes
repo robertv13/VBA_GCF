@@ -5,7 +5,8 @@
 # =============================================
 
 # Modules standard
-*.bas     text eol=crlf working-tree-encoding=UTF-8
+# *.bas     text eol=crlf working-tree-encoding=UTF-8
+*.bas text working-tree-encoding=UTF-8
 
 # Modules de classe
 *.cls     text eol=crlf working-tree-encoding=UTF-8

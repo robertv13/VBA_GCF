@@ -1,4 +1,5 @@
 Attribute VB_Name = "modGL_EJ"
+'@IgnoreModule ValueRequired
 '@Folder("Saisie_Entrée_Journal")
 
 Option Explicit
@@ -1046,9 +1047,12 @@ Sub GL_EJ_Forme_Sauvegarder(forme As Shape)
     gSauvegardesCaracteristiquesForme("Left") = forme.Left
     gSauvegardesCaracteristiquesForme("Width") = forme.Width
     gSauvegardesCaracteristiquesForme("Height") = forme.Height
+    '@Ignore ValueRequired
     gSauvegardesCaracteristiquesForme("FillColor") = forme.Fill.ForeColor.RGB
+    '@Ignore ValueRequired
     gSauvegardesCaracteristiquesForme("LineColor") = forme.Line.ForeColor.RGB
     gSauvegardesCaracteristiquesForme("Text") = forme.TextFrame2.TextRange.text
+    '@Ignore ValueRequired
     gSauvegardesCaracteristiquesForme("TextColor") = forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB
     
 End Sub
@@ -1170,4 +1174,5 @@ Sub ckbRecurrente_Click()
     End If
 
 End Sub
+
 

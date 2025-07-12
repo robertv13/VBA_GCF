@@ -863,9 +863,21 @@ Sub CreerRepertoireEtImporterFichiers() '2025-07-02 @ 13:57
         MsgBox "Fichier non trouvé : " & cheminSourcePROD & nomFichier2, vbExclamation, "Erreur"
     End If
 
-    'Copier les fichiers .log (variable)
     Dim fichier As String
+    
+    'Copier les fichiers .log (variable)
     fichier = Dir(cheminSourcePROD & "*.log")
+    Do While fichier <> ""
+        'Copie du fichier PROD ---> Local
+        fso.CopyFile Source:=cheminSourcePROD & fichier, Destination:=nouveauDossier, OverwriteFiles:=False
+        'Efface le fichier PROD (initialiation)
+        If fso.fileExists(cheminSourcePROD & fichier) Then Kill cheminSourcePROD & fichier
+        'Fichier suivant à copier
+        fichier = Dir
+    Loop
+    
+    'Copier les fichiers .txt (variable) '2025-07-11 @ 20:00
+    fichier = Dir(cheminSourcePROD & "*.txt")
     Do While fichier <> ""
         'Copie du fichier PROD ---> Local
         fso.CopyFile Source:=cheminSourcePROD & fichier, Destination:=nouveauDossier, OverwriteFiles:=False

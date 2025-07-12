@@ -1,4 +1,5 @@
 Attribute VB_Name = "modDEB_Saisie"
+'@IgnoreModule ValueRequired
 '@Folder("Saisie_Déboursé")
 
 Option Explicit
@@ -996,7 +997,10 @@ Sub DEB_Forme_Sauvegarder(forme As Shape)
     sauvegardesCaracteristiquesForme("Left") = forme.Left
     sauvegardesCaracteristiquesForme("Width") = forme.Width
     sauvegardesCaracteristiquesForme("Height") = forme.Height
+    '@Ignore ValueRequired
+    '@Ignore ValueRequired, ValueRequired
     sauvegardesCaracteristiquesForme("FillColor") = forme.Fill.ForeColor.RGB
+    '@Ignore ValueRequired, ValueRequired
     sauvegardesCaracteristiquesForme("LineColor") = forme.Line.ForeColor.RGB
     sauvegardesCaracteristiquesForme("Text") = forme.TextFrame2.TextRange.text
     sauvegardesCaracteristiquesForme("TextColor") = forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB
@@ -1020,3 +1024,5 @@ Sub DEB_Forme_Restaurer(forme As Shape)
     forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB = sauvegardesCaracteristiquesForme("TextColor")
 
 End Sub
+
+
