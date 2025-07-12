@@ -4,7 +4,7 @@ Option Explicit
 
 Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Analyse:Worksheet_Activate", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Analyse:Worksheet_Activate", vbNullString, 0)
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -49,7 +49,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
         ActiveWindow.FreezePanes = True
     End With
     
-    Application.Goto ws.Range("A8"), Scroll:=True
+    Application.GoTo ws.Range("A8"), Scroll:=True
     
     'Reactive les événements
     Application.EnableEvents = True
@@ -59,7 +59,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call Log_Record("wshTEC_Analyse:Worksheet_Activate", "", startTime)
+    Call Log_Record("wshTEC_Analyse:Worksheet_Activate", vbNullString, startTime)
 
 End Sub
 
@@ -67,7 +67,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Analyse:Worksheet_SelectionChange", Target.Address, 0)
     
-    If gPreviousCellAddress <> "" Then
+    If gPreviousCellAddress <> vbNullString Then
         Range(gPreviousCellAddress).Interior.Color = gCOULEUR_BASE_TEC
     End If
     
@@ -84,7 +84,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         Dim rowRange As Range
         Dim firstExpandedRow As Long
         If Target.Cells.count = 1 And Target.row > 6 Then
-            If Target.Value <> "" Then
+            If Target.Value <> vbNullString Then
                 Call Delete_CheckBox
                 If wshTEC_Analyse.Range("B2").Value <> 0 Then
                     firstExpandedRow = wshTEC_Analyse.Range("B2").Value
@@ -110,7 +110,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
                         End If
                     End If
                 Next cell
-                If Me.Cells(Target.row, 2) = "" Then
+                If Me.Cells(Target.row, 2) = vbNullString Then
                     Call Build_Hours_Summary(Target.row)
                 End If
             End If
@@ -121,7 +121,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     Set cell = Nothing
     Set rowRange = Nothing
     
-    Call Log_Record("wshTEC_Analyse:Worksheet_SelectionChange", "", startTime)
+    Call Log_Record("wshTEC_Analyse:Worksheet_SelectionChange", vbNullString, startTime)
     
 End Sub
 
@@ -143,7 +143,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
        
         'Future date ?
@@ -152,7 +152,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.Goto Range(Target.Address)
+                Application.GoTo Range(Target.Address)
             End If
         End If
 
@@ -164,13 +164,13 @@ ExitSub:
 
     Application.EnableEvents = True
     
-    Call Log_Record("wshTEC_Analyse:Worksheet_Change", "", startTime)
+    Call Log_Record("wshTEC_Analyse:Worksheet_Change", vbNullString, startTime)
   
 End Sub
 
 Sub CheckBox1_Click() '2024-07-18 @ 18:53
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Analyse:CheckBox1_Click", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Analyse:CheckBox1_Click", vbNullString, 0)
     
     Dim ws As Worksheet: Set ws = wshTEC_Analyse
     
@@ -184,12 +184,12 @@ Sub CheckBox1_Click() '2024-07-18 @ 18:53
     
     'Get the row number of the checkBox
     Dim chkboxRow As Long
-    chkboxRow = CLng(Replace(chkBoxPosition, "$N$", ""))
+    chkboxRow = CLng(Replace(chkBoxPosition, "$N$", vbNullString))
 
     'Getting to the Client's Total Row (which is the line before the start of the summary)
     Dim i As Long
     For i = chkboxRow - 1 To 7 Step -1
-        If ws.Range("M" & i).Value = "" Then
+        If ws.Range("M" & i).Value = vbNullString Then
             Exit For
         End If
     Next i
@@ -213,7 +213,7 @@ Sub CheckBox1_Click() '2024-07-18 @ 18:53
                 Dim firstRow As Long: firstRow = totalRow + 1
                 Dim lastRow As Long, r As Long
                 r = firstRow
-                Do While ws.Range("A" & r).Value <> ""
+                Do While ws.Range("A" & r).Value <> vbNullString
                     lastRow = r
                     r = r + 1
                 Loop
@@ -228,7 +228,7 @@ Sub CheckBox1_Click() '2024-07-18 @ 18:53
                 Call FAC_Projets_Détails_Add_Record_Locally(clientID, firstRow, lastRow, projetID)
                 
                 r = firstRow
-                Do While ws.Range("J" & r).Value <> ""
+                Do While ws.Range("J" & r).Value <> vbNullString
                     r = r + 1
                 Loop
                 r = r - 1 'Last line of summary, excluding totals
@@ -282,7 +282,7 @@ Sub CheckBox1_Click() '2024-07-18 @ 18:53
     Set rngSummary = Nothing
     Set ws = Nothing
     
-    Call Log_Record("wshTEC_Analyse:CheckBox1_Click", "", startTime)
+    Call Log_Record("wshTEC_Analyse:CheckBox1_Click", vbNullString, startTime)
 
 End Sub
 

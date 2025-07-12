@@ -17,7 +17,7 @@ End Sub
 
 Sub CreerListeAgee() '2024-09-08 @ 15:55
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("CreerListeAgee:CreerListeAgee", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("CreerListeAgee:CreerListeAgee", vbNullString, 0)
    
     Application.ScreenUpdating = False
     
@@ -403,7 +403,7 @@ Next_Invoice:
     
     If DerniereLigne > (20 + ligneVolet) Then
         DerniereLigne = DerniereLigne - 20
-        Application.Goto wshCAR_Liste_Agee.Cells(DerniereLigne, 1), Scroll:=True '2025-07-08 @ 13:39
+        Application.GoTo wshCAR_Liste_Agee.Cells(DerniereLigne, 1), Scroll:=True '2025-07-08 @ 13:39
     End If
     
     Application.ScreenUpdating = True
@@ -468,7 +468,7 @@ Next_Invoice:
     Set wsFactures = Nothing
     Set wsPaiements = Nothing
     
-    Call Log_Record("CreerListeAgee:CreerListeAgee", "", startTime)
+    Call Log_Record("CreerListeAgee:CreerListeAgee", vbNullString, startTime)
     
 End Sub
 
@@ -488,7 +488,7 @@ Sub CAR_ListeAgee_AfficherMenuContextuel(ByVal Target As Range) '2025-02-21 @ 19
     
     Dim numeroFacture As String
     numeroFacture = ActiveSheet.Cells(numeroLigne, "C").Value
-    If Trim$(numeroFacture) = "" Then
+    If Trim$(numeroFacture) = vbNullString Then
         Exit Sub
     End If
     
@@ -528,7 +528,7 @@ Sub EnvoyerRappelParCourriel(noFact As String)
         Exit Sub
     End If
     
-    If codeClient = "" Then
+    If codeClient = vbNullString Then
         MsgBox "Le code client pour cette facture est INVALIDE", vbCritical, "Information erronée / manquante"
         Exit Sub
     End If
@@ -587,7 +587,7 @@ Sub EnvoyerRappelParCourriel(noFact As String)
     
     'Vérification de l'existence de la pièce jointe
     Dim fileExists As Boolean
-    fileExists = Dir(attachmentFullPathName) <> ""
+    fileExists = Dir(attachmentFullPathName) <> vbNullString
     If Not fileExists Then
         MsgBox "La pièce jointe (Facture en format PDF) n'existe pas à" & vbNewLine & _
                     "l'emplacement spécifié, soit " & attachmentFullPathName, vbCritical
@@ -599,7 +599,7 @@ Sub EnvoyerRappelParCourriel(noFact As String)
     templateFullPathName = Environ$("appdata") & "\Microsoft\Templates\GCF_Rappel.oft"
 
     'Vérification de l'existence du template
-    fileExists = Dir(templateFullPathName) <> ""
+    fileExists = Dir(templateFullPathName) <> vbNullString
     If Not fileExists Then
         MsgBox "Le gabarit 'GCF_Rappel.oft' est introuvable " & _
                     "à l'emplacement spécifié, soit " & Environ$("appdata") & "\Microsoft\Templates", _
@@ -707,7 +707,7 @@ Sub AllerAuCentreDesResultats() '2025-06-30@ 11:02
         'Centre la ligne dans la fenêtre visible si possible
         ligneCible = Application.Max(1, derLigne - Int(nbLignesVisibles / 2))
         
-        Application.Goto Reference:=.Cells(ligneCible, 1), Scroll:=True
+        Application.GoTo Reference:=.Cells(ligneCible, 1), Scroll:=True
     End With
     
 End Sub
@@ -720,7 +720,7 @@ End Sub
 
 Sub RetourAuDebut() '2025-06-30 @ 11:08
 
-    Application.Goto Reference:=Cells(1, 1), Scroll:=True
+    Application.GoTo Reference:=ActiveSheet.Cells(1, 1), Scroll:=True
     
 End Sub
 

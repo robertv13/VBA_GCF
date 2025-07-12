@@ -4,7 +4,7 @@ Public clientCode As String
 
 Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Radiation:Worksheet_Activate", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Radiation:Worksheet_Activate", vbNullString, 0)
     
     If gFromMenu = False Then
         Exit Sub
@@ -30,7 +30,7 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
     If colsHidden = False Then
         ws.Range("A:B").EntireColumn.Hidden = True
     End If
-    ws.Range("I3").Value = ""
+    ws.Range("I3").Value = vbNullString
     
     'Certaines cellules perdent la couleur du background
     Dim cellsToColor As Range
@@ -57,15 +57,15 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call Log_Record("wshTEC_Radiation:Worksheet_Activate", "", startTime)
+    Call Log_Record("wshTEC_Radiation:Worksheet_Activate", vbNullString, startTime)
 
 End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Radiation:Worksheet_SelectionChange", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Radiation:Worksheet_SelectionChange", vbNullString, 0)
     
-    If gPreviousCellAddress <> "" Then
+    If gPreviousCellAddress <> vbNullString Then
         Range(gPreviousCellAddress).Interior.Color = vbWhite
     End If
     
@@ -81,7 +81,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     gPreviousCellAddress = Target.Address
     
-    Call Log_Record("wshTEC_Radiation:Worksheet_SelectionChange", "", startTime)
+    Call Log_Record("wshTEC_Radiation:Worksheet_SelectionChange", vbNullString, startTime)
     
 End Sub
 
@@ -123,7 +123,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         Application.EnableEvents = False
         fullDate = Fn_Complete_Date(Target.text, 99, 0)
         If fullDate <> "Invalid Date" Then
-            wshTEC_Radiation.Range("I3").Value = ""
+            wshTEC_Radiation.Range("I3").Value = vbNullString
             Target.Value = Format$(fullDate, wsdADMIN.Range("B1").Value)
             Target.Interior.Color = vbWhite
        Else
@@ -131,7 +131,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
        
         'Future date ?
@@ -140,7 +140,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.Goto Range(Target.Address)
+                Application.GoTo Range(Target.Address)
             End If
         Else
             Call TEC_Radiation_Procedure(clientCode, Target.Value)
@@ -152,6 +152,6 @@ ExitSub:
 
     Application.EnableEvents = True
     
-    Call Log_Record("wshTEC_Radiation:Worksheet_Change", "", startTime)
+    Call Log_Record("wshTEC_Radiation:Worksheet_Change", vbNullString, startTime)
   
 End Sub

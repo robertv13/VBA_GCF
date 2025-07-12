@@ -20,7 +20,7 @@ Sub GL_EJ_Update()
         Exit Sub
     End If
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Update", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Update", vbNullString, 0)
     
     If Fn_Is_Date_Valide(wshGL_EJ.Range("K4").Value) = False Then Exit Sub
     
@@ -55,13 +55,13 @@ Sub GL_EJ_Update()
     
     MsgBox "L'écriture numéro '" & strCurrentJE & "' a été reporté avec succès", vbInformation, "Confirmation de traitement"
     
-    Call Log_Record("modGL_EJ:GL_EJ_Update", "", startTime)
+    Call Log_Record("modGL_EJ:GL_EJ_Update", vbNullString, startTime)
     
 End Sub
 
 Sub JE_Renversement_Update()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:JE_Renversement_Update", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:JE_Renversement_Update", vbNullString, 0)
     
     If Fn_Is_Ecriture_Balance = False Then
         MsgBox "L'écriture à renverser ne balance pas !!!", vbCritical
@@ -78,10 +78,10 @@ Sub JE_Renversement_Update()
     For i = 9 To rowEJLast
         If wshGL_EJ.Cells(i, 8).Value <> 0 Then
             wshGL_EJ.Cells(i, 9).Value = wshGL_EJ.Cells(i, 8).Value
-            wshGL_EJ.Cells(i, 8).Value = ""
+            wshGL_EJ.Cells(i, 8).Value = vbNullString
         Else
             wshGL_EJ.Cells(i, 8).Value = wshGL_EJ.Cells(i, 9).Value
-            wshGL_EJ.Cells(i, 9).Value = ""
+            wshGL_EJ.Cells(i, 9).Value = vbNullString
         End If
     Next i
     
@@ -118,10 +118,10 @@ Sub JE_Renversement_Update()
     For i = 9 To rowEJLast
         If wshGL_EJ.Cells(i, 8).Value <> 0 Then
             wshGL_EJ.Cells(i, 9).Value = wshGL_EJ.Cells(i, 8).Value
-            wshGL_EJ.Cells(i, 8).Value = ""
+            wshGL_EJ.Cells(i, 8).Value = vbNullString
         Else
             wshGL_EJ.Cells(i, 8).Value = wshGL_EJ.Cells(i, 9).Value
-            wshGL_EJ.Cells(i, 9).Value = ""
+            wshGL_EJ.Cells(i, 9).Value = vbNullString
         End If
     Next i
     
@@ -129,7 +129,7 @@ Sub JE_Renversement_Update()
     wshGL_EJ.Range("E9:K23").Font.Color = vbBlack
 
     'Retour à la source
-    wshGL_EJ.Range("F4").Value = ""
+    wshGL_EJ.Range("F4").Value = vbNullString
     wshGL_EJ.Range("F6").Value = saveDescription
     wshGL_EJ.Range("F4").Select
     
@@ -139,13 +139,13 @@ Sub JE_Renversement_Update()
     'Libérer la mémoire
     Set shp = Nothing
     
-    Call Log_Record("modGL_EJ:JE_Renversement_Update", "", startTime)
+    Call Log_Record("modGL_EJ:JE_Renversement_Update", vbNullString, startTime)
     
 End Sub
 
 Sub Save_EJ_Recurrente(ll As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:Save_EJ_Recurrente", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:Save_EJ_Recurrente", vbNullString, 0)
     
     Dim rowEJLast As Long
     rowEJLast = wshGL_EJ.Cells(wshGL_EJ.Rows.count, "E").End(xlUp).Row  'Last Used Row in wshGL_EJ
@@ -153,13 +153,13 @@ Sub Save_EJ_Recurrente(ll As Long)
     Call GL_EJ_Recurrente_Add_Record_To_DB(ll)
     Call GL_EJ_Recurrente_Add_Record_Locally(ll)
     
-    Call Log_Record("modGL_EJ:Save_EJ_Recurrente", "", startTime)
+    Call Log_Record("modGL_EJ:Save_EJ_Recurrente", vbNullString, startTime)
     
 End Sub
 
 Sub Load_JEAuto_Into_JE(EJAutoDesc As String, NoEJAuto As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:Load_JEAuto_Into_JE", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:Load_JEAuto_Into_JE", vbNullString, 0)
     
     'On copie l'E/J automatique vers wshEJ
     Dim rowJEAuto As Long, rowJE As Long
@@ -170,7 +170,7 @@ Sub Load_JEAuto_Into_JE(EJAutoDesc As String, NoEJAuto As Long)
     
     Dim r As Long
     For r = 2 To rowJEAuto
-        If wsdGL_EJ_Recurrente.Range("A" & r).Value = NoEJAuto And wsdGL_EJ_Recurrente.Range("C" & r).Value <> "" Then
+        If wsdGL_EJ_Recurrente.Range("A" & r).Value = NoEJAuto And wsdGL_EJ_Recurrente.Range("C" & r).Value <> vbNullString Then
             wshGL_EJ.Range("E" & rowJE).Value = wsdGL_EJ_Recurrente.Range("D" & r).Value
             wshGL_EJ.Range("H" & rowJE).Value = wsdGL_EJ_Recurrente.Range("E" & r).Value
             wshGL_EJ.Range("I" & rowJE).Value = wsdGL_EJ_Recurrente.Range("F" & r).Value
@@ -182,13 +182,13 @@ Sub Load_JEAuto_Into_JE(EJAutoDesc As String, NoEJAuto As Long)
     wshGL_EJ.Range("F6").Value = "[Auto]-" & EJAutoDesc
     wshGL_EJ.Range("K4").Activate
 
-    Call Log_Record("modGL_EJ:Load_JEAuto_Into_JE", "", startTime)
+    Call Log_Record("modGL_EJ:Load_JEAuto_Into_JE", vbNullString, startTime)
     
 End Sub
 
 Sub GL_EJ_Clear_All_Cells()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Clear_All_Cells", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Clear_All_Cells", vbNullString, 0)
     
     'Efface toutes les cellules de la feuille
     Application.EnableEvents = False
@@ -220,7 +220,7 @@ Sub GL_EJ_Clear_All_Cells()
     'Libérer la mémoire
     Set cell = Nothing
     
-    Call Log_Record("modGL_EJ:GL_EJ_Clear_All_Cells", "", startTime)
+    Call Log_Record("modGL_EJ:GL_EJ_Clear_All_Cells", vbNullString, startTime)
 
 End Sub
 
@@ -230,7 +230,7 @@ Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
     dateFin = CDate(wshGL_EJ.Range("K4").Value)
     
     'Remplir la description, si elle est vide
-    If wshGL_EJ.Range("F6").Value = "" Then
+    If wshGL_EJ.Range("F6").Value = vbNullString Then
         wshGL_EJ.Range("F6").Value = "Déclaration TPS/TVQ - Du " & _
             Format$(Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), wsdADMIN.Range("B1").Value) & " au " & _
             Format$(dateFin, wsdADMIN.Range("B1").Value)
@@ -394,7 +394,7 @@ Sub GL_EJ_Renverser_Ecriture()
             Title:="Sélection d'une écriture à renverser", _
             Buttons:=vbInformation
         Application.EnableEvents = False
-        wshGL_EJ.Range("F4").Value = ""
+        wshGL_EJ.Range("F4").Value = vbNullString
         wshGL_EJ.Range("F4").Select
         Application.EnableEvents = True
         Exit Sub
@@ -420,7 +420,7 @@ Sub GL_EJ_Renverser_Ecriture()
                 "'" & vbNewLine & vbNewLine & _
                 "Veuillez vérifier votre numéro et reessayez", _
                 vbInformation, "Type d'écriture impossible à renverser"
-        wshGL_EJ.Range("F4").Value = ""
+        wshGL_EJ.Range("F4").Value = vbNullString
         wshGL_EJ.Range("F4").Select
         Exit Sub
     End If
@@ -560,7 +560,7 @@ End Sub
 
 Sub GL_EJ_Recurrente_Build_Summary()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Recurrente_Build_Summary", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Recurrente_Build_Summary", vbNullString, 0)
     
     'Build the summary at column K & L
     Dim lastUsedRow1 As Long
@@ -585,13 +585,13 @@ Sub GL_EJ_Recurrente_Build_Summary()
         Next i
     End With
 
-    Call Log_Record("modGL_EJ:GL_EJ_Recurrente_Build_Summary", "", startTime)
+    Call Log_Record("modGL_EJ:GL_EJ_Recurrente_Build_Summary", vbNullString, startTime)
 
 End Sub
 
 Sub GL_Get_JE_Detail_Trans_AF(noEJ As Long) '2024-11-17 @ 12:08
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_Get_JE_Detail_Trans_AF", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_Get_JE_Detail_Trans_AF", vbNullString, 0)
 
     Dim ws As Worksheet: Set ws = wsdGL_Trans
     
@@ -660,13 +660,13 @@ Sub GL_Get_JE_Detail_Trans_AF(noEJ As Long) '2024-11-17 @ 12:08
     Set rngResult = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modGL_EJ:GL_Get_JE_Detail_Trans_AF", "", startTime)
+    Call Log_Record("modGL_EJ:GL_Get_JE_Detail_Trans_AF", vbNullString, startTime)
 
 End Sub
 
 Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_Trans_Add_Record_To_DB", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_Trans_Add_Record_To_DB", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -724,10 +724,10 @@ Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xls
             End If
             rs.Fields(fGlTNoCompte - 1).Value = wshGL_EJ.Range("L" & l).Value
             rs.Fields(fGlTCompte - 1).Value = wshGL_EJ.Range("E" & l).Value
-            If wshGL_EJ.Range("H" & l).Value <> "" <> 0 Then
+            If wshGL_EJ.Range("H" & l).Value <> vbNullString <> 0 Then
                 rs.Fields(fGlTDébit - 1).Value = CDbl(Replace(wshGL_EJ.Range("H" & l).Value, ".", ","))
             End If
-            If wshGL_EJ.Range("I" & l).Value <> "" Then
+            If wshGL_EJ.Range("I" & l).Value <> vbNullString Then
                 rs.Fields(fGlTCrédit - 1).Value = CDbl(Replace(wshGL_EJ.Range("I" & l).Value, ".", ","))
             End If
             rs.Fields(fGlTAutreRemarque - 1).Value = wshGL_EJ.Range("J" & l).Value
@@ -747,13 +747,13 @@ Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xls
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modGL_EJ:GL_Trans_Add_Record_To_DB", "", startTime)
+    Call Log_Record("modGL_EJ:GL_Trans_Add_Record_To_DB", vbNullString, startTime)
 
 End Sub
 
 Sub GL_Trans_Add_Record_Locally(r As Long) 'Write records locally
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_Trans_Add_Record_Locally", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_Trans_Add_Record_Locally", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -785,10 +785,10 @@ Sub GL_Trans_Add_Record_Locally(r As Long) 'Write records locally
         End If
         wsdGL_Trans.Range("E" & rowToBeUsed).Value = wshGL_EJ.Range("L" & i).Value
         wsdGL_Trans.Range("F" & rowToBeUsed).Value = wshGL_EJ.Range("E" & i).Value
-        If wshGL_EJ.Range("H" & i).Value <> "" Then
+        If wshGL_EJ.Range("H" & i).Value <> vbNullString Then
             wsdGL_Trans.Range("G" & rowToBeUsed).Value = wshGL_EJ.Range("H" & i).Value
         End If
-        If wshGL_EJ.Range("I" & i).Value <> "" Then
+        If wshGL_EJ.Range("I" & i).Value <> vbNullString Then
             wsdGL_Trans.Range("H" & rowToBeUsed).Value = wshGL_EJ.Range("I" & i).Value
         End If
         wsdGL_Trans.Range("I" & rowToBeUsed).Value = wshGL_EJ.Range("J" & i).Value
@@ -801,13 +801,13 @@ Sub GL_Trans_Add_Record_Locally(r As Long) 'Write records locally
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modGL_EJ:GL_Trans_Add_Record_Locally", "", startTime)
+    Call Log_Record("modGL_EJ:GL_Trans_Add_Record_Locally", vbNullString, startTime)
 
 End Sub
 
 Sub EJ_Trans_Update_Ecriture_Renversee_To_DB()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:EJ_Trans_Update_Ecriture_Renversee_To_DB", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:EJ_Trans_Update_Ecriture_Renversee_To_DB", vbNullString, 0)
     
     'Définition des paramètres
     Dim destinationFileName As String, destinationTab As String
@@ -850,13 +850,13 @@ Sub EJ_Trans_Update_Ecriture_Renversee_To_DB()
     Set conn = Nothing
     Set rs = Nothing
 
-    Call Log_Record("modGL_EJ:EJ_Trans_Update_Ecriture_Renversee_To_DB", "", startTime)
+    Call Log_Record("modGL_EJ:EJ_Trans_Update_Ecriture_Renversee_To_DB", vbNullString, startTime)
     
 End Sub
 
 Sub EJ_Trans_Update_Ecriture_Renversee_Locally()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modEJ_Saisie:EJ_Trans_Update_Ecriture_Renversee_Locally", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modEJ_Saisie:EJ_Trans_Update_Ecriture_Renversee_Locally", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -880,13 +880,13 @@ Sub EJ_Trans_Update_Ecriture_Renversee_Locally()
     'Libérer la mémoire
     Set ws = Nothing
 
-    Call Log_Record("modEJ_Saisie:EJ_Trans_Update_Ecriture_Renversee_Locally", "", startTime)
+    Call Log_Record("modEJ_Saisie:EJ_Trans_Update_Ecriture_Renversee_Locally", vbNullString, startTime)
     
 End Sub
 
 Sub GL_EJ_Recurrente_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Recurrente_Add_Record_To_DB", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Recurrente_Add_Record_To_DB", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
@@ -933,13 +933,13 @@ Sub GL_EJ_Recurrente_Add_Record_To_DB(r As Long) 'Write/Update a record to exter
         rs.AddNew
             'Add fields to the recordset before updating it
             rs.Fields(fGlEjRNoEjR - 1).Value = nextEJANo
-            rs.Fields(fGlEjRDescription - 1).Value = Replace(wshGL_EJ.Range("F6").Value, "[Auto]-", "")
+            rs.Fields(fGlEjRDescription - 1).Value = Replace(wshGL_EJ.Range("F6").Value, "[Auto]-", vbNullString)
             rs.Fields(fGlEjRNoCompte - 1).Value = wshGL_EJ.Range("L" & l).Value
             rs.Fields(fGlEjRCompte - 1).Value = wshGL_EJ.Range("E" & l).Value
-            If wshGL_EJ.Range("H" & l).Value <> "" Then
+            If wshGL_EJ.Range("H" & l).Value <> vbNullString Then
                 rs.Fields(fGlEjRDébit - 1).Value = CDbl(Replace(wshGL_EJ.Range("H" & l).Value, ".", ","))
             End If
-            If wshGL_EJ.Range("I" & l).Value <> "" Then
+            If wshGL_EJ.Range("I" & l).Value <> vbNullString Then
                 rs.Fields(fGlEjRCrédit - 1).Value = CDbl(Replace(wshGL_EJ.Range("I" & l).Value, ".", ","))
             End If
             rs.Fields(fGlEjRAutreRemarque - 1).Value = wshGL_EJ.Range("J" & l).Value
@@ -959,13 +959,13 @@ Sub GL_EJ_Recurrente_Add_Record_To_DB(r As Long) 'Write/Update a record to exter
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modGL_EJ:GL_EJ_Recurrente_Add_Record_To_DB", "", startTime)
+    Call Log_Record("modGL_EJ:GL_EJ_Recurrente_Add_Record_To_DB", vbNullString, startTime)
 
 End Sub
 
 Sub GL_EJ_Recurrente_Add_Record_Locally(r As Long) 'Write records to local file
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Recurrente_Add_Record_Locally", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_EJ:GL_EJ_Recurrente_Add_Record_Locally", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -985,13 +985,13 @@ Sub GL_EJ_Recurrente_Add_Record_Locally(r As Long) 'Write records to local file
     Dim i As Long
     For i = 9 To r
         wsdGL_EJ_Recurrente.Range("A" & rowToBeUsed).Value = JENo
-        wsdGL_EJ_Recurrente.Range("B" & rowToBeUsed).Value = Replace(wshGL_EJ.Range("F6").Value, "[Auto]-", "")
+        wsdGL_EJ_Recurrente.Range("B" & rowToBeUsed).Value = Replace(wshGL_EJ.Range("F6").Value, "[Auto]-", vbNullString)
         wsdGL_EJ_Recurrente.Range("C" & rowToBeUsed).Value = wshGL_EJ.Range("L" & i).Value
         wsdGL_EJ_Recurrente.Range("D" & rowToBeUsed).Value = wshGL_EJ.Range("E" & i).Value
-        If wshGL_EJ.Range("H" & i).Value <> "" Then
+        If wshGL_EJ.Range("H" & i).Value <> vbNullString Then
             wsdGL_EJ_Recurrente.Range("E" & rowToBeUsed).Value = wshGL_EJ.Range("H" & i).Value
         End If
-        If wshGL_EJ.Range("I" & i).Value <> "" Then
+        If wshGL_EJ.Range("I" & i).Value <> vbNullString Then
             wsdGL_EJ_Recurrente.Range("F" & rowToBeUsed).Value = wshGL_EJ.Range("I" & i).Value
         End If
         wsdGL_EJ_Recurrente.Range("G" & rowToBeUsed).Value = wshGL_EJ.Range("J" & i).Value
@@ -1004,7 +1004,7 @@ Sub GL_EJ_Recurrente_Add_Record_Locally(r As Long) 'Write records to local file
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modGL_EJ:GL_EJ_Recurrente_Add_Record_Locally", "", startTime)
+    Call Log_Record("modGL_EJ:GL_EJ_Recurrente_Add_Record_Locally", vbNullString, startTime)
     
 End Sub
 
@@ -1047,12 +1047,9 @@ Sub GL_EJ_Forme_Sauvegarder(forme As Shape)
     gSauvegardesCaracteristiquesForme("Left") = forme.Left
     gSauvegardesCaracteristiquesForme("Width") = forme.Width
     gSauvegardesCaracteristiquesForme("Height") = forme.Height
-    '@Ignore ValueRequired
     gSauvegardesCaracteristiquesForme("FillColor") = forme.Fill.ForeColor.RGB
-    '@Ignore ValueRequired
     gSauvegardesCaracteristiquesForme("LineColor") = forme.Line.ForeColor.RGB
     gSauvegardesCaracteristiquesForme("Text") = forme.TextFrame2.TextRange.text
-    '@Ignore ValueRequired
     gSauvegardesCaracteristiquesForme("TextColor") = forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB
     
 End Sub
@@ -1113,7 +1110,7 @@ Sub PreparerAfficherListeEcriture()
     For i = 2 To UBound(arrData, 1)
         Source = CStr(arrData(i, fGlTSource))
         'Seulement les écritures de journal (exclure les autres)
-        If Source = "" Or Not ExclureTransaction(Source) = True Then
+        If Source = vbNullString Or Not ExclureTransaction(Source) = True Then
             If InStr(strDejaVu, CStr(arrData(i, 1)) & ".|.") = 0 Then
                 compteur = compteur + 1
                 resultats(compteur, 1) = arrData(i, fGlTNoEntrée)

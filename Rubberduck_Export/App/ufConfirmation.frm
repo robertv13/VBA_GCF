@@ -10,6 +10,7 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
+
 '@IgnoreModule ArgumentWithIncompatibleObjectType
 
 Option Explicit
@@ -21,7 +22,7 @@ Private Sub UserForm_Initialize()
         .CheckBoxes = True
         .FullRowSelect = True
         .Gridlines = True
-        .ColumnHeaders.Add , , "", 17
+        .ColumnHeaders.Add , , vbNullString, 17
         .ColumnHeaders.Add , , " NoFact.", 57
         .ColumnHeaders.Add , , "    Date", 68
         .ColumnHeaders.Add , , "Nom du client", 424
@@ -34,7 +35,7 @@ Private Sub UserForm_Initialize()
             For Each Facture In Factures
                 If IsArray(Facture) Then
                     Dim newItem As listItem
-                    Set newItem = .ListItems.Add(, , "")
+                    Set newItem = .ListItems.Add(, , vbNullString)
                     newItem.SubItems(1) = Facture(0)
                     newItem.SubItems(2) = Facture(1)
                     'Ajustement sur le nom du client
@@ -80,7 +81,7 @@ Private Sub ListView1_ItemClick(ByVal item As MSComctlLib.listItem)
                      Application.PathSeparator & noFacture & ".pdf"
                      
     'Open the invoice using Adobe Acrobat Reader
-    If PDFInvoicePath <> "" Then
+    If PDFInvoicePath <> vbNullString Then
         Dim strShell As String
         strShell = "C:\Program Files\Adobe\Acrobat DC\Acrobat\Acrobat.exe " & Chr$(34) & PDFInvoicePath & Chr$(34)
         Debug.Print "#092 - " & strShell
@@ -207,7 +208,7 @@ End Sub
 
 Private Sub UserForm_Terminate()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufConfirmation:UserForm_Terminate", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufConfirmation:UserForm_Terminate", vbNullString, 0)
 
     ufConfirmation.Hide
     Unload ufConfirmation
@@ -227,7 +228,7 @@ MenuSelect:
     wshMenu.Select
     
 Exit_Sub:
-    Call Log_Record("ufConfirmation:UserForm_Terminate", "", startTime)
+    Call Log_Record("ufConfirmation:UserForm_Terminate", vbNullString, startTime)
 
 End Sub
 

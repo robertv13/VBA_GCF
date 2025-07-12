@@ -135,7 +135,7 @@ Sub AjouteContactDansNomClient()
         posCloseSquareBracket = InStr(client, "]")
         
         If posOpenSquareBracket = 0 And posCloseSquareBracket = 0 Then
-            If contactFacturation <> "" And InStr(client, contactFacturation) = 0 Then
+            If contactFacturation <> vbNullString And InStr(client, contactFacturation) = 0 Then
                 client = Trim$(client) & " [" & contactFacturation & "]"
                 ws.Cells(i, 1).Value = client
                 Debug.Print "#065 - " & i & " - " & client
@@ -215,7 +215,7 @@ Sub ImporterDonnéesDeClasseursFermés_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 
         Dim myInfo() As Variant
         Dim rng As Range: Set rng = wsdBD_Clients.Range("dnrClients_Names_Only")
         myInfo = Fn_Find_Data_In_A_Range(rng, 2, clientCode, 1)
-        If myInfo(1) = "" Then
+        If myInfo(1) = vbNullString Then
             If InStr(errorMesg, client) = 0 Then
                 errorMesg = errorMesg & clientCode & " - " & client & vbNewLine
             End If
@@ -232,20 +232,20 @@ Sub ImporterDonnéesDeClasseursFermés_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 
         wsDest.Range("F" & rowNum).Value = client
         wsDest.Range("G" & rowNum).Value = rst.Fields(4).Value
         wsDest.Range("H" & rowNum).Value = rst.Fields(5).Value
-        wsDest.Range("I" & rowNum).Value = ""
+        wsDest.Range("I" & rowNum).Value = vbNullString
         wsDest.Range("J" & rowNum).Value = "VRAI"
         wsDest.Range("K" & rowNum).Value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
         wsDest.Range("L" & rowNum).Value = "FAUX"
-        wsDest.Range("M" & rowNum).Value = ""
+        wsDest.Range("M" & rowNum).Value = vbNullString
         wsDest.Range("N" & rowNum).Value = "FAUX"
         wsDest.Range("O" & rowNum).Value = ThisWorkbook.Name
-        wsDest.Range("P" & rowNum).Value = ""
+        wsDest.Range("P" & rowNum).Value = vbNullString
         
         rst.MoveNext
         
     Loop
     
-    If errorMesg <> "" Then
+    If errorMesg <> vbNullString Then
         MsgBox errorMesg
     Else
         MsgBox "Tous les TEC ont été importés, pour un total de " & totHres & " heures"
@@ -375,7 +375,6 @@ Sub ImporterDonnéesDeClasseursFermés_GL_BV() '2024-08-03 @ 18:20
     'Loop through the recordset and write data to the destination sheet
     Dim descriptionGL As String
     Dim codeGL As String
-    Dim errorMesg As String
     Dim No_Entrée As Long
     No_Entrée = 1
     Dim amount As Double
@@ -403,21 +402,15 @@ Sub ImporterDonnéesDeClasseursFermés_GL_BV() '2024-08-03 @ 18:20
         Else
             wsDest.Range("H" & rowNum).Value = -amount
         End If
-        wsDest.Range("I" & rowNum).Value = ""
+        wsDest.Range("I" & rowNum).Value = vbNullString
         wsDest.Range("J" & rowNum).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
         
         rst.MoveNext
         
     Loop
     
-    '@Ignore UnassignedVariableUsage
-    If errorMesg <> "" Then
-        '@Ignore UnassignedVariableUsage
-        MsgBox errorMesg
-    Else
-        MsgBox "Tous les soldes ont été importés, pour un total débit de " & totalDT & _
+    MsgBox "Tous les soldes ont été importés, pour un total débit de " & totalDT & _
                 vbNewLine & vbNewLine & "un total crédit de " & totalCT
-    End If
     
     'Libérer la mémoire
     rst.Close
@@ -494,7 +487,7 @@ Sub ImporterDonnéesDeClasseursFermés_CAR() '2024-08-04 @ 07:31
         recu = rst.Fields(4).Value
         regul = 0
         If IsNull(rst.Fields(5).Value) Then
-            dateRecu = ""
+            dateRecu = vbNullString
         Else
             dateRecu = rst.Fields(5).Value
         End If
@@ -509,7 +502,7 @@ Sub ImporterDonnéesDeClasseursFermés_CAR() '2024-08-04 @ 07:31
         Dim myInfo() As Variant
         Dim rng As Range: Set rng = wsdBD_Clients.Range("dnrClients_Names_Only")
         myInfo = Fn_Find_Data_In_A_Range(rng, 1, client, 2)
-        If myInfo(1) = "" Then
+        If myInfo(1) = vbNullString Then
             If InStr(errorMesg, client) = 0 Then
                 errorMesg = errorMesg & clientCode & " - " & client & vbNewLine
             End If
@@ -540,7 +533,7 @@ Sub ImporterDonnéesDeClasseursFermés_CAR() '2024-08-04 @ 07:31
         
     Loop
     
-    If errorMesg <> "" Then
+    If errorMesg <> vbNullString Then
         MsgBox errorMesg
     Else
         MsgBox "Tous les CAR ont été importés, pour un total de " & Format$(totCAR, "#,##0.00$")
@@ -608,7 +601,6 @@ Sub Compare2ExcelFiles()
     Dim cellWas As Range, cellNow As Range
     Dim foundRow As Range
     Dim clientCode As String
-    Dim differences As String
     Dim readCells As Long
     Dim i As Long, j As Long
     For i = 1 To lastUsedRowWas
@@ -680,9 +672,7 @@ Sub Compare2ExcelFiles()
     Set wsNow = Nothing
     Set wsDiff = Nothing
     
-    '@Ignore UnassignedVariableUsage
-    MsgBox "La comparaison est complétée." & vbNewLine & vbNewLine & _
-           differences, vbInformation
+    MsgBox "La comparaison est complétée.", vbInformation
            
 End Sub
 
@@ -989,7 +979,7 @@ Sub CorrigeNomClientInTEC()  '2025-03-04 @ 05:48
     'Setup print parameters
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:E" & rowOutput)
     Dim header1 As String: header1 = "Correction des noms de clients dans les TEC"
-    Dim header2 As String: header2 = ""
+    Dim header2 As String: header2 = vbNullString
     Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
     
     'Close the 2 workbooks without saving anything
@@ -1092,7 +1082,7 @@ Sub DetecterErreurCodeClientInTEC()  '2025-03-11 @ 08:29
     'Setup print parameters
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:G" & rowOutput)
     Dim header1 As String: header1 = "Détection des codes de clients ERRONÉS dans TEC"
-    Dim header2 As String: header2 = ""
+    Dim header2 As String: header2 = vbNullString
     Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
     
     'Close the 2 workbooks without saving anything
@@ -1214,7 +1204,7 @@ Public Sub CorrigeNomClientInCAR()  '2024-08-31 @ 06:52
     'Setup print parameters
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:E" & rowOutput)
     Dim header1 As String: header1 = "Correction des noms de clients dans les CAR"
-    Dim header2 As String: header2 = ""
+    Dim header2 As String: header2 = vbNullString
     Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
     
     'Close the 2 workbooks without saving anything

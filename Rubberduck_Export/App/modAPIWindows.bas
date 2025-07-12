@@ -28,13 +28,13 @@ End Type
     Private Declare Function GetTickCount Lib "kernel32" () As Long
 #End If
 
-Public Function ApplicationIsActive() As Boolean
-
-    Dim hwnd As LongPtr
-    Dim pid As Long
-    hwnd = GetForegroundWindow()
-    Call GetWindowThreadProcessId(hwnd, pid)
-    ApplicationIsActive = (pid = GetCurrentProcessId())
-    
-End Function
-
+'Public Function ApplicationIsActive() As Boolean
+'
+'    Dim hwnd As LongPtr
+'    Dim pid As Long
+'    hwnd = GetForegroundWindow()
+'    Call GetWindowThreadProcessId(hwnd, pid)
+'    ApplicationIsActive = (pid = GetCurrentProcessId())
+'
+'End Function
+'

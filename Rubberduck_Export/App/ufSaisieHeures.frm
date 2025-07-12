@@ -36,7 +36,7 @@ End Sub
 
 Sub UserForm_Activate() '2024-07-31 @ 07:57
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:UserForm_Activate", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:UserForm_Activate", vbNullString, 0)
     
     gLogSaisieHeuresVeryDetailed = False
     
@@ -55,7 +55,7 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
         .CompareMethod = vbTextCompare
     End With
 
-    ufSaisieHeures.txtDate.Value = "" 'On vide la date pour forcer la saisie
+    ufSaisieHeures.txtDate.Value = vbNullString 'On vide la date pour forcer la saisie
     
     On Error Resume Next
     ufSaisieHeures.cmbProfessionnel.SetFocus
@@ -63,13 +63,13 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
    
     rmv_state = rmv_modeInitial
     
-    Call Log_Record("ufSaisieHeures:UserForm_Activate", "", startTime)
+    Call Log_Record("ufSaisieHeures:UserForm_Activate", vbNullString, startTime)
     
 End Sub
 
 Private Sub lstboxNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:lstboxNomClient_DblClick", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:lstboxNomClient_DblClick", vbNullString, 0)
     
     Dim i As Long
     With Me.lstboxNomClient
@@ -90,13 +90,13 @@ Private Sub lstboxNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     
     Me.txtClient.TextAlign = fmTextAlignLeft
 
-    Call Log_Record("ufSaisieHeures:lstboxNomClient_DblClick", "", startTime)
+    Call Log_Record("ufSaisieHeures:lstboxNomClient_DblClick", vbNullString, startTime)
 
 End Sub
 
 Private Sub UserForm_Terminate()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:UserForm_Terminate", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:UserForm_Terminate", vbNullString, 0)
 
     'Libérer la mémoire
     Set oEventHandler = Nothing
@@ -120,7 +120,7 @@ MenuSelect:
     
 Exit_Sub:
 
-    Call Log_Record("ufSaisieHeures:UserForm_Terminate", "", startTime)
+    Call Log_Record("ufSaisieHeures:UserForm_Terminate", vbNullString, startTime)
 
 End Sub
 
@@ -144,9 +144,9 @@ Private Sub cmbProfessionnel_Enter() '2025-05-31 @ 16:31
     
     'Chercher utilisateur dans la liste et récupérer initiales permises
     For Each cell In plageInitiales
-        If Trim(cell.Value) <> "" Then
+        If Trim(cell.Value) <> vbNullString Then
             If StrComp(cell.Value, utilisateur, vbTextCompare) = 0 Then
-                If Trim(cell.offset(0, 2).Value) <> "" Then
+                If Trim(cell.offset(0, 2).Value) <> vbNullString Then
                     'Initiales spécifiques autorisées pour cet utilisateur
                     listeInitiales.Add Trim(cell.offset(0, 2).Value)
                 Else
@@ -163,7 +163,7 @@ Private Sub cmbProfessionnel_Enter() '2025-05-31 @ 16:31
         'Ajoute GC qui est la valeur par défut
         listeInitiales.Add "GC", "GC"
         For Each cellInit In plageInitiales.offset(, 2).Resize(, 1)
-            If Trim(cellInit.Value) <> "" Then
+            If Trim(cellInit.Value) <> vbNullString Then
                 On Error Resume Next 'Eviter doublons dans la collection
                 If Trim(cellInit.Value) <> "Init. Permises" Then
 '                    Debug.Print "XYZ - " & Trim(cellInit.value)
@@ -189,7 +189,7 @@ End Sub
 
 Private Sub cmbProfessionnel_AfterUpdate() '2025-05-31 @ 16:11
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmbProfessionnel_AfterUpdate", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmbProfessionnel_AfterUpdate", vbNullString, 0)
 
     Dim initProfAutorises As String
     
@@ -198,9 +198,9 @@ Private Sub cmbProfessionnel_AfterUpdate() '2025-05-31 @ 16:11
     Select Case initProfAutorises
         Case "INVALID"
             MsgBox "Les initiales saisies ne sont pas permise pour votre code d'utilisateur Windows", vbExclamation
-            cmbProfessionnel.Value = ""
+            cmbProfessionnel.Value = vbNullString
             Exit Sub
-        Case ""
+        Case vbNullString
             'Aucune restriction sur les initiales à utiliser
         Case Else
             If cmbProfessionnel.Value <> initProfAutorises Then
@@ -211,9 +211,9 @@ Private Sub cmbProfessionnel_AfterUpdate() '2025-05-31 @ 16:11
     End Select
 
     With ufSaisieHeures
-        If .cmbProfessionnel.Value <> "" Then
+        If .cmbProfessionnel.Value <> vbNullString Then
             .txtProfID.Value = Fn_GetID_From_Initials(.cmbProfessionnel.Value)
-            If .txtDate.Value <> "" Then
+            If .txtDate.Value <> vbNullString Then
                 Call TEC_Get_All_TEC_AF
                 Call TEC_Refresh_ListBox_And_Add_Hours
             End If
@@ -230,7 +230,7 @@ End Sub
 
 Private Sub txtDate_Enter()
 
-    If ufSaisieHeures.txtDate.Value = "" Then
+    If ufSaisieHeures.txtDate.Value = vbNullString Then
         ufSaisieHeures.txtDate.Value = Format$(Date, wsdADMIN.Range("B1").Value)
     Else
         ufSaisieHeures.txtDate.Value = Format$(ufSaisieHeures.txtDate.Value, wsdADMIN.Range("B1").Value)
@@ -240,7 +240,7 @@ End Sub
 
 Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtDate_BeforeUpdate", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtDate_BeforeUpdate", vbNullString, 0)
     
     'Routine de validation de date
     Dim valeur As Variant
@@ -291,13 +291,13 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
     
     Cancel = False
     
-    Call Log_Record("ufSaisieHeures:txtDate_BeforeUpdate", "", startTime)
+    Call Log_Record("ufSaisieHeures:txtDate_BeforeUpdate", vbNullString, startTime)
     
 End Sub
 
 Private Sub txtDate_AfterUpdate()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtDate_AfterUpdate", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:txtDate_AfterUpdate", vbNullString, 0)
     
     
     If IsDate(ufSaisieHeures.txtDate.Value) Then
@@ -312,14 +312,14 @@ Private Sub txtDate_AfterUpdate()
         Exit Sub
     End If
 
-    If ufSaisieHeures.txtProfID.Value <> "" Then
+    If ufSaisieHeures.txtProfID.Value <> vbNullString Then
         Call TEC_Get_All_TEC_AF
         Call TEC_Refresh_ListBox_And_Add_Hours
     End If
     
 '    Call MettreAJourEtatBoutons
     
-    Call Log_Record("ufSaisieHeures:txtDate_AfterUpdate", "", startTime)
+    Call Log_Record("ufSaisieHeures:txtDate_AfterUpdate", vbNullString, startTime)
     
 End Sub
 
@@ -429,11 +429,11 @@ End Sub
 
 Private Sub chbFacturable_AfterUpdate()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:chbFacturable_AfterUpdate", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:chbFacturable_AfterUpdate", vbNullString, 0)
     
     If Me.chbFacturable.Value <> valeurSauveeEstFacturable Then '2025-03-25 @ 13:05
         Debug.Print "chbFacturable_AfterUpdate : ", Me.chbFacturable.Value, " vs ", valeurSauveeEstFacturable, " - TECID=" & Me.txtTECID
-        If Me.txtTECID = "" Then
+        If Me.txtTECID = vbNullString Then
             Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True) '2024-10-06 @ 14:33
         Else
             Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, True, False, True)
@@ -452,7 +452,7 @@ Private Sub txtCommNote_AfterUpdate()
     
     If Me.txtCommNote.Value <> valeurSauveeCommNote Then '2025-03-25 @ 13:05
         Debug.Print "txtCommNote_AfterUpdate : ", Me.txtCommNote.Value, " vs ", valeurSauveeCommNote, " - TECID=" & Me.txtTECID
-        If Me.txtTECID = "" Then
+        If Me.txtTECID = vbNullString Then
             Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True) '2024-10-06 @ 14:33
         Else
             Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, True, True, True)
@@ -467,11 +467,11 @@ End Sub
 
 Private Sub cmdAdd_Click()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdAdd_Click", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdAdd_Click", vbNullString, 0)
     
     Call TEC_Ajoute_Ligne
 
-    Call Log_Record("ufSaisieHeures:cmdAdd_Click", "", startTime)
+    Call Log_Record("ufSaisieHeures:cmdAdd_Click", vbNullString, startTime)
 
 End Sub
 
@@ -479,15 +479,15 @@ Private Sub cmdUpdate_Click()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdUpdate_Click", ufSaisieHeures.txtTECID.Value, 0)
     
-    If ufSaisieHeures.txtTECID.Value <> "" Then
+    If ufSaisieHeures.txtTECID.Value <> vbNullString Then
         Call TEC_Modifie_Ligne
     Else
         MsgBox Prompt:="Vous devez choisir un enregistrement à modifier !", _
-               Title:="", _
+               Title:=vbNullString, _
                Buttons:=vbCritical
     End If
 
-    Call Log_Record("ufSaisieHeures:cmdUpdate_Click", "", startTime)
+    Call Log_Record("ufSaisieHeures:cmdUpdate_Click", vbNullString, startTime)
 
 End Sub
 
@@ -495,27 +495,27 @@ Private Sub cmdDelete_Click()
 
     Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdDelete_Click", ufSaisieHeures.txtTECID.Value, 0)
 
-    If ufSaisieHeures.txtTECID.Value <> "" Then
+    If ufSaisieHeures.txtTECID.Value <> vbNullString Then
         Call TEC_Efface_Ligne
     Else
         MsgBox Prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
-               Title:="", _
+               Title:=vbNullString, _
                Buttons:=vbCritical
     End If
 
-    Call Log_Record("ufSaisieHeures:cmdDelete_Click", "", startTime)
+    Call Log_Record("ufSaisieHeures:cmdDelete_Click", vbNullString, startTime)
 
 End Sub
 
 Private Sub cmdClear_Click()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdClear_Click", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("ufSaisieHeures:cmdClear_Click", vbNullString, 0)
     
     Call TEC_Efface_Formulaire
     
     Call MettreAJourEtatBoutons
 
-    Call Log_Record("ufSaisieHeures:cmdClear_Click", "", startTime)
+    Call Log_Record("ufSaisieHeures:cmdClear_Click", vbNullString, startTime)
 
 End Sub
 
@@ -581,13 +581,13 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
     'Libérer la mémoire
     Set lookupRange = Nothing
     
-    Call Log_Record("ufSaisieHeures:lsbHresJour_dblClick[" & tecID & "]", "", startTime)
+    Call Log_Record("ufSaisieHeures:lsbHresJour_dblClick[" & tecID & "]", vbNullString, startTime)
 
 End Sub
 
 Sub imgLogoGCF_Click()
 
-    If ufSaisieHeures.cmbProfessionnel.Value <> "" Then
+    If ufSaisieHeures.cmbProfessionnel.Value <> vbNullString Then
             Application.EnableEvents = False
             
             wshTEC_TDB_Data.Range("S7").Value = ufSaisieHeures.cmbProfessionnel.Value
@@ -634,15 +634,15 @@ Private Sub MettreAJourEtatBoutons() '2025-07-03 @ 07:09
     Dim estModifie As Boolean
     Dim tousChampsRemplis As Boolean
 
-    enAjout = (Trim(Me.txtTECID.Value & "") = "")
+    enAjout = (Trim(Me.txtTECID.Value & vbNullString) = vbNullString)
     enModification = Not enAjout
 
     'Vérification champs requis pour Ajout
     tousChampsRemplis = _
-        Trim(Me.cmbProfessionnel.Value & "") <> "" And _
-        Trim(Me.txtClient.Value & "") <> "" And _
-        Trim(Me.txtActivite.Value & "") <> "" And _
-        Trim(Me.txtHeures.Value & "") <> ""
+        Trim(Me.cmbProfessionnel.Value & vbNullString) <> vbNullString And _
+        Trim(Me.txtClient.Value & vbNullString) <> vbNullString And _
+        Trim(Me.txtActivite.Value & vbNullString) <> vbNullString And _
+        Trim(Me.txtHeures.Value & vbNullString) <> vbNullString
 
     'Bouton Ajouter
     Me.cmdAdd.Enabled = enAjout And tousChampsRemplis
@@ -666,4 +666,5 @@ Private Sub MettreAJourEtatBoutons() '2025-07-03 @ 07:09
     Me.cmdClear.Enabled = Me.cmdAdd.Enabled Or Me.cmdUpdate.Enabled
 
 End Sub
+
 

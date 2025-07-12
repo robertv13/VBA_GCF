@@ -8,7 +8,7 @@ Private Sub Worksheet_Activate()
         Exit Sub
     End If
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshDEB_Saisie:Worksheet_Activate", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshDEB_Saisie:Worksheet_Activate", vbNullString, 0)
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -76,14 +76,14 @@ Private Sub Worksheet_Activate()
     Set shp = Nothing
     Set ws = Nothing
     
-    Call Log_Record("wshDEB_Saisie:Worksheet_Activate", "", startTime)
+    Call Log_Record("wshDEB_Saisie:Worksheet_Activate", vbNullString, startTime)
 
 End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
     'Remove the background color of the previous Cell
-    If gPreviousCellAddress <> "" Then
+    If gPreviousCellAddress <> vbNullString Then
         Range(gPreviousCellAddress).Interior.Color = xlNone
     End If
     
@@ -146,7 +146,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     'Amount is selected (Amount to distribute by default)
     If Not Intersect(Target, Range("I9:I23")) Is Nothing Then
-        If Target.Value = "" Then
+        If Target.Value = vbNullString Then
             Application.EnableEvents = False
             Dim suggestedAmount As Double
             suggestedAmount = ws.Range("O6").Value - ws.Range("I26").Value
@@ -260,7 +260,7 @@ Private Sub Process_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
         Application.EnableEvents = True
         Exit Sub
@@ -268,7 +268,7 @@ Private Sub Process_Change(ByVal Target As Range)
     
     'Account has changed
     If Not Intersect(Target, GLRange) Is Nothing Then
-        If Target.Value <> "" Then
+        If Target.Value <> vbNullString Then
             Application.EnableEvents = False
             wshDEB_Saisie.Range("Q" & Target.row).Value = _
                 Fn_GetGL_Code_From_GL_Description(Target.Value)
@@ -282,13 +282,13 @@ Private Sub Process_Change(ByVal Target As Range)
         Dim cell As Range
         For Each cell In Target
             If cell.Value = 0 Then
-                cell.offset(0, 1).Value = "" 'Clear GST
-                cell.offset(0, 2).Value = "" 'Clear PST
-                cell.offset(0, 3).Value = "" 'Clear GST_Credit
-                cell.offset(0, 4).Value = "" 'Clear PST_Credit
-                cell.offset(0, 5).Value = "" 'Clear netAmount
+                cell.offset(0, 1).Value = vbNullString 'Clear GST
+                cell.offset(0, 2).Value = vbNullString 'Clear PST
+                cell.offset(0, 3).Value = vbNullString 'Clear GST_Credit
+                cell.offset(0, 4).Value = vbNullString 'Clear PST_Credit
+                cell.offset(0, 5).Value = vbNullString 'Clear netAmount
                 'Move focus to netAmount
-                If gPreviousCellAddress <> "" Then
+                If gPreviousCellAddress <> vbNullString Then
                     Range(gPreviousCellAddress).Interior.Color = xlNone
                 End If
                 cell.offset(0, 5).Select 'Input NET amount
@@ -307,7 +307,7 @@ Private Sub Process_Change(ByVal Target As Range)
                     cell.offset(0, 4).Value = pstCredit
                     cell.offset(0, 5).Value = netAmount
                     Application.EnableEvents = True
-                    If gPreviousCellAddress <> "" Then
+                    If gPreviousCellAddress <> vbNullString Then
                         Range(gPreviousCellAddress).Interior.Color = xlNone
                     End If
                     'Move to the next line
@@ -322,7 +322,7 @@ Private Sub Process_Change(ByVal Target As Range)
         Dim cellNet As Range
         For Each cellNet In Target
             Debug.Print "#003 - " & cellNet.Address & " = " & cellNet.Value
-            If cellNet.Value <> "" Then
+            If cellNet.Value <> vbNullString Then
                 amount = 0
                 Debug.Print "#004 - Net amount (Manual Input) netAmount - " & wshDEB_Saisie.Range("O4").Value & " " & wshDEB_Saisie.Range("H" & Target.row).Value & " " & _
                     amount & " " & gst & " " & pst & " " & gstCredit & " " & pstCredit & " " & _

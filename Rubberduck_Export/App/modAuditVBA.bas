@@ -25,7 +25,7 @@ Sub AnalyserToutesLesProcedures() '2025-07-07 @ 09:27
     Debug.Print "Traitement terminé (" & indexMax & " procédures analysées)"
     
     Application.ScreenUpdating = True
-    Worksheets("DocAuditVBA").Activate
+    ActiveWorkbook.Worksheets("DocAuditVBA").Activate
 
 End Sub
 
@@ -91,7 +91,7 @@ Sub IncrementerAppelsCodeDirect(dictIndex As Object, tableProc() As Variant, ind
             For i = 0 To UBound(lignes)
                 ligne = Trim(lignes(i))
                 'Filtrage initial des lignes non pertinentes
-                If ligne = "" Or Left(ligne, 1) = "'" Or _
+                If ligne = vbNullString Or Left(ligne, 1) = "'" Or _
                    LCase(Left(ligne, 12)) = "debug.print " Or _
                    LCase(Left(ligne, 7)) = "msgbox " Or _
                    LCase(Left(ligne, 4)) = "set " Or _
@@ -109,7 +109,7 @@ Sub IncrementerAppelsCodeDirect(dictIndex As Object, tableProc() As Variant, ind
                     'Appels directs (nomProc)
                     If LCase(ligne) Like "*call *" Then
                         valeur = Trim(Split(LCase(ligne), "call")(1))
-                        valeur = Replace(valeur, "()", "")
+                        valeur = Replace(valeur, "()", vbNullString)
                         valeur = Split(valeur, " ")(0)
                         If valeur = LCase(nomProc) Then
                             tableProc(dictIndex(nomProc), 4) = tableProc(dictIndex(nomProc), 4) + 1
@@ -126,7 +126,7 @@ Sub IncrementerAppelsCodeDirect(dictIndex As Object, tableProc() As Variant, ind
                             pos2 = InStr(pos1 + 1, ligne, """")
                             If pos2 > pos1 Then
                                 valeur = Mid(ligne, pos1 + 1, pos2 - pos1 - 1)
-                                valeur = Replace(valeur, "()", "")
+                                valeur = Replace(valeur, "()", vbNullString)
                                 valeur = Trim(Split(valeur, "!")(UBound(Split(valeur, "!")))) 'garde le nom après ! s'il est là
                                 If LCase(valeur) = LCase(nomProc) Then
                                     tableProc(dictIndex(nomProc), 6) = tableProc(dictIndex(nomProc), 6) + 1
@@ -156,7 +156,7 @@ Sub IncrementerAppelsIndirect(dictIndex As Object, tableProc() As Variant) '2025
     For Each ws In ThisWorkbook.Worksheets
         'Formes dessinées (Shapes)
         For Each shp In ws.Shapes
-            If shp.OnAction <> "" Then
+            If shp.OnAction <> vbNullString Then
                 nomMacro = shp.OnAction
                 If InStr(nomMacro, "!") > 0 Then
                     nomMacro = Split(nomMacro, "!")(1)
@@ -164,7 +164,7 @@ Sub IncrementerAppelsIndirect(dictIndex As Object, tableProc() As Variant) '2025
                 If dictIndex.Exists(nomMacro) Then
                     idx = dictIndex(nomMacro)
                     tableProc(idx, 6) = tableProc(idx, 6) + 1
-                    If tableProc(idx, 7) = "" Then
+                    If tableProc(idx, 7) = vbNullString Then
                         tableProc(idx, 7) = shp.Name & " (" & ws.Name & ")" 'nom de l’objet appelant
                     Else
                         tableProc(idx, 7) = tableProc(idx, 7) & vbCrLf & shp.Name & " (" & ws.Name & ")" 'nom de l’objet appelant
@@ -175,12 +175,12 @@ Sub IncrementerAppelsIndirect(dictIndex As Object, tableProc() As Variant) '2025
 
         'Boutons de formulaire (si présents)
         For Each obj In ws.Buttons
-            If obj.OnAction <> "" Then
+            If obj.OnAction <> vbNullString Then
                 nomMacro = obj.OnAction
                 If dictIndex.Exists(nomMacro) Then
                 idx = dictIndex(nomMacro)
                     tableProc(idx, 6) = tableProc(idx, 6) + 1
-                    If tableProc(idx, 7) = "" Then
+                    If tableProc(idx, 7) = vbNullString Then
                         tableProc(idx, 7) = obj.Name & " (" & ws.Name & ")"
                     Else
                         tableProc(idx, 7) = tableProc(idx, 7) & vbCrLf & obj.Name & " (" & ws.Name & ")"
@@ -200,7 +200,7 @@ Sub ExporterResultatsFeuille(tableProc() As Variant, indexMax As Long) '2025-07-
     
     'Utilisation de la feuille DocAuditVBA (permanente)
     Dim ws As Worksheet
-    Set ws = Worksheets("DocAuditVBA")
+    Set ws = ActiveWorkbook.Worksheets("DocAuditVBA")
     ws.Cells.Clear 'Efface le contenu, mais garde les événements
 
     With ws
@@ -236,7 +236,7 @@ Sub ExporterResultatsFeuille(tableProc() As Variant, indexMax As Long) '2025-07-
             .Cells(i + 2, 6).Value = tableProc(i, 6) 'indirects
             .Cells(i + 2, 7).FormulaR1C1 = "=RC[-3]+RC[-2]+RC[-1]"
             .Cells(i + 2, 8).Value = tableProc(i, 7)
-            If tableProc(i, 8) <> "" Then
+            If tableProc(i, 8) <> vbNullString Then
                 .Cells(i + 2, 9).Interior.Color = RGB(255, 230, 230) 'Rouge pâle
             End If
             .Cells(i + 2, 9).Value = tableProc(i, 8)
@@ -346,7 +346,7 @@ Sub DiagnostiquerConformite(ws As Worksheet, tableProc() As Variant) '2025-07-07
     For i = 3 To dernLigneUtilisee
         nom = Trim(ws.Cells(i, 1).Value)
         
-        diagnostics = ""
+        diagnostics = vbNullString
 
         'R1 - "_" non autorisé sauf si le nom SE TERMINE par un gestionnaire d’événement
         If InStr(nom, "_") > 0 And Not EstSuffixeEvenement(nom) Then
@@ -368,7 +368,7 @@ Sub DiagnostiquerConformite(ws As Worksheet, tableProc() As Variant) '2025-07-07
 
         If Right(diagnostics, 1) = "," Then diagnostics = Left(diagnostics, Len(diagnostics) - 1)
         
-        If diagnostics <> "" Then
+        If diagnostics <> vbNullString Then
             ws.Cells(i, 9).Value = diagnostics
         End If
         
@@ -404,7 +404,7 @@ Function EstSuffixeEvenement(nom As String) As Boolean '2025-07-07 @ 09:27
     Dim s As Variant
     Dim nbUnderscore As Long
 
-    nbUnderscore = Len(nom) - Len(Replace(nom, "_", ""))
+    nbUnderscore = Len(nom) - Len(Replace(nom, "_", vbNullString))
 
     'Plus d'un underscore = rejet immédiat
     If nbUnderscore > 1 Then
@@ -453,7 +453,7 @@ Function NouveauDict() As Object '2025-07-07 @ 09:27
     
 End Function
 
-Function AllerVersCode(nomModule As String, Optional nomProcedure As String = "") As Boolean '2025-07-07 @ 09:27
+Function AllerVersCode(nomModule As String, Optional nomProcedure As String = vbNullString) As Boolean '2025-07-07 @ 09:27
 
     On Error GoTo erreur
 
@@ -472,7 +472,7 @@ Function AllerVersCode(nomModule As String, Optional nomProcedure As String = ""
     comp.Activate
 
     'Si aucune procédure demandée, c'est terminé
-    If nomProcedure = "" Then
+    If nomProcedure = vbNullString Then
         AllerVersCode = True
         Exit Function
     End If
@@ -501,4 +501,5 @@ erreur:
     AllerVersCode = False
     
 End Function
+
 

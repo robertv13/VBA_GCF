@@ -2,13 +2,13 @@
 
 Option Explicit
 
-Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
+Private Sub Worksheet_Activate() '2024-06-13 @ 18:08
 
     If gFromMenu = False Then
         Exit Sub
     End If
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_EJ:Worksheet_Activate", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_EJ:Worksheet_Activate", vbNullString, 0)
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -78,7 +78,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     Set shp = Nothing
     Set ws = Nothing
     
-    Call Log_Record("wshGL_EJ:Worksheet_Activate", "", startTime)
+    Call Log_Record("wshGL_EJ:Worksheet_Activate", vbNullString, startTime)
 
 End Sub
 
@@ -86,7 +86,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
     ActiveSheet.Unprotect
     
-    If gPreviousCellAddress <> "" Then
+    If gPreviousCellAddress <> vbNullString Then
         If Not Range(gPreviousCellAddress) Is Nothing Then
             Range(gPreviousCellAddress).Interior.Color = xlNone
         End If
@@ -94,7 +94,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     'Ne pas permettre aucun changement à l'écriture originale, lors d'un renversement
     If Me.Range("F4").Value = "Renversement" Then
-        MsgBox "Il n'est pas permis de modifier l'écriture à renverser", vbInformation, ""
+        MsgBox "Il n'est pas permis de modifier l'écriture à renverser", vbInformation, vbNullString
         Exit Sub
     End If
     
@@ -231,12 +231,12 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
         
         If CDate(Me.Range("K4").Value) > Date Then
             If MsgBox("En êtes-vous CERTAIN ?", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
-                Target.Value = ""
+                Target.Value = vbNullString
                 Target.Activate
                 Target.Select
             End If
@@ -248,7 +248,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     If Not Intersect(Target, Range("E9:G23")) Is Nothing Then
         Application.EnableEvents = False
         With wshGL_EJ
-            If .Range("E" & Target.row).Value <> "" Then
+            If .Range("E" & Target.row).Value <> vbNullString Then
                 .Range("L" & Target.row).Value = Fn_GetGL_Code_From_GL_Description(.Range("E" & Target.row).Value)
             End If
 

@@ -143,7 +143,7 @@ Sub Check_Invoice_Template()
     Dim strTemplates As String
     Dim i As Long, j As Long
     For i = 1 To lastUsedRow - firstUsedRow + 1
-        If Not rng.Cells(i, 2) = "" Then
+        If Not rng.Cells(i, 2) = vbNullString Then
             arr = Split(rng.Cells(i, 2), ",")
             For j = 0 To UBound(arr)
                 strTemplates = strTemplates & Trim$(arr(j)) & "-" & i & "|"
@@ -171,7 +171,7 @@ Sub Check_Invoice_Template()
     
     With wsOutput
         For i = 0 To UBound(tt)
-            If tt(i) <> "" Then
+            If tt(i) <> vbNullString Then
                 template = Left$(tt(i), 1)
                 If template <> oldTemplate Then
                     outputRow = outputRow + 2
@@ -290,7 +290,7 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
     
 End Sub
 
-'@Description "Saisie des chaines, construction du tableau des lignes de code - 2025-06-18 @ 15:00"
+'@Description "Saisie des chaines, construction du tableau des lignes de code"
 Sub RechercherCodeProjet() '2024-10-26 @ 10:41
     
     'Declare lineOfCode() as variant
@@ -466,11 +466,11 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
             xAnalyzed = xAnalyzed + 1
 
             On Error Resume Next
-            dvType = ""
+            dvType = vbNullString
             dvType = cell.Validation.Type
             On Error GoTo 0
             
-            If dvType <> "" And dvType <> "0" Then
+            If dvType <> vbNullString And dvType <> "0" Then
                 'Write the data validation details to the output sheet
                 arr(X, 1) = ws.Name & Chr$(0) & cell.Address 'Sort Key
                 arr(X, 2) = ws.Name
@@ -705,7 +705,7 @@ Function HandleComments(ByVal codeLine As String, action As String) As String '2
     
     'Take action - R remove the comment from the code, L uppercase the comment
     If action = "R" Then
-        commentPart = ""
+        commentPart = vbNullString
     Else
         commentPart = Trim$(UCase$(commentPart))
     End If
@@ -827,7 +827,7 @@ Sub List_Named_Ranges_All() '2024-06-23 @ 07:40
     'Result print setup - 2024-07-14 2 07:10
     If i > 1 Then
         Dim header1 As String: header1 = "List all Named Ranges"
-        Dim header2 As String: header2 = ""
+        Dim header2 As String: header2 = vbNullString
         Call Simple_Print_Setup(wshzDocNamedRange, wshzDocNamedRange.Range("B2:I" & i), _
                                header1, _
                                header2, _
@@ -937,7 +937,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, lignesLues, search1 As String, se
             trimmedLineOfCode = HandleComments(trimmedLineOfCode, "U")
         End If
         
-        If trimmedLineOfCode <> "" Then
+        If trimmedLineOfCode <> vbNullString Then
             'Is this a procedure (Sub) declaration line ?
             If InStr(trimmedLineOfCode, "Sub ") <> 0 Then
                 If InStr(trimmedLineOfCode, "End Sub") = 0 And _
@@ -949,7 +949,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, lignesLues, search1 As String, se
             End If
             
             If InStr(trimmedLineOfCode, "End Sub") = 1 Then
-                procedureName = ""
+                procedureName = vbNullString
             End If
 
             'Is this a function declaration line ?
@@ -963,13 +963,13 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, lignesLues, search1 As String, se
             End If
             
             If InStr(trimmedLineOfCode, "End Function") = 1 Then
-                procedureName = ""
+                procedureName = vbNullString
             End If
             
             'Do we find the search1 or search2 or sreach3 strings in this line of code ?
-            If (search1 <> "" And InStr(trimmedLineOfCode, search1) <> 0) Or _
-                (search2 <> "" And InStr(trimmedLineOfCode, search2) <> 0) Or _
-                (search3 <> "" And InStr(trimmedLineOfCode, search3) <> 0) Then
+            If (search1 <> vbNullString And InStr(trimmedLineOfCode, search1) <> 0) Or _
+                (search2 <> vbNullString And InStr(trimmedLineOfCode, search2) <> 0) Or _
+                (search3 <> vbNullString And InStr(trimmedLineOfCode, search3) <> 0) Then
                 'Found an occurence
                 xr = xr + 1
                 arrResult(xr, 2) = arr(X, 1) 'oType
@@ -1053,8 +1053,8 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, lignesLues, search1 As String, se
     Dim header1 As String: header1 = "Search Utility Results"
     Dim header2 As String
     header2 = "Searched strings '" & search1 & "'"
-    If search2 <> "" Then header2 = header2 & " '" & search2 & "'"
-    If search3 <> "" Then header2 = header2 & " '" & search3 & "'"
+    If search2 <> vbNullString Then header2 = header2 & " '" & search2 & "'"
+    If search3 <> vbNullString Then header2 = header2 & " '" & search3 & "'"
     Call Simple_Print_Setup(wsOutput, wsOutput.Range("B2:G" & lastUsedRow), _
                            header1, _
                            header2, _
@@ -1113,7 +1113,7 @@ Sub List_All_Columns() '2024-08-09 @ 11:52
             With reportSheet
                 .Cells(outputRow, 1).Value = ws.Name
                 .Cells(outputRow, 2).Value = i
-                .Cells(outputRow, 3).Value = Replace(col.Address(False, False), "1", "")
+                .Cells(outputRow, 3).Value = Replace(col.Address(False, False), "1", vbNullString)
                 .Cells(outputRow, 4).Value = ws.Cells(1, i).Value
                 .Cells(outputRow, 5).Value = colType
                 .Cells(outputRow, 6).Value = col.ColumnWidth
@@ -1173,7 +1173,7 @@ Sub List_All_Macros_Used_With_Objects() '2024-11-26 @ 20:14
                 On Error Resume Next
                 macroName = shp.OnAction
                 On Error GoTo 0
-                If macroName <> "" Then
+                If macroName <> vbNullString Then
                     wsOutputSheet.Cells(outputRow, 1).Value = ws.Name
                     wsOutputSheet.Cells(outputRow, 2).Value = "Shape"
                     wsOutputSheet.Cells(outputRow, 3).Value = shp.Name
@@ -1194,7 +1194,7 @@ Sub List_All_Macros_Used_With_Objects() '2024-11-26 @ 20:14
                     macroName = obj.Object.OnClick
                 End If
                 On Error GoTo 0
-                If macroName <> "" Then
+                If macroName <> vbNullString Then
                     wsOutputSheet.Cells(outputRow, 1).Value = ws.Name
                     wsOutputSheet.Cells(outputRow, 2).Value = "ActiveX Control"
                     wsOutputSheet.Cells(outputRow, 3).Value = obj.Name
@@ -1333,7 +1333,7 @@ Sub List_Subs_And_Functions_All() '2024-11-26 @ 20:02
                         scope = Left$(trimmedLineOfCode, posSpace - 1)
                         trimmedLineOfCode = Trim$(Mid$(trimmedLineOfCode, posSpace + 1))
                     Else
-                        scope = ""
+                        scope = vbNullString
                     End If
                     arr(i, 5) = scope
                     If InStr(trimmedLineOfCode, "Sub ") = 1 Then
@@ -1349,10 +1349,10 @@ Sub List_Subs_And_Functions_All() '2024-11-26 @ 20:02
                     arr(i, 7) = trimmedLineOfCode
                     arr(i, 1) = UCase$(oType) & Chr$(0) & UCase$(vbComp.Name) & Chr$(0) & UCase$(trimmedLineOfCode) 'Future sort key
                     If params <> "()" Then arr(i, 8) = params
-                    If remarks <> "" Then arr(i, 9) = remarks
+                    If remarks <> vbNullString Then arr(i, 9) = remarks
                     arr(i, 10) = Format$(Now(), "yyyy-mm-dd hh:mm")
-                    params = ""
-                    remarks = ""
+                    params = vbNullString
+                    remarks = vbNullString
                 End If
             Next LineNum
         End If
@@ -1554,14 +1554,14 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
     Set unprotectedCells = Nothing
     Set sortedCells = Nothing
 
-    Call Log_Record("modDev_Utils:SetTabOrder", "", startTime)
+    Call Log_Record("modDev_Utils:SetTabOrder", vbNullString, startTime)
 
 End Sub
 
 Sub Log_Record(ByVal procedureName As String, param As String, Optional ByVal startTime As Double = 0) '2025-02-03 @ 17:17
 
     'En attendant de trouver la problématique... 2025-06-01 @ 05:06
-    If gUtilisateurWindows = "" Then
+    If gUtilisateurWindows = vbNullString Then
         gUtilisateurWindows = Fn_Get_Windows_Username
         Debug.Print "Réinitialisation forcée de gUtilisateurWindows - " & Format$(Now, "yyyy-mm-dd hh:nn:ss")
     End If
@@ -1582,8 +1582,8 @@ Sub Log_Record(ByVal procedureName As String, param As String, Optional ByVal st
     Open logFile For Append As #fileNum
     
     'On laisse une ligne blanche dans le fichier Log
-    If Trim$(procedureName) = "" Then
-        Print #fileNum, ""
+    If Trim$(procedureName) = vbNullString Then
+        Print #fileNum, vbNullString
     ElseIf startTime = 0 Then 'On marque le départ d'une procédure/fonction
         Print #fileNum, timeStamp & " | " & _
                         GetNomUtilisateur() & " | " & _
@@ -1632,9 +1632,9 @@ End Sub
 
 Sub Test_Log_Record()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modDev_Utils:Test_Log_Record", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modDev_Utils:Test_Log_Record", vbNullString, 0)
 
-    Call Log_Record("modDev_Utils:Test_Log_Record", "", startTime)
+    Call Log_Record("modDev_Utils:Test_Log_Record", vbNullString, startTime)
     
 End Sub
 
@@ -1667,7 +1667,7 @@ Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boole
     Open logSaisieHeuresFile For Append As #fileNum
     
     If blankline = True Then
-        Print #fileNum, ""
+        Print #fileNum, vbNullString
     End If
     
     Print #fileNum, timeStamp & " | " & _

@@ -3,7 +3,7 @@ Option Explicit
 
 Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
 
-    If cutoffDate = "" Then
+    If cutoffDate = vbNullString Then
         Exit Sub
     End If
         
@@ -132,7 +132,7 @@ Sub AjouterCheckBoxesAvecControleGlobal(lastUsedRow As Long)
                                          Height:=ws.Cells(5, 4).Height)
     With headerChkBox
         .Name = "chk_header"
-        .Caption = ""
+        .Caption = vbNullString
         .OnAction = "ToutCocherOuDecocher" 'Associe la macro de contrôle global
     End With
 
@@ -144,7 +144,7 @@ Sub AjouterCheckBoxesAvecControleGlobal(lastUsedRow As Long)
                                        Height:=ws.Cells(i, 4).Height)
         With chkBox
             .Name = "chk_" & i
-            .Caption = ""
+            .Caption = vbNullString
             .linkedCell = ws.Cells(i, 2).Address
             .OnAction = "CalculerTotaux"
         End With
@@ -200,8 +200,8 @@ Sub ToutCocherOuDecocher()
     For Each chkBox In ws.CheckBoxes
         If chkBox.Name <> "chk_header" Then
             chkBox.Value = IIf(newState, xlOn, xlOff)
-            chkBox.Characters.text = ""
-            chkBox.Characters.Caption = ""
+            chkBox.Characters.text = vbNullString
+            chkBox.Characters.Caption = vbNullString
         End If
     Next chkBox
 
@@ -209,7 +209,7 @@ Sub ToutCocherOuDecocher()
     Application.EnableEvents = True
 
     'Protéger la feuille à nouveau
-    ws.Protect Password:="", DrawingObjects:=True, Contents:=True, Scenarios:=True, _
+    ws.Protect Password:=vbNullString, DrawingObjects:=True, Contents:=True, Scenarios:=True, _
                 AllowFormattingCells:=True, AllowFormattingColumns:=True, AllowFormattingRows:=True, _
                 AllowInsertingColumns:=True, AllowInsertingRows:=True, AllowDeletingColumns:=True, _
                 AllowDeletingRows:=True, AllowSorting:=True, AllowFiltering:=True, _
@@ -334,7 +334,7 @@ next_iteration:
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modTEC_Radiation:TEC_Radiation_Update_As_Billed_To_DB", "", startTime)
+    Call Log_Record("modTEC_Radiation:TEC_Radiation_Update_As_Billed_To_DB", vbNullString, startTime)
 
 End Sub
 
@@ -362,7 +362,7 @@ Sub TEC_Radiation_Update_As_Billed_Locally(firstResultRow As Long, lastResultRow
     'Libérer la mémoire
     Set lookupRange = Nothing
     
-    Call Log_Record("modTEC_Radiation:TEC_Radiation_Update_As_Billed_Locally", "", startTime)
+    Call Log_Record("modTEC_Radiation:TEC_Radiation_Update_As_Billed_Locally", vbNullString, startTime)
 
 End Sub
 
@@ -406,7 +406,7 @@ End Sub
 
 Sub TEC_Radiation_Back_To_TEC_Menu()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Radiation:TEC_Radiation_Back_To_TEC_Menu", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Radiation:TEC_Radiation_Back_To_TEC_Menu", vbNullString, 0)
     
     wshTEC_Radiation.Visible = xlSheetHidden
     
@@ -415,7 +415,7 @@ Sub TEC_Radiation_Back_To_TEC_Menu()
     wshMenuTEC.Activate
     wshMenuTEC.Range("A1").Select
     
-    Call Log_Record("modTEC_Radiation:TEC_Radiation_Back_To_TEC_Menu", "", startTime)
+    Call Log_Record("modTEC_Radiation:TEC_Radiation_Back_To_TEC_Menu", vbNullString, startTime)
 
 End Sub
 
@@ -425,14 +425,14 @@ Sub Prepare_Pour_Nouvelle_Radiation()
     Set ws = wshTEC_Radiation
     
     With ws
-        .Range("B6:B32").Value = ""
+        .Range("B6:B32").Value = vbNullString
         .Range("D6:K32").ClearContents
         .Range("D6:K32").Font.Bold = False
         .Shapes("Impression").Visible = False
         .Shapes("Radiation").Visible = False
         Application.EnableEvents = False
-            .Range("F3").Value = ""
-            .Range("K3").Value = ""
+            .Range("F3").Value = vbNullString
+            .Range("K3").Value = vbNullString
         Application.EnableEvents = True
         gPreviousCellAddress = .Range("F3").Address
         .Range("F3").Select
@@ -446,4 +446,5 @@ Sub Prepare_Pour_Nouvelle_Radiation()
     Next chkBox
 
 End Sub
+
 

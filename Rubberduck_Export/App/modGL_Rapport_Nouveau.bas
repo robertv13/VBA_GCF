@@ -26,7 +26,7 @@ Public Sub GenererRapportGL_Compte(wsRapport As Worksheet, dateDebut As Date, da
     
     'Filter et trier toutes les transactions du G/L
     Dim rngResultAll As Range
-    Call GL_Get_Account_Trans_AF("", #1/1/2024#, dateFin, rngResultAll)
+    Call GL_Get_Account_Trans_AF(vbNullString, #1/1/2024#, dateFin, rngResultAll)
     
     'Process one account at the time...
     Dim GL As String, descGL As String
@@ -141,7 +141,7 @@ Public Sub GenererRapportGL_Compte(wsRapport As Worksheet, dateDebut As Date, da
         .size = 10
     End With
     
-    Application.StatusBar = ""
+    Application.StatusBar = vbNullString
     
     Application.ScreenUpdating = True
     
@@ -155,7 +155,7 @@ Public Sub GenererRapportGL_Compte(wsRapport As Worksheet, dateDebut As Date, da
     
     Unload ufGL_Rapport
     
-    Call Log_Record("modGL_Rapport_Nouveau:GenererRapportGL_Compte", "", startTime)
+    Call Log_Record("modGL_Rapport_Nouveau:GenererRapportGL_Compte", vbNullString, startTime)
     
     MsgBox "Le rapport a été généré avec succès", vbInformation, "Rapport des transactions du Grand Livre"
 
@@ -279,7 +279,7 @@ Public Sub GenererRapportGL_Ecriture(wsRapport As Worksheet, noEcritureDebut As 
         Next row
     End If
     
-    Application.StatusBar = ""
+    Application.StatusBar = vbNullString
 
     'Impression des totaux
     rowRapport = rowRapport + 1
@@ -322,7 +322,7 @@ Public Sub GenererRapportGL_Ecriture(wsRapport As Worksheet, noEcritureDebut As 
     h3 = "(Pour les numéros d'écriture de " & noEcritureDebut & " à " & noEcritureFin & ")"
     Call GL_Rapport_Wrap_Up_Ecriture(wsRapport, h1, h2, h3)
     
-    Call Log_Record("modGL_Rapport_Nouveau:GenererRapportGL_Ecriture", "", startTime)
+    Call Log_Record("modGL_Rapport_Nouveau:GenererRapportGL_Ecriture", vbNullString, startTime)
     
     Unload ufGL_Rapport
     
@@ -451,7 +451,7 @@ Public Sub GenererRapportGL_DateSaisie(wsRapport As Worksheet, dtSaisieDebut As 
         Next row
     End If
     
-    Application.StatusBar = ""
+    Application.StatusBar = vbNullString
 
     'Impression des totaux
     rowRapport = rowRapport + 1
@@ -495,7 +495,7 @@ Public Sub GenererRapportGL_DateSaisie(wsRapport As Worksheet, dtSaisieDebut As 
     h3 = "(Pour les écritures saisies entre le " & dtSaisieDebut & " et le " & dtSaisieFin & ")"
     Call GL_Rapport_Wrap_Up_DateSaisie(wsRapport, h1, h2, h3)
     
-    Call Log_Record("modGL_Rapport_Nouveau:GenererRapportGL_DateSaisie", "", startTime)
+    Call Log_Record("modGL_Rapport_Nouveau:GenererRapportGL_DateSaisie", vbNullString, startTime)
     
     Unload ufGL_Rapport
     
@@ -790,7 +790,7 @@ End Sub
 
 Sub GL_Rapport_Wrap_Up_Compte(ws As Worksheet, h1 As String, h2 As String, h3 As String)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport_Nouveau:GL_Rapport_Wrap_Up_Compte", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport_Nouveau:GL_Rapport_Wrap_Up_Compte", vbNullString, 0)
     
     Application.PrintCommunication = False
     
@@ -808,13 +808,13 @@ Sub GL_Rapport_Wrap_Up_Compte(ws As Worksheet, h1 As String, h2 As String, h3 As
         .BottomMargin = Application.InchesToPoints(0.45)
         .HeaderMargin = Application.InchesToPoints(0.15)
         .FooterMargin = Application.InchesToPoints(0.15)
-        .LeftHeader = ""
+        .LeftHeader = vbNullString
         .CenterHeader = "&""-,Gras""&16" & h1 & _
                         Chr$(10) & "&11" & h2 & _
                         Chr$(10) & "&11" & h3
-        .RightHeader = ""
+        .RightHeader = vbNullString
         .LeftFooter = "&9&D - &T"
-        .CenterFooter = ""
+        .CenterFooter = vbNullString
         .RightFooter = "&9Page &P de &N"
         .FitToPagesWide = 1
         .FitToPagesTall = 99
@@ -835,13 +835,13 @@ Sub GL_Rapport_Wrap_Up_Compte(ws As Worksheet, h1 As String, h2 As String, h3 As
 '    ActiveWindow.SplitRow = 2
 '    ws.Range("A" & lastUsedRow).Select
     
-    Call Log_Record("modGL_Rapport_Nouveau:GL_Rapport_Wrap_Up_Compte", "", startTime)
+    Call Log_Record("modGL_Rapport_Nouveau:GL_Rapport_Wrap_Up_Compte", vbNullString, startTime)
 
 End Sub
 
 Sub GL_Rapport_Wrap_Up_Ecriture(ws As Worksheet, h1 As String, h2 As String, h3 As String)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport_Nouveau:GL_Rapport_Wrap_Up_Ecriture", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport_Nouveau:GL_Rapport_Wrap_Up_Ecriture", vbNullString, 0)
     
     Application.PrintCommunication = False
     
@@ -862,13 +862,13 @@ Sub GL_Rapport_Wrap_Up_Ecriture(ws As Worksheet, h1 As String, h2 As String, h3 
         .BottomMargin = Application.InchesToPoints(0.45)
         .HeaderMargin = Application.InchesToPoints(0.15)
         .FooterMargin = Application.InchesToPoints(0.15)
-        .LeftHeader = ""
+        .LeftHeader = vbNullString
         .CenterHeader = "&""-,Gras""&16" & h1 & _
                         Chr$(10) & "&11" & h2 & _
                         Chr$(10) & "&11" & h3
-        .RightHeader = ""
+        .RightHeader = vbNullString
         .LeftFooter = "&9&D - &T"
-        .CenterFooter = ""
+        .CenterFooter = vbNullString
         .RightFooter = "&9Page &P de &N"
         .FitToPagesWide = 1
         .FitToPagesTall = 99
@@ -881,13 +881,13 @@ Sub GL_Rapport_Wrap_Up_Ecriture(ws As Worksheet, h1 As String, h2 As String, h3 
 '
     ws.Range("A" & lastUsedRow).Select
     
-    Call Log_Record("modGL_Rapport_Nouveau:GL_Rapport_Wrap_Up_Ecriture", "", startTime)
+    Call Log_Record("modGL_Rapport_Nouveau:GL_Rapport_Wrap_Up_Ecriture", vbNullString, startTime)
 
 End Sub
 
 Sub GL_Rapport_Wrap_Up_DateSaisie(ws As Worksheet, h1 As String, h2 As String, h3 As String)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport_Nouveau:GL_Rapport_Wrap_Up_DateSaisie", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport_Nouveau:GL_Rapport_Wrap_Up_DateSaisie", vbNullString, 0)
     
     Application.PrintCommunication = False
     
@@ -908,13 +908,13 @@ Sub GL_Rapport_Wrap_Up_DateSaisie(ws As Worksheet, h1 As String, h2 As String, h
         .BottomMargin = Application.InchesToPoints(0.45)
         .HeaderMargin = Application.InchesToPoints(0.15)
         .FooterMargin = Application.InchesToPoints(0.15)
-        .LeftHeader = ""
+        .LeftHeader = vbNullString
         .CenterHeader = "&""-,Gras""&16" & h1 & _
                         Chr$(10) & "&11" & h2 & _
                         Chr$(10) & "&11" & h3
-        .RightHeader = ""
+        .RightHeader = vbNullString
         .LeftFooter = "&9&D - &T"
-        .CenterFooter = ""
+        .CenterFooter = vbNullString
         .RightFooter = "&9Page &P de &N"
         .FitToPagesWide = 1
         .FitToPagesTall = 99
@@ -927,7 +927,7 @@ Sub GL_Rapport_Wrap_Up_DateSaisie(ws As Worksheet, h1 As String, h2 As String, h
 '
     ws.Range("A" & lastUsedRow).Select
     
-    Call Log_Record("modGL_Rapport_Nouveau:GL_Rapport_Wrap_Up_DateSaisie", "", startTime)
+    Call Log_Record("modGL_Rapport_Nouveau:GL_Rapport_Wrap_Up_DateSaisie", vbNullString, startTime)
 
 End Sub
 
@@ -956,4 +956,5 @@ Function Fn_ValiderSiDoitImprimerTransaction(ByVal Source As String) As Boolean 
     Fn_ValiderSiDoitImprimerTransaction = aImprimer
     
 End Function
+
 

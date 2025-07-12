@@ -10,7 +10,7 @@ Public rmv_state As Long
 
 Sub TEC_Ajoute_Ligne() 'Add an entry to DB
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Ajoute_Ligne", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Ajoute_Ligne", vbNullString, 0)
 
     'Obtenir le ID du client pur (à partir de son nom pur)
     ufSaisieHeures.txtClientID.Value = Fn_Cell_From_BD_Client(ufSaisieHeures.txtClient.Value, 1, 2)
@@ -31,12 +31,12 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
         
         'Clear the userForm fields after saving
         With ufSaisieHeures
-            .txtTECID.Value = ""
-            .txtClient.Value = ""
-            .txtClientID.Value = ""
-            .txtActivite.Value = ""
-            .txtHeures.Value = ""
-            .txtCommNote.Value = ""
+            .txtTECID.Value = vbNullString
+            .txtClient.Value = vbNullString
+            .txtClientID.Value = vbNullString
+            .txtActivite.Value = vbNullString
+            .txtHeures.Value = vbNullString
+            .txtCommNote.Value = vbNullString
             .chbFacturable = True
         End With
         
@@ -52,13 +52,13 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
         ufSaisieHeures.txtClient.SetFocus
     End If
     
-    Call Log_Record("modTEC_Saisie:TEC_Ajoute_Ligne", "", startTime)
+    Call Log_Record("modTEC_Saisie:TEC_Ajoute_Ligne", vbNullString, startTime)
 
 End Sub
 
 Sub TEC_Modifie_Ligne() '2023-12-23 @ 07:04
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Modifie_Ligne", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Modifie_Ligne", vbNullString, 0)
 
     If Fn_TEC_Is_Data_Valid() = False Then Exit Sub
 
@@ -70,13 +70,13 @@ Sub TEC_Modifie_Ligne() '2023-12-23 @ 07:04
  
     'Initialize dynamic variables
     With ufSaisieHeures
-        .txtTECID.Value = ""
+        .txtTECID.Value = vbNullString
         .cmbProfessionnel.Enabled = True
         .txtDate.Enabled = True
-        .txtClient.Value = ""
-        .txtActivite.Value = ""
-        .txtHeures.Value = ""
-        .txtCommNote.Value = ""
+        .txtClient.Value = vbNullString
+        .txtActivite.Value = vbNullString
+        .txtHeures.Value = vbNullString
+        .txtCommNote.Value = vbNullString
         .chbFacturable = True
     End With
 
@@ -90,15 +90,15 @@ Sub TEC_Modifie_Ligne() '2023-12-23 @ 07:04
     
     ufSaisieHeures.txtClient.SetFocus
     
-    Call Log_Record("modTEC_Saisie:TEC_Modifie_Ligne", "", startTime)
+    Call Log_Record("modTEC_Saisie:TEC_Modifie_Ligne", vbNullString, startTime)
 
 End Sub
 
 Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Efface_Ligne", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Efface_Ligne", vbNullString, 0)
 
-    If ufSaisieHeures.txtTECID.Value = "" Then
+    If ufSaisieHeures.txtTECID.Value = vbNullString Then
         MsgBox Prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
             Buttons:=vbCritical
         GoTo Clean_Exit
@@ -128,10 +128,10 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
     
     'Empty the dynamic fields after deleting
     With ufSaisieHeures
-        .txtClient.Value = ""
-        .txtActivite.Value = ""
-        .txtHeures.Value = ""
-        .txtCommNote.Value = ""
+        .txtClient.Value = vbNullString
+        .txtActivite.Value = vbNullString
+        .txtHeures.Value = vbNullString
+        .txtCommNote.Value = vbNullString
         .chbFacturable = True
     End With
     
@@ -150,13 +150,13 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
     
 Clean_Exit:
 
-    ufSaisieHeures.txtTECID.Value = ""
+    ufSaisieHeures.txtTECID.Value = vbNullString
     ufSaisieHeures.txtClient.SetFocus
 
     'Libérer la mémoire
     Set Sh = Nothing
 
-    Call Log_Record("modTEC_Saisie:TEC_Efface_Ligne", "", startTime)
+    Call Log_Record("modTEC_Saisie:TEC_Efface_Ligne", vbNullString, startTime)
 
 End Sub
 
@@ -170,7 +170,7 @@ Sub TEC_Get_All_TEC_AF() '2024-11-19 @ 10:39
     Application.ScreenUpdating = False
 
     'ProfID and Date are mandatory to execute this routine
-    If ufSaisieHeures.txtProfID.Value = "" Or ufSaisieHeures.txtDate.Value = "" Then
+    If ufSaisieHeures.txtProfID.Value = vbNullString Or ufSaisieHeures.txtDate.Value = vbNullString Then
         Exit Sub
     End If
     
@@ -255,22 +255,22 @@ No_Sort_Required:
     Set rngResult = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modTEC_Saisie:TEC_Get_All_TEC_AF", "", startTime)
+    Call Log_Record("modTEC_Saisie:TEC_Get_All_TEC_AF", vbNullString, startTime)
 
 End Sub
 
 Sub TEC_Efface_Formulaire() '2025-07-03 @ 07:31
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Efface_Formulaire", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Efface_Formulaire", vbNullString, 0)
 
     'Empty the dynamic fields after reseting the form
     With ufSaisieHeures
-        .txtTECID.Value = "" '2024-03-01 @ 09:56
-        .txtClient.Value = ""
-        .txtClientID.Value = ""
-        .txtActivite.Value = ""
-        .txtHeures.Value = ""
-        .txtCommNote.Value = ""
+        .txtTECID.Value = vbNullString '2024-03-01 @ 09:56
+        .txtClient.Value = vbNullString
+        .txtClientID.Value = vbNullString
+        .txtActivite.Value = vbNullString
+        .txtHeures.Value = vbNullString
+        .txtCommNote.Value = vbNullString
         .cmbProfessionnel.Enabled = True
         .txtDate.Enabled = True
     End With
@@ -283,7 +283,7 @@ Sub TEC_Efface_Formulaire() '2025-07-03 @ 07:31
         
     ufSaisieHeures.txtClient.SetFocus
     
-    Call Log_Record("modTEC_Saisie:TEC_Efface_Formulaire", "", startTime)
+    Call Log_Record("modTEC_Saisie:TEC_Efface_Formulaire", vbNullString, startTime)
 
 End Sub
 
@@ -409,7 +409,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to
             rs.Fields(fTECDateFacturee - 1).Value = Null
             rs.Fields(fTECEstDetruit - 1).Value = Fn_Convert_Value_Boolean_To_Text(False)
             rs.Fields(fTECVersionApp - 1).Value = ThisWorkbook.Name
-            rs.Fields(fTECNoFacture - 1).Value = ""
+            rs.Fields(fTECNoFacture - 1).Value = vbNullString
             rs.Update
             
             'Nouveau log - 2024-09-02 @ 10:40
@@ -535,10 +535,10 @@ Sub TEC_Record_Add_Or_Update_Locally(tecID As Long) 'Write -OR- Update a record 
             .Range("J" & nextRowNumber).Value = Fn_Convert_Value_Boolean_To_Text(ufSaisieHeures.chbFacturable.Value)
             .Range("K" & nextRowNumber).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
             .Range("L" & nextRowNumber).Value = Fn_Convert_Value_Boolean_To_Text(False)
-            .Range("M" & nextRowNumber).Value = ""
+            .Range("M" & nextRowNumber).Value = vbNullString
             .Range("N" & nextRowNumber).Value = Fn_Convert_Value_Boolean_To_Text(False)
             .Range("O" & nextRowNumber).Value = ThisWorkbook.Name
-            .Range("P" & nextRowNumber).Value = ""
+            .Range("P" & nextRowNumber).Value = vbNullString
         End With
     Else
         'What is the row number for the TECID
@@ -563,10 +563,10 @@ Sub TEC_Record_Add_Or_Update_Locally(tecID As Long) 'Write -OR- Update a record 
                 .Range("J" & rowToBeUpdated).Value = Fn_Convert_Value_Boolean_To_Text(ufSaisieHeures.chbFacturable.Value)
                 .Range("K" & rowToBeUpdated).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
                 .Range("L" & rowToBeUpdated).Value = Fn_Convert_Value_Boolean_To_Text(False)
-                .Range("M" & rowToBeUpdated).Value = ""
+                .Range("M" & rowToBeUpdated).Value = vbNullString
                 .Range("N" & rowToBeUpdated).Value = Fn_Convert_Value_Boolean_To_Text(False)
                 .Range("O" & rowToBeUpdated).Value = ThisWorkbook.Name
-                .Range("P" & rowToBeUpdated).Value = ""
+                .Range("P" & rowToBeUpdated).Value = vbNullString
             End With
         Else 'Soft delete the record
             With wsdTEC_Local
@@ -595,19 +595,19 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     Application.ScreenUpdating = False
     Application.EnableEvents = False
 
-    If ufSaisieHeures.txtProfID.Value = "" Or Not IsDate(ufSaisieHeures.txtDate.Value) Then
+    If ufSaisieHeures.txtProfID.Value = vbNullString Or Not IsDate(ufSaisieHeures.txtDate.Value) Then
         MsgBox "Veuillez entrer un professionnel et/ou une date valide.", vbExclamation
         GoTo EndOfProcedure
     End If
     
     'On vide le formulaire
-    ufSaisieHeures.txtTotalHeures.Value = ""
-    ufSaisieHeures.txtHresFact.Value = ""
-    ufSaisieHeures.txtHresNF.Value = ""
-    ufSaisieHeures.txtHresFactSemaine.Value = ""
-    ufSaisieHeures.txtHresNFSemaine.Value = ""
+    ufSaisieHeures.txtTotalHeures.Value = vbNullString
+    ufSaisieHeures.txtHresFact.Value = vbNullString
+    ufSaisieHeures.txtHresNF.Value = vbNullString
+    ufSaisieHeures.txtHresFactSemaine.Value = vbNullString
+    ufSaisieHeures.txtHresNFSemaine.Value = vbNullString
 
-    ufSaisieHeures.lsbHresJour.RowSource = ""
+    ufSaisieHeures.lsbHresJour.RowSource = vbNullString
     ufSaisieHeures.lsbHresJour.Clear '2024-08-10 @ 05:59
     
     With ufSaisieHeures.lsbHresJour
@@ -721,7 +721,7 @@ End Sub
 
 Sub TEC_Update_TDB_From_TEC_Local()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Update_TDB_From_TEC_Local", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Update_TDB_From_TEC_Local", vbNullString, 0)
 
     Dim wsFrom As Worksheet: Set wsFrom = wsdTEC_Local
     Dim lastUsedRow As Long
@@ -760,13 +760,13 @@ Sub TEC_Update_TDB_From_TEC_Local()
     Set rngTo = Nothing
     Set wsFrom = Nothing
     
-    Call Log_Record("modTEC_Saisie:TEC_Update_TDB_From_TEC_Local", "", startTime)
+    Call Log_Record("modTEC_Saisie:TEC_Update_TDB_From_TEC_Local", vbNullString, startTime)
 
 End Sub
 
 Sub TEC_TdB_Refresh_All_Pivot_Tables()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables", vbNullString, 0)
 
     Dim pt As pivotTable
     For Each pt In wshTEC_TDB.PivotTables
@@ -776,7 +776,7 @@ Sub TEC_TdB_Refresh_All_Pivot_Tables()
     'Libérer la mémoire
     Set pt = Nothing
     
-    Call Log_Record("modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables", "", startTime)
+    Call Log_Record("modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables", vbNullString, startTime)
     
 End Sub
 
@@ -806,7 +806,7 @@ End Sub
 
 Sub UpdatePivotTables()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:UpdatePivotTables", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:UpdatePivotTables", vbNullString, 0)
     
     Dim ws As Worksheet: Set ws = wshStatsHeuresPivotTables
     Dim pt As pivotTable
@@ -824,7 +824,8 @@ Sub UpdatePivotTables()
     Set pt = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modTEC_Saisie:UpdatePivotTables", "", startTime)
+    Call Log_Record("modTEC_Saisie:UpdatePivotTables", vbNullString, startTime)
     
 End Sub
+
 

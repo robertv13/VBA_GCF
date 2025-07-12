@@ -29,9 +29,9 @@ Function CreerCopieTemporaireSolide(onglet As String) As String
     On Error GoTo ErrHandler
 
     sPath = wsdADMIN.Range("F5").Value & gDATA_PATH & "\"
-    If Dir(sPath, vbDirectory) = "" Then
+    If Dir(sPath, vbDirectory) = vbNullString Then
         MsgBox "Le répertoire n'existe pas : " & vbCrLf & sPath, vbCritical
-        CreerCopieTemporaireSolide = ""
+        CreerCopieTemporaireSolide = vbNullString
         Exit Function
     End If
 
@@ -69,6 +69,7 @@ Function CreerCopieTemporaireSolide(onglet As String) As String
 ErrHandler:
     Application.ScreenUpdating = oldScreenUpdating
     MsgBox "Erreur lors de la création du fichier temporaire : " & Err.description, vbCritical
-    CreerCopieTemporaireSolide = ""
+    CreerCopieTemporaireSolide = vbNullString
     
 End Function
+

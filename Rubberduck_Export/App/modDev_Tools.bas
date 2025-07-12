@@ -11,7 +11,7 @@ Sub Get_Range_From_Dynamic_Named_Range(dynamicRangeName As String, ByRef rng As 
     refersToFormula = ThisWorkbook.Names(dynamicRangeName).RefersTo
     On Error GoTo 0
     
-    If refersToFormula = "" Then
+    If refersToFormula = vbNullString Then
         MsgBox "La plage nommée '" & dynamicRangeName & "' n'existe pas ou est invalide.", vbExclamation
         Exit Sub
     End If
@@ -31,7 +31,7 @@ End Sub
 Sub Detect_Circular_References_In_Workbook() '2024-07-24 @ 07:31
     
     Dim circRef As String
-    circRef = ""
+    circRef = vbNullString
     Dim circRefCount As Long
     circRefCount = 0
     
@@ -107,7 +107,7 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
         nbCol = 1
         Do
             nbCol = nbCol + 1
-        Loop Until wso.Cells(1, nbCol).Value = ""
+        Loop Until wso.Cells(1, nbCol).Value = vbNullString
         nbCol = nbCol - 1
         
         diffRow = diffRow + 1
@@ -187,7 +187,7 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
     'Setup print parameters
     Dim rngToPrint As Range: Set rngToPrint = wsDiff.Range("A2:E" & diffRow)
     Dim header1 As String: header1 = wb1.Name & " vs. " & wb2.Name
-    Dim header2 As String: header2 = ""
+    Dim header2 As String: header2 = vbNullString
     Call Simple_Print_Setup(wsDiff, rngToPrint, header1, header2, "$1:$1", "P")
     
     'Close the 2 workbooks without saving anything
@@ -195,7 +195,7 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
     wb2.Close SaveChanges:=False
     
     'Output differences
-    If diffLog <> "" Then
+    If diffLog <> vbNullString Then
         MsgBox "Différences trouvées:" & vbCrLf & diffLog
     Else
         MsgBox "Aucune différence dans les colonnes."
@@ -263,7 +263,7 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
             nbColProd = nbColProd + 1
             arr(nbColProd) = wsProd.Cells(1, nbColProd).Value
             Debug.Print "#044 - " & wsProd.Name, " Prod: ", wsProd.Cells(1, nbColProd).Value
-        Loop Until wsProd.Cells(1, nbColProd).Value = ""
+        Loop Until wsProd.Cells(1, nbColProd).Value = vbNullString
         nbColProd = nbColProd - 1
         nbRowProd = wsProd.Cells(wsProd.Rows.count, 1).End(xlUp).Row
         
@@ -273,7 +273,7 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
         Do
             nbColDev = nbColDev + 1
             Debug.Print "#045 - " & wsDev.Name, " Dev : ", wsDev.Cells(1, nbColDev).Value
-        Loop Until wsProd.Cells(1, nbColDev).Value = ""
+        Loop Until wsProd.Cells(1, nbColDev).Value = vbNullString
         nbColDev = nbColDev - 1
         nbRowDev = wsDev.Cells(wsDev.Rows.count, 1).End(xlUp).Row
         
@@ -345,7 +345,7 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
     wb2.Close SaveChanges:=False
     
     'Output differences
-    If diffLogMess <> "" Then
+    If diffLogMess <> vbNullString Then
         MsgBox "Différences trouvées:" & vbCrLf & diffLogMess
     Else
         MsgBox "Aucune différence dans les lignes."
@@ -489,7 +489,7 @@ Sub ComparerValeursTECLocalVsTECTDBData()
         With wsTEC
             If .Range("D" & i).Value > dateCutOff Then Stop
             tecID = CLng(.Range("A" & i).Value)
-            If arr(tecID, 1) <> "" Then Stop
+            If arr(tecID, 1) <> vbNullString Then Stop
             arr(tecID, 1) = tecID
             h = .Range("H" & i).Value
             If UCase$(.Range("N" & i).Value) = "VRAI" Then
@@ -572,7 +572,7 @@ Sub Analyse_Search_For_Memory_Management()
     Dim added As String, cleared As String
     Dim i As Long
     For i = 2 To lastUsedRow
-        If ws.Cells(i, 5).Value = "" Then
+        If ws.Cells(i, 5).Value = vbNullString Then
             Call SortDelimitedString(added, "|")
             Call SortDelimitedString(cleared, "|")
             If added <> cleared Then
@@ -582,14 +582,14 @@ Sub Analyse_Search_For_Memory_Management()
                 wsOutput.Cells(r + 1, 3).Value = "'- " & cleared
                 r = r + 3
             End If
-            If ws.Cells(i + 1, 5).Value <> "" Then
+            If ws.Cells(i + 1, 5).Value <> vbNullString Then
                 moduleName = ws.Cells(i + 1, 3).Value
                 procName = ws.Cells(i + 1, 5).Value
             Else
-                procName = ""
+                procName = vbNullString
             End If
-            added = ""
-            cleared = ""
+            added = vbNullString
+            cleared = vbNullString
             GoTo Next_For
         End If
         ligneCode = Trim$(ws.Cells(i, 6))
@@ -606,9 +606,9 @@ Sub Analyse_Search_For_Memory_Management()
             ligneCode = Replace(ligneCode, ".Offset", ".OffSET")
         End If
         
-        objetSet = ""
-        objetForEach = ""
-        objetNothing = ""
+        objetSet = vbNullString
+        objetForEach = vbNullString
+        objetNothing = vbNullString
         'Déclaration de l'objet avec Set...
         If InStr(ligneCode, "Set ") <> 0 Then
             If Left$(ligneCode, 4) = "Set " Or InStr(ligneCode, ": Set") <> 0 Then
@@ -635,7 +635,7 @@ Sub Analyse_Search_For_Memory_Management()
         If InStr(ligneCode, " = Nothing") <> 0 Then
             objetNothing = Mid$(ligneCode, InStr(ligneCode, "Set") + 4, Len(ligneCode))
             objetNothing = Left$(objetNothing, InStr(objetNothing, " ") - 1)
-            If objetNothing = "" Then Stop
+            If objetNothing = vbNullString Then Stop
             cleared = cleared + objetNothing + "|"
         End If
         
@@ -717,7 +717,7 @@ Sub Restaurer_UserForms_Parameters()
 
     'Parcourir la liste des paramètres sauvegardés
     i = 2
-    Do While ws.Cells(i, 1).Value <> ""
+    Do While ws.Cells(i, 1).Value <> vbNullString
         nomUF = ws.Cells(i, 1).Value
         On Error Resume Next
         ' Charger dynamiquement le UserForm
@@ -801,7 +801,7 @@ Sub CreerRepertoireEtImporterFichiers() '2025-07-02 @ 13:57
     Dim actifFile As String
     Dim actifExists As Boolean
     actifFile = Dir(cheminSourcePROD & "Actif_*.txt")
-    actifExists = (actifFile <> "")
+    actifExists = (actifFile <> vbNullString)
     
     If actifExists Then
         MsgBox "Un ou plusieurs utilisateurs utilisent encore l'application." & vbNewLine & vbNewLine & _
@@ -867,7 +867,7 @@ Sub CreerRepertoireEtImporterFichiers() '2025-07-02 @ 13:57
     
     'Copier les fichiers .log (variable)
     fichier = Dir(cheminSourcePROD & "*.log")
-    Do While fichier <> ""
+    Do While fichier <> vbNullString
         'Copie du fichier PROD ---> Local
         fso.CopyFile Source:=cheminSourcePROD & fichier, Destination:=nouveauDossier, OverwriteFiles:=False
         'Efface le fichier PROD (initialiation)
@@ -878,7 +878,7 @@ Sub CreerRepertoireEtImporterFichiers() '2025-07-02 @ 13:57
     
     'Copier les fichiers .txt (variable) '2025-07-11 @ 20:00
     fichier = Dir(cheminSourcePROD & "*.txt")
-    Do While fichier <> ""
+    Do While fichier <> vbNullString
         'Copie du fichier PROD ---> Local
         fso.CopyFile Source:=cheminSourcePROD & fichier, Destination:=nouveauDossier, OverwriteFiles:=False
         'Efface le fichier PROD (initialiation)
@@ -1037,7 +1037,7 @@ Sub VerifierControlesAssociesToutesFeuilles()
             macroNameRaw = shp.OnAction
             On Error GoTo 0
             
-            If macroNameRaw <> "" Then
+            If macroNameRaw <> vbNullString Then
                 ' Extraire uniquement le nom de la macro après le "!"
                 If InStr(1, macroNameRaw, "!") > 0 Then
                     macroName = Split(macroNameRaw, "!")(1)
@@ -1092,7 +1092,7 @@ Sub VerifierControlesAssociesToutesFeuilles()
     
 End Sub
 
-Function VerifierMacroExiste(macroName As String, Optional moduleName As String = "") As Boolean
+Function VerifierMacroExiste(macroName As String, Optional moduleName As String = vbNullString) As Boolean
 
     'Par defaut...
     VerifierMacroExiste = False
@@ -1102,7 +1102,7 @@ Function VerifierMacroExiste(macroName As String, Optional moduleName As String 
     Dim codeModule As Object
     Dim ligne As Long
     
-    If moduleName <> "" Then
+    If moduleName <> vbNullString Then
         On Error Resume Next
         Set vbComp = ThisWorkbook.VBProject.VBComponents(moduleName)
         On Error GoTo 0
@@ -1195,7 +1195,7 @@ Sub ListeEnumsGenerique(ByVal tableName As String, ByVal HeaderRow As Integer, B
     Dim wb As Workbook
     If tableName = "BD_Clients" Or tableName = "BD_Fournisseurs" Then
         Set wb = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx")
-        tableName = Replace(tableName, "BD_", "")
+        tableName = Replace(tableName, "BD_", vbNullString)
     Else
         Set wb = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx")
     End If
@@ -1253,7 +1253,7 @@ Sub ExtractEnumDefinition(tableName As String, ByRef arr() As Variant)
     
     'Variable de travail
     Dim EnumDefinition As String
-    EnumDefinition = ""
+    EnumDefinition = vbNullString
     
     'Redimensionner le tableau
     ReDim arr(1 To 50, 1 To 2)
@@ -1410,12 +1410,12 @@ Sub ValideNomProcedureCallLog()
     Dim i As Integer
     For i = 2 To lastUsedRow
         module = ws.Range("C" & i).Value
-        If module <> "" Then
+        If module <> vbNullString Then
             lineNo = ws.Range("D" & i).Value
             If lineNo = 325 Then Stop
             procedure = ws.Range("E" & i).Value
-            procedure = Replace(procedure, "Sub ", "")
-            procedure = Replace(procedure, "Function ", "")
+            procedure = Replace(procedure, "Sub ", vbNullString)
+            procedure = Replace(procedure, "Function ", vbNullString)
             posPO = InStr(procedure, "(")
             posPF = InStr(procedure, ")")
             'Paramètres au complet sur la ligne -OU- Début seulement sur cette ligne
@@ -1440,7 +1440,7 @@ Function NumeroEnLettre(ByVal num As Long) As String
 
     'Assurer que le nombre soit positif et supérieur à zéro
     If num <= 0 Then
-        NumeroEnLettre = ""
+        NumeroEnLettre = vbNullString
         Exit Function
     End If
     
@@ -1573,7 +1573,7 @@ Sub ExporterCodeVBA() '2025-03-11 @ 06:47
                             Format$(Now, "yyyy-mm-dd_HHMMSS") & "-" & ThisWorkbook.Name & "\"
     
     'Vérifier si le dossier existe, sinon le créer
-    If Dir(dossierBackup, vbDirectory) = "" Then
+    If Dir(dossierBackup, vbDirectory) = vbNullString Then
         MkDir dossierBackup
     End If
 
@@ -1590,10 +1590,10 @@ Sub ExporterCodeVBA() '2025-03-11 @ 06:47
             Case 2: ext = ".cls" 'Classe
             Case 3: ext = ".frm" 'UserForm
             Case vbext_ct_Document: ext = ".cls" 'Feuille de calcul et ThisWorkbook
-            Case Else: ext = ""  'Autres (ignorés)
+            Case Else: ext = vbNullString  'Autres (ignorés)
         End Select
         
-        If ext <> "" Then
+        If ext <> vbNullString Then
             vbComp.Export dossierBackup & vbComp.Name & ext
         End If
     Next vbComp
@@ -1767,7 +1767,7 @@ Sub AnalyserImagesEntêteFactureExcel() '2025-05-27 @ 14:40
     dateSeuilMinimum = DateSerial(2024, 8, 1)
     fichier = Dir(dossier & "\*.xlsx")
 
-    Do While fichier <> ""
+    Do While fichier <> vbNullString
         cheminComplet = dossier & "\" & fichier
         If FileDateTime(cheminComplet) < dateSeuilMinimum Then
             fichier = Dir
@@ -1857,7 +1857,7 @@ Sub AppelerRoutineAddIn(nomFichier As String, nomMacro As String)
     On Error GoTo 0
 
     If wb Is Nothing Then
-        If Dir(nomFichier) <> "" Then
+        If Dir(nomFichier) <> vbNullString Then
             Set wb = Workbooks.Open(fileName:=nomFichier)
         Else
             MsgBox "Le fichier est introuvable : " & nomFichier, _
@@ -1892,7 +1892,7 @@ Sub ScannerAppelsSubsImplicites() '2025-07-03 @ 17:49
             For i = 0 To UBound(lignes)
                 ligne = Trim(lignes(i))
                 'Ignore les commentaires, les lignes vides & les "Debug.Print"
-                If ligne = "" Or Left(ligne, 1) = "'" Then GoTo LigneSuivante
+                If ligne = vbNullString Or Left(ligne, 1) = "'" Then GoTo LigneSuivante
                 If Left(ligne, 12) = "Debug.Print " Then GoTo LigneSuivante
                 If Left(ligne, 7) = "MsgBox " Then GoTo LigneSuivante
                 For Each nomProc In dictSubs.keys

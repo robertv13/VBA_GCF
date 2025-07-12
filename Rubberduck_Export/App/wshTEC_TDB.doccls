@@ -2,7 +2,7 @@ Option Explicit
 
 Private Sub Worksheet_Activate()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_TDB:Worksheet_Activate", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_TDB:Worksheet_Activate", vbNullString, 0)
    
     Application.ScreenUpdating = False
     
@@ -15,6 +15,6 @@ Private Sub Worksheet_Activate()
     
     Application.ScreenUpdating = True
 
-    Call Log_Record("wshTEC_TDB:Worksheet_Activate", "", startTime)
+    Call Log_Record("wshTEC_TDB:Worksheet_Activate", vbNullString, startTime)
 
 End Sub

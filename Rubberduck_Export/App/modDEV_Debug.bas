@@ -170,7 +170,7 @@ Sub ScannerSuppressionAmbigue_VersFenetreImmediate() '2025-07-01 @ 09:36
             ligneCode = Trim(vbMod.Lines(numLigne, 1))
 
             ' Ignorer les lignes vides ou les commentaires purs
-            If ligneCode <> "" And Left(ligneCode, 1) <> "'" Then
+            If ligneCode <> vbNullString And Left(ligneCode, 1) <> "'" Then
                 For Each mot In motsCibles
                     If InStr(1, ligneCode, mot, vbTextCompare) > 0 Then
                         ' Écarter les suppressions explicites de lignes ou colonnes

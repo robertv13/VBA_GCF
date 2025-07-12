@@ -3,7 +3,7 @@ Option Explicit
 
 Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:TEC_Sort_Group_And_Subtotal", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:TEC_Sort_Group_And_Subtotal", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -55,7 +55,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Application.EnableEvents = False
     
     'Appel à AdvancedFilter # 2 dans TEC_Local
-    Call Get_TEC_For_Client_AF("", CLng(CDate(wsDest.Range("H3").Value)), "VRAI", "FAUX", "FAUX")
+    Call Get_TEC_For_Client_AF(vbNullString, CLng(CDate(wsDest.Range("H3").Value)), "VRAI", "FAUX", "FAUX")
     
     Dim lastUsedResult As Long
     lastUsedResult = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "AQ").End(xlUp).Row
@@ -172,7 +172,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     
     'Change the format of all Client's Total rows
     For r = 7 To destLastUsedRow
-        If wsDest.Range("A" & r).Value = "" Then
+        If wsDest.Range("A" & r).Value = vbNullString Then
             With wsDest.Range("C" & r).Interior
 '                .Pattern = xlSolid
                 .PatternColorIndex = xlAutomatic
@@ -228,7 +228,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Set wsDest = Nothing
     Set wsSource = Nothing
     
-    Call Log_Record("modTEC_Analyse:TEC_Sort_Group_And_Subtotal", "", startTime)
+    Call Log_Record("modTEC_Analyse:TEC_Sort_Group_And_Subtotal", vbNullString, startTime)
 
 End Sub
 
@@ -323,8 +323,8 @@ Sub Build_Hours_Summary(rowSelected As Long)
     rowSelected = rowSelected + 1 'Summary starts on the next line (first line of expanded lines)
     saveR = rowSelected
     i = rowSelected
-    Do Until ActiveSheet.Cells(i, 5) = ""
-        If ActiveSheet.Cells(i, 6).Value <> "" Then
+    Do Until ActiveSheet.Cells(i, 5) = vbNullString
+        If ActiveSheet.Cells(i, 6).Value <> vbNullString Then
             If dictHours.Exists(ActiveSheet.Cells(i, 6).Value) Then
                 dictHours(ActiveSheet.Cells(i, 6).Value) = dictHours(ActiveSheet.Cells(i, 6).Value) + ActiveSheet.Cells(i, 8).Value
             Else
@@ -482,7 +482,7 @@ End Sub
 
 Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As Long, ByRef projetID As Long) 'Write a record to MASTER.xlsx file
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:FAC_Projets_Détails_Add_Record_To_DB", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:FAC_Projets_Détails_Add_Record_To_DB", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -556,20 +556,20 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As 
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modTEC_Analyse:FAC_Projets_Détails_Add_Record_To_DB", "", startTime)
+    Call Log_Record("modTEC_Analyse:FAC_Projets_Détails_Add_Record_To_DB", vbNullString, startTime)
 
 End Sub
 
 Sub FAC_Projets_Détails_Add_Record_Locally(clientID As String, fr As Long, lr As Long, projetID As Long) 'Write records locally
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:FAC_Projets_Détails_Add_Record_Locally", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:FAC_Projets_Détails_Add_Record_Locally", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
     'What is the last used row in FAC_Projets_Détails?
     Dim lastUsedRow As Long, rn As Long
     lastUsedRow = wsdFAC_Projets_Details.Cells(wsdFAC_Projets_Details.Rows.count, "A").End(xlUp).Row
-    If wsdFAC_Projets_Details.Cells(2, 1).Value = "" Then
+    If wsdFAC_Projets_Details.Cells(2, 1).Value = vbNullString Then
         rn = lastUsedRow
     Else
         rn = lastUsedRow + 1
@@ -598,7 +598,7 @@ Sub FAC_Projets_Détails_Add_Record_Locally(clientID As String, fr As Long, lr A
     
     Application.ScreenUpdating = True
 
-    Call Log_Record("modTEC_Analyse:FAC_Projets_Détails_Add_Record_Locally", "", startTime)
+    Call Log_Record("modTEC_Analyse:FAC_Projets_Détails_Add_Record_Locally", vbNullString, startTime)
 
 End Sub
 
@@ -606,7 +606,7 @@ Sub DetruireDetailSiEnteteEstDetruite(filePath As String, _
                                                     sheetName As String, _
                                                     columnName As String, _
                                                     valueToFind As Variant) '2024-07-19 @ 15:31
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:DetruireDetailSiEnteteEstDetruite", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:DetruireDetailSiEnteteEstDetruite", vbNullString, 0)
     
     'Create a new ADODB connection
     Dim cn As Object: Set cn = CreateObject("ADODB.Connection")
@@ -622,7 +622,7 @@ Sub DetruireDetailSiEnteteEstDetruite(filePath As String, _
     cn.Close
     Set cn = Nothing
     
-    Call Log_Record("modTEC_Analyse:DetruireDetailSiEnteteEstDetruite", "", startTime)
+    Call Log_Record("modTEC_Analyse:DetruireDetailSiEnteteEstDetruite", vbNullString, startTime)
 
 End Sub
 
@@ -633,7 +633,7 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
                                         hono As Double, _
                                         ByRef arr As Variant) 'Write a record to MASTER.xlsx file
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:FAC_Projets_Entête_Add_Record_To_DB", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:FAC_Projets_Entête_Add_Record_To_DB", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -724,20 +724,20 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modTEC_Analyse:FAC_Projets_Entête_Add_Record_To_DB", "", startTime)
+    Call Log_Record("modTEC_Analyse:FAC_Projets_Entête_Add_Record_To_DB", vbNullString, startTime)
 
 End Sub
 
 Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String, clientID As String, dte As String, hono As Double, ByRef arr As Variant) 'Write records locally
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:FAC_Projets_Entête_Add_Record_Locally", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:FAC_Projets_Entête_Add_Record_Locally", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
     'What is the last used row in FAC_Projets_Détails?
     Dim lastUsedRow As Long, rn As Long
     lastUsedRow = wsdFAC_Projets_Entete.Cells(wsdFAC_Projets_Entete.Rows.count, "A").End(xlUp).Row
-    If wsdFAC_Projets_Entete.Cells(2, 1).Value = "" Then
+    If wsdFAC_Projets_Entete.Cells(2, 1).Value = vbNullString Then
         rn = lastUsedRow
     Else
         rn = lastUsedRow + 1
@@ -765,7 +765,7 @@ Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String
     
     Application.ScreenUpdating = True
 
-    Call Log_Record("modTEC_Analyse:FAC_Projets_Entête_Add_Record_Locally", "", startTime)
+    Call Log_Record("modTEC_Analyse:FAC_Projets_Entête_Add_Record_Locally", vbNullString, startTime)
 
 End Sub
 
@@ -773,7 +773,7 @@ Sub DetruireEnteteSiEnteteEstDetruite(filePath As String, _
                                                    sheetName As String, _
                                                    columnName As String, _
                                                    valueToFind As Variant) '2024-07-19 @ 15:31
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:DetruireEnteteSiEnteteEstDetruite", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:DetruireEnteteSiEnteteEstDetruite", vbNullString, 0)
     
     'Create a new ADODB connection
     Dim cn As Object: Set cn = CreateObject("ADODB.Connection")
@@ -789,7 +789,7 @@ Sub DetruireEnteteSiEnteteEstDetruite(filePath As String, _
     cn.Close
     Set cn = Nothing
     
-    Call Log_Record("modTEC_Analyse:DetruireEnteteSiEnteteEstDetruite", "", startTime)
+    Call Log_Record("modTEC_Analyse:DetruireEnteteSiEnteteEstDetruite", vbNullString, startTime)
 
 End Sub
 
@@ -860,7 +860,7 @@ Sub Groups_SubTotals_Collapse_A_Client(r As Long)
     'Loop through each row starting at row r
     Dim saveR As Long
     saveR = r
-    Do While wshTEC_Analyse.Range("A" & r).Value <> ""
+    Do While wshTEC_Analyse.Range("A" & r).Value <> vbNullString
         r = r + 1
     Loop
 
@@ -874,7 +874,7 @@ End Sub
 
 Sub Clear_Fees_Summary_And_CheckBox() 'RMV_15
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:Clear_Fees_Summary_And_CheckBox", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:Clear_Fees_Summary_And_CheckBox", vbNullString, 0)
     
     'Clean the Fees Summary Area
     Dim ws As Worksheet: Set ws = wshTEC_Analyse
@@ -894,7 +894,7 @@ Sub Clear_Fees_Summary_And_CheckBox() 'RMV_15
     Set Sh = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modTEC_Analyse:Clear_Fees_Summary_And_CheckBox", "", startTime)
+    Call Log_Record("modTEC_Analyse:Clear_Fees_Summary_And_CheckBox", vbNullString, startTime)
     
 End Sub
 
@@ -956,7 +956,7 @@ End Sub
 
 Sub TEC_Analyse_Back_To_TEC_Menu()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:TEC_Analyse_Back_To_TEC_Menu", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Analyse:TEC_Analyse_Back_To_TEC_Menu", vbNullString, 0)
     
     Dim loDetails As ListObject
     Set loDetails = wsdFAC_Projets_Details.ListObjects("l_tbl_FAC_Projets_Détails")
@@ -978,7 +978,8 @@ Sub TEC_Analyse_Back_To_TEC_Menu()
     wshMenuTEC.Activate
     wshMenuTEC.Range("A1").Select
     
-    Call Log_Record("modTEC_Analyse:TEC_Analyse_Back_To_TEC_Menu", "", startTime)
+    Call Log_Record("modTEC_Analyse:TEC_Analyse_Back_To_TEC_Menu", vbNullString, startTime)
 
 End Sub
+
 

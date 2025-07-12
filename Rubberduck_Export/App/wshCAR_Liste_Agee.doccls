@@ -4,7 +4,7 @@ Option Explicit
 
 Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshCAR_Liste_Agee:Worksheet_Activate", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshCAR_Liste_Agee:Worksheet_Activate", vbNullString, 0)
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -62,7 +62,7 @@ Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call Log_Record("wshCAR_Liste_Agee:Worksheet_Activate", "", startTime)
+    Call Log_Record("wshCAR_Liste_Agee:Worksheet_Activate", vbNullString, startTime)
 
 End Sub
 
@@ -72,7 +72,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     Dim ws As Worksheet: Set ws = wshCAR_Liste_Agee
     
-    If gPreviousCellAddress <> "" Then
+    If gPreviousCellAddress <> vbNullString Then
         Range(gPreviousCellAddress).Interior.Color = gCOULEUR_BASE_FACTURATION
     End If
     
@@ -105,13 +105,13 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call Log_Record("wshCAR_Liste_Agee:Worksheet_SelectionChange", "", startTime)
+    Call Log_Record("wshCAR_Liste_Agee:Worksheet_SelectionChange", vbNullString, startTime)
     
 End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshCAR_Liste_Agee:Worksheet_Change", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshCAR_Liste_Agee:Worksheet_Change", vbNullString, 0)
     
     Dim fullDate As Variant
     
@@ -136,7 +136,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
        
         'Future date ?
@@ -145,14 +145,14 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.Goto Range(Target.Address)
+                Application.GoTo Range(Target.Address)
             End If
         End If
     End If
 
     Application.EnableEvents = True
     
-    Call Log_Record("wshCAR_Liste_Agee:Worksheet_Change", "", startTime)
+    Call Log_Record("wshCAR_Liste_Agee:Worksheet_Change", vbNullString, startTime)
   
 End Sub
 

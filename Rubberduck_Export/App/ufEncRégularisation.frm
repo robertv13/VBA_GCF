@@ -27,7 +27,7 @@ Private Sub UserForm_Initialize()
     'Parcourir la plage et charger les factures
     Dim row As Range
     For Each row In factureRange.Rows
-        If row.Cells(1, 1).Value <> "" Then
+        If row.Cells(1, 1).Value <> vbNullString Then
             ufEncRégularisation.cbbNoFacture.AddItem row.Cells(1, 1).Value
         End If
     Next row
@@ -72,11 +72,11 @@ Private Sub cbbNoFacture_AfterUpdate()
         ufEncRégularisation.lblDateFactureData.Caption = dateFacture
         ufEncRégularisation.lblTotalFactureValue.Caption = FormatCurrency(soldeFacture, 2)
         
-        ufEncRégularisation.txtTotalFacture.Value = ""
-        ufEncRégularisation.txtHonoraires.Value = ""
-        ufEncRégularisation.txtFraisDivers.Value = ""
-        ufEncRégularisation.txtTPS.Value = ""
-        ufEncRégularisation.txtTVQ.Value = ""
+        ufEncRégularisation.txtTotalFacture.Value = vbNullString
+        ufEncRégularisation.txtHonoraires.Value = vbNullString
+        ufEncRégularisation.txtFraisDivers.Value = vbNullString
+        ufEncRégularisation.txtTPS.Value = vbNullString
+        ufEncRégularisation.txtTVQ.Value = vbNullString
         
         ufEncRégularisation.lblTotalFactureAjuste.Caption = Format$(soldeFacture, "###,##0.00 $")
     Else
@@ -94,7 +94,7 @@ Private Sub txtTotalFacture_Exit(ByVal Cancel As MSForms.ReturnBoolean)
     Dim totalFacture As Currency
     ufEncRégularisation.txtTotalFacture.text = Replace(ufEncRégularisation.txtTotalFacture.text, ".", ",")
     
-    If ufEncRégularisation.txtTotalFacture.text <> "" And IsNumeric(ufEncRégularisation.txtTotalFacture.Value) = True Then
+    If ufEncRégularisation.txtTotalFacture.text <> vbNullString And IsNumeric(ufEncRégularisation.txtTotalFacture.Value) = True Then
         totalFacture = CCur(ufEncRégularisation.txtTotalFacture.text)
         Debug.Print "#093 - totalFacture = " & totalFacture
     
@@ -164,7 +164,7 @@ End Sub
 
 Private Sub VerifieMontantsSaisis()
 
-    If ufEncRégularisation.txtTotalFacture.text <> "" Then
+    If ufEncRégularisation.txtTotalFacture.text <> vbNullString Then
         With ufEncRégularisation
             Debug.Print "#095 - " & CCur(.txtTotalFacture.text) & " <> ? " & CCur(.txtHonoraires.text) & "+" & CCur(.txtFraisDivers.text) & "+" & CCur(.txtTPS.text) & "+" & CCur(.txtTVQ.text)
             If CCur(.txtTotalFacture.text) = CCur(.txtHonoraires.text) + _
@@ -212,12 +212,13 @@ Sub EffaceDonnéesRégularisation()
     With ufEncRégularisation
         
         'Montants de la régularisation
-        .txtTotalFacture.Value = ""
-        .txtHonoraires.Value = ""
-        .txtFraisDivers.Value = ""
-        .txtTPS.Value = ""
-        .txtTVQ.Value = ""
+        .txtTotalFacture.Value = vbNullString
+        .txtHonoraires.Value = vbNullString
+        .txtFraisDivers.Value = vbNullString
+        .txtTPS.Value = vbNullString
+        .txtTVQ.Value = vbNullString
         
     End With
     
 End Sub
+

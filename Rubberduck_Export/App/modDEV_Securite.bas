@@ -18,10 +18,10 @@ Public Function GetInitialesObligatoiresFromADMIN(ByVal utilisateurWindows As St
         nomWindows = Trim(tblRange.Cells(i, 1).Value)
         initialesPermises = Trim(tblRange.Cells(i, 3).Value)
 
-        If nomWindows = "" Then Exit For 'Arrêter à la première ligne vide
+        If nomWindows = vbNullString Then Exit For 'Arrêter à la première ligne vide
         If nomWindows = utilisateurWindows Then
-            If initialesPermises = "" Then
-                GetInitialesObligatoiresFromADMIN = "" 'Aucune restriction
+            If initialesPermises = vbNullString Then
+                GetInitialesObligatoiresFromADMIN = vbNullString 'Aucune restriction
             Else
                 GetInitialesObligatoiresFromADMIN = initialesPermises
             End If
@@ -53,7 +53,7 @@ Public Function GetInitialesAutorises(ByVal userName As String) As String '2025-
     'Les utilisateurs avec toutes les autorisations retourne ""
     Select Case userName
         Case "Guillaume", "GuillaumeCharron", "gchar", "RobertMV", "robertmv"
-            GetInitialesAutorises = "" 'Toutes les initiales sont permises
+            GetInitialesAutorises = vbNullString 'Toutes les initiales sont permises
         Case Else
             If dict.Exists(userName) Then
                 GetInitialesAutorises = dict(userName)
@@ -63,5 +63,4 @@ Public Function GetInitialesAutorises(ByVal userName As String) As String '2025-
     End Select
     
 End Function
-
 

@@ -62,7 +62,7 @@ End Sub
 
 Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierIntegriteTablesLocales", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierIntegriteTablesLocales", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
@@ -274,7 +274,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
         Call ImprimerEcartsVerificationIntegrite(wsOutput, r, CStr(gValeursAComparer(1, 1)), _
                                                 "FAC_Entete", CCur(gValeursAComparer(1, 2)), _
                                                 "FAC_Comptes_Clients", CCur(gValeursAComparer(1, 3)), _
-                                                "", 0)
+                                                vbNullString, 0)
         gverificationIntegriteOK = False
     End If
     
@@ -283,7 +283,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
         Call ImprimerEcartsVerificationIntegrite(wsOutput, r, CStr(gValeursAComparer(2, 1)), _
                                                 "FAC_Entete", CCur(gValeursAComparer(2, 2)), _
                                                 "FAC_Comptes_Clients", CCur(gValeursAComparer(2, 3)), _
-                                                "", 0)
+                                                vbNullString, 0)
         gverificationIntegriteOK = False
     End If
         
@@ -303,7 +303,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
         Call ImprimerEcartsVerificationIntegrite(wsOutput, r, CStr(gValeursAComparer(4, 1)), _
                                                 "FAC_Comptes_Clients", CCur(gValeursAComparer(4, 2)), _
                                                 "CC_Regularisations", CCur(gValeursAComparer(4, 3)), _
-                                                "", 0)
+                                                vbNullString, 0)
         gverificationIntegriteOK = False
     End If
     
@@ -312,7 +312,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
         Call ImprimerEcartsVerificationIntegrite(wsOutput, r, CStr(gValeursAComparer(5, 1)), _
                                                 "FAC_Comptes_Clients", CCur(gValeursAComparer(5, 2)), _
                                                 "GL_Trans", CCur(gValeursAComparer(5, 3)), _
-                                                "", 0)
+                                                vbNullString, 0)
         gverificationIntegriteOK = False
     End If
     
@@ -321,7 +321,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
         Call ImprimerEcartsVerificationIntegrite(wsOutput, r, CStr(gValeursAComparer(6, 1)), _
                                                 "TEC_TdB_Data", CCur(gValeursAComparer(6, 2)), _
                                                 "TEC_Local", CCur(gValeursAComparer(6, 3)), _
-                                                "", 0)
+                                                vbNullString, 0)
         gverificationIntegriteOK = False
     End If
     
@@ -330,7 +330,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
         Call ImprimerEcartsVerificationIntegrite(wsOutput, r, CStr(gValeursAComparer(7, 1)), _
                                                 "TEC_TdB_Data", CCur(gValeursAComparer(7, 2)), _
                                                 "TEC_Local", CCur(gValeursAComparer(7, 3)), _
-                                                "", 0)
+                                                vbNullString, 0)
         gverificationIntegriteOK = False
     End If
     
@@ -339,7 +339,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
         Call ImprimerEcartsVerificationIntegrite(wsOutput, r, CStr(gValeursAComparer(8, 1)), _
                                                 "TEC_TdB_Data", CCur(gValeursAComparer(8, 2)), _
                                                 "TEC_Local", CCur(gValeursAComparer(8, 3)), _
-                                                "", 0)
+                                                vbNullString, 0)
         gverificationIntegriteOK = False
     End If
 
@@ -348,7 +348,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
         Call ImprimerEcartsVerificationIntegrite(wsOutput, r, CStr(gValeursAComparer(9, 1)), _
                                                 "TEC_TdB_Data", CCur(gValeursAComparer(9, 2)), _
                                                 "TEC_Local", CCur(gValeursAComparer(9, 3)), _
-                                                "", 0)
+                                                vbNullString, 0)
         gverificationIntegriteOK = False
     End If
 
@@ -357,7 +357,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
         Call ImprimerEcartsVerificationIntegrite(wsOutput, r, CStr(gValeursAComparer(10, 1)), _
                                                 "TEC_TdB_Data", CCur(gValeursAComparer(10, 2)), _
                                                 "TEC_Local", CCur(gValeursAComparer(10, 3)), _
-                                                "", 0)
+                                                vbNullString, 0)
         gverificationIntegriteOK = False
     End If
 
@@ -366,7 +366,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
         Call ImprimerEcartsVerificationIntegrite(wsOutput, r, CStr(gValeursAComparer(11, 1)), _
                                                 "TEC_TdB_Data", CCur(gValeursAComparer(11, 2)), _
                                                 "TEC_Local", CCur(gValeursAComparer(11, 3)), _
-                                                "", 0)
+                                                vbNullString, 0)
         gverificationIntegriteOK = False
     End If
 
@@ -375,7 +375,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
         Call ImprimerEcartsVerificationIntegrite(wsOutput, r, CStr(gValeursAComparer(12, 1)), _
                                                 "TEC_TdB_Data", CCur(gValeursAComparer(12, 2)), _
                                                 "TEC_Local", CCur(gValeursAComparer(12, 3)), _
-                                                "", 0)
+                                                vbNullString, 0)
         gverificationIntegriteOK = False
     End If
 
@@ -403,7 +403,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:C" & lastUsedRow)
     Dim header1 As String: header1 = "Vérification d'intégrité des tables"
-    Dim header2 As String: header2 = ""
+    Dim header2 As String: header2 = vbNullString
     Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
     
     If gverificationIntegriteOK = True Then
@@ -421,7 +421,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     Set rngToPrint = Nothing
     Set wsOutput = Nothing
     
-    Call Log_Record("modAppli_Utils:VerifierIntegriteTablesLocales", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierIntegriteTablesLocales", vbNullString, startTime)
 
 End Sub
 
@@ -441,7 +441,7 @@ Sub ImprimerEcartsVerificationIntegrite(ws As Worksheet, r As Long, t As String,
     r = r + 1
     Call AjouterMessageAuxResultats(ws, r, 2, Space(7) & Fn_Pad_A_String(s2, " ", 18, "R") & ":" & Space(14 - Len(str2)) & str2)
     r = r + 1
-    If Not Trim(s3) = "" Then
+    If Not Trim(s3) = vbNullString Then
         Call AjouterMessageAuxResultats(ws, r, 2, Space(7) & Fn_Pad_A_String(s3, " ", 18, "R") & ":" & Space(14 - Len(str3)) & str3)
         r = r + 1
     End If
@@ -459,7 +459,7 @@ Sub Simple_Print_Setup(ws As Worksheet, rng As Range, header1 As String, _
     With ws.PageSetup
         .PrintArea = rng.Address
         .PrintTitleRows = titleRows
-        .PrintTitleColumns = ""
+        .PrintTitleColumns = vbNullString
         
         .CenterHeader = "&""-,Gras""&12&K0070C0" & header1 & Chr$(10) & "&11" & header2
         
@@ -553,7 +553,7 @@ End Sub
 
 Sub CreateOrReplaceWorksheet(wsName As String)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:CreateOrReplaceWorksheet", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:CreateOrReplaceWorksheet", vbNullString, 0)
     
     Dim wsExists As Boolean
     wsExists = NomFeuilleExiste(wsName)
@@ -576,13 +576,13 @@ Sub CreateOrReplaceWorksheet(wsName As String)
     'Libérer la mémoire
     Set ws = Nothing
 
-    Call Log_Record("modAppli_Utils:CreateOrReplaceWorksheet", "", startTime)
+    Call Log_Record("modAppli_Utils:CreateOrReplaceWorksheet", vbNullString, startTime)
     
 End Sub
 
 Private Sub VerifierPlanComptable(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierPlanComptable", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierPlanComptable", vbNullString, 0)
     
     Application.ScreenUpdating = True
     
@@ -687,13 +687,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = False
     
-    Call Log_Record("modAppli_Utils:VerifierPlanComptable", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierPlanComptable", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierClients(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierClients", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierClients", vbNullString, 0)
     
     Application.ScreenUpdating = True
     
@@ -726,7 +726,7 @@ Private Sub VerifierClients(ByRef r As Long, ByRef readRows As Long)
     Dim cas_courriel_invalide As Long
     Dim ligneNonVides As Long
     For i = LBound(arr, 1) + 1 To UBound(arr, 1)
-        If Not Trim$(arr(i, 2)) = "" Then
+        If Not Trim$(arr(i, 2)) = vbNullString Then
         ligneNonVides = ligneNonVides + 1
             nom = arr(i, 1)
             code = arr(i, 2)
@@ -750,7 +750,7 @@ Private Sub VerifierClients(ByRef r As Long, ByRef readRows As Long)
                 cas_doublon_code = cas_doublon_code + 1
             End If
             
-            If Trim$(arr(i, 6)) <> "" Then
+            If Trim$(arr(i, 6)) <> vbNullString Then
                 If Fn_ValiderCourriel(arr(i, 6)) = False Then
                     Call AjouterMessageAuxResultats(wsOutput, r, 2, "À la ligne " & i & ", le courriel '" & arr(i, 6) & "' est INVALIDE pour le code '" & code & "'")
                     r = r + 1
@@ -821,13 +821,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = False
     
-    Call Log_Record("modAppli_Utils:VerifierClients", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierClients", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierFournisseurs(ByRef r As Long, ByRef readRows As Long)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierFournisseurs", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierFournisseurs", vbNullString, 0)
 
     Application.ScreenUpdating = True
 
@@ -916,13 +916,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = False
     
-    Call Log_Record("modAppli_Utils:VerifierFournisseurs", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierFournisseurs", vbNullString, startTime)
 
 End Sub
 
 Private Sub VérifierCCRégularisations(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VérifierCCRégularisations", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VérifierCCRégularisations", vbNullString, 0)
 
     Application.ScreenUpdating = True
     
@@ -935,7 +935,7 @@ Private Sub VérifierCCRégularisations(ByRef r As Long, ByRef readRows As Long)
     Dim HeaderRow As Long: HeaderRow = 1
     Dim lastUsedRowDetails As Long
     lastUsedRowDetails = ws.Cells(ws.Rows.count, 1).End(xlUp).Row
-    If lastUsedRowDetails <= 2 - HeaderRow Or ws.Cells(lastUsedRowDetails, 1).Value = "" Then
+    If lastUsedRowDetails <= 2 - HeaderRow Or ws.Cells(lastUsedRowDetails, 1).Value = vbNullString Then
         Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Cette feuille est vide !!!")
         r = r + 2
         GoTo Clean_Exit
@@ -1119,13 +1119,13 @@ Clean_Exit:
     DoEvents
     Application.ScreenUpdating = False
     
-    Call Log_Record("modAppli_Utils:VérifierCCRégularisations", "", startTime)
+    Call Log_Record("modAppli_Utils:VérifierCCRégularisations", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierDEBRecurrent(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierDEBRecurrent", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierDEBRecurrent", vbNullString, 0)
 
     Application.ScreenUpdating = True
     
@@ -1267,13 +1267,13 @@ Clean_Exit:
 
     Application.ScreenUpdating = False
 
-    Call Log_Record("modAppli_Utils:VerifierDEBRecurrent", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierDEBRecurrent", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierDEBTrans(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierDEBTrans", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierDEBTrans", vbNullString, 0)
 
     Application.ScreenUpdating = True
     
@@ -1423,13 +1423,13 @@ Clean_Exit:
     DoEvents
     Application.ScreenUpdating = False
 
-    Call Log_Record("modAppli_Utils:VerifierDEBTrans", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierDEBTrans", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierENCDetails(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierENCDetails", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierENCDetails", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
@@ -1580,13 +1580,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli_Utils:VerifierENCDetails", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierENCDetails", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierENCEntete(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierENCEntete", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierENCEntete", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
@@ -1693,13 +1693,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli_Utils:VerifierENCEntete", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierENCEntete", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierFACDetails(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierFACDetails", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierFACDetails", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
@@ -1804,13 +1804,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli_Utils:VerifierFACDetails", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierFACDetails", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierFACEntete(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierFACEntete", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierFACEntete", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
@@ -2006,13 +2006,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli_Utils:VerifierFACEntete", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierFACEntete", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierFACComptesClients(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierFACComptesClients", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierFACComptesClients", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
@@ -2247,13 +2247,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli_Utils:VerifierFACComptesClients", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierFACComptesClients", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierFACSommaireTaux(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierFACSommaireTaux", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierFACSommaireTaux", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
@@ -2362,13 +2362,13 @@ Clean_Exit:
 
     Application.ScreenUpdating = True
 
-    Call Log_Record("modAppli_Utils:VerifierFACSommaireTaux", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierFACSommaireTaux", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierFACProjetsEntete(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierFACProjetsEntete", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierFACProjetsEntete", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
@@ -2381,7 +2381,7 @@ Private Sub VerifierFACProjetsEntete(ByRef r As Long, ByRef readRows As Long)
     Dim HeaderRow As Long: HeaderRow = 1
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).Row
-    If lastUsedRow <= HeaderRow Or ws.Cells(2, 1).Value = "" Then
+    If lastUsedRow <= HeaderRow Or ws.Cells(2, 1).Value = vbNullString Then
         Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Cette feuille est vide !!!")
         r = r + 2
         GoTo Clean_Exit
@@ -2409,7 +2409,7 @@ Private Sub VerifierFACProjetsEntete(ByRef r As Long, ByRef readRows As Long)
     isFacProjetEntêteValid = True
     
     For i = LBound(arr, 1) To UBound(arr, 1)
-        If arr(i, 1) <> "" Then
+        If arr(i, 1) <> vbNullString Then
             projetID = arr(i, 1)
             'Client valide ?
             codeClient = Trim$(arr(i, 3))
@@ -2443,61 +2443,61 @@ Private Sub VerifierFACProjetsEntete(ByRef r As Long, ByRef readRows As Long)
                 r = r + 1
                 isFacProjetEntêteValid = False
             End If
-            If arr(i, 11) <> "" And IsNumeric(arr(i, 11)) = False Then
+            If arr(i, 11) <> vbNullString And IsNumeric(arr(i, 11)) = False Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les heures du second sommaire sont INVALIDES '" & arr(i, 11) & "'")
                 r = r + 1
                 isFacProjetEntêteValid = False
             End If
-            If arr(i, 12) <> "" And IsNumeric(arr(i, 12)) = False Then
+            If arr(i, 12) <> vbNullString And IsNumeric(arr(i, 12)) = False Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le taux horaire du second sommaire est INVALIDE '" & arr(i, 12) & "'")
                 r = r + 1
             End If
-            If arr(i, 13) <> "" And IsNumeric(arr(i, 13)) = False Then
+            If arr(i, 13) <> vbNullString And IsNumeric(arr(i, 13)) = False Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les Honoraires du second sommaire sont INVALIDES '" & arr(i, 13) & "'")
                 r = r + 1
                 isFacProjetEntêteValid = False
             End If
-            If arr(i, 15) <> "" And IsNumeric(arr(i, 15)) = False Then
+            If arr(i, 15) <> vbNullString And IsNumeric(arr(i, 15)) = False Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les heures du troisième sommaire sont INVALIDES '" & arr(i, 15) & "'")
                 r = r + 1
                 isFacProjetEntêteValid = False
             End If
-            If arr(i, 16) <> "" And IsNumeric(arr(i, 16)) = False Then
+            If arr(i, 16) <> vbNullString And IsNumeric(arr(i, 16)) = False Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le taux horaire du troisième sommaire est INVALIDE '" & arr(i, 16) & "'")
                 r = r + 1
                 isFacProjetEntêteValid = False
             End If
-            If arr(i, 17) <> "" And IsNumeric(arr(i, 17)) = False Then
+            If arr(i, 17) <> vbNullString And IsNumeric(arr(i, 17)) = False Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les Honoraires du troisième sommaire sont INVALIDES '" & arr(i, 17) & "'")
                 r = r + 1
                 isFacProjetEntêteValid = False
             End If
-            If arr(i, 19) <> "" And IsNumeric(arr(i, 19)) = False Then
+            If arr(i, 19) <> vbNullString And IsNumeric(arr(i, 19)) = False Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les heures du quatrième sommaire sont INVALIDES '" & arr(i, 19) & "'")
                 r = r + 1
                 isFacProjetEntêteValid = False
             End If
-            If arr(i, 20) <> "" And IsNumeric(arr(i, 20)) = False Then
+            If arr(i, 20) <> vbNullString And IsNumeric(arr(i, 20)) = False Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le taux horaire du quatrième sommaire est INVALIDE '" & arr(i, 20) & "'")
                 r = r + 1
                 isFacProjetEntêteValid = False
             End If
-            If arr(i, 21) <> "" And IsNumeric(arr(i, 21)) = False Then
+            If arr(i, 21) <> vbNullString And IsNumeric(arr(i, 21)) = False Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les Honoraires du quatrième sommaire sont INVALIDES '" & arr(i, 21) & "'")
                 r = r + 1
                 isFacProjetEntêteValid = False
             End If
-            If arr(i, 23) <> "" And IsNumeric(arr(i, 23)) = False Then
+            If arr(i, 23) <> vbNullString And IsNumeric(arr(i, 23)) = False Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les heures du cinquième sommaire sont INVALIDES '" & arr(i, 23) & "'")
                 r = r + 1
                 isFacProjetEntêteValid = False
             End If
-            If arr(i, 24) <> "" And IsNumeric(arr(i, 24)) = False Then
+            If arr(i, 24) <> vbNullString And IsNumeric(arr(i, 24)) = False Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le taux horaire du cinquième sommaire est INVALIDE '" & arr(i, 24) & "'")
                 r = r + 1
                 isFacProjetEntêteValid = False
             End If
-            If arr(i, 25) <> "" And IsNumeric(arr(i, 25)) = False Then
+            If arr(i, 25) <> vbNullString And IsNumeric(arr(i, 25)) = False Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les Honoraires du cinquième sommaire sont INVALIDES '" & arr(i, 25) & "'")
                 r = r + 1
                 isFacProjetEntêteValid = False
@@ -2525,13 +2525,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli_Utils:VerifierFACProjetsEntete", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierFACProjetsEntete", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierFACProjetsDetails(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierFACProjetsDetails", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierFACProjetsDetails", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
@@ -2544,7 +2544,7 @@ Private Sub VerifierFACProjetsDetails(ByRef r As Long, ByRef readRows As Long)
     Dim HeaderRow As Long: HeaderRow = 1
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).Row
-    If lastUsedRow <= HeaderRow Or ws.Cells(2, 1).Value = "" Then
+    If lastUsedRow <= HeaderRow Or ws.Cells(2, 1).Value = vbNullString Then
         Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Cette feuille est vide !!!")
         r = r + 2
         GoTo Clean_Exit
@@ -2582,7 +2582,7 @@ Private Sub VerifierFACProjetsDetails(ByRef r As Long, ByRef readRows As Long)
     
     'À partir de la mémoire (Array)
     For i = LBound(arr, 1) To UBound(arr, 1)
-        If arr(i, 1) <> "" Then
+        If arr(i, 1) <> vbNullString Then
             projetID = CLng(arr(i, 1))
             If projetID <> oldProjetID Then
                 result = Application.WorksheetFunction.XLookup(projetID, _
@@ -2652,13 +2652,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli_Utils:VerifierFACProjetsDetails", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierFACProjetsDetails", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierGLTrans(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierGLTrans", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierGLTrans", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
@@ -2679,7 +2679,7 @@ Private Sub VerifierGLTrans(ByRef r As Long, ByRef readRows As Long)
     
     Dim firstEmptyCol As Long
     firstEmptyCol = 1
-    Do Until ws.Cells(HeaderRow, firstEmptyCol) = ""
+    Do Until ws.Cells(HeaderRow, firstEmptyCol) = vbNullString
         firstEmptyCol = firstEmptyCol + 1
     Loop
     Dim lastUsedCol As Long
@@ -2788,7 +2788,7 @@ Private Sub VerifierGLTrans(ByRef r As Long, ByRef readRows As Long)
         currentRow = dict_GL_Entry(GL_Entry_No)
         sum_arr(currentRow, 2) = sum_arr(currentRow, 2) + dt
         sum_arr(currentRow, 3) = sum_arr(currentRow, 3) + ct
-        If arr(i, 10) <> "" Then
+        If arr(i, 10) <> vbNullString Then
             If IsDate(arr(i, 10)) = False Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le TimeStamp '" & arr(i, 10) & "' à la ligne " & i & " n'est pas une date VALIDE")
                 r = r + 1
@@ -2880,13 +2880,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli_Utils:VerifierGLTrans", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierGLTrans", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierGLEJRecurrente(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierGLEJRecurrente", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierGLEJRecurrente", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
@@ -2969,14 +2969,14 @@ Private Sub VerifierGLEJRecurrente(ByRef r As Long, ByRef readRows As Long)
                 isGlEjRécurrenteValid = False
             End If
         End If
-        If arr(i, 5) <> "" Then
+        If arr(i, 5) <> vbNullString Then
             If IsNumeric(arr(i, 5)) = False Or arr(i, 5) <> Round(arr(i, 5), 2) Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le $ du débit '" & arr(i, 5) & "' est INVALIDE")
                 r = r + 1
                 isGlEjRécurrenteValid = False
             End If
         End If
-        If arr(i, 6) <> "" Then
+        If arr(i, 6) <> vbNullString Then
             If IsNumeric(arr(i, 6)) = False Or arr(i, 6) <> Round(arr(i, 6), 2) Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le $ du crédit '" & arr(i, 6) & "' est INVALIDE")
                 r = r + 1
@@ -3006,13 +3006,13 @@ Clean_Exit:
 
     Application.ScreenUpdating = True
 
-    Call Log_Record("modAppli_Utils:VerifierGLEJRecurrente", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierGLEJRecurrente", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierTECTdBData(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierTECTdBData", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierTECTdBData", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -3313,13 +3313,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli_Utils:VerifierTECTdBData", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierTECTdBData", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierTEC(ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierTEC", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierTEC", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -3401,6 +3401,7 @@ Private Sub VerifierTEC(ByRef r As Long, ByRef readRows As Long)
     
         isTECvalid = True
         If Not AnalyserLigneTEC(arrTEC_Local_Data, i, wsOutput, r, _
+                                minDate, maxDate, _
                                 dictClient, dictFacture, dictFactureHres, _
                                 dictDateCharge, dictTimeStamp, dictDict, dictProf, _
                                 stats, lastTECIDReported) Then
@@ -3456,7 +3457,7 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli_Utils:VerifierTEC", "", startTime)
+    Call Log_Record("modAppli_Utils:VerifierTEC", vbNullString, startTime)
 
 End Sub
 
@@ -3735,7 +3736,7 @@ End Sub
 
 Sub AppliquerConditionalFormating(rng As Range, headerRows As Long, couleurFond As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:AppliquerConditionalFormating", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:AppliquerConditionalFormating", vbNullString, 0)
     
     'Avons-nous un Range valide ?
     If rng Is Nothing Or rng.Rows.count <= headerRows Then
@@ -3765,7 +3766,7 @@ Sub AppliquerConditionalFormating(rng As Range, headerRows As Long, couleurFond 
     Set dataRange = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modAppli_Utils:AppliquerConditionalFormating", "", startTime)
+    Call Log_Record("modAppli_Utils:AppliquerConditionalFormating", vbNullString, startTime)
 
 End Sub
 
@@ -4068,7 +4069,7 @@ End Sub
 
 Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:Get_Deplacements_From_TEC", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:Get_Deplacements_From_TEC", vbNullString, 0)
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -4194,13 +4195,13 @@ Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
         End If
         If i > 2 And Len(wsOutput.Cells(i, 2).Value) > 0 Then
             If wsOutput.Cells(i, 2).Value & wsOutput.Cells(i, 3).Value = base Then
-                wsOutput.Cells(i, 2).Value = ""
-                wsOutput.Cells(i, 3).Value = ""
-                wsOutput.Cells(i, 5).Value = ""
-                wsOutput.Cells(i, 6).Value = ""
-                wsOutput.Cells(i, 7).Value = ""
-                wsOutput.Cells(i, 8).Value = ""
-                wsOutput.Cells(i, 9).Value = ""
+                wsOutput.Cells(i, 2).Value = vbNullString
+                wsOutput.Cells(i, 3).Value = vbNullString
+                wsOutput.Cells(i, 5).Value = vbNullString
+                wsOutput.Cells(i, 6).Value = vbNullString
+                wsOutput.Cells(i, 7).Value = vbNullString
+                wsOutput.Cells(i, 8).Value = vbNullString
+                wsOutput.Cells(i, 9).Value = vbNullString
             Else
                 base = wsOutput.Cells(i, 2).Value & wsOutput.Cells(i, 3).Value
             End If
@@ -4214,7 +4215,7 @@ Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
         If wsOutput.Cells(i, 1).Value > wsOutput.Cells(i - 1, 1).Value Then
             wsOutput.Cells(i, 2).Font.Bold = True
         Else
-            wsOutput.Cells(i, 2).Value = ""
+            wsOutput.Cells(i, 2).Value = vbNullString
         End If
     Next i
     
@@ -4244,7 +4245,7 @@ Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
     Set wsMF = Nothing
     Set wsTEC = Nothing
     
-    Call Log_Record("modAppli_Utils:Get_Deplacements_From_TEC", "", startTime)
+    Call Log_Record("modAppli_Utils:Get_Deplacements_From_TEC", vbNullString, startTime)
 
 End Sub
 
@@ -4279,7 +4280,7 @@ End Sub
 
 Sub RedefinirDnrPlanComptable() '2024-07-04 @ 10:39
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:RedefinirDnrPlanComptable", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:RedefinirDnrPlanComptable", vbNullString, 0)
 
     'Redefine - dnrPlanComptable_Description_Only
     'Delete existing dynamic named range (assuming it could exists)
@@ -4306,7 +4307,7 @@ Sub RedefinirDnrPlanComptable() '2024-07-04 @ 10:39
     'Create the new dynamic named range
     ThisWorkbook.Names.Add Name:="dnrPlanComptable_All", RefersTo:=newRangeFormula
     
-    Call Log_Record("modAppli_Utils:RedefinirDnrPlanComptable", "", startTime)
+    Call Log_Record("modAppli_Utils:RedefinirDnrPlanComptable", vbNullString, startTime)
 
 End Sub
 
@@ -4341,7 +4342,7 @@ End Sub
 
 Sub NoterNombreLignesParFeuille() '2025-01-22 @ 16:19
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:NoterNombreLignesParFeuille", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:NoterNombreLignesParFeuille", vbNullString, 0)
     
     'Spécifiez les chemins des classeurs
     Dim cheminClasseurUsage As String
@@ -4375,7 +4376,7 @@ Sub NoterNombreLignesParFeuille() '2025-01-22 @ 16:19
     Dim lastUsedRow As Long
     Dim col As Long
     col = 2 'Commence à la col 2
-    Do While wsUsage.Cells(1, col).Value <> ""
+    Do While wsUsage.Cells(1, col).Value <> vbNullString
         feuilleNom = wsUsage.Cells(1, col).Value
         
         'Vérifier si la feuille existe dans le classeur maître
@@ -4407,7 +4408,7 @@ Sub NoterNombreLignesParFeuille() '2025-01-22 @ 16:19
     'Sauvegarder et fermer le classeur d'usage
     wbUsage.Close SaveChanges:=True
     
-    Call Log_Record("modAppli_Utils:NoterNombreLignesParFeuille", "", startTime)
+    Call Log_Record("modAppli_Utils:NoterNombreLignesParFeuille", vbNullString, startTime)
 
 End Sub
 
@@ -4526,6 +4527,7 @@ Sub Vérifier_Mix_ClientID_ClientNom_TEC()
 End Sub
 
 Private Function AnalyserLigneTEC(data As Variant, i As Long, ByRef wsOutput As Worksheet, ByRef r As Long, _
+                                  ByRef minDate As Date, ByRef maxDate As Date, _
                                   ByRef dictClient As Object, ByRef dictFacture As Object, _
                                   ByRef dictFactureHres As Object, ByRef dictDateCharge As Object, _
                                   ByRef dictTimeStamp As Object, ByRef dictDict As Object, dict_Prof As Object, _
@@ -4564,6 +4566,8 @@ Private Function AnalyserLigneTEC(data As Variant, i As Long, ByRef wsOutput As 
             stats.cas_date_future = stats.cas_date_future + 1
             isValid = False
         End If
+        If dateTEC < minDate Then minDate = dateTEC
+        If dateTEC > maxDate Then maxDate = dateTEC
     End If
     
     '3. Teste la valeur de 'estDetruit'
@@ -4661,7 +4665,7 @@ Private Function AnalyserLigneTEC(data As Variant, i As Long, ByRef wsOutput As 
     Dim dateFact As Variant
     dateFact = data(i, fTECDateFacturee)
     
-    If Not IsEmpty(dateFact) And CStr(dateFact) <> "" Then
+    If Not IsEmpty(dateFact) And CStr(dateFact) <> vbNullString Then
         If Not IsDate(dateFact) Then
             Call AjouterMessage(wsOutput, r, 2, "********** TecID = '" & tecID & "', a une date de facture INVALIDE '" & dateFact & "' !!!")
             stats.cas_date_fact_invalide = stats.cas_date_fact_invalide + 1
@@ -4716,6 +4720,7 @@ Private Function AnalyserLigneTEC(data As Variant, i As Long, ByRef wsOutput As 
     '8. On alimente les 2 dictionnaires pour les dates
     Dim profID As Long
     prof = data(i, fTECProf)
+    profID = data(i, fTECProfID)
     
     If CLng(tecID) > lastTECIDReported And UCase$(estDetruit) = "FAUX" Then
         Dim dCharge As Date, dStamp As Date, strCharge As String, strStamp As String
@@ -4771,7 +4776,7 @@ Sub ExtraireCouleurCellule()
     Dim rouge As Long, vert As Long, bleu As Long
 
     ' récupère la couleur de fond de la cellule active
-    couleur = Range("B8").Interior.Color
+    couleur = ActiveSheet.Range("B8").Interior.Color
     
     ' extrait les composantes RGB
     rouge = couleur Mod 256
@@ -4783,5 +4788,4 @@ Sub ExtraireCouleurCellule()
            "Vert: " & vert & vbCrLf & _
            "Bleu: " & bleu
 End Sub
-
 

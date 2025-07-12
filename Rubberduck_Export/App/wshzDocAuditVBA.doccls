@@ -10,7 +10,7 @@ Private Sub Worksheet_BeforeDoubleClick(ByVal Target As Range, Cancel As Boolean
     nomProc = Trim(Target.Value)
     nomModule = Trim(Cells(Target.row, 2).Value)
 
-    If nomProc <> "" And nomModule <> "" Then
+    If nomProc <> vbNullString And nomModule <> vbNullString Then
         Cancel = True
         Dim success As Boolean
         success = AllerVersCode(nomModule, nomProc)

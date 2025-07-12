@@ -21,7 +21,7 @@ Sub TEC_EvaluationViderFeuille()
     Set ws = wshTEC_Evaluation
     
     With ws
-        .Range("D3").Value = "" 'Message pour écriture de G/L
+        .Range("D3").Value = vbNullString 'Message pour écriture de G/L
         .Range("D6:L28").Clear
         .Shapes("Impression").Visible = msoFalse
         .Shapes("EcritureGL").Visible = msoFalse
@@ -36,7 +36,7 @@ End Sub
 
 Sub TEC_Evaluation_Calcul(cutoffDate As String, ByRef maxDate As Date)
 
-    If cutoffDate = "" Then
+    If cutoffDate = vbNullString Then
         Exit Sub
     End If
         
@@ -326,7 +326,7 @@ Sub Evaluation_Apercu_Avant_Impression()
     DoEvents
 
     Dim header1 As String: header1 = "Évaluation des TEC au  " & wshTEC_Evaluation.Range("L3").Value
-    Dim header2 As String: header2 = ""
+    Dim header2 As String: header2 = vbNullString
     
     Call Simple_Print_Setup(wshTEC_Evaluation, rngToPrint, header1, header2, "$1:$1", "P")
 
@@ -366,7 +366,7 @@ Sub TEC_Evaluation_EcritureGL() '2025-06-08 @ 08:37
     '--- Remplissage des propriétés globales
     ecr.DateEcriture = ws.Range("L3").Value
     ecr.description = "Ajustement de la valeur des TEC"
-    ecr.Source = ""
+    ecr.Source = vbNullString
     ecr.AutreRemarque = "Écriture générée par l'application"
 
     'Ajoute autant de lignes que nécessaire (débit positif, crédit négatif)
@@ -391,14 +391,14 @@ End Sub
 
 Sub TEC_Evaluation_Back_To_TEC_Menu()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Evaluation:TEC_Evaluation_Back_To_TEC_Menu", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Evaluation:TEC_Evaluation_Back_To_TEC_Menu", vbNullString, 0)
     
     wshTEC_Evaluation.Visible = xlSheetVeryHidden
     
     wshMenuTEC.Activate
     wshMenuTEC.Range("A1").Select
     
-    Call Log_Record("modTEC_Evaluation:TEC_Evaluation_Back_To_TEC_Menu", "", startTime)
+    Call Log_Record("modTEC_Evaluation:TEC_Evaluation_Back_To_TEC_Menu", vbNullString, startTime)
 
 End Sub
 
@@ -489,9 +489,9 @@ Sub AjouterEcritureGL(entry As clsGL_Entry) '2025-06-08 @ 09:37
             .Cells(lastRow + i, 6).Value = l.description
             If l.Montant >= 0 Then
                 .Cells(lastRow + i, 7).Value = l.Montant
-                .Cells(lastRow + i, 8).Value = ""
+                .Cells(lastRow + i, 8).Value = vbNullString
             Else
-                .Cells(lastRow + i, 7).Value = ""
+                .Cells(lastRow + i, 7).Value = vbNullString
                 .Cells(lastRow + i, 8).Value = -l.Montant
             End If
             .Cells(lastRow + i, 9).Value = entry.AutreRemarque
@@ -620,4 +620,5 @@ End Sub
 '    End If
 '
 'End Sub
+
 

@@ -34,7 +34,7 @@ Sub Import_CSV_File(ws As Worksheet, path As String, fn As String)
     'Does the file to process exist ?
     Dim fullFileName As String
     fullFileName = path & Application.PathSeparator & fn
-    If Dir(fullFileName) = "" Then
+    If Dir(fullFileName) = vbNullString Then
         MsgBox "Le fichier n'a pas été trouvé", vbExclamation
         Exit Sub
     End If
@@ -68,15 +68,15 @@ Sub Fix_Columns(ws As Worksheet, first As Long, last As Long)
         ws.Range("D" & i).Value = Fn_Correct_Date_Format(ws.Range("D" & i).Value)
         ws.Range("D" & i).NumberFormat = "dd/mm/yyyy"
         'Column H - Change the numeric format
-        ws.Range("H" & i).Value = Replace(ws.Range("H" & i).Value, ",", "")
+        ws.Range("H" & i).Value = Replace(ws.Range("H" & i).Value, ",", vbNullString)
         ws.Range("H" & i).Value = Replace(ws.Range("H" & i).Value, ".", ",")
         ws.Range("H" & i).Value = CDbl(ws.Range("H" & i).Value)
         'Column H - Change the numeric format
-        ws.Range("I" & i).Value = Replace(ws.Range("I" & i).Value, ",", "")
+        ws.Range("I" & i).Value = Replace(ws.Range("I" & i).Value, ",", vbNullString)
         ws.Range("I" & i).Value = Replace(ws.Range("I" & i).Value, ".", ",")
         ws.Range("I" & i).Value = CDbl(ws.Range("I" & i).Value)
         'Column N - Change the balance amount format
-        ws.Range("N" & i).Value = Replace(ws.Range("N" & i).Value, ",", "")
+        ws.Range("N" & i).Value = Replace(ws.Range("N" & i).Value, ",", vbNullString)
         ws.Range("N" & i).Value = Replace(ws.Range("N" & i).Value, ".", ",")
         ws.Range("N" & i).Value = CDbl(ws.Range("N" & i).Value)
         

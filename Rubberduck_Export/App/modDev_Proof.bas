@@ -68,7 +68,7 @@ End Sub
 
 Sub SoustotalHeures(ws As Worksheet, saveInv As String, ByRef r As Long, ByRef st As Currency)
 
-    If saveInv <> "" Then
+    If saveInv <> vbNullString Then
         With ws.Cells(r, 3).Borders(xlEdgeBottom)
             .LineStyle = xlContinuous
             .ColorIndex = 0

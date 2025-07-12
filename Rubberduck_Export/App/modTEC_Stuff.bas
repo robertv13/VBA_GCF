@@ -47,7 +47,7 @@ Public Sub Convertir_NF_en_Facturable_Dans_BD(tecID As Long) '2025-01-15 @ 09:44
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modTEC_Stuff:Convertir_NF_en_Facturable_Dans_BD", "", startTime)
+    Call Log_Record("modTEC_Stuff:Convertir_NF_en_Facturable_Dans_BD", vbNullString, startTime)
 
 End Sub
 
@@ -70,6 +70,7 @@ Public Sub Convertir_NF_en_Facturable_Locally(tecID As Long) '2025-01-15 @ 09:44
     'Convertir à Facturable
     ws.Cells(rowToBeUpdated, fTECEstFacturable).Value = "VRAI"
 
-    Call Log_Record("modTEC_Stuff:Convertir_NF_en_Facturable_Locally", "", startTime)
+    Call Log_Record("modTEC_Stuff:Convertir_NF_en_Facturable_Locally", vbNullString, startTime)
 
 End Sub
+

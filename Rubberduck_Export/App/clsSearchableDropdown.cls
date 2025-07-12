@@ -48,7 +48,7 @@ End Property
 
 Public Property Get SelectedItem() As String
     
-    SelectedItem = IIf(m_textboxStartingState = True, "", myTextBox.Value)
+    SelectedItem = IIf(m_textboxStartingState = True, vbNullString, myTextBox.Value)
 
 End Property
 
@@ -276,7 +276,7 @@ End Function
 Private Sub myTextBox_Change()
 
     If m_UpdateControl = False Then
-        If Trim$(myTextBox.Value) = "" Then
+        If Trim$(myTextBox.Value) = vbNullString Then
             Call InitializeTextBox
         Else
             If m_textboxStartingState = True Then
@@ -387,7 +387,7 @@ Private Function FilterData() As Variant
    
     Dim textPattern As String
     textPattern = myTextBox.Value
-    If textPattern = "" Then
+    If textPattern = vbNullString Then
         Exit Function
     End If
     Dim textPatternWithoutAccent As String '2024-09-25 @ 07:19
@@ -426,4 +426,5 @@ Private Function FilterData() As Variant
     FilterData = finalItems
 
 End Function
+
 

@@ -8,7 +8,7 @@ Private Sub Auto_Open() '2024-12-28 @ 11:09
     cheminSourcePROD = "P:\Administration\APP\GCF\DataFiles\"
     
     If Fn_Get_Windows_Username <> "RobertMV" And Fn_Get_Windows_Username <> "Robertmv" Then
-        If Dir(cheminSourcePROD & "\GCF_BD_MASTER.lock") <> "" Then
+        If Dir(cheminSourcePROD & "\GCF_BD_MASTER.lock") <> vbNullString Then
             MsgBox "Cette application est actuellement en maintenance." & vbNewLine & vbNewLine & _
                    "Le fichier principal est verrouillé par le développeur." & vbNewLine & vbNewLine & _
                    "Veuillez ressayer dans 5 à 10 minutes SVP", _
@@ -41,7 +41,7 @@ Sub DemarrerApplication() '2025-07-11 @ 15:16
     wsdADMIN.Range("F5").Value = rootPath
     Application.EnableEvents = True
    
-    Dim startTime As Double: startTime = Timer: Call Log_Record("----- DÉBUT D'UNE NOUVELLE SESSION (modAppli:DemarrerApplication) -----", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("----- DÉBUT D'UNE NOUVELLE SESSION (modAppli:DemarrerApplication) -----", vbNullString, 0)
     
     'Quel est l'utilisateur Windows ?
     gUtilisateurWindows = GetNomUtilisateur()
@@ -97,7 +97,7 @@ Sub DemarrerApplication() '2025-07-11 @ 15:16
     Set wb = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modAppli:DemarrerApplication", "", startTime)
+    Call Log_Record("modAppli:DemarrerApplication", vbNullString, startTime)
     Exit Sub
     
 ErrorHandler:
@@ -122,7 +122,7 @@ End Function
 
 Sub CreateUserActiveFile(ByVal userName As String)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:CreateUserActiveFile", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:CreateUserActiveFile", vbNullString, 0)
     
     Dim traceFilePath As String
     traceFilePath = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
@@ -137,7 +137,7 @@ Sub CreateUserActiveFile(ByVal userName As String)
     Print #FileNumber, "Utilisateur " & userName & " a ouvert l'application à " & Format$(Now(), "yyyy-mm-dd hh:mm:ss") & " - Version " & ThisWorkbook.Name
     Close FileNumber
     
-    Call Log_Record("modAppli:CreateUserActiveFile", "", startTime)
+    Call Log_Record("modAppli:CreateUserActiveFile", vbNullString, startTime)
     
     Exit Sub
 
@@ -153,7 +153,7 @@ End Sub
 
 Sub SetupUserDateFormat(ByVal user As String)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:SetupUserDateFormat", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:SetupUserDateFormat", vbNullString, 0)
 
     Dim userDateFormat As String
     
@@ -172,13 +172,13 @@ Sub SetupUserDateFormat(ByVal user As String)
 
     wsdADMIN.Range("B1").Value = userDateFormat
     
-    Call Log_Record("modAppli:SetupUserDateFormat", "", startTime)
+    Call Log_Record("modAppli:SetupUserDateFormat", vbNullString, startTime)
     
 End Sub
 
 Sub BackupMasterFile()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:BackupMasterFile", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:BackupMasterFile", vbNullString, 0)
     
     On Error GoTo MASTER_NOT_AVAILABLE
     
@@ -193,7 +193,7 @@ Sub BackupMasterFile()
     'Créer directement une copie du fichier sans ouvrir Excel
     FileCopy masterFilePath, backupFilePath
 
-    Call Log_Record("modAppli:BackupMasterFile", "", startTime)
+    Call Log_Record("modAppli:BackupMasterFile", vbNullString, startTime)
     
     Exit Sub
     
@@ -209,7 +209,7 @@ End Sub
 
 Sub EcrireInformationsConfigAuMenu(ByVal user As String)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:EcrireInformationsConfigAuMenu", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:EcrireInformationsConfigAuMenu", vbNullString, 0)
     
     Dim oldEnableEvents As Boolean
     Dim heure As String, version As String, utilisateur As String
@@ -245,7 +245,7 @@ Sub EcrireInformationsConfigAuMenu(ByVal user As String)
 CleanUp:
     Application.EnableEvents = oldEnableEvents
     
-    Call Log_Record("modAppli:EcrireInformationsConfigAuMenu", "", startTime)
+    Call Log_Record("modAppli:EcrireInformationsConfigAuMenu", vbNullString, startTime)
     
 End Sub
 
@@ -309,7 +309,7 @@ End Sub
 '
 'End Sub
 '
-Public Sub RafraichirActivite(Optional ByVal msg As String = "") '2025-07-02 @ 15:19
+Public Sub RafraichirActivite(Optional ByVal msg As String = vbNullString) '2025-07-02 @ 15:19
     
 '    If TimeValue(Now) < TimeSerial(gHEURE_DEBUT_SURVEILLANCE, 0, 0) Then @TODO(2025-07-03)
 '        Exit Sub
@@ -387,7 +387,7 @@ Public Sub VerifierInactivite() '2025-07-02 @ 12:10
     If minutesInactives >= gMAXIMUM_MINUTES_INACTIVITE Then
         If gMODE_DEBUG Then Debug.Print "[modAppli:VerifierInactivite] Inactivité trop longue (" & Format$(minutesInactives, "0") & " minutes) — fermeture de l'application"
         gFermeturePlanifiee = GetProchaineFermeture()
-        If gMODE_DEBUG Then Debug.Print "[modAppli:VerifierInactivite] Avant l'ajout de " & gDELAI_GRACE_SECONDES & " secondes, gFermeture = " & Format(gFermeturePlanifiee, "; hh: mm: ss "); ""
+        If gMODE_DEBUG Then Debug.Print "[modAppli:VerifierInactivite] Avant l'ajout de " & gDELAI_GRACE_SECONDES & " secondes, gFermeture = " & Format(gFermeturePlanifiee, "; hh: mm: ss "); vbNullString
         gFermeturePlanifiee = Now + TimeSerial(0, 0, gDELAI_GRACE_SECONDES)
         If gMODE_DEBUG Then Debug.Print "[modAppli:VerifierInactivite] Après l'ajout de " & gDELAI_GRACE_SECONDES & " secondes, gFermeture = " & Format(gFermeturePlanifiee, "hh:mm:ss")
         
@@ -431,7 +431,7 @@ End Sub
 
 Public Sub FermetureAutomatiqueParInactivite() '2025-07-02 @ 06:19
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:FermetureAutomatiqueParInactivite", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:FermetureAutomatiqueParInactivite", vbNullString, 0)
     
     'Ajoute un log pour vérification
     If gMODE_DEBUG Then Debug.Print "[modAppli:FermetureAutomatiqueParInactivite] Fermeture automatique déclenchée à : " & Format(Now, "hh:mm:ss")

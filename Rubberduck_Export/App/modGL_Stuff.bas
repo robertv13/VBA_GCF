@@ -93,13 +93,13 @@ Public Sub GL_Get_Account_Trans_AF(glNo As String, dateDeb As Date, dateFin As D
     Set rngResult = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modGL_Stuff:GL_Get_Account_Trans_AF", "", startTime)
+    Call Log_Record("modGL_Stuff:GL_Get_Account_Trans_AF", vbNullString, startTime)
 
 End Sub
 
 Sub GL_Posting_To_DB(df As Date, desc As String, Source As String, arr As Variant, ByRef GLEntryNo As Long) 'Generic routine 2024-06-06 @ 07:00
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Stuff:GL_Posting_To_DB", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Stuff:GL_Posting_To_DB", vbNullString, 0)
 
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
@@ -141,7 +141,7 @@ Sub GL_Posting_To_DB(df As Date, desc As String, Source As String, arr As Varian
     Dim i As Long, j As Long
     'Loop through the array and post each row
     For i = LBound(arr, 1) To UBound(arr, 1)
-        If arr(i, 1) = "" Then GoTo Nothing_to_Post
+        If arr(i, 1) = vbNullString Then GoTo Nothing_to_Post
             rs.AddNew
                 'RecordSet are ZERO base, and Enums are not, so the '-1' is mandatory !!!
                 rs.Fields(fGlTNoEntrée - 1).Value = GLEntryNo
@@ -173,13 +173,13 @@ Nothing_to_Post:
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modGL_Stuff:GL_Posting_To_DB", "", startTime)
+    Call Log_Record("modGL_Stuff:GL_Posting_To_DB", vbNullString, startTime)
 
 End Sub
 
 Sub GL_Posting_Locally(df As Date, desc As String, Source As String, arr As Variant, ByRef GLEntryNo As Long) 'Write records locally
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("*** modGL_Stuff:GL_Posting_Locally", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("*** modGL_Stuff:GL_Posting_Locally", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -195,7 +195,7 @@ Sub GL_Posting_Locally(df As Date, desc As String, Source As String, arr As Vari
     'Loop through the array and post each row
     With wsdGL_Trans
         For i = LBound(arr, 1) To UBound(arr, 1)
-            If arr(i, 1) <> "" Then
+            If arr(i, 1) <> vbNullString Then
                 .Range("A" & rowToBeUsed).Value = GLEntryNo
                 .Range("B" & rowToBeUsed).Value = CDate(df)
                 .Range("C" & rowToBeUsed).Value = desc
@@ -217,13 +217,13 @@ Sub GL_Posting_Locally(df As Date, desc As String, Source As String, arr As Vari
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modGL_Stuff:GL_Posting_Locally", "", startTime)
+    Call Log_Record("modGL_Stuff:GL_Posting_Locally", vbNullString, startTime)
 
 End Sub
 
 Sub GL_BV_Ajouter_Shape_Retour()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Stuff:GL_BV_Ajouter_Shape_Retour", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Stuff:GL_BV_Ajouter_Shape_Retour", vbNullString, 0)
     
     Dim ws As Worksheet: Set ws = ActiveSheet
     
@@ -260,13 +260,13 @@ Sub GL_BV_Ajouter_Shape_Retour()
     Set btn = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modGL_Stuff:GL_BV_Ajouter_Shape_Retour", "", startTime)
+    Call Log_Record("modGL_Stuff:GL_BV_Ajouter_Shape_Retour", vbNullString, startTime)
 
 End Sub
 
 Sub GL_BV_Effacer_Zone_Et_Shape()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Stuff:GL_BV_Effacer_Zone_Et_Shape", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Stuff:GL_BV_Effacer_Zone_Et_Shape", vbNullString, 0)
     
     'Effacer la plage
     Dim ws As Worksheet: Set ws = ActiveSheet
@@ -288,7 +288,7 @@ Sub GL_BV_Effacer_Zone_Et_Shape()
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call Log_Record("modGL_Stuff:GL_BV_Effacer_Zone_Et_Shape", "", startTime)
+    Call Log_Record("modGL_Stuff:GL_BV_Effacer_Zone_Et_Shape", vbNullString, startTime)
 
 End Sub
 
@@ -334,4 +334,5 @@ Sub GL_BV_SupprimerToutesLesFormes_shpRetour(w As Worksheet)
     Next shp
     
 End Sub
+
 

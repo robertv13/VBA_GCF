@@ -49,6 +49,6 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     Set intersectRange = Nothing
     Set ws = Nothing
 
-    Call Log_Record("wshTEC_TDB_Data:Worksheet_Change", "", startTime)
+    Call Log_Record("wshTEC_TDB_Data:Worksheet_Change", vbNullString, startTime)
 
 End Sub

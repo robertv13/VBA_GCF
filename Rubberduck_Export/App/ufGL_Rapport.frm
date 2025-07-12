@@ -154,8 +154,8 @@ Private Sub cmbPeriode_Change()
                 txtDateDebut.Value = Format$(#1/1/2024#, wsdADMIN.Range("B1").Value)
                 txtDateFin.Value = Format$(wsdADMIN.Range("AnneeA"), wsdADMIN.Range("B1").Value)
             Case Else
-                txtDateDebut.Value = ""
-                txtDateFin.Value = ""
+                txtDateDebut.Value = vbNullString
+                txtDateFin.Value = vbNullString
         End Select
 
 End Sub
@@ -164,9 +164,9 @@ Private Sub txtDateDebut_Exit(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim dateCorrigee As String
     
-    If Trim$(txtDateDebut.text) <> "" Then
+    If Trim$(txtDateDebut.text) <> vbNullString Then
         dateCorrigee = CorrigerDate(txtDateDebut.text)
-        If dateCorrigee = "" Then
+        If dateCorrigee = vbNullString Then
             MsgBox "La date saisie est invalide, veuillez saisir une date sous un" & vbNewLine & vbNewLine & _
                     "format valide (jj ou jj/mm ou jj/mm/aaaa ou aaaa/mm/jj)" & vbNewLine & vbNewLine & _
                     "Notez que le séparateur peut être '-' ou '/' ou ' '", vbExclamation, _
@@ -184,9 +184,9 @@ Private Sub txtDateFin_Exit(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim dateCorrigee As String
     
-    If Trim$(txtDateFin.text) <> "" Then
+    If Trim$(txtDateFin.text) <> vbNullString Then
         dateCorrigee = CorrigerDate(txtDateFin.text)
-        If dateCorrigee = "" Then
+        If dateCorrigee = vbNullString Then
             MsgBox "La date saisie est invalide, veuillez saisir une date sous un" & vbNewLine & vbNewLine & _
                     "format valide (jj ou jj/mm ou jj/mm/aaaa ou aaaa/mm/jj)" & vbNewLine & vbNewLine & _
                     "Notez que le séparateur peut être '-' ou '/' ou ' '", vbExclamation, _
@@ -204,9 +204,9 @@ Private Sub txtDateSaisieDebut_Exit(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim dateCorrigee As String
     
-    If Trim$(txtDateSaisieDebut.text) <> "" Then
+    If Trim$(txtDateSaisieDebut.text) <> vbNullString Then
         dateCorrigee = CorrigerDate(txtDateSaisieDebut.text)
-        If dateCorrigee = "" Then
+        If dateCorrigee = vbNullString Then
             MsgBox "La date saisie est invalide, veuillez saisir une date sous un" & vbNewLine & vbNewLine & _
                     "format valide (jj ou jj/mm ou jj/mm/aaaa ou aaaa/mm/jj)" & vbNewLine & vbNewLine & _
                     "Notez que le séparateur peut être '-' ou '/' ou ' '", vbExclamation, _
@@ -226,9 +226,9 @@ Private Sub txtDateSaisieFin_Exit(ByVal Cancel As MSForms.ReturnBoolean)
     
     Dim dateCorrigee As String
     
-    If Trim$(txtDateSaisieFin.text) <> "" Then
+    If Trim$(txtDateSaisieFin.text) <> vbNullString Then
         dateCorrigee = CorrigerDate(txtDateSaisieFin.text)
-        If dateCorrigee = "" Then
+        If dateCorrigee = vbNullString Then
             MsgBox "La date saisie est invalide, veuillez saisir une date sous un" & vbNewLine & vbNewLine & _
                     "format valide (jj ou jj/mm ou jj/mm/aaaa ou aaaa/mm/jj)" & vbNewLine & vbNewLine & _
                     "Notez que le séparateur peut être '-' ou '/' ou ' '", vbExclamation, _
@@ -418,7 +418,7 @@ Function CorrigerDate(txtDate As String) As String
     'Supprimer les espaces & n'accepter que les caractères valides
     txtDate = Trim$(txtDate)
     If Not EstDateCaractereValide(txtDate) Then
-        CorrigerDate = ""
+        CorrigerDate = vbNullString
         Exit Function
     End If
     'Uniformiser les séparateurs
@@ -473,8 +473,8 @@ Function CorrigerDate(txtDate As String) As String
         
     ElseIf UBound(arr) = 1 Then 'Deux parties dans la date saisie
         'L'une des 2 parties est vide
-        If arr(0) = "" Or arr(1) = "" Then
-            CorrigerDate = ""
+        If arr(0) = vbNullString Or arr(1) = vbNullString Then
+            CorrigerDate = vbNullString
             Exit Function
         End If
         
@@ -488,17 +488,17 @@ Function CorrigerDate(txtDate As String) As String
     End If
     
 DerniereValidation:
-    If ValiderDateDernierJourDuMois(Y, m, d) <> "" Then
+    If ValiderDateDernierJourDuMois(Y, m, d) <> vbNullString Then
         'Conversion en date (Toutes les validations sont terminées)
         dt = DateSerial(Y, m, d)
         CorrigerDate = Format$(dt, "dd/mm/yyyy")
     Else
-        CorrigerDate = ""
+        CorrigerDate = vbNullString
     End If
     Exit Function
 
 ErrorHandler:
-    CorrigerDate = "" ' Retourne une chaîne vide si une erreur se produit
+    CorrigerDate = vbNullString ' Retourne une chaîne vide si une erreur se produit
 End Function
 
 Function EstDateCaractereValide(ByVal txt As String) As Boolean '2025-03-03 @ 09:49
@@ -563,4 +563,5 @@ Private Sub CheckBox_Click() '2025-03-03 @ 08:37
     End If
     
 End Sub
+
 

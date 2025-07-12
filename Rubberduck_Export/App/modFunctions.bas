@@ -97,7 +97,7 @@ Function Fn_GetID_From_Client_Name(nomClient As String) '2024-02-14 @ 06:07
     Set dynamicRange = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modFunctions:Fn_GetID_From_Client_Name", "", startTime)
+    Call Log_Record("modFunctions:Fn_GetID_From_Client_Name", vbNullString, startTime)
 
 End Function
 
@@ -139,7 +139,7 @@ Function Fn_Cell_From_BD_Client(nomClient As String, ByRef colNumberSearch As In
     Set dynamicRange = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modFunctions:Fn_Cell_From_BD_Client", "", startTime)
+    Call Log_Record("modFunctions:Fn_Cell_From_BD_Client", vbNullString, startTime)
 
 End Function
 
@@ -177,7 +177,7 @@ Function Fn_GetID_From_Fourn_Name(nomFournisseur As String) '2024-07-03 @ 16:13
     Set dynamicRange = Nothing
     Set ws = Nothing
 
-    Call Log_Record("modFunctions:Fn_GetID_From_Fourn_Name", "", startTime)
+    Call Log_Record("modFunctions:Fn_GetID_From_Fourn_Name", vbNullString, startTime)
 
 End Function
 
@@ -249,7 +249,7 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
     'Otherwise it return an empty array
     '2024-03-09 - First version
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Find_Data_In_A_Range", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Find_Data_In_A_Range", vbNullString, 0)
     
     Dim foundInfo(1 To 3) As Variant 'Cell Address, Row, Value
     
@@ -270,7 +270,7 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
     'Libérer la mémoire
     Set foundCell = Nothing
 
-    Call Log_Record("modFunctions:Fn_Find_Data_In_A_Range", "", startTime)
+    Call Log_Record("modFunctions:Fn_Find_Data_In_A_Range", vbNullString, startTime)
 
 End Function
 
@@ -472,7 +472,7 @@ Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 
     Set dynamicRange = Nothing
     Set ws = Nothing
 
-    Call Log_Record("modFunctions:Fn_GetGL_Code_From_GL_Description", "", startTime)
+    Call Log_Record("modFunctions:Fn_GetGL_Code_From_GL_Description", vbNullString, startTime)
 
 End Function
 
@@ -609,7 +609,7 @@ End Function
 
 Public Function Fn_Find_Row_Number_TECID(ByVal uniqueID As Variant, ByVal lookupRange As Range) As Long '2024-08-10 @ 05:41
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Find_Row_Number_TECID", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Find_Row_Number_TECID", vbNullString, 0)
     
     On Error Resume Next
         Dim cell As Range
@@ -626,7 +626,7 @@ Public Function Fn_Find_Row_Number_TECID(ByVal uniqueID As Variant, ByVal lookup
     'Libérer la mémoire
     Set cell = Nothing
     
-    Call Log_Record("modFunctions:Fn_Find_Row_Number_TECID", "", startTime)
+    Call Log_Record("modFunctions:Fn_Find_Row_Number_TECID", vbNullString, startTime)
     
 End Function
 
@@ -717,14 +717,14 @@ Function Fn_Get_A_Cell_From_A_Worksheet(feuille As String, cle As String, cleCol
     If Not resultat Is Nothing Then
         Fn_Get_A_Cell_From_A_Worksheet = ws.Cells(resultat.row, retourCol)
     Else
-        Fn_Get_A_Cell_From_A_Worksheet = ""
+        Fn_Get_A_Cell_From_A_Worksheet = vbNullString
     End If
     
     'Libérer la mémoire
     Set resultat = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modFunctions:Fn_Get_A_Cell_From_A_Worksheet", "", startTime)
+    Call Log_Record("modFunctions:Fn_Get_A_Cell_From_A_Worksheet", vbNullString, startTime)
 
 End Function
 
@@ -738,7 +738,7 @@ Function Fn_Validate_And_Get_A_Cell(ws As Worksheet, search As String, searchCol
     If Not foundCell Is Nothing Then
         Fn_Validate_And_Get_A_Cell = ws.Cells(foundCell.row, returnCol)
     Else
-        Fn_Validate_And_Get_A_Cell = ""
+        Fn_Validate_And_Get_A_Cell = vbNullString
     End If
     
     'Libérer la mémoire
@@ -794,7 +794,7 @@ Function Fn_ValiderCourriel(ByVal adresses As String) As Boolean '2024-10-26 @ 1
     For Each adresse In arrAdresse
         adresse = Trim$(adresse)
         'Passer si l'adresse est vide (Aucune adresse est aussi permis)
-        If adresse <> "" Then
+        If adresse <> vbNullString Then
             'Si l'adresse ne correspond pas au pattern, renvoyer Faux
             If Not regex.test(adresse) Then
                 Fn_ValiderCourriel = False
@@ -863,7 +863,7 @@ Function Fn_Is_Server_Available() As Boolean
     
     On Error Resume Next
     'Tester l'existence d'un fichier ou d'un répertoire sur le lecteur P:
-    Fn_Is_Server_Available = Dir("P:\", vbDirectory) <> ""
+    Fn_Is_Server_Available = Dir("P:\", vbDirectory) <> vbNullString
     On Error GoTo 0
     
 End Function
@@ -889,9 +889,9 @@ Function Fn_Complete_Date(dateInput As String, joursArriere As Integer, joursFut
     defaultYear = year(Date)
     
     ' Split the input date into parts, considering different delimiters
-    dateInput = Replace(Replace(Replace(dateInput, "/", "-"), ".", "-"), " ", "")
+    dateInput = Replace(Replace(Replace(dateInput, "/", "-"), ".", "-"), " ", vbNullString)
     Dim parts() As String
-    parts = Split(Replace(dateInput, "-01-1900", ""), "-")
+    parts = Split(Replace(dateInput, "-01-1900", vbNullString), "-")
     
     Select Case UBound(parts)
         Case -1
@@ -948,7 +948,7 @@ Function Fn_Complete_Date(dateInput As String, joursArriere As Integer, joursFut
     'Return a VALID date
     Fn_Complete_Date = parsedDate
     
-    Call Log_Record("modFunctions:Fn_Complete_Date", "", startTime)
+    Call Log_Record("modFunctions:Fn_Complete_Date", vbNullString, startTime)
 
     Exit Function
 
@@ -956,7 +956,7 @@ Invalid_Date:
 
     Fn_Complete_Date = "Invalid Date"
     
-    Call Log_Record("modFunctions:Fn_Complete_Date", "", startTime)
+    Call Log_Record("modFunctions:Fn_Complete_Date", vbNullString, startTime)
     
 End Function
 
@@ -1076,7 +1076,7 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
     'Validations first (one field at a time)
     
     'Professionnel ?
-    If ufSaisieHeures.cmbProfessionnel.Value = "" Then
+    If ufSaisieHeures.cmbProfessionnel.Value = vbNullString Then
         MsgBox Prompt:="Le professionnel est OBLIGATOIRE !", _
                Title:="Vérification", _
                Buttons:=vbCritical
@@ -1085,7 +1085,7 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
     End If
 
     'Date de la charge ?
-    If ufSaisieHeures.txtDate.Value = "" Or IsDate(ufSaisieHeures.txtDate.Value) = False Then
+    If ufSaisieHeures.txtDate.Value = vbNullString Or IsDate(ufSaisieHeures.txtDate.Value) = False Then
         MsgBox Prompt:="La date est OBLIGATOIRE !", _
                Title:="Vérification", _
                Buttons:=vbCritical
@@ -1094,7 +1094,7 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
     End If
 
     'Nom du client & code de client ?
-    If ufSaisieHeures.txtClient.Value = "" Or ufSaisieHeures.txtClientID = "" Then
+    If ufSaisieHeures.txtClient.Value = vbNullString Or ufSaisieHeures.txtClientID = vbNullString Then
         MsgBox Prompt:="Le client et son code sont OBLIGATOIRES !" & vbNewLine & vbNewLine & _
                        "Code de client = '" & ufSaisieHeures.txtClientID & "'" & vbNewLine & vbNewLine & _
                        "Nom du client = '" & ufSaisieHeures.txtClient.Value & "'", _
@@ -1105,7 +1105,7 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
     End If
     
     'Heures valides ?
-    If ufSaisieHeures.txtHeures.Value = "" Or IsNumeric(ufSaisieHeures.txtHeures.Value) = False Then
+    If ufSaisieHeures.txtHeures.Value = vbNullString Or IsNumeric(ufSaisieHeures.txtHeures.Value) = False Then
         MsgBox Prompt:="Le nombre d'heures est OBLIGATOIRE !", _
                Title:="Vérification", _
                Buttons:=vbCritical
@@ -1197,19 +1197,14 @@ End Function
 
 Public Function Fn_Is_Client_Facturable(ByVal clientID As String) As Boolean '2025-07-03 @ 07:41
 
-    'Les clients NON FACTURABLES sont compris entre 1 et 99
-    If Len(clientID) > 2 Then
-        Fn_Is_Client_Facturable = True
-    Else
-        Fn_Is_Client_Facturable = False
-    End If
+    Fn_Is_Client_Facturable = Len(clientID) > 2
         
 End Function
 
 Function Fn_Is_Date_Valide(d As String) As Boolean
 
     Fn_Is_Date_Valide = False
-    If d = "" Or IsDate(d) = False Then
+    If d = vbNullString Or IsDate(d) = False Then
         MsgBox "Une date d'écriture est obligatoire." & vbNewLine & vbNewLine & _
             "Veuillez saisir une date valide!", vbCritical, "Date Invalide"
     Else
@@ -1225,6 +1220,7 @@ Function Fn_Get_Windows_Username() As String '2025-06-01 @ 05:36
 
     '@Ignore UnassignedVariableUsage
     If GetUserName(buffer, size) Then
+        '@Ignore UnassignedVariableUsage
         Fn_Get_Windows_Username = Trim(Left$(buffer, size - 1))
     Else
         Debug.Print "Fn_Get_Windows_Username : Incapable de déterminer l'utilisateur Windows !"
@@ -1307,8 +1303,8 @@ Function Fn_Is_JE_Valid(rmax As Long) As Boolean
     
     Dim i As Long
     For i = 9 To rmax
-        If wshGL_EJ.Range("E" & i).Value <> "" Then
-            If wshGL_EJ.Range("H" & i).Value = "" And wshGL_EJ.Range("I" & i).Value = "" Then
+        If wshGL_EJ.Range("E" & i).Value <> vbNullString Then
+            If wshGL_EJ.Range("H" & i).Value = vbNullString And wshGL_EJ.Range("I" & i).Value = vbNullString Then
                 MsgBox "Il existe une ligne avec un compte, sans montant !"
                 Fn_Is_JE_Valid = False
             End If
@@ -1328,8 +1324,8 @@ Function Fn_Is_Deb_Saisie_Valid(rmax As Long) As Boolean
     
     Dim i As Long
     For i = 9 To rmax
-        If wshDEB_Saisie.Range("E" & i).Value <> "" Then
-            If wshDEB_Saisie.Range("N" & i).Value = "" Then
+        If wshDEB_Saisie.Range("E" & i).Value <> vbNullString Then
+            If wshDEB_Saisie.Range("N" & i).Value = vbNullString Then
                 MsgBox _
                     Prompt:="Il existe une ligne avec un compte, sans montant !", _
                     Title:="L'entrée ne peut être acceptée dans son état actuel", _
@@ -1370,7 +1366,7 @@ Function Fn_Get_Next_Invoice_Number() As String '2024-09-17 @ 14:00
     
     Dim strLastInvoice As String
     strLastInvoice = ws.Cells(lastUsedRow, 1).Value
-    If strLastInvoice <> "" Then
+    If strLastInvoice <> vbNullString Then
         strLastInvoice = Right$(strLastInvoice, Len(strLastInvoice) - 3)
     Else
         MsgBox "Problème avec les dernières lignes de la" & _
@@ -1727,7 +1723,7 @@ Function Fn_Nettoyer_Fin_Chaine(s As String) '2024-11-07 @ 16:57
     Fn_Nettoyer_Fin_Chaine = s
     
     'Supprimer les retours à la ligne, les sauts de ligne et les espaces inutiles
-    Fn_Nettoyer_Fin_Chaine = Trim$(Replace(Replace(Replace(s, vbCrLf, ""), vbCr, ""), vbLf, ""))
+    Fn_Nettoyer_Fin_Chaine = Trim$(Replace(Replace(Replace(s, vbCrLf, vbNullString), vbCr, vbNullString), vbLf, vbNullString))
 
 End Function
 
@@ -1735,7 +1731,7 @@ End Function
 Private Function Fn_Chemin_Existe(ByVal chemin As String) As Boolean
 
     On Error Resume Next
-    Fn_Chemin_Existe = (Dir(chemin) <> "")
+    Fn_Chemin_Existe = (Dir(chemin) <> vbNullString)
     On Error GoTo 0
     
 End Function
@@ -1831,7 +1827,7 @@ Function ExtraireSecondes(chaine As String) As Double
     Dim secondes As String
     
     chaine = Replace(chaine, ".", ",")
-    chaine = Replace(chaine, "'", "")
+    chaine = Replace(chaine, "'", vbNullString)
     
     If InStr(chaine, " = ") > 0 Then
         chaine = Right$(chaine, Len(chaine) - InStr(chaine, " = ") - 2)
@@ -1852,7 +1848,7 @@ End Function
 'Fonction pour centraliser tous les messages de l'application - 2024-12-29 @ 07:37
 Function AppMsgBox(message As String _
                  , Optional boutons As VbMsgBoxStyle = vbOKOnly _
-                 , Optional titre As String = "") As VbMsgBoxResult
+                 , Optional titre As String = vbNullString) As VbMsgBoxResult
                  
     AppMsgBox = MsgBox(message, boutons, titre)
                  
@@ -1883,7 +1879,7 @@ Sub ConvertirEnNumerique(rng As Range)
         If IsNumeric(cell.Value) Then
             cell.Value = CCur(cell.Value)
         Else
-            cell.Value = CCur(Replace(cell.Value, " ", ""))
+            cell.Value = CCur(Replace(cell.Value, " ", vbNullString))
         End If
     Next cell
     
@@ -2023,7 +2019,7 @@ Function ValiderDateDernierJourDuMois(Y As Integer, m As Integer, d As Integer) 
 
     'Le mois est-il valide (max 12)
     If m > 12 Then
-        ValiderDateDernierJourDuMois = ""
+        ValiderDateDernierJourDuMois = vbNullString
         Exit Function
     End If
     'Quel est le dernier jour de ce mois ?
@@ -2046,10 +2042,10 @@ Function ValiderDateDernierJourDuMois(Y As Integer, m As Integer, d As Integer) 
         message = "La combinaison jour (" & d & ") et mois (" & m & ") n'existe pas"
         titre = "Date invalide"
         If m = 2 Then
-            titre = titre & IIf(isLeapYear, "", " pour l'année " & Y)
+            titre = titre & IIf(isLeapYear, vbNullString, " pour l'année " & Y)
         End If
         MsgBox message, vbExclamation, titre
-        ValiderDateDernierJourDuMois = "" 'Si le jour n'est pas valide, on retourne une chaîne vide
+        ValiderDateDernierJourDuMois = vbNullString 'Si le jour n'est pas valide, on retourne une chaîne vide
         Exit Function
     Else
         ValiderDateDernierJourDuMois = DateSerial(Y, m, d)
@@ -2138,7 +2134,7 @@ Function NormaliserDate(chaine As String) As Variant '2025-06-12 @ 08:22
     Dim resultDate As Date
     
     chaine = Trim(chaine)
-    If chaine = "" Then
+    If chaine = vbNullString Then
         NormaliserDate = CVErr(xlErrValue)
         Exit Function
     End If
@@ -2212,7 +2208,7 @@ End Function
 
 Public Function EstChampModifie(champ As String, valeurOrigine As String) As Boolean '2025-07-03 @ 07:15
 
-    EstChampModifie = (Trim(champ & "") <> Trim(valeurOrigine & ""))
+    EstChampModifie = (Trim(champ & vbNullString) <> Trim(valeurOrigine & vbNullString))
     
 End Function
 
@@ -2223,4 +2219,5 @@ Public Function Fn_NomFeuilleActive() As String '2025-07-03 @ 10:18
     On Error GoTo 0
     
 End Function
+
 

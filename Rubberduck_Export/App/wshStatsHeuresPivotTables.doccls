@@ -4,7 +4,7 @@ Option Explicit
 
 Private Sub Worksheet_Activate()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshStatsHeuresPivotTables:Worksheet_Activate", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshStatsHeuresPivotTables:Worksheet_Activate", vbNullString, 0)
 
     If gFromMenu = False Then
         Debug.Print "#012 - wshFAC_Brouillon_Worksheet_Activate - Je ne viens pas du menu"
@@ -31,7 +31,7 @@ Private Sub Worksheet_Activate()
     'Ensure all pending events are processed - 2024-10-12 @ 11:33
     DoEvents
     
-    Me.Range("B4").Value = ""
+    Me.Range("B4").Value = vbNullString
     
     Application.ScreenUpdating = True
     Application.EnableEvents = True
@@ -50,7 +50,7 @@ Private Sub Worksheet_Activate()
         Case "Oli_Portable"
             listeChoixValides = "Olivier"
         Case Else
-            listeChoixValides = ""
+            listeChoixValides = vbNullString
     End Select
     
     Dim plageValide As Range
@@ -77,7 +77,7 @@ Private Sub Worksheet_Activate()
     Set plageValide = Nothing
     Set ws = Nothing
     
-    Call Log_Record("wshStatsHeuresPivotTables:Worksheet_Activate", "", startTime)
+    Call Log_Record("wshStatsHeuresPivotTables:Worksheet_Activate", vbNullString, startTime)
 
 End Sub
 
@@ -103,22 +103,22 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Case "Olivier"
                 wshTEC_TDB_Data.Range("S7").Value = "OB"
             Case "Tous"
-                wshTEC_TDB_Data.Range("S7").Value = ""
+                wshTEC_TDB_Data.Range("S7").Value = vbNullString
         End Select
         
-        If wshTEC_TDB_Data.Range("BJ2").Value <> "" Then
+        If wshTEC_TDB_Data.Range("BJ2").Value <> vbNullString Then
             ws.Range("S:V").EntireColumn.Hidden = False
         End If
     
-        If wshTEC_TDB_Data.Range("AW2").Value <> "" Then
+        If wshTEC_TDB_Data.Range("AW2").Value <> vbNullString Then
             ws.Range("N:R").EntireColumn.Hidden = False
         End If
     
-        If wshTEC_TDB_Data.Range("AJ2").Value <> "" Then
+        If wshTEC_TDB_Data.Range("AJ2").Value <> vbNullString Then
             ws.Range("I:M").EntireColumn.Hidden = False
         End If
     
-        If wshTEC_TDB_Data.Range("W2").Value <> "" Then
+        If wshTEC_TDB_Data.Range("W2").Value <> vbNullString Then
             ws.Range("D:H").EntireColumn.Hidden = False
         End If
     
@@ -127,7 +127,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'Libérer la mémoire
     Set ws = Nothing
 
-    Call Log_Record("wshStatsHeuresPivotTables:Worksheet_Change", "", startTime)
+    Call Log_Record("wshStatsHeuresPivotTables:Worksheet_Change", vbNullString, startTime)
 
 End Sub
 

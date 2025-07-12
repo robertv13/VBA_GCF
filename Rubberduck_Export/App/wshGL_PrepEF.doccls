@@ -4,7 +4,7 @@ Option Explicit
 
 Private Sub Worksheet_Activate()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_PrepEF:Worksheet_Activate", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_PrepEF:Worksheet_Activate", vbNullString, 0)
 
     Dim ws As Worksheet: Set ws = wshGL_PrepEF
     
@@ -40,7 +40,7 @@ Private Sub Worksheet_Activate()
     
     'Date du jour par défaut
     gPreviousCellAddress = ws.Range("F3").Address
-    ws.Range("F3").Value = ""
+    ws.Range("F3").Value = vbNullString
 '    ws.Range("F3").Value = Format$(Date, wsdADMIN.Range("B1").Value)
     
     Application.ScreenUpdating = True
@@ -51,13 +51,13 @@ Private Sub Worksheet_Activate()
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call Log_Record("wshGL_PrepEF:Worksheet_Activate", "", startTime)
+    Call Log_Record("wshGL_PrepEF:Worksheet_Activate", vbNullString, startTime)
 
 End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
-    If gPreviousCellAddress <> "" Then
+    If gPreviousCellAddress <> vbNullString Then
         Range(gPreviousCellAddress).Interior.Color = xlNone
     End If
 
@@ -86,7 +86,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         Else
             Call modTEC_Saisie.AfficherMessageDateInvalide("wshGL_PrepEF_139")
             Target.ClearContents
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
         
         Application.EnableEvents = True

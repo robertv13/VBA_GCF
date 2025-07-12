@@ -45,7 +45,7 @@ Function Get_Summary_By_GL_Account(dateMin As Date, dateMax As Date) As Variant 
     'Copier les données vers un fichier temporaire (silencieusement)
     tmpFile = CreerCopieTemporaireSolide("GL_Trans")
 '    tmpFile = CréerCopieTemporaireSansFlash("GL_Trans")
-    If tmpFile = "" Then Exit Function
+    If tmpFile = vbNullString Then Exit Function
 
     sql = "SELECT [NoCompte], SUM([Débit]) AS TotalDébit, SUM([Crédit]) AS TotalCrédit " & _
           "FROM [GL_Trans$] " & _
@@ -431,7 +431,7 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
     Set wsResult = wshGL_BV
 
     'Compte & description (passés en paramètre)
-    If compte = "" Then
+    If compte = vbNullString Then
         MsgBox "Aucun compte sélectionné.", vbExclamation
         Exit Sub
     End If
@@ -444,7 +444,7 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
     
     'Écrire NoCompte & Description en L4
     With wsResult.Range("L4")
-        .Value = compte & IIf(description <> "", " - " & description, "")
+        .Value = compte & IIf(description <> vbNullString, " - " & description, vbNullString)
         .Font.Name = "Aptos Narrow"
         .Font.size = 10
         .Font.Bold = True
@@ -523,8 +523,8 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
             tableau(ligne, 2) = rs.Fields("NoEntrée").Value
             tableau(ligne, 3) = rs.Fields("Description").Value
             tableau(ligne, 4) = rs.Fields("Source").Value
-            tableau(ligne, 5) = IIf(Debit > 0, Debit, "")
-            tableau(ligne, 6) = IIf(Credit > 0, Credit, "")
+            tableau(ligne, 5) = IIf(Debit > 0, Debit, vbNullString)
+            tableau(ligne, 6) = IIf(Credit > 0, Credit, vbNullString)
             tableau(ligne, 7) = solde
             tableau(ligne, 8) = rs.Fields("AutreRemarque")
 
@@ -546,7 +546,7 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
         MsgBox "Aucune transaction à afficher pour ce" & vbNewLine & vbNewLine & _
                 "compte, avec la période choisie", vbExclamation, "Transactions pour la période"
         Application.EnableEvents = False
-        wsResult.Range("L4").Value = ""
+        wsResult.Range("L4").Value = vbNullString
         Application.EnableEvents = True
     End If
     
@@ -633,7 +633,7 @@ End Sub
 
 Sub GL_BV_Setup_And_Print()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_BV_Setup_And_Print", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_BV_Setup_And_Print", vbNullString, 0)
     
     Dim lastRow As Long
     lastRow = wshGL_BV.Cells(wshGL_BV.Rows.count, "D").End(xlUp).Row + 2
@@ -656,23 +656,23 @@ Sub GL_BV_Setup_And_Print()
     Set printRange = Nothing
     Set shp = Nothing
     
-    Call Log_Record("modGL_BV:GL_BV_Setup_And_Print", "", startTime)
+    Call Log_Record("modGL_BV:GL_BV_Setup_And_Print", vbNullString, startTime)
 
 End Sub
 
 Sub shp_GL_BV_Setup_And_Print_Trans_Click()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:shp_GL_BV_Setup_And_Print_Trans_Click", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:shp_GL_BV_Setup_And_Print_Trans_Click", vbNullString, 0)
     
     Call GL_BV_Setup_And_Print_Trans
 
-    Call Log_Record("modGL_BV:shp_GL_BV_Setup_And_Print_Trans_Click", "", startTime)
+    Call Log_Record("modGL_BV:shp_GL_BV_Setup_And_Print_Trans_Click", vbNullString, startTime)
 
 End Sub
 
 Sub GL_BV_Setup_And_Print_Trans()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_BV_Setup_And_Print_Trans", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_BV_Setup_And_Print_Trans", vbNullString, 0)
     
     Dim lastRow As Long
     lastRow = wshGL_BV.Cells(wshGL_BV.Rows.count, "M").End(xlUp).Row
@@ -695,13 +695,13 @@ Sub GL_BV_Setup_And_Print_Trans()
     Set printRange = Nothing
     Set shp = Nothing
     
-    Call Log_Record("modGL_BV:GL_BV_Setup_And_Print_Trans", "", startTime)
+    Call Log_Record("modGL_BV:GL_BV_Setup_And_Print_Trans", vbNullString, startTime)
 
 End Sub
 
 Sub GL_BV_SetUp_And_Print_Document(myPrintRange As Range, pagesTall As Long)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_BV_SetUp_And_Print_Document", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_BV_SetUp_And_Print_Document", vbNullString, 0)
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -759,7 +759,7 @@ Sub GL_BV_SetUp_And_Print_Document(myPrintRange As Range, pagesTall As Long)
     
     wshGL_BV.PrintPreview '2024-08-15 @ 14:53
  
-    Call Log_Record("modGL_BV:GL_BV_SetUp_And_Print_Document", "", startTime)
+    Call Log_Record("modGL_BV:GL_BV_SetUp_And_Print_Document", vbNullString, startTime)
  
 End Sub
 
@@ -810,7 +810,7 @@ End Sub
 
 Sub GL_BV_Adjust_The_Shape()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_BV_Adjust_The_Shape", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_BV_Adjust_The_Shape", vbNullString, 0)
     
     Dim lastResultRow As Long
     lastResultRow = wsdGL_Trans.Cells(wsdGL_Trans.Rows.count, "AC").End(xlUp).Row
@@ -827,7 +827,7 @@ Sub GL_BV_Adjust_The_Shape()
             If i = 2 Then
                 texteFull = "Entrée #: " & .Range("AC2").Value & Space$(43) & "(" & .Range("AL2").Value & ")" & vbCrLf
                 texteFull = texteFull & "Desc    : " & .Range("AE2").Value & vbCrLf
-                If Trim$(.Range("AF2").Value) <> "" Then
+                If Trim$(.Range("AF2").Value) <> vbNullString Then
                     texteFull = texteFull & "Source  : " & .Range("AF2").Value & vbCrLf & vbCrLf
                 Else
                     texteFull = texteFull & vbCrLf
@@ -843,7 +843,7 @@ Sub GL_BV_Adjust_The_Shape()
                 texteOneLine = "   " & texteOneLine
             End If
             texteOneLine = Fn_Pad_A_String(texteOneLine, " ", 79, "R")
-            If Trim$(.Range("AK" & i).Value) <> "" Then
+            If Trim$(.Range("AK" & i).Value) <> vbNullString Then
                 texteOneLine = texteOneLine & Trim$(.Range("AK" & i).Value)
             End If
             If Len(texteOneLine) > maxLength Then
@@ -883,7 +883,7 @@ Sub GL_BV_Adjust_The_Shape()
     'Libérer la mémoire
     Set dynamicShape = Nothing
       
-    Call Log_Record("modGL_BV:GL_BV_Adjust_The_Shape", "", startTime)
+    Call Log_Record("modGL_BV:GL_BV_Adjust_The_Shape", vbNullString, startTime)
       
 End Sub
 
@@ -944,4 +944,5 @@ Sub GL_BV_Back_To_Menu()
     wshMenuGL.Range("A1").Select
     
 End Sub
+
 

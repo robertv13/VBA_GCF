@@ -4,7 +4,7 @@ Option Explicit
 'Option # 1
 Sub PreparationFacture_Click()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMENU_FAC:PreparationFacture_Click", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMENU_FAC:PreparationFacture_Click", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
@@ -20,7 +20,7 @@ Sub PreparationFacture_Click()
     
     Application.ScreenUpdating = True
 
-    Call Log_Record("modMENU_FAC:PreparationFacture_Click", "", startTime)
+    Call Log_Record("modMENU_FAC:PreparationFacture_Click", vbNullString, startTime)
     
 End Sub
 
@@ -45,7 +45,7 @@ End Sub
 'Option # 3
 Sub FAC_Historique_Click()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMENU_FAC:FAC_Historique_Click", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMENU_FAC:FAC_Historique_Click", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
@@ -64,14 +64,14 @@ Sub FAC_Historique_Click()
     
     Application.ScreenUpdating = True
 
-    Call Log_Record("modMENU_FAC:FAC_Historique_Click", "", startTime)
+    Call Log_Record("modMENU_FAC:FAC_Historique_Click", vbNullString, startTime)
 
 End Sub
 
 'Option # 4
 Sub FAC_Confirmation_Click()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMENU_FAC:FAC_Confirmation_Click", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modMENU_FAC:FAC_Confirmation_Click", vbNullString, 0)
     
     gFromMenu = True '2024-09-03 @ 06:20
 
@@ -85,7 +85,7 @@ Sub FAC_Confirmation_Click()
     
     Call Afficher_ufConfirmation
     
-    Call Log_Record("modMENU_FAC:FAC_Confirmation_Click", "", startTime)
+    Call Log_Record("modMENU_FAC:FAC_Confirmation_Click", vbNullString, startTime)
 
 End Sub
 

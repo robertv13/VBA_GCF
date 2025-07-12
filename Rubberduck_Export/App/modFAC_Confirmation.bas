@@ -55,7 +55,7 @@ End Sub
 
 Sub ObtenirFactureAConfirmer(AC_OR_C As String) '2025-03-12 @ 12:40
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:ObtenirFactureAConfirmer", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:ObtenirFactureAConfirmer", vbNullString, 0)
     
     'Utilisation de la feuille FAC_Entête
     Dim ws As Worksheet: Set ws = wsdFAC_Entete
@@ -113,7 +113,7 @@ Sub ObtenirFactureAConfirmer(AC_OR_C As String) '2025-03-12 @ 12:40
     Set rngResult = Nothing
     Set ws = Nothing
 
-    Call Log_Record("modFAC_Confirmation:ObtenirFactureAConfirmer", "", startTime)
+    Call Log_Record("modFAC_Confirmation:ObtenirFactureAConfirmer", vbNullString, startTime)
 
 End Sub
 
@@ -244,7 +244,7 @@ Sub MAJ_Statut_Facture_Entête_BD_MASTER(invoice As String) '2025-03-12 @ 12:40
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modFAC_Confirmation:MAJ_Statut_Facture_Entête_BD_MASTER", "", startTime)
+    Call Log_Record("modFAC_Confirmation:MAJ_Statut_Facture_Entête_BD_MASTER", vbNullString, startTime)
 
 End Sub
 
@@ -275,7 +275,7 @@ Sub MAJ_Statut_Facture_Entête_Local(invoice As String) '2025-03-12 @ 12:40
     Set lookupRange = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modFAC_Confirmation:MAJ_Statut_Facture_Entête_Local", "", startTime)
+    Call Log_Record("modFAC_Confirmation:MAJ_Statut_Facture_Entête_Local", vbNullString, startTime)
 
 End Sub
 
@@ -319,7 +319,7 @@ Sub Construire_GL_Posting_Confirmation(invoice As String) '2025-03-12 @ 12:42
             MyArray(1, 1) = ObtenirNoGlIndicateur("Comptes Clients")
             MyArray(1, 2) = "Comptes clients"
             MyArray(1, 3) = hono + misc1 + misc2 + misc3 + tps + tvq
-            MyArray(1, 4) = ""
+            MyArray(1, 4) = vbNullString
         End If
         
         'Professional Fees (hono)
@@ -327,7 +327,7 @@ Sub Construire_GL_Posting_Confirmation(invoice As String) '2025-03-12 @ 12:42
             MyArray(2, 1) = ObtenirNoGlIndicateur("Revenus de consultation")
             MyArray(2, 2) = "Revenus de consultation"
             MyArray(2, 3) = -hono
-            MyArray(2, 4) = ""
+            MyArray(2, 4) = vbNullString
         End If
         
         'Miscellaneous Amount # 1 (misc1)
@@ -335,7 +335,7 @@ Sub Construire_GL_Posting_Confirmation(invoice As String) '2025-03-12 @ 12:42
             MyArray(3, 1) = ObtenirNoGlIndicateur("Revenus frais de poste")
             MyArray(3, 2) = "Revenus - Frais de poste"
             MyArray(3, 3) = -misc1
-            MyArray(3, 4) = ""
+            MyArray(3, 4) = vbNullString
         End If
         
         'Miscellaneous Amount # 2 (misc2)
@@ -343,7 +343,7 @@ Sub Construire_GL_Posting_Confirmation(invoice As String) '2025-03-12 @ 12:42
             MyArray(4, 1) = ObtenirNoGlIndicateur("Revenus sous-traitants")
             MyArray(4, 2) = "Revenus - Sous-traitants"
             MyArray(4, 3) = -misc2
-            MyArray(4, 4) = ""
+            MyArray(4, 4) = vbNullString
         End If
         
         'Miscellaneous Amount # 3 (misc3)
@@ -351,7 +351,7 @@ Sub Construire_GL_Posting_Confirmation(invoice As String) '2025-03-12 @ 12:42
             MyArray(5, 1) = ObtenirNoGlIndicateur("Revenus autres frais")
             MyArray(5, 2) = "Revenus - Autres Frais"
             MyArray(5, 3) = -misc3
-            MyArray(5, 4) = ""
+            MyArray(5, 4) = vbNullString
         End If
         
         'GST to pay (tps)
@@ -359,7 +359,7 @@ Sub Construire_GL_Posting_Confirmation(invoice As String) '2025-03-12 @ 12:42
             MyArray(6, 1) = ObtenirNoGlIndicateur("TPS Facturée")
             MyArray(6, 2) = "TPS percues"
             MyArray(6, 3) = -tps
-            MyArray(6, 4) = ""
+            MyArray(6, 4) = vbNullString
         End If
         
         'PST to pay (tvq)
@@ -367,7 +367,7 @@ Sub Construire_GL_Posting_Confirmation(invoice As String) '2025-03-12 @ 12:42
             MyArray(7, 1) = ObtenirNoGlIndicateur("TVQ Facturée")
             MyArray(7, 2) = "TVQ percues"
             MyArray(7, 3) = -tvq
-            MyArray(7, 4) = ""
+            MyArray(7, 4) = vbNullString
         End If
         
         'Mise à jour du posting GL des confirmations de facture
@@ -386,7 +386,8 @@ Sub Construire_GL_Posting_Confirmation(invoice As String) '2025-03-12 @ 12:42
     Set ws = Nothing
     On Error GoTo 0
     
-    Call Log_Record("modFAC_Confirmation:Construire_GL_Posting_Confirmation", "", startTime)
+    Call Log_Record("modFAC_Confirmation:Construire_GL_Posting_Confirmation", vbNullString, startTime)
 
 End Sub
+
 

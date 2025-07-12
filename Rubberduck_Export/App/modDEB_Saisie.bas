@@ -21,10 +21,10 @@ Sub DEB_Saisie_Update()
         Exit Sub
     End If
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Saisie_Update", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Saisie_Update", vbNullString, 0)
     
     'Remove highlight from last cell
-    If wshDEB_Saisie.Range("B4").Value <> "" Then
+    If wshDEB_Saisie.Range("B4").Value <> vbNullString Then
         wshDEB_Saisie.Range(wshDEB_Saisie.Range("B4").Value).Interior.Color = xlNone
     End If
     
@@ -67,13 +67,13 @@ Sub DEB_Saisie_Update()
     wshDEB_Saisie.Activate
     wshDEB_Saisie.Range("F4").Select
         
-    Call Log_Record("modDEB_Saisie:DEB_Saisie_Update", "", startTime)
+    Call Log_Record("modDEB_Saisie:DEB_Saisie_Update", vbNullString, startTime)
         
 End Sub
 
 Sub DEB_Renversement_Update()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Renversement_Update", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Renversement_Update", vbNullString, 0)
     
     Dim ws As Worksheet
     Set ws = wshDEB_Saisie
@@ -160,13 +160,13 @@ Sub DEB_Renversement_Update()
     Set shp = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modDEB_Saisie:DEB_Renversement_Update", "", startTime)
+    Call Log_Record("modDEB_Saisie:DEB_Renversement_Update", vbNullString, startTime)
     
 End Sub
 
 Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Trans_Add_Record_To_DB", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Trans_Add_Record_To_DB", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -224,7 +224,7 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
                 rs.Fields(fDebTType - 1).Value = .Range("F4").Value
                 rs.Fields(fDebTBeneficiaire - 1).Value = .Range("J4").Value
                 rs.Fields(fDebTFournID - 1).Value = .Range("B5").Value
-                rs.Fields(fDebTDescription - 1).Value = .Range("F6").Value & IIf(.Range("B7"), " (RENVERSEMENT de " & numeroDebourseARenverser & ")", "")
+                rs.Fields(fDebTDescription - 1).Value = .Range("F6").Value & IIf(.Range("B7"), " (RENVERSEMENT de " & numeroDebourseARenverser & ")", vbNullString)
                 rs.Fields(fDebTReference - 1).Value = .Range("M6").Value
                 
                 rs.Fields(fDebTNoCompte - 1).Value = .Range("Q" & l).Value
@@ -239,7 +239,7 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
                 rs.Fields(fDebTDépense - 1).Value = CDbl(.Range("I" & l).Value _
                                                   - .Range("L" & l).Value _
                                                   - .Range("M" & l).Value)
-                rs.Fields(fDebTAutreRemarque - 1).Value = ""
+                rs.Fields(fDebTAutreRemarque - 1).Value = vbNullString
                 rs.Fields(fDebTTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
             End With
         rs.Update
@@ -257,7 +257,7 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modDEB_Saisie:DEB_Trans_Add_Record_To_DB", "", startTime)
+    Call Log_Record("modDEB_Saisie:DEB_Trans_Add_Record_To_DB", vbNullString, startTime)
 
 End Sub
 
@@ -291,7 +291,7 @@ Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
             ws.Cells(rowToBeUsed, fDebTType).Value = .Range("F4").Value
             ws.Cells(rowToBeUsed, fDebTBeneficiaire).Value = .Range("J4").Value
             ws.Cells(rowToBeUsed, fDebTFournID).Value = .Range("B5").Value
-            ws.Cells(rowToBeUsed, fDebTDescription).Value = .Range("F6").Value & IIf(.Range("B7"), " (RENVERSEMENT de " & numeroDebourseARenverser & ")", "")
+            ws.Cells(rowToBeUsed, fDebTDescription).Value = .Range("F6").Value & IIf(.Range("B7"), " (RENVERSEMENT de " & numeroDebourseARenverser & ")", vbNullString)
             ws.Cells(rowToBeUsed, fDebTReference).Value = .Range("M6").Value
             
             ws.Cells(rowToBeUsed, fDebTNoCompte).Value = .Range("Q" & i).Value
@@ -306,14 +306,14 @@ Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
             ws.Cells(rowToBeUsed, fDebTDépense).Value = .Range("I" & i).Value _
                                                           - .Range("L" & i).Value _
                                                           - .Range("M" & i).Value
-            ws.Cells(rowToBeUsed, fDebTAutreRemarque).Value = ""
+            ws.Cells(rowToBeUsed, fDebTAutreRemarque).Value = vbNullString
             ws.Cells(rowToBeUsed, fDebTTimeStamp).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
         End With
         rowToBeUsed = rowToBeUsed + 1
         Call Log_Record("    modDEB_Saisie:DEB_Trans_Add_Record_Locally", -1)
     Next i
     
-    Call Log_Record("modDEB_Saisie:DEB_Trans_Add_Record_Locally", "", startTime)
+    Call Log_Record("modDEB_Saisie:DEB_Trans_Add_Record_Locally", vbNullString, startTime)
 
     Application.ScreenUpdating = True
 
@@ -321,7 +321,7 @@ End Sub
 
 Sub DEB_Trans_MAJ_Debourse_Renverse_To_DB()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_To_DB", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_To_DB", vbNullString, 0)
     
     'Définition des paramètres
     Dim destinationFileName As String, destinationTab As String
@@ -367,13 +367,13 @@ Sub DEB_Trans_MAJ_Debourse_Renverse_To_DB()
     Set conn = Nothing
     Set rs = Nothing
 
-    Call Log_Record("modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_To_DB", "", startTime)
+    Call Log_Record("modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_To_DB", vbNullString, startTime)
     
 End Sub
 
 Sub DEB_Trans_MAJ_Debourse_Renverse_Locally()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_Locally", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_Locally", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -401,7 +401,7 @@ Sub DEB_Trans_MAJ_Debourse_Renverse_Locally()
     'Libérer la mémoire
     Set ws = Nothing
 
-    Call Log_Record("modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_Locally", "", startTime)
+    Call Log_Record("modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_Locally", vbNullString, startTime)
     
 End Sub
 
@@ -417,7 +417,7 @@ Sub Preparer_Liste_Debourses_Pour_Afficher()
     ufListeDebourse.show vbModal
     
     If numeroDebourseARenverser = -1 Then
-        wshDEB_Saisie.Range("F4").Value = ""
+        wshDEB_Saisie.Range("F4").Value = vbNullString
         wshDEB_Saisie.Range("F4").Select
     Else
         wshDEB_Saisie.Range("B7").Value = True
@@ -435,7 +435,7 @@ Sub DEB_Renverser_Ecriture() '2025-02-23 @ 16:56
     If numeroDebourseARenverser = -1 Then
         MsgBox "Vous n'avez sélectionné aucun déboursé à renverser", vbInformation, "Sélection d'un déboursé à renverser"
         Application.EnableEvents = True
-        wshDEB_Saisie.Range("F4").Value = ""
+        wshDEB_Saisie.Range("F4").Value = vbNullString
         wshDEB_Saisie.Range("F4").Select
         Application.EnableEvents = False
         GoTo Nettoyage
@@ -508,7 +508,7 @@ End Sub
 
 Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation", vbNullString, 0)
 
     Dim Montant As Double, dateDebours As Date
     Dim descGL_Trans As String, Source As String, deboursType As String
@@ -517,7 +517,7 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
     dateDebours = wshDEB_Saisie.Range("O4").Value
     deboursType = wshDEB_Saisie.Range("F4").Value
     descGL_Trans = deboursType & " - " & wshDEB_Saisie.Range("F6").Value
-    If Trim$(wshDEB_Saisie.Range("M6").Value) <> "" Then
+    If Trim$(wshDEB_Saisie.Range("M6").Value) <> vbNullString Then
         descGL_Trans = descGL_Trans & " [" & wshDEB_Saisie.Range("M6").Value & "]"
     End If
     If wshDEB_Saisie.Range("B7").Value = False Then
@@ -560,7 +560,7 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
     End Select
     
     MyArray(1, 3) = -Montant
-    MyArray(1, 4) = ""
+    MyArray(1, 4) = vbNullString
     
     'Process every lines
     Dim lastUsedRow As Long
@@ -572,14 +572,14 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
         MyArray(arrRow, 1) = wshDEB_Saisie.Range("Q" & l).Value
         MyArray(arrRow, 2) = wshDEB_Saisie.Range("E" & l).Value
         MyArray(arrRow, 3) = wshDEB_Saisie.Range("N" & l).Value
-        MyArray(arrRow, 4) = ""
+        MyArray(arrRow, 4) = vbNullString
         arrRow = arrRow + 1
         
         If wshDEB_Saisie.Range("L" & l).Value <> 0 Then
             MyArray(arrRow, 1) = ObtenirNoGlIndicateur("TPS Payée")
             MyArray(arrRow, 2) = "TPS payées"
             MyArray(arrRow, 3) = wshDEB_Saisie.Range("L" & l).Value
-            MyArray(arrRow, 4) = ""
+            MyArray(arrRow, 4) = vbNullString
             arrRow = arrRow + 1
         End If
 
@@ -587,7 +587,7 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
             MyArray(arrRow, 1) = ObtenirNoGlIndicateur("TVQ Payée")
             MyArray(arrRow, 2) = "TVQ payées"
             MyArray(arrRow, 3) = wshDEB_Saisie.Range("M" & l).Value
-            MyArray(arrRow, 4) = ""
+            MyArray(arrRow, 4) = vbNullString
             arrRow = arrRow + 1
         End If
     Next l
@@ -597,13 +597,13 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
     
     Call GL_Posting_Locally(dateDebours, descGL_Trans, Source, MyArray, GLEntryNo)
     
-    Call Log_Record("modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation", "", startTime)
+    Call Log_Record("modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation", vbNullString, startTime)
 
 End Sub
 
 Sub ChargerDEBRecurrentDansSaisie(DEBAutoDesc As String, noDEBAuto As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:ChargerDEBRecurrentDansSaisie", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:ChargerDEBRecurrentDansSaisie", vbNullString, 0)
     
     'On copie l'écriture automatique vers wshDEB_Saisie
     Dim rowDEBAuto As Long, rowDEB As Long
@@ -616,7 +616,7 @@ Sub ChargerDEBRecurrentDansSaisie(DEBAutoDesc As String, noDEBAuto As Long)
     Application.EnableEvents = False
     Dim r As Long, totAmount As Currency, typeDEB As String
     For r = 2 To rowDEBAuto
-        If wsdDEB_Recurrent.Range("A" & r).Value = noDEBAuto And wsdDEB_Recurrent.Range("F" & r).Value <> "" Then
+        If wsdDEB_Recurrent.Range("A" & r).Value = noDEBAuto And wsdDEB_Recurrent.Range("F" & r).Value <> vbNullString Then
             wshDEB_Saisie.Range("E" & rowDEB).Value = wsdDEB_Recurrent.Range("G" & r).Value
             wshDEB_Saisie.Range("H" & rowDEB).Value = wsdDEB_Recurrent.Range("H" & r).Value
             wshDEB_Saisie.Range("I" & rowDEB).Value = wsdDEB_Recurrent.Range("I" & r).Value
@@ -629,7 +629,7 @@ Sub ChargerDEBRecurrentDansSaisie(DEBAutoDesc As String, noDEBAuto As Long)
                                                       - wsdDEB_Recurrent.Range("M" & r).Value
             wshDEB_Saisie.Range("Q" & rowDEB).Value = wsdDEB_Recurrent.Range("F" & r).Value
             totAmount = totAmount + wsdDEB_Recurrent.Range("I" & r).Value
-            If typeDEB = "" Then
+            If typeDEB = vbNullString Then
                 typeDEB = wsdDEB_Recurrent.Range("C" & r).Value
             End If
             rowDEB = rowDEB + 1
@@ -644,13 +644,13 @@ Sub ChargerDEBRecurrentDansSaisie(DEBAutoDesc As String, noDEBAuto As Long)
     wshDEB_Saisie.Range("O4").Activate
     wshDEB_Saisie.Range("O4").Select
 
-    Call Log_Record("modDEB_Saisie:ChargerDEBRecurrentDansSaisie", "", startTime)
+    Call Log_Record("modDEB_Saisie:ChargerDEBRecurrentDansSaisie", vbNullString, startTime)
     
 End Sub
 
 Sub Save_DEB_Recurrent(ll As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:Save_DEB_Recurrent", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:Save_DEB_Recurrent", vbNullString, 0)
     
     Dim rowDEBLast As Long
     rowDEBLast = wshDEB_Saisie.Cells(wshDEB_Saisie.Rows.count, "E").End(xlUp).Row  'Last Used Row in wshDEB_Saisie
@@ -658,13 +658,13 @@ Sub Save_DEB_Recurrent(ll As Long)
     Call DEB_Recurrent_Add_Record_To_DB(rowDEBLast)
     Call DEB_Recurrent_Add_Record_Locally(rowDEBLast)
     
-    Call Log_Record("modDEB_Saisie:Save_DEB_Recurrent", "", startTime)
+    Call Log_Record("modDEB_Saisie:Save_DEB_Recurrent", vbNullString, startTime)
     
 End Sub
 
 Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Recurrent_Add_Record_To_DB", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Recurrent_Add_Record_To_DB", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
@@ -741,13 +741,13 @@ Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modDEB_Saisie:DEB_Recurrent_Add_Record_To_DB", "", startTime)
+    Call Log_Record("modDEB_Saisie:DEB_Recurrent_Add_Record_To_DB", vbNullString, startTime)
 
 End Sub
 
 Sub DEB_Recurrent_Add_Record_Locally(r As Long) 'Write records to local file
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Recurrent_Add_Record_Locally", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Recurrent_Add_Record_Locally", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -790,7 +790,7 @@ Sub DEB_Recurrent_Add_Record_Locally(r As Long) 'Write records to local file
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modDEB_Saisie:DEB_Recurrent_Add_Record_Locally", "", startTime)
+    Call Log_Record("modDEB_Saisie:DEB_Recurrent_Add_Record_Locally", vbNullString, startTime)
     
 End Sub
 
@@ -809,7 +809,7 @@ End Sub
 
 Sub DEB_Recurrent_Build_Summary()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Recurrent_Build_Summary", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Recurrent_Build_Summary", vbNullString, 0)
     
     'Build the summary at column K & L
     Dim lastUsedRow1 As Long
@@ -836,13 +836,13 @@ Sub DEB_Recurrent_Build_Summary()
         Next i
     End With
 
-    Call Log_Record("modDEB_Saisie:DEB_Recurrent_Build_Summary", "", startTime)
+    Call Log_Record("modDEB_Saisie:DEB_Recurrent_Build_Summary", vbNullString, startTime)
 
 End Sub
 
 Public Sub DEB_Saisie_Clear_All_Cells()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Saisie_Clear_All_Cells", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modDEB_Saisie:DEB_Saisie_Clear_All_Cells", vbNullString, 0)
 
     Dim ws As Worksheet
     Set ws = wshDEB_Saisie
@@ -885,7 +885,7 @@ Public Sub DEB_Saisie_Clear_All_Cells()
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call Log_Record("modDEB_Saisie:DEB_Saisie_Clear_All_Cells", "", startTime)
+    Call Log_Record("modDEB_Saisie:DEB_Saisie_Clear_All_Cells", vbNullString, startTime)
 
 End Sub
 
@@ -993,14 +993,11 @@ Sub DEB_Forme_Sauvegarder(forme As Shape)
         Set sauvegardesCaracteristiquesForme = CreateObject("Scripting.Dictionary")
     End If
 
-    ' Sauvegarder les caractéristiques originales de la forme
+    'Sauvegarder les caractéristiques originales de la forme
     sauvegardesCaracteristiquesForme("Left") = forme.Left
     sauvegardesCaracteristiquesForme("Width") = forme.Width
     sauvegardesCaracteristiquesForme("Height") = forme.Height
-    '@Ignore ValueRequired
-    '@Ignore ValueRequired, ValueRequired
     sauvegardesCaracteristiquesForme("FillColor") = forme.Fill.ForeColor.RGB
-    '@Ignore ValueRequired, ValueRequired
     sauvegardesCaracteristiquesForme("LineColor") = forme.Line.ForeColor.RGB
     sauvegardesCaracteristiquesForme("Text") = forme.TextFrame2.TextRange.text
     sauvegardesCaracteristiquesForme("TextColor") = forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB

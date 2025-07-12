@@ -96,7 +96,7 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
     
     wshFAC_Brouillon.Select
     Application.Wait (Now + TimeValue("0:00:02"))
-    wshFAC_Brouillon.Range("E3").Value = "" 'Reset client to empty
+    wshFAC_Brouillon.Range("E3").Value = vbNullString 'Reset client to empty
     
     wshFAC_Brouillon.Range("B27").Value = False
     
@@ -106,7 +106,7 @@ Fast_Exit_Sub:
 
     wshFAC_Brouillon.Select
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Save", "", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Save", vbNullString, startTime)
     
 End Sub
 
@@ -184,7 +184,7 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
     Set rs = Nothing
     Set conn = Nothing
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Header_to_DB", "", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Header_to_DB", vbNullString, startTime)
 
 End Sub
 
@@ -238,7 +238,7 @@ Sub FAC_Finale_Add_Invoice_Header_Locally() '2024-03-11 @ 08:19 - Write records 
     wshFAC_Brouillon.Range("B11").Value = firstFreeRow
     Application.EnableEvents = True
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Header_Locally", "", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Header_Locally", vbNullString, startTime)
 
     Application.ScreenUpdating = True
 
@@ -300,7 +300,7 @@ Sub FAC_Finale_Add_Invoice_Details_to_DB()
     'Create Summary By Rates lines
     Dim i As Long
     For i = 25 To 34
-        If wshFAC_Brouillon.Range("R" & i).Value <> "" And _
+        If wshFAC_Brouillon.Range("R" & i).Value <> vbNullString And _
             wshFAC_Brouillon.Range("S" & i).Value <> 0 Then
                 rs.AddNew
                 With wshFAC_Brouillon
@@ -310,7 +310,7 @@ Sub FAC_Finale_Add_Invoice_Details_to_DB()
                     rs.Fields(fFacDHeures - 1).Value = CDbl(Format$(.Range("S" & i).Value, "0.00"))
                     rs.Fields(fFacDTaux - 1).Value = CDbl(Format$(.Range("T" & i).Value, "0.00"))
                     rs.Fields(fFacDHonoraires - 1).Value = CDbl(Format$(.Range("S" & i).Value * .Range("T" & i).Value, "0.00"))
-                    rs.Fields(fFacDInvRow - 1).Value = ""
+                    rs.Fields(fFacDInvRow - 1).Value = vbNullString
                     rs.Fields(fFacDTimeStamp - 1).Value = Format$(Now, "yyyy-mm-dd hh:mm:ss")
                 End With
                 rs.Update
@@ -331,7 +331,7 @@ nothing_to_update:
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Details_to_DB", "", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Details_to_DB", vbNullString, startTime)
 
 End Sub
 
@@ -366,7 +366,7 @@ Sub FAC_Finale_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records
             .Range("C" & firstFreeRow).Value = Format$(wshFAC_Finale.Range("C" & i).Value, "0.00")
             .Range("D" & firstFreeRow).Value = Format$(wshFAC_Finale.Range("D" & i).Value, "0.00")
             .Range("E" & firstFreeRow).Value = Format$(wshFAC_Finale.Range("E" & i).Value, "0.00")
-            .Range("F" & firstFreeRow).Value = ""
+            .Range("F" & firstFreeRow).Value = vbNullString
             .Range("G" & firstFreeRow).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
         End With
         firstFreeRow = firstFreeRow + 1
@@ -374,7 +374,7 @@ Sub FAC_Finale_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records
 
     'Create Summary By Rates lines
     For i = 25 To 34
-        If wshFAC_Brouillon.Range("R" & i).Value <> "" And _
+        If wshFAC_Brouillon.Range("R" & i).Value <> vbNullString And _
             wshFAC_Brouillon.Range("S" & i).Value <> 0 Then
                 With wshFAC_Brouillon
                     ws.Range("A" & firstFreeRow).Value = wshFAC_Finale.Range("E28")
@@ -383,7 +383,7 @@ Sub FAC_Finale_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records
                     ws.Range("C" & firstFreeRow).Value = Format$(.Range("S" & i).Value, "0.00")
                     ws.Range("D" & firstFreeRow).Value = Format$(.Range("T" & i).Value, "0.00")
                     ws.Range("E" & firstFreeRow).Value = Format$(.Range("S" & i).Value * .Range("T" & i).Value, "0.00")
-                    ws.Range("F" & firstFreeRow).Value = ""
+                    ws.Range("F" & firstFreeRow).Value = vbNullString
                     ws.Range("G" & firstFreeRow).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
                 End With
             firstFreeRow = firstFreeRow + 1
@@ -393,7 +393,7 @@ Sub FAC_Finale_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records
 nothing_to_update:
     Application.ScreenUpdating = True
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Details_Locally", "", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Details_Locally", vbNullString, startTime)
 
 End Sub
 
@@ -433,7 +433,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_to_DB()
     Dim r As Long
     For r = firstRow To lastRow
         'Add fields to the recordset before updating it
-        If wshFAC_Brouillon.Range("R" & r).Value <> "" Then
+        If wshFAC_Brouillon.Range("R" & r).Value <> vbNullString Then
             rs.AddNew
             With wshFAC_Finale
                 rs.Fields(fFacSTInvNo - 1).Value = noFacture
@@ -461,7 +461,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_to_DB()
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_to_DB", "", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_to_DB", vbNullString, startTime)
 
 End Sub
 
@@ -490,7 +490,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_Locally()
     Dim seq As Long
     Dim i As Long
     For i = firstRow To lastRow
-        If wshFAC_Brouillon.Range("R" & i).Value <> "" Then
+        If wshFAC_Brouillon.Range("R" & i).Value <> vbNullString Then
             With wsdFAC_Sommaire_Taux
                 .Cells(firstFreeRow, fFacSTInvNo).Value = noFacture
                 .Cells(firstFreeRow, fFacSTSéquence).Value = seq
@@ -508,7 +508,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_Locally()
 
     Application.ScreenUpdating = True
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_Locally", "", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_Locally", vbNullString, startTime)
 
 End Sub
 
@@ -573,7 +573,7 @@ Sub FAC_Finale_Add_Comptes_Clients_to_DB()
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Comptes_Clients_to_DB", "", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Comptes_Clients_to_DB", vbNullString, startTime)
 
 End Sub
 
@@ -612,7 +612,7 @@ nothing_to_update:
 
     Application.ScreenUpdating = True
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Comptes_Clients_Locally", "", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Add_Comptes_Clients_Locally", vbNullString, startTime)
 
 End Sub
 
@@ -677,7 +677,7 @@ next_iteration:
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_To_DB", "", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_To_DB", vbNullString, startTime)
 
 End Sub
 
@@ -706,7 +706,7 @@ Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Long, lastResultRo
     'Libérer la mémoire
     Set lookupRange = Nothing
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally", "", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_Locally", vbNullString, startTime)
 
 End Sub
 
@@ -746,7 +746,7 @@ Sub FAC_Finale_Softdelete_Projets_Détails_To_DB(projetID As Long)
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_To_DB", "", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_To_DB", vbNullString, startTime)
 
 End Sub
 
@@ -784,7 +784,7 @@ Sub FAC_Finale_Softdelete_Projets_Détails_Locally(projetID As Long)
     Set cell = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_Locally", "", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_Locally", vbNullString, startTime)
 
 End Sub
 
@@ -823,7 +823,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID As Long)
     'Libérer la mémoire (Normal)
     Set conn = Nothing
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_To_DB", "", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_To_DB", vbNullString, startTime)
     Exit Sub
 
 eh:
@@ -871,7 +871,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_Locally(projetID As Long)
     Set cell = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally", "", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally", vbNullString, startTime)
 
 End Sub
 
@@ -886,13 +886,13 @@ End Function
 
 Sub FAC_Finale_Setup_All_Cells()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Setup_All_Cells", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Setup_All_Cells", vbNullString, 0)
     
     Application.EnableEvents = False
      
     With wshFAC_Finale
         .Range("B21").formula = "= ""Le "" & DAY(FAC_Brouillon!o3) & "" "" & UPPER(TEXT(FAC_Brouillon!O3, ""mmmm"")) & "" "" & YEAR(FAC_Brouillon!O3)"
-        .Range("B23:B27").Value = ""
+        .Range("B23:B27").Value = vbNullString
         .Range("E28").Value = "=" & wshFAC_Brouillon.Name & "!O6"    'Invoice number
 
         Call FAC_Brouillon_Set_Labels(.Range("B69"), "FAC_Label_SubTotal_1")
@@ -929,7 +929,7 @@ Sub FAC_Finale_Setup_All_Cells()
     
     Application.EnableEvents = True
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Setup_All_Cells", "", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Setup_All_Cells", vbNullString, startTime)
 
 End Sub
 
@@ -966,7 +966,7 @@ Sub FAC_Finale_Preview_PDF() '2024-03-02 @ 16:18
     wshFAC_Finale.PrintOut , , 1, True, True, , , , False
    
     'Restaurer l'imprimante précédente après l'impression
-    If imprimanteCourante <> "" Then
+    If imprimanteCourante <> vbNullString Then
         On Error Resume Next
         Application.ActivePrinter = imprimanteCourante
         On Error GoTo 0
@@ -1038,7 +1038,7 @@ Fin:
         .Calculation = xlCalculationAutomatic
     End With
 
-    Call Log_Record("modFAC_Finale:FAC_Finale_Creation_PDF", "", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Creation_PDF", vbNullString, startTime)
     
 End Sub
 
@@ -1057,7 +1057,7 @@ Sub FAC_Finale_Create_PDF(noFacture As String)
         gFlagEtapeFacture = -1
     End If
 
-    Call Log_Record("modFAC_Finale:FAC_Finale_Create_PDF", "", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Create_PDF", vbNullString, startTime)
 
 End Sub
 
@@ -1075,7 +1075,7 @@ Function FAC_Finale_Create_PDF_Func(noFacture As String, Optional action As Stri
 
     'Check if the file already exists
     Dim fileExists As Boolean
-    fileExists = Dir(SaveAs) <> ""
+    fileExists = Dir(SaveAs) <> vbNullString
     
     'If the file exists, prompt the user for confirmation
     Dim reponse As VbMsgBoxResult
@@ -1121,7 +1121,7 @@ RefLibError:
 EndMacro:
     Application.ScreenUpdating = True
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Create_PDF_Func", "", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Create_PDF_Func", vbNullString, startTime)
 
 End Function
 
@@ -1161,10 +1161,10 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     
     'Si l'utilisateur annule la sélection du fichier ou il y a une erreur
     Dim wbCible As Workbook
-    If strCible = "Faux" Or strCible = "False" Or strCible = "" Then
+    If strCible = "Faux" Or strCible = "False" Or strCible = vbNullString Then
         'Créer un nouveau workbook
         Set wbCible = Workbooks.Add
-        strCible = ""
+        strCible = vbNullString
     Else
         'Ouvrir le workbook sélectionné
         Set wbCible = Workbooks.Open(strCible)
@@ -1286,7 +1286,7 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     Application.CutCopyMode = False
     
     'Optionnel : Sauvegarder le workbook cible sous un nouveau nom si nécessaire
-    If strCible = "" Then
+    If strCible = vbNullString Then
         wbCible.SaveAs ExcelFilesFullPath & Application.PathSeparator & clientID & " - " & clientNamePurged & ".xlsx"
         MsgBox "Un nouveau fichier Excel (" & clientID & " - " & clientNamePurged & ".xlsx" & ")" & vbNewLine & vbNewLine & _
                 "A été créé pour sauvegarder la facture", vbInformation
@@ -1307,7 +1307,7 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     Set wsCible = Nothing
     Set wsSource = Nothing
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Copie_Vers_Excel", "", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Copie_Vers_Excel", vbNullString, startTime)
 
 End Sub
 
@@ -1365,7 +1365,7 @@ Sub FAC_Finale_Creation_Courriel(noFacture As String, clientID As String) '2024-
                      noFacture & ".pdf" '2024-09-03 @ 16:43
     
     '1b. Vérification de l'existence de la pièce jointe
-    fileExists = Dir(attachmentFullPathName) <> ""
+    fileExists = Dir(attachmentFullPathName) <> vbNullString
     If Not fileExists Then
         MsgBox "La pièce jointe (Facture en format PDF) n'existe pas" & _
                     "à l'emplacement spécifié, soit " & attachmentFullPathName, vbCritical
@@ -1377,7 +1377,7 @@ Sub FAC_Finale_Creation_Courriel(noFacture As String, clientID As String) '2024-
     templateFullPathName = Environ$("appdata") & "\Microsoft\Templates\GCF_Facturation.oft"
 
     '2b. Vérification de l'existence du template
-    fileExists = Dir(templateFullPathName) <> ""
+    fileExists = Dir(templateFullPathName) <> vbNullString
     If Not fileExists Then
         MsgBox "Le gabarit 'GCF_Facturation.oft' est introuvable " & _
                     "à l'emplacement spécifié, soit " & Environ$("appdata") & "\Microsoft\Templates", _
@@ -1406,7 +1406,7 @@ Sub FAC_Finale_Creation_Courriel(noFacture As String, clientID As String) '2024-
     Dim eMailFacturation As String
     eMailFacturation = Fn_Get_Value_From_UniqueID(ws, clientID, 2, fClntFMCourrielFacturation)
     If eMailFacturation = "uniqueID introuvable" Then
-        mailItem.To = ""
+        mailItem.To = vbNullString
     Else
         Dim adresseEmail  As Variant
         adresseEmail = Split(eMailFacturation, "; ") '2025-03-02 @ 16:59
@@ -1433,7 +1433,7 @@ Exit_Sub:
     Set OutlookApp = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Creation_Courriel", "", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Creation_Courriel", vbNullString, startTime)
 
 End Sub
 
@@ -1485,7 +1485,7 @@ Sub FAC_Finale_Cacher_Sommaire_Taux()
     Dim nbItems As Long
     Dim i As Long
     For i = 66 To 62 Step -1
-        If wshFAC_Finale.Range("C" & i).Value <> "" Then
+        If wshFAC_Finale.Range("C" & i).Value <> vbNullString Then
             nbItems = nbItems + 1
         End If
     Next i
@@ -1588,7 +1588,7 @@ End Sub
 
 Sub FAC_Finale_Goto_Onglet_FAC_Brouillon()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Goto_Onglet_FAC_Brouillon", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Finale:FAC_Finale_Goto_Onglet_FAC_Brouillon", vbNullString, 0)
    
     Application.ScreenUpdating = False
     
@@ -1598,7 +1598,7 @@ Sub FAC_Finale_Goto_Onglet_FAC_Brouillon()
 
     Application.ScreenUpdating = True
     
-    Call Log_Record("modFAC_Finale:FAC_Finale_Goto_Onglet_FAC_Brouillon", "", startTime)
+    Call Log_Record("modFAC_Finale:FAC_Finale_Goto_Onglet_FAC_Brouillon", vbNullString, startTime)
 
 End Sub
 

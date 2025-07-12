@@ -42,7 +42,7 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
 
     'Step # 1 - Use AdvancedFilter on GL_Trans for ALL accounts and transactions between the 2 dates
     Dim rngResultAF As Range
-    Call GL_Get_Account_Trans_AF("", #7/31/2024#, dateCutOff, rngResultAF)
+    Call GL_Get_Account_Trans_AF(vbNullString, #7/31/2024#, dateCutOff, rngResultAF)
 
     'The SORT method does not sort correctly the GLNo, since there is NUMBER and NUMBER+LETTER !!!
     Dim lastUsedRow As Long
@@ -201,7 +201,7 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
     Set dictPreuve = Nothing
     Set dictSoldesParGL = Nothing
     
-    Call Log_Record("modGL_PrepEF:Calculer_Soldes_Pour_EF", "", startTime)
+    Call Log_Record("modGL_PrepEF:Calculer_Soldes_Pour_EF", vbNullString, startTime)
 
 End Sub
 
@@ -231,7 +231,7 @@ End Sub
 
 Sub Assembler_États_Financiers()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_États_Financiers", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_États_Financiers", vbNullString, 0)
     
     Dim dateAC As Date, dateAP As Date
     dateAC = wshGL_PrepEF.Range("F5").Value
@@ -272,13 +272,13 @@ Sub Assembler_États_Financiers()
     MsgBox "Les états financiers ont été produits" & vbNewLine & vbNewLine & _
             "Voir les onglets respectifs au bas du classeur", vbOKOnly, "Fin de traitement"
     
-    Call Log_Record("modGL_PrepEF:Assembler_États_Financiers", "", startTime)
+    Call Log_Record("modGL_PrepEF:Assembler_États_Financiers", vbNullString, startTime)
 
 End Sub
 
 Sub CréerFeuillesEtFormat()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:CréerFeuillesEtFormat", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:CréerFeuillesEtFormat", vbNullString, 0)
     
     'Liste des feuilles à créer
     Dim nomsFeuilles As Variant
@@ -316,18 +316,18 @@ Sub CréerFeuillesEtFormat()
         
     Next i
 
-    Application.StatusBar = ""
+    Application.StatusBar = vbNullString
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modGL_PrepEF:CréerFeuillesEtFormat", "", startTime)
+    Call Log_Record("modGL_PrepEF:CréerFeuillesEtFormat", vbNullString, startTime)
     
 End Sub
 
 
 Sub Assembler_Page_Titre_0_Main(dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_Page_Titre_0_Main", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_Page_Titre_0_Main", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -338,17 +338,17 @@ Sub Assembler_Page_Titre_0_Main(dateAC As Date, dateAP As Date)
         
     Call AssemblerPageTitre1EtArrièrePlanEtEntête(ws, dateAC, dateAP)
     
-    Application.StatusBar = ""
+    Application.StatusBar = vbNullString
     
     Application.ScreenUpdating = True
 
-    Call Log_Record("modGL_PrepEF:Assembler_Page_Titre_0_Main", "", startTime)
+    Call Log_Record("modGL_PrepEF:Assembler_Page_Titre_0_Main", vbNullString, startTime)
 
 End Sub
 
 Sub AssemblerPageTitre1EtArrièrePlanEtEntête(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:AssemblerPageTitre1EtArrièrePlanEtEntête", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:AssemblerPageTitre1EtArrièrePlanEtEntête", vbNullString, 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -375,13 +375,13 @@ Sub AssemblerPageTitre1EtArrièrePlanEtEntête(ws As Worksheet, dateAC As Date, 
     'Fixer le printArea selon le nombre de lignes ET 3 colonnes
     ActiveSheet.PageSetup.PrintArea = "$A1:$C" & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3
 
-    Call Log_Record("modGL_PrepEF:AssemblerPageTitre1EtArrièrePlanEtEntête", "", startTime)
+    Call Log_Record("modGL_PrepEF:AssemblerPageTitre1EtArrièrePlanEtEntête", vbNullString, startTime)
 
 End Sub
 
 Sub Assembler_TM_0_Main(dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_TM_0_Main", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_TM_0_Main", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -393,17 +393,17 @@ Sub Assembler_TM_0_Main(dateAC As Date, dateAP As Date)
     Call Assembler_TM_1_Arrière_Plan_Et_Entête(ws, dateAC, dateAP)
     Call Assembler_TM_2_Lignes(ws)
     
-    Application.StatusBar = ""
+    Application.StatusBar = vbNullString
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modGL_PrepEF:Assembler_TM_0_Main", "", startTime)
+    Call Log_Record("modGL_PrepEF:Assembler_TM_0_Main", vbNullString, startTime)
 
 End Sub
 
 Sub Assembler_TM_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_TM_1_Arrière_Plan_Et_Entête", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_TM_1_Arrière_Plan_Et_Entête", vbNullString, 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -433,13 +433,13 @@ Sub Assembler_TM_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dat
     'Fixer le printArea selon le nombre de lignes ET 3 colonnes
     ActiveSheet.PageSetup.PrintArea = "$A1:$D" & ws.Cells(ws.Rows.count, "B").End(xlUp).Row + 3
     
-    Call Log_Record("modGL_PrepEF:Assembler_TM_1_Arrière_Plan_Et_Entête", "", startTime)
+    Call Log_Record("modGL_PrepEF:Assembler_TM_1_Arrière_Plan_Et_Entête", vbNullString, startTime)
 
 End Sub
 
 Sub Assembler_TM_2_Lignes(ws As Worksheet)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_TM_2_Lignes", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_TM_2_Lignes", vbNullString, 0)
     
     'Première ligne
     Dim currRow As Integer
@@ -475,13 +475,13 @@ Sub Assembler_TM_2_Lignes(ws As Worksheet)
     'Fixer le printArea selon le nombre de lignes ET 3 colonnes
     ActiveSheet.PageSetup.PrintArea = "$A1:$D" & ws.Cells(ws.Rows.count, "B").End(xlUp).Row
     
-    Call Log_Record("modGL_PrepEF:Assembler_TM_2_Lignes", "", startTime)
+    Call Log_Record("modGL_PrepEF:Assembler_TM_2_Lignes", vbNullString, startTime)
 
 End Sub
 
 Sub Assembler_ER_0_Main(dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_ER_0_Main", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_ER_0_Main", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -499,17 +499,17 @@ Sub Assembler_ER_0_Main(dateAC As Date, dateAP As Date)
     gSoldeCodeEF(indice, 2) = gSoldeCodeEF(indice, 2) - gTotalRevenuNet_AC
     gSoldeCodeEF(indice, 3) = gSoldeCodeEF(indice, 3) - gTotalRevenuNet_AP
     
-    Application.StatusBar = ""
+    Application.StatusBar = vbNullString
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modGL_PrepEF:Assembler_ER_0_Main", "", startTime)
+    Call Log_Record("modGL_PrepEF:Assembler_ER_0_Main", vbNullString, startTime)
 
 End Sub
 
 Sub Assembler_ER_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_ER_1_Arrière_Plan_Et_Entête", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_ER_1_Arrière_Plan_Et_Entête", vbNullString, 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -564,13 +564,13 @@ Sub Assembler_ER_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dat
 
     ws.PageSetup.CenterFooter = 2
      
-    Call Log_Record("modGL_PrepEF:Assembler_ER_1_Arrière_Plan_Et_Entête", "", startTime)
+    Call Log_Record("modGL_PrepEF:Assembler_ER_1_Arrière_Plan_Et_Entête", vbNullString, startTime)
 
 End Sub
 
 Sub Assembler_ER_2_Lignes(ws As Worksheet)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_ER_2_Lignes", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_ER_2_Lignes", vbNullString, 0)
     
     Dim wsAdmin As Worksheet
     Set wsAdmin = wsdADMIN
@@ -608,7 +608,7 @@ Sub Assembler_ER_2_Lignes(ws As Worksheet)
     'Transfère les montants NON arrondis dans les cellules sans les cents
     Dim i As Integer
     For i = 7 To currRow
-        If ws.Range("G" & i).Value <> "" Then
+        If ws.Range("G" & i).Value <> vbNullString Then
             ws.Range("C" & i).Value = ws.Range("G" & i).Value
             ws.Range("E" & i).Value = ws.Range("I" & i).Value
         End If
@@ -630,13 +630,13 @@ Sub Assembler_ER_2_Lignes(ws As Worksheet)
     'Fixer le printArea selon le nombre de lignes ET colonnes
     ActiveSheet.PageSetup.PrintArea = "$A1:$F" & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3
     
-    Call Log_Record("modGL_PrepEF:Assembler_ER_2_Lignes", "", startTime)
+    Call Log_Record("modGL_PrepEF:Assembler_ER_2_Lignes", vbNullString, startTime)
 
 End Sub
 
 Sub Assembler_Bilan_0_Main(dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_Bilan_0_Main", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_Bilan_0_Main", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -648,17 +648,17 @@ Sub Assembler_Bilan_0_Main(dateAC As Date, dateAP As Date)
     Call Assembler_Bilan_1_Arrière_Plan_Et_Entête(ws, dateAC, dateAP)
     Call Assembler_Bilan_2_Lignes(ws)
     
-    Application.StatusBar = ""
+    Application.StatusBar = vbNullString
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modGL_PrepEF:Assembler_Bilan_0_Main", "", startTime)
+    Call Log_Record("modGL_PrepEF:Assembler_Bilan_0_Main", vbNullString, startTime)
     
 End Sub
 
 Sub Assembler_Bilan_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_Bilan_1_Arrière_Plan_Et_Entête", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_Bilan_1_Arrière_Plan_Et_Entête", vbNullString, 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -696,13 +696,13 @@ Sub Assembler_Bilan_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, 
     
     ws.PageSetup.CenterFooter = 4
     
-    Call Log_Record("modGL_PrepEF:Assembler_Bilan_1_Arrière_Plan_Et_Entête", "", startTime)
+    Call Log_Record("modGL_PrepEF:Assembler_Bilan_1_Arrière_Plan_Et_Entête", vbNullString, startTime)
 
 End Sub
 
 Sub Assembler_Bilan_2_Lignes(ws As Worksheet)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_Bilan_2_Lignes", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_Bilan_2_Lignes", vbNullString, 0)
     
     Dim wsAdmin As Worksheet
     Set wsAdmin = wsdADMIN
@@ -739,7 +739,7 @@ Sub Assembler_Bilan_2_Lignes(ws As Worksheet)
     'Transfère les montants NON arrondis dans les cellules sans les cents
     Dim i As Integer
     For i = 7 To currRow
-        If ws.Range("G" & i).Value <> "" Then
+        If ws.Range("G" & i).Value <> vbNullString Then
             ws.Range("C" & i).Value = ws.Range("G" & i).Value
             ws.Range("E" & i).Value = ws.Range("I" & i).Value
         End If
@@ -749,13 +749,13 @@ Sub Assembler_Bilan_2_Lignes(ws As Worksheet)
     'Fixer le printArea selon le nombre de lignes ET colonnes
     ActiveSheet.PageSetup.PrintArea = "$A1:$F" & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3
     
-    Call Log_Record("modGL_PrepEF:Assembler_Bilan_2_Lignes", "", startTime)
+    Call Log_Record("modGL_PrepEF:Assembler_Bilan_2_Lignes", vbNullString, startTime)
 
 End Sub
 
 Sub Assembler_BNR_0_Main(dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_BNR_0_Main", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_BNR_0_Main", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -767,17 +767,17 @@ Sub Assembler_BNR_0_Main(dateAC As Date, dateAP As Date)
     Call Assembler_BNR_1_Arrière_Plan_Et_Entête(ws, dateAC, dateAP)
     Call Assembler_BNR_2_Lignes(ws)
     
-    Application.StatusBar = ""
+    Application.StatusBar = vbNullString
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modGL_PrepEF:Assembler_BNR_0_Main", "", startTime)
+    Call Log_Record("modGL_PrepEF:Assembler_BNR_0_Main", vbNullString, startTime)
     
 End Sub
 
 Sub Assembler_BNR_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_BNR_1_Arrière_Plan_Et_Entête", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_BNR_1_Arrière_Plan_Et_Entête", vbNullString, 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -831,13 +831,13 @@ Sub Assembler_BNR_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, da
     
     ws.PageSetup.CenterFooter = 3
     
-    Call Log_Record("modGL_PrepEF:Assembler_BNR_1_Arrière_Plan_Et_Entête", "", startTime)
+    Call Log_Record("modGL_PrepEF:Assembler_BNR_1_Arrière_Plan_Et_Entête", vbNullString, startTime)
 
 End Sub
 
 Sub Assembler_BNR_2_Lignes(ws As Worksheet)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_BNR_2_Lignes", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_PrepEF:Assembler_BNR_2_Lignes", vbNullString, 0)
     
     Dim wsAdmin As Worksheet
     Set wsAdmin = wsdADMIN
@@ -875,7 +875,7 @@ Sub Assembler_BNR_2_Lignes(ws As Worksheet)
     'Transfère les montants NON arrondis dans les cellules sans les cents
     Dim i As Integer
     For i = 7 To currRow
-        If ws.Range("G" & i).Value <> "" Then
+        If ws.Range("G" & i).Value <> vbNullString Then
             ws.Range("C" & i).Value = ws.Range("G" & i).Value
             ws.Range("E" & i).Value = ws.Range("I" & i).Value
         End If
@@ -885,7 +885,7 @@ Sub Assembler_BNR_2_Lignes(ws As Worksheet)
     'Fixer le printArea selon le nombre de lignes ET colonnes
     ActiveSheet.PageSetup.PrintArea = "$A1:$F" & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3
     
-    Call Log_Record("modGL_PrepEF:Assembler_BNR_2_Lignes", "", startTime)
+    Call Log_Record("modGL_PrepEF:Assembler_BNR_2_Lignes", vbNullString, startTime)
 
 End Sub
 
@@ -902,7 +902,7 @@ End Sub
 
 Sub AdditionnerSoldes(r1 As Range, r2 As Range, comptes As String)
 
-    If comptes = "" Then
+    If comptes = vbNullString Then
         Exit Sub
     End If
     
@@ -1136,4 +1136,5 @@ Sub TrierDictionaryParCle(ByRef dict As Object)
         Debug.Print keys(i) & " - " & Format$(values(i), "###,##0.00")
     Next i
 End Sub
+
 

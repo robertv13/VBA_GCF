@@ -4,7 +4,7 @@ Option Explicit
 
 Private Sub Worksheet_Activate()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_BV:Worksheet_Activate", "", 0)
+    Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_BV:Worksheet_Activate", vbNullString, 0)
 
     DoEvents
     
@@ -22,8 +22,8 @@ Private Sub Worksheet_Activate()
     Application.EnableEvents = False
     With ws
         .Range("T2").Value = "Mois"
-        .Range("B6").Value = ""
-        .Range("B7").Value = ""
+        .Range("B6").Value = vbNullString
+        .Range("B7").Value = vbNullString
         Call GL_BV_EffacerZoneBV(ws)
         Call GL_BV_EffacerZoneTransactionsDetaillees(ws)
     End With
@@ -47,7 +47,7 @@ Private Sub Worksheet_Activate()
     Set cbx = Nothing
     Set ws = Nothing
     
-    Call Log_Record("wshGL_BV:Worksheet_Activate", "", startTime)
+    Call Log_Record("wshGL_BV:Worksheet_Activate", vbNullString, startTime)
 
 End Sub
 
@@ -61,7 +61,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         On Error GoTo 0
     End If
     
-    If gPreviousCellAddress <> "" Then
+    If gPreviousCellAddress <> vbNullString Then
         Range(gPreviousCellAddress).Interior.Color = xlNone
     End If
 
@@ -99,7 +99,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     'Get the entire transaction, from a selected line
     If Not Intersect(Target, wshGL_BV.Range("M4:T9999")) Is Nothing And _
         Target.Cells.count = 1 And _
-        wshGL_BV.Range("M" & Target.row) <> "" Then
+        wshGL_BV.Range("M" & Target.row) <> vbNullString Then
             Dim noJE As Long
             noJE = wshGL_BV.Range("N" & Target.row).Value
             Application.EnableEvents = False
@@ -171,7 +171,7 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
         
         Range("B8").Value = DateSerial(year(Range("J1").Value), month(Range("J1").Value), 1)
@@ -185,7 +185,7 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
 
     'Changement des dates pour la période à imprimer
     If Not Intersect(Target, Range("T2")) Is Nothing Then
-        If Range("T2").Value <> "" Then
+        If Range("T2").Value <> vbNullString Then
             Dim dateMin As Date, dateMax As Date
             dateMax = Range("J1").Value
             Dim periode As String
@@ -208,7 +208,7 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
             Range("B8").Value = dateMin
             Application.EnableEvents = True
             'Force redisplay of GL Transactions details
-            If Range("B6").Value <> "" Then
+            If Range("B6").Value <> vbNullString Then
                 Call GL_BV_Display_Trans_For_Selected_Account(Range("B6").Value, Range("B7").Value, _
                                                               Range("B8").Value, Range("B9").Value)
             End If

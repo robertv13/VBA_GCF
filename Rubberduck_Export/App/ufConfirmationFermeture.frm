@@ -49,8 +49,8 @@ Private Sub cmdGarderOuverte_Click() '2025-07-01 @ 17:13
     gDerniereActivite = Now
     
     'Nettoie le formulaire (optionnel mais propre)
-    lblMessage.Caption = ""
-    lblTimer.Caption = ""
+    lblMessage.Caption = vbNullString
+    lblTimer.Caption = vbNullString
     gClignoteEtat = False
     
     'Ferme le UserForm
@@ -78,7 +78,7 @@ Public Sub AfficherMessage(Optional minutesInactives As Double = 0) '2025-07-01 
     tFermeture = Now + TimeSerial(0, 0, gDELAI_GRACE_SECONDES)
     gFermeturePlanifiee = tFermeture
     Debug.Print "[AfficherMessage] gFermeturePlanifiee synchronisé à : " & Format(gFermeturePlanifiee, "hh:mm:ss")
-    lblTimer.Caption = ""
+    lblTimer.Caption = vbNullString
     Debug.Print "[AfficherMessage] Affichage du formulaire de confirmation à : " & Format(Now, "hh:mm:ss")
     Debug.Print "[AfficherMessage] Fermeture prévue à (tFermeture) : " & Format(tFermeture, "hh:mm:ss")
     Call ufConfirmationFermeture.RafraichirTimer
@@ -142,4 +142,5 @@ Public Function ProchainTick() As Date '2025-07-02 @ 08:19
     ProchainTick = tProchainTick
     
 End Function
+
 

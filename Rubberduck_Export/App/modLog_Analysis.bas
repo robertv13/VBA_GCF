@@ -21,7 +21,7 @@ Sub Main_OuvrirRepertoireEtTraiterFichiers()
     End If
     
     'Vérification de l'existence du répertoire
-    If Dir(folderPath, vbDirectory) = "" Then
+    If Dir(folderPath, vbDirectory) = vbNullString Then
         MsgBox "Répertoire invalide.", vbCritical
         Exit Sub
     End If
