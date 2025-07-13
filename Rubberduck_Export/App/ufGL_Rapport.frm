@@ -18,7 +18,7 @@ Private Sub UserForm_Initialize()
     Call modImport.ImporterGLTransactions
     
     'Noter l'activité
-    Call ConnectFormControls(Me)
+    Call ConnecterControlesDeForme(Me)
     
     'Efface le contenu de la listBox
     Me.lsbComptes.Clear
@@ -262,7 +262,7 @@ Private Sub cmdGenerer_Click()
     'On efface/cree une feuille pour le rapport
     Dim strWsRapport As String
     strWsRapport = "X_GL_Rapport"
-    Call CreateOrReplaceWorksheet(strWsRapport)
+    Call CreerOuRemplacerFeuille(strWsRapport)
     Dim wsRapport As Worksheet
     Set wsRapport = ThisWorkbook.Sheets(strWsRapport)
     

@@ -8,7 +8,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:08
         Exit Sub
     End If
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_EJ:Worksheet_Activate", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("wshGL_EJ:Worksheet_Activate", vbNullString, 0)
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -78,7 +78,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:08
     Set shp = Nothing
     Set ws = Nothing
     
-    Call Log_Record("wshGL_EJ:Worksheet_Activate", vbNullString, startTime)
+    Call EnregistrerLogApplication("wshGL_EJ:Worksheet_Activate", vbNullString, startTime)
 
 End Sub
 

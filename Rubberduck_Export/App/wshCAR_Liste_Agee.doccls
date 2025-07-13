@@ -4,7 +4,7 @@ Option Explicit
 
 Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshCAR_Liste_Agee:Worksheet_Activate", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("wshCAR_Liste_Agee:Worksheet_Activate", vbNullString, 0)
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -62,13 +62,13 @@ Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call Log_Record("wshCAR_Liste_Agee:Worksheet_Activate", vbNullString, startTime)
+    Call EnregistrerLogApplication("wshCAR_Liste_Agee:Worksheet_Activate", vbNullString, startTime)
 
 End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshCAR_Liste_Agee:Worksheet_SelectionChange", Target.Address, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("wshCAR_Liste_Agee:Worksheet_SelectionChange", Target.Address, 0)
     
     Dim ws As Worksheet: Set ws = wshCAR_Liste_Agee
     
@@ -105,13 +105,13 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call Log_Record("wshCAR_Liste_Agee:Worksheet_SelectionChange", vbNullString, startTime)
+    Call EnregistrerLogApplication("wshCAR_Liste_Agee:Worksheet_SelectionChange", vbNullString, startTime)
     
 End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshCAR_Liste_Agee:Worksheet_Change", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("wshCAR_Liste_Agee:Worksheet_Change", vbNullString, 0)
     
     Dim fullDate As Variant
     
@@ -152,7 +152,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
 
     Application.EnableEvents = True
     
-    Call Log_Record("wshCAR_Liste_Agee:Worksheet_Change", vbNullString, startTime)
+    Call EnregistrerLogApplication("wshCAR_Liste_Agee:Worksheet_Change", vbNullString, startTime)
   
 End Sub
 

@@ -75,7 +75,7 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
 
     'Erase and create a new worksheet for differences
     Dim wsDiff As Worksheet
-    Call CreateOrReplaceWorksheet("Différences_Colonnes")
+    Call CreerOuRemplacerFeuille("Différences_Colonnes")
     Set wsDiff = ThisWorkbook.Worksheets("Différences_Colonnes")
     wsDiff.Range("A1").Value = "Worksheet"
     wsDiff.Range("B1").Value = "Nb. colonnes"
@@ -188,7 +188,7 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
     Dim rngToPrint As Range: Set rngToPrint = wsDiff.Range("A2:E" & diffRow)
     Dim header1 As String: header1 = wb1.Name & " vs. " & wb2.Name
     Dim header2 As String: header2 = vbNullString
-    Call Simple_Print_Setup(wsDiff, rngToPrint, header1, header2, "$1:$1", "P")
+    Call MiseEnFormeImpressionSimple(wsDiff, rngToPrint, header1, header2, "$1:$1", "P")
     
     'Close the 2 workbooks without saving anything
     wb1.Close SaveChanges:=False
@@ -218,7 +218,7 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
 
     'Erase and create a new worksheet for differences
     Dim wsDiff As Worksheet
-    Call CreateOrReplaceWorksheet("Différences_Lignes")
+    Call CreerOuRemplacerFeuille("Différences_Lignes")
     Set wsDiff = ThisWorkbook.Worksheets("Différences_Lignes")
     wsDiff.Range("A1").Value = "Worksheet"
     wsDiff.Range("B1").Value = "Prod_Cols"
@@ -338,7 +338,7 @@ Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
     Dim rngToPrint As Range: Set rngToPrint = wsDiff.Range("A2:I" & diffRow)
     Dim header1 As String: header1 = wb1.Name & " vs. " & wb2.Name
     Dim header2 As String: header2 = "Changements de lignes ou cellules"
-    Call Simple_Print_Setup(wsDiff, rngToPrint, header1, header2, "$1:$1", "P")
+    Call MiseEnFormeImpressionSimple(wsDiff, rngToPrint, header1, header2, "$1:$1", "P")
     
     'Close the 2 workbooks without saving anything
     wb1.Close SaveChanges:=False
@@ -1136,7 +1136,7 @@ Sub main() '2024-12-25 @ 15:27
     'Feuille pour la sortie
     Dim outputName As String
     outputName = "Doc_File_Layouts"
-    Call CreateOrReplaceWorksheet(outputName)
+    Call CreerOuRemplacerFeuille(outputName)
     
     Dim wsOut As Worksheet
     Set wsOut = ThisWorkbook.Worksheets(outputName)
@@ -1424,7 +1424,7 @@ Sub ValideNomProcedureCallLog()
                 If InStr(procedure, "(") <> 0 Then Stop
             End If
             code = ws.Range("F" & i).Value
-            posCL = InStr(code, "Call Log_Record")
+            posCL = InStr(code, "Call EnregistrerLogApplication")
             code = Mid$(code, posCL + 17)
             If InStr(code, module & ":" & procedure) = 0 Then
                 Debug.Print i, module & ":" & procedure, code
@@ -1544,7 +1544,7 @@ Sub CreerBorduresInterieures(rng As Variant) '2025-02-24 @ 16:40
             
 End Sub
 
-Sub DemarrerSauvegardeAutomatique() '2025-03-03 @ 07:19
+Sub DemarrerSauvegardeCodeVBAAutomatique() '2025-03-03 @ 07:19
 
     'Lancer l'export des modules VBA
     Call ExporterCodeVBA
@@ -1552,7 +1552,7 @@ Sub DemarrerSauvegardeAutomatique() '2025-03-03 @ 07:19
     'Programmer la prochaine sauvegarde
     gNextBackupTime = Now + TimeValue("00:" & INTERVALLE_MINUTES_SAUVEGARDE & ":00")
     
-    Application.OnTime gNextBackupTime, "DemarrerSauvegardeAutomatique"
+    Application.OnTime gNextBackupTime, "DemarrerSauvegardeCodeVBAAutomatique"
     
 End Sub
 
@@ -1560,7 +1560,7 @@ Sub StopperSauvegardeAutomatique()
 
     'Annuler la prochaine exécution prévue
     On Error Resume Next
-    Application.OnTime gNextBackupTime, "DemarrerSauvegardeAutomatique", , False
+    Application.OnTime gNextBackupTime, "DemarrerSauvegardeCodeVBAAutomatique", , False
     On Error GoTo 0
     
 End Sub

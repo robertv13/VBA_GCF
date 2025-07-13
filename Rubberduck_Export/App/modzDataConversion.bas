@@ -581,7 +581,7 @@ Sub Compare2ExcelFiles()
     Dim wsNameStr As String
     wsNameStr = "X_Différences"
     Dim wsDiff As Worksheet
-    Call CreateOrReplaceWorksheet(wsNameStr)
+    Call CreerOuRemplacerFeuille(wsNameStr)
     Set wsDiff = ThisWorkbook.Worksheets(wsNameStr)
     wsDiff.Range("A1").Value = "Ligne"
     wsDiff.Range("B1").Value = "Colonne"
@@ -650,7 +650,7 @@ Sub Compare2ExcelFiles()
     Dim rngToPrint As Range: Set rngToPrint = wsDiff.Range("A2:DC" & diffRow)
     Dim header1 As String: header1 = "Vérification des différences"
     Dim header2 As String: header2 = "Clients"
-    Call Simple_Print_Setup(wsDiff, rngToPrint, header1, header2, "$1:$1", "P")
+    Call MiseEnFormeImpressionSimple(wsDiff, rngToPrint, header1, header2, "$1:$1", "P")
     
     Application.ScreenUpdating = True
     
@@ -925,7 +925,7 @@ Sub CorrigeNomClientInTEC()  '2025-03-04 @ 05:48
     'Setup output file
     Dim strOutput As String
     strOutput = "X_TEC_Correction_Nom"
-    Call CreateOrReplaceWorksheet(strOutput)
+    Call CreerOuRemplacerFeuille(strOutput)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets(strOutput)
     wsOutput.Range("A1").Value = "TEC_Nom_Client"
     wsOutput.Range("B1").Value = "Code_de_Client"
@@ -980,7 +980,7 @@ Sub CorrigeNomClientInTEC()  '2025-03-04 @ 05:48
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:E" & rowOutput)
     Dim header1 As String: header1 = "Correction des noms de clients dans les TEC"
     Dim header2 As String: header2 = vbNullString
-    Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
+    Call MiseEnFormeImpressionSimple(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
     
     'Close the 2 workbooks without saving anything
     wbSource.Close SaveChanges:=False
@@ -1026,7 +1026,7 @@ Sub DetecterErreurCodeClientInTEC()  '2025-03-11 @ 08:29
     'Setup output file
     Dim strOutput As String
     strOutput = "X_Détection_Cas_Erreur_Code_TEC"
-    Call CreateOrReplaceWorksheet(strOutput)
+    Call CreerOuRemplacerFeuille(strOutput)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets(strOutput)
     wsOutput.Range("A1").Value = "TEC_ID"
     wsOutput.Range("B1").Value = "Date"
@@ -1083,7 +1083,7 @@ Sub DetecterErreurCodeClientInTEC()  '2025-03-11 @ 08:29
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:G" & rowOutput)
     Dim header1 As String: header1 = "Détection des codes de clients ERRONÉS dans TEC"
     Dim header2 As String: header2 = vbNullString
-    Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
+    Call MiseEnFormeImpressionSimple(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
     
     'Close the 2 workbooks without saving anything
     wbSource.Close SaveChanges:=False
@@ -1144,7 +1144,7 @@ Public Sub CorrigeNomClientInCAR()  '2024-08-31 @ 06:52
     'Setup output file
     Dim strOutput As String
     strOutput = "X_CAR_Correction_Nom"
-    Call CreateOrReplaceWorksheet(strOutput)
+    Call CreerOuRemplacerFeuille(strOutput)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets(strOutput)
     wsOutput.Range("A1").Value = "Feuille"
     wsOutput.Range("B1").Value = "No Facture"
@@ -1205,7 +1205,7 @@ Public Sub CorrigeNomClientInCAR()  '2024-08-31 @ 06:52
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:E" & rowOutput)
     Dim header1 As String: header1 = "Correction des noms de clients dans les CAR"
     Dim header2 As String: header2 = vbNullString
-    Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
+    Call MiseEnFormeImpressionSimple(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
     
     'Close the 2 workbooks without saving anything
     wbSource.Close SaveChanges:=True

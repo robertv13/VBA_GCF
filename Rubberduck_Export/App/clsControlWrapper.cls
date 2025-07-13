@@ -16,43 +16,43 @@ Attribute ctrl.VB_VarHelpID = -1
 
 Private Sub ctrl_Change()
 
-    Call RafraichirActivite(ctrl.Name & "-" & TypeName(ctrl) & " [" & Fn_NomFeuilleActive() & "]")
+    Call EnregistrerActivite(ctrl.Name & "-" & TypeName(ctrl) & " [" & Fn_NomFeuilleActive() & "]")
     
 End Sub
 
 Private Sub ctrl_Click()
 
-    Call RafraichirActivite(ctrl.Name & "-" & TypeName(ctrl) & " [" & Fn_NomFeuilleActive() & "]")
+    Call EnregistrerActivite(ctrl.Name & "-" & TypeName(ctrl) & " [" & Fn_NomFeuilleActive() & "]")
     
 End Sub
 
 Private Sub ctrl_Enter()
 
-    Call RafraichirActivite(ctrl.Name & "-" & TypeName(ctrl) & " [" & Fn_NomFeuilleActive() & "]")
+    Call EnregistrerActivite(ctrl.Name & "-" & TypeName(ctrl) & " [" & Fn_NomFeuilleActive() & "]")
     
 End Sub
 
 Private Sub ctrl_Exit(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Call RafraichirActivite(ctrl.Name & "-" & TypeName(ctrl) & " [" & Fn_NomFeuilleActive() & "]")
+    Call EnregistrerActivite(ctrl.Name & "-" & TypeName(ctrl) & " [" & Fn_NomFeuilleActive() & "]")
     
 End Sub
 
 Private Sub ctrl_KeyDown(ByVal KeyCode As Integer, ByVal Shift As Integer)
 
-    Call RafraichirActivite(ctrl.Name & "-" & TypeName(ctrl) & " [" & Fn_NomFeuilleActive() & "]")
+    Call EnregistrerActivite(ctrl.Name & "-" & TypeName(ctrl) & " [" & Fn_NomFeuilleActive() & "]")
     
 End Sub
 
 Private Sub ctrl_KeyUp(ByVal KeyCode As Integer, ByVal Shift As Integer)
 
-    Call RafraichirActivite(ctrl.Name & "-" & TypeName(ctrl) & " [" & Fn_NomFeuilleActive() & "]")
+    Call EnregistrerActivite(ctrl.Name & "-" & TypeName(ctrl) & " [" & Fn_NomFeuilleActive() & "]")
     
 End Sub
 
 Private Sub ctrl_MouseDown(ByVal Button As Integer, ByVal Shift As Integer, ByVal X As Single, ByVal Y As Single)
 
-    Call RafraichirActivite(ctrl.Name & "-" & TypeName(ctrl) & " [" & Fn_NomFeuilleActive() & "]")
+    Call EnregistrerActivite(ctrl.Name & "-" & TypeName(ctrl) & " [" & Fn_NomFeuilleActive() & "]")
     
 End Sub
 

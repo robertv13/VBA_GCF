@@ -4,7 +4,7 @@ Option Explicit
 
 Private Sub Worksheet_Activate()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshGL_BV:Worksheet_Activate", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("wshGL_BV:Worksheet_Activate", vbNullString, 0)
 
     DoEvents
     
@@ -47,7 +47,7 @@ Private Sub Worksheet_Activate()
     Set cbx = Nothing
     Set ws = Nothing
     
-    Call Log_Record("wshGL_BV:Worksheet_Activate", vbNullString, startTime)
+    Call EnregistrerLogApplication("wshGL_BV:Worksheet_Activate", vbNullString, startTime)
 
 End Sub
 

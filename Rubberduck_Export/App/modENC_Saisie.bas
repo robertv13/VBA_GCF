@@ -6,7 +6,7 @@ Private gNumeroEcritureARenverser As Long
 
 Sub ENC_Get_OS_Invoices(cc As String) '2024-08-21 @ 15:18
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Get_OS_Invoices", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modENC_Saisie:ENC_Get_OS_Invoices", vbNullString, 0)
     
     Dim ws As Worksheet: Set ws = wshENC_Saisie
     
@@ -56,13 +56,13 @@ Sub ENC_Get_OS_Invoices(cc As String) '2024-08-21 @ 15:18
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call Log_Record("modENC_Saisie:ENC_Get_OS_Invoices", vbNullString, startTime)
+    Call EnregistrerLogApplication("modENC_Saisie:ENC_Get_OS_Invoices", vbNullString, startTime)
 
 End Sub
 
 Sub ENC_Get_OS_Invoices_With_AF(cc As String)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Get_OS_Invoices_With_AF", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modENC_Saisie:ENC_Get_OS_Invoices_With_AF", vbNullString, 0)
     
     Dim ws As Worksheet: Set ws = wsdFAC_Comptes_Clients
     
@@ -128,7 +128,7 @@ Sub ENC_Get_OS_Invoices_With_AF(cc As String)
     Set rngResult = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modENC_Saisie:ENC_Get_OS_Invoices_With_AF", vbNullString, startTime)
+    Call EnregistrerLogApplication("modENC_Saisie:ENC_Get_OS_Invoices_With_AF", vbNullString, startTime)
 
 End Sub
 
@@ -140,7 +140,7 @@ End Sub
 
 Sub MAJ_Encaissement() '2024-08-22 @ 09:46
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:MAJ_Encaissement", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modENC_Saisie:MAJ_Encaissement", vbNullString, 0)
     
     With wshENC_Saisie
         'Check for mandatory fields (4)
@@ -225,23 +225,23 @@ Sub MAJ_Encaissement() '2024-08-22 @ 09:46
     
 Clean_Exit:
 
-    Call Log_Record("modENC_Saisie:MAJ_Encaissement", vbNullString, startTime)
+    Call EnregistrerLogApplication("modENC_Saisie:MAJ_Encaissement", vbNullString, startTime)
 
 End Sub
 
 Sub Encaissement_Add_New() '2024-08-21 @ 14:58
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:Encaissement_Add_New", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modENC_Saisie:Encaissement_Add_New", vbNullString, 0)
 
     Call ENC_Clear_Cells
     
-    Call Log_Record("modENC_Saisie:Encaissement_Add_New", vbNullString, startTime)
+    Call EnregistrerLogApplication("modENC_Saisie:Encaissement_Add_New", vbNullString, startTime)
     
 End Sub
 
 Sub ENC_Add_DB_Entete() 'Write to MASTER.xlsx
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Add_DB_Entete", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modENC_Saisie:ENC_Add_DB_Entete", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -305,13 +305,13 @@ Sub ENC_Add_DB_Entete() 'Write to MASTER.xlsx
     
     Application.ScreenUpdating = True
 
-    Call Log_Record("modENC_Saisie:ENC_Add_DB_Entete", vbNullString, startTime)
+    Call EnregistrerLogApplication("modENC_Saisie:ENC_Add_DB_Entete", vbNullString, startTime)
     
 End Sub
 
 Sub ENC_Add_Locally_Entete() '2024-08-22 @ 10:38
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Add_Locally_Entete", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modENC_Saisie:ENC_Add_Locally_Entete", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -339,13 +339,13 @@ Sub ENC_Add_Locally_Entete() '2024-08-22 @ 10:38
     
     Application.ScreenUpdating = True
 
-    Call Log_Record("modENC_Saisie:ENC_Add_Locally_Entete", vbNullString, startTime)
+    Call EnregistrerLogApplication("modENC_Saisie:ENC_Add_Locally_Entete", vbNullString, startTime)
 
 End Sub
 
 Sub ENC_Add_DB_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow As Integer) 'Write to MASTER.xlsx
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Add_DB_Details", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modENC_Saisie:ENC_Add_DB_Details", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -391,13 +391,13 @@ Sub ENC_Add_DB_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow As Int
     
     Application.ScreenUpdating = True
 
-    Call Log_Record("modENC_Saisie:ENC_Add_DB_Details", vbNullString, startTime)
+    Call EnregistrerLogApplication("modENC_Saisie:ENC_Add_DB_Details", vbNullString, startTime)
     
 End Sub
 
 Sub ENC_Add_Locally_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow As Integer) '2024-08-22 @ 10:55
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Add_Locally_Details", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modENC_Saisie:ENC_Add_Locally_Details", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -426,13 +426,13 @@ Sub ENC_Add_Locally_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow A
     
     Application.ScreenUpdating = True
 
-    Call Log_Record("modENC_Saisie:ENC_Add_Locally_Details", vbNullString, startTime)
+    Call EnregistrerLogApplication("modENC_Saisie:ENC_Add_Locally_Details", vbNullString, startTime)
 
 End Sub
 
 Sub ENC_Update_DB_Comptes_Clients(firstRow As Integer, lastRow As Integer) 'Write to MASTER.xlsx
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Update_DB_Comptes_Clients", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modENC_Saisie:ENC_Update_DB_Comptes_Clients", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -496,13 +496,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
 
-    Call Log_Record("modENC_Saisie:ENC_Update_DB_Comptes_Clients", vbNullString, startTime)
+    Call EnregistrerLogApplication("modENC_Saisie:ENC_Update_DB_Comptes_Clients", vbNullString, startTime)
     
 End Sub
 
 Sub ENC_Update_Locally_Comptes_Clients(firstRow As Integer, lastRow As Integer) '2024-08-22 @ 10:55
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Update_Locally_Comptes_Clients", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modENC_Saisie:ENC_Update_Locally_Comptes_Clients", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -544,13 +544,13 @@ Sub ENC_Update_Locally_Comptes_Clients(firstRow As Integer, lastRow As Integer) 
     Set lookupRange = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modENC_Saisie:ENC_Update_Locally_Comptes_Clients", vbNullString, startTime)
+    Call EnregistrerLogApplication("modENC_Saisie:ENC_Update_Locally_Comptes_Clients", vbNullString, startTime)
 
 End Sub
 
 Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, Montant As Currency, desc As String) 'Write/Update to GCF_BD_MASTER / GL_Trans
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_GL_Posting_DB", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modENC_Saisie:ENC_GL_Posting_DB", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -642,13 +642,13 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modENC_Saisie:ENC_GL_Posting_DB", vbNullString, startTime)
+    Call EnregistrerLogApplication("modENC_Saisie:ENC_GL_Posting_DB", vbNullString, startTime)
 
 End Sub
 
 Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As String, Montant As Currency, desc As String) 'Write/Update to GCF_BD_MASTER / GL_Trans
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_GL_Posting_Locally", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modENC_Saisie:ENC_GL_Posting_Locally", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -702,13 +702,13 @@ Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As Str
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modENC_Saisie:ENC_GL_Posting_Locally", vbNullString, startTime)
+    Call EnregistrerLogApplication("modENC_Saisie:ENC_GL_Posting_Locally", vbNullString, startTime)
 
 End Sub
 
 Sub ENC_Add_Check_Boxes(row As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Add_Check_Boxes", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modENC_Saisie:ENC_Add_Check_Boxes", vbNullString, 0)
     
     Application.EnableEvents = False
     
@@ -751,13 +751,13 @@ Sub ENC_Add_Check_Boxes(row As Long)
     Set chkBoxRange = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modENC_Saisie:ENC_Add_Check_Boxes", vbNullString, startTime)
+    Call EnregistrerLogApplication("modENC_Saisie:ENC_Add_Check_Boxes", vbNullString, startTime)
 
 End Sub
 
 Sub ENC_Remove_Check_Boxes(row As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Remove_Check_Boxes", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modENC_Saisie:ENC_Remove_Check_Boxes", vbNullString, 0)
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -776,13 +776,13 @@ Sub ENC_Remove_Check_Boxes(row As Long)
     'Libérer la mémoire
     Set cbx = Nothing
     
-    Call Log_Record("modENC_Saisie:ENC_Remove_Check_Boxes", vbNullString, startTime)
+    Call EnregistrerLogApplication("modENC_Saisie:ENC_Remove_Check_Boxes", vbNullString, startTime)
 
 End Sub
 
 Sub ENC_Clear_Cells()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Clear_Cells", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modENC_Saisie:ENC_Clear_Cells", vbNullString, 0)
     
     wshENC_Saisie.Unprotect
     
@@ -825,7 +825,7 @@ Sub ENC_Clear_Cells()
         .EnableSelection = xlUnlockedCells
     End With
 
-    Call Log_Record("modENC_Saisie:ENC_Clear_Cells", vbNullString, startTime)
+    Call EnregistrerLogApplication("modENC_Saisie:ENC_Clear_Cells", vbNullString, startTime)
 
 End Sub
 
@@ -878,7 +878,7 @@ End Sub
 
 Sub ENC_Back_To_GL_Menu()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modENC_Saisie:ENC_Back_To_GL_Menu", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modENC_Saisie:ENC_Back_To_GL_Menu", vbNullString, 0)
    
     If wshENC_Saisie.ProtectContents Then
         wshENC_Saisie.Unprotect
@@ -895,7 +895,7 @@ Sub ENC_Back_To_GL_Menu()
     wshMenuGL.Activate
     wshMenuGL.Range("A1").Select
     
-    Call Log_Record("modENC_Saisie:ENC_Back_To_GL_Menu", vbNullString, startTime)
+    Call EnregistrerLogApplication("modENC_Saisie:ENC_Back_To_GL_Menu", vbNullString, startTime)
 
 End Sub
 

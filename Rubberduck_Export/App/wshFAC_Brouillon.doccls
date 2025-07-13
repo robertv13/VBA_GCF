@@ -4,7 +4,7 @@ Option Explicit
 
 Private Sub Worksheet_Activate()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_Activate", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("wshFAC_Brouillon:Worksheet_Activate", vbNullString, 0)
 
     If gFromMenu = False Then
         Exit Sub
@@ -65,13 +65,13 @@ Private Sub Worksheet_Activate()
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call Log_Record("wshFAC_Brouillon:Worksheet_Activate", vbNullString, startTime)
+    Call EnregistrerLogApplication("wshFAC_Brouillon:Worksheet_Activate", vbNullString, startTime)
 
 End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_SelectionChange", Target.Address, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("wshFAC_Brouillon:Worksheet_SelectionChange", Target.Address, 0)
     
     If gPreviousCellAddress <> vbNullString Then
         '@Ignore UnassignedVariableUsage
@@ -145,13 +145,13 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     'Libérer la mémoire
     Set shapeTextBox = Nothing
     
-    Call Log_Record("wshFAC_Brouillon:Worksheet_SelectionChange", vbNullString, startTime)
+    Call EnregistrerLogApplication("wshFAC_Brouillon:Worksheet_SelectionChange", vbNullString, startTime)
 
 End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshFAC_Brouillon:Worksheet_Change", Target.Address, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("wshFAC_Brouillon:Worksheet_Change", Target.Address, 0)
     
     Dim targetAddress As String
     On Error Resume Next
@@ -244,7 +244,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     If Not Intersect(Target, Range("O48:O50")) Is Nothing And Range("B24").Value = False And Range("B25").Value = False Then
         With wshFAC_Finale
             If Target.row = 48 Then
-                Call Log_Record("wshFAC_Brouillon:Worksheet_Change" & ":" & _
+                Call EnregistrerLogApplication("wshFAC_Brouillon:Worksheet_Change" & ":" & _
                     targetAddress & " - " & wshFAC_Brouillon.Range("O48").Value, -1)
                 wshFAC_Finale.Range("E70").Value = wshFAC_Brouillon.Range("O48").Value
                 wshFAC_Brouillon.Range("O49").Select
@@ -271,7 +271,7 @@ ExitSub:
     'Libérer la mémoire
     Set rng = Nothing
 
-    Call Log_Record("wshFAC_Brouillon:Worksheet_Change", targetAddress, startTime)
+    Call EnregistrerLogApplication("wshFAC_Brouillon:Worksheet_Change", targetAddress, startTime)
   
 End Sub
 

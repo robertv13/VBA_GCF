@@ -17,7 +17,7 @@ End Sub
 
 Sub AfficherListeDesFactures()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Interrogation:AfficherListeDesFactures", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFAC_Interrogation:AfficherListeDesFactures", vbNullString, 0)
     
     Application.EnableEvents = False
     With wshFAC_Interrogation.Range("B9:O33")
@@ -61,7 +61,7 @@ Sub AfficherListeDesFactures()
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modFAC_Interrogation:AfficherListeDesFactures", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFAC_Interrogation:AfficherListeDesFactures", vbNullString, startTime)
 
 Clean_Exit:
     
@@ -235,7 +235,7 @@ End Sub
 
 Sub FAC_Historique_Clear_All_Cells()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Interrogation:FAC_Historique_Clear_All_Cells", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFAC_Interrogation:FAC_Historique_Clear_All_Cells", vbNullString, 0)
     
     'Efface toutes les cellules de la feuille
     Application.EnableEvents = False
@@ -256,7 +256,7 @@ Sub FAC_Historique_Clear_All_Cells()
         .EnableSelection = xlUnlockedCells
     End With
 
-    Call Log_Record("modFAC_Interrogation:FAC_Historique_Clear_All_Cells", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFAC_Interrogation:FAC_Historique_Clear_All_Cells", vbNullString, startTime)
 
 End Sub
 
@@ -268,14 +268,14 @@ End Sub
 
 Sub FAC_Historique_Back_To_FAC_Menu()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Interrogation:FAC_Historique_Back_To_FAC_Menu", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFAC_Interrogation:FAC_Historique_Back_To_FAC_Menu", vbNullString, 0)
     
     wshFAC_Interrogation.Visible = xlSheetHidden
     
     wshMenuFAC.Activate
     wshMenuFAC.Range("A1").Select
     
-    Call Log_Record("modFAC_Interrogation:FAC_Historique_Back_To_FAC_Menu", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFAC_Interrogation:FAC_Historique_Back_To_FAC_Menu", vbNullString, startTime)
 
 End Sub
 
@@ -437,17 +437,17 @@ End Sub
 
 Sub ObtenirFactureInfos(noFact As String, nomClient As String, dateFacture As Date)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Interrogation:ObtenirFactureInfos", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFAC_Interrogation:ObtenirFactureInfos", vbNullString, 0)
     
     Call AfficherNouvelleFeuille_Stats(noFact, nomClient, dateFacture)
     
-    Call Log_Record("modFAC_Interrogation:ObtenirFactureInfos", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFAC_Interrogation:ObtenirFactureInfos", vbNullString, startTime)
 
 End Sub
 
 Sub AfficherNouvelleFeuille_Stats(invNo As String, nomClient As String, dateFacture As Date)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Interrogation:AfficherNouvelleFeuille_Stats", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFAC_Interrogation:AfficherNouvelleFeuille_Stats", vbNullString, 0)
     
     If invNo = vbNullString Then
         Exit Sub
@@ -753,7 +753,7 @@ Sub AfficherNouvelleFeuille_Stats(invNo As String, nomClient As String, dateFact
     'Libérer la mémoire
     Set rng = Nothing
     
-    Call Log_Record("modFAC_Interrogation:AfficherNouvelleFeuille_Stats", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFAC_Interrogation:AfficherNouvelleFeuille_Stats", vbNullString, startTime)
 
 End Sub
 
@@ -1109,7 +1109,7 @@ End Sub
 
 Sub ObtenirListeTECFactures(adresse As String)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Interrogation:ObtenirListeTECFactures", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFAC_Interrogation:ObtenirListeTECFactures", vbNullString, 0)
     
     Dim numeroLigne As Long, numeroColonne As Long
     Call ExtraireLigneColonneCellule(adresse, numeroLigne, numeroColonne)
@@ -1143,13 +1143,13 @@ Sub ObtenirListeTECFactures(adresse As String)
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call Log_Record("modFAC_Interrogation:ObtenirListeTECFactures", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFAC_Interrogation:ObtenirListeTECFactures", vbNullString, startTime)
     
 End Sub
 
 Sub PreparerRapportTECFactures()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Interrogation:PreparerRapportTECFactures", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFAC_Interrogation:PreparerRapportTECFactures", vbNullString, 0)
     
     'Assigner la feuille du rapport
     Dim strRapport As String
@@ -1291,13 +1291,13 @@ Sub PreparerRapportTECFactures()
     Set wsRapport = Nothing
     Set wsSource = Nothing
     
-    Call Log_Record("modFAC_Interrogation:PreparerRapportTECFactures", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFAC_Interrogation:PreparerRapportTECFactures", vbNullString, startTime)
     
 End Sub
 
 Sub ObtenirListeTECFacturésFiltreAvancé(noFact As String) '2024-10-20 @ 11:11
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Interrogation:ObtenirListeTECFacturésFiltreAvancé", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFAC_Interrogation:ObtenirListeTECFacturésFiltreAvancé", vbNullString, 0)
 
     'Utilisation de la feuille TEC_Local
     Dim ws As Worksheet: Set ws = wsdTEC_Local
@@ -1375,7 +1375,7 @@ Sub ObtenirListeTECFacturésFiltreAvancé(noFact As String) '2024-10-20 @ 11:11
     Set rngResult = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modFAC_Interrogation:ObtenirListeTECFacturésFiltreAvancé", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFAC_Interrogation:ObtenirListeTECFacturésFiltreAvancé", vbNullString, startTime)
     
 End Sub
 
@@ -1401,7 +1401,7 @@ End Sub
 
 Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture As Date)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Interrogation:AfficherNouvelleFeuille_CC", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFAC_Interrogation:AfficherNouvelleFeuille_CC", vbNullString, 0)
     
     If invNo = vbNullString Then
         Exit Sub
@@ -1635,13 +1635,13 @@ Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture
     Set ws = Nothing
     Set wsSelection = Nothing
     
-    Call Log_Record("modFAC_Interrogation:AfficherNouvelleFeuille_CC", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFAC_Interrogation:AfficherNouvelleFeuille_CC", vbNullString, startTime)
 
 End Sub
 
 Sub PreparerRapportTECFacturés(numeroFacture As String)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Interrogation:PreparerRapportTECFacturés", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFAC_Interrogation:PreparerRapportTECFacturés", vbNullString, 0)
     
     'Assigner la feuille du rapport
     Dim strRapport As String
@@ -1786,7 +1786,7 @@ Sub PreparerRapportTECFacturés(numeroFacture As String)
     Set wsRapport = Nothing
     Set wsSource = Nothing
     
-    Call Log_Record("modFAC_Interrogation:PreparerRapportTECFacturés", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFAC_Interrogation:PreparerRapportTECFacturés", vbNullString, startTime)
     
 End Sub
 

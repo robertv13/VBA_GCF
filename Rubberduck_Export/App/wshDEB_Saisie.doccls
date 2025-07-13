@@ -8,7 +8,7 @@ Private Sub Worksheet_Activate()
         Exit Sub
     End If
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshDEB_Saisie:Worksheet_Activate", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("wshDEB_Saisie:Worksheet_Activate", vbNullString, 0)
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -76,7 +76,7 @@ Private Sub Worksheet_Activate()
     Set shp = Nothing
     Set ws = Nothing
     
-    Call Log_Record("wshDEB_Saisie:Worksheet_Activate", vbNullString, startTime)
+    Call EnregistrerLogApplication("wshDEB_Saisie:Worksheet_Activate", vbNullString, startTime)
 
 End Sub
 

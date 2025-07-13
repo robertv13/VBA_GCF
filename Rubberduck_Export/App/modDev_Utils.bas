@@ -278,7 +278,7 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:C" & lastUsedRow)
     Dim header1 As String: header1 = "Liste des feuilles d'un classeur"
     Dim header2 As String: header2 = wbName
-    Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
+    Call MiseEnFormeImpressionSimple(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
     
     ThisWorkbook.Worksheets("X_Feuilles_du_Classeur").Activate
     
@@ -563,7 +563,7 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
                                     " cellules analysées dans l'application ***"
     Dim header1 As String: header1 = "Cells Data Validations"
     Dim header2 As String: header2 = "All worksheets"
-    Call Simple_Print_Setup(wsOutput, wsOutput.Range("B2:H" & lastUsedRow), _
+    Call MiseEnFormeImpressionSimple(wsOutput, wsOutput.Range("B2:H" & lastUsedRow), _
                            header1, _
                            header2, _
                            "$1:$1", _
@@ -828,7 +828,7 @@ Sub List_Named_Ranges_All() '2024-06-23 @ 07:40
     If i > 1 Then
         Dim header1 As String: header1 = "List all Named Ranges"
         Dim header2 As String: header2 = vbNullString
-        Call Simple_Print_Setup(wshzDocNamedRange, wshzDocNamedRange.Range("B2:I" & i), _
+        Call MiseEnFormeImpressionSimple(wshzDocNamedRange, wshzDocNamedRange.Range("B2:I" & i), _
                                header1, _
                                header2, _
                                "$1:$1", _
@@ -1055,7 +1055,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, lignesLues As Long, search1 As St
     header2 = "Searched strings '" & search1 & "'"
     If search2 <> vbNullString Then header2 = header2 & " '" & search2 & "'"
     If search3 <> vbNullString Then header2 = header2 & " '" & search3 & "'"
-    Call Simple_Print_Setup(wsOutput, wsOutput.Range("B2:G" & lastUsedRow), _
+    Call MiseEnFormeImpressionSimple(wsOutput, wsOutput.Range("B2:G" & lastUsedRow), _
                            header1, _
                            header2, _
                            "$1:$1", _
@@ -1233,7 +1233,7 @@ Sub List_All_Macros_Used_With_Objects() '2024-11-26 @ 20:14
     Dim rngToPrint As Range: Set rngToPrint = wsOutputSheet.Range("A2:D" & outputRow)
     Dim header1 As String: header1 = "Liste des macros associées à des contrôles"
     Dim header2 As String: header2 = ThisWorkbook.Name
-    Call Simple_Print_Setup(wsOutputSheet, rngToPrint, header1, header2, "$1:$1", "P")
+    Call MiseEnFormeImpressionSimple(wsOutputSheet, rngToPrint, header1, header2, "$1:$1", "P")
     
     MsgBox "La liste des macros assignées à des contrôles est dans " & _
                 vbNewLine & vbNewLine & "la feuille 'Doc_All_Macros_Used_With_Object'.", vbInformation
@@ -1501,7 +1501,7 @@ Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:C" & lastUsedRow)
     Dim header1 As String: header1 = "Liste des feuilles d'un classeur"
     Dim header2 As String: header2 = ThisWorkbook.Name
-    Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
+    Call MiseEnFormeImpressionSimple(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
     
     ThisWorkbook.Worksheets("X_Feuilles_du_Classeur").Activate
     
@@ -1514,7 +1514,7 @@ End Sub
 
 Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modDev_Utils:SetTabOrder", ws.CodeName, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modDev_Utils:SetTabOrder", ws.CodeName, 0)
 
     'Clear previous settings AND protect the worksheet
     With ws
@@ -1554,11 +1554,11 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
     Set unprotectedCells = Nothing
     Set sortedCells = Nothing
 
-    Call Log_Record("modDev_Utils:SetTabOrder", vbNullString, startTime)
+    Call EnregistrerLogApplication("modDev_Utils:SetTabOrder", vbNullString, startTime)
 
 End Sub
 
-Sub Log_Record(ByVal procedureName As String, param As String, Optional ByVal startTime As Double = 0) '2025-02-03 @ 17:17
+Sub EnregistrerLogApplication(ByVal procedureName As String, param As String, Optional ByVal startTime As Double = 0) '2025-02-03 @ 17:17
 
     'En attendant de trouver la problématique... 2025-06-01 @ 05:06
     If gUtilisateurWindows = vbNullString Then
@@ -1630,11 +1630,11 @@ ErrorHandler:
     
 End Sub
 
-Sub Test_Log_Record()
+Sub Test_EnregistrerLogApplication()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modDev_Utils:Test_Log_Record", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modDev_Utils:Test_EnregistrerLogApplication", vbNullString, 0)
 
-    Call Log_Record("modDev_Utils:Test_Log_Record", vbNullString, startTime)
+    Call EnregistrerLogApplication("modDev_Utils:Test_EnregistrerLogApplication", vbNullString, startTime)
     
 End Sub
 

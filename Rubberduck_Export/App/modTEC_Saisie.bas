@@ -10,7 +10,7 @@ Public rmv_state As Long
 
 Sub TEC_Ajoute_Ligne() 'Add an entry to DB
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Ajoute_Ligne", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modTEC_Saisie:TEC_Ajoute_Ligne", vbNullString, 0)
 
     'Obtenir le ID du client pur (à partir de son nom pur)
     ufSaisieHeures.txtClientID.Value = Fn_Cell_From_BD_Client(ufSaisieHeures.txtClient.Value, 1, 2)
@@ -52,13 +52,13 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
         ufSaisieHeures.txtClient.SetFocus
     End If
     
-    Call Log_Record("modTEC_Saisie:TEC_Ajoute_Ligne", vbNullString, startTime)
+    Call EnregistrerLogApplication("modTEC_Saisie:TEC_Ajoute_Ligne", vbNullString, startTime)
 
 End Sub
 
 Sub TEC_Modifie_Ligne() '2023-12-23 @ 07:04
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Modifie_Ligne", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modTEC_Saisie:TEC_Modifie_Ligne", vbNullString, 0)
 
     If Fn_TEC_Is_Data_Valid() = False Then Exit Sub
 
@@ -90,13 +90,13 @@ Sub TEC_Modifie_Ligne() '2023-12-23 @ 07:04
     
     ufSaisieHeures.txtClient.SetFocus
     
-    Call Log_Record("modTEC_Saisie:TEC_Modifie_Ligne", vbNullString, startTime)
+    Call EnregistrerLogApplication("modTEC_Saisie:TEC_Modifie_Ligne", vbNullString, startTime)
 
 End Sub
 
 Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Efface_Ligne", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modTEC_Saisie:TEC_Efface_Ligne", vbNullString, 0)
 
     If ufSaisieHeures.txtTECID.Value = vbNullString Then
         MsgBox Prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
@@ -115,7 +115,7 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
         GoTo Clean_Exit
     End If
     
-    Call Log_Record("modTEC_Saisie:TEC_Efface_Ligne - Le DELETE est confirmé - " & CStr(-ufSaisieHeures.txtTECID.Value), -1) '2024-10-05 @ 07:21
+    Call EnregistrerLogApplication("modTEC_Saisie:TEC_Efface_Ligne - Le DELETE est confirmé - " & CStr(-ufSaisieHeures.txtTECID.Value), -1) '2024-10-05 @ 07:21
     
     Dim Sh As Worksheet: Set Sh = wsdTEC_Local
     
@@ -156,13 +156,13 @@ Clean_Exit:
     'Libérer la mémoire
     Set Sh = Nothing
 
-    Call Log_Record("modTEC_Saisie:TEC_Efface_Ligne", vbNullString, startTime)
+    Call EnregistrerLogApplication("modTEC_Saisie:TEC_Efface_Ligne", vbNullString, startTime)
 
 End Sub
 
 Sub TEC_Get_All_TEC_AF() '2024-11-19 @ 10:39
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Get_All_TEC_AF", _
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modTEC_Saisie:TEC_Get_All_TEC_AF", _
                                                                  ufSaisieHeures.txtProfID.Value & "/" & ufSaisieHeures.txtDate.Value, 0)
 
     Dim ws As Worksheet: Set ws = wsdTEC_Local
@@ -255,13 +255,13 @@ No_Sort_Required:
     Set rngResult = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modTEC_Saisie:TEC_Get_All_TEC_AF", vbNullString, startTime)
+    Call EnregistrerLogApplication("modTEC_Saisie:TEC_Get_All_TEC_AF", vbNullString, startTime)
 
 End Sub
 
 Sub TEC_Efface_Formulaire() '2025-07-03 @ 07:31
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Efface_Formulaire", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modTEC_Saisie:TEC_Efface_Formulaire", vbNullString, 0)
 
     'Empty the dynamic fields after reseting the form
     With ufSaisieHeures
@@ -283,13 +283,13 @@ Sub TEC_Efface_Formulaire() '2025-07-03 @ 07:31
         
     ufSaisieHeures.txtClient.SetFocus
     
-    Call Log_Record("modTEC_Saisie:TEC_Efface_Formulaire", vbNullString, startTime)
+    Call EnregistrerLogApplication("modTEC_Saisie:TEC_Efface_Formulaire", vbNullString, startTime)
 
 End Sub
 
 Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to external .xlsx file
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB", CStr(tecID), 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB", CStr(tecID), 0)
 
     Application.ScreenUpdating = False
     
@@ -451,7 +451,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to
                 'Handle the case where the specified ID is not found - PROBLEM !!!
                 
                 MsgBox "L'enregistrement avec le TECID '" & tecID & "' ne peut être trouvé!", vbExclamation
-                Call Log_Record("ERREUR - N'a pas trouvé le TECID '", CStr(saveLogTECID), -1)   '2024-09-13 @ 09:09
+                Call EnregistrerLogApplication("ERREUR - N'a pas trouvé le TECID '", CStr(saveLogTECID), -1)   '2024-09-13 @ 09:09
                 Call Log_Saisie_Heures("Erreur  ", "@00495 - Impossible de trouver le TECID = " & CStr(saveLogTECID)) '2024-09-02 @ 10:35
                 rs.Close
                 conn.Close
@@ -474,7 +474,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB", CStr(tecID), startTime)
+    Call EnregistrerLogApplication("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB", CStr(tecID), startTime)
 
     Exit Sub
     
@@ -495,13 +495,13 @@ ErrorHandler:
         On Error GoTo 0
     End If
     
-    Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB", CStr(tecID), startTime)
+    Call EnregistrerLogApplication("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB", CStr(tecID), startTime)
     
 End Sub
 
 Sub TEC_Record_Add_Or_Update_Locally(tecID As Long) 'Write -OR- Update a record to local worksheet
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_Locally", CStr(tecID), 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modTEC_Saisie:TEC_Record_Add_Or_Update_Locally", CStr(tecID), 0)
 
     Application.ScreenUpdating = False
     
@@ -582,13 +582,13 @@ Sub TEC_Record_Add_Or_Update_Locally(tecID As Long) 'Write -OR- Update a record 
     'Libérer la mémoire
     Set lookupRange = Nothing
     
-    Call Log_Record("modTEC_Saisie:TEC_Record_Add_Or_Update_Locally", CStr(tecID), startTime)
+    Call EnregistrerLogApplication("modTEC_Saisie:TEC_Record_Add_Or_Update_Locally", CStr(tecID), startTime)
 
 End Sub
 
 Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate records
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours", _
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours", _
             ufSaisieHeures.txtProfID.Value & "/" & ufSaisieHeures.txtDate.Value, 0)
 
     On Error GoTo ErrorHandler
@@ -708,7 +708,7 @@ EndOfProcedure:
     Set rng = Nothing
     Set rngResult = Nothing
     
-    Call Log_Record("modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours", _
+    Call EnregistrerLogApplication("modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours", _
                         ufSaisieHeures.txtProfID.Value & "/" & ufSaisieHeures.txtDate.Value, startTime)
     Exit Sub
     
@@ -721,7 +721,7 @@ End Sub
 
 Sub TEC_Update_TDB_From_TEC_Local()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_Update_TDB_From_TEC_Local", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modTEC_Saisie:TEC_Update_TDB_From_TEC_Local", vbNullString, 0)
 
     Dim wsFrom As Worksheet: Set wsFrom = wsdTEC_Local
     Dim lastUsedRow As Long
@@ -760,13 +760,13 @@ Sub TEC_Update_TDB_From_TEC_Local()
     Set rngTo = Nothing
     Set wsFrom = Nothing
     
-    Call Log_Record("modTEC_Saisie:TEC_Update_TDB_From_TEC_Local", vbNullString, startTime)
+    Call EnregistrerLogApplication("modTEC_Saisie:TEC_Update_TDB_From_TEC_Local", vbNullString, startTime)
 
 End Sub
 
 Sub TEC_TdB_Refresh_All_Pivot_Tables()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables", vbNullString, 0)
 
     Dim pt As pivotTable
     For Each pt In wshTEC_TDB.PivotTables
@@ -776,7 +776,7 @@ Sub TEC_TdB_Refresh_All_Pivot_Tables()
     'Libérer la mémoire
     Set pt = Nothing
     
-    Call Log_Record("modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables", vbNullString, startTime)
+    Call EnregistrerLogApplication("modTEC_Saisie:TEC_TdB_Refresh_All_Pivot_Tables", vbNullString, startTime)
     
 End Sub
 
@@ -806,7 +806,7 @@ End Sub
 
 Sub UpdatePivotTables()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Saisie:UpdatePivotTables", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modTEC_Saisie:UpdatePivotTables", vbNullString, 0)
     
     Dim ws As Worksheet: Set ws = wshStatsHeuresPivotTables
     Dim pt As pivotTable
@@ -824,7 +824,7 @@ Sub UpdatePivotTables()
     Set pt = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modTEC_Saisie:UpdatePivotTables", vbNullString, startTime)
+    Call EnregistrerLogApplication("modTEC_Saisie:UpdatePivotTables", vbNullString, startTime)
     
 End Sub
 

@@ -55,7 +55,7 @@ End Sub
 
 Sub ObtenirFactureAConfirmer(AC_OR_C As String) '2025-03-12 @ 12:40
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:ObtenirFactureAConfirmer", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFAC_Confirmation:ObtenirFactureAConfirmer", vbNullString, 0)
     
     'Utilisation de la feuille FAC_Entête
     Dim ws As Worksheet: Set ws = wsdFAC_Entete
@@ -113,7 +113,7 @@ Sub ObtenirFactureAConfirmer(AC_OR_C As String) '2025-03-12 @ 12:40
     Set rngResult = Nothing
     Set ws = Nothing
 
-    Call Log_Record("modFAC_Confirmation:ObtenirFactureAConfirmer", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFAC_Confirmation:ObtenirFactureAConfirmer", vbNullString, startTime)
 
 End Sub
 
@@ -206,7 +206,7 @@ End Sub
 
 Sub MAJ_Statut_Facture_Entête_BD_MASTER(invoice As String) '2025-03-12 @ 12:40
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:MAJ_Statut_Facture_Entête_BD_MASTER", invoice, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFAC_Confirmation:MAJ_Statut_Facture_Entête_BD_MASTER", invoice, 0)
 
     Application.ScreenUpdating = False
     
@@ -244,13 +244,13 @@ Sub MAJ_Statut_Facture_Entête_BD_MASTER(invoice As String) '2025-03-12 @ 12:40
     Set conn = Nothing
     Set rs = Nothing
     
-    Call Log_Record("modFAC_Confirmation:MAJ_Statut_Facture_Entête_BD_MASTER", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFAC_Confirmation:MAJ_Statut_Facture_Entête_BD_MASTER", vbNullString, startTime)
 
 End Sub
 
 Sub MAJ_Statut_Facture_Entête_Local(invoice As String) '2025-03-12 @ 12:40
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:MAJ_Statut_Facture_Entête_Local", invoice, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFAC_Confirmation:MAJ_Statut_Facture_Entête_Local", invoice, 0)
     
     Dim ws As Worksheet: Set ws = wsdFAC_Entete
     
@@ -275,13 +275,13 @@ Sub MAJ_Statut_Facture_Entête_Local(invoice As String) '2025-03-12 @ 12:40
     Set lookupRange = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modFAC_Confirmation:MAJ_Statut_Facture_Entête_Local", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFAC_Confirmation:MAJ_Statut_Facture_Entête_Local", vbNullString, startTime)
 
 End Sub
 
 Sub Construire_GL_Posting_Confirmation(invoice As String) '2025-03-12 @ 12:42
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Confirmation:Construire_GL_Posting_Confirmation", invoice, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFAC_Confirmation:Construire_GL_Posting_Confirmation", invoice, 0)
 
     Dim ws As Worksheet: Set ws = wsdFAC_Entete
     
@@ -386,7 +386,7 @@ Sub Construire_GL_Posting_Confirmation(invoice As String) '2025-03-12 @ 12:42
     Set ws = Nothing
     On Error GoTo 0
     
-    Call Log_Record("modFAC_Confirmation:Construire_GL_Posting_Confirmation", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFAC_Confirmation:Construire_GL_Posting_Confirmation", vbNullString, startTime)
 
 End Sub
 

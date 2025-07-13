@@ -17,7 +17,7 @@ End Sub
 
 Sub CreerListeAgee() '2024-09-08 @ 15:55
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("CreerListeAgee:CreerListeAgee", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("CreerListeAgee:CreerListeAgee", vbNullString, 0)
    
     Application.ScreenUpdating = False
     
@@ -450,7 +450,7 @@ Next_Invoice:
     End If
     header2 = ordreTri & " - " & header2
     
-    Call Simple_Print_Setup(wshCAR_Liste_Agee, rngToPrint, header1, header2, "$8:$8", "P")
+    Call MiseEnFormeImpressionSimple(wshCAR_Liste_Agee, rngToPrint, header1, header2, "$8:$8", "P")
     
     Application.ScreenUpdating = True
     
@@ -468,7 +468,7 @@ Next_Invoice:
     Set wsFactures = Nothing
     Set wsPaiements = Nothing
     
-    Call Log_Record("CreerListeAgee:CreerListeAgee", vbNullString, startTime)
+    Call EnregistrerLogApplication("CreerListeAgee:CreerListeAgee", vbNullString, startTime)
     
 End Sub
 

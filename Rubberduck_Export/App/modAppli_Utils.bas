@@ -3,8 +3,8 @@ Attribute VB_Name = "modAppli_Utils"
 
 Option Explicit
 
-'@Description "Structure pour VerifierTEC - 2025-06-19 @ 10:41"
-Public Type StatistiquesTEC
+'@Description "Structure pour VerifierTEC"
+Public Type StatistiquesTEC '2025-06-19 @ 10:41
     cas_doublon_TecID As Long
     cas_date_invalide As Long
     cas_date_future As Long
@@ -41,10 +41,10 @@ Attribute AjouterMessage.VB_Description = "Routine pour ajouter des lignes de me
     
 End Sub
 
-
 Public Sub ConvertRangeBooleanToText(rng As Range)
 
     Dim cell As Range
+    
     For Each cell In rng
         Select Case cell.Value
             Case 0, "False", "FAUX" 'False
@@ -52,7 +52,10 @@ Public Sub ConvertRangeBooleanToText(rng As Range)
             Case -1, "True", "VRAI" 'True
                 cell.Value = "VRAI"
             Case Else
-                MsgBox cell.Value & " est une valeur INVALIDE pour la cellule " & cell.Address & " de la feuille TEC_Local"
+                MsgBox cell.Value & " est une valeur INVALIDE pour la cellule '" & cell.Address & "'" & vbNewLine & vbNewLine & _
+                    "Veuillez contacter le développeur sans faute", _
+                    "Erreur de logique", _
+                    vbCritical
         End Select
     Next cell
 
@@ -63,15 +66,15 @@ End Sub
 
 Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierIntegriteTablesLocales", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierIntegriteTablesLocales", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
     'Variable pour déterminer à la fin s'il y a des erreurs...
     gverificationIntegriteOK = True
     
-    Call Erase_And_Create_Worksheet("X_Analyse_Intégrité")
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
+    Call Erase_And_Create_Worksheet("X_Analyse_Integrite")
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Integrite")
     With wsOutput
         .Unprotect
         .Cells.Font.Name = "Courier New"
@@ -132,7 +135,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Call VerifierPlanComptable(r, readRows)
+    Call VerifierPlanComptable(wsOutput, r, readRows)
 
     'wsdBD_Clients --------------------------------------------------------------- Clients
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "BD_Clients")
@@ -140,7 +143,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Call VerifierClients(r, readRows)
+    Call VerifierClients(wsOutput, r, readRows)
     
     'wsdBD_Fournisseurs ----------------------------------------------------- Fournisseurs
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "BD_Fournisseurs")
@@ -148,7 +151,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Call VerifierFournisseurs(r, readRows)
+    Call VerifierFournisseurs(wsOutput, r, readRows)
     
     'wsdDEB_Recurrent ------------------------------------------------------ DEB_Récurrent
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "DEB_Récurrent")
@@ -156,7 +159,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Call VerifierDEBRecurrent(r, readRows)
+    Call VerifierDEBRecurrent(wsOutput, r, readRows)
     
     'wsdDEB_Trans -------------------------------------------------------------- DEB_Trans
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "DEB_Trans")
@@ -164,7 +167,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Call VerifierDEBTrans(r, readRows)
+    Call VerifierDEBTrans(wsOutput, r, readRows)
     
     'wsdFAC_Entete ------------------------------------------------------------ FAC_Entête
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "FAC_Entête")
@@ -172,7 +175,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Call VerifierFACEntete(r, readRows)
+    Call VerifierFACEntete(wsOutput, r, readRows)
     
     'wsdFAC_Details ---------------------------------------------------------- FAC_Détails
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "FAC_Détails")
@@ -180,7 +183,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Call VerifierFACDetails(r, readRows)
+    Call VerifierFACDetails(wsOutput, r, readRows)
     
     'wsdFAC_Comptes_Clients ------------------------------------------ FAC_Comptes_Clients
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "FAC_Comptes_Clients")
@@ -188,7 +191,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Call VerifierFACComptesClients(r, readRows)
+    Call VerifierFACComptesClients(wsOutput, r, readRows)
     
     'wsdFAC_Sommaire_Taux ---------------------------------------------- FAC_Sommaire_Taux
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "FAC_Sommaire_Taux")
@@ -196,7 +199,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Call VerifierFACSommaireTaux(r, readRows)
+    Call VerifierFACSommaireTaux(wsOutput, r, readRows)
     
     'wsdENC_Entete ------------------------------------------------------------ ENC_Entête
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "ENC_Entête")
@@ -204,7 +207,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Call VerifierENCEntete(r, readRows)
+    Call VerifierENCEntete(wsOutput, r, readRows)
     
     'wsdENC_Details ---------------------------------------------------------- ENC_Détails
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "ENC_Détails")
@@ -212,7 +215,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Call VerifierENCDetails(r, readRows)
+    Call VerifierENCDetails(wsOutput, r, readRows)
     
     'wsdCC_Regularisations ---------------------------------------------------------- CC_Régularisations
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "CC_Régularisations")
@@ -220,7 +223,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Call VérifierCCRégularisations(r, readRows)
+    Call VerifierCCRegularisations(wsOutput, r, readRows)
     
     'wsdFAC_Projets_Entete -------------------------------------------- FAC_Projets_Entête
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "FAC_Projets_Entête")
@@ -228,7 +231,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Call VerifierFACProjetsEntete(r, readRows)
+    Call VerifierFACProjetsEntete(wsOutput, r, readRows)
     
     'wsdFAC_Projets_Details ------------------------------------------ FAC_Projets_Détails
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "FAC_Projets_Détails")
@@ -236,7 +239,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Call VerifierFACProjetsDetails(r, readRows)
+    Call VerifierFACProjetsDetails(wsOutput, r, readRows)
     
     'wsdGL_Trans ---------------------------------------------------------------- GL_Trans
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "GL_Trans")
@@ -244,7 +247,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Call VerifierGLTrans(r, readRows)
+    Call VerifierGLTrans(wsOutput, r, readRows)
     
     'wsdGL_EJ_Recurrente ------------------------------------------------ GL_EJ_Recurrente
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "GL_EJ_Recurrente")
@@ -252,7 +255,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Call VerifierGLEJRecurrente(r, readRows)
+    Call VerifierGLEJRecurrente(wsOutput, r, readRows)
    
     'wshTEC_TdB_Data -------------------------------------------------------- TEC_TdB_Data
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "TEC_TdB_Data")
@@ -260,7 +263,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Call VerifierTECTdBData(r, readRows)
+    Call VerifierTECTdBData(wsOutput, r, readRows)
     
     'wsdTEC_Local -------------------------------------------------------------- TEC_Local
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "TEC_Local")
@@ -268,7 +271,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
-    Call VerifierTEC(r, readRows)
+    Call VerifierTEC(wsOutput, r, readRows)
     
     'Dernière section de vérification
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "Dernières vérifications")
@@ -409,7 +412,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:C" & lastUsedRow)
     Dim header1 As String: header1 = "Vérification d'intégrité des tables"
     Dim header2 As String: header2 = vbNullString
-    Call Simple_Print_Setup(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
+    Call MiseEnFormeImpressionSimple(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
     
     If gverificationIntegriteOK = True Then
         MsgBox "La vérification d'intégrité est terminé SANS PROBLÈME" & vbNewLine & vbNewLine & "Voir la feuille 'X_Analyse_Intégrité'", vbInformation
@@ -417,7 +420,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
         MsgBox "La vérification a détecté AU MOINS UN PROBLÈME" & vbNewLine & vbNewLine & "Voir la feuille 'X_Analyse_Intégrité'", vbInformation
     End If
     
-    ThisWorkbook.Worksheets("X_Analyse_Intégrité").Activate
+    ThisWorkbook.Worksheets("X_Analyse_Integrite").Activate
     
     Application.ScreenUpdating = True
     
@@ -426,7 +429,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     Set rngToPrint = Nothing
     Set wsOutput = Nothing
     
-    Call Log_Record("modAppli_Utils:VerifierIntegriteTablesLocales", vbNullString, startTime)
+    Call EnregistrerLogApplication("modAppli_Utils:VerifierIntegriteTablesLocales", vbNullString, startTime)
 
 End Sub
 
@@ -457,7 +460,7 @@ Sub ImprimerEcartsVerificationIntegrite(ws As Worksheet, r As Long, t As String,
 
 End Sub
 
-Sub Simple_Print_Setup(ws As Worksheet, rng As Range, header1 As String, _
+Sub MiseEnFormeImpressionSimple(ws As Worksheet, rng As Range, header1 As String, _
                        header2 As String, titleRows As String, Optional Orient As String = "L")
     
     On Error GoTo CleanUp
@@ -503,7 +506,7 @@ CleanUp:
     
 End Sub
 
-Public Sub Tx_2D_Array_2_Range(ByRef arr As Variant, _
+Public Sub TransfererTableau2DVersPlage(ByRef arr As Variant, _
                                ByVal rngTo As Range, _
                                Optional ByVal clearExistingData As Boolean = True, _
                                Optional ByVal HeaderSize As Long = 1)
@@ -523,11 +526,11 @@ Public Sub Tx_2D_Array_2_Range(ByRef arr As Variant, _
     
 End Sub
 
-Sub Tx_Range_2_2D_Array(ByVal rng As Range, ByRef arr As Variant, Optional ByVal headerRows As Long = 1)
+Sub TransfererPlageVersTableau2D(ByVal rng As Range, ByRef arr As Variant, Optional ByVal headerRows As Long = 1)
 
     'La plage est-elle valide ?
     If rng Is Nothing Then
-        MsgBox "La plage est invalide ou non définie.", vbExclamation, , "modAppli_Utils:Tx_Range_2_2D_Array"
+        MsgBox "La plage est invalide ou non définie.", vbExclamation, , "modAppli_Utils:TransfererPlageVersTableau2D"
         Exit Sub
     End If
     
@@ -535,13 +538,12 @@ Sub Tx_Range_2_2D_Array(ByVal rng As Range, ByRef arr As Variant, Optional ByVal
     Dim numRows As Long
     Dim numCols As Long
     
-'    startRow = rng.row + headerRows
     numRows = rng.Rows.count - headerRows
     numCols = rng.Columns.count
     
     'La plage contient-elle des données ?
     If numRows <= 0 Or numCols <= 0 Then
-        MsgBox "Aucune donnée à copier dans le tableau.", vbExclamation, "modAppli_Utils:Tx_Range_2_2D_Array"
+        MsgBox "Aucune donnée à copier dans le tableau.", vbExclamation, "modAppli_Utils:TransfererPlageVersTableau2D"
         Exit Sub
     End If
     
@@ -555,7 +557,7 @@ Sub Tx_Range_2_2D_Array(ByVal rng As Range, ByRef arr As Variant, Optional ByVal
     If Not rngData Is Nothing Then
         arr = rngData.Value
     Else
-        MsgBox "Erreur lors de la création de la plage de données.", vbExclamation, "modAppli_Utils:Tx_Range_2_2D_Array"
+        MsgBox "Erreur lors de la création de la plage de données.", vbExclamation, "modAppli_Utils:TransfererPlageVersTableau2D"
     End If
     
     'Libérer la mémoire
@@ -563,9 +565,9 @@ Sub Tx_Range_2_2D_Array(ByVal rng As Range, ByRef arr As Variant, Optional ByVal
     
 End Sub
 
-Sub CreateOrReplaceWorksheet(wsName As String)
+Sub CreerOuRemplacerFeuille(wsName As String)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:CreateOrReplaceWorksheet", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:CreerOuRemplacerFeuille", vbNullString, 0)
     
     Dim wsExists As Boolean
     wsExists = NomFeuilleExiste(wsName)
@@ -588,17 +590,15 @@ Sub CreateOrReplaceWorksheet(wsName As String)
     'Libérer la mémoire
     Set ws = Nothing
 
-    Call Log_Record("modAppli_Utils:CreateOrReplaceWorksheet", vbNullString, startTime)
+    Call EnregistrerLogApplication("modAppli_Utils:CreerOuRemplacerFeuille", vbNullString, startTime)
     
 End Sub
 
-Private Sub VerifierPlanComptable(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierPlanComptable(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierPlanComptable", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierPlanComptable", vbNullString, 0)
     
     Application.ScreenUpdating = True
-    
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'dnrPlanComptable_All
     Dim arr As Variant
@@ -694,24 +694,19 @@ Private Sub VerifierPlanComptable(ByRef r As Long, ByRef readRows As Long)
     End If
     
 Clean_Exit:
-    'Libérer la mémoire
-    Set wsOutput = Nothing
-    
     Application.ScreenUpdating = False
     
-    Call Log_Record("modAppli_Utils:VerifierPlanComptable", vbNullString, startTime)
+    Call EnregistrerLogApplication("modAppli_Utils:VerifierPlanComptable", vbNullString, startTime)
 
 End Sub
 
-Private Sub VerifierClients(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierClients(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierClients", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierClients", vbNullString, 0)
     
     Application.ScreenUpdating = True
     
     Call modImport.ImporterClients
-    
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'Fichier maître des Clients
     Dim ws As Worksheet: Set ws = wsdBD_Clients
@@ -828,23 +823,20 @@ Clean_Exit:
     Set dict_nom_client = Nothing
     Set rng = Nothing
     Set ws = Nothing
-    Set wsOutput = Nothing
     
     Application.ScreenUpdating = False
     
-    Call Log_Record("modAppli_Utils:VerifierClients", vbNullString, startTime)
+    Call EnregistrerLogApplication("modAppli_Utils:VerifierClients", vbNullString, startTime)
 
 End Sub
 
-Private Sub VerifierFournisseurs(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierFournisseurs(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierFournisseurs", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierFournisseurs", vbNullString, 0)
 
     Application.ScreenUpdating = True
 
     Call modImport.ImporterFournisseurs
-    
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'wshBD_fournisseurs
     Dim ws As Worksheet: Set ws = wsdBD_Fournisseurs
@@ -923,23 +915,20 @@ Clean_Exit:
     'Libérer la mémoire
     Set rng = Nothing
     Set ws = Nothing
-    Set wsOutput = Nothing
     
     Application.ScreenUpdating = False
     
-    Call Log_Record("modAppli_Utils:VerifierFournisseurs", vbNullString, startTime)
+    Call EnregistrerLogApplication("modAppli_Utils:VerifierFournisseurs", vbNullString, startTime)
 
 End Sub
 
-Private Sub VérifierCCRégularisations(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierCCRegularisations(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VérifierCCRégularisations", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierCCRegularisations", vbNullString, 0)
 
     Application.ScreenUpdating = True
     
     Call modImport.ImporterCCRegularisations
-    
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'wsdCC_Regularisations
     Dim ws As Worksheet: Set ws = wsdCC_Regularisations
@@ -1122,26 +1111,23 @@ Clean_Exit:
     Set ws = Nothing
     Set wsClients = Nothing
     Set wsFACEntete = Nothing
-    Set wsOutput = Nothing
     
     DoEvents
     Application.ScreenUpdating = False
     
-    Call Log_Record("modAppli_Utils:VérifierCCRégularisations", vbNullString, startTime)
+    Call EnregistrerLogApplication("modAppli_Utils:VerifierCCRegularisations", vbNullString, startTime)
 
 End Sub
 
-Private Sub VerifierDEBRecurrent(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierDEBRecurrent(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierDEBRecurrent", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierDEBRecurrent", vbNullString, 0)
 
     Application.ScreenUpdating = True
     
     Call modImport.ImporterDebRecurrent
     
     Dim ws As Worksheet: Set ws = wsdDEB_Recurrent
-    
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'wsdDEB_Recurrent
     Dim HeaderRow As Long: HeaderRow = 1
@@ -1188,7 +1174,7 @@ Private Sub VerifierDEBRecurrent(ByRef r As Long, ByRef readRows As Long)
     Dim arr() As Variant
     Dim headerRows As Long
     headerRows = 1
-    Call Tx_Range_2_2D_Array(rng, arr, 1)
+    Call TransfererPlageVersTableau2D(rng, arr, 1)
     
     'On analyse chacune des lignes du tableau
     Dim i As Long, p As Long
@@ -1271,25 +1257,22 @@ Clean_Exit:
     Set planComptable = Nothing
     Set rng = Nothing
     Set ws = Nothing
-    Set wsOutput = Nothing
 
     Application.ScreenUpdating = False
 
-    Call Log_Record("modAppli_Utils:VerifierDEBRecurrent", vbNullString, startTime)
+    Call EnregistrerLogApplication("modAppli_Utils:VerifierDEBRecurrent", vbNullString, startTime)
 
 End Sub
 
-Private Sub VerifierDEBTrans(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierDEBTrans(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierDEBTrans", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierDEBTrans", vbNullString, 0)
 
     Application.ScreenUpdating = True
     
     Call modImport.ImporterDebTrans
     
     Dim ws As Worksheet: Set ws = wsdDEB_Trans
-    
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'wsdDEB_Trans
     Dim HeaderRow As Long: HeaderRow = 1
@@ -1336,7 +1319,7 @@ Private Sub VerifierDEBTrans(ByRef r As Long, ByRef readRows As Long)
     Dim arr() As Variant
     Dim headerRows As Long
     headerRows = 1
-    Call Tx_Range_2_2D_Array(rng, arr, 1)
+    Call TransfererPlageVersTableau2D(rng, arr, 1)
     
     'On analyse chacune des lignes du tableau
     Dim i As Long, p As Long
@@ -1425,25 +1408,22 @@ Clean_Exit:
     Set planComptable = Nothing
     Set rng = Nothing
     Set ws = Nothing
-    Set wsOutput = Nothing
     On Error GoTo 0
 
     DoEvents
     Application.ScreenUpdating = False
 
-    Call Log_Record("modAppli_Utils:VerifierDEBTrans", vbNullString, startTime)
+    Call EnregistrerLogApplication("modAppli_Utils:VerifierDEBTrans", vbNullString, startTime)
 
 End Sub
 
-Private Sub VerifierENCDetails(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierENCDetails(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierENCDetails", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierENCDetails", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
     Call modImport.ImporterEncDetails
-    
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'wsdENC_Details
     Dim ws As Worksheet: Set ws = wsdENC_Details
@@ -1583,24 +1563,21 @@ Clean_Exit:
     Set wsComptes_Clients = Nothing
     Set wsFACEntete = Nothing
     Set wsEntete = Nothing
-    Set wsOutput = Nothing
     On Error GoTo 0
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli_Utils:VerifierENCDetails", vbNullString, startTime)
+    Call EnregistrerLogApplication("modAppli_Utils:VerifierENCDetails", vbNullString, startTime)
 
 End Sub
 
-Private Sub VerifierENCEntete(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierENCEntete(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierENCEntete", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierENCEntete", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
     Call modImport.ImporterEncEntete
-    
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'Clients Master File
     Dim wsClients As Worksheet: Set wsClients = wsdBD_Clients
@@ -1693,24 +1670,21 @@ Clean_Exit:
     Set rngClients = Nothing
     Set ws = Nothing
     Set wsClients = Nothing
-    Set wsOutput = Nothing
     On Error GoTo 0
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli_Utils:VerifierENCEntete", vbNullString, startTime)
+    Call EnregistrerLogApplication("modAppli_Utils:VerifierENCEntete", vbNullString, startTime)
 
 End Sub
 
-Private Sub VerifierFACDetails(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierFACDetails(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierFACDetails", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierFACDetails", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
     Call modImport.ImporterFacDetails
-    
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'wsdFAC_Details
     Dim ws As Worksheet: Set ws = wsdFAC_Details
@@ -1800,24 +1774,21 @@ Clean_Exit:
     Set rngMaster = Nothing
     Set ws = Nothing
     Set wsMaster = Nothing
-    Set wsOutput = Nothing
     On Error GoTo 0
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli_Utils:VerifierFACDetails", vbNullString, startTime)
+    Call EnregistrerLogApplication("modAppli_Utils:VerifierFACDetails", vbNullString, startTime)
 
 End Sub
 
-Private Sub VerifierFACEntete(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierFACEntete(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierFACEntete", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierFACEntete", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
     Call modImport.ImporterFacEntete
-    
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'wsdFAC_Entete
     Dim ws As Worksheet: Set ws = wsdFAC_Entete
@@ -2000,24 +1971,21 @@ Clean_Exit:
     Set rng = Nothing
     Set rngData = Nothing
     Set ws = Nothing
-    Set wsOutput = Nothing
     On Error GoTo 0
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli_Utils:VerifierFACEntete", vbNullString, startTime)
+    Call EnregistrerLogApplication("modAppli_Utils:VerifierFACEntete", vbNullString, startTime)
 
 End Sub
 
-Private Sub VerifierFACComptesClients(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierFACComptesClients(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierFACComptesClients", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierFACComptesClients", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
     Call modImport.ImporterFacComptesClients
-    
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'wsdGL_Trans
     Dim ws As Worksheet: Set ws = wsdFAC_Comptes_Clients
@@ -2237,26 +2205,23 @@ Clean_Exit:
     On Error Resume Next
     Set rng = Nothing
     Set ws = Nothing
-    Set wsOutput = Nothing
     On Error GoTo 0
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli_Utils:VerifierFACComptesClients", vbNullString, startTime)
+    Call EnregistrerLogApplication("modAppli_Utils:VerifierFACComptesClients", vbNullString, startTime)
 
 End Sub
 
-Private Sub VerifierFACSommaireTaux(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierFACSommaireTaux(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierFACSommaireTaux", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierFACSommaireTaux", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
     Call modImport.ImporterFacSommaireTaux
     
     Dim ws As Worksheet: Set ws = wsdFAC_Sommaire_Taux
-    
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     Dim tol As Double
     tol = 0.0001 'Petite tolérance pour la comparaison
@@ -2298,7 +2263,7 @@ Private Sub VerifierFACSommaireTaux(ByRef r As Long, ByRef readRows As Long)
     
     Dim headerRows As Long
     headerRows = 1
-    Call Tx_Range_2_2D_Array(rng, arr, 1)
+    Call TransfererPlageVersTableau2D(rng, arr, 1)
     
     'On analyse chacune des lignes du tableau
     Dim i As Long
@@ -2352,24 +2317,21 @@ Clean_Exit:
     Set rngProf = Nothing
     Set ws = Nothing
     Set wsMaster = Nothing
-    Set wsOutput = Nothing
     On Error GoTo 0
 
     Application.ScreenUpdating = True
 
-    Call Log_Record("modAppli_Utils:VerifierFACSommaireTaux", vbNullString, startTime)
+    Call EnregistrerLogApplication("modAppli_Utils:VerifierFACSommaireTaux", vbNullString, startTime)
 
 End Sub
 
-Private Sub VerifierFACProjetsEntete(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierFACProjetsEntete(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierFACProjetsEntete", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierFACProjetsEntete", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
     Call modImport.ImporterFacProjetsEntete
-    
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'wsdGL_Trans
     Dim ws As Worksheet: Set ws = wsdFAC_Projets_Entete
@@ -2512,24 +2474,21 @@ Clean_Exit:
     'Libérer la mémoire
     On Error Resume Next
     Set ws = Nothing
-    Set wsOutput = Nothing
     On Error GoTo 0
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli_Utils:VerifierFACProjetsEntete", vbNullString, startTime)
+    Call EnregistrerLogApplication("modAppli_Utils:VerifierFACProjetsEntete", vbNullString, startTime)
 
 End Sub
 
-Private Sub VerifierFACProjetsDetails(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierFACProjetsDetails(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierFACProjetsDetails", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierFACProjetsDetails", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
     Call modImport.ImporterFacProjetsDetails
-    
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'wsdFAC_Projets_Details
     Dim ws As Worksheet: Set ws = wsdFAC_Projets_Details
@@ -2638,23 +2597,20 @@ Clean_Exit:
     Set rngMaster = Nothing
     Set ws = Nothing
     Set wsMaster = Nothing
-    Set wsOutput = Nothing
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli_Utils:VerifierFACProjetsDetails", vbNullString, startTime)
+    Call EnregistrerLogApplication("modAppli_Utils:VerifierFACProjetsDetails", vbNullString, startTime)
 
 End Sub
 
-Private Sub VerifierGLTrans(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierGLTrans(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierGLTrans", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierGLTrans", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
     Call modImport.ImporterGLTransactions
-    
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'wsdGL_Trans
     Dim ws As Worksheet: Set ws = wsdGL_Trans
@@ -2864,26 +2820,23 @@ Clean_Exit:
     Set rng = Nothing
     Set v = Nothing
     Set ws = Nothing
-    Set wsOutput = Nothing
     On Error GoTo 0
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli_Utils:VerifierGLTrans", vbNullString, startTime)
+    Call EnregistrerLogApplication("modAppli_Utils:VerifierGLTrans", vbNullString, startTime)
 
 End Sub
 
-Private Sub VerifierGLEJRecurrente(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierGLEJRecurrente(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierGLEJRecurrente", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierGLEJRecurrente", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
     Call modImport.ImporterEJRecurrente
     
     Dim ws As Worksheet: Set ws = wsdGL_EJ_Recurrente
-    
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'wsdGL_EJ_Recurrente
     Dim HeaderRow As Long: HeaderRow = 1
@@ -2931,7 +2884,7 @@ Private Sub VerifierGLEJRecurrente(ByRef r As Long, ByRef readRows As Long)
     Dim arr() As Variant
     Dim headerRows As Long
     headerRows = 1
-    Call Tx_Range_2_2D_Array(rng, arr, 1)
+    Call TransfererPlageVersTableau2D(rng, arr, 1)
     
     'On analyse chacune des lignes du tableau
     Dim i As Long, p As Long
@@ -2990,25 +2943,22 @@ Clean_Exit:
     Set planComptable = Nothing
     Set rng = Nothing
     Set ws = Nothing
-    Set wsOutput = Nothing
     On Error GoTo 0
 
     Application.ScreenUpdating = True
 
-    Call Log_Record("modAppli_Utils:VerifierGLEJRecurrente", vbNullString, startTime)
+    Call EnregistrerLogApplication("modAppli_Utils:VerifierGLEJRecurrente", vbNullString, startTime)
 
 End Sub
 
-Private Sub VerifierTECTdBData(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierTECTdBData(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierTECTdBData", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierTECTdBData", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
     Call modImport.ImporterTEC
     Call ActualiserTECTableauDeBord
-    
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     'wshTEC_TdB_Data
     Dim ws As Worksheet: Set ws = wshTEC_TDB_Data
@@ -3037,7 +2987,7 @@ Private Sub VerifierTECTdBData(ByRef r As Long, ByRef readRows As Long)
     Set rngData = ws.Range("A1").CurrentRegion
     Dim arr() As Variant
     Dim headerRows As Long: headerRows = 1
-    Call Tx_Range_2_2D_Array(rngData, arr, 1)
+    Call TransfererPlageVersTableau2D(rngData, arr, 1)
     
     Dim dict_TECID As New Dictionary
     
@@ -3297,23 +3247,21 @@ Clean_Exit:
     Set rng = Nothing
     Set rngData = Nothing
     Set ws = Nothing
-    Set wsOutput = Nothing
     On Error GoTo 0
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli_Utils:VerifierTECTdBData", vbNullString, startTime)
+    Call EnregistrerLogApplication("modAppli_Utils:VerifierTECTdBData", vbNullString, startTime)
 
 End Sub
 
-Private Sub VerifierTEC(ByRef r As Long, ByRef readRows As Long)
+Private Sub VerifierTEC(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:VerifierTEC", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierTEC", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
     Dim ws As Worksheet: Set ws = wsdTEC_Local
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Intégrité")
     
     Dim lastTECIDReported As Long
     lastTECIDReported = 7701 'What is the last TECID analyzed ?
@@ -3439,16 +3387,15 @@ Private Sub VerifierTEC(ByRef r As Long, ByRef readRows As Long)
     Set dictProf = Nothing
     Set dictDict = Nothing
     Set ws = Nothing
-    Set wsOutput = Nothing
     On Error GoTo 0
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modAppli_Utils:VerifierTEC", vbNullString, startTime)
+    Call EnregistrerLogApplication("modAppli_Utils:VerifierTEC", vbNullString, startTime)
 
 End Sub
 
-Sub ImprimerCasProbleme(data As Variant, ByRef wsOutput As Worksheet, ByRef r As Long, _
+Sub ImprimerCasProbleme(data As Variant, ByVal wsOutput As Worksheet, ByRef r As Long, _
                         ByRef minDate As Date, ByRef maxDate As Date, _
                         ByRef stats As StatistiquesTEC, isTECvalid As Boolean)
 
@@ -3516,7 +3463,7 @@ Sub ImprimerCasProbleme(data As Variant, ByRef wsOutput As Worksheet, ByRef r As
 
 End Sub
 
-Sub ComparerHeuresFactureesSelon2Sources(ByRef wsOutput As Worksheet, ByRef r As Long, _
+Sub ComparerHeuresFactureesSelon2Sources(ByVal wsOutput As Worksheet, ByRef r As Long, _
                                          ByRef dictFacture As Object, ByRef dictFactureHres As Object, _
                                          ByRef isTECvalid As Boolean)
 
@@ -3549,7 +3496,7 @@ Sub ComparerHeuresFactureesSelon2Sources(ByRef wsOutput As Worksheet, ByRef r As
         
 End Sub
 
-Sub ImprimerSommaireHeuresTEC(ByRef wsOutput As Worksheet, ByRef r As Long, _
+Sub ImprimerSommaireHeuresTEC(ByVal wsOutput As Worksheet, ByRef r As Long, _
                               ByRef stats As StatistiquesTEC)
     
     Call AjouterMessage(wsOutput, r, 2, "La somme des heures SAISIES donne ces résultats:")
@@ -3612,7 +3559,7 @@ Sub ImprimerSommaireHeuresTEC(ByRef wsOutput As Worksheet, ByRef r As Long, _
     
 End Sub
 
-Sub ImprimerSommaireDateProf(ByRef wsOutput As Worksheet, ByRef r As Long, _
+Sub ImprimerSommaireDateProf(ByVal wsOutput As Worksheet, ByRef r As Long, _
                              ByRef dictDateCharge As Object, maxTECID As Long)
     
     Dim formattedHours As String
@@ -3643,7 +3590,7 @@ Sub ImprimerSommaireDateProf(ByRef wsOutput As Worksheet, ByRef r As Long, _
 
 End Sub
 
-Sub ImprimerSommaireTimeStampProf(ByRef wsOutput As Worksheet, ByRef r As Long, _
+Sub ImprimerSommaireTimeStampProf(ByVal wsOutput As Worksheet, ByRef r As Long, _
                                   ByRef dictTimeStamp As Object, lastTECIDReported As Long, _
                                   ByRef isTECvalid As Boolean)
     
@@ -3721,7 +3668,7 @@ End Sub
 
 Sub AppliquerConditionalFormating(rng As Range, headerRows As Long, couleurFond As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:AppliquerConditionalFormating", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:AppliquerConditionalFormating", vbNullString, 0)
     
     'Avons-nous un Range valide ?
     If rng Is Nothing Or rng.Rows.count <= headerRows Then
@@ -3749,7 +3696,7 @@ Sub AppliquerConditionalFormating(rng As Range, headerRows As Long, couleurFond 
     'Libérer la mémoire
     Set dataRange = Nothing
     
-    Call Log_Record("modAppli_Utils:AppliquerConditionalFormating", vbNullString, startTime)
+    Call EnregistrerLogApplication("modAppli_Utils:AppliquerConditionalFormating", vbNullString, startTime)
 
 End Sub
 
@@ -4049,7 +3996,7 @@ End Sub
 
 Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:Get_Deplacements_From_TEC", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:Get_Deplacements_From_TEC", vbNullString, 0)
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -4057,7 +4004,7 @@ Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
     'Mise en place de la feuille de sortie (output)
     Dim strOutput As String
     strOutput = "X_TEC_Déplacements"
-    Call CreateOrReplaceWorksheet(strOutput)
+    Call CreerOuRemplacerFeuille(strOutput)
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets(strOutput)
     wsOutput.Range("A1").Value = "Date"
     wsOutput.Range("B1").Value = "Date"
@@ -4094,7 +4041,7 @@ Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
     Dim arr() As Variant
     
     'Copier le range en mémoire
-    Call Tx_Range_2_2D_Array(wsTEC.Range("A1:P" & lastUsedRowTEC), arr, 2)
+    Call TransfererPlageVersTableau2D(wsTEC.Range("A1:P" & lastUsedRowTEC), arr, 2)
     
     'Mise en place d'un tableau pour recevoir les résultats (performance)
     Dim output() As Variant
@@ -4125,7 +4072,7 @@ Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
     Next i
     
     'Copier le tableau dans le range
-    Call Tx_2D_Array_2_Range(output, wsOutput.Range("A2:I" & UBound(output, 1)), True, 1)
+    Call TransfererTableau2DVersPlage(output, wsOutput.Range("A2:I" & UBound(output, 1)), True, 1)
     
     'Tri des données
     With wsOutput.Sort
@@ -4216,7 +4163,7 @@ Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
 '    Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:I" & rowOutput)
     Dim header1 As String: header1 = "Liste des TEC pour Guillaume"
     Dim header2 As String: header2 = "Période du " & dateFrom & " au " & dateTo
-    Call Simple_Print_Setup(wsOutput, rngArea, header1, header2, "$1:$1", "P")
+    Call MiseEnFormeImpressionSimple(wsOutput, rngArea, header1, header2, "$1:$1", "P")
     
     'Libérer la mémoire
     Set rngArea = Nothing
@@ -4225,7 +4172,7 @@ Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
     Set wsMF = Nothing
     Set wsTEC = Nothing
     
-    Call Log_Record("modAppli_Utils:Get_Deplacements_From_TEC", vbNullString, startTime)
+    Call EnregistrerLogApplication("modAppli_Utils:Get_Deplacements_From_TEC", vbNullString, startTime)
 
 End Sub
 
@@ -4260,7 +4207,7 @@ End Sub
 
 Sub RedefinirDnrPlanComptable() '2024-07-04 @ 10:39
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:RedefinirDnrPlanComptable", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:RedefinirDnrPlanComptable", vbNullString, 0)
 
     'Redefine - dnrPlanComptable_Description_Only
     'Delete existing dynamic named range (assuming it could exists)
@@ -4287,7 +4234,7 @@ Sub RedefinirDnrPlanComptable() '2024-07-04 @ 10:39
     'Create the new dynamic named range
     ThisWorkbook.Names.Add Name:="dnrPlanComptable_All", RefersTo:=newRangeFormula
     
-    Call Log_Record("modAppli_Utils:RedefinirDnrPlanComptable", vbNullString, startTime)
+    Call EnregistrerLogApplication("modAppli_Utils:RedefinirDnrPlanComptable", vbNullString, startTime)
 
 End Sub
 
@@ -4322,7 +4269,7 @@ End Sub
 
 Sub NoterNombreLignesParFeuille() '2025-01-22 @ 16:19
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli_Utils:NoterNombreLignesParFeuille", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:NoterNombreLignesParFeuille", vbNullString, 0)
     
     'Spécifiez les chemins des classeurs
     Dim cheminClasseurUsage As String
@@ -4388,7 +4335,7 @@ Sub NoterNombreLignesParFeuille() '2025-01-22 @ 16:19
     'Sauvegarder et fermer le classeur d'usage
     wbUsage.Close SaveChanges:=True
     
-    Call Log_Record("modAppli_Utils:NoterNombreLignesParFeuille", vbNullString, startTime)
+    Call EnregistrerLogApplication("modAppli_Utils:NoterNombreLignesParFeuille", vbNullString, startTime)
 
 End Sub
 
@@ -4506,7 +4453,7 @@ Sub Vérifier_Mix_ClientID_ClientNom_TEC()
     
 End Sub
 
-Private Function AnalyserLigneTEC(data As Variant, i As Long, ByRef wsOutput As Worksheet, ByRef r As Long, _
+Private Function AnalyserLigneTEC(data As Variant, i As Long, ByVal wsOutput As Worksheet, ByRef r As Long, _
                                   ByRef minDate As Date, ByRef maxDate As Date, _
                                   ByRef dictClient As Object, ByRef dictFacture As Object, _
                                   ByRef dictFactureHres As Object, ByRef dictDateCharge As Object, _

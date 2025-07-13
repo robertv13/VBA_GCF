@@ -300,7 +300,7 @@ End Function
 
 'Function Get_Summary_By_GL_Account(dateMin As Date, dateMax As Date) As ADODB.Recordset '2025-05-27 @ 17:51 - v6.C.7 - ChatPGT
 '
-'    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:Get_Summary_By_GL_Account", "", 0)
+'    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_BV:Get_Summary_By_GL_Account", "", 0)
 '
 '    Dim cn As ADODB.Connection
 '    Dim rs As ADODB.Recordset
@@ -340,7 +340,7 @@ End Function
 '    'Libérer
 '    Set cn = Nothing
 '
-'    Call Log_Record("modGL_BV:Get_Summary_By_GL_Account", "", startTime)
+'    Call EnregistrerLogApplication("modGL_BV:Get_Summary_By_GL_Account", "", startTime)
 '
 'End Function
 
@@ -636,7 +636,7 @@ End Sub
 
 Sub GL_BV_Setup_And_Print()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_BV_Setup_And_Print", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_BV:GL_BV_Setup_And_Print", vbNullString, 0)
     
     Dim lastRow As Long
     lastRow = wshGL_BV.Cells(wshGL_BV.Rows.count, "D").End(xlUp).Row + 2
@@ -659,23 +659,23 @@ Sub GL_BV_Setup_And_Print()
     Set printRange = Nothing
     Set shp = Nothing
     
-    Call Log_Record("modGL_BV:GL_BV_Setup_And_Print", vbNullString, startTime)
+    Call EnregistrerLogApplication("modGL_BV:GL_BV_Setup_And_Print", vbNullString, startTime)
 
 End Sub
 
 Sub shp_GL_BV_Setup_And_Print_Trans_Click()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:shp_GL_BV_Setup_And_Print_Trans_Click", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_BV:shp_GL_BV_Setup_And_Print_Trans_Click", vbNullString, 0)
     
     Call GL_BV_Setup_And_Print_Trans
 
-    Call Log_Record("modGL_BV:shp_GL_BV_Setup_And_Print_Trans_Click", vbNullString, startTime)
+    Call EnregistrerLogApplication("modGL_BV:shp_GL_BV_Setup_And_Print_Trans_Click", vbNullString, startTime)
 
 End Sub
 
 Sub GL_BV_Setup_And_Print_Trans()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_BV_Setup_And_Print_Trans", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_BV:GL_BV_Setup_And_Print_Trans", vbNullString, 0)
     
     Dim lastRow As Long
     lastRow = wshGL_BV.Cells(wshGL_BV.Rows.count, "M").End(xlUp).Row
@@ -698,13 +698,13 @@ Sub GL_BV_Setup_And_Print_Trans()
     Set printRange = Nothing
     Set shp = Nothing
     
-    Call Log_Record("modGL_BV:GL_BV_Setup_And_Print_Trans", vbNullString, startTime)
+    Call EnregistrerLogApplication("modGL_BV:GL_BV_Setup_And_Print_Trans", vbNullString, startTime)
 
 End Sub
 
 Sub GL_BV_SetUp_And_Print_Document(myPrintRange As Range, pagesTall As Long)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_BV_SetUp_And_Print_Document", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_BV:GL_BV_SetUp_And_Print_Document", vbNullString, 0)
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -718,37 +718,37 @@ Sub GL_BV_SetUp_And_Print_Document(myPrintRange As Range, pagesTall As Long)
         .PrintArea = myPrintRange.Address 'Parameter 1
         .FitToPagesWide = 1
         .FitToPagesTall = pagesTall 'Parameter 2
-        Call Log_Record("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 1 is completed", -1)
+        Call EnregistrerLogApplication("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 1 is completed", -1)
         
         'Page Header & Footer
 '        .LeftHeader = ""
         .CenterHeader = "&""Aptos Narrow,Gras""&18 " & wsdADMIN.Range("NomEntreprise").Value
-        Call Log_Record("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 1.A is completed", -1)
+        Call EnregistrerLogApplication("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 1.A is completed", -1)
         
 '        .RightHeader = ""
         .LeftFooter = "&9&D - &T"
 '        .CenterFooter = ""
         .RightFooter = "&9Page &P de &N"
-        Call Log_Record("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 1.B is completed", -1)
+        Call EnregistrerLogApplication("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 1.B is completed", -1)
         
         'Page Margins
-        Call Log_Record("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 2 is starting", -1)
+        Call EnregistrerLogApplication("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 2 is starting", -1)
         .LeftMargin = Application.InchesToPoints(0.16)
         .RightMargin = Application.InchesToPoints(0.16)
-         Call Log_Record("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 2 (Left & Right) margins", -1)
+         Call EnregistrerLogApplication("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 2 (Left & Right) margins", -1)
          
         .TopMargin = Application.InchesToPoints(0.75)
         .BottomMargin = Application.InchesToPoints(0.75)
-         Call Log_Record("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 2 (Top & Bottom) margins", -1)
+         Call EnregistrerLogApplication("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 2 (Top & Bottom) margins", -1)
          
         .CenterHorizontally = True
         .CenterVertically = False
-         Call Log_Record("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 2 (Center Horizontal & Vertical)", -1)
+         Call EnregistrerLogApplication("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 2 (Center Horizontal & Vertical)", -1)
          
         'Header and Footer margins
         .HeaderMargin = Application.InchesToPoints(0.16)
         .FooterMargin = Application.InchesToPoints(0.16)
-        Call Log_Record("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 2 (Header & Footer) margins", -1)
+        Call EnregistrerLogApplication("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 2 (Header & Footer) margins", -1)
         
         .ScaleWithDocHeaderFooter = True
         .AlignMarginsHeaderFooter = True
@@ -758,11 +758,11 @@ Sub GL_BV_SetUp_And_Print_Document(myPrintRange As Range, pagesTall As Long)
     Application.EnableEvents = True
     Application.Calculation = xlCalculationAutomatic
 
-    Call Log_Record("   modGL_BV:GL_BV_SetUp_And_Print_Document - Speed Measure", -1)
+    Call EnregistrerLogApplication("   modGL_BV:GL_BV_SetUp_And_Print_Document - Speed Measure", -1)
     
     wshGL_BV.PrintPreview '2024-08-15 @ 14:53
  
-    Call Log_Record("modGL_BV:GL_BV_SetUp_And_Print_Document", vbNullString, startTime)
+    Call EnregistrerLogApplication("modGL_BV:GL_BV_SetUp_And_Print_Document", vbNullString, startTime)
  
 End Sub
 
@@ -813,7 +813,7 @@ End Sub
 
 Sub GL_BV_Adjust_The_Shape()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_BV:GL_BV_Adjust_The_Shape", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_BV:GL_BV_Adjust_The_Shape", vbNullString, 0)
     
     Dim lastResultRow As Long
     lastResultRow = wsdGL_Trans.Cells(wsdGL_Trans.Rows.count, "AC").End(xlUp).Row
@@ -886,7 +886,7 @@ Sub GL_BV_Adjust_The_Shape()
     'Libérer la mémoire
     Set dynamicShape = Nothing
       
-    Call Log_Record("modGL_BV:GL_BV_Adjust_The_Shape", vbNullString, startTime)
+    Call EnregistrerLogApplication("modGL_BV:GL_BV_Adjust_The_Shape", vbNullString, startTime)
       
 End Sub
 

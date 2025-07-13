@@ -4,7 +4,7 @@ Option Explicit
 
 Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Analyse:Worksheet_Activate", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("wshTEC_Analyse:Worksheet_Activate", vbNullString, 0)
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -59,13 +59,13 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call Log_Record("wshTEC_Analyse:Worksheet_Activate", vbNullString, startTime)
+    Call EnregistrerLogApplication("wshTEC_Analyse:Worksheet_Activate", vbNullString, startTime)
 
 End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Analyse:Worksheet_SelectionChange", Target.Address, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("wshTEC_Analyse:Worksheet_SelectionChange", Target.Address, 0)
     
     If gPreviousCellAddress <> vbNullString Then
         Range(gPreviousCellAddress).Interior.Color = gCOULEUR_BASE_TEC
@@ -121,13 +121,13 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     Set cell = Nothing
     Set rowRange = Nothing
     
-    Call Log_Record("wshTEC_Analyse:Worksheet_SelectionChange", vbNullString, startTime)
+    Call EnregistrerLogApplication("wshTEC_Analyse:Worksheet_SelectionChange", vbNullString, startTime)
     
 End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Analyse:Worksheet_Change", Target.Address, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("wshTEC_Analyse:Worksheet_Change", Target.Address, 0)
     
     Dim fullDate As Variant
     
@@ -164,13 +164,13 @@ ExitSub:
 
     Application.EnableEvents = True
     
-    Call Log_Record("wshTEC_Analyse:Worksheet_Change", vbNullString, startTime)
+    Call EnregistrerLogApplication("wshTEC_Analyse:Worksheet_Change", vbNullString, startTime)
   
 End Sub
 
 Sub CheckBox1_Click() '2024-07-18 @ 18:53
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_Analyse:CheckBox1_Click", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("wshTEC_Analyse:CheckBox1_Click", vbNullString, 0)
     
     Dim ws As Worksheet: Set ws = wshTEC_Analyse
     
@@ -282,7 +282,7 @@ Sub CheckBox1_Click() '2024-07-18 @ 18:53
     Set rngSummary = Nothing
     Set ws = Nothing
     
-    Call Log_Record("wshTEC_Analyse:CheckBox1_Click", vbNullString, startTime)
+    Call EnregistrerLogApplication("wshTEC_Analyse:CheckBox1_Click", vbNullString, startTime)
 
 End Sub
 

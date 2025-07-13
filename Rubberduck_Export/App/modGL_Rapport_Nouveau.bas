@@ -3,7 +3,7 @@ Option Explicit
 
 Public Sub GenererRapportGL_Compte(wsRapport As Worksheet, dateDebut As Date, dateFin As Date)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport_Nouveau:GenererRapportGL_Compte", dateDebut & " @ " & dateFin, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_Rapport_Nouveau:GenererRapportGL_Compte", dateDebut & " @ " & dateFin, 0)
    
     'Crée une collection pour tous les postes de GL sélectionnés
     Dim collGL_Selectionnes As Collection
@@ -155,7 +155,7 @@ Public Sub GenererRapportGL_Compte(wsRapport As Worksheet, dateDebut As Date, da
     
     Unload ufGL_Rapport
     
-    Call Log_Record("modGL_Rapport_Nouveau:GenererRapportGL_Compte", vbNullString, startTime)
+    Call EnregistrerLogApplication("modGL_Rapport_Nouveau:GenererRapportGL_Compte", vbNullString, startTime)
     
     MsgBox "Le rapport a été généré avec succès", vbInformation, "Rapport des transactions du Grand Livre"
 
@@ -173,7 +173,7 @@ End Sub
 
 Public Sub GenererRapportGL_Ecriture(wsRapport As Worksheet, noEcritureDebut As Long, noEcritureFin As Long)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport_Nouveau:GenererRapportGL_Ecriture", noEcritureDebut & " à " & noEcritureFin, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_Rapport_Nouveau:GenererRapportGL_Ecriture", noEcritureDebut & " à " & noEcritureFin, 0)
    
     'Référence à la feuille source (les données de base)
     Dim wsSource As Worksheet
@@ -322,7 +322,7 @@ Public Sub GenererRapportGL_Ecriture(wsRapport As Worksheet, noEcritureDebut As 
     h3 = "(Pour les numéros d'écriture de " & noEcritureDebut & " à " & noEcritureFin & ")"
     Call GL_Rapport_Wrap_Up_Ecriture(wsRapport, h1, h2, h3)
     
-    Call Log_Record("modGL_Rapport_Nouveau:GenererRapportGL_Ecriture", vbNullString, startTime)
+    Call EnregistrerLogApplication("modGL_Rapport_Nouveau:GenererRapportGL_Ecriture", vbNullString, startTime)
     
     Unload ufGL_Rapport
     
@@ -343,7 +343,7 @@ End Sub
 
 Public Sub GenererRapportGL_DateSaisie(wsRapport As Worksheet, dtSaisieDebut As Date, dtSaisieFin As Date)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport_Nouveau:GenererRapportGL_DateSaisie", dtSaisieDebut & " à " & dtSaisieFin, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_Rapport_Nouveau:GenererRapportGL_DateSaisie", dtSaisieDebut & " à " & dtSaisieFin, 0)
    
     'Référence à la feuille source (les données de base)
     Dim wsSource As Worksheet
@@ -495,7 +495,7 @@ Public Sub GenererRapportGL_DateSaisie(wsRapport As Worksheet, dtSaisieDebut As 
     h3 = "(Pour les écritures saisies entre le " & dtSaisieDebut & " et le " & dtSaisieFin & ")"
     Call GL_Rapport_Wrap_Up_DateSaisie(wsRapport, h1, h2, h3)
     
-    Call Log_Record("modGL_Rapport_Nouveau:GenererRapportGL_DateSaisie", vbNullString, startTime)
+    Call EnregistrerLogApplication("modGL_Rapport_Nouveau:GenererRapportGL_DateSaisie", vbNullString, startTime)
     
     Unload ufGL_Rapport
     
@@ -790,7 +790,7 @@ End Sub
 
 Sub GL_Rapport_Wrap_Up_Compte(ws As Worksheet, h1 As String, h2 As String, h3 As String)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport_Nouveau:GL_Rapport_Wrap_Up_Compte", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_Rapport_Nouveau:GL_Rapport_Wrap_Up_Compte", vbNullString, 0)
     
     Application.PrintCommunication = False
     
@@ -835,13 +835,13 @@ Sub GL_Rapport_Wrap_Up_Compte(ws As Worksheet, h1 As String, h2 As String, h3 As
 '    ActiveWindow.SplitRow = 2
 '    ws.Range("A" & lastUsedRow).Select
     
-    Call Log_Record("modGL_Rapport_Nouveau:GL_Rapport_Wrap_Up_Compte", vbNullString, startTime)
+    Call EnregistrerLogApplication("modGL_Rapport_Nouveau:GL_Rapport_Wrap_Up_Compte", vbNullString, startTime)
 
 End Sub
 
 Sub GL_Rapport_Wrap_Up_Ecriture(ws As Worksheet, h1 As String, h2 As String, h3 As String)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport_Nouveau:GL_Rapport_Wrap_Up_Ecriture", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_Rapport_Nouveau:GL_Rapport_Wrap_Up_Ecriture", vbNullString, 0)
     
     Application.PrintCommunication = False
     
@@ -881,13 +881,13 @@ Sub GL_Rapport_Wrap_Up_Ecriture(ws As Worksheet, h1 As String, h2 As String, h3 
 '
     ws.Range("A" & lastUsedRow).Select
     
-    Call Log_Record("modGL_Rapport_Nouveau:GL_Rapport_Wrap_Up_Ecriture", vbNullString, startTime)
+    Call EnregistrerLogApplication("modGL_Rapport_Nouveau:GL_Rapport_Wrap_Up_Ecriture", vbNullString, startTime)
 
 End Sub
 
 Sub GL_Rapport_Wrap_Up_DateSaisie(ws As Worksheet, h1 As String, h2 As String, h3 As String)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modGL_Rapport_Nouveau:GL_Rapport_Wrap_Up_DateSaisie", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_Rapport_Nouveau:GL_Rapport_Wrap_Up_DateSaisie", vbNullString, 0)
     
     Application.PrintCommunication = False
     
@@ -927,7 +927,7 @@ Sub GL_Rapport_Wrap_Up_DateSaisie(ws As Worksheet, h1 As String, h2 As String, h
 '
     ws.Range("A" & lastUsedRow).Select
     
-    Call Log_Record("modGL_Rapport_Nouveau:GL_Rapport_Wrap_Up_DateSaisie", vbNullString, startTime)
+    Call EnregistrerLogApplication("modGL_Rapport_Nouveau:GL_Rapport_Wrap_Up_DateSaisie", vbNullString, startTime)
 
 End Sub
 

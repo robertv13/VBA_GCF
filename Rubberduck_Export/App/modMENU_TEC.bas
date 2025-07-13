@@ -4,21 +4,21 @@ Option Explicit
 'Option # 1
 Sub SaisieHeures_Click()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMENU_TEC:SaisieHeures_Click", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modMENU_TEC:SaisieHeures_Click", vbNullString, 0)
     
     gFromMenu = True '2024-09-03 @ 06:20
 
     Load ufSaisieHeures
     ufSaisieHeures.show vbModeless '2024-08-08 @ 13:56
     
-    Call Log_Record("modMENU_TEC:SaisieHeures_Click", vbNullString, startTime)
+    Call EnregistrerLogApplication("modMENU_TEC:SaisieHeures_Click", vbNullString, startTime)
 
 End Sub
 
 'Option # 2
 Sub TEC_TDB_Click()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMENU_TEC:TEC_TDB_Click", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modMENU_TEC:TEC_TDB_Click", vbNullString, 0)
     
     gFromMenu = True '2024-09-03 @ 06:20
 
@@ -33,14 +33,14 @@ Sub TEC_TDB_Click()
     
     Application.ScreenUpdating = True
 
-    Call Log_Record("modMENU_TEC:TEC_TDB_Click", vbNullString, startTime)
+    Call EnregistrerLogApplication("modMENU_TEC:TEC_TDB_Click", vbNullString, startTime)
 
 End Sub
 
 'Option # 3
 Sub TEC_Analyse_Click()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMENU_TEC:TEC_Analyse_Click", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modMENU_TEC:TEC_Analyse_Click", vbNullString, 0)
     
     gFromMenu = True '2024-09-03 @ 06:20
 
@@ -55,14 +55,14 @@ Sub TEC_Analyse_Click()
     
     Application.ScreenUpdating = True
 
-    Call Log_Record("modMENU_TEC:TEC_Analyse_Click", vbNullString, startTime)
+    Call EnregistrerLogApplication("modMENU_TEC:TEC_Analyse_Click", vbNullString, startTime)
 
 End Sub
 
 'Option # 4
 Sub TEC_Evaluation_Click()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMENU_TEC:TEC_Evaluation_Click", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modMENU_TEC:TEC_Evaluation_Click", vbNullString, 0)
     
     gFromMenu = True '2024-09-03 @ 06:20
 
@@ -77,14 +77,14 @@ Sub TEC_Evaluation_Click()
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modMENU_TEC:TEC_Evaluation_Click", vbNullString, startTime)
+    Call EnregistrerLogApplication("modMENU_TEC:TEC_Evaluation_Click", vbNullString, startTime)
 
 End Sub
 
 'Option # 5
 Sub TEC_Radiation_Click()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMENU_TEC:TEC_Radiation_Click", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modMENU_TEC:TEC_Radiation_Click", vbNullString, 0)
     
     gFromMenu = True '2024-09-03 @ 06:20
 
@@ -99,7 +99,7 @@ Sub TEC_Radiation_Click()
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modMENU_TEC:TEC_Radiation_Click", vbNullString, startTime)
+    Call EnregistrerLogApplication("modMENU_TEC:TEC_Radiation_Click", vbNullString, startTime)
 
 End Sub
 

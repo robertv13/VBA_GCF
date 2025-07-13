@@ -9,13 +9,13 @@ End Sub
 
 Sub menuTEC()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:menuTEC_Click", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modMenu:menuTEC_Click", vbNullString, 0)
     
     wshMenuTEC.Visible = xlSheetVisible
     wshMenuTEC.Activate
     wshMenuTEC.Range("A1").Select
 
-    Call Log_Record("modMenu:menuTEC_Click", vbNullString, startTime)
+    Call EnregistrerLogApplication("modMenu:menuTEC_Click", vbNullString, startTime)
 
 End Sub
 
@@ -27,7 +27,7 @@ End Sub
 
 Sub menuFacturation()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:menuFacturation_Click", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modMenu:menuFacturation_Click", vbNullString, 0)
     
     If GetNomUtilisateur() = "Guillaume" Or _
             GetNomUtilisateur() = "GuillaumeCharron" Or _
@@ -47,7 +47,7 @@ Sub menuFacturation()
         Application.EnableEvents = True
     End If
     
-    Call Log_Record("modMenu:menuFacturation_Click", vbNullString, startTime)
+    Call EnregistrerLogApplication("modMenu:menuFacturation_Click", vbNullString, startTime)
 
 End Sub
 
@@ -59,7 +59,7 @@ End Sub
 
 Sub menuComptabilité()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:menuComptabilité", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modMenu:menuComptabilité", vbNullString, 0)
     
     If GetNomUtilisateur() = "Guillaume" Or _
             GetNomUtilisateur() = "GuillaumeCharron" Or _
@@ -76,7 +76,7 @@ Sub menuComptabilité()
         Application.EnableEvents = True
     End If
 
-    Call Log_Record("modMenu:menuComptabilité", vbNullString, startTime)
+    Call EnregistrerLogApplication("modMenu:menuComptabilité", vbNullString, startTime)
 
 End Sub
 
@@ -88,7 +88,7 @@ End Sub
 
 Sub Parametres()
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:Parametres", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modMenu:Parametres", vbNullString, 0)
     
     If GetNomUtilisateur() = "Guillaume" Or _
             GetNomUtilisateur() = "GuillaumeCharron" Or _
@@ -103,7 +103,7 @@ Sub Parametres()
         Application.EnableEvents = True
     End If
     
-    Call Log_Record("modMenu:Parametres", vbNullString, startTime)
+    Call EnregistrerLogApplication("modMenu:Parametres", vbNullString, startTime)
 
 End Sub
 
@@ -115,7 +115,7 @@ End Sub
 
 Sub SauvegarderEtSortirApplication() '2024-08-30 @ 07:37
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:SauvegarderEtSortirApplication", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modMenu:SauvegarderEtSortirApplication", vbNullString, 0)
     
     Application.EnableEvents = False
     Application.ScreenUpdating = False
@@ -132,7 +132,7 @@ End Sub
 
 Sub FermerApplicationNormalement(ByVal userName As String) 'Nouvelle procédure - 2025-05-30 @ 11:07
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:FermerApplicationNormalement", vbNullString, startTime)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modMenu:FermerApplicationNormalement", vbNullString, startTime)
     
     On Error GoTo ExitPoint
     
@@ -152,13 +152,13 @@ Sub FermerApplicationNormalement(ByVal userName As String) 'Nouvelle procédure 
     
     'Effacer fichier utilisateur actif + Fermeture de la journalisation
     Call Delete_User_Active_File(GetNomUtilisateur())
-    Call Log_Record("----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) -----", vbNullString, 0)
-    Call Log_Record(vbNullString, vbNullString, -1)
+    Call EnregistrerLogApplication("----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) -----", vbNullString, 0)
+    Call EnregistrerLogApplication(vbNullString, vbNullString, -1)
 
     'Fermer la vérification d'inactivité
     If gProchaineVerification > 0 Then
         On Error Resume Next
-        Application.OnTime gProchaineVerification, "VerifierInactivite", , False
+        Application.OnTime gProchaineVerification, "VerifierDerniereActivite", , False
         On Error GoTo 0
     End If
 
@@ -183,7 +183,7 @@ Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
     
     DoEvents
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:Hide_All_Worksheets_Except_Menu", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modMenu:Hide_All_Worksheets_Except_Menu", vbNullString, 0)
     
     Dim ws As Worksheet
     For Each ws In ThisWorkbook.Worksheets
@@ -197,13 +197,13 @@ Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call Log_Record("modMenu:Hide_All_Worksheets_Except_Menu", vbNullString, startTime)
+    Call EnregistrerLogApplication("modMenu:Hide_All_Worksheets_Except_Menu", vbNullString, startTime)
     
 End Sub
 
 Sub HideDevShapesBasedOnUsername(ByVal userName As String) '2025-06-06 @ 11:17
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:HideDevShapesBasedOnUsername", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modMenu:HideDevShapesBasedOnUsername", vbNullString, 0)
     
     Dim ws As Worksheet: Set ws = wshMenu
     Dim devShapes As Variant
@@ -237,13 +237,13 @@ Sub HideDevShapesBasedOnUsername(ByVal userName As String) '2025-06-06 @ 11:17
         On Error GoTo 0
     Next i
 
-    Call Log_Record("modMenu:HideDevShapesBasedOnUsername", vbNullString, startTime)
+    Call EnregistrerLogApplication("modMenu:HideDevShapesBasedOnUsername", vbNullString, startTime)
 
 End Sub
 
 Sub Delete_User_Active_File(ByVal userName As String)
 
-'    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:Delete_User_Active_File", "", 0)
+'    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modMenu:Delete_User_Active_File", "", 0)
     
     Dim traceFilePath As String
     traceFilePath = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
@@ -252,13 +252,13 @@ Sub Delete_User_Active_File(ByVal userName As String)
         Kill traceFilePath
     End If
 
-'    Call Log_Record("modMenu:Delete_User_Active_File", userName, startTime)
+'    Call EnregistrerLogApplication("modMenu:Delete_User_Active_File", userName, startTime)
 
 End Sub
 
 Sub ViderTableauxStructures() '2025-07-01 @ 10:38
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modMenu:ViderTableauxStructures", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modMenu:ViderTableauxStructures", vbNullString, 0)
     
     Dim feuilles As Variant, tableaux As Variant
     Dim ws As Worksheet
@@ -312,7 +312,7 @@ Sub ViderTableauxStructures() '2025-07-01 @ 10:38
 
     On Error GoTo 0
 
-    Call Log_Record("modMenu:ViderTableauxStructures", vbNullString, startTime)
+    Call EnregistrerLogApplication("modMenu:ViderTableauxStructures", vbNullString, startTime)
 
 End Sub
 

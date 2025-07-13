@@ -24,7 +24,7 @@ End Sub
 
 Sub ActualiserTECTableauDeBord()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_TDB:ActualiserTECTableauDeBord", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modTEC_TDB:ActualiserTECTableauDeBord", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -35,13 +35,13 @@ Sub ActualiserTECTableauDeBord()
     
     Application.ScreenUpdating = True
     
-    Call Log_Record("modTEC_TDB:ActualiserTECTableauDeBord", vbNullString, startTime)
+    Call EnregistrerLogApplication("modTEC_TDB:ActualiserTECTableauDeBord", vbNullString, startTime)
 
 End Sub
 
 Sub AjusteBordurePivotTable() '2025-02-01 @ 05:49
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("wshTEC_TDB:AjusteBordurePivotTable", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("wshTEC_TDB:AjusteBordurePivotTable", vbNullString, 0)
     
     Dim ws As Worksheet
     Set ws = wshTEC_TDB
@@ -106,7 +106,7 @@ Sub AjusteBordurePivotTable() '2025-02-01 @ 05:49
     Set rng = Nothing
     Set ws = Nothing
 
-    Call Log_Record("wshTEC_TDB:AjusteBordurePivotTable", vbNullString, startTime)
+    Call EnregistrerLogApplication("wshTEC_TDB:AjusteBordurePivotTable", vbNullString, startTime)
 
 End Sub
 

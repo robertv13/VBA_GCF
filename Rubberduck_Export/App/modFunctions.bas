@@ -63,7 +63,7 @@ End Function
 
 Function Fn_GetID_From_Client_Name(nomClient As String) '2024-02-14 @ 06:07
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_GetID_From_Client_Name", nomClient, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFunctions:Fn_GetID_From_Client_Name", nomClient, 0)
     
     Dim ws As Worksheet: Set ws = wsdBD_Clients
     
@@ -97,13 +97,13 @@ Function Fn_GetID_From_Client_Name(nomClient As String) '2024-02-14 @ 06:07
     Set dynamicRange = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modFunctions:Fn_GetID_From_Client_Name", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFunctions:Fn_GetID_From_Client_Name", vbNullString, startTime)
 
 End Function
 
 Function Fn_Cell_From_BD_Client(nomClient As String, ByRef colNumberSearch As Integer, ByRef colNumberData As Integer) As String '2025-01-12 @ 08:12
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Cell_From_BD_Client", nomClient, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFunctions:Fn_Cell_From_BD_Client", nomClient, 0)
     
     Dim ws As Worksheet: Set ws = wsdBD_Clients
     
@@ -139,13 +139,13 @@ Function Fn_Cell_From_BD_Client(nomClient As String, ByRef colNumberSearch As In
     Set dynamicRange = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modFunctions:Fn_Cell_From_BD_Client", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFunctions:Fn_Cell_From_BD_Client", vbNullString, startTime)
 
 End Function
 
 Function Fn_GetID_From_Fourn_Name(nomFournisseur As String) '2024-07-03 @ 16:13
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_GetID_From_Fourn_Name", nomFournisseur, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFunctions:Fn_GetID_From_Fourn_Name", nomFournisseur, 0)
     
     Dim ws As Worksheet: Set ws = wsdBD_Fournisseurs
     
@@ -177,7 +177,7 @@ Function Fn_GetID_From_Fourn_Name(nomFournisseur As String) '2024-07-03 @ 16:13
     Set dynamicRange = Nothing
     Set ws = Nothing
 
-    Call Log_Record("modFunctions:Fn_GetID_From_Fourn_Name", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFunctions:Fn_GetID_From_Fourn_Name", vbNullString, startTime)
 
 End Function
 
@@ -249,7 +249,7 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
     'Otherwise it return an empty array
     '2024-03-09 - First version
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Find_Data_In_A_Range", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFunctions:Fn_Find_Data_In_A_Range", vbNullString, 0)
     
     Dim foundInfo(1 To 3) As Variant 'Cell Address, Row, Value
     
@@ -270,7 +270,7 @@ Function Fn_Find_Data_In_A_Range(r As Range, cs As Long, ss As String, cr As Lon
     'Libérer la mémoire
     Set foundCell = Nothing
 
-    Call Log_Record("modFunctions:Fn_Find_Data_In_A_Range", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFunctions:Fn_Find_Data_In_A_Range", vbNullString, startTime)
 
 End Function
 
@@ -440,7 +440,7 @@ End Function
 
 Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 2024-01-09 @ 09:19
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_GetGL_Code_From_GL_Description", glDescr, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFunctions:Fn_GetGL_Code_From_GL_Description", glDescr, 0)
     
     Dim ws As Worksheet: Set ws = wsdADMIN
     
@@ -460,7 +460,7 @@ Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 
         dynamicRange.Columns(1), dynamicRange.Columns(2), _
         "Not Found", 0, 1)
     
-    Call Log_Record("     modFunctions:Fn_GetGL_Code_From_GL_Description - " & result, -1)
+    Call EnregistrerLogApplication("     modFunctions:Fn_GetGL_Code_From_GL_Description - " & result, -1)
     
     If result <> "Not Found" Then
         Fn_GetGL_Code_From_GL_Description = result
@@ -472,7 +472,7 @@ Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 
     Set dynamicRange = Nothing
     Set ws = Nothing
 
-    Call Log_Record("modFunctions:Fn_GetGL_Code_From_GL_Description", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFunctions:Fn_GetGL_Code_From_GL_Description", vbNullString, startTime)
 
 End Function
 
@@ -609,24 +609,24 @@ End Function
 
 Public Function Fn_Find_Row_Number_TECID(ByVal uniqueID As Variant, ByVal lookupRange As Range) As Long '2024-08-10 @ 05:41
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Find_Row_Number_TECID", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFunctions:Fn_Find_Row_Number_TECID", vbNullString, 0)
     
     On Error Resume Next
         Dim cell As Range
         Set cell = lookupRange.Find(What:=uniqueID, LookIn:=xlValues, LookAt:=xlWhole)
         If Not cell Is Nothing Then
             Fn_Find_Row_Number_TECID = cell.row
-            Call Log_Record("modFunctions:Fn_Find_Row_Number_TECID" & " - Row # = " & Fn_Find_Row_Number_TECID, -1)
+            Call EnregistrerLogApplication("modFunctions:Fn_Find_Row_Number_TECID" & " - Row # = " & Fn_Find_Row_Number_TECID, -1)
         Else
             Fn_Find_Row_Number_TECID = -1 'Not found
-            Call Log_Record("modFunctions:Fn_Find_Row_Number_TECID" & " - TECID = WAS NOT FOUND...", -1)
+            Call EnregistrerLogApplication("modFunctions:Fn_Find_Row_Number_TECID" & " - TECID = WAS NOT FOUND...", -1)
         End If
     On Error GoTo 0
     
     'Libérer la mémoire
     Set cell = Nothing
     
-    Call Log_Record("modFunctions:Fn_Find_Row_Number_TECID", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFunctions:Fn_Find_Row_Number_TECID", vbNullString, startTime)
     
 End Function
 
@@ -702,7 +702,7 @@ End Function
 
 Function Fn_Get_A_Cell_From_A_Worksheet(feuille As String, cle As String, cleCol As Integer, retourCol As Integer) As String '2025-03-04 @ 06:56
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Get_A_Cell_From_A_Worksheet", cle, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFunctions:Fn_Get_A_Cell_From_A_Worksheet", cle, 0)
     
     'Définir la feuille pour la recherche
     Dim ws As Worksheet
@@ -724,7 +724,7 @@ Function Fn_Get_A_Cell_From_A_Worksheet(feuille As String, cle As String, cleCol
     Set resultat = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modFunctions:Fn_Get_A_Cell_From_A_Worksheet", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFunctions:Fn_Get_A_Cell_From_A_Worksheet", vbNullString, startTime)
 
 End Function
 
@@ -870,7 +870,7 @@ End Function
 
 Function Fn_Complete_Date(dateInput As String, joursArriere As Integer, joursFutur As Integer) As Variant
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFunctions:Fn_Complete_Date", dateInput & ", " & joursArriere & ", " & joursFutur, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFunctions:Fn_Complete_Date", dateInput & ", " & joursArriere & ", " & joursFutur, 0)
     
     Dim dayPart As Long
     Dim monthPart As Long
@@ -948,7 +948,7 @@ Function Fn_Complete_Date(dateInput As String, joursArriere As Integer, joursFut
     'Return a VALID date
     Fn_Complete_Date = parsedDate
     
-    Call Log_Record("modFunctions:Fn_Complete_Date", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFunctions:Fn_Complete_Date", vbNullString, startTime)
 
     Exit Function
 
@@ -956,7 +956,7 @@ Invalid_Date:
 
     Fn_Complete_Date = "Invalid Date"
     
-    Call Log_Record("modFunctions:Fn_Complete_Date", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFunctions:Fn_Complete_Date", vbNullString, startTime)
     
 End Function
 

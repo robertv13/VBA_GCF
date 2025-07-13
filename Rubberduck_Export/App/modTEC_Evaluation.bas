@@ -328,7 +328,7 @@ Sub Evaluation_Apercu_Avant_Impression()
     Dim header1 As String: header1 = "Évaluation des TEC au  " & wshTEC_Evaluation.Range("L3").Value
     Dim header2 As String: header2 = vbNullString
     
-    Call Simple_Print_Setup(wshTEC_Evaluation, rngToPrint, header1, header2, "$1:$1", "P")
+    Call MiseEnFormeImpressionSimple(wshTEC_Evaluation, rngToPrint, header1, header2, "$1:$1", "P")
 
     ws.PrintPreview
     
@@ -391,14 +391,14 @@ End Sub
 
 Sub TEC_Evaluation_Back_To_TEC_Menu()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modTEC_Evaluation:TEC_Evaluation_Back_To_TEC_Menu", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modTEC_Evaluation:TEC_Evaluation_Back_To_TEC_Menu", vbNullString, 0)
     
     wshTEC_Evaluation.Visible = xlSheetVeryHidden
     
     wshMenuTEC.Activate
     wshMenuTEC.Range("A1").Select
     
-    Call Log_Record("modTEC_Evaluation:TEC_Evaluation_Back_To_TEC_Menu", vbNullString, startTime)
+    Call EnregistrerLogApplication("modTEC_Evaluation:TEC_Evaluation_Back_To_TEC_Menu", vbNullString, startTime)
 
 End Sub
 

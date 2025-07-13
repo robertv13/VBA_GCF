@@ -14,7 +14,7 @@ End Sub
 
 Sub FAC_Brouillon_New_Invoice() 'Clear contents
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_New_Invoice", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_New_Invoice", vbNullString, 0)
     
     Application.EnableEvents = False
     Application.ScreenUpdating = False
@@ -202,13 +202,13 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
     Set rngToSearch = Nothing
     Set shapeTextBox = Nothing
     
-    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_New_Invoice", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_New_Invoice", vbNullString, startTime)
 
 End Sub
 
 Sub FAC_Brouillon_Client_Change(clientName As String)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Client_Change", clientName, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_Client_Change", clientName, 0)
     
     'Aller chercher le vrai nom de client de 2 sources selon le mode de facturation
     Dim allCols As Variant
@@ -294,7 +294,7 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
 
 Clean_Exit:
 
-    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Client_Change - clientCode = '" & wshFAC_Brouillon.Range("B18").Value & "'", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_Client_Change - clientCode = '" & wshFAC_Brouillon.Range("B18").Value & "'", vbNullString, startTime)
     
 End Sub
 
@@ -350,7 +350,7 @@ End Sub
 
 Sub FAC_Brouillon_Inclure_TEC_Factures_Click()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Inclure_TEC_Factures_Click", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_Inclure_TEC_Factures_Click", vbNullString, 0)
     
     Dim cutoffDate As Date
     cutoffDate = CDate(wshFAC_Brouillon.Range("O3").Value)
@@ -361,13 +361,13 @@ Sub FAC_Brouillon_Inclure_TEC_Factures_Click()
         Call FAC_Brouillon_Get_All_TEC_By_Client(cutoffDate, False)
     End If
     
-    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Inclure_TEC_Factures_Click", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_Inclure_TEC_Factures_Click", vbNullString, startTime)
 
 End Sub
 
 Sub FAC_Brouillon_Setup_All_Cells()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells", vbNullString, 0)
 
     Application.EnableEvents = False
     
@@ -423,7 +423,7 @@ Sub FAC_Brouillon_Setup_All_Cells()
     
     Application.EnableEvents = True
     
-    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells", vbNullString, startTime)
 
 End Sub
 
@@ -508,7 +508,7 @@ End Sub
 
 Sub FAC_Brouillon_Clear_All_TEC_Displayed()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed", vbNullString, 0)
     
     Dim lastRow As Long
     lastRow = wshFAC_Brouillon.Cells(wshFAC_Brouillon.Rows.count, "F").End(xlUp).Row 'First line of data is at row 7
@@ -523,13 +523,13 @@ Sub FAC_Brouillon_Clear_All_TEC_Displayed()
         Application.EnableEvents = True
     End If
     
-    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed", vbNullString, startTime)
 
 End Sub
 
 Sub FAC_Brouillon_Get_All_TEC_By_Client(d As Date, includeBilledTEC As Boolean)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client", vbNullString, 0)
     
     'Set all criteria before calling Get_TEC_For_Client_AF
     Dim c1 As String
@@ -556,13 +556,13 @@ Sub FAC_Brouillon_Get_All_TEC_By_Client(d As Date, includeBilledTEC As Boolean)
     
     Call CopierTECFiltresVersFACBrouillon(cutOffDateProjet)
     
-    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_Get_All_TEC_By_Client", vbNullString, startTime)
 
 End Sub
 
 Sub ObtenirTECNonFacturablePourClient()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:ObtenirTECNonFacturablePourClient", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFAC_Brouillon:ObtenirTECNonFacturablePourClient", vbNullString, 0)
     
     'Mettre en place les critères pour aller chercher le temps NON-FACTURABLE pour le client avec AF#
     Dim c1 As String, c3 As String, c4 As String, c5 As String
@@ -575,14 +575,14 @@ Sub ObtenirTECNonFacturablePourClient()
 
     Call Get_TEC_For_Client_AF(c1, c2, c3, c4, c5)
     
-    Call Log_Record("modFAC_Brouillon:ObtenirTECNonFacturablePourClient", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFAC_Brouillon:ObtenirTECNonFacturablePourClient", vbNullString, startTime)
 
 End Sub
 
 Sub FAC_Brouillon_Load_Non_Billable_Into_Userform()
 
     'Les charges NON FACTURABLES pour ce client sont dans TEC_Local, AF# 2
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Load_Non_Billable_Into_Userform", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_Load_Non_Billable_Into_Userform", vbNullString, 0)
 
     Dim lastUsedRow As Long
     lastUsedRow = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "AQ").End(xlUp).Row
@@ -629,7 +629,7 @@ Sub FAC_Brouillon_Load_Non_Billable_Into_Userform()
         
     Application.ScreenUpdating = True
     
-    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Load_Non_Billable_Into_Userform", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_Load_Non_Billable_Into_Userform", vbNullString, startTime)
     
 End Sub
 
@@ -639,7 +639,7 @@ Sub Get_TEC_For_Client_AF(clientID As String, _
                           isInvoiced As String, _
                           isDeleted As String)
     
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:Get_TEC_For_Client_AF", clientID & _
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFAC_Brouillon:Get_TEC_For_Client_AF", clientID & _
                     "', " & cutoffDate & ", " & isBillable & ", " & isInvoiced & ", " & isDeleted, 0)
     
     Dim ws As Worksheet: Set ws = wsdTEC_Local
@@ -730,13 +730,13 @@ No_Sort_Required:
     Set rngResult = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modFAC_Brouillon:Get_TEC_For_Client_AF", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFAC_Brouillon:Get_TEC_For_Client_AF", vbNullString, startTime)
 
 End Sub
 
 Sub CopierTECFiltresVersFACBrouillon(cutOffDateProjet As Date) '2024-03-21 @ 07:10
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:CopierTECFiltresVersFACBrouillon", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFAC_Brouillon:CopierTECFiltresVersFACBrouillon", vbNullString, 0)
 
     Dim lastUsedRow As Long
     lastUsedRow = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "AQ").End(xlUp).Row
@@ -787,11 +787,11 @@ Sub CopierTECFiltresVersFACBrouillon(cutOffDateProjet As Date) '2024-03-21 @ 07:
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.ListBox1.Clear
+        ufFraisDivers.listBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.ListBox1.AddItem item
+            ufFraisDivers.listBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless
@@ -824,7 +824,7 @@ Sub CopierTECFiltresVersFACBrouillon(cutOffDateProjet As Date) '2024-03-21 @ 07:
     Set ufFraisDivers = Nothing
     Set rng = Nothing
 
-    Call Log_Record("modFAC_Brouillon:CopierTECFiltresVersFACBrouillon", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFAC_Brouillon:CopierTECFiltresVersFACBrouillon", vbNullString, startTime)
     
 End Sub
  
@@ -836,7 +836,7 @@ End Sub
 
 Sub FAC_Brouillon_Goto_Onglet_FAC_Finale()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Goto_Onglet_FAC_Finale", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_Goto_Onglet_FAC_Finale", vbNullString, 0)
    
     Application.ScreenUpdating = False
     
@@ -956,7 +956,7 @@ Depot_Checked:
     
     Application.ScreenUpdating = True
 
-    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Goto_Onglet_FAC_Finale", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_Goto_Onglet_FAC_Finale", vbNullString, startTime)
 
 End Sub
 
@@ -968,7 +968,7 @@ End Sub
 
 Sub FAC_Brouillon_Back_To_FAC_Menu()
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Back_To_FAC_Menu", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_Back_To_FAC_Menu", vbNullString, 0)
    
     DoEvents
     
@@ -998,13 +998,13 @@ Sub FAC_Brouillon_Back_To_FAC_Menu()
     'Libérer la mémoire
     Set shapeTextBox = Nothing
     
-    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_Back_To_FAC_Menu", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_Back_To_FAC_Menu", vbNullString, startTime)
 
 End Sub
 
 Sub FAC_Brouillon_TEC_Add_Check_Boxes(row As Long, dateCutOffProjet As Date)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_TEC_Add_Check_Boxes", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_TEC_Add_Check_Boxes", vbNullString, 0)
     
     Application.EnableEvents = False
     
@@ -1083,13 +1083,13 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(row As Long, dateCutOffProjet As Date)
     Set chkBoxRange = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_TEC_Add_Check_Boxes", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_TEC_Add_Check_Boxes", vbNullString, startTime)
 
 End Sub
 
 Sub FAC_Brouillon_TEC_Remove_Check_Boxes(row As Long)
 
-    Dim startTime As Double: startTime = Timer: Call Log_Record("modFAC_Brouillon:FAC_Brouillon_TEC_Remove_Check_Boxes", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_TEC_Remove_Check_Boxes", vbNullString, 0)
     
     Application.EnableEvents = False
     
@@ -1128,7 +1128,7 @@ Sub FAC_Brouillon_TEC_Remove_Check_Boxes(row As Long)
     Set cbx = Nothing
     Set ws = Nothing
     
-    Call Log_Record("modFAC_Brouillon:FAC_Brouillon_TEC_Remove_Check_Boxes", vbNullString, startTime)
+    Call EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_TEC_Remove_Check_Boxes", vbNullString, startTime)
 
 End Sub
 
