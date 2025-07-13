@@ -212,8 +212,10 @@ Sub EcrireInformationsConfigAuMenu(ByVal user As String)
     Dim startTime As Double: startTime = Timer: Call Log_Record("modAppli:EcrireInformationsConfigAuMenu", vbNullString, 0)
     
     Dim oldEnableEvents As Boolean
-    Dim heure As String, version As String, utilisateur As String
-    Dim environnement As String, formatDate As String
+
+    Dim environnement As String
+    Dim formatDate As String
+
     Dim valeurs As Variant
     
     oldEnableEvents = Application.EnableEvents
@@ -332,8 +334,9 @@ Public Sub RafraichirActivite(Optional ByVal msg As String = vbNullString) '2025
 
 End Sub
 
-'@Description "Vérifie l'inactivité et ferme si plus de x minutes"
+'@Description ("Vérifie l'inactivité et ferme si plus de x minutes")
 Public Sub VerifierInactivite() '2025-07-02 @ 12:10
+Attribute VerifierInactivite.VB_Description = "Vérifie l'inactivité et ferme si plus de x minutes"
 
     On Error GoTo GestionErreur
 
@@ -482,4 +485,3 @@ Public Sub LogActivite(ByVal message As String) '2025-07-03 @ 10:29
     Close #fileNum
     
 End Sub
-

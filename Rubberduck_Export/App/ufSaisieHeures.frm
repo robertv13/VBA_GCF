@@ -201,7 +201,7 @@ Private Sub cmbProfessionnel_AfterUpdate() '2025-05-31 @ 16:11
             cmbProfessionnel.Value = vbNullString
             Exit Sub
         Case vbNullString
-            'Aucune restriction sur les initiales à utiliser
+            cmbProfessionnel.Value = vbNullString 'Aucune restriction sur les initiales à utiliser
         Case Else
             If cmbProfessionnel.Value <> initProfAutorises Then
                 MsgBox "Selon votre code d'utilisateur Windows" & vbNewLine & vbNewLine & _

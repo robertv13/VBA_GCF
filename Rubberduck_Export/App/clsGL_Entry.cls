@@ -20,7 +20,7 @@ Private pAutreRemarque As String
 Private pLignes As Collection
 
 'Constructeur (s'exécute à la création)
-Sub Class_Initialize()
+Private Sub Class_Initialize()
     Set pLignes = New Collection
 End Sub
 

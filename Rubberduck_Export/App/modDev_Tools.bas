@@ -1184,7 +1184,7 @@ Sub main() '2024-12-25 @ 15:27
     
 End Sub
 
-Sub ListeEnumsGenerique(ByVal tableName As String, ByVal HeaderRow As Integer, ByRef arrArg() As String, ByRef outputRow As Long)
+Sub ListeEnumsGenerique(ByRef tableName As String, ByVal HeaderRow As Integer, ByRef arrArg() As String, ByRef outputRow As Long)
 
     'Obtenir la feuille de calcul
     Dim ws As Worksheet
@@ -1832,8 +1832,9 @@ Sub LireTailleOriginaleImage(img As Shape, ByRef largeurOrig As Double, ByRef ha
     
 End Sub
 
-'@Description "Compter le nombre de lignes dans le projet actif - 2025-06-18 @ 13:55"
-Sub CompterLignesCode()
+'@Description ("Compter le nombre de lignes dans le projet actif")
+Sub CompterLignesCode() '2025-06-18 @ 13:55
+Attribute CompterLignesCode.VB_Description = "Compter le nombre de lignes dans le projet actif"
 
     Dim cheminComplet As String
     cheminComplet = "C:\Users\RobertMV\AppData\Roaming\Microsoft\AddIns\"
@@ -1848,8 +1849,9 @@ Sub CompterLignesCode()
     
 End Sub
 
-'@Description "Appeler un AddIn - 2025-06-19 @ 06:54"
-Sub AppelerRoutineAddIn(nomFichier As String, nomMacro As String)
+'@Description ("Appeler un AddIn")
+Sub AppelerRoutineAddIn(nomFichier As String, nomMacro As String) '2025-06-19 @ 06:54
+
 
     On Error Resume Next
     Dim wb As Workbook
@@ -1947,4 +1949,3 @@ Function Pad(text As String, longueur As Integer) As String '2025-07-03 @ 17:54
     Pad = Left(text & Space(longueur), longueur)
     
 End Function
-

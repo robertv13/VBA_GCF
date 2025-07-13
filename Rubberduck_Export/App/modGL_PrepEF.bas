@@ -3,8 +3,9 @@ Option Explicit
 
 Public gDictgSoldeCodeEF As Object
 Public gSoldeCodeEF() As Variant
-Public gSavePremiereLigne As Integer
-Public gLigneTotalPassif As Integer, gLigneTotalADA As Integer
+Private gSavePremiereLigne As Integer
+Private gLigneTotalPassif As Integer
+Private gLigneTotalADA As Integer
 Public gLigneTotalRevenus As Integer, gLigneTotalDépenses As Integer
 Public gLigneAutresRevenus As Integer
 Public gLigneRevenuNetAvantImpôts As Integer

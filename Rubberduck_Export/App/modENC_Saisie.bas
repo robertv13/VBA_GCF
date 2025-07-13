@@ -869,8 +869,6 @@ Sub shp_ENC_Exit_Click()
             'Exemple d'action : retour à la feuille "MenuPrincipal"
             Call ENC_Back_To_GL_Menu
 '            Application.GoTo Worksheets("MenuPrincipal").Range("A1")
-        Else
-            'L'utilisateur a annulé la sortie, donc on ne fait rien et il reste sur la feuille.
         End If
     Else
         Call ENC_Back_To_GL_Menu

@@ -21,7 +21,7 @@ Sub shp_GL_BV_Actualiser_Click() '2025-06-03 @ 20:23
     Application.ScreenUpdating = False
     
     Dim resumeGL As Variant
-    resumeGL = Get_Summary_By_GL_Account(#7/31/2024#, Range("J1").Value)
+    resumeGL = Get_Summary_By_GL_Account(#7/31/2024#, ActiveSheet.Range("J1").Value)
     
     Call Afficher_BV_Summary(resumeGL)
     
@@ -38,7 +38,10 @@ Function Get_Summary_By_GL_Account(dateMin As Date, dateMax As Date) As Variant 
     Dim arrPC As Variant, rsKey As String
     Dim i As Long, tDebit As Currency, tCredit As Currency, solde As Currency
     Dim tblData() As Variant, tblFinal() As Variant, key As Variant, soldes As Variant
-    Const COL_Code = 1, COL_Desc = 2, COL_Debit = 3, COL_Credit = 4
+    Const COL_CODE As Long = 1
+    Const COL_DESC As Long = 2
+    Const COL_DEBIT As Long = 3
+    Const COL_CREDIT As Long = 4
 
     On Error GoTo ErrHandler
 
@@ -94,12 +97,12 @@ Function Get_Summary_By_GL_Account(dateMin As Date, dateMax As Date) As Variant 
             solde = 0
         End If
         If soldes(0) <> 0 Or soldes(1) <> 0 Then
-            tblData(i, COL_Code) = key
-            tblData(i, COL_Desc) = dPlanComptable(key)
+            tblData(i, COL_CODE) = key
+            tblData(i, COL_DESC) = dPlanComptable(key)
             If solde >= 0 Then
-                tblData(i, COL_Debit) = solde
+                tblData(i, COL_DEBIT) = solde
             Else
-                tblData(i, COL_Credit) = -solde
+                tblData(i, COL_CREDIT) = -solde
             End If
             i = i + 1
         End If
@@ -108,10 +111,10 @@ Function Get_Summary_By_GL_Account(dateMin As Date, dateMax As Date) As Variant 
     If i = 1 Then GoTo CleanUp ' Aucune ligne à afficher
     ReDim tblFinal(1 To i - 1, 1 To 4)
     For i = 1 To UBound(tblFinal, 1)
-        tblFinal(i, COL_Code) = tblData(i, COL_Code)
-        tblFinal(i, COL_Desc) = tblData(i, COL_Desc)
-        tblFinal(i, COL_Debit) = tblData(i, COL_Debit)
-        tblFinal(i, COL_Credit) = tblData(i, COL_Credit)
+        tblFinal(i, COL_CODE) = tblData(i, COL_CODE)
+        tblFinal(i, COL_DESC) = tblData(i, COL_DESC)
+        tblFinal(i, COL_DEBIT) = tblData(i, COL_DEBIT)
+        tblFinal(i, COL_CREDIT) = tblData(i, COL_CREDIT)
     Next i
 
     Get_Summary_By_GL_Account = tblFinal
@@ -199,7 +202,7 @@ End Function
 '    ReDim tblData(1 To dPlanComptable.count, 1 To 4)
 '    i = 1
 '    Dim key As Variant
-'    Const COL_Code = 1, COL_Desc = 2, COL_Debit = 3, COL_Credit = 4
+'    Const COL_CODE = 1, COL_DESC = 2, COL_DEBIT = 3, COL_CREDIT = 4
 '    For Each key In dPlanComptable.keys
 '        soldes = Array(0, 0)
 '        If dSoldeParGL.Exists(key) Then
@@ -210,12 +213,12 @@ End Function
 '        End If
 '
 '        If soldes(0) <> 0 Or soldes(1) <> 0 Then
-'            tblData(i, COL_Code) = key
-'            tblData(i, COL_Desc) = dPlanComptable(key)
+'            tblData(i, COL_CODE) = key
+'            tblData(i, COL_DESC) = dPlanComptable(key)
 '            If solde >= 0 Then
-'                tblData(i, COL_Debit) = solde
+'                tblData(i, COL_DEBIT) = solde
 '            Else
-'                tblData(i, COL_Credit) = -solde
+'                tblData(i, COL_CREDIT) = -solde
 '            End If
 '            i = i + 1
 '        End If
@@ -227,10 +230,10 @@ End Function
 '    If i > 1 Then
 '        ReDim tblFinal(1 To i - 1, 1 To 4)
 '        For j = 1 To i - 1
-'            tblFinal(j, COL_Code) = tblData(j, COL_Code)
-'            tblFinal(j, COL_Desc) = tblData(j, COL_Desc)
-'            tblFinal(j, COL_Debit) = tblData(j, COL_Debit)
-'            tblFinal(j, COL_Credit) = tblData(j, COL_Credit)
+'            tblFinal(j, COL_CODE) = tblData(j, COL_CODE)
+'            tblFinal(j, COL_DESC) = tblData(j, COL_DESC)
+'            tblFinal(j, COL_DEBIT) = tblData(j, COL_DEBIT)
+'            tblFinal(j, COL_CREDIT) = tblData(j, COL_CREDIT)
 '        Next j
 '        'Utilisez tblFinal à la place de tblData
 '        tblData = tblFinal
@@ -246,9 +249,9 @@ End Function
 '    Dim globalDebit As Currency, globalCredit As Currency
 '    Application.EnableEvents = False
 '    For i = 1 To UBound(tblData, 1)
-'        wshGL_BV.Cells(ligne, 4).Resize(1, 4).Value = Array(tblData(i, COL_Code), tblData(i, COL_Desc), tblData(i, COL_Debit), tblData(i, COL_Credit))
-'        globalDebit = globalDebit + tblData(i, COL_Debit)
-'        globalCredit = globalCredit + tblData(i, COL_Credit)
+'        wshGL_BV.Cells(ligne, 4).Resize(1, 4).Value = Array(tblData(i, COL_CODE), tblData(i, COL_DESC), tblData(i, COL_DEBIT), tblData(i, COL_CREDIT))
+'        globalDebit = globalDebit + tblData(i, COL_DEBIT)
+'        globalCredit = globalCredit + tblData(i, COL_CREDIT)
 '        ligne = ligne + 1
 '    Next i
 '
@@ -345,7 +348,7 @@ Sub Afficher_BV_Summary(tblData As Variant, Optional ligneDépart As Long = 4) '
 
     Dim i As Long, ligne As Long
     Dim globalDebit As Currency, globalCredit As Currency
-    Const COL_Code = 1, COL_Desc = 2, COL_Debit = 3, COL_Credit = 4
+    Const COL_CODE = 1, COL_DESC = 2, COL_DEBIT = 3, COL_CREDIT = 4
 
     If IsEmpty(tblData) Then Exit Sub
 
@@ -355,12 +358,12 @@ Sub Afficher_BV_Summary(tblData As Variant, Optional ligneDépart As Long = 4) '
     ' Écriture des lignes
     For i = 1 To UBound(tblData, 1)
         wshGL_BV.Cells(ligne, 4).Resize(1, 4).Value = Array( _
-            tblData(i, COL_Code), _
-            tblData(i, COL_Desc), _
-            tblData(i, COL_Debit), _
-            tblData(i, COL_Credit))
-        globalDebit = globalDebit + tblData(i, COL_Debit)
-        globalCredit = globalCredit + tblData(i, COL_Credit)
+            tblData(i, COL_CODE), _
+            tblData(i, COL_DESC), _
+            tblData(i, COL_DEBIT), _
+            tblData(i, COL_CREDIT))
+        globalDebit = globalDebit + tblData(i, COL_DEBIT)
+        globalCredit = globalCredit + tblData(i, COL_CREDIT)
         ligne = ligne + 1
     Next i
 

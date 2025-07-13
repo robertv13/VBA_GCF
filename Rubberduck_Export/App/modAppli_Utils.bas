@@ -29,8 +29,9 @@ Private gverificationIntegriteOK As Boolean
 Private gsoldeComptesClients As Currency
 Private gValeursAComparer() As Variant
 
-'@Description "Routine pour ajouter des lignes de message à la feuille"
+'@Description("Routine pour ajouter des lignes de message à la feuille")
 Private Sub AjouterMessage(ws As Worksheet, ByRef r As Long, ByRef c As Long, message As String)
+Attribute AjouterMessage.VB_Description = "Routine pour ajouter des lignes de message à la feuille"
 
     ws.Cells(r, c).Value = message
     If c = 1 Then
@@ -105,7 +106,11 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     Dim fullFileName As String
     fullFileName = wsdADMIN.Range("FolderSharedData").Value & gDATA_PATH & Application.PathSeparator & masterFileName
     Dim ddm As Date
-    Dim j As Long, h As Long, m As Long, s As Long
+    Dim j As Long
+    Dim h As Long
+    Dim m As Long
+    Dim s As Long
+
     Call Get_Date_Derniere_Modification(fullFileName, ddm, j, h, m, s)
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "Date dern. modification")
     
@@ -430,7 +435,10 @@ Sub ImprimerEcartsVerificationIntegrite(ws As Worksheet, r As Long, t As String,
                                                         s2 As String, v2 As Currency, _
                                                         s3 As String, v3 As Currency)
 
-    Dim str1 As String, str2 As String, str3 As String
+    Dim str1 As String
+    Dim str2 As String
+    Dim str3 As String
+
     str1 = Format$(v1, "##,###,##0.00")
     str2 = Format$(v2, "##,###,##0.00")
     str3 = Format$(v3, "##,###,##0.00")
@@ -506,7 +514,9 @@ Public Sub Tx_2D_Array_2_Range(ByRef arr As Variant, _
     End If
     
     'En fonction des dimensions du tableau (arr)
-    Dim r As Long, c As Long
+    Dim r As Long
+    Dim c As Long
+
     r = UBound(arr, 1) - LBound(arr, 1) + HeaderSize
     c = UBound(arr, 2) - LBound(arr, 2) + HeaderSize
     rngTo.Resize(r, c).Value = arr
@@ -522,7 +532,9 @@ Sub Tx_Range_2_2D_Array(ByVal rng As Range, ByRef arr As Variant, Optional ByVal
     End If
     
     'Calculer la taille de la plage des données pour ensuite ignorer les en-têtes
-    Dim numRows As Long, numCols As Long
+    Dim numRows As Long
+    Dim numCols As Long
+    
 '    startRow = rng.row + headerRows
     numRows = rng.Rows.count - headerRows
     numCols = rng.Columns.count
@@ -721,8 +733,7 @@ Private Sub VerifierClients(ByRef r As Long, ByRef readRows As Long)
     Dim dict_nom_client As New Dictionary
     
     Dim i As Long, code As String, nom As String, nomClientSysteme As String
-    Dim cas_doublon_nom As Long
-    Dim cas_doublon_code As Long
+    Dim cas_doublon_nom As Long, cas_doublon_code As Long
     Dim cas_courriel_invalide As Long
     Dim ligneNonVides As Long
     For i = LBound(arr, 1) + 1 To UBound(arr, 1)
@@ -960,12 +971,9 @@ Private Sub VérifierCCRégularisations(ByRef r As Long, ByRef readRows As Long)
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "Analyse de '" & ws.Name & "' ou 'wsdCC_Regularisations'")
     r = r + 1
     
-    'Array pointer
-'    Dim row As Long: row = 1
-    Dim currentRow As Long
-        
     Dim regulNo As Long
     Dim result As Variant
+    
     'Dictionary pour accumuler les encaissements par facture
     Dim dictRegul As Scripting.Dictionary
     Set dictRegul = New Scripting.Dictionary
@@ -1627,9 +1635,6 @@ Private Sub VerifierENCEntete(ByRef r As Long, ByRef readRows As Long)
     arr = wsdENC_Entete.Range("A1").CurrentRegion.offset(1, 0) _
               .Resize(lastUsedRow - HeaderRow, ws.Range("A1").CurrentRegion.Columns.count).Value
     
-    'Array pointer
-    Dim currentRow As Long
-        
     Dim i As Long
     Dim pmtNo As String
     Dim totals As Currency
@@ -1734,10 +1739,6 @@ Private Sub VerifierFACDetails(ByRef r As Long, ByRef readRows As Long)
     Dim arr As Variant
     arr = wsdFAC_Details.Range("A1").CurrentRegion.offset(1, 0).Value
     
-    'Array pointer
-'    Dim row As Long: row = 1
-    Dim currentRow As Long
-        
     Dim i As Long
     Dim Inv_No As String, oldInv_No As String
     Dim result As Variant
@@ -1850,8 +1851,6 @@ Private Sub VerifierFACEntete(ByRef r As Long, ByRef readRows As Long)
     Dim arr As Variant
     arr = rngData
     
-    Dim currentRow As Long
-        
     Dim i As Long
     Dim Inv_No As String
     Dim totals(1 To 8, 1 To 2) As Currency
@@ -2049,10 +2048,6 @@ Private Sub VerifierFACComptesClients(ByRef r As Long, ByRef readRows As Long)
     arr = wsdFAC_Comptes_Clients.Range("A1").CurrentRegion.offset(2, 0) _
               .Resize(lastUsedRow - HeaderRow, ws.Range("A1").CurrentRegion.Columns.count).Value
     
-    'Array pointer
-'    Dim row As Long: row = 1
-    Dim currentRow As Long
-        
     Dim i As Long
     Dim Inv_No As String
     Dim totals(1 To 4, 1 To 2) As Currency
@@ -2398,9 +2393,6 @@ Private Sub VerifierFACProjetsEntete(ByRef r As Long, ByRef readRows As Long)
     Dim arr As Variant
     arr = ws.Range("A1").CurrentRegion.offset(1, 0).Resize(lastUsedRow - 1, ws.Range("A1").CurrentRegion.Columns.count).Value
     
-    'Array pointer
-    Dim currentRow As Long
-        
     Dim i As Long
     Dim projetID As String
     Dim codeClient As String
@@ -2566,8 +2558,6 @@ Private Sub VerifierFACProjetsDetails(ByRef r As Long, ByRef readRows As Long)
     Dim arr As Variant
     arr = ws.Range("A1").CurrentRegion.offset(1, 0).Resize(lastUsedRow - 1, ws.Range("A1").CurrentRegion.Columns.count).Value
     
-    Dim currentRow As Long
-        
     Dim i As Long
     Dim projetID As Long, oldProjetID As Long
     Dim codeClient As String
@@ -2736,7 +2726,6 @@ Private Sub VerifierGLTrans(ByRef r As Long, ByRef readRows As Long)
     Dim dt As Currency, ct As Currency
     Dim arTotal As Currency
     Dim GL_Entry_No As String, glCode As String, glDescr As String
-    Dim result As Variant
     Dim CCGlNo As String
     CCGlNo = ObtenirNoGlIndicateur("Comptes Clients")
     
@@ -3052,15 +3041,16 @@ Private Sub VerifierTECTdBData(ByRef r As Long, ByRef readRows As Long)
     
     Dim dict_TECID As New Dictionary
     
-    Dim i As Long, tecID As Long, profID As String, prof As String, dateTEC As Date, clientCode As String
-    Dim minDate As Date, maxDate As Date
+    Dim i As Long, tecID As Long
+    Dim clientCode As String
+    Dim dateTEC As Date, minDate As Date, maxDate As Date
     Dim hres As Double, hres_non_detruites As Double
     Dim estDetruit As Boolean, estFacturable As Boolean, estFacturee As Boolean
-    Dim cas_doublon_TecID As Long, cas_date_invalide As Long, cas_doublon_prof As Long, cas_doublon_client As Long
+    Dim cas_doublon_TecID As Long, cas_date_invalide As Long
     Dim cas_hres_invalide As Long, cas_estFacturable_invalide As Long
     Dim cas_estDetruit_invalide As Long, cas_estFacturee_invalide As Long
     Dim total_hres_inscrites As Double, total_hres_detruites As Double, total_hres_facturees As Double
-    Dim total_hres_facturable As Double, total_hres_TEC As Double, total_hres_non_facturable As Double
+    Dim total_hres_facturable As Double, total_hres_non_facturable As Double
     
     minDate = "12/31/2999"
     
@@ -3069,7 +3059,6 @@ Private Sub VerifierTECTdBData(ByRef r As Long, ByRef readRows As Long)
     
     For i = LBound(arr, 1) To UBound(arr, 1)
         tecID = arr(i, 1)
-'        prof = arr(i, 3)
         If Fn_Is_String_Valid(CStr(arr(i, 3)), rngProf) = False Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le professionnel '" & arr(i, 3) & "' est INVALIDE")
             r = r + 1
@@ -3427,9 +3416,9 @@ Private Sub VerifierTEC(ByRef r As Long, ByRef readRows As Long)
                                 
     Call ComparerHeuresFactureesSelon2Sources(wsOutput, r, dictFacture, dictFactureHres, isTECvalid)
     
-    Call ImprimerSommaireHeuresTEC(wsOutput, r, stats, isTECvalid)
+    Call ImprimerSommaireHeuresTEC(wsOutput, r, stats)
     
-    Call ImprimerSommaireDateProf(wsOutput, r, dictDateCharge, maxTECID, isTECvalid)
+    Call ImprimerSommaireDateProf(wsOutput, r, dictDateCharge, maxTECID)
     
     Call ImprimerSommaireTimeStampProf(wsOutput, r, dictTimeStamp, lastTECIDReported, isTECvalid)
     
@@ -3440,8 +3429,6 @@ Private Sub VerifierTEC(ByRef r As Long, ByRef readRows As Long)
     
     Call AjouterMessage(wsOutput, r, 2, "Temps d’exécution : " & Format(Timer - startTime, "0.00") & " seconde(s)")
     r = r + 1
-
-Clean_Exit:
 
     'Libérer la mémoire (test)
     On Error Resume Next
@@ -3563,8 +3550,7 @@ Sub ComparerHeuresFactureesSelon2Sources(ByRef wsOutput As Worksheet, ByRef r As
 End Sub
 
 Sub ImprimerSommaireHeuresTEC(ByRef wsOutput As Worksheet, ByRef r As Long, _
-                              ByRef stats As StatistiquesTEC, _
-                              ByRef isTECvalid As Boolean)
+                              ByRef stats As StatistiquesTEC)
     
     Call AjouterMessage(wsOutput, r, 2, "La somme des heures SAISIES donne ces résultats:")
     
@@ -3627,8 +3613,7 @@ Sub ImprimerSommaireHeuresTEC(ByRef wsOutput As Worksheet, ByRef r As Long, _
 End Sub
 
 Sub ImprimerSommaireDateProf(ByRef wsOutput As Worksheet, ByRef r As Long, _
-                             ByRef dictDateCharge, maxTECID As Long, _
-                             ByRef isTECvalid As Boolean)
+                             ByRef dictDateCharge As Object, maxTECID As Long)
     
     Dim formattedHours As String
     Dim key As Variant
@@ -3743,7 +3728,6 @@ Sub AppliquerConditionalFormating(rng As Range, headerRows As Long, couleurFond 
         Exit Sub
     End If
     
-    Dim ws As Worksheet: Set ws = rng.Worksheet
     Dim dataRange As Range
     
     'Définir la plage de données à laquelle appliquer la mise en forme conditionnelle, en
@@ -3764,7 +3748,6 @@ Sub AppliquerConditionalFormating(rng As Range, headerRows As Long, couleurFond 
     
     'Libérer la mémoire
     Set dataRange = Nothing
-    Set ws = Nothing
     
     Call Log_Record("modAppli_Utils:AppliquerConditionalFormating", vbNullString, startTime)
 
@@ -3794,9 +3777,6 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
         End If
         
         Dim rngUnion As Range
-        
-        Dim firstDataRow As Long
-        firstDataRow = HeaderRow + 1
         
         Select Case rng.Worksheet.CodeName
             Case "wsdCC_Regularisations" '2025-02-12 @ 07:58
@@ -4788,4 +4768,3 @@ Sub ExtraireCouleurCellule()
            "Vert: " & vert & vbCrLf & _
            "Bleu: " & bleu
 End Sub
-

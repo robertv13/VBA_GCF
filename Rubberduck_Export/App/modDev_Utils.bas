@@ -290,7 +290,7 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
     
 End Sub
 
-'@Description "Saisie des chaines, construction du tableau des lignes de code"
+'@Description ("Saisie des chaines, construction du tableau des lignes de code")
 Sub RechercherCodeProjet() '2024-10-26 @ 10:41
     
     'Declare lineOfCode() as variant
@@ -919,7 +919,7 @@ Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
     
 End Sub
 
-Sub Search_Every_Lines_Of_Code(arr As Variant, lignesLues, search1 As String, search2 As String, search3 As String)
+Sub Search_Every_Lines_Of_Code(arr As Variant, lignesLues As Long, search1 As String, search2 As String, search3 As String)
 
     'Declare arr() to keep results in memory
     Dim arrResult() As Variant

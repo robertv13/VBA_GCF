@@ -134,8 +134,8 @@ Private Sub ListView1_ItemCheck(ByVal item As MSComctlLib.listItem)
 
 End Sub
 
-'@Description "Ajoute un petit message dans le tableau des factures à confirmer - 2025-06-17 @ 19:58"
-Public Sub MarquerLigneSelectionnee(item As listItem)
+'@Description ("Ajoute un petit message dans le tableau des factures à confirmer")
+Public Sub MarquerLigneSelectionnee(item As listItem) '2025-06-17 @ 19:58
 
     'Vérifie si l'élément n'a pas déjà la mention "   - Sélectionnée -"
     If InStr(item.SubItems(3), "   - Sélectionnée -") = 0 Then

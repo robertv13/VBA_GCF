@@ -2093,7 +2093,7 @@ Function PremierJourTrimestreFiscal(dateMax As Date) As Date
     
 End Function
 
-Function PremierJourAnneeFiscal(maxDate) As Date
+Function PremierJourAnneeFiscal(maxDate As Date) As Date
 
     Dim dt As Date
     Dim annee As Integer
