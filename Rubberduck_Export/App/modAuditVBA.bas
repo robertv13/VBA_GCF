@@ -25,6 +25,7 @@ Sub AnalyserToutesLesProcedures() '2025-07-07 @ 09:27
     Debug.Print "Traitement terminé (" & indexMax & " procédures analysées)"
     
     Application.ScreenUpdating = True
+    
     ActiveWorkbook.Worksheets("DocAuditVBA").Activate
 
 End Sub
@@ -427,13 +428,14 @@ End Function
 Function CommenceParVerbe(nom As String) As Boolean '2025-07-07 @ 09:27
 
     Dim verbesAction As Variant
-    verbesAction = Array("Activer", "Actualiser", "Additionner", "Afficher", "Ajouter", "Ajuster", _
-                         "Aller", "Analyser", "Appliquer", "Assembler", "Batir", _
-                         "Calculer", "Convertir", "Creer", "Effacer", "Executer", _
-                         "Exporter", "Extraire", "Generer", "Importer", "Imprimer", _
-                         "MettreAJour", "Nettoyer", "Preparer", "Redemmarer", "Remplir", _
-                         "Reinitialiser", "Restaurer", "Sauvegarder", "Supprimer", _
-                         "Traiter", "UserForm", "Valider", _
+    verbesAction = Array("Acceder", "Activer", "Actualiser", "Additionner", "Afficher", "Ajouter", "Ajuster", _
+                         "Aller", "Analyser", "Annuler", "Appliquer", "Arreter", "Assembler", "Batir", "Calculer", "Charger", _
+                         "Cocher", "Compter", "Convertir", "Corriger", "Creer", "Demarrer", "Determiner", "Effacer", _
+                         "Executer", "Exporter", "Extraire", "Generer", "Importer", "Imprimer", _
+                         "Initialiser", "Inserer", "MettreAJour", "Nettoyer", "Noter", "Obtenir", _
+                         "Planifier", "Positionner", "Preparer", "Rafraichir", "Rechercher", "Redefinir", _
+                         "Redemmarer", "Reinitialiser", "Remplir", "Restaurer", "Retourner", "Saisir", _
+                         "Sauvegarder", "Selectionner", "Supprimer", "Traiter", "UserForm", "Valider", _
                          "Verifier", "Vider", "Workbook", "Worksheet")
     
     Dim v As Variant

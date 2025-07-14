@@ -39,7 +39,7 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
     Call Remplir_Plage_Avec_Couleur(cellsToColor, gCOULEUR_BASE_TEC)
     Application.EnableEvents = True
     
-    Call SetTabOrder(ws)
+    Call DeterminerOrdreDeTabulation(ws)
         
     Call Prepare_Pour_Nouvelle_Radiation
     

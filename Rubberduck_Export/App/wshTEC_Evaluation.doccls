@@ -31,7 +31,7 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
         ws.Unprotect
     End If
     
-    Call SetTabOrder(ws)
+    Call DeterminerOrdreDeTabulation(ws)
     
     Call TEC_EvaluationViderFeuille '2025-06-28 @ 11:13
     

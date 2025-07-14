@@ -29,7 +29,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
     Me.Range("H3").NumberFormat = wsdADMIN.Range("B1").Value
     Me.Range("H3").Value = Date
     
-    Call SetTabOrder(ws)
+    Call DeterminerOrdreDeTabulation(ws)
     
     'Indique la dernière ligne explosé, qui doit être refermé en passant au suivant
 '    Application.EnableEvents = False
@@ -111,7 +111,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
                     End If
                 Next cell
                 If Me.Cells(Target.row, 2) = vbNullString Then
-                    Call Build_Hours_Summary(Target.row)
+                    Call modTEC_Analyse.ConstruireSommaireHeures(Target.row)
                 End If
             End If
         End If

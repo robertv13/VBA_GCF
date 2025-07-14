@@ -39,7 +39,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:08
     Set cellsToColor = Me.Range("G4:H4")
     Call Remplir_Plage_Avec_Couleur(cellsToColor, gCOULEUR_BASE_COMPTABILITE)
     
-    Call SetTabOrder(ws)
+    Call DeterminerOrdreDeTabulation(ws)
     
     Call GL_EJ_Clear_All_Cells
     

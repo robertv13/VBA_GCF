@@ -63,7 +63,7 @@ Public Sub GenererRapportGL_Compte(wsRapport As Worksheet, dateDebut As Date, da
             Next i
             
             If r > 0 Then
-                Call Array_2D_Resizer(arrTrans, r, UBound(arrTrans, 2))
+                Call RedimensionnerTableau2D(arrTrans, r, UBound(arrTrans, 2))
             End If
 
         End If

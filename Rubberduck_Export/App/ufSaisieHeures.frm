@@ -597,7 +597,7 @@ Sub imgLogoGCF_Click()
             Call Stats_Heures_AF
             
             'Mettre à jour les 4 tableaux croisés dynamiques (Semaine, Mois, Trimestre & Année Financière)
-            Call UpdatePivotTables
+            Call MettreAJourPivotTables
             
             Application.EnableEvents = True
             

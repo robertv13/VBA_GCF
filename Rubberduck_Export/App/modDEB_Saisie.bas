@@ -913,7 +913,7 @@ Sub DEB_Back_To_Menu()
     
 End Sub
 
-Sub Calculate_GST_PST_And_Credits(d As Date, _
+Sub CalculerTaxesEtIntrants(d As Date, _
                                   taxCode As String, _
                                   total As Currency, _
                                   gst As Currency, pst As Currency, _

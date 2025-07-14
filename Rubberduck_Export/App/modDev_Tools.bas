@@ -71,7 +71,7 @@ Sub Detect_Circular_References_In_Workbook() '2024-07-24 @ 07:31
     
 End Sub
 
-Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 16:24
+Sub Comparer2ClasseursFormatColonnes() '2024-08-19 @ 16:24
 
     'Erase and create a new worksheet for differences
     Dim wsDiff As Worksheet
@@ -214,7 +214,7 @@ Sub Compare_2_Workbooks_Column_Formatting()                      '2024-08-19 @ 1
     
 End Sub
 
-Sub Compare_2_Workbooks_Cells_Level()                      '2024-08-20 @ 05:14
+Sub Comparer2ClasseursNiveauCellules() '2024-08-20 @ 05:14
 
     'Erase and create a new worksheet for differences
     Dim wsDiff As Worksheet
@@ -555,7 +555,7 @@ Sub ComparerValeursTECLocalVsTECTDBData()
     
 End Sub
 
-Sub Analyse_Search_For_Memory_Management()
+Sub RechercherCodeVBAPourGestionMemoire()
 
     Dim ws As Worksheet: Set ws = ThisWorkbook.Worksheets("X_Doc_Search_Utility_Results")
     
@@ -1296,7 +1296,7 @@ Sub ExtractEnumDefinition(tableName As String, ByRef arr() As Variant)
     Next vbComp
 
     'Redimension au minimum le tableau
-    Call Array_2D_Resizer(arr, e, 2)
+    Call RedimensionnerTableau2D(arr, e, 2)
     
 End Sub
 
@@ -1556,7 +1556,7 @@ Sub DemarrerSauvegardeCodeVBAAutomatique() '2025-03-03 @ 07:19
     
 End Sub
 
-Sub StopperSauvegardeAutomatique()
+Sub ArreterSauvegardeCodeVBA()
 
     'Annuler la prochaine exécution prévue
     On Error Resume Next
@@ -1742,7 +1742,7 @@ Sub ComparerClasseursNiveauCellules()
     
 End Sub
 
-Sub AnalyserImagesEntêteFactureExcel() '2025-05-27 @ 14:40
+Sub AnalyserImagesEnteteFactureExcel() '2025-05-27 @ 14:40
 
     Dim dossier As String, fichier As String
     Dim wb As Workbook, ws As Worksheet
@@ -1851,7 +1851,6 @@ End Sub
 
 '@Description ("Appeler un AddIn")
 Sub AppelerRoutineAddIn(nomFichier As String, nomMacro As String) '2025-06-19 @ 06:54
-
 
     On Error Resume Next
     Dim wb As Workbook

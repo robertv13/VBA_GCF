@@ -4381,7 +4381,7 @@ Sub ExempleUtilisation()
     
 End Sub
 
-Sub Vérifier_Mix_ClientID_ClientNom_TEC()
+Sub VerifierCombinaisonClientIDClientNomDansTEC()
 
     'Fichier maître des clients
     Dim strFile As String

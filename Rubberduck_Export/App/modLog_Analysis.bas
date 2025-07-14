@@ -111,7 +111,7 @@ Sub Lire_LogClientsApp(filePath As String)
     Loop
 
     'Réduit la taille du tableau output
-    Call Array_2D_Resizer(output, ligne, UBound(output, 2))
+    Call RedimensionnerTableau2D(output, ligne, UBound(output, 2))
     
     'Fermer le fichier
     Close #fileNum
@@ -217,7 +217,7 @@ Sub Lire_LogMainApp(filePath As String)
     Loop
 
     'Réduit la taille du tableau output
-    Call Array_2D_Resizer(output, ligne, UBound(output, 2))
+    Call RedimensionnerTableau2D(output, ligne, UBound(output, 2))
     
     'Fermer le fichier
     Close #fileNum
@@ -302,7 +302,7 @@ Sub Lire_LogSaisieHeures(filePath As String)
     Loop
 
     'Réduit la taille du tableau output
-    Call Array_2D_Resizer(output, ligne, UBound(output, 2))
+    Call RedimensionnerTableau2D(output, ligne, UBound(output, 2))
     
     'Fermer le fichier
     Close #fileNum

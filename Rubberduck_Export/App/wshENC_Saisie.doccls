@@ -54,7 +54,7 @@ Private Sub Worksheet_Activate()
         .EnableSelection = xlUnlockedCells
     End With
     
-    Call modDev_Utils.SetTabOrder(ws)
+    Call modDev_Utils.DeterminerOrdreDeTabulation(ws)
     
     Call ENC_Remove_Check_Boxes(36)
     
@@ -66,7 +66,7 @@ Private Sub Worksheet_Activate()
     End If
     ws.Range("O6:Q" & lastUsedBordereau + 2).Clear
     
-    Call AjusteLibelleEncaissement("Banque")
+    Call AjusterLibelleDansEncaissement("Banque")
     
     ws.Range("K5").Value = Format$(Date, wsdADMIN.Range("B1").Value)
 
@@ -172,7 +172,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     
     'Type a changé
     If Not Intersect(Target, Me.Range("F7")) Is Nothing Then
-        Call AjusteLibelleEncaissement(Target.Value)
+        Call AjusterLibelleDansEncaissement(Target.Value)
     End If
     
 End Sub

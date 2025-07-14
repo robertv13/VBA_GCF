@@ -804,9 +804,9 @@ Sub AfficherMessageDateInvalide(location As String) '2024-06-13 @ 12:40
 
 End Sub
 
-Sub UpdatePivotTables()
+Sub MettreAJourPivotTables()
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modTEC_Saisie:UpdatePivotTables", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modTEC_Saisie:MettreAJourPivotTables", vbNullString, 0)
     
     Dim ws As Worksheet: Set ws = wshStatsHeuresPivotTables
     Dim pt As pivotTable
@@ -824,7 +824,7 @@ Sub UpdatePivotTables()
     Set pt = Nothing
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("modTEC_Saisie:UpdatePivotTables", vbNullString, startTime)
+    Call EnregistrerLogApplication("modTEC_Saisie:MettreAJourPivotTables", vbNullString, startTime)
     
 End Sub
 

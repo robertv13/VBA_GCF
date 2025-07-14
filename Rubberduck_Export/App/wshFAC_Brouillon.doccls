@@ -34,7 +34,7 @@ Private Sub Worksheet_Activate()
     
     Application.Calculation = xlCalculationAutomatic
     
-    Call SetTabOrder(ws)
+    Call DeterminerOrdreDeTabulation(ws)
     
     With ws
         .Protect userInterfaceOnly:=True

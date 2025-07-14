@@ -8,7 +8,7 @@ Private Sub Worksheet_Activate()
     
     Call ActualiserTECTableauDeBord
     
-    Call AjusteBordurePivotTable
+    Call AjusterBordurePivotTable
     
     'Set the zoom factor to 100% when this worksheet is activated
     ActiveWindow.Zoom = 100

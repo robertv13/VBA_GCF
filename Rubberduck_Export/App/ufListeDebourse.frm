@@ -84,7 +84,7 @@ Private Sub ChargerDebDonnees()
         Next i
         
         'Charger dans le ListBox après avoir effectué un tri sur la date et formater les colonnes
-        Call Array_2D_Bubble_Sort(recentArray)
+        Call TrierTableau2DBubble(recentArray)
         
         Call FormatArrayBeforeAddingToDebListBox(recentArray)
         

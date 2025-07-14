@@ -57,10 +57,10 @@ ProchaineLigne:
     End If
 
     'Redimensionner proprement
-    Call Array_2D_Resizer(arr, nbRows, 4)
+    Call RedimensionnerTableau2D(arr, nbRows, 4)
 
     'Trier les données (si souhaité)
-    Call Array_2D_Bubble_Sort(arr)
+    Call TrierTableau2DBubble(arr)
 
     ' Préparer la ListBox
     With Me.lsbProjetsFacture

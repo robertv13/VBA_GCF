@@ -134,7 +134,7 @@ Private Sub txtHonoraires_AfterUpdate()
 
     ufEncRégularisation.txtHonoraires.text = Replace(ufEncRégularisation.txtHonoraires.text, ".", ",")
     ufEncRégularisation.txtHonoraires.text = Format$(ufEncRégularisation.txtHonoraires.text, "###,##0.00 $")
-    Call VerifieMontantsSaisis
+    Call VerifierMontantsSaisis
     
 End Sub
 
@@ -142,7 +142,7 @@ Private Sub txtFraisDivers_AfterUpdate()
 
     ufEncRégularisation.txtFraisDivers.text = Replace(ufEncRégularisation.txtFraisDivers.text, ".", ",")
     ufEncRégularisation.txtFraisDivers.text = Format$(ufEncRégularisation.txtFraisDivers.text, "###,##0.00 $")
-    Call VerifieMontantsSaisis
+    Call VerifierMontantsSaisis
 
 End Sub
 
@@ -150,7 +150,7 @@ Private Sub txtTPS_AfterUpdate()
 
     ufEncRégularisation.txtTPS.text = Replace(ufEncRégularisation.txtTPS.text, ".", ",")
     ufEncRégularisation.txtTPS.text = Format$(ufEncRégularisation.txtTPS.text, "###,##0.00 $")
-    Call VerifieMontantsSaisis
+    Call VerifierMontantsSaisis
 
 End Sub
 
@@ -158,11 +158,11 @@ Private Sub txtTVQ_AfterUpdate()
 
     ufEncRégularisation.txtTVQ.text = Replace(ufEncRégularisation.txtTVQ.text, ".", ",")
     ufEncRégularisation.txtTVQ.text = Format$(ufEncRégularisation.txtTVQ.text, "###,##0.00 $")
-    Call VerifieMontantsSaisis
+    Call VerifierMontantsSaisis
 
 End Sub
 
-Private Sub VerifieMontantsSaisis()
+Private Sub VerifierMontantsSaisis()
 
     If ufEncRégularisation.txtTotalFacture.text <> vbNullString Then
         With ufEncRégularisation

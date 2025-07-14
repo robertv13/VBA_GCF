@@ -787,11 +787,11 @@ Sub CopierTECFiltresVersFACBrouillon(cutOffDateProjet As Date) '2024-03-21 @ 07:
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.listBox1.Clear
+        ufFraisDivers.ListBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.listBox1.AddItem item
+            ufFraisDivers.ListBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless
@@ -1285,7 +1285,7 @@ Sub Load_Invoice_Template(t As String)
     'Sort the services based on the two digits in front of the service description
     Dim arr() As String
     arr = Split(strServices, "|")
-    Call BubbleSort(arr)
+    Call TrierTableauBubble(arr)
 
     'Go thru all the services for the template
     Dim facRow As Long

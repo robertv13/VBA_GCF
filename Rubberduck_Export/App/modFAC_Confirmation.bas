@@ -7,7 +7,7 @@ Public Factures As Collection
 Sub Afficher_ufConfirmation() '2025-03-12 @ 12:40
 
     'Aller chercher les factures à confirmer
-    Call PrepareDonneesPourListView
+    Call PreparerDonneesPourListView
     
     'Vérifiez si la collection de factures est vide
     If Factures Is Nothing Then
@@ -26,7 +26,7 @@ Sub Afficher_ufConfirmation() '2025-03-12 @ 12:40
 
 End Sub
 
-Sub PrepareDonneesPourListView() '2025-03-12 @ 12:40
+Sub PreparerDonneesPourListView() '2025-03-12 @ 12:40
 
     Set Factures = New Collection
     

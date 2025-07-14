@@ -82,13 +82,13 @@ End Sub
 
 Sub shpParamètres_Click()
 
-    Call Parametres
+    Call AccederFeuilleADMIN
     
 End Sub
 
-Sub Parametres()
+Sub AccederFeuilleADMIN()
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modMenu:Parametres", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modMenu:AccederFeuilleADMIN", vbNullString, 0)
     
     If GetNomUtilisateur() = "Guillaume" Or _
             GetNomUtilisateur() = "GuillaumeCharron" Or _
@@ -103,7 +103,7 @@ Sub Parametres()
         Application.EnableEvents = True
     End If
     
-    Call EnregistrerLogApplication("modMenu:Parametres", vbNullString, startTime)
+    Call EnregistrerLogApplication("modMenu:AccederFeuilleADMIN", vbNullString, startTime)
 
 End Sub
 
@@ -164,7 +164,7 @@ Sub FermerApplicationNormalement(ByVal userName As String) 'Nouvelle procédure 
 
     'Fermer la sauvegarde automtique du code VBA (seul le développeur déclenche la sauvegarde automtique)
     If userName = "RobertMV" Or userName = "robertmv" Then
-        Call StopperSauvegardeAutomatique
+        Call ArreterSauvegardeCodeVBA
         Call ExporterCodeVBA
     End If
     
@@ -350,13 +350,13 @@ End Sub
 
 Sub shpCorrigerNomClientTEC_Click()
 
-    Call modzDataConversion.CorrigeNomClientInTEC
+    Call modzDataConversion.CorrigerNomClientDansTEC
     
 End Sub
 
 Sub shpCorrigerNomClientCAR_Click()
 
-    Call modzDataConversion.CorrigeNomClientInCAR
+    Call modzDataConversion.CorrigerNomClientDansCAR
     
 End Sub
 
@@ -384,13 +384,13 @@ Sub shpVérificationMacrosContrôles_Click()
 
 End Sub
 
-Sub shpRetourMenuPrincipal_Click()
+Sub shpRetournerMenuPrincipal_Click()
 
-    Call RetourMenuPrincipal
+    Call RetournerMenuPrincipal
 
 End Sub
 
-Sub RetourMenuPrincipal()
+Sub RetournerMenuPrincipal()
 
     Dim ws As Worksheet
     For Each ws In ActiveWorkbook.Worksheets

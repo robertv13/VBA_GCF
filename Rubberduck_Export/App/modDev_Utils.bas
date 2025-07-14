@@ -24,7 +24,7 @@ Option Explicit
 '
 'End Sub
 '
-Sub Array_2D_Bubble_Sort(ByRef arr() As Variant) '2024-06-23 @ 07:05
+Sub TrierTableau2DBubble(ByRef arr() As Variant) '2024-06-23 @ 07:05
     
     Dim i As Long, j As Long, numRows As Long, numCols As Long
     Dim temp As Variant
@@ -66,7 +66,7 @@ Sub Array_2D_Bubble_Sort(ByRef arr() As Variant) '2024-06-23 @ 07:05
 
 End Sub
 
-Sub Array_2D_Resizer(ByRef inputArray As Variant, ByVal nRows As Long, ByVal nCols As Long)
+Sub RedimensionnerTableau2D(ByRef inputArray As Variant, ByVal nRows As Long, ByVal nCols As Long)
     
     Dim oRows As Long, oCols As Long
     
@@ -95,25 +95,7 @@ Sub Array_2D_Resizer(ByRef inputArray As Variant, ByVal nRows As Long, ByVal nCo
     
 End Sub
 
-Sub Bubble_Sort_1D_Array(arr() As String)
-    Dim i As Long, j As Long
-    Dim temp As String
-    
-    For i = LBound(arr) To UBound(arr) - 1
-        For j = i + 1 To UBound(arr)
-            If arr(i) > arr(j) Then
-                'Swap elements if they are in the wrong order
-                temp = arr(i)
-                arr(i) = arr(j)
-                arr(j) = temp
-            End If
-        Next j
-    Next i
-End Sub
-
-Sub BubbleSort(MyArray() As String) '2024-07-02 @ 15:18 - WellSR.com
-    'Sorts a one-dimensional VBA array from smallest to largest 'using the bubble sort algorithm.
-    'HOW TO USE: Call BubbleSort(MyArray())
+Sub TrierTableauBubble(MyArray() As String) '2024-07-02 @ 15:18
     
     Dim i As Long, j As Long
     Dim temp As Variant
@@ -129,93 +111,94 @@ Sub BubbleSort(MyArray() As String) '2024-07-02 @ 15:18 - WellSR.com
     
 End Sub
 
-Sub Check_Invoice_Template()
-
-    Dim ws As Worksheet: Set ws = wsdADMIN
-    Dim firstUsedRow As Long, lastUsedRow As Long
-    firstUsedRow = 12
-    lastUsedRow = ws.Cells(ws.Rows.count, "Z").End(xlUp).Row
-    Dim rng As Range
-    Set rng = ws.Range("Z" & firstUsedRow & ":AA" & lastUsedRow)
-    
-    'First - Determine which templates are used
-    Dim arr As Variant
-    Dim strTemplates As String
-    Dim i As Long, j As Long
-    For i = 1 To lastUsedRow - firstUsedRow + 1
-        If Not rng.Cells(i, 2) = vbNullString Then
-            arr = Split(rng.Cells(i, 2), ",")
-            For j = 0 To UBound(arr)
-                strTemplates = strTemplates & Trim$(arr(j)) & "-" & i & "|"
-            Next j
-        End If
-    Next i
-    
-    'Second - Sort all the found templates
-    Dim tt() As String
-    tt = Split(strTemplates, "|")
-    Call BubbleSort(tt)
-    
-    'Third - Prepare the worksheet to receive information
-    Call Erase_And_Create_Worksheet("Gabarits_Facture")
-    
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Gabarits_Facture")
-    wsOutput.Range("A1").Value = "Gabarit"
-    wsOutput.Range("B1").Value = "Code"
-    wsOutput.Range("C1").Value = "Service"
-    Dim outputRow As Long: outputRow = 1
-    
-    'Third - Build the list of services associated to each template (First Letter)
-    Dim rowNo As Long
-    Dim template As String, oldTemplate As String
-    
-    With wsOutput
-        For i = 0 To UBound(tt)
-            If tt(i) <> vbNullString Then
-                template = Left$(tt(i), 1)
-                If template <> oldTemplate Then
-                    outputRow = outputRow + 2
-                    .Range("A" & outputRow).Value = "Gabarit '" & template & "'"
-                    oldTemplate = template
-                End If
-                rowNo = Mid$(tt(i), InStr(1, tt(i), "-") + 1)
-                outputRow = outputRow + 1
-                .Range("B" & outputRow).Value = tt(i)
-                .Range("C" & outputRow).Value = rng.Cells(rowNo, 1)
-            End If
-        Next i
-        wsOutput.Range("A1").CurrentRegion.EntireColumn.AutoFit
-    End With
-    
-    With wsOutput.Range("A1:C1")
-        With .Interior
-            .Pattern = xlSolid
-            .PatternColorIndex = xlAutomatic
-            .Color = 12611584
-            .TintAndShade = 0
-            .PatternTintAndShade = 0
-        End With
-        
-        With .Font
-            .ThemeColor = xlThemeColorDark1
-            .TintAndShade = 0
-            .size = 10
-            .Italic = True
-            .Bold = True
-        End With
-    End With
-    
-    With wsOutput.Range("A2:A" & outputRow)
-        .Font.Bold = True
-    End With
-
-    'Cleaning - 2024-07-02 @ 20:12
-    Set rng = Nothing
-    Set ws = Nothing
-    Set wsOutput = Nothing
-    
-End Sub
-
+'CommentOut - Pas utilisé -2025-07-14 @ 09:48
+'Sub Check_Invoice_Template()
+'
+'    Dim ws As Worksheet: Set ws = wsdADMIN
+'    Dim firstUsedRow As Long, lastUsedRow As Long
+'    firstUsedRow = 12
+'    lastUsedRow = ws.Cells(ws.Rows.count, "Z").End(xlUp).Row
+'    Dim rng As Range
+'    Set rng = ws.Range("Z" & firstUsedRow & ":AA" & lastUsedRow)
+'
+'    'First - Determine which templates are used
+'    Dim arr As Variant
+'    Dim strTemplates As String
+'    Dim i As Long, j As Long
+'    For i = 1 To lastUsedRow - firstUsedRow + 1
+'        If Not rng.Cells(i, 2) = vbNullString Then
+'            arr = Split(rng.Cells(i, 2), ",")
+'            For j = 0 To UBound(arr)
+'                strTemplates = strTemplates & Trim$(arr(j)) & "-" & i & "|"
+'            Next j
+'        End If
+'    Next i
+'
+'    'Second - Sort all the found templates
+'    Dim tt() As String
+'    tt = Split(strTemplates, "|")
+'    Call TrierTableauBubble(tt)
+'
+'    'Third - Prepare the worksheet to receive information
+'    Call Erase_And_Create_Worksheet("Gabarits_Facture")
+'
+'    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Gabarits_Facture")
+'    wsOutput.Range("A1").Value = "Gabarit"
+'    wsOutput.Range("B1").Value = "Code"
+'    wsOutput.Range("C1").Value = "Service"
+'    Dim outputRow As Long: outputRow = 1
+'
+'    'Third - Build the list of services associated to each template (First Letter)
+'    Dim rowNo As Long
+'    Dim template As String, oldTemplate As String
+'
+'    With wsOutput
+'        For i = 0 To UBound(tt)
+'            If tt(i) <> vbNullString Then
+'                template = Left$(tt(i), 1)
+'                If template <> oldTemplate Then
+'                    outputRow = outputRow + 2
+'                    .Range("A" & outputRow).Value = "Gabarit '" & template & "'"
+'                    oldTemplate = template
+'                End If
+'                rowNo = Mid$(tt(i), InStr(1, tt(i), "-") + 1)
+'                outputRow = outputRow + 1
+'                .Range("B" & outputRow).Value = tt(i)
+'                .Range("C" & outputRow).Value = rng.Cells(rowNo, 1)
+'            End If
+'        Next i
+'        wsOutput.Range("A1").CurrentRegion.EntireColumn.AutoFit
+'    End With
+'
+'    With wsOutput.Range("A1:C1")
+'        With .Interior
+'            .Pattern = xlSolid
+'            .PatternColorIndex = xlAutomatic
+'            .Color = 12611584
+'            .TintAndShade = 0
+'            .PatternTintAndShade = 0
+'        End With
+'
+'        With .Font
+'            .ThemeColor = xlThemeColorDark1
+'            .TintAndShade = 0
+'            .size = 10
+'            .Italic = True
+'            .Bold = True
+'        End With
+'    End With
+'
+'    With wsOutput.Range("A2:A" & outputRow)
+'        .Font.Bold = True
+'    End With
+'
+'    'Cleaning - 2024-07-02 @ 20:12
+'    Set rng = Nothing
+'    Set ws = Nothing
+'    Set wsOutput = Nothing
+'
+'End Sub
+'
 Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
     
     Call Erase_And_Create_Worksheet("X_Feuilles_du_Classeur")
@@ -255,9 +238,9 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
     'Close the workbook without saving changes
     wb.Close SaveChanges:=False
     
-    Call Array_2D_Resizer(arr, r, UBound(arr, 2))
+    Call RedimensionnerTableau2D(arr, r, UBound(arr, 2))
     
-    Call Array_2D_Bubble_Sort(arr)
+    Call TrierTableau2DBubble(arr)
     
     For r = 1 To UBound(arr, 1)
         wsOutput.Cells(r + 1, 1) = arr(r, 1)
@@ -343,7 +326,7 @@ Sub RechercherCodeProjet() '2024-10-26 @ 10:41
     
     'At this point allLinesOfCode contains all non-empty lines of code of the application - 2025-06-18 @ 14:48
     
-    Call Array_2D_Resizer(allLinesOfCode, indiceTableau, UBound(allLinesOfCode, 2))
+    Call RedimensionnerTableau2D(allLinesOfCode, indiceTableau, UBound(allLinesOfCode, 2))
     
     Call Search_Every_Lines_Of_Code(allLinesOfCode, lignesLues, search1, search2, search3)
     
@@ -405,8 +388,8 @@ Sub List_Conditional_Formatting_All() '2024-06-23 @ 18:37
         'Reset the range variable for the next worksheet
     Next ws
     
-    Call Array_2D_Resizer(arr, i, UBound(arr, 2))
-    Call Array_2D_Bubble_Sort(arr)
+    Call RedimensionnerTableau2D(arr, i, UBound(arr, 2))
+    Call TrierTableau2DBubble(arr)
 
     'Setup and prepare the output worksheet
     Dim wsOutput As Worksheet: Set wsOutput = wshzDocConditionalFormatting
@@ -509,9 +492,9 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
     
         X = X - 1
         
-        Call Array_2D_Resizer(arr, X, UBound(arr, 2))
+        Call RedimensionnerTableau2D(arr, X, UBound(arr, 2))
         
-        Call Array_2D_Bubble_Sort(arr)
+        Call TrierTableau2DBubble(arr)
         
         'Array to Worksheet
         Dim outputRow As Long: outputRow = 2
@@ -655,8 +638,8 @@ Sub List_Formulas_All() '2024-06-22 @ 15:42
 nextIteration:
     Next ws
     
-    Call Array_2D_Resizer(outputArray, i, UBound(outputArray, 2))
-    Call Array_2D_Bubble_Sort(outputArray)
+    Call RedimensionnerTableau2D(outputArray, i, UBound(outputArray, 2))
+    Call TrierTableau2DBubble(outputArray)
     
     'Transfer the array data to the worksheet
     wshzDocFormulas.Range("A2").Resize(UBound(outputArray, 1), UBound(outputArray, 2)).Value = outputArray
@@ -817,8 +800,8 @@ Sub List_Named_Ranges_All() '2024-06-23 @ 07:40
         arr(i, 9) = timeStamp
     Next nr
     
-    Call Array_2D_Resizer(arr, i, UBound(arr, 2))
-    Call Array_2D_Bubble_Sort(arr)
+    Call RedimensionnerTableau2D(arr, i, UBound(arr, 2))
+    Call TrierTableau2DBubble(arr)
     
     'Transfer the array data to the worksheet
     wshzDocNamedRange.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2)).Value = arr
@@ -1004,10 +987,10 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, lignesLues As Long, search1 As St
         'Data starts at row 2
         Dim r As Long: r = 2
 
-        Call Array_2D_Resizer(arrResult, xr, UBound(arrResult, 2))
+        Call RedimensionnerTableau2D(arrResult, xr, UBound(arrResult, 2))
         
         'Sort the 2D array based on column 1
-        Call Array_2D_Bubble_Sort(arrResult)
+        Call TrierTableau2DBubble(arrResult)
     
         'Transfer the array to the worksheet
         wsOutput.Range("A2").Resize(UBound(arrResult, 1), UBound(arrResult, 2)).Value = arrResult
@@ -1363,10 +1346,10 @@ Sub List_Subs_And_Functions_All() '2024-11-26 @ 20:02
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).Row
     ws.Range("A2:J" & lastUsedRow).ClearContents
 
-    Call Array_2D_Resizer(arr, i, UBound(arr, 2))
+    Call RedimensionnerTableau2D(arr, i, UBound(arr, 2))
     
     'Sort the 2D array based on column 1
-    Call Array_2D_Bubble_Sort(arr)
+    Call TrierTableau2DBubble(arr)
     
     'Transfer the array to the worksheet
     ws.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2)).Value = arr
@@ -1406,7 +1389,7 @@ Sub Test_Array_To_Range() '2024-03-18 @ 17:34
     
 End Sub
 
-Sub TestArray_2D_Resizer()
+Sub TestRedimensionnerTableau2D()
     Dim originalArray() As Variant
     Dim i As Long, j As Long
     
@@ -1430,7 +1413,7 @@ Sub TestArray_2D_Resizer()
     Next i
     
     ' Trim the array to 6 rows and 3 columns
-    Call Array_2D_Resizer(originalArray, 6, 3)
+    Call RedimensionnerTableau2D(originalArray, 6, 3)
     
     ' Output the trimmed array to the immediate window
     Debug.Print "#033 - Trimmed Array:"
@@ -1477,9 +1460,9 @@ Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
         arr(i, 3) = timeStamp
     Next ws
     
-    Call Array_2D_Resizer(arr, i, UBound(arr, 2))
+    Call RedimensionnerTableau2D(arr, i, UBound(arr, 2))
     
-    Call Array_2D_Bubble_Sort(arr)
+    Call TrierTableau2DBubble(arr)
     
     Dim f As Long
     For i = 1 To UBound(arr, 1)
@@ -1512,9 +1495,9 @@ Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
 
 End Sub
 
-Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
+Sub DeterminerOrdreDeTabulation(ws As Worksheet) '2024-06-15 @ 13:58
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modDev_Utils:SetTabOrder", ws.CodeName, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modDev_Utils:DeterminerOrdreDeTabulation", ws.CodeName, 0)
 
     'Clear previous settings AND protect the worksheet
     With ws
@@ -1540,7 +1523,7 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
     'Sort to ensure cells are sorted left-to-right, top-to-bottom
     If Not unprotectedCells Is Nothing Then
         Dim sortedCells As Range: Set sortedCells = unprotectedCells
-        Debug.Print "(" & ws.Name & ") - SetTabOrder - Unprotected cells are '" & sortedCells.Address & "' - " & sortedCells.count & " cellule(s) - " & Format$(Now(), "dd/mm/yyyy hh:mm:ss")
+        Debug.Print "(" & ws.Name & ") - DeterminerOrdreDeTabulation - Unprotected cells are '" & sortedCells.Address & "' - " & sortedCells.count & " cellule(s) - " & Format$(Now(), "dd/mm/yyyy hh:mm:ss")
 
         'Enable TAB through unprotected cells
         Application.EnableEvents = False
@@ -1554,7 +1537,7 @@ Sub SetTabOrder(ws As Worksheet) '2024-06-15 @ 13:58
     Set unprotectedCells = Nothing
     Set sortedCells = Nothing
 
-    Call EnregistrerLogApplication("modDev_Utils:SetTabOrder", vbNullString, startTime)
+    Call EnregistrerLogApplication("modDev_Utils:DeterminerOrdreDeTabulation", vbNullString, startTime)
 
 End Sub
 

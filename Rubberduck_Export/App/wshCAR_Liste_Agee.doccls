@@ -47,7 +47,7 @@ Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
     
     Call GererBoutonsNavigation(False)
     
-    Call SetTabOrder(ws)
+    Call DeterminerOrdreDeTabulation(ws)
     
     With ws
         .Protect userInterfaceOnly:=True
@@ -176,7 +176,7 @@ Private Sub Worksheet_BeforeRightClick(ByVal Target As Range, Cancel As Boolean)
     ' Vérifier si la cellule cliquée est dans la plage
     If Not Intersect(Target, Me.Range("B9:J999")) Is Nothing Then
         Cancel = True 'Annuler le menu contextuel par défaut
-        Call CAR_ListeAgee_AfficherMenuContextuel(Target)
+        Call AfficherMenuContextuel(Target)
     End If
 
     'Réactiver la protection de la feuille si elle l'était

@@ -210,7 +210,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     
     'Set conditional formats for total hours (Client's total)
     Dim rngTotals As Range: Set rngTotals = wsDest.Range("C8:C" & destLastUsedRow)
-    Call Apply_Conditional_Formatting_Alternate_On_Column_H(rngTotals, destLastUsedRow)
+    Call AppliquerFormatConditionnelZebreeColonneH(rngTotals, destLastUsedRow)
     
     'Bring in all the invoice requests
     Call Bring_In_Existing_Invoice_Requests(destLastUsedRow)
@@ -245,7 +245,7 @@ Sub Clean_Up_Summary_Area(ws As Worksheet)
 
 End Sub
 
-Sub Apply_Conditional_Formatting_Alternate_On_Column_H(rng As Range, lastUsedRow As Long)
+Sub AppliquerFormatConditionnelZebreeColonneH(rng As Range, lastUsedRow As Long)
 
     Dim ws As Worksheet: Set ws = wshTEC_Analyse
     
@@ -305,7 +305,7 @@ Sub Apply_Conditional_Formatting_Alternate_On_Column_H(rng As Range, lastUsedRow
             
 End Sub
 
-Sub Build_Hours_Summary(rowSelected As Long)
+Sub ConstruireSommaireHeures(rowSelected As Long)
 
     If rowSelected < 8 Then Exit Sub
     

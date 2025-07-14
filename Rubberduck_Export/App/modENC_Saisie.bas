@@ -899,7 +899,7 @@ Sub ENC_Back_To_GL_Menu()
 
 End Sub
 
-Sub AjusteLibelleEncaissement(typeTrans As String)
+Sub AjusterLibelleDansEncaissement(typeTrans As String)
 
     Application.EnableEvents = False
     

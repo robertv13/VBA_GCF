@@ -189,7 +189,7 @@ Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
     End If
     
     'Transfer the arr to the worksheet, after resizing it
-    Call Array_2D_Resizer(arr, r, 13)
+    Call RedimensionnerTableau2D(arr, r, 13)
 
     Application.EnableEvents = False
     
@@ -1379,13 +1379,13 @@ Sub ObtenirListeTECFacturésFiltreAvancé(noFact As String) '2024-10-20 @ 11:11
     
 End Sub
 
-Sub shpRetourInterrogation_Click()
+Sub shpRetournerInterrogationFacture_Click()
 
-    Call RetourInterrogation
+    Call RetournerInterrogationFacture
 
 End Sub
 
-Sub RetourInterrogation()
+Sub RetournerInterrogationFacture()
 
     Application.ScreenUpdating = False
     wshFAC_Interrogation.Activate

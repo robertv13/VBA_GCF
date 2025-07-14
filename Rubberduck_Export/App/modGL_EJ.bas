@@ -1130,7 +1130,7 @@ Sub PreparerAfficherListeEcriture()
     End If
    
     'Réduire la taille du tableau resultats
-    Call Array_2D_Resizer(resultats, compteur, UBound(resultats, 2))
+    Call RedimensionnerTableau2D(resultats, compteur, UBound(resultats, 2))
     
     'Charger les résultats dans la ListBox
     With ufListeEcritureGL.lsbListeEcritureGL

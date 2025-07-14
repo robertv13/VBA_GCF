@@ -42,7 +42,7 @@ Attribute myTextBox.VB_VarHelpID = -1
 Public Property Let CompareMethod(ByVal Value As VbCompareMethod)
 
     m_compareMethod = Value
-    Call FilterListBox
+    Call FiltrerListBox
 
 End Property
 
@@ -62,7 +62,7 @@ End Property
 Public Property Let MaxRows(ByVal Value As Long)
     
     m_maxRows = Value
-    Call FilterListBox
+    Call FiltrerListBox
 
 End Property
 
@@ -78,21 +78,21 @@ End Property
 Public Property Let ShowAllMatches(ByVal state As Boolean)
     
     m_showAllMatches = state
-    Call FilterListBox
+    Call FiltrerListBox
 
 End Property
 
 Public Property Set SearchListBox(ByVal oListBox As MSForms.ListBox)
     
     Set MyListBox = oListBox
-    Call InitializeListBox
+    Call InitialiserListBox
 
 End Property
 
 Public Property Set SearchTextBox(ByVal oTextBox As MSForms.TextBox)
     
     Set myTextBox = oTextBox
-    Call InitializeTextBox
+    Call InitialiserTextBox
 
 End Property
 
@@ -126,7 +126,7 @@ Private Sub myListBox_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shif
         m_UpdateControl = True
     ElseIf KeyCode = vbKeyUp Then
         m_UpdateControl = True
-        Call CheckListBoxFirstItem
+        Call VerifierPremierItemListBox
     ElseIf KeyCode = vbKeyReturn Or KeyCode = vbKeyTab Then
         'Swallow the enter keycode as it passes on to the ok button
         KeyCode = 0
@@ -188,11 +188,11 @@ Private Sub UpdateListBox(items As Variant)
             .ListIndex = 0
         End If
         'Resize the listbox
-        Call SetListboxPosition
+        Call PositionnerListBox
          
         'If show all matches then have a scrollbar
         If m_showAllMatches = True Then
-            Call MakeAllMatchesAvailable
+            Call SelectionnerItemDansListBox
         Else
             .Height = ResizeListbox(MyListBox, 11)
         End If
@@ -201,7 +201,7 @@ Private Sub UpdateListBox(items As Variant)
 
 End Sub
 
-Private Sub MakeAllMatchesAvailable()
+Private Sub SelectionnerItemDansListBox()
 
     With MyListBox
         'To get the scrollbar working correctly it is necessary to turn IntegralHeight off and on
@@ -217,18 +217,18 @@ Private Sub MakeAllMatchesAvailable()
 
 End Sub
 
-Private Sub InitializeListBox()
+Private Sub InitialiserListBox()
     
     'Remove any automatic resizing of the listbox
     MyListBox.IntegralHeight = False
 
 End Sub
 
-Public Sub CheckListBoxFirstItem()
+Public Sub VerifierPremierItemListBox()
     
     If MyListBox.ListIndex = 0 Then
         m_UpdateControl = False
-        Call SelectTextBox
+        Call SelectionnerTextBox
     End If
 
 End Sub
@@ -245,7 +245,7 @@ Private Sub ShowListbox(Optional ByVal show As Boolean = True)
 
 End Sub
 
-Private Sub SetListboxPosition()
+Private Sub PositionnerListBox()
     
     With MyListBox
         .Left = myTextBox.Left
@@ -277,13 +277,13 @@ Private Sub myTextBox_Change()
 
     If m_UpdateControl = False Then
         If Trim$(myTextBox.Value) = vbNullString Then
-            Call InitializeTextBox
+            Call InitialiserTextBox
         Else
             If m_textboxStartingState = True Then
                 m_textboxStartingState = False
                 'Call RemoveStartingText
             End If
-            Call FilterListBox
+            Call FiltrerListBox
         End If
     End If
     
@@ -305,7 +305,7 @@ Private Sub myTextBox_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shif
         Call ShowListbox(False)
     ElseIf KeyCode = vbKeyEscape Then
         'Swallow the esc keycode
-        Call InitializeTextBox
+        Call InitialiserTextBox
         KeyCode = 0
     End If
 
@@ -320,7 +320,7 @@ Private Sub SetTextboxValue(ByVal text As String)
             myTextBox.TextAlign = fmTextAlignLeft
             myTextBox.Value = text
             
-            Call SelectTextBox
+            Call SelectionnerTextBox
             
             m_UpdateControl = False
         End With
@@ -328,7 +328,7 @@ Private Sub SetTextboxValue(ByVal text As String)
     
 End Sub
 
-Private Sub InitializeTextBox()
+Private Sub InitialiserTextBox()
     
     'Set the starting text and position
     m_textboxStartingState = True
@@ -358,7 +358,7 @@ Private Sub RemoveStartingText()
     
 End Sub
 
-Private Sub SelectTextBox()
+Private Sub SelectionnerTextBox()
     
     With myTextBox
 '        SelStart = 0
@@ -367,7 +367,7 @@ Private Sub SelectTextBox()
 
 End Sub
 
-Public Sub FilterListBox() 'Filters the Listbox
+Public Sub FiltrerListBox() 'Filters the Listbox
 
     'In case a setting like MaxRows is used before the range is set
     If IsEmpty(m_listOfItems) Then Exit Sub

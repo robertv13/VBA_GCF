@@ -133,7 +133,7 @@ Sub AjouterCheckBoxesAvecControleGlobal(lastUsedRow As Long)
     With headerChkBox
         .Name = "chk_header"
         .Caption = vbNullString
-        .OnAction = "ToutCocherOuDecocher" 'Associe la macro de contrôle global
+        .OnAction = "CocherOuDecocherToutesCases" 'Associe la macro de contrôle global
     End With
 
     'Ajouter une case à cocher pour chaque ligne du tableau
@@ -152,7 +152,7 @@ Sub AjouterCheckBoxesAvecControleGlobal(lastUsedRow As Long)
 
 End Sub
 
-Sub ToutCocherOuDecocher()
+Sub CocherOuDecocherToutesCases()
 
     Dim ws As Worksheet
     Set ws = wshTEC_Radiation ' Remplacez par le nom de votre feuille

@@ -472,7 +472,7 @@ Next_Invoice:
     
 End Sub
 
-Sub CAR_ListeAgee_AfficherMenuContextuel(ByVal Target As Range) '2025-02-21 @ 19:10
+Sub AfficherMenuContextuel(ByVal Target As Range) '2025-02-21 @ 19:10
 
     Dim menu As CommandBar
     Dim menuItem As CommandBarButton
@@ -714,11 +714,11 @@ End Sub
 
 Sub shpVersHaut_Click() '2025-06-30 @ 10:59
 
-    Call RetourAuDebut
+    Call RetournerEnHaut
 
 End Sub
 
-Sub RetourAuDebut() '2025-06-30 @ 11:08
+Sub RetournerEnHaut() '2025-06-30 @ 11:08
 
     Application.GoTo Reference:=ActiveSheet.Cells(1, 1), Scroll:=True
     
@@ -808,15 +808,15 @@ End Sub
 '
 'End Sub
 
-Sub shpRetourMenuFacturation_Click()
+Sub shpRetournerMenuFacturation_Click()
 
     Call EffacerResultatAnterieur(wshCAR_Liste_Agee)
     
-    Call RetourMenuFacturation
+    Call RetournerMenuFacturation
 
 End Sub
 
-Sub RetourMenuFacturation()
+Sub RetournerMenuFacturation()
 
     wshCAR_Liste_Agee.Visible = xlSheetHidden
     

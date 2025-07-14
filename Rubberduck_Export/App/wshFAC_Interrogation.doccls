@@ -35,7 +35,7 @@ Private Sub Worksheet_Activate()
     
     ws.Application.Calculation = xlCalculationAutomatic
     
-    Call SetTabOrder(ws)
+    Call DeterminerOrdreDeTabulation(ws)
     
     'Certaines cellules perdent la couleur du background
     Dim cellsToColor As Range

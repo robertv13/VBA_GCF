@@ -37,7 +37,7 @@ Private Sub Worksheet_Activate()
                                 ws.Range("L6"), ws.Range("N6"))
     Call modAppli_Utils.Remplir_Plage_Avec_Couleur(cellsToColor, gCOULEUR_BASE_COMPTABILITE)
     
-    Call SetTabOrder(ws)
+    Call DeterminerOrdreDeTabulation(ws)
     
     Call DEB_Saisie_Clear_All_Cells
     
@@ -294,7 +294,7 @@ Private Sub Process_Change(ByVal Target As Range)
                 cell.offset(0, 5).Select 'Input NET amount
             Else
 '                If wshDEB_Saisie.Range("H" & target.row).Value <> "M" Then
-                    Call Calculate_GST_PST_And_Credits(wshDEB_Saisie.Range("O4").Value, _
+                    Call CalculerTaxesEtIntrants(wshDEB_Saisie.Range("O4").Value, _
                                                        wshDEB_Saisie.Range("H" & Target.row).Value, _
                                                        Target.Value, _
                                                        gst, pst, gstCredit, pstCredit, _
@@ -329,7 +329,7 @@ Private Sub Process_Change(ByVal Target As Range)
                     Target.Value
                 'Calculate GST, PST, GST_Credit, PST_Credit based on the Amount
                 If wshDEB_Saisie.Range("H" & Target.row).Value <> "M" Then
-                    Call Calculate_GST_PST_And_Credits(wshDEB_Saisie.Range("O4").Value, _
+                    Call CalculerTaxesEtIntrants(wshDEB_Saisie.Range("O4").Value, _
                                                        wshDEB_Saisie.Range("H" & Target.row).Value, _
                                                        amount, _
                                                        gst, pst, gstCredit, pstCredit, _

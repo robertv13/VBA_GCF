@@ -56,7 +56,7 @@ Sub CopieClientsEntreClasseursFermés() '2024-08-03 @ 09:40
 End Sub
 
 'Ajustements à la feuille DB_Clients (*) ---> [*]
-Sub AjusteNomClient()
+Sub AjusterNomClientBD()
 
     'Declare and open the closed workbook
     Dim wb As Workbook: Set wb = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx")
@@ -107,7 +107,7 @@ Sub AjusteNomClient()
 End Sub
 
 'Ajustements à la feuille DB_Clients (Ajout du contactdans le nom du client)
-Sub AjouteContactDansNomClient()
+Sub AjouterContactDansNomClient()
 
     'Declare and open the closed workbook
     Dim wb As Workbook: Set wb = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx")
@@ -549,7 +549,7 @@ Sub ImporterDonnéesDeClasseursFermés_CAR() '2024-08-04 @ 07:31
     
 End Sub
 
-Sub Compare2ExcelFiles()
+Sub Comparer2Classeurs()
     
     Application.ScreenUpdating = False
     
@@ -677,7 +677,7 @@ Sub Compare2ExcelFiles()
 End Sub
 
 '@Description - Utilitaire pour ajuster le nom du client dans la table TEC_Local
-Sub AdjustClientNameInTEC()  '2024-08-03 @ 09:40
+Sub AjusterNomClientDansTEC() '2024-08-03 @ 09:40
 
     'Définir les chemins d'accès des fichiers (source & destination)
     Dim sourceFilePath As String
@@ -738,7 +738,7 @@ Sub AdjustClientNameInTEC()  '2024-08-03 @ 09:40
 End Sub
 
 '@Description - Utilitaire pour corriger le nom du client dans la table CAR ?
-Sub AdjustClientNameInCAR()  '2024-08-07 @ 17:11
+Sub AjusterNomClientDansCAR() '2024-08-07 @ 17:11
 
     Dim sourceRange As Range
 
@@ -836,7 +836,7 @@ Sub CheckClientName() '2024-08-10 @ 10:13
     
 End Sub
 
-Sub ConstruireSommaireHeures() '2024-08-12 @ 21:09
+Sub ConstruireSommaireHeuresConversion() '2024-08-12 @ 21:09
 
     'Définir les chemins d'accès des fichiers (source & destination)
     Dim sourceFilePath As String
@@ -900,7 +900,7 @@ Sub ConstruireSommaireHeures() '2024-08-12 @ 21:09
     
 End Sub
 
-Sub CorrigeNomClientInTEC()  '2025-03-04 @ 05:48
+Sub CorrigerNomClientDansTEC()  '2025-03-04 @ 05:48
 
     'Source - Définir les chemins d'accès des fichiers, le Workbook, le Worksheet et le Range
     Dim sourceFilePath As String
@@ -1107,7 +1107,7 @@ Sub DetecterErreurCodeClientInTEC()  '2025-03-11 @ 08:29
     
 End Sub
 
-Public Sub CorrigeNomClientInCAR()  '2024-08-31 @ 06:52
+Public Sub CorrigerNomClientDansCAR()  '2024-08-31 @ 06:52
 
     'Worksheets to be corrected - Open the workbook (worksheet will be determined later)
     Dim sourceFilePath As String
