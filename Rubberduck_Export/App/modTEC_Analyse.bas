@@ -213,10 +213,10 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Call AppliquerFormatConditionnelZebreeColonneH(rngTotals, destLastUsedRow)
     
     'Bring in all the invoice requests
-    Call Bring_In_Existing_Invoice_Requests(destLastUsedRow)
+    Call ChargerDemandesDeFactureExistantes(destLastUsedRow)
     
     'Clean up the summary area of the worksheet
-    Call Clean_Up_Summary_Area(wsDest)
+    Call modTEC_Analyse.EffacerPlageSommaire(wsDest)
     
     Application.ScreenUpdating = True
     Application.EnableEvents = True
@@ -232,14 +232,14 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
 
 End Sub
 
-Sub Clean_Up_Summary_Area(ws As Worksheet)
+Sub EffacerPlageSommaire(ws As Worksheet)
 
     Application.EnableEvents = False
     
     'Clean up the summary area (columns K to Q)
     ws.Range("J:P").Clear
     'Erase any checkbox left over
-    Call Delete_CheckBox
+    Call EffacerCheckBox
     
     Application.EnableEvents = True
 
@@ -316,7 +316,7 @@ Sub ConstruireSommaireHeures(rowSelected As Long)
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).Row
     
     'Clear the Hours Summary area
-    Call Clean_Up_Summary_Area(ws)
+    Call modTEC_Analyse.EffacerPlageSommaire(ws)
     
     Dim dictHours As Object: Set dictHours = CreateObject("Scripting.Dictionary")
     Dim i As Long, saveR As Long
@@ -436,7 +436,7 @@ Sub ConstruireSommaireHeures(rowSelected As Long)
     
 End Sub
     
-Sub Bring_In_Existing_Invoice_Requests(activeLastUsedRow As Long)
+Sub ChargerDemandesDeFactureExistantes(activeLastUsedRow As Long)
 
     Dim wsSource As Worksheet: Set wsSource = wsdFAC_Projets_Entete
     Dim sourceLastUsedRow As Long
@@ -833,7 +833,7 @@ Sub AjouterCaseACocherOnFacture(StartRow As Long, lastRow As Long)
     
 End Sub
 
-Sub Delete_CheckBox()
+Sub EffacerCheckBox()
 
     'Set the worksheet
     Dim ws As Worksheet: Set ws = wshTEC_Analyse
@@ -872,9 +872,9 @@ Sub Groups_SubTotals_Collapse_A_Client(r As Long)
     
 End Sub
 
-Sub Clear_Fees_Summary_And_CheckBox() 'RMV_15
+Sub EffacerSectionHonorairesEtCheckBox() 'RMV_15
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modTEC_Analyse:Clear_Fees_Summary_And_CheckBox", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modTEC_Analyse:EffacerSectionHonorairesEtCheckBox", vbNullString, 0)
     
     'Clean the Fees Summary Area
     Dim ws As Worksheet: Set ws = wshTEC_Analyse
@@ -894,7 +894,7 @@ Sub Clear_Fees_Summary_And_CheckBox() 'RMV_15
     Set Sh = Nothing
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("modTEC_Analyse:Clear_Fees_Summary_And_CheckBox", vbNullString, startTime)
+    Call EnregistrerLogApplication("modTEC_Analyse:EffacerSectionHonorairesEtCheckBox", vbNullString, startTime)
     
 End Sub
 
@@ -965,7 +965,7 @@ Sub TEC_Analyse_Back_To_TEC_Menu()
     
     Call NettoyerProjetsDetruits(loDetails, loEntete)
     
-    Call Clear_Fees_Summary_And_CheckBox
+    Call modTEC_Analyse.EffacerSectionHonorairesEtCheckBox
     
     Dim usedLastRow As Long
     usedLastRow = wshTEC_Analyse.Cells(wshTEC_Analyse.Rows.count, "C").End(xlUp).Row

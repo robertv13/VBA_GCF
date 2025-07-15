@@ -261,7 +261,7 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:C" & lastUsedRow)
     Dim header1 As String: header1 = "Liste des feuilles d'un classeur"
     Dim header2 As String: header2 = wbName
-    Call MiseEnFormeImpressionSimple(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
+    Call modAppli_Utils.MettreEnFormeImpressionSimple(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
     
     ThisWorkbook.Worksheets("X_Feuilles_du_Classeur").Activate
     
@@ -546,7 +546,7 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
                                     " cellules analysées dans l'application ***"
     Dim header1 As String: header1 = "Cells Data Validations"
     Dim header2 As String: header2 = "All worksheets"
-    Call MiseEnFormeImpressionSimple(wsOutput, wsOutput.Range("B2:H" & lastUsedRow), _
+    Call modAppli_Utils.MettreEnFormeImpressionSimple(wsOutput, wsOutput.Range("B2:H" & lastUsedRow), _
                            header1, _
                            header2, _
                            "$1:$1", _
@@ -811,7 +811,7 @@ Sub List_Named_Ranges_All() '2024-06-23 @ 07:40
     If i > 1 Then
         Dim header1 As String: header1 = "List all Named Ranges"
         Dim header2 As String: header2 = vbNullString
-        Call MiseEnFormeImpressionSimple(wshzDocNamedRange, wshzDocNamedRange.Range("B2:I" & i), _
+        Call modAppli_Utils.MettreEnFormeImpressionSimple(wshzDocNamedRange, wshzDocNamedRange.Range("B2:I" & i), _
                                header1, _
                                header2, _
                                "$1:$1", _
@@ -1038,7 +1038,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, lignesLues As Long, search1 As St
     header2 = "Searched strings '" & search1 & "'"
     If search2 <> vbNullString Then header2 = header2 & " '" & search2 & "'"
     If search3 <> vbNullString Then header2 = header2 & " '" & search3 & "'"
-    Call MiseEnFormeImpressionSimple(wsOutput, wsOutput.Range("B2:G" & lastUsedRow), _
+    Call modAppli_Utils.MettreEnFormeImpressionSimple(wsOutput, wsOutput.Range("B2:G" & lastUsedRow), _
                            header1, _
                            header2, _
                            "$1:$1", _
@@ -1216,7 +1216,7 @@ Sub List_All_Macros_Used_With_Objects() '2024-11-26 @ 20:14
     Dim rngToPrint As Range: Set rngToPrint = wsOutputSheet.Range("A2:D" & outputRow)
     Dim header1 As String: header1 = "Liste des macros associées à des contrôles"
     Dim header2 As String: header2 = ThisWorkbook.Name
-    Call MiseEnFormeImpressionSimple(wsOutputSheet, rngToPrint, header1, header2, "$1:$1", "P")
+    Call modAppli_Utils.MettreEnFormeImpressionSimple(wsOutputSheet, rngToPrint, header1, header2, "$1:$1", "P")
     
     MsgBox "La liste des macros assignées à des contrôles est dans " & _
                 vbNewLine & vbNewLine & "la feuille 'Doc_All_Macros_Used_With_Object'.", vbInformation
@@ -1244,7 +1244,7 @@ Sub List_Subs_And_Functions_All() '2024-11-26 @ 20:02
     Dim vbComp As Object
     Dim oType As String
     Dim arr() As Variant
-    ReDim arr(1 To 750, 1 To 10)
+    ReDim arr(1 To 1500, 1 To 10)
     Dim trimmedLineOfCode As String, savedLineOfCode As String, remarks As String, params As String
     Dim LineNum As Long, lread As Long
     Dim i As Long
@@ -1484,7 +1484,7 @@ Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:C" & lastUsedRow)
     Dim header1 As String: header1 = "Liste des feuilles d'un classeur"
     Dim header2 As String: header2 = ThisWorkbook.Name
-    Call MiseEnFormeImpressionSimple(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
+    Call modAppli_Utils.MettreEnFormeImpressionSimple(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
     
     ThisWorkbook.Worksheets("X_Feuilles_du_Classeur").Activate
     

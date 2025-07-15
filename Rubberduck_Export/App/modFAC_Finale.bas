@@ -1258,7 +1258,7 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     Next i
 
     '5. Copier l'entête de la facture (logo)
-    Call CopierFormeEnteteEnTouteSécurité(wsSource, wsCible) '2025-05-06 @ 10:59
+    Call modFAC_Finale.CopierFormeEnteteEnTouteSecurite(wsSource, wsCible) '2025-05-06 @ 10:59
 
     '6. Copier les paramètres d'impression
     With wsCible.PageSetup
@@ -1311,7 +1311,7 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
 
 End Sub
 
-Sub CopierFormeEnteteEnTouteSécurité(wsSource As Worksheet, wsCible As Worksheet) '2025-05-06 @ 11:12
+Sub CopierFormeEnteteEnTouteSecurite(wsSource As Worksheet, wsCible As Worksheet) '2025-05-06 @ 11:12
 
     Dim forme As Shape, newForme As Shape
     On Error Resume Next

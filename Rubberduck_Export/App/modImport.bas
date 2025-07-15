@@ -91,7 +91,6 @@ Sub ImportGeneriqueDuMaster(sourceWb As String, ws As Worksheet, onglet As Strin
     'Copy to local worksheet
     Dim targetCell As Range
     If Not recSet.EOF Then
-        Debug.Print sourceTab
         If Not tbl.DataBodyRange Is Nothing Then
             'Si la table a déjà des lignes, on remplace à partir de la première
             Set targetCell = tbl.DataBodyRange.Cells(1, 1)
@@ -100,13 +99,9 @@ Sub ImportGeneriqueDuMaster(sourceWb As String, ws As Worksheet, onglet As Strin
             Set targetCell = tbl.HeaderRowRange.offset(1, 0).Cells(1, 1)
         End If
         targetCell.CopyFromRecordset recSet
-        Debug.Print "J'ai importé " & recSet.RecordCount & " dans " & ws.Name
     End If
     
-'    If tbl.ShowTableStyleRowStripes = False Then tbl.ShowTableStyleRowStripes = True
-    
     Dim rng As Range: Set rng = ws.Range("A1").CurrentRegion
-    Debug.Print ws.Name & " - " & rng.Address
     Call AppliquerFormatColonnesParTable(ws, rng, tbl.HeaderRowRange.row)
     
     Application.ScreenUpdating = True

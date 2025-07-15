@@ -328,7 +328,7 @@ Sub Evaluation_Apercu_Avant_Impression()
     Dim header1 As String: header1 = "Évaluation des TEC au  " & wshTEC_Evaluation.Range("L3").Value
     Dim header2 As String: header2 = vbNullString
     
-    Call MiseEnFormeImpressionSimple(wshTEC_Evaluation, rngToPrint, header1, header2, "$1:$1", "P")
+    Call modAppli_Utils.MettreEnFormeImpressionSimple(wshTEC_Evaluation, rngToPrint, header1, header2, "$1:$1", "P")
 
     ws.PrintPreview
     

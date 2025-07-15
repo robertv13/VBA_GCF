@@ -151,7 +151,7 @@ Sub FermerApplicationNormalement(ByVal userName As String) 'Nouvelle procédure 
     Call ViderTableauxStructures
     
     'Effacer fichier utilisateur actif + Fermeture de la journalisation
-    Call Delete_User_Active_File(GetNomUtilisateur())
+    Call EffacerFichierUtilisateurActif(GetNomUtilisateur())
     Call EnregistrerLogApplication("----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) -----", vbNullString, 0)
     Call EnregistrerLogApplication(vbNullString, vbNullString, -1)
 
@@ -241,18 +241,14 @@ Sub HideDevShapesBasedOnUsername(ByVal userName As String) '2025-06-06 @ 11:17
 
 End Sub
 
-Sub Delete_User_Active_File(ByVal userName As String)
+Sub EffacerFichierUtilisateurActif(ByVal userName As String)
 
-'    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modMenu:Delete_User_Active_File", "", 0)
-    
     Dim traceFilePath As String
     traceFilePath = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
     
     If Dir(traceFilePath) <> vbNullString Then
         Kill traceFilePath
     End If
-
-'    Call EnregistrerLogApplication("modMenu:Delete_User_Active_File", userName, startTime)
 
 End Sub
 
@@ -360,9 +356,9 @@ Sub shpCorrigerNomClientCAR_Click()
     
 End Sub
 
-Sub shpChercherRéférencesCirculaires_Click() '2024-11-22 @ 13:33
+Sub shpChercherReferencesCirculaires_Click() '2024-11-22 @ 13:33
 
-    Call Detect_Circular_References_In_Workbook
+    Call DetecterReferenceCirculaireDansClasseur
     
 End Sub
 

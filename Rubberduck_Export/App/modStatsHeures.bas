@@ -82,13 +82,13 @@ End Sub
 
 Sub shp_Back_To_ufSaisieHeures_Click()
 
-    Call Back_To_ufSaisieHeures
+    Call Retourner_ufSaisieHeures
     
 End Sub
 
-Sub Back_To_ufSaisieHeures()
+Sub Retourner_ufSaisieHeures()
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modStatsHeures:Back_To_ufSaisieHeures", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modStatsHeures:Retourner_ufSaisieHeures", vbNullString, 0)
    
     On Error Resume Next
     wshStatsHeuresPivotTables.Visible = xlSheetHidden
@@ -96,7 +96,7 @@ Sub Back_To_ufSaisieHeures()
     
     ufSaisieHeures.show vbModeless
 
-    Call EnregistrerLogApplication("modStatsHeures:Back_To_ufSaisieHeures", vbNullString, startTime)
+    Call EnregistrerLogApplication("modStatsHeures:Retourner_ufSaisieHeures", vbNullString, startTime)
 
 End Sub
 

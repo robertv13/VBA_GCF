@@ -49,7 +49,7 @@ Sub AfficherListeDesFactures()
     
     Call FAC_Get_Invoice_Client_AF(codeClient)
     
-    Call Copy_List_Of_Invoices_to_Worksheet(dateFrom, dateTo)
+    Call modFAC_Interrogation.CopierListeFacturesVersWorksheet(dateFrom, dateTo)
     
     'Ajuste les 2 boutons
     Dim shp As Shape
@@ -145,7 +145,7 @@ Sub FAC_Get_Invoice_Client_AF(codeClient As String) '2024-06-27 @ 15:27
 
 End Sub
 
-Sub Copy_List_Of_Invoices_to_Worksheet(dateMin As Date, dateMax As Date)
+Sub CopierListeFacturesVersWorksheet(dateMin As Date, dateMax As Date)
 
     Dim ws As Worksheet: Set ws = wsdFAC_Entete
     
@@ -945,7 +945,7 @@ Sub AjouterBoutons_Stats(ws As Worksheet, wsSelection As Worksheet, rngImprimer 
         .TextFrame.Characters.text = "Imprimer"
         .TextFrame.Characters.Font.size = 14
         .TextFrame.Characters.Font.Bold = True
-        .OnAction = "BoutonImprimer_Stats"
+        .OnAction = "ImprimerStatistiques"
     End With
     
     ' Ajouter un bouton pour retourner à la feuille de sélection à la position de rngRetour
@@ -972,7 +972,7 @@ Sub AjouterBoutons_CC(ws As Worksheet, wsSelection As Worksheet, rngImprimer As 
         .TextFrame.Characters.text = "Imprimer"
         .TextFrame.Characters.Font.size = 14
         .TextFrame.Characters.Font.Bold = True
-        .OnAction = "BoutonImprimer_CC"
+        .OnAction = "ImprimerComptesClients"
     End With
     
     ' Ajouter un bouton pour retourner à la feuille de sélection à la position de rngRetour
@@ -987,7 +987,7 @@ Sub AjouterBoutons_CC(ws As Worksheet, wsSelection As Worksheet, rngImprimer As 
     
 End Sub
 
-Sub BoutonImprimer_Stats()
+Sub ImprimerStatistiques()
 
     Dim ws As Worksheet
     Set ws = ActiveSheet
@@ -1002,7 +1002,7 @@ Sub BoutonImprimer_Stats()
 
 End Sub
 
-Sub BoutonImprimer_CC()
+Sub ImprimerComptesClients()
 
     Dim ws As Worksheet
     Set ws = ActiveSheet

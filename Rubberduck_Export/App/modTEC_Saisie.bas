@@ -239,11 +239,11 @@ No_Sort_Required:
     Dim r As Range
     If lastResultRow > 2 Then
         Set r = wsdTEC_Local.Range("AC3:AC" & lastResultRow)
-        Call ConvertRangeBooleanToText(r)
+        Call modAppli_Utils.ConvertirPlageABooleen(r)
         Set r = wsdTEC_Local.Range("AE3:AE" & lastResultRow)
-        Call ConvertRangeBooleanToText(r)
+        Call modAppli_Utils.ConvertirPlageABooleen(r)
         Set r = wsdTEC_Local.Range("AG3:AG" & lastResultRow)
-        Call ConvertRangeBooleanToText(r)
+        Call modAppli_Utils.ConvertirPlageABooleen(r)
     End If
     
     Application.ScreenUpdating = True

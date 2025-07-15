@@ -329,9 +329,6 @@ Sub ExporterResultatsFeuille(tableProc() As Variant, indexMax As Long) '2025-07-
         .RightMargin = Application.InchesToPoints(0.25)
     End With
     
-    ws.Activate
-    ws.Select
-    
     Application.EnableEvents = True
     
 End Sub
@@ -429,13 +426,13 @@ Function CommenceParVerbe(nom As String) As Boolean '2025-07-07 @ 09:27
 
     Dim verbesAction As Variant
     verbesAction = Array("Acceder", "Activer", "Actualiser", "Additionner", "Afficher", "Ajouter", "Ajuster", _
-                         "Aller", "Analyser", "Annuler", "Appliquer", "Arreter", "Assembler", "Batir", "Calculer", "Charger", _
-                         "Cocher", "Compter", "Convertir", "Corriger", "Creer", "Demarrer", "Determiner", "Effacer", _
-                         "Executer", "Exporter", "Extraire", "Generer", "Importer", "Imprimer", _
-                         "Initialiser", "Inserer", "MettreAJour", "Nettoyer", "Noter", "Obtenir", _
-                         "Planifier", "Positionner", "Preparer", "Rafraichir", "Rechercher", "Redefinir", _
-                         "Redemmarer", "Reinitialiser", "Remplir", "Restaurer", "Retourner", "Saisir", _
-                         "Sauvegarder", "Selectionner", "Supprimer", "Traiter", "UserForm", "Valider", _
+                         "Aller", "Analyser", "Annuler", "Appeler", "Appliquer", "Arreter", "Assembler", "Batir", _
+                         "Calculer", "Charger", "Cocher", "Compter", "Comparer", "Connecter", "Construire", "Convertir", _
+                         "Copier", "Corriger", "Creer", "Decocher", "Demarrer", "Determiner", "Diagnostiquer", "Effacer", _
+                         "Executer", "Exporter", "Extraire", "Fermer", "Filtrer", "Generer", "Importer", "Imprimer", "Incrementer", _
+                         "Initialiser", "Inserer", "MettreAJour", "Nettoyer", "Noter", "Obtenir", "Planifier", "Positionner", _
+                         "Preparer", "Rafraichir", "Rechercher", "Redefinir", "Redemmarer", "Reinitialiser", "Remplir", "Restaurer", _
+                         "Retourner", "Saisir", "Sauvegarder", "Selectionner", "Supprimer", "Traiter", "UserForm", "Valider", _
                          "Verifier", "Vider", "Workbook", "Worksheet")
     
     Dim v As Variant

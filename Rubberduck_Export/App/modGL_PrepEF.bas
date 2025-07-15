@@ -238,7 +238,7 @@ Sub Assembler_États_Financiers()
     dateAC = wshGL_PrepEF.Range("F5").Value
     dateAP = wshGL_PrepEF.Range("H5").Value
     
-    Call CréerFeuillesEtFormat
+    Call CreerFeuillesEtFormat
     
     Call Assembler_Page_Titre_0_Main(dateAC, dateAP)
     Call Assembler_TM_0_Main(dateAC, dateAP)
@@ -277,9 +277,9 @@ Sub Assembler_États_Financiers()
 
 End Sub
 
-Sub CréerFeuillesEtFormat()
+Sub CreerFeuillesEtFormat()
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_PrepEF:CréerFeuillesEtFormat", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_PrepEF:CreerFeuillesEtFormat", vbNullString, 0)
     
     'Liste des feuilles à créer
     Dim nomsFeuilles As Variant
@@ -321,7 +321,7 @@ Sub CréerFeuillesEtFormat()
     
     Application.ScreenUpdating = True
     
-    Call EnregistrerLogApplication("modGL_PrepEF:CréerFeuillesEtFormat", vbNullString, startTime)
+    Call EnregistrerLogApplication("modGL_PrepEF:CreerFeuillesEtFormat", vbNullString, startTime)
     
 End Sub
 
@@ -594,7 +594,7 @@ Sub Assembler_ER_2_Lignes(ws As Worksheet)
             gras = UCase$(rngRow.Range.Cells(1, 4).Value)
             souligne = UCase$(rngRow.Range.Cells(1, 5).Value)
             size = rngRow.Range.Cells(1, 6).Value
-            Call Imprime_Ligne_EF(ws, currRow, LigneEF, codeEF, typeLigne, gras, souligne, size)
+            Call ImprimerLigneEF(ws, currRow, LigneEF, codeEF, typeLigne, gras, souligne, size)
         End If
         
     Next rngRow
@@ -725,7 +725,7 @@ Sub Assembler_Bilan_2_Lignes(ws As Worksheet)
             gras = rngRow.Range.Cells(1, 4).Value
             souligne = rngRow.Range.Cells(1, 5).Value
             size = rngRow.Range.Cells(1, 6).Value
-            Call Imprime_Ligne_EF(ws, currRow, LigneEF, codeEF, typeLigne, gras, souligne, size)
+            Call ImprimerLigneEF(ws, currRow, LigneEF, codeEF, typeLigne, gras, souligne, size)
         End If
         
     Next rngRow
@@ -860,7 +860,7 @@ Sub Assembler_BNR_2_Lignes(ws As Worksheet)
             gras = rngRow.Range.Cells(1, 4).Value
             souligne = rngRow.Range.Cells(1, 5).Value
             size = rngRow.Range.Cells(1, 6).Value
-            Call Imprime_Ligne_EF(ws, currRow, LigneEF, codeEF, typeLigne, gras, souligne, size)
+            Call ImprimerLigneEF(ws, currRow, LigneEF, codeEF, typeLigne, gras, souligne, size)
         End If
         
     Next rngRow
@@ -935,7 +935,7 @@ Function ChercherSoldes(valeur As String, colonne As Integer) As Currency
     
 End Function
 
-Sub Imprime_Ligne_EF(ws As Worksheet, ByRef currRow As Integer, LigneEF As String, codeEF As String, typeLigne As String, gras As String, souligne As String, size As Long)
+Sub ImprimerLigneEF(ws As Worksheet, ByRef currRow As Integer, LigneEF As String, codeEF As String, typeLigne As String, gras As String, souligne As String, size As Long)
     
 '    Debug.Print "#7-"; currRow; Tab(10); codeEF; Tab(18); typeLigne; Tab(25); gras; Tab(33); souligne; Tab(41); size
     Dim correcteurSigne As Integer

@@ -85,7 +85,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         Dim firstExpandedRow As Long
         If Target.Cells.count = 1 And Target.row > 6 Then
             If Target.Value <> vbNullString Then
-                Call Delete_CheckBox
+                Call EffacerCheckBox
                 If wshTEC_Analyse.Range("B2").Value <> 0 Then
                     firstExpandedRow = wshTEC_Analyse.Range("B2").Value
                     If Rows(firstExpandedRow).ShowDetail Then
@@ -273,7 +273,7 @@ Sub CheckBox1_Click() '2024-07-18 @ 18:53
 
     End If
     
-    Call Clear_Fees_Summary_And_CheckBox
+    Call modTEC_Analyse.EffacerSectionHonorairesEtCheckBox
     
     Application.EnableEvents = True
     

@@ -28,7 +28,7 @@ Sub Get_Range_From_Dynamic_Named_Range(dynamicRangeName As String, ByRef rng As 
     
 End Sub
 
-Sub Detect_Circular_References_In_Workbook() '2024-07-24 @ 07:31
+Sub DetecterReferenceCirculaireDansClasseur() '2024-07-24 @ 07:31
     
     Dim circRef As String
     circRef = vbNullString
@@ -188,7 +188,7 @@ Sub Comparer2ClasseursFormatColonnes() '2024-08-19 @ 16:24
     Dim rngToPrint As Range: Set rngToPrint = wsDiff.Range("A2:E" & diffRow)
     Dim header1 As String: header1 = wb1.Name & " vs. " & wb2.Name
     Dim header2 As String: header2 = vbNullString
-    Call MiseEnFormeImpressionSimple(wsDiff, rngToPrint, header1, header2, "$1:$1", "P")
+    Call modAppli_Utils.MettreEnFormeImpressionSimple(wsDiff, rngToPrint, header1, header2, "$1:$1", "P")
     
     'Close the 2 workbooks without saving anything
     wb1.Close SaveChanges:=False
@@ -338,7 +338,7 @@ Sub Comparer2ClasseursNiveauCellules() '2024-08-20 @ 05:14
     Dim rngToPrint As Range: Set rngToPrint = wsDiff.Range("A2:I" & diffRow)
     Dim header1 As String: header1 = wb1.Name & " vs. " & wb2.Name
     Dim header2 As String: header2 = "Changements de lignes ou cellules"
-    Call MiseEnFormeImpressionSimple(wsDiff, rngToPrint, header1, header2, "$1:$1", "P")
+    Call modAppli_Utils.MettreEnFormeImpressionSimple(wsDiff, rngToPrint, header1, header2, "$1:$1", "P")
     
     'Close the 2 workbooks without saving anything
     wb1.Close SaveChanges:=False
@@ -1012,7 +1012,7 @@ End Sub
 Sub VerifierControlesAssociesToutesFeuilles()
 
     Dim wsOut As Worksheet
-    Set wsOut = ThisWorkbook.Sheets("Feuil2")
+    Set wsOut = ThisWorkbook.Sheets("Feuil4")
     wsOut.Range("A1").CurrentRegion.offset(1).Clear
     Dim r As Long
     
@@ -1849,7 +1849,7 @@ Attribute CompterLignesCode.VB_Description = "Compter le nombre de lignes dans l
     
 End Sub
 
-'@Description ("Appeler un AddIn")
+'@Description "Appeler un AddIn"
 Sub AppelerRoutineAddIn(nomFichier As String, nomMacro As String) '2025-06-19 @ 06:54
 
     On Error Resume Next

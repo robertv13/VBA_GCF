@@ -450,7 +450,7 @@ Next_Invoice:
     End If
     header2 = ordreTri & " - " & header2
     
-    Call MiseEnFormeImpressionSimple(wshCAR_Liste_Agee, rngToPrint, header1, header2, "$8:$8", "P")
+    Call modAppli_Utils.MettreEnFormeImpressionSimple(wshCAR_Liste_Agee, rngToPrint, header1, header2, "$8:$8", "P")
     
     Application.ScreenUpdating = True
     

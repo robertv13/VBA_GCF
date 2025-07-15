@@ -486,7 +486,7 @@ Sub GL_EJ_Depot_Client()
     Dim condition As Boolean
     condition = (wshGL_EJ.Range("F4").Value = "Dépôt de client")
     
-    Call GérerValidation(cell, "dnrClients_Search_Field_Only", condition)
+    Call GererValidation(cell, "dnrClients_Search_Field_Only", condition)
     
     'Force l'écriture
     wshGL_EJ.Range("E9").Value = "Encaisse"
@@ -501,7 +501,7 @@ Sub GL_EJ_Depot_Client()
     
 End Sub
 
-Sub GérerValidation(cell As Range, nomPlage As String, condition As Boolean)
+Sub GererValidation(cell As Range, nomPlage As String, condition As Boolean)
     
     If condition Then
         'Condition remplie, appliquer la validation de liste

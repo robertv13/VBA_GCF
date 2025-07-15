@@ -405,7 +405,7 @@ Sub DEB_Trans_MAJ_Debourse_Renverse_Locally()
     
 End Sub
 
-Sub DEB_AfficherDeboursRecurrent()
+Sub AfficherDeboursRecurrent()
 
     ufListeDEBAuto.show
 
@@ -889,13 +889,13 @@ Public Sub DEB_Saisie_Clear_All_Cells()
 
 End Sub
 
-Sub shp_DEB_Back_To_Menu_Click()
+Sub shpRetourAuMenu_Click()
 
-    Call DEB_Back_To_Menu
+    Call RetourAuMenu
 
 End Sub
 
-Sub DEB_Back_To_Menu()
+Sub RetourAuMenu()
     
     'Rétablir la forme du bouton (Mettre à jour / Renverser)
     Dim shp As Shape

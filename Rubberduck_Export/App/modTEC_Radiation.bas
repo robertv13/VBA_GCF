@@ -388,7 +388,7 @@ Sub Radiation_Apercu_Avant_Impression()
     Dim header1 As String: header1 = "Radiation des TEC au  " & wshTEC_Radiation.Range("K3").Value
     Dim header2 As String: header2 = wshTEC_Radiation.Range("F3").Value
     
-    Call MiseEnFormeImpressionSimple(wshTEC_Radiation, rngToPrint, header1, header2, "$1:$1", "L")
+    Call modAppli_Utils.MettreEnFormeImpressionSimple(wshTEC_Radiation, rngToPrint, header1, header2, "$1:$1", "L")
 
     ws.PrintPreview
     

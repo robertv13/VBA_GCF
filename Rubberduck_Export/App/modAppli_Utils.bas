@@ -41,7 +41,7 @@ Attribute AjouterMessage.VB_Description = "Routine pour ajouter des lignes de me
     
 End Sub
 
-Public Sub ConvertRangeBooleanToText(rng As Range)
+Public Sub ConvertirPlageABooleen(rng As Range)
 
     Dim cell As Range
     
@@ -412,7 +412,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:C" & lastUsedRow)
     Dim header1 As String: header1 = "Vérification d'intégrité des tables"
     Dim header2 As String: header2 = vbNullString
-    Call MiseEnFormeImpressionSimple(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
+    Call MettreEnFormeImpressionSimple(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
     
     If gverificationIntegriteOK = True Then
         MsgBox "La vérification d'intégrité est terminé SANS PROBLÈME" & vbNewLine & vbNewLine & "Voir la feuille 'X_Analyse_Intégrité'", vbInformation
@@ -460,7 +460,7 @@ Sub ImprimerEcartsVerificationIntegrite(ws As Worksheet, r As Long, t As String,
 
 End Sub
 
-Sub MiseEnFormeImpressionSimple(ws As Worksheet, rng As Range, header1 As String, _
+Sub MettreEnFormeImpressionSimple(ws As Worksheet, rng As Range, header1 As String, _
                        header2 As String, titleRows As String, Optional Orient As String = "L")
     
     On Error GoTo CleanUp
@@ -621,10 +621,14 @@ Private Sub VerifierPlanComptable(ByVal wsOutput As Worksheet, ByRef r As Long, 
     Dim dict_code_GL As New Dictionary
     Dim dict_descr_GL As New Dictionary
     
-    Dim i As Long, codeGL As String, descrGL As String
-'    Dim GL_ID As Long
+    Dim i As Long
+    Dim codeGL As String
+    Dim descrGL As String
     Dim typeGL As String
-    Dim cas_doublon_descr As Long, cas_doublon_code As Long, cas_type As Long
+    Dim cas_doublon_descr As Long
+    Dim cas_doublon_code As Long
+    Dim cas_type As Long
+    
     For i = LBound(arr, 1) To UBound(arr, 1)
         codeGL = arr(i, 1)
         descrGL = arr(i, 2)
@@ -727,10 +731,15 @@ Private Sub VerifierClients(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef 
     Dim dict_code_client As New Dictionary
     Dim dict_nom_client As New Dictionary
     
-    Dim i As Long, code As String, nom As String, nomClientSysteme As String
-    Dim cas_doublon_nom As Long, cas_doublon_code As Long
+    Dim i As Long
+    Dim code As String
+    Dim nom As String
+    Dim nomClientSysteme As String
+    Dim cas_doublon_nom As Long
+    Dim cas_doublon_code As Long
     Dim cas_courriel_invalide As Long
     Dim ligneNonVides As Long
+    
     For i = LBound(arr, 1) + 1 To UBound(arr, 1)
         If Not Trim$(arr(i, 2)) = vbNullString Then
         ligneNonVides = ligneNonVides + 1
@@ -857,9 +866,12 @@ Private Sub VerifierFournisseurs(ByVal wsOutput As Worksheet, ByRef r As Long, B
     Dim dict_code_fournisseur As New Dictionary
     Dim dict_nom_fournisseur As New Dictionary
     
-    Dim i As Long, code As String, nom As String
+    Dim i As Long
+    Dim code As String
+    Dim nom As String
     Dim cas_doublon_nom As Long
     Dim cas_doublon_code As Long
+    
     For i = LBound(arr, 1) + 1 To UBound(arr, 1)
         nom = arr(i, 1)
         code = arr(i, 2)
@@ -1177,8 +1189,10 @@ Private Sub VerifierDEBRecurrent(ByVal wsOutput As Worksheet, ByRef r As Long, B
     Call TransfererPlageVersTableau2D(rng, arr, 1)
     
     'On analyse chacune des lignes du tableau
-    Dim i As Long, p As Long
-    Dim GL As String, descGL As String
+    Dim i As Long
+    Dim p As Long
+    Dim GL As String
+    Dim descGL As String
     
     For i = LBound(arr, 1) To UBound(arr, 1)
         If IsNumeric(arr(i, 1)) = False Or arr(i, 1) <> Int(arr(i, 1)) Then
@@ -1322,8 +1336,10 @@ Private Sub VerifierDEBTrans(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef
     Call TransfererPlageVersTableau2D(rng, arr, 1)
     
     'On analyse chacune des lignes du tableau
-    Dim i As Long, p As Long
-    Dim GL As String, descGL As String
+    Dim i As Long
+    Dim p As Long
+    Dim GL As String
+    Dim descGL As String
     
     For i = LBound(arr, 1) To UBound(arr, 1)
         If IsNumeric(arr(i, 1)) = False Or arr(i, 1) <> Int(arr(i, 1)) Then
@@ -4163,7 +4179,7 @@ Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
 '    Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:I" & rowOutput)
     Dim header1 As String: header1 = "Liste des TEC pour Guillaume"
     Dim header2 As String: header2 = "Période du " & dateFrom & " au " & dateTo
-    Call MiseEnFormeImpressionSimple(wsOutput, rngArea, header1, header2, "$1:$1", "P")
+    Call MettreEnFormeImpressionSimple(wsOutput, rngArea, header1, header2, "$1:$1", "P")
     
     'Libérer la mémoire
     Set rngArea = Nothing

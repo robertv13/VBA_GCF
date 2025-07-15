@@ -2,7 +2,7 @@ Attribute VB_Name = "modzDataConversion"
 Option Explicit
 
 'Importation des clients à partir de ... \DataConversion\Clients.xlsx
-Sub CopieClientsEntreClasseursFermés() '2024-08-03 @ 09:40
+Sub CopierClientsEntreClasseursFermes() '2024-08-03 @ 09:40
 
     Stop 'One shot deal !!!
     
@@ -650,7 +650,7 @@ Sub Comparer2Classeurs()
     Dim rngToPrint As Range: Set rngToPrint = wsDiff.Range("A2:DC" & diffRow)
     Dim header1 As String: header1 = "Vérification des différences"
     Dim header2 As String: header2 = "Clients"
-    Call MiseEnFormeImpressionSimple(wsDiff, rngToPrint, header1, header2, "$1:$1", "P")
+    Call modAppli_Utils.MettreEnFormeImpressionSimple(wsDiff, rngToPrint, header1, header2, "$1:$1", "P")
     
     Application.ScreenUpdating = True
     
@@ -980,7 +980,7 @@ Sub CorrigerNomClientDansTEC()  '2025-03-04 @ 05:48
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:E" & rowOutput)
     Dim header1 As String: header1 = "Correction des noms de clients dans les TEC"
     Dim header2 As String: header2 = vbNullString
-    Call MiseEnFormeImpressionSimple(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
+    Call modAppli_Utils.MettreEnFormeImpressionSimple(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
     
     'Close the 2 workbooks without saving anything
     wbSource.Close SaveChanges:=False
@@ -1083,7 +1083,7 @@ Sub DetecterErreurCodeClientInTEC()  '2025-03-11 @ 08:29
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:G" & rowOutput)
     Dim header1 As String: header1 = "Détection des codes de clients ERRONÉS dans TEC"
     Dim header2 As String: header2 = vbNullString
-    Call MiseEnFormeImpressionSimple(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
+    Call modAppli_Utils.MettreEnFormeImpressionSimple(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
     
     'Close the 2 workbooks without saving anything
     wbSource.Close SaveChanges:=False
@@ -1205,7 +1205,7 @@ Public Sub CorrigerNomClientDansCAR()  '2024-08-31 @ 06:52
     Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:E" & rowOutput)
     Dim header1 As String: header1 = "Correction des noms de clients dans les CAR"
     Dim header2 As String: header2 = vbNullString
-    Call MiseEnFormeImpressionSimple(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
+    Call modAppli_Utils.MettreEnFormeImpressionSimple(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
     
     'Close the 2 workbooks without saving anything
     wbSource.Close SaveChanges:=True

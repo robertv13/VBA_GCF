@@ -1233,7 +1233,6 @@ Function GetNomUtilisateur() As String '2025-06-01 @ 05:48
 
     If Len(gUtilisateurWindows) = 0 Then
         gUtilisateurWindows = Fn_Get_Windows_Username()
-        Debug.Print "GetNomUtilisateur - Initialisation de GetNomUtilisateur() en cours..."
     End If
     
     GetNomUtilisateur = gUtilisateurWindows
