@@ -91,6 +91,8 @@ Sub IncrementerAppelsCodeDirect(dictIndex As Object, tableProc() As Variant, ind
 
             For i = 0 To UBound(lignes)
                 ligne = Trim(lignes(i))
+'                If Trim(ligne) = "Call EcrireInformationsConfigAuMenu(ByVal user As String)" Or _
+'                    InStr(ligne, "EcrireInformationsConfigAuMenu") <> 0 Then Stop
                 'Filtrage initial des lignes non pertinentes
                 If ligne = vbNullString Or Left(ligne, 1) = "'" Or _
                    LCase(Left(ligne, 12)) = "debug.print " Or _
@@ -102,6 +104,7 @@ Sub IncrementerAppelsCodeDirect(dictIndex As Object, tableProc() As Variant, ind
                 End If
 
                 For Each nomProc In dictIndex.keys
+'                    If nomProc = "EcrireInformationsConfigAuMenu" Then Stop
                     'Appels préfixés (Module.nomProc)
                     If InStr(ligne, "." & nomProc) > 0 Then
                         tableProc(dictIndex(nomProc), 5) = tableProc(dictIndex(nomProc), 5) + 1
@@ -112,6 +115,9 @@ Sub IncrementerAppelsCodeDirect(dictIndex As Object, tableProc() As Variant, ind
                         valeur = Trim(Split(LCase(ligne), "call")(1))
                         valeur = Replace(valeur, "()", vbNullString)
                         valeur = Split(valeur, " ")(0)
+                        If InStr(valeur, "(") > 0 Then
+                            valeur = Left(valeur, InStr(valeur, "(") - 1)
+                        End If
                         If valeur = LCase(nomProc) Then
                             tableProc(dictIndex(nomProc), 4) = tableProc(dictIndex(nomProc), 4) + 1
                         End If
@@ -358,7 +364,7 @@ Sub DiagnostiquerConformite(ws As Worksheet, tableProc() As Variant) '2025-07-07
         If Left(nom, 1) <> UCase(Left(nom, 1)) Then diagnostics = diagnostics & "R3,"
 
         'R4 - Doit commencer par un verbe d’action
-        If Not CommenceParVerbe(nom) Then diagnostics = diagnostics & "R4,"
+        If Not ValiderCommenceParUnVerbe(nom) Then diagnostics = diagnostics & "R4,"
 
         'R5 - Procédure n'est jamais appelé par l'application
         totalAppels = ws.Cells(i, 4).Value + ws.Cells(i, 5).Value + ws.Cells(i, 6).Value
@@ -422,27 +428,30 @@ Function EstSuffixeEvenement(nom As String) As Boolean '2025-07-07 @ 09:27
     
 End Function
 
-Function CommenceParVerbe(nom As String) As Boolean '2025-07-07 @ 09:27
+Function ValiderCommenceParUnVerbe(nom As String) As Boolean '2025-07-07 @ 09:27
 
     Dim verbesAction As Variant
     verbesAction = Array("Acceder", "Activer", "Actualiser", "Additionner", "Afficher", "Ajouter", "Ajuster", _
                          "Aller", "Analyser", "Annuler", "Appeler", "Appliquer", "Arreter", "Assembler", "Batir", _
                          "Calculer", "Charger", "Cocher", "Compter", "Comparer", "Connecter", "Construire", "Convertir", _
-                         "Copier", "Corriger", "Creer", "Decocher", "Demarrer", "Determiner", "Diagnostiquer", "Effacer", _
-                         "Executer", "Exporter", "Extraire", "Fermer", "Filtrer", "Generer", "Importer", "Imprimer", "Incrementer", _
-                         "Initialiser", "Inserer", "MettreAJour", "Nettoyer", "Noter", "Obtenir", "Planifier", "Positionner", _
-                         "Preparer", "Rafraichir", "Rechercher", "Redefinir", "Redemmarer", "Reinitialiser", "Remplir", "Restaurer", _
-                         "Retourner", "Saisir", "Sauvegarder", "Selectionner", "Supprimer", "Traiter", "UserForm", "Valider", _
-                         "Verifier", "Vider", "Workbook", "Worksheet")
+                         "Copier", "Corriger", "Creer", "Decocher", "Demarrer", "Detecter", "Determiner", "Detruire", "Diagnostiquer", _
+                         "Effacer", "Enregistrer", "Envoyer", "Executer", "Exporter", "Extraire", "Fermer", "Filtrer", "Fixer", _
+                         "Fusionner", "Gerer", "Generer", "Identifier", "Importer", "Imprimer", "Incrementer", "Initialiser", "Inserer", _
+                         "Lire", "Lister", "MettreAJour", "Nettoyer", "Noter", "Obtenir", "Planifier", "Positionner", "Preparer", _
+                         "Rafraichir", "Rechercher", "Redefinir", "Redemmarer", "Reinitialiser", "Relancer", "Remplir", "Restaurer", _
+                         "Retourner", "Saisir", "Sauvegarder", "Scanner", "Selectionner", "Supprimer", "Tester", "Traiter", "Transferer", _
+                         "Trier", "UserForm", "Valider", "Verifier", "Vider", "Visualiser", "Workbook", "Worksheet", _
+                         "btn", "chk", "cmb", "cmd", "ctrl", "shp", "txt", _
+                         "DEB", "ENC", "FAC", "EJ", "GL", "REGUL", "TEC", "TEST")
     
     Dim v As Variant
     For Each v In verbesAction
         If LCase(Left(nom, Len(v))) = LCase(v) Then
-            CommenceParVerbe = True
+            ValiderCommenceParUnVerbe = True
             Exit Function
         End If
     Next v
-    CommenceParVerbe = False
+    ValiderCommenceParUnVerbe = False
     
 End Function
 

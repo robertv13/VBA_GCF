@@ -302,11 +302,11 @@ End Sub
 
 Sub shp_TEC_Evaluation_Impression_Click()
 
-    Call Evaluation_Apercu_Avant_Impression
+    Call PrevisualiserRapport
 
 End Sub
 
-Sub Evaluation_Apercu_Avant_Impression()
+Sub PrevisualiserRapport()
 
     Dim ws As Worksheet: Set ws = wshTEC_Evaluation
     
@@ -315,12 +315,6 @@ Sub Evaluation_Apercu_Avant_Impression()
     
     Application.EnableEvents = False
 
-'    'Caractères pour le rapport
-'    With rngToPrint.Font
-'        .Name = "Aptos Narrow"
-'        .size = 10
-'    End With
-'
     Application.EnableEvents = True
     
     DoEvents

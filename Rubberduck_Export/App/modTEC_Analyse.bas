@@ -216,7 +216,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Call ChargerDemandesDeFactureExistantes(destLastUsedRow)
     
     'Clean up the summary area of the worksheet
-    Call modTEC_Analyse.EffacerPlageSommaire(wsDest)
+    Call EffacerPlageSommaire(wsDest)
     
     Application.ScreenUpdating = True
     Application.EnableEvents = True
@@ -316,7 +316,7 @@ Sub ConstruireSommaireHeures(rowSelected As Long)
     lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).Row
     
     'Clear the Hours Summary area
-    Call modTEC_Analyse.EffacerPlageSommaire(ws)
+    Call EffacerPlageSommaire(ws)
     
     Dim dictHours As Object: Set dictHours = CreateObject("Scripting.Dictionary")
     Dim i As Long, saveR As Long
@@ -965,7 +965,7 @@ Sub TEC_Analyse_Back_To_TEC_Menu()
     
     Call NettoyerProjetsDetruits(loDetails, loEntete)
     
-    Call modTEC_Analyse.EffacerSectionHonorairesEtCheckBox
+    Call EffacerSectionHonorairesEtCheckBox
     
     Dim usedLastRow As Long
     usedLastRow = wshTEC_Analyse.Cells(wshTEC_Analyse.Rows.count, "C").End(xlUp).Row

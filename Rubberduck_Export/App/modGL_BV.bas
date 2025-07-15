@@ -766,7 +766,7 @@ Sub GL_BV_SetUp_And_Print_Document(myPrintRange As Range, pagesTall As Long)
  
 End Sub
 
-Sub Erase_Non_Required_Shapes() '2024-08-15 @ 14:42
+Sub EffacerFormesNonRequises() '2024-08-15 @ 14:42
 
     Dim ws As Worksheet: Set ws = wshGL_BV
     
@@ -939,7 +939,7 @@ End Sub
 
 Sub GL_BV_Back_To_Menu()
     
-    Call Erase_Non_Required_Shapes
+    Call EffacerFormesNonRequises
     
     wshGL_BV.Visible = xlSheetHidden
     

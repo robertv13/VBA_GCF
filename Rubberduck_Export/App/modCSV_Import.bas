@@ -19,7 +19,7 @@ Sub main()
     
     'First file
     fileName = "Releve.csv"
-    Call Import_CSV_File(ws, pathSourceFile, fileName)
+    Call ImporterFichierCSV(ws, pathSourceFile, fileName)
     
     'Fix columns width
     Call Set_Column_Width(ws)
@@ -29,7 +29,7 @@ Sub main()
     
 End Sub
 
-Sub Import_CSV_File(ws As Worksheet, path As String, fn As String)
+Sub ImporterFichierCSV(ws As Worksheet, path As String, fn As String)
 
     'Does the file to process exist ?
     Dim fullFileName As String

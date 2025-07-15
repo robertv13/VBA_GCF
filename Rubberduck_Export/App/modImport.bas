@@ -50,9 +50,9 @@ Sub ImporterPlanComptable() '2024-02-17 @ 07:21
 
 End Sub
 
-Sub ImportGeneriqueDuMaster(sourceWb As String, ws As Worksheet, onglet As String, table As String) '2025-05-07 @ 18:00
+Sub ImporterMASTERGenerique(sourceWb As String, ws As Worksheet, onglet As String, table As String) '2025-05-07 @ 18:00
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modImport:ImportGeneriqueDuMaster:" & onglet, vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modImport:ImporterMASTERGenerique:" & onglet, vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -111,7 +111,7 @@ Sub ImportGeneriqueDuMaster(sourceWb As String, ws As Worksheet, onglet As Strin
     Set targetCell = Nothing
     Set tbl = Nothing
     
-    Call EnregistrerLogApplication("modImport:ImportGeneriqueDuMaster:" & onglet, vbNullString, startTime)
+    Call EnregistrerLogApplication("modImport:ImporterMASTERGenerique:" & onglet, vbNullString, startTime)
 
 End Sub
 
@@ -188,7 +188,7 @@ Sub ImporterDebRecurrent() '2025-05-07 @ 14:14
     onglet = "DEB_Récurrent"
     table = "l_tbl_DEB_Recurrent"
 
-    Call ImportGeneriqueDuMaster(sourceWb, ws, onglet, table)
+    Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
     'Libérer la mémoire
     Set ws = Nothing
@@ -210,7 +210,7 @@ Sub ImporterDebTrans() '2025-05-07 @ 14:25
     onglet = "DEB_Trans"
     table = "l_tbl_DEB_Trans"
 
-    Call ImportGeneriqueDuMaster(sourceWb, ws, onglet, table)
+    Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
     'Libérer la mémoire
     Set ws = Nothing
@@ -232,7 +232,7 @@ Sub ImporterEncDetails() '2025-05-07 @ 14:45
     onglet = "ENC_Détails"
     table = "l_tbl_ENC_Détails"
 
-    Call ImportGeneriqueDuMaster(sourceWb, ws, onglet, table)
+    Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
     'Libérer la mémoire
     Set ws = Nothing
@@ -254,7 +254,7 @@ Sub ImporterEncEntete() '2025-05-07 @ 14:50
     onglet = "ENC_Entête"
     table = "l_tbl_ENC_Entête"
 
-    Call ImportGeneriqueDuMaster(sourceWb, ws, onglet, table)
+    Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
     'Libérer la mémoire
     Set ws = Nothing
@@ -276,7 +276,7 @@ Sub ImporterCCRegularisations() '2025-05-07 @ 13:58
     onglet = "CC_Régularisations"
     table = "l_tbl_CC_Régularisations"
 
-    Call ImportGeneriqueDuMaster(sourceWb, ws, onglet, table)
+    Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
     'Libérer la mémoire
     Set ws = Nothing
@@ -298,7 +298,7 @@ Sub ImporterFacComptesClients() '2025-05-07 @ 14:52
     onglet = "FAC_Comptes_Clients"
     table = "l_tbl_FAC_Comptes_Clients"
 
-    Call ImportGeneriqueDuMaster(sourceWb, ws, onglet, table)
+    Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
     'Libérer la mémoire
     Set ws = Nothing
@@ -320,7 +320,7 @@ Sub ImporterFacDetails() '2025-05-07 @ 14:59
     onglet = "FAC_Détails"
     table = "l_tbl_FAC_Détails"
 
-    Call ImportGeneriqueDuMaster(sourceWb, ws, onglet, table)
+    Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
     'Libérer la mémoire
     Set ws = Nothing
@@ -342,7 +342,7 @@ Sub ImporterFacEntete() '2025-05-07 @ 15:02
     onglet = "FAC_Entête"
     table = "l_tbl_FAC_Entête"
 
-    Call ImportGeneriqueDuMaster(sourceWb, ws, onglet, table)
+    Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
     'Libérer la mémoire
     Set ws = Nothing
@@ -364,7 +364,7 @@ Sub ImporterFacSommaireTaux() '2025-05-07 @ 16:08
     onglet = "FAC_Sommaire_Taux"
     table = "l_tbl_FAC_Sommaire_Taux"
 
-    Call ImportGeneriqueDuMaster(sourceWb, ws, onglet, table)
+    Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
     'Libérer la mémoire
     Set ws = Nothing
@@ -386,7 +386,7 @@ Sub ImporterFacProjetsDetails() '2025-05-07 @ 15:57
     onglet = "FAC_Projets_Détails"
     table = "l_tbl_FAC_Projets_Détails"
 
-    Call ImportGeneriqueDuMaster(sourceWb, ws, onglet, table)
+    Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
     'Enlever la ligne fantôme associé à ADO avec fichier source vide... 2025-07-09 @ 07:27
     Dim ligne2Vide As Boolean
@@ -425,7 +425,7 @@ Sub ImporterFacProjetsEntete() '2025-05-07 @ 16:05
     onglet = "FAC_Projets_Entête"
     table = "l_tbl_FAC_Projets_Entête"
 
-    Call ImportGeneriqueDuMaster(sourceWb, ws, onglet, table)
+    Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
     'Enlever la ligne fantôme associé à ADO avec fichier source vide... 2025-07-09 @ 07:46
     Dim ligne2Vide As Boolean
@@ -520,7 +520,7 @@ Sub ImporterEJRecurrente() '2025-05-07 @ 14:35
     onglet = "GL_EJ_Récurrente"
     table = "l_tbl_GL_EJ_Auto"
 
-    Call ImportGeneriqueDuMaster(sourceWb, ws, onglet, table)
+    Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
     Call GL_EJ_Recurrente_Build_Summary '2024-03-14 @ 07:38
     
@@ -544,7 +544,7 @@ Sub ImporterGLTransactions() '2025-05-07 @ 16:10
     onglet = "GL_Trans"
     table = "l_tbl_GL_Trans"
 
-    Call ImportGeneriqueDuMaster(sourceWb, ws, onglet, table)
+    Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
     'Libérer la mémoire
     Set ws = Nothing
@@ -568,7 +568,7 @@ Sub ImporterTEC() '2024-02-14 @ 06:19
     onglet = "TEC_Local"
     table = "l_tbl_TEC_Local"
 
-    Call ImportGeneriqueDuMaster(sourceWb, ws, onglet, table)
+    Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
     'Libérer la mémoire
     Set ws = Nothing

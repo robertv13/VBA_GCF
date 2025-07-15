@@ -1,4 +1,4 @@
-﻿📘 Journal de nettoyage typographique — 07/14/2025 21:22:13
+﻿📘 Journal de nettoyage typographique — 07/15/2025 05:52:40
 
 🔧 clsControlWrapper.cls
 
@@ -238,7 +238,6 @@
    Remplacé : .font ➜ .Font
 
 🔧 modTEC_Evaluation.bas
-   Remplacé : .name ➜ .Name
    Remplacé : .value ➜ .Value
    Remplacé : .interior ➜ .Interior
    Remplacé : .cells ➜ .Cells

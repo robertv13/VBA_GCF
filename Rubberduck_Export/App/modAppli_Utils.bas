@@ -73,7 +73,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     'Variable pour déterminer à la fin s'il y a des erreurs...
     gverificationIntegriteOK = True
     
-    Call Erase_And_Create_Worksheet("X_Analyse_Integrite")
+    Call modDev_Utils.EffacerEtRecreerWorksheet("X_Analyse_Integrite")
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Integrite")
     With wsOutput
         .Unprotect

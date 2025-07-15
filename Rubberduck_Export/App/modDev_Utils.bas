@@ -140,7 +140,7 @@ End Sub
 '    Call TrierTableauBubble(tt)
 '
 '    'Third - Prepare the worksheet to receive information
-'    Call Erase_And_Create_Worksheet("Gabarits_Facture")
+'    Call EffacerEtRecreerWorksheet("Gabarits_Facture")
 '
 '    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Gabarits_Facture")
 '    wsOutput.Range("A1").Value = "Gabarit"
@@ -201,7 +201,7 @@ End Sub
 '
 Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
     
-    Call Erase_And_Create_Worksheet("X_Feuilles_du_Classeur")
+    Call EffacerEtRecreerWorksheet("X_Feuilles_du_Classeur")
 
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Feuilles_du_Classeur")
     wsOutput.Range("A1").Value = "Feuille"
@@ -417,7 +417,7 @@ End Sub
 Sub List_Data_Validations_All() '2024-07-15 @ 06:52
 
     'Prepare the result worksheet (wsOutput)
-    Call Erase_And_Create_Worksheet("Doc_Data_Validations")
+    Call EffacerEtRecreerWorksheet("Doc_Data_Validations")
 
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Doc_Data_Validations")
     wsOutput.Cells(1, 1).Value = "SortKey"
@@ -561,7 +561,7 @@ Sub List_Data_Validations_All() '2024-07-15 @ 06:52
     
 End Sub
 
-Sub Erase_And_Create_Worksheet(sheetName As String)
+Sub EffacerEtRecreerWorksheet(sheetName As String)
 
     Dim ws As Worksheet
     Dim wsExists As Boolean
@@ -968,7 +968,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, lignesLues As Long, search1 As St
     Next X
 
     'Prepare the result worksheet
-    Call Erase_And_Create_Worksheet("X_Doc_Search_Utility_Results")
+    Call EffacerEtRecreerWorksheet("X_Doc_Search_Utility_Results")
 
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Doc_Search_Utility_Results")
     wsOutput.Range("A1").Value = "SortKey"
@@ -1065,7 +1065,7 @@ Sub List_All_Columns() '2024-08-09 @ 11:52
     Dim colType As String
     
     'Erase & create a worksheet for the report
-    Call Erase_And_Create_Worksheet("Liste des Colonnes")
+    Call EffacerEtRecreerWorksheet("Liste des Colonnes")
     Dim reportSheet As Worksheet: Set reportSheet = ThisWorkbook.Worksheets("Liste des Colonnes")
     
     'Add headers to the report
@@ -1128,7 +1128,7 @@ End Sub
 Sub List_All_Macros_Used_With_Objects() '2024-11-26 @ 20:14
     
     'Prepare the result worksheet
-    Call Erase_And_Create_Worksheet("Doc_All_Macros_Used_With_Object")
+    Call EffacerEtRecreerWorksheet("Doc_All_Macros_Used_With_Object")
 
     Dim wsOutputSheet As Worksheet
     Set wsOutputSheet = ThisWorkbook.Worksheets("Doc_All_Macros_Used_With_Object")
@@ -1437,7 +1437,7 @@ End Sub
 
 Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
     
-    Call Erase_And_Create_Worksheet("X_Feuilles_du_Classeur")
+    Call EffacerEtRecreerWorksheet("X_Feuilles_du_Classeur")
 
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Feuilles_du_Classeur")
     wsOutput.Range("A1").Value = "Feuille"

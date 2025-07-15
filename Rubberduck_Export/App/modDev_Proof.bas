@@ -27,7 +27,7 @@ Sub ObtenirHeuresFacturéesParFacture() '2025-04-07 @ 04:51
     'Création/Initialisation d'une feuille
     Dim feuilleNom As String
     feuilleNom = "X_Heures_Facturées_Par_Facture"
-    Call Erase_And_Create_Worksheet(feuilleNom)
+    Call modDev_Utils.EffacerEtRecreerWorksheet(feuilleNom)
     Dim wsOutput As Worksheet
     Set wsOutput = ThisWorkbook.Sheets(feuilleNom)
     wsOutput.Cells(1, 1).Value = "NuméroFact"

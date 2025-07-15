@@ -751,7 +751,7 @@ Sub Get_UsedRange_In_Active_Workbook()
     'Feuille pour les résultats
     Dim feuilleNom As String
     feuilleNom = "X_Cellules_Utilisées"
-    Call Erase_And_Create_Worksheet(feuilleNom)
+    Call modDev_Utils.EffacerEtRecreerWorksheet(feuilleNom)
     Dim wsOutput As Worksheet
     Set wsOutput = ThisWorkbook.Sheets(feuilleNom)
     Dim r As Long: r = 1

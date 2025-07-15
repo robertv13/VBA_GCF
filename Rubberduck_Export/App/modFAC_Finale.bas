@@ -1258,7 +1258,7 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     Next i
 
     '5. Copier l'entête de la facture (logo)
-    Call modFAC_Finale.CopierFormeEnteteEnTouteSecurite(wsSource, wsCible) '2025-05-06 @ 10:59
+    Call CopierFormeEnteteEnTouteSecurite(wsSource, wsCible) '2025-05-06 @ 10:59
 
     '6. Copier les paramètres d'impression
     With wsCible.PageSetup
@@ -1289,7 +1289,8 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     If strCible = vbNullString Then
         wbCible.SaveAs ExcelFilesFullPath & Application.PathSeparator & clientID & " - " & clientNamePurged & ".xlsx"
         MsgBox "Un nouveau fichier Excel (" & clientID & " - " & clientNamePurged & ".xlsx" & ")" & vbNewLine & vbNewLine & _
-                "A été créé pour sauvegarder la facture", vbInformation
+                "A été créé pour sauvegarder la facture", _
+                vbInformation
     End If
     
     'Réactiver les événements après l'ouverture
