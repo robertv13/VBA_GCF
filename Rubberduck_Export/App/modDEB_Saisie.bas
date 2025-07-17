@@ -21,7 +21,7 @@ Sub DEB_Saisie_Update()
         Exit Sub
     End If
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modDEB_Saisie:DEB_Saisie_Update", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Saisie_Update", vbNullString, 0)
     
     'Remove highlight from last cell
     If wshDEB_Saisie.Range("B4").Value <> vbNullString Then
@@ -67,13 +67,13 @@ Sub DEB_Saisie_Update()
     wshDEB_Saisie.Activate
     wshDEB_Saisie.Range("F4").Select
         
-    Call EnregistrerLogApplication("modDEB_Saisie:DEB_Saisie_Update", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Saisie_Update", vbNullString, startTime)
         
 End Sub
 
 Sub DEB_Renversement_Update()
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modDEB_Saisie:DEB_Renversement_Update", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Renversement_Update", vbNullString, 0)
     
     Dim ws As Worksheet
     Set ws = wshDEB_Saisie
@@ -160,13 +160,13 @@ Sub DEB_Renversement_Update()
     Set shp = Nothing
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("modDEB_Saisie:DEB_Renversement_Update", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Renversement_Update", vbNullString, startTime)
     
 End Sub
 
 Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modDEB_Saisie:DEB_Trans_Add_Record_To_DB", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Trans_Add_Record_To_DB", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -257,13 +257,13 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
     Set conn = Nothing
     Set rs = Nothing
     
-    Call EnregistrerLogApplication("modDEB_Saisie:DEB_Trans_Add_Record_To_DB", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Trans_Add_Record_To_DB", vbNullString, startTime)
 
 End Sub
 
 Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("*** modDEB_Saisie:DEB_Trans_Add_Record_Locally", CStr(r), 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("*** modDEB_Saisie:DEB_Trans_Add_Record_Locally", CStr(r), 0)
     
     Dim ws As Worksheet
     Set ws = wsdDEB_Trans
@@ -310,10 +310,10 @@ Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
             ws.Cells(rowToBeUsed, fDebTTimeStamp).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
         End With
         rowToBeUsed = rowToBeUsed + 1
-        Call EnregistrerLogApplication("    modDEB_Saisie:DEB_Trans_Add_Record_Locally", -1)
+        Call modDev_Utils.EnregistrerLogApplication("    modDEB_Saisie:DEB_Trans_Add_Record_Locally", -1)
     Next i
     
-    Call EnregistrerLogApplication("modDEB_Saisie:DEB_Trans_Add_Record_Locally", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Trans_Add_Record_Locally", vbNullString, startTime)
 
     Application.ScreenUpdating = True
 
@@ -321,7 +321,7 @@ End Sub
 
 Sub DEB_Trans_MAJ_Debourse_Renverse_To_DB()
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_To_DB", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_To_DB", vbNullString, 0)
     
     'Définition des paramètres
     Dim destinationFileName As String, destinationTab As String
@@ -367,13 +367,13 @@ Sub DEB_Trans_MAJ_Debourse_Renverse_To_DB()
     Set conn = Nothing
     Set rs = Nothing
 
-    Call EnregistrerLogApplication("modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_To_DB", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_To_DB", vbNullString, startTime)
     
 End Sub
 
 Sub DEB_Trans_MAJ_Debourse_Renverse_Locally()
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_Locally", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_Locally", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -401,7 +401,7 @@ Sub DEB_Trans_MAJ_Debourse_Renverse_Locally()
     'Libérer la mémoire
     Set ws = Nothing
 
-    Call EnregistrerLogApplication("modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_Locally", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_Locally", vbNullString, startTime)
     
 End Sub
 
@@ -508,7 +508,7 @@ End Sub
 
 Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation", vbNullString, 0)
 
     Dim Montant As Double, dateDebours As Date
     Dim descGL_Trans As String, Source As String, deboursType As String
@@ -597,13 +597,13 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
     
     Call GL_Posting_Locally(dateDebours, descGL_Trans, Source, MyArray, GLEntryNo)
     
-    Call EnregistrerLogApplication("modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation", vbNullString, startTime)
 
 End Sub
 
 Sub ChargerDEBRecurrentDansSaisie(DEBAutoDesc As String, noDEBAuto As Long)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modDEB_Saisie:ChargerDEBRecurrentDansSaisie", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:ChargerDEBRecurrentDansSaisie", vbNullString, 0)
     
     'On copie l'écriture automatique vers wshDEB_Saisie
     Dim rowDEBAuto As Long, rowDEB As Long
@@ -644,13 +644,13 @@ Sub ChargerDEBRecurrentDansSaisie(DEBAutoDesc As String, noDEBAuto As Long)
     wshDEB_Saisie.Range("O4").Activate
     wshDEB_Saisie.Range("O4").Select
 
-    Call EnregistrerLogApplication("modDEB_Saisie:ChargerDEBRecurrentDansSaisie", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:ChargerDEBRecurrentDansSaisie", vbNullString, startTime)
     
 End Sub
 
 Sub Save_DEB_Recurrent(ll As Long)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modDEB_Saisie:Save_DEB_Recurrent", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:Save_DEB_Recurrent", vbNullString, 0)
     
     Dim rowDEBLast As Long
     rowDEBLast = wshDEB_Saisie.Cells(wshDEB_Saisie.Rows.count, "E").End(xlUp).Row  'Last Used Row in wshDEB_Saisie
@@ -658,13 +658,13 @@ Sub Save_DEB_Recurrent(ll As Long)
     Call DEB_Recurrent_Add_Record_To_DB(rowDEBLast)
     Call DEB_Recurrent_Add_Record_Locally(rowDEBLast)
     
-    Call EnregistrerLogApplication("modDEB_Saisie:Save_DEB_Recurrent", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:Save_DEB_Recurrent", vbNullString, startTime)
     
 End Sub
 
 Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modDEB_Saisie:DEB_Recurrent_Add_Record_To_DB", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Recurrent_Add_Record_To_DB", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
@@ -741,13 +741,13 @@ Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external
     Set conn = Nothing
     Set rs = Nothing
     
-    Call EnregistrerLogApplication("modDEB_Saisie:DEB_Recurrent_Add_Record_To_DB", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Recurrent_Add_Record_To_DB", vbNullString, startTime)
 
 End Sub
 
 Sub DEB_Recurrent_Add_Record_Locally(r As Long) 'Write records to local file
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modDEB_Saisie:DEB_Recurrent_Add_Record_Locally", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Recurrent_Add_Record_Locally", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -790,7 +790,7 @@ Sub DEB_Recurrent_Add_Record_Locally(r As Long) 'Write records to local file
     
     Application.ScreenUpdating = True
     
-    Call EnregistrerLogApplication("modDEB_Saisie:DEB_Recurrent_Add_Record_Locally", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Recurrent_Add_Record_Locally", vbNullString, startTime)
     
 End Sub
 
@@ -809,7 +809,7 @@ End Sub
 
 Sub DEB_Recurrent_Build_Summary()
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modDEB_Saisie:DEB_Recurrent_Build_Summary", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Recurrent_Build_Summary", vbNullString, 0)
     
     'Build the summary at column K & L
     Dim lastUsedRow1 As Long
@@ -836,13 +836,13 @@ Sub DEB_Recurrent_Build_Summary()
         Next i
     End With
 
-    Call EnregistrerLogApplication("modDEB_Saisie:DEB_Recurrent_Build_Summary", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Recurrent_Build_Summary", vbNullString, startTime)
 
 End Sub
 
 Public Sub DEB_Saisie_Clear_All_Cells()
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modDEB_Saisie:DEB_Saisie_Clear_All_Cells", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Saisie_Clear_All_Cells", vbNullString, 0)
 
     Dim ws As Worksheet
     Set ws = wshDEB_Saisie
@@ -885,7 +885,7 @@ Public Sub DEB_Saisie_Clear_All_Cells()
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("modDEB_Saisie:DEB_Saisie_Clear_All_Cells", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Saisie_Clear_All_Cells", vbNullString, startTime)
 
 End Sub
 

@@ -22,7 +22,7 @@ End Type
 
 Public Sub GL_Get_Account_Trans_AF(glNo As String, dateDeb As Date, dateFin As Date, ByRef rResult As Range)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_Stuff:GL_Get_Account_Trans_AF", glNo & " - De " & dateDeb & " à " & dateFin, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_Stuff:GL_Get_Account_Trans_AF", glNo & " - De " & dateDeb & " à " & dateFin, 0)
 
     'Les données à AF proviennent de GL_Trans
     Dim ws As Worksheet: Set ws = wsdGL_Trans
@@ -93,13 +93,13 @@ Public Sub GL_Get_Account_Trans_AF(glNo As String, dateDeb As Date, dateFin As D
     Set rngResult = Nothing
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("modGL_Stuff:GL_Get_Account_Trans_AF", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_Stuff:GL_Get_Account_Trans_AF", vbNullString, startTime)
 
 End Sub
 
 Sub GL_Posting_To_DB(df As Date, desc As String, Source As String, arr As Variant, ByRef GLEntryNo As Long) 'Generic routine 2024-06-06 @ 07:00
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_Stuff:GL_Posting_To_DB", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_Stuff:GL_Posting_To_DB", vbNullString, 0)
 
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
@@ -173,13 +173,13 @@ Nothing_to_Post:
     Set conn = Nothing
     Set rs = Nothing
     
-    Call EnregistrerLogApplication("modGL_Stuff:GL_Posting_To_DB", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_Stuff:GL_Posting_To_DB", vbNullString, startTime)
 
 End Sub
 
 Sub GL_Posting_Locally(df As Date, desc As String, Source As String, arr As Variant, ByRef GLEntryNo As Long) 'Write records locally
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("*** modGL_Stuff:GL_Posting_Locally", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("*** modGL_Stuff:GL_Posting_Locally", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -210,20 +210,20 @@ Sub GL_Posting_Locally(df As Date, desc As String, Source As String, arr As Vari
                 .Range("I" & rowToBeUsed).Value = arr(i, 4)
                 .Range("J" & rowToBeUsed).Value = Format$(timeStamp, "dd/mm/yyyy hh:mm:ss")
                 rowToBeUsed = rowToBeUsed + 1
-                Call EnregistrerLogApplication("   modGL_Stuff:GL_Posting_Locally", -1)
+                Call modDev_Utils.EnregistrerLogApplication("   modGL_Stuff:GL_Posting_Locally", -1)
             End If
         Next i
     End With
     
     Application.ScreenUpdating = True
     
-    Call EnregistrerLogApplication("modGL_Stuff:GL_Posting_Locally", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_Stuff:GL_Posting_Locally", vbNullString, startTime)
 
 End Sub
 
 Sub GL_BV_Ajouter_Shape_Retour()
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_Stuff:GL_BV_Ajouter_Shape_Retour", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_Stuff:GL_BV_Ajouter_Shape_Retour", vbNullString, 0)
     
     Dim ws As Worksheet: Set ws = ActiveSheet
     
@@ -260,13 +260,13 @@ Sub GL_BV_Ajouter_Shape_Retour()
     Set btn = Nothing
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("modGL_Stuff:GL_BV_Ajouter_Shape_Retour", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_Stuff:GL_BV_Ajouter_Shape_Retour", vbNullString, startTime)
 
 End Sub
 
 Sub GL_BV_Effacer_Zone_Et_Shape()
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_Stuff:GL_BV_Effacer_Zone_Et_Shape", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_Stuff:GL_BV_Effacer_Zone_Et_Shape", vbNullString, 0)
     
     'Effacer la plage
     Dim ws As Worksheet: Set ws = ActiveSheet
@@ -288,7 +288,7 @@ Sub GL_BV_Effacer_Zone_Et_Shape()
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("modGL_Stuff:GL_BV_Effacer_Zone_Et_Shape", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_Stuff:GL_BV_Effacer_Zone_Et_Shape", vbNullString, startTime)
 
 End Sub
 

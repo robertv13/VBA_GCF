@@ -4,7 +4,7 @@ Option Explicit
 
 Private Sub Worksheet_Activate()
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("wshFAC_Finale:Worksheet_Activate", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("wshFAC_Finale:Worksheet_Activate", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -27,6 +27,6 @@ Private Sub Worksheet_Activate()
         .TintAndShade = 0
     End With
 
-    Call EnregistrerLogApplication("wshFAC_Finale:Worksheet_Activate", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("wshFAC_Finale:Worksheet_Activate", vbNullString, startTime)
     
 End Sub

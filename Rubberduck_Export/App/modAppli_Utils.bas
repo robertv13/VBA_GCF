@@ -66,7 +66,7 @@ End Sub
 
 Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierIntegriteTablesLocales", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierIntegriteTablesLocales", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
@@ -429,7 +429,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     Set rngToPrint = Nothing
     Set wsOutput = Nothing
     
-    Call EnregistrerLogApplication("modAppli_Utils:VerifierIntegriteTablesLocales", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierIntegriteTablesLocales", vbNullString, startTime)
 
 End Sub
 
@@ -567,7 +567,7 @@ End Sub
 
 Sub CreerOuRemplacerFeuille(wsName As String)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:CreerOuRemplacerFeuille", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:CreerOuRemplacerFeuille", vbNullString, 0)
     
     Dim wsExists As Boolean
     wsExists = NomFeuilleExiste(wsName)
@@ -590,13 +590,13 @@ Sub CreerOuRemplacerFeuille(wsName As String)
     'Libérer la mémoire
     Set ws = Nothing
 
-    Call EnregistrerLogApplication("modAppli_Utils:CreerOuRemplacerFeuille", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:CreerOuRemplacerFeuille", vbNullString, startTime)
     
 End Sub
 
 Private Sub VerifierPlanComptable(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierPlanComptable", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierPlanComptable", vbNullString, 0)
     
     Application.ScreenUpdating = True
     
@@ -700,13 +700,13 @@ Private Sub VerifierPlanComptable(ByVal wsOutput As Worksheet, ByRef r As Long, 
 Clean_Exit:
     Application.ScreenUpdating = False
     
-    Call EnregistrerLogApplication("modAppli_Utils:VerifierPlanComptable", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierPlanComptable", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierClients(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierClients", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierClients", vbNullString, 0)
     
     Application.ScreenUpdating = True
     
@@ -835,13 +835,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = False
     
-    Call EnregistrerLogApplication("modAppli_Utils:VerifierClients", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierClients", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierFournisseurs(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierFournisseurs", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierFournisseurs", vbNullString, 0)
 
     Application.ScreenUpdating = True
 
@@ -930,13 +930,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = False
     
-    Call EnregistrerLogApplication("modAppli_Utils:VerifierFournisseurs", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierFournisseurs", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierCCRegularisations(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierCCRegularisations", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierCCRegularisations", vbNullString, 0)
 
     Application.ScreenUpdating = True
     
@@ -1127,13 +1127,13 @@ Clean_Exit:
     DoEvents
     Application.ScreenUpdating = False
     
-    Call EnregistrerLogApplication("modAppli_Utils:VerifierCCRegularisations", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierCCRegularisations", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierDEBRecurrent(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierDEBRecurrent", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierDEBRecurrent", vbNullString, 0)
 
     Application.ScreenUpdating = True
     
@@ -1274,13 +1274,13 @@ Clean_Exit:
 
     Application.ScreenUpdating = False
 
-    Call EnregistrerLogApplication("modAppli_Utils:VerifierDEBRecurrent", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierDEBRecurrent", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierDEBTrans(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierDEBTrans", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierDEBTrans", vbNullString, 0)
 
     Application.ScreenUpdating = True
     
@@ -1429,13 +1429,13 @@ Clean_Exit:
     DoEvents
     Application.ScreenUpdating = False
 
-    Call EnregistrerLogApplication("modAppli_Utils:VerifierDEBTrans", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierDEBTrans", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierENCDetails(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierENCDetails", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierENCDetails", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
@@ -1583,13 +1583,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call EnregistrerLogApplication("modAppli_Utils:VerifierENCDetails", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierENCDetails", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierENCEntete(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierENCEntete", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierENCEntete", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
@@ -1690,13 +1690,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call EnregistrerLogApplication("modAppli_Utils:VerifierENCEntete", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierENCEntete", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierFACDetails(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierFACDetails", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierFACDetails", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
@@ -1794,13 +1794,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call EnregistrerLogApplication("modAppli_Utils:VerifierFACDetails", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierFACDetails", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierFACEntete(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierFACEntete", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierFACEntete", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
@@ -1991,13 +1991,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call EnregistrerLogApplication("modAppli_Utils:VerifierFACEntete", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierFACEntete", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierFACComptesClients(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierFACComptesClients", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierFACComptesClients", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
@@ -2225,13 +2225,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call EnregistrerLogApplication("modAppli_Utils:VerifierFACComptesClients", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierFACComptesClients", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierFACSommaireTaux(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierFACSommaireTaux", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierFACSommaireTaux", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
@@ -2337,13 +2337,13 @@ Clean_Exit:
 
     Application.ScreenUpdating = True
 
-    Call EnregistrerLogApplication("modAppli_Utils:VerifierFACSommaireTaux", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierFACSommaireTaux", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierFACProjetsEntete(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierFACProjetsEntete", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierFACProjetsEntete", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
@@ -2494,13 +2494,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call EnregistrerLogApplication("modAppli_Utils:VerifierFACProjetsEntete", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierFACProjetsEntete", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierFACProjetsDetails(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierFACProjetsDetails", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierFACProjetsDetails", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
@@ -2616,13 +2616,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call EnregistrerLogApplication("modAppli_Utils:VerifierFACProjetsDetails", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierFACProjetsDetails", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierGLTrans(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierGLTrans", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierGLTrans", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
@@ -2840,13 +2840,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call EnregistrerLogApplication("modAppli_Utils:VerifierGLTrans", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierGLTrans", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierGLEJRecurrente(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierGLEJRecurrente", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierGLEJRecurrente", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
@@ -2963,18 +2963,18 @@ Clean_Exit:
 
     Application.ScreenUpdating = True
 
-    Call EnregistrerLogApplication("modAppli_Utils:VerifierGLEJRecurrente", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierGLEJRecurrente", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierTECTdBData(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierTECTdBData", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierTECTdBData", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
     Call modImport.ImporterTEC
-    Call ActualiserTECTableauDeBord
+    Call modTEC_TDB.ActualiserTECTableauDeBord
     
     'wshTEC_TdB_Data
     Dim ws As Worksheet: Set ws = wshTEC_TDB_Data
@@ -3267,20 +3267,20 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
     
-    Call EnregistrerLogApplication("modAppli_Utils:VerifierTECTdBData", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierTECTdBData", vbNullString, startTime)
 
 End Sub
 
 Private Sub VerifierTEC(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef readRows As Long)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:VerifierTEC", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierTEC", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
     Dim ws As Worksheet: Set ws = wsdTEC_Local
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 7701 'What is the last TECID analyzed ?
+    lastTECIDReported = 7793 'What is the last TECID analyzed ?
     
     'Réference au UserDefined structure 'StatistiquesTEC'
     Dim stats As StatistiquesTEC
@@ -3407,7 +3407,7 @@ Private Sub VerifierTEC(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef read
     
     Application.ScreenUpdating = True
     
-    Call EnregistrerLogApplication("modAppli_Utils:VerifierTEC", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierTEC", vbNullString, startTime)
 
 End Sub
 
@@ -3684,7 +3684,7 @@ End Sub
 
 Sub AppliquerConditionalFormating(rng As Range, headerRows As Long, couleurFond As Long)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:AppliquerConditionalFormating", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:AppliquerConditionalFormating", vbNullString, 0)
     
     'Avons-nous un Range valide ?
     If rng Is Nothing Or rng.Rows.count <= headerRows Then
@@ -3712,7 +3712,7 @@ Sub AppliquerConditionalFormating(rng As Range, headerRows As Long, couleurFond 
     'Libérer la mémoire
     Set dataRange = Nothing
     
-    Call EnregistrerLogApplication("modAppli_Utils:AppliquerConditionalFormating", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:AppliquerConditionalFormating", vbNullString, startTime)
 
 End Sub
 
@@ -4012,7 +4012,7 @@ End Sub
 
 Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:Get_Deplacements_From_TEC", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:Get_Deplacements_From_TEC", vbNullString, 0)
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -4188,7 +4188,7 @@ Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
     Set wsMF = Nothing
     Set wsTEC = Nothing
     
-    Call EnregistrerLogApplication("modAppli_Utils:Get_Deplacements_From_TEC", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:Get_Deplacements_From_TEC", vbNullString, startTime)
 
 End Sub
 
@@ -4223,7 +4223,7 @@ End Sub
 
 Sub RedefinirDnrPlanComptable() '2024-07-04 @ 10:39
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:RedefinirDnrPlanComptable", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:RedefinirDnrPlanComptable", vbNullString, 0)
 
     'Redefine - dnrPlanComptable_Description_Only
     'Delete existing dynamic named range (assuming it could exists)
@@ -4250,7 +4250,7 @@ Sub RedefinirDnrPlanComptable() '2024-07-04 @ 10:39
     'Create the new dynamic named range
     ThisWorkbook.Names.Add Name:="dnrPlanComptable_All", RefersTo:=newRangeFormula
     
-    Call EnregistrerLogApplication("modAppli_Utils:RedefinirDnrPlanComptable", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:RedefinirDnrPlanComptable", vbNullString, startTime)
 
 End Sub
 
@@ -4285,7 +4285,7 @@ End Sub
 
 Sub NoterNombreLignesParFeuille() '2025-01-22 @ 16:19
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli_Utils:NoterNombreLignesParFeuille", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:NoterNombreLignesParFeuille", vbNullString, 0)
     
     'Spécifiez les chemins des classeurs
     Dim cheminClasseurUsage As String
@@ -4351,7 +4351,7 @@ Sub NoterNombreLignesParFeuille() '2025-01-22 @ 16:19
     'Sauvegarder et fermer le classeur d'usage
     wbUsage.Close SaveChanges:=True
     
-    Call EnregistrerLogApplication("modAppli_Utils:NoterNombreLignesParFeuille", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:NoterNombreLignesParFeuille", vbNullString, startTime)
 
 End Sub
 

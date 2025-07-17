@@ -3,7 +3,7 @@ Option Explicit
 
 Public Sub Convertir_NF_en_Facturable_Dans_BD(tecID As Long) '2025-01-15 @ 09:44
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modTEC_Stuff:Convertir_NF_en_Facturable_Dans_BD", CStr(tecID), 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Stuff:Convertir_NF_en_Facturable_Dans_BD", CStr(tecID), 0)
 
     Application.ScreenUpdating = False
     
@@ -47,13 +47,13 @@ Public Sub Convertir_NF_en_Facturable_Dans_BD(tecID As Long) '2025-01-15 @ 09:44
     Set conn = Nothing
     Set rs = Nothing
     
-    Call EnregistrerLogApplication("modTEC_Stuff:Convertir_NF_en_Facturable_Dans_BD", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Stuff:Convertir_NF_en_Facturable_Dans_BD", vbNullString, startTime)
 
 End Sub
 
 Public Sub Convertir_NF_en_Facturable_Locally(tecID As Long) '2025-01-15 @ 09:44
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modTEC_Stuff:Convertir_NF_en_Facturable_Locally", CStr(tecID), 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Stuff:Convertir_NF_en_Facturable_Locally", CStr(tecID), 0)
     
     Dim ws As Worksheet
     Set ws = wsdTEC_Local
@@ -70,7 +70,7 @@ Public Sub Convertir_NF_en_Facturable_Locally(tecID As Long) '2025-01-15 @ 09:44
     'Convertir à Facturable
     ws.Cells(rowToBeUpdated, fTECEstFacturable).Value = "VRAI"
 
-    Call EnregistrerLogApplication("modTEC_Stuff:Convertir_NF_en_Facturable_Locally", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Stuff:Convertir_NF_en_Facturable_Locally", vbNullString, startTime)
 
 End Sub
 

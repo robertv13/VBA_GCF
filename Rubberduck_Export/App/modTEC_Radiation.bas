@@ -275,7 +275,7 @@ End Sub
 
 Sub TEC_Radiation_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Update Billed Status in DB
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modTEC_Radiation:TEC_Radiation_Update_As_Billed_To_DB", firstRow & ", " & lastRow, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Radiation:TEC_Radiation_Update_As_Billed_To_DB", firstRow & ", " & lastRow, 0)
 
     Application.ScreenUpdating = False
     
@@ -334,13 +334,13 @@ next_iteration:
     Set conn = Nothing
     Set rs = Nothing
     
-    Call EnregistrerLogApplication("modTEC_Radiation:TEC_Radiation_Update_As_Billed_To_DB", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Radiation:TEC_Radiation_Update_As_Billed_To_DB", vbNullString, startTime)
 
 End Sub
 
 Sub TEC_Radiation_Update_As_Billed_Locally(firstResultRow As Long, lastResultRow As Long)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modTEC_Radiation:TEC_Radiation_Update_As_Billed_Locally", firstResultRow & ", " & lastResultRow, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Radiation:TEC_Radiation_Update_As_Billed_Locally", firstResultRow & ", " & lastResultRow, 0)
     
     'Set the range to look for
     Dim lookupRange As Range: Set lookupRange = wsdTEC_Local.Range("l_tbl_TEC_Local[TECID]")
@@ -362,7 +362,7 @@ Sub TEC_Radiation_Update_As_Billed_Locally(firstResultRow As Long, lastResultRow
     'Libérer la mémoire
     Set lookupRange = Nothing
     
-    Call EnregistrerLogApplication("modTEC_Radiation:TEC_Radiation_Update_As_Billed_Locally", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Radiation:TEC_Radiation_Update_As_Billed_Locally", vbNullString, startTime)
 
 End Sub
 
@@ -406,7 +406,7 @@ End Sub
 
 Sub TEC_Radiation_Back_To_TEC_Menu()
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modTEC_Radiation:TEC_Radiation_Back_To_TEC_Menu", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Radiation:TEC_Radiation_Back_To_TEC_Menu", vbNullString, 0)
     
     wshTEC_Radiation.Visible = xlSheetHidden
     
@@ -415,7 +415,7 @@ Sub TEC_Radiation_Back_To_TEC_Menu()
     wshMenuTEC.Activate
     wshMenuTEC.Range("A1").Select
     
-    Call EnregistrerLogApplication("modTEC_Radiation:TEC_Radiation_Back_To_TEC_Menu", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Radiation:TEC_Radiation_Back_To_TEC_Menu", vbNullString, startTime)
 
 End Sub
 

@@ -2,7 +2,7 @@ Option Explicit
 
 Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("wshTEC_Evaluation:Worksheet_Activate", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("wshTEC_Evaluation:Worksheet_Activate", vbNullString, 0)
     
     If gFromMenu = False Then
         Exit Sub
@@ -31,7 +31,7 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
         ws.Unprotect
     End If
     
-    Call DeterminerOrdreDeTabulation(ws)
+    Call modDev_Utils.DeterminerOrdreDeTabulation(ws)
     
     Call TEC_EvaluationViderFeuille '2025-06-28 @ 11:13
     
@@ -53,13 +53,13 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("wshTEC_Evaluation:Worksheet_Activate", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("wshTEC_Evaluation:Worksheet_Activate", vbNullString, startTime)
 
 End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("wshTEC_Evaluation:Worksheet_SelectionChange", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("wshTEC_Evaluation:Worksheet_SelectionChange", vbNullString, 0)
     
     If gPreviousCellAddress <> vbNullString Then
         Range(gPreviousCellAddress).Interior.Color = gCOULEUR_BASE_TEC
@@ -70,13 +70,13 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         Target.Interior.Color = gCOULEUR_SAISIE
     End If
     
-    Call EnregistrerLogApplication("wshTEC_Evaluation:Worksheet_SelectionChange", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("wshTEC_Evaluation:Worksheet_SelectionChange", vbNullString, startTime)
     
 End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("wshTEC_Evaluation:Worksheet_Change", Target.Address, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("wshTEC_Evaluation:Worksheet_Change", Target.Address, 0)
     
     Dim fullDate As Variant
     
@@ -112,6 +112,6 @@ ExitSub:
 
     Application.EnableEvents = True
     
-    Call EnregistrerLogApplication("wshTEC_Evaluation:Worksheet_Change", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("wshTEC_Evaluation:Worksheet_Change", vbNullString, startTime)
   
 End Sub

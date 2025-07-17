@@ -4,7 +4,7 @@ Option Explicit
 
 Private Sub Worksheet_Activate()
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("wshStatsHeuresPivotTables:Worksheet_Activate", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("wshStatsHeuresPivotTables:Worksheet_Activate", vbNullString, 0)
 
     If gFromMenu = False Then
         Debug.Print "#012 - wshFAC_Brouillon_Worksheet_Activate - Je ne viens pas du menu"
@@ -77,13 +77,13 @@ Private Sub Worksheet_Activate()
     Set plageValide = Nothing
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("wshStatsHeuresPivotTables:Worksheet_Activate", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("wshStatsHeuresPivotTables:Worksheet_Activate", vbNullString, startTime)
 
 End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("wshStatsHeuresPivotTables:Worksheet_Change", Target.Address, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("wshStatsHeuresPivotTables:Worksheet_Change", Target.Address, 0)
     
     Dim ws As Worksheet: Set ws = wshStatsHeuresPivotTables
     
@@ -127,7 +127,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'Libérer la mémoire
     Set ws = Nothing
 
-    Call EnregistrerLogApplication("wshStatsHeuresPivotTables:Worksheet_Change", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("wshStatsHeuresPivotTables:Worksheet_Change", vbNullString, startTime)
 
 End Sub
 

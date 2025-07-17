@@ -1,4 +1,4 @@
-﻿📘 Journal de nettoyage typographique — 07/15/2025 05:52:40
+﻿📘 Journal de nettoyage typographique — 07/17/2025 09:45:12
 
 🔧 clsControlWrapper.cls
 
@@ -88,10 +88,10 @@
    Remplacé : .offset ➜ .Offset
    Remplacé : .row ➜ .Row
    Remplacé : .range ➜ .Range
+   Remplacé : .font ➜ .Font
 
 🔧 modDev_Utils.bas
    Remplacé : .value ➜ .Value
-   Remplacé : .column ➜ .Column
    Remplacé : .interior ➜ .Interior
    Remplacé : .cells ➜ .Cells
    Remplacé : .row ➜ .Row

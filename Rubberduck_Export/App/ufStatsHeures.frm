@@ -14,7 +14,7 @@ Option Explicit
 
 Private Sub UserForm_Initialize()
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("ufStatsHeures:UserForm_Initialize", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:UserForm_Initialize", vbNullString, 0)
 
     Call ChargerListBoxAvec52DernieresSemaines
     
@@ -23,33 +23,33 @@ Private Sub UserForm_Initialize()
     Call AdditionnerAjouterColonnesDuTrimestre
     Call AdditionnerColonnesDeAnneeFinanciere
     
-    Call EnregistrerLogApplication("ufStatsHeures:UserForm_Initialize", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:UserForm_Initialize", vbNullString, startTime)
     
 End Sub
 
 Private Sub lbxDatesSemaines_Click() '2024-12-04 @ 07:36
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("ufStatsHeures:lbxDatesSemaines_Click", lbxDatesSemaines.Value, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:lbxDatesSemaines_Click", lbxDatesSemaines.Value, 0)
     
     Call lbxDatesSemaines_Click_or_DblClick(lbxDatesSemaines.Value)
     
-    Call EnregistrerLogApplication("ufStatsHeures:lbxDatesSemaines_Click", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:lbxDatesSemaines_Click", vbNullString, startTime)
 
 End Sub
 
 Private Sub lbxDatesSemaines_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("ufStatsHeures:lbxDatesSemaines_DblClick", lbxDatesSemaines.Value, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:lbxDatesSemaines_DblClick", lbxDatesSemaines.Value, 0)
     
     Call lbxDatesSemaines_Click_or_DblClick(lbxDatesSemaines.Value)
 
-    Call EnregistrerLogApplication("ufStatsHeures:lbxDatesSemaines_DblClick", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:lbxDatesSemaines_DblClick", vbNullString, startTime)
 
 End Sub
 
 Private Sub lbxDatesSemaines_Click_or_DblClick(ByVal valeur As Variant) '2024-12-04 @ 07:36
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("ufStatsHeures:lbxDatesSemaines_Click_or_DblClick", lbxDatesSemaines.Value, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:lbxDatesSemaines_Click_or_DblClick", lbxDatesSemaines.Value, 0)
     
     Dim selectedWeek As String
     
@@ -119,13 +119,13 @@ Private Sub lbxDatesSemaines_Click_or_DblClick(ByVal valeur As Variant) '2024-12
     Set rngCriteriaDate1 = Nothing
     Set rngCriteriaDate2 = Nothing
     
-    Call EnregistrerLogApplication("ufStatsHeures:lbxDatesSemaines_Click_or_DblClick", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:lbxDatesSemaines_Click_or_DblClick", vbNullString, startTime)
 
 End Sub
 
 Sub AdditionnerAjouterColonnesDeSemaine()
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("ufStatsHeures:AdditionnerAjouterColonnesDeSemaine", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:AdditionnerAjouterColonnesDeSemaine", vbNullString, 0)
     
     Dim ws As Worksheet: Set ws = wshTEC_TDB_Data
     
@@ -152,13 +152,13 @@ Sub AdditionnerAjouterColonnesDeSemaine()
     Set rngResult = Nothing
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("ufStatsHeures:AdditionnerAjouterColonnesDeSemaine", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:AdditionnerAjouterColonnesDeSemaine", vbNullString, startTime)
 
 End Sub
 
 Sub AdditionnerAjouterColonnesDuMois()
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("ufStatsHeures:AdditionnerAjouterColonnesDuMois", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:AdditionnerAjouterColonnesDuMois", vbNullString, 0)
     
     Dim ws As Worksheet: Set ws = wshTEC_TDB_Data
     
@@ -182,13 +182,13 @@ Sub AdditionnerAjouterColonnesDuMois()
     Set rngResult = Nothing
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("ufStatsHeures:AdditionnerAjouterColonnesDuMois", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:AdditionnerAjouterColonnesDuMois", vbNullString, startTime)
 
 End Sub
 
 Sub AdditionnerAjouterColonnesDuTrimestre()
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("ufStatsHeures:AdditionnerAjouterColonnesDuTrimestre", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:AdditionnerAjouterColonnesDuTrimestre", vbNullString, 0)
     
     Dim ws As Worksheet: Set ws = wshTEC_TDB_Data
     
@@ -212,13 +212,13 @@ Sub AdditionnerAjouterColonnesDuTrimestre()
     Set rngResult = Nothing
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("ufStatsHeures:AdditionnerAjouterColonnesDuTrimestre", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:AdditionnerAjouterColonnesDuTrimestre", vbNullString, startTime)
 
 End Sub
 
 Sub AdditionnerColonnesDeAnneeFinanciere()
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("ufStatsHeures:AdditionnerColonnesDeAnneeFinanciere", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:AdditionnerColonnesDeAnneeFinanciere", vbNullString, 0)
     
     Dim ws As Worksheet: Set ws = wshTEC_TDB_Data
     
@@ -242,13 +242,13 @@ Sub AdditionnerColonnesDeAnneeFinanciere()
     Set rngResult = Nothing
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("ufStatsHeures:AdditionnerColonnesDeAnneeFinanciere", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:AdditionnerColonnesDeAnneeFinanciere", vbNullString, startTime)
 
 End Sub
 
 Sub ChargerListBoxAvec52DernieresSemaines()
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("ufStatsHeures:ChargerListBoxAvec52DernieresSemaines", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:ChargerListBoxAvec52DernieresSemaines", vbNullString, 0)
     
     Dim i As Integer
     Dim dtLundi As Date
@@ -289,7 +289,7 @@ Sub ChargerListBoxAvec52DernieresSemaines()
     'Libérer la mémoire
 '    Set lstSemaines = Nothing
     
-    Call EnregistrerLogApplication("ufStatsHeures:ChargerListBoxAvec52DernieresSemaines", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:ChargerListBoxAvec52DernieresSemaines", vbNullString, startTime)
     
 End Sub
 

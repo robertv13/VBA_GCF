@@ -20,7 +20,7 @@ Sub GL_EJ_Update()
         Exit Sub
     End If
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_EJ:GL_EJ_Update", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_EJ_Update", vbNullString, 0)
     
     If Fn_Is_Date_Valide(wshGL_EJ.Range("K4").Value) = False Then Exit Sub
     
@@ -55,13 +55,13 @@ Sub GL_EJ_Update()
     
     MsgBox "L'écriture numéro '" & strCurrentJE & "' a été reporté avec succès", vbInformation, "Confirmation de traitement"
     
-    Call EnregistrerLogApplication("modGL_EJ:GL_EJ_Update", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_EJ_Update", vbNullString, startTime)
     
 End Sub
 
 Sub JE_Renversement_Update()
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_EJ:JE_Renversement_Update", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:JE_Renversement_Update", vbNullString, 0)
     
     If Fn_Is_Ecriture_Balance = False Then
         MsgBox "L'écriture à renverser ne balance pas !!!", vbCritical
@@ -139,13 +139,13 @@ Sub JE_Renversement_Update()
     'Libérer la mémoire
     Set shp = Nothing
     
-    Call EnregistrerLogApplication("modGL_EJ:JE_Renversement_Update", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:JE_Renversement_Update", vbNullString, startTime)
     
 End Sub
 
 Sub Save_EJ_Recurrente(ll As Long)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_EJ:Save_EJ_Recurrente", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:Save_EJ_Recurrente", vbNullString, 0)
     
     Dim rowEJLast As Long
     rowEJLast = wshGL_EJ.Cells(wshGL_EJ.Rows.count, "E").End(xlUp).Row  'Last Used Row in wshGL_EJ
@@ -153,13 +153,13 @@ Sub Save_EJ_Recurrente(ll As Long)
     Call GL_EJ_Recurrente_Add_Record_To_DB(ll)
     Call GL_EJ_Recurrente_Add_Record_Locally(ll)
     
-    Call EnregistrerLogApplication("modGL_EJ:Save_EJ_Recurrente", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:Save_EJ_Recurrente", vbNullString, startTime)
     
 End Sub
 
 Sub Load_JEAuto_Into_JE(EJAutoDesc As String, NoEJAuto As Long)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_EJ:Load_JEAuto_Into_JE", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:Load_JEAuto_Into_JE", vbNullString, 0)
     
     'On copie l'E/J automatique vers wshEJ
     Dim rowJEAuto As Long, rowJE As Long
@@ -182,13 +182,13 @@ Sub Load_JEAuto_Into_JE(EJAutoDesc As String, NoEJAuto As Long)
     wshGL_EJ.Range("F6").Value = "[Auto]-" & EJAutoDesc
     wshGL_EJ.Range("K4").Activate
 
-    Call EnregistrerLogApplication("modGL_EJ:Load_JEAuto_Into_JE", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:Load_JEAuto_Into_JE", vbNullString, startTime)
     
 End Sub
 
 Sub GL_EJ_Clear_All_Cells()
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_EJ:GL_EJ_Clear_All_Cells", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_EJ_Clear_All_Cells", vbNullString, 0)
     
     'Efface toutes les cellules de la feuille
     Application.EnableEvents = False
@@ -220,7 +220,7 @@ Sub GL_EJ_Clear_All_Cells()
     'Libérer la mémoire
     Set cell = Nothing
     
-    Call EnregistrerLogApplication("modGL_EJ:GL_EJ_Clear_All_Cells", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_EJ_Clear_All_Cells", vbNullString, startTime)
 
 End Sub
 
@@ -560,7 +560,7 @@ End Sub
 
 Sub GL_EJ_Recurrente_Build_Summary()
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_EJ:GL_EJ_Recurrente_Build_Summary", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_EJ_Recurrente_Build_Summary", vbNullString, 0)
     
     'Build the summary at column K & L
     Dim lastUsedRow1 As Long
@@ -585,13 +585,13 @@ Sub GL_EJ_Recurrente_Build_Summary()
         Next i
     End With
 
-    Call EnregistrerLogApplication("modGL_EJ:GL_EJ_Recurrente_Build_Summary", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_EJ_Recurrente_Build_Summary", vbNullString, startTime)
 
 End Sub
 
 Sub GL_Get_JE_Detail_Trans_AF(noEJ As Long) '2024-11-17 @ 12:08
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_EJ:GL_Get_JE_Detail_Trans_AF", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_Get_JE_Detail_Trans_AF", vbNullString, 0)
 
     Dim ws As Worksheet: Set ws = wsdGL_Trans
     
@@ -660,13 +660,13 @@ Sub GL_Get_JE_Detail_Trans_AF(noEJ As Long) '2024-11-17 @ 12:08
     Set rngResult = Nothing
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("modGL_EJ:GL_Get_JE_Detail_Trans_AF", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_Get_JE_Detail_Trans_AF", vbNullString, startTime)
 
 End Sub
 
 Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_EJ:GL_Trans_Add_Record_To_DB", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_Trans_Add_Record_To_DB", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -747,13 +747,13 @@ Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xls
     Set conn = Nothing
     Set rs = Nothing
     
-    Call EnregistrerLogApplication("modGL_EJ:GL_Trans_Add_Record_To_DB", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_Trans_Add_Record_To_DB", vbNullString, startTime)
 
 End Sub
 
 Sub GL_Trans_Add_Record_Locally(r As Long) 'Write records locally
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_EJ:GL_Trans_Add_Record_Locally", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_Trans_Add_Record_Locally", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -770,7 +770,7 @@ Sub GL_Trans_Add_Record_Locally(r As Long) 'Write records locally
     lastUsedRow = wsdGL_Trans.Cells(wsdGL_Trans.Rows.count, "A").End(xlUp).Row
     rowToBeUsed = lastUsedRow + 1
     
-    Call EnregistrerLogApplication("modGL_EJ:GL_Trans_Add_Record_Locally - r = " & r, -1)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_Trans_Add_Record_Locally - r = " & r, -1)
     
     Dim i As Long
     For i = 9 To r
@@ -795,19 +795,19 @@ Sub GL_Trans_Add_Record_Locally(r As Long) 'Write records locally
         wsdGL_Trans.Range("J" & rowToBeUsed).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
         rowToBeUsed = rowToBeUsed + 1
         
-        Call EnregistrerLogApplication("modGL_EJ:GL_Trans_Add_Record_Locally - i = " & i, -1)
+        Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_Trans_Add_Record_Locally - i = " & i, -1)
 
     Next i
     
     Application.ScreenUpdating = True
     
-    Call EnregistrerLogApplication("modGL_EJ:GL_Trans_Add_Record_Locally", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_Trans_Add_Record_Locally", vbNullString, startTime)
 
 End Sub
 
 Sub EJ_Trans_Update_Ecriture_Renversee_To_DB()
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_EJ:EJ_Trans_Update_Ecriture_Renversee_To_DB", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:EJ_Trans_Update_Ecriture_Renversee_To_DB", vbNullString, 0)
     
     'Définition des paramètres
     Dim destinationFileName As String, destinationTab As String
@@ -850,13 +850,13 @@ Sub EJ_Trans_Update_Ecriture_Renversee_To_DB()
     Set conn = Nothing
     Set rs = Nothing
 
-    Call EnregistrerLogApplication("modGL_EJ:EJ_Trans_Update_Ecriture_Renversee_To_DB", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:EJ_Trans_Update_Ecriture_Renversee_To_DB", vbNullString, startTime)
     
 End Sub
 
 Sub EJ_Trans_Update_Ecriture_Renversee_Locally()
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modEJ_Saisie:EJ_Trans_Update_Ecriture_Renversee_Locally", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modEJ_Saisie:EJ_Trans_Update_Ecriture_Renversee_Locally", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -880,13 +880,13 @@ Sub EJ_Trans_Update_Ecriture_Renversee_Locally()
     'Libérer la mémoire
     Set ws = Nothing
 
-    Call EnregistrerLogApplication("modEJ_Saisie:EJ_Trans_Update_Ecriture_Renversee_Locally", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modEJ_Saisie:EJ_Trans_Update_Ecriture_Renversee_Locally", vbNullString, startTime)
     
 End Sub
 
 Sub GL_EJ_Recurrente_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_EJ:GL_EJ_Recurrente_Add_Record_To_DB", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_EJ_Recurrente_Add_Record_To_DB", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
@@ -959,13 +959,13 @@ Sub GL_EJ_Recurrente_Add_Record_To_DB(r As Long) 'Write/Update a record to exter
     Set conn = Nothing
     Set rs = Nothing
     
-    Call EnregistrerLogApplication("modGL_EJ:GL_EJ_Recurrente_Add_Record_To_DB", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_EJ_Recurrente_Add_Record_To_DB", vbNullString, startTime)
 
 End Sub
 
 Sub GL_EJ_Recurrente_Add_Record_Locally(r As Long) 'Write records to local file
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_EJ:GL_EJ_Recurrente_Add_Record_Locally", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_EJ_Recurrente_Add_Record_Locally", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -1004,7 +1004,7 @@ Sub GL_EJ_Recurrente_Add_Record_Locally(r As Long) 'Write records to local file
     
     Application.ScreenUpdating = True
     
-    Call EnregistrerLogApplication("modGL_EJ:GL_EJ_Recurrente_Add_Record_Locally", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_EJ_Recurrente_Add_Record_Locally", vbNullString, startTime)
     
 End Sub
 

@@ -17,7 +17,7 @@ End Sub
 
 Sub CreerListeAgee() '2024-09-08 @ 15:55
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("CreerListeAgee:CreerListeAgee", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("CreerListeAgee:CreerListeAgee", vbNullString, 0)
    
     Application.ScreenUpdating = False
     
@@ -468,7 +468,7 @@ Next_Invoice:
     Set wsFactures = Nothing
     Set wsPaiements = Nothing
     
-    Call EnregistrerLogApplication("CreerListeAgee:CreerListeAgee", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("CreerListeAgee:CreerListeAgee", vbNullString, startTime)
     
 End Sub
 
@@ -498,7 +498,7 @@ Sub AfficherMenuContextuel(ByVal Target As Range) '2025-02-21 @ 19:10
     'Option # 1 - Visualiser la facture
     Set menuItem = menu.Controls.Add(Type:=msoControlButton)
         menuItem.Caption = "Visualiser la facture (format PDF)"
-        menuItem.OnAction = "'VisualiserFacturePDF """ & numeroFacture & """'"
+        menuItem.OnAction = "'modFAC_Interrogation.VisualiserFacturePDF """ & numeroFacture & """'"
 
     'Option # 2 - Visualiser la facture
     Set menuItem = menu.Controls.Add(Type:=msoControlButton)

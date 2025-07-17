@@ -385,14 +385,14 @@ End Sub
 
 Sub TEC_Evaluation_Back_To_TEC_Menu()
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modTEC_Evaluation:TEC_Evaluation_Back_To_TEC_Menu", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Evaluation:TEC_Evaluation_Back_To_TEC_Menu", vbNullString, 0)
     
     wshTEC_Evaluation.Visible = xlSheetVeryHidden
     
     wshMenuTEC.Activate
     wshMenuTEC.Range("A1").Select
     
-    Call EnregistrerLogApplication("modTEC_Evaluation:TEC_Evaluation_Back_To_TEC_Menu", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Evaluation:TEC_Evaluation_Back_To_TEC_Menu", vbNullString, startTime)
 
 End Sub
 

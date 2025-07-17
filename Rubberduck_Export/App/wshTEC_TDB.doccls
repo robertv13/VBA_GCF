@@ -2,11 +2,11 @@ Option Explicit
 
 Private Sub Worksheet_Activate()
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("wshTEC_TDB:Worksheet_Activate", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("wshTEC_TDB:Worksheet_Activate", vbNullString, 0)
    
     Application.ScreenUpdating = False
     
-    Call ActualiserTECTableauDeBord
+    Call modTEC_TDB.ActualiserTECTableauDeBord
     
     Call AjusterBordurePivotTable
     
@@ -15,6 +15,6 @@ Private Sub Worksheet_Activate()
     
     Application.ScreenUpdating = True
 
-    Call EnregistrerLogApplication("wshTEC_TDB:Worksheet_Activate", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("wshTEC_TDB:Worksheet_Activate", vbNullString, startTime)
 
 End Sub

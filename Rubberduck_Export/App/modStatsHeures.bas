@@ -5,7 +5,7 @@ Sub Stats_Heures_AF()
     
     'La cellule 'S7' doit contenir le Professionnel
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modStatsHeures:Stats_Heures_AF", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modStatsHeures:Stats_Heures_AF", vbNullString, 0)
 
     'On utilise la feuille TEC_TDB_Data
     Dim ws As Worksheet: Set ws = wshTEC_TDB_Data
@@ -21,7 +21,7 @@ Sub Stats_Heures_AF()
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("modStatsHeures:Stats_Heures_AF", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modStatsHeures:Stats_Heures_AF", vbNullString, startTime)
 
 End Sub
 
@@ -88,7 +88,7 @@ End Sub
 
 Sub Retourner_ufSaisieHeures()
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modStatsHeures:Retourner_ufSaisieHeures", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modStatsHeures:Retourner_ufSaisieHeures", vbNullString, 0)
    
     On Error Resume Next
     wshStatsHeuresPivotTables.Visible = xlSheetHidden
@@ -96,7 +96,7 @@ Sub Retourner_ufSaisieHeures()
     
     ufSaisieHeures.show vbModeless
 
-    Call EnregistrerLogApplication("modStatsHeures:Retourner_ufSaisieHeures", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modStatsHeures:Retourner_ufSaisieHeures", vbNullString, startTime)
 
 End Sub
 

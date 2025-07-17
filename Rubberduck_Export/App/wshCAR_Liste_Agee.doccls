@@ -4,7 +4,7 @@ Option Explicit
 
 Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("wshCAR_Liste_Agee:Worksheet_Activate", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("wshCAR_Liste_Agee:Worksheet_Activate", vbNullString, 0)
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -47,7 +47,7 @@ Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
     
     Call GererBoutonsNavigation(False)
     
-    Call DeterminerOrdreDeTabulation(ws)
+    Call modDev_Utils.DeterminerOrdreDeTabulation(ws)
     
     With ws
         .Protect userInterfaceOnly:=True
@@ -62,13 +62,13 @@ Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("wshCAR_Liste_Agee:Worksheet_Activate", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("wshCAR_Liste_Agee:Worksheet_Activate", vbNullString, startTime)
 
 End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("wshCAR_Liste_Agee:Worksheet_SelectionChange", Target.Address, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("wshCAR_Liste_Agee:Worksheet_SelectionChange", Target.Address, 0)
     
     Dim ws As Worksheet: Set ws = wshCAR_Liste_Agee
     
@@ -105,13 +105,13 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("wshCAR_Liste_Agee:Worksheet_SelectionChange", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("wshCAR_Liste_Agee:Worksheet_SelectionChange", vbNullString, startTime)
     
 End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("wshCAR_Liste_Agee:Worksheet_Change", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("wshCAR_Liste_Agee:Worksheet_Change", vbNullString, 0)
     
     Dim fullDate As Variant
     
@@ -152,7 +152,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
 
     Application.EnableEvents = True
     
-    Call EnregistrerLogApplication("wshCAR_Liste_Agee:Worksheet_Change", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("wshCAR_Liste_Agee:Worksheet_Change", vbNullString, startTime)
   
 End Sub
 
@@ -169,11 +169,7 @@ Private Sub Worksheet_BeforeRightClick(ByVal Target As Range, Cancel As Boolean)
     'Forcer Excel à mettre à jour la cellule active
     Target.Activate
 
-    'Debugging
-    Debug.Print "Cellule Active AVANT clic : " & ActiveCell.Address
-    Debug.Print "Cellule cliquée (Target) : " & Target.Address
-
-    ' Vérifier si la cellule cliquée est dans la plage
+    'Vérifier si la cellule cliquée est dans la plage
     If Not Intersect(Target, Me.Range("B9:J999")) Is Nothing Then
         Cancel = True 'Annuler le menu contextuel par défaut
         Call AfficherMenuContextuel(Target)

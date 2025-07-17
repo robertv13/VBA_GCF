@@ -45,11 +45,12 @@ Sub BatirTableProcedures(ByRef dictIndex As Object, ByRef tableProc() As Variant
         Set codeMod = comp.codeModule
 
         Select Case comp.Type
-            Case vbext_ct_StdModule: typeModule = "Module Standard"
-            Case vbext_ct_ClassModule: typeModule = "Classe"
-            Case vbext_ct_MSForm: typeModule = "UserForm"
-            Case vbext_ct_Document: typeModule = "Feuille Excel"
-            Case Else: typeModule = "Autre"
+            Case vbext_ct_StdModule: typeModule = "3_Module Standard"
+            Case vbext_ct_ClassModule: typeModule = "4_Classe"
+            Case vbext_ct_MSForm: typeModule = "2_UserForm"
+            Case vbext_ct_Document: typeModule = "1_Feuille Excel"
+            Case vbext_ct_MSForm: typeModule = "2_UserForm"
+            Case Else: typeModule = "z_Autre"
         End Select
 
         For i = 1 To codeMod.CountOfLines
@@ -252,9 +253,9 @@ Sub ExporterResultatsFeuille(tableProc() As Variant, indexMax As Long) '2025-07-
         'Tri multicritère
         With .Sort
             .SortFields.Clear
-            .SortFields.Add key:=ws.Range("A3:A" & indexMax + 1), Order:=xlAscending
-            .SortFields.Add key:=ws.Range("B3:B" & indexMax + 1), Order:=xlAscending
             .SortFields.Add key:=ws.Range("C3:C" & indexMax + 1), Order:=xlAscending
+            .SortFields.Add key:=ws.Range("B3:B" & indexMax + 1), Order:=xlAscending
+            .SortFields.Add key:=ws.Range("A3:A" & indexMax + 1), Order:=xlAscending
             .SetRange ws.Range("A2:I" & indexMax + 2)
             .Header = xlYes
             .Apply

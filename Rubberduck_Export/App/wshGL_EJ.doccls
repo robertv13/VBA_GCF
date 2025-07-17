@@ -8,7 +8,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:08
         Exit Sub
     End If
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("wshGL_EJ:Worksheet_Activate", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("wshGL_EJ:Worksheet_Activate", vbNullString, 0)
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -39,7 +39,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:08
     Set cellsToColor = Me.Range("G4:H4")
     Call Remplir_Plage_Avec_Couleur(cellsToColor, gCOULEUR_BASE_COMPTABILITE)
     
-    Call DeterminerOrdreDeTabulation(ws)
+    Call modDev_Utils.DeterminerOrdreDeTabulation(ws)
     
     Call GL_EJ_Clear_All_Cells
     
@@ -78,7 +78,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:08
     Set shp = Nothing
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("wshGL_EJ:Worksheet_Activate", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("wshGL_EJ:Worksheet_Activate", vbNullString, startTime)
 
 End Sub
 

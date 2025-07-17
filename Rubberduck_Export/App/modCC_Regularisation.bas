@@ -9,7 +9,7 @@ Public gNextJENo As Long
 
 Sub MAJ_Regularisation() '2025-01-14 @ 12:00
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modCC_Regularisation:MAJ_Regularisation", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:MAJ_Regularisation", vbNullString, 0)
     
     With wshENC_Saisie
         'As-t-on les champs obligatoires ?
@@ -71,23 +71,23 @@ Sub MAJ_Regularisation() '2025-01-14 @ 12:00
     
 Clean_Exit:
 
-    Call EnregistrerLogApplication("modCC_Regularisation:MAJ_Regularisation", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:MAJ_Regularisation", vbNullString, startTime)
 
 End Sub
 
 Sub Régularisation_Add_New() '2024-08-21 @ 14:58
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modCC_Regularisation:Régularisation_Add_New", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:Régularisation_Add_New", vbNullString, 0)
 
     Call ENC_Clear_Cells
     
-    Call EnregistrerLogApplication("modCC_Regularisation:Régularisation_Add_New", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:Régularisation_Add_New", vbNullString, startTime)
     
 End Sub
 
 Sub REGUL_Add_DB() 'Write to MASTER.xlsx
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modCC_Regularisation:REGUL_Add_DB", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:REGUL_Add_DB", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -153,13 +153,13 @@ Sub REGUL_Add_DB() 'Write to MASTER.xlsx
     
     Application.ScreenUpdating = True
 
-    Call EnregistrerLogApplication("modCC_Regularisation:REGUL_Add_DB", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:REGUL_Add_DB", vbNullString, startTime)
     
 End Sub
 
 Sub REGUL_Add_Locally() '2024-08-22 @ 10:38
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modCC_Regularisation:REGUL_Add_Locally", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:REGUL_Add_Locally", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -191,13 +191,13 @@ Sub REGUL_Add_Locally() '2024-08-22 @ 10:38
     
     Application.ScreenUpdating = True
 
-    Call EnregistrerLogApplication("modCC_Regularisation:REGUL_Add_Locally", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:REGUL_Add_Locally", vbNullString, startTime)
 
 End Sub
 
 Sub REGUL_Update_Comptes_Clients_DB() 'Write to MASTER.xlsx
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modCC_Regularisation:REGUL_Update_Comptes_Clients_DB", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:REGUL_Update_Comptes_Clients_DB", vbNullString, 0)
     
     Dim errMsg As String
     
@@ -253,13 +253,13 @@ Sub REGUL_Update_Comptes_Clients_DB() 'Write to MASTER.xlsx
     
     Application.ScreenUpdating = True
 
-    Call EnregistrerLogApplication("modCC_Regularisation:REGUL_Update_Comptes_Clients_DB", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:REGUL_Update_Comptes_Clients_DB", vbNullString, startTime)
     
 End Sub
 
 Sub REGUL_Update_Comptes_Clients_Locally() '2024-08-22 @ 10:55
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modCC_Regularisation:REGUL_Update_Comptes_Clients_Locally", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:REGUL_Update_Comptes_Clients_Locally", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -306,13 +306,13 @@ Sub REGUL_Update_Comptes_Clients_Locally() '2024-08-22 @ 10:55
     Set lookupRange = Nothing
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("modCC_Regularisation:REGUL_Update_Comptes_Clients_Locally", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:REGUL_Update_Comptes_Clients_Locally", vbNullString, startTime)
 
 End Sub
 
 Sub REGUL_GL_Posting_DB(no As Long, dt As Date, nom As String, desc As String)
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modCC_Regularisation:REGUL_GL_Posting_DB", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:REGUL_GL_Posting_DB", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -448,13 +448,13 @@ Sub REGUL_GL_Posting_DB(no As Long, dt As Date, nom As String, desc As String)
     Set conn = Nothing
     Set rs = Nothing
     
-    Call EnregistrerLogApplication("modCC_Regularisation:REGUL_GL_Posting_DB", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:REGUL_GL_Posting_DB", vbNullString, startTime)
 
 End Sub
 
 Sub REGUL_GL_Posting_Locally(no As Long, dt As Date, nom As String, desc As String)  'Write/Update to GCF_BD_MASTER / GL_Trans
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modCC_Regularisation:REGUL_GL_Posting_Locally", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:REGUL_GL_Posting_Locally", vbNullString, 0)
 
     Application.ScreenUpdating = False
 
@@ -548,7 +548,7 @@ Sub REGUL_GL_Posting_Locally(no As Long, dt As Date, nom As String, desc As Stri
 
     Application.ScreenUpdating = True
 
-    Call EnregistrerLogApplication("modCC_Regularisation:REGUL_GL_Posting_Locally", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:REGUL_GL_Posting_Locally", vbNullString, startTime)
 
 End Sub
 

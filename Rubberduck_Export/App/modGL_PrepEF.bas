@@ -15,7 +15,7 @@ Public gDividendes_Année_AC As Currency, gDividendes_Année_AP As Currency
 
 Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 04:26
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_PrepEF:Calculer_Soldes_Pour_EF", ws.Name & ", " & dateCutOff, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Calculer_Soldes_Pour_EF", ws.Name & ", " & dateCutOff, 0)
     
     Application.EnableEvents = False
     Application.ScreenUpdating = False
@@ -202,7 +202,7 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
     Set dictPreuve = Nothing
     Set dictSoldesParGL = Nothing
     
-    Call EnregistrerLogApplication("modGL_PrepEF:Calculer_Soldes_Pour_EF", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Calculer_Soldes_Pour_EF", vbNullString, startTime)
 
 End Sub
 
@@ -232,7 +232,7 @@ End Sub
 
 Sub Assembler_États_Financiers()
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_PrepEF:Assembler_États_Financiers", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_États_Financiers", vbNullString, 0)
     
     Dim dateAC As Date, dateAP As Date
     dateAC = wshGL_PrepEF.Range("F5").Value
@@ -273,13 +273,13 @@ Sub Assembler_États_Financiers()
     MsgBox "Les états financiers ont été produits" & vbNewLine & vbNewLine & _
             "Voir les onglets respectifs au bas du classeur", vbOKOnly, "Fin de traitement"
     
-    Call EnregistrerLogApplication("modGL_PrepEF:Assembler_États_Financiers", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_États_Financiers", vbNullString, startTime)
 
 End Sub
 
 Sub CreerFeuillesEtFormat()
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_PrepEF:CreerFeuillesEtFormat", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:CreerFeuillesEtFormat", vbNullString, 0)
     
     'Liste des feuilles à créer
     Dim nomsFeuilles As Variant
@@ -321,14 +321,14 @@ Sub CreerFeuillesEtFormat()
     
     Application.ScreenUpdating = True
     
-    Call EnregistrerLogApplication("modGL_PrepEF:CreerFeuillesEtFormat", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:CreerFeuillesEtFormat", vbNullString, startTime)
     
 End Sub
 
 
 Sub Assembler_Page_Titre_0_Main(dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_PrepEF:Assembler_Page_Titre_0_Main", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_Page_Titre_0_Main", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -343,13 +343,13 @@ Sub Assembler_Page_Titre_0_Main(dateAC As Date, dateAP As Date)
     
     Application.ScreenUpdating = True
 
-    Call EnregistrerLogApplication("modGL_PrepEF:Assembler_Page_Titre_0_Main", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_Page_Titre_0_Main", vbNullString, startTime)
 
 End Sub
 
 Sub AssemblerPageTitre1EtArrièrePlanEtEntête(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_PrepEF:AssemblerPageTitre1EtArrièrePlanEtEntête", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerPageTitre1EtArrièrePlanEtEntête", vbNullString, 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -376,13 +376,13 @@ Sub AssemblerPageTitre1EtArrièrePlanEtEntête(ws As Worksheet, dateAC As Date, 
     'Fixer le printArea selon le nombre de lignes ET 3 colonnes
     ActiveSheet.PageSetup.PrintArea = "$A1:$C" & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3
 
-    Call EnregistrerLogApplication("modGL_PrepEF:AssemblerPageTitre1EtArrièrePlanEtEntête", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerPageTitre1EtArrièrePlanEtEntête", vbNullString, startTime)
 
 End Sub
 
 Sub Assembler_TM_0_Main(dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_PrepEF:Assembler_TM_0_Main", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_TM_0_Main", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -398,13 +398,13 @@ Sub Assembler_TM_0_Main(dateAC As Date, dateAP As Date)
     
     Application.ScreenUpdating = True
     
-    Call EnregistrerLogApplication("modGL_PrepEF:Assembler_TM_0_Main", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_TM_0_Main", vbNullString, startTime)
 
 End Sub
 
 Sub Assembler_TM_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_PrepEF:Assembler_TM_1_Arrière_Plan_Et_Entête", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_TM_1_Arrière_Plan_Et_Entête", vbNullString, 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -434,13 +434,13 @@ Sub Assembler_TM_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dat
     'Fixer le printArea selon le nombre de lignes ET 3 colonnes
     ActiveSheet.PageSetup.PrintArea = "$A1:$D" & ws.Cells(ws.Rows.count, "B").End(xlUp).Row + 3
     
-    Call EnregistrerLogApplication("modGL_PrepEF:Assembler_TM_1_Arrière_Plan_Et_Entête", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_TM_1_Arrière_Plan_Et_Entête", vbNullString, startTime)
 
 End Sub
 
 Sub Assembler_TM_2_Lignes(ws As Worksheet)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_PrepEF:Assembler_TM_2_Lignes", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_TM_2_Lignes", vbNullString, 0)
     
     'Première ligne
     Dim currRow As Integer
@@ -476,13 +476,13 @@ Sub Assembler_TM_2_Lignes(ws As Worksheet)
     'Fixer le printArea selon le nombre de lignes ET 3 colonnes
     ActiveSheet.PageSetup.PrintArea = "$A1:$D" & ws.Cells(ws.Rows.count, "B").End(xlUp).Row
     
-    Call EnregistrerLogApplication("modGL_PrepEF:Assembler_TM_2_Lignes", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_TM_2_Lignes", vbNullString, startTime)
 
 End Sub
 
 Sub Assembler_ER_0_Main(dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_PrepEF:Assembler_ER_0_Main", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_ER_0_Main", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -504,13 +504,13 @@ Sub Assembler_ER_0_Main(dateAC As Date, dateAP As Date)
     
     Application.ScreenUpdating = True
     
-    Call EnregistrerLogApplication("modGL_PrepEF:Assembler_ER_0_Main", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_ER_0_Main", vbNullString, startTime)
 
 End Sub
 
 Sub Assembler_ER_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_PrepEF:Assembler_ER_1_Arrière_Plan_Et_Entête", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_ER_1_Arrière_Plan_Et_Entête", vbNullString, 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -565,13 +565,13 @@ Sub Assembler_ER_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dat
 
     ws.PageSetup.CenterFooter = 2
      
-    Call EnregistrerLogApplication("modGL_PrepEF:Assembler_ER_1_Arrière_Plan_Et_Entête", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_ER_1_Arrière_Plan_Et_Entête", vbNullString, startTime)
 
 End Sub
 
 Sub Assembler_ER_2_Lignes(ws As Worksheet)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_PrepEF:Assembler_ER_2_Lignes", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_ER_2_Lignes", vbNullString, 0)
     
     Dim wsAdmin As Worksheet
     Set wsAdmin = wsdADMIN
@@ -631,13 +631,13 @@ Sub Assembler_ER_2_Lignes(ws As Worksheet)
     'Fixer le printArea selon le nombre de lignes ET colonnes
     ActiveSheet.PageSetup.PrintArea = "$A1:$F" & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3
     
-    Call EnregistrerLogApplication("modGL_PrepEF:Assembler_ER_2_Lignes", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_ER_2_Lignes", vbNullString, startTime)
 
 End Sub
 
 Sub Assembler_Bilan_0_Main(dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_PrepEF:Assembler_Bilan_0_Main", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_Bilan_0_Main", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -653,13 +653,13 @@ Sub Assembler_Bilan_0_Main(dateAC As Date, dateAP As Date)
     
     Application.ScreenUpdating = True
     
-    Call EnregistrerLogApplication("modGL_PrepEF:Assembler_Bilan_0_Main", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_Bilan_0_Main", vbNullString, startTime)
     
 End Sub
 
 Sub Assembler_Bilan_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_PrepEF:Assembler_Bilan_1_Arrière_Plan_Et_Entête", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_Bilan_1_Arrière_Plan_Et_Entête", vbNullString, 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -697,13 +697,13 @@ Sub Assembler_Bilan_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, 
     
     ws.PageSetup.CenterFooter = 4
     
-    Call EnregistrerLogApplication("modGL_PrepEF:Assembler_Bilan_1_Arrière_Plan_Et_Entête", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_Bilan_1_Arrière_Plan_Et_Entête", vbNullString, startTime)
 
 End Sub
 
 Sub Assembler_Bilan_2_Lignes(ws As Worksheet)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_PrepEF:Assembler_Bilan_2_Lignes", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_Bilan_2_Lignes", vbNullString, 0)
     
     Dim wsAdmin As Worksheet
     Set wsAdmin = wsdADMIN
@@ -750,13 +750,13 @@ Sub Assembler_Bilan_2_Lignes(ws As Worksheet)
     'Fixer le printArea selon le nombre de lignes ET colonnes
     ActiveSheet.PageSetup.PrintArea = "$A1:$F" & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3
     
-    Call EnregistrerLogApplication("modGL_PrepEF:Assembler_Bilan_2_Lignes", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_Bilan_2_Lignes", vbNullString, startTime)
 
 End Sub
 
 Sub Assembler_BNR_0_Main(dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_PrepEF:Assembler_BNR_0_Main", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_BNR_0_Main", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -772,13 +772,13 @@ Sub Assembler_BNR_0_Main(dateAC As Date, dateAP As Date)
     
     Application.ScreenUpdating = True
     
-    Call EnregistrerLogApplication("modGL_PrepEF:Assembler_BNR_0_Main", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_BNR_0_Main", vbNullString, startTime)
     
 End Sub
 
 Sub Assembler_BNR_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_PrepEF:Assembler_BNR_1_Arrière_Plan_Et_Entête", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_BNR_1_Arrière_Plan_Et_Entête", vbNullString, 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -832,13 +832,13 @@ Sub Assembler_BNR_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, da
     
     ws.PageSetup.CenterFooter = 3
     
-    Call EnregistrerLogApplication("modGL_PrepEF:Assembler_BNR_1_Arrière_Plan_Et_Entête", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_BNR_1_Arrière_Plan_Et_Entête", vbNullString, startTime)
 
 End Sub
 
 Sub Assembler_BNR_2_Lignes(ws As Worksheet)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modGL_PrepEF:Assembler_BNR_2_Lignes", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_BNR_2_Lignes", vbNullString, 0)
     
     Dim wsAdmin As Worksheet
     Set wsAdmin = wsdADMIN
@@ -886,7 +886,7 @@ Sub Assembler_BNR_2_Lignes(ws As Worksheet)
     'Fixer le printArea selon le nombre de lignes ET colonnes
     ActiveSheet.PageSetup.PrintArea = "$A1:$F" & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3
     
-    Call EnregistrerLogApplication("modGL_PrepEF:Assembler_BNR_2_Lignes", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_BNR_2_Lignes", vbNullString, startTime)
 
 End Sub
 

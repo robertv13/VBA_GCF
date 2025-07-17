@@ -41,7 +41,7 @@ Sub DemarrerApplication() '2025-07-11 @ 15:16
     wsdADMIN.Range("F5").Value = rootPath
     Application.EnableEvents = True
    
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("----- DÉBUT D'UNE NOUVELLE SESSION (modAppli:DemarrerApplication) -----", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("----- DÉBUT D'UNE NOUVELLE SESSION (modAppli:DemarrerApplication) -----", vbNullString, 0)
     
     'Quel est l'utilisateur Windows ?
     gUtilisateurWindows = GetNomUtilisateur()
@@ -96,14 +96,14 @@ Sub DemarrerApplication() '2025-07-11 @ 15:16
     Set wb = Nothing
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("modAppli:DemarrerApplication", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli:DemarrerApplication", vbNullString, startTime)
     Exit Sub
     
 ErrorHandler:
     Application.EnableEvents = True 'On s'assure de toujours restaurer l'état
     Application.DisplayAlerts = True
     Application.StatusBar = False
-    Call EnregistrerLogApplication("modAppli:DemarrerApplication (ERREUR) : " & Err.description, Timer)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli:DemarrerApplication (ERREUR) : " & Err.description, Timer)
     
 End Sub
 
@@ -121,7 +121,7 @@ End Function
 
 Sub CreerFichierUtilisateurActif(ByVal userName As String)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli:CreerFichierUtilisateurActif", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:CreerFichierUtilisateurActif", vbNullString, 0)
     
     Dim traceFilePath As String
     traceFilePath = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
@@ -136,7 +136,7 @@ Sub CreerFichierUtilisateurActif(ByVal userName As String)
     Print #FileNumber, "Utilisateur " & userName & " a ouvert l'application à " & Format$(Now(), "yyyy-mm-dd hh:mm:ss") & " - Version " & ThisWorkbook.Name
     Close FileNumber
     
-    Call EnregistrerLogApplication("modAppli:CreerFichierUtilisateurActif", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli:CreerFichierUtilisateurActif", vbNullString, startTime)
     
     Exit Sub
 
@@ -152,7 +152,7 @@ End Sub
 
 Sub FixerFormatDateUtilisateur(ByVal user As String)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli:FixerFormatDateUtilisateur", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:FixerFormatDateUtilisateur", vbNullString, 0)
 
     Dim userDateFormat As String
     
@@ -171,13 +171,13 @@ Sub FixerFormatDateUtilisateur(ByVal user As String)
 
     wsdADMIN.Range("B1").Value = userDateFormat
     
-    Call EnregistrerLogApplication("modAppli:FixerFormatDateUtilisateur", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli:FixerFormatDateUtilisateur", vbNullString, startTime)
     
 End Sub
 
 Sub CreerSauvegardeMaster()
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli:CreerSauvegardeMaster", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:CreerSauvegardeMaster", vbNullString, 0)
     
     On Error GoTo MASTER_NOT_AVAILABLE
     
@@ -192,7 +192,7 @@ Sub CreerSauvegardeMaster()
     'Créer directement une copie du fichier sans ouvrir Excel
     FileCopy masterFilePath, backupFilePath
 
-    Call EnregistrerLogApplication("modAppli:CreerSauvegardeMaster", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli:CreerSauvegardeMaster", vbNullString, startTime)
     
     Exit Sub
     
@@ -208,7 +208,7 @@ End Sub
 
 Sub EcrireInformationsConfigAuMenu(ByVal user As String)
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli:EcrireInformationsConfigAuMenu", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:EcrireInformationsConfigAuMenu", vbNullString, 0)
     
     Dim oldEnableEvents As Boolean
 
@@ -246,7 +246,7 @@ Sub EcrireInformationsConfigAuMenu(ByVal user As String)
 CleanUp:
     Application.EnableEvents = oldEnableEvents
     
-    Call EnregistrerLogApplication("modAppli:EcrireInformationsConfigAuMenu", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli:EcrireInformationsConfigAuMenu", vbNullString, startTime)
     
 End Sub
 
@@ -398,7 +398,7 @@ End Sub
 
 Public Sub FermerApplicationAucuneActivite() '2025-07-02 @ 06:19
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modAppli:FermerApplicationAucuneActivite", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:FermerApplicationAucuneActivite", vbNullString, 0)
     
     'Ajoute un log pour vérification
     If gMODE_DEBUG Then Debug.Print "[modAppli:FermerApplicationAucuneActivite] Fermeture automatique déclenchée à : " & Format(Now, "hh:mm:ss")

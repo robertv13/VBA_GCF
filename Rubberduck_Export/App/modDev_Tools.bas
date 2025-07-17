@@ -1424,7 +1424,7 @@ Sub ValideNomProcedureCallLog()
                 If InStr(procedure, "(") <> 0 Then Stop
             End If
             code = ws.Range("F" & i).Value
-            posCL = InStr(code, "Call EnregistrerLogApplication")
+            posCL = InStr(code, "call modDev_utils.EnregistrerLogApplication")
             code = Mid$(code, posCL + 17)
             If InStr(code, module & ":" & procedure) = 0 Then
                 Debug.Print i, module & ":" & procedure, code
@@ -1948,3 +1948,332 @@ Function Pad(text As String, longueur As Integer) As String '2025-07-03 @ 17:54
     Pad = Left(text & Space(longueur), longueur)
     
 End Function
+
+Sub InventaireProceduresETFonctions() '2025-07-15 @ 22:56
+
+    Dim comp As VBIDE.VBComponent
+    Dim i As Long, ligne As String
+    Dim regexDecl As Object, regexCall As Object
+    Dim tableau()
+    Dim r As Long
+
+    ' Initialiser expressions régulières
+    Set regexDecl = CreateObject("VBScript.RegExp")
+    With regexDecl
+        .Pattern = "^\s*(Public|Private)?\s*(Sub|Function|Property\s+(Get|Let|Set))"
+        .IgnoreCase = True
+        .Global = False
+    End With
+
+    Set regexCall = CreateObject("VBScript.RegExp")
+    With regexCall
+        .Pattern = "(OnAction\s*=\s*""[^""]+""|Application\.Run\s*""[^""]+""|CallByName\s*\(.*?""[^""]+""[^)]*\))"
+        .IgnoreCase = True
+        .Global = True
+    End With
+
+    ' Dictionnaire des noms déclarés
+    Dim dictNomModule As Object: Set dictNomModule = CreateObject("Scripting.Dictionary")
+    ReDim tableau(1 To 2000, 1 To 9)
+    r = 0
+
+    ' Parcours des composants VBA
+    For Each comp In ThisWorkbook.VBProject.VBComponents
+        Dim typeModule As String
+        Select Case comp.Type
+        Case vbext_ct_StdModule
+            typeModule = "3_Standard"
+        Case vbext_ct_ClassModule
+            typeModule = "4_Classe"
+        Case vbext_ct_Document
+            typeModule = "1_Feuille/Workbook"
+        Case vbext_ct_MSForm
+            typeModule = "2_UserForm"
+        Case Else
+            typeModule = "z_Autre"
+        End Select
+        For i = 1 To comp.codeModule.CountOfLines
+            ligne = comp.codeModule.Lines(i, 1)
+
+            ' Déclaration
+            If regexDecl.test(ligne) Then
+                r = r + 1
+                Dim nomProc As String: nomProc = ExtraireNomProcedure(ligne)
+                Dim t As String, p As String
+                Call ExtraireTypeEtPortee(ligne, t, p)
+
+                tableau(r, 1) = comp.Name
+                tableau(r, 2) = nomProc
+                tableau(r, 3) = t
+                tableau(r, 4) = p
+                tableau(r, 5) = ligne
+                tableau(r, 6) = "Déclaration"
+                tableau(r, 7) = typeModule
+                tableau(r, 8) = i
+                tableau(r, 9) = ""
+
+                If nomProc <> "" Then
+                    If Not dictNomModule.Exists(nomProc) Then
+                        dictNomModule.Add nomProc, comp.Name
+                    Else
+                        dictNomModule(nomProc) = dictNomModule(nomProc) & " | " & comp.Name
+                    End If
+                End If
+            End If
+
+            ' Appels indirects
+            If regexCall.test(ligne) Then
+                Dim matchesCall: Set matchesCall = regexCall.Execute(ligne)
+                Dim appel
+                For Each appel In matchesCall
+                    r = r + 1
+                    Dim nomAppel As String: nomAppel = ExtraireNomAppelIndirect(appel.Value)
+
+                    tableau(r, 1) = comp.Name
+                    tableau(r, 2) = nomAppel
+                    tableau(r, 3) = "---"
+                    tableau(r, 4) = "---"
+                    tableau(r, 5) = ligne
+                    If InStr(appel, "OnAction") > 0 Then
+                        tableau(r, 6) = "Appel indirect (.OnAction)"
+                    ElseIf InStr(appel, "Application.Run") > 0 Then
+                        tableau(r, 6) = "Appel indirect (Application.Run)"
+                    ElseIf InStr(appel, "CallByName") > 0 Then
+                        tableau(r, 6) = "Appel indirect (CallByName)"
+                    Else
+                        tableau(r, 6) = "Appel indirect (autre)"
+                    End If
+                    tableau(r, 7) = typeModule
+                    tableau(r, 8) = i
+
+                    If nomAppel <> "" Then
+                        If dictNomModule.Exists(nomAppel) Then
+                            tableau(r, 9) = ""
+                        Else
+                            tableau(r, 9) = "Non trouvé"
+                        End If
+                    Else
+                        tableau(r, 9) = vbNullString
+                    End If
+                Next appel
+            End If
+        Next i
+    Next comp
+
+    'Écriture dans la feuille
+    Dim ws As Worksheet
+    On Error Resume Next
+    Application.DisplayAlerts = False
+    Worksheets("InventaireProcedures").Delete
+    Application.DisplayAlerts = True
+    On Error GoTo 0
+
+    Set ws = ThisWorkbook.Sheets.Add
+    ws.Name = "InventaireProcedures"
+    ws.Range("A1:I1").Value = Array("Module", "Nom", "Type", "Portée", "Contenu", "Catégorie", "Type de module", "Ligne", "Vérification")
+    ws.Range("A2").Resize(r, 9).Value = tableau
+
+    With ws.Sort
+        .SortFields.Clear
+        .SortFields.Add key:=ws.Range("G2:G" & r), Order:=xlAscending ' Type de module
+        .SortFields.Add key:=ws.Range("A2:A" & r), Order:=xlAscending ' Module
+        .SortFields.Add key:=ws.Range("B2:B" & r), Order:=xlAscending ' Nom
+        .SetRange ws.Range("A2:I" & r)
+        .Header = xlNo
+        .Apply
+    End With
+    
+    With ws.Range("A1:I1")
+        .Interior.Color = RGB(180, 198, 231)     ' Bleu pâle
+        .Font.Bold = True
+        .HorizontalAlignment = xlCenter
+    End With
+    
+    ws.Columns.AutoFit
+    ws.Range("A1:I1").AutoFilter
+    
+    With ws.Range("A2:I" & r)
+        For i = 2 To r
+            If (i Mod 2 = 0) Then
+                ws.Range("A" & i & ":I" & i).Interior.Color = RGB(240, 240, 240)
+            End If
+        Next i
+    End With
+
+    With ws.PageSetup
+        .Orientation = xlLandscape
+        .TopMargin = Application.CentimetersToPoints(0.4)
+        .BottomMargin = Application.CentimetersToPoints(0.4)
+        .LeftMargin = Application.CentimetersToPoints(0.4)
+        .RightMargin = Application.CentimetersToPoints(0.4)
+        .FitToPagesWide = 1
+        .FitToPagesTall = False
+        .Zoom = False
+        .PrintTitleRows = "$1:$1"
+        .LeftFooter = Format(Now, "yyyy-mm-dd à HH:mm:ss")
+        .RightFooter = "Page &P sur &N"
+    End With
+
+    MsgBox "Analyse terminée : " & r & " entrées listées dans 'InventaireProcedures'.", vbInformation
+    
+End Sub
+
+Function ExtraireNomProcedure(ligne As String) As String '2025-07-15 @ 22:56
+
+    Dim mots() As String, i As Long
+    ligne = Trim(ligne)
+    If InStr(ligne, "(") > 0 Then ligne = Left(ligne, InStr(ligne, "(") - 1)
+    ligne = Replace(ligne, ":", " ")
+    mots = Split(ligne)
+    For i = UBound(mots) To 0 Step -1
+        If mots(i) <> "" Then
+            ExtraireNomProcedure = mots(i)
+            Exit Function
+        End If
+    Next i
+    
+End Function
+
+Function ExtraireNomAppelIndirect(texte As String) As String '2025-07-15 @ 22:56
+
+    Dim debut As Long, fin As Long
+    ExtraireNomAppelIndirect = ""
+    debut = InStr(texte, """")
+    If debut > 0 Then
+        fin = InStr(debut + 1, texte, """")
+        If fin > debut Then
+            ExtraireNomAppelIndirect = Mid(texte, debut + 1, fin - debut - 1)
+        End If
+    End If
+    
+End Function
+
+Function ExtraireTypeEtPortee(ligne As String, ByRef TypeRetour As String, ByRef PorteeRetour As String) '2025-07-15 @ 22:56
+
+    Dim reg As Object: Set reg = CreateObject("VBScript.RegExp")
+    reg.Pattern = "^\s*(Public|Private)?\s*(Sub|Function|Property\s+(Get|Let|Set))"
+    reg.IgnoreCase = True
+    reg.Global = False
+
+    If reg.test(ligne) Then
+        Dim matches: Set matches = reg.Execute(ligne)
+        PorteeRetour = matches(0).SubMatches(0)
+        If PorteeRetour = "" Then PorteeRetour = "Public"
+
+        If matches(0).SubMatches(1) = "Property" Then
+            TypeRetour = "Property " & matches(0).SubMatches(2)
+        Else
+            TypeRetour = matches(0).SubMatches(1)
+        End If
+    Else
+        TypeRetour = "---": PorteeRetour = "---"
+    End If
+    
+End Function
+
+Function ConstruireDictionnaireDeclarations() As Object '2025-07-15 @ 22:56
+
+    Dim dict As Object: Set dict = CreateObject("Scripting.Dictionary")
+    Dim ws As Worksheet: Set ws = Worksheets("InventaireProcedures")
+    Dim lastRow As Long: lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).Row
+
+    Dim i As Long, nom As String, moduleNom As String
+    For i = 2 To lastRow
+        If ws.Cells(i, 6).Value = "Déclaration" Then
+            nom = Trim(ws.Cells(i, 2).Value)
+            moduleNom = Trim(ws.Cells(i, 1).Value)
+            If nom <> "" Then
+                If Not dict.Exists(nom) Then
+                    dict.Add nom, moduleNom
+                End If
+            End If
+        End If
+    Next i
+
+    Set ConstruireDictionnaireDeclarations = dict
+    
+End Function
+
+Sub InjecterModuleDansAppels() '2025-07-15 @ 22:56
+
+    Dim dict As Object: Set dict = ConstruireDictionnaireDeclarations()
+    Dim ws As Worksheet: Set ws = Worksheets("InventaireProcedures")
+    Dim lastRow As Long: lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).Row
+
+    Dim i As Long, nomAppel As String, moduleAppelant As String, moduleCible As String
+
+    For i = 2 To lastRow
+        If ws.Cells(i, 6).Value Like "Appel indirect*" Then
+            nomAppel = Trim(ws.Cells(i, 2).Value)
+            moduleAppelant = Trim(ws.Cells(i, 1).Value)
+
+            If dict.Exists(nomAppel) Then
+                moduleCible = dict(nomAppel)
+                If moduleAppelant <> moduleCible Then
+                    Debug.Print "Appel externe : '" & nomAppel & "' devient '" & moduleCible & "." & nomAppel & "'"
+                    'Option : marquer dans colonne 10
+                    ws.Cells(i, 10).Value = moduleCible & "." & nomAppel
+'                Else
+'                    Debug.Print "Appel interne : laisser """ & nomAppel & """"
+                End If
+            Else
+                Debug.Print "Nom non reconnu (" & i & ") '" & nomAppel & "'"
+            End If
+        End If
+    Next i
+    
+End Sub
+
+Sub InjecterFormeModuleDansColonne10() '2025-07-15 @ 22:56
+
+    Dim ws As Worksheet: Set ws = Worksheets("InventaireProcedures")
+    Dim lastRow As Long: lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).Row
+
+    ' ?? Construire dictionnaire des procédures/fonctions
+    Dim dictNomModule As Object: Set dictNomModule = CreateObject("Scripting.Dictionary")
+    Dim i As Long, nom As String, moduleNom As String
+
+    For i = 2 To lastRow
+        If ws.Cells(i, 6).Value = "Déclaration" Then
+            nom = Trim(ws.Cells(i, 2).Value)
+            moduleNom = Trim(ws.Cells(i, 1).Value)
+            If nom <> "" Then
+                If Not dictNomModule.Exists(nom) Then
+                    dictNomModule.Add nom, moduleNom
+                End If
+            End If
+        End If
+    Next i
+
+    ' ?? Analyse des lignes appelantes
+    Dim nomAppel As String, moduleAppelant As String
+
+    Dim contenu As String
+    Dim injection As String
+
+    For i = 2 To lastRow
+        nomAppel = Trim(ws.Cells(i, 2).Value)
+        moduleAppelant = Trim(ws.Cells(i, 1).Value)
+
+        If nomAppel <> "" Then
+            If dictNomModule.Exists(nomAppel) Then
+                moduleNom = dictNomModule(nomAppel)
+                contenu = Trim(ws.Cells(i, 5).Value)
+                injection = moduleNom & "." & nomAppel
+                If moduleNom <> moduleAppelant And InStr(contenu, injection) = 0 Then
+                    ws.Cells(i, 10).Value = injection
+                Else
+                    ws.Cells(i, 10).Value = vbNullString
+                End If
+            Else
+                ws.Cells(i, 10).Value = "Inconnu"
+            End If
+        Else
+            ws.Cells(i, 10).Value = vbNullString
+        End If
+    Next i
+
+    MsgBox "Injection terminée dans la colonne 10", vbInformation
+    
+End Sub
+

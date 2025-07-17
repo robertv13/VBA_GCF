@@ -4,7 +4,7 @@ Public clientCode As String
 
 Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("wshTEC_Radiation:Worksheet_Activate", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("wshTEC_Radiation:Worksheet_Activate", vbNullString, 0)
     
     If gFromMenu = False Then
         Exit Sub
@@ -39,7 +39,7 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
     Call Remplir_Plage_Avec_Couleur(cellsToColor, gCOULEUR_BASE_TEC)
     Application.EnableEvents = True
     
-    Call DeterminerOrdreDeTabulation(ws)
+    Call modDev_Utils.DeterminerOrdreDeTabulation(ws)
         
     Call Prepare_Pour_Nouvelle_Radiation
     
@@ -57,13 +57,13 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("wshTEC_Radiation:Worksheet_Activate", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("wshTEC_Radiation:Worksheet_Activate", vbNullString, startTime)
 
 End Sub
 
 Private Sub Worksheet_SelectionChange(ByVal Target As Range)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("wshTEC_Radiation:Worksheet_SelectionChange", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("wshTEC_Radiation:Worksheet_SelectionChange", vbNullString, 0)
     
     If gPreviousCellAddress <> vbNullString Then
         Range(gPreviousCellAddress).Interior.Color = vbWhite
@@ -81,13 +81,13 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     gPreviousCellAddress = Target.Address
     
-    Call EnregistrerLogApplication("wshTEC_Radiation:Worksheet_SelectionChange", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("wshTEC_Radiation:Worksheet_SelectionChange", vbNullString, startTime)
     
 End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("wshTEC_Radiation:Worksheet_Change", Target.Address, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("wshTEC_Radiation:Worksheet_Change", Target.Address, 0)
     
     Dim fullDate As Variant
     
@@ -152,6 +152,6 @@ ExitSub:
 
     Application.EnableEvents = True
     
-    Call EnregistrerLogApplication("wshTEC_Radiation:Worksheet_Change", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("wshTEC_Radiation:Worksheet_Change", vbNullString, startTime)
   
 End Sub

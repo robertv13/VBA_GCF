@@ -3,7 +3,7 @@ Option Explicit
 
 Sub ImporterPlanComptable() '2024-02-17 @ 07:21
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modImport:ImporterPlanComptable", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterPlanComptable", vbNullString, 0)
 
     'Clear all cells, but the headers, in the target worksheet
     wsdADMIN.Range("T10").CurrentRegion.offset(2, 0).ClearContents
@@ -46,13 +46,13 @@ Sub ImporterPlanComptable() '2024-02-17 @ 07:21
     Set connStr = Nothing
     Set recSet = Nothing
 
-    Call EnregistrerLogApplication("modImport:ImporterPlanComptable", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterPlanComptable", vbNullString, startTime)
 
 End Sub
 
 Sub ImporterMASTERGenerique(sourceWb As String, ws As Worksheet, onglet As String, table As String) '2025-05-07 @ 18:00
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modImport:ImporterMASTERGenerique:" & onglet, vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterMASTERGenerique:" & onglet, vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -111,13 +111,13 @@ Sub ImporterMASTERGenerique(sourceWb As String, ws As Worksheet, onglet As Strin
     Set targetCell = Nothing
     Set tbl = Nothing
     
-    Call EnregistrerLogApplication("modImport:ImporterMASTERGenerique:" & onglet, vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterMASTERGenerique:" & onglet, vbNullString, startTime)
 
 End Sub
 
 Sub ImporterClients() 'Using ADODB - 2024-02-25 @ 10:23
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modImport:ImporterClients", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterClients", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -171,13 +171,13 @@ Sub ImporterClients() 'Using ADODB - 2024-02-25 @ 10:23
     Set recSet = Nothing
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("modImport:ImporterClients", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterClients", vbNullString, startTime)
 
 End Sub
 
 Sub ImporterDebRecurrent() '2025-05-07 @ 14:14
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modImport:ImporterDebRecurrent", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterDebRecurrent", vbNullString, 0)
     
     'Mettre en place les variables (paramètres)
     Dim sourceWb As String
@@ -193,13 +193,13 @@ Sub ImporterDebRecurrent() '2025-05-07 @ 14:14
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("modImport:ImporterDebRecurrent", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterDebRecurrent", vbNullString, startTime)
 
 End Sub
 
 Sub ImporterDebTrans() '2025-05-07 @ 14:25
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modImport:ImporterDebTrans", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterDebTrans", vbNullString, 0)
     
     'Mettre en place les variables (paramètres)
     Dim sourceWb As String
@@ -215,13 +215,13 @@ Sub ImporterDebTrans() '2025-05-07 @ 14:25
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("modImport:ImporterDebTrans", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterDebTrans", vbNullString, startTime)
 
 End Sub
 
 Sub ImporterEncDetails() '2025-05-07 @ 14:45
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modImport:ImporterEncDetails", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterEncDetails", vbNullString, 0)
     
     'Mettre en place les variables (paramètres)
     Dim sourceWb As String
@@ -237,13 +237,13 @@ Sub ImporterEncDetails() '2025-05-07 @ 14:45
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("modImport:ImporterEncDetails", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterEncDetails", vbNullString, startTime)
 
 End Sub
 
 Sub ImporterEncEntete() '2025-05-07 @ 14:50
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modImport:ImporterEncEntete", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterEncEntete", vbNullString, 0)
     
     'Mettre en place les variables (paramètres)
     Dim sourceWb As String
@@ -259,13 +259,13 @@ Sub ImporterEncEntete() '2025-05-07 @ 14:50
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("modImport:ImporterEncEntete", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterEncEntete", vbNullString, startTime)
 
 End Sub
 
 Sub ImporterCCRegularisations() '2025-05-07 @ 13:58
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modImport:ImporterCCRegularisations", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterCCRegularisations", vbNullString, 0)
     
     'Mettre en place les variables (paramètres)
     Dim sourceWb As String
@@ -281,13 +281,13 @@ Sub ImporterCCRegularisations() '2025-05-07 @ 13:58
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("modImport:ImporterCCRegularisations", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterCCRegularisations", vbNullString, startTime)
 
 End Sub
 
 Sub ImporterFacComptesClients() '2025-05-07 @ 14:52
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modImport:ImporterFacComptesClients", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFacComptesClients", vbNullString, 0)
     
     'Mettre en place les variables (paramètres)
     Dim sourceWb As String
@@ -303,13 +303,13 @@ Sub ImporterFacComptesClients() '2025-05-07 @ 14:52
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("modImport:ImporterFacComptesClients", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFacComptesClients", vbNullString, startTime)
 
 End Sub
 
 Sub ImporterFacDetails() '2025-05-07 @ 14:59
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modImport:ImporterFacDetails", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFacDetails", vbNullString, 0)
     
     'Mettre en place les variables (paramètres)
     Dim sourceWb As String
@@ -325,13 +325,13 @@ Sub ImporterFacDetails() '2025-05-07 @ 14:59
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("modImport:ImporterFacDetails", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFacDetails", vbNullString, startTime)
 
 End Sub
 
 Sub ImporterFacEntete() '2025-05-07 @ 15:02
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modImport:ImporterFacEntete", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFacEntete", vbNullString, 0)
     
     'Mettre en place les variables (paramètres)
     Dim sourceWb As String
@@ -347,13 +347,13 @@ Sub ImporterFacEntete() '2025-05-07 @ 15:02
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("modImport:ImporterFacEntete", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFacEntete", vbNullString, startTime)
 
 End Sub
 
 Sub ImporterFacSommaireTaux() '2025-05-07 @ 16:08
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modImport:ImporterFacSommaireTaux", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFacSommaireTaux", vbNullString, 0)
     
     'Mettre en place les variables (paramètres)
     Dim sourceWb As String
@@ -369,13 +369,13 @@ Sub ImporterFacSommaireTaux() '2025-05-07 @ 16:08
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("modImport:ImporterFacSommaireTaux", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFacSommaireTaux", vbNullString, startTime)
 
 End Sub
 
 Sub ImporterFacProjetsDetails() '2025-05-07 @ 15:57
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modImport:ImporterFacProjetsDetails", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFacProjetsDetails", vbNullString, 0)
     
     'Mettre en place les variables (paramètres)
     Dim sourceWb As String
@@ -408,13 +408,13 @@ Sub ImporterFacProjetsDetails() '2025-05-07 @ 15:57
     Set lo = Nothing
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("modImport:ImporterFacProjetsDetails", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFacProjetsDetails", vbNullString, startTime)
 
 End Sub
 
 Sub ImporterFacProjetsEntete() '2025-05-07 @ 16:05
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modImport:ImporterFacProjetsEntete", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFacProjetsEntete", vbNullString, 0)
     
     'Mettre en place les variables (paramètres)
     Dim sourceWb As String
@@ -447,13 +447,13 @@ Sub ImporterFacProjetsEntete() '2025-05-07 @ 16:05
     Set lo = Nothing
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("modImport:ImporterFacProjetsEntete", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFacProjetsEntete", vbNullString, startTime)
 
 End Sub
 
 Sub ImporterFournisseurs() 'Using ADODB - 2024-07-03 @ 15:43
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modImport:ImporterFournisseurs", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFournisseurs", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -503,13 +503,13 @@ Sub ImporterFournisseurs() 'Using ADODB - 2024-07-03 @ 15:43
     Set recSet = Nothing
     Set rng = Nothing
     
-    Call EnregistrerLogApplication("modImport:ImporterFournisseurs", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFournisseurs", vbNullString, startTime)
 
 End Sub
 
 Sub ImporterEJRecurrente() '2025-05-07 @ 14:35
 
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modImport:ImporterEJRecurrente", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterEJRecurrente", vbNullString, 0)
     
     'Mettre en place les variables (paramètres)
     Dim sourceWb As String
@@ -527,13 +527,13 @@ Sub ImporterEJRecurrente() '2025-05-07 @ 14:35
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("modImport:ImporterEJRecurrente", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterEJRecurrente", vbNullString, startTime)
 
 End Sub
 
 Sub ImporterGLTransactions() '2025-05-07 @ 16:10
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modImport:ImporterGLTransactions", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterGLTransactions", vbNullString, 0)
     
     'Mettre en place les variables (paramètres)
     Dim sourceWb As String
@@ -549,13 +549,13 @@ Sub ImporterGLTransactions() '2025-05-07 @ 16:10
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call EnregistrerLogApplication("modImport:ImporterGLTransactions", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterGLTransactions", vbNullString, startTime)
 
 End Sub
 
 Sub ImporterTEC() '2024-02-14 @ 06:19
     
-    Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modImport:ImporterTEC", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterTEC", vbNullString, 0)
     
     Application.StatusBar = "Importation des TEC à partir de GCF_MASTER.xlsx" '2025-06-13 @ 08:47
     
@@ -575,7 +575,7 @@ Sub ImporterTEC() '2024-02-14 @ 06:19
     
     Application.StatusBar = False '2025-06-13 @ 08:47
     
-    Call EnregistrerLogApplication("modImport:ImporterTEC", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterTEC", vbNullString, startTime)
 
 End Sub
 

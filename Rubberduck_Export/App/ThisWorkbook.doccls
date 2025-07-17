@@ -1,32 +1,5 @@
 Option Explicit
 
-'Private Sub Workbook_SheetChange(ByVal Sh As Object, ByVal Target As Range) '2025-07-03 @ 10:58
-'
-'    Call EnregistrerActivite("SheetChange [" & Sh.Name & "] Plage = " & Target.Address)
-'
-'End Sub
-'
-'Private Sub Workbook_SheetSelectionChange(ByVal Sh As Object, ByVal Target As Range) '2025-07-03 @ 10:58
-'
-'    Dim nbCellules As Long
-'    On Error Resume Next
-'    nbCellules = Target.Cells.count
-'    If Err.Number <> 0 Then
-'        nbCellules = -1 ' ou 0, selon ton choix
-'        Err.Clear
-'    End If
-'    On Error GoTo 0
-'
-'    If nbCellules <= 10 And nbCellules > 0 Then
-'        Call EnregistrerActivite("SelectionChange [" & Sh.Name & "] Plage = " & Target.Address & _
-'                                " NbCellules = " & nbCellules & " Valeur = '" & Target.text & "'")
-'    Else
-'        Call EnregistrerActivite("SelectionChange [" & Sh.Name & "] Plage = " & Target.Address & _
-'                                " NbCellules = " & nbCellules)
-'    End If
-'
-'End Sub
-'
 Private Sub Workbook_SheetActivate(ByVal Sh As Object) '2025-07-03 @ 10:58
 
     Call EnregistrerActivite("SheetActivate [" & Sh.Name & "]")
@@ -36,12 +9,6 @@ End Sub
 Private Sub Workbook_SheetDeactivate(ByVal Sh As Object) '2025-07-03 @ 10:58
 
     Call EnregistrerActivite("SheetDeactivate [" & Sh.Name & "]")
-    
-End Sub
-
-Private Sub Workbook_SheetFollowHyperlink(ByVal Sh As Object, ByVal Target As Hyperlink) '2025-07-03 @ 10:58
-
-    Call EnregistrerActivite("SheetFollowHyperlink [" & Sh.Name & "]")
     
 End Sub
 
