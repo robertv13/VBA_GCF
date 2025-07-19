@@ -72,6 +72,9 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     'Is client been selected ?
     If Not Intersect(Target, wshTEC_Radiation.Range("F3")) Is Nothing Then
         Target.Interior.Color = gCOULEUR_SAISIE
+        If wshTEC_Radiation.Range("E6").Value <> vbNullString Then
+            Call Prepare_Pour_Nouvelle_Radiation
+        End If
     End If
     
     'Is date been selected ?
@@ -108,6 +111,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         Target.Interior.Color = gCOULEUR_BASE_TEC
         gPreviousCellAddress = Target.Address
         clientCode = allCols(fClntFMClientID)
+        Range("K3").Value = ""
         Application.EnableEvents = True
         If Fn_Is_Client_Facturable(clientCode) = False Then
             MsgBox "Ce client n'est pas un client facturable", vbInformation
@@ -135,7 +139,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         End If
        
         'Future date ?
-        If CDate(Range("L3").Value) > Date Then
+        If CDate(Range("K3").Value) > Date Then
             If MsgBox("Il n'est pas permis d'utiliser une date dans le futur !", vbYesNo + vbCritical, "Utilisation d'une date FUTURE") = vbNo Then
                 Application.EnableEvents = False
                 Target.ClearContents

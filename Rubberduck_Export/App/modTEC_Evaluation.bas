@@ -7,11 +7,13 @@ Sub TEC_Evaluation_Procedure(cutoffDate As String)
 
     Dim maxDate As Date
     
-    Call TEC_EvaluationViderFeuille
-    
-    Call TEC_Evaluation_Calcul(cutoffDate, maxDate)
-    
-    Call TEC_Evaluation_Affichage(cutoffDate, maxDate)
+    If Not cutoffDate = vbNullString Then
+        Call TEC_EvaluationViderFeuille
+        
+        Call TEC_Evaluation_Calcul(cutoffDate, maxDate)
+        
+        Call TEC_Evaluation_Affichage(cutoffDate, maxDate)
+    End If
     
 End Sub
 
@@ -263,7 +265,7 @@ Sub TEC_Evaluation_Affichage(cutoffDate As String, maxDate As Date)
         currentRow = currentRow + 2
     Next i
 
-    'Obtenir le solde d'ouverture & les transactions pour le compte TEC au Grand Livre
+    'Obtenir le solde au G/L pour le compte TEC
     Dim solde As Currency
     solde = Fn_Get_GL_Account_Balance(ObtenirNoGlIndicateur("Travaux en cours"), maxDate)
 
@@ -443,8 +445,8 @@ Sub AjouterEcritureGL(entry As clsGL_Entry) '2025-06-08 @ 09:37
               "'" & Replace(entry.Source, "'", "''") & "'," & _
               "'" & l.NoCompte & "'," & _
               "'" & Replace(l.description, "'", "''") & "'," & _
-              IIf(l.Montant >= 0, Replace(l.Montant, ",", "."), "NULL") & "," & _
-              IIf(l.Montant < 0, Replace(-l.Montant, ",", "."), "NULL") & "," & _
+              IIf(l.montant >= 0, Replace(l.montant, ",", "."), "NULL") & "," & _
+              IIf(l.montant < 0, Replace(-l.montant, ",", "."), "NULL") & "," & _
               "'" & Replace(entry.AutreRemarque, "'", "''") & "'," & _
               "'" & ts & "'" & _
               ")"
@@ -481,12 +483,12 @@ Sub AjouterEcritureGL(entry As clsGL_Entry) '2025-06-08 @ 09:37
             .Cells(lastRow + i, 4).Value = entry.Source
             .Cells(lastRow + i, 5).Value = l.NoCompte
             .Cells(lastRow + i, 6).Value = l.description
-            If l.Montant >= 0 Then
-                .Cells(lastRow + i, 7).Value = l.Montant
+            If l.montant >= 0 Then
+                .Cells(lastRow + i, 7).Value = l.montant
                 .Cells(lastRow + i, 8).Value = vbNullString
             Else
                 .Cells(lastRow + i, 7).Value = vbNullString
-                .Cells(lastRow + i, 8).Value = -l.Montant
+                .Cells(lastRow + i, 8).Value = -l.montant
             End If
             .Cells(lastRow + i, 9).Value = entry.AutreRemarque
             .Cells(lastRow + i, 10).Value = ts

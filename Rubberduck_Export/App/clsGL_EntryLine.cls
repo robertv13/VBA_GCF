@@ -36,11 +36,11 @@ Public Property Let description(val As String)
 End Property
 
 'Montant (+ ou -)
-Public Property Get Montant() As Double
-    Montant = pMontant
+Public Property Get montant() As Double
+    montant = pMontant
 End Property
 
-Public Property Let Montant(val As Double)
+Public Property Let montant(val As Double)
     pMontant = val
 End Property
 

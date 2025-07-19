@@ -131,219 +131,6 @@ ErrHandler:
     
 End Function
 
-'Function Get_Summary_By_GL_Account(dateMin As Date, dateMax As Date) As Variant '2025-06-01 @ 13:46
-'
-'    Dim cn As Object, rs As Object
-'    Dim wbTemp As Workbook, wsDest As Worksheet
-'    Dim sql As String, tmpFile As String
-'    Dim arr(), i As Long, totalDebit As Currency, totalCredit As Currency
-'    Const HDR_ROW As Long = 4
-'
-'    On Error GoTo ErrHandler
-'
-'    'Copie temporaire de la feuille GL_Trans
-'    tmpFile = CréerCopieTemporaireSansFlash("GL_Trans")
-'    If tmpFile = "" Then Exit Function
-'
-'    ' Requête SQL pour résumer les débits et crédits par compte
-'    sql = "SELECT [NoCompte], " & _
-'          "SUM([Débit]) AS TotalDébit, SUM([Crédit]) AS TotalCrédit " & _
-'          "FROM [GL_Trans$] " & _
-'          "WHERE [Date] >= #" & Format(dateMin, "yyyy-mm-dd") & "# " & _
-'          "AND [Date] <= #" & Format(dateMax, "yyyy-mm-dd") & "# " & _
-'          "GROUP BY [NoCompte] " & _
-'          "ORDER BY [NoCompte]"
-'
-'    ' Connexion ADO
-'    Set cn = CreateObject("ADODB.Connection")
-'    cn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & tmpFile & ";Extended Properties=""Excel 12.0 Xml;HDR=YES"";"
-'
-'    Set rs = cn.Execute(sql)
-'    If rs.EOF Then
-'        rs.Close: cn.Close
-'        If Len(Dir(tmpFile, vbNormal)) > 0 Then Kill tmpFile
-'        Exit Function
-'    End If
-'
-'    'Construction d'un dictionnaire pour le Plan Comptable (tous les comptes)
-'    Dim dPlanComptable As Object: Set dPlanComptable = CreateObject("Scripting.Dictionary")
-'    Dim arrPC As Variant
-'    arrPC = Fn_Get_Plan_Comptable(2) 'Retourne 2 colonnes (Code & Description)
-'    For i = 1 To UBound(arrPC, 1)
-'        If Not dPlanComptable.Exists(arrPC(i, 1)) Then
-'            dPlanComptable.Add arrPC(i, 1), arrPC(i, 2)
-'        End If
-'    Next i
-'
-'    'Fusion du recordSet et du dictionnaire du Plan Comptable
-'    Dim solde As Currency, tDebit As Currency, tCredit As Currency
-'    Dim dSoldeParGL As Object: Set dSoldeParGL = CreateObject("Scripting.Dictionary")
-'
-'    Dim rsKey As String
-'    Do While Not rs.EOF
-'        rsKey = rs.Fields("NoCompte").Value
-'        'S'assurer que tous les comptes du résultat SQL sont présents dans le plan comptable
-'        If Not dPlanComptable.Exists(rsKey) Then
-'            dPlanComptable.Add rsKey, "Compte inconnu"
-'        End If
-'        tDebit = Nz(rs.Fields("TotalDébit"))
-'        tCredit = Nz(rs.Fields("TotalCrédit"))
-'        If tDebit <> 0 Or tCredit <> 0 Then
-'            If Not dSoldeParGL.Exists(rsKey) Then
-'                dSoldeParGL.Add rsKey, Array(tDebit, tCredit)
-'            End If
-'        End If
-'        rs.MoveNext
-'    Loop
-'
-'    'Création d'un tableau pour emmagasiner les informations
-'    Dim soldes As Variant
-'    Dim tblData() As Variant
-'    ReDim tblData(1 To dPlanComptable.count, 1 To 4)
-'    i = 1
-'    Dim key As Variant
-'    Const COL_CODE = 1, COL_DESC = 2, COL_DEBIT = 3, COL_CREDIT = 4
-'    For Each key In dPlanComptable.keys
-'        soldes = Array(0, 0)
-'        If dSoldeParGL.Exists(key) Then
-'            soldes = dSoldeParGL(key)
-'            solde = soldes(0) - soldes(1)
-'        Else
-'            solde = 0
-'        End If
-'
-'        If soldes(0) <> 0 Or soldes(1) <> 0 Then
-'            tblData(i, COL_CODE) = key
-'            tblData(i, COL_DESC) = dPlanComptable(key)
-'            If solde >= 0 Then
-'                tblData(i, COL_DEBIT) = solde
-'            Else
-'                tblData(i, COL_CREDIT) = -solde
-'            End If
-'            i = i + 1
-'        End If
-'    Next key
-'
-'    'Enlève les lignes qui n'ont pas MINIMALEMENT un débit ou un crédit
-'    Dim tblFinal() As Variant
-'    Dim j As Long
-'    If i > 1 Then
-'        ReDim tblFinal(1 To i - 1, 1 To 4)
-'        For j = 1 To i - 1
-'            tblFinal(j, COL_CODE) = tblData(j, COL_CODE)
-'            tblFinal(j, COL_DESC) = tblData(j, COL_DESC)
-'            tblFinal(j, COL_DEBIT) = tblData(j, COL_DEBIT)
-'            tblFinal(j, COL_CREDIT) = tblData(j, COL_CREDIT)
-'        Next j
-'        'Utilisez tblFinal à la place de tblData
-'        tblData = tblFinal
-'    Else
-'        Erase tblData
-'        Exit Function
-'    End If
-'    Erase tblFinal
-'
-'    'Écrire résultats + calculer totaux
-'    Dim ligne As Long
-'    ligne = 4
-'    Dim globalDebit As Currency, globalCredit As Currency
-'    Application.EnableEvents = False
-'    For i = 1 To UBound(tblData, 1)
-'        wshGL_BV.Cells(ligne, 4).Resize(1, 4).Value = Array(tblData(i, COL_CODE), tblData(i, COL_DESC), tblData(i, COL_DEBIT), tblData(i, COL_CREDIT))
-'        globalDebit = globalDebit + tblData(i, COL_DEBIT)
-'        globalCredit = globalCredit + tblData(i, COL_CREDIT)
-'        ligne = ligne + 1
-'    Next i
-'
-'   'Afficher les totaux
-'    ligne = ligne + 1
-'    With wshGL_BV.Cells(ligne, 4)
-'        .Value = "TOTALS"
-'        .Font.Bold = True
-'    End With
-'    wshGL_BV.Cells(ligne, 6).Value = globalDebit
-'    wshGL_BV.Cells(ligne, 7).Value = globalCredit
-'
-'    With wshGL_BV.Range("F" & ligne & ":" & "G" & ligne)
-'        With .Borders(xlEdgeTop)
-'            .LineStyle = xlContinuous
-'            .ColorIndex = 0
-'            .TintAndShade = 0
-'            .Weight = xlThin
-'        End With
-'        With .Borders(xlEdgeBottom)
-'            .LineStyle = xlContinuous
-'            .ColorIndex = 0
-'            .TintAndShade = 0
-'            .Weight = xlThick
-'        End With
-'        .Font.Bold = True
-'        .NumberFormat = "#,##0.00 $"
-'    End With
-'
-'    wshGL_BV.Range("D4:D" & ligne).HorizontalAlignment = xlCenter
-'
-'    'Vérification intégrité (DT ?= CT)
-'    If Round(globalDebit, 2) <> Round(globalCredit, 2) Then
-'        MsgBox "Il y a une différence entre le total des débits et le total des crédits : " & Format(globalDebit - globalCredit, "0.00"), vbExclamation
-'    End If
-'
-'    Exit Function
-'
-'ErrHandler:
-'    On Error Resume Next
-'    If Not rs Is Nothing Then If rs.state = 1 Then rs.Close
-'    If Not cn Is Nothing Then If cn.state = 1 Then cn.Close
-'    If Len(Dir(tmpFile, vbNormal)) > 0 Then Kill tmpFile
-'
-'End Function
-
-'Function Get_Summary_By_GL_Account(dateMin As Date, dateMax As Date) As ADODB.Recordset '2025-05-27 @ 17:51 - v6.C.7 - ChatPGT
-'
-'    Dim startTime As Double: startTime = Timer: call modDev_utils.EnregistrerLogApplication("modGL_BV:Get_Summary_By_GL_Account", "", 0)
-'
-'    Dim cn As ADODB.Connection
-'    Dim rs As ADODB.Recordset
-'    Dim strSQL As String
-'
-'    'Fichier actif
-'    Dim sWBPath As String
-'    sWBPath = ThisWorkbook.FullName
-'
-'    'Requête SQL
-'    strSQL = "SELECT [NoCompte], " & _
-'           "SUM([Débit]) AS TotalDébit, " & _
-'           "SUM([Crédit]) AS TotalCrédit " & _
-'           "FROM [GL_Trans$] " & _
-'           "WHERE [Date] >= #" & Format(dateMin, "yyyy-mm-dd") & "# " & _
-'           "AND [Date] <= #" & Format(dateMax, "yyyy-mm-dd") & "# " & _
-'           "GROUP BY [NoCompte] " & _
-'           "ORDER BY [NoCompte];"
-'    Debug.Print "Calcul de la BV" & vbNewLine & "Get_Summary_By_GL_Account - strSQL = " & strSQL
-'
-'    'Connexion ADO
-'    Set cn = New ADODB.Connection
-'    With cn
-'        .Provider = "Microsoft.ACE.OLEDB.12.0"
-'        .ConnectionString = "Data Source=" & sWBPath & ";" & _
-'                            "Extended Properties=""Excel 12.0 Xml;HDR=YES;IMEX=1"";"
-'        .Open
-'    End With
-'
-'    'Recordset
-'    Set rs = New ADODB.Recordset
-'    rs.Open strSQL, cn, adOpenStatic, adLockReadOnly
-'
-'    'Retour
-'    Set Get_Summary_By_GL_Account = rs
-'
-'    'Libérer
-'    Set cn = Nothing
-'
-'    call modDev_utils.EnregistrerLogApplication("modGL_BV:Get_Summary_By_GL_Account", "", startTime)
-'
-'End Function
-
 Sub Afficher_BV_Summary(tblData As Variant, Optional ligneDépart As Long = 4) '2025-06-03 @ 20:18
 
     Dim i As Long, ligne As Long
@@ -427,7 +214,7 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
     Dim wsTrans As Worksheet, wsResult As Worksheet
     Dim strSQL As String
     Dim ligne As Long, lastRow As Long
-    Dim Debit As Currency, Credit As Currency, solde As Currency, soldeInitial As Currency
+    Dim debit As Currency, credit As Currency, solde As Currency, soldeInitial As Currency
 
     'Feuilles
     Set wsTrans = wsdGL_Trans
@@ -518,16 +305,16 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
         Application.EnableEvents = True
 
         Do While Not rs.EOF
-            Debit = Nz(rs.Fields("Débit").Value)
-            Credit = Nz(rs.Fields("Crédit").Value)
-            solde = solde + Debit - Credit
+            debit = Nz(rs.Fields("Débit").Value)
+            credit = Nz(rs.Fields("Crédit").Value)
+            solde = solde + debit - credit
 
             tableau(ligne, 1) = rs.Fields("Date").Value
             tableau(ligne, 2) = rs.Fields("NoEntrée").Value
             tableau(ligne, 3) = rs.Fields("Description").Value
             tableau(ligne, 4) = rs.Fields("Source").Value
-            tableau(ligne, 5) = IIf(Debit > 0, Debit, vbNullString)
-            tableau(ligne, 6) = IIf(Credit > 0, Credit, vbNullString)
+            tableau(ligne, 5) = IIf(debit > 0, debit, vbNullString)
+            tableau(ligne, 6) = IIf(credit > 0, credit, vbNullString)
             tableau(ligne, 7) = solde
             tableau(ligne, 8) = rs.Fields("AutreRemarque")
 
@@ -910,13 +697,62 @@ Sub GL_BV_Hide_Dynamic_Shape()
     
 End Sub
 
-Private Function Nz(val As Variant) As Double '2025-05-27 @ 17:55 - v6.C.7 - ChatGPT
+Private Function Nz(val As Variant) As Currency '2025-07-17 @ 09:57
 
     If IsNull(val) Or IsEmpty(val) Then
         Nz = 0
     Else
         Nz = val
     End If
+    
+End Function
+
+
+Public Function ObtenirSoldesClotureADO(cheminFichier As String, nomFeuille As String, dateCloture As Date) As Collection '2025-07-17 @ 10:05
+
+    Dim requeteSQL As String
+    Dim soldes As New Collection
+    Dim cle As String
+    Dim montant As Currency
+
+    'Connexion ADO à un classeur fermé
+    Dim conn As Object 'ADODB.Connection
+    Set conn = CreateObject("ADODB.Connection")
+    Dim rs As Object 'ADODB.Recordset
+    Set rs = CreateObject("ADODB.Recordset")
+
+    On Error GoTo ErrHandler
+
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;" & _
+              "Data Source=" & cheminFichier & ";" & _
+              "Extended Properties='Excel 12.0 Xml;HDR=YES';"
+
+    'Requête : somme des montants pour chaque compte (>= 4000), jusqu’à la date de clôture incluse
+    requeteSQL = "SELECT Compte, SUM(Montant) AS Solde " & _
+                 "FROM [" & nomFeuille & "$] " & _
+                 "WHERE Compte >= 4000 AND Date <= #" & Format(dateCloture, "yyyy-mm-dd") & "# " & _
+                 "GROUP BY Compte"
+
+    rs.Open requeteSQL, conn, 1, 1
+
+    Do While Not rs.EOF
+        cle = CStr(rs.Fields("Compte").Value)
+        montant = Nz(rs.Fields("Solde").Value)
+        soldes.Add montant, cle
+        rs.MoveNext
+    Loop
+
+    rs.Close
+    conn.Close
+    Set ObtenirSoldesClotureADO = soldes
+    Exit Function
+
+ErrHandler:
+    MsgBox "Erreur dans ObtenirSoldesClotureADO : " & Err.description, vbCritical
+    On Error Resume Next
+    If Not rs Is Nothing Then If rs.state = 1 Then rs.Close
+    If Not conn Is Nothing Then If conn.state = 1 Then conn.Close
+    Set ObtenirSoldesClotureADO = Nothing
     
 End Function
 

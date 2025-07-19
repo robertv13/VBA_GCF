@@ -77,13 +77,13 @@ Public Property Get lignes() As Collection
 End Property
 
 'Méthode pour ajouter une ligne à l'écriture
-Public Sub AjouterLigne(NoCompte As String, description As String, Montant As Currency)
+Public Sub AjouterLigne(NoCompte As String, description As String, montant As Currency)
 
     Dim l As clsGL_EntryLine
     Set l = New clsGL_EntryLine
     l.NoCompte = NoCompte
     l.description = description
-    l.Montant = Montant
+    l.montant = montant
     pLignes.Add l
     
 End Sub

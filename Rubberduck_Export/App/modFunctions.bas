@@ -90,7 +90,9 @@ Function Fn_GetID_From_Client_Name(nomClient As String) '2024-02-14 @ 06:07
         ufSaisieHeures.txtClientID.Value = result
     Else
         MsgBox "Impossible de retrouver le nom du client dans la feuille" & vbNewLine & vbNewLine & _
-                    "BD_Clients...", vbExclamation, "Recherche dans BD_Clients " & dynamicRange.Address
+                    "BD_Clients..." & vbNewLine & vbNewLine & _
+                    "VOUS DEVEZ SAISIR LE NOM DU CLIENT À NOUVEAU", _
+                    , vbCritical, "Client inexistant dans la base de données des clients"
     End If
     
     'Libérer la mémoire
@@ -129,9 +131,9 @@ Function Fn_Cell_From_BD_Client(nomClient As String, ByRef colNumberSearch As In
         Fn_Cell_From_BD_Client = result
     Else
         MsgBox _
-            Prompt:="Impossible de retrouver le nom du client dans la feuille" & vbNewLine & vbNewLine & _
-                    "BD_Clients...", _
-            Title:="Erreur grave - Impossible de retrouver le nom du client - " & colNumberSearch & "-" & colNumberData, _
+            Prompt:="Impossible de retrouver ce nom du client dans BD_Clients" & vbNewLine & vbNewLine & _
+                    "VOUS DEVEZ SAISIR À NOUVEAU LE NOM DU CLIENT", _
+            Title:="Erreur grave - Impossible de retrouver le nom du client - ", _
             Buttons:=vbCritical
     End If
     
@@ -967,6 +969,11 @@ Function Fn_Sort_Dictionary_By_Keys(dict As Object, Optional descending As Boole
     Dim i As Long, j As Long
     Dim temp As Variant
     
+    If dict Is Nothing Then
+        Fn_Sort_Dictionary_By_Keys = vbNullString
+        Exit Function
+    End If
+    
     ReDim keys(0 To dict.count - 1)
     
     Dim key As Variant
@@ -1097,9 +1104,12 @@ Public Function Fn_TEC_Is_Data_Valid() As Boolean
     If ufSaisieHeures.txtClient.Value = vbNullString Or ufSaisieHeures.txtClientID = vbNullString Then
         MsgBox Prompt:="Le client et son code sont OBLIGATOIRES !" & vbNewLine & vbNewLine & _
                        "Code de client = '" & ufSaisieHeures.txtClientID & "'" & vbNewLine & vbNewLine & _
-                       "Nom du client = '" & ufSaisieHeures.txtClient.Value & "'", _
+                       "Nom du client = '" & ufSaisieHeures.txtClient.Value & "'" & vbNewLine & vbNewLine & _
+                       "VOUS DEVEZ SAISIR À NOUVEAU LE CLIENT", _
                Title:="Vérifications essentielles des données du client", _
                Buttons:=vbCritical
+        ufSaisieHeures.txtClient.Value = vbNullString
+        ufSaisieHeures.txtClientID.Value = vbNullString
         ufSaisieHeures.txtClient.SetFocus
         Exit Function
     End If

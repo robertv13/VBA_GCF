@@ -26,7 +26,7 @@ Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
     Dim lastUsedRow As Long
     lastUsedRow = wsSource.Cells(wsSource.Rows.count, "AQ").End(xlUp).Row
     If lastUsedRow < 3 Then
-        MsgBox "Il n'y a aucune TEC pour ce client", vbInformation
+        MsgBox "Il n'y a aucun TEC pour ce client", vbInformation
         Call Prepare_Pour_Nouvelle_Radiation
         wshTEC_Radiation.Range("F3").Activate
         GoTo ExitSub
@@ -101,7 +101,7 @@ Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
     Application.EnableEvents = True
 
     ws.Shapes("Impression").Visible = True
-    ws.Shapes("Radiation").Visible = True
+    ws.Shapes("Radiation").Visible = False
     
 ExitSub:
 
@@ -246,6 +246,12 @@ Sub CalculerTotaux()
     ws.Cells(rowNum + 1, 10).Value = Format$(totalHres, "###,##0.00")
     ws.Cells(rowNum + 1, 11).Value = Format$(totalValeur, "###,##0.00 $")
     
+    If Not totalHres = 0 Then
+        ws.Shapes("Radiation").Visible = True
+    Else
+        ws.Shapes("Radiation").Visible = False
+    End If
+    
 End Sub
 
 Sub shp_TEC_Radiation_GO_Click()
@@ -267,9 +273,11 @@ Sub Radiation_Mise_À_Jour()
     If lastUsedRow >= 3 Then
         Call TEC_Radiation_Update_As_Billed_To_DB(3, lastUsedRow)
         Call TEC_Radiation_Update_As_Billed_Locally(3, lastUsedRow)
+        Call modTEC_TDB.ActualiserTECTableauDeBord
+        MsgBox "Les TEC sélectionnés ont été radié avec succès", vbOKOnly, "Confirmation de traitement"
+    Else
+        MsgBox "AUCUNE radiation n'a été effectuée", vbOKOnly
     End If
-    
-    MsgBox "Les TEC sélectionnés ont été radié avec succès", vbOKOnly, "Confirmation de traitement"
     
 End Sub
 

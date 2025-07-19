@@ -92,6 +92,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Target.ClearContents
             Application.EnableEvents = True
             Application.GoTo Range(Target.Address)
+            Exit Sub
         End If
        
         'Future date ?

@@ -16,7 +16,7 @@ Public Type clsGL_EntryLine '2025-06-08 @ 07:02
 
     NoCompte As String
     description As String
-    Montant As Double
+    montant As Double
     
 End Type
 

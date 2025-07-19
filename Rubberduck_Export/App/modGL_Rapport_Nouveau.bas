@@ -226,7 +226,7 @@ Public Sub GenererRapportGL_Ecriture(wsRapport As Worksheet, noEcritureDebut As 
         Dim row As Range
         Dim i As Long
         Dim colDesc As Integer
-        Dim Debit As Currency, Credit As Currency
+        Dim debit As Currency, credit As Currency
         Dim tDebit As Currency, tCredit As Currency
         Dim DateTrans As Date
         Dim currentEcriture As Long
@@ -253,12 +253,12 @@ Public Sub GenererRapportGL_Ecriture(wsRapport As Worksheet, noEcritureDebut As 
                 End If
                 'Détermine la colonne pour la description du GL et le montant
                 If row.Cells(fGlTDébit).Value <> 0 Then
-                    Debit = row.Cells(fGlTDébit).Value
-                    Credit = 0
+                    debit = row.Cells(fGlTDébit).Value
+                    credit = 0
                     colDesc = 5
                 Else
-                    Debit = 0
-                    Credit = row.Cells(fGlTCrédit).Value
+                    debit = 0
+                    credit = row.Cells(fGlTCrédit).Value
                     colDesc = 6
                 End If
                 'Ajouter les lignes de détail pour chaque compte
@@ -266,12 +266,12 @@ Public Sub GenererRapportGL_Ecriture(wsRapport As Worksheet, noEcritureDebut As 
                 wsRapport.Cells(rowRapport, colDesc).Value = row.Cells(fGlTCompte).Value
                 wsRapport.Cells(rowRapport, 7).Value = row.Cells(fGlTAutreRemarque).Value
                 'Déterminer s'il y a un débit ou un crédit
-                If Debit <> 0 Then
-                    wsRapport.Cells(rowRapport, 8).Value = Debit
-                    tDebit = tDebit + Debit
+                If debit <> 0 Then
+                    wsRapport.Cells(rowRapport, 8).Value = debit
+                    tDebit = tDebit + debit
                 Else
-                    wsRapport.Cells(rowRapport, 9).Value = Credit
-                    tCredit = tCredit + Credit
+                    wsRapport.Cells(rowRapport, 9).Value = credit
+                    tCredit = tCredit + credit
                 End If
                 rowRapport = rowRapport + 1
                 i = i + 1
@@ -396,7 +396,7 @@ Public Sub GenererRapportGL_DateSaisie(wsRapport As Worksheet, dtSaisieDebut As 
         Dim row As Range
         Dim i As Long
         Dim colDesc As Integer
-        Dim Debit As Currency, Credit As Currency
+        Dim debit As Currency, credit As Currency
         Dim tDebit As Currency, tCredit As Currency
         Dim DateTrans As Date
         Dim currentTimeStamp As Double
@@ -425,12 +425,12 @@ Public Sub GenererRapportGL_DateSaisie(wsRapport As Worksheet, dtSaisieDebut As 
                 End If
                 'Détermine la colonne pour la description du GL et le montant
                 If row.Cells(fGlTDébit).Value <> 0 Then
-                    Debit = row.Cells(fGlTDébit).Value
-                    Credit = 0
+                    debit = row.Cells(fGlTDébit).Value
+                    credit = 0
                     colDesc = 6
                 Else
-                    Debit = 0
-                    Credit = row.Cells(fGlTCrédit).Value
+                    debit = 0
+                    credit = row.Cells(fGlTCrédit).Value
                     colDesc = 7
                 End If
                 'Ajouter les lignes de détail pour chaque compte
@@ -438,12 +438,12 @@ Public Sub GenererRapportGL_DateSaisie(wsRapport As Worksheet, dtSaisieDebut As 
                 wsRapport.Cells(rowRapport, colDesc).Value = row.Cells(fGlTCompte).Value
                 wsRapport.Cells(rowRapport, 8).Value = row.Cells(fGlTAutreRemarque).Value
                 'Déterminer s'il y a un débit ou un crédit
-                If Debit <> 0 Then
-                    wsRapport.Cells(rowRapport, 9).Value = Debit
-                    tDebit = tDebit + Debit
+                If debit <> 0 Then
+                    wsRapport.Cells(rowRapport, 9).Value = debit
+                    tDebit = tDebit + debit
                 Else
-                    wsRapport.Cells(rowRapport, 10).Value = Credit
-                    tCredit = tCredit + Credit
+                    wsRapport.Cells(rowRapport, 10).Value = credit
+                    tCredit = tCredit + credit
                 End If
                 rowRapport = rowRapport + 1
                 i = i + 1

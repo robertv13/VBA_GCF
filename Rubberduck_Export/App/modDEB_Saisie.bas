@@ -510,7 +510,7 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation", vbNullString, 0)
 
-    Dim Montant As Double, dateDebours As Date
+    Dim montant As Double, dateDebours As Date
     Dim descGL_Trans As String, Source As String, deboursType As String
     Dim GL_TransNo As Long
     
@@ -531,7 +531,7 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
     
     'Based on Disbursement type, the CREDIT account will be different
     'Disbursement Total (wshDEB_Saisie.Range("O6"))
-    Montant = wshDEB_Saisie.Range("O6").Value
+    montant = wshDEB_Saisie.Range("O6").Value
     
     Dim GLNo_Credit As String
     
@@ -559,7 +559,7 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
             MyArray(1, 2) = "Encaisse"
     End Select
     
-    MyArray(1, 3) = -Montant
+    MyArray(1, 3) = -montant
     MyArray(1, 4) = vbNullString
     
     'Process every lines

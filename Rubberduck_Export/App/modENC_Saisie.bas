@@ -548,7 +548,7 @@ Sub ENC_Update_Locally_Comptes_Clients(firstRow As Integer, lastRow As Integer) 
 
 End Sub
 
-Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, Montant As Currency, desc As String) 'Write/Update to GCF_BD_MASTER / GL_Trans
+Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, montant As Currency, desc As String) 'Write/Update to GCF_BD_MASTER / GL_Trans
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ENC_GL_Posting_DB", vbNullString, 0)
     
@@ -606,7 +606,7 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
             rs.Fields(fGlTNoCompte - 1).Value = ObtenirNoGlIndicateur("Encaisse")
             rs.Fields(fGlTCompte - 1).Value = "Encaisse" 'Hardcoded
         End If
-        rs.Fields(fGlTDébit - 1).Value = Montant
+        rs.Fields(fGlTDébit - 1).Value = montant
         rs.Fields(fGlTAutreRemarque - 1).Value = desc
         rs.Fields(fGlTTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
     rs.Update
@@ -625,7 +625,7 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
         End If
         rs.Fields(fGlTNoCompte - 1).Value = ObtenirNoGlIndicateur("Comptes Clients")
         rs.Fields(fGlTCompte - 1).Value = "Comptes clients" 'Hardcoded
-        rs.Fields(fGlTCrédit - 1).Value = Montant
+        rs.Fields(fGlTCrédit - 1).Value = montant
         rs.Fields(fGlTAutreRemarque - 1).Value = desc
         rs.Fields(fGlTTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
     rs.Update
@@ -646,7 +646,7 @@ Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, 
 
 End Sub
 
-Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As String, Montant As Currency, desc As String) 'Write/Update to GCF_BD_MASTER / GL_Trans
+Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As String, montant As Currency, desc As String) 'Write/Update to GCF_BD_MASTER / GL_Trans
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ENC_GL_Posting_Locally", vbNullString, 0)
     
@@ -678,7 +678,7 @@ Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As Str
             .Range("E" & rowToBeUsed).Value = ObtenirNoGlIndicateur("Encaisse")
             .Range("F" & rowToBeUsed).Value = "Encaisse" 'Hardcoded
         End If
-        .Range("G" & rowToBeUsed).Value = Montant
+        .Range("G" & rowToBeUsed).Value = montant
         .Range("I" & rowToBeUsed).Value = desc
         .Range("J" & rowToBeUsed).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
         rowToBeUsed = rowToBeUsed + 1
@@ -695,7 +695,7 @@ Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As Str
         End If
         .Range("E" & rowToBeUsed).Value = ObtenirNoGlIndicateur("Comptes Clients")
         .Range("F" & rowToBeUsed).Value = "Comptes clients" 'Hardcoded
-        .Range("H" & rowToBeUsed).Value = Montant
+        .Range("H" & rowToBeUsed).Value = montant
         .Range("I" & rowToBeUsed).Value = desc
         .Range("J" & rowToBeUsed).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
     End With

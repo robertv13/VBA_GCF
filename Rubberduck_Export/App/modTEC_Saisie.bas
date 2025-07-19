@@ -47,6 +47,8 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
         
         'Back to client
         ufSaisieHeures.txtClient.SetFocus
+    Else
+        Stop
     End If
     
     Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:TEC_Ajoute_Ligne", vbNullString, startTime)
