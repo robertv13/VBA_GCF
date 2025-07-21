@@ -68,10 +68,10 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierIntegriteTablesLocales", vbNullString, 0)
 
-    Application.ScreenUpdating = False
-    
     'Variable pour déterminer à la fin s'il y a des erreurs...
     gverificationIntegriteOK = True
+    
+    Application.ScreenUpdating = False
     
     Call modDev_Utils.EffacerEtRecreerWorksheet("X_Analyse_Integrite")
     Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("X_Analyse_Integrite")
@@ -3280,7 +3280,7 @@ Private Sub VerifierTEC(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef read
     Dim ws As Worksheet: Set ws = wsdTEC_Local
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 7813 'What is the last TECID analyzed ?
+    lastTECIDReported = 7836 'What is the last TECID analyzed ?
     
     'Réference au UserDefined structure 'StatistiquesTEC'
     Dim stats As StatistiquesTEC

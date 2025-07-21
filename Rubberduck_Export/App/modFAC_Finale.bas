@@ -79,13 +79,12 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
     Dim invoice_Total As Currency
     invoice_Total = wshFAC_Brouillon.Range("O51").Value
         
-    'GL stuff will occur at the confirmation level (later)
-'    Call FAC_Finale_GL_Posting_Preparation
-    
     'Update TEC_DashBoard
     Call modTEC_TDB.ActualiserTECTableauDeBord '2024-03-21 @ 12:32
 
-    Call FAC_Brouillon_Clear_All_TEC_Displayed
+    Call modFAC_Brouillon.EffacerTECAffiches
+    
+    wshFAC_Brouillon.Range("FactureStatut").Value = "" '2025-07-19 @ 19:02
     
     Application.ScreenUpdating = True
     
@@ -985,14 +984,14 @@ End Sub
 Sub FAC_Finale_Creation_PDF() '2025-05-06 @ 11:07
 
     Dim startTime As Double: startTime = Timer
-    Dim codeFacture As String: codeFacture = wshFAC_Finale.Range("E28").Value
+    Dim numeroFacture As String: numeroFacture = wshFAC_Finale.Range("E28").Value
     Dim nomClient As String: nomClient = wshFAC_Brouillon.Range("B18").Value
     Dim nomFichier As String: nomFichier = wshFAC_Finale.Range("L81").Value
     Dim dateFacture As String: dateFacture = Format$(wshFAC_Brouillon.Range("O3").Value, "yyyy-mm-dd")
     
     'État initial
     gFlagEtapeFacture = 1
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Creation_PDF", codeFacture, 0)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Creation_PDF", numeroFacture, 0)
     
     'Sécuriser l’environnement
     With Application
@@ -1005,29 +1004,31 @@ Sub FAC_Finale_Creation_PDF() '2025-05-06 @ 11:07
     On Error GoTo GestionErreur
 
     'Étape 1 - Création du document PDF
-    Call FAC_Finale_Create_PDF(codeFacture)
+    Call FAC_Finale_Create_PDF(numeroFacture)
     DoEvents: Application.Wait Now + TimeValue("0:00:01")
     
     'Étape 2 - Copie vers fichier Excel client
-    Call FAC_Finale_Copie_Vers_Excel(nomClient, nomFichier, codeFacture, dateFacture)
+    Call FAC_Finale_Copie_Vers_Excel(nomClient, nomFichier, numeroFacture, dateFacture)
     DoEvents: Application.Wait Now + TimeValue("0:00:01")
     gFlagEtapeFacture = 3
 
     'Étape 3 - Création du courriel avec pièce jointe PDF
-    Call FAC_Finale_Creation_Courriel(codeFacture, nomClient)
+    Call FAC_Finale_Creation_Courriel(numeroFacture, nomClient)
     DoEvents: Application.Wait Now + TimeValue("0:00:01")
     gFlagEtapeFacture = 4
 
     'Étape 4 - Activation du bouton Sauvegarde
     Call FAC_Finale_Enable_Save_Button
     gFlagEtapeFacture = 5
+    
+    wshFAC_Brouillon.Range("FactureStatut").Value = "En attente de mise à jour" '2025-07-19 @ 18:35
 
     GoTo fin
 
 GestionErreur:
     MsgBox "Une erreur est survenue à l'étape " & gFlagEtapeFacture & "." & vbCrLf & _
            "Erreur: " & Err.Number & " - " & Err.description, vbCritical
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Creation_PDF", codeFacture & " ÉTAPE " & gFlagEtapeFacture & " > " & Err.description, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Creation_PDF", numeroFacture & " ÉTAPE " & gFlagEtapeFacture & " > " & Err.description, startTime)
 
 fin:
     'Restaurer l’environnement
@@ -1581,8 +1582,14 @@ Sub FAC_Finale_Montrer_Sommaire_Taux()
     
 End Sub
 
-Sub shp_FAC_Finale_Goto_Onglet_Brouillon_CLick()
+Sub shp_FAC_Finale_Goto_Onglet_Brouillon_Click()
 
+    If wshFAC_Brouillon.Range("FactureStatut").Value = "En attente de mise à jour" Then '2025-07-19 @ 18:44
+        MsgBox "Vous devez d'abord mettre à jour la facture en cours" & vbNewLine & vbNewLine & _
+                "avant d'en créer une nouvelle.", vbExclamation
+        Exit Sub
+    End If
+    
     Call FAC_Finale_Goto_Onglet_FAC_Brouillon
 
 End Sub

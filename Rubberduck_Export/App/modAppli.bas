@@ -371,7 +371,7 @@ Attribute VerifierDerniereActivite.VB_Description = "Vérifie l'inactivité et f
         
         Unload ufConfirmationFermeture '2025-07-02 @ 07:54
         
-        Call ufConfirmationFermeture.AfficherMessage(minutesInactives)
+        Call ufConfirmationFermeture.afficherMessage(minutesInactives)
         Exit Sub
     End If
 
@@ -434,6 +434,12 @@ Public Sub RelancerSurveillance() '2025-07-02 @ 07:41
 End Sub
 
 Public Sub EnregistrerActiviteAuLog(ByVal message As String) '2025-07-03 @ 10:29
+
+    'Ne rien faire avant l'heure de début de la surveillance
+    If TimeValue(Now) < TimeSerial(gHEURE_DEBUT_SURVEILLANCE, 0, 0) Then
+'        Call PlanifierVerificationDerniereActivite
+        Exit Sub
+    End If
 
     Dim cheminLog As String
     cheminLog = wsdADMIN.Range("F5").Value & gDATA_PATH & "\ActiviteDurantSurveillance.txt"

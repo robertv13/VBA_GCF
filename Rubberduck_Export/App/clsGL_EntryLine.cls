@@ -18,11 +18,11 @@ Private pMontant As Currency
 'Propriétés publiques pour accéder aux variables privées - Get & Let pour chaque variable
 
 'NoCompte
-Public Property Get NoCompte() As String
-    NoCompte = pNoCompte
+Public Property Get noCompte() As String
+    noCompte = pNoCompte
 End Property
 
-Public Property Let NoCompte(val As String)
+Public Property Let noCompte(val As String)
     pNoCompte = val
 End Property
 

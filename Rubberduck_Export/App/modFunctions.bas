@@ -492,6 +492,26 @@ Function Fn_Get_GL_Account_Balance(glCode As String, dateSolde As Date) As Curre
 
 End Function
 
+Function ObtenirDescriptionCompte(codeCompte As String) As String '2025-07-20 @ 08:11
+
+    Dim planComptable As Variant
+    Dim nbCol As Long
+    nbCol = 2
+    planComptable = Fn_Get_Plan_Comptable(nbCol)
+    
+    ObtenirDescriptionCompte = "Compte non-défini"
+   
+    'Boucle à travers le tableau 'planComptable'
+    Dim i As Long
+    For i = LBound(planComptable) To UBound(planComptable)
+        If Trim(planComptable(i, 1)) = Trim(codeCompte) Then
+            ObtenirDescriptionCompte = planComptable(i, 2)
+            Exit Function
+        End If
+    Next i
+    
+End Function
+
 Function Fn_Get_GL_Month_Trans_Total(glCode As String, dateFinMois As Date) As Double '2025-02-07 @ 13:46
     
     Fn_Get_GL_Month_Trans_Total = 0
@@ -1749,7 +1769,7 @@ Function ObtenirNoGlIndicateur(ByVal indic As Variant) As String
 
     'Plage où sont situés les liens (indicateur/no de GL)
     Dim plage As Range
-    Set plage = wsdADMIN.Range("D44:F60")
+    Set plage = wsdADMIN.Range("D44:F61")
     
     'Parcourir chaque cellule dans la première colonne de la plage
     Dim cellule As Range

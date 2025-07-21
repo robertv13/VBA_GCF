@@ -352,7 +352,6 @@ Sub TEC_Evaluation_EcritureGL() '2025-06-08 @ 08:37
     Set ws = wshTEC_Evaluation
 
     ajustementTEC = ws.Range("B2").Value
-    If ajustementTEC < 0 Then Stop
     glTEC = ObtenirNoGlIndicateur("Travaux en cours")
     glREVTEC = ObtenirNoGlIndicateur("Revenus - Travaux en cours")
     
@@ -375,30 +374,11 @@ Sub TEC_Evaluation_EcritureGL() '2025-06-08 @ 08:37
     End If
 
     '--- Écriture ---
-    Call AjouterEcritureGL(ecr)
+    Call AjouterEcritureGL(ecr, True)
     
 End Sub
 
-Sub shp_TEC_Evaluation_Back_To_TEC_Menu_Click()
-
-    Call TEC_Evaluation_Back_To_TEC_Menu
-    
-End Sub
-
-Sub TEC_Evaluation_Back_To_TEC_Menu()
-
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Evaluation:TEC_Evaluation_Back_To_TEC_Menu", vbNullString, 0)
-    
-    wshTEC_Evaluation.Visible = xlSheetVeryHidden
-    
-    wshMenuTEC.Activate
-    wshMenuTEC.Range("A1").Select
-    
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Evaluation:TEC_Evaluation_Back_To_TEC_Menu", vbNullString, startTime)
-
-End Sub
-
-Sub AjouterEcritureGL(entry As clsGL_Entry) '2025-06-08 @ 09:37
+Public Sub AjouterEcritureGL(entry As clsGL_Entry, Optional afficherMessage As Boolean = True) '2025-06-08 @ 09:37
 
     '=== BLOC 1 : Écriture dans GCF_BD_MASTER.xslx en utilisant ADO ===
     Dim cn As Object
@@ -443,7 +423,7 @@ Sub AjouterEcritureGL(entry As clsGL_Entry) '2025-06-08 @ 09:37
               "'" & Format(entry.DateEcriture, "yyyy-mm-dd") & "'," & _
               "'" & Replace(entry.description, "'", "''") & "'," & _
               "'" & Replace(entry.Source, "'", "''") & "'," & _
-              "'" & l.NoCompte & "'," & _
+              "'" & l.noCompte & "'," & _
               "'" & Replace(l.description, "'", "''") & "'," & _
               IIf(l.montant >= 0, Replace(l.montant, ",", "."), "NULL") & "," & _
               IIf(l.montant < 0, Replace(-l.montant, ",", "."), "NULL") & "," & _
@@ -481,7 +461,7 @@ Sub AjouterEcritureGL(entry As clsGL_Entry) '2025-06-08 @ 09:37
             .Cells(lastRow + i, 2).Value = entry.DateEcriture
             .Cells(lastRow + i, 3).Value = entry.description
             .Cells(lastRow + i, 4).Value = entry.Source
-            .Cells(lastRow + i, 5).Value = l.NoCompte
+            .Cells(lastRow + i, 5).Value = l.noCompte
             .Cells(lastRow + i, 6).Value = l.description
             If l.montant >= 0 Then
                 .Cells(lastRow + i, 7).Value = l.montant
@@ -496,7 +476,9 @@ Sub AjouterEcritureGL(entry As clsGL_Entry) '2025-06-08 @ 09:37
     Next i
 
     wshTEC_Evaluation.Shapes("EcritureGL").Visible = msoFalse
-    MsgBox "L'écriture comptable a été complétée avec succès", vbInformation, "Écriture au Grand Livre"
+    If afficherMessage Then
+        MsgBox "L'écriture comptable a été complétée avec succès", vbInformation, "Écriture au Grand Livre"
+    End If
 
 CleanUpADO:
     On Error Resume Next
@@ -514,107 +496,24 @@ CleanUpADO:
     On Error GoTo 0
     
 End Sub
-'    Dim oldScreenUpdating As Boolean, oldEnableEvents As Boolean
-'    Dim oldDisplayAlerts As Boolean, oldCalculation As XlCalculation
-'    Dim cheminMaster As String
-'    Dim wbLocal As Workbook, wsLocal As Worksheet
-'    Dim wbMaster As Workbook, wsMaster As Worksheet
-'    Dim lastRow As Long, nextNoEntree As Long
-'    Dim ts As String
-'    Dim i As Long
-'    Dim l As clsGL_EntryLine
-'
-'    On Error GoTo CleanUp
-'
-'    'Mémoriser l’état initial d’Excel
-'    oldScreenUpdating = Application.ScreenUpdating
-'    oldEnableEvents = Application.EnableEvents
-'    oldDisplayAlerts = Application.DisplayAlerts
-'    oldCalculation = Application.Calculation
-'
-'    'Mode silencieux
-'    Application.ScreenUpdating = False
-'    Application.EnableEvents = False
-'    Application.DisplayAlerts = False
-'    Application.Calculation = xlCalculationManual
-'
-'    cheminMaster = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
-'    Set wbLocal = ThisWorkbook
-'    Set wsLocal = wbLocal.Sheets("GL_Trans")
-'
-'    'Ouvrir le MASTER
-'    Set wbMaster = Workbooks.Open(cheminMaster, ReadOnly:=False)
-'    wbMaster.Windows(1).Visible = False
-'    Set wsMaster = wbMaster.Sheets("GL_Trans")
-'
-'    'Déterminer le prochain numéro d'écriture
-'    lastRow = wsMaster.Cells(wsMaster.Rows.count, 1).End(xlUp).Row
-'    If IsNumeric(wsMaster.Cells(lastRow, 1).Value) Then
-'        nextNoEntree = wsMaster.Cells(lastRow, 1).Value + 1
-'    Else
-'        nextNoEntree = 1
-'    End If
-'    entry.NoEcriture = nextNoEntree
-'
-'    'Timestamp unique pour toutes les lignes de l'écriture
-'    ts = Format(Now, "yyyy-mm-dd hh:mm:ss")
-'
-'    '--- 1. Écriture dans MASTER
-'    For i = 1 To entry.Lignes.count
-'        Set l = entry.Lignes(i)
-'        With wsMaster
-'            .Cells(lastRow + i, 1).Value = entry.NoEcriture
-'            .Cells(lastRow + i, 2).Value = entry.DateEcriture
-'            .Cells(lastRow + i, 3).Value = entry.Description
-'            .Cells(lastRow + i, 4).Value = entry.Source
-'            .Cells(lastRow + i, 5).Value = l.NoCompte
-'            .Cells(lastRow + i, 6).Value = l.Description
-'            If l.Montant >= 0 Then
-'                .Cells(lastRow + i, 7).Value = l.Montant
-'                .Cells(lastRow + i, 8).Value = 0
-'            Else
-'                .Cells(lastRow + i, 7).Value = 0
-'                .Cells(lastRow + i, 8).Value = -l.Montant
-'            End If
-'            .Cells(lastRow + i, 9).Value = entry.AutreRemarque
-'            .Cells(lastRow + i, 10).Value = ts
-'        End With
-'    Next i
-'
-'    wbMaster.Close SaveChanges:=True
-'
-'    '--- 2. Écriture dans la feuille de l'application (local)
-'    lastRow = wsLocal.Cells(wsLocal.Rows.count, 1).End(xlUp).Row
-'    For i = 1 To entry.Lignes.count
-'        Set l = entry.Lignes(i)
-'        With wsLocal
-'            .Cells(lastRow + i, 1).Value = entry.NoEcriture
-'            .Cells(lastRow + i, 2).Value = entry.DateEcriture
-'            .Cells(lastRow + i, 3).Value = entry.Description
-'            .Cells(lastRow + i, 4).Value = entry.Source
-'            .Cells(lastRow + i, 5).Value = l.NoCompte
-'            .Cells(lastRow + i, 6).Value = l.Description
-'            If l.Montant >= 0 Then
-'                .Cells(lastRow + i, 7).Value = l.Montant
-'                .Cells(lastRow + i, 8).Value = 0
-'            Else
-'                .Cells(lastRow + i, 7).Value = 0
-'                .Cells(lastRow + i, 8).Value = -l.Montant
-'            End If
-'            .Cells(lastRow + i, 9).Value = entry.AutreRemarque
-'            .Cells(lastRow + i, 10).Value = ts
-'        End With
-'    Next i
-'
-'CleanUp:
-'    Application.ScreenUpdating = oldScreenUpdating
-'    Application.EnableEvents = oldEnableEvents
-'    Application.DisplayAlerts = oldDisplayAlerts
-'    Application.Calculation = oldCalculation
-'    If Err.Number <> 0 Then
-'        MsgBox "Erreur lors de l’écriture au G/L : " & Err.Description, vbCritical
-'    End If
-'
-'End Sub
+
+Sub shp_TEC_Evaluation_Back_To_TEC_Menu_Click()
+
+    Call TEC_Evaluation_Back_To_TEC_Menu
+    
+End Sub
+
+Sub TEC_Evaluation_Back_To_TEC_Menu()
+
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Evaluation:TEC_Evaluation_Back_To_TEC_Menu", vbNullString, 0)
+    
+    wshTEC_Evaluation.Visible = xlSheetVeryHidden
+    
+    wshMenuTEC.Activate
+    wshMenuTEC.Range("A1").Select
+    
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Evaluation:TEC_Evaluation_Back_To_TEC_Menu", vbNullString, startTime)
+
+End Sub
 
 

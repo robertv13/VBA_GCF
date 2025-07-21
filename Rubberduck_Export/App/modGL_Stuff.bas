@@ -6,7 +6,7 @@ Public Type clsGL_Entry '2025-06-08 @ 06:59
 
     DateTrans As Date
     Source As String
-    NoCompte As String
+    noCompte As String
     AutreRemarque As String
     
 End Type
@@ -14,7 +14,7 @@ End Type
 'Structure pour une écriture comptable (données spécifiques à chaque ligne)
 Public Type clsGL_EntryLine '2025-06-08 @ 07:02
 
-    NoCompte As String
+    noCompte As String
     description As String
     montant As Double
     
@@ -335,4 +335,22 @@ Sub GL_BV_SupprimerToutesLesFormes_shpRetour(w As Worksheet)
     
 End Sub
 
+Function ObtenirFinExercice(dateSaisie As Date) As Date '2025-07-20 @ 08:49
+
+    Dim anneeExercice As Integer
+    
+    Dim moisFinExercice As Integer
+    moisFinExercice = wsdADMIN.Range("MoisFinAnnéeFinancière").Value
+
+    'Si le mois de la date saisie est supérieur au mois de fin, alors la fin d'exercice est l'année suivante
+    If month(dateSaisie) > moisFinExercice Then
+        anneeExercice = year(dateSaisie) + 1
+    Else
+        anneeExercice = year(dateSaisie)
+    End If
+
+    ' Dernier jour du mois de fin d’exercice
+    ObtenirFinExercice = DateSerial(anneeExercice, moisFinExercice + 1, 0)
+    
+End Function
 

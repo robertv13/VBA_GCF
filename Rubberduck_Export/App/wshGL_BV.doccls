@@ -6,8 +6,6 @@ Private Sub Worksheet_Activate()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("wshGL_BV:Worksheet_Activate", vbNullString, 0)
 
-    DoEvents
-    
     'Import transactions from MASTER file
     Call modImport.ImporterGLTransactions
 
@@ -39,6 +37,7 @@ Private Sub Worksheet_Activate()
         .Range("J1").Value = Format$(Date, wsdADMIN.Range("B1").Value)
         .Range("J1").Select
         gPreviousCellAddress = .Range("J1").Address
+        .Shapes("shpEcritureCloture").Visible = False
     End With
     
     Application.EnableEvents = True
@@ -171,7 +170,7 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
         
         Range("B8").Value = DateSerial(year(Range("J1").Value), month(Range("J1").Value), 1)

@@ -43,7 +43,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
                 Unload ufNonBillableTime '2025-01-14 @ 17:25
             On Error GoTo 0
             
-            Call FAC_Brouillon_Clear_All_TEC_Displayed
+            Call EffacerTECAffiches
             
             Call FAC_Brouillon_Setup_All_Cells
             
@@ -284,7 +284,7 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
         Application.EnableEvents = True
     End With
     
-    Call FAC_Brouillon_Clear_All_TEC_Displayed
+    Call EffacerTECAffiches
     
     Call ObtenirTECNonFacturablePourClient
     
@@ -506,9 +506,9 @@ Sub FAC_Brouillon_Goto_Misc_Charges()
     
 End Sub
 
-Sub FAC_Brouillon_Clear_All_TEC_Displayed()
+Sub EffacerTECAffiches()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:EffacerTECAffiches", vbNullString, 0)
     
     Dim lastRow As Long
     lastRow = wshFAC_Brouillon.Cells(wshFAC_Brouillon.Rows.count, "F").End(xlUp).Row 'First line of data is at row 7
@@ -523,7 +523,7 @@ Sub FAC_Brouillon_Clear_All_TEC_Displayed()
         Application.EnableEvents = True
     End If
     
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_Clear_All_TEC_Displayed", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:EffacerTECAffiches", vbNullString, startTime)
 
 End Sub
 
@@ -547,7 +547,7 @@ Sub FAC_Brouillon_Get_All_TEC_By_Client(d As Date, includeBilledTEC As Boolean)
     End If
     c5 = Fn_Convert_Value_Boolean_To_Text(False)
 
-    Call FAC_Brouillon_Clear_All_TEC_Displayed
+    Call EffacerTECAffiches
     
     Call Get_TEC_For_Client_AF(c1, c2, c3, c4, c5)
     
@@ -787,11 +787,11 @@ Sub CopierTECFiltresVersFACBrouillon(cutOffDateProjet As Date) '2024-03-21 @ 07:
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.ListBox1.Clear
+        ufFraisDivers.listBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.ListBox1.AddItem item
+            ufFraisDivers.listBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless
@@ -1296,7 +1296,7 @@ Sub Load_Invoice_Template(t As String)
         facRow = facRow + 2
     Next i
         
-    Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
+    Application.Goto wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
 

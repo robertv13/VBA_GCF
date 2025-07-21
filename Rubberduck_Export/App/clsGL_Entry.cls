@@ -11,13 +11,13 @@ Option Explicit
 
 'Module de classe: clsGL_Entry - 2025-06-08 @ 07:35
 
-Private pNoEcriture As Long
-Private pDateEcriture As Date
-Private pDescription As String
-Private pSource As String
-Private pAutreRemarque As String
+Public pNoEcriture As Long
+Public pDateEcriture As Date
+Public pDescription As String
+Public pSource As String
+Public pAutreRemarque As String
 
-Private pLignes As Collection
+Public pLignes As Collection
 
 'Constructeur (s'exécute à la création)
 Private Sub Class_Initialize()
@@ -77,11 +77,11 @@ Public Property Get lignes() As Collection
 End Property
 
 'Méthode pour ajouter une ligne à l'écriture
-Public Sub AjouterLigne(NoCompte As String, description As String, montant As Currency)
+Public Sub AjouterLigne(noCompte As String, description As String, montant As Currency)
 
     Dim l As clsGL_EntryLine
     Set l = New clsGL_EntryLine
-    l.NoCompte = NoCompte
+    l.noCompte = noCompte
     l.description = description
     l.montant = montant
     pLignes.Add l

@@ -2,6 +2,20 @@ Option Explicit
 
 Private Sub Workbook_SheetActivate(ByVal Sh As Object) '2025-07-03 @ 10:58
 
+    Dim nomFeuilleFacture As String: nomFeuilleFacture = "FAC_Finale" '2025-07-19 @ 18:46
+    Dim statutFacture As String: statutFacture = Trim(ThisWorkbook.Names("FactureStatut").RefersToRange.Value)
+
+    If statutFacture = "En attente de mise à jour" Then
+        If Sh.Name <> nomFeuilleFacture Then
+            Application.EnableEvents = False
+            MsgBox "Veuillez d'abord finaliser la facture (Sauvegarde)" & vbNewLine & vbNewLine & _
+                    "avant de quitter la facture FINALE", vbExclamation, _
+                    "Contrôle imposé par l'application"
+            Sheets(nomFeuilleFacture).Activate
+            Application.EnableEvents = True
+        End If
+    End If
+    
     Call modAppli.EnregistrerActivite("SheetActivate [" & Sh.Name & "]")
     
 End Sub

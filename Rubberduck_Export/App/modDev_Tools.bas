@@ -2277,3 +2277,18 @@ Sub InjecterFormeModuleDansColonne10() '2025-07-15 @ 22:56
     
 End Sub
 
+Sub RouvrirMASTER()
+
+    Dim xlApp As Object, wb As Workbook
+    Set xlApp = CreateObject("Excel.Application")
+    xlApp.Visible = True
+    Set wb = xlApp.Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx")
+    
+End Sub
+
+
+Sub Test_Copie_Master()
+
+    FileCopy "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx", "C:\VBA\GC_FISCALITÉ\DataFiles\MASTER_copie.xlsx"
+
+End Sub

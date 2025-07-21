@@ -52,7 +52,7 @@ End Sub
 
 Sub ImporterMASTERGenerique(sourceWb As String, ws As Worksheet, onglet As String, table As String) '2025-05-07 @ 18:00
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterMASTERGenerique:" & onglet, vbNullString, 0)
+'    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterMASTERGenerique:" & onglet, vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -76,11 +76,13 @@ Sub ImporterMASTERGenerique(sourceWb As String, ws As Worksheet, onglet As Strin
     
     'Recordset
     Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
+    Dim strSQL As String
+    strSQL = "SELECT * FROM [" & sourceTab & "]"
     With recSet
         .ActiveConnection = connStr
         .CursorType = adOpenStatic
         .LockType = adLockReadOnly
-        .Source = "SELECT * FROM [" & sourceTab & "]"
+        .Source = strSQL
         .Open
     End With
     
@@ -111,7 +113,7 @@ Sub ImporterMASTERGenerique(sourceWb As String, ws As Worksheet, onglet As Strin
     Set targetCell = Nothing
     Set tbl = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterMASTERGenerique:" & onglet, vbNullString, startTime)
+'    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterMASTERGenerique:" & onglet, vbNullString, startTime)
 
 End Sub
 
