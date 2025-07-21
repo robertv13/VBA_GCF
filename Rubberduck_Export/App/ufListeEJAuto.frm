@@ -15,7 +15,7 @@ Option Explicit
 Private Sub UserForm_Initialize()
     
     Dim lastUsedRow As Long
-    lastUsedRow = wsdGL_EJ_Recurrente.Cells(wsdGL_EJ_Recurrente.Rows.count, "J").End(xlUp).Row
+    lastUsedRow = wsdGL_EJ_Recurrente.Cells(wsdGL_EJ_Recurrente.Rows.count, "J").End(xlUp).row
     If lastUsedRow < 2 Then Exit Sub 'Empty List
     
     With lsbEJ_AutoDesc

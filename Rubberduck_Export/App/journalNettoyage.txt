@@ -1,4 +1,4 @@
-﻿📘 Journal de nettoyage typographique — 07/21/2025 13:42:57
+﻿📘 Journal de nettoyage typographique — 07/21/2025 14:17:42
 
 🔧 clsControlWrapper.cls
 
@@ -7,9 +7,8 @@
 🔧 clsGL_EntryLine.cls
 
 🔧 clsSearchableDropdown.cls
-   Remplacé : .value ➜ .Value
    Remplacé : .text ➜ .Text
-   Remplacé : .list ➜ .List
+   Remplacé : .value ➜ .Value
 
 🔧 Feuil1.doccls
 
@@ -21,193 +20,191 @@
    Remplacé : .value ➜ .Value
 
 🔧 modAppli_Utils.bas
-   Remplacé : .name ➜ .Name
-   Remplacé : .value ➜ .Value
    Remplacé : .column ➜ .Column
    Remplacé : .interior ➜ .Interior
    Remplacé : .cells ➜ .Cells
    Remplacé : .offset ➜ .Offset
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
    Remplacé : .range ➜ .Range
+   Remplacé : .name ➜ .Name
    Remplacé : .font ➜ .Font
 
 🔧 modAuditVBA.bas
-   Remplacé : .value ➜ .Value
    Remplacé : .interior ➜ .Interior
    Remplacé : .cells ➜ .Cells
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
    Remplacé : .range ➜ .Range
    Remplacé : .font ➜ .Font
 
 🔧 modCAR_Liste_Agee.bas
-   Remplacé : .name ➜ .Name
-   Remplacé : .value ➜ .Value
    Remplacé : .column ➜ .Column
    Remplacé : .cells ➜ .Cells
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
    Remplacé : .range ➜ .Range
+   Remplacé : .name ➜ .Name
    Remplacé : .font ➜ .Font
 
 🔧 modCC_Regularisation.bas
-   Remplacé : .value ➜ .Value
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
    Remplacé : .range ➜ .Range
 
 🔧 modConfig.bas
 
 🔧 modCSV_Import.bas
-   Remplacé : .value ➜ .Value
    Remplacé : .column ➜ .Column
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
 
 🔧 modDEB_Saisie.bas
-   Remplacé : .value ➜ .Value
    Remplacé : .interior ➜ .Interior
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
    Remplacé : .range ➜ .Range
    Remplacé : .font ➜ .Font
 
 🔧 modDEV_Debug.bas
-   Remplacé : .value ➜ .Value
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
 
 🔧 modDev_Proof.bas
    Remplacé : .borders ➜ .Borders
-   Remplacé : .value ➜ .Value
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
    Remplacé : .font ➜ .Font
 
 🔧 modDEV_Securite.bas
    Remplacé : .value ➜ .Value
 
 🔧 modDev_Tools.bas
-   Remplacé : .value ➜ .Value
    Remplacé : .column ➜ .Column
    Remplacé : .interior ➜ .Interior
    Remplacé : .cells ➜ .Cells
    Remplacé : .offset ➜ .Offset
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
    Remplacé : .range ➜ .Range
    Remplacé : .font ➜ .Font
 
 🔧 modDev_Utils.bas
-   Remplacé : .value ➜ .Value
    Remplacé : .interior ➜ .Interior
    Remplacé : .cells ➜ .Cells
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
    Remplacé : .range ➜ .Range
    Remplacé : .font ➜ .Font
 
 🔧 modENC_Saisie.bas
-   Remplacé : .name ➜ .Name
-   Remplacé : .value ➜ .Value
    Remplacé : .interior ➜ .Interior
    Remplacé : .cells ➜ .Cells
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
    Remplacé : .range ➜ .Range
+   Remplacé : .name ➜ .Name
    Remplacé : .font ➜ .Font
 
 🔧 modFAC_Brouillon.bas
-   Remplacé : .name ➜ .Name
-   Remplacé : .value ➜ .Value
    Remplacé : .column ➜ .Column
    Remplacé : .interior ➜ .Interior
    Remplacé : .cells ➜ .Cells
    Remplacé : .text ➜ .Text
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
    Remplacé : .range ➜ .Range
-   Remplacé : .list ➜ .List
+   Remplacé : .name ➜ .Name
    Remplacé : .font ➜ .Font
 
 🔧 modFAC_Confirmation.bas
-   Remplacé : .value ➜ .Value
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
 
 🔧 modFAC_Finale.bas
-   Remplacé : .value ➜ .Value
    Remplacé : .cells ➜ .Cells
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
    Remplacé : .range ➜ .Range
    Remplacé : .font ➜ .Font
 
 🔧 modFAC_Interrogation.bas
-   Remplacé : .name ➜ .Name
    Remplacé : .borders ➜ .Borders
-   Remplacé : .value ➜ .Value
    Remplacé : .interior ➜ .Interior
    Remplacé : .cells ➜ .Cells
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
    Remplacé : .range ➜ .Range
+   Remplacé : .name ➜ .Name
    Remplacé : .font ➜ .Font
 
 🔧 modFunctions.bas
-   Remplacé : .value ➜ .Value
    Remplacé : .cells ➜ .Cells
    Remplacé : .offset ➜ .Offset
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
    Remplacé : .range ➜ .Range
 
 🔧 modGL_BV.bas
-   Remplacé : .name ➜ .Name
    Remplacé : .borders ➜ .Borders
-   Remplacé : .value ➜ .Value
    Remplacé : .interior ➜ .Interior
    Remplacé : .cells ➜ .Cells
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
    Remplacé : .range ➜ .Range
+   Remplacé : .name ➜ .Name
    Remplacé : .font ➜ .Font
 
 🔧 modGL_DataService.bas
-   Remplacé : .value ➜ .Value
    Remplacé : .column ➜ .Column
    Remplacé : .cells ➜ .Cells
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
 
 🔧 modGL_EJ.bas
-   Remplacé : .name ➜ .Name
-   Remplacé : .value ➜ .Value
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
    Remplacé : .range ➜ .Range
-   Remplacé : .list ➜ .List
+   Remplacé : .name ➜ .Name
    Remplacé : .font ➜ .Font
 
 🔧 modGL_PrepEF.bas
    Remplacé : .borders ➜ .Borders
-   Remplacé : .value ➜ .Value
    Remplacé : .cells ➜ .Cells
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
    Remplacé : .range ➜ .Range
    Remplacé : .font ➜ .Font
 
 🔧 modGL_Rapport_Nouveau.bas
-   Remplacé : .name ➜ .Name
    Remplacé : .borders ➜ .Borders
-   Remplacé : .value ➜ .Value
    Remplacé : .column ➜ .Column
    Remplacé : .interior ➜ .Interior
    Remplacé : .cells ➜ .Cells
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
    Remplacé : .range ➜ .Range
+   Remplacé : .name ➜ .Name
    Remplacé : .font ➜ .Font
 
 🔧 modGL_Stats_CA.bas
-   Remplacé : .name ➜ .Name
    Remplacé : .value ➜ .Value
+   Remplacé : .name ➜ .Name
 
 🔧 modGL_Stuff.bas
-   Remplacé : .name ➜ .Name
-   Remplacé : .value ➜ .Value
    Remplacé : .offset ➜ .Offset
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
    Remplacé : .range ➜ .Range
+   Remplacé : .name ➜ .Name
 
 🔧 modImport.bas
-   Remplacé : .value ➜ .Value
    Remplacé : .cells ➜ .Cells
+   Remplacé : .value ➜ .Value
 
 🔧 modLog_Analysis.bas
-   Remplacé : .value ➜ .Value
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
 
 🔧 modMain.bas
 
@@ -222,49 +219,48 @@
 🔧 modMENU_TEC.bas
 
 🔧 modStatsHeures.bas
-   Remplacé : .value ➜ .Value
    Remplacé : .column ➜ .Column
    Remplacé : .cells ➜ .Cells
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
 
 🔧 modTEC_Analyse.bas
-   Remplacé : .name ➜ .Name
    Remplacé : .borders ➜ .Borders
    Remplacé : .count ➜ .Count
-   Remplacé : .value ➜ .Value
    Remplacé : .interior ➜ .Interior
    Remplacé : .cells ➜ .Cells
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
    Remplacé : .range ➜ .Range
+   Remplacé : .name ➜ .Name
    Remplacé : .font ➜ .Font
 
 🔧 modTEC_Evaluation.bas
-   Remplacé : .value ➜ .Value
    Remplacé : .interior ➜ .Interior
    Remplacé : .cells ➜ .Cells
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
    Remplacé : .range ➜ .Range
    Remplacé : .font ➜ .Font
 
 🔧 modTEC_Radiation.bas
-   Remplacé : .name ➜ .Name
-   Remplacé : .value ➜ .Value
    Remplacé : .address ➜ .Address
    Remplacé : .cells ➜ .Cells
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
    Remplacé : .range ➜ .Range
+   Remplacé : .name ➜ .Name
    Remplacé : .font ➜ .Font
 
 🔧 modTEC_Saisie.bas
-   Remplacé : .value ➜ .Value
    Remplacé : .cells ➜ .Cells
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
    Remplacé : .range ➜ .Range
-   Remplacé : .list ➜ .List
 
 🔧 modTEC_Stuff.bas
-   Remplacé : .value ➜ .Value
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
 
 🔧 modTEC_TDB.bas
    Remplacé : .borders ➜ .Borders
@@ -273,62 +269,39 @@
 🔧 modTestJump.bas
 
 🔧 modzDataConversion.bas
-   Remplacé : .value ➜ .Value
    Remplacé : .column ➜ .Column
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
 
 🔧 ThisWorkbook.doccls
 
 🔧 ufConfirmation.frm
-   Remplacé : .value ➜ .Value
 
 🔧 ufConfirmationFermeture.frm
 
 🔧 ufEncRégularisation.frm
-   Remplacé : .value ➜ .Value
 
 🔧 ufExitDisable.frm
 
 🔧 ufFraisDivers.frm
 
 🔧 ufGL_Rapport.frm
-   Remplacé : .value ➜ .Value
-   Remplacé : .range ➜ .Range
 
 🔧 ufListeDEBAuto.frm
-   Remplacé : .value ➜ .Value
-   Remplacé : .row ➜ .Row
-   Remplacé : .range ➜ .Range
-   Remplacé : .list ➜ .List
 
 🔧 ufListeDebourse.frm
-   Remplacé : .value ➜ .Value
-   Remplacé : .row ➜ .Row
 
 🔧 ufListeEcritureGL.frm
-   Remplacé : .value ➜ .Value
 
 🔧 ufListeEJAuto.frm
-   Remplacé : .value ➜ .Value
-   Remplacé : .row ➜ .Row
 
 🔧 ufListeProjetsFacture.frm
-   Remplacé : .value ➜ .Value
-   Remplacé : .range ➜ .Range
-   Remplacé : .list ➜ .List
 
 🔧 ufNonBillableTime.frm
 
 🔧 ufSaisieHeures.frm
-   Remplacé : .value ➜ .Value
-   Remplacé : .text ➜ .Text
-   Remplacé : .row ➜ .Row
-   Remplacé : .list ➜ .List
 
 🔧 ufStatsHeures.frm
-   Remplacé : .value ➜ .Value
-   Remplacé : .address ➜ .Address
-   Remplacé : .row ➜ .Row
 
 🔧 wsdADMIN.doccls
 
@@ -365,24 +338,24 @@
 🔧 wsdTEC_Local.doccls
 
 🔧 wshCAR_Liste_Agee.doccls
-   Remplacé : .value ➜ .Value
    Remplacé : .address ➜ .Address
    Remplacé : .interior ➜ .Interior
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
    Remplacé : .range ➜ .Range
 
 🔧 wshDEB_Saisie.doccls
-   Remplacé : .value ➜ .Value
    Remplacé : .interior ➜ .Interior
+   Remplacé : .value ➜ .Value
 
 🔧 wshENC_Saisie.doccls
-   Remplacé : .value ➜ .Value
    Remplacé : .interior ➜ .Interior
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
 
 🔧 wshFAC_Brouillon.doccls
-   Remplacé : .value ➜ .Value
    Remplacé : .interior ➜ .Interior
+   Remplacé : .value ➜ .Value
    Remplacé : .range ➜ .Range
 
 🔧 wshFAC_Finale.doccls
@@ -392,28 +365,28 @@
    Remplacé : .font ➜ .Font
 
 🔧 wshFAC_Interrogation.doccls
-   Remplacé : .value ➜ .Value
    Remplacé : .address ➜ .Address
    Remplacé : .interior ➜ .Interior
+   Remplacé : .value ➜ .Value
    Remplacé : .range ➜ .Range
 
 🔧 wshGL_BV.doccls
-   Remplacé : .value ➜ .Value
    Remplacé : .address ➜ .Address
    Remplacé : .interior ➜ .Interior
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
    Remplacé : .range ➜ .Range
 
 🔧 wshGL_EJ.doccls
-   Remplacé : .value ➜ .Value
    Remplacé : .interior ➜ .Interior
+   Remplacé : .value ➜ .Value
    Remplacé : .range ➜ .Range
 
 🔧 wshGL_PrepEF.doccls
-   Remplacé : .value ➜ .Value
    Remplacé : .address ➜ .Address
    Remplacé : .interior ➜ .Interior
    Remplacé : .row ➜ .Row
+   Remplacé : .value ➜ .Value
 
 🔧 wshGL_Stats_CA.doccls
 
@@ -431,20 +404,20 @@
 🔧 wshTECFacture.doccls
 
 🔧 wshTEC_Analyse.doccls
-   Remplacé : .value ➜ .Value
    Remplacé : .address ➜ .Address
    Remplacé : .interior ➜ .Interior
+   Remplacé : .value ➜ .Value
    Remplacé : .range ➜ .Range
 
 🔧 wshTEC_Evaluation.doccls
-   Remplacé : .value ➜ .Value
    Remplacé : .address ➜ .Address
    Remplacé : .interior ➜ .Interior
+   Remplacé : .value ➜ .Value
    Remplacé : .range ➜ .Range
 
 🔧 wshTEC_Radiation.doccls
-   Remplacé : .value ➜ .Value
    Remplacé : .interior ➜ .Interior
+   Remplacé : .value ➜ .Value
 
 🔧 wshTEC_TDB.doccls
 

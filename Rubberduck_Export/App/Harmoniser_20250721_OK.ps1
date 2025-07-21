@@ -1,12 +1,13 @@
-﻿# Dictionnaire principal de normalisation typographique (casse stricte)
-$keywords = @{
+﻿$keywords = @{
     '.address' = '.Address'
     '.borders' = '.Borders'
     '.cells' = '.Cells'
     '.column' = '.Column'
     '.count' = '.Count'
     '.font' = '.Font'
+    '.goto' = '.GoTo'
     '.interior' = '.Interior'
+    '.list' = '.List'
     '.name' = '.Name'
     '.offset' = '.Offset'
     '.range' = '.Range'
@@ -14,10 +15,8 @@ $keywords = @{
     '.text' = '.Text'
     '.value' = '.Value'
     '.worksheetfunction' = '.WorksheetFunction'
-    '.goto' = '.GoTo'
 }
 
-# Dossier racine
 $folder = $PSScriptRoot
 $journal = "$folder\journalNettoyage.txt"
 Set-Content -Path $journal -Value "📘 Journal de nettoyage typographique — $(Get-Date)" -Encoding UTF8
@@ -28,7 +27,7 @@ if (-Not (Test-Path $folder)) {
     exit
 }
 
-# Fichiers ciblés (exclure .frx)
+# Obtenir les bons fichiers, en excluant les .frx
 $files = Get-ChildItem -Recurse -Path $folder -Include *.bas, *.cls, *.doccls, *.frm |
     Where-Object { $_.Extension -ne ".frx" }
 
@@ -39,25 +38,40 @@ if ($files.Count -eq 0) {
         Add-Content -Path $journal -Value "`n🔧 $($file.Name)"
         Write-Host "🔧 Traitement : $($file.Name)"
         
+        # Lire le contenu
         $content = Get-Content $file.FullName -Raw
-
-        # Traitement typographique (éviter les objets nommés ex: .ListBox1)
-        if ($file.Extension -ne ".frm") {
-            foreach ($pair in $keywords.GetEnumerator()) {
-                $pattern = '(?<![\w])' + [regex]::Escape($pair.Key) + '(?![\w])'
-                if ($content -match $pattern) {
-                    Add-Content -Path $journal -Value "   Remplacé : $($pair.Key) ➜ $($pair.Value)"
-                }
-                $content = [regex]::Replace($content, $pattern, $pair.Value)
+        
+        # Appliquer les remplacements typographiques principaux
+        foreach ($pair in $keywords.GetEnumerator()) {
+            $pattern = '(?<![\w])' + [regex]::Escape($pair.Key) + '(?![\w])'
+            if ($content -match $pattern) {
+                Add-Content -Path $journal -Value "   Remplacé : $($pair.Key) ➜ $($pair.Value)"
             }
-        } else {
-            # Nettoyage visuel des .frm (sans modifier la casse)
-            $lines = $content -split "`r?`n"
-            $filtered = $lines | Where-Object {
+            $content = [regex]::Replace($content, $pattern, $pair.Value)
+        }
+
+        # 🔒 Verrouiller la casse stricte pour objets sensibles
+        $verrouilles = @{
+            '.listbox' = '.ListBox'
+            '.goto'    = '.GoTo'
+        }
+
+        foreach ($pair in $verrouilles.GetEnumerator()) {
+            $pattern = '(?<![\w])' + [regex]::Escape($pair.Key) + '(?![\w])'
+            if ($content -match $pattern) {
+                Add-Content -Path $journal -Value "   Verrouillé : $($pair.Key) ➜ $($pair.Value)"
+            }
+            $content = [regex]::Replace($content, $pattern, $pair.Value, 'IgnoreCase')
+        }
+
+        # Nettoyer visuellement les fichiers .frm
+        if ($file.Extension -eq ".frm") {
+            $contentLines = $content -split "`r?`n"
+            $filteredLines = $contentLines | Where-Object {
                 ($_ -match '^\s*$') -or
                 ($_ -notmatch '^\s*(ClientHeight|ClientWidth|StartUpPosition|Left|Top|Zoom|ScrollBars|WindowState)\s*=')
             }
-            $content = $filtered -join "`r`n"
+            $content = $filteredLines -join "`r`n"
         }
 
         # Réécriture en UTF-8 sans BOM

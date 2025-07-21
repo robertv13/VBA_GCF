@@ -19,7 +19,7 @@ Private Sub UserForm_Initialize()
     Set ws = wsdDEB_Recurrent
     
     Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "P").End(xlUp).Row
+    lastUsedRow = ws.Cells(ws.Rows.count, "P").End(xlUp).row
     If lastUsedRow < 2 Then Exit Sub 'Empty List
     Dim arr() As Variant
     ReDim arr(1 To (lastUsedRow - 1), 1 To 4) As Variant

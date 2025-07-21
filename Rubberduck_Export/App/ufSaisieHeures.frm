@@ -44,7 +44,7 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
     
     'Mise en place de la colonne à rechercher dans BD_Clients
     Dim lastUsedRow As Long
-    lastUsedRow = wsdBD_Clients.Cells(wsdBD_Clients.Rows.count, 1).End(xlUp).Row
+    lastUsedRow = wsdBD_Clients.Cells(wsdBD_Clients.Rows.count, 1).End(xlUp).row
     ufSaisieHeures.ListData = wsdBD_Clients.Range("Q1:Q" & lastUsedRow) '2025-01-11 @ 18:00
     
     With oEventHandler
@@ -272,7 +272,7 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
         With ufSaisieHeures.txtDate
             .SetFocus 'Remettre le focus sur la TextBox
             .SelStart = 0 'Début de la sélection
-            .SelLength = Len(.Text) 'Sélectionner tout le texte
+            .SelLength = Len(.text) 'Sélectionner tout le texte
         End With
         Exit Sub
     End If
@@ -534,7 +534,7 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
         
         'Retrieve the record in wsdTEC_Local
         Dim lookupRange As Range, lastTECRow As Long, rowTECID As Long
-        lastTECRow = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "A").End(xlUp).Row
+        lastTECRow = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "A").End(xlUp).row
         Set lookupRange = wsdTEC_Local.Range("A3:A" & lastTECRow)
         rowTECID = Fn_Find_Row_Number_TECID(tecID, lookupRange)
         
