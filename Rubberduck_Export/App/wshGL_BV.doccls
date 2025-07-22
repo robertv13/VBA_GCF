@@ -87,9 +87,6 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
             wshGL_BV.Range("B9").Value = Format$(dateLimite, wsdADMIN.Range("B1").Value)
             Application.EnableEvents = True
             
-    '        wshGL_BV.Range("T2").Value = "Mois"
-'            DoEvents
-            
             'Display all transactions for the selected G/L
             Call GL_BV_Display_Trans_For_Selected_Account(GLAcct, GLDescription, wshGL_BV.Range("B8").Value, dateLimite)
         End If
@@ -122,29 +119,6 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         shp.Visible = msoFalse
     End If
     
-'    'Vérifier si le curseur est en dehors de la zone
-'    If Not Intersect(Target, rngDetailTrans) Is Nothing Then
-'        'Si un bouton existe, l'effacer
-'        Dim btn As Shape
-'        On Error Resume Next
-'        Set btn = Me.Shapes("EffacerBouton")
-'        If Not btn Is Nothing Then btn.Delete
-'        On Error GoTo 0
-'
-'        'Effacer la zone des résultats
-'        rngDetailTrans.Clear
-'
-'        'Ramener le focus à C4
-'        Application.EnableEvents = False
-'        Me.Range("C4").Select
-'        Application.EnableEvents = True
-'    End If
-    
-    'Libérer la mémoire
-'    Set rngBV = Nothing
-'    Set rngDetailTrans = Nothing
-'    Set rngZonesSensibles = Nothing
-
     'Libérer la mémoire
     Set shp = Nothing
     

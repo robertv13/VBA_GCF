@@ -1,4 +1,4 @@
-﻿📘 Journal de nettoyage typographique — 07/21/2025 14:17:42
+﻿📘 Journal de nettoyage typographique — 07/21/2025 20:37:38
 
 🔧 clsControlWrapper.cls
 
@@ -148,7 +148,6 @@
 🔧 modGL_BV.bas
    Remplacé : .borders ➜ .Borders
    Remplacé : .interior ➜ .Interior
-   Remplacé : .cells ➜ .Cells
    Remplacé : .row ➜ .Row
    Remplacé : .value ➜ .Value
    Remplacé : .range ➜ .Range
@@ -192,6 +191,7 @@
    Remplacé : .name ➜ .Name
 
 🔧 modGL_Stuff.bas
+   Remplacé : .cells ➜ .Cells
    Remplacé : .offset ➜ .Offset
    Remplacé : .row ➜ .Row
    Remplacé : .value ➜ .Value

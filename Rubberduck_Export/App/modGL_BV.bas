@@ -36,7 +36,7 @@ Sub ActualiserBV() '2025-07-21 @ 13:01
     Dim nomFeuilleSource As String
     nomFeuilleSource = "GL_Trans"
     
-    Set soldes = ObtenirSoldesParCompteAvecADO(cheminFichier, nomFeuilleSource, "0000", "9999", dateBV, False)
+    Set soldes = modGL_Stuff.ObtenirSoldesParCompteAvecADO(cheminFichier, nomFeuilleSource, "0000", "9999", dateBV, False)
     If soldes Is Nothing Then
         MsgBox "Impossible d'obtenir les soldes par numéro de compte" & vbNewLine & vbNewLine & _
                 "en date du " & Format$(dateBV, wsdADMIN.Range("B1").Value) & _
@@ -47,7 +47,7 @@ Sub ActualiserBV() '2025-07-21 @ 13:01
         Exit Sub
     End If
     
-    Call AfficherSoldeBV(soldes)
+    Call AfficherSoldesBV(soldes)
     
     Dim dateFinExercice As Date
     dateFinExercice = ObtenirFinExercice(dateBV)
@@ -63,108 +63,7 @@ Sub ActualiserBV() '2025-07-21 @ 13:01
 
 End Sub
 
-Function Get_Summary_By_GL_Account(dateMin As Date, dateMax As Date) As Variant '2025-06-03 @ 20:16
-
-    Dim cn As Object, rs As Object
-    Dim sql As String, tmpFile As String
-    Dim dPlanComptable As Object, dSoldeParGL As Object
-    Dim arrPC As Variant, rsKey As String
-    Dim i As Long, tDebit As Currency, tCredit As Currency, solde As Currency
-    Dim tblData() As Variant, tblFinal() As Variant, key As Variant, soldes As Variant
-    Const COL_CODE As Long = 1
-    Const COL_DESC As Long = 2
-    Const COL_DEBIT As Long = 3
-    Const COL_CREDIT As Long = 4
-
-    On Error GoTo ErrHandler
-
-    'Copier les données vers un fichier temporaire (silencieusement)
-    tmpFile = CreerCopieTemporaireSolide("GL_Trans")
-'    tmpFile = CréerCopieTemporaireSansFlash("GL_Trans")
-    If tmpFile = vbNullString Then Exit Function
-
-    sql = "SELECT [NoCompte], SUM([Débit]) AS TotalDébit, SUM([Crédit]) AS TotalCrédit " & _
-          "FROM [GL_Trans$] " & _
-          "WHERE [Date] >= #" & Format(dateMin, "yyyy-mm-dd") & "# " & _
-          "AND [Date] <= #" & Format(dateMax, "yyyy-mm-dd") & "# " & _
-          "GROUP BY [NoCompte] ORDER BY [NoCompte]"
-
-    Set cn = CreateObject("ADODB.Connection")
-    cn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & tmpFile & ";" & _
-            "Extended Properties=""Excel 12.0 Xml;HDR=YES"";"
-    Set rs = cn.Execute(sql)
-    If rs.EOF Then GoTo CleanUp
-
-    Set dPlanComptable = CreateObject("Scripting.Dictionary")
-    arrPC = Fn_Get_Plan_Comptable(2)
-    For i = 1 To UBound(arrPC, 1)
-        If Not dPlanComptable.Exists(arrPC(i, 1)) Then
-            dPlanComptable.Add arrPC(i, 1), arrPC(i, 2)
-        End If
-    Next i
-
-    Set dSoldeParGL = CreateObject("Scripting.Dictionary")
-    Do While Not rs.EOF
-        rsKey = rs.Fields("NoCompte").Value
-        If Not dPlanComptable.Exists(rsKey) Then
-            dPlanComptable.Add rsKey, "Compte inconnu"
-        End If
-        tDebit = Nz(rs.Fields("TotalDébit"))
-        tCredit = Nz(rs.Fields("TotalCrédit"))
-        If tDebit <> 0 Or tCredit <> 0 Then
-            If Not dSoldeParGL.Exists(rsKey) Then
-                dSoldeParGL.Add rsKey, Array(tDebit, tCredit)
-            End If
-        End If
-        rs.MoveNext
-    Loop
-
-    ReDim tblData(1 To dPlanComptable.count, 1 To 4)
-    i = 1
-    For Each key In dPlanComptable.keys
-        soldes = Array(0, 0)
-        If dSoldeParGL.Exists(key) Then
-            soldes = dSoldeParGL(key)
-            solde = soldes(0) - soldes(1)
-        Else
-            solde = 0
-        End If
-        If soldes(0) <> 0 Or soldes(1) <> 0 Then
-            tblData(i, COL_CODE) = key
-            tblData(i, COL_DESC) = dPlanComptable(key)
-            If solde >= 0 Then
-                tblData(i, COL_DEBIT) = solde
-            Else
-                tblData(i, COL_CREDIT) = -solde
-            End If
-            i = i + 1
-        End If
-    Next key
-
-    If i = 1 Then GoTo CleanUp ' Aucune ligne à afficher
-    ReDim tblFinal(1 To i - 1, 1 To 4)
-    For i = 1 To UBound(tblFinal, 1)
-        tblFinal(i, COL_CODE) = tblData(i, COL_CODE)
-        tblFinal(i, COL_DESC) = tblData(i, COL_DESC)
-        tblFinal(i, COL_DEBIT) = tblData(i, COL_DEBIT)
-        tblFinal(i, COL_CREDIT) = tblData(i, COL_CREDIT)
-    Next i
-
-    Get_Summary_By_GL_Account = tblFinal
-
-CleanUp:
-    On Error Resume Next
-    If Not rs Is Nothing Then If rs.state = 1 Then rs.Close
-    If Not cn Is Nothing Then If cn.state = 1 Then cn.Close
-    If Len(Dir(tmpFile, vbNormal)) > 0 Then Kill tmpFile
-    Exit Function
-
-ErrHandler:
-    Resume CleanUp
-    
-End Function
-
-Sub AfficherSoldeBV(soldes As Dictionary, Optional ligneDépart As Long = 4) '2025-06-03 @ 20:18
+Sub AfficherSoldesBV(soldes As Dictionary, Optional ligneDépart As Long = 4) '2025-06-03 @ 20:18
 
     Dim i As Long
     Dim ligne As Long
@@ -288,7 +187,7 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
     wshGL_BV.Range("B7").Value = description
     Application.EnableEvents = True
     
-    'Connexion ADO
+    'Connexion ADO à MASTER
     Set cn = CreateObject("ADODB.Connection")
     With cn
         .Provider = "Microsoft.ACE.OLEDB.12.0"
@@ -297,20 +196,38 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
         .Open
     End With
 
-    'Calcul du solde initial avant DateMin
+    'Calcul du solde d'ouverture avant DateMin
     dateMin = wsResult.Range("B8").Value
-'    wsResult.Range("L2").Value = "Du " & Format$(dateMin, wsdADMIN.Range("B1").Value) & " au " & Format$(dateMax, wsdADMIN.Range("B1").Value)
     Set rsInit = CreateObject("ADODB.Recordset")
     
-    strSQL = "SELECT SUM(Débit) AS TotalDebit, SUM(Crédit) AS TotalCredit FROM [GL_Trans$] " & _
-             "WHERE NoCompte = '" & compte & "' AND Date < #" & Format(dateMin, "mm/dd/yyyy") & "#"
-    Debug.Print "GL_BV_Display_Trans_For_Selected_Account - strSQL1 = " & strSQL
+    strSQL = "SELECT SUM(IIF(Débit IS NULL, 0, Débit)) as TotalDebit, SUM(IIF(Crédit IS NULL, 0, Crédit)) AS TotalCredit " & _
+             "FROM [GL_Trans$] " & _
+             "WHERE NoCompte = '" & compte & "' AND Date < #" & Format$(dateMin, "mm/dd/yyyy") & "#"
+    Debug.Print "#777 - strSQL1 (Solde d'ouveture) = " & strSQL
     
     rsInit.Open strSQL, cn, 1, 1
     If Not rsInit.EOF Then
-        soldeInitial = Nz(rsInit.Fields("TotalDebit").Value) - Nz(rsInit.Fields("TotalCredit").Value)
+        soldeInitial = modGL_Stuff.Nz(rsInit.Fields("TotalDebit").Value) - modGL_Stuff.Nz(rsInit.Fields("TotalCredit").Value)
     End If
+    Debug.Print "Solde d'ouverture pour '" & compte & "' est de " & Format$(soldeInitial, "#,##0.00 $")
     rsInit.Close: Set rsInit = Nothing
+    
+    'Solde d'ouverture
+    Application.EnableEvents = False
+    With wsResult
+        .Range("L4").Value = compte & IIf(description <> vbNullString, " - " & description, vbNullString)
+        .Range("P4").Value = "Solde d'ouverture au " & Format(dateMin, wsdADMIN.Range("B1"))
+        .Range("S4").Value = soldeInitial
+        With .Range("P4:S4")
+            .Font.Name = "Aptos Narrow"
+            .Font.size = 9
+            .Font.Bold = True
+        End With
+    End With
+    
+    solde = soldeInitial
+    ligne = 1 'Commencer les écritures de transactions à la 1ère ligne du tableau
+    Application.EnableEvents = True
     
     'Requête SQL complète (toutes les dates) pour le compte
     strSQL = "SELECT Date, NoEntrée, Description, Source, Débit, Crédit, AutreRemarque FROM [GL_Trans$] " & _
@@ -318,7 +235,7 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
              "AND Date >= #" & Format(dateMin, "yyyy-mm-dd") & "# " & _
              "AND Date <= #" & Format(dateMax, "yyyy-mm-dd") & "# " & _
              "ORDER BY Date, NoEntrée"
-    Debug.Print "GL_BV_Display_Trans_For_Selected_Account - strSQL2 = " & strSQL
+    Debug.Print "#777 - strSQL2 (Transactions pour la période) = " & strSQL
     
     'Exécuter la requête
     Set rs = CreateObject("ADODB.Recordset")
@@ -334,19 +251,6 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
         'Tableau recevra les données à partir du rs
         Dim tableau() As Variant
         ReDim tableau(1 To nbLignes, 1 To 8) 'Colonnes M à S
-
-        'Solde d'ouverture
-        Application.EnableEvents = False
-        wsResult.Range("P4").Value = "Solde d'ouverture au " & Format(dateMin, wsdADMIN.Range("B1"))
-        wsResult.Range("S4").Value = soldeInitial
-        With wsResult.Range("P4:S4")
-            .Font.Name = "Aptos Narrow"
-            .Font.size = 9
-            .Font.Bold = True
-        End With
-        solde = soldeInitial
-        ligne = 1 'Commencer les écritures de transactions à la 1ère ligne du tableau
-        Application.EnableEvents = True
 
         Do While Not rs.EOF
             debit = Nz(rs.Fields("Débit").Value)
@@ -368,7 +272,17 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
 
         'Écriture de tableau dans la plage, en commençant à M5 - @TODO - 2025-07-11 @ 03:14
         Application.EnableEvents = False
+        ActiveWindow.FreezePanes = False
+        
+        'Positionner la cellule d’ancrage juste à droite du volet figé
+        wsResult.Activate
+'        wsResult.Range("M5").Select
+'        ActiveWindow.FreezePanes = True
+
         wsResult.Range("M5").Resize(nbLignes, 8).Value = tableau
+        
+        Application.ScreenUpdating = True
+
         With wsResult.Range("M5:T" & (4 + nbLignes)).Font
             .Name = "Aptos Narrow"
             .size = 9
@@ -379,9 +293,9 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
     Else
         MsgBox "Aucune transaction à afficher pour ce" & vbNewLine & vbNewLine & _
                 "compte, avec la période choisie", vbExclamation, "Transactions pour la période"
-        Application.EnableEvents = False
-        wsResult.Range("L4").Value = vbNullString
-        Application.EnableEvents = True
+'        Application.EnableEvents = False
+'        wsResult.Range("L4").Value = vbNullString
+'        Application.EnableEvents = True
     End If
     
     Call GL_BV_AjustementAffichageTransactionsDetaillees
@@ -741,225 +655,11 @@ Sub GL_BV_Hide_Dynamic_Shape()
     
 End Sub
 
-Private Function Nz(val As Variant) As Currency '2025-07-17 @ 09:57
-
-    If IsNull(val) Or IsEmpty(val) Then
-        Nz = 0
-    Else
-        Nz = val
-    End If
-    
-End Function
-
 Public Sub shpEcritureCloture_Click()
 
     Call GenererEcritureCloture
 
 End Sub
-
-'@Description "Procédure pour obtenir les soldes en date de la fin d'année financière et"
-'             "Effectuer l'écriture de clôture pour l'exercice"
-Sub GenererEcritureCloture() '2025-07-20 @ 08:35
-
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_BV:GenererEcritureCloture", vbNullString, 0)
-    
-    Dim ws As Worksheet
-    Set ws = wshGL_BV
-    
-    Dim dateCloture As Date
-    dateCloture = ws.Range("B12").Value
-    
-    '1. Efface l'écriture si elle existe
-    Call SupprimerEcritureClotureCourante(dateCloture) 'Classeur MASTER
-    
-    Call modImport.ImporterGLTransactions 'Reimporte de MASTER
-    
-    '2. Construire les soldes à la date de cloture
-    Dim soldes As Object
-    Set soldes = CreateObject("Scripting.Dictionary")
-    
-    Dim cheminFichier As String
-    cheminFichier = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
-    Dim nomFeuilleSource As String
-    nomFeuilleSource = "GL_Trans"
-    Dim compteBNR As String
-    compteBNR = ObtenirNoGlIndicateur("Bénéfices Non Répartis")
-
-    'Récupération des soldes par ADO (classeur, feuille, premierGL, dernierGL, dateLimite, rejet écriture clôture)
-    Set soldes = ObtenirSoldesParCompteAvecADO(cheminFichier, nomFeuilleSource, "4000", "9999", dateCloture, False)
-    If soldes Is Nothing Then
-        MsgBox "Impossible d'effectuer l'écriture de clôture pour" & vbNewLine & vbNewLine & _
-                "l'exercice se terminant le " & Format$(dateCloture, wsdADMIN.Range("B1").Value) & _
-                "VEUILLEZ CONTACTER LE DÉVELOPPEUR SANS TARDER", _
-                vbCritical, _
-                "Les soldes de clôture ne peuvent être calculés !!!"
-        
-        Exit Sub
-    End If
-
-    '3. Création de l'écriture à partir de soldes (dictionary)
-    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    Dim cmd As Object: Set cmd = CreateObject("ADODB.Command")
-    
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;" & _
-              "Data Source=" & cheminFichier & ";" & _
-              "Extended Properties='Excel 12.0 Xml;HDR=YES';"
-              
-    Dim cpte As Variant
-    Dim montant As Currency
-    Dim totalResultat As Currency
-    Dim ecr As clsGL_Entry
-    
-    'Instanciation de l'écrituire globale
-    Set ecr = New clsGL_Entry
-    ecr.DateEcriture = dateCloture
-    ecr.description = "Écriture de clôture annuelle"
-    ecr.Source = "Clôture Annuelle"
-    ecr.AutreRemarque = "Générée par l'application"
-    
-    'Parcours du dictionaire
-    Dim descCompte As String
-    For Each cpte In soldes.keys
-        montant = soldes(cpte)
-        If montant <> 0 Then
-            'Montant inverse pour solder le compte
-            descCompte = ObtenirDescriptionCompte(CStr(cpte))
-            ecr.AjouterLigne CStr(cpte), descCompte, -montant 'Inverse pour solder
-            totalResultat = totalResultat + montant
-        End If
-    Next cpte
-
-    'Ligne de contrepartie pour BNR
-    If totalResultat <> 0 Then
-        descCompte = ObtenirDescriptionCompte(compteBNR)
-        ecr.AjouterLigne CStr(compteBNR), descCompte, totalResultat
-    End If
-    
-    Call AjouterEcritureGL(ecr, False)
-    
-    MsgBox "L'écriture de clôture en date du " & Format$(dateCloture, wsdADMIN.Range("B1").Value) & vbNewLine & vbNewLine & _
-           "a été complétée avec succès", _
-           vbInformation, _
-           "Écriture ANNUELLE de clôture"
-    
-    ws.Shapes("shpEcritureCloture").Visible = False
-    
-    'Libérer la mémoire
-    Set cmd = Nothing
-    Set conn = Nothing
-    Set ecr = Nothing
-    Set soldes = Nothing
-    Set ws = Nothing
-    
-    Call modDev_Utils.EnregistrerLogApplication("modGL_BV:GenererEcritureCloture", vbNullString, startTime)
-    
-End Sub
-    
-Public Sub SupprimerEcritureClotureCourante(dateCloture As Date) '2025-07-21 @ 11:56
-
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_BV:SupprimerEcritureClotureCourante", vbNullString, 0)
-    
-    Dim wb As Workbook
-    Dim ws As Worksheet
-    Dim cheminMaster As String
-    
-    cheminMaster = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
-    Application.ScreenUpdating = False
-    Set wb = Workbooks.Open(cheminMaster, ReadOnly:=False)
-    Set ws = wb.Sheets("GL_Trans")
-
-    Dim i As Long
-    'Boucle INVERSÉE pour supprimer l'écriture de clôture courante
-    With ws
-        For i = .Cells(.Rows.count, "A").End(xlUp).Row To 2 Step -1
-            If .Cells(i, fGlTDate).Value = dateCloture And _
-               .Cells(i, fGlTSource).Value = "Clôture Annuelle" Then
-                .Rows(i).Delete
-            End If
-        Next i
-    End With
-    
-    wb.Close SaveChanges:=True
-    Application.ScreenUpdating = True
-    
-    Call modDev_Utils.EnregistrerLogApplication("modGL_BV:SupprimerEcritureClotureCourante", vbNullString, startTime)
-
-End Sub
-
-'@Description "Retourne un dictionnaire avec sommaire par noCompte & Solde"
-Public Function ObtenirSoldesParCompteAvecADO(cheminFichier As String, nomFeuille As String, _
-                                              noCompteGLMin As String, noCompteGLMax As String, dateCloture As Date, _
-                                              inclureEcrCloture As Boolean) As Dictionary '2025-07-21 @ 12:49
-
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_BV:ObtenirSoldesParCompteAvecADO", vbNullString, 0)
-    
-    Dim reqSQL As String
-    Dim soldes As Object: Set soldes = CreateObject("Scripting.Dictionary")
-    Dim cle As String
-    Dim montant As Currency
-    
-    'Si un seul compte est spécifié, le MAX = MIN
-    If noCompteGLMax = vbNullString Then
-        noCompteGLMax = noCompteGLMin
-    End If
-
-    'Connexion ADO à un classeur fermé
-    Dim conn As Object 'ADODB.Connection
-    Set conn = CreateObject("ADODB.Connection")
-    Dim rs As Object 'ADODB.Recordset
-    Set rs = CreateObject("ADODB.Recordset")
-
-'    On Error GoTo ErrHandler
-
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;" & _
-              "Data Source=" & cheminFichier & ";" & _
-              "Extended Properties='Excel 12.0 Xml;HDR=YES';"
-
-    'Requête : somme des montants pour chaque compte (>= 4000), jusqu’à la date de clôture incluse
-    reqSQL = "SELECT NoCompte, SUM(IIF(Débit IS NULL, 0, Débit)) - SUM(IIF(Crédit IS NULL, 0, Crédit)) AS Solde " & _
-                    "FROM [" & nomFeuille & "$] " & _
-                    "WHERE NoCompte >= '" & noCompteGLMin & "' AND NoCompte <= '" & noCompteGLMax & _
-                    "' AND Date <= #" & Format(dateCloture, "yyyy-mm-dd") & "#"
-                    
-                If Not inclureEcrCloture Then
-                    reqSQL = reqSQL & " AND NOT (Date = #" & Format(dateCloture, "yyyy-mm-dd") & "# AND Source = 'Clôture annuelle')"
-                End If
-                
-                reqSQL = reqSQL & " GROUP BY NoCompte"
-
-    Debug.Print reqSQL
-    
-    rs.Open reqSQL, conn, 1, 1
-
-    Do While Not rs.EOF
-        cle = CStr(rs.Fields("NoCompte").Value)
-        Debug.Print "Construction du dictionary : " & cle & " = " & Format$(rs.Fields("Solde").Value, "#,##0.00")
-        montant = Nz(rs.Fields("Solde").Value)
-        If Not soldes.Exists(cle) Then
-            soldes.Add cle, montant
-        Else
-            soldes(cle) = soldes(cle) + montant
-        End If
-        rs.MoveNext
-    Loop
-
-    rs.Close
-    conn.Close
-    Set ObtenirSoldesParCompteAvecADO = soldes
-    GoTo Exit_Function
-
-ErrHandler:
-    MsgBox "Erreur dans ObtenirSoldesParCompteAvecADO : " & Err.description, vbCritical
-    On Error Resume Next
-    If Not rs Is Nothing Then If rs.state = 1 Then rs.Close
-    If Not conn Is Nothing Then If conn.state = 1 Then conn.Close
-    Set ObtenirSoldesParCompteAvecADO = Nothing
-    
-Exit_Function:
-
-    Call modDev_Utils.EnregistrerLogApplication("modGL_BV:ObtenirSoldesParCompteAvecADO", vbNullString, startTime)
-
-End Function
 
 Sub shp_GL_BV_Exit_Click()
 
