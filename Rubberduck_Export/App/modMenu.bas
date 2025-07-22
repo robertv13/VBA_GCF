@@ -3,31 +3,31 @@ Option Explicit
 
 Sub shpMenuTEC_Click()
 
-    Call menuTEC
+    Call AccederMenuTEC
     
 End Sub
 
-Sub menuTEC()
+Sub AccederMenuTEC()
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMenu:menuTEC_Click", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMenu:AccederMenuTEC", vbNullString, 0)
     
     wshMenuTEC.Visible = xlSheetVisible
     wshMenuTEC.Activate
     wshMenuTEC.Range("A1").Select
 
-    Call modDev_Utils.EnregistrerLogApplication("modMenu:menuTEC_Click", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modMenu:AccederMenuTEC", vbNullString, startTime)
 
 End Sub
 
 Sub shpMenuFacturation_Click()
 
-    Call menuFacturation
+    Call AccederMenuFacturation
 
 End Sub
 
-Sub menuFacturation()
+Sub AccederMenuFacturation()
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMenu:menuFacturation_Click", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMenu:AccederMenuFacturation", vbNullString, 0)
     
     If GetNomUtilisateur() = "Guillaume" Or _
             GetNomUtilisateur() = "GuillaumeCharron" Or _
@@ -47,19 +47,19 @@ Sub menuFacturation()
         Application.EnableEvents = True
     End If
     
-    Call modDev_Utils.EnregistrerLogApplication("modMenu:menuFacturation_Click", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modMenu:AccederMenuFacturation", vbNullString, startTime)
 
 End Sub
 
 Sub shpMenuComptabilité_Click()
 
-    Call menuComptabilité
+    Call AccéderMenuComptabilite
     
 End Sub
 
-Sub menuComptabilité()
+Sub AccéderMenuComptabilite()
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMenu:menuComptabilité", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMenu:AccéderMenuComptabilite", vbNullString, 0)
     
     If GetNomUtilisateur() = "Guillaume" Or _
             GetNomUtilisateur() = "GuillaumeCharron" Or _
@@ -76,7 +76,7 @@ Sub menuComptabilité()
         Application.EnableEvents = True
     End If
 
-    Call modDev_Utils.EnregistrerLogApplication("modMenu:menuComptabilité", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modMenu:AccéderMenuComptabilite", vbNullString, startTime)
 
 End Sub
 
@@ -179,11 +179,11 @@ ExitPoint:
     
 End Sub
 
-Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
+Sub CacherToutesFeuillesSaufMenu() '2024-02-20 @ 07:28
     
     DoEvents
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMenu:Hide_All_Worksheets_Except_Menu", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMenu:CacherToutesFeuillesSaufMenu", vbNullString, 0)
     
     Dim ws As Worksheet
     For Each ws In ThisWorkbook.Worksheets
@@ -197,7 +197,7 @@ Sub Hide_All_Worksheets_Except_Menu() '2024-02-20 @ 07:28
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modMenu:Hide_All_Worksheets_Except_Menu", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modMenu:CacherToutesFeuillesSaufMenu", vbNullString, startTime)
     
 End Sub
 

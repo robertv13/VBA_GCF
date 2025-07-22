@@ -187,7 +187,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Call FAC_Historique_Montrer_Bouton_Afficher
             Application.EnableEvents = True
         Else
-            Call modTEC_Saisie.AfficherMessageDateInvalide("wshFAC_Interrogation_179")
+            Call modDataValidation.AfficherMessageDateInvalide("wshFAC_Interrogation_179")
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
@@ -206,7 +206,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
 '            Call Remove_All_PDF_Icons
             Application.EnableEvents = True
         Else
-            Call modTEC_Saisie.AfficherMessageDateInvalide("wshFAC_Interrogation_199")
+            Call modDataValidation.AfficherMessageDateInvalide("wshFAC_Interrogation_199")
             Target.ClearContents
             Application.EnableEvents = True
             Application.Goto Range(Target.Address)

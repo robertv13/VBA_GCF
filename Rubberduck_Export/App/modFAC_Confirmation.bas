@@ -4,7 +4,7 @@ Option Explicit
 Public invNo As String
 Public Factures As Collection
 
-Sub Afficher_ufConfirmation() '2025-03-12 @ 12:40
+Sub AfficherFormulaireConfirmation() '2025-03-12 @ 12:40
 
     'Aller chercher les factures à confirmer
     Call PreparerDonneesPourListView
@@ -170,7 +170,7 @@ Public Sub MarquerLigneSelectionnee(item As listItem) '2025-03-12 @ 12:40
     
 End Sub
 
-Sub Confirmation_Mise_À_Jour() '2025-03-12 @ 12:40
+Sub ConfirmerSauvegardeConfirmation() '2025-03-12 @ 12:40
 
     Dim ligne As listItem
     
@@ -188,10 +188,10 @@ Sub Confirmation_Mise_À_Jour() '2025-03-12 @ 12:40
                 invNo = Trim$(ligne.SubItems(1))
                 ufConfirmation.txtNoFactureEnConfirmation.Value = invNo
                 DoEvents
-                Call MAJ_Statut_Facture_Entête_BD_MASTER(invNo)
-                Call MAJ_Statut_Facture_Entête_Local(invNo)
+                Call MettreAJourStatutFactureEnteteMaster(invNo)
+                Call MettreAJourStatutFactureEnteteLocale(invNo)
                 DoEvents
-                Call Construire_GL_Posting_Confirmation(invNo)
+                Call ConstruireEcritureGLConfirmation(invNo)
                 DoEvents
             End If
         Next i
@@ -200,13 +200,13 @@ Sub Confirmation_Mise_À_Jour() '2025-03-12 @ 12:40
     MsgBox "La confirmation des factures est complétée", vbOKOnly + vbInformation, "Confirmation de traitement"
 
     Unload ufConfirmation
-    Call Afficher_ufConfirmation
+    Call AfficherFormulaireConfirmation
     
 End Sub
 
-Sub MAJ_Statut_Facture_Entête_BD_MASTER(invoice As String) '2025-03-12 @ 12:40
+Sub MettreAJourStatutFactureEnteteMaster(invoice As String) '2025-03-12 @ 12:40
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Confirmation:MAJ_Statut_Facture_Entête_BD_MASTER", invoice, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Confirmation:MettreAJourStatutFactureEnteteMaster", invoice, 0)
 
     Application.ScreenUpdating = False
     
@@ -244,13 +244,13 @@ Sub MAJ_Statut_Facture_Entête_BD_MASTER(invoice As String) '2025-03-12 @ 12:40
     Set conn = Nothing
     Set rs = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Confirmation:MAJ_Statut_Facture_Entête_BD_MASTER", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Confirmation:MettreAJourStatutFactureEnteteMaster", vbNullString, startTime)
 
 End Sub
 
-Sub MAJ_Statut_Facture_Entête_Local(invoice As String) '2025-03-12 @ 12:40
+Sub MettreAJourStatutFactureEnteteLocale(invoice As String) '2025-03-12 @ 12:40
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Confirmation:MAJ_Statut_Facture_Entête_Local", invoice, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Confirmation:MettreAJourStatutFactureEnteteLocale", invoice, 0)
     
     Dim ws As Worksheet: Set ws = wsdFAC_Entete
     
@@ -275,13 +275,13 @@ Sub MAJ_Statut_Facture_Entête_Local(invoice As String) '2025-03-12 @ 12:40
     Set lookupRange = Nothing
     Set ws = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Confirmation:MAJ_Statut_Facture_Entête_Local", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Confirmation:MettreAJourStatutFactureEnteteLocale", vbNullString, startTime)
 
 End Sub
 
-Sub Construire_GL_Posting_Confirmation(invoice As String) '2025-03-12 @ 12:42
+Sub ConstruireEcritureGLConfirmation(invoice As String) '2025-03-12 @ 12:42
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Confirmation:Construire_GL_Posting_Confirmation", invoice, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Confirmation:ConstruireEcritureGLConfirmation", invoice, 0)
 
     Dim ws As Worksheet: Set ws = wsdFAC_Entete
     
@@ -386,7 +386,7 @@ Sub Construire_GL_Posting_Confirmation(invoice As String) '2025-03-12 @ 12:42
     Set ws = Nothing
     On Error GoTo 0
     
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Confirmation:Construire_GL_Posting_Confirmation", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Confirmation:ConstruireEcritureGLConfirmation", vbNullString, startTime)
 
 End Sub
 

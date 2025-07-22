@@ -326,6 +326,7 @@ Private Sub cmdGenerer_Click()
             Not chkEncaissement And _
             Not chkDepotClient And _
             Not chkEJ And _
+            Not chkEcrCloture And _
             Not chkFacture And _
             Not chkRegularisation Then
             MsgBox _
@@ -363,6 +364,7 @@ Private Sub cmdGenerer_Click()
             Not chkEncaissement And _
             Not chkDepotClient And _
             Not chkEJ And _
+            Not chkEcrCloture And _
             Not chkFacture And _
             Not chkRegularisation Then
             MsgBox _

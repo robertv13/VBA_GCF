@@ -8,9 +8,9 @@ Public Const rmv_modeModification As Long = 4
 
 Public rmv_state As Long
 
-Sub TEC_Ajoute_Ligne() 'Add an entry to DB
+Sub AjouterLigneTEC() 'Add an entry to DB
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:TEC_Ajoute_Ligne", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:AjouterLigneTEC", vbNullString, 0)
 
     'Obtenir le ID du client pur (à partir de son nom pur)
     ufSaisieHeures.txtClientID.Value = Fn_Cell_From_BD_Client(ufSaisieHeures.txtClient.Value, 1, 2)
@@ -51,13 +51,13 @@ Sub TEC_Ajoute_Ligne() 'Add an entry to DB
         Stop
     End If
     
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:TEC_Ajoute_Ligne", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:AjouterLigneTEC", vbNullString, startTime)
 
 End Sub
 
-Sub TEC_Modifie_Ligne() '2023-12-23 @ 07:04
+Sub ModifierLigneTEC() '2023-12-23 @ 07:04
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:TEC_Modifie_Ligne", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:ModifierLigneTEC", vbNullString, 0)
 
     If Fn_TEC_Is_Data_Valid() = False Then Exit Sub
 
@@ -86,13 +86,13 @@ Sub TEC_Modifie_Ligne() '2023-12-23 @ 07:04
     
     ufSaisieHeures.txtClient.SetFocus
     
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:TEC_Modifie_Ligne", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:ModifierLigneTEC", vbNullString, startTime)
 
 End Sub
 
-Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
+Sub DetruireLigneTEC() '2023-12-23 @ 07:05
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:TEC_Efface_Ligne", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:DetruireLigneTEC", vbNullString, 0)
 
     If ufSaisieHeures.txtTECID.Value = vbNullString Then
         MsgBox Prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
@@ -111,7 +111,7 @@ Sub TEC_Efface_Ligne() '2023-12-23 @ 07:05
         GoTo Clean_Exit
     End If
     
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:TEC_Efface_Ligne - Le DELETE est confirmé - " & CStr(-ufSaisieHeures.txtTECID.Value), -1) '2024-10-05 @ 07:21
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:DetruireLigneTEC - Le DELETE est confirmé - " & CStr(-ufSaisieHeures.txtTECID.Value), -1) '2024-10-05 @ 07:21
     
     Dim Sh As Worksheet: Set Sh = wsdTEC_Local
     
@@ -152,14 +152,14 @@ Clean_Exit:
     'Libérer la mémoire
     Set Sh = Nothing
 
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:TEC_Efface_Ligne", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:DetruireLigneTEC", vbNullString, startTime)
 
 End Sub
 
 Sub TEC_Get_All_TEC_AF() '2024-11-19 @ 10:39
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:TEC_Get_All_TEC_AF", _
-                                                                 ufSaisieHeures.txtProfID.Value & "/" & ufSaisieHeures.txtDate.Value, 0)
+                                                                 ufSaisieHeures.txtProfID.Value & " / " & ufSaisieHeures.txtDate.Value, 0)
 
     Dim ws As Worksheet: Set ws = wsdTEC_Local
     
@@ -255,9 +255,9 @@ No_Sort_Required:
 
 End Sub
 
-Sub TEC_Efface_Formulaire() '2025-07-03 @ 07:31
+Sub EffacerFormulaireTEC() '2025-07-03 @ 07:31
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:TEC_Efface_Formulaire", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:EffacerFormulaireTEC", vbNullString, 0)
 
     'Empty the dynamic fields after reseting the form
     With ufSaisieHeures
@@ -277,7 +277,7 @@ Sub TEC_Efface_Formulaire() '2025-07-03 @ 07:31
     
     ufSaisieHeures.txtClient.SetFocus
     
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:TEC_Efface_Formulaire", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:EffacerFormulaireTEC", vbNullString, startTime)
 
 End Sub
 
@@ -583,7 +583,7 @@ End Sub
 Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate records
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours", _
-            ufSaisieHeures.txtProfID.Value & "/" & ufSaisieHeures.txtDate.Value, 0)
+            ufSaisieHeures.txtProfID.Value & " / " & ufSaisieHeures.txtDate.Value, 0)
 
     On Error GoTo ErrorHandler
     Application.ScreenUpdating = False
@@ -701,7 +701,7 @@ EndOfProcedure:
     Set rngResult = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:TEC_Refresh_ListBox_And_Add_Hours", _
-                        ufSaisieHeures.txtProfID.Value & "/" & ufSaisieHeures.txtDate.Value, startTime)
+                        ufSaisieHeures.txtProfID.Value & " / " & ufSaisieHeures.txtDate.Value, startTime)
     Exit Sub
     
 ErrorHandler:
@@ -780,19 +780,6 @@ Sub ActiverButtonsVraiOuFaux(a As Boolean, u As Boolean, d As Boolean, c As Bool
         .cmdDelete.Enabled = d
         .cmdClear.Enabled = c
     End With
-
-End Sub
-
-Sub AfficherMessageDateInvalide(location As String) '2024-06-13 @ 12:40
-
-    MsgBox "La date saisie ne peut être acceptée tel qu'elle est entrée." & vbNewLine & vbNewLine & _
-           "Elle doit être obligatoirement de format:" & vbNewLine & _
-           "     'j', jj', " & vbNewLine & _
-           "     'jj-mm', 'jj/mm' ou " & vbNewLine & _
-           "     'j-m-aa', 'j-m-aaaa', 'jj-mm-aaaa'" & vbNewLine & vbNewLine & _
-           "Veuillez saisir la date de nouveau SVP", _
-           vbCritical, _
-           "La date saisie est INVALIDE - " & location
 
 End Sub
 

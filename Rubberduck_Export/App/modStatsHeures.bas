@@ -1,11 +1,11 @@
 Attribute VB_Name = "modStatsHeures"
 Option Explicit
 
-Sub Stats_Heures_AF()
+Sub ExecuterAdvancedFilterSurTEC_TDB_Data()
     
     'La cellule 'S7' doit contenir le Professionnel
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modStatsHeures:Stats_Heures_AF", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modStatsHeures:ExecuterAdvancedFilterSurTEC_TDB_Data", vbNullString, 0)
 
     'On utilise la feuille TEC_TDB_Data
     Dim ws As Worksheet: Set ws = wshTEC_TDB_Data
@@ -21,7 +21,7 @@ Sub Stats_Heures_AF()
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modStatsHeures:Stats_Heures_AF", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modStatsHeures:ExecuterAdvancedFilterSurTEC_TDB_Data", vbNullString, startTime)
 
 End Sub
 

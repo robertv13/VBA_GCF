@@ -1,4 +1,4 @@
-﻿📘 Journal de nettoyage typographique — 07/21/2025 20:37:38
+﻿📘 Journal de nettoyage typographique — 07/22/2025 08:30:28
 
 🔧 clsControlWrapper.cls
 
@@ -11,6 +11,8 @@
    Remplacé : .value ➜ .Value
 
 🔧 Feuil1.doccls
+
+🔧 Feuil3.doccls
 
 🔧 Feuil4.doccls
 
@@ -58,6 +60,8 @@
    Remplacé : .column ➜ .Column
    Remplacé : .row ➜ .Row
    Remplacé : .value ➜ .Value
+
+🔧 modDataValidation.bas
 
 🔧 modDEB_Saisie.bas
    Remplacé : .interior ➜ .Interior

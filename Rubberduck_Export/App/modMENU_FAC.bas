@@ -83,7 +83,7 @@ Sub FAC_Confirmation_Click()
     Call modImport.ImporterGLTransactions
     Call modImport.ImporterTEC
     
-    Call Afficher_ufConfirmation
+    Call AfficherFormulaireConfirmation
     
     Call modDev_Utils.EnregistrerLogApplication("modMENU_FAC:FAC_Confirmation_Click", vbNullString, startTime)
 

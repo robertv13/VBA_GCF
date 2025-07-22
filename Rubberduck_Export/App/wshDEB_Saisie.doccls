@@ -241,7 +241,7 @@ Private Sub Process_Change(ByVal Target As Range)
             Exit Sub
         End If
         If Target.Value = "Renversement" Then
-            Call DEB_Renverser_Ecriture
+            Call modDEB_Saisie.DEB_Renverser_Ecriture
         End If
     End If
     
@@ -257,7 +257,7 @@ Private Sub Process_Change(ByVal Target As Range)
         If fullDate <> "Invalid Date" Then
             Target.Value = Format$(fullDate, wsdADMIN.Range("B1").Value)
         Else
-            Call modTEC_Saisie.AfficherMessageDateInvalide("wshDEB_Saisie_190")
+            Call modDataValidation.AfficherMessageDateInvalide("wshDEB_Saisie_190")
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
@@ -295,7 +295,7 @@ Private Sub Process_Change(ByVal Target As Range)
                 cell.offset(0, 5).Select 'Input NET amount
             Else
 '                If wshDEB_Saisie.Range("H" & target.row).Value <> "M" Then
-                    Call CalculerTaxesEtIntrants(wshDEB_Saisie.Range("O4").Value, _
+                    Call modDEB_Saisie.CalculerTaxesEtIntrants(wshDEB_Saisie.Range("O4").Value, _
                                                        wshDEB_Saisie.Range("H" & Target.row).Value, _
                                                        Target.Value, _
                                                        gst, pst, gstCredit, pstCredit, _
@@ -330,7 +330,7 @@ Private Sub Process_Change(ByVal Target As Range)
                     Target.Value
                 'Calculate GST, PST, GST_Credit, PST_Credit based on the Amount
                 If wshDEB_Saisie.Range("H" & Target.row).Value <> "M" Then
-                    Call CalculerTaxesEtIntrants(wshDEB_Saisie.Range("O4").Value, _
+                    Call modDEB_Saisie.CalculerTaxesEtIntrants(wshDEB_Saisie.Range("O4").Value, _
                                                        wshDEB_Saisie.Range("H" & Target.row).Value, _
                                                        amount, _
                                                        gst, pst, gstCredit, pstCredit, _

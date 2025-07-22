@@ -262,7 +262,6 @@ Private Sub ConnecterControlesDeFormeRecursivement(ctrls As MSForms.Controls) '2
     Dim ctrl As MSForms.Control
     For Each ctrl In ctrls
         If TypeName(ctrl) <> "Label" Then
-'            Debug.Print "Contrôle '" & ctrl.Name & "' de type '" & TypeName(ctrl)
             Select Case TypeName(ctrl)
                 Case "Frame", "TabStrip"
                     Call ConnecterControlesDeFormeRecursivement(ctrl.Controls)

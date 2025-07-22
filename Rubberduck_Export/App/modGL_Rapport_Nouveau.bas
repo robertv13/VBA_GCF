@@ -231,9 +231,10 @@ Public Sub GenererRapportGL_Ecriture(wsRapport As Worksheet, noEcritureDebut As 
         Dim DateTrans As Date
         Dim currentEcriture As Long
         i = 1 'Numéro de ligne à traiter
-        Debug.Print "X - ", ufGL_Rapport.chkDebourse, ufGL_Rapport.chkDepotClient, ufGL_Rapport.chkEJ, ufGL_Rapport.chkEncaissement, ufGL_Rapport.chkFacture, ufGL_Rapport.chkRegularisation
+'        Debug.Print "X - ", ufGL_Rapport.chkDebourse, ufGL_Rapport.chkDepotClient, ufGL_Rapport.chkEJ, _
+'                    ufGL_Rapport.chkEcrCloture, ufGL_Rapport.chkEncaissement, ufGL_Rapport.chkFacture, _
+'                    ufGL_Rapport.chkRegularisation
         For Each row In filteredRange.Rows
-'            If InStr(row.Cells(fGlTSource).Value, "DÉBOURSÉ:") Or InStr(row.Cells(fGlTSource).Value, "ENCAISSEMENT:") Or InStr(row.Cells(fGlTSource).Value, "FACTURE:") Then Stop
             If Not row.Hidden And Fn_ValiderSiDoitImprimerTransaction(row.Cells(fGlTSource).Value) = True Then
                 'Traitement des données visibles seulement
                 If row.Cells(1).Value <> currentEcriture Then
@@ -400,9 +401,10 @@ Public Sub GenererRapportGL_DateSaisie(wsRapport As Worksheet, dtSaisieDebut As 
         Dim tDebit As Currency, tCredit As Currency
         Dim DateTrans As Date
         Dim currentTimeStamp As Double
-        Debug.Print "X - ", ufGL_Rapport.chkDebourse, ufGL_Rapport.chkDepotClient, ufGL_Rapport.chkEJ, ufGL_Rapport.chkEncaissement, ufGL_Rapport.chkFacture, ufGL_Rapport.chkRegularisation
+'        Debug.Print "X - ", ufGL_Rapport.chkDebourse, ufGL_Rapport.chkDepotClient, ufGL_Rapport.chkEJ, _
+'                    ufGL_Rapport.chkEcrCloture, ufGL_Rapport.chkEncaissement, ufGL_Rapport.chkFacture, _
+'                    ufGL_Rapport.chkRegularisation
         For Each row In filteredRange.Rows
-'            If InStr(row.Cells(fGlTSource).Value, "DÉBOURSÉ:") Or InStr(row.Cells(fGlTSource).Value, "ENCAISSEMENT:") Or InStr(row.Cells(fGlTSource).Value, "FACTURE:") Then Stop
             If Not row.Hidden And Fn_ValiderSiDoitImprimerTransaction(row.Cells(fGlTSource).Value) = True Then
                 'Traitement des données visibles seulement
                 If CDbl(row.Cells(10).Value) <> currentTimeStamp Then
@@ -948,6 +950,8 @@ Function Fn_ValiderSiDoitImprimerTransaction(ByVal Source As String) As Boolean 
         If ufGL_Rapport.chkFacture.Value = True Then aImprimer = True
     ElseIf InStr(Source, "RÉGULARISATION:") = 1 Then
         If ufGL_Rapport.chkRegularisation.Value = True Then aImprimer = True
+    ElseIf InStr(Source, "Clôture Annuelle") = 1 Then
+        If ufGL_Rapport.chkEcrCloture.Value = True Then aImprimer = True
     Else
         If ufGL_Rapport.chkEJ.Value = True Then aImprimer = True
     End If

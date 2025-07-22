@@ -139,7 +139,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Target.Value = fullDate
             Call TEC_Sort_Group_And_Subtotal
         Else
-            Call modTEC_Saisie.AfficherMessageDateInvalide("wshTEC_Analyse_131")
+            Call modDataValidation.AfficherMessageDateInvalide("wshTEC_Analyse_131")
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True

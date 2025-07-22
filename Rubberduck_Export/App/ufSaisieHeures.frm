@@ -467,55 +467,39 @@ End Sub
 
 Private Sub cmdAdd_Click()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:cmdAdd_Click", vbNullString, 0)
-    
-    Call TEC_Ajoute_Ligne
-
-    Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:cmdAdd_Click", vbNullString, startTime)
+    Call AjouterLigneTEC
 
 End Sub
 
 Private Sub cmdUpdate_Click()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:cmdUpdate_Click", ufSaisieHeures.txtTECID.Value, 0)
-    
     If ufSaisieHeures.txtTECID.Value <> vbNullString Then
-        Call TEC_Modifie_Ligne
+        Call ModifierLigneTEC
     Else
         MsgBox Prompt:="Vous devez choisir un enregistrement à modifier !", _
                Title:=vbNullString, _
                Buttons:=vbCritical
     End If
 
-    Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:cmdUpdate_Click", vbNullString, startTime)
-
 End Sub
 
 Private Sub cmdDelete_Click()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:cmdDelete_Click", ufSaisieHeures.txtTECID.Value, 0)
-
     If ufSaisieHeures.txtTECID.Value <> vbNullString Then
-        Call TEC_Efface_Ligne
+        Call DetruireLigneTEC
     Else
         MsgBox Prompt:="Vous devez choisir un enregistrement à DÉTRUIRE !", _
                Title:=vbNullString, _
                Buttons:=vbCritical
     End If
 
-    Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:cmdDelete_Click", vbNullString, startTime)
-
 End Sub
 
 Private Sub cmdClear_Click()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:cmdClear_Click", vbNullString, 0)
-    
-    Call TEC_Efface_Formulaire
+    Call EffacerFormulaireTEC
     
     Call MettreAJourEtatBoutons
-
-    Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:cmdClear_Click", vbNullString, startTime)
 
 End Sub
 
@@ -594,7 +578,7 @@ Sub imgLogoGCF_Click()
         
             Call modTEC_TDB.ActualiserTECTableauDeBord
             
-            Call Stats_Heures_AF
+            Call ExecuterAdvancedFilterSurTEC_TDB_Data
             
             'Mettre à jour les 4 tableaux croisés dynamiques (Semaine, Mois, Trimestre & Année Financière)
             Call MettreAJourPivotTables

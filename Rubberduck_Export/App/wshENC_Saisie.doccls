@@ -161,7 +161,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         If fullDate <> "Invalid Date" Then
             Target.Value = Format$(fullDate, wsdADMIN.Range("B1").Value)
         Else
-            Call modTEC_Saisie.AfficherMessageDateInvalide("wshENC_Saisie_115")
+            Call modDataValidation.AfficherMessageDateInvalide("wshENC_Saisie_115")
             Target.ClearContents
             Application.EnableEvents = True
             Application.Goto Range(Target.Address)

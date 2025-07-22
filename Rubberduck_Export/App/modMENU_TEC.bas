@@ -16,9 +16,9 @@ Sub SaisieHeures_Click()
 End Sub
 
 'Option # 2
-Sub TEC_TDB_Click()
+Sub AccederTEC_TDB_Click()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU_TEC:TEC_TDB_Click", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU_TEC:AccederTEC_TDB_Click", vbNullString, 0)
     
     gFromMenu = True '2024-09-03 @ 06:20
 
@@ -33,14 +33,14 @@ Sub TEC_TDB_Click()
     
     Application.ScreenUpdating = True
 
-    Call modDev_Utils.EnregistrerLogApplication("modMENU_TEC:TEC_TDB_Click", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modMENU_TEC:AccederTEC_TDB_Click", vbNullString, startTime)
 
 End Sub
 
 'Option # 3
-Sub TEC_Analyse_Click()
+Sub AccederTEC_Analyse_Click()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU_TEC:TEC_Analyse_Click", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU_TEC:AccederTEC_Analyse_Click", vbNullString, 0)
     
     gFromMenu = True '2024-09-03 @ 06:20
 
@@ -55,7 +55,7 @@ Sub TEC_Analyse_Click()
     
     Application.ScreenUpdating = True
 
-    Call modDev_Utils.EnregistrerLogApplication("modMENU_TEC:TEC_Analyse_Click", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modMENU_TEC:AccederTEC_Analyse_Click", vbNullString, startTime)
 
 End Sub
 

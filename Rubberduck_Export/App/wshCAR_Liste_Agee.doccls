@@ -45,7 +45,7 @@ Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
         ws.Range("B8:J" & lastUsedRow + 2).Clear
     End If
     
-    Call GererBoutonsNavigation(False)
+    Call modCAR_Liste_Agee.GererBoutonsNavigation(False)
     
     Call modDev_Utils.DeterminerOrdreDeTabulation(ws)
     
@@ -132,7 +132,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Target.Value = Format$(fullDate, wsdADMIN.Range("B1").Value)
             Application.EnableEvents = True
         Else
-            Call modTEC_Saisie.AfficherMessageDateInvalide("wshCAR_Liste_Agee_125")
+            Call modDataValidation.AfficherMessageDateInvalide("wshCAR_Liste_Agee_125")
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True

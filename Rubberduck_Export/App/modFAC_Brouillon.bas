@@ -639,7 +639,7 @@ Sub Get_TEC_For_Client_AF(clientID As String, _
                           isInvoiced As String, _
                           isDeleted As String)
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:Get_TEC_For_Client_AF", clientID & _
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:Get_TEC_For_Client_AF '", clientID & _
                     "', " & cutoffDate & ", " & isBillable & ", " & isInvoiced & ", " & isDeleted, 0)
     
     Dim ws As Worksheet: Set ws = wsdTEC_Local

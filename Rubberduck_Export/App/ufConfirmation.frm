@@ -84,7 +84,6 @@ Private Sub ListView1_ItemClick(ByVal item As MSComctlLib.listItem)
     If PDFInvoicePath <> vbNullString Then
         Dim strShell As String
         strShell = "C:\Program Files\Adobe\Acrobat DC\Acrobat\Acrobat.exe " & Chr$(34) & PDFInvoicePath & Chr$(34)
-        Debug.Print "#092 - " & strShell
         Shell strShell, vbNormalFocus
     Else
         MsgBox "Le fichier PDF de la facture n'existe pas : " & PDFInvoicePath, vbExclamation, "Fichier PDF manquant"
@@ -148,13 +147,13 @@ End Sub
 
 Private Sub cmdCocherToutesCases_Click()
 
-    Call CocherToutesLesCases(ListView1)
+    Call modFAC_Confirmation.CocherToutesLesCases(ListView1)
 
 End Sub
 
 Private Sub cmdDécocherToutesCases_Click()
 
-    Call DecocherToutesLesCases(ListView1)
+    Call modFAC_Confirmation.DecocherToutesLesCases(ListView1)
 
 End Sub
 
@@ -178,7 +177,7 @@ Private Sub cmdConfirmation_Click()
             'Annule la confirmation si l'utilisateur répond Non
             Exit Sub
         End If
-        Call Confirmation_Mise_À_Jour
+        Call modFAC_Confirmation.ConfirmerSauvegardeConfirmation
     End If
 
 End Sub
