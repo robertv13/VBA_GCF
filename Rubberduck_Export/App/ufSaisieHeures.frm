@@ -137,7 +137,7 @@ Private Sub cmbProfessionnel_Enter() '2025-05-31 @ 16:31
     'Plage de la table WindowsUser_Initials : colonnes D à F, lignes 63 à 78
     Set plageInitiales = ws.Range("D63:D78")
     
-    utilisateur = GetNomUtilisateur() ' Variable globale utilisateur Windows
+    utilisateur = modFunctions.GetNomUtilisateur() ' Variable globale utilisateur Windows
 
     Set listeInitiales = New Collection
     toutesInitiales = False
@@ -193,7 +193,7 @@ Private Sub cmbProfessionnel_AfterUpdate() '2025-05-31 @ 16:11
 
     Dim initProfAutorises As String
     
-    initProfAutorises = GetInitialesObligatoiresFromADMIN(GetNomUtilisateur())
+    initProfAutorises = GetInitialesObligatoiresFromADMIN(modFunctions.GetNomUtilisateur())
 
     Select Case initProfAutorises
         Case "INVALID"

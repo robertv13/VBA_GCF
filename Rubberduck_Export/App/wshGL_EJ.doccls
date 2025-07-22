@@ -37,7 +37,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:08
     'Certaines cellules perdent la couleur du background
     Dim cellsToColor As Range
     Set cellsToColor = Me.Range("G4:H4")
-    Call Remplir_Plage_Avec_Couleur(cellsToColor, gCOULEUR_BASE_COMPTABILITE)
+    Call modAppli_Utils.RemplirPlageAvecCouleur(cellsToColor, gCOULEUR_BASE_COMPTABILITE)
     
     Call modDev_Utils.DeterminerOrdreDeTabulation(ws)
     

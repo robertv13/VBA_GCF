@@ -6,7 +6,6 @@ Sub AnalyserToutesLesProcedures() '2025-07-07 @ 09:27
     Dim tableProc(1 To 1000, 1 To 8) As Variant '[Nom, Module, Type, Direct, Préfixé, Indirect, Object, NonConformite]
     Dim indexMax As Long
     Dim dictIndex As Object
-    Set dictIndex = NouveauDict()
 
     Debug.Print "Début du traitement : analyse des procédures VBA"
 
@@ -456,12 +455,6 @@ Function ValiderCommenceParUnVerbe(nom As String) As Boolean '2025-07-07 @ 09:27
     
 End Function
 
-Function NouveauDict() As Object '2025-07-07 @ 09:27
-
-    Set NouveauDict = CreateObject("Scripting.Dictionary")
-    
-End Function
-
 Function AllerVersCode(nomModule As String, Optional nomProcedure As String = vbNullString) As Boolean '2025-07-07 @ 09:27
 
     On Error GoTo erreur
@@ -510,5 +503,51 @@ erreur:
     AllerVersCode = False
     
 End Function
+
+Sub BatirListeProcEtFoncDansDictionnaire() '2025-07-22 @ 12:01
+
+    Dim comp As Object
+    Dim codeMod As Object
+    Dim ligne As String
+    Dim nomSub As String
+    Dim typeModule As String
+
+    Dim dictProcFunc As Object
+    Set dictProcFunc = CreateObject("Scripting.Dictionary")
+
+    Dim i As Long
+    For Each comp In ThisWorkbook.VBProject.VBComponents
+        Set codeMod = comp.codeModule
+        Select Case comp.Type
+            Case vbext_ct_StdModule: typeModule = "3_Module Standard"
+            Case vbext_ct_ClassModule: typeModule = "4_Classe"
+            Case vbext_ct_MSForm: typeModule = "2_UserForm"
+            Case vbext_ct_Document: typeModule = "1_Feuille Excel"
+            Case vbext_ct_MSForm: typeModule = "2_UserForm"
+            Case Else: typeModule = "z_Autre"
+        End Select
+
+        For i = 1 To codeMod.CountOfLines
+            ligne = Trim(codeMod.Lines(i, 1))
+            'Exclure les commentaires et les déclarations de fonction ou procédures
+            If Left(ligne, 1) = "'" Or _
+                InStr(ligne, "Function ") > 0 Or _
+                InStr(ligne, "Sub") > 0 Then
+                GoTo NextLigne
+            End If
+
+            nomSub = codeMod.ProcOfLine(i, vbext_pk_Proc)
+            
+            If nomSub <> vbNullString Then
+                If Not dictProcFunc.Exists(nomSub) Then
+                    dictProcFunc.Add nomSub, comp.Name
+                End If
+            End If
+
+NextLigne:
+        Next i
+    Next comp
+    
+End Sub
 
 

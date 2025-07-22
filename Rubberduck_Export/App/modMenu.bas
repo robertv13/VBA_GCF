@@ -29,15 +29,15 @@ Sub AccederMenuFacturation()
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMenu:AccederMenuFacturation", vbNullString, 0)
     
-    If GetNomUtilisateur() = "Guillaume" Or _
-            GetNomUtilisateur() = "GuillaumeCharron" Or _
-            GetNomUtilisateur() = "gchar" Or _
-            GetNomUtilisateur() = "RobertMV" Or _
-            GetNomUtilisateur() = "robertmv" Or _
-            GetNomUtilisateur() = "User" Or _
-            GetNomUtilisateur() = "vgervais" Or _
-            GetNomUtilisateur() = "Vlad_Portable" Or _
-            GetNomUtilisateur() = "Oli_Portable" Then
+    If modFunctions.GetNomUtilisateur() = "Guillaume" Or _
+            modFunctions.GetNomUtilisateur() = "GuillaumeCharron" Or _
+            modFunctions.GetNomUtilisateur() = "gchar" Or _
+            modFunctions.GetNomUtilisateur() = "RobertMV" Or _
+            modFunctions.GetNomUtilisateur() = "robertmv" Or _
+            modFunctions.GetNomUtilisateur() = "User" Or _
+            modFunctions.GetNomUtilisateur() = "vgervais" Or _
+            modFunctions.GetNomUtilisateur() = "Vlad_Portable" Or _
+            modFunctions.GetNomUtilisateur() = "Oli_Portable" Then
         wshMenuFAC.Visible = xlSheetVisible
         wshMenuFAC.Activate
         wshMenuFAC.Range("A1").Select
@@ -61,12 +61,12 @@ Sub AccéderMenuComptabilite()
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMenu:AccéderMenuComptabilite", vbNullString, 0)
     
-    If GetNomUtilisateur() = "Guillaume" Or _
-            GetNomUtilisateur() = "GuillaumeCharron" Or _
-            GetNomUtilisateur() = "gchar" Or _
-            GetNomUtilisateur() = "RobertMV" Or _
-            GetNomUtilisateur() = "robertmv" Or _
-            GetNomUtilisateur() = "User" Then
+    If modFunctions.GetNomUtilisateur() = "Guillaume" Or _
+            modFunctions.GetNomUtilisateur() = "GuillaumeCharron" Or _
+            modFunctions.GetNomUtilisateur() = "gchar" Or _
+            modFunctions.GetNomUtilisateur() = "RobertMV" Or _
+            modFunctions.GetNomUtilisateur() = "robertmv" Or _
+            modFunctions.GetNomUtilisateur() = "User" Then
         wshMenuGL.Visible = xlSheetVisible
         wshMenuGL.Activate
         wshMenuGL.Range("A1").Select
@@ -90,11 +90,11 @@ Sub AccederFeuilleADMIN()
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMenu:AccederFeuilleADMIN", vbNullString, 0)
     
-    If GetNomUtilisateur() = "Guillaume" Or _
-            GetNomUtilisateur() = "GuillaumeCharron" Or _
-            GetNomUtilisateur() = "gchar" Or _
-            GetNomUtilisateur() = "RobertMV" Or _
-            GetNomUtilisateur() = "robertmv" Then
+    If modFunctions.GetNomUtilisateur() = "Guillaume" Or _
+            modFunctions.GetNomUtilisateur() = "GuillaumeCharron" Or _
+            modFunctions.GetNomUtilisateur() = "gchar" Or _
+            modFunctions.GetNomUtilisateur() = "RobertMV" Or _
+            modFunctions.GetNomUtilisateur() = "robertmv" Then
         wsdADMIN.Visible = xlSheetVisible
         wsdADMIN.Select
     Else
@@ -125,7 +125,7 @@ Sub SauvegarderEtSortirApplication() '2024-08-30 @ 07:37
                         "l'application de gestion (sauvegarde automatique) ?", vbYesNo + vbQuestion, "Confirmation de sortie")
     
     If confirmation = vbYes Then
-        Call FermerApplicationNormalement(GetNomUtilisateur())
+        Call FermerApplicationNormalement(modFunctions.GetNomUtilisateur())
     End If
     
 End Sub
@@ -151,7 +151,7 @@ Sub FermerApplicationNormalement(ByVal userName As String) 'Nouvelle procédure 
     Call ViderTableauxStructures
     
     'Effacer fichier utilisateur actif + Fermeture de la journalisation
-    Call EffacerFichierUtilisateurActif(GetNomUtilisateur())
+    Call EffacerFichierUtilisateurActif(modFunctions.GetNomUtilisateur())
     Call modDev_Utils.EnregistrerLogApplication("----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) -----", vbNullString, 0)
     Call modDev_Utils.EnregistrerLogApplication(vbNullString, vbNullString, -1)
 
@@ -188,7 +188,7 @@ Sub CacherToutesFeuillesSaufMenu() '2024-02-20 @ 07:28
     Dim ws As Worksheet
     For Each ws In ThisWorkbook.Worksheets
         If ws.CodeName <> "wshMenu" Then
-            If GetNomUtilisateur() <> "RobertMV" Or InStr(ws.CodeName, "wshzDoc") = 0 Then
+            If modFunctions.GetNomUtilisateur() <> "RobertMV" Or InStr(ws.CodeName, "wshzDoc") = 0 Then
                 ws.Visible = xlSheetHidden
             End If
         End If
@@ -314,7 +314,7 @@ End Sub
 
 Sub shpImporterCorrigerMASTER_Click()
 
-    If GetNomUtilisateur() <> "RobertMV" And GetNomUtilisateur() <> "robertmv" Then
+    If modFunctions.GetNomUtilisateur() <> "RobertMV" And modFunctions.GetNomUtilisateur() <> "robertmv" Then
         Exit Sub
     End If
     

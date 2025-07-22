@@ -114,7 +114,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     Dim m As Long
     Dim s As Long
 
-    Call Get_Date_Derniere_Modification(fullFileName, ddm, j, h, m, s)
+    Call ObtenirDateDernModifFichier(fullFileName, ddm, j, h, m, s)
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "Date dern. modification")
     
     'Un peu de couleur
@@ -1733,8 +1733,8 @@ Private Sub VerifierFACDetails(ByVal wsOutput As Worksheet, ByRef r As Long, ByR
     Dim Inv_No As String, oldInv_No As String
     Dim result As Variant
     
-    Dim isFACDétailsValid As Boolean
-    isFACDétailsValid = True
+    Dim isFACDetailsValid As Boolean
+    isFACDetailsValid = True
     
     For i = LBound(arr, 1) + 2 To UBound(arr, 1) - 1 'Two lines of header !
         Inv_No = CStr(arr(i, 1))
@@ -1754,22 +1754,22 @@ Private Sub VerifierFACDetails(ByVal wsOutput As Worksheet, ByRef r As Long, ByR
         If result = "Not Found" Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** La facture '" & Inv_No & "' à la ligne " & i & " n'existe pas dans FAC_Entête")
             r = r + 1
-            isFACDétailsValid = False
+            isFACDetailsValid = False
         End If
         If IsNumeric(arr(i, 3)) = False Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** La facture '" & Inv_No & "' à la ligne " & i & " le nombre d'heures est INVALIDE '" & arr(i, 3) & "'")
             r = r + 1
-            isFACDétailsValid = False
+            isFACDetailsValid = False
         End If
         If IsNumeric(arr(i, 4)) = False Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** La facture '" & Inv_No & "' à la ligne " & i & " le taux horaire est INVALIDE '" & arr(i, 5) & "'")
             r = r + 1
-            isFACDétailsValid = False
+            isFACDetailsValid = False
         End If
         If IsNumeric(arr(i, 5)) = False Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** La facture '" & Inv_No & "' à la ligne " & i & " le montant est INVALIDE '" & arr(i, 5) & "'")
             r = r + 1
-            isFACDétailsValid = False
+            isFACDetailsValid = False
         End If
     Next i
     
@@ -1780,7 +1780,7 @@ Private Sub VerifierFACDetails(ByVal wsOutput As Worksheet, ByRef r As Long, ByR
     readRows = readRows + UBound(arr, 1) - 2
     
     'Cas problème dans cette vérification ?
-    If isFACDétailsValid = False Then
+    If isFACDetailsValid = False Then
         gverificationIntegriteOK = False
     End If
     
@@ -3494,7 +3494,7 @@ Sub ComparerHeuresFactureesSelon2Sources(ByVal wsOutput As Worksheet, ByRef r As
     For Each key In dictFacture.keys
         totalHoursBilled = Fn_Get_TEC_Total_Invoice_AF(CStr(key), "Heures")
         hresFactureesTEC_Local = dictFactureHres(key)
-        If Not EgalCurrency(totalHoursBilled, hresFactureesTEC_Local) Then
+        If Not totalHoursBilled = hresFactureesTEC_Local Then
             Call AjouterMessage(wsOutput, r, 2, "********** Facture '" & CStr(key) & _
                     "', il y a un écart d'heures facturées entre TEC_Local & FAC_Détails - " & _
                         Round(hresFactureesTEC_Local, 2) & " vs. " & Round(totalHoursBilled, 2))
@@ -3718,11 +3718,7 @@ End Sub
 
 Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As Long)
 
-    'Conditional Formatting (many steps)
-    '1) Remove existing conditional formatting
-'        rng.Cells.FormatConditions.Delete 'Remove the worksheet conditional formatting
-    
-    '2) Define the usedRange to data only (exclude header row(s))
+    '1) Define the usedRange to data only (exclude header row(s))
         Dim numRows As Long
         numRows = rng.CurrentRegion.Rows.count - HeaderRow
         Dim usedRange As Range
@@ -3732,7 +3728,7 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
             On Error GoTo 0
         End If
         
-    '3) Specific columns formats to worksheets
+    '2) Specific columns formats to worksheets
         Dim lastUsedRow As Long
         lastUsedRow = rng.Rows.count
         If lastUsedRow = HeaderRow Then
@@ -3976,7 +3972,7 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                 End With
         End Select
 
-    '4) Common stuff to all worksheets
+    '3) Common stuff to all worksheets
         rng.EntireColumn.AutoFit
         rng.RowHeight = 15
         
@@ -3997,22 +3993,9 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
     
 End Sub
 
-Sub Fix_Font_Size_And_Family(r As Range, ff As String, fs As Long)
+Sub ObtenirDeplacementsAPartirDesTEC()  '2024-09-05 @ 10:22
 
-    With r.Font
-        .Name = ff
-        .size = fs
-        .underline = xlUnderlineStyleNone
-        .ThemeColor = xlThemeColorLight1
-        .TintAndShade = 0
-        .ThemeFont = xlThemeFontNone
-    End With
-
-End Sub
-
-Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
-
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:Get_Deplacements_From_TEC", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:ObtenirDeplacementsAPartirDesTEC", vbNullString, 0)
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -4176,7 +4159,6 @@ Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
     Application.EnableEvents = True
     
     'Setup print parameters
-'    Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:I" & rowOutput)
     Dim header1 As String: header1 = "Liste des TEC pour Guillaume"
     Dim header2 As String: header2 = "Période du " & dateFrom & " au " & dateTo
     Call MettreEnFormeImpressionSimple(wsOutput, rngArea, header1, header2, "$1:$1", "P")
@@ -4188,11 +4170,11 @@ Sub Get_Deplacements_From_TEC()  '2024-09-05 @ 10:22
     Set wsMF = Nothing
     Set wsTEC = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:Get_Deplacements_From_TEC", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:ObtenirDeplacementsAPartirDesTEC", vbNullString, startTime)
 
 End Sub
 
-Sub Get_Date_Derniere_Modification(fileName As String, ByRef ddm As Date, _
+Sub ObtenirDateDernModifFichier(fileName As String, ByRef ddm As Date, _
                                     ByRef jours As Long, ByRef heures As Long, _
                                     ByRef minutes As Long, ByRef secondes As Long)
     
@@ -4254,7 +4236,7 @@ Sub RedefinirDnrPlanComptable() '2024-07-04 @ 10:39
 
 End Sub
 
-Sub Remplir_Plage_Avec_Couleur(ByVal plage As Range, ByVal couleurRVB As Long)
+Sub RemplirPlageAvecCouleur(ByVal plage As Range, ByVal couleurRVB As Long)
 
     If Not plage Is Nothing Then
         Dim cellule As Range
@@ -4265,22 +4247,9 @@ Sub Remplir_Plage_Avec_Couleur(ByVal plage As Range, ByVal couleurRVB As Long)
             On Error GoTo 0
         Next cellule
     Else
-        MsgBox "La plage spécifiée est invalide.", vbExclamation, "Procédure 'Remplir_Plage_Avec_Couleur'"
+        MsgBox "La plage spécifiée est invalide.", vbExclamation, "Procédure 'RemplirPlageAvecCouleur'"
     End If
     
-End Sub
-
-Sub Paint_A_Range(rng As Range, colorRGB As String)
-   
-    Dim cell As Variant
-    With rng.Interior
-        .Pattern = xlSolid
-        .PatternColorIndex = xlAutomatic
-        .ThemeColor = xlThemeColorAccent6
-        .TintAndShade = 0.599993896298105
-        .PatternTintAndShade = 0
-    End With
-
 End Sub
 
 Sub NoterNombreLignesParFeuille() '2025-01-22 @ 16:19
@@ -4353,120 +4322,6 @@ Sub NoterNombreLignesParFeuille() '2025-01-22 @ 16:19
     
     Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:NoterNombreLignesParFeuille", vbNullString, startTime)
 
-End Sub
-
-Sub ChargerPlageDansDictionary(ByRef dict As Object, ByVal rng As Range, Optional colValeurOffset As Long = 0)
-
-    'Créer un dictionnaire si non initialisé
-    If dict Is Nothing Then
-        Set dict = CreateObject("Scripting.Dictionary")
-    End If
-
-    'Parcourir chaque cellule de la plage et ajouter au dictionnaire
-    Dim cell As Range
-    Dim clé As Variant
-    Dim valeur As Variant
-    For Each cell In rng
-        clé = cell.Value
-        valeur = cell.offset(0, colValeurOffset).Value 'Colonne adjacente ou selon décalage
-
-        'Ajouter au dictionnaire si la clé n'existe pas déjà
-        If Not dict.Exists(clé) Then
-            dict.Add clé, valeur
-        End If
-    Next cell
-    
-End Sub
-
-Sub ExempleUtilisation()
-
-    Dim dict As Object
-    
-    'Définir la feuille de calcul et la plage
-    Dim ws As Worksheet: Set ws = wsdFAC_Entete
-    Dim rng As Range: Set rng = ws.Range("A1").CurrentRegion.offset(2, 0)
-    'Redimensionner la plage pour inclure uniquement les lignes restantes
-    Set rng = rng.Resize(rng.Rows.count - 2, rng.Columns.count)
-
-    'Charger les données dans un dictionnaire
-    Call ChargerPlageDansDictionary(dict, rng, 2) ' 2 = Décalage de colonne pour les valeurs (colonne C)
-
-    'Nettoyer la mémoire
-    Set rng = Nothing
-    Set ws = Nothing
-    
-End Sub
-
-Sub VerifierCombinaisonClientIDClientNomDansTEC()
-
-    'Fichier maître des clients
-    Dim strFile As String
-    strFile = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx"
-    Dim wb As Workbook
-    Set wb = Workbooks.Open(strFile)
-    
-    'Feuille TEC_Local
-    Dim ws As Worksheet
-    Set ws = wsdTEC_Local
-    Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).Row
-    'Transfère la feuille en mémoire (matrice)
-    Dim m As Variant
-    m = ws.Range("A3:P" & lastUsedRow).Value
-    
-    'Feuille de travail (ouput)
-    Dim output As Worksheet
-    Set output = ThisWorkbook.Sheets("Feuil1")
-    Dim r As Integer
-    r = 1
-    output.Cells.Clear
-    output.Cells(r, 1) = "Ligne"
-    output.Cells(r, 2) = "TEC_ID"
-    output.Cells(r, 3) = "ClientID"
-    output.Cells(r, 4) = "ClientName"
-    output.Cells(r, 5) = "clientNameFromMF"
-    output.Cells(r, 6) = "Date"
-    output.Cells(r, 7) = "Prof"
-    output.Cells(r, 8) = "Description"
-    output.Cells(r, 9) = "Heures"
-    output.Cells(r, 10) = "estFacturée"
-    
-    Dim clientID As String, clientName As String, clientNameFromMF As String
-    Dim allCols As Variant
-    Dim i As Integer
-    For i = 1 To UBound(m, 1)
-        clientID = m(i, fTECClientID)
-        clientName = m(i, fTECClientNom)
-        
-        'Obtenir le nom du client associé à clientID
-        allCols = Fn_Get_A_Row_From_A_Worksheet("BD_Clients", clientID, fClntFMClientID)
-        'Vérifier le résultat retourné
-        If IsArray(allCols) Then
-            clientNameFromMF = allCols(1)
-        Else
-            MsgBox "Valeur non trouvée !!!", vbCritical
-        End If
-        
-        If clientName <> clientNameFromMF Then
-            r = r + 1
-            output.Cells(r, 1).Value = i + 2
-            output.Cells(r, 2).Value = m(i, fTECTECID)
-            output.Cells(r, 3).Value = clientID
-            output.Cells(r, 4).Value = clientName
-            output.Cells(r, 5).Value = clientNameFromMF
-            output.Cells(r, 6).Value = m(i, fTECDate)
-            output.Cells(r, 7).Value = m(i, fTECProf)
-            output.Cells(r, 8).Value = m(i, fTECDescription)
-            output.Cells(r, 9).Value = m(i, fTECHeures)
-            output.Cells(r, 10).Value = m(i, fTECEstFacturee)
-        End If
-        
-    Next i
-
-    Debug.Print lastUsedRow, UBound(m, 1)
-
-    wb.Close False
-    
 End Sub
 
 Private Function AnalyserLigneTEC(data As Variant, i As Long, ByVal wsOutput As Worksheet, ByRef r As Long, _
@@ -4707,27 +4562,3 @@ Private Function AnalyserLigneTEC(data As Variant, i As Long, ByVal wsOutput As 
     
 End Function
 
-Public Function EgalCurrency(a As Currency, b As Currency, Optional epsilon As Currency = 0.01) As Boolean
-
-    EgalCurrency = Abs(a - b) <= epsilon
-    
-End Function
-
-Sub ExtraireCouleurCellule()
-
-    Dim couleur As Long
-    Dim rouge As Long, vert As Long, bleu As Long
-
-    ' récupère la couleur de fond de la cellule active
-    couleur = ActiveSheet.Range("B8").Interior.Color
-    
-    ' extrait les composantes RGB
-    rouge = couleur Mod 256
-    vert = (couleur \ 256) Mod 256
-    bleu = (couleur \ 65536) Mod 256
-
-    ' affiche les valeurs
-    MsgBox "Rouge: " & rouge & vbCrLf & _
-           "Vert: " & vert & vbCrLf & _
-           "Bleu: " & bleu
-End Sub

@@ -2277,18 +2277,94 @@ Sub InjecterFormeModuleDansColonne10() '2025-07-15 @ 22:56
     
 End Sub
 
-Sub RouvrirMASTER()
+Sub VerifierCombinaisonClientIDClientNomDansTEC()
 
-    Dim xlApp As Object, wb As Workbook
-    Set xlApp = CreateObject("Excel.Application")
-    xlApp.Visible = True
-    Set wb = xlApp.Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx")
+    'Fichier maître des clients
+    Dim strFile As String
+    strFile = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx"
+    Dim wb As Workbook
+    Set wb = Workbooks.Open(strFile)
+    
+    'Feuille TEC_Local
+    Dim ws As Worksheet
+    Set ws = wsdTEC_Local
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).Row
+    'Transfère la feuille en mémoire (matrice)
+    Dim m As Variant
+    m = ws.Range("A3:P" & lastUsedRow).Value
+    
+    'Feuille de travail (ouput)
+    Dim output As Worksheet
+    Set output = ThisWorkbook.Sheets("Feuil1")
+    Dim r As Integer
+    r = 1
+    output.Cells.Clear
+    output.Cells(r, 1) = "Ligne"
+    output.Cells(r, 2) = "TEC_ID"
+    output.Cells(r, 3) = "ClientID"
+    output.Cells(r, 4) = "ClientName"
+    output.Cells(r, 5) = "clientNameFromMF"
+    output.Cells(r, 6) = "Date"
+    output.Cells(r, 7) = "Prof"
+    output.Cells(r, 8) = "Description"
+    output.Cells(r, 9) = "Heures"
+    output.Cells(r, 10) = "estFacturée"
+    
+    Dim clientID As String, clientName As String, clientNameFromMF As String
+    Dim allCols As Variant
+    Dim i As Integer
+    For i = 1 To UBound(m, 1)
+        clientID = m(i, fTECClientID)
+        clientName = m(i, fTECClientNom)
+        
+        'Obtenir le nom du client associé à clientID
+        allCols = Fn_Get_A_Row_From_A_Worksheet("BD_Clients", clientID, fClntFMClientID)
+        'Vérifier le résultat retourné
+        If IsArray(allCols) Then
+            clientNameFromMF = allCols(1)
+        Else
+            MsgBox "Valeur non trouvée !!!", vbCritical
+        End If
+        
+        If clientName <> clientNameFromMF Then
+            r = r + 1
+            output.Cells(r, 1).Value = i + 2
+            output.Cells(r, 2).Value = m(i, fTECTECID)
+            output.Cells(r, 3).Value = clientID
+            output.Cells(r, 4).Value = clientName
+            output.Cells(r, 5).Value = clientNameFromMF
+            output.Cells(r, 6).Value = m(i, fTECDate)
+            output.Cells(r, 7).Value = m(i, fTECProf)
+            output.Cells(r, 8).Value = m(i, fTECDescription)
+            output.Cells(r, 9).Value = m(i, fTECHeures)
+            output.Cells(r, 10).Value = m(i, fTECEstFacturee)
+        End If
+        
+    Next i
+
+    Debug.Print lastUsedRow, UBound(m, 1)
+
+    wb.Close False
     
 End Sub
 
+Sub ExtraireCouleurCellule()
 
-Sub Test_Copie_Master()
+    Dim couleur As Long
+    Dim rouge As Long, vert As Long, bleu As Long
 
-    FileCopy "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx", "C:\VBA\GC_FISCALITÉ\DataFiles\MASTER_copie.xlsx"
+    ' récupère la couleur de fond de la cellule active
+    couleur = ActiveSheet.Range("B8").Interior.Color
+    
+    ' extrait les composantes RGB
+    rouge = couleur Mod 256
+    vert = (couleur \ 256) Mod 256
+    bleu = (couleur \ 65536) Mod 256
 
+    ' affiche les valeurs
+    MsgBox "Rouge: " & rouge & vbCrLf & _
+           "Vert: " & vert & vbCrLf & _
+           "Bleu: " & bleu
 End Sub
+

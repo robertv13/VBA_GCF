@@ -63,7 +63,7 @@ Private Sub cmdFermerMaintenant_Click() '2025-07-01 @ 15:46
     Debug.Print "[cmdFermerMaintenant_Click] Utilisateur a cliqué sur 'Fermer maintenant' à : " & Format(Now, "hh:mm:ss")
     
     Me.Hide
-    Call FermerApplicationNormalement(GetNomUtilisateur())
+    Call FermerApplicationNormalement(modFunctions.GetNomUtilisateur())
     
 End Sub
 

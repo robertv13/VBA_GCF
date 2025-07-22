@@ -105,7 +105,7 @@ End Sub
 
 Sub shp_Get_Deplacements_From_TEC_Click()
 
-    Call Get_Deplacements_From_TEC
+    Call ObtenirDeplacementsAPartirDesTEC
     
 End Sub
 

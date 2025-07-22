@@ -35,7 +35,7 @@ Private Sub Worksheet_Activate()
     Set cellsToColor = Union(ws.Range("E4"), ws.Range("I4"), ws.Range("N4"), ws.Range("F5"), _
                                 ws.Range("G5"), ws.Range("J5"), ws.Range("E6"), _
                                 ws.Range("L6"), ws.Range("N6"))
-    Call modAppli_Utils.Remplir_Plage_Avec_Couleur(cellsToColor, gCOULEUR_BASE_COMPTABILITE)
+    Call modAppli_Utils.RemplirPlageAvecCouleur(cellsToColor, gCOULEUR_BASE_COMPTABILITE)
     
     Call modDev_Utils.DeterminerOrdreDeTabulation(ws)
     

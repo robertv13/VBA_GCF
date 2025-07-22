@@ -4,20 +4,20 @@ Attribute VB_Name = "modCAR_Liste_Agee"
 
 Option Explicit
 
-Sub CC_PreparerListeAgee_Click()
+Sub PreparerListeAgeeCC_Click()
 
     Dim ws As Worksheet
     Set ws = wshCAR_Liste_Agee
     
     Call EffacerResultatAnterieur(ws)
     
-    Call CreerListeAgee
+    Call CreerListeAgeeCC
 
 End Sub
 
-Sub CreerListeAgee() '2024-09-08 @ 15:55
+Sub CreerListeAgeeCC() '2024-09-08 @ 15:55
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("CreerListeAgee:CreerListeAgee", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modCAR_Liste_Agee:CreerListeAgeeCC", vbNullString, 0)
    
     Application.ScreenUpdating = False
     
@@ -468,7 +468,7 @@ Next_Invoice:
     Set wsFactures = Nothing
     Set wsPaiements = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("CreerListeAgee:CreerListeAgee", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modCAR_Liste_Agee:CreerListeAgeeCC", vbNullString, startTime)
     
 End Sub
 

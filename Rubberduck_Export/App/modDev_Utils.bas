@@ -1546,13 +1546,13 @@ Sub EnregistrerLogApplication(ByVal procedureName As String, param As String, Op
         Print #fileNum, vbNullString
     ElseIf startTime = 0 Then 'On marque le départ d'une procédure/fonction
         Print #fileNum, timeStamp & " | " & _
-                        GetNomUtilisateur() & " | " & _
+                        modFunctions.GetNomUtilisateur() & " | " & _
                         ThisWorkbook.Name & " | " & _
                         procedureName & " | " & _
                         param & " | "
     ElseIf startTime < 0 Then 'On enregistre une entrée intermédiaire (au coeur d'un procédure/fonction)
         Print #fileNum, timeStamp & " | " & _
-                        GetNomUtilisateur() & " | " & _
+                        modFunctions.GetNomUtilisateur() & " | " & _
                         ThisWorkbook.Name & " | " & _
                         procedureName & " | " & _
                         param & " | "
@@ -1560,7 +1560,7 @@ Sub EnregistrerLogApplication(ByVal procedureName As String, param As String, Op
         Dim elapsedTime As Double
         elapsedTime = Round(Timer - startTime, 4) 'Calculate elapsed time
         Print #fileNum, timeStamp & " | " & _
-                        GetNomUtilisateur() & " | " & _
+                        modFunctions.GetNomUtilisateur() & " | " & _
                         ThisWorkbook.Name & " | " & _
                         procedureName & " | " & _
                         param & " | " & _
@@ -1623,7 +1623,7 @@ Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boole
     End If
     
     Print #fileNum, timeStamp & " | " & _
-                        Left$(GetNomUtilisateur() & Space(19), 19) & " | " & _
+                        Left$(modFunctions.GetNomUtilisateur() & Space(19), 19) & " | " & _
                         ThisWorkbook.Name & " | " & _
                         oper & " | " & _
                         txt
@@ -1667,7 +1667,7 @@ Sub Settrace(Source As String, module As String, procedure As String, variable A
     Open settraceFile For Append As #fileNum
     
     Print #fileNum, timeStamp & " | " & _
-                    GetNomUtilisateur() & " | " & _
+                    modFunctions.GetNomUtilisateur() & " | " & _
                     Source & " | " & _
                     module & " | " & _
                     procedure & " | " & _

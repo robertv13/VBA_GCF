@@ -1,4 +1,4 @@
-﻿📘 Journal de nettoyage typographique — 07/22/2025 08:30:28
+﻿📘 Journal de nettoyage typographique — 07/22/2025 14:48:12
 
 🔧 clsControlWrapper.cls
 
@@ -29,7 +29,6 @@
    Remplacé : .row ➜ .Row
    Remplacé : .value ➜ .Value
    Remplacé : .range ➜ .Range
-   Remplacé : .name ➜ .Name
    Remplacé : .font ➜ .Font
 
 🔧 modAuditVBA.bas

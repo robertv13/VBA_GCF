@@ -22,7 +22,7 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
     
     'Qui exécute ce programme ?
     Dim isDeveloppeur As Boolean
-    If GetNomUtilisateur() = "RobertMV" Or GetNomUtilisateur() = "robertmv" Then
+    If modFunctions.GetNomUtilisateur() = "RobertMV" Or modFunctions.GetNomUtilisateur() = "robertmv" Then
         isDeveloppeur = True
     End If
     

@@ -945,7 +945,7 @@ Sub FAC_Finale_Preview_PDF() '2024-03-02 @ 16:18
     
     'Imprimante PDF à utiliser
     Dim imprimantePDF As String
-    If GetNomUtilisateur() = "RobertMV" Or GetNomUtilisateur() = "robertmv" Then
+    If modFunctions.GetNomUtilisateur() = "RobertMV" Or modFunctions.GetNomUtilisateur() = "robertmv" Then
         imprimantePDF = "Adobe PDF"
     Else
         imprimantePDF = "Microsoft Print to PDF"

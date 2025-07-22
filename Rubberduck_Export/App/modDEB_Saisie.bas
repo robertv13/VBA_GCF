@@ -10,18 +10,18 @@ Public numeroDebourseARenverser As Long
 
 Sub shp_DEB_Saisie_Update_Click()
 
-    Call DEB_Saisie_Update
+    Call MiseAjourDebours
 
 End Sub
 
-Sub DEB_Saisie_Update()
+Sub MiseAjourDebours()
 
     If wshDEB_Saisie.Range("B7").Value = True Then
         Call DEB_Renversement_Update
         Exit Sub
     End If
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Saisie_Update", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:MiseAjourDebours", vbNullString, 0)
     
     'Remove highlight from last cell
     If wshDEB_Saisie.Range("B4").Value <> vbNullString Then
@@ -43,11 +43,11 @@ Sub DEB_Saisie_Update()
     wshDEB_Saisie.Range("B5").Value = Fn_GetID_From_Fourn_Name(wshDEB_Saisie.Range("J4").Value)
 
     'Transfert des données vers DEB_Trans
-    Call DEB_Trans_Add_Record_To_DB(rowDebSaisie)
-    Call DEB_Trans_Add_Record_Locally(rowDebSaisie)
+    Call AjouterDebBDMaster(rowDebSaisie)
+    Call AjouterDebBDLocale(rowDebSaisie)
     
     'GL posting
-    Call DEB_Saisie_GL_Posting_Preparation
+    Call PreparerEcriturePourDeb
     
     If wshDEB_Saisie.ckbRecurrente = True Then
         Call Save_DEB_Recurrent(rowDebSaisie)
@@ -67,7 +67,7 @@ Sub DEB_Saisie_Update()
     wshDEB_Saisie.Activate
     wshDEB_Saisie.Range("F4").Select
         
-    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Saisie_Update", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:MiseAjourDebours", vbNullString, startTime)
         
 End Sub
 
@@ -107,15 +107,15 @@ Sub DEB_Renversement_Update()
     Next i
     
     'Transfert des données vers wsdDEB_Trans
-    Call DEB_Trans_Add_Record_To_DB(rowLastUsed)
-    Call DEB_Trans_Add_Record_Locally(rowLastUsed)
+    Call AjouterDebBDMaster(rowLastUsed)
+    Call AjouterDebBDLocale(rowLastUsed)
     
     'Mettre à jour le débouré renversé
     Call DEB_Trans_MAJ_Debourse_Renverse_To_DB
     Call DEB_Trans_MAJ_Debourse_Renverse_Locally
     
     'GL posting
-    Call DEB_Saisie_GL_Posting_Preparation
+    Call PreparerEcriturePourDeb
     
     MsgBox "Le déboursé a été RENVERSÉ avec succès", vbInformation, "Confirmation de traitement"
     
@@ -164,9 +164,9 @@ Sub DEB_Renversement_Update()
     
 End Sub
 
-Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
+Sub AjouterDebBDMaster(r As Long) 'Write/Update a record to external .xlsx file
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Trans_Add_Record_To_DB", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:AjouterDebBDMaster", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -257,13 +257,13 @@ Sub DEB_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xl
     Set conn = Nothing
     Set rs = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Trans_Add_Record_To_DB", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:AjouterDebBDMaster", vbNullString, startTime)
 
 End Sub
 
-Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
+Sub AjouterDebBDLocale(r As Long) 'Write records locally
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("*** modDEB_Saisie:DEB_Trans_Add_Record_Locally", CStr(r), 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("*** modDEB_Saisie:AjouterDebBDLocale", CStr(r), 0)
     
     Dim ws As Worksheet
     Set ws = wsdDEB_Trans
@@ -310,10 +310,10 @@ Sub DEB_Trans_Add_Record_Locally(r As Long) 'Write records locally
             ws.Cells(rowToBeUsed, fDebTTimeStamp).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
         End With
         rowToBeUsed = rowToBeUsed + 1
-        Call modDev_Utils.EnregistrerLogApplication("    modDEB_Saisie:DEB_Trans_Add_Record_Locally", -1)
+        Call modDev_Utils.EnregistrerLogApplication("    modDEB_Saisie:AjouterDebBDLocale", -1)
     Next i
     
-    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Trans_Add_Record_Locally", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:AjouterDebBDLocale", vbNullString, startTime)
 
     Application.ScreenUpdating = True
 
@@ -506,9 +506,9 @@ Nettoyage:
     
 End Sub
 
-Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
+Sub PreparerEcriturePourDeb() '2024-06-05 @ 18:28
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:PreparerEcriturePourDeb", vbNullString, 0)
 
     Dim montant As Double, dateDebours As Date
     Dim descGL_Trans As String, Source As String, deboursType As String
@@ -597,7 +597,7 @@ Sub DEB_Saisie_GL_Posting_Preparation() '2024-06-05 @ 18:28
     
     Call GL_Posting_Locally(dateDebours, descGL_Trans, Source, MyArray, GLEntryNo)
     
-    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Saisie_GL_Posting_Preparation", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:PreparerEcriturePourDeb", vbNullString, startTime)
 
 End Sub
 

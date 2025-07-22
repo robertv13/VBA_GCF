@@ -14,7 +14,7 @@ Private Sub Auto_Open() '2024-12-28 @ 11:09
                    "Veuillez ressayer dans 5 à 10 minutes SVP", _
                    vbCritical, _
                    "L'application APP n'est pas disponible"
-            Call FermerApplicationNormalement(GetNomUtilisateur())
+            Call modMenu.FermerApplicationNormalement(modFunctions.GetNomUtilisateur())
         End If
     End If
     
@@ -44,7 +44,7 @@ Sub DemarrerApplication() '2025-07-11 @ 15:16
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("----- DÉBUT D'UNE NOUVELLE SESSION (modAppli:DemarrerApplication) -----", vbNullString, 0)
     
     'Quel est l'utilisateur Windows ?
-    gUtilisateurWindows = GetNomUtilisateur()
+    gUtilisateurWindows = modFunctions.GetNomUtilisateur()
     
     On Error GoTo ErrorHandler
     
@@ -67,7 +67,7 @@ Sub DemarrerApplication() '2025-07-11 @ 15:16
     Call CreerSauvegardeMaster
     Call EcrireInformationsConfigAuMenu(gUtilisateurWindows)
     wshMenu.Range("A1").Value = wsdADMIN.Range("NomEntreprise").Value
-    Call HideDevShapesBasedOnUsername(gUtilisateurWindows)
+    Call modMenu.HideDevShapesBasedOnUsername(gUtilisateurWindows)
     
     'Protection de la feuille wshMenu
     With wshMenu
@@ -111,7 +111,7 @@ Function ObtenirRepertoireBase() As String '2025-03-03 @ 20:28
    
     DoEvents
     
-    If GetNomUtilisateur() = "RobertMV" Or GetNomUtilisateur() = "robertmv" Then
+    If modFunctions.GetNomUtilisateur() = "RobertMV" Or modFunctions.GetNomUtilisateur() = "robertmv" Then
         ObtenirRepertoireBase = "C:\VBA\GC_FISCALITÉ"
     Else
         ObtenirRepertoireBase = "P:\Administration\APP\GCF"
@@ -403,7 +403,7 @@ Public Sub FermerApplicationAucuneActivite() '2025-07-02 @ 06:19
     If gMODE_DEBUG Then Debug.Print "[modAppli:FermerApplicationAucuneActivite] Fermeture automatique déclenchée à : " & Format(Now, "hh:mm:ss")
 
     'Appel direct de la procédure de fermeture
-    Call FermerApplicationNormalement(GetNomUtilisateur())
+    Call FermerApplicationNormalement(modFunctions.GetNomUtilisateur())
     
 End Sub
 
@@ -436,7 +436,6 @@ Public Sub EnregistrerActiviteAuLog(ByVal message As String) '2025-07-03 @ 10:29
 
     'Ne rien faire avant l'heure de début de la surveillance
     If TimeValue(Now) < TimeSerial(gHEURE_DEBUT_SURVEILLANCE, 0, 0) Then
-'        Call PlanifierVerificationDerniereActivite
         Exit Sub
     End If
 

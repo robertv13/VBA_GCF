@@ -36,7 +36,7 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
     Dim cellsToColor As Range
     Application.EnableEvents = False
     Set cellsToColor = Union(ws.Range("E3"), ws.Range("F4"), ws.Range("I3"), ws.Range("J3"), ws.Range("L3"), ws.Range("F4"))
-    Call Remplir_Plage_Avec_Couleur(cellsToColor, gCOULEUR_BASE_TEC)
+    Call modAppli_Utils.RemplirPlageAvecCouleur(cellsToColor, gCOULEUR_BASE_TEC)
     Application.EnableEvents = True
     
     Call modDev_Utils.DeterminerOrdreDeTabulation(ws)

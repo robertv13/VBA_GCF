@@ -29,7 +29,7 @@ Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
     'Certaines cellules perdent la couleur du background
     Dim cellsToColor As Range
     Set cellsToColor = Union(ws.Range("B4"), ws.Range("D4"), ws.Range("F4"), ws.Range("H4"))
-    Call modAppli_Utils.Remplir_Plage_Avec_Couleur(cellsToColor, -4142)
+    Call modAppli_Utils.RemplirPlageAvecCouleur(cellsToColor, -4142)
     
     With ws
         .Range("B4").Value = "Facture"

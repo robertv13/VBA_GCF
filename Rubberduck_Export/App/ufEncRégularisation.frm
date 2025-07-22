@@ -200,7 +200,7 @@ Private Sub cmbAccepte_Click()
     
     'Vérifie la réponse de l'utilisateur
     If reponse = vbYes Then
-        Call MAJ_Regularisation
+        Call SauvegarderRegularisation
     Else
         Exit Sub
     End If
