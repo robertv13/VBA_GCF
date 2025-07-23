@@ -164,14 +164,14 @@ Sub MAJ_Encaissement() '2024-08-22 @ 09:46
             GoTo Clean_Exit
         End If
         
-        'Create records for ENC_Entête
+        'Create records for ENC_Entete
         Call ENC_Add_DB_Entete
         Call ENC_Add_Locally_Entete
         
         Dim lastOSRow As Integer
         lastOSRow = .Cells(.Rows.count, "F").End(xlUp).Row 'Last applied Item
         
-        'Create records for ENC_Détails
+        'Create records for ENC_Details
         If lastOSRow > 11 Then
             Call ENC_Add_DB_Details(wshENC_Saisie.pmtNo, 12, lastOSRow)
             Call ENC_Add_Locally_Details(wshENC_Saisie.pmtNo, 12, lastOSRow)
@@ -248,7 +248,7 @@ Sub ENC_Add_DB_Entete() 'Write to MASTER.xlsx
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "ENC_Entête$"
+    destinationTab = "ENC_Entete$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object, rs As Object
@@ -352,7 +352,7 @@ Sub ENC_Add_DB_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow As Int
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "ENC_Détails$"
+    destinationTab = "ENC_Details$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -405,7 +405,7 @@ Sub ENC_Add_Locally_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow A
     Dim timeStamp As Date
     timeStamp = Now
     
-    'What is the last used row in ENC_Détails ?
+    'What is the last used row in ENC_Details ?
     Dim lastUsedRow As Long, rowToBeUsed As Long
     lastUsedRow = wsdENC_Details.Cells(wsdENC_Details.Rows.count, 1).End(xlUp).Row
     rowToBeUsed = lastUsedRow + 1

@@ -187,7 +187,7 @@ Sub ImporterDebRecurrent() '2025-05-07 @ 14:14
     Dim ws As Worksheet
     Set ws = wsdDEB_Recurrent
     Dim onglet As String, table As String
-    onglet = "DEB_Récurrent"
+    onglet = "DEB_Recurrent"
     table = "l_tbl_DEB_Recurrent"
 
     Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
@@ -231,8 +231,8 @@ Sub ImporterEncDetails() '2025-05-07 @ 14:45
     Dim ws As Worksheet
     Set ws = wsdENC_Details
     Dim onglet As String, table As String
-    onglet = "ENC_Détails"
-    table = "l_tbl_ENC_Détails"
+    onglet = "ENC_Details"
+    table = "l_tbl_ENC_Details"
 
     Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
@@ -253,8 +253,8 @@ Sub ImporterEncEntete() '2025-05-07 @ 14:50
     Dim ws As Worksheet
     Set ws = wsdENC_Entete
     Dim onglet As String, table As String
-    onglet = "ENC_Entête"
-    table = "l_tbl_ENC_Entête"
+    onglet = "ENC_Entete"
+    table = "l_tbl_ENC_Entete"
 
     Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
@@ -275,7 +275,7 @@ Sub ImporterCCRegularisations() '2025-05-07 @ 13:58
     Dim ws As Worksheet
     Set ws = wsdCC_Regularisations
     Dim onglet As String, table As String
-    onglet = "CC_Régularisations"
+    onglet = "CC_Regularisations"
     table = "l_tbl_CC_Régularisations"
 
     Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
@@ -319,8 +319,8 @@ Sub ImporterFacDetails() '2025-05-07 @ 14:59
     Dim ws As Worksheet
     Set ws = wsdFAC_Details
     Dim onglet As String, table As String
-    onglet = "FAC_Détails"
-    table = "l_tbl_FAC_Détails"
+    onglet = "FAC_Details"
+    table = "l_tbl_FAC_Details"
 
     Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
@@ -341,8 +341,8 @@ Sub ImporterFacEntete() '2025-05-07 @ 15:02
     Dim ws As Worksheet
     Set ws = wsdFAC_Entete
     Dim onglet As String, table As String
-    onglet = "FAC_Entête"
-    table = "l_tbl_FAC_Entête"
+    onglet = "FAC_Entete"
+    table = "l_tbl_FAC_Entete"
 
     Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
@@ -385,8 +385,8 @@ Sub ImporterFacProjetsDetails() '2025-05-07 @ 15:57
     Dim ws As Worksheet
     Set ws = wsdFAC_Projets_Details
     Dim onglet As String, table As String
-    onglet = "FAC_Projets_Détails"
-    table = "l_tbl_FAC_Projets_Détails"
+    onglet = "FAC_Projets_Details"
+    table = "l_tbl_FAC_Projets_Details"
 
     Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
@@ -424,8 +424,8 @@ Sub ImporterFacProjetsEntete() '2025-05-07 @ 16:05
     Dim ws As Worksheet
     Set ws = wsdFAC_Projets_Entete
     Dim onglet As String, table As String
-    onglet = "FAC_Projets_Entête"
-    table = "l_tbl_FAC_Projets_Entête"
+    onglet = "FAC_Projets_Entete"
+    table = "l_tbl_FAC_Projets_Entete"
 
     Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
@@ -519,7 +519,7 @@ Sub ImporterEJRecurrente() '2025-05-07 @ 14:35
     Dim ws As Worksheet
     Set ws = wsdGL_EJ_Recurrente
     Dim onglet As String, table As String
-    onglet = "GL_EJ_Récurrente"
+    onglet = "GL_EJ_Recurrente"
     table = "l_tbl_GL_EJ_Auto"
 
     Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)

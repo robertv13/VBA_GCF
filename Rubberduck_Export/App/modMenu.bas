@@ -51,15 +51,15 @@ Sub AccederMenuFacturation()
 
 End Sub
 
-Sub shpMenuComptabilité_Click()
+Sub shpMenuComptabilite_Click()
 
-    Call AccéderMenuComptabilite
+    Call AccederMenuComptabilite
     
 End Sub
 
-Sub AccéderMenuComptabilite()
+Sub AccederMenuComptabilite()
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMenu:AccéderMenuComptabilite", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMenu:AccederMenuComptabilite", vbNullString, 0)
     
     If modFunctions.GetNomUtilisateur() = "Guillaume" Or _
             modFunctions.GetNomUtilisateur() = "GuillaumeCharron" Or _
@@ -76,11 +76,11 @@ Sub AccéderMenuComptabilite()
         Application.EnableEvents = True
     End If
 
-    Call modDev_Utils.EnregistrerLogApplication("modMenu:AccéderMenuComptabilite", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modMenu:AccederMenuComptabilite", vbNullString, startTime)
 
 End Sub
 
-Sub shpParamètres_Click()
+Sub shpADMIN_Click()
 
     Call AccederFeuilleADMIN
     
@@ -107,7 +107,7 @@ Sub AccederFeuilleADMIN()
 
 End Sub
 
-Sub shpExitApp_Click()
+Sub shpSortieApplication_Click()
 
     Call SauvegarderEtSortirApplication
 
@@ -201,9 +201,9 @@ Sub CacherToutesFeuillesSaufMenu() '2024-02-20 @ 07:28
     
 End Sub
 
-Sub HideDevShapesBasedOnUsername(ByVal userName As String) '2025-06-06 @ 11:17
+Sub CacherFormesEnFonctionUtilisateur(ByVal userName As String) '2025-06-06 @ 11:17
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMenu:HideDevShapesBasedOnUsername", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMenu:CacherFormesEnFonctionUtilisateur", vbNullString, 0)
     
     Dim ws As Worksheet: Set ws = wshMenu
     Dim devShapes As Variant
@@ -237,7 +237,7 @@ Sub HideDevShapesBasedOnUsername(ByVal userName As String) '2025-06-06 @ 11:17
         On Error GoTo 0
     Next i
 
-    Call modDev_Utils.EnregistrerLogApplication("modMenu:HideDevShapesBasedOnUsername", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modMenu:CacherFormesEnFonctionUtilisateur", vbNullString, startTime)
 
 End Sub
 
@@ -261,31 +261,21 @@ Sub ViderTableauxStructures() '2025-07-01 @ 10:38
     Dim lo As ListObject
 
     'Feuilles & noms de tableaux à vider
-    feuilles = Array("BD_Clients", _
-                     "BD_Fournisseurs", _
-                     "CC_Régularisations", _
+    feuilles = Array("BD_Clients", "BD_Fournisseurs", _
+                     "CC_Regularisations", _
                      "DEB_Trans", _
-                     "ENC_Détails", _
-                     "ENC_Entête", _
-                     "FAC_Comptes_Clients", _
-                     "FAC_Détails", _
-                     "FAC_Entête", _
-                     "FAC_Projets_Détails", _
-                     "FAC_Projets_Entête", _
+                     "ENC_Details", "ENC_Entete", _
+                     "FAC_Comptes_Clients", "FAC_Details", "FAC_Entete", _
+                     "FAC_Projets_Details", "FAC_Projets_Entete", _
                      "FAC_Sommaire_Taux", _
                      "GL_Trans", _
                      "TEC_Local")
-    tableaux = Array("l_tbl_BD_Clients", _
-                     "l_tbl_Fournisseur_FM", _
+    tableaux = Array("l_tbl_BD_Clients", "l_tbl_Fournisseur_FM", _
                      "l_tbl_CC_Régularisations", _
                      "l_tbl_DEB_Trans", _
-                     "l_tbl_ENC_Détails", _
-                     "l_tbl_ENC_Entête", _
-                     "l_tbl_FAC_Comptes_Clients", _
-                     "l_tbl_FAC_Détails", _
-                     "l_tbl_FAC_Entête", _
-                     "l_tbl_FAC_Projets_Détails", _
-                     "l_tbl_FAC_Projets_Entête", _
+                     "l_tbl_ENC_Details", "l_tbl_ENC_Entete", _
+                     "l_tbl_FAC_Comptes_Clients", "l_tbl_FAC_Details", "l_tbl_FAC_Entete", _
+                     "l_tbl_FAC_Projets_Details", "l_tbl_FAC_Projets_Entete", _
                      "l_tbl_FAC_Sommaire_Taux", _
                      "l_tbl_GL_Trans", _
                      "l_tbl_TEC_Local")
@@ -334,7 +324,7 @@ End Sub
 
 Sub shpRechercherCode_Click()
 
-    Call RechercherCodeProjet
+    Call modDev_Utils.RechercherCodeProjet
 
 End Sub
 
@@ -358,25 +348,25 @@ End Sub
 
 Sub shpChercherReferencesCirculaires_Click() '2024-11-22 @ 13:33
 
-    Call DetecterReferenceCirculaireDansClasseur
+    Call modDev_Tools.DetecterReferenceCirculaireDansClasseur
     
 End Sub
 
 Sub shpChangerReferenceSystem_Click() '2024-11-22 @ 13:33
 
-    Call Toggle_A1_R1C1_Reference
+    Call modDev_Utils.Toggle_A1_R1C1_Reference
     
 End Sub
 
 Sub shpListerModulesEtRoutines_Click() '2024-11-22 @ 13:33
 
-    Call List_Subs_And_Functions_All
+    Call modDev_Utils.List_Subs_And_Functions_All
     
 End Sub
 
 Sub shpVérificationMacrosContrôles_Click()
 
-    Call VerifierControlesAssociesToutesFeuilles
+    Call modDev_Tools.VerifierControlesAssociesToutesFeuilles
 
 End Sub
 

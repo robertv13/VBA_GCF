@@ -893,7 +893,7 @@ Sub GL_EJ_Recurrente_Add_Record_To_DB(r As Long) 'Write/Update a record to exter
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "GL_EJ_Récurrente$"
+    destinationTab = "GL_EJ_Recurrente$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")

@@ -93,7 +93,7 @@ Public Enum BD_Fournisseurs '2024-12-24 @ 07:34
     [_Last]
 End Enum
 
-Public Enum CC_Régularisations
+Public Enum CC_Regularisations
     [_First] = 1
     fREGULRegulID = [_First]
     fREGULInvNo
@@ -109,7 +109,7 @@ Public Enum CC_Régularisations
     [_Last]
 End Enum
 
-Public Enum DEB_Récurrent
+Public Enum DEB_Recurrent
     [_First] = 1
     fDebRNoDebRec = [_First]
     fDebRDate
@@ -151,7 +151,7 @@ Public Enum DEB_Trans
     [_Last]
 End Enum
 
-Public Enum ENC_Détails
+Public Enum ENC_Details
     [_First] = 1
     fEncDPayID = [_First]
     fEncDInvNo
@@ -162,7 +162,7 @@ Public Enum ENC_Détails
     [_Last]
 End Enum
 
-Public Enum ENC_Entête
+Public Enum ENC_Entete
     [_First] = 1
     fEncEPayID = [_First]
     fEncEPayDate
@@ -193,7 +193,7 @@ Public Enum FAC_Comptes_Clients
     [_Last]
 End Enum
 
-Public Enum FAC_Détails
+Public Enum FAC_Details
     [_First] = 1
     fFacDInvNo = [_First]
     fFacDDescription
@@ -205,7 +205,7 @@ Public Enum FAC_Détails
     [_Last]
 End Enum
 
-Public Enum FAC_Entête
+Public Enum FAC_Entete
     [_First] = 1
     fFacEInvNo = [_First]
     fFacEDateFacture
@@ -233,7 +233,7 @@ Public Enum FAC_Entête
     [_Last]
 End Enum
 
-Public Enum FAC_Projets_Détails
+Public Enum FAC_Projets_Details
     [_First] = 1
     fFacPDProjetID = [_First]
     fFacPDNomClient
@@ -248,7 +248,7 @@ Public Enum FAC_Projets_Détails
     [_Last]
 End Enum
 
-Public Enum FAC_Projets_Entête
+Public Enum FAC_Projets_Entete
     [_First] = 1
     fFacPEProjetID = [_First]
     fFacPENomClient
@@ -291,7 +291,7 @@ Public Enum FAC_Sommaire_Taux
     [_Last]
 End Enum
 
-Public Enum GL_EJ_Récurrente
+Public Enum GL_EJ_Recurrente
     [_First] = 1
     fGlEjRNoEjR = [_First]
     fGlEjRDescription

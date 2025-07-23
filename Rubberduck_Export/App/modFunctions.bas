@@ -329,14 +329,14 @@ Function Fn_Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hon
                 
                 'Soft delete all collected rows from wsdFAC_Projets_Details (locally) - 2025-07-11 @ 00:58
                 Dim lo As ListObject
-                Set lo = ws.ListObjects("l_tbl_FAC_Projets_Détails")
+                Set lo = ws.ListObjects("l_tbl_FAC_Projets_Details")
                 
                 For i = rowsToDelete.count To 1 Step -1
                     ws.Cells(rowsToDelete(i), 9).Value = -1
                 Next i
                 
-                'Soft Delete FAC_Projets_Entête
-                Set lo = wsdFAC_Projets_Entete.ListObjects("l_tbl_FAC_Projets_Entête")
+                'Soft Delete FAC_Projets_Entete
+                Set lo = wsdFAC_Projets_Entete.ListObjects("l_tbl_FAC_Projets_Entete")
                 
                 For i = 1 To lo.ListRows.count
                     If lo.ListRows(i).Range.Cells(1, 2).Value = valueToFind Then
@@ -356,7 +356,7 @@ Function Fn_Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hon
                 Dim destinationFileName As String, destinationTab As String
                 destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                                       "GCF_BD_MASTER.xlsx"
-                destinationTab = "FAC_Projets_Détails$"
+                destinationTab = "FAC_Projets_Details$"
                 
                 Dim columnName As String
                 columnName = "NomClient"
@@ -368,7 +368,7 @@ Function Fn_Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hon
                 'Update row from MASTER file (entête)
                 destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                                       "GCF_BD_MASTER.xlsx"
-                destinationTab = "FAC_Projets_Entête$"
+                destinationTab = "FAC_Projets_Entete$"
                 Call DetruireEnteteSiEnteteEstDetruite(destinationFileName, _
                                                         destinationTab, _
                                                         columnName, _
@@ -577,7 +577,7 @@ Function Fn_Get_TEC_Total_Invoice_AF(invNo As String, t As String) As Currency
     
     'Définir le range pour la source des données en utilisant un tableau
     Dim rngData As Range
-    Set rngData = ws.Range("l_tbl_FAC_Détails[#All]")
+    Set rngData = ws.Range("l_tbl_FAC_Details[#All]")
     ws.Range("I7").Value = rngData.Address
     
     'Définir le range des critères
@@ -681,7 +681,7 @@ Function Fn_Get_Invoice_Total_Payments_AF(invNo As String)
     
     'Définir le range pour la source des données en utilisant un tableau
     Dim rngData As Range
-    Set rngData = ws.Range("l_tbl_ENC_Détails[#All]")
+    Set rngData = ws.Range("l_tbl_ENC_Details[#All]")
     ws.Range("H7").Value = rngData.Address
     
     'Définir le range des critères

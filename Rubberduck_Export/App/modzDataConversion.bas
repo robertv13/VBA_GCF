@@ -1159,7 +1159,7 @@ Public Sub CorrigerNomClientDansCAR()  '2024-08-31 @ 06:52
     Dim ws As Variant
     Dim wsSource As Worksheet
     Dim casDelta As Long
-    For Each ws In Array("FAC_Entête|4|6", "FAC_Comptes_Clients|4|3")
+    For Each ws In Array("FAC_Entete|4|6", "FAC_Comptes_Clients|4|3")
         Dim param As String
         param = Mid$(ws, InStr(ws, "|") + 1)
         ws = Left$(ws, InStr(ws, "|") - 1)
@@ -1239,7 +1239,7 @@ Sub ImporterDonnéesManquantes_CAR() '2024-08-24 @ 15:58
 
     'Declare the 2 worksheets
     Dim ws1 As Worksheet: Set ws1 = wb1.Worksheets("FAC_Comptes_Clients")
-    Dim ws2 As Worksheet: Set ws2 = wb2.Worksheets("FAC_Entête")
+    Dim ws2 As Worksheet: Set ws2 = wb2.Worksheets("FAC_Entete")
     
     Dim lastUsedRow As Long
     lastUsedRow = ws1.Cells(ws1.Rows.count, 1).End(xlUp).Row
@@ -1303,7 +1303,7 @@ Sub FusionnerDonnéesManquantes_CAR() '2024-08-29 @ 07:29
 
     'Declare the 2 worksheets
     Dim ws1 As Worksheet: Set ws1 = wb1.Worksheets("Feuil1")
-    Dim ws2 As Worksheet: Set ws2 = wb2.Worksheets("FAC_Entête")
+    Dim ws2 As Worksheet: Set ws2 = wb2.Worksheets("FAC_Entete")
     
     Dim lastUsedRow As Long
     lastUsedRow = ws1.Cells(ws1.Rows.count, 1).End(xlUp).Row

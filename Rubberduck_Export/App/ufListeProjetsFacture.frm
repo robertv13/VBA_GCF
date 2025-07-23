@@ -18,7 +18,7 @@ Private Sub UserForm_Initialize() '2025-06-01 @ 06:54
     Set ws = wsdFAC_Projets_Entete
 
     Dim lo As ListObject
-    Set lo = ws.ListObjects("l_tbl_FAC_Projets_Entête")
+    Set lo = ws.ListObjects("l_tbl_FAC_Projets_Entete")
 
     'Vérifier qu’il y a des données réelles dans le tableau (ignore les lignes vides)
     If Not TableauContientDesDonnees(lo) Then

@@ -403,7 +403,7 @@ Next_Invoice:
     
     If DerniereLigne > (20 + ligneVolet) Then
         DerniereLigne = DerniereLigne - 20
-        Application.Goto wshCAR_Liste_Agee.Cells(DerniereLigne, 1), Scroll:=True '2025-07-08 @ 13:39
+        Application.GoTo wshCAR_Liste_Agee.Cells(DerniereLigne, 1), Scroll:=True '2025-07-08 @ 13:39
     End If
     
     Application.ScreenUpdating = True
@@ -518,7 +518,7 @@ Sub EnvoyerRappelParCourriel(noFact As String)
     Dim codeClient As String
     Dim dateFact As Date
     Dim allCols As Variant
-    allCols = Fn_Get_A_Row_From_A_Worksheet("FAC_Entête", noFact, fFacEInvNo)
+    allCols = Fn_Get_A_Row_From_A_Worksheet("FAC_Entete", noFact, fFacEInvNo)
     'Vérifier les résultats
     If IsArray(allCols) Then
         codeClient = allCols(fFacECustID)
@@ -707,7 +707,7 @@ Sub AllerAuCentreDesResultats() '2025-06-30@ 11:02
         'Centre la ligne dans la fenêtre visible si possible
         ligneCible = Application.Max(1, derLigne - Int(nbLignesVisibles / 2))
         
-        Application.Goto Reference:=.Cells(ligneCible, 1), Scroll:=True
+        Application.GoTo Reference:=.Cells(ligneCible, 1), Scroll:=True
     End With
     
 End Sub
@@ -720,7 +720,7 @@ End Sub
 
 Sub RetournerEnHaut() '2025-06-30 @ 11:08
 
-    Application.Goto Reference:=ActiveSheet.Cells(1, 1), Scroll:=True
+    Application.GoTo Reference:=ActiveSheet.Cells(1, 1), Scroll:=True
     
 End Sub
 

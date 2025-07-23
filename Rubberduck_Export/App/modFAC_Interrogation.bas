@@ -97,7 +97,7 @@ Sub FAC_Get_Invoice_Client_AF(codeClient As String) '2024-06-27 @ 15:27
     
         'Définir le range pour la source des données en utilisant un tableau
         Dim rngData As Range
-        Set rngData = .Range("l_tbl_FAC_Entête[#All]")
+        Set rngData = .Range("l_tbl_FAC_Entete[#All]")
         .Range("Y7").Value = rngData.Address
         
         'Définir le range des critères

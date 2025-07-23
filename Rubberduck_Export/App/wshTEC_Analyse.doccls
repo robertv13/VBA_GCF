@@ -49,7 +49,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
         ActiveWindow.FreezePanes = True
     End With
     
-    Application.Goto ws.Range("A8"), Scroll:=True
+    Application.GoTo ws.Range("A8"), Scroll:=True
     
     'Reactive les événements
     Application.EnableEvents = True
@@ -143,7 +143,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
        
         'Future date ?
@@ -152,7 +152,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.Goto Range(Target.Address)
+                Application.GoTo Range(Target.Address)
             End If
         End If
 
@@ -224,8 +224,8 @@ Sub CheckBox1_Click() '2024-07-18 @ 18:53
                 clientID = Fn_GetID_From_Client_Name(nomClient)
                 
                 Dim projetID As Long 'ProjetID is establised by the next procedure
-                Call FAC_Projets_Détails_Add_Record_To_DB(clientID, firstRow, lastRow, projetID)
-                Call FAC_Projets_Détails_Add_Record_Locally(clientID, firstRow, lastRow, projetID)
+                Call FAC_Projets_Details_Add_Record_To_DB(clientID, firstRow, lastRow, projetID)
+                Call FAC_Projets_Details_Add_Record_Locally(clientID, firstRow, lastRow, projetID)
                 
                 r = firstRow
                 Do While ws.Range("J" & r).Value <> vbNullString
@@ -246,8 +246,8 @@ Sub CheckBox1_Click() '2024-07-18 @ 18:53
                 Dim hono As Double
                 hono = ws.Range("M" & r + 1).Value
                 
-                Call FAC_Projets_Entête_Add_Record_To_DB(projetID, nomClient, clientID, dateProjet, hono, arr)
-                Call FAC_Projets_Entête_Add_Record_Locally(projetID, nomClient, clientID, dateProjet, hono, arr)
+                Call FAC_Projets_Entete_Add_Record_To_DB(projetID, nomClient, clientID, dateProjet, hono, arr)
+                Call FAC_Projets_Entete_Add_Record_Locally(projetID, nomClient, clientID, dateProjet, hono, arr)
                 
                 Call Groups_SubTotals_Collapse_A_Client(firstRow)
                 

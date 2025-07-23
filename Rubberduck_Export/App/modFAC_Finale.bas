@@ -64,15 +64,15 @@ Sub FAC_Finale_Save() '2024-03-28 @ 07:19
         Call FAC_Finale_TEC_Update_As_Billed_Locally(3, lastResultRow)
     End If
     
-    'Update FAC_Projets_Entête & FAC_Projets_Détails, if necessary
+    'Update FAC_Projets_Entete & FAC_Projets_Details, if necessary
     Dim projetID As Long
     projetID = wshFAC_Brouillon.Range("B52").Value
     If projetID <> 0 Then
-        Call FAC_Finale_Softdelete_Projets_Détails_To_DB(projetID)
-        Call FAC_Finale_Softdelete_Projets_Détails_Locally(projetID)
+        Call FAC_Finale_Softdelete_Projets_Details_To_DB(projetID)
+        Call FAC_Finale_Softdelete_Projets_Details_Locally(projetID)
         
-        Call FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID)
-        Call FAC_Finale_Softdelete_Projets_Entête_Locally(projetID)
+        Call FAC_Finale_Softdelete_Projets_Entete_To_DB(projetID)
+        Call FAC_Finale_Softdelete_Projets_Entete_Locally(projetID)
     End If
         
     'Save Invoice total amount
@@ -119,7 +119,7 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "FAC_Entête$"
+    destinationTab = "FAC_Entete$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -257,7 +257,7 @@ Sub FAC_Finale_Add_Invoice_Details_to_DB()
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "FAC_Détails$"
+    destinationTab = "FAC_Details$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -709,16 +709,16 @@ Sub FAC_Finale_TEC_Update_As_Billed_Locally(firstResultRow As Long, lastResultRo
 
 End Sub
 
-Sub FAC_Finale_Softdelete_Projets_Détails_To_DB(projetID As Long)
+Sub FAC_Finale_Softdelete_Projets_Details_To_DB(projetID As Long)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_To_DB", CStr(projetID), 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Softdelete_Projets_Details_To_DB", CStr(projetID), 0)
 
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "FAC_Projets_Détails$"
+    destinationTab = "FAC_Projets_Details$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -745,13 +745,13 @@ Sub FAC_Finale_Softdelete_Projets_Détails_To_DB(projetID As Long)
     Set conn = Nothing
     Set rs = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_To_DB", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Softdelete_Projets_Details_To_DB", vbNullString, startTime)
 
 End Sub
 
-Sub FAC_Finale_Softdelete_Projets_Détails_Locally(projetID As Long)
+Sub FAC_Finale_Softdelete_Projets_Details_Locally(projetID As Long)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_Locally", CStr(projetID), 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Softdelete_Projets_Details_Locally", CStr(projetID), 0)
     
     Dim ws As Worksheet: Set ws = wsdFAC_Projets_Details
     
@@ -783,20 +783,20 @@ Sub FAC_Finale_Softdelete_Projets_Détails_Locally(projetID As Long)
     Set cell = Nothing
     Set ws = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Softdelete_Projets_Détails_Locally", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Softdelete_Projets_Details_Locally", vbNullString, startTime)
 
 End Sub
 
-Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID As Long)
+Sub FAC_Finale_Softdelete_Projets_Entete_To_DB(projetID As Long)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_To_DB", CStr(projetID), 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entete_To_DB", CStr(projetID), 0)
 
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "FAC_Projets_Entête$"
+    destinationTab = "FAC_Projets_Entete$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -822,7 +822,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_To_DB(projetID As Long)
     'Libérer la mémoire (Normal)
     Set conn = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_To_DB", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entete_To_DB", vbNullString, startTime)
     Exit Sub
 
 eh:
@@ -836,9 +836,9 @@ eh:
     
 End Sub
 
-Sub FAC_Finale_Softdelete_Projets_Entête_Locally(projetID As Long)
+Sub FAC_Finale_Softdelete_Projets_Entete_Locally(projetID As Long)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally", CStr(projetID), 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entete_Locally", CStr(projetID), 0)
     
     Dim ws As Worksheet: Set ws = wsdFAC_Projets_Entete
     
@@ -870,7 +870,7 @@ Sub FAC_Finale_Softdelete_Projets_Entête_Locally(projetID As Long)
     Set cell = Nothing
     Set ws = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entête_Locally", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Softdelete_Projets_Entete_Locally", vbNullString, startTime)
 
 End Sub
 
@@ -1317,7 +1317,7 @@ Sub CopierFormeEnteteEnTouteSecurite(wsSource As Worksheet, wsCible As Worksheet
 
     Dim forme As Shape, newForme As Shape
     On Error Resume Next
-    Set forme = wsSource.Shapes("GCF_Entête")
+    Set forme = wsSource.Shapes("GCF_Entete")
     On Error GoTo 0
 
     If Not forme Is Nothing Then
@@ -1349,7 +1349,7 @@ Sub CopierFormeEnteteEnTouteSecurite(wsSource As Worksheet, wsCible As Worksheet
 
         Application.CutCopyMode = False
     Else
-        Debug.Print "Forme 'GCF_Entête' introuvable sur la feuille source."
+        Debug.Print "Forme 'GCF_Entete' introuvable sur la feuille source."
     End If
     
 End Sub

@@ -57,7 +57,7 @@ Sub ObtenirFactureAConfirmer(AC_OR_C As String) '2025-03-12 @ 12:40
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Confirmation:ObtenirFactureAConfirmer", vbNullString, 0)
     
-    'Utilisation de la feuille FAC_Entête
+    'Utilisation de la feuille FAC_Entete
     Dim ws As Worksheet: Set ws = wsdFAC_Entete
     
     'Utilisation du AF#2 dans wsdFAC_Entete
@@ -68,7 +68,7 @@ Sub ObtenirFactureAConfirmer(AC_OR_C As String) '2025-03-12 @ 12:40
     
     'Définir le range pour la source des données en utilisant un tableau
     Dim rngData As Range
-    Set rngData = ws.Range("l_tbl_FAC_Entête[#All]")
+    Set rngData = ws.Range("l_tbl_FAC_Entete[#All]")
     ws.Range("AX7").Value = rngData.Address
     
     'Définir le range des critères
@@ -213,7 +213,7 @@ Sub MettreAJourStatutFactureEnteteMaster(invoice As String) '2025-03-12 @ 12:40
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "FAC_Entête$"
+    destinationTab = "FAC_Entete$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -267,7 +267,7 @@ Sub MettreAJourStatutFactureEnteteLocale(invoice As String) '2025-03-12 @ 12:40
         r = foundRange.row
         ws.Cells(r, fFacEACouC).Value = "C"
     Else
-        MsgBox "La facture '" & invoice & "' n'existe pas dans FAC_Entête."
+        MsgBox "La facture '" & invoice & "' n'existe pas dans FAC_Entete."
     End If
     
     'Libérer la mémoire
@@ -376,7 +376,7 @@ Sub ConstruireEcritureGLConfirmation(invoice As String) '2025-03-12 @ 12:42
         Call GL_Posting_Locally(dateFact, descGL_Trans, Source, MyArray, GLEntryNo)
         
     Else
-        MsgBox "La facture '" & invoice & "' n'existe pas dans FAC_Entête.", vbCritical
+        MsgBox "La facture '" & invoice & "' n'existe pas dans FAC_Entete.", vbCritical
     End If
     
     'Libérer la mémoire

@@ -480,16 +480,16 @@ Sub ChargerDemandesDeFactureExistantes(activeLastUsedRow As Long)
     
 End Sub
 
-Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As Long, ByRef projetID As Long) 'Write a record to MASTER.xlsx file
+Sub FAC_Projets_Details_Add_Record_To_DB(clientID As String, fr As Long, lr As Long, ByRef projetID As Long) 'Write a record to MASTER.xlsx file
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:FAC_Projets_Détails_Add_Record_To_DB", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:FAC_Projets_Details_Add_Record_To_DB", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "FAC_Projets_Détails$"
+    destinationTab = "FAC_Projets_Details$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -556,17 +556,17 @@ Sub FAC_Projets_Détails_Add_Record_To_DB(clientID As String, fr As Long, lr As 
     Set conn = Nothing
     Set rs = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:FAC_Projets_Détails_Add_Record_To_DB", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:FAC_Projets_Details_Add_Record_To_DB", vbNullString, startTime)
 
 End Sub
 
-Sub FAC_Projets_Détails_Add_Record_Locally(clientID As String, fr As Long, lr As Long, projetID As Long) 'Write records locally
+Sub FAC_Projets_Details_Add_Record_Locally(clientID As String, fr As Long, lr As Long, projetID As Long) 'Write records locally
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:FAC_Projets_Détails_Add_Record_Locally", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:FAC_Projets_Details_Add_Record_Locally", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
-    'What is the last used row in FAC_Projets_Détails?
+    'What is the last used row in FAC_Projets_Details?
     Dim lastUsedRow As Long, rn As Long
     lastUsedRow = wsdFAC_Projets_Details.Cells(wsdFAC_Projets_Details.Rows.count, "A").End(xlUp).Row
     If wsdFAC_Projets_Details.Cells(2, 1).Value = vbNullString Then
@@ -598,7 +598,7 @@ Sub FAC_Projets_Détails_Add_Record_Locally(clientID As String, fr As Long, lr A
     
     Application.ScreenUpdating = True
 
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:FAC_Projets_Détails_Add_Record_Locally", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:FAC_Projets_Details_Add_Record_Locally", vbNullString, startTime)
 
 End Sub
 
@@ -626,21 +626,21 @@ Sub DetruireDetailSiEnteteEstDetruite(filePath As String, _
 
 End Sub
 
-Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
+Sub FAC_Projets_Entete_Add_Record_To_DB(projetID As Long, _
                                         nomClient As String, _
                                         clientID As String, _
                                         dte As String, _
                                         hono As Double, _
                                         ByRef arr As Variant) 'Write a record to MASTER.xlsx file
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:FAC_Projets_Entête_Add_Record_To_DB", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:FAC_Projets_Entete_Add_Record_To_DB", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "FAC_Projets_Entête$"
+    destinationTab = "FAC_Projets_Entete$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
@@ -724,17 +724,17 @@ Sub FAC_Projets_Entête_Add_Record_To_DB(projetID As Long, _
     Set conn = Nothing
     Set rs = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:FAC_Projets_Entête_Add_Record_To_DB", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:FAC_Projets_Entete_Add_Record_To_DB", vbNullString, startTime)
 
 End Sub
 
-Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String, clientID As String, dte As String, hono As Double, ByRef arr As Variant) 'Write records locally
+Sub FAC_Projets_Entete_Add_Record_Locally(projetID As Long, nomClient As String, clientID As String, dte As String, hono As Double, ByRef arr As Variant) 'Write records locally
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:FAC_Projets_Entête_Add_Record_Locally", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:FAC_Projets_Entete_Add_Record_Locally", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
-    'What is the last used row in FAC_Projets_Détails?
+    'What is the last used row in FAC_Projets_Details?
     Dim lastUsedRow As Long, rn As Long
     lastUsedRow = wsdFAC_Projets_Entete.Cells(wsdFAC_Projets_Entete.Rows.count, "A").End(xlUp).Row
     If wsdFAC_Projets_Entete.Cells(2, 1).Value = vbNullString Then
@@ -765,7 +765,7 @@ Sub FAC_Projets_Entête_Add_Record_Locally(projetID As Long, nomClient As String
     
     Application.ScreenUpdating = True
 
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:FAC_Projets_Entête_Add_Record_Locally", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:FAC_Projets_Entete_Add_Record_Locally", vbNullString, startTime)
 
 End Sub
 
@@ -959,9 +959,9 @@ Sub TEC_Analyse_Back_To_TEC_Menu()
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:TEC_Analyse_Back_To_TEC_Menu", vbNullString, 0)
     
     Dim loDetails As ListObject
-    Set loDetails = wsdFAC_Projets_Details.ListObjects("l_tbl_FAC_Projets_Détails")
+    Set loDetails = wsdFAC_Projets_Details.ListObjects("l_tbl_FAC_Projets_Details")
     Dim loEntete As ListObject
-    Set loEntete = wsdFAC_Projets_Entete.ListObjects("l_tbl_FAC_Projets_Entête")
+    Set loEntete = wsdFAC_Projets_Entete.ListObjects("l_tbl_FAC_Projets_Entete")
     
     Call NettoyerProjetsDetruits(loDetails, loEntete)
     

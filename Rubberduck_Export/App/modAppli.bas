@@ -67,7 +67,7 @@ Sub DemarrerApplication() '2025-07-11 @ 15:16
     Call CreerSauvegardeMaster
     Call EcrireInformationsConfigAuMenu(gUtilisateurWindows)
     wshMenu.Range("A1").Value = wsdADMIN.Range("NomEntreprise").Value
-    Call modMenu.HideDevShapesBasedOnUsername(gUtilisateurWindows)
+    Call modMenu.CacherFormesEnFonctionUtilisateur(gUtilisateurWindows)
     
     'Protection de la feuille wshMenu
     With wshMenu

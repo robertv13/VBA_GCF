@@ -926,7 +926,7 @@ Sub AjusterEpurerTablesDeMaster() '2024-12-07 @ 06:47
     End If
     On Error GoTo 0
 
-    '1. Supprimer les lignes facturées dans FAC_Projets_Détails et FAC_Projets_Entête - 2025-05-30 @ 07:17
+    '1. Supprimer les lignes facturées dans FAC_Projets_Details et FAC_Projets_Entete - 2025-05-30 @ 07:17
     Dim i As Long
     Dim wsDetails As Worksheet, wsEntete As Worksheet
 
@@ -934,8 +934,8 @@ Sub AjusterEpurerTablesDeMaster() '2024-12-07 @ 06:47
     Dim lastUsedRow As Long
     
     On Error Resume Next
-    Set wsDetails = wb.Sheets("FAC_Projets_Détails")
-    Set wsEntete = wb.Sheets("FAC_Projets_Entête")
+    Set wsDetails = wb.Sheets("FAC_Projets_Details")
+    Set wsEntete = wb.Sheets("FAC_Projets_Entete")
     On Error GoTo 0
 
     If Not wsDetails Is Nothing Then
@@ -1153,22 +1153,22 @@ Sub main() '2024-12-25 @ 15:27
     Call ListeEnumsGenerique("BD_Clients", 1, outputArr, outputRow)
     Call ListeEnumsGenerique("BD_Fournisseurs", 1, outputArr, outputRow)
     
-    Call ListeEnumsGenerique("CC_Régularisations", 1, outputArr, outputRow)
+    Call ListeEnumsGenerique("CC_Regularisations", 1, outputArr, outputRow)
     
-    Call ListeEnumsGenerique("DEB_Récurrent", 1, outputArr, outputRow)
+    Call ListeEnumsGenerique("DEB_Recurrent", 1, outputArr, outputRow)
     Call ListeEnumsGenerique("DEB_Trans", 1, outputArr, outputRow)
     
-    Call ListeEnumsGenerique("ENC_Détails", 1, outputArr, outputRow)
-    Call ListeEnumsGenerique("ENC_Entête", 1, outputArr, outputRow)
+    Call ListeEnumsGenerique("ENC_Details", 1, outputArr, outputRow)
+    Call ListeEnumsGenerique("ENC_Entete", 1, outputArr, outputRow)
     
     Call ListeEnumsGenerique("FAC_Comptes_Clients", 2, outputArr, outputRow)
-    Call ListeEnumsGenerique("FAC_Détails", 2, outputArr, outputRow)
-    Call ListeEnumsGenerique("FAC_Entête", 2, outputArr, outputRow)
-    Call ListeEnumsGenerique("FAC_Projets_Détails", 1, outputArr, outputRow)
-    Call ListeEnumsGenerique("FAC_Projets_Entête", 1, outputArr, outputRow)
+    Call ListeEnumsGenerique("FAC_Details", 2, outputArr, outputRow)
+    Call ListeEnumsGenerique("FAC_Entete", 2, outputArr, outputRow)
+    Call ListeEnumsGenerique("FAC_Projets_Details", 1, outputArr, outputRow)
+    Call ListeEnumsGenerique("FAC_Projets_Entete", 1, outputArr, outputRow)
     Call ListeEnumsGenerique("FAC_Sommaire_Taux", 1, outputArr, outputRow)
     
-    Call ListeEnumsGenerique("GL_EJ_Récurrente", 1, outputArr, outputRow)
+    Call ListeEnumsGenerique("GL_EJ_Recurrente", 1, outputArr, outputRow)
     Call ListeEnumsGenerique("GL_Trans", 1, outputArr, outputRow)
     
     Call ListeEnumsGenerique("TEC_Local", 2, outputArr, outputRow)
@@ -2367,4 +2367,81 @@ Sub ExtraireCouleurCellule()
            "Vert: " & vert & vbCrLf & _
            "Bleu: " & bleu
 End Sub
+
+Public Sub MettreAJour_estFacturable() '2025-07-23 @ 08:26
+
+    Dim cheminFichier As String
+    Dim wb As Workbook
+    Dim ws As Worksheet
+    Dim i As Long
+    Dim valeurActuelle As Variant
+    
+    'Chemin d’accès au classeur cible
+    cheminFichier = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx"
+
+    Application.ScreenUpdating = False
+    Application.DisplayAlerts = False
+
+    'Ouvrir le classeur
+    Set wb = Workbooks.Open(fileName:=cheminFichier, ReadOnly:=False)
+    Set ws = wb.Sheets("TEC_Local")
+
+    'Parcourir les lignes
+    For i = 2 To ws.Cells(ws.Rows.count, "A").End(xlUp).Row
+        If Len(Trim(ws.Cells(i, fTECClientID).Value)) < 2 And _
+               ws.Cells(i, fTECEstFacturable).Value = "VRAI" Then
+            valeurActuelle = ws.Cells(i, fTECEstFacturable).Value
+            ws.Cells(i, fTECEstFacturable) = "FAUX"
+        End If
+    Next i
+
+    'Sauvegarder les modifications et fermer le classeur
+    wb.Save
+    wb.Close SaveChanges:=True
+
+    Application.DisplayAlerts = True
+    Application.ScreenUpdating = True
+
+    MsgBox "Le traitement est complété" & vbNewLine & vbNewLine & _
+            "La colonne 'estFacturable' est en ligne avec le client", _
+            vbInformation
+
+End Sub
+
+Public Function ListerPDFs(dossier As String) As Object '2025-07-23 @ 12:40
+
+    Dim dictPDFs As Object
+    Set dictPDFs = CreateObject("Scripting.Dictionary")
+
+    Dim facturesManquantesConnues As String
+    facturesManquantesConnues = "24-24540A.24-24540B.24-24548A.24-24548B.24-24552v2.24-24566v2." & _
+        "24-24655 v2.24-24721 V2.25-24756A.25-24756B.25-24761v2.25-24937V2.25-25074A.25-25074B." & _
+        "25-25078-25-25107.99-25046.Facture #23466.Facture #24059.Facture #24133.Facture #24224." & _
+        "Facture #24324."
+        
+    Dim fso As Object
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    Dim dossierObj As Object
+    Set dossierObj = fso.GetFolder(dossier)
+
+    Dim fichier As Object
+    Dim nomSansExtension As String
+    For Each fichier In dossierObj.Files
+        If LCase(fso.GetExtensionName(fichier.Name)) = "pdf" Then
+            nomSansExtension = fso.GetBaseName(fichier.Name)
+            If InStr(facturesManquantesConnues, nomSansExtension & ".") = 0 Then
+                dictPDFs(nomSansExtension) = False
+            End If
+        End If
+    Next fichier
+
+    Set ListerPDFs = dictPDFs
+    
+    'Libérer la mémoire
+    Set dictPDFs = Nothing
+    Set dossierObj = Nothing
+    Set fichier = Nothing
+    Set fso = Nothing
+    
+End Function
 

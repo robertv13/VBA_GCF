@@ -24,20 +24,20 @@ Sub IdentifierEcartsComptesClientsEtGL() '2025-04-02 @ 07:46
     Dim matFAC() As Currency
     ReDim matFAC(24475 To 26000, 1 To 2)
     
-    'Additionne TOUS les encaissements à partir de ENC_Détails et accumule dans dictionary
-    Dim totalENC_Détails As Currency
+    'Additionne TOUS les encaissements à partir de ENC_Details et accumule dans dictionary
+    Dim totalENC_Details As Currency
     Dim i As Long
     For i = 2 To usedRowENC
-        totalENC_Détails = totalENC_Détails + wsENC.Cells(i, 5).Value
+        totalENC_Details = totalENC_Details + wsENC.Cells(i, 5).Value
         matENC(wsENC.Cells(i, 1).Value, 1) = matENC(wsENC.Cells(i, 1).Value, 1) + wsENC.Cells(i, 5).Value
     Next i
-    Debug.Print "ENC_Détails        ", "Total des encaissements = " & Format$(totalENC_Détails, "#,##0.00 $") & " pour " & usedRowENC & " lignes"
+    Debug.Print "ENC_Details        ", "Total des encaissements = " & Format$(totalENC_Details, "#,##0.00 $") & " pour " & usedRowENC & " lignes"
 
     'Additionne TOUS les encaissements à partir de FAC_Comptes_Clients
-    Dim totalCC_Détails As Currency
+    Dim totalCC_Details As Currency
     Dim noFact As String
     For i = 3 To usedRowCC
-        totalCC_Détails = totalCC_Détails + wsCC.Cells(i, 9).Value
+        totalCC_Details = totalCC_Details + wsCC.Cells(i, 9).Value
         noFact = wsCC.Cells(i, 1).Value
         If InStr(noFact, "-") Then
             noFact = Right(noFact, 5)
@@ -46,16 +46,16 @@ Sub IdentifierEcartsComptesClientsEtGL() '2025-04-02 @ 07:46
             matFAC(noFact, 1) = matFAC(noFact, 1) + wsCC.Cells(i, 8).Value
         End If
     Next i
-    Debug.Print "FAC_Comptes_Clients", "Total des encaissements = " & Format$(totalCC_Détails, "#,##0.00 $") & " pour " & usedRowCC & " lignes"
+    Debug.Print "FAC_Comptes_Clients", "Total des encaissements = " & Format$(totalCC_Details, "#,##0.00 $") & " pour " & usedRowCC & " lignes"
 
     'Analyse TOUS les écritures au G/L
-    Dim totalGL_Détails As Currency
+    Dim totalGL_Details As Currency
     Dim Source As String, noEnc As Long
     For i = 2 To usedRowGL
         Source = wsGL.Cells(i, 4).Value
         If wsGL.Cells(i, 5).Value = "1100" Then
             If InStr(Source, "ENCAISSEMENT:") = 1 Or InStr(Source, "DÉPÔT DE CLIENT:") = 1 Then
-                totalGL_Détails = totalGL_Détails - wsGL.Cells(i, 7).Value + wsGL.Cells(i, 8).Value
+                totalGL_Details = totalGL_Details - wsGL.Cells(i, 7).Value + wsGL.Cells(i, 8).Value
                 noEnc = Mid$(Source, InStr(Source, ":") + 1, Len(Source) - InStr(Source, ":"))
                 
                 matENC(noEnc, 2) = matENC(noEnc, 2) - wsGL.Cells(i, 7).Value + wsGL.Cells(i, 8).Value
@@ -68,7 +68,7 @@ Sub IdentifierEcartsComptesClientsEtGL() '2025-04-02 @ 07:46
             
         End If
     Next i
-    Debug.Print "GL_Trans          ", "Total des encaissements = " & Format$(totalGL_Détails, "#,##0.00 $") & " pour " & usedRowGL & " lignes"
+    Debug.Print "GL_Trans          ", "Total des encaissements = " & Format$(totalGL_Details, "#,##0.00 $") & " pour " & usedRowGL & " lignes"
 
     'Compare les deux valeurs de matENC
     For i = 1 To UBound(matENC, 1)

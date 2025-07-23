@@ -391,7 +391,7 @@ Sub Assembler_TM_0_Main(dateAC As Date, dateAP As Date)
     
     Application.StatusBar = "Construction de la table des matières"
     
-    Call Assembler_TM_1_Arrière_Plan_Et_Entête(ws, dateAC, dateAP)
+    Call Assembler_TM_1_Arrière_Plan_Et_Entete(ws, dateAC, dateAP)
     Call Assembler_TM_2_Lignes(ws)
     
     Application.StatusBar = vbNullString
@@ -402,9 +402,9 @@ Sub Assembler_TM_0_Main(dateAC As Date, dateAP As Date)
 
 End Sub
 
-Sub Assembler_TM_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateAP As Date)
+Sub Assembler_TM_1_Arrière_Plan_Et_Entete(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_TM_1_Arrière_Plan_Et_Entête", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_TM_1_Arrière_Plan_Et_Entete", vbNullString, 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -434,7 +434,7 @@ Sub Assembler_TM_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dat
     'Fixer le printArea selon le nombre de lignes ET 3 colonnes
     ActiveSheet.PageSetup.PrintArea = "$A1:$D" & ws.Cells(ws.Rows.count, "B").End(xlUp).Row + 3
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_TM_1_Arrière_Plan_Et_Entête", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_TM_1_Arrière_Plan_Et_Entete", vbNullString, startTime)
 
 End Sub
 
@@ -491,7 +491,7 @@ Sub Assembler_ER_0_Main(dateAC As Date, dateAP As Date)
     
     Application.StatusBar = "Construction de l'état des résultats"
     
-    Call Assembler_ER_1_Arrière_Plan_Et_Entête(ws, dateAC, dateAP)
+    Call Assembler_ER_1_Arrière_Plan_Et_Entete(ws, dateAC, dateAP)
     Call Assembler_ER_2_Lignes(ws)
     
     'On ajoute le Revenu Net au BNR du bilan via variables Globales
@@ -508,9 +508,9 @@ Sub Assembler_ER_0_Main(dateAC As Date, dateAP As Date)
 
 End Sub
 
-Sub Assembler_ER_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateAP As Date)
+Sub Assembler_ER_1_Arrière_Plan_Et_Entete(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_ER_1_Arrière_Plan_Et_Entête", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_ER_1_Arrière_Plan_Et_Entete", vbNullString, 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -565,7 +565,7 @@ Sub Assembler_ER_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dat
 
     ws.PageSetup.CenterFooter = 2
      
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_ER_1_Arrière_Plan_Et_Entête", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_ER_1_Arrière_Plan_Et_Entete", vbNullString, startTime)
 
 End Sub
 
@@ -646,7 +646,7 @@ Sub Assembler_Bilan_0_Main(dateAC As Date, dateAP As Date)
     
     Application.StatusBar = "Construction du bilan"
     
-    Call Assembler_Bilan_1_Arrière_Plan_Et_Entête(ws, dateAC, dateAP)
+    Call Assembler_Bilan_1_Arrière_Plan_Et_Entete(ws, dateAC, dateAP)
     Call Assembler_Bilan_2_Lignes(ws)
     
     Application.StatusBar = vbNullString
@@ -657,9 +657,9 @@ Sub Assembler_Bilan_0_Main(dateAC As Date, dateAP As Date)
     
 End Sub
 
-Sub Assembler_Bilan_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateAP As Date)
+Sub Assembler_Bilan_1_Arrière_Plan_Et_Entete(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_Bilan_1_Arrière_Plan_Et_Entête", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_Bilan_1_Arrière_Plan_Et_Entete", vbNullString, 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -697,7 +697,7 @@ Sub Assembler_Bilan_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, 
     
     ws.PageSetup.CenterFooter = 4
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_Bilan_1_Arrière_Plan_Et_Entête", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_Bilan_1_Arrière_Plan_Et_Entete", vbNullString, startTime)
 
 End Sub
 
@@ -765,7 +765,7 @@ Sub Assembler_BNR_0_Main(dateAC As Date, dateAP As Date)
     
     Application.StatusBar = "Construction de l'état des bénéfices non répartis"
     
-    Call Assembler_BNR_1_Arrière_Plan_Et_Entête(ws, dateAC, dateAP)
+    Call Assembler_BNR_1_Arrière_Plan_Et_Entete(ws, dateAC, dateAP)
     Call Assembler_BNR_2_Lignes(ws)
     
     Application.StatusBar = vbNullString
@@ -776,9 +776,9 @@ Sub Assembler_BNR_0_Main(dateAC As Date, dateAP As Date)
     
 End Sub
 
-Sub Assembler_BNR_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, dateAP As Date)
+Sub Assembler_BNR_1_Arrière_Plan_Et_Entete(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_BNR_1_Arrière_Plan_Et_Entête", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_BNR_1_Arrière_Plan_Et_Entete", vbNullString, 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -832,7 +832,7 @@ Sub Assembler_BNR_1_Arrière_Plan_Et_Entête(ws As Worksheet, dateAC As Date, da
     
     ws.PageSetup.CenterFooter = 3
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_BNR_1_Arrière_Plan_Et_Entête", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_BNR_1_Arrière_Plan_Et_Entete", vbNullString, startTime)
 
 End Sub
 

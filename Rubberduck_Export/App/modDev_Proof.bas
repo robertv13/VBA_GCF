@@ -103,7 +103,7 @@ Sub IdentifierÉcartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
     'Effacer le contenu du rapport
     wsRapport.Cells.Clear
     wsRapport.Cells(1, 1).Value = "Numéro de facture"
-    wsRapport.Cells(1, 2).Value = "$ FAC_Entête"
+    wsRapport.Cells(1, 2).Value = "$ FAC_Entete"
     wsRapport.Cells(1, 3).Value = "$ FAC_Comptes_Clients"
     wsRapport.Cells(1, 4).Value = "Différence"
     
@@ -181,7 +181,7 @@ Sub IdentifierÉcartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
         End If
     Next fact
     
-    wsRapport.Cells(rowRapport, 1).Value = "Total des factures (selon FAC_Entête) est de " & Format$(totalEntêteCC, "###,##0.00$")
+    wsRapport.Cells(rowRapport, 1).Value = "Total des factures (selon FAC_Entete) est de " & Format$(totalEntêteCC, "###,##0.00$")
     rowRapport = rowRapport + 1
     wsRapport.Cells(rowRapport, 1).Value = "Total des factures (selon FAC_Comptes_Clients) est de " & Format$(totalComptesClients, "###,##0.00$")
     rowRapport = rowRapport + 1

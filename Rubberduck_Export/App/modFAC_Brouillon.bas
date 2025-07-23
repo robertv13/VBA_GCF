@@ -89,7 +89,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
 
         'Do we have pending requests to invoice ?
         Dim lo As ListObject '2025-06-01 @ 06:07
-        Set lo = wsdFAC_Projets_Entete.ListObjects("l_tbl_FAC_Projets_Entête")
+        Set lo = wsdFAC_Projets_Entete.ListObjects("l_tbl_FAC_Projets_Entete")
         
         Dim liveOne As Long
         Dim i As Long
@@ -787,11 +787,11 @@ Sub CopierTECFiltresVersFACBrouillon(cutOffDateProjet As Date) '2024-03-21 @ 07:
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.ListBox1.Clear
+        ufFraisDivers.listBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.ListBox1.AddItem item
+            ufFraisDivers.listBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless
@@ -1296,7 +1296,7 @@ Sub Load_Invoice_Template(t As String)
         facRow = facRow + 2
     Next i
         
-    Application.Goto wshFAC_Brouillon.Range("L" & facRow)
+    Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
 

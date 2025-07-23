@@ -28,6 +28,7 @@ End Type
 Private gverificationIntegriteOK As Boolean
 Private gsoldeComptesClients As Currency
 Private gValeursAComparer() As Variant
+Private gdictFactures As New Dictionary
 
 '@Description("Routine pour ajouter des lignes de message à la feuille")
 Private Sub AjouterMessage(ws As Worksheet, ByRef r As Long, ByRef c As Long, message As String)
@@ -153,9 +154,9 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     
     Call VerifierFournisseurs(wsOutput, r, readRows)
     
-    'wsdDEB_Recurrent ------------------------------------------------------ DEB_Récurrent
-    Call AjouterMessageAuxResultats(wsOutput, r, 1, "DEB_Récurrent")
-    Call AjouterMessageAuxResultats(wsOutput, r, 2, "DEB_Récurrent a été importée du fichier GCF_BD_MASTER.xlsx")
+    'wsdDEB_Recurrent ------------------------------------------------------ DEB_Recurrent
+    Call AjouterMessageAuxResultats(wsOutput, r, 1, "DEB_Recurrent")
+    Call AjouterMessageAuxResultats(wsOutput, r, 2, "DEB_Recurrent a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
@@ -169,17 +170,17 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     
     Call VerifierDEBTrans(wsOutput, r, readRows)
     
-    'wsdFAC_Entete ------------------------------------------------------------ FAC_Entête
-    Call AjouterMessageAuxResultats(wsOutput, r, 1, "FAC_Entête")
-    Call AjouterMessageAuxResultats(wsOutput, r, 2, "FAC_Entête a été importée du fichier GCF_BD_MASTER.xlsx")
+    'wsdFAC_Entete ------------------------------------------------------------ FAC_Entete
+    Call AjouterMessageAuxResultats(wsOutput, r, 1, "FAC_Entete")
+    Call AjouterMessageAuxResultats(wsOutput, r, 2, "FAC_Entete a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
     Call VerifierFACEntete(wsOutput, r, readRows)
     
-    'wsdFAC_Details ---------------------------------------------------------- FAC_Détails
-    Call AjouterMessageAuxResultats(wsOutput, r, 1, "FAC_Détails")
-    Call AjouterMessageAuxResultats(wsOutput, r, 2, "FAC_Détails a été importée du fichier GCF_BD_MASTER.xlsx")
+    'wsdFAC_Details ---------------------------------------------------------- FAC_Details
+    Call AjouterMessageAuxResultats(wsOutput, r, 1, "FAC_Details")
+    Call AjouterMessageAuxResultats(wsOutput, r, 2, "FAC_Details a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
@@ -201,41 +202,41 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     
     Call VerifierFACSommaireTaux(wsOutput, r, readRows)
     
-    'wsdENC_Entete ------------------------------------------------------------ ENC_Entête
-    Call AjouterMessageAuxResultats(wsOutput, r, 1, "ENC_Entête")
-    Call AjouterMessageAuxResultats(wsOutput, r, 2, "ENC_Entête a été importée du fichier GCF_BD_MASTER.xlsx")
+    'wsdENC_Entete ------------------------------------------------------------ ENC_Entete
+    Call AjouterMessageAuxResultats(wsOutput, r, 1, "ENC_Entete")
+    Call AjouterMessageAuxResultats(wsOutput, r, 2, "ENC_Entete a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
     Call VerifierENCEntete(wsOutput, r, readRows)
     
-    'wsdENC_Details ---------------------------------------------------------- ENC_Détails
-    Call AjouterMessageAuxResultats(wsOutput, r, 1, "ENC_Détails")
-    Call AjouterMessageAuxResultats(wsOutput, r, 2, "ENC_Détails a été importée du fichier GCF_BD_MASTER.xlsx")
+    'wsdENC_Details ---------------------------------------------------------- ENC_Details
+    Call AjouterMessageAuxResultats(wsOutput, r, 1, "ENC_Details")
+    Call AjouterMessageAuxResultats(wsOutput, r, 2, "ENC_Details a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
     Call VerifierENCDetails(wsOutput, r, readRows)
     
-    'wsdCC_Regularisations ---------------------------------------------------------- CC_Régularisations
-    Call AjouterMessageAuxResultats(wsOutput, r, 1, "CC_Régularisations")
-    Call AjouterMessageAuxResultats(wsOutput, r, 2, "CC_Régularisations a été importée du fichier GCF_BD_MASTER.xlsx")
+    'wsdCC_Regularisations ---------------------------------------------------------- CC_Regularisations
+    Call AjouterMessageAuxResultats(wsOutput, r, 1, "CC_Regularisations")
+    Call AjouterMessageAuxResultats(wsOutput, r, 2, "CC_Regularisations a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
     Call VerifierCCRegularisations(wsOutput, r, readRows)
     
-    'wsdFAC_Projets_Entete -------------------------------------------- FAC_Projets_Entête
-    Call AjouterMessageAuxResultats(wsOutput, r, 1, "FAC_Projets_Entête")
-    Call AjouterMessageAuxResultats(wsOutput, r, 2, "FAC_Projets_Entête a été importée du fichier GCF_BD_MASTER.xlsx")
+    'wsdFAC_Projets_Entete -------------------------------------------- FAC_Projets_Entete
+    Call AjouterMessageAuxResultats(wsOutput, r, 1, "FAC_Projets_Entete")
+    Call AjouterMessageAuxResultats(wsOutput, r, 2, "FAC_Projets_Entete a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
     Call VerifierFACProjetsEntete(wsOutput, r, readRows)
     
-    'wsdFAC_Projets_Details ------------------------------------------ FAC_Projets_Détails
-    Call AjouterMessageAuxResultats(wsOutput, r, 1, "FAC_Projets_Détails")
-    Call AjouterMessageAuxResultats(wsOutput, r, 2, "FAC_Projets_Détails a été importée du fichier GCF_BD_MASTER.xlsx")
+    'wsdFAC_Projets_Details ------------------------------------------ FAC_Projets_Details
+    Call AjouterMessageAuxResultats(wsOutput, r, 1, "FAC_Projets_Details")
+    Call AjouterMessageAuxResultats(wsOutput, r, 2, "FAC_Projets_Details a été importée du fichier GCF_BD_MASTER.xlsx")
     Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
     r = r + 1
     
@@ -957,7 +958,7 @@ Private Sub VerifierCCRegularisations(ByVal wsOutput As Worksheet, ByRef r As Lo
         " lignes et " & Format$(ws.Range("A1").CurrentRegion.Columns.count, "#,##0") & " colonnes dans cette table")
     r = r + 1
     
-    'FAC_Entête Worksheet
+    'FAC_Entete Worksheet
     Dim wsFACEntete As Worksheet: Set wsFACEntete = wsdFAC_Entete
     Dim lastUsedRowFacEntete As Long
     lastUsedRowFacEntete = wsFACEntete.Cells(wsFACEntete.Rows.count, 1).End(xlUp).Row
@@ -995,7 +996,7 @@ Private Sub VerifierCCRegularisations(ByVal wsOutput As Worksheet, ByRef r As Lo
                         0, _
                         1)
         If result = "Not Found" Then
-            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** La facture '" & Inv_No & "', ligne " & i & ", de la régularisation '" & regulNo & "' n'existe pas dans FAC_Entête")
+            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** La facture '" & Inv_No & "', ligne " & i & ", de la régularisation '" & regulNo & "' n'existe pas dans FAC_Entete")
             r = r + 1
             isRegularisationValid = False
         End If
@@ -1456,7 +1457,7 @@ Private Sub VerifierENCDetails(ByVal wsOutput As Worksheet, ByRef r As Long, ByR
         " lignes et " & Format$(ws.Range("A1").CurrentRegion.Columns.count, "#,##0") & " colonnes dans cette table")
     r = r + 1
     
-    'ENC_Entête Worksheet
+    'ENC_Entete Worksheet
     Dim wsEntete As Worksheet: Set wsEntete = wsdENC_Entete
     Dim lastUsedRowEntete As Long
     lastUsedRowEntete = wsEntete.Cells(wsEntete.Rows.count, 1).End(xlUp).Row
@@ -1467,7 +1468,7 @@ Private Sub VerifierENCDetails(ByVal wsOutput As Worksheet, ByRef r As Long, ByR
         strPmtNo = strPmtNo & CLng(wsEntete.Cells(i, fEncEPayID).Value) & "|"
     Next i
     
-    'FAC_Entête Worksheet
+    'FAC_Entete Worksheet
     Dim wsFACEntete As Worksheet: Set wsFACEntete = wsdFAC_Entete
     Dim lastUsedRowFacEntete As Long
     lastUsedRowFacEntete = wsFACEntete.Cells(wsFACEntete.Rows.count, 1).End(xlUp).Row
@@ -1483,16 +1484,16 @@ Private Sub VerifierENCDetails(ByVal wsOutput As Worksheet, ByRef r As Long, ByR
     Set dictENC = New Scripting.Dictionary
     Dim totalEncDetails As Currency
     
-    Dim isEncDétailsValid As Boolean
-    isEncDétailsValid = True
+    Dim isEncDetailsValid As Boolean
+    isEncDetailsValid = True
     
     For i = 2 To lastUsedRowDetails
         pmtNo = CLng(ws.Cells(i, fEncDPayID).Value)
         If pmtNo <> oldpmtNo Then
             If InStr(strPmtNo, pmtNo) = 0 Then
-                Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le paiement '" & pmtNo & "' à la ligne " & i & " n'existe pas dans ENC_Entête")
+                Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le paiement '" & pmtNo & "' à la ligne " & i & " n'existe pas dans ENC_Entete")
                 r = r + 1
-                isEncDétailsValid = False
+                isEncDetailsValid = False
             End If
             strPmtNo = strPmtNo & pmtNo & "|"
             oldpmtNo = pmtNo
@@ -1507,21 +1508,21 @@ Private Sub VerifierENCDetails(ByVal wsOutput As Worksheet, ByRef r As Long, ByR
                         0, _
                         1)
         If result = "Not Found" Then
-            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** La facture '" & Inv_No & "', ligne " & i & ", du paiement '" & pmtNo & "' n'existe pas dans FAC_Entête")
+            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** La facture '" & Inv_No & "', ligne " & i & ", du paiement '" & pmtNo & "' n'existe pas dans FAC_Entete")
             r = r + 1
-            isEncDétailsValid = False
+            isEncDetailsValid = False
         End If
         
         If IsDate(ws.Cells(i, fEncDPayDate).Value) = False Or ws.Cells(i, fEncDPayDate) > Date Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** La date '" & ws.Cells(i, fEncDPayDate).Value & "', ligne " & i & ", du paiment '" & pmtNo & "' est INVALIDE '")
             r = r + 1
-            isEncDétailsValid = False
+            isEncDetailsValid = False
         End If
         
         If IsNumeric(ws.Cells(i, fEncDPayAmount).Value) = False Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le montant '" & ws.Cells(i, fEncDPayAmount).Value & "' du paiement '" & pmtNo & "' n'est pas numérique")
             r = r + 1
-            isEncDétailsValid = False
+            isEncDetailsValid = False
         Else
             If dictENC.Exists(Inv_No) Then
                 dictENC(Inv_No) = dictENC(Inv_No) + ws.Cells(i, fEncDPayAmount).Value
@@ -1549,7 +1550,7 @@ Private Sub VerifierENCDetails(ByVal wsOutput As Worksheet, ByRef r As Long, ByR
                             & "(wshFAC_Comptes_clients) " & Format$(totalPaid, "###,##0.00 $") _
                             & " est <> du détail des enc. " & Format$(dictENC(Inv_No), "###,##0.00 $"))
             r = r + 1
-            isEncDétailsValid = False
+            isEncDetailsValid = False
         End If
     Next i
     
@@ -1565,7 +1566,7 @@ Private Sub VerifierENCDetails(ByVal wsOutput As Worksheet, ByRef r As Long, ByR
     readRows = readRows + lastUsedRowDetails - 1
     
     'Cas problème dans cette vérification ?
-    If isEncDétailsValid = False Then
+    If isEncDetailsValid = False Then
         gverificationIntegriteOK = False
     End If
     
@@ -1752,7 +1753,7 @@ Private Sub VerifierFACDetails(ByVal wsOutput As Worksheet, ByRef r As Long, ByR
             oldInv_No = CStr(Inv_No)
         End If
         If result = "Not Found" Then
-            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** La facture '" & Inv_No & "' à la ligne " & i & " n'existe pas dans FAC_Entête")
+            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** La facture '" & Inv_No & "' à la ligne " & i & " n'existe pas dans FAC_Entete")
             r = r + 1
             isFACDetailsValid = False
         End If
@@ -1806,6 +1807,10 @@ Private Sub VerifierFACEntete(ByVal wsOutput As Worksheet, ByRef r As Long, ByRe
     
     Call modImport.ImporterFacEntete
     
+    'Creer une liste des factures en format PDF (PROD)
+    Dim dictFacturesPDF As Object
+    Set dictFacturesPDF = modDev_Tools.ListerPDFs("P:\Administration\APP\GCF\Factures_PDF")
+    
     'wsdFAC_Entete
     Dim ws As Worksheet: Set ws = wsdFAC_Entete
     
@@ -1848,6 +1853,11 @@ Private Sub VerifierFACEntete(ByVal wsOutput As Worksheet, ByRef r As Long, ByRe
     
     For i = LBound(arr, 1) To UBound(arr, 1)
         Inv_No = arr(i, 1)
+        'Indique que la facture PDF existe dans la feuille FAC_Entete
+        If dictFacturesPDF.Exists(Inv_No) Then
+            dictFacturesPDF(Inv_No) = True
+        End If
+        
         If IsDate(arr(i, 2)) = False Or arr(i, 2) > Date Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** La facture '" & Inv_No & "' à la ligne " & i & " la date est INVALIDE '" & arr(i, 2) & "'")
             r = r + 1
@@ -1894,6 +1904,26 @@ Private Sub VerifierFACEntete(ByVal wsOutput As Worksheet, ByRef r As Long, ByRe
     
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "Un total de " & Format$(UBound(arr, 1), "##,##0") & " factures ont été analysées")
     r = r + 1
+    
+    'Affichage des factures PDF non référencées - 2025-07-23 @ 14:16
+    Dim f As Variant
+    Dim casFactureNonSauvegardee As Long
+    For Each f In dictFacturesPDF.keys
+        If dictFacturesPDF(f) = False Then
+            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Une facture PDF '" & f & "' a été créée, MAIS n'existe pas dans FAC_Entete!")
+            r = r + 1
+            casFactureNonSauvegardee = casFactureNonSauvegardee + 1
+        End If
+    Next f
+
+    If casFactureNonSauvegardee > 0 Then
+            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Un total de " & casFactureNonSauvegardee & " factures n'ont pas été sauvegardées")
+            r = r + 1
+            isFACEntêteValid = False
+    Else
+            Call AjouterMessageAuxResultats(wsOutput, r, 2, "Toutes les factures du répertoire PDF ont été sauvegardées")
+            r = r + 1
+    End If
     
     'Un peu de couleur
     Dim rng As Range: Set rng = wsOutput.Range("B" & r)
@@ -1984,6 +2014,7 @@ Private Sub VerifierFACEntete(ByVal wsOutput As Worksheet, ByRef r As Long, ByRe
 Clean_Exit:
     'Libérer la mémoire
     On Error Resume Next
+    Set dictFacturesPDF = Nothing
     Set rng = Nothing
     Set rngData = Nothing
     Set ws = Nothing
@@ -2559,7 +2590,7 @@ Private Sub VerifierFACProjetsDetails(ByVal wsOutput As Worksheet, ByRef r As Lo
                 oldProjetID = projetID
             End If
             If result = "Not Found" Then
-                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " n'existe pas dans FAC_Projets_Entête")
+                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " n'existe pas dans FAC_Projets_Entete")
                  r = r + 1
                  isFacProjetDetailValid = False
             End If
@@ -3326,7 +3357,7 @@ Private Sub VerifierTEC(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef read
     Next i
     
     '2. Remplir le dictionnaire (dictFacture) pour toutes les factures émises
-    Set lo = wsdFAC_Entete.ListObjects("l_tbl_FAC_Entête")
+    Set lo = wsdFAC_Entete.ListObjects("l_tbl_FAC_Entete")
     arr = lo.DataBodyRange.Value
     
     Dim dictFacture As New Dictionary 'Dictionnaire pour toutes les factures émises
@@ -3485,7 +3516,7 @@ Sub ComparerHeuresFactureesSelon2Sources(ByVal wsOutput As Worksheet, ByRef r As
 
     Call AjouterMessage(wsOutput, r, 2, "Vérification des Heures Facturées par Facture")
 
-    'Vérification des heures facturées selon 2 sources (TEC_Local vs. FAC_Détails)
+    'Vérification des heures facturées selon 2 sources (TEC_Local vs. FAC_Details)
     Dim key As Variant
     Dim totalHoursBilled As Currency
     Dim hresFactureesTEC_Local As Currency
@@ -3496,7 +3527,7 @@ Sub ComparerHeuresFactureesSelon2Sources(ByVal wsOutput As Worksheet, ByRef r As
         hresFactureesTEC_Local = dictFactureHres(key)
         If Not totalHoursBilled = hresFactureesTEC_Local Then
             Call AjouterMessage(wsOutput, r, 2, "********** Facture '" & CStr(key) & _
-                    "', il y a un écart d'heures facturées entre TEC_Local & FAC_Détails - " & _
+                    "', il y a un écart d'heures facturées entre TEC_Local & FAC_Details - " & _
                         Round(hresFactureesTEC_Local, 2) & " vs. " & Round(totalHoursBilled, 2))
             isTECvalid = False
             cas_Heures_Differentes = cas_Heures_Differentes + 1
@@ -4496,7 +4527,7 @@ Private Function AnalyserLigneTEC(data As Variant, i As Long, ByVal wsOutput As 
         If invNo <> "Radiation" Then
             If Not dictFacture.Exists(invNo) Then
                 Call AjouterMessage(wsOutput, r, 2, "********** TecID = '" & tecID & _
-                    "', Le numéro de facture '" & invNo & "' n'existe pas dans le fichier FAC_Entête")
+                    "', Le numéro de facture '" & invNo & "' n'existe pas dans le fichier FAC_Entete")
                 isValid = False
             Else
                 'Accumuler les heures dans dictFactureHres

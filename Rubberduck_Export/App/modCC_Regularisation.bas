@@ -94,7 +94,7 @@ Sub AjouterRegularisationBDMaster() 'Write to MASTER.xlsx
     Dim destinationFileName As String, destinationTab As String
     destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
                           "GCF_BD_MASTER.xlsx"
-    destinationTab = "CC_Régularisations$"
+    destinationTab = "CC_Regularisations$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object, rs As Object
