@@ -449,12 +449,12 @@ Sub ImprimerEcartsVerificationIntegrite(ws As Worksheet, r As Long, t As String,
     
     Call AjouterMessageAuxResultats(ws, r, 2, t)
     r = r + 1
-    Call AjouterMessageAuxResultats(ws, r, 2, Space(7) & Fn_Pad_A_String(s1, " ", 18, "R") & ":" & Space(14 - Len(str1)) & str1)
+    Call AjouterMessageAuxResultats(ws, r, 2, Space(7) & Fn_Pad_A_String(s1, " ", 19, "R") & ":" & Space(14 - Len(str1)) & str1)
     r = r + 1
-    Call AjouterMessageAuxResultats(ws, r, 2, Space(7) & Fn_Pad_A_String(s2, " ", 18, "R") & ":" & Space(14 - Len(str2)) & str2)
+    Call AjouterMessageAuxResultats(ws, r, 2, Space(7) & Fn_Pad_A_String(s2, " ", 19, "R") & ":" & Space(14 - Len(str2)) & str2)
     r = r + 1
     If Not Trim(s3) = vbNullString Then
-        Call AjouterMessageAuxResultats(ws, r, 2, Space(7) & Fn_Pad_A_String(s3, " ", 18, "R") & ":" & Space(14 - Len(str3)) & str3)
+        Call AjouterMessageAuxResultats(ws, r, 2, Space(7) & Fn_Pad_A_String(s3, " ", 19, "R") & ":" & Space(14 - Len(str3)) & str3)
         r = r + 1
     End If
     r = r + 1

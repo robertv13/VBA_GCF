@@ -4,9 +4,9 @@ Option Explicit
 Public lastRow As Long
 Private gNumeroEcritureARenverser As Long
 
-Sub ENC_Get_OS_Invoices(cc As String) '2024-08-21 @ 15:18
+Sub ObtenirFacturesEnSuspens(cc As String) '2024-08-21 @ 15:18
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ENC_Get_OS_Invoices", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ObtenirFacturesEnSuspens", vbNullString, 0)
     
     Dim ws As Worksheet: Set ws = wshENC_Saisie
     
@@ -14,7 +14,7 @@ Sub ENC_Get_OS_Invoices(cc As String) '2024-08-21 @ 15:18
     ws.Range("E12:K36").ClearContents 'Clear the invoices area before loading it
     Application.EnableEvents = True
     
-    Call ENC_Get_OS_Invoices_With_AF(cc)
+    Call ObtenirFacturesEnSuspensAvecAF(cc)
     
     'Bring the Result from AF into our List of Oustanding Invoices
     Dim lastResultRow As Long
@@ -51,18 +51,18 @@ Sub ENC_Get_OS_Invoices(cc As String) '2024-08-21 @ 15:18
         Next i
     End With
     
-    Call ENC_Add_Check_Boxes(lastResultRow - 2)
+    Call AjouterCheckBoxesEncaissement(lastResultRow - 2)
     
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ENC_Get_OS_Invoices", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ObtenirFacturesEnSuspens", vbNullString, startTime)
 
 End Sub
 
-Sub ENC_Get_OS_Invoices_With_AF(cc As String)
+Sub ObtenirFacturesEnSuspensAvecAF(cc As String)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ENC_Get_OS_Invoices_With_AF", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ObtenirFacturesEnSuspensAvecAF", vbNullString, 0)
     
     Dim ws As Worksheet: Set ws = wsdFAC_Comptes_Clients
     
@@ -83,10 +83,8 @@ Sub ENC_Get_OS_Invoices_With_AF(cc As String)
     
     'Définir le range des résultats et effacer avant le traitement
     Dim rngResult As Range
-'    Set rngResult = ws.Range("P1").CurrentRegion
     Set rngResult = ws.Range("R1").CurrentRegion
     rngResult.offset(2, 0).Clear
-'    Set rngResult = ws.Range("P2:U2")
     Set rngResult = ws.Range("R2:X2")
     ws.Range("O9").Value = rngResult.Address
     
@@ -115,7 +113,6 @@ Sub ENC_Get_OS_Invoices_With_AF(cc As String)
          End With
     End If
     
-'    'PLUG - Recalculate Column 'U' - Balance after AdvancedFilter
     'PLUG - Recalculate Column 'W' - Balance after AdvancedFilter
     Dim r As Integer
     For r = 3 To lastResultRow
@@ -128,19 +125,19 @@ Sub ENC_Get_OS_Invoices_With_AF(cc As String)
     Set rngResult = Nothing
     Set ws = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ENC_Get_OS_Invoices_With_AF", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ObtenirFacturesEnSuspensAvecAF", vbNullString, startTime)
 
 End Sub
 
-Sub shp_ENC_Update_Click()
+Sub shpMiseAJourEncaissement()
 
-    Call MAJ_Encaissement
+    Call MettreAJourEncaissement
 
 End Sub
 
-Sub MAJ_Encaissement() '2024-08-22 @ 09:46
+Sub MettreAJourEncaissement() '2024-08-22 @ 09:46
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:MAJ_Encaissement", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:MettreAJourEncaissement", vbNullString, 0)
     
     With wshENC_Saisie
         'Check for mandatory fields (4)
@@ -165,22 +162,22 @@ Sub MAJ_Encaissement() '2024-08-22 @ 09:46
         End If
         
         'Create records for ENC_Entete
-        Call ENC_Add_DB_Entete
-        Call ENC_Add_Locally_Entete
+        Call AjouterEncEnteteDansBDMaster
+        Call AjouterEncEnteteDansBDLocale
         
         Dim lastOSRow As Integer
         lastOSRow = .Cells(.Rows.count, "F").End(xlUp).Row 'Last applied Item
         
         'Create records for ENC_Details
         If lastOSRow > 11 Then
-            Call ENC_Add_DB_Details(wshENC_Saisie.pmtNo, 12, lastOSRow)
-            Call ENC_Add_Locally_Details(wshENC_Saisie.pmtNo, 12, lastOSRow)
+            Call AjouterEncDetailDansBDMaster(wshENC_Saisie.pmtNo, 12, lastOSRow)
+            Call AjouterEncDetailDansBDLocale(wshENC_Saisie.pmtNo, 12, lastOSRow)
         End If
         
         'Update FAC_Comptes_Clients
         If lastOSRow > 11 Then
-            Call ENC_Update_DB_Comptes_Clients(12, lastOSRow)
-            Call ENC_Update_Locally_Comptes_Clients(12, lastOSRow)
+            Call MettreAJourEncComptesClientsDansBDMaster(12, lastOSRow)
+            Call MettreAJourEncComptesClientsDansBDLocale(12, lastOSRow)
         End If
                 
         'Mise à jour du bordereau de dépôt
@@ -203,45 +200,51 @@ Sub MAJ_Encaissement() '2024-08-22 @ 09:46
         Application.EnableEvents = True
         
         'Prepare G/L posting
-        Dim noEnc As String, nomClient As String, typeEnc As String, descEnc As String
+        Dim noEnc As Long
+        Dim nomClient As String
+        Dim typeEnc As String
+        Dim descEnc As String
         Dim dateEnc As Date
         Dim montantEnc As Currency
+        
         noEnc = wshENC_Saisie.pmtNo
         dateEnc = wshENC_Saisie.Range("K5").Value
         nomClient = wshENC_Saisie.Range("F5").Value
         typeEnc = wshENC_Saisie.Range("F7").Value
         montantEnc = wshENC_Saisie.Range("K7").Value
         descEnc = wshENC_Saisie.Range("F9").Value
+        
+        Call ComptabiliserEncaissement(noEnc, dateEnc, nomClient, typeEnc, montantEnc, descEnc) '2025-07-24 @ 12:22
 
-        Call ENC_GL_Posting_DB(noEnc, dateEnc, nomClient, typeEnc, montantEnc, descEnc)  '2024-08-22 @ 16:08
-        Call ENC_GL_Posting_Locally(noEnc, dateEnc, nomClient, typeEnc, montantEnc, descEnc)  '2024-08-22 @ 16:08
+'        Call ENC_GL_Posting_DB(noEnc, dateEnc, nomClient, typeEnc, montantEnc, descEnc)  '2024-08-22 @ 16:08
+'        Call ENC_GL_Posting_Locally(noEnc, dateEnc, nomClient, typeEnc, montantEnc, descEnc)  '2024-08-22 @ 16:08
         
         MsgBox "L'encaissement '" & wshENC_Saisie.pmtNo & "' a été enregistré avec succès", vbOKOnly + vbInformation
         
-        Call Encaissement_Add_New 'Reset the form
+        Call CreerNouvelEncaissement 'Reset the form
         
         .Range("F5").Select
     End With
     
 Clean_Exit:
 
-    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:MAJ_Encaissement", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:MettreAJourEncaissement", vbNullString, startTime)
 
 End Sub
 
-Sub Encaissement_Add_New() '2024-08-21 @ 14:58
+Sub CreerNouvelEncaissement() '2024-08-21 @ 14:58
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:Encaissement_Add_New", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:CreerNouvelEncaissement", vbNullString, 0)
 
-    Call ENC_Clear_Cells
+    Call EffacerFeuilleEncaissement
     
-    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:Encaissement_Add_New", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:CreerNouvelEncaissement", vbNullString, startTime)
     
 End Sub
 
-Sub ENC_Add_DB_Entete() 'Write to MASTER.xlsx
+Sub AjouterEncEnteteDansBDMaster() 'Write to MASTER.xlsx
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ENC_Add_DB_Entete", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:AjouterEncEnteteDansBDMaster", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -305,13 +308,13 @@ Sub ENC_Add_DB_Entete() 'Write to MASTER.xlsx
     
     Application.ScreenUpdating = True
 
-    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ENC_Add_DB_Entete", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:AjouterEncEnteteDansBDMaster", vbNullString, startTime)
     
 End Sub
 
-Sub ENC_Add_Locally_Entete() '2024-08-22 @ 10:38
+Sub AjouterEncEnteteDansBDLocale() '2024-08-22 @ 10:38
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ENC_Add_Locally_Entete", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:AjouterEncEnteteDansBDLocale", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -329,7 +332,7 @@ Sub ENC_Add_Locally_Entete() '2024-08-22 @ 10:38
     rowToBeUsed = lastUsedRow + 1
     
     wsdENC_Entete.Cells(rowToBeUsed, fEncEPayID).Value = currentPmtNo
-    wsdENC_Entete.Cells(rowToBeUsed, fEncEPayDate).Value = wshENC_Saisie.Range("K5").Value
+    wsdENC_Entete.Cells(rowToBeUsed, fEncEPayDate).Value = CDate(wshENC_Saisie.Range("K5").Value)
     wsdENC_Entete.Cells(rowToBeUsed, fEncECustomer).Value = wshENC_Saisie.Range("F5").Value
     wsdENC_Entete.Cells(rowToBeUsed, fEncECodeClient).Value = wshENC_Saisie.clientCode
     wsdENC_Entete.Cells(rowToBeUsed, fEncEPayType).Value = wshENC_Saisie.Range("F7").Value
@@ -339,13 +342,13 @@ Sub ENC_Add_Locally_Entete() '2024-08-22 @ 10:38
     
     Application.ScreenUpdating = True
 
-    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ENC_Add_Locally_Entete", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:AjouterEncEnteteDansBDLocale", vbNullString, startTime)
 
 End Sub
 
-Sub ENC_Add_DB_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow As Integer) 'Write to MASTER.xlsx
+Sub AjouterEncDetailDansBDMaster(pmtNo As Long, firstRow As Integer, lastAppliedRow As Integer) 'Write to MASTER.xlsx
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ENC_Add_DB_Details", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:AjouterEncDetailDansBDMaster", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -391,13 +394,13 @@ Sub ENC_Add_DB_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow As Int
     
     Application.ScreenUpdating = True
 
-    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ENC_Add_DB_Details", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:AjouterEncDetailDansBDMaster", vbNullString, startTime)
     
 End Sub
 
-Sub ENC_Add_Locally_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow As Integer) '2024-08-22 @ 10:55
+Sub AjouterEncDetailDansBDLocale(pmtNo As Long, firstRow As Integer, lastAppliedRow As Integer) '2024-08-22 @ 10:55
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ENC_Add_Locally_Details", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:AjouterEncDetailDansBDLocale", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -417,7 +420,7 @@ Sub ENC_Add_Locally_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow A
             wsdENC_Details.Range("A" & rowToBeUsed).Value = pmtNo
             wsdENC_Details.Range("B" & rowToBeUsed).Value = wshENC_Saisie.Range("F" & r).Value
             wsdENC_Details.Range("C" & rowToBeUsed).Value = wshENC_Saisie.Range("F5").Value
-            wsdENC_Details.Range("D" & rowToBeUsed).Value = wshENC_Saisie.Range("K5").Value
+            wsdENC_Details.Range("D" & rowToBeUsed).Value = CDate(wshENC_Saisie.Range("K5").Value)
             wsdENC_Details.Range("E" & rowToBeUsed).Value = CDbl(Format$(wshENC_Saisie.Range("K" & r).Value, "#,##0.00"))
             wsdENC_Details.Range("F" & rowToBeUsed).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
             rowToBeUsed = rowToBeUsed + 1
@@ -426,13 +429,13 @@ Sub ENC_Add_Locally_Details(pmtNo As Long, firstRow As Integer, lastAppliedRow A
     
     Application.ScreenUpdating = True
 
-    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ENC_Add_Locally_Details", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:AjouterEncDetailDansBDLocale", vbNullString, startTime)
 
 End Sub
 
-Sub ENC_Update_DB_Comptes_Clients(firstRow As Integer, lastRow As Integer) 'Write to MASTER.xlsx
+Sub MettreAJourEncComptesClientsDansBDMaster(firstRow As Integer, lastRow As Integer) 'Write to MASTER.xlsx
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ENC_Update_DB_Comptes_Clients", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:MettreAJourEncComptesClientsDansBDMaster", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -496,13 +499,13 @@ Clean_Exit:
     
     Application.ScreenUpdating = True
 
-    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ENC_Update_DB_Comptes_Clients", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:MettreAJourEncComptesClientsDansBDMaster", vbNullString, startTime)
     
 End Sub
 
-Sub ENC_Update_Locally_Comptes_Clients(firstRow As Integer, lastRow As Integer) '2024-08-22 @ 10:55
+Sub MettreAJourEncComptesClientsDansBDLocale(firstRow As Integer, lastRow As Integer) '2024-08-22 @ 10:55
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ENC_Update_Locally_Comptes_Clients", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:MettreAJourEncComptesClientsDansBDLocale", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -544,171 +547,62 @@ Sub ENC_Update_Locally_Comptes_Clients(firstRow As Integer, lastRow As Integer) 
     Set lookupRange = Nothing
     Set ws = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ENC_Update_Locally_Comptes_Clients", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:MettreAJourEncComptesClientsDansBDLocale", vbNullString, startTime)
 
 End Sub
 
-Sub ENC_GL_Posting_DB(no As String, dt As Date, nom As String, typeE As String, montant As Currency, desc As String) 'Write/Update to GCF_BD_MASTER / GL_Trans
+Sub ComptabiliserEncaissement(noEnc As Long, dt As Date, nom As String, _
+                              typeEnc As String, montant As Currency, desc As String) '2025-07-24 @ 07:02
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ENC_GL_Posting_DB", vbNullString, 0)
+    Dim ws As Worksheet
+    Set ws = wshTEC_Evaluation
     
-    Application.ScreenUpdating = False
+    Dim glEncaisse As String, descGLEncaisse As String
+    Dim glComptesClients As String, descGLComptesClients As String
+    Dim glProduitPercuAvance As String, descGLProduitPercuAvance As String
     
-    Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                          "GCF_BD_MASTER.xlsx"
-    destinationTab = "GL_Trans$"
+    'Comptes de GL et description du poste
+    glEncaisse = ObtenirNoGlIndicateur("Encaisse")
+    descGLEncaisse = ObtenirDescriptionCompte(glEncaisse)
+    glComptesClients = ObtenirNoGlIndicateur("Comptes Clients")
+    descGLComptesClients = ObtenirDescriptionCompte(glComptesClients)
+    glProduitPercuAvance = ObtenirNoGlIndicateur("Produit perçu d'avance")
+    descGLProduitPercuAvance = ObtenirDescriptionCompte(glProduitPercuAvance)
     
-    'Initialize connection, connection string, open the connection & declare rs Object
-    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+    'Déclaration et instanciation d'un objet GL_Entry
+    Dim ecr As clsGL_Entry
+    Set ecr = New clsGL_Entry
 
-    'SQL select command to find the next available ID
-    Dim strSQL As String, MaxEJNo As Long
-    strSQL = "SELECT MAX(NoEntrée) AS MaxEJNo FROM [" & destinationTab & "]"
+    'Remplissage des propriétés communes
+    ecr.DateEcriture = dt
+    ecr.description = nom
+    ecr.Source = "ENCAISSEMENT:" & Format$(noEnc, "00000")
+    ecr.AutreRemarque = desc
 
-    'Open recordset to find out the MaxID
-    rs.Open strSQL, conn
-    
-    'Get the last used row
-    Dim lastJE As Long
-    If IsNull(rs.Fields("MaxEJNo").Value) Then
-        ' Handle empty table (assign a default value, e.g., 1)
-        lastJE = 1
-    Else
-        lastJE = rs.Fields("MaxEJNo").Value
+    'Ajoute autant de lignes que nécessaire
+    If montant <> 0 Then
+        'Portion Débit
+        If Not wshENC_Saisie.Range("F7").Value = "Dépôt de client" Then
+            'Encaisse
+            ecr.AjouterLigne glEncaisse, descGLEncaisse, montant
+        Else
+            'Produit perçu d'avance
+            ecr.description = "Client:" & wshENC_Saisie.clientCode & " - " & nom
+            ecr.Source = UCase$(wshENC_Saisie.Range("F7").Value) & ":" & Format$(noEnc, "00000")
+            ecr.AjouterLigne glProduitPercuAvance, descGLProduitPercuAvance, montant
+        End If
+        'Crédit Comptes-Clients
+        ecr.AjouterLigne glComptesClients, descGLComptesClients, -montant
     End If
     
-    'Calculate the new ID
-    gNextJENo = lastJE + 1
-
-    'Close the previous recordset, no longer needed and open an empty recordset
-    rs.Close
-    rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
+    '--- Écriture ---
+    Call modGL_Stuff.AjouterEcritureGLADOPlusLocale(ecr, False)
     
-    Dim timeStamp As Date
-    timeStamp = Now
-    
-    'Debit side
-    rs.AddNew
-        'Add fields to the recordset before updating it
-        rs.Fields(fGlTNoEntrée - 1).Value = gNextJENo
-        rs.Fields(fGlTDate - 1).Value = Format$(dt, "yyyy-mm-dd")
-        If wshENC_Saisie.Range("F7").Value = "Dépôt de client" Then
-            rs.Fields(fGlTDescription - 1).Value = "Client:" & wshENC_Saisie.clientCode & " - " & nom
-            rs.Fields(fGlTSource - 1).Value = UCase$(wshENC_Saisie.Range("F7").Value) & ":" & Format$(no, "00000")
-            rs.Fields(fGlTNoCompte - 1).Value = ObtenirNoGlIndicateur("Produit perçu d'avance")
-            rs.Fields(fGlTCompte - 1).Value = "Produit perçu d'avance" 'Hardcoded
-        Else
-            rs.Fields(fGlTDescription - 1).Value = nom
-            rs.Fields(fGlTSource - 1).Value = "ENCAISSEMENT:" & Format$(no, "00000")
-            rs.Fields(fGlTNoCompte - 1).Value = ObtenirNoGlIndicateur("Encaisse")
-            rs.Fields(fGlTCompte - 1).Value = "Encaisse" 'Hardcoded
-        End If
-        rs.Fields(fGlTDébit - 1).Value = montant
-        rs.Fields(fGlTAutreRemarque - 1).Value = desc
-        rs.Fields(fGlTTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
-    rs.Update
-    
-    'Credit side
-    rs.AddNew
-        'Add fields to the recordset before updating it
-        rs.Fields(fGlTNoEntrée - 1).Value = gNextJENo
-        rs.Fields(fGlTDate - 1).Value = Format$(dt, "yyyy-mm-dd")
-        If wshENC_Saisie.Range("F7").Value = "Dépôt de client" Then
-            rs.Fields(fGlTDescription - 1).Value = "Client:" & wshENC_Saisie.clientCode & " - " & nom
-            rs.Fields(fGlTSource - 1).Value = UCase$(wshENC_Saisie.Range("F7").Value) & ":" & Format$(no, "00000")
-        Else
-            rs.Fields(fGlTDescription - 1).Value = nom
-            rs.Fields(fGlTSource - 1).Value = "ENCAISSEMENT:" & Format$(no, "00000")
-        End If
-        rs.Fields(fGlTNoCompte - 1).Value = ObtenirNoGlIndicateur("Comptes Clients")
-        rs.Fields(fGlTCompte - 1).Value = "Comptes clients" 'Hardcoded
-        rs.Fields(fGlTCrédit - 1).Value = montant
-        rs.Fields(fGlTAutreRemarque - 1).Value = desc
-        rs.Fields(fGlTTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
-    rs.Update
-
-    'Close recordset and connection
-    On Error Resume Next
-    rs.Close
-    On Error GoTo 0
-    conn.Close
-    
-    Application.ScreenUpdating = True
-    
-    'Libérer la mémoire
-    Set conn = Nothing
-    Set rs = Nothing
-    
-    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ENC_GL_Posting_DB", vbNullString, startTime)
-
 End Sub
 
-Sub ENC_GL_Posting_Locally(no As String, dt As Date, nom As String, typeE As String, montant As Currency, desc As String) 'Write/Update to GCF_BD_MASTER / GL_Trans
-    
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ENC_GL_Posting_Locally", vbNullString, 0)
-    
-    Application.ScreenUpdating = False
-    
-    'What is the last used row in GL_Trans ?
-    Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wsdGL_Trans.Cells(wsdGL_Trans.Rows.count, 1).End(xlUp).Row
-    rowToBeUsed = lastUsedRow + 1
-    
-    gNextJENo = wshENC_Saisie.Range("B10").Value
-    
-    'timeStamnp uniforme
-    Dim timeStamp As Date
-    timeStamp = Now
-    
-    With wsdGL_Trans
-    'Debit side
-        .Range("A" & rowToBeUsed).Value = gNextJENo
-        .Range("B" & rowToBeUsed).Value = CDate(dt)
-        If wshENC_Saisie.Range("F7").Value = "Dépôt de client" Then
-            .Range("C" & rowToBeUsed).Value = "Client:" & wshENC_Saisie.clientCode & " - " & nom
-            .Range("D" & rowToBeUsed).Value = UCase$(wshENC_Saisie.Range("F7").Value) & ":" & Format$(no, "00000")
-            .Range("E" & rowToBeUsed).Value = ObtenirNoGlIndicateur("Produit perçu d'avance")
-            .Range("F" & rowToBeUsed).Value = "Produit perçu d'avance" 'Hardcoded
-        Else
-            .Range("C" & rowToBeUsed).Value = nom
-            .Range("D" & rowToBeUsed).Value = "ENCAISSEMENT:" & Format$(no, "00000")
-            .Range("E" & rowToBeUsed).Value = ObtenirNoGlIndicateur("Encaisse")
-            .Range("F" & rowToBeUsed).Value = "Encaisse" 'Hardcoded
-        End If
-        .Range("G" & rowToBeUsed).Value = montant
-        .Range("I" & rowToBeUsed).Value = desc
-        .Range("J" & rowToBeUsed).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
-        rowToBeUsed = rowToBeUsed + 1
-    
-    'Credit side
-        .Range("A" & rowToBeUsed).Value = gNextJENo
-        .Range("B" & rowToBeUsed).Value = CDate(dt)
-        If wshENC_Saisie.Range("F7").Value = "Dépôt de client" Then
-            .Range("C" & rowToBeUsed).Value = "Client:" & wshENC_Saisie.clientCode & " - " & nom
-            .Range("D" & rowToBeUsed).Value = UCase$(wshENC_Saisie.Range("F7").Value) & ":" & Format$(no, "00000")
-        Else
-            .Range("C" & rowToBeUsed).Value = nom
-            .Range("D" & rowToBeUsed).Value = "ENCAISSEMENT:" & Format$(no, "00000")
-        End If
-        .Range("E" & rowToBeUsed).Value = ObtenirNoGlIndicateur("Comptes Clients")
-        .Range("F" & rowToBeUsed).Value = "Comptes clients" 'Hardcoded
-        .Range("H" & rowToBeUsed).Value = montant
-        .Range("I" & rowToBeUsed).Value = desc
-        .Range("J" & rowToBeUsed).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
-    End With
-    
-    Application.ScreenUpdating = True
-    
-    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ENC_GL_Posting_Locally", vbNullString, startTime)
+Sub AjouterCheckBoxesEncaissement(row As Long)
 
-End Sub
-
-Sub ENC_Add_Check_Boxes(row As Long)
-
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ENC_Add_Check_Boxes", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:AjouterCheckBoxesEncaissement", vbNullString, 0)
     
     Application.EnableEvents = False
     
@@ -731,7 +625,7 @@ Sub ENC_Add_Check_Boxes(row As Long)
                 .Value = False
                 .linkedCell = "B" & cell.row
                 .Display3DShading = True
-                .OnAction = "chkBox_Apply_Click"
+                .OnAction = "ckbAppliquerEncaissementLigne"
                 .Locked = False
             End With
     End If
@@ -751,7 +645,7 @@ Sub ENC_Add_Check_Boxes(row As Long)
     Set chkBoxRange = Nothing
     Set ws = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ENC_Add_Check_Boxes", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:AjouterCheckBoxesEncaissement", vbNullString, startTime)
 
 End Sub
 
@@ -780,9 +674,9 @@ Sub ENC_Remove_Check_Boxes(row As Long)
 
 End Sub
 
-Sub ENC_Clear_Cells()
+Sub EffacerFeuilleEncaissement()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ENC_Clear_Cells", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:EffacerFeuilleEncaissement", vbNullString, 0)
     
     wshENC_Saisie.Unprotect
     
@@ -825,11 +719,11 @@ Sub ENC_Clear_Cells()
         .EnableSelection = xlUnlockedCells
     End With
 
-    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ENC_Clear_Cells", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:EffacerFeuilleEncaissement", vbNullString, startTime)
 
 End Sub
 
-Sub chkBox_Apply_Click()
+Sub ckbAppliquerEncaissementLigne()
 
     Dim chkBox As checkBox
     Set chkBox = ActiveSheet.CheckBoxes(Application.Caller)
@@ -858,7 +752,7 @@ Sub chkBox_Apply_Click()
     
 End Sub
 
-Sub shp_ENC_Exit_Click()
+Sub shpSortirEncaissement_Click()
 
     If ActiveSheet.Range("K7").Value <> 0 Then
         Dim reponse As VbMsgBoxResult
@@ -867,18 +761,18 @@ Sub shp_ENC_Exit_Click()
                 vbExclamation + vbYesNo + vbDefaultButton2, "Confirmation avant de quitter SANS enregistrer")
         If reponse = vbYes Then
             'Exemple d'action : retour à la feuille "MenuPrincipal"
-            Call ENC_Back_To_GL_Menu
+            Call RetournerMenuComptabilite
 '            Application.GoTo Worksheets("MenuPrincipal").Range("A1")
         End If
     Else
-        Call ENC_Back_To_GL_Menu
+        Call RetournerMenuComptabilite
     End If
     
 End Sub
 
-Sub ENC_Back_To_GL_Menu()
+Sub RetournerMenuComptabilite()
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ENC_Back_To_GL_Menu", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:RetournerMenuComptabilite", vbNullString, 0)
    
     If wshENC_Saisie.ProtectContents Then
         wshENC_Saisie.Unprotect
@@ -886,7 +780,7 @@ Sub ENC_Back_To_GL_Menu()
     
     Application.EnableEvents = False
     
-    Call ENC_Clear_Cells
+    Call EffacerFeuilleEncaissement
     
     Application.EnableEvents = True
     
@@ -895,7 +789,7 @@ Sub ENC_Back_To_GL_Menu()
     wshMenuGL.Activate
     wshMenuGL.Range("A1").Select
     
-    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ENC_Back_To_GL_Menu", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:RetournerMenuComptabilite", vbNullString, startTime)
 
 End Sub
 

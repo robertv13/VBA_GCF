@@ -980,9 +980,9 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, lignesLues As Long, search1 As St
         Dim j As Long, oldProcedure As String
         oldProcedure = wsOutput.Range("C" & lastUsedRow).Value & wsOutput.Range("E" & lastUsedRow).Value
         For j = lastUsedRow To 2 Step -1
-            If wsOutput.Range("C" & j).Value & wsOutput.Range("E" & j).Value <> oldProcedure Then
+            If wsOutput.Range("C" & j).Value <> oldProcedure Then
                 wsOutput.Rows(j + 1).Insert Shift:=xlDown, CopyOrigin:=xlFormatFromRightOrBelow
-                oldProcedure = wsOutput.Range("C" & j).Value & wsOutput.Range("E" & j).Value
+                oldProcedure = wsOutput.Range("C" & j).Value
             End If
         Next j
         

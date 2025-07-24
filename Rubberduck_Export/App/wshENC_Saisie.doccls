@@ -150,7 +150,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         Application.EnableEvents = False
         clientCode = allCols(fClntFMClientID)
         Call ENC_Remove_Check_Boxes(36)
-        Call ENC_Get_OS_Invoices(clientCode)
+        Call ObtenirFacturesEnSuspens(clientCode)
         Application.EnableEvents = True
     End If
     
