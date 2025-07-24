@@ -657,7 +657,7 @@ End Sub
 
 Public Sub shpEcritureCloture_Click()
 
-    Call GenererEcritureCloture
+    Call modGL_Stuff.ComptabiliserEcritureCloture
 
 End Sub
 

@@ -175,10 +175,11 @@ Sub CopierListeFacturesVersWorksheet(dateMin As Date, dateMax As Date)
                 arr(r, 8) = .Range("AT" & i).Value 'PST $
                 arr(r, 9) = .Range("AV" & i).Value 'Deposit
                 arr(r, 10) = .Range("AU" & i).Value 'AR_Total
-                arr(r, 11) = Fn_Get_Invoice_Total_Payments_AF(.Range("AA" & i).Value)
-                arr(r, 12) = CDate(Fn_Get_A_Cell_From_A_Worksheet("FAC_Comptes_Clients", .Range("AA" & i).Value, fFacCCInvNo, fFacCCDueDate))
+                arr(r, 11) = modFunctions.Fn_Get_Invoice_Total_Payments_AF(.Range("AA" & i).Value) - _
+                                modFunctions.Fn_Get_Invoice_Total_Regul_AF(.Range("AA" & i).Value)
+                arr(r, 12) = CDate(modFunctions.Fn_Get_A_Cell_From_A_Worksheet("FAC_Comptes_Clients", .Range("AA" & i).Value, fFacCCInvNo, fFacCCDueDate))
                 'Obtenir les TEC facturés par cette facture
-                arr(r, 13) = Fn_Get_TEC_Total_Invoice_AF(.Range("AA" & i).Value, "Dollars")
+                arr(r, 13) = modFunctions.Fn_Get_TEC_Total_Invoice_AF(.Range("AA" & i).Value, "Dollars")
             End If
         Next i
     End With
@@ -1503,7 +1504,6 @@ Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture
             For j = 1 To UBound(tableauCC, 2)
                 If j = 2 Then
                     ws.Cells(i + rOffset, j + cOffset).Value = "'" & Format$(tableauCC(i, j), wsdADMIN.Range("B1").Value)
-                    Debug.Print "#110 - " & ws.Cells(i + rOffset, j + cOffset).Value
                 Else
                     ws.Cells(i + rOffset, j + cOffset).Value = tableauCC(i, j)
                 End If

@@ -144,8 +144,8 @@ Sub GL_Posting_To_DB(df As Date, desc As String, Source As String, arr As Varian
                 rs.Fields(fGlTDate - 1).Value = CDate(df)
                 rs.Fields(fGlTDescription - 1).Value = desc
                 rs.Fields(fGlTSource - 1).Value = Source
-                rs.Fields(fGlTNoCompte - 1).Value = arr(i, 1)
-                rs.Fields(fGlTCompte - 1).Value = arr(i, 2)
+                rs.Fields(fGlTNoCompte - 1).Value = CStr(arr(i, 1))
+                rs.Fields(fGlTCompte - 1).Value = modFunctions.ObtenirDescriptionCompte(CStr(arr(i, 1)))
                 If arr(i, 3) > 0 Then
                     rs.Fields(fGlTDébit - 1).Value = arr(i, 3)
                 Else
@@ -154,6 +154,7 @@ Sub GL_Posting_To_DB(df As Date, desc As String, Source As String, arr As Varian
                 rs.Fields(fGlTAutreRemarque - 1).Value = arr(i, 4)
                 rs.Fields(fGlTTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
             rs.Update
+            
 Nothing_to_Post:
     Next i
 
@@ -197,7 +198,7 @@ Sub GL_Posting_Locally(df As Date, desc As String, Source As String, arr As Vari
                 .Range("C" & rowToBeUsed).Value = desc
                 .Range("D" & rowToBeUsed).Value = Source
                 .Range("E" & rowToBeUsed).Value = arr(i, 1)
-                .Range("F" & rowToBeUsed).Value = arr(i, 2)
+                .Range("F" & rowToBeUsed).Value = modFunctions.ObtenirDescriptionCompte(CStr(arr(i, 1)))
                 If arr(i, 3) > 0 Then
                      .Range("G" & rowToBeUsed).Value = CDbl(arr(i, 3))
                 Else
@@ -334,9 +335,9 @@ End Sub
 
 '@Description "Procédure pour obtenir les soldes en date de la fin d'année financière et"
 '             "Effectuer l'écriture de clôture pour l'exercice"
-Sub GenererEcritureCloture() '2025-07-20 @ 08:35
+Sub ComptabiliserEcritureCloture() '2025-07-20 @ 08:35
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_BV:GenererEcritureCloture", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_BV:ComptabiliserEcritureCloture", vbNullString, 0)
     
     Dim ws As Worksheet
     Set ws = wshGL_BV
@@ -344,12 +345,12 @@ Sub GenererEcritureCloture() '2025-07-20 @ 08:35
     Dim dateCloture As Date
     dateCloture = ws.Range("B12").Value
     
-    '1. Efface l'écriture si elle existe
-    Call SupprimerEcritureClotureCourante(dateCloture) 'Classeur MASTER
+    '1. Efface l'écriture si elle existe dans MASTER + Reimporter MASTER dans Local
+    Call SupprimerEcritureClotureCourante(dateCloture)
     
     Call modImport.ImporterGLTransactions 'Reimporte de MASTER
     
-    '2. Construire les soldes à la date de cloture
+    '2. Construire les soldes à la date de clôture
     Dim soldes As Object
     Set soldes = CreateObject("Scripting.Dictionary")
     
@@ -398,7 +399,7 @@ Sub GenererEcritureCloture() '2025-07-20 @ 08:35
         montant = soldes(cpte)
         If montant <> 0 Then
             'Montant inverse pour solder le compte
-            descCompte = ObtenirDescriptionCompte(CStr(cpte))
+            descCompte = modFunctions.ObtenirDescriptionCompte(CStr(cpte))
             ecr.AjouterLigne CStr(cpte), descCompte, -montant 'Inverse pour solder
             totalResultat = totalResultat + montant
         End If
@@ -410,7 +411,7 @@ Sub GenererEcritureCloture() '2025-07-20 @ 08:35
         ecr.AjouterLigne CStr(compteBNR), descCompte, totalResultat
     End If
     
-    Call AjouterEcritureGL(ecr, False)
+    Call AjouterEcritureGLADOPlusLocale(ecr, False)
     
     MsgBox "L'écriture de clôture en date du " & Format$(dateCloture, wsdADMIN.Range("B1").Value) & vbNewLine & vbNewLine & _
            "a été complétée avec succès", _
@@ -426,7 +427,7 @@ Sub GenererEcritureCloture() '2025-07-20 @ 08:35
     Set soldes = Nothing
     Set ws = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_BV:GenererEcritureCloture", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_BV:ComptabiliserEcritureCloture", vbNullString, startTime)
     
 End Sub
     
@@ -531,7 +532,6 @@ ErrHandler:
     Set ObtenirSoldesParCompteAvecADO = Nothing
     
 Exit_Function:
-
     Call modDev_Utils.EnregistrerLogApplication("modGL_BV:ObtenirSoldesParCompteAvecADO", vbNullString, startTime)
 
 End Function
@@ -564,4 +564,126 @@ Function ObtenirFinExercice(dateSaisie As Date) As Date '2025-07-20 @ 08:49
     ObtenirFinExercice = DateSerial(anneeExercice, moisFinExercice + 1, 0)
     
 End Function
+
+Public Sub AjouterEcritureGLADOPlusLocale(entry As clsGL_Entry, Optional afficherMessage As Boolean = True) '2025-06-08 @ 09:37
+
+    '=== BLOC 1 : Écriture dans GCF_BD_MASTER.xslx en utilisant ADO ===
+    Dim cn As Object
+    Dim rs As Object
+    Dim cheminMaster As String
+    Dim nextNoEntree As Long
+    Dim ts As String
+    Dim i As Long
+    Dim l As clsGL_EntryLine
+    Dim strSQL As String
+
+    On Error GoTo CleanUpADO
+
+    'Chemin du classeur MASTER.xlsx
+    cheminMaster = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
+    
+    'Ouvre connexion ADO
+    Set cn = CreateObject("ADODB.Connection")
+    cn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & cheminMaster & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+
+    'Détermine le prochain numéro d'écriture
+    Set rs = cn.Execute("SELECT MAX([NoEntrée]) AS MaxNo FROM [GL_Trans$]")
+    If Not rs.EOF And Not IsNull(rs!MaxNo) Then
+        nextNoEntree = rs!MaxNo + 1
+    Else
+        nextNoEntree = 1
+    End If
+    entry.NoEcriture = nextNoEntree
+    rs.Close
+    Set rs = Nothing
+
+    'Timestamp unique pour l'écriture
+    ts = Format(Now, "yyyy-mm-dd hh:mm:ss")
+
+    'Ajoute chaque ligne d'écriture dans le classeur MASTER.xlsx
+    For i = 1 To entry.lignes.count
+        Set l = entry.lignes(i)
+        strSQL = "INSERT INTO [GL_Trans$] " & _
+              "([NoEntrée],[Date],[Description],[Source],[NoCompte],[Compte],[Débit],[Crédit],[AutreRemarque],[TimeStamp]) " & _
+              "VALUES (" & _
+              entry.NoEcriture & "," & _
+              "'" & Format(entry.DateEcriture, "yyyy-mm-dd") & "'," & _
+              "'" & Replace(entry.description, "'", "''") & "'," & _
+              "'" & Replace(entry.Source, "'", "''") & "'," & _
+              "'" & l.noCompte & "'," & _
+              "'" & Replace(l.description, "'", "''") & "'," & _
+              IIf(l.montant >= 0, Replace(l.montant, ",", "."), "NULL") & "," & _
+              IIf(l.montant < 0, Replace(-l.montant, ",", "."), "NULL") & "," & _
+              "'" & Replace(entry.AutreRemarque, "'", "''") & "'," & _
+              "'" & ts & "'" & _
+              ")"
+        cn.Execute strSQL
+    Next i
+
+    cn.Close: Set cn = Nothing
+
+    '=== BLOC 2 - Écriture dans feuille locale (GL_Trans)
+    Dim oldScreenUpdating As Boolean
+    Dim oldEnableEvents As Boolean
+    Dim oldDisplayAlerts As Boolean
+    Dim oldCalculation As XlCalculation
+    Dim wsLocal As Worksheet
+    Dim lastRow As Long
+
+    'Mémoriser l’état initial d’Excel
+    oldScreenUpdating = Application.ScreenUpdating
+    oldEnableEvents = Application.EnableEvents
+    oldDisplayAlerts = Application.DisplayAlerts
+    oldCalculation = Application.Calculation
+
+    Application.ScreenUpdating = False
+    Application.EnableEvents = False
+    Application.DisplayAlerts = False
+    Application.Calculation = xlCalculationManual
+
+    Set wsLocal = ThisWorkbook.Sheets("GL_Trans")
+    lastRow = wsLocal.Cells(wsLocal.Rows.count, 1).End(xlUp).Row
+
+    For i = 1 To entry.lignes.count
+        Set l = entry.lignes(i)
+        With wsLocal
+            .Cells(lastRow + i, 1).Value = entry.NoEcriture
+            .Cells(lastRow + i, 2).Value = entry.DateEcriture
+            .Cells(lastRow + i, 3).Value = entry.description
+            .Cells(lastRow + i, 4).Value = entry.Source
+            .Cells(lastRow + i, 5).Value = l.noCompte
+            .Cells(lastRow + i, 6).Value = l.description
+            If l.montant >= 0 Then
+                .Cells(lastRow + i, 7).Value = l.montant
+                .Cells(lastRow + i, 8).Value = vbNullString
+            Else
+                .Cells(lastRow + i, 7).Value = vbNullString
+                .Cells(lastRow + i, 8).Value = -l.montant
+            End If
+            .Cells(lastRow + i, 9).Value = entry.AutreRemarque
+            .Cells(lastRow + i, 10).Value = ts
+        End With
+    Next i
+
+    If afficherMessage Then
+        MsgBox "L'écriture comptable a été complétée avec succès", vbInformation, "Écriture au Grand Livre"
+    End If
+
+CleanUpADO:
+    On Error Resume Next
+    If Not rs Is Nothing Then If rs.state = 1 Then rs.Close
+    Set rs = Nothing
+    If Not cn Is Nothing Then If cn.state = 1 Then cn.Close
+    Set cn = Nothing
+    Application.ScreenUpdating = oldScreenUpdating
+    Application.EnableEvents = oldEnableEvents
+    Application.DisplayAlerts = oldDisplayAlerts
+    Application.Calculation = oldCalculation
+    If Err.Number <> 0 Then
+        MsgBox "Erreur lors de l’écriture au G/L : " & Err.description, vbCritical, "AjouterEcritureGLADOPlusLocale"
+    End If
+    On Error GoTo 0
+    
+End Sub
+
 

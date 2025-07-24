@@ -1,8 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufListeDebourse 
    Caption         =   "Liste des déboursés"
+   ClientHeight    =   5700
    ClientLeft      =   120
    ClientTop       =   465
+   ClientWidth     =   15345
    OleObjectBlob   =   "ufListeDebourse.frx":0000
 End
 Attribute VB_Name = "ufListeDebourse"
@@ -28,7 +30,7 @@ Private Sub ChargerDebDonnees()
     'Définir la feuille source et la plage des données
     Dim ws As Worksheet
     Set ws = wsdDEB_Trans
-    dataArray = ws.Range("A2:S" & ws.Cells(ws.Rows.count, 1).End(xlUp).row).Value
+    dataArray = ws.Range("A2:S" & ws.Cells(ws.Rows.count, 1).End(xlUp).Row).Value
     
     'Définir la date limite (75 jours avant aujourd'hui)
     Dim dateLimite As Date

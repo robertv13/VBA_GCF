@@ -600,10 +600,10 @@ Sub RechercherCodeVBAPourGestionMemoire()
             ligneCode = Replace(ligneCode, ".Recordset", ".RecordSET")
         End If
         If InStr(ligneCode, ".Offset") Then
-            ligneCode = Replace(ligneCode, ".Offset", ".offSET")
+            ligneCode = Replace(ligneCode, ".Offset", ".Offset")
         End If
         If InStr(ligneCode, ".Offset") Then
-            ligneCode = Replace(ligneCode, ".Offset", ".OffSET")
+            ligneCode = Replace(ligneCode, ".Offset", ".Offset")
         End If
         
         objetSet = vbNullString

@@ -170,26 +170,59 @@ Public Sub MarquerLigneSelectionnee(item As listItem) '2025-03-12 @ 12:40
     
 End Sub
 
-Sub ConfirmerSauvegardeConfirmation() '2025-03-12 @ 12:40
+Public Sub ConfirmerSauvegardeConfirmationFacture()
 
+    Dim uf As UserForm: Set uf = ufConfirmation
+    
+    If uf.ListView1.ListItems.count < 1 Then
+        MsgBox "Vous n'avez sélectionné aucune facture à confirmer"
+        Exit Sub
+    Else
+        Dim mess As String
+        If uf.txtNbFacturesSélectionnées.Value = 1 Then
+            mess = uf.txtNbFacturesSélectionnées.Value & " facture sélectionnée"
+        Else
+            mess = uf.txtNbFacturesSélectionnées.Value & " factures sélectionnées"
+        End If
+        Dim reponse As VbMsgBoxResult
+        reponse = MsgBox("Êtes-vous certain de vouloir procéder à la confirmation de" & _
+                            vbNewLine & vbNewLine & "facture, avec " & mess & " ?", _
+                            vbQuestion + vbYesNo, "Confirmation de traitement avec " & mess)
+        If reponse = vbNo Then
+            'Annule la confirmation si l'utilisateur répond Non
+            GoTo exitSub
+        End If
+        Call MettreAJourConfirmationFacture
+    End If
+    
+exitSub:
+    'Libérer la mémoire
+    Set uf = Nothing
+
+End Sub
+
+Sub MettreAJourConfirmationFacture() '2025-03-12 @ 12:40
+
+    Dim uf As UserForm: Set uf = ufConfirmation
+    
     Dim ligne As listItem
     
-    ufConfirmation.lblFactureEmConfirmation.Visible = True
-    ufConfirmation.txtNoFactureEnConfirmation.Visible = True
+    uf.lblFactureEmConfirmation.Visible = True
+    uf.txtNoFactureEnConfirmation.Visible = True
 
     Application.ScreenUpdating = True
     
-    With ufConfirmation.ListView1
+    With uf.ListView1
         Dim i As Long
         'Parcourir chacune des lignes
         For i = 1 To .ListItems.count
             Set ligne = .ListItems(i)
             If ligne.Checked Then
                 invNo = Trim$(ligne.SubItems(1))
-                ufConfirmation.txtNoFactureEnConfirmation.Value = invNo
+                uf.txtNoFactureEnConfirmation.Value = invNo
                 DoEvents
-                Call MettreAJourStatutFactureEnteteMaster(invNo)
-                Call MettreAJourStatutFactureEnteteLocale(invNo)
+                Call MettreAJourStatutFacEnteteMaster(invNo)
+                Call MettreAJourStatutFacEnteteLocale(invNo)
                 DoEvents
                 Call ConstruireEcritureGLConfirmation(invNo)
                 DoEvents
@@ -202,11 +235,14 @@ Sub ConfirmerSauvegardeConfirmation() '2025-03-12 @ 12:40
     Unload ufConfirmation
     Call AfficherFormulaireConfirmation
     
+    'Libérer la mémoire
+    Set uf = Nothing
+    
 End Sub
 
-Sub MettreAJourStatutFactureEnteteMaster(invoice As String) '2025-03-12 @ 12:40
+Sub MettreAJourStatutFacEnteteMaster(invoice As String) '2025-03-12 @ 12:40
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Confirmation:MettreAJourStatutFactureEnteteMaster", invoice, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Confirmation:MettreAJourStatutFacEnteteMaster", invoice, 0)
 
     Application.ScreenUpdating = False
     
@@ -244,13 +280,13 @@ Sub MettreAJourStatutFactureEnteteMaster(invoice As String) '2025-03-12 @ 12:40
     Set conn = Nothing
     Set rs = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Confirmation:MettreAJourStatutFactureEnteteMaster", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Confirmation:MettreAJourStatutFacEnteteMaster", vbNullString, startTime)
 
 End Sub
 
-Sub MettreAJourStatutFactureEnteteLocale(invoice As String) '2025-03-12 @ 12:40
+Sub MettreAJourStatutFacEnteteLocale(invoice As String) '2025-03-12 @ 12:40
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Confirmation:MettreAJourStatutFactureEnteteLocale", invoice, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Confirmation:MettreAJourStatutFacEnteteLocale", invoice, 0)
     
     Dim ws As Worksheet: Set ws = wsdFAC_Entete
     
@@ -275,7 +311,7 @@ Sub MettreAJourStatutFactureEnteteLocale(invoice As String) '2025-03-12 @ 12:40
     Set lookupRange = Nothing
     Set ws = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Confirmation:MettreAJourStatutFactureEnteteLocale", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Confirmation:MettreAJourStatutFacEnteteLocale", vbNullString, startTime)
 
 End Sub
 
@@ -372,9 +408,8 @@ Sub ConstruireEcritureGLConfirmation(invoice As String) '2025-03-12 @ 12:42
         
         'Mise à jour du posting GL des confirmations de facture
         Dim GLEntryNo As Long
-        Call GL_Posting_To_DB(dateFact, descGL_Trans, Source, MyArray, GLEntryNo)
-        Call GL_Posting_Locally(dateFact, descGL_Trans, Source, MyArray, GLEntryNo)
-        
+        Call modGL_Stuff.GL_Posting_To_DB(dateFact, descGL_Trans, Source, MyArray, GLEntryNo)
+        Call modGL_Stuff.GL_Posting_Locally(dateFact, descGL_Trans, Source, MyArray, GLEntryNo)
     Else
         MsgBox "La facture '" & invoice & "' n'existe pas dans FAC_Entete.", vbCritical
     End If

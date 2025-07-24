@@ -1,9 +1,12 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufListeEcritureGL 
    Caption         =   "Liste des écritures"
+   ClientHeight    =   7320
    ClientLeft      =   -60
    ClientTop       =   -255
+   ClientWidth     =   13500
    OleObjectBlob   =   "ufListeEcritureGL.frx":0000
+   StartUpPosition =   1  'CenterOwner
 End
 Attribute VB_Name = "ufListeEcritureGL"
 Attribute VB_GlobalNameSpace = False

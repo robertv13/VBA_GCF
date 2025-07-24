@@ -1,8 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufListeEJAuto 
    Caption         =   "Choisir l'entrée récurrente à utiliser"
+   ClientHeight    =   5160
    ClientLeft      =   7065
    ClientTop       =   6180
+   ClientWidth     =   7155
    OleObjectBlob   =   "ufListeEJAuto.frx":0000
 End
 Attribute VB_Name = "ufListeEJAuto"
@@ -15,7 +17,7 @@ Option Explicit
 Private Sub UserForm_Initialize()
     
     Dim lastUsedRow As Long
-    lastUsedRow = wsdGL_EJ_Recurrente.Cells(wsdGL_EJ_Recurrente.Rows.count, "J").End(xlUp).row
+    lastUsedRow = wsdGL_EJ_Recurrente.Cells(wsdGL_EJ_Recurrente.Rows.count, "J").End(xlUp).Row
     If lastUsedRow < 2 Then Exit Sub 'Empty List
     
     With lsbEJ_AutoDesc

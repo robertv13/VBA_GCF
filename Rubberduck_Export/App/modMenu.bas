@@ -271,7 +271,7 @@ Sub ViderTableauxStructures() '2025-07-01 @ 10:38
                      "GL_Trans", _
                      "TEC_Local")
     tableaux = Array("l_tbl_BD_Clients", "l_tbl_Fournisseur_FM", _
-                     "l_tbl_CC_Régularisations", _
+                     "l_tbl_CC_Regularisations", _
                      "l_tbl_DEB_Trans", _
                      "l_tbl_ENC_Details", "l_tbl_ENC_Entete", _
                      "l_tbl_FAC_Comptes_Clients", "l_tbl_FAC_Details", "l_tbl_FAC_Entete", _

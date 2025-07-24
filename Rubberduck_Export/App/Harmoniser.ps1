@@ -1,4 +1,4 @@
-﻿# Dictionnaire principal de normalisation typographique (casse stricte)
+﻿# 📘 Dictionnaire typographique — casse normalisée
 $keywords = @{
     '.address' = '.Address'
     '.borders' = '.Borders'
@@ -14,71 +14,56 @@ $keywords = @{
     '.text' = '.Text'
     '.value' = '.Value'
     '.worksheetfunction' = '.WorksheetFunction'
-    '.goto' = '.GoTo'
+    '.goto' = '.GoTo'        # ✅ correction ciblée
+    '.listbox' = '.ListBox'  # ✅ éléments visuels dans les .frm
 }
 
-# Dossier racine
+# 📁 Dossier racine
 $folder = $PSScriptRoot
 $journal = "$folder\journalNettoyage.txt"
-Set-Content -Path $journal -Value "📘 Journal de nettoyage typographique — $(Get-Date)" -Encoding UTF8
+Set-Content -Path $journal -Value "📘 Journal typographique — $(Get-Date)" -Encoding UTF8
 
-if (-Not (Test-Path $folder)) {
-    Write-Host "❌ Dossier introuvable : $folder" -ForegroundColor Red
-    pause
-    exit
-}
-
-# Fichiers ciblés (exclure .frx)
+# 🔍 Fichiers ciblés (comme dans ta version de base)
 $files = Get-ChildItem -Recurse -Path $folder -Include *.bas, *.cls, *.doccls, *.frm |
     Where-Object { $_.Extension -ne ".frx" }
 
-if ($files.Count -eq 0) {
-    Write-Host "❌ Aucun fichier à traiter dans $folder" -ForegroundColor Yellow
-} else {
-    foreach ($file in $files) {
-        Add-Content -Path $journal -Value "`n🔧 $($file.Name)"
-        Write-Host "🔧 Traitement : $($file.Name)"
-        
-        $content = Get-Content $file.FullName -Raw
+foreach ($file in $files) {
+    Write-Host "🔧 Traitement : $($file.Name)"
+    Add-Content -Path $journal -Value "`n🔧 Fichier : $($file.Name)"
 
-        # Traitement typographique (éviter les objets nommés ex: .ListBox1)
-        if ($file.Extension -ne ".frm") {
-            foreach ($pair in $keywords.GetEnumerator()) {
-                $pattern = '(?<![\w])' + [regex]::Escape($pair.Key) + '(?![\w])'
-                if ($content -match $pattern) {
-                    Add-Content -Path $journal -Value "   Remplacé : $($pair.Key) ➜ $($pair.Value)"
-                }
-                $content = [regex]::Replace($content, $pattern, $pair.Value)
-            }
-        } else {
-            # Nettoyage visuel des .frm (sans modifier la casse)
-            $lines = $content -split "`r?`n"
-            $filtered = $lines | Where-Object {
-                ($_ -match '^\s*$') -or
-                ($_ -notmatch '^\s*(ClientHeight|ClientWidth|StartUpPosition|Left|Top|Zoom|ScrollBars|WindowState)\s*=')
-            }
-            $content = $filtered -join "`r`n"
+    # 📥 Lecture
+    $content = Get-Content $file.FullName -Raw
+
+    # 🔄 Remplacement typographique insensible à la casse
+    foreach ($pair in $keywords.GetEnumerator()) {
+        $pattern = '(?i)(?<![\w])' + [regex]::Escape($pair.Key) + '(?![\w\d])'
+        if ($content -match $pattern) {
+            Add-Content -Path $journal -Value "   ✅ Remplacé : $($pair.Key) ➜ $($pair.Value)"
+            $content = [regex]::Replace($content, $pattern, $pair.Value)
         }
-
-        # Réécriture en UTF-8 sans BOM
-        $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
-        $writer = New-Object System.IO.StreamWriter($file.FullName, $false, $utf8NoBom)
-        $writer.Write($content)
-        $writer.Close()
-
-        Write-Host "✅ Fichier modifié : $($file.Name)"
     }
+
+    # 🔒 Correction ciblée finale .Goto ➜ .GoTo (sécurisée)
+    $patternGoto = '(?i)(?<![\w])\.goto(?![\w\d])'
+    if ([regex]::Matches($content, $patternGoto).Count -gt 0) {
+        $content = [regex]::Replace($content, $patternGoto, '.GoTo')
+        Add-Content -Path $journal -Value "   🔄 Correction ciblée .Goto ➜ .GoTo"
+    }
+
+    # 📤 Réécriture en UTF-8 sans BOM
+    $utf8NoBom = New-Object System.Text.UTF8Encoding($false)
+    $writer = New-Object System.IO.StreamWriter($file.FullName, $false, $utf8NoBom)
+    $writer.Write($content)
+    $writer.Close()
+
+    Write-Host "✅ Fichier harmonisé : $($file.Name)"
 }
 
-# Suppression des fichiers .frx inutiles
+# 🗑️ Suppression des fichiers .frx inutiles
 $frxFiles = Get-ChildItem -Recurse -Path $folder -Filter *.frx
-if ($frxFiles.Count -gt 0) {
-    foreach ($file in $frxFiles) {
-        Remove-Item $file.FullName -Force
-        Write-Host "🗑️ Supprimé : $($file.FullName)" -ForegroundColor DarkGray
-    }
-} else {
-    Write-Host "✅ Aucun fichier .frx à supprimer" -ForegroundColor Green
+foreach ($file in $frxFiles) {
+    Remove-Item $file.FullName -Force
+    Write-Host "🗑️ Supprimé : $($file.Name)" -ForegroundColor DarkGray
 }
 
 pause

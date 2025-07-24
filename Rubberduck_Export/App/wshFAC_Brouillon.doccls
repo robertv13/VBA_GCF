@@ -46,7 +46,7 @@ Private Sub Worksheet_Activate()
     
     Application.EnableEvents = False
     
-    Application.GoTo Reference:=Me.Cells(1, 3), Scroll:=True
+    Application.Goto Reference:=Me.Cells(1, 3), Scroll:=True
     
     Me.Range("O3").Value = Format$(Date, wsdADMIN.Range("B1").Value)
     Me.Range("B27").Value = False '2024-09-03 @ 06:33
@@ -180,7 +180,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
        
         'Future date ?
@@ -189,14 +189,14 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.GoTo Range(Target.Address)
+                Application.Goto Range(Target.Address)
             End If
         End If
 
         Call FAC_Brouillon_Date_Change(CDate(wshFAC_Brouillon.Range("O3").Value))
         
         Set rng = wshFAC_Brouillon.Range("O9")
-        GoTo ExitSub
+        GoTo exitSub
     End If
     
     'Template has changed
@@ -212,7 +212,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         wshFAC_Finale.Range("B" & Target.row + 23).Value = "   - " & wshFAC_Brouillon.Range("L" & Target.row).Value
         Set rng = wshFAC_Brouillon.Range("M" & Target.row) 'Hours
 '        rng.Select
-        GoTo ExitSub
+        GoTo exitSub
     End If
   
     'Hours per service
@@ -231,7 +231,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Set rng = wshFAC_Brouillon.Range("O47")
             wshFAC_Brouillon.Range("O47").Select
         End If
-        GoTo ExitSub
+        GoTo exitSub
       End If
     
     'Fees summary has changed
@@ -258,10 +258,10 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 wshFAC_Brouillon.Range("O57").Select
             End If
         End With
-        GoTo ExitSub
+        GoTo exitSub
     End If
     
-ExitSub:
+exitSub:
 
     'On s'assure d'enlever la couleur dans le champs qui a déclenché l'évènement _Change
     Target.Interior.Color = gCOULEUR_BASE_FACTURATION

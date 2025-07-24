@@ -276,7 +276,7 @@ Sub ImporterCCRegularisations() '2025-05-07 @ 13:58
     Set ws = wsdCC_Regularisations
     Dim onglet As String, table As String
     onglet = "CC_Regularisations"
-    table = "l_tbl_CC_Régularisations"
+    table = "l_tbl_CC_Regularisations"
 
     Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     

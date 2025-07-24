@@ -82,7 +82,7 @@ Sub ActualiserStatsChiffreAffaires()
     
     'Variation des TEC - Quelle est la valeur des TEC et le solde au G/L des TEC ? '2025-02-21 @ 14:10
     Dim maxDate As Date
-    Call TEC_Evaluation_Calcul(Date, maxDate) 'Génère gDictHours
+    Call modTEC_Evaluation.CalculerValeurTEC(Date, maxDate) 'Génère gDictHours
     
     Dim prof As Variant
     Dim profID As Long

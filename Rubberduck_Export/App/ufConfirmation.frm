@@ -1,8 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufConfirmation 
    Caption         =   "Confirmation des factures"
+   ClientHeight    =   9120.001
    ClientLeft      =   120
    ClientTop       =   465
+   ClientWidth     =   16560
    OleObjectBlob   =   "ufConfirmation.frx":0000
 End
 Attribute VB_Name = "ufConfirmation"
@@ -10,7 +12,6 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-
 '@IgnoreModule ArgumentWithIncompatibleObjectType
 
 Option Explicit
@@ -151,7 +152,7 @@ Private Sub cmdCocherToutesCases_Click()
 
 End Sub
 
-Private Sub cmdDécocherToutesCases_Click()
+Private Sub cmdDecocherToutesCases_Click()
 
     Call modFAC_Confirmation.DecocherToutesLesCases(ListView1)
 
@@ -159,26 +160,7 @@ End Sub
 
 Private Sub cmdConfirmation_Click()
 
-    If ListView1.ListItems.count < 1 Then
-        MsgBox "Vous n'avez sélectionné aucune facture à confirmer"
-        Exit Sub
-    Else
-        Dim mess As String
-        If ufConfirmation.txtNbFacturesSélectionnées.Value = 1 Then
-            mess = ufConfirmation.txtNbFacturesSélectionnées.Value & " facture sélectionnée"
-        Else
-            mess = ufConfirmation.txtNbFacturesSélectionnées.Value & " factures sélectionnées"
-        End If
-        Dim reponse As VbMsgBoxResult
-        reponse = MsgBox("Êtes-vous certain de vouloir procéder à la confirmation de" & _
-                            vbNewLine & vbNewLine & "facture, avec " & mess & " ?", _
-                            vbQuestion + vbYesNo, "Confirmation de traitement avec " & mess)
-        If reponse = vbNo Then
-            'Annule la confirmation si l'utilisateur répond Non
-            Exit Sub
-        End If
-        Call modFAC_Confirmation.ConfirmerSauvegardeConfirmation
-    End If
+    Call modFAC_Confirmation.ConfirmerSauvegardeConfirmationFacture
 
 End Sub
 

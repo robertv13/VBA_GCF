@@ -1,9 +1,12 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufStatsHeures 
    Caption         =   "Statistiques d'heures"
+   ClientHeight    =   8325.001
    ClientLeft      =   90
    ClientTop       =   270
+   ClientWidth     =   15060
    OleObjectBlob   =   "ufStatsHeures.frx":0000
+   StartUpPosition =   1  'CenterOwner
 End
 Attribute VB_Name = "ufStatsHeures"
 Attribute VB_GlobalNameSpace = False
@@ -94,7 +97,7 @@ Private Sub lbxDatesSemaines_Click_or_DblClick(ByVal valeur As Variant) '2024-12
             'Force une mise à jour du listBox en changeant le RowSource
             ufStatsHeures.MultiPage1.Pages("pSemaine").lbxSemaine.RowSource = vbNullString
             Dim lastUsedRow As Long
-            lastUsedRow = wshTEC_TDB_Data.Cells(wshTEC_TDB_Data.Rows.count, "W").End(xlUp).row
+            lastUsedRow = wshTEC_TDB_Data.Cells(wshTEC_TDB_Data.Rows.count, "W").End(xlUp).Row
             ufStatsHeures.MultiPage1.Pages("pSemaine").lbxSemaine.RowSource = wshTEC_TDB_Data.Name & "!" & "StatsHeuresSemaine_uf"
 '            ufStatsHeures.MultiPage1.Pages("pSemaine").lbxSemaine.RowSource = wshTEC_TDB_Data.Range("W2:AD" & lastUsedRow).Address(external:=True)
 '            Debug.Print wshTEC_TDB_Data.Name & "!" & "StatsHeuresSemaine_uf"
@@ -132,7 +135,7 @@ Sub AdditionnerAjouterColonnesDeSemaine()
     Dim t1 As Currency, t2 As Currency, t3 As Currency
     
     Dim lastUsedResult As Long
-    lastUsedResult = ws.Cells(ws.Rows.count, "W").End(xlUp).row
+    lastUsedResult = ws.Cells(ws.Rows.count, "W").End(xlUp).Row
     Dim rngResult As Range
     Set rngResult = ws.Range("W2:AD" & lastUsedResult)
     
@@ -165,7 +168,7 @@ Sub AdditionnerAjouterColonnesDuMois()
     Dim t1 As Currency, t2 As Currency, t3 As Currency
     
     Dim lastUsedResult As Long
-    lastUsedResult = ws.Cells(ws.Rows.count, "AJ").End(xlUp).row
+    lastUsedResult = ws.Cells(ws.Rows.count, "AJ").End(xlUp).Row
     Dim rngResult As Range
     Set rngResult = ws.Range("AJ2:AQ" & lastUsedResult)
     
@@ -195,7 +198,7 @@ Sub AdditionnerAjouterColonnesDuTrimestre()
     Dim t1 As Currency, t2 As Currency, t3 As Currency
     
     Dim lastUsedResult As Long
-    lastUsedResult = ws.Cells(ws.Rows.count, "AW").End(xlUp).row
+    lastUsedResult = ws.Cells(ws.Rows.count, "AW").End(xlUp).Row
     Dim rngResult As Range
     Set rngResult = ws.Range("AW2:BD" & lastUsedResult)
     
@@ -225,7 +228,7 @@ Sub AdditionnerColonnesDeAnneeFinanciere()
     Dim t1 As Currency, t2 As Currency, t3 As Currency
     
     Dim lastUsedResult As Long
-    lastUsedResult = ws.Cells(ws.Rows.count, "BJ").End(xlUp).row
+    lastUsedResult = ws.Cells(ws.Rows.count, "BJ").End(xlUp).Row
     Dim rngResult As Range
     Set rngResult = ws.Range("BJ2:BQ" & lastUsedResult)
     

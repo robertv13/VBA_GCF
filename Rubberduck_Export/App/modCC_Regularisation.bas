@@ -48,10 +48,9 @@ Sub SauvegarderRegularisation() '2025-01-14 @ 12:00
         dateRegul = wshENC_Saisie.Range("K5").Value
         nomClient = wshENC_Saisie.Range("F5").Value
         descRegul = wshENC_Saisie.Range("F9").Value
-
-        Call ComptabiliserRegulBDMaster(regulNo, dateRegul, nomClient, descRegul)
-        Call ComptabiliserRegulBDLocale(regulNo, dateRegul, nomClient, descRegul)
         
+        Call ComptabiliserRegularisation(regulNo, dateRegul, nomClient, descRegul)
+
         MsgBox "La régularisation '" & regulNo & "' a été enregistré avec succès", vbOKOnly + vbInformation, "Confirmation de traitement"
         
         'Fermer le UserForm
@@ -310,246 +309,82 @@ Sub MiseAJourRegulComptesClientsBDLocale() '2024-08-22 @ 10:55
 
 End Sub
 
-Sub ComptabiliserRegulBDMaster(no As Long, dt As Date, nom As String, desc As String)
+Sub ComptabiliserRegularisation(no As Long, dt As Date, nom As String, desc As String) '2025-07-24 @ 07:02
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:ComptabiliserRegulBDMaster", vbNullString, 0)
+    Dim ws As Worksheet
+    Set ws = wshTEC_Evaluation
     
-    Application.ScreenUpdating = False
+    Dim uf As UserForm
+    Set uf = ufEncRégularisation
     
-    Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                          "GCF_BD_MASTER.xlsx"
-    destinationTab = "GL_Trans$"
+    Dim honoraires As Currency
+    Dim fraisDivers As Currency
+    Dim tps As Currency
+    Dim tvq As Currency
+    Dim comptesClients As Currency
     
-    'Initialize connection, connection string, open the connection & declare rs Object
-    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+    Dim glComptesClients As String, descGLComptesClients As String
+    Dim glHonoraires As String, descGLHonoraires As String
+    Dim glFraisDivers As String, descGLFraisDivers As String
+    Dim glTPS As String, descGLTPS As String
+    Dim glTVQ As String, descGLTVQ As String
+    
+    honoraires = CCur(uf.txtHonoraires.Value)
+    fraisDivers = CCur(uf.txtFraisDivers.Value)
+    tps = CCur(uf.txtTPS.Value)
+    tvq = CCur(uf.txtTVQ.Value)
+    comptesClients = honoraires + fraisDivers + tps + tvq
+    
+    'Comptes de GL et description du poste
+    glComptesClients = ObtenirNoGlIndicateur("Comptes Clients")
+    descGLComptesClients = ObtenirDescriptionCompte(glComptesClients)
+    glHonoraires = ObtenirNoGlIndicateur("Revenus de consultation")
+    descGLHonoraires = ObtenirDescriptionCompte(glHonoraires)
+    glFraisDivers = ObtenirNoGlIndicateur("Revenus frais de poste")
+    descGLFraisDivers = ObtenirDescriptionCompte(glFraisDivers)
+    glTPS = ObtenirNoGlIndicateur("TPS Facturée")
+    descGLTPS = ObtenirDescriptionCompte(glTPS)
+    glTVQ = ObtenirNoGlIndicateur("TVQ Facturée")
+    descGLTVQ = ObtenirDescriptionCompte(glTVQ)
+    
+    'Déclaration et instanciation d'un objet GL_Entry
+    Dim ecr As clsGL_Entry
+    Set ecr = New clsGL_Entry
 
-    'SQL select command to find the next available ID
-    Dim strSQL As String, MaxEJNo As Long
-    strSQL = "SELECT MAX(NoEntrée) AS MaxEJNo FROM [" & destinationTab & "]"
+    'Remplissage des propriétés communes
+    ecr.DateEcriture = dt
+    ecr.description = nom
+    ecr.Source = "RÉGULARISATION:" & Format$(no, "00000")
+    ecr.AutreRemarque = vbNullString
 
-    'Open recordset to find out the MaxID
-    rs.Open strSQL, conn
-    
-    'Get the last used row
-    Dim lastJE As Long
-    If IsNull(rs.Fields("MaxEJNo").Value) Then
-        ' Handle empty table (assign a default value, e.g., 1)
-        lastJE = 1
-    Else
-        lastJE = rs.Fields("MaxEJNo").Value
+    'Ajoute autant de lignes que nécessaire
+    If honoraires <> 0 Then
+        ecr.AjouterLigne glHonoraires, descGLHonoraires, -honoraires
     End If
     
-    'Calculate the new ID
-    gNextJENo = lastJE + 1
+    If fraisDivers <> 0 Then
+        ecr.AjouterLigne glFraisDivers, descGLFraisDivers, -fraisDivers
+    End If
 
-    'Close the previous recordset, no longer needed and open an empty recordset
-    rs.Close
-    rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
-    
-    'timeStamp uniforme
-    Dim timeStamp As Date
-    timeStamp = Now
-    
-    'Crédit - Honoraires
-    If ufEncRégularisation.txtHonoraires.Value <> 0 Then
-        rs.AddNew
-            'Cnstruction des champs
-            rs.Fields(fGlTNoEntrée - 1).Value = gNextJENo
-            rs.Fields(fGlTDate - 1).Value = Format$(dt, "yyyy-mm-dd")
-            rs.Fields(fGlTDescription - 1).Value = nom
-            rs.Fields(fGlTSource - 1).Value = "RÉGULARISATION:" & Format$(no, "00000")
-            rs.Fields(fGlTNoCompte - 1).Value = ObtenirNoGlIndicateur("Revenus de consultation")
-            rs.Fields(fGlTCompte - 1).Value = "Revenus de consultation"
-            rs.Fields(fGlTDébit - 1).Value = -CCur(ufEncRégularisation.txtHonoraires.Value)
-            rs.Fields(fGlTAutreRemarque - 1).Value = desc
-            rs.Fields(fGlTTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
-        rs.Update
+    If tps <> 0 Then
+        ecr.AjouterLigne glTPS, descGLTPS, -tps
     End If
     
-    'Crédit - Frais Divers
-    If ufEncRégularisation.txtFraisDivers.Value <> 0 Then
-        rs.AddNew
-            'Cnstruction des champs
-            rs.Fields(fGlTNoEntrée - 1).Value = gNextJENo
-            rs.Fields(fGlTDate - 1).Value = Format$(dt, "yyyy-mm-dd")
-            rs.Fields(fGlTDescription - 1).Value = nom
-            rs.Fields(fGlTSource - 1).Value = "RÉGULARISATION:" & Format$(no, "00000")
-            rs.Fields(fGlTNoCompte - 1).Value = ObtenirNoGlIndicateur("Revenus frais de poste")
-            rs.Fields(fGlTCompte - 1).Value = "Revenus - Frais de poste"
-            rs.Fields(fGlTDébit - 1).Value = -CCur(ufEncRégularisation.txtFraisDivers.Value)
-            rs.Fields(fGlTAutreRemarque - 1).Value = desc
-            rs.Fields(fGlTTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
-        rs.Update
+    If tvq <> 0 Then
+        ecr.AjouterLigne glTVQ, descGLTVQ, -tvq
     End If
     
-    'Crédit - TPS
-    If ufEncRégularisation.txtTPS.Value <> 0 Then
-        rs.AddNew
-            'Cnstruction des champs
-            rs.Fields(fGlTNoEntrée - 1).Value = gNextJENo
-            rs.Fields(fGlTDate - 1).Value = Format$(dt, "yyyy-mm-dd")
-            rs.Fields(fGlTDescription - 1).Value = nom
-            rs.Fields(fGlTSource - 1).Value = "RÉGULARISATION:" & Format$(no, "00000")
-            rs.Fields(fGlTNoCompte - 1).Value = ObtenirNoGlIndicateur("TPS Facturée")
-            rs.Fields(fGlTCompte - 1).Value = "TPS percues"
-            rs.Fields(fGlTDébit - 1).Value = -CCur(ufEncRégularisation.txtTPS.Value)
-            rs.Fields(fGlTAutreRemarque - 1).Value = desc
-            rs.Fields(fGlTTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
-        rs.Update
+    If comptesClients <> 0 Then
+        ecr.AjouterLigne glComptesClients, descGLComptesClients, comptesClients
     End If
     
-    'Crédit - TVQ
-    If ufEncRégularisation.txtTVQ.Value <> 0 Then
-        rs.AddNew
-            'Cnstruction des champs
-            rs.Fields(fGlTNoEntrée - 1).Value = gNextJENo
-            rs.Fields(fGlTDate - 1).Value = Format$(dt, "yyyy-mm-dd")
-            rs.Fields(fGlTDescription - 1).Value = nom
-            rs.Fields(fGlTSource - 1).Value = "RÉGULARISATION:" & Format$(no, "00000")
-            rs.Fields(fGlTNoCompte - 1).Value = ObtenirNoGlIndicateur("TVQ Facturée")
-            rs.Fields(fGlTCompte - 1).Value = "TVQ percues"
-            rs.Fields(fGlTDébit - 1).Value = -CCur(ufEncRégularisation.txtTVQ.Value)
-            rs.Fields(fGlTAutreRemarque - 1).Value = desc
-            rs.Fields(fGlTTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
-        rs.Update
-    End If
+    '--- Écriture ---
+    Call modGL_Stuff.AjouterEcritureGLADOPlusLocale(ecr, False)
     
-    'Débit = Total de Honoraires, Frais Divers, TPS & TVQ
-    Dim regulTotal As Currency
-    regulTotal = CCur(ufEncRégularisation.txtHonoraires.Value) + _
-                    CCur(ufEncRégularisation.txtFraisDivers.Value) + _
-                    CCur(ufEncRégularisation.txtTPS.Value) + _
-                    CCur(ufEncRégularisation.txtTVQ.Value)
-    rs.AddNew
-        'Add fields to the recordset before updating it
-        rs.Fields(fGlTNoEntrée - 1).Value = gNextJENo
-        rs.Fields(fGlTDate - 1).Value = Format$(dt, "yyyy-mm-dd")
-        rs.Fields(fGlTDescription - 1).Value = nom
-        rs.Fields(fGlTSource - 1).Value = "RÉGULARISATION:" & Format$(no, "00000")
-        rs.Fields(fGlTNoCompte - 1).Value = ObtenirNoGlIndicateur("Comptes Clients")
-        rs.Fields(fGlTCompte - 1).Value = "Comptes clients"
-        rs.Fields(fGlTCrédit - 1).Value = -regulTotal
-        rs.Fields(fGlTAutreRemarque - 1).Value = desc
-        rs.Fields(fGlTTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
-    rs.Update
-    
-    'Close recordset and connection
-    On Error Resume Next
-    rs.Close
-    On Error GoTo 0
-    conn.Close
-    
-    Application.ScreenUpdating = True
-    
-    'Libérer la mémoire
-    Set conn = Nothing
-    Set rs = Nothing
-    
-    Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:ComptabiliserRegulBDMaster", vbNullString, startTime)
-
+    MsgBox "L'écriture pour cette régularisation s'est complétée" & vbNewLine & vbNewLine & _
+            "avec succès", _
+            vbInformation + vbOKOnly, _
+            "Comptabilisation de l'écriture de régularisation"
+            
 End Sub
-
-Sub ComptabiliserRegulBDLocale(no As Long, dt As Date, nom As String, desc As String)  'Write/Update to GCF_BD_MASTER / GL_Trans
-    
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:ComptabiliserRegulBDLocale", vbNullString, 0)
-
-    Application.ScreenUpdating = False
-
-    'What is the last used row in GL_Trans ?
-    Dim ws As Worksheet: Set ws = wsdGL_Trans
-    Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).Row
-    rowToBeUsed = lastUsedRow + 1
-
-    'timeStamp uniforme
-    Dim timeStamp As Date
-    timeStamp = Now
-    
-    With ws
-        'Credit side - Honoraires
-        If ufEncRégularisation.txtHonoraires.Value <> 0 Then
-            .Range("A" & rowToBeUsed).Value = gNextJENo
-            .Range("B" & rowToBeUsed).Value = CDate(dt)
-            .Range("C" & rowToBeUsed).Value = nom
-            .Range("D" & rowToBeUsed).Value = "RÉGULARISATION:" & Format$(no, "00000")
-            .Range("E" & rowToBeUsed).Value = ObtenirNoGlIndicateur("Revenus de consultation")
-            .Range("F" & rowToBeUsed).Value = "Revenus de consultation"
-            .Range("G" & rowToBeUsed).Value = -CCur(ufEncRégularisation.txtHonoraires.Value)
-            .Range("I" & rowToBeUsed).Value = desc
-            .Range("J" & rowToBeUsed).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
-             rowToBeUsed = rowToBeUsed + 1
-       End If
-        
-        'Credit side - Frais divers
-        If ufEncRégularisation.txtFraisDivers.Value <> 0 Then
-            .Range("A" & rowToBeUsed).Value = gNextJENo
-            .Range("B" & rowToBeUsed).Value = CDate(dt)
-            .Range("C" & rowToBeUsed).Value = nom
-            .Range("D" & rowToBeUsed).Value = "RÉGULARISATION:" & Format$(no, "00000")
-            .Range("E" & rowToBeUsed).Value = ObtenirNoGlIndicateur("Revenus frais de poste")
-            .Range("F" & rowToBeUsed).Value = "Revenus - Frais de poste"
-            .Range("G" & rowToBeUsed).Value = -CCur(ufEncRégularisation.txtFraisDivers.Value)
-            .Range("I" & rowToBeUsed).Value = desc
-            .Range("J" & rowToBeUsed).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
-            rowToBeUsed = rowToBeUsed + 1
-        End If
-    
-        'Credit side - TPS
-        If ufEncRégularisation.txtTPS.Value <> 0 Then
-            .Range("A" & rowToBeUsed).Value = gNextJENo
-            .Range("B" & rowToBeUsed).Value = CDate(dt)
-            .Range("C" & rowToBeUsed).Value = nom
-            .Range("D" & rowToBeUsed).Value = "RÉGULARISATION:" & Format$(no, "00000")
-            .Range("E" & rowToBeUsed).Value = ObtenirNoGlIndicateur("TPS Facturée")
-            .Range("F" & rowToBeUsed).Value = "TPS percues"
-            .Range("G" & rowToBeUsed).Value = -CCur(ufEncRégularisation.txtTPS.Value)
-            .Range("I" & rowToBeUsed).Value = desc
-            .Range("J" & rowToBeUsed).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
-            rowToBeUsed = rowToBeUsed + 1
-        End If
-    
-        'Credit side - TVQ
-        If ufEncRégularisation.txtTVQ.Value <> 0 Then
-            .Range("A" & rowToBeUsed).Value = gNextJENo
-            .Range("B" & rowToBeUsed).Value = CDate(dt)
-            .Range("C" & rowToBeUsed).Value = nom
-            .Range("D" & rowToBeUsed).Value = "RÉGULARISATION:" & Format$(no, "00000")
-            .Range("E" & rowToBeUsed).Value = ObtenirNoGlIndicateur("TVQ Facturée")
-            .Range("F" & rowToBeUsed).Value = "TVQ percues"
-            .Range("G" & rowToBeUsed).Value = -CCur(ufEncRégularisation.txtTVQ.Value)
-            .Range("I" & rowToBeUsed).Value = desc
-            .Range("J" & rowToBeUsed).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
-            rowToBeUsed = rowToBeUsed + 1
-        End If
-        
-        'Débit = Total de Honoraires, Frais Divers, TPS & TVQ
-        Dim regulTotal As Currency
-        regulTotal = CCur(ufEncRégularisation.txtHonoraires.Value) + _
-                    CCur(ufEncRégularisation.txtFraisDivers.Value) + _
-                    CCur(ufEncRégularisation.txtTPS.Value) + _
-                    CCur(ufEncRégularisation.txtTVQ.Value)
-    
-        If regulTotal <> 0 Then
-            .Range("A" & rowToBeUsed).Value = gNextJENo
-            .Range("B" & rowToBeUsed).Value = CDate(dt)
-            .Range("C" & rowToBeUsed).Value = nom
-            .Range("D" & rowToBeUsed).Value = "RÉGULARISATION:" & Format$(no, "00000")
-            .Range("E" & rowToBeUsed).Value = ObtenirNoGlIndicateur("Comptes Clients")
-            .Range("F" & rowToBeUsed).Value = "Comptes clients"
-            .Range("H" & rowToBeUsed).Value = -regulTotal
-            .Range("I" & rowToBeUsed).Value = desc
-            .Range("J" & rowToBeUsed).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
-            rowToBeUsed = rowToBeUsed + 1
-        End If
-    End With
-
-    Application.ScreenUpdating = True
-
-    Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:ComptabiliserRegulBDLocale", vbNullString, startTime)
-
-End Sub
-
 

@@ -1,9 +1,12 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufEncRégularisation 
    Caption         =   "Régularisation des Comptes Clients"
+   ClientHeight    =   5730
    ClientLeft      =   -60
    ClientTop       =   -240
+   ClientWidth     =   10020
    OleObjectBlob   =   "ufEncRégularisation.frx":0000
+   StartUpPosition =   1  'CenterOwner
 End
 Attribute VB_Name = "ufEncRégularisation"
 Attribute VB_GlobalNameSpace = False
@@ -96,7 +99,6 @@ Private Sub txtTotalFacture_Exit(ByVal Cancel As MSForms.ReturnBoolean)
     
     If ufEncRégularisation.txtTotalFacture.text <> vbNullString And IsNumeric(ufEncRégularisation.txtTotalFacture.Value) = True Then
         totalFacture = CCur(ufEncRégularisation.txtTotalFacture.text)
-        Debug.Print "#093 - totalFacture = " & totalFacture
     
         Dim honoraires As Currency, fraisDivers As Currency
         Dim tps As Currency, tvq As Currency
@@ -166,7 +168,6 @@ Private Sub VerifierMontantsSaisis()
 
     If ufEncRégularisation.txtTotalFacture.text <> vbNullString Then
         With ufEncRégularisation
-            Debug.Print "#095 - " & CCur(.txtTotalFacture.text) & " <> ? " & CCur(.txtHonoraires.text) & "+" & CCur(.txtFraisDivers.text) & "+" & CCur(.txtTPS.text) & "+" & CCur(.txtTVQ.text)
             If CCur(.txtTotalFacture.text) = CCur(.txtHonoraires.text) + _
                                         CCur(.txtFraisDivers.text) + _
                                         CCur(.txtTPS.text) + _

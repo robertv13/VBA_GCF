@@ -1,9 +1,12 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufExitDisable 
    Caption         =   "Sortie non autorisée via le fermeture d'Excel"
+   ClientHeight    =   2310
    ClientLeft      =   -30
    ClientTop       =   -255
+   ClientWidth     =   7755
    OleObjectBlob   =   "ufExitDisable.frx":0000
+   StartUpPosition =   1  'CenterOwner
 End
 Attribute VB_Name = "ufExitDisable"
 Attribute VB_GlobalNameSpace = False

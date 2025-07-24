@@ -3,21 +3,21 @@ Option Explicit
 
 Public gDictHours As Object 'Déclaration globale
 
-Sub TEC_Evaluation_Procedure(cutoffDate As String)
+Sub EvaluerValeurTEC(cutoffDate As String)
 
     Dim maxDate As Date
     
     If Not cutoffDate = vbNullString Then
-        Call TEC_EvaluationViderFeuille
+        Call ViderFeuilleEvaluationTEC
         
-        Call TEC_Evaluation_Calcul(cutoffDate, maxDate)
+        Call CalculerValeurTEC(cutoffDate, maxDate)
         
-        Call TEC_Evaluation_Affichage(cutoffDate, maxDate)
+        Call AfficherValeurTEC(cutoffDate, maxDate)
     End If
     
 End Sub
 
-Sub TEC_EvaluationViderFeuille()
+Sub ViderFeuilleEvaluationTEC()
 
     Dim ws As Worksheet
     Set ws = wshTEC_Evaluation
@@ -36,7 +36,7 @@ Sub TEC_EvaluationViderFeuille()
     
 End Sub
 
-Sub TEC_Evaluation_Calcul(cutoffDate As String, ByRef maxDate As Date)
+Sub CalculerValeurTEC(cutoffDate As String, ByRef maxDate As Date)
 
     If cutoffDate = vbNullString Then
         Exit Sub
@@ -168,7 +168,7 @@ Sub TEC_Evaluation_Calcul(cutoffDate As String, ByRef maxDate As Date)
     
 End Sub
 
-Sub TEC_Evaluation_Affichage(cutoffDate As String, maxDate As Date)
+Sub AfficherValeurTEC(cutoffDate As String, maxDate As Date)
 
     Dim ws  As Worksheet
     Set ws = wshTEC_Evaluation
@@ -302,7 +302,7 @@ Sub TEC_Evaluation_Affichage(cutoffDate As String, maxDate As Date)
 
 End Sub
 
-Sub shp_TEC_Evaluation_Impression_Click()
+Sub shpImprimerValeurTEC_Click()
 
     Call PrevisualiserRapport
 
@@ -334,13 +334,13 @@ Sub PrevisualiserRapport()
     
 End Sub
 
-Sub shp_TEC_Evaluation_EcritureGL_Click() '2025-06-08 @ 08:37
+Sub shpComptabiliserValeurTEC_Click() '2025-06-08 @ 08:37
 
-    Call TEC_Evaluation_EcritureGL
+    Call ComptabiliserValeurTEC
     
 End Sub
     
-Sub TEC_Evaluation_EcritureGL() '2025-06-08 @ 08:37
+Sub ComptabiliserValeurTEC() '2025-06-08 @ 08:37
     
     '--- Déclarations ---
     Dim ws As Worksheet
@@ -374,126 +374,9 @@ Sub TEC_Evaluation_EcritureGL() '2025-06-08 @ 08:37
     End If
 
     '--- Écriture ---
-    Call AjouterEcritureGL(ecr, True)
+    Call modGL_Stuff.AjouterEcritureGLADOPlusLocale(ecr, True)
     
-End Sub
-
-Public Sub AjouterEcritureGL(entry As clsGL_Entry, Optional afficherMessage As Boolean = True) '2025-06-08 @ 09:37
-
-    '=== BLOC 1 : Écriture dans GCF_BD_MASTER.xslx en utilisant ADO ===
-    Dim cn As Object
-    Dim rs As Object
-    Dim cheminMaster As String
-    Dim nextNoEntree As Long
-    Dim ts As String
-    Dim i As Long
-    Dim l As clsGL_EntryLine
-    Dim sql As String
-
-    On Error GoTo CleanUpADO
-
-    'Chemin du classeur MASTER.xlsx
-    cheminMaster = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
-    
-    'Ouvre connexion ADO
-    Set cn = CreateObject("ADODB.Connection")
-    cn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & cheminMaster & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-
-    'Détermine le prochain numéro d'écriture
-    Set rs = cn.Execute("SELECT MAX([NoEntrée]) AS MaxNo FROM [GL_Trans$]")
-    If Not rs.EOF And Not IsNull(rs!MaxNo) Then
-        nextNoEntree = rs!MaxNo + 1
-    Else
-        nextNoEntree = 1
-    End If
-    entry.NoEcriture = nextNoEntree
-    rs.Close
-    Set rs = Nothing
-
-    'Timestamp unique pour l'écriture
-    ts = Format(Now, "yyyy-mm-dd hh:mm:ss")
-
-    'Ajoute chaque ligne d'écriture dans le classeur MASTER.xlsx
-    For i = 1 To entry.lignes.count
-        Set l = entry.lignes(i)
-        sql = "INSERT INTO [GL_Trans$] " & _
-              "([NoEntrée],[Date],[Description],[Source],[NoCompte],[Compte],[Débit],[Crédit],[AutreRemarque],[TimeStamp]) " & _
-              "VALUES (" & _
-              entry.NoEcriture & "," & _
-              "'" & Format(entry.DateEcriture, "yyyy-mm-dd") & "'," & _
-              "'" & Replace(entry.description, "'", "''") & "'," & _
-              "'" & Replace(entry.Source, "'", "''") & "'," & _
-              "'" & l.noCompte & "'," & _
-              "'" & Replace(l.description, "'", "''") & "'," & _
-              IIf(l.montant >= 0, Replace(l.montant, ",", "."), "NULL") & "," & _
-              IIf(l.montant < 0, Replace(-l.montant, ",", "."), "NULL") & "," & _
-              "'" & Replace(entry.AutreRemarque, "'", "''") & "'," & _
-              "'" & ts & "'" & _
-              ")"
-        cn.Execute sql
-    Next i
-
-    cn.Close: Set cn = Nothing
-
-    '=== BLOC 2 : Écriture dans feuille locale (GL_Trans)
-    Dim oldScreenUpdating As Boolean, oldEnableEvents As Boolean
-    Dim oldDisplayAlerts As Boolean, oldCalculation As XlCalculation
-    Dim wsLocal As Worksheet, lastRow As Long
-
-    'Mémoriser l’état initial d’Excel
-    oldScreenUpdating = Application.ScreenUpdating
-    oldEnableEvents = Application.EnableEvents
-    oldDisplayAlerts = Application.DisplayAlerts
-    oldCalculation = Application.Calculation
-
-    Application.ScreenUpdating = False
-    Application.EnableEvents = False
-    Application.DisplayAlerts = False
-    Application.Calculation = xlCalculationManual
-
-    Set wsLocal = ThisWorkbook.Sheets("GL_Trans")
-    lastRow = wsLocal.Cells(wsLocal.Rows.count, 1).End(xlUp).Row
-
-    For i = 1 To entry.lignes.count
-        Set l = entry.lignes(i)
-        With wsLocal
-            .Cells(lastRow + i, 1).Value = entry.NoEcriture
-            .Cells(lastRow + i, 2).Value = entry.DateEcriture
-            .Cells(lastRow + i, 3).Value = entry.description
-            .Cells(lastRow + i, 4).Value = entry.Source
-            .Cells(lastRow + i, 5).Value = l.noCompte
-            .Cells(lastRow + i, 6).Value = l.description
-            If l.montant >= 0 Then
-                .Cells(lastRow + i, 7).Value = l.montant
-                .Cells(lastRow + i, 8).Value = vbNullString
-            Else
-                .Cells(lastRow + i, 7).Value = vbNullString
-                .Cells(lastRow + i, 8).Value = -l.montant
-            End If
-            .Cells(lastRow + i, 9).Value = entry.AutreRemarque
-            .Cells(lastRow + i, 10).Value = ts
-        End With
-    Next i
-
     wshTEC_Evaluation.Shapes("EcritureGL").Visible = msoFalse
-    If afficherMessage Then
-        MsgBox "L'écriture comptable a été complétée avec succès", vbInformation, "Écriture au Grand Livre"
-    End If
-
-CleanUpADO:
-    On Error Resume Next
-    If Not rs Is Nothing Then If rs.state = 1 Then rs.Close
-    Set rs = Nothing
-    If Not cn Is Nothing Then If cn.state = 1 Then cn.Close
-    Set cn = Nothing
-    Application.ScreenUpdating = oldScreenUpdating
-    Application.EnableEvents = oldEnableEvents
-    Application.DisplayAlerts = oldDisplayAlerts
-    Application.Calculation = oldCalculation
-    If Err.Number <> 0 Then
-        MsgBox "Erreur lors de l’écriture au G/L : " & Err.description, vbCritical
-    End If
-    On Error GoTo 0
     
 End Sub
 

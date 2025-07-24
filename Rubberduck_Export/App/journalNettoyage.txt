@@ -1,447 +1,466 @@
-﻿📘 Journal de nettoyage typographique — 07/23/2025 17:58:26
-
-🔧 clsControlWrapper.cls
-
-🔧 clsGL_Entry.cls
-
-🔧 clsGL_EntryLine.cls
-
-🔧 clsSearchableDropdown.cls
-   Remplacé : .text ➜ .Text
-   Remplacé : .value ➜ .Value
-
-🔧 Feuil1.doccls
-
-🔧 Feuil3.doccls
-
-🔧 Feuil4.doccls
-
-🔧 modAPIWindows.bas
-
-🔧 modAppli.bas
-   Remplacé : .value ➜ .Value
-
-🔧 modAppli_Utils.bas
-   Remplacé : .column ➜ .Column
-   Remplacé : .interior ➜ .Interior
-   Remplacé : .cells ➜ .Cells
-   Remplacé : .offset ➜ .Offset
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-   Remplacé : .range ➜ .Range
-   Remplacé : .font ➜ .Font
-
-🔧 modAuditVBA.bas
-   Remplacé : .interior ➜ .Interior
-   Remplacé : .cells ➜ .Cells
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-   Remplacé : .range ➜ .Range
-   Remplacé : .font ➜ .Font
-
-🔧 modCAR_Liste_Agee.bas
-   Remplacé : .column ➜ .Column
-   Remplacé : .cells ➜ .Cells
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-   Remplacé : .range ➜ .Range
-   Remplacé : .name ➜ .Name
-   Remplacé : .font ➜ .Font
-
-🔧 modCC_Regularisation.bas
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-   Remplacé : .range ➜ .Range
-
-🔧 modConfig.bas
-
-🔧 modCSV_Import.bas
-   Remplacé : .column ➜ .Column
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-
-🔧 modDataValidation.bas
-
-🔧 modDEB_Saisie.bas
-   Remplacé : .interior ➜ .Interior
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-   Remplacé : .range ➜ .Range
-   Remplacé : .font ➜ .Font
-
-🔧 modDEV_Debug.bas
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-
-🔧 modDev_Proof.bas
-   Remplacé : .borders ➜ .Borders
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-   Remplacé : .font ➜ .Font
-
-🔧 modDEV_Securite.bas
-   Remplacé : .value ➜ .Value
-
-🔧 modDev_Tools.bas
-   Remplacé : .column ➜ .Column
-   Remplacé : .interior ➜ .Interior
-   Remplacé : .cells ➜ .Cells
-   Remplacé : .offset ➜ .Offset
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-   Remplacé : .range ➜ .Range
-   Remplacé : .font ➜ .Font
-
-🔧 modDev_Utils.bas
-   Remplacé : .interior ➜ .Interior
-   Remplacé : .cells ➜ .Cells
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-   Remplacé : .range ➜ .Range
-   Remplacé : .font ➜ .Font
-
-🔧 modENC_Saisie.bas
-   Remplacé : .interior ➜ .Interior
-   Remplacé : .cells ➜ .Cells
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-   Remplacé : .range ➜ .Range
-   Remplacé : .name ➜ .Name
-   Remplacé : .font ➜ .Font
-
-🔧 modFAC_Brouillon.bas
-   Remplacé : .column ➜ .Column
-   Remplacé : .interior ➜ .Interior
-   Remplacé : .cells ➜ .Cells
-   Remplacé : .text ➜ .Text
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-   Remplacé : .range ➜ .Range
-   Remplacé : .name ➜ .Name
-   Remplacé : .font ➜ .Font
-
-🔧 modFAC_Confirmation.bas
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-
-🔧 modFAC_Finale.bas
-   Remplacé : .cells ➜ .Cells
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-   Remplacé : .range ➜ .Range
-   Remplacé : .font ➜ .Font
-
-🔧 modFAC_Interrogation.bas
-   Remplacé : .borders ➜ .Borders
-   Remplacé : .interior ➜ .Interior
-   Remplacé : .cells ➜ .Cells
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-   Remplacé : .range ➜ .Range
-   Remplacé : .name ➜ .Name
-   Remplacé : .font ➜ .Font
-
-🔧 modFunctions.bas
-   Remplacé : .cells ➜ .Cells
-   Remplacé : .offset ➜ .Offset
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-   Remplacé : .range ➜ .Range
-
-🔧 modGL_BV.bas
-   Remplacé : .borders ➜ .Borders
-   Remplacé : .interior ➜ .Interior
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-   Remplacé : .range ➜ .Range
-   Remplacé : .name ➜ .Name
-   Remplacé : .font ➜ .Font
-
-🔧 modGL_DataService.bas
-   Remplacé : .column ➜ .Column
-   Remplacé : .cells ➜ .Cells
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-
-🔧 modGL_EJ.bas
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-   Remplacé : .range ➜ .Range
-   Remplacé : .name ➜ .Name
-   Remplacé : .font ➜ .Font
-
-🔧 modGL_PrepEF.bas
-   Remplacé : .borders ➜ .Borders
-   Remplacé : .cells ➜ .Cells
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-   Remplacé : .range ➜ .Range
-   Remplacé : .font ➜ .Font
-
-🔧 modGL_Rapport_Nouveau.bas
-   Remplacé : .borders ➜ .Borders
-   Remplacé : .column ➜ .Column
-   Remplacé : .interior ➜ .Interior
-   Remplacé : .cells ➜ .Cells
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-   Remplacé : .range ➜ .Range
-   Remplacé : .name ➜ .Name
-   Remplacé : .font ➜ .Font
-
-🔧 modGL_Stats_CA.bas
-   Remplacé : .value ➜ .Value
-   Remplacé : .name ➜ .Name
-
-🔧 modGL_Stuff.bas
-   Remplacé : .cells ➜ .Cells
-   Remplacé : .offset ➜ .Offset
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-   Remplacé : .range ➜ .Range
-   Remplacé : .name ➜ .Name
-
-🔧 modImport.bas
-   Remplacé : .cells ➜ .Cells
-   Remplacé : .value ➜ .Value
-
-🔧 modLog_Analysis.bas
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-
-🔧 modMain.bas
-
-🔧 modMenu.bas
-   Remplacé : .value ➜ .Value
-   Remplacé : .range ➜ .Range
-
-🔧 modMENU_FAC.bas
-
-🔧 modMENU_GL.bas
-
-🔧 modMENU_TEC.bas
-
-🔧 modStatsHeures.bas
-   Remplacé : .column ➜ .Column
-   Remplacé : .cells ➜ .Cells
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-
-🔧 modTEC_Analyse.bas
-   Remplacé : .borders ➜ .Borders
-   Remplacé : .count ➜ .Count
-   Remplacé : .interior ➜ .Interior
-   Remplacé : .cells ➜ .Cells
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-   Remplacé : .range ➜ .Range
-   Remplacé : .name ➜ .Name
-   Remplacé : .font ➜ .Font
+﻿📘 Journal typographique — 07/24/2025 09:08:08
+
+🔧 Fichier : clsControlWrapper.cls
+
+🔧 Fichier : clsGL_Entry.cls
+
+🔧 Fichier : clsGL_EntryLine.cls
+
+🔧 Fichier : clsSearchableDropdown.cls
+   ✅ Remplacé : .text ➜ .Text
+   ✅ Remplacé : .value ➜ .Value
+
+🔧 Fichier : Feuil1.doccls
+
+🔧 Fichier : Feuil3.doccls
+
+🔧 Fichier : Feuil4.doccls
+
+🔧 Fichier : modAPIWindows.bas
+
+🔧 Fichier : modAppli.bas
+   ✅ Remplacé : .value ➜ .Value
+
+🔧 Fichier : modAppli_Utils.bas
+   ✅ Remplacé : .column ➜ .Column
+   ✅ Remplacé : .interior ➜ .Interior
+   ✅ Remplacé : .cells ➜ .Cells
+   ✅ Remplacé : .offset ➜ .Offset
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
+   ✅ Remplacé : .font ➜ .Font
+
+🔧 Fichier : modAuditVBA.bas
+   ✅ Remplacé : .interior ➜ .Interior
+   ✅ Remplacé : .cells ➜ .Cells
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
+   ✅ Remplacé : .font ➜ .Font
+
+🔧 Fichier : modCAR_Liste_Agee.bas
+   ✅ Remplacé : .column ➜ .Column
+   ✅ Remplacé : .cells ➜ .Cells
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
+   ✅ Remplacé : .name ➜ .Name
+   ✅ Remplacé : .font ➜ .Font
+
+🔧 Fichier : modCC_Regularisation.bas
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
+
+🔧 Fichier : modConfig.bas
+
+🔧 Fichier : modCSV_Import.bas
+   ✅ Remplacé : .column ➜ .Column
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+
+🔧 Fichier : modDataValidation.bas
+
+🔧 Fichier : modDEB_Saisie.bas
+   ✅ Remplacé : .interior ➜ .Interior
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
+   ✅ Remplacé : .font ➜ .Font
+
+🔧 Fichier : modDEV_Debug.bas
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+
+🔧 Fichier : modDev_Proof.bas
+   ✅ Remplacé : .borders ➜ .Borders
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .font ➜ .Font
+
+🔧 Fichier : modDEV_Securite.bas
+   ✅ Remplacé : .value ➜ .Value
+
+🔧 Fichier : modDev_Tools.bas
+   ✅ Remplacé : .column ➜ .Column
+   ✅ Remplacé : .interior ➜ .Interior
+   ✅ Remplacé : .cells ➜ .Cells
+   ✅ Remplacé : .offset ➜ .Offset
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
+   ✅ Remplacé : .font ➜ .Font
+
+🔧 Fichier : modDev_Utils.bas
+   ✅ Remplacé : .interior ➜ .Interior
+   ✅ Remplacé : .cells ➜ .Cells
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
+   ✅ Remplacé : .font ➜ .Font
+
+🔧 Fichier : modENC_Saisie.bas
+   ✅ Remplacé : .interior ➜ .Interior
+   ✅ Remplacé : .cells ➜ .Cells
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
+   ✅ Remplacé : .name ➜ .Name
+   ✅ Remplacé : .font ➜ .Font
+
+🔧 Fichier : modFAC_Brouillon.bas
+   ✅ Remplacé : .column ➜ .Column
+   ✅ Remplacé : .interior ➜ .Interior
+   ✅ Remplacé : .cells ➜ .Cells
+   ✅ Remplacé : .text ➜ .Text
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
+   ✅ Remplacé : .name ➜ .Name
+   ✅ Remplacé : .font ➜ .Font
+
+🔧 Fichier : modFAC_Confirmation.bas
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+
+🔧 Fichier : modFAC_Finale.bas
+   ✅ Remplacé : .cells ➜ .Cells
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
+   ✅ Remplacé : .font ➜ .Font
+
+🔧 Fichier : modFAC_Interrogation.bas
+   ✅ Remplacé : .borders ➜ .Borders
+   ✅ Remplacé : .interior ➜ .Interior
+   ✅ Remplacé : .cells ➜ .Cells
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
+   ✅ Remplacé : .name ➜ .Name
+   ✅ Remplacé : .font ➜ .Font
+
+🔧 Fichier : modFunctions.bas
+   ✅ Remplacé : .cells ➜ .Cells
+   ✅ Remplacé : .offset ➜ .Offset
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
+
+🔧 Fichier : modGL_BV.bas
+   ✅ Remplacé : .borders ➜ .Borders
+   ✅ Remplacé : .interior ➜ .Interior
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
+   ✅ Remplacé : .name ➜ .Name
+   ✅ Remplacé : .font ➜ .Font
+
+🔧 Fichier : modGL_DataService.bas
+   ✅ Remplacé : .column ➜ .Column
+   ✅ Remplacé : .cells ➜ .Cells
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+
+🔧 Fichier : modGL_EJ.bas
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
+   ✅ Remplacé : .name ➜ .Name
+   ✅ Remplacé : .font ➜ .Font
+
+🔧 Fichier : modGL_PrepEF.bas
+   ✅ Remplacé : .borders ➜ .Borders
+   ✅ Remplacé : .cells ➜ .Cells
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
+   ✅ Remplacé : .font ➜ .Font
+
+🔧 Fichier : modGL_Rapport_Nouveau.bas
+   ✅ Remplacé : .borders ➜ .Borders
+   ✅ Remplacé : .column ➜ .Column
+   ✅ Remplacé : .interior ➜ .Interior
+   ✅ Remplacé : .cells ➜ .Cells
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
+   ✅ Remplacé : .name ➜ .Name
+   ✅ Remplacé : .font ➜ .Font
+
+🔧 Fichier : modGL_Stats_CA.bas
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .name ➜ .Name
+
+🔧 Fichier : modGL_Stuff.bas
+   ✅ Remplacé : .cells ➜ .Cells
+   ✅ Remplacé : .offset ➜ .Offset
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
+   ✅ Remplacé : .name ➜ .Name
+
+🔧 Fichier : modImport.bas
+   ✅ Remplacé : .cells ➜ .Cells
+   ✅ Remplacé : .value ➜ .Value
+
+🔧 Fichier : modLog_Analysis.bas
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+
+🔧 Fichier : modMain.bas
+
+🔧 Fichier : modMenu.bas
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
+
+🔧 Fichier : modMENU_FAC.bas
+
+🔧 Fichier : modMENU_GL.bas
+
+🔧 Fichier : modMENU_TEC.bas
+
+🔧 Fichier : modStatsHeures.bas
+   ✅ Remplacé : .column ➜ .Column
+   ✅ Remplacé : .cells ➜ .Cells
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+
+🔧 Fichier : modTEC_Analyse.bas
+   ✅ Remplacé : .borders ➜ .Borders
+   ✅ Remplacé : .count ➜ .Count
+   ✅ Remplacé : .interior ➜ .Interior
+   ✅ Remplacé : .cells ➜ .Cells
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
+   ✅ Remplacé : .name ➜ .Name
+   ✅ Remplacé : .font ➜ .Font
+
+🔧 Fichier : modTEC_Evaluation.bas
+   ✅ Remplacé : .interior ➜ .Interior
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
+   ✅ Remplacé : .font ➜ .Font
+
+🔧 Fichier : modTEC_Radiation.bas
+   ✅ Remplacé : .address ➜ .Address
+   ✅ Remplacé : .cells ➜ .Cells
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
+   ✅ Remplacé : .name ➜ .Name
+   ✅ Remplacé : .font ➜ .Font
+
+🔧 Fichier : modTEC_Saisie.bas
+   ✅ Remplacé : .cells ➜ .Cells
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
+
+🔧 Fichier : modTEC_Stuff.bas
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+
+🔧 Fichier : modTEC_TDB.bas
+   ✅ Remplacé : .borders ➜ .Borders
+   ✅ Remplacé : .row ➜ .Row
+
+🔧 Fichier : modTestJump.bas
+
+🔧 Fichier : modzDataConversion.bas
+   ✅ Remplacé : .column ➜ .Column
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+
+🔧 Fichier : ThisWorkbook.doccls
+
+🔧 Fichier : ufConfirmation.frm
+   ✅ Remplacé : .value ➜ .Value
+
+🔧 Fichier : ufConfirmationFermeture.frm
+
+🔧 Fichier : ufEncRégularisation.frm
+   ✅ Remplacé : .value ➜ .Value
+
+🔧 Fichier : ufExitDisable.frm
+
+🔧 Fichier : ufFraisDivers.frm
+
+🔧 Fichier : ufGL_Rapport.frm
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
+
+🔧 Fichier : ufListeDEBAuto.frm
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
+
+🔧 Fichier : ufListeDebourse.frm
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+
+🔧 Fichier : ufListeEcritureGL.frm
+   ✅ Remplacé : .value ➜ .Value
+
+🔧 Fichier : ufListeEJAuto.frm
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+
+🔧 Fichier : ufListeProjetsFacture.frm
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
+
+🔧 Fichier : ufNonBillableTime.frm
+
+🔧 Fichier : ufSaisieHeures.frm
+   ✅ Remplacé : .text ➜ .Text
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+
+🔧 Fichier : ufStatsHeures.frm
+   ✅ Remplacé : .address ➜ .Address
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+
+🔧 Fichier : wsdADMIN.doccls
+
+🔧 Fichier : wsdBD_Clients.doccls
+
+🔧 Fichier : wsdBD_Fournisseurs.doccls
+
+🔧 Fichier : wsdCC_Regularisations.doccls
+
+🔧 Fichier : wsdDEB_Recurrent.doccls
+
+🔧 Fichier : wsdDEB_Trans.doccls
+
+🔧 Fichier : wsdENC_Details.doccls
+
+🔧 Fichier : wsdENC_Entete.doccls
+
+🔧 Fichier : wsdFAC_Comptes_Clients.doccls
+
+🔧 Fichier : wsdFAC_Details.doccls
+
+🔧 Fichier : wsdFAC_Entete.doccls
+
+🔧 Fichier : wsdFAC_Projets_Details.doccls
+
+🔧 Fichier : wsdFAC_Projets_Entete.doccls
+
+🔧 Fichier : wsdFAC_Sommaire_Taux.doccls
+
+🔧 Fichier : wsdGL_EJ_Recurrente.doccls
+
+🔧 Fichier : wsdGL_Trans.doccls
+
+🔧 Fichier : wsdTEC_Local.doccls
 
-🔧 modTEC_Evaluation.bas
-   Remplacé : .interior ➜ .Interior
-   Remplacé : .cells ➜ .Cells
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-   Remplacé : .range ➜ .Range
-   Remplacé : .font ➜ .Font
+🔧 Fichier : wshCAR_Liste_Agee.doccls
+   ✅ Remplacé : .address ➜ .Address
+   ✅ Remplacé : .interior ➜ .Interior
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
 
-🔧 modTEC_Radiation.bas
-   Remplacé : .address ➜ .Address
-   Remplacé : .cells ➜ .Cells
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-   Remplacé : .range ➜ .Range
-   Remplacé : .name ➜ .Name
-   Remplacé : .font ➜ .Font
+🔧 Fichier : wshDEB_Saisie.doccls
+   ✅ Remplacé : .interior ➜ .Interior
+   ✅ Remplacé : .value ➜ .Value
 
-🔧 modTEC_Saisie.bas
-   Remplacé : .cells ➜ .Cells
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-   Remplacé : .range ➜ .Range
-
-🔧 modTEC_Stuff.bas
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
+🔧 Fichier : wshENC_Saisie.doccls
+   ✅ Remplacé : .interior ➜ .Interior
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
 
-🔧 modTEC_TDB.bas
-   Remplacé : .borders ➜ .Borders
-   Remplacé : .row ➜ .Row
+🔧 Fichier : wshFAC_Brouillon.doccls
+   ✅ Remplacé : .interior ➜ .Interior
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
 
-🔧 modTestJump.bas
+🔧 Fichier : wshFAC_Finale.doccls
+   ✅ Remplacé : .font ➜ .Font
 
-🔧 modzDataConversion.bas
-   Remplacé : .column ➜ .Column
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-
-🔧 ThisWorkbook.doccls
-
-🔧 ufConfirmation.frm
-
-🔧 ufConfirmationFermeture.frm
-
-🔧 ufEncRégularisation.frm
-
-🔧 ufExitDisable.frm
-
-🔧 ufFraisDivers.frm
-
-🔧 ufGL_Rapport.frm
-
-🔧 ufListeDEBAuto.frm
-
-🔧 ufListeDebourse.frm
-
-🔧 ufListeEcritureGL.frm
-
-🔧 ufListeEJAuto.frm
+🔧 Fichier : wshFAC_Finale_Intact.doccls
+   ✅ Remplacé : .font ➜ .Font
 
-🔧 ufListeProjetsFacture.frm
+🔧 Fichier : wshFAC_Interrogation.doccls
+   ✅ Remplacé : .address ➜ .Address
+   ✅ Remplacé : .interior ➜ .Interior
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
 
-🔧 ufNonBillableTime.frm
+🔧 Fichier : wshGL_BV.doccls
+   ✅ Remplacé : .address ➜ .Address
+   ✅ Remplacé : .interior ➜ .Interior
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
 
-🔧 ufSaisieHeures.frm
+🔧 Fichier : wshGL_EJ.doccls
+   ✅ Remplacé : .interior ➜ .Interior
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
 
-🔧 ufStatsHeures.frm
+🔧 Fichier : wshGL_PrepEF.doccls
+   ✅ Remplacé : .address ➜ .Address
+   ✅ Remplacé : .interior ➜ .Interior
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
 
-🔧 wsdADMIN.doccls
+🔧 Fichier : wshGL_Stats_CA.doccls
 
-🔧 wsdBD_Clients.doccls
+🔧 Fichier : wshMenu.doccls
 
-🔧 wsdBD_Fournisseurs.doccls
+🔧 Fichier : wshMenuFAC.doccls
 
-🔧 wsdCC_Regularisations.doccls
+🔧 Fichier : wshMenuGL.doccls
 
-🔧 wsdDEB_Recurrent.doccls
+🔧 Fichier : wshMenuTEC.doccls
 
-🔧 wsdDEB_Trans.doccls
+🔧 Fichier : wshStatsHeuresPivotTables.doccls
+   ✅ Remplacé : .value ➜ .Value
 
-🔧 wsdENC_Details.doccls
+🔧 Fichier : wshTECFacture.doccls
 
-🔧 wsdENC_Entete.doccls
+🔧 Fichier : wshTEC_Analyse.doccls
+   ✅ Remplacé : .address ➜ .Address
+   ✅ Remplacé : .interior ➜ .Interior
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
 
-🔧 wsdFAC_Comptes_Clients.doccls
+🔧 Fichier : wshTEC_Evaluation.doccls
+   ✅ Remplacé : .address ➜ .Address
+   ✅ Remplacé : .interior ➜ .Interior
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
 
-🔧 wsdFAC_Details.doccls
+🔧 Fichier : wshTEC_Radiation.doccls
+   ✅ Remplacé : .interior ➜ .Interior
+   ✅ Remplacé : .value ➜ .Value
 
-🔧 wsdFAC_Entete.doccls
+🔧 Fichier : wshTEC_TDB.doccls
 
-🔧 wsdFAC_Projets_Details.doccls
+🔧 Fichier : wshTEC_TDB_Data.doccls
 
-🔧 wsdFAC_Projets_Entete.doccls
+🔧 Fichier : wshzCSV_File.doccls
 
-🔧 wsdFAC_Sommaire_Taux.doccls
+🔧 Fichier : wshzDocAnalyseEcartTEC.doccls
 
-🔧 wsdGL_EJ_Recurrente.doccls
+🔧 Fichier : wshzDocAuditVBA.doccls
+   ✅ Remplacé : .value ➜ .Value
 
-🔧 wsdGL_Trans.doccls
+🔧 Fichier : wshzDocConditionalFormatting.doccls
 
-🔧 wsdTEC_Local.doccls
+🔧 Fichier : wshzDocFormulas.doccls
 
-🔧 wshCAR_Liste_Agee.doccls
-   Remplacé : .address ➜ .Address
-   Remplacé : .interior ➜ .Interior
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-   Remplacé : .range ➜ .Range
+🔧 Fichier : wshzDocNamedRange.doccls
 
-🔧 wshDEB_Saisie.doccls
-   Remplacé : .interior ➜ .Interior
-   Remplacé : .value ➜ .Value
+🔧 Fichier : wshzDocSubsAndFunctions.doccls
 
-🔧 wshENC_Saisie.doccls
-   Remplacé : .interior ➜ .Interior
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
+🔧 Fichier : wshzDocTests_And_Todos.doccls
+   ✅ Remplacé : .value ➜ .Value
 
-🔧 wshFAC_Brouillon.doccls
-   Remplacé : .interior ➜ .Interior
-   Remplacé : .value ➜ .Value
-   Remplacé : .range ➜ .Range
-
-🔧 wshFAC_Finale.doccls
-   Remplacé : .font ➜ .Font
-
-🔧 wshFAC_Finale_Intact.doccls
-   Remplacé : .font ➜ .Font
-
-🔧 wshFAC_Interrogation.doccls
-   Remplacé : .address ➜ .Address
-   Remplacé : .interior ➜ .Interior
-   Remplacé : .value ➜ .Value
-   Remplacé : .range ➜ .Range
-
-🔧 wshGL_BV.doccls
-   Remplacé : .address ➜ .Address
-   Remplacé : .interior ➜ .Interior
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-   Remplacé : .range ➜ .Range
-
-🔧 wshGL_EJ.doccls
-   Remplacé : .interior ➜ .Interior
-   Remplacé : .value ➜ .Value
-   Remplacé : .range ➜ .Range
-
-🔧 wshGL_PrepEF.doccls
-   Remplacé : .address ➜ .Address
-   Remplacé : .interior ➜ .Interior
-   Remplacé : .row ➜ .Row
-   Remplacé : .value ➜ .Value
-
-🔧 wshGL_Stats_CA.doccls
-
-🔧 wshMenu.doccls
-
-🔧 wshMenuFAC.doccls
-
-🔧 wshMenuGL.doccls
-
-🔧 wshMenuTEC.doccls
-
-🔧 wshStatsHeuresPivotTables.doccls
-   Remplacé : .value ➜ .Value
-
-🔧 wshTECFacture.doccls
-
-🔧 wshTEC_Analyse.doccls
-   Remplacé : .address ➜ .Address
-   Remplacé : .interior ➜ .Interior
-   Remplacé : .value ➜ .Value
-   Remplacé : .range ➜ .Range
-
-🔧 wshTEC_Evaluation.doccls
-   Remplacé : .address ➜ .Address
-   Remplacé : .interior ➜ .Interior
-   Remplacé : .value ➜ .Value
-   Remplacé : .range ➜ .Range
-
-🔧 wshTEC_Radiation.doccls
-   Remplacé : .interior ➜ .Interior
-   Remplacé : .value ➜ .Value
-
-🔧 wshTEC_TDB.doccls
-
-🔧 wshTEC_TDB_Data.doccls
-
-🔧 wshzCSV_File.doccls
-
-🔧 wshzDocAnalyseEcartTEC.doccls
-
-🔧 wshzDocAuditVBA.doccls
-   Remplacé : .value ➜ .Value
-
-🔧 wshzDocConditionalFormatting.doccls
-
-🔧 wshzDocFormulas.doccls
-
-🔧 wshzDocNamedRange.doccls
-
-🔧 wshzDocSubsAndFunctions.doccls
-
-🔧 wshzDocTests_And_Todos.doccls
-   Remplacé : .value ➜ .Value
-
-🔧 wshzDocUserFormParams.doccls
+🔧 Fichier : wshzDocUserFormParams.doccls

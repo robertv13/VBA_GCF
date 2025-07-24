@@ -722,6 +722,65 @@ Function Fn_Get_Invoice_Total_Payments_AF(invNo As String)
     
 End Function
 
+Function Fn_Get_Invoice_Total_Regul_AF(invNo As String)
+
+    Fn_Get_Invoice_Total_Regul_AF = 0
+    
+    Dim ws As Worksheet: Set ws = wsdCC_Regularisations
+    
+    'Effacer les données de la dernière utilisation
+    ws.Range("M6:M10").ClearContents
+    ws.Range("M6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    
+    'Définir le range pour la source des données en utilisant un tableau
+    Dim rngData As Range
+    Set rngData = ws.Range("l_tbl_CC_Regularisations[#All]")
+    ws.Range("M7").Value = rngData.Address
+    
+    'Définir le range des critères
+    Dim rngCriteria As Range
+    Set rngCriteria = ws.Range("M2:M3")
+    ws.Range("M3").Value = invNo
+    ws.Range("M8").Value = rngCriteria.Address
+    
+    'Définir le range des résultats et effacer avant le traitement
+    Dim rngResult As Range
+    Set rngResult = ws.Range("O1").CurrentRegion
+    rngResult.offset(2, 0).Clear
+    Set rngResult = ws.Range("O2:Y2")
+    ws.Range("M9").Value = rngResult.Address
+    
+    rngData.AdvancedFilter _
+                action:=xlFilterCopy, _
+                criteriaRange:=rngCriteria, _
+                CopyToRange:=rngResult, _
+                Unique:=False
+        
+    'Quels sont les résultats ?
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.Rows.count, "O").End(xlUp).Row
+    ws.Range("M10").Value = lastUsedRow - 2 & " lignes"
+    
+    'Il n'est pas nécessaire de trier les résultats
+    Dim sommeRegul As Currency
+    Dim i As Long
+    If lastUsedRow > 2 Then
+        Set rngResult = ws.Range("O3:Y" & lastUsedRow)
+        For i = 5 To 9
+            sommeRegul = sommeRegul + Application.WorksheetFunction.Sum(rngResult.Columns(i))
+        Next i
+    End If
+
+    Fn_Get_Invoice_Total_Regul_AF = sommeRegul
+    
+    'Libérer la mémoire
+    Set rngCriteria = Nothing
+    Set rngData = Nothing
+    Set rngResult = Nothing
+    Set ws = Nothing
+    
+End Function
+
 Function Fn_Get_A_Cell_From_A_Worksheet(feuille As String, cle As String, cleCol As Integer, retourCol As Integer) As String '2025-03-04 @ 06:56
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFunctions:Fn_Get_A_Cell_From_A_Worksheet", cle, 0)

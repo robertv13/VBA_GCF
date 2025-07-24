@@ -29,7 +29,7 @@ Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
         MsgBox "Il n'y a aucun TEC pour ce client", vbInformation
         Call Prepare_Pour_Nouvelle_Radiation
         wshTEC_Radiation.Range("F3").Activate
-        GoTo ExitSub
+        GoTo exitSub
     End If
     
     'Transfère la table en mémoire (arr)
@@ -103,7 +103,7 @@ Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
     ws.Shapes("Impression").Visible = True
     ws.Shapes("Radiation").Visible = False
     
-ExitSub:
+exitSub:
 
     'Libérer la mémoire
     Set ws = Nothing
