@@ -6,7 +6,7 @@ Public Type tGL_Entry '2025-06-08 @ 06:59
     DateTrans As Date
     Source As String
     noCompte As String
-    AutreRemarque As String
+    autreRemarque As String
 End Type
 
 'Structure pour une écriture comptable (données spécifiques à chaque ligne)
@@ -16,9 +16,9 @@ Public Type tGL_EntryLine '2025-06-08 @ 07:02
     montant As Double
 End Type
 
-Public Sub GL_Get_Account_Trans_AF(glNo As String, dateDeb As Date, dateFin As Date, ByRef rResult As Range)
+Public Sub ObtenirSoldeCompteEntreDebutEtFin(glNo As String, dateDeb As Date, dateFin As Date, ByRef rResult As Range)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_Stuff:GL_Get_Account_Trans_AF", glNo & " - De " & dateDeb & " à " & dateFin, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_Stuff:ObtenirSoldeCompteEntreDebutEtFin", glNo & " - De " & dateDeb & " à " & dateFin, 0)
 
     'Les données à AF proviennent de GL_Trans
     Dim ws As Worksheet: Set ws = wsdGL_Trans
@@ -89,7 +89,7 @@ Public Sub GL_Get_Account_Trans_AF(glNo As String, dateDeb As Date, dateFin As D
     Set rngResult = Nothing
     Set ws = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_Stuff:GL_Get_Account_Trans_AF", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_Stuff:ObtenirSoldeCompteEntreDebutEtFin", vbNullString, startTime)
 
 End Sub
 
@@ -391,7 +391,6 @@ Sub ComptabiliserEcritureCloture() '2025-07-20 @ 08:35
     ecr.DateEcriture = dateCloture
     ecr.description = "Écriture de clôture annuelle"
     ecr.Source = "Clôture Annuelle"
-    ecr.AutreRemarque = "Générée par l'application"
     
     'Parcours du dictionaire
     Dim descCompte As String
@@ -400,7 +399,7 @@ Sub ComptabiliserEcritureCloture() '2025-07-20 @ 08:35
         If montant <> 0 Then
             'Montant inverse pour solder le compte
             descCompte = modFunctions.ObtenirDescriptionCompte(CStr(cpte))
-            ecr.AjouterLigne CStr(cpte), descCompte, -montant 'Inverse pour solder
+            ecr.AjouterLigne CStr(cpte), descCompte, -montant, "Générée par l'application" 'Inverse pour solder
             totalResultat = totalResultat + montant
         End If
     Next cpte
@@ -408,7 +407,7 @@ Sub ComptabiliserEcritureCloture() '2025-07-20 @ 08:35
     'Ligne de contrepartie pour BNR
     If totalResultat <> 0 Then
         descCompte = ObtenirDescriptionCompte(compteBNR)
-        ecr.AjouterLigne CStr(compteBNR), descCompte, totalResultat
+        ecr.AjouterLigne CStr(compteBNR), descCompte, totalResultat, "Générée par l'application"
     End If
     
     Call AjouterEcritureGLADOPlusLocale(ecr, False)
@@ -614,7 +613,7 @@ Public Sub AjouterEcritureGLADOPlusLocale(entry As clsGL_Entry, Optional affiche
               "'" & Replace(l.description, "'", "''") & "'," & _
               IIf(l.montant >= 0, Replace(l.montant, ",", "."), "NULL") & "," & _
               IIf(l.montant < 0, Replace(-l.montant, ",", "."), "NULL") & "," & _
-              "'" & Replace(entry.AutreRemarque, "'", "''") & "'," & _
+              "'" & Replace(l.autreRemarque, "'", "''") & "'," & _
               "'" & ts & "'" & _
               ")"
         cn.Execute strSQL
@@ -660,7 +659,7 @@ Public Sub AjouterEcritureGLADOPlusLocale(entry As clsGL_Entry, Optional affiche
                 .Cells(lastRow + i, 7).Value = vbNullString
                 .Cells(lastRow + i, 8).Value = -l.montant
             End If
-            .Cells(lastRow + i, 9).Value = entry.AutreRemarque
+            .Cells(lastRow + i, 9).Value = l.autreRemarque
             .Cells(lastRow + i, 10).Value = ts
         End With
     Next i

@@ -554,6 +554,8 @@ End Sub
 Sub ComptabiliserEncaissement(noEnc As Long, dt As Date, nom As String, _
                               typeEnc As String, montant As Currency, desc As String) '2025-07-24 @ 07:02
     
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ComptabiliserEncaissement", vbNullString, 0)
+    
     Dim ws As Worksheet
     Set ws = wshTEC_Evaluation
     
@@ -577,27 +579,28 @@ Sub ComptabiliserEncaissement(noEnc As Long, dt As Date, nom As String, _
     ecr.DateEcriture = dt
     ecr.description = nom
     ecr.Source = "ENCAISSEMENT:" & Format$(noEnc, "00000")
-    ecr.AutreRemarque = desc
 
     'Ajoute autant de lignes que nécessaire
     If montant <> 0 Then
         'Portion Débit
         If Not wshENC_Saisie.Range("F7").Value = "Dépôt de client" Then
             'Encaisse
-            ecr.AjouterLigne glEncaisse, descGLEncaisse, montant
+            ecr.AjouterLigne glEncaisse, descGLEncaisse, montant, desc
         Else
             'Produit perçu d'avance
             ecr.description = "Client:" & wshENC_Saisie.clientCode & " - " & nom
             ecr.Source = UCase$(wshENC_Saisie.Range("F7").Value) & ":" & Format$(noEnc, "00000")
-            ecr.AjouterLigne glProduitPercuAvance, descGLProduitPercuAvance, montant
+            ecr.AjouterLigne glProduitPercuAvance, descGLProduitPercuAvance, montant, desc
         End If
         'Crédit Comptes-Clients
-        ecr.AjouterLigne glComptesClients, descGLComptesClients, -montant
+        ecr.AjouterLigne glComptesClients, descGLComptesClients, -montant, desc
     End If
     
-    '--- Écriture ---
+    'Écriture
     Call modGL_Stuff.AjouterEcritureGLADOPlusLocale(ecr, False)
     
+    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ComptabiliserEncaissement", vbNullString, startTime)
+
 End Sub
 
 Sub AjouterCheckBoxesEncaissement(row As Long)

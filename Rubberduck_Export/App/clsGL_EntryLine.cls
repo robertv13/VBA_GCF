@@ -14,6 +14,8 @@ Option Explicit
 Private pNoCompte As String
 Private pDescription As String
 Private pMontant As Currency
+Private pAutreRemarque As String
+
 
 'Propriétés publiques pour accéder aux variables privées - Get & Let pour chaque variable
 
@@ -43,4 +45,14 @@ End Property
 Public Property Let montant(val As Double)
     pMontant = val
 End Property
+
+'Autre remarque
+Public Property Get autreRemarque() As String
+    autreRemarque = pAutreRemarque
+End Property
+
+Public Property Let autreRemarque(val As String)
+    pAutreRemarque = val
+End Property
+
 

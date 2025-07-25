@@ -26,7 +26,7 @@ Public Sub GenererRapportGL_Compte(wsRapport As Worksheet, dateDebut As Date, da
     
     'Filter et trier toutes les transactions du G/L
     Dim rngResultAll As Range
-    Call GL_Get_Account_Trans_AF(vbNullString, #1/1/2024#, dateFin, rngResultAll)
+    Call modGL_Stuff.ObtenirSoldeCompteEntreDebutEtFin(vbNullString, #1/1/2024#, dateFin, rngResultAll)
     
     'Process one account at the time...
     Dim GL As String, descGL As String

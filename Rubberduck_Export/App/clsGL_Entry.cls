@@ -15,7 +15,6 @@ Public pNoEcriture As Long
 Public pDateEcriture As Date
 Public pDescription As String
 Public pSource As String
-Public pAutreRemarque As String
 
 Public pLignes As Collection
 
@@ -62,28 +61,20 @@ Public Property Let Source(val As String)
     pSource = val
 End Property
 
-'Autre remarque
-Public Property Get AutreRemarque() As String
-    AutreRemarque = pAutreRemarque
-End Property
-
-Public Property Let AutreRemarque(val As String)
-    pAutreRemarque = val
-End Property
-
 'Accès aux lignes (Collection d'objets clsGL_EntryLine)
 Public Property Get lignes() As Collection
     Set lignes = pLignes
 End Property
 
 'Méthode pour ajouter une ligne à l'écriture
-Public Sub AjouterLigne(noCompte As String, description As String, montant As Currency)
+Public Sub AjouterLigne(noCompte As String, description As String, montant As Currency, autreRemarque As String)
 
     Dim l As clsGL_EntryLine
     Set l = New clsGL_EntryLine
     l.noCompte = noCompte
     l.description = description
     l.montant = montant
+    l.autreRemarque = autreRemarque
     pLignes.Add l
     
 End Sub

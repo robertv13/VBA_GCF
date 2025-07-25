@@ -478,16 +478,16 @@ Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 
 
 End Function
 
-Function Fn_Get_GL_Account_Balance(glCode As String, dateSolde As Date) As Currency '2024-11-18 @ 06:41
+Function ObtenirSoldeCompteGL(glCode As String, dateSolde As Date) As Currency '2024-11-18 @ 06:41
     
-    Fn_Get_GL_Account_Balance = 0
+    ObtenirSoldeCompteGL = 0
     
     'AdvancedFilter GL_Trans with FromDate to ToDate, returns rngResult
     Dim rngResult As Range
-    Call GL_Get_Account_Trans_AF(glCode, #7/31/2024#, dateSolde, rngResult)
+    Call modGL_Stuff.ObtenirSoldeCompteEntreDebutEtFin(glCode, #7/31/2024#, dateSolde, rngResult)
     
     'Méthode plus rapide pour obtenir une somme
-    Fn_Get_GL_Account_Balance = Application.WorksheetFunction.Sum(rngResult.Columns(7)) _
+    ObtenirSoldeCompteGL = Application.WorksheetFunction.Sum(rngResult.Columns(7)) _
                                            - Application.WorksheetFunction.Sum(rngResult.Columns(8))
 
 End Function
@@ -521,7 +521,7 @@ Function Fn_Get_GL_Month_Trans_Total(glCode As String, dateFinMois As Date) As D
     
     'AdvancedFilter GL_Trans with FromDate to ToDate, returns rngResult
     Dim rngResult As Range
-    Call GL_Get_Account_Trans_AF(glCode, dateDebutMois, dateFinMois, rngResult)
+    Call modGL_Stuff.ObtenirSoldeCompteEntreDebutEtFin(glCode, dateDebutMois, dateFinMois, rngResult)
     
     'Méthode plus rapide pour obtenir une somme
     Fn_Get_GL_Month_Trans_Total = Application.WorksheetFunction.Sum(rngResult.Columns(7)) _
@@ -1389,15 +1389,15 @@ Function Fn_Is_JE_Valid(rmax As Long) As Boolean
         Fn_Is_JE_Valid = False
     End If
     
-    Dim i As Long
-    For i = 9 To rmax
-        If wshGL_EJ.Range("E" & i).Value <> vbNullString Then
-            If wshGL_EJ.Range("H" & i).Value = vbNullString And wshGL_EJ.Range("I" & i).Value = vbNullString Then
-                MsgBox "Il existe une ligne avec un compte, sans montant !"
-                Fn_Is_JE_Valid = False
-            End If
-        End If
-    Next i
+'    Dim i As Long '2025-07-25 @ 08:02
+'    For i = 9 To rmax
+'        If wshGL_EJ.Range("E" & i).Value <> vbNullString Then
+'            If wshGL_EJ.Range("H" & i).Value = vbNullString And wshGL_EJ.Range("I" & i).Value = vbNullString Then
+'                MsgBox "Il existe une ligne avec un compte, sans montant !"
+'                Fn_Is_JE_Valid = False
+'            End If
+'        End If
+'    Next i
 
 End Function
 

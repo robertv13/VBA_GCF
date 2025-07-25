@@ -311,6 +311,8 @@ End Sub
 
 Sub ComptabiliserRegularisation(no As Long, dt As Date, nom As String, desc As String) '2025-07-24 @ 07:02
     
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:ComptabiliserRegularisation", vbNullString, 0)
+    
     Dim ws As Worksheet
     Set ws = wshTEC_Evaluation
     
@@ -355,27 +357,26 @@ Sub ComptabiliserRegularisation(no As Long, dt As Date, nom As String, desc As S
     ecr.DateEcriture = dt
     ecr.description = nom
     ecr.Source = "RÉGULARISATION:" & Format$(no, "00000")
-    ecr.AutreRemarque = vbNullString
 
     'Ajoute autant de lignes que nécessaire
     If honoraires <> 0 Then
-        ecr.AjouterLigne glHonoraires, descGLHonoraires, -honoraires
+        ecr.AjouterLigne glHonoraires, descGLHonoraires, -honoraires, ""
     End If
     
     If fraisDivers <> 0 Then
-        ecr.AjouterLigne glFraisDivers, descGLFraisDivers, -fraisDivers
+        ecr.AjouterLigne glFraisDivers, descGLFraisDivers, -fraisDivers, ""
     End If
 
     If tps <> 0 Then
-        ecr.AjouterLigne glTPS, descGLTPS, -tps
+        ecr.AjouterLigne glTPS, descGLTPS, -tps, ""
     End If
     
     If tvq <> 0 Then
-        ecr.AjouterLigne glTVQ, descGLTVQ, -tvq
+        ecr.AjouterLigne glTVQ, descGLTVQ, -tvq, ""
     End If
     
     If comptesClients <> 0 Then
-        ecr.AjouterLigne glComptesClients, descGLComptesClients, comptesClients
+        ecr.AjouterLigne glComptesClients, descGLComptesClients, comptesClients, ""
     End If
     
     '--- Écriture ---
@@ -385,6 +386,8 @@ Sub ComptabiliserRegularisation(no As Long, dt As Date, nom As String, desc As S
             "avec succès", _
             vbInformation + vbOKOnly, _
             "Comptabilisation de l'écriture de régularisation"
+    
+    Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:ComptabiliserRegularisation", vbNullString, startTime)
             
 End Sub
 

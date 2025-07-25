@@ -43,7 +43,7 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
 
     'Step # 1 - Use AdvancedFilter on GL_Trans for ALL accounts and transactions between the 2 dates
     Dim rngResultAF As Range
-    Call GL_Get_Account_Trans_AF(vbNullString, #7/31/2024#, dateCutOff, rngResultAF)
+    Call modGL_Stuff.ObtenirSoldeCompteEntreDebutEtFin(vbNullString, #7/31/2024#, dateCutOff, rngResultAF)
 
     'The SORT method does not sort correctly the GLNo, since there is NUMBER and NUMBER+LETTER !!!
     Dim lastUsedRow As Long

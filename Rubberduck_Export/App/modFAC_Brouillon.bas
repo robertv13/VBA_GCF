@@ -847,7 +847,7 @@ Sub FAC_Brouillon_Goto_Onglet_FAC_Finale()
     
     'Y a-t-il des montants en dépôt ? - 2024-11-12 @ 11:25
     Dim soldeDépôt As Currency
-    soldeDépôt = Fn_Get_GL_Account_Balance(ObtenirNoGlIndicateur("Produit perçu d'avance"), wshFAC_Brouillon.Range("O3").Value)
+    soldeDépôt = modFunctions.ObtenirSoldeCompteGL(ObtenirNoGlIndicateur("Produit perçu d'avance"), wshFAC_Brouillon.Range("O3").Value)
     
     'Les résultats du AvancedFilter sont dans GL_Trans - Colonnes P @ Y
     Dim lastUsedRowResult As Double

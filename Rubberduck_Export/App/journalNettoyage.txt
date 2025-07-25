@@ -1,4 +1,4 @@
-﻿📘 Journal typographique — 07/24/2025 14:26:41
+﻿📘 Journal typographique — 07/25/2025 08:55:08
 
 🔧 Fichier : clsControlWrapper.cls
 
@@ -167,7 +167,6 @@
    ✅ Remplacé : .row ➜ .Row
    ✅ Remplacé : .value ➜ .Value
    ✅ Remplacé : .range ➜ .Range
-   ✅ Remplacé : .name ➜ .Name
    ✅ Remplacé : .font ➜ .Font
 
 🔧 Fichier : modGL_PrepEF.bas

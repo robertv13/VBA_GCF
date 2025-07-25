@@ -106,7 +106,7 @@ Sub ActualiserStatsChiffreAffaires()
     Dim glTEC As String
     Dim glTECSolde As Currency
     glTEC = ObtenirNoGlIndicateur("Travaux en cours")
-    glTECSolde = Fn_Get_GL_Account_Balance(glTEC, maxDate)
+    glTECSolde = modFunctions.ObtenirSoldeCompteGL(glTEC, maxDate)
 
     'Ajoute un note à la cellule
     Dim rng As Range

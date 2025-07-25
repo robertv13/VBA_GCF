@@ -7,20 +7,20 @@ Option Explicit
 Private gSauvegardesCaracteristiquesForme As Object
 Private gNumeroEcritureARenverser As Long
 
-Sub shp_GL_EJ_Update_Click()
+Sub shpSauvegarderEJ_Click()
 
-    Call GL_EJ_Update
+    Call SauvegarderEntreeJournal
     
 End Sub
 
-Sub GL_EJ_Update()
+Sub SauvegarderEntreeJournal()
 
     If wshGL_EJ.Range("F4").Value = "Renversement" Then
-        Call JE_Renversement_Update
+        Call SauvegarderRenversementEntreeJournal
         Exit Sub
     End If
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_EJ_Update", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:SauvegarderEntreeJournal", vbNullString, 0)
     
     If Fn_Is_Date_Valide(wshGL_EJ.Range("K4").Value) = False Then Exit Sub
     
@@ -31,11 +31,10 @@ Sub GL_EJ_Update()
     If Fn_Is_JE_Valid(rowEJLast) = False Then Exit Sub
     
     'Transfert des données vers wshGL, entête d'abord puis une ligne à la fois
-    Call GL_Trans_Add_Record_To_DB(rowEJLast)
-    Call GL_Trans_Add_Record_Locally(rowEJLast)
+    Call ComptabiliserEntreeJournal(rowEJLast)
     
     If wshGL_EJ.ckbRecurrente = True Then
-        Call Save_EJ_Recurrente(rowEJLast)
+        Call SauvegarderEJRecurrente(rowEJLast)
     End If
     
     'Save Current JE number
@@ -45,7 +44,7 @@ Sub GL_EJ_Update()
     'Increment Next JE number
     wshGL_EJ.Range("B1").Value = wshGL_EJ.Range("B1").Value + 1
         
-    Call GL_EJ_Clear_All_Cells
+    Call EffacerCellulesEJ
         
     With wshGL_EJ
         .Activate
@@ -55,13 +54,13 @@ Sub GL_EJ_Update()
     
     MsgBox "L'écriture numéro '" & strCurrentJE & "' a été reporté avec succès", vbInformation, "Confirmation de traitement"
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_EJ_Update", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:SauvegarderEntreeJournal", vbNullString, startTime)
     
 End Sub
 
-Sub JE_Renversement_Update()
+Sub SauvegarderRenversementEntreeJournal()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:JE_Renversement_Update", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:SauvegarderRenversementEntreeJournal", vbNullString, 0)
     
     If Fn_Is_Ecriture_Balance = False Then
         MsgBox "L'écriture à renverser ne balance pas !!!", vbCritical
@@ -92,14 +91,14 @@ Sub JE_Renversement_Update()
     saveDescription = wshGL_EJ.Range("F6").Value
     wshGL_EJ.Range("F6").Value = "RENV. - " & wshGL_EJ.Range("F6").Value
     
-    'Transfert des données vers wshGL, entête d'abord puis une ligne à la fois
-    Call GL_Trans_Add_Record_To_DB(rowEJLast)
-    Call GL_Trans_Add_Record_Locally(rowEJLast)
+    'Comptabilisation de l'écriture
+    Call ComptabiliserEntreeJournal(rowEJLast)
     
     'Indiquer dans l'écriture originale qu'elle a été renversée par
-    Call EJ_Trans_Update_Ecriture_Renversee_To_DB
-    Call EJ_Trans_Update_Ecriture_Renversee_Locally
+    Call MiseAJourEcritureRenverseeBDMaster
+    Call MiseAJourEcritureRenverseeBDLocale
     
+   
     MsgBox _
         Prompt:="L'écriture numéro '" & gNumeroEcritureARenverser & "' a été RENVERSÉE avec succès", _
         Title:="Confirmation de traitement", _
@@ -112,7 +111,7 @@ Sub JE_Renversement_Update()
     Application.ScreenUpdating = False
     Dim shp As Shape
     Set shp = wshGL_EJ.Shapes("btnUpdate")
-    Call GL_EJ_Forme_Restaurer(shp)
+    Call RestaurerFormeEJ(shp)
     
     'Renverser les montants (DT --> CT & CT ---> DT)
     For i = 9 To rowEJLast
@@ -139,33 +138,33 @@ Sub JE_Renversement_Update()
     'Libérer la mémoire
     Set shp = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:JE_Renversement_Update", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:SauvegarderRenversementEntreeJournal", vbNullString, startTime)
     
 End Sub
 
-Sub Save_EJ_Recurrente(ll As Long)
+Sub SauvegarderEJRecurrente(ll As Long)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:Save_EJ_Recurrente", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:SauvegarderEJRecurrente", vbNullString, 0)
     
     Dim rowEJLast As Long
     rowEJLast = wshGL_EJ.Cells(wshGL_EJ.Rows.count, "E").End(xlUp).Row  'Last Used Row in wshGL_EJ
     
-    Call GL_EJ_Recurrente_Add_Record_To_DB(ll)
-    Call GL_EJ_Recurrente_Add_Record_Locally(ll)
+    Call AjouterEJRecurrenteDBMaster(ll)
+    Call AjouterEJRecurrenteDBLocale(ll)
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:Save_EJ_Recurrente", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:SauvegarderEJRecurrente", vbNullString, startTime)
     
 End Sub
 
-Sub Load_JEAuto_Into_JE(EJAutoDesc As String, NoEJAuto As Long)
+Sub ChargerEJRecurrenteDansEJ(EJAutoDesc As String, NoEJAuto As Long)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:Load_JEAuto_Into_JE", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:ChargerEJRecurrenteDansEJ", vbNullString, 0)
     
     'On copie l'E/J automatique vers wshEJ
     Dim rowJEAuto As Long, rowJE As Long
     rowJEAuto = wsdGL_EJ_Recurrente.Cells(wsdGL_EJ_Recurrente.Rows.count, 1).End(xlUp).Row  'Last Row used in wshGL_EJRecuurente
     
-    Call GL_EJ_Clear_All_Cells
+    Call EffacerCellulesEJ
     rowJE = 9
     
     Dim r As Long
@@ -182,13 +181,13 @@ Sub Load_JEAuto_Into_JE(EJAutoDesc As String, NoEJAuto As Long)
     wshGL_EJ.Range("F6").Value = "[Auto]-" & EJAutoDesc
     wshGL_EJ.Range("K4").Activate
 
-    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:Load_JEAuto_Into_JE", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:ChargerEJRecurrenteDansEJ", vbNullString, startTime)
     
 End Sub
 
-Sub GL_EJ_Clear_All_Cells()
+Sub EffacerCellulesEJ()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_EJ_Clear_All_Cells", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:EffacerCellulesEJ", vbNullString, 0)
     
     'Efface toutes les cellules de la feuille
     Application.EnableEvents = False
@@ -199,7 +198,6 @@ Sub GL_EJ_Clear_All_Cells()
         .Range("F4, K4, F6:K6").Font.Color = vbBlack
         .Range("E9:K23").ClearContents
         .Range("E9:K23").Font.Color = vbBlack
-'        .Range("E9:G23,H9:H23,I9:I23,J9:L23").ClearContents
         .ckbRecurrente = False
         .Range("E6").Value = "Description:"
         Application.EnableEvents = True
@@ -220,11 +218,11 @@ Sub GL_EJ_Clear_All_Cells()
     'Libérer la mémoire
     Set cell = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_EJ_Clear_All_Cells", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:EffacerCellulesEJ", vbNullString, startTime)
 
 End Sub
 
-Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
+Sub ConstruireEcriturePourRemiseTpsTvq(r As Integer)
 
     Dim dateFin As Date
     dateFin = CDate(wshGL_EJ.Range("K4").Value)
@@ -246,7 +244,7 @@ Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
     wshGL_EJ.Range("V6").Value = "du " & Format$(dateFin, wsdADMIN.Range("B1").Value)
     
     Dim rngResultAF As Range
-    Call GL_Get_Account_Trans_AF(ObtenirNoGlIndicateur("Revenus de consultation"), Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), dateFin, rngResultAF)
+    Call modGL_Stuff.ObtenirSoldeCompteEntreDebutEtFin(ObtenirNoGlIndicateur("Revenus de consultation"), Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), dateFin, rngResultAF)
     cases(101) = -Application.WorksheetFunction.Sum(rngResultAF.Columns(7)) _
                     - Application.WorksheetFunction.Sum(rngResultAF.Columns(8))
 
@@ -259,7 +257,7 @@ Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
     End With
     
     'TPS percues
-    cases(105) = Fn_Get_GL_Account_Balance(ObtenirNoGlIndicateur("TPS Facturée"), dateFin)
+    cases(105) = modFunctions.ObtenirSoldeCompteGL(ObtenirNoGlIndicateur("TPS Facturée"), dateFin)
     wshGL_EJ.Range("E" & r).Value = "TPS percues"
     If cases(105) <= 0 Then
         wshGL_EJ.Range("H" & r).Value = -cases(105)
@@ -276,7 +274,7 @@ Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
     End With
     
     'TVQ percues
-    cases(205) = Fn_Get_GL_Account_Balance(ObtenirNoGlIndicateur("TVQ Facturée"), dateFin)
+    cases(205) = modFunctions.ObtenirSoldeCompteGL(ObtenirNoGlIndicateur("TVQ Facturée"), dateFin)
     wshGL_EJ.Range("E" & r).Value = "TVQ percues"
     If cases(205) <= 0 Then
         wshGL_EJ.Range("H" & r).Value = -cases(205)
@@ -292,7 +290,7 @@ Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
         .Value = -cases(205)
     End With
     
-    cases(108) = Fn_Get_GL_Account_Balance(ObtenirNoGlIndicateur("TPS Payée"), dateFin)
+    cases(108) = modFunctions.ObtenirSoldeCompteGL(ObtenirNoGlIndicateur("TPS Payée"), dateFin)
     wshGL_EJ.Range("E" & r).Value = "TPS payées"
     If cases(108) <= 0 Then
         wshGL_EJ.Range("H" & r).Value = -cases(108)
@@ -308,7 +306,7 @@ Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
         .Value = cases(108)
     End With
     
-    cases(208) = Fn_Get_GL_Account_Balance(ObtenirNoGlIndicateur("TVQ Payée"), dateFin)
+    cases(208) = modFunctions.ObtenirSoldeCompteGL(ObtenirNoGlIndicateur("TVQ Payée"), dateFin)
     wshGL_EJ.Range("E" & r).Value = "TVQ payées"
     If cases(208) <= 0 Then
         wshGL_EJ.Range("H" & r).Value = -cases(208)
@@ -342,7 +340,7 @@ Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
         .Value = cases(213)
     End With
     
-    Dim net As Double
+    Dim net As Currency
     If cases(113) + cases(213) > 0 Then
         With wshGL_EJ.Range("X14")
             .Font.Bold = True
@@ -351,15 +349,17 @@ Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
             .HorizontalAlignment = xlRight
             .Value = cases(113) + cases(213)
         End With
+        wshGL_EJ.Range("X11").Value = 0
         net = cases(113) + cases(213)
     Else
-        With wshGL_EJ.Range("X10")
+        With wshGL_EJ.Range("X11")
             .Font.Bold = True
             .Font.size = 12
             .NumberFormat = "###,##0.00 $"
             .HorizontalAlignment = xlRight
             .Value = -(cases(113) + cases(213))
         End With
+        wshGL_EJ.Range("X14").Value = 0
         net = -(cases(113) + cases(213))
     End If
     
@@ -379,7 +379,7 @@ Sub GL_EJ_Construire_Remise_TPS_TVQ(r As Integer)
 
 End Sub
 
-Sub GL_EJ_Renverser_Ecriture()
+Sub AfficherEntreeJournalARenverser()
 
     Dim ws As Worksheet: Set ws = wsdGL_Trans
     
@@ -401,7 +401,7 @@ Sub GL_EJ_Renverser_Ecriture()
     End If
     
     '2. Affiche l'écriture à renverser
-    Call GL_Get_JE_Detail_Trans_AF(no_Ecriture)
+    Call ObtenirEcritureAvecAF(no_Ecriture)
     Dim lastUsedRowResult As Long
     lastUsedRowResult = ws.Cells(ws.Rows.count, "AC").End(xlUp).Row
     If lastUsedRowResult < 2 Then
@@ -414,6 +414,7 @@ Sub GL_EJ_Renverser_Ecriture()
     If InStr(rngResult.Cells(1, 4).Value, "ENCAISSEMENT:") <> 0 Or _
         InStr(rngResult.Cells(1, 4).Value, "DÉBOURSÉ:") <> 0 Or _
         InStr(rngResult.Cells(1, 4).Value, "FACTURE:") <> 0 Or _
+        InStr(rngResult.Cells(1, 4).Value, "Clôture Annuelle") Or _
         InStr(rngResult.Cells(1, 4).Value, "RENVERSEMENT:") <> 0 Then
         MsgBox "Je ne peux renverser ce type d'écriture '" & _
                 Left$(rngResult.Cells(1, 4).Value, InStr(rngResult.Cells(1, 4).Value, ":") - 1) & _
@@ -463,7 +464,7 @@ Sub GL_EJ_Renverser_Ecriture()
     'Change le libellé du Bouton & caractéristiques
     Dim shp As Shape
     Set shp = wshGL_EJ.Shapes("btnUpdate")
-    Call GL_EJ_Forme_Modifier(shp)
+    Call ModifierTexteFormeSauvegardeEJ(shp)
     
     'Libérer la mémoire
     Set ligne = Nothing
@@ -473,7 +474,7 @@ Sub GL_EJ_Renverser_Ecriture()
     
 End Sub
 
-Sub GL_EJ_Depot_Client()
+Sub ValiderNomClientPourDepotClient()
 
     Dim ws As Worksheet: Set ws = wshGL_EJ
     
@@ -530,7 +531,7 @@ Sub AjouterValidation(cell As Range, nomPlage As String)
     cell.Validation.Add Type:=xlValidateList, _
                         AlertStyle:=xlValidAlertStop, _
                         Operator:=xlBetween, _
-                        Formula1:="=" & ThisWorkbook.Names(nomPlage).Name
+                        Formula1:="=" & nomPlage
 
     'Configurer les propriétés de la validation de données
     If Not cell.Validation Is Nothing Then
@@ -558,9 +559,9 @@ Sub AnnulerValidation(cell As Range)
     
 End Sub
 
-Sub GL_EJ_Recurrente_Build_Summary()
+Sub ConstruireSommaireEJRecurrente()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_EJ_Recurrente_Build_Summary", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:ConstruireSommaireEJRecurrente", vbNullString, 0)
     
     'Build the summary at column K & L
     Dim lastUsedRow1 As Long
@@ -585,13 +586,13 @@ Sub GL_EJ_Recurrente_Build_Summary()
         Next i
     End With
 
-    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_EJ_Recurrente_Build_Summary", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:ConstruireSommaireEJRecurrente", vbNullString, startTime)
 
 End Sub
 
-Sub GL_Get_JE_Detail_Trans_AF(noEJ As Long) '2024-11-17 @ 12:08
+Sub ObtenirEcritureAvecAF(noEJ As Long) '2024-11-17 @ 12:08
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_Get_JE_Detail_Trans_AF", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:ObtenirEcritureAvecAF", vbNullString, 0)
 
     Dim ws As Worksheet: Set ws = wsdGL_Trans
     
@@ -660,154 +661,75 @@ Sub GL_Get_JE_Detail_Trans_AF(noEJ As Long) '2024-11-17 @ 12:08
     Set rngResult = Nothing
     Set ws = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_Get_JE_Detail_Trans_AF", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:ObtenirEcritureAvecAF", vbNullString, startTime)
 
 End Sub
 
-Sub GL_Trans_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
+Sub ComptabiliserEntreeJournal(r As Long) '2025-06-08 @ 08:37
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_Trans_Add_Record_To_DB", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:ComptabiliserEntreeJournal", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
-    Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                          "GCF_BD_MASTER.xlsx"
-    destinationTab = "GL_Trans$"
-    
-    'Initialize connection, connection string & open the connection
-    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+    'Déclarations
+    Dim ws As Worksheet
+    Dim ecr As clsGL_Entry
 
-    'SQL select command to find the next available ID
-    Dim strSQL As String
-    strSQL = "SELECT MAX(NoEntrée) AS MaxEJNo FROM [" & destinationTab & "]"
+    'Initialisation
+    Set ws = wshGL_EJ
 
-    'Open recordset to find out the MaxID
-    rs.Open strSQL, conn
-    
-    'Get the last used row
-    Dim MaxEJNo As Long, lastJE As Long
-    If IsNull(rs.Fields("MaxEJNo").Value) Then
-        ' Handle empty table (assign a default value, e.g., 1)
-        lastJE = 1
-    Else
-        lastJE = rs.Fields("MaxEJNo").Value
-    End If
-    
-    'Calculate the new JE number
-    gNextJENo = lastJE + 1
-    wshGL_EJ.Range("B1").Value = gNextJENo
-    
-    'timeStamp uniforme
-    Dim timeStamp As Date
-    timeStamp = Now
-    
-    'Close the previous recordset, no longer needed and open an empty recordset
-    rs.Close
-    rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
-    
-    'Read all line from Journal Entry
+    'Instanciation d'un objet GL_Entry
+    Set ecr = New clsGL_Entry
+
+    'Remplissage des propriétés globales
+    ecr.DateEcriture = CDate(wshGL_EJ.Range("K4").Value)
+
+    'Lire toutes les lignes de l'écriture
     Dim l As Long
+    Dim glNo As String
+    Dim autreRemarque As String
+    
     For l = 9 To r
-        rs.AddNew
+            autreRemarque = wshGL_EJ.Range("J" & l).Value
+            If InStr(1, wshGL_EJ.Range("F6").Value, "Déclaration TPS/TVQ") = 1 And _
+               InStr(1, wshGL_EJ.Range("F4").Value, "Remise TPS/TVQ") = 1 Then
+                autreRemarque = "Écriture générée par l'application"
+            End If
             'Add fields to the recordset before updating it
-            rs.Fields(fGlTNoEntrée - 1).Value = gNextJENo
-            rs.Fields(fGlTDate - 1).Value = Format$(CDate(wshGL_EJ.Range("K4").Value), "yyyy-mm-dd")
             If wshGL_EJ.Range("F4").Value <> "Dépôt de client" Then
-                rs.Fields(fGlTDescription - 1).Value = wshGL_EJ.Range("F6").Value
-                rs.Fields(fGlTSource - 1).Value = wshGL_EJ.Range("F4").Value
+                ecr.description = wshGL_EJ.Range("F6").Value
+                ecr.Source = wshGL_EJ.Range("F4").Value
             Else
-                rs.Fields(fGlTDescription - 1).Value = "Client:" & wshGL_EJ.Range("B6").Value & " - " & wshGL_EJ.Range("F6").Value
-                rs.Fields(fGlTSource - 1).Value = UCase$(wshGL_EJ.Range("F4").Value)
+                ecr.description = "Client:" & wshGL_EJ.Range("B6").Value & " - " & wshGL_EJ.Range("F6").Value
+                ecr.Source = UCase$(wshGL_EJ.Range("F4").Value)
             End If
-            rs.Fields(fGlTNoCompte - 1).Value = wshGL_EJ.Range("L" & l).Value
-            rs.Fields(fGlTCompte - 1).Value = wshGL_EJ.Range("E" & l).Value
-            If wshGL_EJ.Range("H" & l).Value <> vbNullString <> 0 Then
-                rs.Fields(fGlTDébit - 1).Value = CDbl(Replace(wshGL_EJ.Range("H" & l).Value, ".", ","))
+            
+            glNo = wshGL_EJ.Range("L" & l).Value
+            
+            If wshGL_EJ.Range("H" & l).Value <> "" Then
+                ecr.AjouterLigne glNo, ObtenirDescriptionCompte(glNo), Nz(wshGL_EJ.Range("H" & l).Value), autreRemarque
             End If
-            If wshGL_EJ.Range("I" & l).Value <> vbNullString Then
-                rs.Fields(fGlTCrédit - 1).Value = CDbl(Replace(wshGL_EJ.Range("I" & l).Value, ".", ","))
+            If wshGL_EJ.Range("I" & l).Value <> "" Then
+                ecr.AjouterLigne glNo, ObtenirDescriptionCompte(glNo), -Nz(wshGL_EJ.Range("I" & l).Value), autreRemarque
             End If
-            rs.Fields(fGlTAutreRemarque - 1).Value = wshGL_EJ.Range("J" & l).Value
-            rs.Fields(fGlTTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
-        rs.Update
     Next l
     
-    'Close recordset and connection
-    On Error Resume Next
-    rs.Close
-    On Error GoTo 0
-    conn.Close
+    'Écriture est construite, on procède
+    Call modGL_Stuff.AjouterEcritureGLADOPlusLocale(ecr, False)
     
     Application.ScreenUpdating = True
     
     'Libérer la mémoire
-    Set conn = Nothing
-    Set rs = Nothing
+    Set ecr = Nothing
+    Set ws = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_Trans_Add_Record_To_DB", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:ComptabiliserEntreeJournal", vbNullString, startTime)
 
 End Sub
 
-Sub GL_Trans_Add_Record_Locally(r As Long) 'Write records locally
-    
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_Trans_Add_Record_Locally", vbNullString, 0)
-    
-    Application.ScreenUpdating = False
-    
-    'Get the JE number
-    Dim JENo As Long
-    JENo = wshGL_EJ.Range("B1").Value
-    
-    'timeStamp uniforme
-    Dim timeStamp As Date
-    timeStamp = Now
-    
-    'What is the last used row in GL_Trans ?
-    Dim lastUsedRow As Long, rowToBeUsed As Long
-    lastUsedRow = wsdGL_Trans.Cells(wsdGL_Trans.Rows.count, "A").End(xlUp).Row
-    rowToBeUsed = lastUsedRow + 1
-    
-    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_Trans_Add_Record_Locally - r = " & r, -1)
-    
-    Dim i As Long
-    For i = 9 To r
-        wsdGL_Trans.Range("A" & rowToBeUsed).Value = JENo
-        wsdGL_Trans.Range("B" & rowToBeUsed).Value = CDate(wshGL_EJ.Range("K4").Value)
-        If wshGL_EJ.Range("F4").Value <> "Dépôt de client" Then
-            wsdGL_Trans.Range("C" & rowToBeUsed).Value = wshGL_EJ.Range("F6").Value
-            wsdGL_Trans.Range("D" & rowToBeUsed).Value = wshGL_EJ.Range("F4").Value
-        Else
-            wsdGL_Trans.Range("C" & rowToBeUsed) = "Client:" & wshGL_EJ.Range("B6").Value & " - " & wshGL_EJ.Range("F6").Value
-            wsdGL_Trans.Range("D" & rowToBeUsed).Value = UCase$(wshGL_EJ.Range("F4").Value)
-        End If
-        wsdGL_Trans.Range("E" & rowToBeUsed).Value = wshGL_EJ.Range("L" & i).Value
-        wsdGL_Trans.Range("F" & rowToBeUsed).Value = wshGL_EJ.Range("E" & i).Value
-        If wshGL_EJ.Range("H" & i).Value <> vbNullString Then
-            wsdGL_Trans.Range("G" & rowToBeUsed).Value = wshGL_EJ.Range("H" & i).Value
-        End If
-        If wshGL_EJ.Range("I" & i).Value <> vbNullString Then
-            wsdGL_Trans.Range("H" & rowToBeUsed).Value = wshGL_EJ.Range("I" & i).Value
-        End If
-        wsdGL_Trans.Range("I" & rowToBeUsed).Value = wshGL_EJ.Range("J" & i).Value
-        wsdGL_Trans.Range("J" & rowToBeUsed).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
-        rowToBeUsed = rowToBeUsed + 1
-        
-        Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_Trans_Add_Record_Locally - i = " & i, -1)
+Sub MiseAJourEcritureRenverseeBDMaster()
 
-    Next i
-    
-    Application.ScreenUpdating = True
-    
-    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_Trans_Add_Record_Locally", vbNullString, startTime)
-
-End Sub
-
-Sub EJ_Trans_Update_Ecriture_Renversee_To_DB()
-
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:EJ_Trans_Update_Ecriture_Renversee_To_DB", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:MiseAJourEcritureRenverseeBDMaster", vbNullString, 0)
     
     'Définition des paramètres
     Dim destinationFileName As String, destinationTab As String
@@ -850,13 +772,13 @@ Sub EJ_Trans_Update_Ecriture_Renversee_To_DB()
     Set conn = Nothing
     Set rs = Nothing
 
-    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:EJ_Trans_Update_Ecriture_Renversee_To_DB", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:MiseAJourEcritureRenverseeBDMaster", vbNullString, startTime)
     
 End Sub
 
-Sub EJ_Trans_Update_Ecriture_Renversee_Locally()
+Sub MiseAJourEcritureRenverseeBDLocale()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modEJ_Saisie:EJ_Trans_Update_Ecriture_Renversee_Locally", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modEJ_Saisie:MiseAJourEcritureRenverseeBDLocale", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -880,13 +802,13 @@ Sub EJ_Trans_Update_Ecriture_Renversee_Locally()
     'Libérer la mémoire
     Set ws = Nothing
 
-    Call modDev_Utils.EnregistrerLogApplication("modEJ_Saisie:EJ_Trans_Update_Ecriture_Renversee_Locally", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modEJ_Saisie:MiseAJourEcritureRenverseeBDLocale", vbNullString, startTime)
     
 End Sub
 
-Sub GL_EJ_Recurrente_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
+Sub AjouterEJRecurrenteDBMaster(r As Long) 'Write/Update a record to external .xlsx file
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_EJ_Recurrente_Add_Record_To_DB", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:AjouterEJRecurrenteDBMaster", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
@@ -959,13 +881,13 @@ Sub GL_EJ_Recurrente_Add_Record_To_DB(r As Long) 'Write/Update a record to exter
     Set conn = Nothing
     Set rs = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_EJ_Recurrente_Add_Record_To_DB", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:AjouterEJRecurrenteDBMaster", vbNullString, startTime)
 
 End Sub
 
-Sub GL_EJ_Recurrente_Add_Record_Locally(r As Long) 'Write records to local file
+Sub AjouterEJRecurrenteDBLocale(r As Long) 'Write records to local file
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_EJ_Recurrente_Add_Record_Locally", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:AjouterEJRecurrenteDBLocale", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -1000,28 +922,28 @@ Sub GL_EJ_Recurrente_Add_Record_Locally(r As Long) 'Write records to local file
         rowToBeUsed = rowToBeUsed + 1
     Next i
     
-    Call GL_EJ_Recurrente_Build_Summary '2024-03-14 @ 07:40
+    Call ConstruireSommaireEJRecurrente '2024-03-14 @ 07:40
     
     Application.ScreenUpdating = True
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:GL_EJ_Recurrente_Add_Record_Locally", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:AjouterEJRecurrenteDBLocale", vbNullString, startTime)
     
 End Sub
 
-Sub shp_EJ_Exit_Click()
+Sub shpRetourAuMenuEJ_Click()
 
-    Call GL_EJ_Back_To_Menu
+    Call RetournerAuMenuComptabiliteEJ
 
 End Sub
 
-Sub GL_EJ_Back_To_Menu()
+Sub RetournerAuMenuComptabiliteEJ()
     
     ActiveSheet.Unprotect
     
     'Rétablir la forme du bouton (Mettre à jour / Renverser)
     Dim shp As Shape
     Set shp = wshGL_EJ.Shapes("btnUpdate")
-    Call GL_EJ_Forme_Restaurer(shp)
+    Call RestaurerFormeEJ(shp)
 
     'Nouvelle façon de faire
     wshGL_EJ.Visible = xlSheetHidden
@@ -1036,7 +958,7 @@ Sub GL_EJ_Back_To_Menu()
     
 End Sub
 
-Sub GL_EJ_Forme_Sauvegarder(forme As Shape)
+Sub SauvegarderFormeEJ(forme As Shape)
 
     'Vérifier si le Dictionary est déjà instancié, sinon le créer
     If gSauvegardesCaracteristiquesForme Is Nothing Then
@@ -1054,7 +976,7 @@ Sub GL_EJ_Forme_Sauvegarder(forme As Shape)
     
 End Sub
 
-Sub GL_EJ_Forme_Modifier(forme As Shape)
+Sub ModifierTexteFormeSauvegardeEJ(forme As Shape)
 
     'Appliquer des modifications à la forme
     Application.ScreenUpdating = True
@@ -1074,7 +996,7 @@ Sub GL_EJ_Forme_Modifier(forme As Shape)
     
 End Sub
 
-Sub GL_EJ_Forme_Restaurer(forme As Shape)
+Sub RestaurerFormeEJ(forme As Shape)
 
     'Vérifiez si les caractéristiques originales sont sauvegardées
     If gSauvegardesCaracteristiquesForme Is Nothing Then

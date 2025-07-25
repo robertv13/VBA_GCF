@@ -101,7 +101,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
             Application.EnableEvents = False
             wshGL_BV.Range("B10").Value = Target.row
             Application.EnableEvents = True
-            Call GL_Get_JE_Detail_Trans_AF(noJE)
+            Call ObtenirEcritureAvecAF(noJE)
             Call GL_BV_Display_JE_Trans_With_Shape
     Else
         Application.EnableEvents = False

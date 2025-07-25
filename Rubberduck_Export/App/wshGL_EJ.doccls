@@ -16,6 +16,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:08
     'Import transactions from MASTER file
     Call modImport.ImporterGLTransactions
     Call modImport.ImporterEJRecurrente
+    Call modImport.ImporterClients
     
     'Set the zoom factor to 100% when this worksheet is activated
     ActiveWindow.Zoom = 100
@@ -41,7 +42,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:08
     
     Call modDev_Utils.DeterminerOrdreDeTabulation(ws)
     
-    Call GL_EJ_Clear_All_Cells
+    Call modGL_EJ.EffacerCellulesEJ
     
     'Rétablir le bouton "Mettre à jour / Renversement"
     Dim shp As Shape
@@ -56,7 +57,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:08
         .TextFrame2.TextRange.Font.Fill.ForeColor.RGB = RGB(0, 0, 0) 'Noir
     End With
     
-    Call GL_EJ_Forme_Sauvegarder(shp)
+    Call modGL_EJ.SauvegarderFormeEJ(shp)
     
     With ws
         .Range("B2").Value = -1
@@ -103,6 +104,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         On Error Resume Next
         Target.Interior.Color = gCOULEUR_SAISIE
         On Error GoTo 0
+        Me.Range("N:Y").EntireColumn.Hidden = True '2025-07-25 @ 08:27
     End If
 
     'Date has been selected
@@ -126,7 +128,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     If Not Intersect(Target, Me.Range("E9:E23")) Is Nothing Then
         Target.Interior.Color = gCOULEUR_SAISIE
         If Target.row = 9 And Me.Range("F4").Value = "Remise TPS/TVQ" Then
-            Call GL_EJ_Construire_Remise_TPS_TVQ(Target.row)
+            Call modGL_EJ.ConstruireEcriturePourRemiseTpsTvq(Target.row)
         End If
     End If
     
@@ -183,16 +185,16 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                     wshGL_EJ.Range("K4").Activate
                     wshGL_EJ.Range("K4").Select
                 Else
-                    Call GL_EJ_Clear_All_Cells
+                    Call modGL_EJ.EffacerCellulesEJ
                 End If
             End If
         Application.EnableEvents = True
         If Target.Value = "Renversement" Then
-            Call GL_EJ_Renverser_Ecriture
+            Call modGL_EJ.AfficherEntreeJournalARenverser
             Exit Sub
         End If
         If Target.Value = "Dépôt de client" Then
-            Call GL_EJ_Depot_Client
+            Call modGL_EJ.ValiderNomClientPourDepotClient
         End If
     End If
     
@@ -209,6 +211,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = True
             Else
                 MsgBox "Valeur non trouvée !!!", vbCritical
+                Exit Sub
             End If
             Application.EnableEvents = False
             Dim clientCode As String

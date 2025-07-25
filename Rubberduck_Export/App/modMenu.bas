@@ -288,6 +288,7 @@ Sub ViderTableauxStructures() '2025-07-01 @ 10:38
         Set lo = ws.ListObjects(tableaux(i))
 
         If Not lo Is Nothing Then
+            Debug.Print ws.Name & " - " & lo.Name
             If Not lo.DataBodyRange Is Nothing Then
                 lo.DataBodyRange.Delete
             End If

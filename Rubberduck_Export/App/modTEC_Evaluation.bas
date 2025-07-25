@@ -267,7 +267,7 @@ Sub AfficherValeurTEC(cutoffDate As String, maxDate As Date)
 
     'Obtenir le solde au G/L pour le compte TEC
     Dim solde As Currency
-    solde = Fn_Get_GL_Account_Balance(ObtenirNoGlIndicateur("Travaux en cours"), maxDate)
+    solde = modFunctions.ObtenirSoldeCompteGL(ObtenirNoGlIndicateur("Travaux en cours"), maxDate)
 
     'Afficher le solde des TEC au Grand Livre
     ws.Range("D3").Font.Bold = True
@@ -342,42 +342,45 @@ End Sub
     
 Sub ComptabiliserValeurTEC() '2025-06-08 @ 08:37
     
-    '--- Déclarations ---
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Evaluation:ComptabiliserValeurTEC", vbNullString, 0)
+    
+    'Déclarations
     Dim ws As Worksheet
     Dim ajustementTEC As Currency
     Dim glTEC As String, glREVTEC As String
     Dim ecr As clsGL_Entry
 
-    '--- Initialisation ---
+    'Initialisation
     Set ws = wshTEC_Evaluation
 
     ajustementTEC = ws.Range("B2").Value
     glTEC = ObtenirNoGlIndicateur("Travaux en cours")
     glREVTEC = ObtenirNoGlIndicateur("Revenus - Travaux en cours")
     
-    '--- Instanciation d'un objet GL_Entry
+    'Instanciation d'un objet GL_Entry
     Set ecr = New clsGL_Entry
 
-    '--- Remplissage des propriétés globales
+    'Remplissage des propriétés globales
     ecr.DateEcriture = ws.Range("L3").Value
     ecr.description = "Ajustement de la valeur des TEC"
     ecr.Source = vbNullString
-    ecr.AutreRemarque = "Écriture générée par l'application"
 
     'Ajoute autant de lignes que nécessaire (débit positif, crédit négatif)
     If ajustementTEC > 0 Then
-        ecr.AjouterLigne glTEC, "Travaux en cours", ajustementTEC
-        ecr.AjouterLigne glREVTEC, "Revenus - Travaux en cours", -ajustementTEC
+        ecr.AjouterLigne glTEC, "Travaux en cours", ajustementTEC, "Écriture générée par l'application"
+        ecr.AjouterLigne glREVTEC, "Revenus - Travaux en cours", -ajustementTEC, "Écriture générée par l'application"
     Else
-        ecr.AjouterLigne glREVTEC, "Revenus - Travaux en cours", -ajustementTEC
-        ecr.AjouterLigne glTEC, "Travaux en cours", ajustementTEC
+        ecr.AjouterLigne glREVTEC, "Revenus - Travaux en cours", -ajustementTEC, "Écriture générée par l'application"
+        ecr.AjouterLigne glTEC, "Travaux en cours", ajustementTEC, "Écriture générée par l'application"
     End If
 
-    '--- Écriture ---
+    'Écriture
     Call modGL_Stuff.AjouterEcritureGLADOPlusLocale(ecr, True)
     
     wshTEC_Evaluation.Shapes("EcritureGL").Visible = msoFalse
     
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Evaluation:ComptabiliserValeurTEC", vbNullString, startTime)
+
 End Sub
 
 Sub shp_TEC_Evaluation_Back_To_TEC_Menu_Click()

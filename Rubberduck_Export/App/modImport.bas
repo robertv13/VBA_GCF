@@ -524,7 +524,7 @@ Sub ImporterEJRecurrente() '2025-05-07 @ 14:35
 
     Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
-    Call GL_EJ_Recurrente_Build_Summary '2024-03-14 @ 07:38
+    Call ConstruireSommaireEJRecurrente '2024-03-14 @ 07:38
     
     'Libérer la mémoire
     Set ws = Nothing
