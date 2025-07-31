@@ -62,7 +62,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:08
     With ws
         .Range("B2").Value = -1
         .Range("B3").Value = -1
-        .Range("K4").Value = Format$(Date, wsdADMIN.Range("B1").Value)
+        .Range("K4").Value = Format$(Date, wsdADMIN.Range("USER_DATE_FORMAT").Value)
         .Range("F4").Select
     End With
     
@@ -228,7 +228,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         
         'Update the cell with the full date, if valid
         If fullDate <> "Invalid Date" Then
-            Target.Value = Format$(fullDate, wsdADMIN.Range("B1").Value)
+            Target.Value = Format$(fullDate, wsdADMIN.Range("USER_DATE_FORMAT").Value)
         Else
             Call modDataValidation.AfficherMessageDateInvalide("wshGL_EJ_123")
             Application.EnableEvents = False

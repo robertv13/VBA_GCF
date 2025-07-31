@@ -249,31 +249,30 @@ Sub AjouterEncEnteteDansBDMaster() 'Write to MASTER.xlsx
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                          "GCF_BD_MASTER.xlsx"
+    destinationFileName = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                          wsdADMIN.Range("MASTER_FILE").Value
     destinationTab = "ENC_Entete$"
     
     'Initialize connection, connection string & open the connection
-    Dim conn As Object, rs As Object
-    Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
-        ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Set rs = CreateObject("ADODB.Recordset")
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";" & _
+              "Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
 
     'SQL select command to find the next available ID
     Dim strSQL As String, MaxPmtNo As Long
     strSQL = "SELECT MAX(PayID) AS MaxPmtNo FROM [" & destinationTab & "]"
 
     'Open recordset to find out the MaxPmtNo
-    rs.Open strSQL, conn
+    recSet.Open strSQL, conn
     
     'Get the last used row
     Dim lr As Long
-    If IsNull(rs.Fields("MaxPmtNo").Value) Then
+    If IsNull(recSet.Fields("MaxPmtNo").Value) Then
         'Handle empty table (assign a default value, e.g., 1)
         lr = 0
     Else
-        lr = rs.Fields("MaxPmtNo").Value
+        lr = recSet.Fields("MaxPmtNo").Value
     End If
     
     'Calculate the new PmtNo
@@ -284,25 +283,25 @@ Sub AjouterEncEnteteDansBDMaster() 'Write to MASTER.xlsx
     timeStamp = Now
     
     'Close the previous recordset, no longer needed and open an empty recordset
-    rs.Close
-    rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
+    recSet.Close
+    recSet.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
     
     'Add fields to the recordset before updating it
-    rs.AddNew
-        rs.Fields(fEncEPayID - 1).Value = wshENC_Saisie.pmtNo
-        rs.Fields(fEncEPayDate - 1).Value = wshENC_Saisie.Range("K5").Value
-        rs.Fields(fEncECustomer - 1).Value = wshENC_Saisie.Range("F5").Value
-        rs.Fields(fEncECodeClient - 1).Value = wshENC_Saisie.clientCode
-        rs.Fields(fEncEPayType - 1).Value = wshENC_Saisie.Range("F7").Value
-        rs.Fields(fEncEAmount - 1).Value = CDbl(Format$(wshENC_Saisie.Range("K7").Value, "#,##0.00 $"))
-        rs.Fields(fEncENotes - 1).Value = wshENC_Saisie.Range("F9").Value
-        rs.Fields(fEncETimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+    recSet.AddNew
+        recSet.Fields(fEncEPayID - 1).Value = wshENC_Saisie.pmtNo
+        recSet.Fields(fEncEPayDate - 1).Value = wshENC_Saisie.Range("K5").Value
+        recSet.Fields(fEncECustomer - 1).Value = wshENC_Saisie.Range("F5").Value
+        recSet.Fields(fEncECodeClient - 1).Value = wshENC_Saisie.clientCode
+        recSet.Fields(fEncEPayType - 1).Value = wshENC_Saisie.Range("F7").Value
+        recSet.Fields(fEncEAmount - 1).Value = CDbl(Format$(wshENC_Saisie.Range("K7").Value, "#,##0.00 $"))
+        recSet.Fields(fEncENotes - 1).Value = wshENC_Saisie.Range("F9").Value
+        recSet.Fields(fEncETimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
     'Update the recordset (create the record)
-    rs.Update
+    recSet.Update
     
     'Close recordset and connection
-    rs.Close
-    Set rs = Nothing
+    recSet.Close
+    Set recSet = Nothing
     conn.Close
     Set conn = Nothing
     
@@ -353,42 +352,42 @@ Sub AjouterEncDetailDansBDMaster(pmtNo As Long, firstRow As Integer, lastApplied
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                          "GCF_BD_MASTER.xlsx"
+    destinationFileName = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                          wsdADMIN.Range("MASTER_FILE").Value
     destinationTab = "ENC_Details$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
-        ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";" & _
+              "Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
 
     'timeStamnp uniforme
     Dim timeStamp As Date
     timeStamp = Now
     
-    rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
+    recSet.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
         
     'Build the recordSet
     Dim r As Integer
     For r = firstRow To lastAppliedRow
         If wshENC_Saisie.Range("B" & r).Value = True And _
             wshENC_Saisie.Range("K" & r).Value <> 0 Then
-            rs.AddNew
-                rs.Fields(fEncDPayID - 1).Value = CLng(pmtNo)
-                rs.Fields(fEncDInvNo - 1).Value = wshENC_Saisie.Range("F" & r).Value
-                rs.Fields(fEncDCustomer - 1).Value = wshENC_Saisie.Range("F5").Value
-                rs.Fields(fEncDPayDate - 1).Value = wshENC_Saisie.Range("K5").Value
-                rs.Fields(fEncDPayAmount - 1).Value = CDbl(Format$(wshENC_Saisie.Range("K" & r).Value, "#,##0.00 $"))
-                rs.Fields(fEncDTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+            recSet.AddNew
+                recSet.Fields(fEncDPayID - 1).Value = CLng(pmtNo)
+                recSet.Fields(fEncDInvNo - 1).Value = wshENC_Saisie.Range("F" & r).Value
+                recSet.Fields(fEncDCustomer - 1).Value = wshENC_Saisie.Range("F5").Value
+                recSet.Fields(fEncDPayDate - 1).Value = wshENC_Saisie.Range("K5").Value
+                recSet.Fields(fEncDPayAmount - 1).Value = CDbl(Format$(wshENC_Saisie.Range("K" & r).Value, "#,##0.00 $"))
+                recSet.Fields(fEncDTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
             'Update the recordset (create the record)
-            rs.Update
+            recSet.Update
         End If
     Next r
     
     'Close recordset and connection
-    rs.Close
-    Set rs = Nothing
+    recSet.Close
+    Set recSet = Nothing
     conn.Close
     Set conn = Nothing
     
@@ -440,15 +439,15 @@ Sub MettreAJourEncComptesClientsDansBDMaster(firstRow As Integer, lastRow As Int
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                          "GCF_BD_MASTER.xlsx"
+    destinationFileName = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                          wsdADMIN.Range("MASTER_FILE").Value
     destinationTab = "FAC_Comptes_Clients$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
-        ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";" & _
+              "Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
 
     Dim r As Long
     For r = firstRow To lastRow
@@ -460,24 +459,24 @@ Sub MettreAJourEncComptesClientsDansBDMaster(firstRow As Integer, lastRow As Int
             
             Dim strSQL As String
             strSQL = "SELECT * FROM [" & destinationTab & "] WHERE InvNo = '" & Inv_No & "'"
-            rs.Open strSQL, conn, 2, 3
-            If Not rs.EOF Then
+            recSet.Open strSQL, conn, 2, 3
+            If Not recSet.EOF Then
                 'Mettre à jour Amount_Paid
-                rs.Fields(fFacCCTotalPaid - 1).Value = rs.Fields(fFacCCTotalPaid - 1).Value + CDbl(wshENC_Saisie.Range("K" & r).Value)
+                recSet.Fields(fFacCCTotalPaid - 1).Value = recSet.Fields(fFacCCTotalPaid - 1).Value + CDbl(wshENC_Saisie.Range("K" & r).Value)
                 'Mettre à jour Status
-                If rs.Fields(fFacCCTotal - 1).Value - rs.Fields(fFacCCTotalPaid - 1).Value = 0 Then
+                If recSet.Fields(fFacCCTotal - 1).Value - recSet.Fields(fFacCCTotalPaid - 1).Value = 0 Then
                     On Error Resume Next
-                    rs.Fields(fFacCCStatus - 1).Value = "Paid"
+                    recSet.Fields(fFacCCStatus - 1).Value = "Paid"
                     If Err.Number <> 0 Then
                         MsgBox "Erreur #" & Err.Number & " : " & Err.description
                     End If
                     On Error GoTo 0
                 Else
-                    rs.Fields(fFacCCStatus - 1).Value = "Unpaid"
+                    recSet.Fields(fFacCCStatus - 1).Value = "Unpaid"
                 End If
                 'Mettre à jour le solde de la facture
-                rs.Fields(fFacCCBalance - 1).Value = rs.Fields(fFacCCTotal - 1).Value - rs.Fields(fFacCCTotalPaid - 1).Value + rs.Fields(fFacCCTotalRegul - 1).Value
-                rs.Update
+                recSet.Fields(fFacCCBalance - 1).Value = recSet.Fields(fFacCCTotal - 1).Value - recSet.Fields(fFacCCTotalPaid - 1).Value + recSet.Fields(fFacCCTotalRegul - 1).Value
+                recSet.Update
             Else
                 'Handle the case where the specified ID is not found
                 MsgBox "L'enregistrement avec la facture '" & Inv_No & "' ne peut être retrouvé!", _
@@ -485,15 +484,15 @@ Sub MettreAJourEncComptesClientsDansBDMaster(firstRow As Integer, lastRow As Int
                 GoTo Clean_Exit
             End If
             'Update the recordset (create the record)
-            rs.Update
-            rs.Close
+            recSet.Update
+            recSet.Close
         End If
     Next r
     
 Clean_Exit:
     
     'Close recordset and connection
-    Set rs = Nothing
+    Set recSet = Nothing
     conn.Close
     Set conn = Nothing
     
@@ -519,7 +518,7 @@ Sub MettreAJourEncComptesClientsDansBDLocale(firstRow As Integer, lastRow As Int
     Dim r As Integer
     For r = firstRow To lastRow
         Dim Inv_No As String
-        Inv_No = CStr(wshENC_Saisie.Range("F" & r).Value)
+        Inv_No = CStr(Trim(wshENC_Saisie.Range("F" & r).Value))
         
         Dim foundRange As Range
         Set foundRange = lookupRange.Find(What:=Inv_No, LookIn:=xlValues, LookAt:=xlWhole)

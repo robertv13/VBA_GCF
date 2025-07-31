@@ -32,7 +32,7 @@ Sub ActualiserBV() '2025-07-21 @ 13:01
     Set soldes = CreateObject("Scripting.Dictionary")
     
     Dim cheminFichier As String
-    cheminFichier = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
+    cheminFichier = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & wsdADMIN.Range("MASTER_FILE").Value
     Dim nomFeuilleSource As String
     nomFeuilleSource = "GL_Trans"
     
@@ -153,7 +153,7 @@ End Sub
 
 Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As String, dateMin As Date, dateMax As Date) '2025-05-27 @ 19:40 - v6.C.7 - ChatGPT
 
-    Dim cn As Object, rs As Object, rsInit As Object
+    Dim rsInit As Object
     Dim wsTrans As Worksheet, wsResult As Worksheet
     Dim strSQL As String
     Dim ligne As Long, lastRow As Long
@@ -188,13 +188,9 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
     Application.EnableEvents = True
     
     'Connexion ADO à MASTER
-    Set cn = CreateObject("ADODB.Connection")
-    With cn
-        .Provider = "Microsoft.ACE.OLEDB.12.0"
-        .ConnectionString = "Data Source=" & ThisWorkbook.FullName & ";" & _
-                            "Extended Properties=""Excel 12.0 Xml;HDR=Yes;IMEX=1"";"
-        .Open
-    End With
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & ThisWorkbook.FullName & ";" & _
+              "Extended Properties=""Excel 12.0 Xml;HDR=Yes;IMEX=1"";"
 
     'Calcul du solde d'ouverture avant DateMin
     dateMin = wsResult.Range("B8").Value
@@ -205,7 +201,7 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
              "WHERE NoCompte = '" & compte & "' AND Date < #" & Format$(dateMin, "mm/dd/yyyy") & "#"
     Debug.Print "#777 - strSQL1 (Solde d'ouveture) = " & strSQL
     
-    rsInit.Open strSQL, cn, 1, 1
+    rsInit.Open strSQL, conn, 1, 1
     If Not rsInit.EOF Then
         soldeInitial = modGL_Stuff.Nz(rsInit.Fields("TotalDebit").Value) - modGL_Stuff.Nz(rsInit.Fields("TotalCredit").Value)
     End If
@@ -238,36 +234,36 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
     Debug.Print "#777 - strSQL2 (Transactions pour la période) = " & strSQL
     
     'Exécuter la requête
-    Set rs = CreateObject("ADODB.Recordset")
-    rs.Open strSQL, cn, 1, 1
+    Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
+    recSet.Open strSQL, conn, 1, 1
 
     'Utilisation d'un tableau pour performance optimale avec ligne 'Solde ouverture'
-    If Not rs.EOF Then
-        rs.MoveLast
+    If Not recSet.EOF Then
+        recSet.MoveLast
         Dim nbLignes As Long
-        nbLignes = rs.RecordCount
-        rs.MoveFirst
+        nbLignes = recSet.RecordCount
+        recSet.MoveFirst
 
         'Tableau recevra les données à partir du rs
         Dim tableau() As Variant
         ReDim tableau(1 To nbLignes, 1 To 8) 'Colonnes M à S
 
-        Do While Not rs.EOF
-            debit = Nz(rs.Fields("Débit").Value)
-            credit = Nz(rs.Fields("Crédit").Value)
+        Do While Not recSet.EOF
+            debit = Nz(recSet.Fields("Débit").Value)
+            credit = Nz(recSet.Fields("Crédit").Value)
             solde = solde + debit - credit
 
-            tableau(ligne, 1) = rs.Fields("Date").Value
-            tableau(ligne, 2) = rs.Fields("NoEntrée").Value
-            tableau(ligne, 3) = rs.Fields("Description").Value
-            tableau(ligne, 4) = rs.Fields("Source").Value
+            tableau(ligne, 1) = recSet.Fields("Date").Value
+            tableau(ligne, 2) = recSet.Fields("NoEntrée").Value
+            tableau(ligne, 3) = recSet.Fields("Description").Value
+            tableau(ligne, 4) = recSet.Fields("Source").Value
             tableau(ligne, 5) = IIf(debit > 0, debit, vbNullString)
             tableau(ligne, 6) = IIf(credit > 0, credit, vbNullString)
             tableau(ligne, 7) = solde
-            tableau(ligne, 8) = rs.Fields("AutreRemarque")
+            tableau(ligne, 8) = recSet.Fields("AutreRemarque")
 
             ligne = ligne + 1
-            rs.MoveNext
+            recSet.MoveNext
         Loop
 
         'Écriture de tableau dans la plage, en commençant à M5 - @TODO - 2025-07-11 @ 03:14
@@ -303,8 +299,8 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
     Call GL_BV_Ajouter_Shape_Retour
 
     'Nettoyage
-    rs.Close: Set rs = Nothing
-    cn.Close: Set cn = Nothing
+    recSet.Close: Set recSet = Nothing
+    conn.Close: Set conn = Nothing
     
 End Sub
 

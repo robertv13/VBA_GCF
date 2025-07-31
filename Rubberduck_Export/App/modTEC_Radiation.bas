@@ -50,7 +50,7 @@ Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
         Debug.Print currRow
         If currRow <= 30 Then
             tecID = CLng(arr(i, fTECTECID))
-            dateTEC = Format$(arr(i, fTECDate), wsdADMIN.Range("B1").Value)
+            dateTEC = Format$(arr(i, fTECDate), wsdADMIN.Range("USER_DATE_FORMAT").Value)
             profInit = Format$(arr(i, fTECProfID), "000") & arr(i, fTECProf)
             descTEC = arr(i, fTECDescription)
             hresTEC = arr(i, fTECHeures)
@@ -288,15 +288,15 @@ Sub TEC_Radiation_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Upd
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                          "GCF_BD_MASTER.xlsx"
+    destinationFileName = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                          wsdADMIN.Range("MASTER_FILE").Value
     destinationTab = "TEC_Local$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
-        ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";" & _
+              "Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
 
     Dim r As Long, tecID As Long, strSQL As String
     'Offset entre TEC_Local & wshTEC_Radiation
@@ -308,31 +308,31 @@ Sub TEC_Radiation_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Upd
             
             'Open the recordset for the specified ID
             strSQL = "SELECT * FROM [" & destinationTab & "] WHERE TECID=" & tecID
-            rs.Open strSQL, conn, 2, 3
-            If Not rs.EOF Then
+            recSet.Open strSQL, conn, 2, 3
+            If Not recSet.EOF Then
                 'Update EstFacturee, DateFacturee & NoFacture
-                rs.Fields(fTECEstFacturee - 1).Value = "VRAI"
-                rs.Fields(fTECDateFacturee - 1).Value = Format$(Date, "yyyy-mm-dd")
-                rs.Fields(fTECNoFacture - 1).Value = "Radiation"
-                rs.Update
+                recSet.Fields(fTECEstFacturee - 1).Value = "VRAI"
+                recSet.Fields(fTECDateFacturee - 1).Value = Format$(Date, "yyyy-mm-dd")
+                recSet.Fields(fTECNoFacture - 1).Value = "Radiation"
+                recSet.Update
             Else
                 'Handle the case where the specified ID is not found
                 MsgBox "L'enregistrement avec le TECID '" & r & "' ne peut être trouvé!", _
                     vbExclamation
-                rs.Close
+                recSet.Close
                 conn.Close
                 Exit Sub
             End If
             'Update the recordset (create the record)
-            rs.Update
-            rs.Close
+            recSet.Update
+            recSet.Close
         End If
 next_iteration:
     Next r
     
     'Close recordset and connection
     On Error Resume Next
-    rs.Close
+    recSet.Close
     On Error GoTo 0
     conn.Close
     
@@ -340,7 +340,7 @@ next_iteration:
 
     'Libérer la mémoire
     Set conn = Nothing
-    Set rs = Nothing
+    Set recSet = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modTEC_Radiation:TEC_Radiation_Update_As_Billed_To_DB", vbNullString, startTime)
 

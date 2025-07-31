@@ -170,7 +170,7 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
                 Case "Trimestre"
                     dateMin = PremierJourTrimestreFiscal(dateMax)
                 Case "Année Financière"
-                    dateMin = PremierJourAnneeFiscal(dateMax)
+                    dateMin = PremierJourAnneeFinanciere(dateMax)
                 Case "Toutes les dates"
                     dateMin = DateSerial(2024, 7, 31)
             End Select

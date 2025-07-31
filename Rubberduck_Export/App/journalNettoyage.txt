@@ -1,4 +1,4 @@
-﻿📘 Journal typographique — 07/25/2025 08:55:08
+﻿📘 Journal typographique — 07/31/2025 14:01:33
 
 🔧 Fichier : clsControlWrapper.cls
 
@@ -15,6 +15,8 @@
 🔧 Fichier : Feuil3.doccls
 
 🔧 Fichier : Feuil4.doccls
+
+🔧 Fichier : Feuil6.doccls
 
 🔧 Fichier : modAPIWindows.bas
 

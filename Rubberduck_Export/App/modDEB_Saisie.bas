@@ -171,31 +171,30 @@ Sub AjouterDebBDMaster(r As Long) 'Write/Update a record to external .xlsx file
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                          "GCF_BD_MASTER.xlsx"
+    destinationFileName = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                          wsdADMIN.Range("MASTER_FILE").Value
     destinationTab = "DEB_Trans$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-
-    'Initialize recordset
-    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";" & _
+              "Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
 
     'SQL select command to find the next available ID
     Dim strSQL As String
     strSQL = "SELECT MAX(NoEntrée) AS MaxDebTransNo FROM [" & destinationTab & "]"
 
     'Open recordset to find out the MaxID
-    rs.Open strSQL, conn
+    recSet.Open strSQL, conn
     
     'Get the last used row
     Dim lastDebTrans As Long
-    If IsNull(rs.Fields("MaxDebTransNo").Value) Then
+    If IsNull(recSet.Fields("MaxDebTransNo").Value) Then
         'Handle empty table (assign a default value, e.g., 0)
         lastDebTrans = 0
     Else
-        lastDebTrans = rs.Fields("MaxDebTransNo").Value
+        lastDebTrans = recSet.Fields("MaxDebTransNo").Value
     End If
     
     'Calculate the new Debourse Number
@@ -210,44 +209,44 @@ Sub AjouterDebBDMaster(r As Long) 'Write/Update a record to external .xlsx file
     timeStamp = Now
     
     'Close the previous recordset, no longer needed and open an empty recordset
-    rs.Close
-    rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
+    recSet.Close
+    recSet.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
     
     'Read all line from Journal Entry
     Dim l As Long
     For l = 9 To r
-        rs.AddNew
+        recSet.AddNew
             With wshDEB_Saisie
                 'Add fields to the recordset before updating it
-                rs.Fields(fDebTNoEntrée - 1).Value = currDebTransNo
-                rs.Fields(fDebTDate - 1).Value = .Range("O4").Value
-                rs.Fields(fDebTType - 1).Value = .Range("F4").Value
-                rs.Fields(fDebTBeneficiaire - 1).Value = .Range("J4").Value
-                rs.Fields(fDebTFournID - 1).Value = .Range("B5").Value
-                rs.Fields(fDebTDescription - 1).Value = .Range("F6").Value & IIf(.Range("B7"), " (RENVERSEMENT de " & numeroDebourseARenverser & ")", vbNullString)
-                rs.Fields(fDebTReference - 1).Value = .Range("M6").Value
+                recSet.Fields(fDebTNoEntrée - 1).Value = currDebTransNo
+                recSet.Fields(fDebTDate - 1).Value = .Range("O4").Value
+                recSet.Fields(fDebTType - 1).Value = .Range("F4").Value
+                recSet.Fields(fDebTBeneficiaire - 1).Value = .Range("J4").Value
+                recSet.Fields(fDebTFournID - 1).Value = .Range("B5").Value
+                recSet.Fields(fDebTDescription - 1).Value = .Range("F6").Value & IIf(.Range("B7"), " (RENVERSEMENT de " & numeroDebourseARenverser & ")", vbNullString)
+                recSet.Fields(fDebTReference - 1).Value = .Range("M6").Value
                 
-                rs.Fields(fDebTNoCompte - 1).Value = .Range("Q" & l).Value
-                rs.Fields(fDebTCompte - 1).Value = .Range("E" & l).Value
-                rs.Fields(fDebTCodeTaxe - 1).Value = .Range("H" & l).Value
-                rs.Fields(fDebTTotal - 1).Value = CDbl(.Range("I" & l).Value)
-                rs.Fields(fDebTTPS - 1).Value = CDbl(.Range("J" & l).Value)
-                rs.Fields(fDebTTVQ - 1).Value = CDbl(.Range("K" & l).Value)
-                rs.Fields(fDebTCréditTPS - 1).Value = CDbl(.Range("L" & l).Value)
-                rs.Fields(fDebTCréditTVQ - 1).Value = CDbl(.Range("M" & l).Value)
+                recSet.Fields(fDebTNoCompte - 1).Value = .Range("Q" & l).Value
+                recSet.Fields(fDebTCompte - 1).Value = .Range("E" & l).Value
+                recSet.Fields(fDebTCodeTaxe - 1).Value = .Range("H" & l).Value
+                recSet.Fields(fDebTTotal - 1).Value = CDbl(.Range("I" & l).Value)
+                recSet.Fields(fDebTTPS - 1).Value = CDbl(.Range("J" & l).Value)
+                recSet.Fields(fDebTTVQ - 1).Value = CDbl(.Range("K" & l).Value)
+                recSet.Fields(fDebTCréditTPS - 1).Value = CDbl(.Range("L" & l).Value)
+                recSet.Fields(fDebTCréditTVQ - 1).Value = CDbl(.Range("M" & l).Value)
                 'Montant de dépense (Total - creditTPS - creditTVQ)
-                rs.Fields(fDebTDépense - 1).Value = CDbl(.Range("I" & l).Value _
+                recSet.Fields(fDebTDépense - 1).Value = CDbl(.Range("I" & l).Value _
                                                   - .Range("L" & l).Value _
                                                   - .Range("M" & l).Value)
-                rs.Fields(fDebTAutreRemarque - 1).Value = vbNullString
-                rs.Fields(fDebTTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+                recSet.Fields(fDebTAutreRemarque - 1).Value = vbNullString
+                recSet.Fields(fDebTTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
             End With
-        rs.Update
+        recSet.Update
     Next l
     
     'Close recordset and connection
     On Error Resume Next
-    rs.Close
+    recSet.Close
     On Error GoTo 0
     conn.Close
     
@@ -255,7 +254,7 @@ Sub AjouterDebBDMaster(r As Long) 'Write/Update a record to external .xlsx file
     
     'Libérer la mémoire
     Set conn = Nothing
-    Set rs = Nothing
+    Set recSet = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:AjouterDebBDMaster", vbNullString, startTime)
 
@@ -325,47 +324,48 @@ Sub DEB_Trans_MAJ_Debourse_Renverse_To_DB()
     
     'Définition des paramètres
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                          "GCF_BD_MASTER.xlsx"
+    destinationFileName = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                          wsdADMIN.Range("MASTER_FILE").Value
     destinationTab = "DEB_Trans$"
 
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";" & _
+              "Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
 
     'Requête SQL pour rechercher la ligne correspondante
     Dim strSQL As String
     strSQL = "SELECT * FROM [" & destinationTab & "] WHERE [NoEntrée] = " & numeroDebourseARenverser
 
     'Ouvrir le Recordset
-    rs.Open strSQL, conn, 1, 3 'adOpenKeyset (1) + adLockOptimistic (3) pour modifier les données
+    recSet.Open strSQL, conn, 1, 3 'adOpenKeyset (1) + adLockOptimistic (3) pour modifier les données
 
     'Vérifier si des enregistrements existent
-    If rs.EOF Then
+    If recSet.EOF Then
         MsgBox "Aucun enregistrement trouvé.", vbCritical, "Impossible de mettre à jour les déboursés RENVERSÉS"
     Else
         'Boucler à travers les enregistrements
-        Do While Not rs.EOF
+        Do While Not recSet.EOF
         ' Vérifier si Reference contient déjà "RENVERSÉ" pour éviter les doublons
-        If InStr(1, rs.Fields(fDebTDescription - 1).Value, " (RENVERSÉ", vbTextCompare) = 0 Then
-            rs.Fields(fDebTDescription - 1).Value = rs.Fields(fDebTDescription - 1).Value & " (RENVERSÉ par " & wshDEB_Saisie.Range("B1").Value & ")"
-            rs.Update
+        If InStr(1, recSet.Fields(fDebTDescription - 1).Value, " (RENVERSÉ", vbTextCompare) = 0 Then
+            recSet.Fields(fDebTDescription - 1).Value = recSet.Fields(fDebTDescription - 1).Value & " (RENVERSÉ par " & wshDEB_Saisie.Range("B1").Value & ")"
+            recSet.Update
         End If
         'Passer à l'enregistrement suivant
-        rs.MoveNext
+        recSet.MoveNext
         Loop
     End If
     
     'Close recordset and connection
     On Error Resume Next
-    rs.Close
+    recSet.Close
     On Error GoTo 0
     conn.Close
     
     'Libérer la mémoire
     Set conn = Nothing
-    Set rs = Nothing
+    Set recSet = Nothing
 
     Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_To_DB", vbNullString, startTime)
     
@@ -669,29 +669,30 @@ Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                          "GCF_BD_MASTER.xlsx"
+    destinationFileName = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                          wsdADMIN.Range("MASTER_FILE").Value
     destinationTab = "DEB_Recurrent$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";" & _
+              "Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
 
     'SQL select command to find the next available ID
     Dim strSQL As String, MaxDebRecNo As Long
     strSQL = "SELECT MAX(NoDebRec) AS MaxDebRecNo FROM [" & destinationTab & "]"
 
     'Open recordset to find out the MaxID
-    rs.Open strSQL, conn
+    recSet.Open strSQL, conn
     
     'Get the last used row
     Dim lastDR As Long, nextDRNo As Long
-    If IsNull(rs.Fields("MaxDebRecNo").Value) Then
+    If IsNull(recSet.Fields("MaxDebRecNo").Value) Then
         ' Handle empty table (assign a default value, e.g., 1)
         lastDR = 0
     Else
-        lastDR = rs.Fields("MaxDebRecNo").Value
+        lastDR = recSet.Fields("MaxDebRecNo").Value
     End If
     
     'Calculate the new ID
@@ -703,35 +704,35 @@ Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external
     timeStamp = Now
     
     'Close the previous recordset, no longer needed and open an empty recordset
-    rs.Close
-    rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
+    recSet.Close
+    recSet.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
     
     Dim l As Long
     For l = 9 To r
-        rs.AddNew
+        recSet.AddNew
             With wshDEB_Saisie
                 'Add fields to the recordset before updating it
-                rs.Fields(fDebRNoDebRec - 1).Value = nextDRNo
-                rs.Fields(fDebRDate - 1).Value = .Range("O4").Value
-                rs.Fields(fDebRType - 1).Value = .Range("F4").Value
-                rs.Fields(fDebRBeneficiaire - 1).Value = .Range("J4").Value
-                rs.Fields(fDebRReference - 1).Value = .Range("M6").Value
-                rs.Fields(fDebRNoCompte - 1).Value = .Range("Q" & l).Value
-                rs.Fields(fDebRCompte - 1).Value = .Range("E" & l).Value
-                rs.Fields(fDebRCodeTaxe - 1).Value = .Range("H" & l).Value
-                rs.Fields(fDebRTotal - 1).Value = .Range("I" & l).Value
-                rs.Fields(fDebRTPS - 1).Value = .Range("J" & l).Value
-                rs.Fields(fDebRTVQ - 1).Value = .Range("K" & l).Value
-                rs.Fields(fDebRCréditTPS - 1).Value = .Range("L" & l).Value
-                rs.Fields(fDebRCréditTVQ - 1).Value = .Range("M" & l).Value
-                rs.Fields(fDebRTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+                recSet.Fields(fDebRNoDebRec - 1).Value = nextDRNo
+                recSet.Fields(fDebRDate - 1).Value = .Range("O4").Value
+                recSet.Fields(fDebRType - 1).Value = .Range("F4").Value
+                recSet.Fields(fDebRBeneficiaire - 1).Value = .Range("J4").Value
+                recSet.Fields(fDebRReference - 1).Value = .Range("M6").Value
+                recSet.Fields(fDebRNoCompte - 1).Value = .Range("Q" & l).Value
+                recSet.Fields(fDebRCompte - 1).Value = .Range("E" & l).Value
+                recSet.Fields(fDebRCodeTaxe - 1).Value = .Range("H" & l).Value
+                recSet.Fields(fDebRTotal - 1).Value = .Range("I" & l).Value
+                recSet.Fields(fDebRTPS - 1).Value = .Range("J" & l).Value
+                recSet.Fields(fDebRTVQ - 1).Value = .Range("K" & l).Value
+                recSet.Fields(fDebRCréditTPS - 1).Value = .Range("L" & l).Value
+                recSet.Fields(fDebRCréditTVQ - 1).Value = .Range("M" & l).Value
+                recSet.Fields(fDebRTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
             End With
-        rs.Update
+        recSet.Update
     Next l
     
     'Close recordset and connection
     On Error Resume Next
-    rs.Close
+    recSet.Close
     On Error GoTo 0
     conn.Close
     
@@ -739,7 +740,7 @@ Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external
 
     'Libérer la mémoire
     Set conn = Nothing
-    Set rs = Nothing
+    Set recSet = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Recurrent_Add_Record_To_DB", vbNullString, startTime)
 

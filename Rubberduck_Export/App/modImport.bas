@@ -10,23 +10,17 @@ Sub ImporterPlanComptable() '2024-02-17 @ 07:21
 
     'Import Accounts List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
     Dim sourceWorkbook As String, sourceWorksheet As String
-    sourceWorkbook = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                     "GCF_BD_Entrée.xlsx"
+    sourceWorkbook = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                     wsdADMIN.Range("CLIENTS_FILE").Value
     sourceWorksheet = "PlanComptable$"
 
     'ADODB connection
-    Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
-
-    'Connection String specific to EXCEL
-    connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
-                               "Data Source = " & sourceWorkbook & ";" & _
-                               "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
-    connStr.Open
-
-    'Recordset
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
+    conn.Open = "Provider = Microsoft.ACE.OLEDB.12.0;Data Source = " & sourceWorkbook & ";" & _
+                "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
     Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
     With recSet
-        .ActiveConnection = connStr
+        .ActiveConnection = conn
         .CursorType = adOpenStatic
         .LockType = adLockReadOnly
         .Source = "SELECT * FROM [" & sourceWorksheet & "]"
@@ -38,12 +32,12 @@ Sub ImporterPlanComptable() '2024-02-17 @ 07:21
 
     'Close resource
     recSet.Close
-    connStr.Close
+    conn.Close
 
     Call RedefinirDnrPlanComptable
 
     'Libérer la mémoire
-    Set connStr = Nothing
+    Set conn = Nothing
     Set recSet = Nothing
 
     Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterPlanComptable", vbNullString, startTime)
@@ -61,25 +55,22 @@ Sub ImporterMASTERGenerique(sourceWb As String, ws As Worksheet, onglet As Strin
     
     '2. Importer les enregistrements de la source via ADO
     Dim fullPathSourceWb As String, sourceTab As String
-    fullPathSourceWb = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
+    fullPathSourceWb = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
                        sourceWb
     sourceTab = onglet & "$"
                      
     'ADODB connection
-    Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
+    Dim conn As Object: Set conn = New ADODB.Connection
     
     'Connection String specific to EXCEL
-    connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
-                               "Data Source = " & fullPathSourceWb & ";" & _
-                               "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
-    connStr.Open
-    
-    'Recordset
+    conn.Open = "Provider = Microsoft.ACE.OLEDB.12.0;Data Source = " & fullPathSourceWb & ";" & _
+                "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
     Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
+    
     Dim strSQL As String
     strSQL = "SELECT * FROM [" & sourceTab & "]"
     With recSet
-        .ActiveConnection = connStr
+        .ActiveConnection = conn
         .CursorType = adOpenStatic
         .LockType = adLockReadOnly
         .Source = strSQL
@@ -136,23 +127,18 @@ Sub ImporterClients() 'Using ADODB - 2024-02-25 @ 10:23
     
     'Import Clients List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                     "GCF_BD_Entrée.xlsx" '2024-02-14 @ 07:04
+    sourceWorkbook = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                     wsdADMIN.Range("CLIENTS_FILE").Value '2024-02-14 @ 07:04
     sourceTab = "Clients$"
     
     'ADODB connection
-    Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
+    conn.Open = "Provider = Microsoft.ACE.OLEDB.12.0;Data Source = " & sourceWorkbook & ";" & _
+                "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
+    Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
     
-    'Connection String specific to EXCEL
-    connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
-                               "Data Source = " & sourceWorkbook & ";" & _
-                               "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
-    connStr.Open
-    
-    'Recordset
-    Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
     With recSet
-        .ActiveConnection = connStr
+        .ActiveConnection = conn
         .CursorType = adOpenStatic
         .LockType = adLockReadOnly
         .Source = "SELECT * FROM [" & sourceTab & "]"
@@ -166,10 +152,10 @@ Sub ImporterClients() 'Using ADODB - 2024-02-25 @ 10:23
     
     'Close resource
     recSet.Close
-    connStr.Close
+    conn.Close
     
     'Libérer la mémoire
-    Set connStr = Nothing
+    Set conn = Nothing
     Set recSet = Nothing
     Set ws = Nothing
     
@@ -183,7 +169,7 @@ Sub ImporterDebRecurrent() '2025-05-07 @ 14:14
     
     'Mettre en place les variables (paramètres)
     Dim sourceWb As String
-    sourceWb = "GCF_BD_MASTER.xlsx"
+    sourceWb = wsdADMIN.Range("MASTER_FILE").Value
     Dim ws As Worksheet
     Set ws = wsdDEB_Recurrent
     Dim onglet As String, table As String
@@ -205,7 +191,7 @@ Sub ImporterDebTrans() '2025-05-07 @ 14:25
     
     'Mettre en place les variables (paramètres)
     Dim sourceWb As String
-    sourceWb = "GCF_BD_MASTER.xlsx"
+    sourceWb = wsdADMIN.Range("MASTER_FILE").Value
     Dim ws As Worksheet
     Set ws = wsdDEB_Trans
     Dim onglet As String, table As String
@@ -227,7 +213,7 @@ Sub ImporterEncDetails() '2025-05-07 @ 14:45
     
     'Mettre en place les variables (paramètres)
     Dim sourceWb As String
-    sourceWb = "GCF_BD_MASTER.xlsx"
+    sourceWb = wsdADMIN.Range("MASTER_FILE").Value
     Dim ws As Worksheet
     Set ws = wsdENC_Details
     Dim onglet As String, table As String
@@ -249,7 +235,7 @@ Sub ImporterEncEntete() '2025-05-07 @ 14:50
     
     'Mettre en place les variables (paramètres)
     Dim sourceWb As String
-    sourceWb = "GCF_BD_MASTER.xlsx"
+    sourceWb = wsdADMIN.Range("MASTER_FILE").Value
     Dim ws As Worksheet
     Set ws = wsdENC_Entete
     Dim onglet As String, table As String
@@ -271,7 +257,7 @@ Sub ImporterCCRegularisations() '2025-05-07 @ 13:58
     
     'Mettre en place les variables (paramètres)
     Dim sourceWb As String
-    sourceWb = "GCF_BD_MASTER.xlsx"
+    sourceWb = wsdADMIN.Range("MASTER_FILE").Value
     Dim ws As Worksheet
     Set ws = wsdCC_Regularisations
     Dim onglet As String, table As String
@@ -293,7 +279,7 @@ Sub ImporterFacComptesClients() '2025-05-07 @ 14:52
     
     'Mettre en place les variables (paramètres)
     Dim sourceWb As String
-    sourceWb = "GCF_BD_MASTER.xlsx"
+    sourceWb = wsdADMIN.Range("MASTER_FILE").Value
     Dim ws As Worksheet
     Set ws = wsdFAC_Comptes_Clients
     Dim onglet As String, table As String
@@ -315,7 +301,7 @@ Sub ImporterFacDetails() '2025-05-07 @ 14:59
     
     'Mettre en place les variables (paramètres)
     Dim sourceWb As String
-    sourceWb = "GCF_BD_MASTER.xlsx"
+    sourceWb = wsdADMIN.Range("MASTER_FILE").Value
     Dim ws As Worksheet
     Set ws = wsdFAC_Details
     Dim onglet As String, table As String
@@ -337,7 +323,7 @@ Sub ImporterFacEntete() '2025-05-07 @ 15:02
     
     'Mettre en place les variables (paramètres)
     Dim sourceWb As String
-    sourceWb = "GCF_BD_MASTER.xlsx"
+    sourceWb = wsdADMIN.Range("MASTER_FILE").Value
     Dim ws As Worksheet
     Set ws = wsdFAC_Entete
     Dim onglet As String, table As String
@@ -359,7 +345,7 @@ Sub ImporterFacSommaireTaux() '2025-05-07 @ 16:08
     
     'Mettre en place les variables (paramètres)
     Dim sourceWb As String
-    sourceWb = "GCF_BD_MASTER.xlsx"
+    sourceWb = wsdADMIN.Range("MASTER_FILE").Value
     Dim ws As Worksheet
     Set ws = wsdFAC_Sommaire_Taux
     Dim onglet As String, table As String
@@ -381,7 +367,7 @@ Sub ImporterFacProjetsDetails() '2025-05-07 @ 15:57
     
     'Mettre en place les variables (paramètres)
     Dim sourceWb As String
-    sourceWb = "GCF_BD_MASTER.xlsx"
+    sourceWb = wsdADMIN.Range("MASTER_FILE").Value
     Dim ws As Worksheet
     Set ws = wsdFAC_Projets_Details
     Dim onglet As String, table As String
@@ -420,7 +406,7 @@ Sub ImporterFacProjetsEntete() '2025-05-07 @ 16:05
     
     'Mettre en place les variables (paramètres)
     Dim sourceWb As String
-    sourceWb = "GCF_BD_MASTER.xlsx"
+    sourceWb = wsdADMIN.Range("MASTER_FILE").Value
     Dim ws As Worksheet
     Set ws = wsdFAC_Projets_Entete
     Dim onglet As String, table As String
@@ -464,23 +450,18 @@ Sub ImporterFournisseurs() 'Using ADODB - 2024-07-03 @ 15:43
 
     'Import Suppliers List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
     Dim sourceWorkbook As String, sourceTab As String
-    sourceWorkbook = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                     "GCF_BD_Entrée.xlsx" '2024-02-14 @ 07:04
+    sourceWorkbook = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                     wsdADMIN.Range("CLIENTS_FILE").Value '2024-02-14 @ 07:04
     sourceTab = "Fournisseurs$"
     
     'ADODB connection
-    Dim connStr As ADODB.Connection: Set connStr = New ADODB.Connection
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
+    conn.Open = "Provider = Microsoft.ACE.OLEDB.12.0;Data Source = " & sourceWorkbook & ";" & _
+                "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
+    Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
     
-    'Connection String specific to EXCEL
-    connStr.ConnectionString = "Provider = Microsoft.ACE.OLEDB.12.0;" & _
-                               "Data Source = " & sourceWorkbook & ";" & _
-                               "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
-    connStr.Open
-    
-    'Recordset
-    Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
     With recSet
-        .ActiveConnection = connStr
+        .ActiveConnection = conn
         .CursorType = adOpenStatic
         .LockType = adLockReadOnly
         .Source = "SELECT * FROM [" & sourceTab & "]"
@@ -496,12 +477,12 @@ Sub ImporterFournisseurs() 'Using ADODB - 2024-07-03 @ 15:43
     
     'Close resource
     recSet.Close
-    connStr.Close
+    conn.Close
     
     Application.ScreenUpdating = True
     
     'Libérer la mémoire
-    Set connStr = Nothing
+    Set conn = Nothing
     Set recSet = Nothing
     Set rng = Nothing
     
@@ -515,7 +496,7 @@ Sub ImporterEJRecurrente() '2025-05-07 @ 14:35
     
     'Mettre en place les variables (paramètres)
     Dim sourceWb As String
-    sourceWb = "GCF_BD_MASTER.xlsx"
+    sourceWb = wsdADMIN.Range("MASTER_FILE").Value
     Dim ws As Worksheet
     Set ws = wsdGL_EJ_Recurrente
     Dim onglet As String, table As String
@@ -539,7 +520,7 @@ Sub ImporterGLTransactions() '2025-05-07 @ 16:10
     
     'Mettre en place les variables (paramètres)
     Dim sourceWb As String
-    sourceWb = "GCF_BD_MASTER.xlsx"
+    sourceWb = wsdADMIN.Range("MASTER_FILE").Value
     Dim ws As Worksheet
     Set ws = wsdGL_Trans
     Dim onglet As String, table As String
@@ -563,7 +544,7 @@ Sub ImporterTEC() '2024-02-14 @ 06:19
     
     'Mettre en place les variables (paramètres)
     Dim sourceWb As String
-    sourceWb = "GCF_BD_MASTER.xlsx"
+    sourceWb = wsdADMIN.Range("MASTER_FILE").Value
     Dim ws As Worksheet
     Set ws = wsdTEC_Local
     Dim onglet As String, table As String

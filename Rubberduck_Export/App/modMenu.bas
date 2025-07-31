@@ -143,10 +143,10 @@ Sub FermerApplicationNormalement(ByVal userName As String) 'Nouvelle procédure 
     
     Dim ws As Worksheet
     Set ws = wsdADMIN
-    With ws
-        .Range("B1").Value = vbNullString
-        .Range("B2").Value = vbNullString
-    End With
+'    With ws
+'        .Range("USER_DATE_FORMAT").Value = vbNullString
+'        .Range("B2").Value = vbNullString
+'    End With
     
     Call ViderTableauxStructures
     
@@ -244,7 +244,7 @@ End Sub
 Sub EffacerFichierUtilisateurActif(ByVal userName As String)
 
     Dim traceFilePath As String
-    traceFilePath = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
+    traceFilePath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
     
     If Dir(traceFilePath) <> vbNullString Then
         Kill traceFilePath
@@ -288,7 +288,6 @@ Sub ViderTableauxStructures() '2025-07-01 @ 10:38
         Set lo = ws.ListObjects(tableaux(i))
 
         If Not lo Is Nothing Then
-            Debug.Print ws.Name & " - " & lo.Name
             If Not lo.DataBodyRange Is Nothing Then
                 lo.DataBodyRange.Delete
             End If

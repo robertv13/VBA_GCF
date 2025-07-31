@@ -369,7 +369,7 @@ Sub VisualiserFacturePDF(noFact As String)
 
     'The invoice number is in column C (3rd column) pour les 2 feuilles...
     Dim fullPDFFileName As String
-    fullPDFFileName = wsdADMIN.Range("F5").Value & gFACT_PDF_PATH & _
+    fullPDFFileName = wsdADMIN.Range("PATH_DATA_FILES").Value & gFACT_PDF_PATH & _
                             Application.PathSeparator & noFact & ".pdf"
     
     'Ouvrir la version PDF de la facture, si elle existe

@@ -96,19 +96,19 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
 
     'Répertoire de données
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "Répertoire utilisé")
-    Call AjouterMessageAuxResultats(wsOutput, r, 2, wsdADMIN.Range("FolderSharedData").Value & gDATA_PATH)
+    Call AjouterMessageAuxResultats(wsOutput, r, 2, wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH)
     r = r + 1
 
     'Fichier utilisé
     Dim masterFileName As String
-    masterFileName = "GCF_BD_MASTER.xlsx"
+    masterFileName = wsdADMIN.Range("MASTER_FILE").Value
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "Fichier utilisé")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, masterFileName)
     r = r + 1
     
     'Date dernière modification du fichier MAÎTRE
     Dim fullFileName As String
-    fullFileName = wsdADMIN.Range("FolderSharedData").Value & gDATA_PATH & Application.PathSeparator & masterFileName
+    fullFileName = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & masterFileName
     Dim ddm As Date
     Dim j As Long
     Dim h As Long
@@ -3311,7 +3311,7 @@ Private Sub VerifierTEC(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef read
     Dim ws As Worksheet: Set ws = wsdTEC_Local
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 7880 'What is the last TECID analyzed ?
+    lastTECIDReported = 7991 'What is the last TECID analyzed ?
     
     'Réference au UserDefined structure 'StatistiquesTEC'
     Dim stats As StatistiquesTEC
@@ -4289,9 +4289,9 @@ Sub NoterNombreLignesParFeuille() '2025-01-22 @ 16:19
     
     'Spécifiez les chemins des classeurs
     Dim cheminClasseurUsage As String
-    cheminClasseurUsage = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & "GCF_File_Usage.xlsx"
+    cheminClasseurUsage = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & "GCF_File_Usage.xlsx"
     Dim cheminClasseurMASTER As String
-    cheminClasseurMASTER = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
+    cheminClasseurMASTER = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & wsdADMIN.Range("MASTER_FILE").Value
     
     Application.ScreenUpdating = False
     

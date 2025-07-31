@@ -487,29 +487,28 @@ Sub FAC_Projets_Details_Add_Record_To_DB(clientID As String, fr As Long, lr As L
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                          "GCF_BD_MASTER.xlsx"
+    destinationFileName = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                          wsdADMIN.Range("MASTER_FILE").Value
     destinationTab = "FAC_Projets_Details$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    
-    'Initialize recordset
-    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";" & _
+              "Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
     
     'First SQL - SQL query to find the maximum value in the first column
     Dim strSQL As String
     strSQL = "SELECT MAX(ProjetID) AS MaxValue FROM [" & destinationTab & "]"
-    rs.Open strSQL, conn
+    recSet.Open strSQL, conn
 
     'Get the maximum value
     Dim MaxValue As Long
-    If IsNull(rs.Fields("MaxValue").Value) Then
+    If IsNull(recSet.Fields("MaxValue").Value) Then
         'Handle empty table (assign a default value, e.g., 1)
         projetID = 1
     Else
-        projetID = rs.Fields("MaxValue").Value + 1
+        projetID = recSet.Fields("MaxValue").Value + 1
     End If
     
     'timeStamp uniforme
@@ -517,36 +516,36 @@ Sub FAC_Projets_Details_Add_Record_To_DB(clientID As String, fr As Long, lr As L
     timeStamp = Now
     
     'Close the previous recordset (no longer needed)
-    rs.Close
+    recSet.Close
     
     'Second SQL - SQL query to add the new records
     strSQL = "SELECT * FROM [" & destinationTab & "] WHERE 1=0"
-    rs.Open strSQL, conn, 2, 3
+    recSet.Open strSQL, conn, 2, 3
     
     'Read all line from TEC_Analyse
     Dim dateTEC As String
     Dim l As Long
     For l = fr To lr
-        rs.AddNew
+        recSet.AddNew
             'Add fields to the recordset before updating it
             'RecordSet are ZERO base, and Enums are not, so the '-1' is mandatory !!!
-            rs.Fields(fFacPDProjetID - 1).Value = projetID
-            rs.Fields(fFacPDNomClient - 1).Value = wshTEC_Analyse.Range("C" & l).Value
-            rs.Fields(fFacPDClientID - 1).Value = CStr(clientID)
-            rs.Fields(fFacPDTECID - 1).Value = wshTEC_Analyse.Range("A" & l).Value
-            rs.Fields(fFacPDProfID - 1).Value = wshTEC_Analyse.Range("B" & l).Value
+            recSet.Fields(fFacPDProjetID - 1).Value = projetID
+            recSet.Fields(fFacPDNomClient - 1).Value = wshTEC_Analyse.Range("C" & l).Value
+            recSet.Fields(fFacPDClientID - 1).Value = CStr(clientID)
+            recSet.Fields(fFacPDTECID - 1).Value = wshTEC_Analyse.Range("A" & l).Value
+            recSet.Fields(fFacPDProfID - 1).Value = wshTEC_Analyse.Range("B" & l).Value
             dateTEC = Format$(wshTEC_Analyse.Range("E" & l).Value, "yyyy-mm-dd")
-            rs.Fields(fFacPDDate - 1).Value = dateTEC
-            rs.Fields(fFacPDProf - 1).Value = wshTEC_Analyse.Range("F" & l).Value
-            rs.Fields(fFacPDestDetruite - 1) = 0 'Faux
-            rs.Fields(fFacPDHeures - 1).Value = CDbl(wshTEC_Analyse.Range("H" & l).Value)
-            rs.Fields(fFacPDTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
-        rs.Update
+            recSet.Fields(fFacPDDate - 1).Value = dateTEC
+            recSet.Fields(fFacPDProf - 1).Value = wshTEC_Analyse.Range("F" & l).Value
+            recSet.Fields(fFacPDestDetruite - 1) = 0 'Faux
+            recSet.Fields(fFacPDHeures - 1).Value = CDbl(wshTEC_Analyse.Range("H" & l).Value)
+            recSet.Fields(fFacPDTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+        recSet.Update
     Next l
     
     'Close recordset and connection
     On Error Resume Next
-    rs.Close
+    recSet.Close
     On Error GoTo 0
     conn.Close
     
@@ -554,7 +553,7 @@ Sub FAC_Projets_Details_Add_Record_To_DB(clientID As String, fr As Long, lr As L
     
     'Libérer la mémoire
     Set conn = Nothing
-    Set rs = Nothing
+    Set recSet = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:FAC_Projets_Details_Add_Record_To_DB", vbNullString, startTime)
 
@@ -609,18 +608,19 @@ Sub DetruireDetailSiEnteteEstDetruite(filePath As String, _
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:DetruireDetailSiEnteteEstDetruite", vbNullString, 0)
     
     'Create a new ADODB connection
-    Dim cn As Object: Set cn = CreateObject("ADODB.Connection")
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
     'Open the connection to the closed workbook
-    cn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & filePath & ";Extended Properties=""Excel 12.0;HDR=Yes"";"
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & filePath & ";" & _
+              "Extended Properties=""Excel 12.0;HDR=Yes"";"
     
     'Update the rows to mark as deleted (soft delete)
     Dim strSQL As String
     strSQL = "UPDATE [" & sheetName & "] SET estDetruite = -1 WHERE [" & columnName & "] = '" & Replace(valueToFind, "'", "''") & "'"
-    cn.Execute strSQL
+    conn.Execute strSQL
     
     'Close the connection
-    cn.Close
-    Set cn = Nothing
+    conn.Close
+    Set conn = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:DetruireDetailSiEnteteEstDetruite", vbNullString, startTime)
 
@@ -635,86 +635,87 @@ Sub FAC_Projets_Entete_Add_Record_To_DB(projetID As Long, _
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:FAC_Projets_Entete_Add_Record_To_DB", vbNullString, 0)
     
-    Application.ScreenUpdating = False
-    
-    Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                          "GCF_BD_MASTER.xlsx"
-    destinationTab = "FAC_Projets_Entete$"
-    
-    'Initialize connection, connection string & open the connection
-    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    
     'timeStamp uniforme
     Dim timeStamp As Date
     timeStamp = Now
     
+    Application.ScreenUpdating = False
+    
+    Dim destinationFileName As String, destinationTab As String
+    destinationFileName = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                          wsdADMIN.Range("MASTER_FILE").Value
+    destinationTab = "FAC_Projets_Entete$"
+    
+    'Initialize connection, connection string & open the connection
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";" & _
+              "Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
+    
     Dim strSQL As String
     strSQL = "SELECT * FROM [" & destinationTab & "] WHERE 1=0"
     
-    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
-    rs.Open strSQL, conn, 2, 3
+    recSet.Open strSQL, conn, 2, 3
     
     Dim c As Long
     Dim l As Long
-    rs.AddNew
-        Debug.Print "rs.State = " & rs.state
-        Debug.Print "rs.EOF = " & rs.EOF
-        Debug.Print "rs.BOF = " & rs.BOF
-        Debug.Print "rs.RecordCount = " & rs.RecordCount
-        Debug.Print "rs.Fields.Count = " & rs.Fields.count
-        Debug.Print "Field 2 - Name: " & rs.Fields(2).Name
-        Debug.Print "Field 2 - Type: " & rs.Fields(2).Type
-        Debug.Print "Field 2 - Attributes: " & rs.Fields(2).Attributes
+    recSet.AddNew
+        Debug.Print "recSet.state = " & recSet.state
+        Debug.Print "recSet.EOF = " & recSet.EOF
+        Debug.Print "recSet.BOF = " & recSet.BOF
+        Debug.Print "recSet.RecordCount = " & recSet.RecordCount
+        Debug.Print "recSet.Fields.Count = " & recSet.Fields.count
+        Debug.Print "Field 2 - Name: " & recSet.Fields(2).Name
+        Debug.Print "Field 2 - Type: " & recSet.Fields(2).Type
+        Debug.Print "Field 2 - Attributes: " & recSet.Fields(2).Attributes
         'Add fields to the recordset before updating it
         'RecordSet are ZERO base, and Enums are not, so the '-1' is mandatory !!!
-        rs.Fields(fFacPEProjetID - 1).Value = projetID
-        rs.Fields(fFacPENomClient - 1).Value = nomClient
-        rs.Fields(fFacPEClientID - 1).Value = CStr(clientID)
-        rs.Fields(fFacPEDate - 1).Value = dte
-        rs.Fields(fFacPEHonoTotal - 1).Value = hono
+        recSet.Fields(fFacPEProjetID - 1).Value = projetID
+        recSet.Fields(fFacPENomClient - 1).Value = nomClient
+        recSet.Fields(fFacPEClientID - 1).Value = CStr(clientID)
+        recSet.Fields(fFacPEDate - 1).Value = dte
+        recSet.Fields(fFacPEHonoTotal - 1).Value = hono
         
-        rs.Fields(fFacPEProf1 - 1).Value = arr(1, 1)
-        rs.Fields(fFacPEHres1 - 1).Value = arr(1, 2)
-        rs.Fields(fFacPETauxH1 - 1).Value = arr(1, 3)
-        rs.Fields(fFacPEHono1 - 1).Value = arr(1, 4)
+        recSet.Fields(fFacPEProf1 - 1).Value = arr(1, 1)
+        recSet.Fields(fFacPEHres1 - 1).Value = arr(1, 2)
+        recSet.Fields(fFacPETauxH1 - 1).Value = arr(1, 3)
+        recSet.Fields(fFacPEHono1 - 1).Value = arr(1, 4)
         
         If UBound(arr, 1) >= 2 Then
-            rs.Fields(fFacPEProf2 - 1).Value = arr(2, 1)
-            rs.Fields(fFacPEHres2 - 1).Value = arr(2, 2)
-            rs.Fields(fFacPETauxH2 - 1).Value = arr(2, 3)
-            rs.Fields(fFacPEHono2 - 1).Value = arr(2, 4)
+            recSet.Fields(fFacPEProf2 - 1).Value = arr(2, 1)
+            recSet.Fields(fFacPEHres2 - 1).Value = arr(2, 2)
+            recSet.Fields(fFacPETauxH2 - 1).Value = arr(2, 3)
+            recSet.Fields(fFacPEHono2 - 1).Value = arr(2, 4)
         End If
         
         If UBound(arr, 1) >= 3 Then
-            rs.Fields(fFacPEProf3 - 1).Value = arr(3, 1)
-            rs.Fields(fFacPEHres3 - 1).Value = arr(3, 2)
-            rs.Fields(fFacPETauxH3 - 1).Value = arr(3, 3)
-            rs.Fields(fFacPEHono3 - 1).Value = arr(3, 4)
+            recSet.Fields(fFacPEProf3 - 1).Value = arr(3, 1)
+            recSet.Fields(fFacPEHres3 - 1).Value = arr(3, 2)
+            recSet.Fields(fFacPETauxH3 - 1).Value = arr(3, 3)
+            recSet.Fields(fFacPEHono3 - 1).Value = arr(3, 4)
         End If
         
         If UBound(arr, 1) >= 4 Then
-            rs.Fields(fFacPEProf4 - 1).Value = arr(4, 1)
-            rs.Fields(fFacPEHres4 - 1).Value = arr(4, 2)
-            rs.Fields(fFacPETauxH4 - 1).Value = arr(4, 3)
-            rs.Fields(fFacPEHono4 - 1).Value = arr(4, 4)
+            recSet.Fields(fFacPEProf4 - 1).Value = arr(4, 1)
+            recSet.Fields(fFacPEHres4 - 1).Value = arr(4, 2)
+            recSet.Fields(fFacPETauxH4 - 1).Value = arr(4, 3)
+            recSet.Fields(fFacPEHono4 - 1).Value = arr(4, 4)
         End If
         
         If UBound(arr, 1) >= 5 Then
-            rs.Fields(fFacPEProf5 - 1).Value = arr(5, 1)
-            rs.Fields(fFacPEHres5 - 1).Value = arr(5, 2)
-            rs.Fields(fFacPETauxH5 - 1).Value = arr(5, 3)
-            rs.Fields(fFacPEHono5 - 1).Value = arr(5, 4)
+            recSet.Fields(fFacPEProf5 - 1).Value = arr(5, 1)
+            recSet.Fields(fFacPEHres5 - 1).Value = arr(5, 2)
+            recSet.Fields(fFacPETauxH5 - 1).Value = arr(5, 3)
+            recSet.Fields(fFacPEHono5 - 1).Value = arr(5, 4)
         End If
         
-        rs.Fields(fFacPEestDetruite - 1).Value = 0 'Faux
-        rs.Fields(fFacPETimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
-    rs.Update
+        recSet.Fields(fFacPEestDetruite - 1).Value = 0 'Faux
+        recSet.Fields(fFacPETimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+    recSet.Update
     
     'Close recordset and connection
     On Error Resume Next
-    rs.Close
+    recSet.Close
     On Error GoTo 0
     conn.Close
     
@@ -722,7 +723,7 @@ Sub FAC_Projets_Entete_Add_Record_To_DB(projetID As Long, _
     
     'Libérer la mémoire
     Set conn = Nothing
-    Set rs = Nothing
+    Set recSet = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:FAC_Projets_Entete_Add_Record_To_DB", vbNullString, startTime)
 
@@ -770,24 +771,24 @@ Sub FAC_Projets_Entete_Add_Record_Locally(projetID As Long, nomClient As String,
 End Sub
 
 Sub DetruireEnteteSiEnteteEstDetruite(filePath As String, _
-                                                   sheetName As String, _
-                                                   columnName As String, _
-                                                   valueToFind As Variant) '2024-07-19 @ 15:31
+                                      sheetName As String, _
+                                      columnName As String, _
+                                      valueToFind As Variant) '2024-07-19 @ 15:31
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:DetruireEnteteSiEnteteEstDetruite", vbNullString, 0)
     
     'Create a new ADODB connection
-    Dim cn As Object: Set cn = CreateObject("ADODB.Connection")
-    'Open the connection to the closed workbook
-    cn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & filePath & ";Extended Properties=""Excel 12.0;HDR=Yes"";"
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & filePath & ";" & _
+              "Extended Properties=""Excel 12.0;HDR=Yes"";"
     
     'Update the rows to mark as deleted (soft delete)
     Dim strSQL As String
     strSQL = "UPDATE [" & sheetName & "] SET estDetruite = -1 WHERE [" & columnName & "] = '" & Replace(valueToFind, "'", "''") & "'"
-    cn.Execute strSQL
+    conn.Execute strSQL
     
     'Close the connection
-    cn.Close
-    Set cn = Nothing
+    conn.Close
+    Set conn = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:DetruireEnteteSiEnteteEstDetruite", vbNullString, startTime)
 

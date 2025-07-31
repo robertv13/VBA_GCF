@@ -98,29 +98,31 @@ Sub GL_Posting_To_DB(df As Date, desc As String, Source As String, arr As Varian
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_Stuff:GL_Posting_To_DB", vbNullString, 0)
 
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                          "GCF_BD_MASTER.xlsx"
+    destinationFileName = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                          wsdADMIN.Range("MASTER_FILE").Value
     destinationTab = "GL_Trans$"
     
     'Initialize connection, connection string, open the connection and declare rs Object
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";" & _
+              "Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
 
     'SQL select command to find the next available ID
-    Dim strSQL As String, MaxEJNo As Long
+    Dim strSQL As String
     strSQL = "SELECT MAX(NoEntrée) AS MaxEJNo FROM [" & destinationTab & "]"
 
     'Open recordset to find out the next JE number
-    rs.Open strSQL, conn
+    recSet.Open strSQL, conn
     
     'Get the last used row
+    Dim MaxEJNo As Long
     Dim lastJE As Long
-    If IsNull(rs.Fields("MaxEJNo").Value) Then
+    If IsNull(recSet.Fields("MaxEJNo").Value) Then
         ' Handle empty table (assign a default value, e.g., 1)
         lastJE = 0
     Else
-        lastJE = rs.Fields("MaxEJNo").Value
+        lastJE = recSet.Fields("MaxEJNo").Value
     End If
     
     'Calculate the new JE number
@@ -131,36 +133,36 @@ Sub GL_Posting_To_DB(df As Date, desc As String, Source As String, arr As Varian
     timeStamp = Now
     
     'Close the previous recordset, no longer needed and open an empty recordset
-    rs.Close
-    rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
+    recSet.Close
+    recSet.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
     
     Dim i As Long, j As Long
     'Loop through the array and post each row
     For i = LBound(arr, 1) To UBound(arr, 1)
         If arr(i, 1) = vbNullString Then GoTo Nothing_to_Post
-            rs.AddNew
+            recSet.AddNew
                 'RecordSet are ZERO base, and Enums are not, so the '-1' is mandatory !!!
-                rs.Fields(fGlTNoEntrée - 1).Value = GLEntryNo
-                rs.Fields(fGlTDate - 1).Value = CDate(df)
-                rs.Fields(fGlTDescription - 1).Value = desc
-                rs.Fields(fGlTSource - 1).Value = Source
-                rs.Fields(fGlTNoCompte - 1).Value = CStr(arr(i, 1))
-                rs.Fields(fGlTCompte - 1).Value = modFunctions.ObtenirDescriptionCompte(CStr(arr(i, 1)))
+                recSet.Fields(fGlTNoEntrée - 1).Value = GLEntryNo
+                recSet.Fields(fGlTDate - 1).Value = CDate(df)
+                recSet.Fields(fGlTDescription - 1).Value = desc
+                recSet.Fields(fGlTSource - 1).Value = Source
+                recSet.Fields(fGlTNoCompte - 1).Value = CStr(arr(i, 1))
+                recSet.Fields(fGlTCompte - 1).Value = modFunctions.ObtenirDescriptionCompte(CStr(arr(i, 1)))
                 If arr(i, 3) > 0 Then
-                    rs.Fields(fGlTDébit - 1).Value = arr(i, 3)
+                    recSet.Fields(fGlTDébit - 1).Value = arr(i, 3)
                 Else
-                    rs.Fields(fGlTCrédit - 1).Value = -arr(i, 3)
+                    recSet.Fields(fGlTCrédit - 1).Value = -arr(i, 3)
                 End If
-                rs.Fields(fGlTAutreRemarque - 1).Value = arr(i, 4)
-                rs.Fields(fGlTTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
-            rs.Update
+                recSet.Fields(fGlTAutreRemarque - 1).Value = arr(i, 4)
+                recSet.Fields(fGlTTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+            recSet.Update
             
 Nothing_to_Post:
     Next i
 
     'Close recordset and connection
     On Error Resume Next
-    rs.Close
+    recSet.Close
     On Error GoTo 0
     conn.Close
     
@@ -168,7 +170,7 @@ Nothing_to_Post:
 
     'Libérer la mémoire
     Set conn = Nothing
-    Set rs = Nothing
+    Set recSet = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modGL_Stuff:GL_Posting_To_DB", vbNullString, startTime)
 
@@ -355,7 +357,7 @@ Sub ComptabiliserEcritureCloture() '2025-07-20 @ 08:35
     Set soldes = CreateObject("Scripting.Dictionary")
     
     Dim cheminFichier As String
-    cheminFichier = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
+    cheminFichier = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & wsdADMIN.Range("MASTER_FILE").Value
     Dim nomFeuilleSource As String
     nomFeuilleSource = "GL_Trans"
     Dim compteBNR As String
@@ -375,11 +377,9 @@ Sub ComptabiliserEcritureCloture() '2025-07-20 @ 08:35
 
     '3. Création de l'écriture à partir de soldes (dictionary)
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    Dim cmd As Object: Set cmd = CreateObject("ADODB.Command")
-    
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;" & _
-              "Data Source=" & cheminFichier & ";" & _
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;" & "Data Source=" & cheminFichier & ";" & _
               "Extended Properties='Excel 12.0 Xml;HDR=YES';"
+    Dim cmd As Object: Set cmd = CreateObject("ADODB.Command")
               
     Dim cpte As Variant
     Dim montant As Currency
@@ -438,7 +438,7 @@ Public Sub SupprimerEcritureClotureCourante(dateCloture As Date) '2025-07-21 @ 1
     Dim ws As Worksheet
     Dim cheminMaster As String
     
-    cheminMaster = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
+    cheminMaster = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & wsdADMIN.Range("MASTER_FILE").Value
     Application.ScreenUpdating = False
     Set wb = Workbooks.Open(cheminMaster, ReadOnly:=False)
     Set ws = wb.Sheets("GL_Trans")
@@ -468,7 +468,7 @@ Public Function ObtenirSoldesParCompteAvecADO(cheminFichier As String, nomFeuill
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_BV:ObtenirSoldesParCompteAvecADO", vbNullString, 0)
     
-    Dim reqSQL As String
+    Dim strSQL As String
     Dim soldes As Object: Set soldes = CreateObject("Scripting.Dictionary")
     Dim cle As String
     Dim montant As Currency
@@ -479,46 +479,44 @@ Public Function ObtenirSoldesParCompteAvecADO(cheminFichier As String, nomFeuill
     End If
 
     'Connexion ADO à un classeur fermé
-    Dim conn As Object 'ADODB.Connection
-    Set conn = CreateObject("ADODB.Connection")
-    Dim rs As Object 'ADODB.Recordset
-    Set rs = CreateObject("ADODB.Recordset")
-
-'    On Error GoTo ErrHandler
-
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;" & _
-              "Data Source=" & cheminFichier & ";" & _
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;" & "Data Source=" & cheminFichier & ";" & _
               "Extended Properties='Excel 12.0 Xml;HDR=YES';"
+    Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
 
+'    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;" & _
+'              "Data Source=" & cheminFichier & ";" & _
+'              "Extended Properties='Excel 12.0 Xml;HDR=YES';"
+'
     'Requête : somme des montants pour chaque compte (>= 4000), jusqu’à la date de clôture incluse
-    reqSQL = "SELECT NoCompte, SUM(IIF(Débit IS NULL, 0, Débit)) - SUM(IIF(Crédit IS NULL, 0, Crédit)) AS Solde " & _
+    strSQL = "SELECT NoCompte, SUM(IIF(Débit IS NULL, 0, Débit)) - SUM(IIF(Crédit IS NULL, 0, Crédit)) AS Solde " & _
                     "FROM [" & nomFeuille & "$] " & _
                     "WHERE NoCompte >= '" & noCompteGLMin & "' AND NoCompte <= '" & noCompteGLMax & _
                     "' AND Date <= #" & Format(dateCloture, "yyyy-mm-dd") & "#"
                     
                 If Not inclureEcrCloture Then
-                    reqSQL = reqSQL & " AND NOT (Date = #" & Format(dateCloture, "yyyy-mm-dd") & "# AND Source = 'Clôture annuelle')"
+                    strSQL = strSQL & " AND NOT (Date = #" & Format(dateCloture, "yyyy-mm-dd") & "# AND Source = 'Clôture annuelle')"
                 End If
                 
-                reqSQL = reqSQL & " GROUP BY NoCompte"
+                strSQL = strSQL & " GROUP BY NoCompte"
 
-    Debug.Print reqSQL
+    Debug.Print strSQL
     
-    rs.Open reqSQL, conn, 1, 1
+    recSet.Open strSQL, conn, 1, 1
 
-    Do While Not rs.EOF
-        cle = CStr(rs.Fields("NoCompte").Value)
-        Debug.Print "Construction du dictionary : " & cle & " = " & Format$(rs.Fields("Solde").Value, "#,##0.00")
-        montant = Nz(rs.Fields("Solde").Value)
+    Do While Not recSet.EOF
+        cle = CStr(recSet.Fields("NoCompte").Value)
+        Debug.Print "Construction du dictionary : " & cle & " = " & Format$(recSet.Fields("Solde").Value, "#,##0.00")
+        montant = Nz(recSet.Fields("Solde").Value)
         If Not soldes.Exists(cle) Then
             soldes.Add cle, montant
         Else
             soldes(cle) = soldes(cle) + montant
         End If
-        rs.MoveNext
+        recSet.MoveNext
     Loop
 
-    rs.Close
+    recSet.Close
     conn.Close
     Set ObtenirSoldesParCompteAvecADO = soldes
     GoTo Exit_Function
@@ -526,7 +524,7 @@ Public Function ObtenirSoldesParCompteAvecADO(cheminFichier As String, nomFeuill
 ErrHandler:
     MsgBox "Erreur dans ObtenirSoldesParCompteAvecADO : " & Err.description, vbCritical
     On Error Resume Next
-    If Not rs Is Nothing Then If rs.state = 1 Then rs.Close
+    If Not recSet Is Nothing Then If recSet.state = 1 Then recSet.Close
     If Not conn Is Nothing Then If conn.state = 1 Then conn.Close
     Set ObtenirSoldesParCompteAvecADO = Nothing
     
@@ -567,8 +565,6 @@ End Function
 Public Sub AjouterEcritureGLADOPlusLocale(entry As clsGL_Entry, Optional afficherMessage As Boolean = True) '2025-06-08 @ 09:37
 
     '=== BLOC 1 : Écriture dans GCF_BD_MASTER.xslx en utilisant ADO ===
-    Dim cn As Object
-    Dim rs As Object
     Dim cheminMaster As String
     Dim nextNoEntree As Long
     Dim ts As String
@@ -579,22 +575,23 @@ Public Sub AjouterEcritureGLADOPlusLocale(entry As clsGL_Entry, Optional affiche
     On Error GoTo CleanUpADO
 
     'Chemin du classeur MASTER.xlsx
-    cheminMaster = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
+    cheminMaster = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & wsdADMIN.Range("MASTER_FILE").Value
     
     'Ouvre connexion ADO
-    Set cn = CreateObject("ADODB.Connection")
-    cn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & cheminMaster & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & cheminMaster & ";" & _
+              "Extended Properties=""Excel 12.0 XML;HDR=YES"";"
 
     'Détermine le prochain numéro d'écriture
-    Set rs = cn.Execute("SELECT MAX([NoEntrée]) AS MaxNo FROM [GL_Trans$]")
-    If Not rs.EOF And Not IsNull(rs!MaxNo) Then
-        nextNoEntree = rs!MaxNo + 1
+    Dim recSet As Object: Set recSet = conn.Execute("SELECT MAX([NoEntrée]) AS MaxNo FROM [GL_Trans$]")
+    If Not recSet.EOF And Not IsNull(recSet!MaxNo) Then
+        nextNoEntree = recSet!MaxNo + 1
     Else
         nextNoEntree = 1
     End If
     entry.NoEcriture = nextNoEntree
-    rs.Close
-    Set rs = Nothing
+    recSet.Close
+    Set recSet = Nothing
 
     'Timestamp unique pour l'écriture
     ts = Format(Now, "yyyy-mm-dd hh:mm:ss")
@@ -616,10 +613,10 @@ Public Sub AjouterEcritureGLADOPlusLocale(entry As clsGL_Entry, Optional affiche
               "'" & Replace(l.autreRemarque, "'", "''") & "'," & _
               "'" & ts & "'" & _
               ")"
-        cn.Execute strSQL
+        conn.Execute strSQL
     Next i
 
-    cn.Close: Set cn = Nothing
+    conn.Close: Set conn = Nothing
 
     '=== BLOC 2 - Écriture dans feuille locale (GL_Trans)
     Dim oldScreenUpdating As Boolean
@@ -670,10 +667,10 @@ Public Sub AjouterEcritureGLADOPlusLocale(entry As clsGL_Entry, Optional affiche
 
 CleanUpADO:
     On Error Resume Next
-    If Not rs Is Nothing Then If rs.state = 1 Then rs.Close
-    Set rs = Nothing
-    If Not cn Is Nothing Then If cn.state = 1 Then cn.Close
-    Set cn = Nothing
+    If Not recSet Is Nothing Then If recSet.state = 1 Then recSet.Close
+    Set recSet = Nothing
+    If Not conn Is Nothing Then If conn.state = 1 Then conn.Close
+    Set conn = Nothing
     Application.ScreenUpdating = oldScreenUpdating
     Application.EnableEvents = oldEnableEvents
     Application.DisplayAlerts = oldDisplayAlerts
@@ -685,4 +682,168 @@ CleanUpADO:
     
 End Sub
 
+Function ConstruireTableau12MoisGL(d As Date) As Variant '2025-07-29 @ 11:10
+
+    Dim dicoComptes As Object
+    Dim dicoMois As Object
+    Dim comptes As Collection
+    Dim tableau() As Variant
+    Dim fichier As String
+    Dim strSQL As String
+    Dim dateDebutOperations As Date
+    Dim dateDernierJourAnneeFinanciereCourante As Date
+    Dim dateDernierJourAnneeFinancierePrecedente As Date
+    Dim datePremierJourAnneeFinanciereCourante As Date
+    Dim datePremierJourAnneeFinancierePrecedente As Date
+    Dim dernierMoisAnneeFinanciere As Long
+    Dim compteTrouve As Boolean
+    
+    'Chemin du classeur MASTER.xlsx
+    fichier = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & wsdADMIN.Range("MASTER_FILE").Value
+    
+    'Établir la date du premier jour de l'année financière
+    datePremierJourAnneeFinanciereCourante = PremierJourAnneeFinanciere(d)
+    dateDernierJourAnneeFinanciereCourante = DernierJourAnneeFinanciere(d)
+    Debug.Print "Année courante : " & datePremierJourAnneeFinanciereCourante & " à " & dateDernierJourAnneeFinanciereCourante
+    
+    datePremierJourAnneeFinancierePrecedente = DateAdd("yyyy", -1, datePremierJourAnneeFinanciereCourante)
+    dateDernierJourAnneeFinancierePrecedente = DernierJourAnneeFinanciere(datePremierJourAnneeFinancierePrecedente)
+    Debug.Print "Année précédente : " & datePremierJourAnneeFinancierePrecedente & " à " & dateDernierJourAnneeFinancierePrecedente
+    
+    dateDebutOperations = Format$(#7/31/2024#, "yyyy-mm-dd")
+    
+    'Connexion ADO
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & fichier & ";" & _
+              "Extended Properties='Excel 12.0 Xml;HDR=YES'"
+    Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
+    
+    'Requête SQL
+    strSQL = "SELECT [NoCompte], year([Date]) as Annee, month([Date]) as MoisNum, " & _
+             "SUM(IIF([Débit] IS NULL, 0, [Débit]) - IIF([Crédit] IS NULL, 0, [Crédit])) AS Total " & _
+             "FROM [GL_Trans$] " & _
+             "WHERE [Date] >= #" & Format$(dateDebutOperations, "yyyy-mm-dd") & "# " & _
+             "GROUP BY [NoCompte], Year([Date]), Month([Date]) " & _
+             "ORDER BY [NoCompte], Year([Date]), Month([Date]) "
+    
+    Debug.Print strSQL
+    
+    recSet.CursorLocation = adUseClient
+    recSet.CursorType = adOpenKeyset
+    
+    recSet.Open strSQL, conn
+    
+    Debug.Print "Total lignes renvoyées dans le recordSet:", recSet.RecordCount
+    
+    'Liste unique des comptes
+    Set comptes = New Collection
+    recSet.MoveFirst
+    
+    On Error Resume Next
+    Do While Not recSet.EOF
+        comptes.Add recSet("NoCompte").Value, CStr(recSet("NoCompte").Value)
+        recSet.MoveNext
+    Loop
+    On Error GoTo 0
+    
+    'Établir les périodes à conserver
+    Dim periodesAnneeCourante As String
+    Dim periodesAnneePrecedente As String
+    Dim annee As Long
+    Dim mois As Long
+    Dim periode As String
+    Dim i As Long
+    
+    'Établir les périodes de l'année financière précédente
+    annee = year(datePremierJourAnneeFinancierePrecedente)
+    mois = month(datePremierJourAnneeFinancierePrecedente)
+    For i = 1 To 12
+        periode = periode & Format$(annee, "0000") & "-" & Format$(mois, "00") & " "
+        mois = mois + 1
+        If mois > 12 Then
+            annee = annee + 1
+            mois = mois - 12
+        End If
+    Next i
+
+    'Établir les périodes de l'année financière précédente
+    annee = year(datePremierJourAnneeFinanciereCourante)
+    mois = month(datePremierJourAnneeFinanciereCourante)
+    For i = 1 To 12
+        periode = periode & Format$(annee, "0000") & "-" & Format$(mois, "00") & " "
+        mois = mois + 1
+        If mois > 12 Then
+            annee = annee + 1
+            mois = mois - 12
+        End If
+    Next i
+    
+    'Tableau [nb comptes x 25]
+    ReDim tableau(0 To comptes.count - 1, 0 To 25)
+    
+    'Remplir colonne 0 avec les comptes
+    Dim j As Long
+    For i = 0 To comptes.count - 1
+        tableau(i, 0) = comptes(i + 1) 'Collection indexée à partir de 1
+    Next
+
+    'Remplissage des mois
+    recSet.MoveFirst
+    Do While Not recSet.EOF
+        compteTrouve = False
+        For i = 0 To comptes.count - 1
+            If recSet("NoCompte").Value = tableau(i, 0) Then
+                Debug.Print recSet("NoCompte").Value, recSet("Annee").Value, recSet("MoisNum").Value, recSet("Total").Value
+                annee = recSet("Annee").Value
+                mois = recSet("MoisNum").Value
+                j = InStr(periode, Format$(annee, "0000") & "-" & Format$(mois, "00"))
+                If Not j < 1 Then
+                    j = ((j + 7) / 8) + 1
+                Else
+                    j = 1
+                End If
+                tableau(i, j) = IIf(IsNull(recSet("Total")), 0, recSet("Total"))
+                compteTrouve = True
+                Exit For
+            End If
+        Next
+        If Not compteTrouve Then Debug.Print "Compte non trouvé :"; recSet("NoCompte")
+        recSet.MoveNext
+    Loop
+
+    'Libérer la mémoire
+    recSet.Close: conn.Close
+    Set recSet = Nothing: Set conn = Nothing
+    
+    'Résultat
+    ConstruireTableau12MoisGL = tableau
+    
+End Function
+
+Sub TestTableauGL() '2025-07-27 @ 08:19
+
+    Dim tableau() As Variant
+    Dim i As Long, j As Long
+    
+    Dim dateCutoff As Date
+    dateCutoff = #7/31/2025#
+
+    'Appel de la fonction
+    tableau = ConstruireTableau12MoisGL(Date)
+    
+    'Exemple d’affichage dans la fenêtre de débogage - @TODO
+    Dim solde As Currency
+    For i = LBound(tableau, 1) To UBound(tableau, 1)
+        solde = 0
+        For j = 1 To 25
+            solde = solde + tableau(i, j)
+        Next j
+    
+        Debug.Print "Compte: " & tableau(i, 0) & " - Solde ouverture (A/P) = " & _
+            Fn_Pad_A_String(Format$(tableau(i, 1), "#,##0.00"), " ", 13, "L") & " " & _
+            Fn_Pad_A_String(Format$(tableau(i, 13), "#,##0.00"), " ", 13, "L") & " donc " & _
+            Fn_Pad_A_String(Format$(solde, "#,##0.00"), " ", 13, "L")
+    Next
+    
+End Sub
 

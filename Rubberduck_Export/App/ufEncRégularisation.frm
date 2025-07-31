@@ -71,7 +71,7 @@ Private Sub cbbNoFacture_AfterUpdate()
     If Not rngTrouve Is Nothing Then
         'Si la valeur est trouvée, récupérer d'autres colonnes
         soldeFacture = CCur(rngTrouve.offset(0, 10).Value)
-        dateFacture = Format$(rngTrouve.offset(0, 1).Value, wsdADMIN.Range("B1").Value)
+        dateFacture = Format$(rngTrouve.offset(0, 1).Value, wsdADMIN.Range("USER_DATE_FORMAT").Value)
         ufEncRégularisation.lblDateFactureData.Caption = dateFacture
         ufEncRégularisation.lblTotalFactureValue.Caption = FormatCurrency(soldeFacture, 2)
         

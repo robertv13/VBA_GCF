@@ -91,30 +91,29 @@ Sub AjouterRegularisationBDMaster() 'Write to MASTER.xlsx
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                          "GCF_BD_MASTER.xlsx"
+    destinationFileName = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                          wsdADMIN.Range("MASTER_FILE").Value
     destinationTab = "CC_Regularisations$"
     
     'Initialize connection, connection string & open the connection
-    Dim conn As Object, rs As Object
-    Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
-        ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Set rs = CreateObject("ADODB.Recordset")
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";" & _
+              "Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
 
     'SQL select command to find the next available ID
     Dim strSQL As String, MaxRegulNo As Long
     strSQL = "SELECT MAX(RegulID) AS MaxRegulNo FROM [" & destinationTab & "]"
 
     'Open recordset to find out the MaxPmtNo
-    rs.Open strSQL, conn
+    recSet.Open strSQL, conn
     
     'Get the last used row
     Dim lr As Long
-    If IsNull(rs.Fields("MaxRegulNo").Value) Then
+    If IsNull(recSet.Fields("MaxRegulNo").Value) Then
         lr = 0
     Else
-        lr = rs.Fields("MaxRegulNo").Value
+        lr = recSet.Fields("MaxRegulNo").Value
     End If
     
     'Calculate the new PmtNo
@@ -125,28 +124,28 @@ Sub AjouterRegularisationBDMaster() 'Write to MASTER.xlsx
     timeStamp = Now
     
     'Close the previous recordset, no longer needed and open an empty recordset
-    rs.Close
-    rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
+    recSet.Close
+    recSet.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
     
     'Add fields to the recordset before updating it
-    rs.AddNew
-        rs.Fields(fREGULRegulID - 1).Value = regulNo
-        rs.Fields(fREGULInvNo - 1).Value = ufEncRégularisation.cbbNoFacture
-        rs.Fields(fREGULDate - 1).Value = CDate(wshENC_Saisie.Range("K5").Value)
-        rs.Fields(fREGULClientID - 1).Value = wshENC_Saisie.clientCode
-        rs.Fields(fREGULClientNom - 1).Value = wshENC_Saisie.Range("F5").Value
-        rs.Fields(fREGULHono - 1).Value = CCur(ufEncRégularisation.txtHonoraires)
-        rs.Fields(fREGULFrais - 1).Value = CCur(ufEncRégularisation.txtFraisDivers)
-        rs.Fields(fREGULTPS - 1).Value = CCur(ufEncRégularisation.txtTPS)
-        rs.Fields(fREGULTVQ - 1).Value = CCur(ufEncRégularisation.txtTVQ)
-        rs.Fields(fREGULDescription - 1).Value = wshENC_Saisie.Range("F9").Value
-        rs.Fields(fREGULTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+    recSet.AddNew
+        recSet.Fields(fREGULRegulID - 1).Value = regulNo
+        recSet.Fields(fREGULInvNo - 1).Value = ufEncRégularisation.cbbNoFacture
+        recSet.Fields(fREGULDate - 1).Value = CDate(wshENC_Saisie.Range("K5").Value)
+        recSet.Fields(fREGULClientID - 1).Value = wshENC_Saisie.clientCode
+        recSet.Fields(fREGULClientNom - 1).Value = wshENC_Saisie.Range("F5").Value
+        recSet.Fields(fREGULHono - 1).Value = CCur(ufEncRégularisation.txtHonoraires)
+        recSet.Fields(fREGULFrais - 1).Value = CCur(ufEncRégularisation.txtFraisDivers)
+        recSet.Fields(fREGULTPS - 1).Value = CCur(ufEncRégularisation.txtTPS)
+        recSet.Fields(fREGULTVQ - 1).Value = CCur(ufEncRégularisation.txtTVQ)
+        recSet.Fields(fREGULDescription - 1).Value = wshENC_Saisie.Range("F9").Value
+        recSet.Fields(fREGULTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
     'Update the recordset (create the record)
-    rs.Update
+    recSet.Update
     
     'Close recordset and connection
-    rs.Close
-    Set rs = Nothing
+    recSet.Close
+    Set recSet = Nothing
     conn.Close
     Set conn = Nothing
     
@@ -203,15 +202,15 @@ Sub MiseAJourRegulComptesClientsBDMaster() 'Write to MASTER.xlsx
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                          "GCF_BD_MASTER.xlsx"
+    destinationFileName = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                          wsdADMIN.Range("MASTER_FILE").Value
     destinationTab = "FAC_Comptes_Clients$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
-        ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";" & _
+              "Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
 
     'Open the recordset for the specified invoice
     Dim Inv_No As String
@@ -219,8 +218,8 @@ Sub MiseAJourRegulComptesClientsBDMaster() 'Write to MASTER.xlsx
     
     Dim strSQL As String
     strSQL = "SELECT * FROM [" & destinationTab & "] WHERE InvNo = '" & Inv_No & "'"
-    rs.Open strSQL, conn, 2, 3
-    If Not (rs.BOF Or rs.EOF) Then
+    recSet.Open strSQL, conn, 2, 3
+    If Not (recSet.BOF Or recSet.EOF) Then
         Dim mntRegulTotal As Double
         mntRegulTotal = CDbl(ufEncRégularisation.txtHonoraires.Value) + _
                         CDbl(ufEncRégularisation.txtFraisDivers.Value) + _
@@ -228,25 +227,25 @@ Sub MiseAJourRegulComptesClientsBDMaster() 'Write to MASTER.xlsx
                         CDbl(ufEncRégularisation.txtTVQ.Value)
 
         'Mettre à jour Régularisation totale
-        rs.Fields(fFacCCTotalRegul - 1).Value = rs.Fields(fFacCCTotalRegul - 1).Value + mntRegulTotal
+        recSet.Fields(fFacCCTotalRegul - 1).Value = recSet.Fields(fFacCCTotalRegul - 1).Value + mntRegulTotal
         'Mettre à jour le solde de la facture
-        rs.Fields(fFacCCBalance - 1).Value = rs.Fields(fFacCCBalance - 1).Value + mntRegulTotal
+        recSet.Fields(fFacCCBalance - 1).Value = recSet.Fields(fFacCCBalance - 1).Value + mntRegulTotal
         'Mettre à jour Status
-        If rs.Fields(fFacCCBalance - 1).Value = 0 Then
-            rs.Fields(fFacCCStatus - 1).Value = "Paid"
+        If recSet.Fields(fFacCCBalance - 1).Value = 0 Then
+            recSet.Fields(fFacCCStatus - 1).Value = "Paid"
         Else
-            rs.Fields(fFacCCStatus - 1).Value = "Unpaid"
+            recSet.Fields(fFacCCStatus - 1).Value = "Unpaid"
         End If
-        rs.Update
+        recSet.Update
     Else
         MsgBox "Problème avec la facture '" & Inv_No & "'" & vbNewLine & vbNewLine & _
                "Contactez le développeur SVP", vbCritical, "Impossible de trouver la facture dans Comptes_Clients"
     End If
     'Update the recordset (create the record)
-    rs.Close
+    recSet.Close
     
     'Close recordset and connection
-    Set rs = Nothing
+    Set recSet = Nothing
     conn.Close
     Set conn = Nothing
     

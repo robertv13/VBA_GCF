@@ -121,7 +121,7 @@ End Sub
 '
 '    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Gabarits_Facture")
 '    wsOutput.Range("A1").Value = "Gabarit"
-'    wsOutput.Range("B1").Value = "Code"
+'    wsOutput.Range("USER_DATE_FORMAT").Value = "Code"
 '    wsOutput.Range("C1").Value = "Service"
 '    Dim outputRow As Long: outputRow = 1
 '
@@ -188,8 +188,8 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
 
     'Specify the full path and name of the closed workbook
     Dim wbPath As String
-    wbPath = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                     "GCF_BD_MASTER.xlsx"
+    wbPath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                     wsdADMIN.Range("MASTER_FILE").Value
     
     'Open the workbook in read-only mode
     Dim wb As Workbook: Set wb = Workbooks.Open(fileName:=wbPath, ReadOnly:=True)
@@ -1533,7 +1533,7 @@ Sub EnregistrerLogApplication(ByVal procedureName As String, param As String, Op
     timeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & Right$(Format$(Timer, "0.00"), 2)
     
     Dim logFile As String
-    logFile = wsdADMIN.Range("F5").Value & gDATA_PATH & _
+    logFile = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & _
                                     Application.PathSeparator & "LogMainApp.log"
     
     Dim fileNum As Integer
@@ -1574,7 +1574,7 @@ Sub EnregistrerLogApplication(ByVal procedureName As String, param As String, Op
 ErrorHandler:
 
     MsgBox "Une erreur est survenue à l'ouverture du fichier 'LogMainApp.log' " & vbNewLine & vbNewLine & _
-                "Erreur : " & Err & " = " & Err.description, vbCritical, "Répertoire utilisé '" & wsdADMIN.Range("F5").Value & "'"
+                "Erreur : " & Err & " = " & Err.description, vbCritical, "Répertoire utilisé '" & wsdADMIN.Range("PATH_DATA_FILES").Value & "'"
     
     'Nettoyage : réactivation des événements, calculs, etc.
     Application.EnableEvents = True
@@ -1610,7 +1610,7 @@ Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boole
     
     'Path complet du fichier LogSaisieHeures.txt
     Dim logSaisieHeuresFile As String
-    logSaisieHeuresFile = wsdADMIN.Range("F5").Value & gDATA_PATH & _
+    logSaisieHeuresFile = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & _
                                 Application.PathSeparator & "LogSaisieHeures.log"
     
     Dim fileNum As Integer
@@ -1652,7 +1652,7 @@ Sub Settrace(Source As String, module As String, procedure As String, variable A
     Dim ms As String
     
     Dim settraceFile As String
-    settraceFile = wsdADMIN.Range("F5").Value & gDATA_PATH & _
+    settraceFile = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & _
         Application.PathSeparator & "LogSettrace.txt"
     
     Dim fileNum As Integer
@@ -1725,7 +1725,7 @@ End Sub
 Sub LogMainApp_Analysis() '2025-01-10 @ 17:10
 
     Dim logFile As String
-    logFile = wsdADMIN.Range("F5").Value & Application.PathSeparator & "LogMainApp.log"
+    logFile = wsdADMIN.Range("PATH_DATA_FILES").Value & Application.PathSeparator & "LogMainApp.log"
     
     Dim fileNum As Integer
     fileNum = FreeFile

@@ -13,9 +13,9 @@ Public gTotalRevenuNet_AC As Currency, gTotalRevenuNet_AP As Currency
 Public gBNR_Début_Année_AC As Currency, gBNR_Début_Année_AP As Currency
 Public gDividendes_Année_AC As Currency, gDividendes_Année_AP As Currency
 
-Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 04:26
+Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutoff As Date) '2025-02-05 @ 04:26
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Calculer_Soldes_Pour_EF", ws.Name & ", " & dateCutOff, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Calculer_Soldes_Pour_EF", ws.Name & ", " & dateCutoff, 0)
     
     Application.EnableEvents = False
     Application.ScreenUpdating = False
@@ -28,9 +28,9 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
     
     'Déterminer la date de cutoff pour l'an passé
     Dim cutOffAnPassé As Date
-    cutOffAnPassé = dateCutOff
+    cutOffAnPassé = dateCutoff
     cutOffAnPassé = DateAdd("yyyy", -1, cutOffAnPassé)
-    ws.Range("F5").Value = Format$(dateCutOff, wsdADMIN.Range("B1").Value)
+    ws.Range("F5").Value = Format$(dateCutoff, wsdADMIN.Range("B1").Value)
     ws.Range("H5").Value = Format$(cutOffAnPassé, wsdADMIN.Range("B1").Value)
     
     'The Chart of Account will drive the results, so the sort order is determined by COA
@@ -43,7 +43,7 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutOff As Date) '2025-02-05 @ 0
 
     'Step # 1 - Use AdvancedFilter on GL_Trans for ALL accounts and transactions between the 2 dates
     Dim rngResultAF As Range
-    Call modGL_Stuff.ObtenirSoldeCompteEntreDebutEtFin(vbNullString, #7/31/2024#, dateCutOff, rngResultAF)
+    Call modGL_Stuff.ObtenirSoldeCompteEntreDebutEtFin(vbNullString, #7/31/2024#, dateCutoff, rngResultAF)
 
     'The SORT method does not sort correctly the GLNo, since there is NUMBER and NUMBER+LETTER !!!
     Dim lastUsedRow As Long

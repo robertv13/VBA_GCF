@@ -354,8 +354,8 @@ Function Fn_Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hon
 '
                 'Update rows from MASTER file (details)
                 Dim destinationFileName As String, destinationTab As String
-                destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                                      "GCF_BD_MASTER.xlsx"
+                destinationFileName = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                                      wsdADMIN.Range("MASTER_FILE").Value
                 destinationTab = "FAC_Projets_Details$"
                 
                 Dim columnName As String
@@ -366,8 +366,8 @@ Function Fn_Verify_And_Delete_Rows_If_Value_Is_Found(valueToFind As Variant, hon
                                                         valueToFind)
                                                                      
                 'Update row from MASTER file (entête)
-                destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                                      "GCF_BD_MASTER.xlsx"
+                destinationFileName = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                                      wsdADMIN.Range("MASTER_FILE").Value
                 destinationTab = "FAC_Projets_Entete$"
                 Call DetruireEnteteSiEnteteEstDetruite(destinationFileName, _
                                                         destinationTab, _
@@ -487,8 +487,8 @@ Function ObtenirSoldeCompteGL(glCode As String, dateSolde As Date) As Currency '
     Call modGL_Stuff.ObtenirSoldeCompteEntreDebutEtFin(glCode, #7/31/2024#, dateSolde, rngResult)
     
     'Méthode plus rapide pour obtenir une somme
-    ObtenirSoldeCompteGL = Application.WorksheetFunction.Sum(rngResult.Columns(7)) _
-                                           - Application.WorksheetFunction.Sum(rngResult.Columns(8))
+    ObtenirSoldeCompteGL = Application.WorksheetFunction.SUM(rngResult.Columns(7)) _
+                                           - Application.WorksheetFunction.SUM(rngResult.Columns(8))
 
 End Function
 
@@ -524,8 +524,8 @@ Function Fn_Get_GL_Month_Trans_Total(glCode As String, dateFinMois As Date) As D
     Call modGL_Stuff.ObtenirSoldeCompteEntreDebutEtFin(glCode, dateDebutMois, dateFinMois, rngResult)
     
     'Méthode plus rapide pour obtenir une somme
-    Fn_Get_GL_Month_Trans_Total = Application.WorksheetFunction.Sum(rngResult.Columns(7)) _
-                                           - Application.WorksheetFunction.Sum(rngResult.Columns(8))
+    Fn_Get_GL_Month_Trans_Total = Application.WorksheetFunction.SUM(rngResult.Columns(7)) _
+                                           - Application.WorksheetFunction.SUM(rngResult.Columns(8))
 
 End Function
 
@@ -711,7 +711,7 @@ Function Fn_Get_Invoice_Total_Payments_AF(invNo As String)
     'Il n'est pas nécessaire de trier les résultats
     If lastUsedRow > 3 Then
         Set rngResult = ws.Range("J4:N" & lastUsedRow)
-        Fn_Get_Invoice_Total_Payments_AF = Application.WorksheetFunction.Sum(rngResult.Columns(5))
+        Fn_Get_Invoice_Total_Payments_AF = Application.WorksheetFunction.SUM(rngResult.Columns(5))
     End If
 
     'Libérer la mémoire
@@ -767,7 +767,7 @@ Function Fn_Get_Invoice_Total_Regul_AF(invNo As String)
     If lastUsedRow > 2 Then
         Set rngResult = ws.Range("O3:Y" & lastUsedRow)
         For i = 5 To 9
-            sommeRegul = sommeRegul + Application.WorksheetFunction.Sum(rngResult.Columns(i))
+            sommeRegul = sommeRegul + Application.WorksheetFunction.SUM(rngResult.Columns(i))
         Next i
     End If
 
@@ -1013,16 +1013,16 @@ Function Fn_Complete_Date(dateInput As String, joursArriere As Integer, joursFut
     joursEcart = parsedDate - Date
     If joursEcart < 0 And Abs(joursEcart) > joursArriere Then
         MsgBox "Cette date NE RESPECTE PAS les paramètres de date établis" & vbNewLine & vbNewLine & _
-                    "La date minimale est '" & Format$(Date - joursArriere, wsdADMIN.Range("B1").Value) & "'", _
+                    "La date minimale est '" & Format$(Date - joursArriere, wsdADMIN.Range("USER_DATE_FORMAT").Value) & "'", _
                     vbCritical, "La date saisie est hors-norme - (Du " & _
-                        Format$(Date - joursArriere, wsdADMIN.Range("B1").Value) & " au " & Format$(Date + joursFutur, wsdADMIN.Range("B1").Value) & ")"
+                        Format$(Date - joursArriere, wsdADMIN.Range("USER_DATE_FORMAT").Value) & " au " & Format$(Date + joursFutur, wsdADMIN.Range("USER_DATE_FORMAT").Value) & ")"
         GoTo Invalid_Date
     End If
     If joursEcart > 0 And joursEcart > joursFutur Then
         MsgBox "Cette date NE RESPECTE PAS les paramètres de date établis" & vbNewLine & vbNewLine & _
-                    "La date maximale est '" & Format$(Date + joursFutur, wsdADMIN.Range("B1").Value) & "'", _
+                    "La date maximale est '" & Format$(Date + joursFutur, wsdADMIN.Range("USER_DATE_FORMAT").Value) & "'", _
                     vbCritical, "La date saisie est hors-norme - (Du " & _
-                    Format$(Date - joursArriere, wsdADMIN.Range("B1").Value) & " au " & Format$(Date + joursFutur, wsdADMIN.Range("B1").Value) & ")"
+                    Format$(Date - joursArriere, wsdADMIN.Range("USER_DATE_FORMAT").Value) & " au " & Format$(Date + joursFutur, wsdADMIN.Range("USER_DATE_FORMAT").Value) & ")"
         GoTo Invalid_Date
     End If
    
@@ -1523,8 +1523,8 @@ Function Fn_Get_GL_Account_Opening_Balance_AF(glNo As String, d As Date) As Doub
         
     'Méthode plus rapide pour obtenir une somme
     Set rngResult = ws.Range("P2:Y" & lastUsedRow)
-    Fn_Get_GL_Account_Opening_Balance_AF = Application.WorksheetFunction.Sum(rngResult.Columns(7)) _
-                                           - Application.WorksheetFunction.Sum(rngResult.Columns(8))
+    Fn_Get_GL_Account_Opening_Balance_AF = Application.WorksheetFunction.SUM(rngResult.Columns(7)) _
+                                           - Application.WorksheetFunction.SUM(rngResult.Columns(8))
     
     'Libérer la mémoire
     Set rngCriteria = Nothing
@@ -2181,7 +2181,7 @@ Function PremierJourTrimestreFiscal(dateMax As Date) As Date
     
 End Function
 
-Function PremierJourAnneeFiscal(maxDate As Date) As Date
+Function PremierJourAnneeFinanciere(maxDate As Date) As Date
 
     Dim dt As Date
     Dim annee As Integer
@@ -2200,7 +2200,26 @@ Function PremierJourAnneeFiscal(maxDate As Date) As Date
         dt = DateSerial(annee, wsdADMIN.Range("MoisFinAnnéeFinancière") + 1, 1)
     End If
 
-    PremierJourAnneeFiscal = dt
+    PremierJourAnneeFinanciere = dt
+    
+End Function
+
+Function DernierJourAnneeFinanciere(maxDate As Date) As Date
+
+    Dim dt As Date
+    Dim annee As Integer
+    
+    'Calcul de l'année du début d'exercice
+    If month(maxDate) > wsdADMIN.Range("MoisFinAnnéeFinancière") Then
+        annee = year(maxDate) + 1
+    Else
+        annee = year(maxDate)
+    End If
+
+    'Retourner la date de la fin de l'année financière
+    dt = DateSerial(annee, wsdADMIN.Range("MoisFinAnnéeFinancière") + 1, 0)
+
+    DernierJourAnneeFinanciere = dt
     
 End Function
 
@@ -2308,4 +2327,17 @@ Public Function Fn_NomFeuilleActive() As String '2025-07-03 @ 10:18
     
 End Function
 
+Function CalculerMoisAnneeFinanciere(m As Long) As Long
 
+    Dim dernierMoisAnneeFinanciere As Long
+    dernierMoisAnneeFinanciere = wsdADMIN.Range("MoisFinAnnéeFinancière").Value
+    
+    If m > dernierMoisAnneeFinanciere Then
+        m = m - dernierMoisAnneeFinanciere
+    Else
+        m = m + 12 - dernierMoisAnneeFinanciere
+    End If
+    
+    CalculerMoisAnneeFinanciere = m
+    
+End Function

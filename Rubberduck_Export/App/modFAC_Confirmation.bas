@@ -247,38 +247,38 @@ Sub MettreAJourStatutFacEnteteMaster(invoice As String) '2025-03-12 @ 12:40
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                          "GCF_BD_MASTER.xlsx"
+    destinationFileName = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                          wsdADMIN.Range("MASTER_FILE").Value
     destinationTab = "FAC_Entete$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
-              ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";" & _
+              "Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
 
     Dim sql As String
     'Open the recordset for the specified invoice
     sql = "SELECT * FROM [" & destinationTab & "] WHERE InvNo = '" & invoice & "'"
-    rs.Open sql, conn, 2, 3
-    If Not rs.EOF Then
+    recSet.Open sql, conn, 2, 3
+    If Not recSet.EOF Then
         'Update AC_ouC with 'C'
-        rs.Fields(fFacEACouC - 1).Value = "C"
-        rs.Update
+        recSet.Fields(fFacEACouC - 1).Value = "C"
+        recSet.Update
     Else
         'Handle the case where the specified invoice is not found
         MsgBox "La facture '" & invoice & "' n'existe pas!", vbCritical
     End If
     
     'Close recordset and connection
-    rs.Close
+    recSet.Close
     conn.Close
     
     Application.ScreenUpdating = True
 
     'Libérer la mémoire
     Set conn = Nothing
-    Set rs = Nothing
+    Set recSet = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modFAC_Confirmation:MettreAJourStatutFacEnteteMaster", vbNullString, startTime)
 

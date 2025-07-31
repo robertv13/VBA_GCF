@@ -245,8 +245,8 @@ Sub ConstruireEcriturePourRemiseTpsTvq(r As Integer)
     
     Dim rngResultAF As Range
     Call modGL_Stuff.ObtenirSoldeCompteEntreDebutEtFin(ObtenirNoGlIndicateur("Revenus de consultation"), Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), dateFin, rngResultAF)
-    cases(101) = -Application.WorksheetFunction.Sum(rngResultAF.Columns(7)) _
-                    - Application.WorksheetFunction.Sum(rngResultAF.Columns(8))
+    cases(101) = -Application.WorksheetFunction.SUM(rngResultAF.Columns(7)) _
+                    - Application.WorksheetFunction.SUM(rngResultAF.Columns(8))
 
     With wshGL_EJ.Range("P10")
         .Font.Bold = True
@@ -733,44 +733,45 @@ Sub MiseAJourEcritureRenverseeBDMaster()
     
     'Définition des paramètres
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                          "GCF_BD_MASTER.xlsx"
+    destinationFileName = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                          wsdADMIN.Range("MASTER_FILE").Value
     destinationTab = "GL_Trans$"
 
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";" & _
+              "Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
 
     'Requête SQL pour rechercher la ligne correspondante
     Dim strSQL As String
     strSQL = "SELECT * FROM [" & destinationTab & "] WHERE [NoEntrée] = " & gNumeroEcritureARenverser
 
     'Ouvrir le Recordset
-    rs.Open strSQL, conn, 1, 3 'adOpenKeyset (1) + adLockOptimistic (3) pour modifier les données
+    recSet.Open strSQL, conn, 1, 3 'adOpenKeyset (1) + adLockOptimistic (3) pour modifier les données
 
     'Vérifier si des enregistrements existent
-    If rs.EOF Then
+    If recSet.EOF Then
         MsgBox "Aucun enregistrement trouvé.", vbCritical, "Impossible de mettre à jour les écritures RENVERSÉES"
     Else
         'Boucler à travers les enregistrements
-        Do While Not rs.EOF
-            rs.Fields(fGlTSource - 1).Value = "RENVERSÉE par " & wshGL_EJ.Range("B1").Value
-            rs.Update
+        Do While Not recSet.EOF
+            recSet.Fields(fGlTSource - 1).Value = "RENVERSÉE par " & wshGL_EJ.Range("B1").Value
+            recSet.Update
         'Passer à l'enregistrement suivant
-        rs.MoveNext
+        recSet.MoveNext
         Loop
     End If
     
     'Close recordset and connection
     On Error Resume Next
-    rs.Close
+    recSet.Close
     On Error GoTo 0
     conn.Close
     
     'Libérer la mémoire
     Set conn = Nothing
-    Set rs = Nothing
+    Set recSet = Nothing
 
     Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:MiseAJourEcritureRenverseeBDMaster", vbNullString, startTime)
     
@@ -813,29 +814,30 @@ Sub AjouterEJRecurrenteDBMaster(r As Long) 'Write/Update a record to external .x
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                          "GCF_BD_MASTER.xlsx"
+    destinationFileName = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                          wsdADMIN.Range("MASTER_FILE").Value
     destinationTab = "GL_EJ_Recurrente$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";" & _
+              "Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
 
     'SQL select command to find the next available ID
     Dim strSQL As String, MaxEJANo As Long
     strSQL = "SELECT MAX(NoEjR) AS MaxEJANo FROM [" & destinationTab & "]"
 
     'Open recordset to find out the MaxID
-    rs.Open strSQL, conn
+    recSet.Open strSQL, conn
     
     'Get the last used row
     Dim lastEJA As Long, nextEJANo As Long
-    If IsNull(rs.Fields("MaxEJANo").Value) Then
+    If IsNull(recSet.Fields("MaxEJANo").Value) Then
         ' Handle empty table (assign a default value, e.g., 1)
         lastEJA = 1
     Else
-        lastEJA = rs.Fields("MaxEJANo").Value
+        lastEJA = recSet.Fields("MaxEJANo").Value
     End If
     
     'Calculate the new ID
@@ -847,31 +849,31 @@ Sub AjouterEJRecurrenteDBMaster(r As Long) 'Write/Update a record to external .x
     timeStamp = Now
     
     'Close the previous recordset, no longer needed and open an empty recordset
-    rs.Close
-    rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
+    recSet.Close
+    recSet.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
     
     Dim l As Long
     For l = 9 To r
-        rs.AddNew
+        recSet.AddNew
             'Add fields to the recordset before updating it
-            rs.Fields(fGlEjRNoEjR - 1).Value = nextEJANo
-            rs.Fields(fGlEjRDescription - 1).Value = Replace(wshGL_EJ.Range("F6").Value, "[Auto]-", vbNullString)
-            rs.Fields(fGlEjRNoCompte - 1).Value = wshGL_EJ.Range("L" & l).Value
-            rs.Fields(fGlEjRCompte - 1).Value = wshGL_EJ.Range("E" & l).Value
+            recSet.Fields(fGlEjRNoEjR - 1).Value = nextEJANo
+            recSet.Fields(fGlEjRDescription - 1).Value = Replace(wshGL_EJ.Range("F6").Value, "[Auto]-", vbNullString)
+            recSet.Fields(fGlEjRNoCompte - 1).Value = wshGL_EJ.Range("L" & l).Value
+            recSet.Fields(fGlEjRCompte - 1).Value = wshGL_EJ.Range("E" & l).Value
             If wshGL_EJ.Range("H" & l).Value <> vbNullString Then
-                rs.Fields(fGlEjRDébit - 1).Value = CDbl(Replace(wshGL_EJ.Range("H" & l).Value, ".", ","))
+                recSet.Fields(fGlEjRDébit - 1).Value = CDbl(Replace(wshGL_EJ.Range("H" & l).Value, ".", ","))
             End If
             If wshGL_EJ.Range("I" & l).Value <> vbNullString Then
-                rs.Fields(fGlEjRCrédit - 1).Value = CDbl(Replace(wshGL_EJ.Range("I" & l).Value, ".", ","))
+                recSet.Fields(fGlEjRCrédit - 1).Value = CDbl(Replace(wshGL_EJ.Range("I" & l).Value, ".", ","))
             End If
-            rs.Fields(fGlEjRAutreRemarque - 1).Value = wshGL_EJ.Range("J" & l).Value
-            rs.Fields(fGlEjRTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
-        rs.Update
+            recSet.Fields(fGlEjRAutreRemarque - 1).Value = wshGL_EJ.Range("J" & l).Value
+            recSet.Fields(fGlEjRTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+        recSet.Update
     Next l
     
     'Close recordset and connection
     On Error Resume Next
-    rs.Close
+    recSet.Close
     On Error GoTo 0
     conn.Close
     
@@ -879,7 +881,7 @@ Sub AjouterEJRecurrenteDBMaster(r As Long) 'Write/Update a record to external .x
 
     'Libérer la mémoire
     Set conn = Nothing
-    Set rs = Nothing
+    Set recSet = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:AjouterEJRecurrenteDBMaster", vbNullString, startTime)
 

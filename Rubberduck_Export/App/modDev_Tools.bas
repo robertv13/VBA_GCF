@@ -479,15 +479,15 @@ Sub ComparerValeursTECLocalVsTECTDBData()
     
     Dim i As Long
     Dim tecID As Long
-    Dim dateCutOff As Date
-    dateCutOff = Date
+    Dim dateCutoff As Date
+    dateCutoff = Date
     
     Dim h As Currency, hTEC As Currency
     'Boucle dans TEC_Local
     Debug.Print "#048 - Mise en mémoire TEC_LOCAL"
     For i = 3 To lurTEC
         With wsTEC
-            If .Range("D" & i).Value > dateCutOff Then Stop
+            If .Range("D" & i).Value > dateCutoff Then Stop
             tecID = CLng(.Range("A" & i).Value)
             If arr(tecID, 1) <> vbNullString Then Stop
             arr(tecID, 1) = tecID
@@ -498,7 +498,7 @@ Sub ComparerValeursTECLocalVsTECTDBData()
             If h <> 0 Then
                 If UCase$(.Range("J" & i).Value) = "VRAI" And Len(.Range("E" & i).Value) > 2 Then
                     If UCase$(.Range("L" & i).Value) = "FAUX" Then
-                        If .Range("M" & i).Value <= dateCutOff Then
+                        If .Range("M" & i).Value <= dateCutoff Then
                             arr(tecID, 2) = h
                         Else
                             Stop
@@ -514,7 +514,7 @@ Sub ComparerValeursTECLocalVsTECTDBData()
     Debug.Print "#049 - Mise en mémoire TEC_TDB"
     For i = 2 To lurTDB
         With wsTDB
-            If .Range("D" & i).Value > dateCutOff Then Stop
+            If .Range("D" & i).Value > dateCutoff Then Stop
             tecID = CLng(.Range("A" & i).Value)
             arr(tecID, 1) = tecID
             arr(tecID, 3) = .Range("Q" & i).Value
@@ -817,7 +817,7 @@ Sub CreerRepertoireEtImporterFichiers() '2025-07-02 @ 13:57
     Dim dateHeure As String
     Dim nouveauDossier As String
     dateHeure = Format$(Now, "yyyy_mm_dd_hhnn")
-    nouveauDossier = cheminRacineDestination & dateHeure & "\"
+    nouveauDossier = cheminRacineDestination & dateHeure & Application.PathSeparator
     
     'Créer le répertoire s'il n'existe pas déjà (ne devrait pas exister)
     Dim fso As Object
@@ -828,8 +828,8 @@ Sub CreerRepertoireEtImporterFichiers() '2025-07-02 @ 13:57
     
     'Noms des deux fichiers à copier (fixe)
     Dim nomFichier1 As String, nomFichier2 As String
-    nomFichier1 = "GCF_BD_MASTER.xlsx"
-    nomFichier2 = "GCF_BD_Entrée.xlsx"
+    nomFichier1 = wsdADMIN.Range("MASTER_FILE").Value
+    nomFichier2 = wsdADMIN.Range("CLIENTS_FILE").Value
     
     'Mise en place d'un fichier .lock chez le client - 2025-07-02 @ 14:03
     Dim fichierLock As String

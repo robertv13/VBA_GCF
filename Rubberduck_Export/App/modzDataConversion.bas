@@ -12,7 +12,7 @@ Sub CopierClientsEntreClasseursFermes() '2024-08-03 @ 09:40
     Dim sourceFilePath As String
     sourceFilePath = "C:\VBA\GC_FISCALITÉ\DataConversion\Clients.xlsx"
     Dim destinationFilePath As String
-    destinationFilePath = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & "GCF_BD_Entrée.xlsx"
+    destinationFilePath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & wsdADMIN.Range("CLIENTS_FILE").Value
     
     'Declare le Workbook & le Worksheet (source)
     Dim sourceWorkbook As Workbook: Set sourceWorkbook = Workbooks.Open(sourceFilePath)
@@ -169,20 +169,14 @@ Sub ImporterDonnéesDeClasseursFermés_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 
     strRange = "A1:F110" 'Adjust the range as needed
     
     'Connection string for Excel
-    Dim strConnection As String
-    strConnection = "Provider=Microsoft.ACE.OLEDB.12.0;" & _
-                    "Data Source=" & strFilePath & ";" & _
-                    "Extended Properties=""Excel 12.0 Xml;HDR=Yes"";"
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
+    conn.Open = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & strFilePath & ";" & _
+                "Extended Properties=""Excel 12.0 Xml;HDR=Yes"";"
     
-    'Create a new ADO connection and recordset
-    Dim cnn As Object: Set cnn = CreateObject("ADODB.Connection")
-    Dim rst As Object: Set rst = CreateObject("ADODB.Recordset")
-    
-    'Open the connection
-    cnn.Open strConnection
+    Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
     
     'Open the recordset
-    rst.Open "SELECT * FROM [" & strSheetName & strRange & "]", cnn, 3, 1, 1
+    recSet.Open "SELECT * FROM [" & strSheetName & strRange & "]", conn, 3, 1, 1
     
     'Define the destination worksheet
     Dim wsDest As Worksheet
@@ -201,15 +195,15 @@ Sub ImporterDonnéesDeClasseursFermés_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 
     Dim errorMesg As String
     Dim tecID As Long: tecID = 342
     Dim totHres As Double
-    Do Until rst.EOF
+    Do Until recSet.EOF
         rowNum = rowNum + 1
-        prof = Trim$(rst.Fields(0).Value)
-        clientCode = Trim$(rst.Fields(2).Value)
+        prof = Trim$(recSet.Fields(0).Value)
+        clientCode = Trim$(recSet.Fields(2).Value)
 '        clientCode = Left$(client, 10)
 '            clientCode = Left$(clientCode, InStr(clientCode, " -") - 1)
-        client = Trim$(rst.Fields(3).Value)
+        client = Trim$(recSet.Fields(3).Value)
 '        client = Mid$(client, InStr(client, " - ") + 3, Len(client))
-        totHres = totHres + CDbl(rst.Fields(5).Value)
+        totHres = totHres + CDbl(recSet.Fields(5).Value)
         
         'Is this a Valid Client ?
         Dim myInfo() As Variant
@@ -227,11 +221,11 @@ Sub ImporterDonnéesDeClasseursFermés_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 
         wsDest.Range("A" & rowNum).Value = tecID
         wsDest.Range("B" & rowNum).Value = ObtenirProfIDAvecInitiales(prof)
         wsDest.Range("C" & rowNum).Value = prof
-        wsDest.Range("D" & rowNum).Value = rst.Fields(1).Value
+        wsDest.Range("D" & rowNum).Value = recSet.Fields(1).Value
         wsDest.Range("E" & rowNum).Value = clientCode
         wsDest.Range("F" & rowNum).Value = client
-        wsDest.Range("G" & rowNum).Value = rst.Fields(4).Value
-        wsDest.Range("H" & rowNum).Value = rst.Fields(5).Value
+        wsDest.Range("G" & rowNum).Value = recSet.Fields(4).Value
+        wsDest.Range("H" & rowNum).Value = recSet.Fields(5).Value
         wsDest.Range("I" & rowNum).Value = vbNullString
         wsDest.Range("J" & rowNum).Value = "VRAI"
         wsDest.Range("K" & rowNum).Value = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
@@ -241,7 +235,7 @@ Sub ImporterDonnéesDeClasseursFermés_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 
         wsDest.Range("O" & rowNum).Value = ThisWorkbook.Name
         wsDest.Range("P" & rowNum).Value = vbNullString
         
-        rst.MoveNext
+        recSet.MoveNext
         
     Loop
     
@@ -252,10 +246,10 @@ Sub ImporterDonnéesDeClasseursFermés_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 
     End If
     
     'Libérer la mémoire
-    rst.Close
-    cnn.Close
-    Set rst = Nothing
-    Set cnn = Nothing
+    recSet.Close
+    conn.Close
+    Set recSet = Nothing
+    Set conn = Nothing
     Set rng = Nothing
     Set wsDest = Nothing
     
@@ -290,7 +284,7 @@ Sub ImporterDonnéesDeClasseursFermésFournisseurs() '2024-08-03 @ 18:10
     Dim sourceFilePath As String
     sourceFilePath = "C:\VBA\GC_FISCALITÉ\DataConversion\Fournisseurs.xlsx"
     Dim destinationFilePath As String
-    destinationFilePath = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & "GCF_BD_Entrée.xlsx"
+    destinationFilePath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & wsdADMIN.Range("CLIENTS_FILE").Value
     
     'Declare le Workbook & le Worksheet (source)
     Dim sourceWorkbook As Workbook: Set sourceWorkbook = Workbooks.Open(sourceFilePath)
@@ -348,20 +342,13 @@ Sub ImporterDonnéesDeClasseursFermés_GL_BV() '2024-08-03 @ 18:20
     strRange = "A1:B20" 'Adjust the range as needed
     
     'Connection string for Excel
-    Dim strConnection As String
-    strConnection = "Provider=Microsoft.ACE.OLEDB.12.0;" & _
-                    "Data Source=" & strFilePath & ";" & _
-                    "Extended Properties=""Excel 12.0 Xml;HDR=Yes"";"
-    
-    'Create a new ADO connection and recordset
-    Dim cnn As Object: Set cnn = CreateObject("ADODB.Connection")
-    Dim rst As Object: Set rst = CreateObject("ADODB.Recordset")
-    
-    'Open the connection
-    cnn.Open strConnection
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
+    conn.Open = "Provider=Microsoft.ACE.OLEDB.12.0;" & "Data Source=" & strFilePath & ";" & _
+                "Extended Properties=""Excel 12.0 Xml;HDR=Yes"";"
+    Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
     
     'Open the recordset
-    rst.Open "SELECT * FROM [" & strSheetName & strRange & "]", cnn, 3, 1, 1
+    recSet.Open "SELECT * FROM [" & strSheetName & strRange & "]", conn, 3, 1, 1
     
     'Define the destination worksheet
     Dim wsDest As Worksheet: Set wsDest = wsdGL_Trans
@@ -380,11 +367,11 @@ Sub ImporterDonnéesDeClasseursFermés_GL_BV() '2024-08-03 @ 18:20
     Dim amount As Double
     Dim totalDT As Double, totalCT As Double
     
-    Do Until rst.EOF
+    Do Until recSet.EOF
         rowNum = rowNum + 1
-        descriptionGL = rst.Fields(0).Value
+        descriptionGL = recSet.Fields(0).Value
         codeGL = Fn_GetGL_Code_From_GL_Description(descriptionGL)
-        amount = rst.Fields(1).Value
+        amount = recSet.Fields(1).Value
         If amount > 0 Then
             totalDT = totalDT + amount
         Else
@@ -405,7 +392,7 @@ Sub ImporterDonnéesDeClasseursFermés_GL_BV() '2024-08-03 @ 18:20
         wsDest.Range("I" & rowNum).Value = vbNullString
         wsDest.Range("J" & rowNum).Value = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
         
-        rst.MoveNext
+        recSet.MoveNext
         
     Loop
     
@@ -413,10 +400,10 @@ Sub ImporterDonnéesDeClasseursFermés_GL_BV() '2024-08-03 @ 18:20
                 vbNewLine & vbNewLine & "un total crédit de " & totalCT
     
     'Libérer la mémoire
-    rst.Close
-    cnn.Close
-    Set rst = Nothing
-    Set cnn = Nothing
+    recSet.Close
+    conn.Close
+    Set recSet = Nothing
+    Set conn = Nothing
     Set wsDest = Nothing
     
 End Sub
@@ -442,19 +429,13 @@ Sub ImporterDonnéesDeClasseursFermés_CAR() '2024-08-04 @ 07:31
     strRange = "A1:G120" 'Adjust the range as needed
     
     'Connection string for Excel
-    strConnection = "Provider=Microsoft.ACE.OLEDB.12.0;" & _
-                    "Data Source=" & strFilePath & ";" & _
-                    "Extended Properties=""Excel 12.0 Xml;HDR=Yes"";"
-    
-    'Create a new ADO connection and recordset
-    Dim cnn As Object: Set cnn = CreateObject("ADODB.Connection")
-    Dim rst As Object: Set rst = CreateObject("ADODB.Recordset")
-    
-    'Open the connection
-    cnn.Open strConnection
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
+    conn.Open = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & strFilePath & ";" & _
+                "Extended Properties=""Excel 12.0 Xml;HDR=Yes"";"
+    Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
     
     'Open the recordset
-    rst.Open "SELECT * FROM [" & strSheetName & strRange & "]", cnn, 3, 1, 1
+    recSet.Open "SELECT * FROM [" & strSheetName & strRange & "]", conn, 3, 1, 1
     
     'Define the destination worksheet
     Set wsDest = wsdFAC_Comptes_Clients
@@ -479,19 +460,19 @@ Sub ImporterDonnéesDeClasseursFermés_CAR() '2024-08-04 @ 07:31
     Dim errorMesg As String
     Dim totCAR As Double
     
-    Do Until rst.EOF
-        client = rst.Fields(0).Value
-        dateFact = rst.Fields(1).Value
-        factNo = rst.Fields(2).Value
-        totalFact = rst.Fields(3).Value
-        recu = rst.Fields(4).Value
+    Do Until recSet.EOF
+        client = recSet.Fields(0).Value
+        dateFact = recSet.Fields(1).Value
+        factNo = recSet.Fields(2).Value
+        totalFact = recSet.Fields(3).Value
+        recu = recSet.Fields(4).Value
         regul = 0
-        If IsNull(rst.Fields(5).Value) Then
+        If IsNull(recSet.Fields(5).Value) Then
             dateRecu = vbNullString
         Else
-            dateRecu = rst.Fields(5).Value
+            dateRecu = recSet.Fields(5).Value
         End If
-        solde = rst.Fields(6).Value
+        solde = recSet.Fields(6).Value
         
         clientCode = Left$(client, 10)
             clientCode = Left$(clientCode, InStr(clientCode, " -") - 1)
@@ -529,7 +510,7 @@ Sub ImporterDonnéesDeClasseursFermés_CAR() '2024-08-04 @ 07:31
         wsDest.Cells(rowNum, fFacCCDaysOverdue).Value = joursDue
         rowNum = rowNum + 1
 
-        rst.MoveNext
+        recSet.MoveNext
         
     Loop
     
@@ -540,11 +521,11 @@ Sub ImporterDonnéesDeClasseursFermés_CAR() '2024-08-04 @ 07:31
     End If
     
     'Libérer la mémoire
-    rst.Close
-    cnn.Close
+    recSet.Close
+    conn.Close
     Set rng = Nothing
-    Set rst = Nothing
-    Set cnn = Nothing
+    Set recSet = Nothing
+    Set conn = Nothing
     Set wsDest = Nothing
     
 End Sub
@@ -904,8 +885,8 @@ Sub CorrigerNomClientDansTEC()  '2025-03-04 @ 05:48
 
     'Source - Définir les chemins d'accès des fichiers, le Workbook, le Worksheet et le Range
     Dim sourceFilePath As String
-    sourceFilePath = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                     "GCF_BD_Master.xlsx"
+    sourceFilePath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                     wsdADMIN.Range("MASTER_FILE").Value
     Dim wbSource As Workbook: Set wbSource = Workbooks.Open(sourceFilePath)
     Dim wsSource As Worksheet: Set wsSource = wbSource.Worksheets("TEC_Local")
     
@@ -915,8 +896,8 @@ Sub CorrigerNomClientDansTEC()  '2025-03-04 @ 05:48
     
     'Open the Master File Workbook
     Dim clientMFPath As String
-    clientMFPath = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                     "GCF_BD_Entrée.xlsx"
+    clientMFPath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                     wsdADMIN.Range("CLIENTS_FILE").Value
     Dim wbMF As Workbook: Set wbMF = Workbooks.Open(clientMFPath)
     Dim wsMF As Worksheet: Set wsMF = wbMF.Worksheets("Clients")
     Dim lastUsedRowClient As Long
@@ -1005,8 +986,8 @@ Sub DetecterErreurCodeClientInTEC()  '2025-03-11 @ 08:29
 
     'Source - Définir les chemins d'accès des fichiers, le Workbook et le Worksheet
     Dim sourceFilePath As String
-    sourceFilePath = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                     "GCF_BD_Master.xlsx"
+    sourceFilePath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                     wsdADMIN.Range("MASTER_FILE").Value
     Dim wbSource As Workbook: Set wbSource = Workbooks.Open(sourceFilePath)
     Dim wsSource As Worksheet: Set wsSource = wbSource.Worksheets("TEC_Local")
     
@@ -1016,8 +997,8 @@ Sub DetecterErreurCodeClientInTEC()  '2025-03-11 @ 08:29
     
     'Open the Master File Workbook
     Dim clientMFPath As String
-    clientMFPath = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                     "GCF_BD_Entrée.xlsx"
+    clientMFPath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                     wsdADMIN.Range("CLIENTS_FILE").Value
     Dim wbMF As Workbook: Set wbMF = Workbooks.Open(clientMFPath)
     Dim wsMF As Worksheet: Set wsMF = wbMF.Worksheets("Clients")
     Dim lastUsedRowClient As Long
@@ -1111,15 +1092,15 @@ Public Sub CorrigerNomClientDansCAR()  '2024-08-31 @ 06:52
 
     'Worksheets to be corrected - Open the workbook (worksheet will be determined later)
     Dim sourceFilePath As String
-    sourceFilePath = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                     "GCF_BD_Master.xlsx"
+    sourceFilePath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                     wsdADMIN.Range("MASTER_FILE").Value
     Dim wbSource As Workbook
     Set wbSource = Workbooks.Open(sourceFilePath)
     
     'Client's Master File - Workbook & Worksheet
     Dim clientMFPath As String
-    clientMFPath = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                     "GCF_BD_Entrée.xlsx"
+    clientMFPath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                     wsdADMIN.Range("CLIENTS_FILE").Value
     Dim wbMF As Workbook
     Set wbMF = Workbooks.Open(clientMFPath)
     Dim wsMF As Worksheet

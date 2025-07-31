@@ -117,15 +117,15 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                          "GCF_BD_MASTER.xlsx"
+    destinationFileName = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                          wsdADMIN.Range("MASTER_FILE").Value
     destinationTab = "FAC_Entete$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
-        ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";" & _
+              "Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
 
     'Can only ADD to the file, no modification is allowed
     
@@ -134,53 +134,53 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
     timeStamp = Now
     
     'Create an empty recordset
-    rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
+    recSet.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
     
     'Add fields to the recordset before updating it
-    rs.AddNew
+    recSet.AddNew
     With wshFAC_Finale
-        rs.Fields(fFacEInvNo - 1).Value = .Range("E28").Value
-        rs.Fields(fFacEDateFacture - 1).Value = Format$(wshFAC_Brouillon.Range("O3").Value, "yyyy-mm-dd")
-        rs.Fields(fFacEACouC - 1).Value = "AC" 'Facture to be confirmed MANUALLY - 2024-08-16 @ 05:46
-        rs.Fields(fFacECustID - 1).Value = wshFAC_Brouillon.Range("B18").Value
-        rs.Fields(fFacEContact - 1).Value = .Range("B23").Value
-        rs.Fields(fFacENomClient - 1).Value = .Range("B24").Value
-        rs.Fields(fFacEAdresse1 - 1).Value = .Range("B25").Value
-        rs.Fields(fFacEAdresse2 - 1).Value = .Range("B26").Value
-        rs.Fields(fFacEAdresse3 - 1).Value = .Range("B27").Value
+        recSet.Fields(fFacEInvNo - 1).Value = .Range("E28").Value
+        recSet.Fields(fFacEDateFacture - 1).Value = Format$(wshFAC_Brouillon.Range("O3").Value, "yyyy-mm-dd")
+        recSet.Fields(fFacEACouC - 1).Value = "AC" 'Facture to be confirmed MANUALLY - 2024-08-16 @ 05:46
+        recSet.Fields(fFacECustID - 1).Value = wshFAC_Brouillon.Range("B18").Value
+        recSet.Fields(fFacEContact - 1).Value = .Range("B23").Value
+        recSet.Fields(fFacENomClient - 1).Value = .Range("B24").Value
+        recSet.Fields(fFacEAdresse1 - 1).Value = .Range("B25").Value
+        recSet.Fields(fFacEAdresse2 - 1).Value = .Range("B26").Value
+        recSet.Fields(fFacEAdresse3 - 1).Value = .Range("B27").Value
         
-        rs.Fields(fFacEHonoraires - 1).Value = .Range("E69").Value
+        recSet.Fields(fFacEHonoraires - 1).Value = .Range("E69").Value
         
-        rs.Fields(fFacEAF1Desc - 1).Value = .Range("B70").Value
-        rs.Fields(fFacEAutresFrais1 - 1).Value = Format$(wshFAC_Finale.Range("E70").Value, "0.00")
-        rs.Fields(fFacEAF2Desc - 1).Value = .Range("B71").Value
-        rs.Fields(fFacEAutresFrais2 - 1).Value = Format$(.Range("E71").Value, "0.00")
-        rs.Fields(fFacEAF3Desc - 1).Value = .Range("B72").Value
-        rs.Fields(fFacEAutresFrais3 - 1).Value = Format$(.Range("E72").Value, "0.00")
+        recSet.Fields(fFacEAF1Desc - 1).Value = .Range("B70").Value
+        recSet.Fields(fFacEAutresFrais1 - 1).Value = Format$(wshFAC_Finale.Range("E70").Value, "0.00")
+        recSet.Fields(fFacEAF2Desc - 1).Value = .Range("B71").Value
+        recSet.Fields(fFacEAutresFrais2 - 1).Value = Format$(.Range("E71").Value, "0.00")
+        recSet.Fields(fFacEAF3Desc - 1).Value = .Range("B72").Value
+        recSet.Fields(fFacEAutresFrais3 - 1).Value = Format$(.Range("E72").Value, "0.00")
         
-        rs.Fields(fFacETauxTPS - 1).Value = Format$(.Range("C74").Value, "0.00")
-        rs.Fields(fFacEMntTPS - 1).Value = Format$(.Range("E74").Value, "0.00")
-        rs.Fields(fFacETauxTVQ - 1).Value = Format$(.Range("C75").Value, "0.00000") '2024-10-15 @ 05:49
-        rs.Fields(fFacEMntTVQ - 1).Value = Format$(.Range("E75").Value, "0.00")
+        recSet.Fields(fFacETauxTPS - 1).Value = Format$(.Range("C74").Value, "0.00")
+        recSet.Fields(fFacEMntTPS - 1).Value = Format$(.Range("E74").Value, "0.00")
+        recSet.Fields(fFacETauxTVQ - 1).Value = Format$(.Range("C75").Value, "0.00000") '2024-10-15 @ 05:49
+        recSet.Fields(fFacEMntTVQ - 1).Value = Format$(.Range("E75").Value, "0.00")
         
-        rs.Fields(fFacEARTotal - 1).Value = Format$(.Range("E77").Value, "0.00")
+        recSet.Fields(fFacEARTotal - 1).Value = Format$(.Range("E77").Value, "0.00")
         
-        rs.Fields(fFacEDépôt - 1).Value = Format$(.Range("E79").Value, "0.00")
-        rs.Fields(fFacETimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss") '2025-01-25 @ 15:01
+        recSet.Fields(fFacEDépôt - 1).Value = Format$(.Range("E79").Value, "0.00")
+        recSet.Fields(fFacETimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss") '2025-01-25 @ 15:01
     End With
     'Update the recordset (create the record)
-    rs.Update
+    recSet.Update
     
     'Close recordset and connection
     On Error Resume Next
-    rs.Close
+    recSet.Close
     On Error GoTo 0
     conn.Close
     
     Application.ScreenUpdating = True
 
     'Libérer la mémoire
-    Set rs = Nothing
+    Set recSet = Nothing
     Set conn = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Add_Invoice_Header_to_DB", vbNullString, startTime)
@@ -255,45 +255,45 @@ Sub FAC_Finale_Add_Invoice_Details_to_DB()
     If rowLastService < 34 Then GoTo nothing_to_update
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                          "GCF_BD_MASTER.xlsx"
+    destinationFileName = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                          wsdADMIN.Range("MASTER_FILE").Value
     destinationTab = "FAC_Details$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
-        ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";" & _
+              "Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
 
     'timeStamnp uniforme
     Dim timeStamp As Date
     timeStamp = Now
     
     'Create an empty recordset
-    rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
+    recSet.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
     
     Dim noFacture As String
     noFacture = wshFAC_Finale.Range("E28").Value
     Dim r As Long
     For r = 34 To rowLastService
         'Add fields to the recordset before updating it
-        rs.AddNew
+        recSet.AddNew
         With wshFAC_Finale
-            rs.Fields(fFacDInvNo - 1).Value = CStr(noFacture)
-            rs.Fields(fFacDDescription - 1).Value = .Range("B" & r).Value
+            recSet.Fields(fFacDInvNo - 1).Value = CStr(noFacture)
+            recSet.Fields(fFacDDescription - 1).Value = .Range("B" & r).Value
             If .Range("C" & r).Value <> 0 And _
                .Range("D" & r).Value <> 0 And _
                .Range("E" & r).Value <> 0 Then
-                    rs.Fields(fFacDHeures - 1).Value = Format$(.Range("C" & r).Value, "0.00")
-                    rs.Fields(fFacDTaux - 1).Value = Format$(.Range("D" & r).Value, "0.00")
-                    rs.Fields(fFacDHonoraires - 1).Value = Format$(.Range("E" & r).Value, "0.00")
+                    recSet.Fields(fFacDHeures - 1).Value = Format$(.Range("C" & r).Value, "0.00")
+                    recSet.Fields(fFacDTaux - 1).Value = Format$(.Range("D" & r).Value, "0.00")
+                    recSet.Fields(fFacDHonoraires - 1).Value = Format$(.Range("E" & r).Value, "0.00")
             End If
-            rs.Fields(fFacDInvRow - 1).Value = wshFAC_Brouillon.Range("B11").Value
-            rs.Fields(fFacDTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+            recSet.Fields(fFacDInvRow - 1).Value = wshFAC_Brouillon.Range("B11").Value
+            recSet.Fields(fFacDTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
             
         End With
     'Update the recordset (create the record)
-    rs.Update
+    recSet.Update
     Next r
     
     'Create Summary By Rates lines
@@ -301,24 +301,24 @@ Sub FAC_Finale_Add_Invoice_Details_to_DB()
     For i = 25 To 34
         If wshFAC_Brouillon.Range("R" & i).Value <> vbNullString And _
             wshFAC_Brouillon.Range("S" & i).Value <> 0 Then
-                rs.AddNew
+                recSet.AddNew
                 With wshFAC_Brouillon
-                    rs.Fields(fFacDInvNo - 1).Value = noFacture
-                    rs.Fields(fFacDDescription - 1).Value = "*** - [Sommaire des TEC] pour la facture - " & _
+                    recSet.Fields(fFacDInvNo - 1).Value = noFacture
+                    recSet.Fields(fFacDDescription - 1).Value = "*** - [Sommaire des TEC] pour la facture - " & _
                                                 wshFAC_Brouillon.Range("R" & i).Value
-                    rs.Fields(fFacDHeures - 1).Value = CDbl(Format$(.Range("S" & i).Value, "0.00"))
-                    rs.Fields(fFacDTaux - 1).Value = CDbl(Format$(.Range("T" & i).Value, "0.00"))
-                    rs.Fields(fFacDHonoraires - 1).Value = CDbl(Format$(.Range("S" & i).Value * .Range("T" & i).Value, "0.00"))
-                    rs.Fields(fFacDInvRow - 1).Value = vbNullString
-                    rs.Fields(fFacDTimeStamp - 1).Value = Format$(Now, "yyyy-mm-dd hh:mm:ss")
+                    recSet.Fields(fFacDHeures - 1).Value = CDbl(Format$(.Range("S" & i).Value, "0.00"))
+                    recSet.Fields(fFacDTaux - 1).Value = CDbl(Format$(.Range("T" & i).Value, "0.00"))
+                    recSet.Fields(fFacDHonoraires - 1).Value = CDbl(Format$(.Range("S" & i).Value * .Range("T" & i).Value, "0.00"))
+                    recSet.Fields(fFacDInvRow - 1).Value = vbNullString
+                    recSet.Fields(fFacDTimeStamp - 1).Value = Format$(Now, "yyyy-mm-dd hh:mm:ss")
                 End With
-                rs.Update
+                recSet.Update
         End If
     Next i
     
     'Close recordset and connection
     On Error Resume Next
-    rs.Close
+    recSet.Close
     On Error GoTo 0
     conn.Close
     
@@ -328,7 +328,7 @@ nothing_to_update:
 
     'Libérer la mémoire
     Set conn = Nothing
-    Set rs = Nothing
+    Set recSet = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Add_Invoice_Details_to_DB", vbNullString, startTime)
 
@@ -409,22 +409,22 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_to_DB()
     lastRow = 48
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                          "GCF_BD_MASTER.xlsx"
+    destinationFileName = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                          wsdADMIN.Range("MASTER_FILE").Value
     destinationTab = "FAC_Sommaire_Taux$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
-        ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";" & _
+              "Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
 
     'timeStamnp uniforme
     Dim timeStamp As Date
     timeStamp = Now
     
     'Create an empty recordset
-    rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
+    recSet.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
     
     Dim noFacture As String
     noFacture = wshFAC_Finale.Range("E28").Value
@@ -433,24 +433,24 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_to_DB()
     For r = firstRow To lastRow
         'Add fields to the recordset before updating it
         If wshFAC_Brouillon.Range("R" & r).Value <> vbNullString Then
-            rs.AddNew
+            recSet.AddNew
             With wshFAC_Finale
-                rs.Fields(fFacSTInvNo - 1).Value = noFacture
-                rs.Fields(fFacSTSéquence - 1).Value = seq
-                rs.Fields(fFacSTProf - 1).Value = wshFAC_Brouillon.Range("R" & r).Value
-                rs.Fields(fFacSTHeures - 1).Value = wshFAC_Brouillon.Range("S" & r).Value
-                rs.Fields(fFacSTTaux - 1).Value = wshFAC_Brouillon.Range("T" & r).Value
-                rs.Fields(fFacSTTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+                recSet.Fields(fFacSTInvNo - 1).Value = noFacture
+                recSet.Fields(fFacSTSéquence - 1).Value = seq
+                recSet.Fields(fFacSTProf - 1).Value = wshFAC_Brouillon.Range("R" & r).Value
+                recSet.Fields(fFacSTHeures - 1).Value = wshFAC_Brouillon.Range("S" & r).Value
+                recSet.Fields(fFacSTTaux - 1).Value = wshFAC_Brouillon.Range("T" & r).Value
+                recSet.Fields(fFacSTTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
                 seq = seq + 1
             End With
             'Update the recordset (create the record)
-            rs.Update
+            recSet.Update
         End If
     Next r
     
     'Close recordset and connection
     On Error Resume Next
-    rs.Close
+    recSet.Close
     conn.Close
     On Error GoTo 0
    
@@ -458,7 +458,7 @@ Sub FAC_Finale_Add_Invoice_Somm_Taux_to_DB()
 
     'Libérer la mémoire
     Set conn = Nothing
-    Set rs = Nothing
+    Set recSet = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Add_Invoice_Somm_Taux_to_DB", vbNullString, startTime)
 
@@ -522,47 +522,47 @@ Sub FAC_Finale_Add_Comptes_Clients_to_DB()
     Dim formula As String
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                          "GCF_BD_MASTER.xlsx"
+    destinationFileName = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                          wsdADMIN.Range("MASTER_FILE").Value
     destinationTab = "FAC_Comptes_Clients$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
-        ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";" & _
+              "Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
 
     'timeStamnp uniforme
     Dim timeStamp As Date
     timeStamp = Now
     
     'Create an empty recordset
-    rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
+    recSet.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
     
     'Add fields to the recordset before updating it
-    rs.AddNew
+    recSet.AddNew
     With wshFAC_Finale
-        rs.Fields(fFacCCInvNo - 1).Value = .Range("E28").Value
-        rs.Fields(fFacCCInvoiceDate - 1).Value = CDate(wshFAC_Brouillon.Range("O3").Value)
-        rs.Fields(fFacCCCustomer - 1).Value = .Range("B24").Value
-        rs.Fields(fFacCCCodeClient - 1).Value = wshFAC_Brouillon.Range("B18").Value
-        rs.Fields(fFacCCStatus - 1).Value = "Unpaid"
-        rs.Fields(fFacCCTerms - 1).Value = "Net"
-        rs.Fields(fFacCCDueDate - 1).Value = CDate(wshFAC_Brouillon.Range("O3").Value)
-        rs.Fields(fFacCCTotal - 1).Value = .Range("E77").Value 'Le dépôt s'il y en a un n'est pas comptabilisé ici!
-        rs.Fields(fFacCCTotalPaid - 1).Value = 0
-        rs.Fields(fFacCCTotalRegul - 1).Value = 0
-        rs.Fields(fFacCCBalance - 1).Value = .Range("E77").Value
-        rs.Fields(fFacCCDaysOverdue - 1).Value = 0
-        rs.Fields(fFacCCTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+        recSet.Fields(fFacCCInvNo - 1).Value = .Range("E28").Value
+        recSet.Fields(fFacCCInvoiceDate - 1).Value = CDate(wshFAC_Brouillon.Range("O3").Value)
+        recSet.Fields(fFacCCCustomer - 1).Value = .Range("B24").Value
+        recSet.Fields(fFacCCCodeClient - 1).Value = wshFAC_Brouillon.Range("B18").Value
+        recSet.Fields(fFacCCStatus - 1).Value = "Unpaid"
+        recSet.Fields(fFacCCTerms - 1).Value = "Net"
+        recSet.Fields(fFacCCDueDate - 1).Value = CDate(wshFAC_Brouillon.Range("O3").Value)
+        recSet.Fields(fFacCCTotal - 1).Value = .Range("E77").Value 'Le dépôt s'il y en a un n'est pas comptabilisé ici!
+        recSet.Fields(fFacCCTotalPaid - 1).Value = 0
+        recSet.Fields(fFacCCTotalRegul - 1).Value = 0
+        recSet.Fields(fFacCCBalance - 1).Value = .Range("E77").Value
+        recSet.Fields(fFacCCDaysOverdue - 1).Value = 0
+        recSet.Fields(fFacCCTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
     End With
     
     'Update the recordset (create the record)
-    rs.Update
+    recSet.Update
     
     'Close recordset and connection
     On Error Resume Next
-    rs.Close
+    recSet.Close
     On Error GoTo 0
     conn.Close
     
@@ -570,7 +570,7 @@ Sub FAC_Finale_Add_Comptes_Clients_to_DB()
 
     'Libérer la mémoire
     Set conn = Nothing
-    Set rs = Nothing
+    Set recSet = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Add_Comptes_Clients_to_DB", vbNullString, startTime)
 
@@ -622,15 +622,15 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Up
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                          "GCF_BD_MASTER.xlsx"
+    destinationFileName = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                          wsdADMIN.Range("MASTER_FILE").Value
     destinationTab = "TEC_Local$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
-        ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";" & _
+              "Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
 
     Dim r As Long, tecID As Long, sql As String
     For r = firstRow To lastRow
@@ -642,31 +642,31 @@ Sub FAC_Finale_TEC_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Up
         
         'Open the recordset for the specified ID
         sql = "SELECT * FROM [" & destinationTab & "] WHERE TECID=" & tecID
-        rs.Open sql, conn, 2, 3
-        If Not rs.EOF Then
+        recSet.Open sql, conn, 2, 3
+        If Not recSet.EOF Then
             'Update EstFacturee, DateFacturee & NoFacture
-            rs.Fields(fTECEstFacturee - 1).Value = "VRAI"
-            rs.Fields(fTECDateFacturee - 1).Value = Format$(Date, "yyyy-mm-dd")
-            rs.Fields(fTECVersionApp - 1).Value = ThisWorkbook.Name
-            rs.Fields(fTECNoFacture - 1).Value = wshFAC_Brouillon.Range("O6").Value
-            rs.Update
+            recSet.Fields(fTECEstFacturee - 1).Value = "VRAI"
+            recSet.Fields(fTECDateFacturee - 1).Value = Format$(Date, "yyyy-mm-dd")
+            recSet.Fields(fTECVersionApp - 1).Value = ThisWorkbook.Name
+            recSet.Fields(fTECNoFacture - 1).Value = wshFAC_Brouillon.Range("O6").Value
+            recSet.Update
         Else
             'Handle the case where the specified ID is not found
             MsgBox "L'enregistrement avec le TECID '" & r & "' ne peut être trouvé!", _
                 vbExclamation
-            rs.Close
+            recSet.Close
             conn.Close
             Exit Sub
         End If
         'Update the recordset (create the record)
-        rs.Update
-        rs.Close
+        recSet.Update
+        recSet.Close
 next_iteration:
     Next r
     
     'Close recordset and connection
     On Error Resume Next
-    rs.Close
+    recSet.Close
     On Error GoTo 0
     conn.Close
     
@@ -674,7 +674,7 @@ next_iteration:
 
     'Libérer la mémoire
     Set conn = Nothing
-    Set rs = Nothing
+    Set recSet = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_TEC_Update_As_Billed_To_DB", vbNullString, startTime)
 
@@ -716,15 +716,15 @@ Sub FAC_Finale_Softdelete_Projets_Details_To_DB(projetID As Long)
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                          "GCF_BD_MASTER.xlsx"
+    destinationFileName = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                          wsdADMIN.Range("MASTER_FILE").Value
     destinationTab = "FAC_Projets_Details$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
-        ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";" & _
+              "Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
 
     'Build the query
     Dim strSQL As String
@@ -735,7 +735,7 @@ Sub FAC_Finale_Softdelete_Projets_Details_To_DB(projetID As Long)
     
     'Close recordset and connection
     On Error Resume Next
-    rs.Close
+    recSet.Close
     On Error GoTo 0
     conn.Close
     
@@ -743,7 +743,7 @@ Sub FAC_Finale_Softdelete_Projets_Details_To_DB(projetID As Long)
 
     'Libérer la mémoire
     Set conn = Nothing
-    Set rs = Nothing
+    Set recSet = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Softdelete_Projets_Details_To_DB", vbNullString, startTime)
 
@@ -794,14 +794,14 @@ Sub FAC_Finale_Softdelete_Projets_Entete_To_DB(projetID As Long)
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                          "GCF_BD_MASTER.xlsx"
+    destinationFileName = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                          wsdADMIN.Range("MASTER_FILE").Value
     destinationTab = "FAC_Projets_Entete$"
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & _
-        ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";" & _
+              "Extended Properties=""Excel 12.0 XML;HDR=YES"";"
 
     'Build the query
     Dim strSQL As String
@@ -1071,7 +1071,7 @@ Function FAC_Finale_Create_PDF_Func(noFacture As String, Optional action As Stri
     Application.ScreenUpdating = False
 
     'Construct the SaveAs filename
-    SaveAs = wsdADMIN.Range("F5").Value & gFACT_PDF_PATH & Application.PathSeparator & _
+    SaveAs = wsdADMIN.Range("PATH_DATA_FILES").Value & gFACT_PDF_PATH & Application.PathSeparator & _
                      noFacture & ".pdf" '2023-12-19 @ 07:28
 
     'Check if the file already exists
@@ -1143,7 +1143,7 @@ Sub FAC_Finale_Copie_Vers_Excel(clientID As String, clientName As String, invNo 
     
     'Définir le chemin complet du répertoire des fichiers Excel
     Dim ExcelFilesFullPath As String
-    ExcelFilesFullPath = wsdADMIN.Range("F5").Value & gFACT_EXCEL_PATH
+    ExcelFilesFullPath = wsdADMIN.Range("PATH_DATA_FILES").Value & gFACT_EXCEL_PATH
     ChDir ExcelFilesFullPath
     
     'Définir la feuille source et la plage à copier
@@ -1363,7 +1363,7 @@ Sub FAC_Finale_Creation_Courriel(noFacture As String, clientID As String) '2024-
     
     '1a. Chemin de la pièce jointe (Facture en format PDF)
     Dim attachmentFullPathName As String
-    attachmentFullPathName = wsdADMIN.Range("F5").Value & gFACT_PDF_PATH & Application.PathSeparator & _
+    attachmentFullPathName = wsdADMIN.Range("PATH_DATA_FILES").Value & gFACT_PDF_PATH & Application.PathSeparator & _
                      noFacture & ".pdf" '2024-09-03 @ 16:43
     
     '1b. Vérification de l'existence de la pièce jointe

@@ -38,7 +38,7 @@ Sub DemarrerApplication() '2025-07-11 @ 15:16
     rootPath = ObtenirRepertoireBase
 
     Application.EnableEvents = False
-    wsdADMIN.Range("F5").Value = rootPath
+    wsdADMIN.Range("PATH_DATA_FILES").Value = rootPath
     Application.EnableEvents = True
    
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("----- DÉBUT D'UNE NOUVELLE SESSION (modAppli:DemarrerApplication) -----", vbNullString, 0)
@@ -124,7 +124,7 @@ Sub CreerFichierUtilisateurActif(ByVal userName As String)
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:CreerFichierUtilisateurActif", vbNullString, 0)
     
     Dim traceFilePath As String
-    traceFilePath = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
+    traceFilePath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
     
     Dim FileNumber As Long
     FileNumber = FreeFile
@@ -183,10 +183,10 @@ Sub CreerSauvegardeMaster()
     
     'Chemin source (fichier principal) et destination (sauvegarde)
     Dim masterFilePath As String
-    masterFilePath = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
+    masterFilePath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & wsdADMIN.Range("MASTER_FILE").Value
     
     Dim backupFilePath As String
-    backupFilePath = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
+    backupFilePath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
                      "GCF_BD_MASTER_" & Format$(Now, "YYYYMMDD_HHMMSS") & ".xlsx"
     
     'Créer directement une copie du fichier sans ouvrir Excel
@@ -226,7 +226,7 @@ Sub EcrireInformationsConfigAuMenu(ByVal user As String)
 
     ' Récupération des valeurs
     formatDate = wsdADMIN.Range("B1").Value
-    environnement = wsdADMIN.Range("F5").Value
+    environnement = wsdADMIN.Range("PATH_DATA_FILES").Value
 
     valeurs = Array( _
         "Heure - " & Format$(Now(), formatDate & " hh:mm:ss"), _
@@ -440,7 +440,7 @@ Public Sub EnregistrerActiviteAuLog(ByVal message As String) '2025-07-03 @ 10:29
     End If
 
     Dim cheminLog As String
-    cheminLog = wsdADMIN.Range("F5").Value & gDATA_PATH & "\ActiviteDurantSurveillance.txt"
+    cheminLog = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & "\ActiviteDurantSurveillance.txt"
 
     Dim fileNum As Integer
     fileNum = FreeFile

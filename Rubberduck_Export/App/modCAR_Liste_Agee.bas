@@ -165,7 +165,7 @@ Sub CreerListeAgeeCC() '2024-09-08 @ 15:55
                 wshCAR_Liste_Agee.Cells(r, 2).Value = client
                 wshCAR_Liste_Agee.Cells(r, 3).Value = numFacture
                 wshCAR_Liste_Agee.Cells(r, 4).Value = dateFacture
-                wshCAR_Liste_Agee.Cells(r, 4).NumberFormat = wsdADMIN.Range("B1").Value
+                wshCAR_Liste_Agee.Cells(r, 4).NumberFormat = wsdADMIN.Range("USER_DATE_FORMAT").Value
                 wshCAR_Liste_Agee.Cells(r, 5).Value = montantRestant
                 Select Case trancheAge
                     Case "- de 30 jours"
@@ -185,7 +185,7 @@ Sub CreerListeAgeeCC() '2024-09-08 @ 15:55
                 wshCAR_Liste_Agee.Cells(r, 3).Value = numFacture
                 wshCAR_Liste_Agee.Cells(r, 4).Value = "Facture"
                 wshCAR_Liste_Agee.Cells(r, 5).Value = dateFacture
-                wshCAR_Liste_Agee.Cells(r, 5).NumberFormat = wsdADMIN.Range("B1").Value
+                wshCAR_Liste_Agee.Cells(r, 5).NumberFormat = wsdADMIN.Range("USER_DATE_FORMAT").Value
                 wshCAR_Liste_Agee.Cells(r, 6).Value = montantFacture
                 Select Case trancheAge
                     Case "- de 30 jours"
@@ -582,7 +582,7 @@ Sub EnvoyerRappelParCourriel(noFact As String)
 
     'Ajouter la copie de la facture (format PDF)
     Dim attachmentFullPathName As String
-    attachmentFullPathName = wsdADMIN.Range("F5").Value & gFACT_PDF_PATH & Application.PathSeparator & _
+    attachmentFullPathName = wsdADMIN.Range("PATH_DATA_FILES").Value & gFACT_PDF_PATH & Application.PathSeparator & _
                      noFact & ".pdf"
     
     'Vérification de l'existence de la pièce jointe

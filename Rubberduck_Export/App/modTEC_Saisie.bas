@@ -288,20 +288,17 @@ Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to
     Application.ScreenUpdating = False
     
     Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("F5").Value & gDATA_PATH & Application.PathSeparator & _
-                          "GCF_BD_MASTER.xlsx"
+    destinationFileName = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                          wsdADMIN.Range("MASTER_FILE").Value
     destinationTab = "TEC_Local$"
     
 '    On Error GoTo ErrorHandler
     
     'Initialize connection, connection string & open the connection
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    Dim strConnection As String
-    strConnection = "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & _
-        destinationFileName & ";Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    conn.Open strConnection
-    
-    Dim rs As Object: Set rs = CreateObject("ADODB.Recordset")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";" & _
+              "Extended Properties=""Excel 12.0 XML;HDR=YES"";"
+    Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
 
     Dim saveLogTECID As Long
     saveLogTECID = tecID
@@ -323,14 +320,14 @@ Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to
         
         'Open the recordset for the specified ID
         
-        rs.Open "SELECT * FROM [" & destinationTab & "] WHERE TECID=" & Abs(tecID), conn, 2, 3
+        recSet.Open "SELECT * FROM [" & destinationTab & "] WHERE TECID=" & Abs(tecID), conn, 2, 3
         saveLogTECID = tecID
-        If Not rs.EOF Then
+        If Not recSet.EOF Then
             'Update the "IsDeleted" field to mark the record as deleted
-            rs.Fields(fTECDateSaisie - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
-            rs.Fields(fTECEstDetruit - 1).Value = Fn_Convert_Value_Boolean_To_Text(True)
-            rs.Fields(fTECVersionApp - 1).Value = ThisWorkbook.Name
-            rs.Update
+            recSet.Fields(fTECDateSaisie - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+            recSet.Fields(fTECEstDetruit - 1).Value = Fn_Convert_Value_Boolean_To_Text(True)
+            recSet.Fields(fTECVersionApp - 1).Value = ThisWorkbook.Name
+            recSet.Update
             
             Call Log_Saisie_Heures("DELETE" & saveLogTECID, ufSaisieHeures.cmbProfessionnel.Value & " | " & _
                                     dateValue & " | " & _
@@ -346,7 +343,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to
             MsgBox "L'enregistrement avec le TECID '" & tecID & "' ne peut être trouvé!", _
                 vbExclamation
                 
-            rs.Close
+            recSet.Close
             conn.Close
             
             Exit Sub
@@ -361,15 +358,15 @@ Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to
             strSQL = "SELECT MAX(TECID) AS MaxID FROM [" & destinationTab & "]"
         
             'Open recordset to find out the MaxID
-            rs.Open strSQL, conn
+            recSet.Open strSQL, conn
             
             'Get the last used row
             Dim lastRow As Long
-            If IsNull(rs.Fields("MaxID").Value) Then
+            If IsNull(recSet.Fields("MaxID").Value) Then
                 'Handle empty table (assign a default value, e.g., 0)
                 lastRow = 0
             Else
-                lastRow = rs.Fields("MaxID").Value
+                lastRow = recSet.Fields("MaxID").Value
             End If
             
             'Calculate the new ID
@@ -380,31 +377,31 @@ Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to
             saveLogTECID = nextID
         
             'Close the previous recordset, no longer needed and open an empty recordset
-            rs.Close
-            rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
+            recSet.Close
+            recSet.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
             
             'Create a new RecordSet and update all fields of the recordset before updating it
-            rs.AddNew
-            rs.Fields(fTECTECID - 1).Value = nextID
-            rs.Fields(fTECProfID - 1).Value = ufSaisieHeures.txtProfID.Value
-            rs.Fields(fTECProf - 1).Value = ufSaisieHeures.cmbProfessionnel.Value
-            rs.Fields(fTECDate - 1).Value = dateValue '2024-09-04 @ 09:01
-            rs.Fields(fTECClientID - 1).Value = ufSaisieHeures.txtClientID.Value
-            rs.Fields(fTECClientNom - 1).Value = ufSaisieHeures.txtClient.Value
+            recSet.AddNew
+            recSet.Fields(fTECTECID - 1).Value = nextID
+            recSet.Fields(fTECProfID - 1).Value = ufSaisieHeures.txtProfID.Value
+            recSet.Fields(fTECProf - 1).Value = ufSaisieHeures.cmbProfessionnel.Value
+            recSet.Fields(fTECDate - 1).Value = dateValue '2024-09-04 @ 09:01
+            recSet.Fields(fTECClientID - 1).Value = ufSaisieHeures.txtClientID.Value
+            recSet.Fields(fTECClientNom - 1).Value = ufSaisieHeures.txtClient.Value
             If Len(ufSaisieHeures.txtActivite.Value) > 255 Then
                 ufSaisieHeures.txtActivite.Value = Left$(ufSaisieHeures.txtActivite.Value, 255)
             End If
-            rs.Fields(fTECDescription - 1).Value = ufSaisieHeures.txtActivite.Value
-            rs.Fields(fTECHeures - 1).Value = Format$(ufSaisieHeures.txtHeures.Value, "#0.00")
-            rs.Fields(fTECCommentaireNote - 1).Value = ufSaisieHeures.txtCommNote.Value
-            rs.Fields(fTECEstFacturable - 1).Value = Fn_Convert_Value_Boolean_To_Text(ufSaisieHeures.chbFacturable.Value)
-            rs.Fields(fTECDateSaisie - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
-            rs.Fields(fTECEstFacturee - 1).Value = Fn_Convert_Value_Boolean_To_Text(False)
-            rs.Fields(fTECDateFacturee - 1).Value = Null
-            rs.Fields(fTECEstDetruit - 1).Value = Fn_Convert_Value_Boolean_To_Text(False)
-            rs.Fields(fTECVersionApp - 1).Value = ThisWorkbook.Name
-            rs.Fields(fTECNoFacture - 1).Value = vbNullString
-            rs.Update
+            recSet.Fields(fTECDescription - 1).Value = ufSaisieHeures.txtActivite.Value
+            recSet.Fields(fTECHeures - 1).Value = Format$(ufSaisieHeures.txtHeures.Value, "#0.00")
+            recSet.Fields(fTECCommentaireNote - 1).Value = ufSaisieHeures.txtCommNote.Value
+            recSet.Fields(fTECEstFacturable - 1).Value = Fn_Convert_Value_Boolean_To_Text(ufSaisieHeures.chbFacturable.Value)
+            recSet.Fields(fTECDateSaisie - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+            recSet.Fields(fTECEstFacturee - 1).Value = Fn_Convert_Value_Boolean_To_Text(False)
+            recSet.Fields(fTECDateFacturee - 1).Value = Null
+            recSet.Fields(fTECEstDetruit - 1).Value = Fn_Convert_Value_Boolean_To_Text(False)
+            recSet.Fields(fTECVersionApp - 1).Value = ThisWorkbook.Name
+            recSet.Fields(fTECNoFacture - 1).Value = vbNullString
+            recSet.Update
             
             'Nouveau log - 2024-09-02 @ 10:40
             Call Log_Saisie_Heures("ADD    " & saveLogTECID, ufSaisieHeures.cmbProfessionnel.Value & " | " & _
@@ -419,17 +416,17 @@ Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to
         Else 'Update an existing record (TECID <> 0)
         
             'Open the recordset for the specified ID
-            rs.Open "SELECT * FROM [" & destinationTab & "] WHERE TECID=" & tecID, conn, 2, 3
-            If Not rs.EOF Then
+            recSet.Open "SELECT * FROM [" & destinationTab & "] WHERE TECID=" & tecID, conn, 2, 3
+            If Not recSet.EOF Then
                 'Update fields for the existing record
-                rs.Fields(fTECClientID - 1).Value = ufSaisieHeures.txtClientID.Value
-                rs.Fields(fTECClientNom - 1).Value = ufSaisieHeures.txtClient.Value
-                rs.Fields(fTECDescription - 1).Value = ufSaisieHeures.txtActivite.Value
-                rs.Fields(fTECHeures - 1).Value = Format$(ufSaisieHeures.txtHeures.Value, "#0.00")
-                rs.Fields(fTECCommentaireNote - 1).Value = ufSaisieHeures.txtCommNote.Value
-                rs.Fields(fTECEstFacturable - 1).Value = Fn_Convert_Value_Boolean_To_Text(ufSaisieHeures.chbFacturable.Value)
-                rs.Fields(fTECDateSaisie - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
-                rs.Fields(fTECVersionApp - 1).Value = ThisWorkbook.Name
+                recSet.Fields(fTECClientID - 1).Value = ufSaisieHeures.txtClientID.Value
+                recSet.Fields(fTECClientNom - 1).Value = ufSaisieHeures.txtClient.Value
+                recSet.Fields(fTECDescription - 1).Value = ufSaisieHeures.txtActivite.Value
+                recSet.Fields(fTECHeures - 1).Value = Format$(ufSaisieHeures.txtHeures.Value, "#0.00")
+                recSet.Fields(fTECCommentaireNote - 1).Value = ufSaisieHeures.txtCommNote.Value
+                recSet.Fields(fTECEstFacturable - 1).Value = Fn_Convert_Value_Boolean_To_Text(ufSaisieHeures.chbFacturable.Value)
+                recSet.Fields(fTECDateSaisie - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+                recSet.Fields(fTECVersionApp - 1).Value = ThisWorkbook.Name
                 
                 Call Log_Saisie_Heures("UPDATE " & saveLogTECID, ufSaisieHeures.cmbProfessionnel.Value & " | " & _
                             dateValue & " | " & _
@@ -447,18 +444,18 @@ Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to
                 MsgBox "L'enregistrement avec le TECID '" & tecID & "' ne peut être trouvé!", vbExclamation
                 Call modDev_Utils.EnregistrerLogApplication("ERREUR - N'a pas trouvé le TECID '", CStr(saveLogTECID), -1)   '2024-09-13 @ 09:09
                 Call Log_Saisie_Heures("Erreur  ", "@00495 - Impossible de trouver le TECID = " & CStr(saveLogTECID)) '2024-09-02 @ 10:35
-                rs.Close
+                recSet.Close
                 conn.Close
                 Exit Sub
             End If
         End If
     End If
     'Update the recordset (create the record)
-    rs.Update
+    recSet.Update
     
     'Close recordset and connection
     On Error Resume Next
-    rs.Close
+    recSet.Close
     conn.Close
     On Error GoTo 0
     
@@ -466,7 +463,7 @@ Sub TEC_Record_Add_Or_Update_To_DB(tecID As Long) 'Write -OR- Update a record to
 
     'Libérer la mémoire
     Set conn = Nothing
-    Set rs = Nothing
+    Set recSet = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:TEC_Record_Add_Or_Update_To_DB", CStr(tecID), startTime)
 
@@ -478,14 +475,14 @@ ErrorHandler:
            "ou déjà ouvert par un autre utilisateur ou" & vbNewLine & vbNewLine & _
            "ou un autre type de problème" & vbNewLine & vbNewLine & _
            "COMMUNIQUER AVEC LE DÉVELOPPEUR IMMÉDIATEMENT", vbCritical, "Erreur = " & Err & " - " & Err.description
-    If Not rs Is Nothing Then
-        rs.Close
+    If Not recSet Is Nothing Then
+        recSet.Close
     End If
     If Not conn Is Nothing Then
         conn.Close
         On Error Resume Next
         Set conn = Nothing
-        Set rs = Nothing
+        Set recSet = Nothing
         On Error GoTo 0
     End If
     
@@ -676,8 +673,8 @@ Sub TEC_Refresh_ListBox_And_Add_Hours() 'Load the listBox with the appropriate r
     lastRow = wshTEC_TDB_Data.Cells(wshTEC_TDB_Data.Rows.count, "W").End(xlUp).Row
     If lastRow > 1 Then
         Set rngResult = wshTEC_TDB_Data.Range("W2:AD" & lastRow)
-        totalHresFactSemaine = Application.WorksheetFunction.Sum(rngResult.Columns(7))
-        totalHresNonFactSemaine = Application.WorksheetFunction.Sum(rngResult.Columns(8))
+        totalHresFactSemaine = Application.WorksheetFunction.SUM(rngResult.Columns(7))
+        totalHresNonFactSemaine = Application.WorksheetFunction.SUM(rngResult.Columns(8))
     End If
 
     ufSaisieHeures.txtHresFactSemaine.Value = Format$(totalHresFactSemaine, "#0.00")
