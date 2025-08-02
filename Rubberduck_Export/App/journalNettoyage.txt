@@ -1,4 +1,4 @@
-﻿📘 Journal typographique — 08/01/2025 21:26:10
+﻿📘 Journal typographique — 08/02/2025 00:09:54
 
 🔧 Fichier : clsControlWrapper.cls
 
@@ -12,9 +12,15 @@
 
 🔧 Fichier : Feuil1.doccls
 
+🔧 Fichier : Feuil12.doccls
+
+🔧 Fichier : Feuil2.doccls
+
 🔧 Fichier : Feuil3.doccls
 
 🔧 Fichier : Feuil4.doccls
+
+🔧 Fichier : Feuil5.doccls
 
 🔧 Fichier : Feuil6.doccls
 
@@ -270,6 +276,8 @@
    ✅ Remplacé : .row ➜ .Row
 
 🔧 Fichier : modTestJump.bas
+
+🔧 Fichier : Module1.bas
 
 🔧 Fichier : modzDataConversion.bas
    ✅ Remplacé : .column ➜ .Column

@@ -28,7 +28,7 @@ End Type
 Private gverificationIntegriteOK As Boolean
 Private gsoldeComptesClients As Currency
 Private gValeursAComparer() As Variant
-Private gdictFactures As New Dictionary
+Private gdictTotalFacture As New Dictionary
 
 '@Description("Routine pour ajouter des lignes de message à la feuille")
 Private Sub AjouterMessage(ws As Worksheet, ByRef r As Long, ByRef c As Long, message As String)
@@ -1851,11 +1851,22 @@ Private Sub VerifierFACEntete(ByVal wsOutput As Worksheet, ByRef r As Long, ByRe
     Dim isFACEntêteValid As Boolean
     isFACEntêteValid = True
     
+    Set gdictTotalFacture = CreateObject("Scripting.Dictionary")
+    
     For i = LBound(arr, 1) To UBound(arr, 1)
         Inv_No = arr(i, 1)
         'Indique que la facture PDF existe dans la feuille FAC_Entete
         If dictFacturesPDF.Exists(Inv_No) Then
             dictFacturesPDF(Inv_No) = True
+        End If
+        
+        'Sauvegarde le total de la facture
+        If Not gdictTotalFacture.Exists(Inv_No) Then
+            gdictTotalFacture.Add Inv_No, arr(i, 21)
+        Else
+            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** La facture '" & Inv_No & "' à la ligne " & i & " a déja été vue (DOUBLON) ...")
+            r = r + 1
+            isFACEntêteValid = False
         End If
         
         If IsDate(arr(i, 2)) = False Or arr(i, 2) > Date Then
@@ -2071,8 +2082,23 @@ Private Sub VerifierFACComptesClients(ByVal wsOutput As Worksheet, ByRef r As Lo
     Dim isFACCCValid As Boolean
     isFACCCValid = True
     
+    Dim totalFacture As Currency
+    
     For i = LBound(arr, 1) To UBound(arr, 1)
         Inv_No = arr(i, fFacCCInvNo)
+        If gdictTotalFacture.Exists(Inv_No) Then
+            totalFacture = gdictTotalFacture(Inv_No)
+            If totalFacture <> arr(i, fFacCCTotal) Then
+                Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + 1 & " (facture = " & Inv_No & "), total (" & arr(i, fFacCCTotal) & " <> total FAC_Entete (" & totalFacture & ")")
+                r = r + 1
+                isFACCCValid = False
+            End If
+        Else
+            Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + 1 & " (facture = " & Inv_No & "), la facture n'existe pas dans FAC_Entete")
+            r = r + 1
+            isFACCCValid = False
+        End If
+                
         Dim invType As String
         invType = Fn_Get_Invoice_Type(Inv_No)
         If invType <> "C" And invType <> "AC" Then
@@ -3311,7 +3337,7 @@ Private Sub VerifierTEC(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef read
     Dim ws As Worksheet: Set ws = wsdTEC_Local
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 7991 'What is the last TECID analyzed ?
+    lastTECIDReported = 8035 'What is the last TECID analyzed ?
     
     'Réference au UserDefined structure 'StatistiquesTEC'
     Dim stats As StatistiquesTEC
