@@ -383,22 +383,22 @@ Sub ComptabiliserValeurTEC() '2025-06-08 @ 08:37
 
 End Sub
 
-Sub shp_TEC_Evaluation_Back_To_TEC_Menu_Click()
+Sub shpRetourMenuTEC_Click()
 
-    Call TEC_Evaluation_Back_To_TEC_Menu
+    Call RetourMenuTEC
     
 End Sub
 
-Sub TEC_Evaluation_Back_To_TEC_Menu()
+Sub RetourMenuTEC()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Evaluation:TEC_Evaluation_Back_To_TEC_Menu", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Evaluation:RetourMenuTEC", vbNullString, 0)
     
     wshTEC_Evaluation.Visible = xlSheetVeryHidden
     
     wshMenuTEC.Activate
     wshMenuTEC.Range("A1").Select
     
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Evaluation:TEC_Evaluation_Back_To_TEC_Menu", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Evaluation:RetourMenuTEC", vbNullString, startTime)
 
 End Sub
 

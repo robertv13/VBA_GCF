@@ -13,9 +13,9 @@ Public gTotalRevenuNet_AC As Currency, gTotalRevenuNet_AP As Currency
 Public gBNR_Début_Année_AC As Currency, gBNR_Début_Année_AP As Currency
 Public gDividendes_Année_AC As Currency, gDividendes_Année_AP As Currency
 
-Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutoff As Date) '2025-02-05 @ 04:26
+Sub CalculerSoldesPourEF(ws As Worksheet, dateCutoff As Date) '2025-02-05 @ 04:26
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Calculer_Soldes_Pour_EF", ws.Name & ", " & dateCutoff, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:CalculerSoldesPourEF", ws.Name & ", " & dateCutoff, 0)
     
     Application.EnableEvents = False
     Application.ScreenUpdating = False
@@ -202,26 +202,26 @@ Sub Calculer_Soldes_Pour_EF(ws As Worksheet, dateCutoff As Date) '2025-02-05 @ 0
     Set dictPreuve = Nothing
     Set dictSoldesParGL = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Calculer_Soldes_Pour_EF", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:CalculerSoldesPourEF", vbNullString, startTime)
 
 End Sub
 
-Sub shp_GL_PrepEF_Preparer_Click()
+Sub shpPreparerEF_Click()
 
     Dim ws As Worksheet
     Set ws = wshGL_PrepEF
     
-    Call Assembler_États_Financiers
+    Call AssemblerEtatsFinanciers
     
 End Sub
 
-Sub shp_GL_PrepEF_Exit_Click()
+Sub shpRetournerMenuGL_Click()
 
-    Call GL_PrepEF_Back_To_Menu
+    Call RetournerMenuGL
 
 End Sub
 
-Sub GL_PrepEF_Back_To_Menu()
+Sub RetournerMenuGL()
     
     wshGL_PrepEF.Visible = xlSheetHidden
     
@@ -230,9 +230,9 @@ Sub GL_PrepEF_Back_To_Menu()
     
 End Sub
 
-Sub Assembler_États_Financiers()
+Sub AssemblerEtatsFinanciers()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_États_Financiers", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerEtatsFinanciers", vbNullString, 0)
     
     Dim dateAC As Date, dateAP As Date
     dateAC = wshGL_PrepEF.Range("F5").Value
@@ -273,7 +273,7 @@ Sub Assembler_États_Financiers()
     MsgBox "Les états financiers ont été produits" & vbNewLine & vbNewLine & _
             "Voir les onglets respectifs au bas du classeur", vbOKOnly, "Fin de traitement"
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:Assembler_États_Financiers", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerEtatsFinanciers", vbNullString, startTime)
 
 End Sub
 
@@ -937,7 +937,6 @@ End Function
 
 Sub ImprimerLigneEF(ws As Worksheet, ByRef currRow As Integer, LigneEF As String, codeEF As String, typeLigne As String, gras As String, souligne As String, size As Long)
     
-'    Debug.Print "#7-"; currRow; Tab(10); codeEF; Tab(18); typeLigne; Tab(25); gras; Tab(33); souligne; Tab(41); size
     Dim correcteurSigne As Integer
     Dim section As String
     section = Left$(codeEF, 1)
@@ -971,7 +970,6 @@ Sub ImprimerLigneEF(ws As Worksheet, ByRef currRow As Integer, LigneEF As String
                 Else
                     doitImprimer = False
                 End If
-                
             Else
                 doitImprimer = False
             End If

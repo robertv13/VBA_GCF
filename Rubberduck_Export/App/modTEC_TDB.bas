@@ -1,18 +1,22 @@
 Attribute VB_Name = "modTEC_TDB"
 Option Explicit
 
-Sub shpTEC_TDB_BackToMenu_Click()
+Sub shpRetourAuMenuTEC_Click()
 
-    Call TEC_TDB_BackToMenu
+    Call RetourAuMenuTEC
 
 End Sub
 
-Sub TEC_TDB_BackToMenu()
+Sub RetourAuMenuTEC()
 
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_TDB:RetourAuMenuTEC", vbNullString, 0)
+    
     wshTEC_TDB.Visible = xlSheetHidden
     
     wshMenuTEC.Activate
     wshMenuTEC.Range("A1").Select
+    
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_TDB:RetourAuMenuTEC", vbNullString, startTime)
 
 End Sub
 
@@ -28,8 +32,8 @@ Sub ActualiserTECTableauDeBord()
     
     Application.ScreenUpdating = False
     
-    Call TEC_Update_TDB_From_TEC_Local
-    Call TEC_TdB_Refresh_All_Pivot_Tables
+    Call RafraichirTableauDeBordTEC
+    Call RafraichirTableauxCroisesTEC
     
     Call AjusterBordurePivotTable
     

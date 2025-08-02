@@ -217,8 +217,8 @@ Private Sub cmbProfessionnel_AfterUpdate() '2025-05-31 @ 16:11
         If .cmbProfessionnel.Value <> vbNullString Then
             .txtProfID.Value = Fn_GetID_From_Initials(.cmbProfessionnel.Value)
             If .txtDate.Value <> vbNullString Then
-                Call TEC_Get_All_TEC_AF
-                Call TEC_Refresh_ListBox_And_Add_Hours
+                Call ObtenirTousLesTECDateAvecAF
+                Call RafraichirListBoxEtAddtionnerHeures
             End If
         End If
     End With
@@ -226,8 +226,6 @@ Private Sub cmbProfessionnel_AfterUpdate() '2025-05-31 @ 16:11
     'Lorsqu'on change de professionnel, on force l'importation des TEC - 2025-06-13 @ 08:46
     Call ImporterTEC
     Me.txtLastImport.Value = "Les TEC ont été importés à " & Format$(Now, "hh:mm:ss")
-    
-'    Call MettreAJourEtatBoutons
 
 End Sub
 
@@ -316,11 +314,9 @@ Private Sub txtDate_AfterUpdate()
     End If
 
     If ufSaisieHeures.txtProfID.Value <> vbNullString Then
-        Call TEC_Get_All_TEC_AF
-        Call TEC_Refresh_ListBox_And_Add_Hours
+        Call ObtenirTousLesTECDateAvecAF
+        Call RafraichirListBoxEtAddtionnerHeures
     End If
-    
-'    Call MettreAJourEtatBoutons
     
     Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:txtDate_AfterUpdate", vbNullString, startTime)
     

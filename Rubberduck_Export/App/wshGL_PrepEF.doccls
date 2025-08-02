@@ -32,6 +32,8 @@ Private Sub Worksheet_Activate()
         ws.Range("C6:S" & lastUsedRow).ClearContents
     End If
     
+    ws.Range("F5, H5").Value = ""
+    
     'Protection de la feuille
     With ws
         .Protect userInterfaceOnly:=True
@@ -39,14 +41,13 @@ Private Sub Worksheet_Activate()
     End With
     
     'Date du jour par défaut
-    gPreviousCellAddress = ws.Range("F3").Address
-    ws.Range("F3").Value = vbNullString
-'    ws.Range("F3").Value = Format$(Date, wsdADMIN.Range("B1").Value)
+    gPreviousCellAddress = ws.Range("J3").Address
+    ws.Range("J3").Value = vbNullString
     
     Application.ScreenUpdating = True
     Application.EnableEvents = True
     
-    ws.Range("F3").Select
+    ws.Range("J3").Select
     
     'Libérer la mémoire
     Set ws = Nothing
@@ -62,7 +63,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     End If
 
     'Date limite est sélectionnée
-    If Not Intersect(Target, Me.Range("F3")) Is Nothing Then
+    If Not Intersect(Target, Me.Range("J3")) Is Nothing Then
         Target.Interior.Color = gCOULEUR_SAISIE
     End If
     
@@ -73,7 +74,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     Dim fullDate As Variant
     
     'Date limite a été changée
-    If Not Intersect(Target, Range("F3")) Is Nothing Then
+    If Not Intersect(Target, Range("J3")) Is Nothing Then
         
         'Pour éviter des boucles infinies
         Application.EnableEvents = False
@@ -94,7 +95,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         Dim ws As Worksheet
         Set ws = wshGL_PrepEF
         
-        Call Calculer_Soldes_Pour_EF(ws, Range("F3").Value)
+        Call CalculerSoldesPourEF(ws, Range("J3").Value)
         
         'Afficher le bouton 'Actualiser'
         Dim shp As Shape

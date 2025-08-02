@@ -1,9 +1,9 @@
 Attribute VB_Name = "modTEC_Analyse"
 Option Explicit
 
-Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
+Sub TrierEtAjouterSousTotauxClient() '2024-08-24 @ 08:10
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:TEC_Sort_Group_And_Subtotal", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:TrierEtAjouterSousTotauxClient", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -11,7 +11,6 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     
     'Remove existing subtotals in the destination worksheet
     wsDest.Cells.RemoveSubtotal
-'    call modDev_utils.EnregistrerLogApplication("     modTEC_Analyse:TEC_Sort_Group_And_Subtotal - Les anciens SubTotal ont été effacés", -1)
     
     'Clear the worksheet from row 6 until the last row used
     Dim destLastUsedRow As Long
@@ -228,7 +227,7 @@ Sub TEC_Sort_Group_And_Subtotal() '2024-08-24 @ 08:10
     Set wsDest = Nothing
     Set wsSource = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:TEC_Sort_Group_And_Subtotal", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:TrierEtAjouterSousTotauxClient", vbNullString, startTime)
 
 End Sub
 
@@ -480,9 +479,9 @@ Sub ChargerDemandesDeFactureExistantes(activeLastUsedRow As Long)
     
 End Sub
 
-Sub FAC_Projets_Details_Add_Record_To_DB(clientID As String, fr As Long, lr As Long, ByRef projetID As Long) 'Write a record to MASTER.xlsx file
+Sub AjouterProjetsDetailsBDMaster(clientID As String, fr As Long, lr As Long, ByRef projetID As Long) 'Write a record to MASTER.xlsx file
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:FAC_Projets_Details_Add_Record_To_DB", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:AjouterProjetsDetailsBDMaster", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -555,13 +554,13 @@ Sub FAC_Projets_Details_Add_Record_To_DB(clientID As String, fr As Long, lr As L
     Set conn = Nothing
     Set recSet = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:FAC_Projets_Details_Add_Record_To_DB", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:AjouterProjetsDetailsBDMaster", vbNullString, startTime)
 
 End Sub
 
-Sub FAC_Projets_Details_Add_Record_Locally(clientID As String, fr As Long, lr As Long, projetID As Long) 'Write records locally
+Sub AjouterProjetsDetailsBDLocale(clientID As String, fr As Long, lr As Long, projetID As Long) 'Write records locally
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:FAC_Projets_Details_Add_Record_Locally", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:AjouterProjetsDetailsBDLocale", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -597,7 +596,7 @@ Sub FAC_Projets_Details_Add_Record_Locally(clientID As String, fr As Long, lr As
     
     Application.ScreenUpdating = True
 
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:FAC_Projets_Details_Add_Record_Locally", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:AjouterProjetsDetailsBDLocale", vbNullString, startTime)
 
 End Sub
 
@@ -626,14 +625,14 @@ Sub DetruireDetailSiEnteteEstDetruite(filePath As String, _
 
 End Sub
 
-Sub FAC_Projets_Entete_Add_Record_To_DB(projetID As Long, _
+Sub AjouterProjetsEnteteBDMaster(projetID As Long, _
                                         nomClient As String, _
                                         clientID As String, _
                                         dte As String, _
                                         hono As Double, _
                                         ByRef arr As Variant) 'Write a record to MASTER.xlsx file
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:FAC_Projets_Entete_Add_Record_To_DB", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:AjouterProjetsEnteteBDMaster", vbNullString, 0)
     
     'timeStamp uniforme
     Dim timeStamp As Date
@@ -725,13 +724,13 @@ Sub FAC_Projets_Entete_Add_Record_To_DB(projetID As Long, _
     Set conn = Nothing
     Set recSet = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:FAC_Projets_Entete_Add_Record_To_DB", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:AjouterProjetsEnteteBDMaster", vbNullString, startTime)
 
 End Sub
 
-Sub FAC_Projets_Entete_Add_Record_Locally(projetID As Long, nomClient As String, clientID As String, dte As String, hono As Double, ByRef arr As Variant) 'Write records locally
+Sub AjouterProjetsEnteteBDLocale(projetID As Long, nomClient As String, clientID As String, dte As String, hono As Double, ByRef arr As Variant) 'Write records locally
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:FAC_Projets_Entete_Add_Record_Locally", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:AjouterProjetsEnteteBDLocale", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -766,7 +765,7 @@ Sub FAC_Projets_Entete_Add_Record_Locally(projetID As Long, nomClient As String,
     
     Application.ScreenUpdating = True
 
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:FAC_Projets_Entete_Add_Record_Locally", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:AjouterProjetsEnteteBDLocale", vbNullString, startTime)
 
 End Sub
 
@@ -899,7 +898,7 @@ Sub EffacerSectionHonorairesEtCheckBox() 'RMV_15
     
 End Sub
 
-Sub TEC_Analyse_Delete_CheckBox()
+Sub EffacerTousCheckBoxes()
 
     'Assigner la feuille à ws
     Dim ws As Worksheet: Set ws = wshTEC_Analyse
@@ -949,15 +948,15 @@ Sub NettoyerProjetsDetruits(loDetails As ListObject, loEntete As ListObject) '20
 
 End Sub
 
-Sub shp_TEC_Analyse_Back_To_TEC_Menu_Click()
+Sub shpRetourMenuTEC_Click()
 
-    Call TEC_Analyse_Back_To_TEC_Menu
+    Call RetourMenuTEC
 
 End Sub
 
-Sub TEC_Analyse_Back_To_TEC_Menu()
+Sub RetourMenuTEC()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:TEC_Analyse_Back_To_TEC_Menu", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:RetourMenuTEC", vbNullString, 0)
     
     Dim loDetails As ListObject
     Set loDetails = wsdFAC_Projets_Details.ListObjects("l_tbl_FAC_Projets_Details")
@@ -979,7 +978,7 @@ Sub TEC_Analyse_Back_To_TEC_Menu()
     wshMenuTEC.Activate
     wshMenuTEC.Range("A1").Select
     
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:TEC_Analyse_Back_To_TEC_Menu", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:RetourMenuTEC", vbNullString, startTime)
 
 End Sub
 

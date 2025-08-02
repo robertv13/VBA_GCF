@@ -406,15 +406,15 @@ Sub Radiation_Apercu_Avant_Impression()
     
 End Sub
 
-Sub shp_TEC_Radiation_Back_To_TEC_Menu_Click()
+Sub shpRetourMenuTEC_Click()
 
-    Call TEC_Radiation_Back_To_TEC_Menu
+    Call RetourMenuTEC
     
 End Sub
 
-Sub TEC_Radiation_Back_To_TEC_Menu()
+Sub RetourMenuTEC()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Radiation:TEC_Radiation_Back_To_TEC_Menu", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Radiation:RetourMenuTEC", vbNullString, 0)
     
     wshTEC_Radiation.Visible = xlSheetHidden
     
@@ -423,7 +423,7 @@ Sub TEC_Radiation_Back_To_TEC_Menu()
     wshMenuTEC.Activate
     wshMenuTEC.Range("A1").Select
     
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Radiation:TEC_Radiation_Back_To_TEC_Menu", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Radiation:RetourMenuTEC", vbNullString, startTime)
 
 End Sub
 
