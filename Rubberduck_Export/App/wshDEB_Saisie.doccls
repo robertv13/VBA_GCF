@@ -57,7 +57,7 @@ Private Sub Worksheet_Activate()
     
     'Protect the Worksheet
     With ws
-        .Protect userInterfaceOnly:=True
+        .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
     

@@ -470,7 +470,7 @@ Sub FAC_Brouillon_Open_Copy_Paste() '2024-07-27 @ 07:46
     With wshFAC_Brouillon
         .Unprotect
         .Range("L11:L" & 11 + rngSource.Rows.count - 1).Value = rngSource.Value
-        .Protect userInterfaceOnly:=True
+        .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
 '        .EnableSelection = xlUnlockedCells
     End With
@@ -517,7 +517,7 @@ Sub EffacerTECAffiches()
         'Verrouiller les cellules des descriptions des TEC - 2025-03-02 @ 21:53
         wshFAC_Brouillon.Unprotect
         wshFAC_Brouillon.Range("F7:F" & lastRow).Locked = True
-        wshFAC_Brouillon.Protect userInterfaceOnly:=True
+        wshFAC_Brouillon.Protect UserInterfaceOnly:=True
         wshFAC_Brouillon.Range("D7:I" & lastRow + 2).ClearContents
         Call FAC_Brouillon_TEC_Remove_Check_Boxes(lastRow - 2)
         Application.EnableEvents = True
@@ -781,7 +781,7 @@ Sub CopierTECFiltresVersFACBrouillon(cutOffDateProjet As Date) '2024-03-21 @ 07:
     If lastDisplayedRow >= 7 Then
         wshFAC_Brouillon.Range("F7:F" & lastDisplayedRow).Locked = False
     End If
-    wshFAC_Brouillon.Protect userInterfaceOnly:=True
+    wshFAC_Brouillon.Protect UserInterfaceOnly:=True
     
     'Création du userForm s'il y a quelque chose à afficher
     If collFraisDivers.count > 0 Then
@@ -845,10 +845,10 @@ Sub FAC_Brouillon_Goto_Onglet_FAC_Finale()
         GoTo Depot_Checked
     End If
     
-    'Y a-t-il des montants en dépôt ? - 2024-11-12 @ 11:25
-    Dim soldeDépôt As Currency
-    soldeDépôt = modFunctions.ObtenirSoldeCompteGL(ObtenirNoGlIndicateur("Produit perçu d'avance"), wshFAC_Brouillon.Range("O3").Value)
-    
+'    'Y a-t-il des montants en dépôt ? - 2024-11-12 @ 11:25
+'    Dim soldeDépôt As Currency
+'    soldeDépôt = modFunctions.ObtenirSoldeCompteGL(ObtenirNoGlIndicateur("Produit perçu d'avance"), wshFAC_Brouillon.Range("O3").Value)
+'
     'Les résultats du AvancedFilter sont dans GL_Trans - Colonnes P @ Y
     Dim lastUsedRowResult As Double
     lastUsedRowResult = wsdGL_Trans.Cells(wsdGL_Trans.Rows.count, "P").End(xlUp).Row
@@ -1061,7 +1061,7 @@ Sub FAC_Brouillon_TEC_Add_Check_Boxes(row As Long, dateCutOffProjet As Date)
         
         .Range("B19").formula = "=SUMIF(C7:C" & row + 5 & ",True,G7:G" & row + 5 & ")"
         
-        .Protect userInterfaceOnly:=True
+        .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
 '        .EnableSelection = xlUnlockedCells
     End With
@@ -1114,7 +1114,7 @@ Sub FAC_Brouillon_TEC_Remove_Check_Boxes(row As Long)
     
     'Protect the worksheet
     With ws
-        .Protect userInterfaceOnly:=True
+        .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
     

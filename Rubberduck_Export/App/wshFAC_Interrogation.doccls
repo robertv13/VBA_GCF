@@ -48,7 +48,7 @@ Private Sub Worksheet_Activate()
     Application.EnableEvents = True
     
     With ws
-        .Protect userInterfaceOnly:=True
+        .Protect UserInterfaceOnly:=True
     End With
     
     With ws

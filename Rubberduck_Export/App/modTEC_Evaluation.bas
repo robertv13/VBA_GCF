@@ -27,7 +27,7 @@ Sub ViderFeuilleEvaluationTEC()
         .Range("D6:L28").Clear
         .Shapes("Impression").Visible = msoFalse
         .Shapes("EcritureGL").Visible = msoFalse
-        .Protect userInterfaceOnly:=True
+        .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
 
@@ -170,7 +170,7 @@ End Sub
 
 Sub AfficherValeurTEC(cutoffDate As String, maxDate As Date)
 
-    Dim ws  As Worksheet
+    Dim ws As Worksheet
     Set ws = wshTEC_Evaluation
     
     Dim totalHresTEC As Currency, totalValeurTEC As Currency
@@ -265,14 +265,20 @@ Sub AfficherValeurTEC(cutoffDate As String, maxDate As Date)
         currentRow = currentRow + 2
     Next i
 
-    'Obtenir le solde au G/L pour le compte TEC
+    'Obtenir le solde au G/L pour le compte TEC avec ObtenirSoldesParCompteAvecADO - 2025-08-03 @ 09:23
+    Dim glTEC As String
+    glTEC = ObtenirNoGlIndicateur("Travaux en cours")
+    Dim dictSoldes As Object
+    Set dictSoldes = CreateObject("Scripting.Dictionary")
+    Set dictSoldes = modGL_Stuff.ObtenirSoldesParCompteAvecADO(glTEC, "", maxDate, True)
     Dim solde As Currency
-    solde = modFunctions.ObtenirSoldeCompteGL(ObtenirNoGlIndicateur("Travaux en cours"), maxDate)
-
+    solde = dictSoldes(glTEC)
+    
     'Afficher le solde des TEC au Grand Livre
     ws.Range("D3").Font.Bold = True
     ws.Range("D3").Font.size = 12
     ws.Range("D3").Font.Color = vbRed
+    
     Dim message As String
     message = "Le solde au G/L pour les TEC est de " & Format$(solde, "###,##0.00 $")
     If valeurTEC = solde Then

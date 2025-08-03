@@ -478,20 +478,6 @@ Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 
 
 End Function
 
-Function ObtenirSoldeCompteGL(glCode As String, dateSolde As Date) As Currency '2024-11-18 @ 06:41
-    
-    ObtenirSoldeCompteGL = 0
-    
-    'AdvancedFilter GL_Trans with FromDate to ToDate, returns rngResult
-    Dim rngResult As Range
-    Call modGL_Stuff.ObtenirSoldeCompteEntreDebutEtFin(glCode, #7/31/2024#, dateSolde, rngResult)
-    
-    'Méthode plus rapide pour obtenir une somme
-    ObtenirSoldeCompteGL = Application.WorksheetFunction.SUM(rngResult.Columns(7)) _
-                                           - Application.WorksheetFunction.SUM(rngResult.Columns(8))
-
-End Function
-
 Function ObtenirDescriptionCompte(codeCompte As String) As String '2025-07-20 @ 08:11
 
     Dim planComptable As Variant
@@ -1828,13 +1814,13 @@ Function ObtenirNoGlIndicateur(ByVal indic As Variant) As String
 
     'Plage où sont situés les liens (indicateur/no de GL)
     Dim plage As Range
-    Set plage = wsdADMIN.Range("D44:F61")
+    Set plage = wsdADMIN.Range("D44:F63")
     
     'Parcourir chaque cellule dans la première colonne de la plage
     Dim cellule As Range
     For Each cellule In plage.Columns(1).Cells
         If cellule.Value = indic Then
-            'Retourner la valeur de la troisième colonne pour la ligne correspondante
+            'Retourner la valeur de la deuxième colonne de la ligne trouvée
             ObtenirNoGlIndicateur = cellule.offset(0, 1).Value
             Exit Function
         End If

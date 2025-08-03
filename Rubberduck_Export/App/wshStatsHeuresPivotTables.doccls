@@ -67,7 +67,7 @@ Private Sub Worksheet_Activate()
     plageValide.Validation.InCellDropdown = True
     
     With ws
-        .Protect userInterfaceOnly:=True
+        .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
     

@@ -37,7 +37,7 @@ Private Sub Worksheet_Activate()
     Call modDev_Utils.DeterminerOrdreDeTabulation(ws)
     
     With ws
-        .Protect userInterfaceOnly:=True
+        .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
     

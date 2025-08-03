@@ -1,20 +1,12 @@
 Attribute VB_Name = "modGL_Stats_CA"
 Option Explicit
 
-Sub shp_GL_PrepEF_Actualiser_Click()
-
-    Dim ws As Worksheet
-    Set ws = wshGL_PrepEF
-    
-    Call ActualiserStatsChiffreAffaires
-    
-End Sub
-
 Sub ActualiserStatsChiffreAffaires()
 
     Dim ws As Worksheet
     Set ws = wshGL_Stats_CA
     
+    'Enlever toute note/commentaire existant
     Dim cell As Range
     For Each cell In ws.Range("D9:O9")
         If Not cell.Comment Is Nothing Then
@@ -34,18 +26,33 @@ Sub ActualiserStatsChiffreAffaires()
     moisPrécédent = month(DateSerial(year(Date), month(Date), 0))
     Dim dateFinMoisPrécédent As Date
     dateFinMoisPrécédent = DateSerial(year(Date), month(Date), 0)
+    Dim dateFinAnnée As Date
+    dateFinAnnée = wsdADMIN.Range("AnneeA").Value
+    
+    'Doit-on insérer une nouvelle ligne (nouvelle année) ? 2025-08-03 @ 09:13
+    Dim annéeCelluleC9 As Long
+    annéeCelluleC9 = CLng(ws.Range("C9").Value)
+    If year(dateFinAnnée) <> annéeCelluleC9 Then
+        Call AjusterTableauNouvelleAnnee(ws, dateFinAnnée)
+    End If
     
     Dim moisFinAnnéeFinancière As Integer
     moisFinAnnéeFinancière = wsdADMIN.Range("MoisFinAnnéeFinancière").Value
     
     'Mémoriser les colonnes de la feuille pour chacun des 12 mois de l'année financière
+    Dim m As Integer
     Dim colMois(1 To 12, 1 To 2) As String
-    Dim annee As Integer, anneeMoisDebutAF As Integer, anneeMoisFinAF As Integer
+    Dim annee As Integer
+    Dim anneeMoisDebutAF As Integer
+    Dim anneeMoisFinAF As Integer
     
-    Dim m As Integer, noMois As Integer, col As Integer, saveCol As Integer
+    Dim noMois As Integer
+    Dim saveCol As Integer
     anneeMoisDebutAF = ws.Range("C9").Value - 1
     anneeMoisFinAF = ws.Range("C9").Value
+    
     'Le premier mois de l'année financière est en colonne 4 du tableau
+    Dim col As Integer
     col = 4
     For m = 1 To 12
         noMois = m + moisFinAnnéeFinancière
@@ -58,7 +65,6 @@ Sub ActualiserStatsChiffreAffaires()
         colMois(m, 1) = col
         colMois(m, 2) = Format$(annee, "0000") & "-" & Format$(noMois, "00") & "-" & _
                 Format$(day(DateSerial(annee, noMois + 1, 0)), "00")
-'        Debug.Print m, noMois, col, annee, colMois(m, 2)
         If noMois = month(Date) Then
             saveCol = col
         End If
@@ -66,7 +72,9 @@ Sub ActualiserStatsChiffreAffaires()
     Next m
     
     Dim dateFinMois As Date
-    Dim revenus_mois As Currency, revenus As Currency, revenus_TEC As Currency
+    Dim revenus_mois As Currency
+    Dim revenus As Currency
+    Dim revenus_TEC As Currency
     Dim r As Integer
     For m = 1 To 12
         col = colMois(m, 1)
@@ -102,11 +110,14 @@ Sub ActualiserStatsChiffreAffaires()
         End If
     Next prof
 
-    'Solde au G/L du compte Travaux en Cours
+    'Solde au G/L du compte Travaux en Cours en utilisant ObtenirSoldesParCompteAvecADO - 2025-08-03 @ 09:23
     Dim glTEC As String
-    Dim glTECSolde As Currency
     glTEC = ObtenirNoGlIndicateur("Travaux en cours")
-    glTECSolde = modFunctions.ObtenirSoldeCompteGL(glTEC, maxDate)
+    Dim dictSoldes As Object
+    Set dictSoldes = CreateObject("Scripting.Dictionary")
+    Set dictSoldes = modGL_Stuff.ObtenirSoldesParCompteAvecADO(glTEC, "", Format$(Date, "yyyy-mm-dd"), True)
+    Dim glTECSolde As Currency
+    glTECSolde = dictSoldes(glTEC)
 
     'Ajoute un note à la cellule
     Dim rng As Range
@@ -134,13 +145,88 @@ Sub ActualiserStatsChiffreAffaires()
     
 End Sub
 
-Sub shp_GL_Stats_CA_Exit_Click()
+'@Description "Le tableau nécessite beaucoup d'ajustement lors de l'insertion d'une nouvelle année"
+Sub AjusterTableauNouvelleAnnee(ws As Worksheet, dateFinAnnée As Date) '2025-08-03 @ 09:13
 
-    Call GL_Stats_CA_Back_To_Menu
+    With ws
+        'Insérer une ligne à la position 9
+        .Rows(9).Insert Shift:=xlDown
+        .Rows(10).Copy
+        .Rows(9).PasteSpecial Paste:=xlPasteFormats
+        Application.CutCopyMode = False
+        .Rows(25).Delete 'Maintenir 15 années d'historique
+    End With
+    
+    ws.Range("C9").Value = year(dateFinAnnée)
+    ws.Range("P9").formula = "=sum(D09:O09)"
+    
+    'Ajustement de la surbrillance pour les 3 dernières années
+    With Range("C9:C24").Interior
+        .Pattern = xlNone
+        .TintAndShade = 0
+        .PatternTintAndShade = 0
+    End With
+    With Range("C10:C12").Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .Color = 5296274
+        .TintAndShade = 0
+        .PatternTintAndShade = 0
+    End With
+    
+    'Ajustement du libellé de la cellule C26
+    ws.Range("C26").Value = "Moyennes mensuelles pour " & year(dateFinAnnée) - 3 & " @ " & year(dateFinAnnée) - 1
+    
+    'Ajustement des formules de la ligne 27
+    Dim col As Integer
+    For col = 4 To 16 'Colonnes D à P
+        ws.Cells(27, col).formula = "=AVERAGE(" & _
+            ws.Cells(10, col).Address(False, False) & ":" & _
+            ws.Cells(12, col).Address(False, False) & ")"
+    Next col
+    
+    'Ajout de l'année précédente, comme complète, à la ligne 31
+    With ws
+        .Rows(31).Insert Shift:=xlDown
+        .Rows(32).Copy
+        .Rows(31).PasteSpecial Paste:=xlPasteFormats
+        Application.CutCopyMode = False
+        .Rows(36).Delete 'Garder que 5 années pour la pondération
+    End With
+    ws.Range("C31").Value = year(dateFinAnnée) - 1
+    
+    'Remplir les cellules (D à P) de la nouvelle ligne (31) avec formule pour pondération
+    For col = 4 To 16
+        ws.Cells(31, col).formula = "=" & ws.Cells(10, col).Address(False, False) & "/$P10"
+    Next col
+    
+    'Ajuster les formules des cellules (D à P) de la ligne (37)
+    For col = 4 To 16
+        ws.Cells(37, col).formula = "=AVERAGE(" & _
+            ws.Cells(31, col).Address(False, False) & ":" & _
+            ws.Cells(35, col).Address(False, False) & ")"
+    Next col
+    
+    'Ajustement de la MÉGA formule dans la cellule d'estimation ANNUELLE
+    Dim cell As Range
+    Set cell = Range("P4")
+    Dim formuleActuelle As String
+    formuleActuelle = cell.formula
+    formuleActuelle = Replace(formuleActuelle, "10", "9")
+    cell.formula = formuleActuelle
+
+    'Libérer la mémoire
+    Set cell = Nothing
+    
+End Sub
+
+Sub shpRetourMenuGL_Click()
+
+    Call RetourMenuGL
 
 End Sub
 
-Sub GL_Stats_CA_Back_To_Menu()
+Sub RetourMenuGL()
     
     wshGL_Stats_CA.Visible = xlSheetHidden
     

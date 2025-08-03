@@ -680,7 +680,7 @@ Sub EffacerResultatAnterieur(ws As Worksheet)
     DoEvents
     Application.ScreenUpdating = True
     
-    ws.Protect userInterfaceOnly:=True
+    ws.Protect UserInterfaceOnly:=True
 
 End Sub
 

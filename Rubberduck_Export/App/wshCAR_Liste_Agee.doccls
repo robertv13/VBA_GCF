@@ -50,7 +50,7 @@ Private Sub Worksheet_Activate() '2024-09-01 @ 04:52
     Call modDev_Utils.DeterminerOrdreDeTabulation(ws)
     
     With ws
-        .Protect userInterfaceOnly:=True
+        .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
     

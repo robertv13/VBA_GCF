@@ -36,7 +36,7 @@ Private Sub Worksheet_Activate()
     
     'Protection de la feuille
     With ws
-        .Protect userInterfaceOnly:=True
+        .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
     

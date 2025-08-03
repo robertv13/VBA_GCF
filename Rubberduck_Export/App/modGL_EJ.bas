@@ -211,7 +211,7 @@ Sub EffacerCellulesEJ()
     Call AnnulerValidation(cell)
     
     With ActiveSheet
-        .Protect userInterfaceOnly:=True
+        .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
     
@@ -256,8 +256,27 @@ Sub ConstruireEcriturePourRemiseTpsTvq(r As Integer)
         .Value = -cases(101)
     End With
     
+    'Obtenir les soldes des quatre (4) comptes de taxes - 2025-08-02 @ 11:04
+    Dim noGLMin As String
+    noGLMin = ObtenirNoGlIndicateur("TPS Payée")
+    Dim noGLMax As String
+    noGLMax = ObtenirNoGlIndicateur("TVQ Facturée")
+    
+    Dim dictSoldes As Object
+    Set dictSoldes = CreateObject("Scripting.Dictionary")
+    
+    Set dictSoldes = modGL_Stuff.ObtenirSoldesParCompteAvecADO(noGLMin, noGLMax, dateFin, True)
+    If dictSoldes Is Nothing Then
+        MsgBox "Impossible d'obtenir les soldes pour les comptes de taxe" & vbNewLine & vbNewLine & _
+                "en date du " & Format$(dateFin, wsdADMIN.Range("B1").Value) & _
+                "VEUILLEZ CONTACTER LE DÉVELOPPEUR SANS TARDER", _
+                vbCritical, _
+                "La remise TPS/TVQ ne peut être complétée !!!"
+        Exit Sub
+    End If
+    
     'TPS percues
-    cases(105) = modFunctions.ObtenirSoldeCompteGL(ObtenirNoGlIndicateur("TPS Facturée"), dateFin)
+    cases(105) = dictSoldes(ObtenirNoGlIndicateur("TPS Facturée"))
     wshGL_EJ.Range("E" & r).Value = "TPS percues"
     If cases(105) <= 0 Then
         wshGL_EJ.Range("H" & r).Value = -cases(105)
@@ -274,7 +293,7 @@ Sub ConstruireEcriturePourRemiseTpsTvq(r As Integer)
     End With
     
     'TVQ percues
-    cases(205) = modFunctions.ObtenirSoldeCompteGL(ObtenirNoGlIndicateur("TVQ Facturée"), dateFin)
+    cases(205) = dictSoldes(ObtenirNoGlIndicateur("TVQ Facturée"))
     wshGL_EJ.Range("E" & r).Value = "TVQ percues"
     If cases(205) <= 0 Then
         wshGL_EJ.Range("H" & r).Value = -cases(205)
@@ -290,7 +309,7 @@ Sub ConstruireEcriturePourRemiseTpsTvq(r As Integer)
         .Value = -cases(205)
     End With
     
-    cases(108) = modFunctions.ObtenirSoldeCompteGL(ObtenirNoGlIndicateur("TPS Payée"), dateFin)
+    cases(108) = dictSoldes(ObtenirNoGlIndicateur("TPS Payée"))
     wshGL_EJ.Range("E" & r).Value = "TPS payées"
     If cases(108) <= 0 Then
         wshGL_EJ.Range("H" & r).Value = -cases(108)
@@ -306,7 +325,7 @@ Sub ConstruireEcriturePourRemiseTpsTvq(r As Integer)
         .Value = cases(108)
     End With
     
-    cases(208) = modFunctions.ObtenirSoldeCompteGL(ObtenirNoGlIndicateur("TVQ Payée"), dateFin)
+    cases(208) = dictSoldes(ObtenirNoGlIndicateur("TVQ Payée"))
     wshGL_EJ.Range("E" & r).Value = "TVQ payées"
     If cases(208) <= 0 Then
         wshGL_EJ.Range("H" & r).Value = -cases(208)
@@ -363,20 +382,56 @@ Sub ConstruireEcriturePourRemiseTpsTvq(r As Integer)
         net = -(cases(113) + cases(213))
     End If
     
-    'Encaisse
-    wshGL_EJ.Range("E" & r).Value = "Encaisse"
-    If net <= 0 Then
-        wshGL_EJ.Range("H" & r).Value = -net
-    Else
-        wshGL_EJ.Range("I" & r).Value = net
-    End If
-    r = r + 1
-    
+    'Montrer le formulaire de remise
     With wshGL_EJ
         .Unprotect
         .Range("N:Y").EntireColumn.Hidden = False
     End With
+    wshGL_EJ.Range("P19").Value = ""
+    
+    'L'utilisateur a le choix de la méthode (Créditer 2 comptes de passif -OU- Créditer le compte Encaisse) - 2025-08-02 @ 12:26
+    Dim choix As VbMsgBoxResult
+    choix = MsgBox("Voulez-vous créer le déboursé IMMÉDIATEMENT ?" & vbCrLf & vbCrLf & _
+                   "Oui = Créditer l'encaisse" & vbCrLf & vbCrLf & _
+                   "Non = Créditer Acomptes provisionnels TPS & TVQ", vbYesNo + vbQuestion, "Choix de méthode")
 
+    If choix = vbYes Then
+        'Encaisse
+        wshGL_EJ.Range("E" & r).Value = "Encaisse"
+        If net <= 0 Then
+            wshGL_EJ.Range("H" & r).Value = -net
+        Else
+            wshGL_EJ.Range("I" & r).Value = net
+        End If
+        r = r + 1
+        wshGL_EJ.Range("P19").Value = "Vous avez choisi de créditer le compte ENCAISSE (le décaissement est comptabilisé)"
+    Else
+        'TPS à remettre
+        Dim noGL As String
+        Dim descGL As String
+        noGL = ObtenirNoGlIndicateur("TPS à remettre")
+        descGL = ObtenirDescriptionCompte(noGL)
+        wshGL_EJ.Range("E" & r).Value = descGL
+        If cases(113) < 0 Then
+            wshGL_EJ.Range("H" & r).Value = -cases(113)
+        Else
+            wshGL_EJ.Range("I" & r).Value = cases(113)
+        End If
+        r = r + 1
+    
+        'TVQ à remettre
+        noGL = ObtenirNoGlIndicateur("TVQ à remettre")
+        descGL = ObtenirDescriptionCompte(noGL)
+        wshGL_EJ.Range("E" & r).Value = descGL
+        If cases(213) < 0 Then
+            wshGL_EJ.Range("H" & r).Value = -cases(213)
+        Else
+            wshGL_EJ.Range("I" & r).Value = cases(213)
+        End If
+        r = r + 1
+        wshGL_EJ.Range("P19").Value = "Vous avez choisi de créditer les 2 comptes d'acomptes provisionnels TPS & TVQ - Il vous reste à comptabiliser le décaissement"
+    End If
+    
 End Sub
 
 Sub AfficherEntreeJournalARenverser()
@@ -543,7 +598,7 @@ Sub AjouterValidation(cell As Range, nomPlage As String)
     
     If feuilleProtégée Then
         With ws
-            .Protect userInterfaceOnly:=True
+            .Protect UserInterfaceOnly:=True
             .EnableSelection = xlUnlockedCells
         End With
     End If

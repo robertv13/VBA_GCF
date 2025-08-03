@@ -879,7 +879,7 @@ Public Sub DEB_Saisie_Clear_All_Cells()
     
     'Protection de la feuille, seules les cellules non-verrouillées peuvent être sélectionnées
     With wshDEB_Saisie
-        .Protect userInterfaceOnly:=True
+        .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
     

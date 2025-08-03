@@ -31,12 +31,7 @@ Sub ActualiserBV() '2025-07-21 @ 13:01
     Dim soldes As Object
     Set soldes = CreateObject("Scripting.Dictionary")
     
-    Dim cheminFichier As String
-    cheminFichier = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & wsdADMIN.Range("MASTER_FILE").Value
-    Dim nomFeuilleSource As String
-    nomFeuilleSource = "GL_Trans"
-    
-    Set soldes = modGL_Stuff.ObtenirSoldesParCompteAvecADO(cheminFichier, nomFeuilleSource, "0000", "9999", dateBV, False)
+    Set soldes = modGL_Stuff.ObtenirSoldesParCompteAvecADO("0000", "9999", dateBV, False)
     If soldes Is Nothing Then
         MsgBox "Impossible d'obtenir les soldes par numéro de compte" & vbNewLine & vbNewLine & _
                 "en date du " & Format$(dateBV, wsdADMIN.Range("B1").Value) & _

@@ -1,4 +1,4 @@
-﻿📘 Journal typographique — 08/02/2025 00:09:54
+﻿📘 Journal typographique — 08/03/2025 09:45:57
 
 🔧 Fichier : clsControlWrapper.cls
 
@@ -23,6 +23,8 @@
 🔧 Fichier : Feuil5.doccls
 
 🔧 Fichier : Feuil6.doccls
+
+🔧 Fichier : Feuil7.doccls
 
 🔧 Fichier : modAPIWindows.bas
 
@@ -185,6 +187,17 @@
    ✅ Remplacé : .range ➜ .Range
    ✅ Remplacé : .font ➜ .Font
 
+🔧 Fichier : modGL_Rapport.bas
+   ✅ Remplacé : .borders ➜ .Borders
+   ✅ Remplacé : .column ➜ .Column
+   ✅ Remplacé : .interior ➜ .Interior
+   ✅ Remplacé : .cells ➜ .Cells
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
+   ✅ Remplacé : .name ➜ .Name
+   ✅ Remplacé : .font ➜ .Font
+
 🔧 Fichier : modGL_Rapport_Nouveau.bas
    ✅ Remplacé : .borders ➜ .Borders
    ✅ Remplacé : .column ➜ .Column
@@ -197,6 +210,8 @@
    ✅ Remplacé : .font ➜ .Font
 
 🔧 Fichier : modGL_Stats_CA.bas
+   ✅ Remplacé : .address ➜ .Address
+   ✅ Remplacé : .interior ➜ .Interior
    ✅ Remplacé : .value ➜ .Value
    ✅ Remplacé : .name ➜ .Name
 

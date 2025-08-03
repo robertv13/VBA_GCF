@@ -135,7 +135,6 @@ Sub CalculerSoldesPourEF(ws As Worksheet, dateCutoff As Date) '2025-02-05 @ 04:2
                 If Not gDictSoldeCodeEF.Exists(codeEF) Then
                     rowID_to_gSoldeCodeEF = rowID_to_gSoldeCodeEF + 1
                     gDictSoldeCodeEF.Add codeEF, rowID_to_gSoldeCodeEF
-                    Debug.Print "Ajout au dictionary (gDictSoldeCodeEF) - " & codeEF & " - " & rowID_to_gSoldeCodeEF
                     gSoldeCodeEF(rowID_to_gSoldeCodeEF, 1) = codeEF
                 End If
                 currRowID = gDictSoldeCodeEF(codeEF)
@@ -188,7 +187,7 @@ Sub CalculerSoldesPourEF(ws As Worksheet, dateCutoff As Date) '2025-02-05 @ 04:2
     ws.Range("F6:F" & currRow).NumberFormat = "###,###,##0.00 ;(###,###,##0.00);0.00"
     ws.Range("H6:H" & currRow).NumberFormat = "###,###,##0.00 ;(###,###,##0.00);0.00"
     
-    ws.Protect userInterfaceOnly:=True
+    ws.Protect UserInterfaceOnly:=True
     ws.EnableSelection = xlUnlockedCells
     
     Application.EnableEvents = True
@@ -258,13 +257,14 @@ Sub AssemblerEtatsFinanciers() '2025-08-01 @ 21:44
             'Sélectionner la feuille
             .Activate
             .Visible = xlSheetVisible
-            'Affichage de la feuille à 87 %
-            ActiveWindow.Zoom = 87
             'Afficher en mode aperçu des sauts de page
             ActiveWindow.View = xlPageBreakPreview
+            'Affichage de la feuille à 80 %
+            ActiveWindow.Zoom = 80
+            'Police de base
+            .Cells.Font.Name = "Verdana"
             'Remplir toutes les cellules avec la couleur blanche
             .Cells.Interior.Color = RGB(255, 255, 255) 'Blanc
-'            .Cells.Interior.Color = RGB(255, 255, 204) ' Jaune pâle
         End With
     Next i
     
@@ -318,7 +318,7 @@ Sub CreerFeuillesEtFormat()
         
     Next i
 
-    Application.StatusBar = vbNullString
+    Application.StatusBar = False
     
     Application.ScreenUpdating = True
     
@@ -340,7 +340,7 @@ Sub AssemblerPageTitre0Main(dateAC As Date, dateAP As Date)
         
     Call AssemblerPageTitre1EtArrièrePlanEtEntête(ws, dateAC, dateAP)
     
-    Application.StatusBar = vbNullString
+    Application.StatusBar = False
     
     Application.ScreenUpdating = True
 
@@ -369,9 +369,9 @@ Sub AssemblerPageTitre1EtArrièrePlanEtEntête(ws As Worksheet, dateAC As Date, 
     
     'Ajuster la police pour la feuille
     With ws.Cells
-        .Font.Name = "Calibri"
+        .Font.Name = "Verdana"
         .Font.size = 20
-        .Font.Color = RGB(98, 88, 80)
+        .Font.Color = RGB(140, 131, 117)
     End With
 
     'Fixer le printArea selon le nombre de lignes ET 3 colonnes
@@ -395,7 +395,7 @@ Sub AssemblerTM0Main(dateAC As Date, dateAP As Date)
     Call AssemblerTM1ArrièrePlanEtEntete(ws, dateAC, dateAP)
     Call AssemblerTM2Lignes(ws)
     
-    Application.StatusBar = vbNullString
+    Application.StatusBar = False
     
     Application.ScreenUpdating = True
     
@@ -467,9 +467,9 @@ Sub AssemblerTM2Lignes(ws As Worksheet)
         
        'Ajuster la police pour la feuille
         With .Cells
-            .Font.Name = "Calibri"
+            .Font.Name = "Verdana"
             .Font.size = 11
-            .Font.Color = RGB(98, 88, 80)
+            .Font.Color = RGB(140, 131, 117)
         End With
     
     End With
@@ -501,7 +501,7 @@ Sub AssemblerER0Main(dateAC As Date, dateAP As Date)
     gSoldeCodeEF(indice, 2) = gSoldeCodeEF(indice, 2) - gTotalRevenuNet_AC
     gSoldeCodeEF(indice, 3) = gSoldeCodeEF(indice, 3) - gTotalRevenuNet_AP
     
-    Application.StatusBar = vbNullString
+    Application.StatusBar = False
     
     Application.ScreenUpdating = True
     
@@ -602,11 +602,14 @@ Sub AssemblerER2Lignes(ws As Worksheet)
     
     'Ajuster la police pour la feuille
     With ws.Cells
-        .Font.Name = "Calibri"
-        .Font.size = 11
-        .Font.Color = RGB(98, 88, 80)
+        .Font.Name = "Verdana"
+        .Font.size = 10
+        .Font.Color = RGB(140, 131, 117)
     End With
 
+    'Augmenter la taille de police pour les 3 premières lignes
+    ws.Range("1:3").Font.size = 12
+    
     'Transfère les montants NON arrondis dans les cellules sans les cents
     Dim i As Integer
     For i = 7 To currRow
@@ -650,7 +653,7 @@ Sub AssemblerBilan0Main(dateAC As Date, dateAP As Date)
     Call AssemblerBilan1ArrièrePlanEtEntete(ws, dateAC, dateAP)
     Call AssemblerBilan2Lignes(ws)
     
-    Application.StatusBar = vbNullString
+    Application.StatusBar = False
     
     Application.ScreenUpdating = True
     
@@ -733,11 +736,14 @@ Sub AssemblerBilan2Lignes(ws As Worksheet)
     
     'Ajuster la police pour la feuille
     With ws.Cells
-        .Font.Name = "Calibri"
-        .Font.size = 11
-        .Font.Color = RGB(98, 88, 80)
+        .Font.Name = "Verdana"
+        .Font.size = 10
+        .Font.Color = RGB(140, 131, 117)
     End With
 
+    'Augmenter la taille de police pour les 3 premières lignes
+    ws.Range("1:3").Font.size = 12
+    
     'Transfère les montants NON arrondis dans les cellules sans les cents
     Dim i As Integer
     For i = 7 To currRow
@@ -769,7 +775,7 @@ Sub AssemblerBNR0Main(dateAC As Date, dateAP As Date)
     Call AssemblerBNR1ArrièrePlanEtEntete(ws, dateAC, dateAP)
     Call AssemblerBNR2Lignes(ws)
     
-    Application.StatusBar = vbNullString
+    Application.StatusBar = False
     
     Application.ScreenUpdating = True
     
@@ -868,12 +874,14 @@ Sub AssemblerBNR2Lignes(ws As Worksheet)
     
     'Ajuster la police pour la feuille
     With ws.Cells
-        .Font.Name = "Calibri"
-        .Font.size = 11
-        .Font.Color = RGB(98, 88, 80)
+        .Font.Name = "Verdana"
+        .Font.size = 10
+        .Font.Color = RGB(140, 131, 117)
     End With
-
     
+    'Augmenter la taille de police pour les 3 premières lignes
+    ws.Range("1:3").Font.size = 12
+
     'Transfère les montants NON arrondis dans les cellules sans les cents
     Dim i As Integer
     For i = 7 To currRow

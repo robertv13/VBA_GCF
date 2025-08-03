@@ -253,7 +253,7 @@ Sub FAC_Historique_Clear_All_Cells()
     End With
     
     With ActiveSheet
-        .Protect userInterfaceOnly:=True
+        .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
 

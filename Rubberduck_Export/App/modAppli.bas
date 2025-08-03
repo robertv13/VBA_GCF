@@ -71,7 +71,7 @@ Sub DemarrerApplication() '2025-07-11 @ 15:16
     
     'Protection de la feuille wshMenu
     With wshMenu
-        .Protect userInterfaceOnly:=True
+        .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
     
@@ -239,7 +239,7 @@ Sub EcrireInformationsConfigAuMenu(ByVal user As String)
     wshMenu.Range("A30:A34").Value = Application.WorksheetFunction.Transpose(valeurs)
 
     With wshMenu
-        .Protect userInterfaceOnly:=True
+        .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
 

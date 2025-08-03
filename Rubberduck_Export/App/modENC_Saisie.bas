@@ -27,7 +27,7 @@ Sub ObtenirFacturesEnSuspens(cc As String) '2024-08-21 @ 15:18
             .Unprotect
             .Range("B12:B" & 11 + lastResultRow - 2).Locked = False
             .Range("E12:E" & 11 + lastResultRow - 2).Locked = False
-            .Protect userInterfaceOnly:=True
+            .Protect UserInterfaceOnly:=True
             .EnableSelection = xlUnlockedCells
         End If
     End With
@@ -635,7 +635,7 @@ Sub AjouterCheckBoxesEncaissement(row As Long)
 
     'Protect the worksheet
     With ws
-        .Protect userInterfaceOnly:=True
+        .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
     
@@ -717,7 +717,7 @@ Sub EffacerFeuilleEncaissement()
     Application.EnableEvents = True
     
     With wshENC_Saisie
-        .Protect userInterfaceOnly:=True
+        .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
 

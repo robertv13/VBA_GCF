@@ -303,7 +303,7 @@ Private Sub cmdGenerer_Click()
         End If
         
         'Les validations sont terminées, on appelle la procédure pour le rapport par compte
-        Call GenererRapportGL_Compte(wsRapport, dateDebut, dateFin)
+        Call GenererRapportGLParCompte(wsRapport, dateDebut, dateFin)
 
     ElseIf TypeRapport = "Par numéro d'écriture" Then
         'Validation des numéros d'écriture
@@ -340,7 +340,7 @@ Private Sub cmdGenerer_Click()
         End If
         
         'Les validations sont terminées, on appelle la procédure pour le rapport par compte
-        Call GenererRapportGL_Ecriture(wsRapport, noEcritureDebut, noEcritureFin)
+        Call GenererRapportGLParEcriture(wsRapport, noEcritureDebut, noEcritureFin)
     Else
         'Validation des dates de saisie
         Dim dateSaisieDebut As Date, dateSaisieFin As Date
@@ -382,7 +382,7 @@ Private Sub cmdGenerer_Click()
         dateSaisieFin = DateSerial(year(dateSaisieFin), month(dateSaisieFin), day(dateSaisieFin))
         
         'Les validations sont terminées, on appelle la procédure pour le rapport par date de saisie
-        Call GenererRapportGL_DateSaisie(wsRapport, dateSaisieDebut, dateSaisieFin)
+        Call GenererRapportGLParDateSaisie(wsRapport, dateSaisieDebut, dateSaisieFin)
        
     End If
 

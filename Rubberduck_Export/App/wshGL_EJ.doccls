@@ -68,9 +68,11 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:08
     
     'Protection de la feuille
     With ws
-        .Protect userInterfaceOnly:=True
+        .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
+
+    Me.Range("$E$9:$K$23").Locked = True
 
     Application.ScreenUpdating = True
     Application.EnableEvents = True
@@ -122,6 +124,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
                    vbOKOnly, "Enregistrement d'un dépôt de client"
         End If
         Target.Interior.Color = gCOULEUR_SAISIE
+        Me.Range("$E$9:$K$23").Locked = False
     End If
 
     'Compte has been selected
@@ -150,7 +153,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     'Save the current cell Address
     gPreviousCellAddress = Target.Address
     
-    ActiveSheet.Protect userInterfaceOnly:=True
+    ActiveSheet.Protect UserInterfaceOnly:=True
     
 '    'Passe à la cellule suivante
 '    Application.EnableEvents = False

@@ -358,13 +358,11 @@ Sub ComptabiliserEcritureCloture() '2025-07-20 @ 08:35
     
     Dim cheminFichier As String
     cheminFichier = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & wsdADMIN.Range("MASTER_FILE").Value
-    Dim nomFeuilleSource As String
-    nomFeuilleSource = "GL_Trans"
     Dim compteBNR As String
     compteBNR = ObtenirNoGlIndicateur("Bénéfices Non Répartis")
 
     'Récupération des soldes par ADO (classeur, feuille, premierGL, dernierGL, dateLimite, rejet écriture clôture)
-    Set soldes = ObtenirSoldesParCompteAvecADO(cheminFichier, nomFeuilleSource, "4000", "9999", dateCloture, False)
+    Set soldes = ObtenirSoldesParCompteAvecADO("4000", "9999", dateCloture, False)
     If soldes Is Nothing Then
         MsgBox "Impossible d'effectuer l'écriture de clôture pour" & vbNewLine & vbNewLine & _
                 "l'exercice se terminant le " & Format$(dateCloture, wsdADMIN.Range("B1").Value) & _
@@ -461,15 +459,14 @@ Public Sub SupprimerEcritureClotureCourante(dateCloture As Date) '2025-07-21 @ 1
 
 End Sub
 
-'@Description "Retourne un dictionnaire avec sommaire par noCompte & Solde"
-Public Function ObtenirSoldesParCompteAvecADO(cheminFichier As String, nomFeuille As String, _
-                                              noCompteGLMin As String, noCompteGLMax As String, dateCloture As Date, _
-                                              inclureEcrCloture As Boolean) As Dictionary '2025-07-21 @ 12:49
+'@Description "Retourne un dictionnaire avec sommaire par noCompte & Solde à une date donnée"
+Function ObtenirSoldesParCompteAvecADO(noCompteGLMin As String, noCompteGLMax As String, dateLimite As Date, _
+                                       inclureEcrCloture As Boolean) As Dictionary '2025-08-02 @ 10:04
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_BV:ObtenirSoldesParCompteAvecADO", vbNullString, 0)
     
     Dim strSQL As String
-    Dim soldes As Object: Set soldes = CreateObject("Scripting.Dictionary")
+    Dim dictSoldes As Object: Set dictSoldes = CreateObject("Scripting.Dictionary")
     Dim cle As String
     Dim montant As Currency
     
@@ -477,48 +474,52 @@ Public Function ObtenirSoldesParCompteAvecADO(cheminFichier As String, nomFeuill
     If noCompteGLMax = vbNullString Then
         noCompteGLMax = noCompteGLMin
     End If
-
+    
+    'Fichier fermé est GCF_BD_MASTER.xlsx et la feuille est 'GL_Trans'
+    Dim cheminFichier As String
+    cheminFichier = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & _
+                    Application.PathSeparator & wsdADMIN.Range("MASTER_FILE").Value
+    Dim nomFeuille As String
+    nomFeuille = "GL_Trans"
+    
     'Connexion ADO à un classeur fermé
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
     conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;" & "Data Source=" & cheminFichier & ";" & _
               "Extended Properties='Excel 12.0 Xml;HDR=YES';"
     Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
 
-'    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;" & _
-'              "Data Source=" & cheminFichier & ";" & _
-'              "Extended Properties='Excel 12.0 Xml;HDR=YES';"
-'
     'Requête : somme des montants pour chaque compte (>= 4000), jusqu’à la date de clôture incluse
     strSQL = "SELECT NoCompte, SUM(IIF(Débit IS NULL, 0, Débit)) - SUM(IIF(Crédit IS NULL, 0, Crédit)) AS Solde " & _
-                    "FROM [" & nomFeuille & "$] " & _
-                    "WHERE NoCompte >= '" & noCompteGLMin & "' AND NoCompte <= '" & noCompteGLMax & _
-                    "' AND Date <= #" & Format(dateCloture, "yyyy-mm-dd") & "#"
-                    
-                If Not inclureEcrCloture Then
-                    strSQL = strSQL & " AND NOT (Date = #" & Format(dateCloture, "yyyy-mm-dd") & "# AND Source = 'Clôture annuelle')"
-                End If
-                
-                strSQL = strSQL & " GROUP BY NoCompte"
+             "FROM [" & nomFeuille & "$] " & _
+             "WHERE NoCompte >= '" & noCompteGLMin & "' AND NoCompte <= '" & noCompteGLMax & _
+             "' AND Date <= #" & Format(dateLimite, "yyyy-mm-dd") & "#"
+    If Not inclureEcrCloture Then
+        strSQL = strSQL & " AND (Source IS NULL OR NOT (Date = #" & Format(dateLimite, "yyyy-mm-dd") & "# AND Source = 'Clôture annuelle'))"
+    End If
+    
+    strSQL = strSQL & " GROUP BY NoCompte"
 
-    Debug.Print strSQL
+    Debug.Print "ObtenirSoldesParCompteAvecADO: " & strSQL
     
     recSet.Open strSQL, conn, 1, 1
 
     Do While Not recSet.EOF
         cle = CStr(recSet.Fields("NoCompte").Value)
-        Debug.Print "Construction du dictionary : " & cle & " = " & Format$(recSet.Fields("Solde").Value, "#,##0.00")
+        Debug.Print "Construction du dictionary (dictSoldes): " & cle & " = " & Format$(recSet.Fields("Solde").Value, "#,##0.00")
         montant = Nz(recSet.Fields("Solde").Value)
-        If Not soldes.Exists(cle) Then
-            soldes.Add cle, montant
+        If Not dictSoldes.Exists(cle) Then
+            dictSoldes.Add cle, montant
         Else
-            soldes(cle) = soldes(cle) + montant
+            dictSoldes(cle) = dictSoldes(cle) + montant
         End If
         recSet.MoveNext
     Loop
 
     recSet.Close
     conn.Close
-    Set ObtenirSoldesParCompteAvecADO = soldes
+    
+    Set ObtenirSoldesParCompteAvecADO = dictSoldes
+    
     GoTo Exit_Function
 
 ErrHandler:

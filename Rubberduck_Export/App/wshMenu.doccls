@@ -7,7 +7,7 @@ Private Sub Worksheet_Activate()
     Call CacherToutesFeuillesSaufMenu
 
     With wshMenu
-        .Protect userInterfaceOnly:=True
+        .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
     

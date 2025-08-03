@@ -1478,7 +1478,7 @@ Sub DeterminerOrdreDeTabulation(ws As Worksheet) '2024-06-15 @ 13:58
 
     'Clear previous settings AND protect the worksheet
     With ws
-        .Protect userInterfaceOnly:=True
+        .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
 

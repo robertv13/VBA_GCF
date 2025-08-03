@@ -44,7 +44,7 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
     Call Prepare_Pour_Nouvelle_Radiation
     
     With ws
-        .Protect userInterfaceOnly:=True
+        .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
 
