@@ -991,12 +991,12 @@ Sub ImprimerLigneEF(ws As Worksheet, ByRef currRow As Integer, LigneEF As String
                 With ws.Range("C" & currRow).Borders(xlEdgeTop)
                     .LineStyle = xlContinuous
                     .Color = -11511710
-                    .Weight = xlMedium
+                    .Weight = xlThin
                 End With
                 With ws.Range("E" & currRow).Borders(xlEdgeTop)
                     .LineStyle = xlContinuous
                     .Color = -11511710
-                    .Weight = xlMedium
+                    .Weight = xlThin
                 End With
             End If
             
@@ -1018,12 +1018,12 @@ Sub ImprimerLigneEF(ws As Worksheet, ByRef currRow As Integer, LigneEF As String
                 With ws.Range("C" & currRow).Borders(xlEdgeBottom)
                     .LineStyle = xlContinuous
                     .Color = -11511710
-                    .Weight = xlMedium
+                    .Weight = xlThin
                 End With
                 With ws.Range("E" & currRow).Borders(xlEdgeBottom)
                     .LineStyle = xlContinuous
                     .Color = -11511710
-                    .Weight = xlMedium
+                    .Weight = xlThin
                 End With
             End If
             

@@ -7,17 +7,17 @@ Private invRow As Long, itemDBRow As Long, invitemRow As Long, invNumb As Long
 Private lastRow As Long, lastResultRow As Long, resultRow As Long
 
 '@Description ("Clic sur le bouton Sauvegarde")
-Sub shp_FAC_Finale_Save_Click() '2025-06-21 @ 08:20
+Sub shpSauvegardeFacture_Click() '2025-06-21 @ 08:20
 
-    Call FAC_Finale_Save
+    Call SauvegardeFacture
     
     Call RestaurerFeuilleFinaleIntact
 
 End Sub
 
-Sub FAC_Finale_Save() '2024-03-28 @ 07:19
+Sub SauvegardeFacture() '2024-03-28 @ 07:19
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Save", _
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:SauvegardeFacture", _
         "# = " & wshFAC_Finale.Range("E28").Value & " - Date = " & Format$(wshFAC_Brouillon.Range("O3").Value, "dd/mm/yyyy"), 0)
 
     With wshFAC_Brouillon
@@ -105,7 +105,7 @@ Fast_Exit_Sub:
 
     wshFAC_Brouillon.Select
     
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Save", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:SauvegardeFacture", vbNullString, startTime)
     
 End Sub
 
@@ -902,8 +902,8 @@ Sub FAC_Finale_Setup_All_Cells()
         Call FAC_Brouillon_Set_Labels(.Range("B79"), "FAC_Label_Deposit")
         Call FAC_Brouillon_Set_Labels(.Range("B81"), "FAC_Label_AmountDue")
 
-        'Establish formulas
-        .Range("E69").formula = "=" & wshFAC_Brouillon.Name & "!O47" 'Fees Sub-Total
+        'Mettre en place les formules de la feuille
+        .Range("E69").formula = "=ROUND(" & wshFAC_Brouillon.Name & "!O47, 2)" 'Fees Sub-Total
         
         .Range("B70").formula = "=" & wshFAC_Brouillon.Name & "!M48" 'Misc. Amount # 1 - Description
         .Range("E70").formula = "=" & wshFAC_Brouillon.Name & "!O48" 'Misc. Amount # 1

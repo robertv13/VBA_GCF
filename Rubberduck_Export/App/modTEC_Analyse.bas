@@ -822,7 +822,6 @@ Sub AjouterCaseACocherOnFacture(StartRow As Long, lastRow As Long)
         End With
     End With
     
-    
     Application.EnableEvents = True
     Application.ScreenUpdating = True
     

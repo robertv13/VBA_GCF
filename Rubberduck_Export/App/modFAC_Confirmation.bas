@@ -224,7 +224,7 @@ Sub MettreAJourConfirmationFacture() '2025-03-12 @ 12:40
                 Call MettreAJourStatutFacEnteteMaster(invNo)
                 Call MettreAJourStatutFacEnteteLocale(invNo)
                 DoEvents
-                Call ConstruireEcritureGLConfirmation(invNo)
+                Call ComptabiliserConfirmationFacture(invNo)
                 DoEvents
             End If
         Next i
@@ -315,9 +315,9 @@ Sub MettreAJourStatutFacEnteteLocale(invoice As String) '2025-03-12 @ 12:40
 
 End Sub
 
-Sub ConstruireEcritureGLConfirmation(invoice As String) '2025-03-12 @ 12:42
+Sub ComptabiliserConfirmationFacture(invoice As String) '2025-08-04 @ 07:19
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Confirmation:ConstruireEcritureGLConfirmation", invoice, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Confirmation:ComptabiliserConfirmationFacture", invoice, 0)
 
     Dim ws As Worksheet: Set ws = wsdFAC_Entete
     
@@ -336,83 +336,88 @@ Sub ConstruireEcritureGLConfirmation(invoice As String) '2025-03-12 @ 12:42
         dateFact = Left$(ws.Cells(r, fFacEDateFacture).Value, 10)
         Dim hono As Currency
         hono = ws.Cells(r, fFacEHonoraires).Value
-        Dim misc1 As Currency, misc2 As Currency, misc3 As Currency
+        Dim misc1 As Currency
+        Dim misc2 As Currency
+        Dim misc3 As Currency
         misc1 = ws.Cells(r, fFacEAutresFrais1).Value
         misc2 = ws.Cells(r, fFacEAutresFrais2).Value
         misc3 = ws.Cells(r, fFacEAutresFrais3).Value
-        Dim tps As Currency, tvq As Currency
+        Dim tps As Currency
+        Dim tvq As Currency
         tps = ws.Cells(r, fFacEMntTPS).Value
         tvq = ws.Cells(r, fFacEMntTVQ).Value
         
-        Dim descGL_Trans As String, Source As String
-        descGL_Trans = ws.Cells(r, fFacENomClient).Value
-        Source = "FACTURE:" & invoice
+        'Déclaration et instanciation d'un objet GL_Entry
+        Dim ecr As clsGL_Entry
+        Set ecr = New clsGL_Entry
+    
+        'Remplissage des propriétés communes
+        ecr.DateEcriture = dateFact
+        ecr.description = ws.Cells(r, fFacENomClient).Value
+        ecr.Source = "FACTURE:" & invoice
         
-        Dim MyArray(1 To 7, 1 To 4) As String
+        Dim codeGL As String
+        Dim descGL As String
         
-        'AR amount
-        If hono + misc1 + misc2 + misc3 + tps + tvq Then
-            MyArray(1, 1) = ObtenirNoGlIndicateur("Comptes Clients")
-            MyArray(1, 2) = "Comptes clients"
-            MyArray(1, 3) = hono + misc1 + misc2 + misc3 + tps + tvq
-            MyArray(1, 4) = vbNullString
+        'Débit Comptes Clients
+        If hono + misc1 + misc2 + misc3 + tps + tvq <> 0 Then
+            codeGL = ObtenirNoGlIndicateur("Comptes Clients")
+            descGL = ObtenirDescriptionCompte(codeGL)
+            ecr.AjouterLigne codeGL, descGL, hono + misc1 + misc2 + misc3 + tps + tvq, vbNullString
         End If
         
-        'Professional Fees (hono)
+        'Honoraires
         If hono Then
-            MyArray(2, 1) = ObtenirNoGlIndicateur("Revenus de consultation")
-            MyArray(2, 2) = "Revenus de consultation"
-            MyArray(2, 3) = -hono
-            MyArray(2, 4) = vbNullString
+            codeGL = ObtenirNoGlIndicateur("Revenus de consultation")
+            descGL = ObtenirDescriptionCompte(codeGL)
+            ecr.AjouterLigne codeGL, descGL, -hono, vbNullString
         End If
         
         'Miscellaneous Amount # 1 (misc1)
         If misc1 Then
-            MyArray(3, 1) = ObtenirNoGlIndicateur("Revenus frais de poste")
-            MyArray(3, 2) = "Revenus - Frais de poste"
-            MyArray(3, 3) = -misc1
-            MyArray(3, 4) = vbNullString
+            codeGL = ObtenirNoGlIndicateur("Revenus frais de poste")
+            descGL = ObtenirDescriptionCompte(codeGL)
+            ecr.AjouterLigne codeGL, descGL, -misc1, vbNullString
         End If
         
         'Miscellaneous Amount # 2 (misc2)
         If misc2 Then
-            MyArray(4, 1) = ObtenirNoGlIndicateur("Revenus sous-traitants")
-            MyArray(4, 2) = "Revenus - Sous-traitants"
-            MyArray(4, 3) = -misc2
-            MyArray(4, 4) = vbNullString
+            codeGL = ObtenirNoGlIndicateur("Revenus sous-traitants")
+            descGL = ObtenirDescriptionCompte(codeGL)
+            ecr.AjouterLigne codeGL, descGL, -misc2, vbNullString
         End If
         
         'Miscellaneous Amount # 3 (misc3)
         If misc3 Then
-            MyArray(5, 1) = ObtenirNoGlIndicateur("Revenus autres frais")
-            MyArray(5, 2) = "Revenus - Autres Frais"
-            MyArray(5, 3) = -misc3
-            MyArray(5, 4) = vbNullString
+            codeGL = ObtenirNoGlIndicateur("Revenus autres frais")
+            descGL = ObtenirDescriptionCompte(codeGL)
+            ecr.AjouterLigne codeGL, descGL, -misc3, vbNullString
         End If
         
-        'GST to pay (tps)
+        'TPS à payer
         If tps Then
-            MyArray(6, 1) = ObtenirNoGlIndicateur("TPS Facturée")
-            MyArray(6, 2) = "TPS percues"
-            MyArray(6, 3) = -tps
-            MyArray(6, 4) = vbNullString
+            codeGL = ObtenirNoGlIndicateur("TPS Facturée")
+            descGL = ObtenirDescriptionCompte(codeGL)
+            ecr.AjouterLigne codeGL, descGL, -tps, vbNullString
         End If
         
-        'PST to pay (tvq)
+        'TVQ à payer
         If tvq Then
-            MyArray(7, 1) = ObtenirNoGlIndicateur("TVQ Facturée")
-            MyArray(7, 2) = "TVQ percues"
-            MyArray(7, 3) = -tvq
-            MyArray(7, 4) = vbNullString
+            codeGL = ObtenirNoGlIndicateur("TVQ Facturée")
+            descGL = ObtenirDescriptionCompte(codeGL)
+            ecr.AjouterLigne codeGL, descGL, -tvq, vbNullString
         End If
         
         'Mise à jour du posting GL des confirmations de facture
-        Dim GLEntryNo As Long
-        Call modGL_Stuff.GL_Posting_To_DB(dateFact, descGL_Trans, Source, MyArray, GLEntryNo)
-        Call modGL_Stuff.GL_Posting_Locally(dateFact, descGL_Trans, Source, MyArray, GLEntryNo)
+'        Dim GLEntryNo As Long
+'        Call modGL_Stuff.GL_Posting_To_DB(dateFact, descGL_Trans, Source, MyArray, GLEntryNo)
+'        Call modGL_Stuff.GL_Posting_Locally(dateFact, descGL_Trans, Source, MyArray, GLEntryNo)
     Else
         MsgBox "La facture '" & invoice & "' n'existe pas dans FAC_Entete.", vbCritical
     End If
+    
+    'Écriture
+    Call modGL_Stuff.AjouterEcritureGLADOPlusLocale(ecr, False)
     
     'Libérer la mémoire
     On Error Resume Next
@@ -421,7 +426,7 @@ Sub ConstruireEcritureGLConfirmation(invoice As String) '2025-03-12 @ 12:42
     Set ws = Nothing
     On Error GoTo 0
     
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Confirmation:ConstruireEcritureGLConfirmation", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Confirmation:ComptabiliserConfirmationFacture", vbNullString, startTime)
 
 End Sub
 

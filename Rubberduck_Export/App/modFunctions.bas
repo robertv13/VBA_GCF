@@ -90,9 +90,9 @@ Function Fn_GetID_From_Client_Name(nomClient As String) '2024-02-14 @ 06:07
         ufSaisieHeures.txtClientID.Value = result
     Else
         MsgBox "Impossible de retrouver le nom du client dans la feuille" & vbNewLine & vbNewLine & _
-                    "BD_Clients..." & vbNewLine & vbNewLine & _
-                    "VOUS DEVEZ SAISIR LE NOM DU CLIENT À NOUVEAU", _
-                    , vbCritical, "Client inexistant dans la base de données des clients"
+               "BD_Clients (" & nomClient & ")" & vbNewLine & vbNewLine & _
+               "VOUS DEVEZ SAISIR LE NOM DU CLIENT À NOUVEAU", _
+               vbCritical, "Client INEXISTANT dans la base de données des clients"
     End If
     
     'Libérer la mémoire
@@ -937,7 +937,7 @@ End Function
 
 Function Fn_Complete_Date(dateInput As String, joursArriere As Integer, joursFutur As Integer) As Variant
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFunctions:Fn_Complete_Date", dateInput & ", " & joursArriere & ", " & joursFutur, 0)
+'    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFunctions:Fn_Complete_Date", dateInput & ", " & joursArriere & ", " & joursFutur, 0)
     
     Dim dayPart As Long
     Dim monthPart As Long
@@ -1015,15 +1015,15 @@ Function Fn_Complete_Date(dateInput As String, joursArriere As Integer, joursFut
     'Return a VALID date
     Fn_Complete_Date = parsedDate
     
-    Call modDev_Utils.EnregistrerLogApplication("modFunctions:Fn_Complete_Date", vbNullString, startTime)
-
+    GoTo Exit_Function
+    
     Exit Function
 
 Invalid_Date:
-
     Fn_Complete_Date = "Invalid Date"
     
-    Call modDev_Utils.EnregistrerLogApplication("modFunctions:Fn_Complete_Date", vbNullString, startTime)
+Exit_Function:
+'    Call modDev_Utils.EnregistrerLogApplication("modFunctions:Fn_Complete_Date", vbNullString, startTime)
     
 End Function
 
@@ -1431,7 +1431,7 @@ Public Function Fn_Pad_A_String(s As String, fillCaracter As String, length As L
         
 End Function
 
-Function Fn_Get_Next_Invoice_Number() As String '2024-09-17 @ 14:00
+Function FnProchainNumeroFacture() As String '2024-09-17 @ 14:00
 
     Dim ws As Worksheet: Set ws = wsdFAC_Entete
     
@@ -1448,18 +1448,18 @@ Function Fn_Get_Next_Invoice_Number() As String '2024-09-17 @ 14:00
                 vbNewLine & vbNewLine & "Veuillez contacter le développeur", _
                 vbOKOnly, "Structure invalide dans 'wsdFAC_Entete'"
     End If
-    Fn_Get_Next_Invoice_Number = strLastInvoice + 1
+    FnProchainNumeroFacture = strLastInvoice + 1
 
     'Libérer la mémoire
     Set ws = Nothing
     
 End Function
 
-Function Fn_Get_GL_Account_Opening_Balance_AF(glNo As String, d As Date) As Double
+Function FnObtenirSoldeOuvertureGLAvecAF(glNo As String, d As Date) As Double
 
     'Using AdvancedFilter # 1 in wsdGL_Trans
     
-    Fn_Get_GL_Account_Opening_Balance_AF = 0
+    FnObtenirSoldeOuvertureGLAvecAF = 0
     
     Dim ws As Worksheet: Set ws = wsdGL_Trans
     
@@ -1509,7 +1509,7 @@ Function Fn_Get_GL_Account_Opening_Balance_AF(glNo As String, d As Date) As Doub
         
     'Méthode plus rapide pour obtenir une somme
     Set rngResult = ws.Range("P2:Y" & lastUsedRow)
-    Fn_Get_GL_Account_Opening_Balance_AF = Application.WorksheetFunction.SUM(rngResult.Columns(7)) _
+    FnObtenirSoldeOuvertureGLAvecAF = Application.WorksheetFunction.SUM(rngResult.Columns(7)) _
                                            - Application.WorksheetFunction.SUM(rngResult.Columns(8))
     
     'Libérer la mémoire

@@ -1,4 +1,4 @@
-﻿📘 Journal typographique — 08/03/2025 09:45:57
+﻿📘 Journal typographique — 08/05/2025 04:43:27
 
 🔧 Fichier : clsControlWrapper.cls
 
@@ -161,6 +161,7 @@
 🔧 Fichier : modGL_BV.bas
    ✅ Remplacé : .borders ➜ .Borders
    ✅ Remplacé : .interior ➜ .Interior
+   ✅ Remplacé : .cells ➜ .Cells
    ✅ Remplacé : .row ➜ .Row
    ✅ Remplacé : .value ➜ .Value
    ✅ Remplacé : .range ➜ .Range

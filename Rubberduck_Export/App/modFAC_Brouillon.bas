@@ -35,7 +35,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
             .Range("B5").Value = "FAUX"
             .Range("B24").Value = True
             .Range("K3:L7,O3,O5").ClearContents 'Clear cells for a new Invoice
-            .Range("O6").Value = Fn_Get_Next_Invoice_Number
+            .Range("O6").Value = FnProchainNumeroFacture
             
             On Error Resume Next
                 DoEvents

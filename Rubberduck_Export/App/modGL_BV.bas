@@ -3,8 +3,10 @@ Option Explicit
 
 Public dynamicShape As Shape
 
-Sub shp_GL_BV_Actualiser_Click()
+Sub shpActualiserBV_Click()
 
+    Call EffacerZoneTransactionsDetailleesBV(wshGL_BV)
+    
     Call ActualiserBV
 
 End Sub
@@ -125,28 +127,7 @@ Sub AfficherSoldesBV(soldes As Dictionary, Optional ligneDépart As Long = 4) '2
     
 End Sub
 
-Private Sub Sort2DArray(arr As Variant, sortColumn As Long, ascending As Boolean) '2025-05-27 @ 18:05 - v6.C.7 - ChatPGT
-
-    Dim i As Long, j As Long
-    Dim temp As Variant
-    For i = LBound(arr, 1) To UBound(arr, 1) - 1
-        For j = i + 1 To UBound(arr, 1)
-            If (ascending And arr(i, sortColumn) > arr(j, sortColumn)) _
-            Or (Not ascending And arr(i, sortColumn) < arr(j, sortColumn)) Then
-                temp = arr(i, 1)
-                arr(i, 1) = arr(j, 1)
-                arr(j, 1) = temp
-
-                temp = arr(i, 2): arr(i, 2) = arr(j, 2): arr(j, 2) = temp
-                temp = arr(i, 3): arr(i, 3) = arr(j, 3): arr(j, 3) = temp
-                temp = arr(i, 4): arr(i, 4) = arr(j, 4): arr(j, 4) = temp
-            End If
-        Next j
-    Next i
-
-End Sub
-
-Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As String, dateMin As Date, dateMax As Date) '2025-05-27 @ 19:40 - v6.C.7 - ChatGPT
+Sub AfficherTransactionsPourUnCompteDeGL(compte As String, description As String, dateMin As Date, dateMax As Date) '2025-05-27 @ 19:40 - v6.C.7 - ChatGPT
 
     Dim rsInit As Object
     Dim wsTrans As Worksheet, wsResult As Worksheet
@@ -165,7 +146,7 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
     End If
 
     'Nettoyer la zone existante (M5 vers le bas) & ajuster l'entête
-    Call GL_BV_EffacerZoneTransactionsDetaillees(wsResult)
+    Call EffacerZoneTransactionsDetailleesBV(wsResult)
     
     Application.EnableEvents = False
     wsResult.Range("L2").Value = "Du " & Format$(dateMin, wsdADMIN.Range("B1").Value) & " au " & Format$(dateMax, wsdADMIN.Range("B1").Value)
@@ -194,7 +175,6 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
     strSQL = "SELECT SUM(IIF(Débit IS NULL, 0, Débit)) as TotalDebit, SUM(IIF(Crédit IS NULL, 0, Crédit)) AS TotalCredit " & _
              "FROM [GL_Trans$] " & _
              "WHERE NoCompte = '" & compte & "' AND Date < #" & Format$(dateMin, "mm/dd/yyyy") & "#"
-    Debug.Print "#777 - strSQL1 (Solde d'ouveture) = " & strSQL
     
     rsInit.Open strSQL, conn, 1, 1
     If Not rsInit.EOF Then
@@ -267,8 +247,6 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
         
         'Positionner la cellule d’ancrage juste à droite du volet figé
         wsResult.Activate
-'        wsResult.Range("M5").Select
-'        ActiveWindow.FreezePanes = True
 
         wsResult.Range("M5").Resize(nbLignes, 8).Value = tableau
         
@@ -284,12 +262,9 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
     Else
         MsgBox "Aucune transaction à afficher pour ce" & vbNewLine & vbNewLine & _
                 "compte, avec la période choisie", vbExclamation, "Transactions pour la période"
-'        Application.EnableEvents = False
-'        wsResult.Range("L4").Value = vbNullString
-'        Application.EnableEvents = True
     End If
     
-    Call GL_BV_AjustementAffichageTransactionsDetaillees
+    Call AjusterAffichageTransactionsDetailleesBV
     
     Call GL_BV_Ajouter_Shape_Retour
 
@@ -299,45 +274,37 @@ Sub GL_BV_Display_Trans_For_Selected_Account(compte As String, description As St
     
 End Sub
 
-Sub GL_BV_AjustementAffichageTransactionsDetaillees()
+Sub AjusterAffichageTransactionsDetailleesBV()
 
-    'Ajuster la largeur des colonnes de la section
     Dim ws As Worksheet
     Set ws = wshGL_BV
     
-    Dim rng As Range
+    With ws
+        'Date
+        .Columns("M").ColumnWidth = 9
+        .Columns("M").HorizontalAlignment = xlCenter
+    
+        'No écriture
+        .Columns("N").ColumnWidth = 7
+        
+        'Description
+        .Columns("O").ColumnWidth = 44
+        
+        'Source
+        .Columns("P").ColumnWidth = 20
+        
+        'Débit et crédit
+        .Columns("Q:R").ColumnWidth = 14
+        
+        'Solde
+        .Columns("S").ColumnWidth = 15
+        
+        'Autre remarque
+        .Columns("T").ColumnWidth = 30
+    End With
+    
     Dim lastUsedRow As Long
     lastUsedRow = ws.Cells(ws.Rows.count, "M").End(xlUp).Row
-    
-    'Date
-    Set rng = ws.Range("M5:M" & lastUsedRow)
-    rng.ColumnWidth = 9
-    rng.HorizontalAlignment = xlCenter
-    
-    'No écriture
-    Set rng = ws.Range("N5:N" & lastUsedRow)
-    rng.ColumnWidth = 7
-    
-    'Description
-    Set rng = ws.Range("O5:O" & lastUsedRow)
-    rng.ColumnWidth = 45
-    
-    'Source
-    Set rng = ws.Range("P5:P" & lastUsedRow)
-    rng.ColumnWidth = 20
-    
-    'Débit & Crédit
-    Set rng = ws.Range("Q5:R" & lastUsedRow)
-    rng.ColumnWidth = 14
-    
-    'Solde
-    Set rng = ws.Range("S5:S" & lastUsedRow)
-    rng.ColumnWidth = 15
-    
-    'Autre remarque
-    Set rng = ws.Range("T5:T" & lastUsedRow)
-    rng.ColumnWidth = 30
-
     Dim visibleRows As Long
     visibleRows = ActiveWindow.VisibleRange.Rows.count
     If lastUsedRow > visibleRows Then
@@ -346,33 +313,159 @@ Sub GL_BV_AjustementAffichageTransactionsDetaillees()
         ActiveWindow.ScrollRow = 1
     End If
 
-    'Ajouter un fond alternatif pour faciliter la lecture
-    With ws.Range("M5:T" & lastUsedRow)
-        On Error Resume Next
-        .FormatConditions.Add _
-            Type:=xlExpression, _
-            Formula1:="=ET($M5<>"""";MOD(LIGNE();2)=1)"
-        .FormatConditions(.FormatConditions.count).SetFirstPriority
-        With .FormatConditions(1).Interior
-            .PatternColorIndex = xlAutomatic
-            .ThemeColor = xlThemeColorAccent1
-            .TintAndShade = 0.799981688894314
+    'Ajouter un fond alternatif pour faciliter la lecture, s'il y a des transactions
+    If lastUsedRow >= 5 Then
+        With ws.Range("M5:T" & lastUsedRow)
+            On Error Resume Next
+            .FormatConditions.Add _
+                Type:=xlExpression, _
+                Formula1:="=ET($M5<>"""";MOD(LIGNE();2)=1)"
+            .FormatConditions(.FormatConditions.count).SetFirstPriority
+            With .FormatConditions(1).Interior
+                .PatternColorIndex = xlAutomatic
+                .ThemeColor = xlThemeColorAccent1
+                .TintAndShade = 0.799981688894314
+            End With
+            .FormatConditions(1).StopIfTrue = False
+            On Error GoTo 0
         End With
-        .FormatConditions(1).StopIfTrue = False
-        On Error GoTo 0
-    End With
+    End If
 
 End Sub
 
-Sub shp_GL_BV_Impression_BV_Click()
+'@Description "Procédure pour obtenir les soldes en date de la fin d'année financière et"
+'             "Effectuer l'écriture de clôture pour l'exercice"
+Sub ComptabiliserEcritureCloture() '2025-08-04 @ 07:15
 
-    Call GL_BV_Setup_And_Print
-
-End Sub
-
-Sub GL_BV_Setup_And_Print()
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_BV:ComptabiliserEcritureCloture", vbNullString, 0)
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_BV:GL_BV_Setup_And_Print", vbNullString, 0)
+    Dim ws As Worksheet
+    Set ws = wshGL_BV
+    
+    Dim dateCloture As Date
+    dateCloture = ws.Range("B12").Value
+    
+    '1. Efface l'écriture si elle existe dans MASTER + Reimporter MASTER dans Local
+    Call SupprimerEcritureClotureCourante(dateCloture)
+    
+    Call modImport.ImporterGLTransactions 'Reimporte de MASTER
+    
+    '2. Construire les soldes à la date de clôture
+    Dim soldes As Object
+    Set soldes = CreateObject("Scripting.Dictionary")
+    
+    Dim cheminFichier As String
+    cheminFichier = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & wsdADMIN.Range("MASTER_FILE").Value
+    Dim compteBNR As String
+    compteBNR = ObtenirNoGlIndicateur("Bénéfices Non Répartis")
+
+    'Récupération des soldes par ADO (classeur, feuille, premierGL, dernierGL, dateLimite, rejet écriture clôture)
+    Set soldes = ObtenirSoldesParCompteAvecADO("4000", "9999", dateCloture, False)
+    If soldes Is Nothing Then
+        MsgBox "Impossible d'effectuer l'écriture de clôture pour" & vbNewLine & vbNewLine & _
+                "l'exercice se terminant le " & Format$(dateCloture, wsdADMIN.Range("B1").Value) & _
+                "VEUILLEZ CONTACTER LE DÉVELOPPEUR SANS TARDER", _
+                vbCritical, _
+                "Les soldes de clôture ne peuvent être calculés !!!"
+        
+        Exit Sub
+    End If
+
+    '3. Création de l'écriture à partir de soldes (dictionary)
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;" & "Data Source=" & cheminFichier & ";" & _
+              "Extended Properties='Excel 12.0 Xml;HDR=YES';"
+    Dim cmd As Object: Set cmd = CreateObject("ADODB.Command")
+              
+    Dim cpte As Variant
+    Dim montant As Currency
+    Dim totalResultat As Currency
+    Dim ecr As clsGL_Entry
+    
+    'Instanciation de l'écrituire globale
+    Set ecr = New clsGL_Entry
+    ecr.DateEcriture = dateCloture
+    ecr.description = "Écriture de clôture annuelle"
+    ecr.Source = "Clôture Annuelle"
+    
+    'Parcours du dictionaire
+    Dim descCompte As String
+    For Each cpte In soldes.keys
+        montant = soldes(cpte)
+        If montant <> 0 Then
+            'Montant inverse pour solder le compte
+            descCompte = modFunctions.ObtenirDescriptionCompte(CStr(cpte))
+            ecr.AjouterLigne CStr(cpte), descCompte, -montant, "Générée par l'application" 'Inverse pour solder
+            totalResultat = totalResultat + montant
+        End If
+    Next cpte
+
+    'Ligne de contrepartie pour BNR
+    If totalResultat <> 0 Then
+        descCompte = ObtenirDescriptionCompte(compteBNR)
+        ecr.AjouterLigne CStr(compteBNR), descCompte, totalResultat, "Générée par l'application"
+    End If
+    
+    Call AjouterEcritureGLADOPlusLocale(ecr, False)
+    
+    MsgBox "L'écriture de clôture en date du " & Format$(dateCloture, wsdADMIN.Range("B1").Value) & vbNewLine & vbNewLine & _
+           "a été complétée avec succès", _
+           vbInformation, _
+           "Écriture ANNUELLE de clôture"
+    
+    ws.Shapes("shpEcritureCloture").Visible = False
+    
+    'Libérer la mémoire
+    Set cmd = Nothing
+    Set conn = Nothing
+    Set ecr = Nothing
+    Set soldes = Nothing
+    Set ws = Nothing
+    
+    Call modDev_Utils.EnregistrerLogApplication("modGL_BV:ComptabiliserEcritureCloture", vbNullString, startTime)
+    
+End Sub
+
+Public Sub SupprimerEcritureClotureCourante(dateCloture As Date) '2025-07-21 @ 11:56
+
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_BV:SupprimerEcritureClotureCourante", vbNullString, 0)
+    
+    Dim wb As Workbook
+    Dim ws As Worksheet
+    Dim cheminMaster As String
+    
+    cheminMaster = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & wsdADMIN.Range("MASTER_FILE").Value
+    Application.ScreenUpdating = False
+    Set wb = Workbooks.Open(cheminMaster, ReadOnly:=False)
+    Set ws = wb.Sheets("GL_Trans")
+
+    Dim i As Long
+    'Boucle INVERSÉE pour supprimer l'écriture de clôture courante
+    With ws
+        For i = .Cells(.Rows.count, "A").End(xlUp).Row To 2 Step -1
+            If .Cells(i, fGlTDate).Value = dateCloture And _
+               .Cells(i, fGlTSource).Value = "Clôture Annuelle" Then
+                .Rows(i).Delete
+            End If
+        Next i
+    End With
+    
+    wb.Close SaveChanges:=True
+    Application.ScreenUpdating = True
+    
+    Call modDev_Utils.EnregistrerLogApplication("modGL_BV:SupprimerEcritureClotureCourante", vbNullString, startTime)
+
+End Sub
+
+Sub shpImprimerBV_Click()
+
+    Call ImprimerBV
+
+End Sub
+
+Sub ImprimerBV()
+    
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_BV:ImprimerBV", vbNullString, 0)
     
     Dim lastRow As Long
     lastRow = wshGL_BV.Cells(wshGL_BV.Rows.count, "D").End(xlUp).Row + 2
@@ -387,7 +480,7 @@ Sub GL_BV_Setup_And_Print()
     Dim shp As Shape: Set shp = wshGL_BV.Shapes("GL_BV_Print")
     shp.Visible = msoFalse
     
-    Call GL_BV_SetUp_And_Print_Document(printRange, pagesRequired)
+    Call MettreEnPageEtPrevisualiserBVOuTrans(printRange, pagesRequired)
     
     shp.Visible = msoTrue
     
@@ -395,23 +488,23 @@ Sub GL_BV_Setup_And_Print()
     Set printRange = Nothing
     Set shp = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_BV:GL_BV_Setup_And_Print", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_BV:ImprimerBV", vbNullString, startTime)
 
 End Sub
 
-Sub shp_GL_BV_Setup_And_Print_Trans_Click()
+Sub shpImprimerBVTrans_Click()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_BV:shp_GL_BV_Setup_And_Print_Trans_Click", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_BV:shpImprimerBVTrans_Click", vbNullString, 0)
     
-    Call GL_BV_Setup_And_Print_Trans
+    Call ImprimerBVTransactions
 
-    Call modDev_Utils.EnregistrerLogApplication("modGL_BV:shp_GL_BV_Setup_And_Print_Trans_Click", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_BV:shpImprimerBVTrans_Click", vbNullString, startTime)
 
 End Sub
 
-Sub GL_BV_Setup_And_Print_Trans()
+Sub ImprimerBVTransactions()
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_BV:GL_BV_Setup_And_Print_Trans", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("   modGL_BV:ImprimerBVTransactions", vbNullString, 0)
     
     Dim lastRow As Long
     lastRow = wshGL_BV.Cells(wshGL_BV.Rows.count, "M").End(xlUp).Row
@@ -426,7 +519,7 @@ Sub GL_BV_Setup_And_Print_Trans()
     Dim shp As Shape: Set shp = ActiveSheet.Shapes("GL_BV_Print_Trans")
     shp.Visible = msoFalse
     
-    Call GL_BV_SetUp_And_Print_Document(printRange, pagesRequired)
+    Call MettreEnPageEtPrevisualiserBVOuTrans(printRange, pagesRequired)
     
     shp.Visible = msoTrue
     
@@ -434,57 +527,44 @@ Sub GL_BV_Setup_And_Print_Trans()
     Set printRange = Nothing
     Set shp = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_BV:GL_BV_Setup_And_Print_Trans", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("   modGL_BV:ImprimerBVTransactions", vbNullString, startTime)
 
 End Sub
 
-Sub GL_BV_SetUp_And_Print_Document(myPrintRange As Range, pagesTall As Long)
+Sub MettreEnPageEtPrevisualiserBVOuTrans(myPrintRange As Range, pagesTall As Long)
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_BV:GL_BV_SetUp_And_Print_Document", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("      modGL_BV:MettreEnPageEtPrevisualiserBVOuTrans", vbNullString, 0)
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
     Application.Calculation = xlCalculationManual
 
     With ActiveSheet.PageSetup
-'        .PrintTitleRows = ""
-'        .PrintTitleColumns = ""
         .PaperSize = xlPaperLetter
         .Orientation = xlPortrait
         .PrintArea = myPrintRange.Address 'Parameter 1
         .FitToPagesWide = 1
         .FitToPagesTall = pagesTall 'Parameter 2
-        Call modDev_Utils.EnregistrerLogApplication("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 1 is completed", -1)
         
         'Page Header & Footer
-'        .LeftHeader = ""
         .CenterHeader = "&""Aptos Narrow,Gras""&18 " & wsdADMIN.Range("NomEntreprise").Value
-        Call modDev_Utils.EnregistrerLogApplication("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 1.A is completed", -1)
         
-'        .RightHeader = ""
         .LeftFooter = "&9&D - &T"
-'        .CenterFooter = ""
         .RightFooter = "&9Page &P de &N"
-        Call modDev_Utils.EnregistrerLogApplication("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 1.B is completed", -1)
         
         'Page Margins
-        Call modDev_Utils.EnregistrerLogApplication("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 2 is starting", -1)
         .LeftMargin = Application.InchesToPoints(0.16)
         .RightMargin = Application.InchesToPoints(0.16)
-         Call modDev_Utils.EnregistrerLogApplication("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 2 (Left & Right) margins", -1)
          
-        .TopMargin = Application.InchesToPoints(0.75)
-        .BottomMargin = Application.InchesToPoints(0.75)
-         Call modDev_Utils.EnregistrerLogApplication("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 2 (Top & Bottom) margins", -1)
+        .TopMargin = Application.InchesToPoints(0.5)
+        .BottomMargin = Application.InchesToPoints(0.5)
          
         .CenterHorizontally = True
         .CenterVertically = False
-         Call modDev_Utils.EnregistrerLogApplication("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 2 (Center Horizontal & Vertical)", -1)
          
         'Header and Footer margins
         .HeaderMargin = Application.InchesToPoints(0.16)
         .FooterMargin = Application.InchesToPoints(0.16)
-        Call modDev_Utils.EnregistrerLogApplication("   modGL_BV:GL_BV_SetUp_And_Print_Document - Block 2 (Header & Footer) margins", -1)
         
         .ScaleWithDocHeaderFooter = True
         .AlignMarginsHeaderFooter = True
@@ -494,11 +574,9 @@ Sub GL_BV_SetUp_And_Print_Document(myPrintRange As Range, pagesTall As Long)
     Application.EnableEvents = True
     Application.Calculation = xlCalculationAutomatic
 
-    Call modDev_Utils.EnregistrerLogApplication("   modGL_BV:GL_BV_SetUp_And_Print_Document - Speed Measure", -1)
-    
     wshGL_BV.PrintPreview '2024-08-15 @ 14:53
  
-    Call modDev_Utils.EnregistrerLogApplication("modGL_BV:GL_BV_SetUp_And_Print_Document", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("      modGL_BV:MettreEnPageEtPrevisualiserBVOuTrans", vbNullString, startTime)
  
 End Sub
 
@@ -519,24 +597,15 @@ Sub EffacerFormesNonRequises() '2024-08-15 @ 14:42
     
 End Sub
 
-Sub Test_Get_All_Shapes() '2024-08-15 @ 14:42
+Sub AfficherDetailEcritureAvecForme()
 
-    Dim ws As Worksheet: Set ws = wshGL_BV
-    
-    'Libérer la mémoire
-    Set ws = Nothing
-    
-End Sub
-
-Sub GL_BV_Display_JE_Trans_With_Shape()
-
-    Call GL_BV_Create_Dynamic_Shape
-    Call GL_BV_Adjust_The_Shape
-    Call GL_BV_Show_Dynamic_Shape
+    Call CreerFormeDynamiquePourAfficherDetailEcriture
+    Call AjusterFormeDynamiqueBV
+    Call AfficherFormeDynamiqueBV
     
 End Sub
 
-Sub GL_BV_Create_Dynamic_Shape()
+Sub CreerFormeDynamiquePourAfficherDetailEcriture()
 
     'Check if the shape has already been created
     If dynamicShape Is Nothing Then
@@ -547,9 +616,9 @@ Sub GL_BV_Create_Dynamic_Shape()
 
 End Sub
 
-Sub GL_BV_Adjust_The_Shape()
+Sub AjusterFormeDynamiqueBV()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_BV:GL_BV_Adjust_The_Shape", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_BV:AjusterFormeDynamiqueBV", vbNullString, 0)
     
     Dim lastResultRow As Long
     lastResultRow = wsdGL_Trans.Cells(wsdGL_Trans.Rows.count, "AC").End(xlUp).Row
@@ -622,11 +691,11 @@ Sub GL_BV_Adjust_The_Shape()
     'Libérer la mémoire
     Set dynamicShape = Nothing
       
-    Call modDev_Utils.EnregistrerLogApplication("modGL_BV:GL_BV_Adjust_The_Shape", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_BV:AjusterFormeDynamiqueBV", vbNullString, startTime)
       
 End Sub
 
-Sub GL_BV_Show_Dynamic_Shape()
+Sub AfficherFormeDynamiqueBV()
 
     Dim shp As Shape: Set shp = wshGL_BV.Shapes("JE_Detail_Trans")
     shp.Visible = msoTrue
@@ -636,7 +705,7 @@ Sub GL_BV_Show_Dynamic_Shape()
     
 End Sub
 
-Sub GL_BV_Hide_Dynamic_Shape()
+Sub EffacerFormeDynamique()
 
     Dim shp As Shape: Set shp = wshGL_BV.Shapes("JE_Detail_Trans")
     shp.Visible = msoFalse
@@ -646,18 +715,38 @@ Sub GL_BV_Hide_Dynamic_Shape()
     
 End Sub
 
-Public Sub shpEcritureCloture_Click()
+Sub EffacerZoneTransactionsDetailleesBV(w As Worksheet)
 
-    Call modGL_Stuff.ComptabiliserEcritureCloture
+    Application.EnableEvents = False
+    Dim lastUsedRow As Long
+    lastUsedRow = w.Cells(w.Rows.count, "M").End(xlUp).Row
+    If lastUsedRow < 4 Then
+        lastUsedRow = 4
+    End If
+    
+    Application.EnableEvents = False
+    w.Range("L4:T" & lastUsedRow).Clear
+    Application.EnableEvents = True
+    
+    'Supprimer les formes 'shpRetour'
+    Call GL_BV_SupprimerToutesLesFormes_shpRetour(w)
+
+    Application.EnableEvents = True
 
 End Sub
 
-Sub shp_GL_BV_Exit_Click()
+Public Sub shpEcritureCloture_Click()
+
+    Call ComptabiliserEcritureCloture
+
+End Sub
+
+Sub shpSortieBV_Click()
 
     Dim ws As Worksheet
     Set ws = wshGL_BV
     
-    Call GL_BV_EffacerZoneTransactionsDetaillees(ws)
+    Call EffacerZoneTransactionsDetailleesBV(ws)
     Call GL_BV_EffacerZoneBV(ws)
     Call GL_BV_SupprimerToutesLesFormes_shpRetour(ws)
     
@@ -668,11 +757,11 @@ Sub shp_GL_BV_Exit_Click()
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call GL_BV_Back_To_Menu
+    Call RetourMenuGL
 
 End Sub
 
-Sub GL_BV_Back_To_Menu()
+Sub RetourMenuGL()
     
     Call EffacerFormesNonRequises
     

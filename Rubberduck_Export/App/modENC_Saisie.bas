@@ -216,9 +216,6 @@ Sub MettreAJourEncaissement() '2024-08-22 @ 09:46
         
         Call ComptabiliserEncaissement(noEnc, dateEnc, nomClient, typeEnc, montantEnc, descEnc) '2025-07-24 @ 12:22
 
-'        Call ENC_GL_Posting_DB(noEnc, dateEnc, nomClient, typeEnc, montantEnc, descEnc)  '2024-08-22 @ 16:08
-'        Call ENC_GL_Posting_Locally(noEnc, dateEnc, nomClient, typeEnc, montantEnc, descEnc)  '2024-08-22 @ 16:08
-        
         MsgBox "L'encaissement '" & wshENC_Saisie.pmtNo & "' a été enregistré avec succès", vbOKOnly + vbInformation
         
         Call CreerNouvelEncaissement 'Reset the form

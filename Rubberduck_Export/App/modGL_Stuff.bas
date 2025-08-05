@@ -277,7 +277,7 @@ Sub GL_BV_Effacer_Zone_Et_Shape()
     'Supprimer les formes shpRetour
     Call GL_BV_SupprimerToutesLesFormes_shpRetour(ws)
 
-    Call GL_BV_Hide_Dynamic_Shape
+    Call EffacerFormeDynamique
     
     'Ramener le focus à C4
     Application.EnableEvents = False
@@ -303,26 +303,6 @@ Sub GL_BV_EffacerZoneBV(w As Worksheet)
 
 End Sub
 
-Sub GL_BV_EffacerZoneTransactionsDetaillees(w As Worksheet)
-
-    Application.EnableEvents = False
-    Dim lastUsedRow As Long
-    lastUsedRow = w.Cells(w.Rows.count, "M").End(xlUp).Row
-    If lastUsedRow < 4 Then
-        lastUsedRow = 4
-    End If
-    
-    Application.EnableEvents = False
-    w.Range("L4:T" & lastUsedRow).Clear
-    Application.EnableEvents = True
-    
-    'Supprimer les formes 'shpRetour'
-    Call GL_BV_SupprimerToutesLesFormes_shpRetour(w)
-
-    Application.EnableEvents = True
-
-End Sub
-
 Sub GL_BV_SupprimerToutesLesFormes_shpRetour(w As Worksheet)
 
     Dim shp As Shape
@@ -334,131 +314,7 @@ Sub GL_BV_SupprimerToutesLesFormes_shpRetour(w As Worksheet)
     Next shp
     
 End Sub
-
-'@Description "Procédure pour obtenir les soldes en date de la fin d'année financière et"
-'             "Effectuer l'écriture de clôture pour l'exercice"
-Sub ComptabiliserEcritureCloture() '2025-07-20 @ 08:35
-
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_BV:ComptabiliserEcritureCloture", vbNullString, 0)
     
-    Dim ws As Worksheet
-    Set ws = wshGL_BV
-    
-    Dim dateCloture As Date
-    dateCloture = ws.Range("B12").Value
-    
-    '1. Efface l'écriture si elle existe dans MASTER + Reimporter MASTER dans Local
-    Call SupprimerEcritureClotureCourante(dateCloture)
-    
-    Call modImport.ImporterGLTransactions 'Reimporte de MASTER
-    
-    '2. Construire les soldes à la date de clôture
-    Dim soldes As Object
-    Set soldes = CreateObject("Scripting.Dictionary")
-    
-    Dim cheminFichier As String
-    cheminFichier = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & wsdADMIN.Range("MASTER_FILE").Value
-    Dim compteBNR As String
-    compteBNR = ObtenirNoGlIndicateur("Bénéfices Non Répartis")
-
-    'Récupération des soldes par ADO (classeur, feuille, premierGL, dernierGL, dateLimite, rejet écriture clôture)
-    Set soldes = ObtenirSoldesParCompteAvecADO("4000", "9999", dateCloture, False)
-    If soldes Is Nothing Then
-        MsgBox "Impossible d'effectuer l'écriture de clôture pour" & vbNewLine & vbNewLine & _
-                "l'exercice se terminant le " & Format$(dateCloture, wsdADMIN.Range("B1").Value) & _
-                "VEUILLEZ CONTACTER LE DÉVELOPPEUR SANS TARDER", _
-                vbCritical, _
-                "Les soldes de clôture ne peuvent être calculés !!!"
-        
-        Exit Sub
-    End If
-
-    '3. Création de l'écriture à partir de soldes (dictionary)
-    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;" & "Data Source=" & cheminFichier & ";" & _
-              "Extended Properties='Excel 12.0 Xml;HDR=YES';"
-    Dim cmd As Object: Set cmd = CreateObject("ADODB.Command")
-              
-    Dim cpte As Variant
-    Dim montant As Currency
-    Dim totalResultat As Currency
-    Dim ecr As clsGL_Entry
-    
-    'Instanciation de l'écrituire globale
-    Set ecr = New clsGL_Entry
-    ecr.DateEcriture = dateCloture
-    ecr.description = "Écriture de clôture annuelle"
-    ecr.Source = "Clôture Annuelle"
-    
-    'Parcours du dictionaire
-    Dim descCompte As String
-    For Each cpte In soldes.keys
-        montant = soldes(cpte)
-        If montant <> 0 Then
-            'Montant inverse pour solder le compte
-            descCompte = modFunctions.ObtenirDescriptionCompte(CStr(cpte))
-            ecr.AjouterLigne CStr(cpte), descCompte, -montant, "Générée par l'application" 'Inverse pour solder
-            totalResultat = totalResultat + montant
-        End If
-    Next cpte
-
-    'Ligne de contrepartie pour BNR
-    If totalResultat <> 0 Then
-        descCompte = ObtenirDescriptionCompte(compteBNR)
-        ecr.AjouterLigne CStr(compteBNR), descCompte, totalResultat, "Générée par l'application"
-    End If
-    
-    Call AjouterEcritureGLADOPlusLocale(ecr, False)
-    
-    MsgBox "L'écriture de clôture en date du " & Format$(dateCloture, wsdADMIN.Range("B1").Value) & vbNewLine & vbNewLine & _
-           "a été complétée avec succès", _
-           vbInformation, _
-           "Écriture ANNUELLE de clôture"
-    
-    ws.Shapes("shpEcritureCloture").Visible = False
-    
-    'Libérer la mémoire
-    Set cmd = Nothing
-    Set conn = Nothing
-    Set ecr = Nothing
-    Set soldes = Nothing
-    Set ws = Nothing
-    
-    Call modDev_Utils.EnregistrerLogApplication("modGL_BV:ComptabiliserEcritureCloture", vbNullString, startTime)
-    
-End Sub
-    
-Public Sub SupprimerEcritureClotureCourante(dateCloture As Date) '2025-07-21 @ 11:56
-
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_BV:SupprimerEcritureClotureCourante", vbNullString, 0)
-    
-    Dim wb As Workbook
-    Dim ws As Worksheet
-    Dim cheminMaster As String
-    
-    cheminMaster = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & wsdADMIN.Range("MASTER_FILE").Value
-    Application.ScreenUpdating = False
-    Set wb = Workbooks.Open(cheminMaster, ReadOnly:=False)
-    Set ws = wb.Sheets("GL_Trans")
-
-    Dim i As Long
-    'Boucle INVERSÉE pour supprimer l'écriture de clôture courante
-    With ws
-        For i = .Cells(.Rows.count, "A").End(xlUp).Row To 2 Step -1
-            If .Cells(i, fGlTDate).Value = dateCloture And _
-               .Cells(i, fGlTSource).Value = "Clôture Annuelle" Then
-                .Rows(i).Delete
-            End If
-        Next i
-    End With
-    
-    wb.Close SaveChanges:=True
-    Application.ScreenUpdating = True
-    
-    Call modDev_Utils.EnregistrerLogApplication("modGL_BV:SupprimerEcritureClotureCourante", vbNullString, startTime)
-
-End Sub
-
 '@Description "Retourne un dictionnaire avec sommaire par noCompte & Solde à une date donnée"
 Function ObtenirSoldesParCompteAvecADO(noCompteGLMin As String, noCompteGLMax As String, dateLimite As Date, _
                                        inclureEcrCloture As Boolean) As Dictionary '2025-08-02 @ 10:04
@@ -683,7 +539,7 @@ CleanUpADO:
     
 End Sub
 
-Function ConstruireTableau12MoisGL(d As Date) As Variant '2025-07-29 @ 11:10
+Function ConstruireTableau24MoisGL(dateLimite As Date, inclureEcrCloture As Boolean) As Variant '2025-08-03 @ 14:16
 
     Dim dicoComptes As Object
     Dim dicoMois As Object
@@ -703,8 +559,8 @@ Function ConstruireTableau12MoisGL(d As Date) As Variant '2025-07-29 @ 11:10
     fichier = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & wsdADMIN.Range("MASTER_FILE").Value
     
     'Établir la date du premier jour de l'année financière
-    datePremierJourAnneeFinanciereCourante = PremierJourAnneeFinanciere(d)
-    dateDernierJourAnneeFinanciereCourante = DernierJourAnneeFinanciere(d)
+    datePremierJourAnneeFinanciereCourante = PremierJourAnneeFinanciere(dateLimite)
+    dateDernierJourAnneeFinanciereCourante = DernierJourAnneeFinanciere(dateLimite)
     Debug.Print "Année courante : " & datePremierJourAnneeFinanciereCourante & " à " & dateDernierJourAnneeFinanciereCourante
     
     datePremierJourAnneeFinancierePrecedente = DateAdd("yyyy", -1, datePremierJourAnneeFinanciereCourante)
@@ -724,8 +580,13 @@ Function ConstruireTableau12MoisGL(d As Date) As Variant '2025-07-29 @ 11:10
              "SUM(IIF([Débit] IS NULL, 0, [Débit]) - IIF([Crédit] IS NULL, 0, [Crédit])) AS Total " & _
              "FROM [GL_Trans$] " & _
              "WHERE [Date] >= #" & Format$(dateDebutOperations, "yyyy-mm-dd") & "# " & _
-             "GROUP BY [NoCompte], Year([Date]), Month([Date]) " & _
-             "ORDER BY [NoCompte], Year([Date]), Month([Date]) "
+             "AND [Date] <= #" & Format$(dateLimite, "yyyy-mm-dd") & "#"
+    If Not inclureEcrCloture Then
+        strSQL = strSQL & " AND ([Source] IS NULL OR NOT ([Date] = #" & Format(dateLimite, "yyyy-mm-dd") & "# AND [Source] = 'Clôture annuelle'))"
+    End If
+    
+    strSQL = strSQL & "GROUP BY [NoCompte], Year([Date]), Month([Date]) " & _
+                      "ORDER BY [NoCompte], Year([Date]), Month([Date]) "
     
     Debug.Print strSQL
     
@@ -779,8 +640,15 @@ Function ConstruireTableau12MoisGL(d As Date) As Variant '2025-07-29 @ 11:10
         End If
     Next i
     
+    Debug.Print periode
+    
+    Feuil2.Cells(2, 2) = "Ouverture"
+    For i = 1 To Len(periode) Step 8
+        Feuil2.Cells(2, ((i + 7) / 8) + 2) = "'" & Mid(periode, i, 7)
+    Next i
+    
     'Tableau [nb comptes x 25]
-    ReDim tableau(0 To comptes.count - 1, 0 To 25)
+    ReDim tableau(0 To comptes.count - 1, 0 To 26)
     
     'Remplir colonne 0 avec les comptes
     Dim j As Long
@@ -794,7 +662,7 @@ Function ConstruireTableau12MoisGL(d As Date) As Variant '2025-07-29 @ 11:10
         compteTrouve = False
         For i = 0 To comptes.count - 1
             If recSet("NoCompte").Value = tableau(i, 0) Then
-                Debug.Print recSet("NoCompte").Value, recSet("Annee").Value, recSet("MoisNum").Value, recSet("Total").Value
+'                Debug.Print recSet("NoCompte").Value, recSet("Annee").Value, recSet("MoisNum").Value, recSet("Total").Value
                 annee = recSet("Annee").Value
                 mois = recSet("MoisNum").Value
                 j = InStr(periode, Format$(annee, "0000") & "-" & Format$(mois, "00"))
@@ -817,33 +685,39 @@ Function ConstruireTableau12MoisGL(d As Date) As Variant '2025-07-29 @ 11:10
     Set recSet = Nothing: Set conn = Nothing
     
     'Résultat
-    ConstruireTableau12MoisGL = tableau
+    ConstruireTableau24MoisGL = tableau
     
 End Function
 
-Sub TestTableauGL() '2025-07-27 @ 08:19
+Sub TestTableauGL() '2025-08-03 @ 14:16
 
     Dim tableau() As Variant
     Dim i As Long, j As Long
     
     Dim dateCutoff As Date
     dateCutoff = #7/31/2025#
+    
+    Feuil2.Range("A2:Y100").ClearContents
 
     'Appel de la fonction
-    tableau = ConstruireTableau12MoisGL(Date)
+    tableau = ConstruireTableau24MoisGL(dateCutoff, False)
     
     'Exemple d’affichage dans la fenêtre de débogage - @TODO
-    Dim solde As Currency
+    Dim r As Long
+    r = 3
     For i = LBound(tableau, 1) To UBound(tableau, 1)
-        solde = 0
+    Feuil2.Cells(r, 1) = tableau(i, 0)
         For j = 1 To 25
-            solde = solde + tableau(i, j)
+            Feuil2.Cells(r, j + 1) = tableau(i, j)
         Next j
     
-        Debug.Print "Compte: " & tableau(i, 0) & " - Solde ouverture (A/P) = " & _
-            Fn_Pad_A_String(Format$(tableau(i, 1), "#,##0.00"), " ", 13, "L") & " " & _
-            Fn_Pad_A_String(Format$(tableau(i, 13), "#,##0.00"), " ", 13, "L") & " donc " & _
-            Fn_Pad_A_String(Format$(solde, "#,##0.00"), " ", 13, "L")
+        r = r + 1
+        
+'        Debug.Print "Compte: " & tableau(i, 0) & _
+'            " Solde ouv. (A/P) = " & Fn_Pad_A_String(Format$(tableau(i, 1), "#,##0.00"), " ", 13, "L") & _
+'            " 2024/07/31 = " & Fn_Pad_A_String(Format$(tableau(i, 13), "#,##0.00"), " ", 13, "L") & _
+'            " 2025/07/31 = " & Fn_Pad_A_String(Format$(tableau(i, 25), "#,##0.00"), " ", 13, "L") & _
+'            " SOLDE = " & Fn_Pad_A_String(Format$(solde, "#,##0.00"), " ", 13, "L")
     Next
     
 End Sub
