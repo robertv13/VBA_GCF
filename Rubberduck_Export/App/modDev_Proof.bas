@@ -194,21 +194,3 @@ Sub IdentifierÉcartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
     
 End Sub
 
-Function CompterOccurrences(texte As String, motif As String) As Long
-
-    'Initialiser la position et trouver la position
-    Dim position As Long
-    position = InStr(1, texte, motif, vbTextCompare)
-
-    'Parcourir le texte pour trouver toutes les occurrences
-    Dim compteur As Long
-    Do While position > 0
-        compteur = compteur + 1
-        position = InStr(position + Len(motif), texte, motif, vbTextCompare)
-    Loop
-
-    'Retourner le nombre d'occurrences
-    CompterOccurrences = compteur
-    
-End Function
-

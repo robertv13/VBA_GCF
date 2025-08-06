@@ -70,7 +70,7 @@ Private Sub cmdFermerMaintenant_Click() '2025-07-01 @ 15:46
     
 End Sub
 
-Public Sub afficherMessage(Optional minutesInactives As Double = 0) '2025-07-01 @ 15:56
+Public Sub AfficherMessage(Optional minutesInactives As Double = 0) '2025-07-01 @ 15:56
 
     Dim msg As String
     msg = "Aucune activité détectée depuis " & Format$(minutesInactives, "0") & " minutes..." & vbCrLf & vbCrLf

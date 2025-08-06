@@ -370,7 +370,7 @@ Attribute VerifierDerniereActivite.VB_Description = "Vérifie l'inactivité et f
         
         Unload ufConfirmationFermeture '2025-07-02 @ 07:54
         
-        Call ufConfirmationFermeture.afficherMessage(minutesInactives)
+        Call ufConfirmationFermeture.AfficherMessage(minutesInactives)
         Exit Sub
     End If
 

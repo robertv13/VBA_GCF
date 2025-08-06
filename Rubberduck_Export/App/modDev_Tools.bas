@@ -851,14 +851,14 @@ Sub CreerRepertoireEtImporterFichiers() '2025-07-02 @ 13:57
     
     'Copier le premier fichier
     If fso.fileExists(cheminSourcePROD & nomFichier1) Then
-        fso.CopyFile Source:=cheminSourcePROD & nomFichier1, Destination:=nouveauDossier, OverwriteFiles:=False
+        fso.CopyFile source:=cheminSourcePROD & nomFichier1, Destination:=nouveauDossier, OverwriteFiles:=False
     Else
         MsgBox "Fichier non trouvé : " & cheminSourcePROD & nomFichier1, vbExclamation, "Erreur"
     End If
     
     'Copier le deuxième fichier
     If fso.fileExists(cheminSourcePROD & nomFichier2) Then
-        fso.CopyFile Source:=cheminSourcePROD & nomFichier2, Destination:=nouveauDossier, OverwriteFiles:=False
+        fso.CopyFile source:=cheminSourcePROD & nomFichier2, Destination:=nouveauDossier, OverwriteFiles:=False
     Else
         MsgBox "Fichier non trouvé : " & cheminSourcePROD & nomFichier2, vbExclamation, "Erreur"
     End If
@@ -869,7 +869,7 @@ Sub CreerRepertoireEtImporterFichiers() '2025-07-02 @ 13:57
     fichier = Dir(cheminSourcePROD & "*.log")
     Do While fichier <> vbNullString
         'Copie du fichier PROD ---> Local
-        fso.CopyFile Source:=cheminSourcePROD & fichier, Destination:=nouveauDossier, OverwriteFiles:=False
+        fso.CopyFile source:=cheminSourcePROD & fichier, Destination:=nouveauDossier, OverwriteFiles:=False
         'Efface le fichier PROD (initialiation)
         If fso.fileExists(cheminSourcePROD & fichier) Then Kill cheminSourcePROD & fichier
         'Fichier suivant à copier
@@ -880,7 +880,7 @@ Sub CreerRepertoireEtImporterFichiers() '2025-07-02 @ 13:57
     fichier = Dir(cheminSourcePROD & "*.txt")
     Do While fichier <> vbNullString
         'Copie du fichier PROD ---> Local
-        fso.CopyFile Source:=cheminSourcePROD & fichier, Destination:=nouveauDossier, OverwriteFiles:=False
+        fso.CopyFile source:=cheminSourcePROD & fichier, Destination:=nouveauDossier, OverwriteFiles:=False
         'Efface le fichier PROD (initialiation)
         If fso.fileExists(cheminSourcePROD & fichier) Then Kill cheminSourcePROD & fichier
         'Fichier suivant à copier
@@ -894,14 +894,14 @@ Sub CreerRepertoireEtImporterFichiers() '2025-07-02 @ 13:57
     
     'Copier le premier fichier
     If fso.fileExists(nouveauDossier & nomFichier1) Then
-        fso.CopyFile Source:=cheminSourcePROD & nomFichier1, Destination:=dossierDEV, OverwriteFiles:=True
+        fso.CopyFile source:=cheminSourcePROD & nomFichier1, Destination:=dossierDEV, OverwriteFiles:=True
     Else
         MsgBox "Fichier non trouvé : " & nouveauDossier & nomFichier1, vbExclamation, "Erreur"
     End If
     
     'Copier le deuxième fichier
     If fso.fileExists(nouveauDossier & nomFichier2) Then
-        fso.CopyFile Source:=cheminSourcePROD & nomFichier2, Destination:=dossierDEV, OverwriteFiles:=True
+        fso.CopyFile source:=cheminSourcePROD & nomFichier2, Destination:=dossierDEV, OverwriteFiles:=True
     Else
         MsgBox "Fichier non trouvé : " & nouveauDossier & nomFichier2, vbExclamation, "Erreur"
     End If
@@ -1871,17 +1871,23 @@ Sub AppelerRoutineAddIn(nomFichier As String, nomMacro As String) '2025-06-19 @ 
     
 End Sub
 
-Sub ScannerAppelsSubsImplicites() '2025-07-03 @ 17:49
+Sub zz_ObtenirListeAppelSubsSansCall() '2025-08-05 @ 13:44
 
-    Dim comp As Object, codeMod As Object, dictSubs As Object
-    Dim ligne As String, nomModule As String, lignes() As String
-    Dim i As Long
-    Dim nomProc As Variant
-
+    Dim comp As Object
+    Dim codeMod As Object
+    Dim dictSubs As Object
+    
     Set dictSubs = BatirDictionnaireProcedures()
 
-    Debug.Print "Appels implicites aux Sub sans 'Call'"
+    Debug.Print "Liste des appels aux Subs SANS 'Call'"
 
+    Dim ligne As String
+    Dim nomModule As String
+    Dim lignes() As String
+    Dim i As Long
+    Dim nomProc As Variant
+    Dim cas As Long
+    
     For Each comp In ThisWorkbook.VBProject.VBComponents
         If comp.Type = vbext_ct_StdModule Or _
            comp.Type = vbext_ct_ClassModule Or _
@@ -1902,15 +1908,28 @@ Sub ScannerAppelsSubsImplicites() '2025-07-03 @ 17:49
                         InStr(LCase(ligne), "call " & LCase(nomProc)) = 0 And _
                         InStr(LCase(ligne), "set " & LCase(nomProc)) = 0 Then
                         Debug.Print Pad(nomModule, 25) & " # " & Format(i + 1, "###0") & "   " & ligne
+                        cas = cas + 1
                     End If
+                    
                 Next nomProc
 
 LigneSuivante:
             Next i
         End If
     Next comp
-
-    Debug.Print "Recherche terminée"
+    
+    'Libérer la mémoire
+    Set codeMod = Nothing
+    Set comp = Nothing
+    Set dictSubs = Nothing
+  
+    'Recherche terminée
+    If cas = 0 Then
+        Debug.Print "Recherche terminée, sans aucun cas"
+    Else
+        Debug.Print "Recherche terminée, avec " & cas & " cas d'appel sans 'Call'"
+    End If
+    
 End Sub
 
 Function BatirDictionnaireProcedures() As Object '2025-07-03 @ 17:53

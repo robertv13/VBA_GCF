@@ -574,7 +574,7 @@ Sub ComptabiliserEncaissement(noEnc As Long, dt As Date, nom As String, _
     'Remplissage des propriétés communes
     ecr.DateEcriture = dt
     ecr.description = nom
-    ecr.Source = "ENCAISSEMENT:" & Format$(noEnc, "00000")
+    ecr.source = "ENCAISSEMENT:" & Format$(noEnc, "00000")
 
     'Ajoute autant de lignes que nécessaire
     If montant <> 0 Then
@@ -585,7 +585,7 @@ Sub ComptabiliserEncaissement(noEnc As Long, dt As Date, nom As String, _
         Else
             'Produit perçu d'avance
             ecr.description = "Client:" & wshENC_Saisie.clientCode & " - " & nom
-            ecr.Source = UCase$(wshENC_Saisie.Range("F7").Value) & ":" & Format$(noEnc, "00000")
+            ecr.source = UCase$(wshENC_Saisie.Range("F7").Value) & ":" & Format$(noEnc, "00000")
             ecr.AjouterLigne glProduitPercuAvance, descGLProduitPercuAvance, montant, desc
         End If
         'Crédit Comptes-Clients

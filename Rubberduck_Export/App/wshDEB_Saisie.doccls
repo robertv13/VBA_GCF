@@ -61,7 +61,7 @@ Private Sub Worksheet_Activate()
         .EnableSelection = xlUnlockedCells
     End With
     
-    numeroDebourseARenverser = -1
+    gNumeroDebourseARenverser = -1
     Me.Range("B7").Value = False
     
     Me.Range("O4").Value = Format$(Date, wsdADMIN.Range("B1").Value)
@@ -261,7 +261,7 @@ Private Sub Process_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
         Application.EnableEvents = True
         Exit Sub

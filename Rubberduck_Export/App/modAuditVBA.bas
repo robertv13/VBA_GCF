@@ -1,7 +1,7 @@
 Attribute VB_Name = "modAuditVBA"
 Option Explicit
 
-Sub AnalyserToutesLesProcedures() '2025-07-07 @ 09:27
+Sub zz_AnalyserToutesLesProcedures() '2025-08-05 @ 13:52
 
     Dim tableProc(1 To 1000, 1 To 8) As Variant '[Nom, Module, Type, Direct, Préfixé, Indirect, Object, NonConformite]
     Dim indexMax As Long
@@ -10,7 +10,7 @@ Sub AnalyserToutesLesProcedures() '2025-07-07 @ 09:27
     Debug.Print "Début du traitement : analyse des procédures VBA"
 
     'Étape 1 - Construction du tableau
-    Call BatirTableProcedures(dictIndex, tableProc, indexMax)
+    Call BatirTableProceduresEtFonctions(dictIndex, tableProc, indexMax)
 
     'Étape 2 - Comptage des appels dans le code
     Call IncrementerAppelsCodeDirect(dictIndex, tableProc, indexMax)
@@ -29,7 +29,7 @@ Sub AnalyserToutesLesProcedures() '2025-07-07 @ 09:27
 
 End Sub
 
-Sub BatirTableProcedures(ByRef dictIndex As Object, ByRef tableProc() As Variant, ByRef index As Long) '2025-07-07 @ 09:27
+Sub BatirTableProceduresEtFonctions(ByRef dictIndex As Object, ByRef tableProc() As Variant, ByRef index As Long) '2025-07-07 @ 09:27
 
     Debug.Print "   1. Construction de la liste des Procédures"
     
@@ -54,7 +54,7 @@ Sub BatirTableProcedures(ByRef dictIndex As Object, ByRef tableProc() As Variant
 
         For i = 1 To codeMod.CountOfLines
             ligne = Trim(codeMod.Lines(i, 1))
-            If Left(ligne, 1) = "'" Or InStr(ligne, "Function") > 0 Or InStr(ligne, "Sub ") = 0 Then GoTo NextLigne
+            If Left(ligne, 1) = "'" Or InStr(ligne, "Function ") > 0 Or InStr(ligne, "Sub ") = 0 Then GoTo NextLigne
 
             nomSub = codeMod.ProcOfLine(i, vbext_pk_Proc)
 
@@ -91,8 +91,6 @@ Sub IncrementerAppelsCodeDirect(dictIndex As Object, tableProc() As Variant, ind
 
             For i = 0 To UBound(lignes)
                 ligne = Trim(lignes(i))
-'                If Trim(ligne) = "Call EcrireInformationsConfigAuMenu(ByVal user As String)" Or _
-'                    InStr(ligne, "EcrireInformationsConfigAuMenu") <> 0 Then Stop
                 'Filtrage initial des lignes non pertinentes
                 If ligne = vbNullString Or Left(ligne, 1) = "'" Or _
                    LCase(Left(ligne, 12)) = "debug.print " Or _
@@ -103,6 +101,8 @@ Sub IncrementerAppelsCodeDirect(dictIndex As Object, tableProc() As Variant, ind
                     GoTo LigneSuivante
                 End If
 
+'                If InStr(1, ligne, ".OnAction") Then Stop
+                
                 For Each nomProc In dictIndex.keys
 '                    If nomProc = "EcrireInformationsConfigAuMenu" Then Stop
                     'Appels préfixés (Module.nomProc)
@@ -126,7 +126,8 @@ Sub IncrementerAppelsCodeDirect(dictIndex As Object, tableProc() As Variant, ind
                     'Appels indirects dynamiques : Application.Run, Evaluate, Excel4Macro
                     If (InStr(LCase(ligne), "application.run") > 0 Or _
                         InStr(LCase(ligne), "evaluate(") > 0 Or _
-                        InStr(LCase(ligne), "executeexcel4macro") > 0) Then
+                        InStr(LCase(ligne), "executeexcel4macro") > 0) Or _
+                        InStr(LCase(ligne), ".onaction ") > 0 Then
 
                         pos1 = InStr(ligne, """")
                         If pos1 > 0 Then
@@ -135,6 +136,10 @@ Sub IncrementerAppelsCodeDirect(dictIndex As Object, tableProc() As Variant, ind
                                 valeur = Mid(ligne, pos1 + 1, pos2 - pos1 - 1)
                                 valeur = Replace(valeur, "()", vbNullString)
                                 valeur = Trim(Split(valeur, "!")(UBound(Split(valeur, "!")))) 'garde le nom après ! s'il est là
+                                If InStr(1, ligne, "'") Then
+                                    valeur = Trim(Replace(valeur, "'", vbNullString))
+                                End If
+                                Debug.Print ligne
                                 If LCase(valeur) = LCase(nomProc) Then
                                     tableProc(dictIndex(nomProc), 6) = tableProc(dictIndex(nomProc), 6) + 1
                                 End If

@@ -22,7 +22,7 @@ Private Sub Worksheet_Activate()
         .Range("T2").Value = "Mois"
         .Range("B6").Value = vbNullString
         .Range("B7").Value = vbNullString
-        Call GL_BV_EffacerZoneBV(ws)
+        Call modGL_Stuff.EffacerZoneBV(ws)
         Call EffacerZoneTransactionsDetailleesBV(ws)
     End With
     
@@ -75,8 +75,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     If lastUsedAccount > 5 Then
         If Not Intersect(Target, wshGL_BV.Range("D4:G" & lastUsedAccount - 2)) Is Nothing Then
             If Target.CountLarge > 1 Then Exit Sub
-            Call EffacerZoneTransactionsDetailleesBV(wshGL_BV)
-    '        Call GL_BV_Effacer_Zone_Et_Shape
+            Call modGL_BV.EffacerZoneTransactionsDetailleesBV(wshGL_BV)
             Dim GLAcct As String, GLDescription As String, dateLimite As Date
             GLAcct = CStr(Range("D" & Target.row).Value)
             GLDescription = Range("E" & Target.row).Value
@@ -88,7 +87,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
             Application.EnableEvents = True
             
             'Display all transactions for the selected G/L
-            Call AfficherTransactionsPourUnCompteDeGL(GLAcct, GLDescription, wshGL_BV.Range("B8").Value, dateLimite)
+            Call modGL_BV.AfficherTransactionsPourUnCompteDeGL(GLAcct, GLDescription, wshGL_BV.Range("B8").Value, dateLimite)
         End If
     End If
     
@@ -134,7 +133,7 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
         Application.EnableEvents = False
         
        'Try to convert the input to a complete valid date
-        fullDate = Fn_Complete_Date(Target.Value, 999, 15)
+        fullDate = Fn_Complete_Date(Target.Value, 999, 365)
        
         'Update the cell with the full date, if valid
         If fullDate <> "Invalid Date" Then
@@ -144,7 +143,7 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
         
         Range("B8").Value = DateSerial(year(Range("J1").Value), month(Range("J1").Value), 1)

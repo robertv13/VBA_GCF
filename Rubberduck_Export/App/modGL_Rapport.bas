@@ -235,7 +235,7 @@ Public Sub GenererRapportGLParEcriture(wsRapport As Worksheet, noEcritureDebut A
 '                    ufGL_Rapport.chkEcrCloture, ufGL_Rapport.chkEncaissement, ufGL_Rapport.chkFacture, _
 '                    ufGL_Rapport.chkRegularisation
         For Each row In filteredRange.Rows
-            If Not row.Hidden And Fn_ValiderSiDoitImprimerTransaction(row.Cells(fGlTSource).Value) = True Then
+            If Not row.Hidden And modFunctions.ImprimeOuPasCetteEcriture(row.Cells(fGlTSource).Value) = True Then
                 'Traitement des données visibles seulement
                 If row.Cells(1).Value <> currentEcriture Then
                     currentEcriture = row.Cells(1, fGlTNoEntrée).Value
@@ -405,7 +405,7 @@ Public Sub GenererRapportGLParDateSaisie(wsRapport As Worksheet, dtSaisieDebut A
 '                    ufGL_Rapport.chkEcrCloture, ufGL_Rapport.chkEncaissement, ufGL_Rapport.chkFacture, _
 '                    ufGL_Rapport.chkRegularisation
         For Each row In filteredRange.Rows
-            If Not row.Hidden And Fn_ValiderSiDoitImprimerTransaction(row.Cells(fGlTSource).Value) = True Then
+            If Not row.Hidden And modFunctions.ImprimeOuPasCetteEcriture(row.Cells(fGlTSource).Value) = True Then
                 'Traitement des données visibles seulement
                 If CDbl(row.Cells(10).Value) <> currentTimeStamp Then
                     currentTimeStamp = CDbl(row.Cells(1, fGlTTimeStamp).Value)
@@ -544,7 +544,7 @@ Sub InsererBoutonRetourMenu() '2025-07-01 @ 08:54
         .TextFrame2.TextRange.Font.Bold = True
         .TextFrame2.TextRange.Font.Fill.ForeColor.RGB = RGB(255, 255, 255) 'Blanc
         .Placement = xlFreeFloating
-        .OnAction = "shpRetourMenu_Click"
+        .OnAction = "shpRetourMenuGL_Click"
     End With
 
 End Sub
@@ -916,33 +916,5 @@ Sub FinaliserGLRapportParDateSaisie(ws As Worksheet, h1 As String, h2 As String,
     Call modDev_Utils.EnregistrerLogApplication("modGL_Rapport:FinaliserGLRapportParDateSaisie", vbNullString, startTime)
 
 End Sub
-
-Function Fn_ValiderSiDoitImprimerTransaction(ByVal Source As String) As Boolean '2025-03-03 @ 10:21
-
-    'Variable pour vérifier si la transaction est valide
-    Dim aImprimer As Boolean
-    aImprimer = False
-
-    'Traitement de la transaction selon fGlTSource et l'état des cases
-    If InStr(Source, "DÉBOURSÉ:") = 1 Or InStr(Source, "RENV/DÉBOURSÉ:") = 1 Then
-        If ufGL_Rapport.chkDebourse.Value = True Then aImprimer = True
-    ElseIf InStr(Source, "DÉPÔT DE CLIENT:") = 1 Then
-        If ufGL_Rapport.chkDepotClient.Value = True Then aImprimer = True
-    ElseIf InStr(Source, "ENCAISSEMENT:") = 1 Then
-        If ufGL_Rapport.chkEncaissement.Value = True Then aImprimer = True
-    ElseIf InStr(Source, "FACTURE:") = 1 Then
-        If ufGL_Rapport.chkFacture.Value = True Then aImprimer = True
-    ElseIf InStr(Source, "RÉGULARISATION:") = 1 Then
-        If ufGL_Rapport.chkRegularisation.Value = True Then aImprimer = True
-    ElseIf InStr(Source, "Clôture Annuelle") = 1 Then
-        If ufGL_Rapport.chkEcrCloture.Value = True Then aImprimer = True
-    Else
-        If ufGL_Rapport.chkEJ.Value = True Then aImprimer = True
-    End If
-
-    'Retourne True si la transaction doit être traitée, sinon False
-    Fn_ValiderSiDoitImprimerTransaction = aImprimer
-    
-End Function
 
 

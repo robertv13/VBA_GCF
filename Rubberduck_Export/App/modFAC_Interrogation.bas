@@ -936,6 +936,7 @@ Function ObtenirTransCC(numeroFacture As String) As Variant
 End Function
 
 Sub AjouterBoutons_Stats(ws As Worksheet, wsSelection As Worksheet, rngImprimer As Range, rngRetour As Range)
+
     Dim btnImprimer As Shape
     Dim btnRetour As Shape
     

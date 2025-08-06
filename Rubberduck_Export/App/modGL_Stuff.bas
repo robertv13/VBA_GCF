@@ -4,7 +4,7 @@ Option Explicit
 'Structure pour une écriture comptable (données communes)
 Public Type tGL_Entry '2025-06-08 @ 06:59
     DateTrans As Date
-    Source As String
+    source As String
     noCompte As String
     autreRemarque As String
 End Type
@@ -93,136 +93,84 @@ Public Sub ObtenirSoldeCompteEntreDebutEtFin(glNo As String, dateDeb As Date, da
 
 End Sub
 
-Sub GL_Posting_To_DB(df As Date, desc As String, Source As String, arr As Variant, ByRef GLEntryNo As Long) 'Generic routine 2024-06-06 @ 07:00
+Sub ObtenirEcritureAvecAF(noEJ As Long) '2024-11-17 @ 12:08
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_Stuff:GL_Posting_To_DB", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:ObtenirEcritureAvecAF", vbNullString, 0)
 
-    Dim destinationFileName As String, destinationTab As String
-    destinationFileName = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
-                          wsdADMIN.Range("MASTER_FILE").Value
-    destinationTab = "GL_Trans$"
+    Dim ws As Worksheet: Set ws = wsdGL_Trans
     
-    'Initialize connection, connection string, open the connection and declare rs Object
-    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & destinationFileName & ";" & _
-              "Extended Properties=""Excel 12.0 XML;HDR=YES"";"
-    Dim recSet As Object: Set recSet = CreateObject("ADODB.Recordset")
+    'wsdGL_Trans_AF#2
 
-    'SQL select command to find the next available ID
-    Dim strSQL As String
-    strSQL = "SELECT MAX(NoEntrée) AS MaxEJNo FROM [" & destinationTab & "]"
-
-    'Open recordset to find out the next JE number
-    recSet.Open strSQL, conn
+    'Effacer les données de la dernière utilisation
+    ws.Range("AA6:AA10").ClearContents
+    ws.Range("AA6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
     
-    'Get the last used row
-    Dim MaxEJNo As Long
-    Dim lastJE As Long
-    If IsNull(recSet.Fields("MaxEJNo").Value) Then
-        ' Handle empty table (assign a default value, e.g., 1)
-        lastJE = 0
-    Else
-        lastJE = recSet.Fields("MaxEJNo").Value
+    'Définir le range pour la source des données en utilisant un tableau
+    Dim rngData As Range
+    Set rngData = ws.Range("l_tbl_GL_Trans[#All]")
+    ws.Range("AA7").Value = rngData.Address
+    
+    'Définir le range des critères
+    Dim rngCriteria As Range
+    Set rngCriteria = ws.Range("AA2:AA3")
+    ws.Range("AA3").Value = noEJ
+    ws.Range("AA8").Value = rngCriteria.Address
+    
+    'Définir le range des résultats et effacer avant le traitement
+    Dim rngResult As Range
+    Set rngResult = ws.Range("AC1").CurrentRegion
+    rngResult.offset(1, 0).Clear
+    Set rngResult = ws.Range("AC1:AL1")
+    ws.Range("AA9").Value = rngResult.Address
+    
+    rngData.AdvancedFilter _
+                action:=xlFilterCopy, _
+                criteriaRange:=rngCriteria, _
+                CopyToRange:=rngResult, _
+                Unique:=False
+        
+    'Quels sont les résultats ?
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.Rows.count, "AC").End(xlUp).Row
+    ws.Range("AA10").Value = lastUsedRow - 1 & " lignes"
+
+    'On tri les résultats par noGL / par date?
+    If lastUsedRow > 2 Then
+        With ws.Sort 'Sort - NoEntrée, Débit(D) et Crédit (D)
+        .SortFields.Clear
+            'First sort On NoEntrée
+            .SortFields.Add key:=ws.Range("AC2"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlAscending, _
+                DataOption:=xlSortNormal
+            'Second, sort On Débit(D)
+            .SortFields.Add key:=ws.Range("AI2"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlDescending, _
+                DataOption:=xlSortNormal
+            'Third, sort On Crédit(D)
+            .SortFields.Add key:=ws.Range("AJ2"), _
+                SortOn:=xlSortOnValues, _
+                Order:=xlDescending, _
+                DataOption:=xlSortNormal
+            .SetRange wsdGL_Trans.Range("AC2:AL" & lastUsedRow)
+            .Apply 'Apply Sort
+         End With
     End If
     
-    'Calculate the new JE number
-    GLEntryNo = lastJE + 1
-
-    'timeStamp uniforme
-    Dim timeStamp As Date
-    timeStamp = Now
-    
-    'Close the previous recordset, no longer needed and open an empty recordset
-    recSet.Close
-    recSet.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
-    
-    Dim i As Long, j As Long
-    'Loop through the array and post each row
-    For i = LBound(arr, 1) To UBound(arr, 1)
-        If arr(i, 1) = vbNullString Then GoTo Nothing_to_Post
-            recSet.AddNew
-                'RecordSet are ZERO base, and Enums are not, so the '-1' is mandatory !!!
-                recSet.Fields(fGlTNoEntrée - 1).Value = GLEntryNo
-                recSet.Fields(fGlTDate - 1).Value = CDate(df)
-                recSet.Fields(fGlTDescription - 1).Value = desc
-                recSet.Fields(fGlTSource - 1).Value = Source
-                recSet.Fields(fGlTNoCompte - 1).Value = CStr(arr(i, 1))
-                recSet.Fields(fGlTCompte - 1).Value = modFunctions.ObtenirDescriptionCompte(CStr(arr(i, 1)))
-                If arr(i, 3) > 0 Then
-                    recSet.Fields(fGlTDébit - 1).Value = arr(i, 3)
-                Else
-                    recSet.Fields(fGlTCrédit - 1).Value = -arr(i, 3)
-                End If
-                recSet.Fields(fGlTAutreRemarque - 1).Value = arr(i, 4)
-                recSet.Fields(fGlTTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
-            recSet.Update
-            
-Nothing_to_Post:
-    Next i
-
-    'Close recordset and connection
-    On Error Resume Next
-    recSet.Close
-    On Error GoTo 0
-    conn.Close
-    
-    Application.ScreenUpdating = True
-
     'Libérer la mémoire
-    Set conn = Nothing
-    Set recSet = Nothing
+    Set rngCriteria = Nothing
+    Set rngData = Nothing
+    Set rngResult = Nothing
+    Set ws = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_Stuff:GL_Posting_To_DB", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:ObtenirEcritureAvecAF", vbNullString, startTime)
 
 End Sub
 
-Sub GL_Posting_Locally(df As Date, desc As String, Source As String, arr As Variant, ByRef GLEntryNo As Long) 'Write records locally
+Sub AjouterFormeRetourEnHaut()
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("*** modGL_Stuff:GL_Posting_Locally", vbNullString, 0)
-    
-    Application.ScreenUpdating = False
-    
-    'What is the last used row in GL_Trans ?
-    Dim rowToBeUsed As Long
-    rowToBeUsed = wsdGL_Trans.Cells(wsdGL_Trans.Rows.count, 1).End(xlUp).Row + 1
-    
-    'timeStamp uniforme
-    Dim timeStamp As Date
-    timeStamp = Now
-    
-    Dim i As Long, j As Long
-    'Loop through the array and post each row
-    With wsdGL_Trans
-        For i = LBound(arr, 1) To UBound(arr, 1)
-            If arr(i, 1) <> vbNullString Then
-                .Range("A" & rowToBeUsed).Value = GLEntryNo
-                .Range("B" & rowToBeUsed).Value = CDate(df)
-                .Range("C" & rowToBeUsed).Value = desc
-                .Range("D" & rowToBeUsed).Value = Source
-                .Range("E" & rowToBeUsed).Value = arr(i, 1)
-                .Range("F" & rowToBeUsed).Value = modFunctions.ObtenirDescriptionCompte(CStr(arr(i, 1)))
-                If arr(i, 3) > 0 Then
-                     .Range("G" & rowToBeUsed).Value = CDbl(arr(i, 3))
-                Else
-                     .Range("H" & rowToBeUsed).Value = -CDbl(arr(i, 3))
-                End If
-                .Range("I" & rowToBeUsed).Value = arr(i, 4)
-                .Range("J" & rowToBeUsed).Value = Format$(timeStamp, "dd/mm/yyyy hh:mm:ss")
-                rowToBeUsed = rowToBeUsed + 1
-                Call modDev_Utils.EnregistrerLogApplication("   modGL_Stuff:GL_Posting_Locally", -1)
-            End If
-        Next i
-    End With
-    
-    Application.ScreenUpdating = True
-    
-    Call modDev_Utils.EnregistrerLogApplication("modGL_Stuff:GL_Posting_Locally", vbNullString, startTime)
-
-End Sub
-
-Sub GL_BV_Ajouter_Shape_Retour()
-    
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_Stuff:GL_BV_Ajouter_Shape_Retour", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_Stuff:AjouterFormeRetourEnHaut", vbNullString, 0)
     
     Dim ws As Worksheet: Set ws = ActiveSheet
     
@@ -251,7 +199,7 @@ Sub GL_BV_Ajouter_Shape_Retour()
             .TextFrame2.HorizontalAnchor = msoAnchorCenter
             .TextFrame2.VerticalAnchor = msoAnchorMiddle
             .Fill.ForeColor.RGB = RGB(166, 166, 166)
-            .OnAction = "GL_BV_Effacer_Zone_Et_Shape"
+            .OnAction = "EffacerZoneTransDetailleesEtForme"
         End With
     End If
     
@@ -259,13 +207,13 @@ Sub GL_BV_Ajouter_Shape_Retour()
     Set btn = Nothing
     Set ws = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_Stuff:GL_BV_Ajouter_Shape_Retour", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_Stuff:AjouterFormeRetourEnHaut", vbNullString, startTime)
 
 End Sub
 
-Sub GL_BV_Effacer_Zone_Et_Shape()
+Sub EffacerZoneTransDetailleesEtForme()
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_Stuff:GL_BV_Effacer_Zone_Et_Shape", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_Stuff:EffacerZoneTransDetailleesEtForme", vbNullString, 0)
     
     'Effacer la plage
     Dim ws As Worksheet: Set ws = ActiveSheet
@@ -275,7 +223,7 @@ Sub GL_BV_Effacer_Zone_Et_Shape()
     Application.EnableEvents = True
 
     'Supprimer les formes shpRetour
-    Call GL_BV_SupprimerToutesLesFormes_shpRetour(ws)
+    Call SupprimerToutesFormesRetour(ws)
 
     Call EffacerFormeDynamique
     
@@ -287,11 +235,11 @@ Sub GL_BV_Effacer_Zone_Et_Shape()
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_Stuff:GL_BV_Effacer_Zone_Et_Shape", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_Stuff:EffacerZoneTransDetailleesEtForme", vbNullString, startTime)
 
 End Sub
 
-Sub GL_BV_EffacerZoneBV(w As Worksheet)
+Sub EffacerZoneBV(w As Worksheet)
 
     Application.EnableEvents = False
     Dim lastUsedRow As Long
@@ -303,7 +251,7 @@ Sub GL_BV_EffacerZoneBV(w As Worksheet)
 
 End Sub
 
-Sub GL_BV_SupprimerToutesLesFormes_shpRetour(w As Worksheet)
+Sub SupprimerToutesFormesRetour(w As Worksheet)
 
     Dim shp As Shape
 
@@ -361,7 +309,7 @@ Function ObtenirSoldesParCompteAvecADO(noCompteGLMin As String, noCompteGLMax As
 
     Do While Not recSet.EOF
         cle = CStr(recSet.Fields("NoCompte").Value)
-        Debug.Print "Construction du dictionary (dictSoldes): " & cle & " = " & Format$(recSet.Fields("Solde").Value, "#,##0.00")
+'        Debug.Print "Construction du dictionary (dictSoldes): " & cle & " = " & Format$(recSet.Fields("Solde").Value, "#,##0.00")
         montant = Nz(recSet.Fields("Solde").Value)
         If Not dictSoldes.Exists(cle) Then
             dictSoldes.Add cle, montant
@@ -419,7 +367,7 @@ Function ObtenirFinExercice(dateSaisie As Date) As Date '2025-07-20 @ 08:49
     
 End Function
 
-Public Sub AjouterEcritureGLADOPlusLocale(entry As clsGL_Entry, Optional afficherMessage As Boolean = True) '2025-06-08 @ 09:37
+Public Sub AjouterEcritureGLADOPlusLocale(entry As clsGL_Entry, Optional afficheMessage As Boolean = True) '2025-06-08 @ 09:37
 
     '=== BLOC 1 : Écriture dans GCF_BD_MASTER.xslx en utilisant ADO ===
     Dim cheminMaster As String
@@ -462,7 +410,7 @@ Public Sub AjouterEcritureGLADOPlusLocale(entry As clsGL_Entry, Optional affiche
               entry.NoEcriture & "," & _
               "'" & Format(entry.DateEcriture, "yyyy-mm-dd") & "'," & _
               "'" & Replace(entry.description, "'", "''") & "'," & _
-              "'" & Replace(entry.Source, "'", "''") & "'," & _
+              "'" & Replace(entry.source, "'", "''") & "'," & _
               "'" & l.noCompte & "'," & _
               "'" & Replace(l.description, "'", "''") & "'," & _
               IIf(l.montant >= 0, Replace(l.montant, ",", "."), "NULL") & "," & _
@@ -503,7 +451,7 @@ Public Sub AjouterEcritureGLADOPlusLocale(entry As clsGL_Entry, Optional affiche
             .Cells(lastRow + i, 1).Value = entry.NoEcriture
             .Cells(lastRow + i, 2).Value = entry.DateEcriture
             .Cells(lastRow + i, 3).Value = entry.description
-            .Cells(lastRow + i, 4).Value = entry.Source
+            .Cells(lastRow + i, 4).Value = entry.source
             .Cells(lastRow + i, 5).Value = l.noCompte
             .Cells(lastRow + i, 6).Value = l.description
             If l.montant >= 0 Then
@@ -518,7 +466,7 @@ Public Sub AjouterEcritureGLADOPlusLocale(entry As clsGL_Entry, Optional affiche
         End With
     Next i
 
-    If afficherMessage Then
+    If afficheMessage Then
         MsgBox "L'écriture comptable a été complétée avec succès", vbInformation, "Écriture au Grand Livre"
     End If
 
@@ -539,33 +487,17 @@ CleanUpADO:
     
 End Sub
 
-Function ConstruireTableau24MoisGL(dateLimite As Date, inclureEcrCloture As Boolean) As Variant '2025-08-03 @ 14:16
+Function ConstructionTableau24MoisGL(dateLimite As Date, periode As String, inclureEcrCloture As Boolean) As Variant '2025-08-05 @ 05:58
 
-    Dim dicoComptes As Object
-    Dim dicoMois As Object
-    Dim comptes As Collection
-    Dim tableau() As Variant
+    Dim collComptes As Collection
+    Dim tableau24Mois() As Variant
     Dim fichier As String
     Dim strSQL As String
     Dim dateDebutOperations As Date
-    Dim dateDernierJourAnneeFinanciereCourante As Date
-    Dim dateDernierJourAnneeFinancierePrecedente As Date
-    Dim datePremierJourAnneeFinanciereCourante As Date
-    Dim datePremierJourAnneeFinancierePrecedente As Date
-    Dim dernierMoisAnneeFinanciere As Long
     Dim compteTrouve As Boolean
     
     'Chemin du classeur MASTER.xlsx
     fichier = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & wsdADMIN.Range("MASTER_FILE").Value
-    
-    'Établir la date du premier jour de l'année financière
-    datePremierJourAnneeFinanciereCourante = PremierJourAnneeFinanciere(dateLimite)
-    dateDernierJourAnneeFinanciereCourante = DernierJourAnneeFinanciere(dateLimite)
-    Debug.Print "Année courante : " & datePremierJourAnneeFinanciereCourante & " à " & dateDernierJourAnneeFinanciereCourante
-    
-    datePremierJourAnneeFinancierePrecedente = DateAdd("yyyy", -1, datePremierJourAnneeFinanciereCourante)
-    dateDernierJourAnneeFinancierePrecedente = DernierJourAnneeFinanciere(datePremierJourAnneeFinancierePrecedente)
-    Debug.Print "Année précédente : " & datePremierJourAnneeFinancierePrecedente & " à " & dateDernierJourAnneeFinancierePrecedente
     
     dateDebutOperations = Format$(#7/31/2024#, "yyyy-mm-dd")
     
@@ -577,7 +509,7 @@ Function ConstruireTableau24MoisGL(dateLimite As Date, inclureEcrCloture As Bool
     
     'Requête SQL
     strSQL = "SELECT [NoCompte], year([Date]) as Annee, month([Date]) as MoisNum, " & _
-             "SUM(IIF([Débit] IS NULL, 0, [Débit]) - IIF([Crédit] IS NULL, 0, [Crédit])) AS Total " & _
+             "SUM(IIF([Débit] IS NULL, 0, [Débit]) - IIF([Crédit] IS NULL, 0, [Crédit])) AS transTotal " & _
              "FROM [GL_Trans$] " & _
              "WHERE [Date] >= #" & Format$(dateDebutOperations, "yyyy-mm-dd") & "# " & _
              "AND [Date] <= #" & Format$(dateLimite, "yyyy-mm-dd") & "#"
@@ -597,72 +529,37 @@ Function ConstruireTableau24MoisGL(dateLimite As Date, inclureEcrCloture As Bool
     
     Debug.Print "Total lignes renvoyées dans le recordSet:", recSet.RecordCount
     
-    'Liste unique des comptes
-    Set comptes = New Collection
+    'Liste unique des collComptes
+    Set collComptes = New Collection
     recSet.MoveFirst
     
     On Error Resume Next
     Do While Not recSet.EOF
-        comptes.Add recSet("NoCompte").Value, CStr(recSet("NoCompte").Value)
+        collComptes.Add recSet("NoCompte").Value, CStr(recSet("NoCompte").Value)
         recSet.MoveNext
     Loop
     On Error GoTo 0
     
-    'Établir les périodes à conserver
-    Dim periodesAnneeCourante As String
-    Dim periodesAnneePrecedente As String
-    Dim annee As Long
-    Dim mois As Long
-    Dim periode As String
+    'tableau24Mois [Compte, Ouverture & 24 mois]
+    ReDim tableau24Mois(0 To collComptes.count - 1, 0 To 25)
+    
+    'Remplir colonne 0 avec les collComptes
     Dim i As Long
-    
-    'Établir les périodes de l'année financière précédente
-    annee = year(datePremierJourAnneeFinancierePrecedente)
-    mois = month(datePremierJourAnneeFinancierePrecedente)
-    For i = 1 To 12
-        periode = periode & Format$(annee, "0000") & "-" & Format$(mois, "00") & " "
-        mois = mois + 1
-        If mois > 12 Then
-            annee = annee + 1
-            mois = mois - 12
-        End If
-    Next i
-
-    'Établir les périodes de l'année financière précédente
-    annee = year(datePremierJourAnneeFinanciereCourante)
-    mois = month(datePremierJourAnneeFinanciereCourante)
-    For i = 1 To 12
-        periode = periode & Format$(annee, "0000") & "-" & Format$(mois, "00") & " "
-        mois = mois + 1
-        If mois > 12 Then
-            annee = annee + 1
-            mois = mois - 12
-        End If
-    Next i
-    
-    Debug.Print periode
-    
-    Feuil2.Cells(2, 2) = "Ouverture"
-    For i = 1 To Len(periode) Step 8
-        Feuil2.Cells(2, ((i + 7) / 8) + 2) = "'" & Mid(periode, i, 7)
-    Next i
-    
-    'Tableau [nb comptes x 25]
-    ReDim tableau(0 To comptes.count - 1, 0 To 26)
-    
-    'Remplir colonne 0 avec les comptes
-    Dim j As Long
-    For i = 0 To comptes.count - 1
-        tableau(i, 0) = comptes(i + 1) 'Collection indexée à partir de 1
+    For i = 0 To collComptes.count - 1
+        tableau24Mois(i, 0) = collComptes(i + 1) 'Collection indexée à partir de 1
     Next
 
     'Remplissage des mois
+    Dim annee As Long
+    Dim mois As Long
+    Dim j As Long
+    
     recSet.MoveFirst
+    
     Do While Not recSet.EOF
         compteTrouve = False
-        For i = 0 To comptes.count - 1
-            If recSet("NoCompte").Value = tableau(i, 0) Then
-'                Debug.Print recSet("NoCompte").Value, recSet("Annee").Value, recSet("MoisNum").Value, recSet("Total").Value
+        For i = 0 To collComptes.count - 1
+            If recSet("NoCompte").Value = tableau24Mois(i, 0) Then
                 annee = recSet("Annee").Value
                 mois = recSet("MoisNum").Value
                 j = InStr(periode, Format$(annee, "0000") & "-" & Format$(mois, "00"))
@@ -671,7 +568,7 @@ Function ConstruireTableau24MoisGL(dateLimite As Date, inclureEcrCloture As Bool
                 Else
                     j = 1
                 End If
-                tableau(i, j) = IIf(IsNull(recSet("Total")), 0, recSet("Total"))
+                tableau24Mois(i, j) = tableau24Mois(i, j) + CCur(recSet("transTotal"))
                 compteTrouve = True
                 Exit For
             End If
@@ -685,11 +582,33 @@ Function ConstruireTableau24MoisGL(dateLimite As Date, inclureEcrCloture As Bool
     Set recSet = Nothing: Set conn = Nothing
     
     'Résultat
-    ConstruireTableau24MoisGL = tableau
+    ConstructionTableau24MoisGL = tableau24Mois
     
 End Function
 
-Sub TestTableauGL() '2025-08-03 @ 14:16
+Function Construire24PeriodesGL(dateLimite As Date) As String
+
+    Dim periodes As String
+    Dim tmpAnnee As Long
+    Dim tmpMois As Long
+    tmpAnnee = year(dateLimite)
+    tmpMois = month(dateLimite)
+    
+    Dim i As Long
+    For i = 1 To 24
+        periodes = Format$(tmpAnnee, "0000") & "-" & Format$(tmpMois, "00") & " " & periodes
+        tmpMois = tmpMois - 1
+        If tmpMois < 1 Then
+            tmpMois = 12
+            tmpAnnee = tmpAnnee - 1
+        End If
+    Next i
+    
+    Construire24PeriodesGL = periodes
+
+End Function
+
+Sub TestTableau24MoisGLDansExcel() '2025-08-05 @ 05:58
 
     Dim tableau() As Variant
     Dim i As Long, j As Long
@@ -697,28 +616,105 @@ Sub TestTableauGL() '2025-08-03 @ 14:16
     Dim dateCutoff As Date
     dateCutoff = #7/31/2025#
     
-    Feuil2.Range("A2:Y100").ClearContents
-
-    'Appel de la fonction
-    tableau = ConstruireTableau24MoisGL(dateCutoff, False)
+    Dim periodes As String
+    periodes = Construire24PeriodesGL(dateCutoff)
     
-    'Exemple d’affichage dans la fenêtre de débogage - @TODO
+    'Détermine le mois de l'année financière en fonction de la date limite
+    Dim dernierMoisAnneeFinanciere As Long
+    dernierMoisAnneeFinanciere = wsdADMIN.Range("MoisFinAnnéeFinancière")
+    Dim moisAnneeFinanciere As Long
+    moisAnneeFinanciere = month(dateCutoff)
+    If moisAnneeFinanciere > dernierMoisAnneeFinanciere Then
+        moisAnneeFinanciere = moisAnneeFinanciere - dernierMoisAnneeFinanciere
+    Else
+        moisAnneeFinanciere = moisAnneeFinanciere + 12 - dernierMoisAnneeFinanciere
+    End If
+    
+    Debug.Print "Pour la date '" & Format$(dateCutoff, "yyyy-mm-dd") & "' le mois de l'année financière est " & moisAnneeFinanciere
+    
+    'Feuille de travail
+    Dim feuilleNom As String
+    feuilleNom = "X_GLTableau24Mois"
+    Call modDev_Utils.EffacerEtRecreerWorksheet(feuilleNom)
+    Dim wsOutput As Worksheet
+    Set wsOutput = ThisWorkbook.Sheets(feuilleNom)
+    
+    wsOutput.Range("A1:Y100").Font.Name = "Aptos Narrow"
+    wsOutput.Range("A1:Y100").Font.size = 10
+    
+    'Appel de la fonction
+    Dim inclureEcritureCloture As Boolean
+    inclureEcritureCloture = False
+    tableau = ConstructionTableau24MoisGL(dateCutoff, periodes, inclureEcritureCloture)
+    
+    With wsOutput
+        .Cells(1, 1) = 0
+        .Cells(2, 1) = "Compte"
+        .Cells(1, 2) = 1
+        .Cells(2, 2) = "Ouverture"
+        For i = 1 To Len(periodes) Step 8
+            .Cells(1, ((i + 7) / 8) + 2) = ((i + 7) / 8) + 1
+            .Cells(2, ((i + 7) / 8) + 2) = "'" & Mid(periodes, i, 7)
+        Next i
+        .Cells(1, 27) = 26
+        .Cells(2, 27) = "Solde"
+    End With
+
+    'Exemple d’affichage dans la fenêtre de débogage
+    Dim solde As Currency
+    Dim k As Long
     Dim r As Long
     r = 3
     For i = LBound(tableau, 1) To UBound(tableau, 1)
-    Feuil2.Cells(r, 1) = tableau(i, 0)
+    wsOutput.Cells(r, 1) = tableau(i, 0) 'noCompteGL
         For j = 1 To 25
-            Feuil2.Cells(r, j + 1) = tableau(i, j)
+            wsOutput.Cells(r, j + 1) = tableau(i, j)
         Next j
-    
+        solde = 0
+        If tableau(i, 0) < "4000" Then
+            For k = 1 To 25
+                solde = solde + tableau(i, k)
+            Next k
+        Else
+            For k = (25 - moisAnneeFinanciere + 1) To 25
+                solde = solde + tableau(i, k)
+            Next k
+        End If
+        wsOutput.Cells(r, 27) = CCur(solde)
         r = r + 1
-        
-'        Debug.Print "Compte: " & tableau(i, 0) & _
-'            " Solde ouv. (A/P) = " & Fn_Pad_A_String(Format$(tableau(i, 1), "#,##0.00"), " ", 13, "L") & _
-'            " 2024/07/31 = " & Fn_Pad_A_String(Format$(tableau(i, 13), "#,##0.00"), " ", 13, "L") & _
-'            " 2025/07/31 = " & Fn_Pad_A_String(Format$(tableau(i, 25), "#,##0.00"), " ", 13, "L") & _
-'            " SOLDE = " & Fn_Pad_A_String(Format$(solde, "#,##0.00"), " ", 13, "L")
-    Next
+    Next i
+    
+    Dim col As Long
+    r = r + 1
+    wsOutput.Cells(r, 1) = "TOTAUX"
+    For col = 2 To 27
+        wsOutput.Cells(r, col).formula = "=SUM(" & wsOutput.Cells(3, col).Address & ":" & wsOutput.Cells(r - 2, col).Address & ")"
+    Next col
+    
+    wsOutput.Columns("A").HorizontalAlignment = xlCenter
+    wsOutput.Columns("B:AA").HorizontalAlignment = xlRight
+    wsOutput.Rows("1:2").HorizontalAlignment = xlCenter
+    wsOutput.Columns.AutoFit
     
 End Sub
 
+'Function SommePlageTableau(tableau As Variant, ligne As Long, debutCol As Long, finCol As Long) As Currency
+'
+'    Dim plage() As Long
+'    Dim i As Long
+'
+'    'Construire un tableau d’indices colonnes
+'    ReDim plage(1 To finCol - debutCol + 1)
+'    For i = debutCol To finCol
+'        plage(i - debutCol + 1) = i
+'    Next i
+'
+'    Dim extrait As Variant
+'    extrait = Application.index(tableau, ligne, plage)
+'    Debug.Print Join(extrait, ", ")
+'
+'    'Somme via Index + Sum
+'    SommePlageTableau = WorksheetFunction.Sum(Application.index(tableau, ligne, plage))
+'
+'End Function
+'

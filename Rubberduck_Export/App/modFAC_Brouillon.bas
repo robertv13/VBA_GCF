@@ -45,7 +45,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
             
             Call EffacerTECAffiches
             
-            Call FAC_Brouillon_Setup_All_Cells
+            Call MettreEnPlaceCellulesFAC_Brouillon
             
             Application.EnableEvents = False
             .Range("B20").Value = vbNullString
@@ -177,7 +177,7 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
             wshFAC_Brouillon.Range("O47").Value = wshFAC_Brouillon.Range("U49").Value
             
             wshFAC_Brouillon.Range("E3").Value = wshFAC_Brouillon.Range("B51").Value
-            Call FAC_Brouillon_Client_Change(wshFAC_Brouillon.Range("B51").Value)
+            Call ChangerNomDuClient(wshFAC_Brouillon.Range("B51").Value)
             
             Application.EnableEvents = False
             
@@ -206,9 +206,9 @@ Sub FAC_Brouillon_New_Invoice() 'Clear contents
 
 End Sub
 
-Sub FAC_Brouillon_Client_Change(clientName As String)
+Sub ChangerNomDuClient(clientName As String)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_Client_Change", clientName, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:ChangerNomDuClient", clientName, 0)
     
     'Aller chercher le vrai nom de client de 2 sources selon le mode de facturation
     Dim allCols As Variant
@@ -294,7 +294,7 @@ Sub FAC_Brouillon_Client_Change(clientName As String)
 
 Clean_Exit:
 
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_Client_Change - clientCode = '" & wshFAC_Brouillon.Range("B18").Value & "'", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:ChangerNomDuClient - clientCode = '" & wshFAC_Brouillon.Range("B18").Value & "'", vbNullString, startTime)
     
 End Sub
 
@@ -348,9 +348,9 @@ Sub FAC_Brouillon_Date_Change(d As String)
     
 End Sub
 
-Sub FAC_Brouillon_Inclure_TEC_Factures_Click()
+Sub ckbMontrerTECDejaFactures_Click()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_Inclure_TEC_Factures_Click", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:ckbMontrerTECDejaFactures_Click", vbNullString, 0)
     
     Dim cutoffDate As Date
     cutoffDate = CDate(wshFAC_Brouillon.Range("O3").Value)
@@ -361,13 +361,13 @@ Sub FAC_Brouillon_Inclure_TEC_Factures_Click()
         Call FAC_Brouillon_Get_All_TEC_By_Client(cutoffDate, False)
     End If
     
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_Inclure_TEC_Factures_Click", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:ckbMontrerTECDejaFactures_Click", vbNullString, startTime)
 
 End Sub
 
-Sub FAC_Brouillon_Setup_All_Cells()
+Sub MettreEnPlaceCellulesFAC_Brouillon()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:MettreEnPlaceCellulesFAC_Brouillon", vbNullString, 0)
 
     Application.EnableEvents = False
     
@@ -423,7 +423,7 @@ Sub FAC_Brouillon_Setup_All_Cells()
     
     Application.EnableEvents = True
     
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_Setup_All_Cells", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:MettreEnPlaceCellulesFAC_Brouillon", vbNullString, startTime)
 
 End Sub
 
@@ -960,15 +960,15 @@ Depot_Checked:
 
 End Sub
 
-Sub shp_FAC_Exit_Click()
+Sub shpRetourMenuFAC_Click()
 
-    Call FAC_Brouillon_Back_To_FAC_Menu
+    Call RetourMenuFAC
 
 End Sub
 
-Sub FAC_Brouillon_Back_To_FAC_Menu()
+Sub RetourMenuFAC()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_Back_To_FAC_Menu", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:RetourMenuFAC", vbNullString, 0)
    
     DoEvents
     
@@ -998,7 +998,7 @@ Sub FAC_Brouillon_Back_To_FAC_Menu()
     'Libérer la mémoire
     Set shapeTextBox = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:FAC_Brouillon_Back_To_FAC_Menu", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:RetourMenuFAC", vbNullString, startTime)
 
 End Sub
 
@@ -1296,7 +1296,7 @@ Sub Load_Invoice_Template(t As String)
         facRow = facRow + 2
     Next i
         
-    Application.Goto wshFAC_Brouillon.Range("L" & facRow)
+    Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
 

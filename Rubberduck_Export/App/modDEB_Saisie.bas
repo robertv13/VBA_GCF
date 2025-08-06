@@ -5,8 +5,8 @@ Attribute VB_Name = "modDEB_Saisie"
 Option Explicit
 
 'Variables globales
-Public sauvegardesCaracteristiquesForme As Object
-Public numeroDebourseARenverser As Long
+Public gSauvegardesCaracteristiquesForme As Object
+Public gNumeroDebourseARenverser As Long
 
 Sub shp_DEB_Saisie_Update_Click()
 
@@ -47,7 +47,7 @@ Sub MiseAjourDebours()
     Call AjouterDebBDLocale(rowDebSaisie)
     
     'GL posting
-    Call PreparerEcriturePourDeb
+    Call ComptabiliserDebours
     
     If wshDEB_Saisie.ckbRecurrente = True Then
         Call Save_DEB_Recurrent(rowDebSaisie)
@@ -115,7 +115,7 @@ Sub DEB_Renversement_Update()
     Call DEB_Trans_MAJ_Debourse_Renverse_Locally
     
     'GL posting
-    Call PreparerEcriturePourDeb
+    Call ComptabiliserDebours
     
     MsgBox "Le déboursé a été RENVERSÉ avec succès", vbInformation, "Confirmation de traitement"
     
@@ -150,7 +150,7 @@ Sub DEB_Renversement_Update()
     DoEvents
     
     'Mode normal (pas renversement)
-    numeroDebourseARenverser = -1
+    gNumeroDebourseARenverser = -1
     ws.Range("B7").Value = False
 
     Application.ScreenUpdating = True
@@ -223,7 +223,7 @@ Sub AjouterDebBDMaster(r As Long) 'Write/Update a record to external .xlsx file
                 recSet.Fields(fDebTType - 1).Value = .Range("F4").Value
                 recSet.Fields(fDebTBeneficiaire - 1).Value = .Range("J4").Value
                 recSet.Fields(fDebTFournID - 1).Value = .Range("B5").Value
-                recSet.Fields(fDebTDescription - 1).Value = .Range("F6").Value & IIf(.Range("B7"), " (RENVERSEMENT de " & numeroDebourseARenverser & ")", vbNullString)
+                recSet.Fields(fDebTDescription - 1).Value = .Range("F6").Value & IIf(.Range("B7"), " (RENVERSEMENT de " & gNumeroDebourseARenverser & ")", vbNullString)
                 recSet.Fields(fDebTReference - 1).Value = .Range("M6").Value
                 
                 recSet.Fields(fDebTNoCompte - 1).Value = .Range("Q" & l).Value
@@ -290,7 +290,7 @@ Sub AjouterDebBDLocale(r As Long) 'Write records locally
             ws.Cells(rowToBeUsed, fDebTType).Value = .Range("F4").Value
             ws.Cells(rowToBeUsed, fDebTBeneficiaire).Value = .Range("J4").Value
             ws.Cells(rowToBeUsed, fDebTFournID).Value = .Range("B5").Value
-            ws.Cells(rowToBeUsed, fDebTDescription).Value = .Range("F6").Value & IIf(.Range("B7"), " (RENVERSEMENT de " & numeroDebourseARenverser & ")", vbNullString)
+            ws.Cells(rowToBeUsed, fDebTDescription).Value = .Range("F6").Value & IIf(.Range("B7"), " (RENVERSEMENT de " & gNumeroDebourseARenverser & ")", vbNullString)
             ws.Cells(rowToBeUsed, fDebTReference).Value = .Range("M6").Value
             
             ws.Cells(rowToBeUsed, fDebTNoCompte).Value = .Range("Q" & i).Value
@@ -336,7 +336,7 @@ Sub DEB_Trans_MAJ_Debourse_Renverse_To_DB()
 
     'Requête SQL pour rechercher la ligne correspondante
     Dim strSQL As String
-    strSQL = "SELECT * FROM [" & destinationTab & "] WHERE [NoEntrée] = " & numeroDebourseARenverser
+    strSQL = "SELECT * FROM [" & destinationTab & "] WHERE [NoEntrée] = " & gNumeroDebourseARenverser
 
     'Ouvrir le Recordset
     recSet.Open strSQL, conn, 1, 3 'adOpenKeyset (1) + adLockOptimistic (3) pour modifier les données
@@ -387,7 +387,7 @@ Sub DEB_Trans_MAJ_Debourse_Renverse_Locally()
     'Boucler sur toutes les lignes pour trouver les correspondances
     Dim cell As Range
     For Each cell In ws.Range("A2:A" & lastUsedRow)
-        If cell.Value = numeroDebourseARenverser Then
+        If cell.Value = gNumeroDebourseARenverser Then
             'Vérifier si "RENVERSÉ" est déjà présent pour éviter les doublons
             If InStr(1, cell.offset(0, fDebTDescription - 1).Value, " (RENVERSÉ par ", vbTextCompare) = 0 Then
                 'Ajouter "RENVERSÉ" à la colonne "Reference" (colonne B)
@@ -416,7 +416,7 @@ Sub Preparer_Liste_Debourses_Pour_Afficher()
     'Afficher le UserForm
     ufListeDebourse.show vbModal
     
-    If numeroDebourseARenverser = -1 Then
+    If gNumeroDebourseARenverser = -1 Then
         wshDEB_Saisie.Range("F4").Value = vbNullString
         wshDEB_Saisie.Range("F4").Select
     Else
@@ -432,7 +432,7 @@ Sub DEB_Renverser_Ecriture() '2025-02-23 @ 16:56
     '1. Quelle écriture doit-on renverser (à partir d'un ListBox)
     Call Preparer_Liste_Debourses_Pour_Afficher
     
-    If numeroDebourseARenverser = -1 Then
+    If gNumeroDebourseARenverser = -1 Then
         MsgBox "Vous n'avez sélectionné aucun déboursé à renverser", vbInformation, "Sélection d'un déboursé à renverser"
         Application.EnableEvents = True
         wshDEB_Saisie.Range("F4").Value = vbNullString
@@ -443,7 +443,7 @@ Sub DEB_Renverser_Ecriture() '2025-02-23 @ 16:56
     
     '2. Aller chercher les debourses pour le numero choisi (0 à n lignes)
     Dim debTransSubset As Variant
-    debTransSubset = RechercherLignesTableau(ws, numeroDebourseARenverser)
+    debTransSubset = RechercherLignesTableau(ws, gNumeroDebourseARenverser)
     
     Application.EnableEvents = False
 
@@ -506,98 +506,99 @@ Nettoyage:
     
 End Sub
 
-Sub PreparerEcriturePourDeb() '2024-06-05 @ 18:28
+Sub ComptabiliserDebours() '2025-08-05 @ 11:22
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:PreparerEcriturePourDeb", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:ComptabiliserDebours", vbNullString, 0)
 
-    Dim montant As Double, dateDebours As Date
-    Dim descGL_Trans As String, Source As String, deboursType As String
-    Dim GL_TransNo As Long
+    Dim ws As Worksheet: Set ws = wshDEB_Saisie
     
-    dateDebours = wshDEB_Saisie.Range("O4").Value
-    deboursType = wshDEB_Saisie.Range("F4").Value
-    descGL_Trans = deboursType & " - " & wshDEB_Saisie.Range("F6").Value
-    If Trim$(wshDEB_Saisie.Range("M6").Value) <> vbNullString Then
-        descGL_Trans = descGL_Trans & " [" & wshDEB_Saisie.Range("M6").Value & "]"
+    'Y a-t-il des lignes à traiter ?
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(wshDEB_Saisie.Rows.count, "E").End(xlUp).Row
+
+    'Récupère les variables à partir de la feuille DEB_Saisie
+    Dim dateDebours As Date
+    dateDebours = ws.Range("O4").Value
+    Dim montant As Currency
+    montant = ws.Range("O6").Value
+    Dim deboursType As String
+    deboursType = ws.Range("F4").Value
+    Dim descGL_Trans As String
+    descGL_Trans = deboursType & " - " & ws.Range("F6").Value
+    If Trim$(ws.Range("M6").Value) <> vbNullString Then
+        descGL_Trans = descGL_Trans & " [" & ws.Range("M6").Value & "]"
     End If
+    Dim source As String
     If wshDEB_Saisie.Range("B7").Value = False Then
-        Source = "DÉBOURSÉ:" & Format$(wshDEB_Saisie.Range("B1").Value, "00000")
+        source = "DÉBOURSÉ:" & Format$(ws.Range("B1").Value, "00000")
     Else
-        Source = "RENV/DÉBOURSÉ:" & Format$(numeroDebourseARenverser, "00000")
+        source = "RENV/DÉBOURSÉ:" & Format$(gNumeroDebourseARenverser, "00000")
     End If
     
-    Dim MyArray() As String
-    ReDim MyArray(1 To 16, 1 To 4)
+    'Déclaration et instanciation d'un objet GL_Entry
+    Dim ecr As clsGL_Entry
+    Set ecr = New clsGL_Entry
+
+    'Remplissage des propriétés communes
+    ecr.DateEcriture = dateDebours
+    ecr.description = descGL_Trans
+    ecr.source = source
     
-    'Based on Disbursement type, the CREDIT account will be different
-    'Disbursement Total (wshDEB_Saisie.Range("O6"))
-    montant = wshDEB_Saisie.Range("O6").Value
+    Dim codeGL As String
+    Dim descGL As String
     
-    Dim GLNo_Credit As String
-    
+    'La portion Crédit varie en fonction du type de déboursé
     Select Case deboursType
-        Case "Chèque", "Virement", "Paiement pré-autorisé"
-            MyArray(1, 1) = ObtenirNoGlIndicateur("Encaisse")
-            MyArray(1, 2) = "Encaisse"
+        Case "Chèque", "Virement", "Paiement pré-autorisé", "Autre"
+            codeGL = modFunctions.ObtenirNoGlIndicateur("Encaisse")
+            descGL = modFunctions.ObtenirDescriptionCompte(codeGL)
         Case "Carte de crédit"
-            MyArray(1, 1) = ObtenirNoGlIndicateur("Carte de crédit")
-            MyArray(1, 2) = "Carte de crédit"
+            codeGL = modFunctions.ObtenirNoGlIndicateur("Carte de crédit")
+            descGL = modFunctions.ObtenirDescriptionCompte(codeGL)
         Case "Avances avec Guillaume Charron"
-            MyArray(1, 1) = ObtenirNoGlIndicateur("Avances Guillaume Charron")
-            MyArray(1, 2) = "Avances avec Guillaume Charron"
+            codeGL = modFunctions.ObtenirNoGlIndicateur("Avances Guillaume Charron")
+            descGL = modFunctions.ObtenirDescriptionCompte(codeGL)
         Case "Avances avec 9249-3626 Québec inc."
-            MyArray(1, 1) = ObtenirNoGlIndicateur("Avances 9249-3626 Québec inc.")
-            MyArray(1, 2) = "Avances avec 9249-3626 Québec inc."
+            codeGL = modFunctions.ObtenirNoGlIndicateur("Avances 9249-3626 Québec inc.")
+            descGL = modFunctions.ObtenirDescriptionCompte(codeGL)
         Case "Avances avec 9333-4829 Québec inc."
-            MyArray(1, 1) = ObtenirNoGlIndicateur("Avances 9333-4829 Québec inc.")
-            MyArray(1, 2) = "Avances avec 9333-4829 Québec inc."
-        Case "Autre"
-            MyArray(1, 1) = ObtenirNoGlIndicateur("Encaisse")
-            MyArray(1, 2) = "Encaisse"
+            codeGL = modFunctions.ObtenirNoGlIndicateur("Avances 9333-4829 Québec inc.")
+            descGL = modFunctions.ObtenirDescriptionCompte(codeGL)
         Case Else
-            MyArray(1, 1) = ObtenirNoGlIndicateur("Encaisse")
-            MyArray(1, 2) = "Encaisse"
+            codeGL = modFunctions.ObtenirNoGlIndicateur("Encaisse")
+            descGL = modFunctions.ObtenirDescriptionCompte(codeGL)
     End Select
     
-    MyArray(1, 3) = -montant
-    MyArray(1, 4) = vbNullString
+    'Portion CRÉDIT de l'écriture
+    ecr.AjouterLigne codeGL, descGL, -montant, vbNullString
     
-    'Process every lines
-    Dim lastUsedRow As Long
-    lastUsedRow = wshDEB_Saisie.Cells(wshDEB_Saisie.Rows.count, "E").End(xlUp).Row
-
-    Dim l As Long, arrRow As Long
-    arrRow = 2 '1 is already used
+    Dim l As Long
     For l = 9 To lastUsedRow
-        MyArray(arrRow, 1) = wshDEB_Saisie.Range("Q" & l).Value
-        MyArray(arrRow, 2) = wshDEB_Saisie.Range("E" & l).Value
-        MyArray(arrRow, 3) = wshDEB_Saisie.Range("N" & l).Value
-        MyArray(arrRow, 4) = vbNullString
-        arrRow = arrRow + 1
+        codeGL = ws.Range("Q" & l).Value
+        descGL = ws.Range("E" & l).Value
+        ecr.AjouterLigne codeGL, descGL, CCur(ws.Range("N" & l).Value), vbNullString
         
         If wshDEB_Saisie.Range("L" & l).Value <> 0 Then
-            MyArray(arrRow, 1) = ObtenirNoGlIndicateur("TPS Payée")
-            MyArray(arrRow, 2) = "TPS payées"
-            MyArray(arrRow, 3) = wshDEB_Saisie.Range("L" & l).Value
-            MyArray(arrRow, 4) = vbNullString
-            arrRow = arrRow + 1
+            codeGL = ObtenirNoGlIndicateur("TPS Payée")
+            descGL = modFunctions.ObtenirDescriptionCompte(codeGL)
+            ecr.AjouterLigne codeGL, descGL, CCur(ws.Range("L" & l).Value), vbNullString
         End If
 
         If wshDEB_Saisie.Range("M" & l).Value <> 0 Then
-            MyArray(arrRow, 1) = ObtenirNoGlIndicateur("TVQ Payée")
-            MyArray(arrRow, 2) = "TVQ payées"
-            MyArray(arrRow, 3) = wshDEB_Saisie.Range("M" & l).Value
-            MyArray(arrRow, 4) = vbNullString
-            arrRow = arrRow + 1
+            codeGL = ObtenirNoGlIndicateur("TVQ Payée")
+            descGL = modFunctions.ObtenirDescriptionCompte(codeGL)
+            ecr.AjouterLigne codeGL, descGL, CCur(ws.Range("M" & l).Value), vbNullString
         End If
     Next l
     
-    Dim GLEntryNo As Long
-    Call GL_Posting_To_DB(dateDebours, descGL_Trans, Source, MyArray, GLEntryNo)
+    'Écriture
+    Call modGL_Stuff.AjouterEcritureGLADOPlusLocale(ecr, False)
     
-    Call GL_Posting_Locally(dateDebours, descGL_Trans, Source, MyArray, GLEntryNo)
+    'Libérer la mémoire
+    Set ecr = Nothing
+    Set ws = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:PreparerEcriturePourDeb", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:ComptabiliserDebours", vbNullString, startTime)
 
 End Sub
 
@@ -990,36 +991,36 @@ End Sub
 Sub DEB_Forme_Sauvegarder(forme As Shape)
 
     ' Vérifier si le Dictionary est déjà instancié, sinon le créer
-    If sauvegardesCaracteristiquesForme Is Nothing Then
-        Set sauvegardesCaracteristiquesForme = CreateObject("Scripting.Dictionary")
+    If gSauvegardesCaracteristiquesForme Is Nothing Then
+        Set gSauvegardesCaracteristiquesForme = CreateObject("Scripting.Dictionary")
     End If
 
     'Sauvegarder les caractéristiques originales de la forme
-    sauvegardesCaracteristiquesForme("Left") = forme.Left
-    sauvegardesCaracteristiquesForme("Width") = forme.Width
-    sauvegardesCaracteristiquesForme("Height") = forme.Height
-    sauvegardesCaracteristiquesForme("FillColor") = forme.Fill.ForeColor.RGB
-    sauvegardesCaracteristiquesForme("LineColor") = forme.Line.ForeColor.RGB
-    sauvegardesCaracteristiquesForme("Text") = forme.TextFrame2.TextRange.text
-    sauvegardesCaracteristiquesForme("TextColor") = forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB
+    gSauvegardesCaracteristiquesForme("Left") = forme.Left
+    gSauvegardesCaracteristiquesForme("Width") = forme.Width
+    gSauvegardesCaracteristiquesForme("Height") = forme.Height
+    gSauvegardesCaracteristiquesForme("FillColor") = forme.Fill.ForeColor.RGB
+    gSauvegardesCaracteristiquesForme("LineColor") = forme.Line.ForeColor.RGB
+    gSauvegardesCaracteristiquesForme("Text") = forme.TextFrame2.TextRange.text
+    gSauvegardesCaracteristiquesForme("TextColor") = forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB
     
 End Sub
 
 Sub DEB_Forme_Restaurer(forme As Shape)
 
     'Vérifiez si les caractéristiques originales sont sauvegardées
-    If sauvegardesCaracteristiquesForme Is Nothing Then
+    If gSauvegardesCaracteristiquesForme Is Nothing Then
         Exit Sub
     End If
 
     'Restaurer les caractéristiques de la forme
-    forme.Left = sauvegardesCaracteristiquesForme("Left")
-    forme.Width = sauvegardesCaracteristiquesForme("Width")
-    forme.Height = sauvegardesCaracteristiquesForme("Height")
-    forme.Fill.ForeColor.RGB = sauvegardesCaracteristiquesForme("FillColor")
-    forme.Line.ForeColor.RGB = sauvegardesCaracteristiquesForme("LineColor")
-    forme.TextFrame2.TextRange.text = sauvegardesCaracteristiquesForme("Text")
-    forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB = sauvegardesCaracteristiquesForme("TextColor")
+    forme.Left = gSauvegardesCaracteristiquesForme("Left")
+    forme.Width = gSauvegardesCaracteristiquesForme("Width")
+    forme.Height = gSauvegardesCaracteristiquesForme("Height")
+    forme.Fill.ForeColor.RGB = gSauvegardesCaracteristiquesForme("FillColor")
+    forme.Line.ForeColor.RGB = gSauvegardesCaracteristiquesForme("LineColor")
+    forme.TextFrame2.TextRange.text = gSauvegardesCaracteristiquesForme("Text")
+    forme.TextFrame2.TextRange.Font.Fill.ForeColor.RGB = gSauvegardesCaracteristiquesForme("TextColor")
 
 End Sub
 

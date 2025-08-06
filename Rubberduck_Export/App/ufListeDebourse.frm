@@ -100,7 +100,7 @@ Private Sub ChargerDebDonnees()
         Me.lsbListeDebourse.Clear
     End If
     
-    numeroDebourseARenverser = -1
+    gNumeroDebourseARenverser = -1
     wshDEB_Saisie.Range("B7").Value = False
     
 End Sub
@@ -159,7 +159,7 @@ Private Sub UpdateFilteredArray(filtre As String)
         Me.lsbListeDebourse.Clear  ' Si aucun enregistrement, vider la ListBox
     End If
     
-    numeroDebourseARenverser = -1
+    gNumeroDebourseARenverser = -1
     wshDEB_Saisie.Range("B7").Value = False
     
 End Sub
@@ -172,10 +172,10 @@ Private Sub lsbListeDebourse_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     If lsbListeDebourse.ListIndex <> -1 Then
         'Récupérer le numéro de déboursé à renverser
         selectedRow = lsbListeDebourse.ListIndex
-        numeroDebourseARenverser = lsbListeDebourse.List(selectedRow, 10)
+        gNumeroDebourseARenverser = lsbListeDebourse.List(selectedRow, 10)
         wshDEB_Saisie.Range("B7").Value = True
     Else
-        numeroDebourseARenverser = -1
+        gNumeroDebourseARenverser = -1
         wshDEB_Saisie.Range("B7").Value = False
     End If
         
@@ -202,7 +202,7 @@ End Sub
 Private Sub cmdFermer_Click()
 
     'Pas de rowNumber pour renverser
-    numeroDebourseARenverser = -1
+    gNumeroDebourseARenverser = -1
     wshDEB_Saisie.Range("B7").Value = False
     
     Unload Me

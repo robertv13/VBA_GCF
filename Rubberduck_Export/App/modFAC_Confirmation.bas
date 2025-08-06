@@ -354,7 +354,7 @@ Sub ComptabiliserConfirmationFacture(invoice As String) '2025-08-04 @ 07:19
         'Remplissage des propriétés communes
         ecr.DateEcriture = dateFact
         ecr.description = ws.Cells(r, fFacENomClient).Value
-        ecr.Source = "FACTURE:" & invoice
+        ecr.source = "FACTURE:" & invoice
         
         Dim codeGL As String
         Dim descGL As String

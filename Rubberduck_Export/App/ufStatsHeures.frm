@@ -139,9 +139,9 @@ Sub AdditionnerAjouterColonnesDeSemaine()
     Dim rngResult As Range
     Set rngResult = ws.Range("W2:AD" & lastUsedResult)
     
-    t1 = Application.WorksheetFunction.SUM(rngResult.Columns(6))
-    t2 = Application.WorksheetFunction.SUM(rngResult.Columns(7))
-    t3 = Application.WorksheetFunction.SUM(rngResult.Columns(8))
+    t1 = Application.WorksheetFunction.Sum(rngResult.Columns(6))
+    t2 = Application.WorksheetFunction.Sum(rngResult.Columns(7))
+    t3 = Application.WorksheetFunction.Sum(rngResult.Columns(8))
     
     ufStatsHeures.lblTotaux = "* Totaux de la semaine (" & _
         Format$(wshTEC_TDB_Data.Range("T7").Value, wsdADMIN.Range("B1").Value) & " au " & _
@@ -172,9 +172,9 @@ Sub AdditionnerAjouterColonnesDuMois()
     Dim rngResult As Range
     Set rngResult = ws.Range("AJ2:AQ" & lastUsedResult)
     
-    t1 = Application.WorksheetFunction.SUM(rngResult.Columns(6))
-    t2 = Application.WorksheetFunction.SUM(rngResult.Columns(7))
-    t3 = Application.WorksheetFunction.SUM(rngResult.Columns(8))
+    t1 = Application.WorksheetFunction.Sum(rngResult.Columns(6))
+    t2 = Application.WorksheetFunction.Sum(rngResult.Columns(7))
+    t3 = Application.WorksheetFunction.Sum(rngResult.Columns(8))
     
     'Affiche le total dans la TextBox
     ufStatsHeures.MultiPage1.Pages("pMois").txtMoisHresNettes.Value = Format$(t1, "#,##0.00") 'Formatage du total en deux décimales
@@ -202,9 +202,9 @@ Sub AdditionnerAjouterColonnesDuTrimestre()
     Dim rngResult As Range
     Set rngResult = ws.Range("AW2:BD" & lastUsedResult)
     
-    t1 = Application.WorksheetFunction.SUM(rngResult.Columns(6))
-    t2 = Application.WorksheetFunction.SUM(rngResult.Columns(7))
-    t3 = Application.WorksheetFunction.SUM(rngResult.Columns(8))
+    t1 = Application.WorksheetFunction.Sum(rngResult.Columns(6))
+    t2 = Application.WorksheetFunction.Sum(rngResult.Columns(7))
+    t3 = Application.WorksheetFunction.Sum(rngResult.Columns(8))
     
     'Affiche le total dans la TextBox
     ufStatsHeures.MultiPage1.Pages("pTrimestre").txtTrimHresNettes.Value = Format$(t1, "#,##0.00") 'Formatage du total en deux décimales
@@ -232,9 +232,9 @@ Sub AdditionnerColonnesDeAnneeFinanciere()
     Dim rngResult As Range
     Set rngResult = ws.Range("BJ2:BQ" & lastUsedResult)
     
-    t1 = Application.WorksheetFunction.SUM(rngResult.Columns(6))
-    t2 = Application.WorksheetFunction.SUM(rngResult.Columns(7))
-    t3 = Application.WorksheetFunction.SUM(rngResult.Columns(8))
+    t1 = Application.WorksheetFunction.Sum(rngResult.Columns(6))
+    t2 = Application.WorksheetFunction.Sum(rngResult.Columns(7))
+    t3 = Application.WorksheetFunction.Sum(rngResult.Columns(8))
     
     'Affiche le total dans la TextBox
     ufStatsHeures.MultiPage1.Pages("pAnneeFinanciere").txtAnneeFinanciereHresNettes.Value = Format$(t1, "#,##0.00") 'Formatage du total en deux décimales

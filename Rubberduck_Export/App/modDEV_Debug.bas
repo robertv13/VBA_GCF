@@ -1,7 +1,7 @@
 Attribute VB_Name = "modDEV_Debug"
 Option Explicit
 
-Sub IdentifierEcartsComptesClientsEtGL() '2025-04-02 @ 07:46
+Sub zz_IdentifierEcartsComptesClientsEtGL() '2025-04-02 @ 07:46
 
     Dim wsCC As Worksheet
     Set wsCC = wsdFAC_Comptes_Clients
@@ -50,18 +50,18 @@ Sub IdentifierEcartsComptesClientsEtGL() '2025-04-02 @ 07:46
 
     'Analyse TOUS les écritures au G/L
     Dim totalGL_Details As Currency
-    Dim Source As String, noEnc As Long
+    Dim source As String, noEnc As Long
     For i = 2 To usedRowGL
-        Source = wsGL.Cells(i, 4).Value
+        source = wsGL.Cells(i, 4).Value
         If wsGL.Cells(i, 5).Value = "1100" Then
-            If InStr(Source, "ENCAISSEMENT:") = 1 Or InStr(Source, "DÉPÔT DE CLIENT:") = 1 Then
+            If InStr(source, "ENCAISSEMENT:") = 1 Or InStr(source, "DÉPÔT DE CLIENT:") = 1 Then
                 totalGL_Details = totalGL_Details - wsGL.Cells(i, 7).Value + wsGL.Cells(i, 8).Value
-                noEnc = Mid$(Source, InStr(Source, ":") + 1, Len(Source) - InStr(Source, ":"))
+                noEnc = Mid$(source, InStr(source, ":") + 1, Len(source) - InStr(source, ":"))
                 
                 matENC(noEnc, 2) = matENC(noEnc, 2) - wsGL.Cells(i, 7).Value + wsGL.Cells(i, 8).Value
             Else
-                If InStr(Source, "FACTURE:") = 1 Then
-                    noFact = Right(Source, 5)
+                If InStr(source, "FACTURE:") = 1 Then
+                    noFact = Right(source, 5)
                     matFAC(noFact, 2) = matFAC(noFact, 2) + wsGL.Cells(i, 7).Value - wsGL.Cells(i, 8).Value
                 End If
             End If
@@ -89,7 +89,7 @@ Sub IdentifierEcartsComptesClientsEtGL() '2025-04-02 @ 07:46
     
 End Sub
 
-Sub VérifierTousLesContrôlesFeuillesEtUserForms()
+Sub zz_VerifierTousLesControlesFeuillesEtUserForms()
 
     Dim ws As Worksheet
     Dim ctrl As OLEObject
@@ -152,7 +152,8 @@ NextForm:
     End If
 End Sub
 
-Sub ScannerSuppressionAmbigue_VersFenetreImmediate() '2025-07-01 @ 09:36
+Sub zz_ScannerSuppressionAmbigue_VersFenetreImmediate() '2025-07-01 @ 09:36
+    
     Dim vbComp As Object
     Dim vbMod As Object
     Dim numLigne As Long

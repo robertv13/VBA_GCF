@@ -673,8 +673,8 @@ Sub RafraichirListBoxEtAddtionnerHeures() 'Load the listBox with the appropriate
     lastRow = wshTEC_TDB_Data.Cells(wshTEC_TDB_Data.Rows.count, "W").End(xlUp).Row
     If lastRow > 1 Then
         Set rngResult = wshTEC_TDB_Data.Range("W2:AD" & lastRow)
-        totalHresFactSemaine = Application.WorksheetFunction.SUM(rngResult.Columns(7))
-        totalHresNonFactSemaine = Application.WorksheetFunction.SUM(rngResult.Columns(8))
+        totalHresFactSemaine = Application.WorksheetFunction.Sum(rngResult.Columns(7))
+        totalHresNonFactSemaine = Application.WorksheetFunction.Sum(rngResult.Columns(8))
     End If
 
     ufSaisieHeures.txtHresFactSemaine.Value = Format$(totalHresFactSemaine, "#0.00")

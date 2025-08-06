@@ -1037,7 +1037,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, lignesLues As Long, search1 As St
     
 End Sub
 
-Sub List_All_Columns() '2024-08-09 @ 11:52
+Sub zz_List_All_Columns() '2024-08-09 @ 11:52
 
     Dim colType As String
     
@@ -1102,18 +1102,18 @@ Sub List_All_Columns() '2024-08-09 @ 11:52
     
 End Sub
 
-Sub List_All_Macros_Used_With_Objects() '2024-11-26 @ 20:14
+Sub zz_ListAllMacrosUsedWithShapesOrActiveXControls() '2024-11-26 @ 20:14
     
     'Prepare the result worksheet
-    Call EffacerEtRecreerWorksheet("Doc_All_Macros_Used_With_Object")
+    Call EffacerEtRecreerWorksheet("DocAllIndirectMacros")
 
     Dim wsOutputSheet As Worksheet
-    Set wsOutputSheet = ThisWorkbook.Worksheets("Doc_All_Macros_Used_With_Object")
+    Set wsOutputSheet = ThisWorkbook.Worksheets("DocAllIndirectMacros")
     
-    wsOutputSheet.Cells(1, 1).Value = "Worksheet"
-    wsOutputSheet.Cells(1, 2).Value = "Object Type"
+    wsOutputSheet.Cells(1, 1).Value = "Macro Name"
+    wsOutputSheet.Cells(1, 2).Value = "Worksheet"
     wsOutputSheet.Cells(1, 3).Value = "Object Name"
-    wsOutputSheet.Cells(1, 4).Value = "Macro Name"
+    wsOutputSheet.Cells(1, 4).Value = "Object Type"
     
     Call Make_It_As_Header(wsOutputSheet.Range("A1:D1"), RGB(0, 112, 192))
 
@@ -1134,10 +1134,10 @@ Sub List_All_Macros_Used_With_Objects() '2024-11-26 @ 20:14
                 macroName = shp.OnAction
                 On Error GoTo 0
                 If macroName <> vbNullString Then
-                    wsOutputSheet.Cells(outputRow, 1).Value = ws.Name
-                    wsOutputSheet.Cells(outputRow, 2).Value = "Shape"
+                    wsOutputSheet.Cells(outputRow, 1).Value = Trim(Split(macroName, "!")(UBound(Split(macroName, "!"))))
+                    wsOutputSheet.Cells(outputRow, 2).Value = ws.Name
                     wsOutputSheet.Cells(outputRow, 3).Value = shp.Name
-                    wsOutputSheet.Cells(outputRow, 4).Value = macroName
+                    wsOutputSheet.Cells(outputRow, 4).Value = "Shape"
                     outputRow = outputRow + 1
                 End If
             Next shp
@@ -1155,11 +1155,11 @@ Sub List_All_Macros_Used_With_Objects() '2024-11-26 @ 20:14
                 End If
                 On Error GoTo 0
                 If macroName <> vbNullString Then
-                    wsOutputSheet.Cells(outputRow, 1).Value = ws.Name
-                    wsOutputSheet.Cells(outputRow, 2).Value = "ActiveX Control"
+                    wsOutputSheet.Cells(outputRow, 1).Value = Trim(Split(macroName, "!")(UBound(Split(macroName, "!"))))
+                    wsOutputSheet.Cells(outputRow, 2).Value = ws.Name
                     wsOutputSheet.Cells(outputRow, 3).Value = obj.Name
-                    wsOutputSheet.Cells(outputRow, 4).Value = macroName
-                    outputRow = outputRow + 1
+                    wsOutputSheet.Cells(outputRow, 4).Value = "ActiveX Control"
+                   outputRow = outputRow + 1
                 End If
             Next obj
         End If
@@ -1177,7 +1177,6 @@ Sub List_All_Macros_Used_With_Objects() '2024-11-26 @ 20:14
             .SortFields.Add key:=wsOutputSheet.Range("A2:A" & outputRow - 1), Order:=xlAscending
             .SortFields.Add key:=wsOutputSheet.Range("B2:B" & outputRow - 1), Order:=xlAscending
             .SortFields.Add key:=wsOutputSheet.Range("C2:C" & outputRow - 1), Order:=xlAscending
-            .SortFields.Add key:=wsOutputSheet.Range("D2:D" & outputRow - 1), Order:=xlAscending
             .SetRange wsOutputSheet.Range("A1:D" & outputRow - 1)
             .Header = xlYes
             .Apply
@@ -1195,8 +1194,9 @@ Sub List_All_Macros_Used_With_Objects() '2024-11-26 @ 20:14
     Dim header2 As String: header2 = ThisWorkbook.Name
     Call modAppli_Utils.MettreEnFormeImpressionSimple(wsOutputSheet, rngToPrint, header1, header2, "$1:$1", "P")
     
-    MsgBox "La liste des macros assignées à des contrôles est dans " & _
-                vbNewLine & vbNewLine & "la feuille 'Doc_All_Macros_Used_With_Object'.", vbInformation
+    MsgBox "La liste des macros assignées à des formes ou des ActiveX" & vbNewLine & vbNewLine & _
+           "est dans la feuille 'DocAllIndirectMacros'.", _
+           vbInformation
                 
     'Libérer la mémoire
     Set obj = Nothing
@@ -1649,7 +1649,7 @@ Sub Test_Log_Saisie_Heures()
     
 End Sub
 
-Sub Settrace(Source As String, module As String, procedure As String, variable As String, vType As String) '2024-09-26 @ 10:31
+Sub Settrace(source As String, module As String, procedure As String, variable As String, vType As String) '2024-09-26 @ 10:31
 
     On Error GoTo Error_Handler
     
@@ -1672,7 +1672,7 @@ Sub Settrace(Source As String, module As String, procedure As String, variable A
     
     Print #fileNum, timeStamp & " | " & _
                     modFunctions.GetNomUtilisateur() & " | " & _
-                    Source & " | " & _
+                    source & " | " & _
                     module & " | " & _
                     procedure & " | " & _
                     variable & " | " & _

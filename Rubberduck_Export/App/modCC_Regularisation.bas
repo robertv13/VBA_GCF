@@ -355,7 +355,7 @@ Sub ComptabiliserRegularisation(no As Long, dt As Date, nom As String, desc As S
     'Remplissage des propriétés communes
     ecr.DateEcriture = dt
     ecr.description = nom
-    ecr.Source = "RÉGULARISATION:" & Format$(no, "00000")
+    ecr.source = "RÉGULARISATION:" & Format$(no, "00000")
 
     'Ajoute autant de lignes que nécessaire
     If honoraires <> 0 Then

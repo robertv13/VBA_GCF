@@ -510,8 +510,8 @@ Function Fn_Get_GL_Month_Trans_Total(glCode As String, dateFinMois As Date) As D
     Call modGL_Stuff.ObtenirSoldeCompteEntreDebutEtFin(glCode, dateDebutMois, dateFinMois, rngResult)
     
     'Méthode plus rapide pour obtenir une somme
-    Fn_Get_GL_Month_Trans_Total = Application.WorksheetFunction.SUM(rngResult.Columns(7)) _
-                                           - Application.WorksheetFunction.SUM(rngResult.Columns(8))
+    Fn_Get_GL_Month_Trans_Total = Application.WorksheetFunction.Sum(rngResult.Columns(7)) _
+                                           - Application.WorksheetFunction.Sum(rngResult.Columns(8))
 
 End Function
 
@@ -697,7 +697,7 @@ Function Fn_Get_Invoice_Total_Payments_AF(invNo As String)
     'Il n'est pas nécessaire de trier les résultats
     If lastUsedRow > 3 Then
         Set rngResult = ws.Range("J4:N" & lastUsedRow)
-        Fn_Get_Invoice_Total_Payments_AF = Application.WorksheetFunction.SUM(rngResult.Columns(5))
+        Fn_Get_Invoice_Total_Payments_AF = Application.WorksheetFunction.Sum(rngResult.Columns(5))
     End If
 
     'Libérer la mémoire
@@ -753,7 +753,7 @@ Function Fn_Get_Invoice_Total_Regul_AF(invNo As String)
     If lastUsedRow > 2 Then
         Set rngResult = ws.Range("O3:Y" & lastUsedRow)
         For i = 5 To 9
-            sommeRegul = sommeRegul + Application.WorksheetFunction.SUM(rngResult.Columns(i))
+            sommeRegul = sommeRegul + Application.WorksheetFunction.Sum(rngResult.Columns(i))
         Next i
     End If
 
@@ -1509,8 +1509,8 @@ Function FnObtenirSoldeOuvertureGLAvecAF(glNo As String, d As Date) As Double
         
     'Méthode plus rapide pour obtenir une somme
     Set rngResult = ws.Range("P2:Y" & lastUsedRow)
-    FnObtenirSoldeOuvertureGLAvecAF = Application.WorksheetFunction.SUM(rngResult.Columns(7)) _
-                                           - Application.WorksheetFunction.SUM(rngResult.Columns(8))
+    FnObtenirSoldeOuvertureGLAvecAF = Application.WorksheetFunction.Sum(rngResult.Columns(7)) _
+                                           - Application.WorksheetFunction.Sum(rngResult.Columns(8))
     
     'Libérer la mémoire
     Set rngCriteria = Nothing
@@ -2127,7 +2127,7 @@ Function ValiderDateDernierJourDuMois(Y As Integer, m As Integer, d As Integer) 
     
 End Function
 
-Function ExclureTransaction(Source As String) As Boolean '2025-03-06 @ 08:04
+Function ExclureTransaction(source As String) As Boolean '2025-03-06 @ 08:04
 
     'Liste des sources à exclure
     Dim Exclusions As Variant
@@ -2135,7 +2135,7 @@ Function ExclureTransaction(Source As String) As Boolean '2025-03-06 @ 08:04
     
     Dim i As Integer
     For i = LBound(Exclusions) To UBound(Exclusions)
-        If Left$(Source, Len(Exclusions(i))) = Exclusions(i) Then
+        If Left$(source, Len(Exclusions(i))) = Exclusions(i) Then
             ExclureTransaction = True
             Exit Function
         End If
@@ -2327,3 +2327,50 @@ Function CalculerMoisAnneeFinanciere(m As Long) As Long
     CalculerMoisAnneeFinanciere = m
     
 End Function
+
+Function ImprimeOuPasCetteEcriture(ByVal source As String) As Boolean '2025-03-03 @ 10:21
+
+    'Variable pour vérifier si la transaction est valide
+    Dim aImprimer As Boolean
+    aImprimer = False
+
+    'Traitement de la transaction selon fGlTSource et l'état des cases
+    If InStr(source, "DÉBOURSÉ:") = 1 Or InStr(source, "RENV/DÉBOURSÉ:") = 1 Then
+        If ufGL_Rapport.chkDebourse.Value = True Then aImprimer = True
+    ElseIf InStr(source, "DÉPÔT DE CLIENT:") = 1 Then
+        If ufGL_Rapport.chkDepotClient.Value = True Then aImprimer = True
+    ElseIf InStr(source, "ENCAISSEMENT:") = 1 Then
+        If ufGL_Rapport.chkEncaissement.Value = True Then aImprimer = True
+    ElseIf InStr(source, "FACTURE:") = 1 Then
+        If ufGL_Rapport.chkFacture.Value = True Then aImprimer = True
+    ElseIf InStr(source, "RÉGULARISATION:") = 1 Then
+        If ufGL_Rapport.chkRegularisation.Value = True Then aImprimer = True
+    ElseIf InStr(source, "Clôture Annuelle") = 1 Then
+        If ufGL_Rapport.chkEcrCloture.Value = True Then aImprimer = True
+    Else
+        If ufGL_Rapport.chkEJ.Value = True Then aImprimer = True
+    End If
+
+    'Retourne True si la transaction doit être traitée, sinon False
+    ImprimeOuPasCetteEcriture = aImprimer
+    
+End Function
+
+'Function CompterOccurrences(texte As String, motif As String) As Long
+'
+'    'Initialiser la position et trouver la position
+'    Dim position As Long
+'    position = InStr(1, texte, motif, vbTextCompare)
+'
+'    'Parcourir le texte pour trouver toutes les occurrences
+'    Dim compteur As Long
+'    Do While position > 0
+'        compteur = compteur + 1
+'        position = InStr(position + Len(motif), texte, motif, vbTextCompare)
+'    Loop
+'
+'    'Retourner le nombre d'occurrences
+'    CompterOccurrences = compteur
+'
+'End Function
+'

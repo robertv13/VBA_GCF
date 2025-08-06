@@ -245,8 +245,8 @@ Sub ConstruireEcriturePourRemiseTpsTvq(r As Integer)
     
     Dim rngResultAF As Range
     Call modGL_Stuff.ObtenirSoldeCompteEntreDebutEtFin(ObtenirNoGlIndicateur("Revenus de consultation"), Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), dateFin, rngResultAF)
-    cases(101) = -Application.WorksheetFunction.SUM(rngResultAF.Columns(7)) _
-                    - Application.WorksheetFunction.SUM(rngResultAF.Columns(8))
+    cases(101) = -Application.WorksheetFunction.Sum(rngResultAF.Columns(7)) _
+                    - Application.WorksheetFunction.Sum(rngResultAF.Columns(8))
 
     With wshGL_EJ.Range("P10")
         .Font.Bold = True
@@ -645,81 +645,6 @@ Sub ConstruireSommaireEJRecurrente()
 
 End Sub
 
-Sub ObtenirEcritureAvecAF(noEJ As Long) '2024-11-17 @ 12:08
-
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:ObtenirEcritureAvecAF", vbNullString, 0)
-
-    Dim ws As Worksheet: Set ws = wsdGL_Trans
-    
-    'wsdGL_Trans_AF#2
-
-    'Effacer les données de la dernière utilisation
-    ws.Range("AA6:AA10").ClearContents
-    ws.Range("AA6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-    
-    'Définir le range pour la source des données en utilisant un tableau
-    Dim rngData As Range
-    Set rngData = ws.Range("l_tbl_GL_Trans[#All]")
-    ws.Range("AA7").Value = rngData.Address
-    
-    'Définir le range des critères
-    Dim rngCriteria As Range
-    Set rngCriteria = ws.Range("AA2:AA3")
-    ws.Range("AA3").Value = noEJ
-    ws.Range("AA8").Value = rngCriteria.Address
-    
-    'Définir le range des résultats et effacer avant le traitement
-    Dim rngResult As Range
-    Set rngResult = ws.Range("AC1").CurrentRegion
-    rngResult.offset(1, 0).Clear
-    Set rngResult = ws.Range("AC1:AL1")
-    ws.Range("AA9").Value = rngResult.Address
-    
-    rngData.AdvancedFilter _
-                action:=xlFilterCopy, _
-                criteriaRange:=rngCriteria, _
-                CopyToRange:=rngResult, _
-                Unique:=False
-        
-    'Quels sont les résultats ?
-    Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, "AC").End(xlUp).Row
-    ws.Range("AA10").Value = lastUsedRow - 1 & " lignes"
-
-    'On tri les résultats par noGL / par date?
-    If lastUsedRow > 2 Then
-        With ws.Sort 'Sort - NoEntrée, Débit(D) et Crédit (D)
-        .SortFields.Clear
-            'First sort On NoEntrée
-            .SortFields.Add key:=ws.Range("AC2"), _
-                SortOn:=xlSortOnValues, _
-                Order:=xlAscending, _
-                DataOption:=xlSortNormal
-            'Second, sort On Débit(D)
-            .SortFields.Add key:=ws.Range("AI2"), _
-                SortOn:=xlSortOnValues, _
-                Order:=xlDescending, _
-                DataOption:=xlSortNormal
-            'Third, sort On Crédit(D)
-            .SortFields.Add key:=ws.Range("AJ2"), _
-                SortOn:=xlSortOnValues, _
-                Order:=xlDescending, _
-                DataOption:=xlSortNormal
-            .SetRange wsdGL_Trans.Range("AC2:AL" & lastUsedRow)
-            .Apply 'Apply Sort
-         End With
-    End If
-    
-    'Libérer la mémoire
-    Set rngCriteria = Nothing
-    Set rngData = Nothing
-    Set rngResult = Nothing
-    Set ws = Nothing
-    
-    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:ObtenirEcritureAvecAF", vbNullString, startTime)
-
-End Sub
-
 Sub ComptabiliserEntreeJournal(r As Long) '2025-06-08 @ 08:37
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:ComptabiliserEntreeJournal", vbNullString, 0)
@@ -753,10 +678,10 @@ Sub ComptabiliserEntreeJournal(r As Long) '2025-06-08 @ 08:37
             'Add fields to the recordset before updating it
             If wshGL_EJ.Range("F4").Value <> "Dépôt de client" Then
                 ecr.description = wshGL_EJ.Range("F6").Value
-                ecr.Source = wshGL_EJ.Range("F4").Value
+                ecr.source = wshGL_EJ.Range("F4").Value
             Else
                 ecr.description = "Client:" & wshGL_EJ.Range("B6").Value & " - " & wshGL_EJ.Range("F6").Value
-                ecr.Source = UCase$(wshGL_EJ.Range("F4").Value)
+                ecr.source = UCase$(wshGL_EJ.Range("F4").Value)
             End If
             
             glNo = wshGL_EJ.Range("L" & l).Value
@@ -1083,19 +1008,19 @@ Sub PreparerAfficherListeEcriture()
     Dim compteur As Long
     ReDim resultats(1 To Round(UBound(arrData, 1) / 2, 0), 1 To 5) 'Maximum = Nombre de lignes / 2
     
-    Dim strDejaVu As String, Source As String
+    Dim strDejaVu As String, source As String
     Dim i As Long
     compteur = 0
     For i = 2 To UBound(arrData, 1)
-        Source = CStr(arrData(i, fGlTSource))
+        source = CStr(arrData(i, fGlTSource))
         'Seulement les écritures de journal (exclure les autres)
-        If Source = vbNullString Or Not ExclureTransaction(Source) = True Then
+        If source = vbNullString Or Not ExclureTransaction(source) = True Then
             If InStr(strDejaVu, CStr(arrData(i, 1)) & ".|.") = 0 Then
                 compteur = compteur + 1
                 resultats(compteur, 1) = arrData(i, fGlTNoEntrée)
                 resultats(compteur, 2) = Format$(arrData(i, fGlTDate), wsdADMIN.Range("B1").Value)
                 resultats(compteur, 3) = arrData(i, fGlTDescription)
-                resultats(compteur, 4) = Source
+                resultats(compteur, 4) = source
                 resultats(compteur, 5) = Format$(arrData(i, fGlTTimeStamp), wsdADMIN.Range("B1").Value & " hh:mm:ss")
                 strDejaVu = strDejaVu & CStr(arrData(i, fGlTNoEntrée)) & ".|."
             End If

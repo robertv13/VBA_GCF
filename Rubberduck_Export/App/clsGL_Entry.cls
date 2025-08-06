@@ -53,11 +53,11 @@ Public Property Let DateEcriture(val As Date)
 End Property
 
 'Source
-Public Property Get Source() As String
-    Source = pSource
+Public Property Get source() As String
+    source = pSource
 End Property
 
-Public Property Let Source(val As String)
+Public Property Let source(val As String)
     pSource = val
 End Property
 

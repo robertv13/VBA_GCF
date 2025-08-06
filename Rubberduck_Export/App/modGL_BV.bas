@@ -174,7 +174,7 @@ Sub AfficherTransactionsPourUnCompteDeGL(compte As String, description As String
     
     strSQL = "SELECT SUM(IIF(Débit IS NULL, 0, Débit)) as TotalDebit, SUM(IIF(Crédit IS NULL, 0, Crédit)) AS TotalCredit " & _
              "FROM [GL_Trans$] " & _
-             "WHERE NoCompte = '" & compte & "' AND Date < #" & Format$(dateMin, "mm/dd/yyyy") & "#"
+             "WHERE NoCompte = '" & compte & "' AND Date < #" & Format$(dateMin, "yyyy-mm-dd") & "#"
     
     rsInit.Open strSQL, conn, 1, 1
     If Not rsInit.EOF Then
@@ -266,7 +266,7 @@ Sub AfficherTransactionsPourUnCompteDeGL(compte As String, description As String
     
     Call AjusterAffichageTransactionsDetailleesBV
     
-    Call GL_BV_Ajouter_Shape_Retour
+    Call AjouterFormeRetourEnHaut
 
     'Nettoyage
     recSet.Close: Set recSet = Nothing
@@ -386,7 +386,7 @@ Sub ComptabiliserEcritureCloture() '2025-08-04 @ 07:15
     Set ecr = New clsGL_Entry
     ecr.DateEcriture = dateCloture
     ecr.description = "Écriture de clôture annuelle"
-    ecr.Source = "Clôture Annuelle"
+    ecr.source = "Clôture Annuelle"
     
     'Parcours du dictionaire
     Dim descCompte As String
@@ -729,7 +729,7 @@ Sub EffacerZoneTransactionsDetailleesBV(w As Worksheet)
     Application.EnableEvents = True
     
     'Supprimer les formes 'shpRetour'
-    Call GL_BV_SupprimerToutesLesFormes_shpRetour(w)
+    Call SupprimerToutesFormesRetour(w)
 
     Application.EnableEvents = True
 
@@ -747,8 +747,8 @@ Sub shpSortieBV_Click()
     Set ws = wshGL_BV
     
     Call EffacerZoneTransactionsDetailleesBV(ws)
-    Call GL_BV_EffacerZoneBV(ws)
-    Call GL_BV_SupprimerToutesLesFormes_shpRetour(ws)
+    Call EffacerZoneBV(ws)
+    Call SupprimerToutesFormesRetour(ws)
     
     ws.Shapes("shpEcritureCloture").Visible = False
     

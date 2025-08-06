@@ -369,7 +369,7 @@ Sub ComptabiliserValeurTEC() '2025-06-08 @ 08:37
     'Remplissage des propriétés globales
     ecr.DateEcriture = ws.Range("L3").Value
     ecr.description = "Ajustement de la valeur des TEC"
-    ecr.Source = vbNullString
+    ecr.source = vbNullString
 
     'Ajoute autant de lignes que nécessaire (débit positif, crédit négatif)
     If ajustementTEC > 0 Then
