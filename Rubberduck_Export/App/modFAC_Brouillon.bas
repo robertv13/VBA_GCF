@@ -213,9 +213,9 @@ Sub ChangerNomDuClient(clientName As String)
     'Aller chercher le vrai nom de client de 2 sources selon le mode de facturation
     Dim allCols As Variant
     If wshFAC_Brouillon.Range("B52").Value = vbNullString Then
-        allCols = Fn_Get_A_Row_From_A_Worksheet("BD_Clients", clientName, fClntFMNomClientPlusNomClientSystème)
+        allCols = Fn_ObtenirLigneDeFeuille("BD_Clients", clientName, fClntFMNomClientPlusNomClientSystème)
     Else
-        allCols = Fn_Get_A_Row_From_A_Worksheet("BD_Clients", clientName, fClntFMClientNom)
+        allCols = Fn_ObtenirLigneDeFeuille("BD_Clients", clientName, fClntFMClientNom)
     End If
     
     'Vérifier le résultat retourné
@@ -499,7 +499,13 @@ Sub FAC_Brouillon_Set_Labels(r As Range, l As String)
 
 End Sub
 
-Sub FAC_Brouillon_Goto_Misc_Charges()
+Sub shpDeplacerVersFraisDivers_Click()
+
+    Call DeplacerVersFraisDivers
+
+End Sub
+
+Sub DeplacerVersFraisDivers()
     
     ActiveWindow.SmallScroll Down:=6
     wshFAC_Brouillon.Range("O47").Select 'Hours Summary

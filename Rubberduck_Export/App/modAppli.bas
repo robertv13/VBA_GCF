@@ -365,7 +365,7 @@ Attribute VerifierDerniereActivite.VB_Description = "Vérifie l'inactivité et f
         
         On Error Resume Next
         If gMODE_DEBUG Then Debug.Print "[modAppli:VerifierDerniereActivite] OnTime prévu pour : " & Format(gFermeturePlanifiee, "hh:mm:ss")
-        Application.OnTime gFermeturePlanifiee, "FermerApplicationAucuneActivite"
+        Application.OnTime gFermeturePlanifiee, "FermerApplicationInactive"
         On Error GoTo 0
         
         Unload ufConfirmationFermeture '2025-07-02 @ 07:54
@@ -395,12 +395,12 @@ Public Sub PlanifierVerificationDerniereActivite() '2025-07-01 @ 13:53
     
 End Sub
 
-Public Sub FermerApplicationAucuneActivite() '2025-07-02 @ 06:19
+Public Sub FermerApplicationInactive() '2025-07-02 @ 06:19
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:FermerApplicationAucuneActivite", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:FermerApplicationInactive", vbNullString, 0)
     
     'Ajoute un log pour vérification
-    If gMODE_DEBUG Then Debug.Print "[modAppli:FermerApplicationAucuneActivite] Fermeture automatique déclenchée à : " & Format(Now, "hh:mm:ss")
+    If gMODE_DEBUG Then Debug.Print "[modAppli:FermerApplicationInactive] Fermeture automatique déclenchée à : " & Format(Now, "hh:mm:ss")
 
     'Appel direct de la procédure de fermeture
     Call FermerApplicationNormalement(modFunctions.GetNomUtilisateur())
@@ -423,7 +423,7 @@ Public Sub RelancerSurveillance() '2025-07-02 @ 07:41
         If gMODE_DEBUG Then Debug.Print "[modAppli:RelancerSurveillance] gFermeturePlanifiee est nul — aucun OnTime à annuler"
     End If
 
-    Application.OnTime gFermeturePlanifiee, "FermerApplicationAucuneActivite", , False
+    Application.OnTime gFermeturePlanifiee, "FermerApplicationInactive", , False
     Application.OnTime ufConfirmationFermeture.ProchainTick, "RelancerTimer", , False
     On Error GoTo 0
 

@@ -41,7 +41,7 @@ Private Sub cmdGarderOuverte_Click() '2025-07-01 @ 17:13
     On Error Resume Next
     
     'Annule la fermeture automatique planifiée
-    Application.OnTime gFermeturePlanifiee, "FermerApplicationAucuneActivite", , False
+    Application.OnTime gFermeturePlanifiee, "FermerApplicationInactive", , False
     
     'Annule le clignotement du timer (si encore actif)
     Application.OnTime tProchainTick, "RelancerTimer", , False

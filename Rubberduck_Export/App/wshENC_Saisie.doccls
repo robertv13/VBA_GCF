@@ -138,7 +138,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         Me.Range("B6").Value = vbNullString Then
         'Aller chercher le vrai nom du client
         Dim allCols As Variant
-        allCols = modFunctions.Fn_Get_A_Row_From_A_Worksheet("BD_Clients", Target.Value, fClntFMNomClientPlusNomClientSystème)
+        allCols = modFunctions.Fn_ObtenirLigneDeFeuille("BD_Clients", Target.Value, fClntFMNomClientPlusNomClientSystème)
         'Vérifier les résultats
         If IsArray(allCols) Then
             Application.EnableEvents = False

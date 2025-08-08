@@ -1,4 +1,4 @@
-﻿📘 Journal typographique — 08/05/2025 20:09:10
+﻿📘 Journal typographique — 08/08/2025 08:59:30
 
 🔧 Fichier : clsControlWrapper.cls
 
@@ -9,6 +9,10 @@
 🔧 Fichier : clsSearchableDropdown.cls
    ✅ Remplacé : .text ➜ .Text
    ✅ Remplacé : .value ➜ .Value
+
+🔧 Fichier : Feuil1.doccls
+
+🔧 Fichier : Feuil2.doccls
 
 🔧 Fichier : Feuil3.doccls
 
@@ -94,7 +98,6 @@
    ✅ Remplacé : .row ➜ .Row
    ✅ Remplacé : .value ➜ .Value
    ✅ Remplacé : .range ➜ .Range
-   ✅ Remplacé : .font ➜ .Font
 
 🔧 Fichier : modENC_Saisie.bas
    ✅ Remplacé : .interior ➜ .Interior
@@ -223,6 +226,10 @@
 🔧 Fichier : modStatsHeures.bas
    ✅ Remplacé : .column ➜ .Column
    ✅ Remplacé : .cells ➜ .Cells
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+
+🔧 Fichier : modTBD.bas
    ✅ Remplacé : .row ➜ .Row
    ✅ Remplacé : .value ➜ .Value
 
@@ -456,6 +463,8 @@
 🔧 Fichier : wshzDocConditionalFormatting.doccls
 
 🔧 Fichier : wshzDocFormulas.doccls
+
+🔧 Fichier : wshzDocMemoryLeak.doccls
 
 🔧 Fichier : wshzDocNamedRange.doccls
 

@@ -2,7 +2,7 @@ Attribute VB_Name = "modzDataConversion"
 Option Explicit
 
 'Importation des clients à partir de ... \DataConversion\Clients.xlsx
-Sub CopierClientsEntreClasseursFermes() '2024-08-03 @ 09:40
+Sub zz_CopierClientsEntreClasseursFermes() '2024-08-03 @ 09:40
 
     Stop 'One shot deal !!!
     
@@ -52,105 +52,6 @@ Sub CopierClientsEntreClasseursFermes() '2024-08-03 @ 09:40
     Set destinationWorkbook = Nothing
     
     MsgBox "Les données ont été copiées avec succès dans le fichier destination."
-    
-End Sub
-
-'Ajustements à la feuille DB_Clients (*) ---> [*]
-Sub AjusterNomClientBD()
-
-    'Declare and open the closed workbook
-    Dim wb As Workbook: Set wb = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx")
-
-    'Define the worksheet you want to work with
-    Dim ws As Worksheet: Set ws = wb.Worksheets("Clients")
-    
-    'Find the last used row with data in column A
-    Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).Row
-    
-    'Loop through each row starting from row 2 (headers are 1 row)
-    Dim client As String, clientID As String, contactFacturation As String
-    Dim posOpenParenthesis As Integer, posCloseParenthesis As Integer
-    Dim numberOpenParenthesis As Integer, numberCloseParenthesis As Integer
-    Dim i As Long
-    For i = 2 To lastUsedRow
-        'Load data into variables
-        client = ws.Cells(i, fClntFMClientNom).Value
-        clientID = ws.Cells(i, fClntFMClientID).Value
-        contactFacturation = ws.Cells(i, fClntFMContactFacturation).Value
-        
-        'Process the data and make adjustments if necessary
-        posOpenParenthesis = InStr(client, "(")
-        posCloseParenthesis = InStr(client, ")")
-        numberOpenParenthesis = Fn_Count_Char_Occurrences(client, "(")
-        numberCloseParenthesis = Fn_Count_Char_Occurrences(client, ")")
-        
-        If numberOpenParenthesis = 1 And numberCloseParenthesis = 1 Then
-            If posCloseParenthesis > posOpenParenthesis + 5 Then
-                client = Replace(client, "(", "[")
-                client = Replace(client, ")", "]")
-                ws.Cells(i, 1).Value = client
-                Debug.Print "#064 - " & i & " - " & client
-            End If
-        End If
-        
-    Next i
-    
-    wb.Save
-    
-    'Libérer la mémoire
-    Set wb = Nothing
-    Set ws = Nothing
-    
-    MsgBox "Le traitement est complété sur " & i - 1 & " lignes"
-    
-End Sub
-
-'Ajustements à la feuille DB_Clients (Ajout du contactdans le nom du client)
-Sub AjouterContactDansNomClient()
-
-    'Declare and open the closed workbook
-    Dim wb As Workbook: Set wb = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx")
-
-    'Define the worksheet you want to work with
-    Dim ws As Worksheet: Set ws = wb.Worksheets("Clients")
-    
-    'Find the last used row with data in column A
-    Dim lastUsedRow As Long
-    lastUsedRow = ws.Cells(ws.Rows.count, 1).End(xlUp).Row
-    
-    'Loop through each row starting from row 2 (headers are 1 row)
-    Dim client As String, clientID As String, contactFacturation As String
-    Dim posOpenSquareBracket As Integer, posCloseSquareBracket As Integer
-'    Dim numberOpenSquareBracket As Integer, numberCloseSquareBracket As Integer
-    Dim i As Long
-    For i = 2 To lastUsedRow
-        'Load data into variables
-        client = ws.Cells(i, fClntFMClientNom).Value
-        clientID = ws.Cells(i, fClntFMClientID).Value
-        contactFacturation = Trim$(ws.Cells(i, fClntFMContactFacturation).Value)
-        
-        'Process the data and make adjustments if necessary
-        posOpenSquareBracket = InStr(client, "[")
-        posCloseSquareBracket = InStr(client, "]")
-        
-        If posOpenSquareBracket = 0 And posCloseSquareBracket = 0 Then
-            If contactFacturation <> vbNullString And InStr(client, contactFacturation) = 0 Then
-                client = Trim$(client) & " [" & contactFacturation & "]"
-                ws.Cells(i, 1).Value = client
-                Debug.Print "#065 - " & i & " - " & client
-            End If
-        End If
-        
-    Next i
-    
-    wb.Save
-    
-    'Libérer la mémoire
-    Set wb = Nothing
-    Set ws = Nothing
-    
-    MsgBox "Le traitement est complété sur " & i - 1 & " lignes"
     
 End Sub
 
@@ -530,135 +431,8 @@ Sub ImporterDonnéesDeClasseursFermés_CAR() '2024-08-04 @ 07:31
     
 End Sub
 
-Sub Comparer2Classeurs()
-    
-    Application.ScreenUpdating = False
-    
-    'Declare and open the 2 workbooks
-    Dim wbWas As Workbook
-    Set wbWas = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx", ReadOnly:=True)
-    Debug.Print "#066 - " & wbWas.Name
-    Dim wbNow As Workbook
-    Set wbNow = Workbooks.Open("C:\VBA\GC_FISCALITÉ\GCF_DataFiles\2024_09_01_1835\GCF_BD_Entrée_TBA.xlsx", ReadOnly:=True)
-    Debug.Print "#067 - " & wbNow.Name
-
-    'Declare the 2 worksheets
-    Dim wsWas As Worksheet
-    Set wsWas = wbWas.Worksheets("Clients")
-    Dim wsNow As Worksheet
-    Set wsNow = wbNow.Worksheets("Clients")
-    
-    'Détermine la dernière ligne utilisée dans chacune des 2 feuilles
-    Dim lastUsedRowWas As Long
-    lastUsedRowWas = wsWas.Cells(wsWas.Rows.count, 1).End(xlUp).Row
-    Dim lastUsedRowNOw As Long
-    lastUsedRowNOw = wsNow.Cells(wsNow.Rows.count, 1).End(xlUp).Row
-    
-    'Détermine le nombre de colonnes dans l'ancienne feuille
-    Dim lastUsedColWas As Long
-    lastUsedColWas = wsWas.Cells(wsWas.Columns.count).End(xlToLeft).Column
-    
-    'Erase and create a new worksheet for differences
-    Dim wsNameStr As String
-    wsNameStr = "X_Différences"
-    Dim wsDiff As Worksheet
-    Call CreerOuRemplacerFeuille(wsNameStr)
-    Set wsDiff = ThisWorkbook.Worksheets(wsNameStr)
-    wsDiff.Range("A1").Value = "Ligne"
-    wsDiff.Range("B1").Value = "Colonne"
-    wsDiff.Range("C1").Value = "CodeClient"
-    wsDiff.Range("D1").Value = "Nom du Client"
-    wsDiff.Range("E1").Value = "Avant changement"
-    wsDiff.Range("F1").Value = "Type"
-    wsDiff.Range("G1").Value = "Après changement"
-    Call Make_It_As_Header(wsDiff.Range("A1:G1"), RGB(0, 112, 192))
-
-    Dim diffRow As Long
-    diffRow = 2 'Take into consideration the Header
-    Dim diffCol As Long
-    diffCol = 1
-
-    'Parcourir chaque ligne de l'ancienne version
-    Dim cellWas As Range, cellNow As Range
-    Dim foundRow As Range
-    Dim clientCode As String
-    Dim readCells As Long
-    Dim i As Long, j As Long
-    For i = 1 To lastUsedRowWas
-        clientCode = CStr(wsWas.Cells(i, 2).Value)
-        'Trouver la ligne correspondante dans la nouvelle version
-        Set foundRow = wsNow.Columns(2).Find(What:=clientCode, LookIn:=xlValues, LookAt:=xlWhole)
-        If Not foundRow Is Nothing Then
-            Debug.Print "#068 - Ligne : " & i
-            'Comparer les cellules des lignes correspondantes
-            For j = 1 To lastUsedColWas
-                readCells = readCells + 1
-                Set cellWas = wsWas.Cells(i, j)
-                Set cellNow = wsNow.Cells(foundRow.row, j)
-                If CStr(cellWas.Value) <> CStr(cellNow.Value) Then
-                    wsDiff.Cells(diffRow, 1).Value = i
-                    wsDiff.Cells(diffRow, 2).Value = j
-                    wsDiff.Cells(diffRow, 3).Value = wsWas.Cells(i, 2).Value
-                    wsDiff.Cells(diffRow, 4).Value = wsWas.Cells(cellWas.row, 1).Value
-                    wsDiff.Cells(diffRow, 5).Value = cellWas.Value
-                    wsDiff.Cells(diffRow, 6).Value = "'--->"
-                    wsDiff.Cells(diffRow, 7).Value = cellNow.Value
-                    diffRow = diffRow + 1
-                End If
-            Next j
-        Else
-            wsDiff.Cells(diffRow, 1).Value = i
-            wsDiff.Cells(diffRow, 3).Value = wsWas.Cells(i, 2).Value
-            wsDiff.Cells(diffRow, 4).Value = wsWas.Cells(cellWas.row, 1).Value
-            wsDiff.Cells(diffRow, 5).Value = cellWas.Value
-            wsDiff.Cells(diffRow, 6).Value = "XXXX"
-            diffRow = diffRow + 1
-        End If
-    Next i
-            
-    wsDiff.Columns.AutoFit
-    
-    'Result print setup - 2024-08-05 @ 05:16
-    diffRow = diffRow + 1
-    wsDiff.Range("A" & diffRow).Value = "**** " & Format$(readCells, "###,##0") & _
-                                        " cellules analysées dans l'ensemble du fichier ***"
-                                    
-    'Set conditional formatting for the worksheet (alternate colors)
-    Dim rngArea As Range: Set rngArea = wsDiff.Range("A2:G" & diffRow)
-    Call modAppli_Utils.AppliquerConditionalFormating(rngArea, 1, RGB(173, 216, 230))
-
-    'Setup print parameters
-    Dim rngToPrint As Range: Set rngToPrint = wsDiff.Range("A2:DC" & diffRow)
-    Dim header1 As String: header1 = "Vérification des différences"
-    Dim header2 As String: header2 = "Clients"
-    Call modAppli_Utils.MettreEnFormeImpressionSimple(wsDiff, rngToPrint, header1, header2, "$1:$1", "P")
-    
-    Application.ScreenUpdating = True
-    
-    wsDiff.Activate
-
-    'Close the workbooks without saving
-    wbWas.Close SaveChanges:=False
-    wbNow.Close SaveChanges:=False
-    
-    'Libérer la mémoire
-    Set cellWas = Nothing
-    Set cellNow = Nothing
-    Set foundRow = Nothing
-    Set rngArea = Nothing
-    Set rngToPrint = Nothing
-    Set wbWas = Nothing
-    Set wbNow = Nothing
-    Set wsWas = Nothing
-    Set wsNow = Nothing
-    Set wsDiff = Nothing
-    
-    MsgBox "La comparaison est complétée.", vbInformation
-           
-End Sub
-
 '@Description - Utilitaire pour ajuster le nom du client dans la table TEC_Local
-Sub AjusterNomClientDansTEC() '2024-08-03 @ 09:40
+Sub zz_AjusterNomClientDansTEC() '2024-08-03 @ 09:40
 
     'Définir les chemins d'accès des fichiers (source & destination)
     Dim sourceFilePath As String
@@ -719,7 +493,7 @@ Sub AjusterNomClientDansTEC() '2024-08-03 @ 09:40
 End Sub
 
 '@Description - Utilitaire pour corriger le nom du client dans la table CAR ?
-Sub AjusterNomClientDansCAR() '2024-08-07 @ 17:11
+Sub zz_AjusterNomClientDansCAR() '2024-08-07 @ 17:11
 
     Dim sourceRange As Range
 
@@ -814,70 +588,6 @@ Sub CheckClientName() '2024-08-10 @ 10:13
     Set sourceWorkbook = Nothing
     
     MsgBox "Les données ont été vérifiées avec succès dans le fichier Clients."
-    
-End Sub
-
-Sub ConstruireSommaireHeuresConversion() '2024-08-12 @ 21:09
-
-    'Définir les chemins d'accès des fichiers (source & destination)
-    Dim sourceFilePath As String
-    sourceFilePath = "C:\VBA\GC_FISCALITÉ\GCF_DataFiles\GCF_BD_MASTER.xlsx"
-    
-    'Declare le Workbook & le Worksheet (source)
-    Dim sourceWorkbook As Workbook: Set sourceWorkbook = Workbooks.Open(sourceFilePath)
-    Dim sourceSheet As Worksheet: Set sourceSheet = sourceWorkbook.Worksheets("TEC_Local")
-    
-    'Détermine la dernière rangée utilisée dans le fichier Source
-    Dim lastUsedRow As Long
-    lastUsedRow = sourceSheet.Cells(sourceSheet.Rows.count, 1).End(xlUp).Row
-    
-    Dim profID As Long
-    Dim prof As String, codeClient As String, nomClient As String
-    Dim estFacturable As String, estFacturee As String, estDetruit As String
-    Dim dateServ As Date
-    Dim hresSaisies As Double, hresDetruites As Double, hresFacturees As Double
-    Dim hresNonDetruites As Double, hresFacturables As Double, hresNonFacturables As Double
-    Dim i As Long
-    For i = 2 To lastUsedRow
-        profID = sourceSheet.Cells(i, 2).Value
-        prof = sourceSheet.Cells(i, 3).Value
-        dateServ = sourceSheet.Cells(i, 4).Value
-        codeClient = sourceSheet.Cells(i, 5).Value
-        nomClient = Trim$(sourceSheet.Cells(i, 6).Value)
-        hresSaisies = Trim$(sourceSheet.Cells(i, 8).Value)
-        estFacturable = sourceSheet.Cells(i, 10).Value
-        estFacturee = sourceSheet.Cells(i, 12).Value
-        estDetruit = sourceSheet.Cells(i, 14).Value
-        
-        hresDetruites = 0
-        If estDetruit = "VRAI" Then
-            hresDetruites = hresSaisies
-        End If
-        hresNonDetruites = hresSaisies - hresDetruites
-        
-        hresFacturables = 0
-        hresNonFacturables = 0
-        If estFacturable = "VRAI" Then
-            hresFacturables = hresNonDetruites
-        Else
-            hresNonFacturables = hresNonDetruites
-        End If
-        
-        hresFacturees = 0
-        If estFacturee = "VRAI" Then
-            hresFacturees = hresNonDetruites
-        End If
-        
-    Next i
-    
-    'Close the source workbook
-    sourceWorkbook.Close
-    
-    'Libérer la mémoire
-    Set sourceSheet = Nothing
-    Set sourceWorkbook = Nothing
-    
-    MsgBox "Sommaire des heures est complété."
     
 End Sub
 
@@ -979,112 +689,6 @@ Sub CorrigerNomClientDansTEC()  '2025-03-04 @ 05:48
     
     MsgBox "Il y a " & casDelta & " cas où le nom du client (TEC) diffère" & _
             vbNewLine & vbNewLine & "du nom de client du Fichier MAÎTRE", vbInformation
-    
-End Sub
-
-Sub DetecterErreurCodeClientInTEC()  '2025-03-11 @ 08:29
-
-    'Source - Définir les chemins d'accès des fichiers, le Workbook et le Worksheet
-    Dim sourceFilePath As String
-    sourceFilePath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
-                     wsdADMIN.Range("MASTER_FILE").Value
-    Dim wbSource As Workbook: Set wbSource = Workbooks.Open(sourceFilePath)
-    Dim wsSource As Worksheet: Set wsSource = wbSource.Worksheets("TEC_Local")
-    
-    'Détermine la dernière rangée et dernière colonne utilisées dans wsdTEC_Local
-    Dim lastUsedRowTEC As Long
-    lastUsedRowTEC = wsSource.Cells(wsSource.Rows.count, 1).End(xlUp).Row
-    
-    'Open the Master File Workbook
-    Dim clientMFPath As String
-    clientMFPath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
-                     wsdADMIN.Range("CLIENTS_FILE").Value
-    Dim wbMF As Workbook: Set wbMF = Workbooks.Open(clientMFPath)
-    Dim wsMF As Worksheet: Set wsMF = wbMF.Worksheets("Clients")
-    Dim lastUsedRowClient As Long
-    lastUsedRowClient = wsMF.Cells(wsMF.Rows.count, 1).End(xlUp).Row
-    
-    'Setup output file
-    Dim strOutput As String
-    strOutput = "X_Détection_Cas_Erreur_Code_TEC"
-    Call CreerOuRemplacerFeuille(strOutput)
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets(strOutput)
-    wsOutput.Range("A1").Value = "TEC_ID"
-    wsOutput.Range("B1").Value = "Date"
-    wsOutput.Range("C1").Value = "Prof"
-    wsOutput.Range("D1").Value = "NomClientTEC"
-    wsOutput.Range("E1").Value = "CodeClient"
-    wsOutput.Range("F1").Value = "NomClientFM"
-    wsOutput.Range("G1").Value = "DateSaisie"
-    Call Make_It_As_Header(wsOutput.Range("A1:G1"), RGB(0, 112, 192))
-    
-    'Build the dictionnary (Code, Nom du client) from Client's Master File
-    Dim dictClients As Dictionary
-    Set dictClients = New Dictionary
-    Dim i As Long
-    For i = 2 To lastUsedRowClient
-        dictClients.Add CStr(wsMF.Cells(i, fClntFMClientID).Value), wsMF.Cells(i, fClntFMClientNom).Value
-    Next i
-    
-    'Parse TEC_Local to verify TEC's clientName vs. MasterFile's clientName
-    Dim codeClientTEC As String, nomClientTEC As String, nomClientFromMF As String
-    Dim casDelta As Long, rowOutput As Long
-    rowOutput = 2
-    For i = 2 To lastUsedRowTEC
-        codeClientTEC = wsSource.Cells(i, fTECClientID).Value
-        nomClientTEC = wsSource.Cells(i, fTECTDBClientNom).Value
-        nomClientFromMF = dictClients(codeClientTEC)
-        If Trim$(nomClientTEC) <> Trim$(nomClientFromMF) Then
-            Debug.Print "#073 - " & i & " : " & codeClientTEC & " - " & nomClientTEC & " <---> " & nomClientFromMF
-'            wsSource.Cells(i, 6).Value = nomClientFromMF
-            wsOutput.Cells(rowOutput, 1).Value = wsSource.Cells(i, fTECTECID).Value
-            wsOutput.Cells(rowOutput, 2).Value = wsSource.Cells(i, fTECDate).Value
-            wsOutput.Cells(rowOutput, 3).Value = wsSource.Cells(i, fTECProf).Value
-            wsOutput.Cells(rowOutput, 4).Value = nomClientTEC
-            wsOutput.Cells(rowOutput, 5).Value = codeClientTEC
-            wsOutput.Cells(rowOutput, 6).Value = nomClientFromMF
-            wsOutput.Cells(rowOutput, 7).Value = wsSource.Cells(i, fTECDateSaisie).Value
-            rowOutput = rowOutput + 1
-            casDelta = casDelta + 1
-        End If
-    Next i
-    
-    wsOutput.Columns.AutoFit
-
-    'Result print setup
-    rowOutput = rowOutput + 1
-    wsOutput.Range("A" & rowOutput).Value = "**** " & Format$(lastUsedRowTEC - 1, "###,##0") & _
-                                        " lignes analysées dans l'ensemble du fichier ***"
-                                    
-    'Set conditional formatting for the worksheet (alternate colors)
-    Dim rngArea As Range: Set rngArea = wsOutput.Range("A2:G" & rowOutput)
-    Call modAppli_Utils.AppliquerConditionalFormating(rngArea, 1, RGB(173, 216, 230))
-
-    'Setup print parameters
-    Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:G" & rowOutput)
-    Dim header1 As String: header1 = "Détection des codes de clients ERRONÉS dans TEC"
-    Dim header2 As String: header2 = vbNullString
-    Call modAppli_Utils.MettreEnFormeImpressionSimple(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
-    
-    'Close the 2 workbooks without saving anything
-    wbSource.Close SaveChanges:=False
-    wbMF.Close SaveChanges:=False
-
-    'Libérer la mémoire
-    Set dictClients = Nothing
-    Set rngArea = Nothing
-    Set rngToPrint = Nothing
-    Set wbMF = Nothing
-    Set wbSource = Nothing
-    Set wsMF = Nothing
-    Set wsOutput = Nothing
-    Set wsSource = Nothing
-    
-    MsgBox _
-        Prompt:="Il y a " & casDelta & " cas où le nom du client (TEC) diffère" & _
-            vbNewLine & vbNewLine & "du nom de client du Fichier MAÎTRE", _
-        Title:="Les données ne sont pas corrigées", _
-        Buttons:=vbInformation
     
 End Sub
 

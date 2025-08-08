@@ -18,6 +18,7 @@ Private Sub Worksheet_Activate()
     Call modImport.ImporterFacComptesClients
     Call modImport.ImporterFacEntete
     Call modImport.ImporterFacDetails
+    Call modImport.ImporterTEC
     
     Call FAC_Historique_Clear_All_Cells
     
@@ -114,7 +115,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
      If Not Intersect(Target, Range("D4")) Is Nothing Then
         'Aller chercher le vrai nom du client
         Dim allCols As Variant
-        allCols = Fn_Get_A_Row_From_A_Worksheet("BD_Clients", Target.Value, fClntFMNomClientPlusNomClientSystème)
+        allCols = Fn_ObtenirLigneDeFeuille("BD_Clients", Target.Value, fClntFMNomClientPlusNomClientSystème)
         'Vérifier les résultats
         If IsArray(allCols) Then
             Application.EnableEvents = False

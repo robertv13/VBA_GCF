@@ -71,7 +71,7 @@ Sub DetecterReferenceCirculaireDansClasseur() '2024-07-24 @ 07:31
     
 End Sub
 
-Sub Comparer2ClasseursFormatColonnes() '2024-08-19 @ 16:24
+Sub zz_Comparer2ClasseursFormatColonnes() '2024-08-19 @ 16:24
 
     'Erase and create a new worksheet for differences
     Dim wsDiff As Worksheet
@@ -214,7 +214,7 @@ Sub Comparer2ClasseursFormatColonnes() '2024-08-19 @ 16:24
     
 End Sub
 
-Sub Comparer2ClasseursNiveauCellules() '2024-08-20 @ 05:14
+Sub zz_Comparer2ClasseursNiveauCellules() '2024-08-20 @ 05:14
 
     'Erase and create a new worksheet for differences
     Dim wsDiff As Worksheet
@@ -454,7 +454,7 @@ Sub Fix_Date_Format()
 
 End Sub
 
-Sub ComparerValeursTECLocalVsTECTDBData()
+Sub zz_ComparerValeursTECLocalVsTECTDBData()
 
     Dim wsTEC As Worksheet: Set wsTEC = wsdTEC_Local
     Dim lurTEC As Long
@@ -555,11 +555,11 @@ Sub ComparerValeursTECLocalVsTECTDBData()
     
 End Sub
 
-Sub RechercherCodeVBAPourGestionMemoire()
+Sub zz_RechercherCodeVBAPourGestionMemoire()
 
     Dim ws As Worksheet: Set ws = ThisWorkbook.Worksheets("X_Doc_Search_Utility_Results")
     
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Cas")
+    Dim wsOutput As Worksheet: Set wsOutput = wshzDocMemoryLeak
     wsOutput.Range("A1").CurrentRegion.offset(1, 0).ClearContents
     
     Dim lastUsedRow As Long, r As Long
@@ -646,102 +646,6 @@ Next_For:
     Set ws = Nothing
     Set wsOutput = Nothing
     
-End Sub
-
-Sub Sauvegarder_UserForms_Parameters() '2024-11-26 @ 07:42
-
-    'Utiliser la feuille 'Doc_UserForm_Params' ou la créer pour sauvegarder les paramètres
-    On Error Resume Next
-    Dim ws As Worksheet
-    Set ws = wshzDocUserFormParams
-    If ws Is Nothing Then
-        Set ws = ThisWorkbook.Sheets.Add
-        ws.Name = "Doc_UserForm_Params"
-    End If
-    On Error GoTo 0
-    
-    'En-têtes de colonnes
-    ws.Cells.Clear
-    ws.Range("A1:D1").Value = Array("Nom_UserForm", "Largeur", "Hauteur", "Position_Left", "Position_Top")
-    
-    Dim i As Integer
-    i = 2
-    'Parcourir tous les composants VBA pour trouver les UserForms
-    Dim vbComp As Object
-    Dim userFormName As String
-    Dim uf As Object
-    For Each vbComp In ThisWorkbook.VBProject.VBComponents
-        If vbComp.Type = vbext_ct_MSForm Then
-            userFormName = vbComp.Name
-            On Error Resume Next
-            ' Charger dynamiquement le UserForm
-            Set uf = VBA.UserForms.Add(userFormName)
-            On Error GoTo 0
-
-            If Not uf Is Nothing Then
-                ws.Cells(i, 1).Value = userFormName
-                ws.Cells(i, 2).Value = uf.Width
-                ws.Cells(i, 3).Value = uf.Height
-                ws.Cells(i, 4).Value = uf.Left
-                ws.Cells(i, 5).Value = uf.Top
-                i = i + 1
-                ' Décharger le UserForm pour libérer la mémoire
-                Unload uf
-                Set uf = Nothing
-            End If
-        End If
-    Next vbComp
-    
-    'Libérer la mémoire
-    Set uf = Nothing
-    
-    MsgBox "Paramètres des UserForms sauvegardés avec succès.", vbInformation
-
-End Sub
-
-Sub Restaurer_UserForms_Parameters()
-
-    Dim ws As Worksheet
-    Dim i As Integer
-    Dim uf As Object
-    Dim nomUF As String
-
-    'Vérifier si la feuille existe
-    On Error Resume Next
-    Set ws = wshzDocUserFormParams
-    If ws Is Nothing Then
-        MsgBox "La feuille 'Doc_UserForm_Params' n'existe pas. Sauvegardez d'abord les paramètres.", vbExclamation
-        Exit Sub
-    End If
-    On Error GoTo 0
-
-    'Parcourir la liste des paramètres sauvegardés
-    i = 2
-    Do While ws.Cells(i, 1).Value <> vbNullString
-        nomUF = ws.Cells(i, 1).Value
-        On Error Resume Next
-        ' Charger dynamiquement le UserForm
-        Set uf = VBA.UserForms.Add(nomUF)
-        On Error GoTo 0
-
-        If Not uf Is Nothing Then
-            uf.Width = ws.Cells(i, 2).Value
-            uf.Height = ws.Cells(i, 3).Value
-            uf.Left = ws.Cells(i, 4).Value
-            uf.Top = ws.Cells(i, 5).Value
-            'Optionnel : afficher le UserForm pour vérifier
-            'uf.Show
-        End If
-
-        i = i + 1
-    Loop
-
-    'Libérer la mémoire
-    Set uf = Nothing
-    Set ws = Nothing
-    
-    MsgBox "Paramètres des UserForms restaurés avec succès.", vbInformation
-
 End Sub
 
 Sub Get_UsedRange_In_Active_Workbook()
@@ -1330,7 +1234,7 @@ Function Convertir_Couleur_RGB_Hex(ByVal couleur As Long) As String
     
 End Function
 
-Sub test_CouleurEnRGBTableau()
+Sub zz_AfficheCouleurEnRGB()
 
     Dim couleur As Long
     Dim rgbArray As Variant
@@ -1338,33 +1242,32 @@ Sub test_CouleurEnRGBTableau()
     wshMenuFAC.Activate
     wshMenuFAC.Range("A3").Select
     
-    couleur = wshMenuFAC.Range("A3").Interior.Color
     couleur = gCOULEUR_BASE_FACTURATION
     
     rgbArray = CouleurEnRGBTableau(couleur)
     
-    'Afficher les composantes
+    'Afficher les composantes RGB
     MsgBox "Rouge: " & rgbArray(1) & ", Vert: " & rgbArray(2) & ", Bleu: " & rgbArray(3)
     
 End Sub
 
-Sub Test_Convertir_Couleur_RGB_Hex()
+Sub zz_ConvertirCouleurEnHEX()
 
     Dim couleur As Long
     Dim couleurHex As String
     
-    ' Obtenir la couleur de remplissage de la cellule
+    'Obtenir la couleur de remplissage de la cellule
     couleur = 11854022
     
-    ' Convertir en HEX
+    'Convertir en HEX
     couleurHex = Convertir_Couleur_RGB_Hex(couleur)
     
-    ' Afficher le résultat
-    MsgBox "La couleur HEX de la cellule A1 est : " & couleurHex
+    'Afficher le résultat
+    MsgBox "La couleur HEX de la couleur " & couleur & " est " & couleurHex
     
 End Sub
 
-Function Convertir_Couleur_OLE(ByVal couleur As Long) As String
+Function ConvertiCouleurEnOLE(ByVal couleur As Long) As String
 
     Dim rouge As Integer, vert As Integer, bleu As Integer
     
@@ -1374,24 +1277,24 @@ Function Convertir_Couleur_OLE(ByVal couleur As Long) As String
     bleu = (couleur \ 65536) Mod 256
     
     ' Construire le code OLE en inversant les composantes RGB en BGR
-    Convertir_Couleur_OLE = "&H00" & Right$("00" & Hex$(bleu), 2) & _
+    ConvertiCouleurEnOLE = "&H00" & Right$("00" & Hex$(bleu), 2) & _
                                         Right$("00" & Hex$(vert), 2) & _
                                         Right$("00" & Hex$(rouge), 2) & "&"
                                         
 End Function
 
-Sub Test_Convertir_Couleur_OLE()
+Sub zz_ConvertirCouleurOLE()
 
     Dim couleur As Long
     Dim couleurOLE As String
     
-    ' Exemple : couleur de la cellule A1
+    'Exemple : couleur de la cellule A1
     couleur = gCOULEUR_BASE_FACTURATION
     
-    ' Convertir en format OLE
-    couleurOLE = Convertir_Couleur_OLE(couleur)
+    'Convertir en format OLE
+    couleurOLE = ConvertiCouleurEnOLE(couleur)
     
-    ' Afficher la couleur en format OLE
+    'Afficher la couleur en format OLE
     MsgBox "La couleur OLE est : " & couleurOLE
     
 End Sub
@@ -1453,7 +1356,7 @@ Function NumeroEnLettre(ByVal num As Long) As String
     
 End Function
 
-Sub ListerValidations()
+Sub zz_ListerValidations()
 
     Dim ws As Worksheet
     Dim cell As Range
@@ -1462,20 +1365,20 @@ Sub ListerValidations()
     Dim lastRow As Long
     Dim rowIndex As Long
     
-    ' Vérifie s'il existe déjà une feuille de rapport, sinon la crée
+    'Vérifie s'il existe déjà une feuille de rapport, sinon la crée
     On Error Resume Next
-    Set wsReport = ThisWorkbook.Sheets("ListeValidations")
+    Set wsReport = ThisWorkbook.Sheets("DocListeValidations")
     On Error GoTo 0
     
     If wsReport Is Nothing Then
         Set wsReport = ThisWorkbook.Sheets.Add
-        wsReport.Name = "ListeValidations"
+        wsReport.Name = "DocListeValidations"
     Else
-        ' Efface l'ancien contenu si la feuille existe déjà
+        'Efface l'ancien contenu si la feuille existe déjà
         wsReport.Cells.Clear
     End If
     
-    ' En-têtes de colonnes
+    'En-têtes de colonnes
     wsReport.Cells(1, 1).Value = "Feuille"
     wsReport.Cells(1, 2).Value = "Cellule"
     wsReport.Cells(1, 3).Value = "Type de Validation"
@@ -1483,7 +1386,7 @@ Sub ListerValidations()
     
     rowIndex = 2
 
-    ' Parcourt toutes les feuilles
+    'Parcourt de toutes les feuilles
     For Each ws In ThisWorkbook.Sheets
         On Error Resume Next
         ws.Unprotect
@@ -1497,7 +1400,7 @@ Sub ListerValidations()
                     wsReport.Cells(rowIndex, 2).Value = cell.Address(False, False)
                     wsReport.Cells(rowIndex, 3).Value = .Type
                     If .Type = xlValidateList Then
-                        wsReport.Cells(rowIndex, 4).Value = .Formula1 ' Affiche la liste ou la formule utilisée
+                        wsReport.Cells(rowIndex, 4).Value = .Formula1 'Affiche la liste ou la formule utilisée
                     Else
                         wsReport.Cells(rowIndex, 4).Value = "Autre type"
                     End If
@@ -1509,7 +1412,7 @@ Sub ListerValidations()
         Set rngDV = Nothing
     Next ws
     
-    MsgBox "Liste des validations générée dans la feuille 'ListeValidations'.", vbInformation
+    MsgBox "Liste des validations générée dans la feuille 'DocListeValidations'.", vbInformation
     
 End Sub
 
@@ -1614,28 +1517,7 @@ Function VérifierAccesVBAAutorise() As Boolean
     
 End Function
 
-Sub Tester_dnrProf_Initials_Only() '2025-03-14 @ 10:42
-
-    Dim nm As Name
-    Dim rng As Range
-    Dim strRef As String
-    
-    Set nm = ThisWorkbook.Names("dnrProf_Initials_Only")
-    
-    On Error Resume Next
-    strRef = nm.RefersTo
-    Set rng = Evaluate(strRef) 'Utiliser Evaluate pour contourner RefersToRange
-    On Error GoTo 0
-    
-    If Not rng Is Nothing Then
-        MsgBox "Plage correcte : " & rng.Address
-    Else
-        MsgBox "Erreur : la plage nommée est invalide !", vbCritical
-    End If
-    
-End Sub
-
-Sub ComparerClasseursNiveauCellules()
+Sub zz_ComparerClasseursNiveauCellules()
 
     Dim wbOld As Workbook, wbNew As Workbook, wbReport As Workbook
     Dim wsOld As Worksheet, wsNew As Worksheet, wsReport As Worksheet
@@ -1739,75 +1621,6 @@ Sub ComparerClasseursNiveauCellules()
     wbNew.Close False
     
     MsgBox "Comparaison terminée ! Consultez le classeur de rapport.", vbInformation
-    
-End Sub
-
-Sub AnalyserImagesEnteteFactureExcel() '2025-05-27 @ 14:40
-
-    Dim dossier As String, fichier As String
-    Dim wb As Workbook, ws As Worksheet
-    Dim img As Shape
-    Dim largeurOrig As Double, hauteurOrig As Double
-    Dim largeurActuelle As Double, hauteurActuelle As Double
-    Dim cheminComplet As String
-    Dim nomImageCible As String
-
-    'Demande à l'utilisateur de choisir un dossier
-    With Application.fileDialog(msoFileDialogFolderPicker)
-        .Title = "Choisissez un dossier contenant les fichiers Excel"
-        If .show <> -1 Then Exit Sub 'Annuler
-        dossier = .SelectedItems(1)
-    End With
-
-    'Nom exact de l'image à trouver (ou utiliser un critère partiel)
-    nomImageCible = "Image 1" '? Modifier si nécessaire
-
-    'Recherche tous les fichiers .xlsx dans le dossier
-    Dim dateSeuilMinimum As Date
-    dateSeuilMinimum = DateSerial(2024, 8, 1)
-    fichier = Dir(dossier & "\*.xlsx")
-
-    Do While fichier <> vbNullString
-        cheminComplet = dossier & "\" & fichier
-        If FileDateTime(cheminComplet) < dateSeuilMinimum Then
-            fichier = Dir
-            GoTo SkipFile
-        End If
-        Set wb = Workbooks.Open(cheminComplet, ReadOnly:=True)
-
-        On Error Resume Next
-        Set ws = wb.Worksheets(wb.Worksheets.count)
-        If ws.Name = "Activités" Then
-            GoTo SkipFile
-        End If
-        On Error GoTo 0
-
-        If Not ws Is Nothing Then
-            For Each img In ws.Shapes
-                If img.Type = msoPicture Then
-                    If img.Name = nomImageCible Then
-                        largeurActuelle = img.Width
-                        hauteurActuelle = img.Height
-
-                        'Lire la taille originale estimée
-                        Call LireTailleOriginaleImage(img, largeurOrig, hauteurOrig)
-
-                        Debug.Print "Fichier : " & fichier
-                        Debug.Print "  Image : " & img.Name
-                        Debug.Print "  Taille actuelle : " & largeurActuelle & " x " & hauteurActuelle
-                        Debug.Print "  Taille originale : " & largeurOrig & " x " & hauteurOrig
-                        Debug.Print String(40, "-")
-                    End If
-                End If
-            Next img
-        End If
-
-        wb.Close SaveChanges:=False
-        fichier = Dir
-SkipFile:
-    Loop
-
-    MsgBox "Analyse terminée."
     
 End Sub
 
@@ -1947,7 +1760,7 @@ Function BatirDictionnaireProcedures() As Object '2025-07-03 @ 17:53
             ligne = Trim(codeMod.Lines(i, 1))
             'Ignore les commentaires ou les Functions
             If Left(ligne, 1) = "'" Then GoTo NextLigne
-            If InStr(ligne, "Function") > 0 Then GoTo NextLigne
+            If InStr(ligne, "Function ") > 0 Then GoTo NextLigne
 
             If InStr(ligne, "Sub ") > 0 Then
                 nomSub = codeMod.ProcOfLine(i, vbext_pk_Proc)
@@ -2338,7 +2151,7 @@ Sub VerifierCombinaisonClientIDClientNomDansTEC()
         clientName = m(i, fTECClientNom)
         
         'Obtenir le nom du client associé à clientID
-        allCols = Fn_Get_A_Row_From_A_Worksheet("BD_Clients", clientID, fClntFMClientID)
+        allCols = Fn_ObtenirLigneDeFeuille("BD_Clients", clientID, fClntFMClientID)
         'Vérifier le résultat retourné
         If IsArray(allCols) Then
             clientNameFromMF = allCols(1)
@@ -2368,26 +2181,7 @@ Sub VerifierCombinaisonClientIDClientNomDansTEC()
     
 End Sub
 
-Sub ExtraireCouleurCellule()
-
-    Dim couleur As Long
-    Dim rouge As Long, vert As Long, bleu As Long
-
-    ' récupère la couleur de fond de la cellule active
-    couleur = ActiveSheet.Range("B8").Interior.Color
-    
-    ' extrait les composantes RGB
-    rouge = couleur Mod 256
-    vert = (couleur \ 256) Mod 256
-    bleu = (couleur \ 65536) Mod 256
-
-    ' affiche les valeurs
-    MsgBox "Rouge: " & rouge & vbCrLf & _
-           "Vert: " & vert & vbCrLf & _
-           "Bleu: " & bleu
-End Sub
-
-Public Sub MettreAJour_estFacturable() '2025-07-23 @ 08:26
+Sub zz_FixEstFacturable() '2025-07-23 @ 08:26
 
     Dim cheminFichier As String
     Dim wb As Workbook
@@ -2463,4 +2257,239 @@ Public Function ListerPDFs(dossier As String) As Object '2025-07-23 @ 12:40
     Set fso = Nothing
     
 End Function
+
+Sub zz_Comparer2Classeurs()
+    
+    Application.ScreenUpdating = False
+    
+    'Declare and open the 2 workbooks
+    Dim wbWas As Workbook
+    Set wbWas = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx", ReadOnly:=True)
+    Debug.Print "#066 - " & wbWas.Name
+    Dim wbNow As Workbook
+    Set wbNow = Workbooks.Open("C:\VBA\GC_FISCALITÉ\GCF_DataFiles\2024_09_01_1835\GCF_BD_Entrée_TBA.xlsx", ReadOnly:=True)
+    Debug.Print "#067 - " & wbNow.Name
+
+    'Declare the 2 worksheets
+    Dim wsWas As Worksheet
+    Set wsWas = wbWas.Worksheets("Clients")
+    Dim wsNow As Worksheet
+    Set wsNow = wbNow.Worksheets("Clients")
+    
+    'Détermine la dernière ligne utilisée dans chacune des 2 feuilles
+    Dim lastUsedRowWas As Long
+    lastUsedRowWas = wsWas.Cells(wsWas.Rows.count, 1).End(xlUp).Row
+    Dim lastUsedRowNOw As Long
+    lastUsedRowNOw = wsNow.Cells(wsNow.Rows.count, 1).End(xlUp).Row
+    
+    'Détermine le nombre de colonnes dans l'ancienne feuille
+    Dim lastUsedColWas As Long
+    lastUsedColWas = wsWas.Cells(wsWas.Columns.count).End(xlToLeft).Column
+    
+    'Erase and create a new worksheet for differences
+    Dim wsNameStr As String
+    wsNameStr = "X_Différences"
+    Dim wsDiff As Worksheet
+    Call CreerOuRemplacerFeuille(wsNameStr)
+    Set wsDiff = ThisWorkbook.Worksheets(wsNameStr)
+    wsDiff.Range("A1").Value = "Ligne"
+    wsDiff.Range("B1").Value = "Colonne"
+    wsDiff.Range("C1").Value = "CodeClient"
+    wsDiff.Range("D1").Value = "Nom du Client"
+    wsDiff.Range("E1").Value = "Avant changement"
+    wsDiff.Range("F1").Value = "Type"
+    wsDiff.Range("G1").Value = "Après changement"
+    Call Make_It_As_Header(wsDiff.Range("A1:G1"), RGB(0, 112, 192))
+
+    Dim diffRow As Long
+    diffRow = 2 'Take into consideration the Header
+    Dim diffCol As Long
+    diffCol = 1
+
+    'Parcourir chaque ligne de l'ancienne version
+    Dim cellWas As Range, cellNow As Range
+    Dim foundRow As Range
+    Dim clientCode As String
+    Dim readCells As Long
+    Dim i As Long, j As Long
+    For i = 1 To lastUsedRowWas
+        clientCode = CStr(wsWas.Cells(i, 2).Value)
+        'Trouver la ligne correspondante dans la nouvelle version
+        Set foundRow = wsNow.Columns(2).Find(What:=clientCode, LookIn:=xlValues, LookAt:=xlWhole)
+        If Not foundRow Is Nothing Then
+            Debug.Print "#068 - Ligne : " & i
+            'Comparer les cellules des lignes correspondantes
+            For j = 1 To lastUsedColWas
+                readCells = readCells + 1
+                Set cellWas = wsWas.Cells(i, j)
+                Set cellNow = wsNow.Cells(foundRow.row, j)
+                If CStr(cellWas.Value) <> CStr(cellNow.Value) Then
+                    wsDiff.Cells(diffRow, 1).Value = i
+                    wsDiff.Cells(diffRow, 2).Value = j
+                    wsDiff.Cells(diffRow, 3).Value = wsWas.Cells(i, 2).Value
+                    wsDiff.Cells(diffRow, 4).Value = wsWas.Cells(cellWas.row, 1).Value
+                    wsDiff.Cells(diffRow, 5).Value = cellWas.Value
+                    wsDiff.Cells(diffRow, 6).Value = "'--->"
+                    wsDiff.Cells(diffRow, 7).Value = cellNow.Value
+                    diffRow = diffRow + 1
+                End If
+            Next j
+        Else
+            wsDiff.Cells(diffRow, 1).Value = i
+            wsDiff.Cells(diffRow, 3).Value = wsWas.Cells(i, 2).Value
+            wsDiff.Cells(diffRow, 4).Value = wsWas.Cells(cellWas.row, 1).Value
+            wsDiff.Cells(diffRow, 5).Value = cellWas.Value
+            wsDiff.Cells(diffRow, 6).Value = "XXXX"
+            diffRow = diffRow + 1
+        End If
+    Next i
+            
+    wsDiff.Columns.AutoFit
+    
+    'Result print setup - 2024-08-05 @ 05:16
+    diffRow = diffRow + 1
+    wsDiff.Range("A" & diffRow).Value = "**** " & Format$(readCells, "###,##0") & _
+                                        " cellules analysées dans l'ensemble du fichier ***"
+                                    
+    'Set conditional formatting for the worksheet (alternate colors)
+    Dim rngArea As Range: Set rngArea = wsDiff.Range("A2:G" & diffRow)
+    Call modAppli_Utils.AppliquerConditionalFormating(rngArea, 1, RGB(173, 216, 230))
+
+    'Setup print parameters
+    Dim rngToPrint As Range: Set rngToPrint = wsDiff.Range("A2:DC" & diffRow)
+    Dim header1 As String: header1 = "Vérification des différences"
+    Dim header2 As String: header2 = "Clients"
+    Call modAppli_Utils.MettreEnFormeImpressionSimple(wsDiff, rngToPrint, header1, header2, "$1:$1", "P")
+    
+    Application.ScreenUpdating = True
+    
+    wsDiff.Activate
+
+    'Close the workbooks without saving
+    wbWas.Close SaveChanges:=False
+    wbNow.Close SaveChanges:=False
+    
+    'Libérer la mémoire
+    Set cellWas = Nothing
+    Set cellNow = Nothing
+    Set foundRow = Nothing
+    Set rngArea = Nothing
+    Set rngToPrint = Nothing
+    Set wbWas = Nothing
+    Set wbNow = Nothing
+    Set wsWas = Nothing
+    Set wsNow = Nothing
+    Set wsDiff = Nothing
+    
+    MsgBox "La comparaison est complétée.", vbInformation
+           
+End Sub
+
+Sub zz_DetecterErreurCodeClientInTEC()  '2025-03-11 @ 08:29
+
+    'Source - Définir les chemins d'accès des fichiers, le Workbook et le Worksheet
+    Dim sourceFilePath As String
+    sourceFilePath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                     wsdADMIN.Range("MASTER_FILE").Value
+    Dim wbSource As Workbook: Set wbSource = Workbooks.Open(sourceFilePath)
+    Dim wsSource As Worksheet: Set wsSource = wbSource.Worksheets("TEC_Local")
+    
+    'Détermine la dernière rangée et dernière colonne utilisées dans wsdTEC_Local
+    Dim lastUsedRowTEC As Long
+    lastUsedRowTEC = wsSource.Cells(wsSource.Rows.count, 1).End(xlUp).Row
+    
+    'Open the Master File Workbook
+    Dim clientMFPath As String
+    clientMFPath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                     wsdADMIN.Range("CLIENTS_FILE").Value
+    Dim wbMF As Workbook: Set wbMF = Workbooks.Open(clientMFPath)
+    Dim wsMF As Worksheet: Set wsMF = wbMF.Worksheets("Clients")
+    Dim lastUsedRowClient As Long
+    lastUsedRowClient = wsMF.Cells(wsMF.Rows.count, 1).End(xlUp).Row
+    
+    'Setup output file
+    Dim strOutput As String
+    strOutput = "X_Détection_Cas_Erreur_Code_TEC"
+    Call CreerOuRemplacerFeuille(strOutput)
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets(strOutput)
+    wsOutput.Range("A1").Value = "TEC_ID"
+    wsOutput.Range("B1").Value = "Date"
+    wsOutput.Range("C1").Value = "Prof"
+    wsOutput.Range("D1").Value = "NomClientTEC"
+    wsOutput.Range("E1").Value = "CodeClient"
+    wsOutput.Range("F1").Value = "NomClientFM"
+    wsOutput.Range("G1").Value = "DateSaisie"
+    Call Make_It_As_Header(wsOutput.Range("A1:G1"), RGB(0, 112, 192))
+    
+    'Build the dictionnary (Code, Nom du client) from Client's Master File
+    Dim dictClients As Dictionary
+    Set dictClients = New Dictionary
+    Dim i As Long
+    For i = 2 To lastUsedRowClient
+        dictClients.Add CStr(wsMF.Cells(i, fClntFMClientID).Value), wsMF.Cells(i, fClntFMClientNom).Value
+    Next i
+    
+    'Parse TEC_Local to verify TEC's clientName vs. MasterFile's clientName
+    Dim codeClientTEC As String, nomClientTEC As String, nomClientFromMF As String
+    Dim casDelta As Long, rowOutput As Long
+    rowOutput = 2
+    For i = 2 To lastUsedRowTEC
+        codeClientTEC = wsSource.Cells(i, fTECClientID).Value
+        nomClientTEC = wsSource.Cells(i, fTECTDBClientNom).Value
+        nomClientFromMF = dictClients(codeClientTEC)
+        If Trim$(nomClientTEC) <> Trim$(nomClientFromMF) Then
+            Debug.Print "#073 - " & i & " : " & codeClientTEC & " - " & nomClientTEC & " <---> " & nomClientFromMF
+'            wsSource.Cells(i, 6).Value = nomClientFromMF
+            wsOutput.Cells(rowOutput, 1).Value = wsSource.Cells(i, fTECTECID).Value
+            wsOutput.Cells(rowOutput, 2).Value = wsSource.Cells(i, fTECDate).Value
+            wsOutput.Cells(rowOutput, 3).Value = wsSource.Cells(i, fTECProf).Value
+            wsOutput.Cells(rowOutput, 4).Value = nomClientTEC
+            wsOutput.Cells(rowOutput, 5).Value = codeClientTEC
+            wsOutput.Cells(rowOutput, 6).Value = nomClientFromMF
+            wsOutput.Cells(rowOutput, 7).Value = wsSource.Cells(i, fTECDateSaisie).Value
+            rowOutput = rowOutput + 1
+            casDelta = casDelta + 1
+        End If
+    Next i
+    
+    wsOutput.Columns.AutoFit
+
+    'Result print setup
+    rowOutput = rowOutput + 1
+    wsOutput.Range("A" & rowOutput).Value = "**** " & Format$(lastUsedRowTEC - 1, "###,##0") & _
+                                        " lignes analysées dans l'ensemble du fichier ***"
+                                    
+    'Set conditional formatting for the worksheet (alternate colors)
+    Dim rngArea As Range: Set rngArea = wsOutput.Range("A2:G" & rowOutput)
+    Call modAppli_Utils.AppliquerConditionalFormating(rngArea, 1, RGB(173, 216, 230))
+
+    'Setup print parameters
+    Dim rngToPrint As Range: Set rngToPrint = wsOutput.Range("A2:G" & rowOutput)
+    Dim header1 As String: header1 = "Détection des codes de clients ERRONÉS dans TEC"
+    Dim header2 As String: header2 = vbNullString
+    Call modAppli_Utils.MettreEnFormeImpressionSimple(wsOutput, rngToPrint, header1, header2, "$1:$1", "P")
+    
+    'Close the 2 workbooks without saving anything
+    wbSource.Close SaveChanges:=False
+    wbMF.Close SaveChanges:=False
+
+    'Libérer la mémoire
+    Set dictClients = Nothing
+    Set rngArea = Nothing
+    Set rngToPrint = Nothing
+    Set wbMF = Nothing
+    Set wbSource = Nothing
+    Set wsMF = Nothing
+    Set wsOutput = Nothing
+    Set wsSource = Nothing
+    
+    MsgBox _
+        Prompt:="Il y a " & casDelta & " cas où le nom du client (TEC) diffère" & _
+            vbNewLine & vbNewLine & "du nom de client du Fichier MAÎTRE", _
+        Title:="Les données ne sont pas corrigées", _
+        Buttons:=vbInformation
+    
+End Sub
+
+
 

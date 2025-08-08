@@ -88,94 +88,6 @@ Sub TrierTableauBubble(MyArray() As String) '2024-07-02 @ 15:18
     
 End Sub
 
-'CommentOut - Pas utilisé -2025-07-14 @ 09:48
-'Sub Check_Invoice_Template()
-'
-'    Dim ws As Worksheet: Set ws = wsdADMIN
-'    Dim firstUsedRow As Long, lastUsedRow As Long
-'    firstUsedRow = 12
-'    lastUsedRow = ws.Cells(ws.Rows.count, "Z").End(xlUp).Row
-'    Dim rng As Range
-'    Set rng = ws.Range("Z" & firstUsedRow & ":AA" & lastUsedRow)
-'
-'    'First - Determine which templates are used
-'    Dim arr As Variant
-'    Dim strTemplates As String
-'    Dim i As Long, j As Long
-'    For i = 1 To lastUsedRow - firstUsedRow + 1
-'        If Not rng.Cells(i, 2) = vbNullString Then
-'            arr = Split(rng.Cells(i, 2), ",")
-'            For j = 0 To UBound(arr)
-'                strTemplates = strTemplates & Trim$(arr(j)) & "-" & i & "|"
-'            Next j
-'        End If
-'    Next i
-'
-'    'Second - Sort all the found templates
-'    Dim tt() As String
-'    tt = Split(strTemplates, "|")
-'    Call TrierTableauBubble(tt)
-'
-'    'Third - Prepare the worksheet to receive information
-'    Call EffacerEtRecreerWorksheet("Gabarits_Facture")
-'
-'    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Gabarits_Facture")
-'    wsOutput.Range("A1").Value = "Gabarit"
-'    wsOutput.Range("USER_DATE_FORMAT").Value = "Code"
-'    wsOutput.Range("C1").Value = "Service"
-'    Dim outputRow As Long: outputRow = 1
-'
-'    'Third - Build the list of services associated to each template (First Letter)
-'    Dim rowNo As Long
-'    Dim template As String, oldTemplate As String
-'
-'    With wsOutput
-'        For i = 0 To UBound(tt)
-'            If tt(i) <> vbNullString Then
-'                template = Left$(tt(i), 1)
-'                If template <> oldTemplate Then
-'                    outputRow = outputRow + 2
-'                    .Range("A" & outputRow).Value = "Gabarit '" & template & "'"
-'                    oldTemplate = template
-'                End If
-'                rowNo = Mid$(tt(i), InStr(1, tt(i), "-") + 1)
-'                outputRow = outputRow + 1
-'                .Range("B" & outputRow).Value = tt(i)
-'                .Range("C" & outputRow).Value = rng.Cells(rowNo, 1)
-'            End If
-'        Next i
-'        wsOutput.Range("A1").CurrentRegion.EntireColumn.AutoFit
-'    End With
-'
-'    With wsOutput.Range("A1:C1")
-'        With .Interior
-'            .Pattern = xlSolid
-'            .PatternColorIndex = xlAutomatic
-'            .Color = 12611584
-'            .TintAndShade = 0
-'            .PatternTintAndShade = 0
-'        End With
-'
-'        With .Font
-'            .ThemeColor = xlThemeColorDark1
-'            .TintAndShade = 0
-'            .size = 10
-'            .Italic = True
-'            .Bold = True
-'        End With
-'    End With
-'
-'    With wsOutput.Range("A2:A" & outputRow)
-'        .Font.Bold = True
-'    End With
-'
-'    'Cleaning - 2024-07-02 @ 20:12
-'    Set rng = Nothing
-'    Set ws = Nothing
-'    Set wsOutput = Nothing
-'
-'End Sub
-'
 Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
     
     Call EffacerEtRecreerWorksheet("X_Feuilles_du_Classeur")
@@ -310,231 +222,6 @@ Sub RechercherCodeProjet() '2024-10-26 @ 10:41
     'Libérer la mémoire
     Set vbComp = Nothing
     Set vbCodeMod = Nothing
-    
-End Sub
-
-Sub List_Conditional_Formatting_All() '2024-06-23 @ 18:37
-
-    'Work in memory
-    Dim arr() As Variant
-    ReDim arr(1 To 100, 1 To 7)
-    
-    Dim ws As Worksheet
-    Dim rng As Range
-    Dim area As Range
-    Dim ruleIndex As Long
-    Dim cf As FormatCondition
-    Dim i As Long
-    
-    'Loop through each worksheet in the current workbook
-    For Each ws In ThisWorkbook.Worksheets
-        
-        On Error Resume Next
-        'Attempt to get the range with conditional formatting
-        Application.EnableEvents = False
-        Set rng = ws.usedRange.SpecialCells(xlCellTypeAllFormatConditions)
-        Application.EnableEvents = True
-        On Error GoTo 0
-        
-        'Check if rng is not nothing, which means there are conditional formatting rules
-        If Not rng Is Nothing Then
-            'Loop through each area in the range
-            For Each area In rng.Areas
-                Debug.Print "#027 - " & ws.Name & " - " & area.FormatConditions.count
-                ' Loop through each conditional formatting rule in the area
-                For ruleIndex = 1 To area.FormatConditions.count
-                    Set cf = area.FormatConditions(ruleIndex)
-                    i = i + 1
-                    arr(i, 1) = ws.Name & Chr$(0) & area.Address
-                    arr(i, 2) = ws.Name
-                    arr(i, 3) = area.Address
-                    arr(i, 4) = cf.Type
-                    arr(i, 5) = cf.Formula1
-                    
-                    On Error Resume Next
-                    If cf.Type = xlCellValue And (cf.Operator = xlBetween Or cf.Operator = xlNotBetween) Then
-                        arr(i, 6) = cf.Formula2
-                    End If
-                    On Error GoTo 0
-                    
-                    arr(i, 7) = Format$(Now(), "yyyy-mm-dd hh:mm")
-                Next ruleIndex
-            Next area
-        End If
-        
-        'Reset the range variable for the next worksheet
-    Next ws
-    
-    Call RedimensionnerTableau2D(arr, i, UBound(arr, 2))
-    Call TrierTableau2DBubble(arr)
-
-    'Setup and prepare the output worksheet
-    Dim wsOutput As Worksheet: Set wsOutput = wshzDocConditionalFormatting
-    Dim lastUsedRow As Long
-    lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "A").End(xlUp).Row
-    If lastUsedRow > 1 Then
-        wsOutput.Range("A2:F" & lastUsedRow).ClearContents
-    End If
-    
-    'Assign array to range
-    wsOutput.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2)).Value = arr
-    wsOutput.Range("A:A").EntireColumn.Hidden = True 'Do not show the SortKey
-   
-    MsgBox "J'ai trouvé " & i & " Conditional Formatting"
-    
-    'Libérer la mémoire
-    Set area = Nothing
-    Set cf = Nothing
-    Set rng = Nothing
-    Set ws = Nothing
-    Set wsOutput = Nothing
-
-End Sub
-
-Sub List_Data_Validations_All() '2024-07-15 @ 06:52
-
-    'Prepare the result worksheet (wsOutput)
-    Call EffacerEtRecreerWorksheet("Doc_Data_Validations")
-
-    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("Doc_Data_Validations")
-    wsOutput.Cells(1, 1).Value = "SortKey"
-    wsOutput.Cells(1, 2).Value = "Worksheet"
-    wsOutput.Cells(1, 3).Value = "CellAddress"
-    wsOutput.Cells(1, 4).Value = "ValidationType"
-    wsOutput.Cells(1, 5).Value = "Formula1"
-    wsOutput.Cells(1, 6).Value = "Formula2"
-    wsOutput.Cells(1, 7).Value = "Operator"
-    wsOutput.Cells(1, 8).Value = "TimeStamp"
-    
-    Call Make_It_As_Header(wsOutput.Range("A1:H1"), RGB(0, 112, 192))
-    
-    'Create the Array to store results in memory
-    Dim arr() As Variant
-    ReDim arr(1 To 5000, 1 To 8)
-    
-    ' Loop through each worksheet in the workbook
-    Dim dvType As String
-    Dim ws As Worksheet
-    Dim cell As Range
-    Dim timeStamp As String
-    Dim X As Long: X = 1
-    Dim xAnalyzed As Long
-    For Each ws In ThisWorkbook.Worksheets
-        'Loop through each cell in the worksheet
-        For Each cell In ws.usedRange
-            'Check if the cell has data validation
-            xAnalyzed = xAnalyzed + 1
-
-            On Error Resume Next
-            dvType = vbNullString
-            dvType = cell.Validation.Type
-            On Error GoTo 0
-            
-            If dvType <> vbNullString And dvType <> "0" Then
-                'Write the data validation details to the output sheet
-                arr(X, 1) = ws.Name & Chr$(0) & cell.Address 'Sort Key
-                arr(X, 2) = ws.Name
-                arr(X, 3) = cell.Address
-                arr(X, 4) = dvType
-                Select Case dvType
-                    Case "2"
-                        arr(X, 4) = "Min/Max"
-                    Case "3"
-                        arr(X, 4) = "Liste"
-                    Case Else
-                        arr(X, 4) = dvType
-                End Select
-                On Error Resume Next
-                arr(X, 5) = "'" & cell.Validation.Formula1
-                On Error GoTo 0
-                
-                On Error Resume Next
-                arr(X, 6) = "'" & cell.Validation.Formula2
-                On Error GoTo 0
-                
-                On Error Resume Next
-                arr(X, 7) = "'" & cell.Validation.Operator
-                On Error GoTo 0
-                
-                timeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
-                arr(X, 8) = timeStamp
-
-                'Increment the output row counter
-                X = X + 1
-            End If
-        Next cell
-    Next ws
-
-    If X > 1 Then
-    
-        X = X - 1
-        
-        Call RedimensionnerTableau2D(arr, X, UBound(arr, 2))
-        
-        Call TrierTableau2DBubble(arr)
-        
-        'Array to Worksheet
-        Dim outputRow As Long: outputRow = 2
-        wsOutput.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2)).Value = arr
-        wsOutput.Range("A:A").EntireColumn.Hidden = True 'Do not show the sortKey
-        wsOutput.Columns(4).HorizontalAlignment = xlCenter
-        wsOutput.Columns(7).HorizontalAlignment = xlCenter
-        wsOutput.Columns(8).NumberFormat = "dd/mm/yyyy hh:mm:ss"
-        
-        Dim lastUsedRow As Long
-        lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "B").End(xlUp).Row
-        Dim j As Long, oldWorksheet As String
-        oldWorksheet = wsOutput.Range("B" & lastUsedRow).Value
-        For j = lastUsedRow To 2 Step -1
-            If wsOutput.Range("B" & j).Value <> oldWorksheet Then
-                wsOutput.Rows(j + 1).Insert Shift:=xlDown, CopyOrigin:=xlFormatFromRightOrBelow
-                oldWorksheet = wsOutput.Range("B" & j).Value
-            End If
-        Next j
-        
-        'Since we might have inserted new row, let's update the lastUsedRow
-        lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "B").End(xlUp).Row
-        With wsOutput.Range("B2:H" & lastUsedRow)
-            On Error Resume Next
-            ActiveSheet.Cells.FormatConditions.Delete
-            On Error GoTo 0
-        
-            .FormatConditions.Add Type:=xlExpression, Formula1:= _
-                "=ET($B2<>"""";MOD(LIGNE();2)=1)"
-            .FormatConditions(.FormatConditions.count).SetFirstPriority
-            With .FormatConditions(1).Interior
-                .PatternColorIndex = xlAutomatic
-                .ThemeColor = xlThemeColorAccent1
-                .TintAndShade = 0.799981688894314
-            End With
-            .FormatConditions(1).StopIfTrue = False
-        End With
-        
-        wsOutput.Range("A1").CurrentRegion.EntireColumn.AutoFit
-
-    End If
-
-    'AutoFit the columns for better readability
-    wsOutput.Columns.AutoFit
-    
-    'Result print setup - 2024-07-15 @ 09:22
-    lastUsedRow = lastUsedRow + 2
-    wsOutput.Range("B" & lastUsedRow).Value = "*** " & Format$(xAnalyzed, "###,##0") & _
-                                    " cellules analysées dans l'application ***"
-    Dim header1 As String: header1 = "Cells Data Validations"
-    Dim header2 As String: header2 = "All worksheets"
-    Call modAppli_Utils.MettreEnFormeImpressionSimple(wsOutput, wsOutput.Range("B2:H" & lastUsedRow), _
-                           header1, _
-                           header2, _
-                           "$1:$1", _
-                           "L")
-    
-    'Libérer la mémoire
-    Set cell = Nothing
-    Set ws = Nothing
-    Set wsOutput = Nothing
-    
-    MsgBox "Data validation list were created in worksheet: " & wsOutput.Name
     
 End Sub
 
@@ -1345,27 +1032,6 @@ Sub List_Subs_And_Functions_All() '2024-11-26 @ 20:02
     
 End Sub
 
-Sub Test_Array_To_Range() '2024-03-18 @ 17:34
-
-    Dim ws As Worksheet: Set ws = ThisWorkbook.Worksheets(2)
-    
-    Dim arr() As Variant
-    ReDim arr(1 To 1000, 1 To 20)
-    
-    Dim i As Long, j As Long
-    For i = 1 To UBound(arr, 1)
-        For j = 1 To UBound(arr, 2)
-            arr(i, j) = "i = " & i & " and j = " & j & " - *********"
-        Next j
-    Next i
-    
-    ws.Range("A1").Resize(UBound(arr, 1), UBound(arr, 2)).Value = arr
-    
-    'Libérer la mémoire
-    Set ws = Nothing
-    
-End Sub
-
 Sub TestRedimensionnerTableau2D()
     Dim originalArray() As Variant
     Dim i As Long, j As Long
@@ -1643,59 +1309,6 @@ Error_Handler:
     
 End Sub
 
-Sub Test_Log_Saisie_Heures()
-
-    Call Log_Saisie_Heures("W", "Test")
-    
-End Sub
-
-Sub Settrace(source As String, module As String, procedure As String, variable As String, vType As String) '2024-09-26 @ 10:31
-
-    On Error GoTo Error_Handler
-    
-    Dim ms As String
-    
-    Dim settraceFile As String
-    settraceFile = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & _
-        Application.PathSeparator & "LogSettrace.txt"
-    
-    Dim fileNum As Integer
-    fileNum = FreeFile
-    
-    'Ajoute les millisecondes à la chaîne de temps
-    ms = Right$(Format$(Timer, "0.00"), 2) 'Récupère les millisecondes sous forme de texte
-    
-    Dim timeStamp As String
-    timeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & ms
-    
-    Open settraceFile For Append As #fileNum
-    
-    Print #fileNum, timeStamp & " | " & _
-                    modFunctions.GetNomUtilisateur() & " | " & _
-                    source & " | " & _
-                    module & " | " & _
-                    procedure & " | " & _
-                    variable & " | " & _
-                    vType
-
-    Close #fileNum
-    
-    Exit Sub
-    
-Error_Handler:
-
-    MsgBox "Une erreur est survenue : " & Err.description, vbCritical, "Log_Settrace"
-    'Sortir gracieusement de l'application
-    Application.Quit 'No save...
-    
-End Sub
-
-Sub Test_Settrace()
-
-    Call Settrace("DB.1854", "modDev_Utils", "Test_Settrace", "date = '" & Date & "'", "type = " & "Date")
-    
-End Sub
-
 Sub SortDelimitedString(ByRef inputString As String, delimiter As String)
     
     'Split the string into components
@@ -1726,7 +1339,7 @@ Sub SortDelimitedString(ByRef inputString As String, delimiter As String)
     
 End Sub
 
-Sub LogMainApp_Analysis() '2025-01-10 @ 17:10
+Sub zz_AnalyserLogApplication() '2025-01-10 @ 17:10
 
     Dim logFile As String
     logFile = wsdADMIN.Range("PATH_DATA_FILES").Value & Application.PathSeparator & "LogMainApp.log"
@@ -1820,7 +1433,7 @@ Sub LogMainApp_Analysis() '2025-01-10 @ 17:10
     
 End Sub
 
-Sub Test_Fn_Get_A_Row_From_A_Worksheet() '2025-01-13 @ 08:49
+Sub zz_ObtenirLigneAPartirCelluleRecherche() '2025-01-13 @ 08:49
 
     Dim feuille As String
     Dim valeurRecherche As String
@@ -1834,13 +1447,11 @@ Sub Test_Fn_Get_A_Row_From_A_Worksheet() '2025-01-13 @ 08:49
     colRecherche = 17
     
     'Appeler la fonction de recherche
-    resultat = Fn_Get_A_Row_From_A_Worksheet(feuille, valeurRecherche, fClntFMNomClientPlusNomClientSystème)
+    resultat = Fn_ObtenirLigneDeFeuille(feuille, valeurRecherche, fClntFMNomClientPlusNomClientSystème)
     
     'Vérifier le résultat
     If IsArray(resultat) Then
-        Debug.Print "#080 - Valeur trouvée :"
         For i = LBound(resultat) To UBound(resultat)
-            Debug.Print "#081 - " & i; Tab(13); resultat(i)
         Next i
     Else
         MsgBox "Valeur non trouvée", vbInformation

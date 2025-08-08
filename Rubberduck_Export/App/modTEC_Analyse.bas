@@ -897,30 +897,6 @@ Sub EffacerSectionHonorairesEtCheckBox() 'RMV_15
     
 End Sub
 
-Sub EffacerTousCheckBoxes()
-
-    'Assigner la feuille à ws
-    Dim ws As Worksheet: Set ws = wshTEC_Analyse
-    
-    'Si CheckBox* existe, l'effacer
-    Dim checkBox As OLEObject
-    Dim i As Long
-    For i = 1 To 5
-        On Error Resume Next
-        Set checkBox = ws.OLEObjects("CheckBox" & i)
-        If Not checkBox Is Nothing Then
-            checkBox.Delete
-            
-        End If
-        On Error GoTo 0
-    Next i
-    
-    'Libérer la mémoire
-    Set checkBox = Nothing
-    Set ws = Nothing
-    
-End Sub
-
 Sub NettoyerProjetsDetruits(loDetails As ListObject, loEntete As ListObject) '2025-07-11 @ 01:50
 
     Dim i As Long

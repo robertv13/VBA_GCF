@@ -281,7 +281,6 @@ Private Sub myTextBox_Change()
         Else
             If m_textboxStartingState = True Then
                 m_textboxStartingState = False
-                'Call RemoveStartingText
             End If
             Call FiltrerListBox
         End If
@@ -345,19 +344,18 @@ End Sub
 
 'Description: Replace the default starting text with the letter the user has typed.
 '             This will work if the user types at any position in the starting text.
-Private Sub RemoveStartingText()
-    
-    m_UpdateControl = True
-
-    With myTextBox
-        .Text = Mid$(.Value, .SelStart, 1)
-'        .ForeColor = rgbBlack
-    End With
-    
-    m_UpdateControl = False
-    
-End Sub
-
+'Private Sub RemoveStartingText()
+'
+'    m_UpdateControl = True
+'
+'    With myTextBox
+'        .Text = Mid$(.Value, .SelStart, 1)
+'    End With
+'
+'    m_UpdateControl = False
+'
+'End Sub
+'
 Private Sub SelectionnerTextBox()
     
     With myTextBox

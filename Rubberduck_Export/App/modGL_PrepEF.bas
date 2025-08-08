@@ -910,24 +910,6 @@ Sub PositionnerCellule(ws As Worksheet, cell As String, ligne As Integer, col As
     
 End Sub
 
-Sub AdditionnerSoldes(r1 As Range, r2 As Range, comptes As String)
-
-    If comptes = vbNullString Then
-        Exit Sub
-    End If
-    
-    Dim compte() As String
-    compte = Split(comptes, "^")
-    
-    Dim i As Integer
-    For i = 0 To UBound(compte, 1) - 1
-        r1.Value = r1.Value + ChercherSoldes(compte(i), 1)
-    Next i
-
-    r1.Value = Round(r1.Value, 0)
-    
-End Sub
-
 Function ChercherSoldes(valeur As String, colonne As Integer) As Currency
 
     Dim ws As Worksheet

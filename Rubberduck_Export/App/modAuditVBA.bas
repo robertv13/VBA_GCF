@@ -101,10 +101,7 @@ Sub IncrementerAppelsCodeDirect(dictIndex As Object, tableProc() As Variant, ind
                     GoTo LigneSuivante
                 End If
 
-'                If InStr(1, ligne, ".OnAction") Then Stop
-                
                 For Each nomProc In dictIndex.keys
-'                    If nomProc = "EcrireInformationsConfigAuMenu" Then Stop
                     'Appels préfixés (Module.nomProc)
                     If InStr(ligne, "." & nomProc) > 0 Then
                         tableProc(dictIndex(nomProc), 5) = tableProc(dictIndex(nomProc), 5) + 1
@@ -139,7 +136,7 @@ Sub IncrementerAppelsCodeDirect(dictIndex As Object, tableProc() As Variant, ind
                                 If InStr(1, ligne, "'") Then
                                     valeur = Trim(Replace(valeur, "'", vbNullString))
                                 End If
-                                Debug.Print ligne
+                                If valeur = "ObtenirListeTECFactures" And nomProc = "ObtenirListeTECFactures" Then Stop
                                 If LCase(valeur) = LCase(nomProc) Then
                                     tableProc(dictIndex(nomProc), 6) = tableProc(dictIndex(nomProc), 6) + 1
                                 End If
@@ -217,7 +214,8 @@ Sub ExporterResultatsFeuille(tableProc() As Variant, indexMax As Long) '2025-07-
 
     With ws
         'Légende interactive
-        .Cells(1, 1).Value = "?? Double-cliquez sur un nom de procédure (colonne A) pour accéder directement au code VBA"
+        .Cells(1, 1).Value = "Double-cliquez sur un nom de procédure (colonne A) pour accéder directement au code VBA"
+        .Cells(1, 1).Font.Name = "Aptos Narrow"
         .Cells(1, 1).Font.size = 10
         .Cells(1, 1).Font.Bold = True
         .Cells(1, 1).Font.Color = RGB(0, 102, 204) 'Bleu
@@ -257,9 +255,9 @@ Sub ExporterResultatsFeuille(tableProc() As Variant, indexMax As Long) '2025-07-
         'Tri multicritère
         With .Sort
             .SortFields.Clear
-            .SortFields.Add key:=ws.Range("C3:C" & indexMax + 1), Order:=xlAscending
-            .SortFields.Add key:=ws.Range("B3:B" & indexMax + 1), Order:=xlAscending
             .SortFields.Add key:=ws.Range("A3:A" & indexMax + 1), Order:=xlAscending
+            .SortFields.Add key:=ws.Range("B3:B" & indexMax + 1), Order:=xlAscending
+            .SortFields.Add key:=ws.Range("G3:G" & indexMax + 1), Order:=xlDescending
             .SetRange ws.Range("A2:I" & indexMax + 2)
             .Header = xlYes
             .Apply
@@ -334,10 +332,12 @@ Sub ExporterResultatsFeuille(tableProc() As Variant, indexMax As Long) '2025-07-
         .RightFooter = "Page &P de &N"
     
         'Marges serrées pour optimiser l’espace
-        .TopMargin = Application.InchesToPoints(0.25)
-        .BottomMargin = Application.InchesToPoints(0.25)
-        .LeftMargin = Application.InchesToPoints(0.25)
-        .RightMargin = Application.InchesToPoints(0.25)
+        .HeaderMargin = Application.InchesToPoints(0.16)
+        .TopMargin = Application.InchesToPoints(0.5)
+        .FooterMargin = Application.InchesToPoints(0.16)
+        .BottomMargin = Application.InchesToPoints(0.5)
+        .LeftMargin = Application.InchesToPoints(0.16)
+        .RightMargin = Application.InchesToPoints(0.16)
     End With
     
     Application.EnableEvents = True
@@ -346,8 +346,19 @@ End Sub
 
 Sub DiagnostiquerConformite(ws As Worksheet, tableProc() As Variant) '2025-07-07 @ 09:27
 
-    Dim i As Long, nom As String, totalAppels As Long
+    Dim i As Long
+    Dim nom As String
+    Dim totalAppels As Long
+    Dim suffixesEvenements As Variant
+    suffixesEvenements = Array("_Activate", "_AfterUpdate", "_BeforeClose", "_BeforeDoubleClick", _
+        "_BeforeRightClick", "_BeforeUpdate", "_Change", "_Click", "_DblClick", "_Enter", "_Exit", _
+        "_GotFocus", "_Initialize", "_ItemCheck", "_ItemClick", "_KeyDown", "_KeyUp", "_MouseDown", _
+        "_Open", "_QueryClose", "_SelectionChange", "_SheetActivate", "_SheetDeactivate", "_Terminate")
+    Dim suffixe As Variant
+    Dim estEvenement As Boolean
+    
     Dim diagnostics As String
+    Dim procName As String
     
     Dim dernLigneUtilisee As Long
     dernLigneUtilisee = ws.Cells(ws.Rows.count, "A").End(xlUp).Row
@@ -373,9 +384,24 @@ Sub DiagnostiquerConformite(ws As Worksheet, tableProc() As Variant) '2025-07-07
 
         'R5 - Procédure n'est jamais appelé par l'application
         totalAppels = ws.Cells(i, 4).Value + ws.Cells(i, 5).Value + ws.Cells(i, 6).Value
-        If totalAppels < 1 Then diagnostics = diagnostics & "R5,"
+        procName = ws.Cells(i, 1)
+        If totalAppels < 1 Then
+            estEvenement = False
+            For Each suffixe In suffixesEvenements
+                If Right(procName, Len(suffixe)) = suffixe Then
+                    estEvenement = True
+                    Exit For
+                End If
+            Next suffixe
+            If Not estEvenement Then
+                diagnostics = diagnostics & "R5,"
+            End If
+        End If
 
-        If Right(diagnostics, 1) = "," Then diagnostics = Left(diagnostics, Len(diagnostics) - 1)
+        'Tous les tests ont été passés
+        If Right(diagnostics, 1) = "," Then
+            diagnostics = Left(diagnostics, Len(diagnostics) - 1)
+        End If
         
         If diagnostics <> vbNullString Then
             ws.Cells(i, 9).Value = diagnostics
@@ -462,7 +488,7 @@ End Function
 
 Function AllerVersCode(nomModule As String, Optional nomProcedure As String = vbNullString) As Boolean '2025-07-07 @ 09:27
 
-    On Error GoTo erreur
+    On Error GoTo Erreur
 
     Dim comp As VBComponent
     Dim cm As codeModule
@@ -474,7 +500,7 @@ Function AllerVersCode(nomModule As String, Optional nomProcedure As String = vb
         If Trim(comp.Name) = Trim(nomModule) Then Exit For
     Next
 
-    If comp Is Nothing Then GoTo erreur
+    If comp Is Nothing Then GoTo Erreur
 
     comp.Activate
 
@@ -487,7 +513,7 @@ Function AllerVersCode(nomModule As String, Optional nomProcedure As String = vb
     'Recherche de la procédure dans le module
     Set cm = comp.codeModule
     startLine = cm.ProcStartLine(nomProcedure, vbext_pk_Proc)
-    If startLine < 1 Then GoTo erreur
+    If startLine < 1 Then GoTo Erreur
 
     numLines = cm.ProcCountLines(nomProcedure, vbext_pk_Proc)
 
@@ -504,12 +530,12 @@ Function AllerVersCode(nomModule As String, Optional nomProcedure As String = vb
         End If
     Next
 
-erreur:
+Erreur:
     AllerVersCode = False
     
 End Function
 
-Sub BatirListeProcEtFoncDansDictionnaire() '2025-07-22 @ 12:01
+Sub zz_BatirListeProcEtFoncDansDictionnaire() '2025-07-22 @ 12:01
 
     Dim comp As Object
     Dim codeMod As Object
@@ -537,12 +563,12 @@ Sub BatirListeProcEtFoncDansDictionnaire() '2025-07-22 @ 12:01
             'Exclure les commentaires et les déclarations de fonction ou procédures
             If Left(ligne, 1) = "'" Or _
                 InStr(ligne, "Function ") > 0 Or _
-                InStr(ligne, "Sub") > 0 Then
+                InStr(ligne, "Sub ") > 0 Then
                 GoTo NextLigne
             End If
 
             nomSub = codeMod.ProcOfLine(i, vbext_pk_Proc)
-            
+
             If nomSub <> vbNullString Then
                 If Not dictProcFunc.Exists(nomSub) Then
                     dictProcFunc.Add nomSub, comp.Name
@@ -552,7 +578,272 @@ Sub BatirListeProcEtFoncDansDictionnaire() '2025-07-22 @ 12:01
 NextLigne:
         Next i
     Next comp
+
+End Sub
+
+Sub zz_AuditMiseEnFormeConditionnelle() '2025-08-06 @ 08:52
+
+    Dim area As Range, cf As FormatCondition
+    Dim iRow As Long, ruleIndex As Long
+    Dim dictRules As Object: Set dictRules = CreateObject("Scripting.Dictionary")
+    Dim uniqueKey As String, doublon As String
+    Dim formule As String, plageAdresse As String
+    Dim countNonVides As Long
+    
+    'Créer la feuille d’audit
+    Dim feuilleNom As String
+    feuilleNom = "AuditMFC"
+    Call EffacerEtRecreerWorksheet(feuilleNom)
+    Dim auditWs As Worksheet
+    Set auditWs = ThisWorkbook.Sheets(feuilleNom)
+
+    auditWs.Range("A1:G1").Value = Array("Feuille", "Adresse", "Type", "Formule1", "NbCellNonVides", "Doublon", "À Supprimer ?")
+    iRow = 2
+    
+    ' Parcourir toutes les feuilles
+    Dim ws As Worksheet
+    For Each ws In ThisWorkbook.Worksheets
+        On Error Resume Next
+        Set area = ws.Cells.SpecialCells(xlCellTypeAllFormatConditions)
+        On Error GoTo 0
+        
+        If Not area Is Nothing Then
+            For Each area In area.Areas
+                For ruleIndex = 1 To area.FormatConditions.count
+                    On Error Resume Next
+                    Set cf = area.FormatConditions(ruleIndex)
+                    If cf Is Nothing Then GoTo SkipRule
+                    
+                    ' Lecture sécurisée du type
+                    Dim t As Variant: t = cf.Type
+                    
+                    ' Lecture sécurisée de la formule
+                    formule = ""
+                    If t = xlExpression Or t = xlCellValue Then
+                        On Error Resume Next
+                        formule = cf.Formula1
+                        If Err.Number <> 0 Then formule = "[Erreur lecture Formula1]"
+                        On Error GoTo 0
+                    Else
+                        formule = "[Type non compatible]"
+                    End If
+                    
+                    ' Lecture sécurisée de la plage et CountA
+                    On Error Resume Next
+                    plageAdresse = cf.AppliesTo.Address
+                    countNonVides = WorksheetFunction.CountA(cf.AppliesTo)
+                    On Error GoTo 0
+                    
+                    ' Détection de doublon
+                    uniqueKey = ws.Name & "|" & t & "|" & formule & "|" & plageAdresse
+                    If dictRules.Exists(uniqueKey) Then
+                        doublon = "Oui"
+                    Else
+                        dictRules.Add uniqueKey, 1
+                        doublon = "Non"
+                    End If
+                    
+                    ' Remplir l’audit
+                    With auditWs
+                        .Cells(iRow, 1).Value = ws.Name
+                        .Cells(iRow, 2).Value = plageAdresse
+                        .Cells(iRow, 3).Value = t
+                        Debug.Print "Contenu formule = [" & formule & "]"
+                        Debug.Print "Longueur = " & Len(formule)
+'                        On Error Resume Next
+                        If Len(formule) = 0 Then
+                            auditWs.Cells(iRow, 4).Value = "[Formule vide]"
+                        Else
+                            auditWs.Cells(iRow, 4).Value = Fn_FormuleSecuriseeTexte(formule)
+                        End If
+                        If Err.Number <> 0 Then
+                            auditWs.Cells(iRow, 4).Value = "[Erreur lors de l’écriture]"
+                            Err.Clear
+                        End If
+'                        On Error GoTo 0
+                        .Cells(iRow, 5).Value = countNonVides
+                        .Cells(iRow, 6).Value = doublon
+                        If countNonVides = 0 Or formule = "" Or formule = "[Erreur lecture Formula1]" Or doublon = "Oui" Then
+                            .Cells(iRow, 7).Value = "??"
+                        Else
+                            .Cells(iRow, 7).Value = ""
+                        End If
+                    End With
+                    
+                    iRow = iRow + 1
+SkipRule:
+                    On Error GoTo 0
+                Next ruleIndex
+            Next area
+        End If
+    Next ws
+    
+    MsgBox "Audit terminé — " & iRow - 2 & " règles analysées", vbInformation
     
 End Sub
 
+Function Fn_FormuleSecuriseeTexte(formule As String) As String
+
+    On Error GoTo Erreur
+
+    Dim formuleBrute As String
+
+    'Nettoyage et encodage des guillemets
+    formuleBrute = Replace(formule, """", """""")
+
+    'Ajout de guillemets autour, pour usage VBA
+    Fn_FormuleSecuriseeTexte = Chr(34) & formuleBrute & Chr(34)
+    Exit Function
+
+Erreur:
+    Fn_FormuleSecuriseeTexte = "Erreur lors du traitement"
+    
+End Function
+
+Sub zz_AuditDataValidationsInCells() '2025-08-06 @ 08:59
+
+    'Prepare the result worksheet (wsOutput)
+    Call EffacerEtRecreerWorksheet("AuditDataValidations")
+
+    Dim wsOutput As Worksheet: Set wsOutput = ThisWorkbook.Worksheets("AuditDataValidations")
+    wsOutput.Cells(1, 1).Value = "SortKey"
+    wsOutput.Cells(1, 2).Value = "Worksheet"
+    wsOutput.Cells(1, 3).Value = "CellAddress"
+    wsOutput.Cells(1, 4).Value = "ValidationType"
+    wsOutput.Cells(1, 5).Value = "Formula1"
+    wsOutput.Cells(1, 6).Value = "Formula2"
+    wsOutput.Cells(1, 7).Value = "Operator"
+    wsOutput.Cells(1, 8).Value = "TimeStamp"
+    
+    Call Make_It_As_Header(wsOutput.Range("A1:H1"), RGB(0, 112, 192))
+    
+    'Create the Array to store results in memory
+    Dim arr() As Variant
+    ReDim arr(1 To 5000, 1 To 8)
+    
+    ' Loop through each worksheet in the workbook
+    Dim dvType As String
+    Dim ws As Worksheet
+    Dim cell As Range
+    Dim timeStamp As String
+    Dim X As Long: X = 1
+    Dim xAnalyzed As Long
+    For Each ws In ThisWorkbook.Worksheets
+        'Loop through each cell in the worksheet
+        For Each cell In ws.usedRange
+            'Check if the cell has data validation
+            xAnalyzed = xAnalyzed + 1
+
+            On Error Resume Next
+            dvType = vbNullString
+            dvType = cell.Validation.Type
+            On Error GoTo 0
+            
+            If dvType <> vbNullString And dvType <> "0" Then
+                'Write the data validation details to the output sheet
+                arr(X, 1) = ws.Name & Chr$(0) & cell.Address 'Sort Key
+                arr(X, 2) = ws.Name
+                arr(X, 3) = cell.Address
+                arr(X, 4) = dvType
+                Select Case dvType
+                    Case "2"
+                        arr(X, 4) = "Min/Max"
+                    Case "3"
+                        arr(X, 4) = "Liste"
+                    Case Else
+                        arr(X, 4) = dvType
+                End Select
+                On Error Resume Next
+                arr(X, 5) = "'" & cell.Validation.Formula1
+                On Error GoTo 0
+                
+                On Error Resume Next
+                arr(X, 6) = "'" & cell.Validation.Formula2
+                On Error GoTo 0
+                
+                On Error Resume Next
+                arr(X, 7) = "'" & cell.Validation.Operator
+                On Error GoTo 0
+                
+                timeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
+                arr(X, 8) = timeStamp
+
+                'Increment the output row counter
+                X = X + 1
+            End If
+        Next cell
+    Next ws
+
+    If X > 1 Then
+    
+        X = X - 1
+        
+        Call RedimensionnerTableau2D(arr, X, UBound(arr, 2))
+        
+        Call TrierTableau2DBubble(arr)
+        
+        'Array to Worksheet
+        Dim outputRow As Long: outputRow = 2
+        wsOutput.Range("A2").Resize(UBound(arr, 1), UBound(arr, 2)).Value = arr
+        wsOutput.Range("A:A").EntireColumn.Hidden = True 'Do not show the sortKey
+        wsOutput.Columns(4).HorizontalAlignment = xlCenter
+        wsOutput.Columns(7).HorizontalAlignment = xlCenter
+        wsOutput.Columns(8).NumberFormat = "dd/mm/yyyy hh:mm:ss"
+        
+        Dim lastUsedRow As Long
+        lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "B").End(xlUp).Row
+        Dim j As Long, oldWorksheet As String
+        oldWorksheet = wsOutput.Range("B" & lastUsedRow).Value
+        For j = lastUsedRow To 2 Step -1
+            If wsOutput.Range("B" & j).Value <> oldWorksheet Then
+                wsOutput.Rows(j + 1).Insert Shift:=xlDown, CopyOrigin:=xlFormatFromRightOrBelow
+                oldWorksheet = wsOutput.Range("B" & j).Value
+            End If
+        Next j
+        
+        'Since we might have inserted new row, let's update the lastUsedRow
+        lastUsedRow = wsOutput.Cells(wsOutput.Rows.count, "B").End(xlUp).Row
+        With wsOutput.Range("B2:H" & lastUsedRow)
+            On Error Resume Next
+            ActiveSheet.Cells.FormatConditions.Delete
+            On Error GoTo 0
+        
+            .FormatConditions.Add Type:=xlExpression, Formula1:= _
+                "=ET($B2<>"""";MOD(LIGNE();2)=1)"
+            .FormatConditions(.FormatConditions.count).SetFirstPriority
+            With .FormatConditions(1).Interior
+                .PatternColorIndex = xlAutomatic
+                .ThemeColor = xlThemeColorAccent1
+                .TintAndShade = 0.799981688894314
+            End With
+            .FormatConditions(1).StopIfTrue = False
+        End With
+        
+        wsOutput.Range("A1").CurrentRegion.EntireColumn.AutoFit
+
+    End If
+
+    'AutoFit the columns for better readability
+    wsOutput.Columns.AutoFit
+    
+    'Result print setup
+    lastUsedRow = lastUsedRow + 2
+    wsOutput.Range("B" & lastUsedRow).Value = "*** " & Format$(xAnalyzed, "###,##0") & _
+                                    " cellules analysées dans l'application ***"
+    Dim header1 As String: header1 = "Cells Data Validations"
+    Dim header2 As String: header2 = "All worksheets"
+    Call modAppli_Utils.MettreEnFormeImpressionSimple(wsOutput, wsOutput.Range("B2:H" & lastUsedRow), _
+                           header1, _
+                           header2, _
+                           "$1:$1", _
+                           "L")
+    
+    MsgBox "Data validation list were created in worksheet: " & wsOutput.Name
+    
+    'Libérer la mémoire
+    Set cell = Nothing
+    Set ws = Nothing
+    Set wsOutput = Nothing
+    
+End Sub
 

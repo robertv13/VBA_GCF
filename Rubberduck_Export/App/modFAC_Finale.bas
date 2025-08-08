@@ -44,11 +44,11 @@ Sub SauvegardeFacture() '2024-03-28 @ 07:19
     
     Call FAC_Finale_Disable_Save_Button
 
-    Call FAC_Finale_Add_Invoice_Header_to_DB
-    Call FAC_Finale_Add_Invoice_Header_Locally
+    Call AjouterFACEnteteDBMaster
+    Call AjouterFACEnteteDBLocale
     
-    Call FAC_Finale_Add_Invoice_Details_to_DB
-    Call FAC_Finale_Add_Invoice_Details_Locally
+    Call AjouterFACDetailsBDMaster
+    Call AjouterFACDetailsBDLocale
     
     Call FAC_Finale_Add_Invoice_Somm_Taux_to_DB
     Call FAC_Finale_Add_Invoice_Somm_Taux_Locally
@@ -109,9 +109,9 @@ Fast_Exit_Sub:
     
 End Sub
 
-Sub FAC_Finale_Add_Invoice_Header_to_DB()
+Sub AjouterFACEnteteDBMaster()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Add_Invoice_Header_to_DB", _
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:AjouterFACEnteteDBMaster", _
         "# = " & wshFAC_Finale.Range("E28").Value & " - Date = " & Format$(wshFAC_Brouillon.Range("O3").Value, "dd/mm/yyyy"), 0)
 
     Application.ScreenUpdating = False
@@ -183,13 +183,13 @@ Sub FAC_Finale_Add_Invoice_Header_to_DB()
     Set recSet = Nothing
     Set conn = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Add_Invoice_Header_to_DB", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:AjouterFACEnteteDBMaster", vbNullString, startTime)
 
 End Sub
 
-Sub FAC_Finale_Add_Invoice_Header_Locally() '2024-03-11 @ 08:19 - Write records locally
+Sub AjouterFACEnteteDBLocale() '2024-03-11 @ 08:19 - Write records locally
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Add_Invoice_Header_Locally", _
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:AjouterFACEnteteDBLocale", _
         "# = " & wshFAC_Finale.Range("E28").Value & " - Date = " & Format$(wshFAC_Brouillon.Range("O3").Value, "dd/mm/yyyy"), 0)
     
     Application.ScreenUpdating = False
@@ -237,15 +237,15 @@ Sub FAC_Finale_Add_Invoice_Header_Locally() '2024-03-11 @ 08:19 - Write records 
     wshFAC_Brouillon.Range("B11").Value = firstFreeRow
     Application.EnableEvents = True
     
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Add_Invoice_Header_Locally", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:AjouterFACEnteteDBLocale", vbNullString, startTime)
 
     Application.ScreenUpdating = True
 
 End Sub
 
-Sub FAC_Finale_Add_Invoice_Details_to_DB()
+Sub AjouterFACDetailsBDMaster()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Add_Invoice_Details_to_DB", _
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:AjouterFACDetailsBDMaster", _
         "# = " & wshFAC_Finale.Range("E28").Value & " - Date = " & Format$(wshFAC_Brouillon.Range("O3").Value, "dd/mm/yyyy"), 0)
 
     Application.ScreenUpdating = False
@@ -330,13 +330,13 @@ nothing_to_update:
     Set conn = Nothing
     Set recSet = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Add_Invoice_Details_to_DB", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:AjouterFACDetailsBDMaster", vbNullString, startTime)
 
 End Sub
 
-Sub FAC_Finale_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records locally
+Sub AjouterFACDetailsBDLocale() '2024-03-11 @ 08:19 - Write records locally
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Add_Invoice_Details_Locally", _
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:AjouterFACDetailsBDLocale", _
         "# = " & wshFAC_Finale.Range("E28").Value & " - Date = " & Format$(wshFAC_Brouillon.Range("O3").Value, "dd/mm/yyyy"), 0)
     
     Application.ScreenUpdating = False
@@ -392,7 +392,7 @@ Sub FAC_Finale_Add_Invoice_Details_Locally() '2024-03-11 @ 08:19 - Write records
 nothing_to_update:
     Application.ScreenUpdating = True
     
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Add_Invoice_Details_Locally", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:AjouterFACDetailsBDLocale", vbNullString, startTime)
 
 End Sub
 
@@ -1436,12 +1436,6 @@ Exit_Sub:
     Set ws = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:FAC_Finale_Creation_Courriel", vbNullString, startTime)
-
-End Sub
-
-Sub Test_FAC_Finale_Creation_Courriel()
-
-    Call FAC_Finale_Creation_Courriel("24-24524", "1793")
 
 End Sub
 

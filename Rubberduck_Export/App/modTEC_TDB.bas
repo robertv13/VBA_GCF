@@ -11,7 +11,7 @@ Sub RetourAuMenuTEC()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_TDB:RetourAuMenuTEC", vbNullString, 0)
     
-    wshTEC_TDB.Visible = xlSheetHidden
+    wshTEC_Analyse.Visible = xlSheetHidden
     
     wshMenuTEC.Activate
     wshMenuTEC.Range("A1").Select

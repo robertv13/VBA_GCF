@@ -33,7 +33,7 @@ Function Fn_Get_Prof_From_ProfID(i As Long)
     
 End Function
 
-Function Fn_Get_A_Row_From_A_Worksheet(feuille As String, cle As Variant, cleCol As Integer) As Variant
+Function Fn_ObtenirLigneDeFeuille(feuille As String, cle As Variant, cleCol As Integer) As Variant
 
     'Feuille à rechercher
     Dim ws As Worksheet
@@ -51,13 +51,13 @@ Function Fn_Get_A_Row_From_A_Worksheet(feuille As String, cle As Variant, cleCol
         If Trim(allData(i, cleCol)) = Trim(cle) Then
             'Ligne est trouvée alors on copie toutes les colonnes dans le tableau résultat
             resultArray = Application.index(allData, i, 0)
-            Fn_Get_A_Row_From_A_Worksheet = resultArray
+            Fn_ObtenirLigneDeFeuille = resultArray
             Exit Function
         End If
     Next i
     
     'Si aucune correspondance n'a été trouvée, retourner une valeur vide
-    Fn_Get_A_Row_From_A_Worksheet = CVErr(xlErrValue)
+    Fn_ObtenirLigneDeFeuille = CVErr(xlErrValue)
     
 End Function
 
@@ -1928,7 +1928,7 @@ Function AppMsgBox(message As String _
                  
 End Function
 
-Sub test_AppMsgBox()
+Sub zz_TesterAppMsgBox() '@TODO
 
     Dim r As VbMsgBoxResult
     r = AppMsgBox("Voulez-vous continuer ?", vbYesNo + vbQuestion + vbDefaultButton1, "Confirmation avant de continuer")
@@ -2235,7 +2235,7 @@ Function NormaliserDate(chaine As String) As Variant '2025-06-12 @ 08:22
     parties = Split(Replace(chaine, "-", "/"), "/")
     nbParties = UBound(parties) - LBound(parties) + 1
 
-    On Error GoTo erreur
+    On Error GoTo Erreur
 
     Select Case nbParties
         Case 1 ' Juste le jour
@@ -2278,7 +2278,7 @@ Function NormaliserDate(chaine As String) As Variant '2025-06-12 @ 08:22
     NormaliserDate = resultDate
     Exit Function
 
-erreur:
+Erreur:
     NormaliserDate = CVErr(xlErrValue)
     
 End Function

@@ -271,8 +271,8 @@ Sub Radiation_Mise_À_Jour()
     lastUsedRow = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "AQ").End(xlUp).Row
     
     If lastUsedRow >= 3 Then
-        Call TEC_Radiation_Update_As_Billed_To_DB(3, lastUsedRow)
-        Call TEC_Radiation_Update_As_Billed_Locally(3, lastUsedRow)
+        Call MettreAJourEstFactureeBDMaster(3, lastUsedRow)
+        Call MettreAJourEstFactureeBDLocale(3, lastUsedRow)
         Call modTEC_TDB.ActualiserTECTableauDeBord
         MsgBox "Les TEC sélectionnés ont été radié avec succès", vbOKOnly, "Confirmation de traitement"
     Else
@@ -281,9 +281,9 @@ Sub Radiation_Mise_À_Jour()
     
 End Sub
 
-Sub TEC_Radiation_Update_As_Billed_To_DB(firstRow As Long, lastRow As Long) 'Update Billed Status in DB
+Sub MettreAJourEstFactureeBDMaster(firstRow As Long, lastRow As Long) 'Update Billed Status in DB
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Radiation:TEC_Radiation_Update_As_Billed_To_DB", firstRow & ", " & lastRow, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Radiation:MettreAJourEstFactureeBDMaster", firstRow & ", " & lastRow, 0)
 
     Application.ScreenUpdating = False
     
@@ -342,13 +342,13 @@ next_iteration:
     Set conn = Nothing
     Set recSet = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Radiation:TEC_Radiation_Update_As_Billed_To_DB", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Radiation:MettreAJourEstFactureeBDMaster", vbNullString, startTime)
 
 End Sub
 
-Sub TEC_Radiation_Update_As_Billed_Locally(firstResultRow As Long, lastResultRow As Long)
+Sub MettreAJourEstFactureeBDLocale(firstResultRow As Long, lastResultRow As Long)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Radiation:TEC_Radiation_Update_As_Billed_Locally", firstResultRow & ", " & lastResultRow, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Radiation:MettreAJourEstFactureeBDLocale", firstResultRow & ", " & lastResultRow, 0)
     
     'Set the range to look for
     Dim lookupRange As Range: Set lookupRange = wsdTEC_Local.Range("l_tbl_TEC_Local[TECID]")
@@ -370,7 +370,7 @@ Sub TEC_Radiation_Update_As_Billed_Locally(firstResultRow As Long, lastResultRow
     'Libérer la mémoire
     Set lookupRange = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Radiation:TEC_Radiation_Update_As_Billed_Locally", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Radiation:MettreAJourEstFactureeBDLocale", vbNullString, startTime)
 
 End Sub
 

@@ -518,7 +518,7 @@ Sub EnvoyerRappelParCourriel(noFact As String)
     Dim codeClient As String
     Dim dateFact As Date
     Dim allCols As Variant
-    allCols = Fn_Get_A_Row_From_A_Worksheet("FAC_Entete", noFact, fFacEInvNo)
+    allCols = Fn_ObtenirLigneDeFeuille("FAC_Entete", noFact, fFacEInvNo)
     'Vérifier les résultats
     If IsArray(allCols) Then
         codeClient = allCols(fFacECustID)
@@ -537,7 +537,7 @@ Sub EnvoyerRappelParCourriel(noFact As String)
     Dim clientNom As String
     Dim clientContactFact As String
     Dim clientCourriel As String
-    allCols = Fn_Get_A_Row_From_A_Worksheet("BD_Clients", codeClient, fClntFMClientID)
+    allCols = Fn_ObtenirLigneDeFeuille("BD_Clients", codeClient, fClntFMClientID)
     'Vérifier les résultats
     If IsArray(allCols) Then
         clientNom = allCols(fClntFMClientNom)
@@ -555,7 +555,7 @@ Sub EnvoyerRappelParCourriel(noFact As String)
     Dim factSolde As Currency
     Dim factSommePmts As Currency
     Dim factSommeRegul As Currency
-    allCols = Fn_Get_A_Row_From_A_Worksheet("FAC_Comptes_Clients", noFact, fFacCCInvNo)
+    allCols = Fn_ObtenirLigneDeFeuille("FAC_Comptes_Clients", noFact, fFacCCInvNo)
     'Vérifier les résultats
     If IsArray(allCols) Then
         factSolde = allCols(fFacCCBalance)

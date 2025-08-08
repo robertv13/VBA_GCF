@@ -1,49 +1,6 @@
 Attribute VB_Name = "modImport"
 Option Explicit
 
-Sub ImporterPlanComptable() '2024-02-17 @ 07:21
-
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterPlanComptable", vbNullString, 0)
-
-    'Clear all cells, but the headers, in the target worksheet
-    wsdADMIN.Range("T10").CurrentRegion.offset(2, 0).ClearContents
-
-    'Import Accounts List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
-    Dim sourceWorkbook As String, sourceWorksheet As String
-    sourceWorkbook = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
-                     wsdADMIN.Range("CLIENTS_FILE").Value
-    sourceWorksheet = "PlanComptable$"
-
-    'ADODB connection
-    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    conn.Open = "Provider = Microsoft.ACE.OLEDB.12.0;Data Source = " & sourceWorkbook & ";" & _
-                "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
-    Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
-    With recSet
-        .ActiveConnection = conn
-        .CursorType = adOpenStatic
-        .LockType = adLockReadOnly
-        .source = "SELECT * FROM [" & sourceWorksheet & "]"
-        .Open
-    End With
-
-    'Copy to wsdAdmin workbook
-    wsdADMIN.Range("T11").CopyFromRecordset recSet
-
-    'Close resource
-    recSet.Close
-    conn.Close
-
-    Call RedefinirDnrPlanComptable
-
-    'Libérer la mémoire
-    Set conn = Nothing
-    Set recSet = Nothing
-
-    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterPlanComptable", vbNullString, startTime)
-
-End Sub
-
 Sub ImporterMASTERGenerique(sourceWb As String, ws As Worksheet, onglet As String, table As String) '2025-05-07 @ 18:00
 
 '    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterMASTERGenerique:" & onglet, vbNullString, 0)
