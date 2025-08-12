@@ -49,7 +49,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
         ActiveWindow.FreezePanes = True
     End With
     
-    Application.GoTo ws.Range("A8"), Scroll:=True
+    Application.Goto ws.Range("A8"), Scroll:=True
     
     'Reactive les événements
     Application.EnableEvents = True
@@ -134,7 +134,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'CutOffDate has changed
     If Not Intersect(Target, Range("H3")) Is Nothing Then
         Application.EnableEvents = False
-        fullDate = Fn_Complete_Date(Target.text, 45, 0)
+        fullDate = Fn_CompleteLaDate(Target.text, 45, 0)
         If fullDate <> "Invalid Date" Then
             Target.Value = fullDate
             Call TrierEtAjouterSousTotauxClient
@@ -143,7 +143,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
        
         'Future date ?
@@ -152,7 +152,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.GoTo Range(Target.Address)
+                Application.Goto Range(Target.Address)
             End If
         End If
 
@@ -168,15 +168,15 @@ exitSub:
   
 End Sub
 
-Sub CheckBox1_Click() '2024-07-18 @ 18:53
+Sub shpCheckBox1_Click() '2024-07-18 @ 18:53
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("wshTEC_Analyse:CheckBox1_Click", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("wshTEC_Analyse:shpCheckBox1_Click", vbNullString, 0)
     
     Dim ws As Worksheet: Set ws = wshTEC_Analyse
     
     'Reference your checkbox by name
     Dim chkBox As OLEObject
-    Set chkBox = ws.OLEObjects("CheckBox1")
+    Set chkBox = ws.OLEObjects("shpCheckBox1")
     
     'Get the address of the checkbox
     Dim chkBoxPosition As String
@@ -201,7 +201,7 @@ Sub CheckBox1_Click() '2024-07-18 @ 18:53
         
         'Is there a billing project that already exist for this customer ?
         Dim cell As String
-        cell = Fn_Verify_And_Delete_Rows_If_Value_Is_Found(ws.Range("C" & totalRow + 1).Value, _
+        cell = Fn_DetruireLigneSiValeurEstTrouvee(ws.Range("C" & totalRow + 1).Value, _
                                                         ws.Range("D" & totalRow).Value)
         
         Select Case cell
@@ -221,7 +221,7 @@ Sub CheckBox1_Click() '2024-07-18 @ 18:53
                 Dim nomClient As String
                 Dim clientID As String
                 nomClient = ws.Range("C" & firstRow).Value
-                clientID = Fn_GetID_From_Client_Name(nomClient)
+                clientID = Fn_ClientIDAPartirDuNomDeClient(nomClient)
                 
                 Dim projetID As Long 'ProjetID is establised by the next procedure
                 Call AjouterProjetsDetailsBDMaster(clientID, firstRow, lastRow, projetID)
@@ -249,7 +249,7 @@ Sub CheckBox1_Click() '2024-07-18 @ 18:53
                 Call AjouterProjetsEnteteBDMaster(projetID, nomClient, clientID, dateProjet, hono, arr)
                 Call AjouterProjetsEnteteBDLocale(projetID, nomClient, clientID, dateProjet, hono, arr)
                 
-                Call Groups_SubTotals_Collapse_A_Client(firstRow)
+                Call OrganiserEtFermerSousTotauxClient(firstRow)
                 
                 Application.EnableEvents = True
                 
@@ -258,18 +258,18 @@ Sub CheckBox1_Click() '2024-07-18 @ 18:53
                 ws.Range("D" & totalRow).Value = 0
                 Application.EnableEvents = True
                 firstRow = totalRow + 1
-                Call Groups_SubTotals_Collapse_A_Client(firstRow)
+                Call OrganiserEtFermerSousTotauxClient(firstRow)
                 
             Case "RIEN_CHANGER"
                 firstRow = totalRow + 1
-                Call Groups_SubTotals_Collapse_A_Client(firstRow)
+                Call OrganiserEtFermerSousTotauxClient(firstRow)
             
         End Select
     Else
         ws.Range("D" & totalRow).Value = 0
         'Perform actions when checkbox is unchecked
         Application.EnableEvents = True
-        Call Groups_SubTotals_Collapse_A_Client(firstRow)
+        Call OrganiserEtFermerSousTotauxClient(firstRow)
 
     End If
     
@@ -282,7 +282,7 @@ Sub CheckBox1_Click() '2024-07-18 @ 18:53
     Set rngSummary = Nothing
     Set ws = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("wshTEC_Analyse:CheckBox1_Click", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("wshTEC_Analyse:shpCheckBox1_Click", vbNullString, startTime)
 
 End Sub
 

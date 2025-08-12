@@ -22,7 +22,7 @@ Sub CalculerSoldesPourEF(ws As Worksheet, dateCutoff As Date) '2025-02-05 @ 04:2
     
     'Qui exécute ce programme ?
     Dim isDeveloppeur As Boolean
-    If modFunctions.GetNomUtilisateur() = "RobertMV" Or modFunctions.GetNomUtilisateur() = "robertmv" Then
+    If modFunctions.Fn_NomUtilisateurWindows() = "RobertMV" Or modFunctions.Fn_NomUtilisateurWindows() = "robertmv" Then
         isDeveloppeur = True
     End If
     
@@ -35,7 +35,7 @@ Sub CalculerSoldesPourEF(ws As Worksheet, dateCutoff As Date) '2025-02-05 @ 04:2
     
     'The Chart of Account will drive the results, so the sort order is determined by COA
     Dim arr As Variant
-    arr = Fn_Get_Plan_Comptable(4) 'Retourne un tableau avec 4 colonnes
+    arr = Fn_PlanComptableTableau2D(4) 'Retourne un tableau avec 4 colonnes
     
     'Effacer les cellules en place (contenu & format)
     ws.Unprotect
@@ -338,7 +338,7 @@ Sub AssemblerPageTitre0Main(dateAC As Date, dateAP As Date)
     
     Application.StatusBar = "Construction de la page titre"
         
-    Call AssemblerPageTitre1EtArrièrePlanEtEntête(ws, dateAC, dateAP)
+    Call AssemblerPageTitre1EtArrierePlanEtEntete(ws, dateAC, dateAP)
     
     Application.StatusBar = False
     
@@ -348,9 +348,9 @@ Sub AssemblerPageTitre0Main(dateAC As Date, dateAP As Date)
 
 End Sub
 
-Sub AssemblerPageTitre1EtArrièrePlanEtEntête(ws As Worksheet, dateAC As Date, dateAP As Date)
+Sub AssemblerPageTitre1EtArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerPageTitre1EtArrièrePlanEtEntête", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerPageTitre1EtArrierePlanEtEntete", vbNullString, 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -377,7 +377,7 @@ Sub AssemblerPageTitre1EtArrièrePlanEtEntête(ws As Worksheet, dateAC As Date, 
     'Fixer le printArea selon le nombre de lignes ET 3 colonnes
     ActiveSheet.PageSetup.PrintArea = "$A1:$C" & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3
 
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerPageTitre1EtArrièrePlanEtEntête", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerPageTitre1EtArrierePlanEtEntete", vbNullString, startTime)
 
 End Sub
 
@@ -392,7 +392,7 @@ Sub AssemblerTM0Main(dateAC As Date, dateAP As Date)
     
     Application.StatusBar = "Construction de la table des matières"
     
-    Call AssemblerTM1ArrièrePlanEtEntete(ws, dateAC, dateAP)
+    Call AssemblerTM1ArrierePlanEtEntete(ws, dateAC, dateAP)
     Call AssemblerTM2Lignes(ws)
     
     Application.StatusBar = False
@@ -403,9 +403,9 @@ Sub AssemblerTM0Main(dateAC As Date, dateAP As Date)
 
 End Sub
 
-Sub AssemblerTM1ArrièrePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As Date)
+Sub AssemblerTM1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerTM1ArrièrePlanEtEntete", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerTM1ArrierePlanEtEntete", vbNullString, 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -435,7 +435,7 @@ Sub AssemblerTM1ArrièrePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As 
     'Fixer le printArea selon le nombre de lignes ET 3 colonnes
     ActiveSheet.PageSetup.PrintArea = "$A1:$D" & ws.Cells(ws.Rows.count, "B").End(xlUp).Row + 3
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerTM1ArrièrePlanEtEntete", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerTM1ArrierePlanEtEntete", vbNullString, startTime)
 
 End Sub
 
@@ -492,7 +492,7 @@ Sub AssemblerER0Main(dateAC As Date, dateAP As Date)
     
     Application.StatusBar = "Construction de l'état des résultats"
     
-    Call AssemblerER1ArrièrePlanEtEntete(ws, dateAC, dateAP)
+    Call AssemblerER1ArrierePlanEtEntete(ws, dateAC, dateAP)
     Call AssemblerER2Lignes(ws)
     
     'On ajoute le Revenu Net au BNR du bilan via variables Globales
@@ -509,9 +509,9 @@ Sub AssemblerER0Main(dateAC As Date, dateAP As Date)
 
 End Sub
 
-Sub AssemblerER1ArrièrePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As Date)
+Sub AssemblerER1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerER1ArrièrePlanEtEntete", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerER1ArrierePlanEtEntete", vbNullString, 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -566,7 +566,7 @@ Sub AssemblerER1ArrièrePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As 
 
     ws.PageSetup.CenterFooter = 2
      
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerER1ArrièrePlanEtEntete", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerER1ArrierePlanEtEntete", vbNullString, startTime)
 
 End Sub
 
@@ -650,7 +650,7 @@ Sub AssemblerBilan0Main(dateAC As Date, dateAP As Date)
     
     Application.StatusBar = "Construction du bilan"
     
-    Call AssemblerBilan1ArrièrePlanEtEntete(ws, dateAC, dateAP)
+    Call AssemblerBilan1ArrierePlanEtEntete(ws, dateAC, dateAP)
     Call AssemblerBilan2Lignes(ws)
     
     Application.StatusBar = False
@@ -661,9 +661,9 @@ Sub AssemblerBilan0Main(dateAC As Date, dateAP As Date)
     
 End Sub
 
-Sub AssemblerBilan1ArrièrePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As Date)
+Sub AssemblerBilan1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBilan1ArrièrePlanEtEntete", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBilan1ArrierePlanEtEntete", vbNullString, 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -701,7 +701,7 @@ Sub AssemblerBilan1ArrièrePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP 
     
     ws.PageSetup.CenterFooter = 4
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBilan1ArrièrePlanEtEntete", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBilan1ArrierePlanEtEntete", vbNullString, startTime)
 
 End Sub
 
@@ -772,7 +772,7 @@ Sub AssemblerBNR0Main(dateAC As Date, dateAP As Date)
     
     Application.StatusBar = "Construction de l'état des bénéfices non répartis"
     
-    Call AssemblerBNR1ArrièrePlanEtEntete(ws, dateAC, dateAP)
+    Call AssemblerBNR1ArrierePlanEtEntete(ws, dateAC, dateAP)
     Call AssemblerBNR2Lignes(ws)
     
     Application.StatusBar = False
@@ -783,9 +783,9 @@ Sub AssemblerBNR0Main(dateAC As Date, dateAP As Date)
     
 End Sub
 
-Sub AssemblerBNR1ArrièrePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As Date)
+Sub AssemblerBNR1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBNR1ArrièrePlanEtEntete", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBNR1ArrierePlanEtEntete", vbNullString, 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -839,7 +839,7 @@ Sub AssemblerBNR1ArrièrePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As
     
     ws.PageSetup.CenterFooter = 3
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBNR1ArrièrePlanEtEntete", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBNR1ArrierePlanEtEntete", vbNullString, startTime)
 
 End Sub
 
@@ -909,22 +909,6 @@ Sub PositionnerCellule(ws As Worksheet, cell As String, ligne As Integer, col As
     End With
     
 End Sub
-
-Function ChercherSoldes(valeur As String, colonne As Integer) As Currency
-
-    Dim ws As Worksheet
-    Set ws = wshGL_PrepEF
-    
-    Dim r As Range
-    Set r = ws.Range("C6:C" & ws.Cells(ws.Rows.count, "C").End(xlUp).Row).Find(valeur, LookAt:=xlWhole)
-    
-    If Not r Is Nothing Then
-        ChercherSoldes = r.offset(0, 3).Value
-    Else
-        ChercherSoldes = 0
-    End If
-    
-End Function
 
 Sub ImprimerLigneEF(ws As Worksheet, ByRef currRow As Integer, LigneEF As String, codeEF As String, typeLigne As String, gras As String, souligne As String, size As Long)
     
@@ -1109,38 +1093,4 @@ Sub ImprimerLigneEF(ws As Worksheet, ByRef currRow As Integer, LigneEF As String
     End If
     
 End Sub
-
-Sub TrierDictionaryParCle(ByRef dict As Object)
-
-    'Récupérer les clés dans un tableau
-    Dim keys() As Variant, values() As Variant
-    keys = dict.keys
-    values = dict.items
-    
-    'Trier les clés et réarranger les valeurs
-    Dim i As Integer, j As Integer
-    Dim tempKey As Variant, tempValue As Variant
-    For i = LBound(keys) To UBound(keys) - 1
-        For j = i + 1 To UBound(keys)
-            If keys(i) > keys(j) Then ' Tri ascendant (A ? Z)
-                ' Échanger les clés
-                tempKey = keys(i)
-                keys(i) = keys(j)
-                keys(j) = tempKey
-                
-                ' Échanger les valeurs correspondantes
-                tempValue = values(i)
-                values(i) = values(j)
-                values(j) = tempValue
-            End If
-        Next j
-    Next i
-
-    'Afficher le dictionnaire trié
-    Debug.Print "Dictionnaire trié par clé :"
-    For i = LBound(keys) To UBound(keys)
-        Debug.Print keys(i) & " - " & Format$(values(i), "###,##0.00")
-    Next i
-End Sub
-
 

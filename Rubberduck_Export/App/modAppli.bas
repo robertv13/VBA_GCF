@@ -1,41 +1,10 @@
 Attribute VB_Name = "modAppli"
 Option Explicit
 
-Private Sub Auto_Open() '2024-12-28 @ 11:09
-
-    'Chemin du dossier contenant les fichiers PROD - 2025-07-02 @ 14:24
-    Dim cheminSourcePROD As String
-    cheminSourcePROD = "P:\Administration\APP\GCF\DataFiles\"
-    
-    If Fn_Get_Windows_Username <> "RobertMV" And Fn_Get_Windows_Username <> "Robertmv" Then
-        If Dir(cheminSourcePROD & "\GCF_BD_MASTER.lock") <> vbNullString Then
-            MsgBox "Cette application est actuellement en maintenance." & vbNewLine & vbNewLine & _
-                   "Le fichier principal est verrouillé par le développeur." & vbNewLine & vbNewLine & _
-                   "Veuillez ressayer dans 5 à 10 minutes SVP", _
-                   vbCritical, _
-                   "L'application APP n'est pas disponible"
-            Call modMenu.FermerApplicationNormalement(modFunctions.GetNomUtilisateur())
-        End If
-    End If
-    
-    gDerniereActivite = Now
-
-    'Mise en placedu mécanisme pour sortir automatiquement de l'application, s'il n'y a pas d'activité
-    gProchaineVerification = Now + TimeSerial(0, gFREQUENCE_VERIFICATION_INACTIVITE, 0)
-    Application.OnTime gProchaineVerification, "VerifierDerniereActivite"
-    Application.EnableEvents = False
-    wsdADMIN.Range("B3").Value = gFREQUENCE_VERIFICATION_INACTIVITE
-    wsdADMIN.Range("B4").Value = gMAXIMUM_MINUTES_INACTIVITE
-    Application.EnableEvents = True
-
-    Call DemarrerApplication
-    
-End Sub
-
 Sub DemarrerApplication() '2025-07-11 @ 15:16
 
     Dim rootPath As String
-    rootPath = ObtenirRepertoireBase
+    rootPath = Fn_RepertoireBaseApplication
 
     Application.EnableEvents = False
     wsdADMIN.Range("PATH_DATA_FILES").Value = rootPath
@@ -44,7 +13,7 @@ Sub DemarrerApplication() '2025-07-11 @ 15:16
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("----- DÉBUT D'UNE NOUVELLE SESSION (modAppli:DemarrerApplication) -----", vbNullString, 0)
     
     'Quel est l'utilisateur Windows ?
-    gUtilisateurWindows = modFunctions.GetNomUtilisateur()
+    gUtilisateurWindows = modFunctions.Fn_NomUtilisateurWindows()
     
     On Error GoTo ErrorHandler
     
@@ -55,7 +24,7 @@ Sub DemarrerApplication() '2025-07-11 @ 15:16
     Application.EnableEvents = True
     
     Application.StatusBar = "Vérification de l'accès au répertoire principal"
-    If Fn_Check_Server_Access(rootPath) = False Then
+    If Fn_AccesServeur(rootPath) = False Then
         MsgBox "Le répertoire principal '" & rootPath & "' n'est pas accessible." & vbNewLine & vbNewLine & _
                "Veuillez vérifier votre connexion au serveur SVP", vbCritical, rootPath
         Exit Sub
@@ -107,14 +76,42 @@ ErrorHandler:
     
 End Sub
 
-Function ObtenirRepertoireBase() As String '2025-03-03 @ 20:28
+Function Fn_VersionCompare(v1 As String, v2 As String) As Integer '2025-08-12 @ 06:04
+
+    Dim arr1() As String
+    Dim arr2() As String
+    Dim i As Integer
+
+    arr1 = Split(v1, ".")
+    arr2 = Split(v2, ".")
+
+    For i = 0 To Application.WorksheetFunction.Max(UBound(arr1), UBound(arr2))
+        Dim n1 As Integer
+        Dim n2 As Integer
+        If i <= UBound(arr1) Then n1 = val(arr1(i))
+        If i <= UBound(arr2) Then n2 = val(arr2(i))
+
+        If n1 < n2 Then
+            Fn_VersionCompare = -1
+            Exit Function
+        ElseIf n1 > n2 Then
+            Fn_VersionCompare = 1
+            Exit Function
+        End If
+    Next i
+
+    Fn_VersionCompare = 0 'Versions égales
+    
+End Function
+
+Function Fn_RepertoireBaseApplication() As String '2025-03-03 @ 20:28
    
     DoEvents
     
-    If modFunctions.GetNomUtilisateur() = "RobertMV" Or modFunctions.GetNomUtilisateur() = "robertmv" Then
-        ObtenirRepertoireBase = "C:\VBA\GC_FISCALITÉ"
+    If modFunctions.Fn_NomUtilisateurWindows() = "RobertMV" Or modFunctions.Fn_NomUtilisateurWindows() = "robertmv" Then
+        Fn_RepertoireBaseApplication = "C:\VBA\GC_FISCALITÉ"
     Else
-        ObtenirRepertoireBase = "P:\Administration\APP\GCF"
+        Fn_RepertoireBaseApplication = "P:\Administration\APP\GCF"
     End If
 
 End Function
@@ -324,7 +321,7 @@ Attribute VerifierDerniereActivite.VB_Description = "Vérifie l'inactivité et f
 
     'Calcul du temps d'inactivité en minutes
     Dim minutesInactives As Double
-    minutesInactives = Round(MinutesDepuisDerniereActivite(), 1)
+    minutesInactives = Round(Fn_MinutesDepuisDerniereActivite(), 1)
 
     If gMODE_DEBUG Then Debug.Print "[modAppli:VerifierDerniereActivite] Vérification @ " & minutesInactives & " min. - " & _
                                     "Fréq. vérification = "; gFREQUENCE_VERIFICATION_INACTIVITE & " min., " & _
@@ -403,7 +400,7 @@ Public Sub FermerApplicationInactive() '2025-07-02 @ 06:19
     If gMODE_DEBUG Then Debug.Print "[modAppli:FermerApplicationInactive] Fermeture automatique déclenchée à : " & Format(Now, "hh:mm:ss")
 
     'Appel direct de la procédure de fermeture
-    Call FermerApplicationNormalement(modFunctions.GetNomUtilisateur())
+    Call FermerApplicationNormalement(modFunctions.Fn_NomUtilisateurWindows())
     
 End Sub
 
@@ -412,24 +409,6 @@ Public Sub RelancerTimer() '2025-07-02 @ 06:43
     If gMODE_DEBUG Then Debug.Print "[modAppli:RelancerTimer] Appel de 'ufConfirmationFermeture.RafraichirTimer'"
     ufConfirmationFermeture.RafraichirTimer
     
-End Sub
-
-Public Sub RelancerSurveillance() '2025-07-02 @ 07:41
-
-    If gMODE_DEBUG Then Debug.Print "[modAppli:RelancerSurveillance] *** Surveillance relancée manuellement à " & Format(Now, "hh:mm:ss")
-    
-    On Error Resume Next
-    If gFermeturePlanifiee = 0 Then
-        If gMODE_DEBUG Then Debug.Print "[modAppli:RelancerSurveillance] gFermeturePlanifiee est nul — aucun OnTime à annuler"
-    End If
-
-    Application.OnTime gFermeturePlanifiee, "FermerApplicationInactive", , False
-    Application.OnTime ufConfirmationFermeture.ProchainTick, "RelancerTimer", , False
-    On Error GoTo 0
-
-    gDerniereActivite = Now
-    Call VerifierDerniereActivite
-
 End Sub
 
 Public Sub EnregistrerActiviteAuLog(ByVal message As String) '2025-07-03 @ 10:29
@@ -446,7 +425,7 @@ Public Sub EnregistrerActiviteAuLog(ByVal message As String) '2025-07-03 @ 10:29
     fileNum = FreeFile
 
     Open cheminLog For Append As #fileNum
-    Print #fileNum, "[" & Format(Now, "yyyy-mm-dd hh:nn:ss") & "] [" & Fn_Get_Windows_Username & "] " & message
+    Print #fileNum, "[" & Format(Now, "yyyy-mm-dd hh:nn:ss") & "] [" & Fn_UtilisateurWindows & "] " & message
     Close #fileNum
     
 End Sub

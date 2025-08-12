@@ -13,7 +13,7 @@ Sub AjouterLigneTEC() 'Add an entry to DB
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:AjouterLigneTEC", vbNullString, 0)
 
     'Obtenir le ID du client pur (à partir de son nom pur)
-    ufSaisieHeures.txtClientID.Value = Fn_Cell_From_BD_Client(ufSaisieHeures.txtClient.Value, 1, 2)
+    ufSaisieHeures.txtClientID.Value = Fn_CellSpecifiqueDeBDClient(ufSaisieHeures.txtClient.Value, 1, 2)
         
     If Fn_TEC_Is_Data_Valid() = True Then
         Dim Y As Integer, m As Integer, d As Integer
@@ -27,7 +27,7 @@ Sub AjouterLigneTEC() 'Add an entry to DB
         On Error GoTo 0
         
         Call AjouterOuModifierTECdansDBMaster(0)
-        Call AjouterOuModifierTECdansDBLocale(0)
+        Call AjouterOuModifierTECdansBDLocale(0)
         
         'Clear the userForm fields after saving
         With ufSaisieHeures
@@ -37,7 +37,7 @@ Sub AjouterLigneTEC() 'Add an entry to DB
             .txtActivite.Value = vbNullString
             .txtHeures.Value = vbNullString
             .txtCommNote.Value = vbNullString
-            .chbFacturable = True
+            .chkFacturable = True
         End With
         
         ufSaisieHeures.valeurSauveeHeures = 0 '2025-05-07 @ 16:54
@@ -62,10 +62,10 @@ Sub ModifierLigneTEC() '2023-12-23 @ 07:04
     If Fn_TEC_Is_Data_Valid() = False Then Exit Sub
 
     'Obtenir le ID du client pur (à partir de son nom pur) - 2025-03-04 @ 08:02
-    ufSaisieHeures.txtClientID.Value = Fn_Cell_From_BD_Client(ufSaisieHeures.txtClient.Value, 1, 2)
+    ufSaisieHeures.txtClientID.Value = Fn_CellSpecifiqueDeBDClient(ufSaisieHeures.txtClient.Value, 1, 2)
         
     Call AjouterOuModifierTECdansDBMaster(ufSaisieHeures.txtTECID.Value)
-    Call AjouterOuModifierTECdansDBLocale(ufSaisieHeures.txtTECID.Value)
+    Call AjouterOuModifierTECdansBDLocale(ufSaisieHeures.txtTECID.Value)
  
     'Initialize dynamic variables
     With ufSaisieHeures
@@ -76,7 +76,7 @@ Sub ModifierLigneTEC() '2023-12-23 @ 07:04
         .txtActivite.Value = vbNullString
         .txtHeures.Value = vbNullString
         .txtCommNote.Value = vbNullString
-        .chbFacturable = True
+        .chkFacturable = True
     End With
 
     Call ObtenirTousLesTECDateAvecAF
@@ -120,7 +120,7 @@ Sub DetruireLigneTEC() '2023-12-23 @ 07:05
     tecID = -ufSaisieHeures.txtTECID.Value
     
     Call AjouterOuModifierTECdansDBMaster(tecID)  'Write to external XLSX file - 2023-12-23 @ 07:07
-    Call AjouterOuModifierTECdansDBLocale(tecID)  'Write to local worksheet - 2024-02-25 @ 10:40
+    Call AjouterOuModifierTECdansBDLocale(tecID)  'Write to local worksheet - 2024-02-25 @ 10:40
     
     'Empty the dynamic fields after deleting
     With ufSaisieHeures
@@ -128,7 +128,7 @@ Sub DetruireLigneTEC() '2023-12-23 @ 07:05
         .txtActivite.Value = vbNullString
         .txtHeures.Value = vbNullString
         .txtCommNote.Value = vbNullString
-        .chbFacturable = True
+        .chkFacturable = True
     End With
     
     MsgBox _
@@ -313,7 +313,7 @@ Sub AjouterOuModifierTECdansDBMaster(tecID As Long) 'Write -OR- Update a record 
     If tecID = 0 And Date - dateValue > 30 Then
         MsgBox "La date saisie est plus de 30 jours dans le passé..." & vbNewLine & vbNewLine & _
                 "Veuillez aviser le développeur de cette situation SVP", vbInformation
-        Call Log_Saisie_Heures("Future   ", "Plus de 30 jours dans le passé - dateValue = " & dateValue & "  type = " & TypeName(dateValue))
+        Call EnregistrerLogSaisieHeures("Future   ", "Plus de 30 jours dans le passé - dateValue = " & dateValue & "  type = " & TypeName(dateValue))
     End If
     
     If tecID < 0 Then 'Soft delete a record
@@ -329,13 +329,13 @@ Sub AjouterOuModifierTECdansDBMaster(tecID As Long) 'Write -OR- Update a record 
             recSet.Fields(fTECVersionApp - 1).Value = ThisWorkbook.Name
             recSet.Update
             
-            Call Log_Saisie_Heures("DELETE" & saveLogTECID, ufSaisieHeures.cmbProfessionnel.Value & " | " & _
+            Call EnregistrerLogSaisieHeures("DELETE" & saveLogTECID, ufSaisieHeures.cmbProfessionnel.Value & " | " & _
                                     dateValue & " | " & _
                                     ufSaisieHeures.txtClientID.Value & " | " & _
                                     ufSaisieHeures.txtClient.Value & " | " & _
                                     ufSaisieHeures.txtActivite.Value & " | " & _
                                     Format$(ufSaisieHeures.txtHeures.Value, "#0.00") & " | " & _
-                                    Fn_Convert_Value_Boolean_To_Text(ufSaisieHeures.chbFacturable.Value) & " | " & _
+                                    Fn_Convert_Value_Boolean_To_Text(ufSaisieHeures.chkFacturable.Value) & " | " & _
                                     ufSaisieHeures.txtCommNote.Value)
 
         Else 'Handle the case where the specified ID is not found - PROBLEM !!!
@@ -394,7 +394,7 @@ Sub AjouterOuModifierTECdansDBMaster(tecID As Long) 'Write -OR- Update a record 
             recSet.Fields(fTECDescription - 1).Value = ufSaisieHeures.txtActivite.Value
             recSet.Fields(fTECHeures - 1).Value = Format$(ufSaisieHeures.txtHeures.Value, "#0.00")
             recSet.Fields(fTECCommentaireNote - 1).Value = ufSaisieHeures.txtCommNote.Value
-            recSet.Fields(fTECEstFacturable - 1).Value = Fn_Convert_Value_Boolean_To_Text(ufSaisieHeures.chbFacturable.Value)
+            recSet.Fields(fTECEstFacturable - 1).Value = Fn_Convert_Value_Boolean_To_Text(ufSaisieHeures.chkFacturable.Value)
             recSet.Fields(fTECDateSaisie - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
             recSet.Fields(fTECEstFacturee - 1).Value = Fn_Convert_Value_Boolean_To_Text(False)
             recSet.Fields(fTECDateFacturee - 1).Value = Null
@@ -404,13 +404,13 @@ Sub AjouterOuModifierTECdansDBMaster(tecID As Long) 'Write -OR- Update a record 
             recSet.Update
             
             'Nouveau log - 2024-09-02 @ 10:40
-            Call Log_Saisie_Heures("ADD    " & saveLogTECID, ufSaisieHeures.cmbProfessionnel.Value & " | " & _
+            Call EnregistrerLogSaisieHeures("ADD    " & saveLogTECID, ufSaisieHeures.cmbProfessionnel.Value & " | " & _
                         dateValue & " | " & _
                         ufSaisieHeures.txtClientID.Value & " | " & _
                         ufSaisieHeures.txtClient.Value & " | " & _
                         ufSaisieHeures.txtActivite.Value & " | " & _
                         Format$(ufSaisieHeures.txtHeures.Value, "#0.00") & " | " & _
-                        Fn_Convert_Value_Boolean_To_Text(ufSaisieHeures.chbFacturable.Value) & " | " & _
+                        Fn_Convert_Value_Boolean_To_Text(ufSaisieHeures.chkFacturable.Value) & " | " & _
                         ufSaisieHeures.txtCommNote.Value)
         
         Else 'Update an existing record (TECID <> 0)
@@ -424,17 +424,17 @@ Sub AjouterOuModifierTECdansDBMaster(tecID As Long) 'Write -OR- Update a record 
                 recSet.Fields(fTECDescription - 1).Value = ufSaisieHeures.txtActivite.Value
                 recSet.Fields(fTECHeures - 1).Value = Format$(ufSaisieHeures.txtHeures.Value, "#0.00")
                 recSet.Fields(fTECCommentaireNote - 1).Value = ufSaisieHeures.txtCommNote.Value
-                recSet.Fields(fTECEstFacturable - 1).Value = Fn_Convert_Value_Boolean_To_Text(ufSaisieHeures.chbFacturable.Value)
+                recSet.Fields(fTECEstFacturable - 1).Value = Fn_Convert_Value_Boolean_To_Text(ufSaisieHeures.chkFacturable.Value)
                 recSet.Fields(fTECDateSaisie - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
                 recSet.Fields(fTECVersionApp - 1).Value = ThisWorkbook.Name
                 
-                Call Log_Saisie_Heures("UPDATE " & saveLogTECID, ufSaisieHeures.cmbProfessionnel.Value & " | " & _
+                Call EnregistrerLogSaisieHeures("UPDATE " & saveLogTECID, ufSaisieHeures.cmbProfessionnel.Value & " | " & _
                             dateValue & " | " & _
                             ufSaisieHeures.txtClientID.Value & " | " & _
                             ufSaisieHeures.txtClient.Value & " | " & _
                             ufSaisieHeures.txtActivite.Value & " | " & _
                             Format$(ufSaisieHeures.txtHeures.Value, "#0.00") & " | " & _
-                            Fn_Convert_Value_Boolean_To_Text(ufSaisieHeures.chbFacturable.Value) & " | " & _
+                            Fn_Convert_Value_Boolean_To_Text(ufSaisieHeures.chkFacturable.Value) & " | " & _
                             ufSaisieHeures.txtCommNote.Value)
             
             Else
@@ -443,7 +443,7 @@ Sub AjouterOuModifierTECdansDBMaster(tecID As Long) 'Write -OR- Update a record 
                 
                 MsgBox "L'enregistrement avec le TECID '" & tecID & "' ne peut être trouvé!", vbExclamation
                 Call modDev_Utils.EnregistrerLogApplication("ERREUR - N'a pas trouvé le TECID '", CStr(saveLogTECID), -1)   '2024-09-13 @ 09:09
-                Call Log_Saisie_Heures("Erreur  ", "@00495 - Impossible de trouver le TECID = " & CStr(saveLogTECID)) '2024-09-02 @ 10:35
+                Call EnregistrerLogSaisieHeures("Erreur  ", "@00495 - Impossible de trouver le TECID = " & CStr(saveLogTECID)) '2024-09-02 @ 10:35
                 recSet.Close
                 conn.Close
                 Exit Sub
@@ -490,9 +490,9 @@ ErrorHandler:
     
 End Sub
 
-Sub AjouterOuModifierTECdansDBLocale(tecID As Long)
+Sub AjouterOuModifierTECdansBDLocale(tecID As Long)
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:AjouterOuModifierTECdansDBLocale", CStr(tecID), 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:AjouterOuModifierTECdansBDLocale", CStr(tecID), 0)
 
     Application.ScreenUpdating = False
     
@@ -523,7 +523,7 @@ Sub AjouterOuModifierTECdansDBLocale(tecID As Long)
             .Range("G" & nextRowNumber).Value = ufSaisieHeures.txtActivite.Value
             .Range("H" & nextRowNumber).Value = hoursValue
             .Range("I" & nextRowNumber).Value = ufSaisieHeures.txtCommNote.Value
-            .Range("J" & nextRowNumber).Value = Fn_Convert_Value_Boolean_To_Text(ufSaisieHeures.chbFacturable.Value)
+            .Range("J" & nextRowNumber).Value = Fn_Convert_Value_Boolean_To_Text(ufSaisieHeures.chkFacturable.Value)
             .Range("K" & nextRowNumber).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
             .Range("L" & nextRowNumber).Value = Fn_Convert_Value_Boolean_To_Text(False)
             .Range("M" & nextRowNumber).Value = vbNullString
@@ -551,7 +551,7 @@ Sub AjouterOuModifierTECdansDBLocale(tecID As Long)
                 .Range("G" & rowToBeUpdated).Value = ufSaisieHeures.txtActivite.Value
                 .Range("H" & rowToBeUpdated).Value = hoursValue
                 .Range("I" & rowToBeUpdated).Value = ufSaisieHeures.txtCommNote.Value
-                .Range("J" & rowToBeUpdated).Value = Fn_Convert_Value_Boolean_To_Text(ufSaisieHeures.chbFacturable.Value)
+                .Range("J" & rowToBeUpdated).Value = Fn_Convert_Value_Boolean_To_Text(ufSaisieHeures.chkFacturable.Value)
                 .Range("K" & rowToBeUpdated).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
                 .Range("L" & rowToBeUpdated).Value = Fn_Convert_Value_Boolean_To_Text(False)
                 .Range("M" & rowToBeUpdated).Value = vbNullString
@@ -573,7 +573,7 @@ Sub AjouterOuModifierTECdansDBLocale(tecID As Long)
     'Libérer la mémoire
     Set lookupRange = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:AjouterOuModifierTECdansDBLocale", CStr(tecID), startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:AjouterOuModifierTECdansBDLocale", CStr(tecID), startTime)
 
 End Sub
 
@@ -598,10 +598,10 @@ Sub RafraichirListBoxEtAddtionnerHeures() 'Load the listBox with the appropriate
     ufSaisieHeures.txtHresFactSemaine.Value = vbNullString
     ufSaisieHeures.txtHresNFSemaine.Value = vbNullString
 
-    ufSaisieHeures.lsbHresJour.RowSource = vbNullString
-    ufSaisieHeures.lsbHresJour.Clear '2024-08-10 @ 05:59
+    ufSaisieHeures.lstHresJour.RowSource = vbNullString
+    ufSaisieHeures.lstHresJour.Clear '2024-08-10 @ 05:59
     
-    With ufSaisieHeures.lsbHresJour
+    With ufSaisieHeures.lstHresJour
         .ColumnHeads = False
         .ColumnCount = 9
         .ColumnWidths = "30; 23; 60; 157; 242; 35; 90; 32; 90"
@@ -625,7 +625,7 @@ Sub RafraichirListBoxEtAddtionnerHeures() 'Load the listBox with the appropriate
     If lastRow >= 3 Then
         Set rng = wsdTEC_Local.Range("V3:AI" & lastRow)
         For i = 1 To rng.Rows.count
-            With ufSaisieHeures.lsbHresJour
+            With ufSaisieHeures.lstHresJour
                 .AddItem rng.Cells(i, 1).Value
                 Dim idx As Long: idx = .ListCount - 1
                 For ColIndex = 2 To 9
@@ -660,7 +660,7 @@ Sub RafraichirListBoxEtAddtionnerHeures() 'Load the listBox with the appropriate
     'Modifie les critères pour forcer une execution du AdvancedFilter dans wshTEC_TDB_Data
     Dim dateCharge As Date, dateLundi As Date, dateDimanche As Date
     dateCharge = ufSaisieHeures.txtDate.Value
-    dateLundi = Fn_Obtenir_Date_Lundi(dateCharge)
+    dateLundi = Fn_DateDuLundi(dateCharge)
     dateDimanche = dateLundi + 6
     Application.EnableEvents = False
     wshTEC_TDB_Data.Range("S7").Value = ufSaisieHeures.cmbProfessionnel.Value
@@ -772,10 +772,10 @@ End Sub
 Sub ActiverButtonsVraiOuFaux(a As Boolean, u As Boolean, d As Boolean, c As Boolean)
                                   
     With ufSaisieHeures
-        .cmdAdd.Enabled = a
-        .cmdUpdate.Enabled = u
-        .cmdDelete.Enabled = d
-        .cmdClear.Enabled = c
+        .shpAdd.Enabled = a
+        .shpUpdate.Enabled = u
+        .shpDelete.Enabled = d
+        .shpClear.Enabled = c
     End With
 
 End Sub

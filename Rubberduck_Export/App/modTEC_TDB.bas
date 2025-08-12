@@ -1,22 +1,22 @@
 Attribute VB_Name = "modTEC_TDB"
 Option Explicit
 
-Sub shpRetourAuMenuTEC_Click()
+Sub shpRetournerAuMenuTEC_Click()
 
-    Call RetourAuMenuTEC
+    Call RetournerAuMenuTEC
 
 End Sub
 
-Sub RetourAuMenuTEC()
+Sub RetournerAuMenuTEC()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_TDB:RetourAuMenuTEC", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_TDB:RetournerAuMenuTEC", vbNullString, 0)
     
-    wshTEC_Analyse.Visible = xlSheetHidden
+    wshTEC_TDB.Visible = xlSheetHidden
     
     wshMenuTEC.Activate
     wshMenuTEC.Range("A1").Select
     
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_TDB:RetourAuMenuTEC", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_TDB:RetournerAuMenuTEC", vbNullString, startTime)
 
 End Sub
 
@@ -113,4 +113,3 @@ Sub AjusterBordurePivotTable() '2025-02-01 @ 05:49
     Call modDev_Utils.EnregistrerLogApplication("wshTEC_TDB:AjusterBordurePivotTable", vbNullString, startTime)
 
 End Sub
-

@@ -111,7 +111,7 @@ Private Sub myListBox_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     'If the user doubleclicks or presses enter, place the selected value in the textbox
     If m_UpdateControl = False Then
         Dim pureClientName As String
-        pureClientName = Fn_Cell_From_BD_Client(MyListBox.Value, 17, 1)
+        pureClientName = Fn_CellSpecifiqueDeBDClient(MyListBox.Value, 17, 1)
         Call SetTextboxValue(pureClientName)
         MyListBox.Visible = False
         
@@ -132,10 +132,10 @@ Private Sub myListBox_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shif
         KeyCode = 0
         If MyListBox.Value <> 0 Then
             Dim pureClientName As String
-            pureClientName = Fn_Cell_From_BD_Client(MyListBox.Value, 17, 1)
+            pureClientName = Fn_CellSpecifiqueDeBDClient(MyListBox.Value, 17, 1)
             Call SetTextboxValue(pureClientName)
         End If
-        Call ShowListbox(False)
+        Call AfficherListBox(False)
 '        SendKeys "{TAB}"
         
     End If
@@ -171,7 +171,7 @@ Private Sub List_MoveDown()
 
 End Sub
 
-Private Sub UpdateListBox(items As Variant)
+Private Sub MettreAJourListBox(items As Variant)
  
     With MyListBox
         'Reload listbox
@@ -233,7 +233,7 @@ Public Sub VerifierPremierItemListBox()
 
 End Sub
 
-Private Sub ShowListbox(Optional ByVal show As Boolean = True)
+Private Sub AfficherListBox(Optional ByVal show As Boolean = True)
     
     If rmv_state = rmv_modeInitial Or _
         rmv_state = rmv_modeAffichage Or _
@@ -252,7 +252,7 @@ Private Sub PositionnerListBox()
         .Top = myTextBox.Top + (myTextBox.Height)
 '        .Width = 625
 '        .Width = myTextBox.Width
-        Call ShowListbox(True)
+        Call AfficherListBox(True)
     End With
     
 End Sub
@@ -298,10 +298,10 @@ Private Sub myTextBox_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shif
         KeyCode = 0
         If IsNull(MyListBox.Value) = False And m_textboxStartingState = False Then
             Dim pureClientName As String
-            pureClientName = Fn_Cell_From_BD_Client(MyListBox.Value, 17, 1)
+            pureClientName = Fn_CellSpecifiqueDeBDClient(MyListBox.Value, 17, 1)
             Call SetTextboxValue(pureClientName)
         End If
-        Call ShowListbox(False)
+        Call AfficherListBox(False)
     ElseIf KeyCode = vbKeyEscape Then
         'Swallow the esc keycode
         Call InitialiserTextBox
@@ -338,7 +338,7 @@ Private Sub InitialiserTextBox()
     myTextBox.SelStart = 0
 '    myTextBox.ForeColor = rgbBlue
     
-    Call ShowListbox(False)
+    Call AfficherListBox(False)
 
 End Sub
 
@@ -375,7 +375,7 @@ Public Sub FiltrerListBox() 'Filters the Listbox
     Dim items As Variant
     items = FilterData
       
-    Call UpdateListBox(items)
+    Call MettreAJourListBox(items)
       
     m_UpdateControl = False
     
@@ -389,7 +389,7 @@ Private Function FilterData() As Variant
         Exit Function
     End If
     Dim textPatternWithoutAccent As String '2024-09-25 @ 07:19
-    textPatternWithoutAccent = Fn_Remove_All_Accents(textPattern)
+    textPatternWithoutAccent = Fn_ChaineSansAccents(textPattern)
     
     'Create an array to store the filtered items
     Dim filteredItems() As String
@@ -401,7 +401,7 @@ Private Function FilterData() As Variant
     Dim clientNameWithoutAccent As String
         For i = LBound(m_listOfItems) To UBound(m_listOfItems)
         'Using Instr instead of Like so we can set the case sensitivity
-        clientNameWithoutAccent = Fn_Remove_All_Accents(m_listOfItems(i, 1)) '2024-09-25 @ 07:19
+        clientNameWithoutAccent = Fn_ChaineSansAccents(m_listOfItems(i, 1)) '2024-09-25 @ 07:19
         If InStr(1, clientNameWithoutAccent, textPatternWithoutAccent, m_compareMethod) > 0 Then
             filteredItems(count) = m_listOfItems(i, 1)
             count = count + 1

@@ -18,7 +18,7 @@ Public Sub GenererRapportGLParCompte(wsRapport As Worksheet, dateDebut As Date, 
     Next i
     
     'Setup report header
-    Call SetUpGLReportHeadersAndColumns_Compte(wsRapport)
+    Call AjusterEntetesEtColonnesParCompte(wsRapport)
     Dim rowRapport As Integer, saveFirstRow As Integer
     rowRapport = 3
     
@@ -41,7 +41,7 @@ Public Sub GenererRapportGLParCompte(wsRapport As Worksheet, dateDebut As Date, 
         
         'Extraire les lignes pertinentes pour un compte de GL - arr()
         Dim arr() As Variant
-        arr = ExtraireTransactionsPourUnCompte(rngResultAll, GL)
+        arr = Fn_ExtraireTransactionsPourUnCompte(rngResultAll, GL)
         Dim arrTrans() As Variant
         arrTrans = Array()
         If UBound(arr, 1) > 0 Then
@@ -180,7 +180,7 @@ Public Sub GenererRapportGLParEcriture(wsRapport As Worksheet, noEcritureDebut A
     Set wsSource = wsdGL_Trans
     
     'Setup report header
-    Call SetUpGLReportHeadersAndColumns_Ecriture(wsRapport)
+    Call AjusterEntetesEtColonnesParEcriture(wsRapport)
     
     Application.ScreenUpdating = False
     
@@ -235,7 +235,7 @@ Public Sub GenererRapportGLParEcriture(wsRapport As Worksheet, noEcritureDebut A
 '                    ufGL_Rapport.chkEcrCloture, ufGL_Rapport.chkEncaissement, ufGL_Rapport.chkFacture, _
 '                    ufGL_Rapport.chkRegularisation
         For Each row In filteredRange.Rows
-            If Not row.Hidden And modFunctions.ImprimeOuPasCetteEcriture(row.Cells(fGlTSource).Value) = True Then
+            If Not row.Hidden And modFunctions.Fn_ConsidereOuPasCetteEcriture(row.Cells(fGlTSource).Value) = True Then
                 'Traitement des données visibles seulement
                 If row.Cells(1).Value <> currentEcriture Then
                     currentEcriture = row.Cells(1, fGlTNoEntrée).Value
@@ -351,7 +351,7 @@ Public Sub GenererRapportGLParDateSaisie(wsRapport As Worksheet, dtSaisieDebut A
     Set wsSource = wsdGL_Trans
     
     'Setup report header
-    Call SetUpGLReportHeadersAndColumns_DateSaisie(wsRapport)
+    Call AjusterEntetesEtColonnesParDateSaisie(wsRapport)
     
     Application.ScreenUpdating = False
     
@@ -405,7 +405,7 @@ Public Sub GenererRapportGLParDateSaisie(wsRapport As Worksheet, dtSaisieDebut A
 '                    ufGL_Rapport.chkEcrCloture, ufGL_Rapport.chkEncaissement, ufGL_Rapport.chkFacture, _
 '                    ufGL_Rapport.chkRegularisation
         For Each row In filteredRange.Rows
-            If Not row.Hidden And modFunctions.ImprimeOuPasCetteEcriture(row.Cells(fGlTSource).Value) = True Then
+            If Not row.Hidden And modFunctions.Fn_ConsidereOuPasCetteEcriture(row.Cells(fGlTSource).Value) = True Then
                 'Traitement des données visibles seulement
                 If CDbl(row.Cells(10).Value) <> currentTimeStamp Then
                     currentTimeStamp = CDbl(row.Cells(1, fGlTTimeStamp).Value)
@@ -544,7 +544,7 @@ Sub InsererBoutonRetourMenu() '2025-07-01 @ 08:54
         .TextFrame2.TextRange.Font.Bold = True
         .TextFrame2.TextRange.Font.Fill.ForeColor.RGB = RGB(255, 255, 255) 'Blanc
         .Placement = xlFreeFloating
-        .OnAction = "shpRetourMenuGL_Click"
+        .OnAction = "shpRetournerMenuGL_Click"
     End With
 
 End Sub
@@ -555,7 +555,7 @@ Sub shpRetourMenu_Click()
     
 End Sub
 
-Sub SetUpGLReportHeadersAndColumns_Compte(ws As Worksheet)
+Sub AjusterEntetesEtColonnesParCompte(ws As Worksheet)
 
     'Efface le contenu de la feuille
     ws.Cells.Clear
@@ -624,7 +624,7 @@ Sub SetUpGLReportHeadersAndColumns_Compte(ws As Worksheet)
     
 End Sub
 
-Sub SetUpGLReportHeadersAndColumns_Ecriture(ws As Worksheet)
+Sub AjusterEntetesEtColonnesParEcriture(ws As Worksheet)
 
     'Efface le contenu de la feuille
     ws.Cells.Clear
@@ -704,7 +704,7 @@ Sub SetUpGLReportHeadersAndColumns_Ecriture(ws As Worksheet)
 
 End Sub
 
-Sub SetUpGLReportHeadersAndColumns_DateSaisie(ws As Worksheet)
+Sub AjusterEntetesEtColonnesParDateSaisie(ws As Worksheet)
 
     'Efface le contenu de la feuille
     ws.Cells.Clear

@@ -88,7 +88,7 @@ Sub TrierTableauBubble(MyArray() As String) '2024-07-02 @ 15:18
     
 End Sub
 
-Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
+Sub zz_ListerToutesLesFeuillesClasseurFerme() '2024-07-14 @ 07:02
     
     Call EffacerEtRecreerWorksheet("X_Feuilles_du_Classeur")
 
@@ -96,7 +96,7 @@ Sub List_Worksheets_From_Closed_Workbook_All() '2024-07-14 @ 07:02
     wsOutput.Range("A1").Value = "Feuille"
     wsOutput.Range("B1").Value = "CodeName"
     wsOutput.Range("C1").Value = "TimeStamp"
-    Call Make_It_As_Header(wsOutput.Range("A1:C1"), RGB(0, 112, 192))
+    Call CreerEnteteDeFeuille(wsOutput.Range("A1:C1"), RGB(0, 112, 192))
 
     'Specify the full path and name of the closed workbook
     Dim wbPath As String
@@ -217,7 +217,7 @@ Sub RechercherCodeProjet() '2024-10-26 @ 10:41
     
     Call RedimensionnerTableau2D(allLinesOfCode, indiceTableau, UBound(allLinesOfCode, 2))
     
-    Call Search_Every_Lines_Of_Code(allLinesOfCode, lignesLues, search1, search2, search3)
+    Call RechercherToutesLesLignesDeCode(allLinesOfCode, lignesLues, search1, search2, search3)
     
     'Libérer la mémoire
     Set vbComp = Nothing
@@ -255,7 +255,7 @@ Sub EffacerEtRecreerWorksheet(sheetName As String)
     
 End Sub
 
-Sub List_Formulas_All() '2024-06-22 @ 15:42
+Sub zz_ListerToutesLesFormules() '2024-06-22 @ 15:42
     
     Dim wb As Workbook: Set wb = ThisWorkbook
     
@@ -318,7 +318,7 @@ nextIteration:
 
 End Sub
 
-Function HandleComments(ByVal codeLine As String, action As String) As String '2024-06-30 @ 10:45
+Function Fn_TraiteRemarquesDansLeCode(ByVal codeLine As String, action As String) As String '2024-06-30 @ 10:45
     
     'R as action will remove the comments
     'U as action will UPPERCASE the comments
@@ -357,11 +357,11 @@ Function HandleComments(ByVal codeLine As String, action As String) As String '2
         commentPart = Trim$(UCase$(commentPart))
     End If
     
-    HandleComments = codePart & commentPart
+    Fn_TraiteRemarquesDansLeCode = codePart & commentPart
     
 End Function
 
-Sub List_All_Shapes_Properties() '2024-08-07 @ 19:37
+Sub zz_ListerProprietesToutesLesFormes() '2024-08-07 @ 19:37
 
     Dim ws As Worksheet: Set ws = ThisWorkbook.ActiveSheet
     
@@ -404,7 +404,7 @@ Sub List_All_Shapes_Properties() '2024-08-07 @ 19:37
     
 End Sub
 
-Sub List_All_Tables()
+Sub zz_ListerTousLesObjetsDeToutesLesFeuilles()
 
     'Loop through each worksheet
     Dim ws As Worksheet
@@ -422,7 +422,7 @@ Sub List_All_Tables()
     
 End Sub
 
-Sub List_Named_Ranges_All() '2024-06-23 @ 07:40
+Sub zz_ListerTousLesDynamicNamedRange() '2024-06-23 @ 07:40
     
     'Setup and clear the output worksheet
     Dim ws As Worksheet: Set ws = wshzDocNamedRange
@@ -491,13 +491,13 @@ Sub List_Named_Ranges_All() '2024-06-23 @ 07:40
     
 End Sub
 
-Sub shp_Reorganize_Tests_And_Todos_Click()
+Sub shpReorganiserTestsEtTodo_Click()
 
-    Call Reorganize_Tests_And_Todos_Worksheet
+    Call ReorganiserTestsEtTodo
 
 End Sub
 
-Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
+Sub ReorganiserTestsEtTodo() '2024-03-02 @ 15:21
 
     Application.ScreenUpdating = False
     
@@ -566,7 +566,7 @@ Sub Reorganize_Tests_And_Todos_Worksheet() '2024-03-02 @ 15:21
     
 End Sub
 
-Sub Search_Every_Lines_Of_Code(arr As Variant, lignesLues As Long, search1 As String, search2 As String, search3 As String)
+Sub RechercherToutesLesLignesDeCode(arr As Variant, lignesLues As Long, search1 As String, search2 As String, search3 As String)
 
     'Declare arr() to keep results in memory
     Dim arrResult() As Variant
@@ -581,7 +581,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, lignesLues As Long, search1 As St
         
         'Handle comments (second parameter is either Remove or Uppercase)
         If InStr(1, trimmedLineOfCode, "'") <> 0 Then
-            trimmedLineOfCode = HandleComments(trimmedLineOfCode, "U")
+            trimmedLineOfCode = Fn_TraiteRemarquesDansLeCode(trimmedLineOfCode, "U")
         End If
         
         If trimmedLineOfCode <> vbNullString Then
@@ -643,7 +643,7 @@ Sub Search_Every_Lines_Of_Code(arr As Variant, lignesLues As Long, search1 As St
     wsOutput.Range("F1").Value = "Code"
     wsOutput.Range("G1").Value = "TimeStamp"
     
-    Call Make_It_As_Header(wsOutput.Range("A1:G1"), RGB(0, 112, 192))
+    Call CreerEnteteDeFeuille(wsOutput.Range("A1:G1"), RGB(0, 112, 192))
     
     'Is there anything to show ?
     If xr > 0 Then
@@ -754,7 +754,7 @@ Sub zz_List_All_Columns() '2024-08-09 @ 11:52
         For i = 1 To ws.Range("A1").CurrentRegion.Columns.count
             Set col = ws.Cells(1, i).EntireColumn
             
-            colType = Fn_Get_Column_Type(col)
+            colType = Fn_TypeDonneeColonne(col)
             
             'Output the information to the report
             With reportSheet
@@ -802,7 +802,7 @@ Sub zz_ListAllMacrosUsedWithShapesOrActiveXControls() '2024-11-26 @ 20:14
     wsOutputSheet.Cells(1, 3).Value = "Object Name"
     wsOutputSheet.Cells(1, 4).Value = "Object Type"
     
-    Call Make_It_As_Header(wsOutputSheet.Range("A1:D1"), RGB(0, 112, 192))
+    Call CreerEnteteDeFeuille(wsOutputSheet.Range("A1:D1"), RGB(0, 112, 192))
 
     Dim outputRow As Long
     outputRow = 2 'Start writing from the second row
@@ -895,7 +895,7 @@ Sub zz_ListAllMacrosUsedWithShapesOrActiveXControls() '2024-11-26 @ 20:14
     
 End Sub
 
-Sub List_Subs_And_Functions_All() '2024-11-26 @ 20:02
+Sub ListerToutesProceduresEtFonctions() '2024-11-26 @ 20:02
     
     Dim ws As Worksheet: Set ws = wshzDocSubsAndFunctions
     
@@ -938,7 +938,7 @@ Sub List_Subs_And_Functions_All() '2024-11-26 @ 20:02
                 trimmedLineOfCode = Trim$(vbCodeMod.Lines(LineNum, 1))
                 'Remove comments
                 If InStr(1, trimmedLineOfCode, "'") Then
-                    trimmedLineOfCode = HandleComments(trimmedLineOfCode, "U")
+                    trimmedLineOfCode = Fn_TraiteRemarquesDansLeCode(trimmedLineOfCode, "U")
                 End If
                 
                 posProcedure = InStr(trimmedLineOfCode, "Sub ")
@@ -1032,43 +1032,7 @@ Sub List_Subs_And_Functions_All() '2024-11-26 @ 20:02
     
 End Sub
 
-Sub TestRedimensionnerTableau2D()
-    Dim originalArray() As Variant
-    Dim i As Long, j As Long
-    
-    'Dimension the original array to a fixed size (e.g., 10 rows and 5 columns)
-    ReDim originalArray(1 To 10, 1 To 5)
-    
-    'Fill the original array with some example data
-    For i = 1 To 10
-        For j = 1 To 5
-            originalArray(i, j) = "R" & i & "C" & j
-        Next j
-    Next i
-    
-    'Output the original array to the immediate window
-    Debug.Print "#030 - Original Array:"
-    For i = 1 To 10
-        For j = 1 To 5
-            Debug.Print "#031 - " & originalArray(i, j);
-        Next j
-        Debug.Print "#032"
-    Next i
-    
-    ' Trim the array to 6 rows and 3 columns
-    Call RedimensionnerTableau2D(originalArray, 6, 3)
-    
-    ' Output the trimmed array to the immediate window
-    Debug.Print "#033 - Trimmed Array:"
-    For i = 1 To 6
-        For j = 1 To 3
-            Debug.Print "#034 - " & originalArray(i, j);
-        Next j
-        Debug.Print "#035"
-    Next i
-End Sub
-
-Sub Toggle_A1_R1C1_Reference()
+Sub ChangerSystemeReferenceCellules()
 
     If Application.ReferenceStyle = xlA1 Then
         Application.ReferenceStyle = xlR1C1
@@ -1078,7 +1042,7 @@ Sub Toggle_A1_R1C1_Reference()
 
 End Sub
 
-Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
+Sub zz_ListerToutesLesFeuillesClasseurCourant() '2024-07-24 @ 10:14
     
     Call EffacerEtRecreerWorksheet("X_Feuilles_du_Classeur")
 
@@ -1086,7 +1050,7 @@ Sub List_Worksheets_From_Current_Workbook_All() '2024-07-24 @ 10:14
     wsOutput.Range("A1").Value = "Feuille"
     wsOutput.Range("B1").Value = "CodeName"
     wsOutput.Range("C1").Value = "TimeStamp"
-    Call Make_It_As_Header(wsOutput.Range("A1:C1"), RGB(0, 112, 192))
+    Call CreerEnteteDeFeuille(wsOutput.Range("A1:C1"), RGB(0, 112, 192))
 
     'Loop through all worksheets in the active workbook
     Dim arr() As Variant
@@ -1188,7 +1152,7 @@ Sub EnregistrerLogApplication(ByVal procedureName As String, ByVal param As Stri
 
     'En attendant de trouver la problématique... 2025-06-01 @ 05:06
     If gUtilisateurWindows = vbNullString Then
-        gUtilisateurWindows = Fn_Get_Windows_Username
+        gUtilisateurWindows = Fn_UtilisateurWindows
         Debug.Print "Réinitialisation forcée de gUtilisateurWindows - " & Format$(Now, "yyyy-mm-dd hh:nn:ss")
     End If
     
@@ -1216,19 +1180,19 @@ Sub EnregistrerLogApplication(ByVal procedureName As String, ByVal param As Stri
         Print #fileNum, vbNullString
     ElseIf startTime = 0 Then 'On marque le départ d'une procédure/fonction
         Print #fileNum, timeStamp & " | " & _
-                        modFunctions.GetNomUtilisateur() & " | " & _
+                        modFunctions.Fn_NomUtilisateurWindows() & " | " & _
                         ThisWorkbook.Name & " | " & _
                         procedureName & param
     ElseIf startTime < 0 Then 'On enregistre une entrée intermédiaire (au coeur d'un procédure/fonction)
         Print #fileNum, timeStamp & " | " & _
-                        modFunctions.GetNomUtilisateur() & " | " & _
+                        modFunctions.Fn_NomUtilisateurWindows() & " | " & _
                         ThisWorkbook.Name & " | " & _
                         procedureName & param
     Else 'On marque la fin d'une procédure/fonction
         Dim elapsedTime As Double
         elapsedTime = Round(Timer - startTime, 4) 'Calculate elapsed time
         Print #fileNum, timeStamp & " | " & _
-                        modFunctions.GetNomUtilisateur() & " | " & _
+                        modFunctions.Fn_NomUtilisateurWindows() & " | " & _
                         ThisWorkbook.Name & " | " & _
                         procedureName & param & " | " & _
                         Format$(elapsedTime, "0.0000") & " secondes"
@@ -1260,7 +1224,7 @@ ErrorHandler:
     
 End Sub
 
-Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boolean = False) '2024-09-14 @ 06:56
+Sub EnregistrerLogSaisieHeures(oper As String, txt As String, Optional blankline As Boolean = False) '2024-09-14 @ 06:56
 
     On Error GoTo Error_Handler
     
@@ -1293,7 +1257,7 @@ Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boole
     End If
     
     Print #fileNum, timeStamp & " | " & _
-                        Left$(modFunctions.GetNomUtilisateur() & Space(19), 19) & " | " & _
+                        Left$(modFunctions.Fn_NomUtilisateurWindows() & Space(19), 19) & " | " & _
                         ThisWorkbook.Name & " | " & _
                         oper & " | " & _
                         txt
@@ -1303,13 +1267,13 @@ Sub Log_Saisie_Heures(oper As String, txt As String, Optional blankline As Boole
     
 Error_Handler:
 
-    MsgBox "Une erreur est survenue : " & Err.description, vbCritical, "Log_Saisie_Heures"
+    MsgBox "Une erreur est survenue : " & Err.description, vbCritical, "EnregistrerLogSaisieHeures"
     'Sortir gracieusement de l'application
     Application.Quit 'No save...
     
 End Sub
 
-Sub SortDelimitedString(ByRef inputString As String, delimiter As String)
+Sub TrierChaineAvecDelimiteurs(ByRef inputString As String, delimiter As String)
     
     'Split the string into components
     Dim components() As String
@@ -1363,16 +1327,16 @@ Sub zz_AnalyserLogApplication() '2025-01-10 @ 17:10
         Dim arr() As String
         arr = Split(logline, "|")
         If InStr(strUser, arr(0)) = 0 Then
-            strUser = strUser + Fn_Pad_A_String(arr(0), " ", 15, "R") & "|"
+            strUser = strUser + Fn_ChaineRemplie(arr(0), " ", 15, "R") & "|"
         End If
         If InStr(strDate, Left$(arr(1), 10)) = 0 Then
             strDate = strDate & Left$(arr(1), 10) & "|"
         End If
         If InStr(strVersion, arr(2)) = 0 Then
-            strVersion = strVersion & Fn_Pad_A_String(arr(2), " ", 10, "R") & "|"
+            strVersion = strVersion & Fn_ChaineRemplie(arr(2), " ", 10, "R") & "|"
         End If
         If InStr(strModule, arr(3)) = 0 Then
-            strModule = strModule & Fn_Pad_A_String(arr(3), " ", 65, "R") & "|"
+            strModule = strModule & Fn_ChaineRemplie(arr(3), " ", 65, "R") & "|"
         End If
         Dim subString As String
         Dim e As Double
@@ -1407,19 +1371,19 @@ Sub zz_AnalyserLogApplication() '2025-01-10 @ 17:10
     
     Debug.Print "#042 - " & arrTime(1), arrTime(2), arrTime(3), arrTime(4), arrTime(5), arrTime(6), arrTime(7), arrTime(8), arrTime(9), arrTime(10)
     
-    Call SortDelimitedString(strUser, "|")
+    Call TrierChaineAvecDelimiteurs(strUser, "|")
     Dim arrUser() As String
     arrUser = Split(strUser, "|")
     
-    Call SortDelimitedString(strDate, "|")
+    Call TrierChaineAvecDelimiteurs(strDate, "|")
     Dim arrDate() As String
     arrDate = Split(strDate, "|")
     
-    Call SortDelimitedString(strVersion, "|")
+    Call TrierChaineAvecDelimiteurs(strVersion, "|")
     Dim arrVersion() As String
     arrVersion = Split(strVersion, "|")
 
-    Call SortDelimitedString(strModule, "|")
+    Call TrierChaineAvecDelimiteurs(strModule, "|")
     Dim arrModule() As String
     arrModule = Split(strModule, "|")
     

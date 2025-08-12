@@ -8,20 +8,20 @@ Option Explicit
 Public gSauvegardesCaracteristiquesForme As Object
 Public gNumeroDebourseARenverser As Long
 
-Sub shp_DEB_Saisie_Update_Click()
+Sub shpMettreAJourDEB_Click()
 
-    Call MiseAjourDebours
+    Call MettreAJourDebours
 
 End Sub
 
-Sub MiseAjourDebours()
+Sub MettreAJourDebours()
 
     If wshDEB_Saisie.Range("B7").Value = True Then
-        Call DEB_Renversement_Update
+        Call MettreAJourDEBRenversement
         Exit Sub
     End If
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:MiseAjourDebours", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:MettreAJourDebours", vbNullString, 0)
     
     'Remove highlight from last cell
     If wshDEB_Saisie.Range("B4").Value <> vbNullString Then
@@ -29,18 +29,18 @@ Sub MiseAjourDebours()
     End If
     
     'Date is not valid OR the transaction does not balance
-    If Fn_Is_Date_Valide(wshDEB_Saisie.Range("O4").Value) = False Or _
-        Fn_Is_Debours_Balance = False Then
-            Exit Sub
+    If Fn_DateEstElleValide(wshDEB_Saisie.Range("O4").Value) = False Or _
+        Fn_SaisieDEBBalance = False Then
+        Exit Sub
     End If
     
     'Is every line of the transaction well entered ?
     Dim rowDebSaisie As Long
     rowDebSaisie = wshDEB_Saisie.Range("E23").End(xlUp).Row  'Last Used Row in wshDEB_Saisie
-    If Fn_Is_Deb_Saisie_Valid(rowDebSaisie) = False Then Exit Sub
+    If Fn_SaisieDEBEstElleValide(rowDebSaisie) = False Then Exit Sub
     
     'Get the FournID
-    wshDEB_Saisie.Range("B5").Value = Fn_GetID_From_Fourn_Name(wshDEB_Saisie.Range("J4").Value)
+    wshDEB_Saisie.Range("B5").Value = Fn_ClientIDAPartirDuNomDeFournisseur(wshDEB_Saisie.Range("J4").Value)
 
     'Transfert des données vers DEB_Trans
     Call AjouterDebBDMaster(rowDebSaisie)
@@ -50,7 +50,7 @@ Sub MiseAjourDebours()
     Call ComptabiliserDebours
     
     If wshDEB_Saisie.ckbRecurrente = True Then
-        Call Save_DEB_Recurrent(rowDebSaisie)
+        Call SauvegarderDEBRecurrent(rowDebSaisie)
     End If
     
     'Retrieve the CurrentDebours number
@@ -60,20 +60,20 @@ Sub MiseAjourDebours()
     MsgBox "Le déboursé, numéro '" & CurrentDeboursNo & "' a été reporté avec succès"
     
     'Get ready for a new one
-    Call DEB_Saisie_Clear_All_Cells
+    Call EffacerCellulesSaisieDEB
     
     Application.EnableEvents = True
     
     wshDEB_Saisie.Activate
     wshDEB_Saisie.Range("F4").Select
         
-    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:MiseAjourDebours", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:MettreAJourDebours", vbNullString, startTime)
         
 End Sub
 
-Sub DEB_Renversement_Update()
+Sub MettreAJourDEBRenversement()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Renversement_Update", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:MettreAJourDEBRenversement", vbNullString, 0)
     
     Dim ws As Worksheet
     Set ws = wshDEB_Saisie
@@ -91,7 +91,7 @@ Sub DEB_Renversement_Update()
     End If
     
     'Get the FournID
-    ws.Range("B5").Value = Fn_GetID_From_Fourn_Name(wshDEB_Saisie.Range("J4").Value)
+    ws.Range("B5").Value = Fn_ClientIDAPartirDuNomDeFournisseur(wshDEB_Saisie.Range("J4").Value)
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -111,8 +111,8 @@ Sub DEB_Renversement_Update()
     Call AjouterDebBDLocale(rowLastUsed)
     
     'Mettre à jour le débouré renversé
-    Call DEB_Trans_MAJ_Debourse_Renverse_To_DB
-    Call DEB_Trans_MAJ_Debourse_Renverse_Locally
+    Call MettreAJourDEBRenversementBDMaster
+    Call MettreAJourDEBRenversementBDLocale
     
     'GL posting
     Call ComptabiliserDebours
@@ -128,7 +128,7 @@ Sub DEB_Renversement_Update()
     Application.ScreenUpdating = False
     Dim shp As Shape
     Set shp = ws.Shapes("btnUpdate")
-    Call DEB_Forme_Restaurer(shp)
+    Call RestaurerParametresForme(shp)
     
     Application.EnableEvents = False
     
@@ -160,7 +160,7 @@ Sub DEB_Renversement_Update()
     Set shp = Nothing
     Set ws = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Renversement_Update", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:MettreAJourDEBRenversement", vbNullString, startTime)
     
 End Sub
 
@@ -318,9 +318,9 @@ Sub AjouterDebBDLocale(r As Long) 'Write records locally
 
 End Sub
 
-Sub DEB_Trans_MAJ_Debourse_Renverse_To_DB()
+Sub MettreAJourDEBRenversementBDMaster()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_To_DB", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:MettreAJourDEBRenversementBDMaster", vbNullString, 0)
     
     'Définition des paramètres
     Dim destinationFileName As String, destinationTab As String
@@ -367,13 +367,13 @@ Sub DEB_Trans_MAJ_Debourse_Renverse_To_DB()
     Set conn = Nothing
     Set recSet = Nothing
 
-    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_To_DB", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:MettreAJourDEBRenversementBDMaster", vbNullString, startTime)
     
 End Sub
 
-Sub DEB_Trans_MAJ_Debourse_Renverse_Locally()
+Sub MettreAJourDEBRenversementBDLocale()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_Locally", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:MettreAJourDEBRenversementBDLocale", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -401,7 +401,7 @@ Sub DEB_Trans_MAJ_Debourse_Renverse_Locally()
     'Libérer la mémoire
     Set ws = Nothing
 
-    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Trans_MAJ_Debourse_Renverse_Locally", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:MettreAJourDEBRenversementBDLocale", vbNullString, startTime)
     
 End Sub
 
@@ -411,7 +411,7 @@ Sub AfficherDeboursRecurrent()
 
 End Sub
 
-Sub Preparer_Liste_Debourses_Pour_Afficher()
+Sub PreparerListeDEBRecurrentPourAfficher()
 
     'Afficher le UserForm
     ufListeDebourse.show vbModal
@@ -425,12 +425,12 @@ Sub Preparer_Liste_Debourses_Pour_Afficher()
     
 End Sub
 
-Sub DEB_Renverser_Ecriture() '2025-02-23 @ 16:56
+Sub ConstruireEcritureDEBRenversement() '2025-02-23 @ 16:56
 
     Dim ws As Worksheet: Set ws = wsdDEB_Trans
     
     '1. Quelle écriture doit-on renverser (à partir d'un ListBox)
-    Call Preparer_Liste_Debourses_Pour_Afficher
+    Call PreparerListeDEBRecurrentPourAfficher
     
     If gNumeroDebourseARenverser = -1 Then
         MsgBox "Vous n'avez sélectionné aucun déboursé à renverser", vbInformation, "Sélection d'un déboursé à renverser"
@@ -443,7 +443,7 @@ Sub DEB_Renverser_Ecriture() '2025-02-23 @ 16:56
     
     '2. Aller chercher les debourses pour le numero choisi (0 à n lignes)
     Dim debTransSubset As Variant
-    debTransSubset = RechercherLignesTableau(ws, gNumeroDebourseARenverser)
+    debTransSubset = Fn_RangeeAPartirNumeroColonne1(ws, gNumeroDebourseARenverser)
     
     Application.EnableEvents = False
 
@@ -495,8 +495,8 @@ Sub DEB_Renverser_Ecriture() '2025-02-23 @ 16:56
 
     'Change le libellé du Bouton & caractéristiques
     Dim shp As Shape
-    Set shp = wshDEB_Saisie.Shapes("btnUpdate")
-    Call DEB_Forme_Modifier(shp)
+    Set shp = wshDEB_Saisie.Shapes("shpMettreAJourDEB")
+    Call ModifierForme(shp)
 
 Nettoyage:
 
@@ -550,23 +550,23 @@ Sub ComptabiliserDebours() '2025-08-05 @ 11:22
     'La portion Crédit varie en fonction du type de déboursé
     Select Case deboursType
         Case "Chèque", "Virement", "Paiement pré-autorisé", "Autre"
-            codeGL = modFunctions.ObtenirNoGlIndicateur("Encaisse")
-            descGL = modFunctions.ObtenirDescriptionCompte(codeGL)
+            codeGL = modFunctions.Fn_NoCompteAPartirIndicateurCompte("Encaisse")
+            descGL = modFunctions.Fn_DescriptionAPartirNoCompte(codeGL)
         Case "Carte de crédit"
-            codeGL = modFunctions.ObtenirNoGlIndicateur("Carte de crédit")
-            descGL = modFunctions.ObtenirDescriptionCompte(codeGL)
+            codeGL = modFunctions.Fn_NoCompteAPartirIndicateurCompte("Carte de crédit")
+            descGL = modFunctions.Fn_DescriptionAPartirNoCompte(codeGL)
         Case "Avances avec Guillaume Charron"
-            codeGL = modFunctions.ObtenirNoGlIndicateur("Avances Guillaume Charron")
-            descGL = modFunctions.ObtenirDescriptionCompte(codeGL)
+            codeGL = modFunctions.Fn_NoCompteAPartirIndicateurCompte("Avances Guillaume Charron")
+            descGL = modFunctions.Fn_DescriptionAPartirNoCompte(codeGL)
         Case "Avances avec 9249-3626 Québec inc."
-            codeGL = modFunctions.ObtenirNoGlIndicateur("Avances 9249-3626 Québec inc.")
-            descGL = modFunctions.ObtenirDescriptionCompte(codeGL)
+            codeGL = modFunctions.Fn_NoCompteAPartirIndicateurCompte("Avances 9249-3626 Québec inc.")
+            descGL = modFunctions.Fn_DescriptionAPartirNoCompte(codeGL)
         Case "Avances avec 9333-4829 Québec inc."
-            codeGL = modFunctions.ObtenirNoGlIndicateur("Avances 9333-4829 Québec inc.")
-            descGL = modFunctions.ObtenirDescriptionCompte(codeGL)
+            codeGL = modFunctions.Fn_NoCompteAPartirIndicateurCompte("Avances 9333-4829 Québec inc.")
+            descGL = modFunctions.Fn_DescriptionAPartirNoCompte(codeGL)
         Case Else
-            codeGL = modFunctions.ObtenirNoGlIndicateur("Encaisse")
-            descGL = modFunctions.ObtenirDescriptionCompte(codeGL)
+            codeGL = modFunctions.Fn_NoCompteAPartirIndicateurCompte("Encaisse")
+            descGL = modFunctions.Fn_DescriptionAPartirNoCompte(codeGL)
     End Select
     
     'Portion CRÉDIT de l'écriture
@@ -579,14 +579,14 @@ Sub ComptabiliserDebours() '2025-08-05 @ 11:22
         ecr.AjouterLigne codeGL, descGL, CCur(ws.Range("N" & l).Value), vbNullString
         
         If wshDEB_Saisie.Range("L" & l).Value <> 0 Then
-            codeGL = ObtenirNoGlIndicateur("TPS Payée")
-            descGL = modFunctions.ObtenirDescriptionCompte(codeGL)
+            codeGL = Fn_NoCompteAPartirIndicateurCompte("TPS Payée")
+            descGL = modFunctions.Fn_DescriptionAPartirNoCompte(codeGL)
             ecr.AjouterLigne codeGL, descGL, CCur(ws.Range("L" & l).Value), vbNullString
         End If
 
         If wshDEB_Saisie.Range("M" & l).Value <> 0 Then
-            codeGL = ObtenirNoGlIndicateur("TVQ Payée")
-            descGL = modFunctions.ObtenirDescriptionCompte(codeGL)
+            codeGL = Fn_NoCompteAPartirIndicateurCompte("TVQ Payée")
+            descGL = modFunctions.Fn_DescriptionAPartirNoCompte(codeGL)
             ecr.AjouterLigne codeGL, descGL, CCur(ws.Range("M" & l).Value), vbNullString
         End If
     Next l
@@ -610,7 +610,7 @@ Sub ChargerDEBRecurrentDansSaisie(DEBAutoDesc As String, noDEBAuto As Long)
     Dim rowDEBAuto As Long, rowDEB As Long
     rowDEBAuto = wsdDEB_Recurrent.Cells(wsdDEB_Recurrent.Rows.count, "C").End(xlUp).Row  'Last Row used in wshDEB_Recurrent
     
-    Call DEB_Saisie_Clear_All_Cells
+    Call EffacerCellulesSaisieDEB
     
     rowDEB = 9
     
@@ -649,23 +649,23 @@ Sub ChargerDEBRecurrentDansSaisie(DEBAutoDesc As String, noDEBAuto As Long)
     
 End Sub
 
-Sub Save_DEB_Recurrent(ll As Long)
+Sub SauvegarderDEBRecurrent(ll As Long)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:Save_DEB_Recurrent", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:SauvegarderDEBRecurrent", vbNullString, 0)
     
     Dim rowDEBLast As Long
     rowDEBLast = wshDEB_Saisie.Cells(wshDEB_Saisie.Rows.count, "E").End(xlUp).Row  'Last Used Row in wshDEB_Saisie
     
-    Call DEB_Recurrent_Add_Record_To_DB(rowDEBLast)
-    Call DEB_Recurrent_Add_Record_Locally(rowDEBLast)
+    Call AjouterDEBRecurrentBDMaster(rowDEBLast)
+    Call AjouterDEBRecurrentBDLocale(rowDEBLast)
     
-    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:Save_DEB_Recurrent", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:SauvegarderDEBRecurrent", vbNullString, startTime)
     
 End Sub
 
-Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external .xlsx file
+Sub AjouterDEBRecurrentBDMaster(r As Long) 'Write/Update a record to external .xlsx file
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Recurrent_Add_Record_To_DB", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:AjouterDEBRecurrentBDMaster", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
@@ -743,13 +743,13 @@ Sub DEB_Recurrent_Add_Record_To_DB(r As Long) 'Write/Update a record to external
     Set conn = Nothing
     Set recSet = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Recurrent_Add_Record_To_DB", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:AjouterDEBRecurrentBDMaster", vbNullString, startTime)
 
 End Sub
 
-Sub DEB_Recurrent_Add_Record_Locally(r As Long) 'Write records to local file
+Sub AjouterDEBRecurrentBDLocale(r As Long) 'Write records to local file
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Recurrent_Add_Record_Locally", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:AjouterDEBRecurrentBDLocale", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -788,15 +788,15 @@ Sub DEB_Recurrent_Add_Record_Locally(r As Long) 'Write records to local file
         rowToBeUsed = rowToBeUsed + 1
     Next i
     
-    Call DEB_Recurrent_Build_Summary '2024-03-14 @ 07:40
+    Call ConstruireSommaireDEBRecurrent '2024-03-14 @ 07:40
     
     Application.ScreenUpdating = True
     
-    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Recurrent_Add_Record_Locally", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:AjouterDEBRecurrentBDLocale", vbNullString, startTime)
     
 End Sub
 
-Sub DEB_Forme_Modifier(forme As Shape)
+Sub ModifierForme(forme As Shape)
 
     'Appliquer des modifications à la forme
     Application.ScreenUpdating = True
@@ -809,9 +809,9 @@ Sub DEB_Forme_Modifier(forme As Shape)
     
 End Sub
 
-Sub DEB_Recurrent_Build_Summary()
+Sub ConstruireSommaireDEBRecurrent()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Recurrent_Build_Summary", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:ConstruireSommaireDEBRecurrent", vbNullString, 0)
     
     'Build the summary at column K & L
     Dim lastUsedRow1 As Long
@@ -838,13 +838,13 @@ Sub DEB_Recurrent_Build_Summary()
         Next i
     End With
 
-    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Recurrent_Build_Summary", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:ConstruireSommaireDEBRecurrent", vbNullString, startTime)
 
 End Sub
 
-Public Sub DEB_Saisie_Clear_All_Cells()
+Sub EffacerCellulesSaisieDEB()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Saisie_Clear_All_Cells", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:EffacerCellulesSaisieDEB", vbNullString, 0)
 
     Dim ws As Worksheet
     Set ws = wshDEB_Saisie
@@ -887,22 +887,22 @@ Public Sub DEB_Saisie_Clear_All_Cells()
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:DEB_Saisie_Clear_All_Cells", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:EffacerCellulesSaisieDEB", vbNullString, startTime)
 
 End Sub
 
 Sub shpRetourAuMenu_Click()
 
-    Call RetourAuMenu
+    Call RetournerAuMenu
 
 End Sub
 
-Sub RetourAuMenu()
+Sub RetournerAuMenu()
     
     'Rétablir la forme du bouton (Mettre à jour / Renverser)
     Dim shp As Shape
-    Set shp = wshDEB_Saisie.Shapes("btnUpdate")
-    Call DEB_Forme_Restaurer(shp)
+    Set shp = wshDEB_Saisie.Shapes("shpMettreAJourDEB")
+    Call RestaurerParametresForme(shp)
 
     wshDEB_Saisie.Visible = xlSheetHidden
     
@@ -988,7 +988,7 @@ Sub CalculerTaxesEtIntrants(d As Date, _
     
 End Sub
 
-Sub DEB_Forme_Sauvegarder(forme As Shape)
+Sub SauvegarderParametresForme(forme As Shape)
 
     ' Vérifier si le Dictionary est déjà instancié, sinon le créer
     If gSauvegardesCaracteristiquesForme Is Nothing Then
@@ -1006,7 +1006,7 @@ Sub DEB_Forme_Sauvegarder(forme As Shape)
     
 End Sub
 
-Sub DEB_Forme_Restaurer(forme As Shape)
+Sub RestaurerParametresForme(forme As Shape)
 
     'Vérifiez si les caractéristiques originales sont sauvegardées
     If gSauvegardesCaracteristiquesForme Is Nothing Then

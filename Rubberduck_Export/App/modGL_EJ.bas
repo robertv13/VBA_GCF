@@ -22,18 +22,18 @@ Sub SauvegarderEntreeJournal()
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:SauvegarderEntreeJournal", vbNullString, 0)
     
-    If Fn_Is_Date_Valide(wshGL_EJ.Range("K4").Value) = False Then Exit Sub
+    If Fn_DateEstElleValide(wshGL_EJ.Range("K4").Value) = False Then Exit Sub
     
-    If Fn_Is_Ecriture_Balance = False Then Exit Sub
+    If Fn_SaisieEJBalance = False Then Exit Sub
     
     Dim rowEJLast As Long
     rowEJLast = wshGL_EJ.Range("E23").End(xlUp).Row  'Last Used Row in wshGL_EJ
-    If Fn_Is_JE_Valid(rowEJLast) = False Then Exit Sub
+    If Fn_SaisieEJEstValide(rowEJLast) = False Then Exit Sub
     
     'Transfert des données vers wshGL, entête d'abord puis une ligne à la fois
     Call ComptabiliserEntreeJournal(rowEJLast)
     
-    If wshGL_EJ.ckbRecurrente = True Then
+    If wshGL_EJ.chkRecurrente = True Then
         Call SauvegarderEJRecurrente(rowEJLast)
     End If
     
@@ -62,14 +62,14 @@ Sub SauvegarderRenversementEntreeJournal()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:SauvegarderRenversementEntreeJournal", vbNullString, 0)
     
-    If Fn_Is_Ecriture_Balance = False Then
+    If Fn_SaisieEJBalance = False Then
         MsgBox "L'écriture à renverser ne balance pas !!!", vbCritical
         Exit Sub
     End If
     
     Dim rowEJLast As Long
     rowEJLast = wshGL_EJ.Range("E23").End(xlUp).Row  'Last Used Row in wshGL_EJ
-    If Fn_Is_JE_Valid(rowEJLast) = False Then Exit Sub
+    If Fn_SaisieEJEstValide(rowEJLast) = False Then Exit Sub
     
     'Renverser les montants (DT --> CT & CT ---> DT)
     Application.ScreenUpdating = False
@@ -95,8 +95,8 @@ Sub SauvegarderRenversementEntreeJournal()
     Call ComptabiliserEntreeJournal(rowEJLast)
     
     'Indiquer dans l'écriture originale qu'elle a été renversée par
-    Call MiseAJourEcritureRenverseeBDMaster
-    Call MiseAJourEcritureRenverseeBDLocale
+    Call MettreAJourEcritureRenverseeBDMaster
+    Call MettreAJourEcritureRenverseeBDLocale
     
    
     MsgBox _
@@ -150,7 +150,7 @@ Sub SauvegarderEJRecurrente(ll As Long)
     rowEJLast = wshGL_EJ.Cells(wshGL_EJ.Rows.count, "E").End(xlUp).Row  'Last Used Row in wshGL_EJ
     
     Call AjouterEJRecurrenteDBMaster(ll)
-    Call AjouterEJRecurrenteDBLocale(ll)
+    Call AjouterEJRecurrenteBDLocale(ll)
     
     Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:SauvegarderEJRecurrente", vbNullString, startTime)
     
@@ -198,7 +198,7 @@ Sub EffacerCellulesEJ()
         .Range("F4, K4, F6:K6").Font.Color = vbBlack
         .Range("E9:K23").ClearContents
         .Range("E9:K23").Font.Color = vbBlack
-        .ckbRecurrente = False
+        .chkRecurrente = False
         .Range("E6").Value = "Description:"
         Application.EnableEvents = True
         wshGL_EJ.Activate
@@ -230,7 +230,7 @@ Sub ConstruireEcriturePourRemiseTpsTvq(r As Integer)
     'Remplir la description, si elle est vide
     If wshGL_EJ.Range("F6").Value = vbNullString Then
         wshGL_EJ.Range("F6").Value = "Déclaration TPS/TVQ - Du " & _
-            Format$(Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), wsdADMIN.Range("B1").Value) & " au " & _
+            Format$(Fn_DatePremierJourTrimestrePrecedent(dateFin), wsdADMIN.Range("B1").Value) & " au " & _
             Format$(dateFin, wsdADMIN.Range("B1").Value)
     End If
     
@@ -238,13 +238,13 @@ Sub ConstruireEcriturePourRemiseTpsTvq(r As Integer)
     ReDim cases(101 To 213)
     
     'Remplir le formulaire de déclaration
-    wshGL_EJ.Range("T5").Value = "du " & Format$(Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), wsdADMIN.Range("B1").Value)
-    wshGL_EJ.Range("V5").Value = "du " & Format$(Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), wsdADMIN.Range("B1").Value)
+    wshGL_EJ.Range("T5").Value = "du " & Format$(Fn_DatePremierJourTrimestrePrecedent(dateFin), wsdADMIN.Range("B1").Value)
+    wshGL_EJ.Range("V5").Value = "du " & Format$(Fn_DatePremierJourTrimestrePrecedent(dateFin), wsdADMIN.Range("B1").Value)
     wshGL_EJ.Range("T6").Value = "du " & Format$(dateFin, wsdADMIN.Range("B1").Value)
     wshGL_EJ.Range("V6").Value = "du " & Format$(dateFin, wsdADMIN.Range("B1").Value)
     
     Dim rngResultAF As Range
-    Call modGL_Stuff.ObtenirSoldeCompteEntreDebutEtFin(ObtenirNoGlIndicateur("Revenus de consultation"), Fn_Calcul_Date_Premier_Jour_Trois_Mois_Arrière(dateFin), dateFin, rngResultAF)
+    Call modGL_Stuff.ObtenirSoldeCompteEntreDebutEtFin(Fn_NoCompteAPartirIndicateurCompte("Revenus de consultation"), Fn_DatePremierJourTrimestrePrecedent(dateFin), dateFin, rngResultAF)
     cases(101) = -Application.WorksheetFunction.Sum(rngResultAF.Columns(7)) _
                     - Application.WorksheetFunction.Sum(rngResultAF.Columns(8))
 
@@ -258,14 +258,14 @@ Sub ConstruireEcriturePourRemiseTpsTvq(r As Integer)
     
     'Obtenir les soldes des quatre (4) comptes de taxes - 2025-08-02 @ 11:04
     Dim noGLMin As String
-    noGLMin = ObtenirNoGlIndicateur("TPS Payée")
+    noGLMin = Fn_NoCompteAPartirIndicateurCompte("TPS Payée")
     Dim noGLMax As String
-    noGLMax = ObtenirNoGlIndicateur("TVQ Facturée")
+    noGLMax = Fn_NoCompteAPartirIndicateurCompte("TVQ Facturée")
     
     Dim dictSoldes As Object
     Set dictSoldes = CreateObject("Scripting.Dictionary")
     
-    Set dictSoldes = modGL_Stuff.ObtenirSoldesParCompteAvecADO(noGLMin, noGLMax, dateFin, True)
+    Set dictSoldes = modGL_Stuff.Fn_SoldesParCompteAvecADO(noGLMin, noGLMax, dateFin, True)
     If dictSoldes Is Nothing Then
         MsgBox "Impossible d'obtenir les soldes pour les comptes de taxe" & vbNewLine & vbNewLine & _
                 "en date du " & Format$(dateFin, wsdADMIN.Range("B1").Value) & _
@@ -276,7 +276,7 @@ Sub ConstruireEcriturePourRemiseTpsTvq(r As Integer)
     End If
     
     'TPS percues
-    cases(105) = dictSoldes(ObtenirNoGlIndicateur("TPS Facturée"))
+    cases(105) = dictSoldes(Fn_NoCompteAPartirIndicateurCompte("TPS Facturée"))
     wshGL_EJ.Range("E" & r).Value = "TPS percues"
     If cases(105) <= 0 Then
         wshGL_EJ.Range("H" & r).Value = -cases(105)
@@ -293,7 +293,7 @@ Sub ConstruireEcriturePourRemiseTpsTvq(r As Integer)
     End With
     
     'TVQ percues
-    cases(205) = dictSoldes(ObtenirNoGlIndicateur("TVQ Facturée"))
+    cases(205) = dictSoldes(Fn_NoCompteAPartirIndicateurCompte("TVQ Facturée"))
     wshGL_EJ.Range("E" & r).Value = "TVQ percues"
     If cases(205) <= 0 Then
         wshGL_EJ.Range("H" & r).Value = -cases(205)
@@ -309,7 +309,7 @@ Sub ConstruireEcriturePourRemiseTpsTvq(r As Integer)
         .Value = -cases(205)
     End With
     
-    cases(108) = dictSoldes(ObtenirNoGlIndicateur("TPS Payée"))
+    cases(108) = dictSoldes(Fn_NoCompteAPartirIndicateurCompte("TPS Payée"))
     wshGL_EJ.Range("E" & r).Value = "TPS payées"
     If cases(108) <= 0 Then
         wshGL_EJ.Range("H" & r).Value = -cases(108)
@@ -325,7 +325,7 @@ Sub ConstruireEcriturePourRemiseTpsTvq(r As Integer)
         .Value = cases(108)
     End With
     
-    cases(208) = dictSoldes(ObtenirNoGlIndicateur("TVQ Payée"))
+    cases(208) = dictSoldes(Fn_NoCompteAPartirIndicateurCompte("TVQ Payée"))
     wshGL_EJ.Range("E" & r).Value = "TVQ payées"
     If cases(208) <= 0 Then
         wshGL_EJ.Range("H" & r).Value = -cases(208)
@@ -409,8 +409,8 @@ Sub ConstruireEcriturePourRemiseTpsTvq(r As Integer)
         'TPS à remettre
         Dim noGL As String
         Dim descGL As String
-        noGL = ObtenirNoGlIndicateur("TPS à remettre")
-        descGL = ObtenirDescriptionCompte(noGL)
+        noGL = Fn_NoCompteAPartirIndicateurCompte("TPS à remettre")
+        descGL = Fn_DescriptionAPartirNoCompte(noGL)
         wshGL_EJ.Range("E" & r).Value = descGL
         If cases(113) < 0 Then
             wshGL_EJ.Range("H" & r).Value = -cases(113)
@@ -420,8 +420,8 @@ Sub ConstruireEcriturePourRemiseTpsTvq(r As Integer)
         r = r + 1
     
         'TVQ à remettre
-        noGL = ObtenirNoGlIndicateur("TVQ à remettre")
-        descGL = ObtenirDescriptionCompte(noGL)
+        noGL = Fn_NoCompteAPartirIndicateurCompte("TVQ à remettre")
+        descGL = Fn_DescriptionAPartirNoCompte(noGL)
         wshGL_EJ.Range("E" & r).Value = descGL
         If cases(213) < 0 Then
             wshGL_EJ.Range("H" & r).Value = -cases(213)
@@ -634,7 +634,7 @@ Sub ConstruireSommaireEJRecurrente()
         For i = 2 To lastUsedRow1
             If .Range("A" & i).Value <> oldEntry Then
                 .Range("J" & k).Value = .Range("B" & i).Value
-                .Range("K" & k).Value = "'" & Fn_Pad_A_String(.Range("A" & i).Value, " ", 5, "L")
+                .Range("K" & k).Value = "'" & Fn_ChaineRemplie(.Range("A" & i).Value, " ", 5, "L")
                 oldEntry = .Range("A" & i).Value
                 k = k + 1
             End If
@@ -687,10 +687,10 @@ Sub ComptabiliserEntreeJournal(r As Long) '2025-06-08 @ 08:37
             glNo = wshGL_EJ.Range("L" & l).Value
             
             If wshGL_EJ.Range("H" & l).Value <> "" Then
-                ecr.AjouterLigne glNo, ObtenirDescriptionCompte(glNo), Nz(wshGL_EJ.Range("H" & l).Value), autreRemarque
+                ecr.AjouterLigne glNo, Fn_DescriptionAPartirNoCompte(glNo), Nz(wshGL_EJ.Range("H" & l).Value), autreRemarque
             End If
             If wshGL_EJ.Range("I" & l).Value <> "" Then
-                ecr.AjouterLigne glNo, ObtenirDescriptionCompte(glNo), -Nz(wshGL_EJ.Range("I" & l).Value), autreRemarque
+                ecr.AjouterLigne glNo, Fn_DescriptionAPartirNoCompte(glNo), -Nz(wshGL_EJ.Range("I" & l).Value), autreRemarque
             End If
     Next l
     
@@ -707,9 +707,9 @@ Sub ComptabiliserEntreeJournal(r As Long) '2025-06-08 @ 08:37
 
 End Sub
 
-Sub MiseAJourEcritureRenverseeBDMaster()
+Sub MettreAJourEcritureRenverseeBDMaster()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:MiseAJourEcritureRenverseeBDMaster", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:MettreAJourEcritureRenverseeBDMaster", vbNullString, 0)
     
     'Définition des paramètres
     Dim destinationFileName As String, destinationTab As String
@@ -753,13 +753,13 @@ Sub MiseAJourEcritureRenverseeBDMaster()
     Set conn = Nothing
     Set recSet = Nothing
 
-    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:MiseAJourEcritureRenverseeBDMaster", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:MettreAJourEcritureRenverseeBDMaster", vbNullString, startTime)
     
 End Sub
 
-Sub MiseAJourEcritureRenverseeBDLocale()
+Sub MettreAJourEcritureRenverseeBDLocale()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modEJ_Saisie:MiseAJourEcritureRenverseeBDLocale", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modEJ_Saisie:MettreAJourEcritureRenverseeBDLocale", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -783,7 +783,7 @@ Sub MiseAJourEcritureRenverseeBDLocale()
     'Libérer la mémoire
     Set ws = Nothing
 
-    Call modDev_Utils.EnregistrerLogApplication("modEJ_Saisie:MiseAJourEcritureRenverseeBDLocale", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modEJ_Saisie:MettreAJourEcritureRenverseeBDLocale", vbNullString, startTime)
     
 End Sub
 
@@ -867,9 +867,9 @@ Sub AjouterEJRecurrenteDBMaster(r As Long) 'Write/Update a record to external .x
 
 End Sub
 
-Sub AjouterEJRecurrenteDBLocale(r As Long) 'Write records to local file
+Sub AjouterEJRecurrenteBDLocale(r As Long) 'Write records to local file
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:AjouterEJRecurrenteDBLocale", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:AjouterEJRecurrenteBDLocale", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -908,7 +908,7 @@ Sub AjouterEJRecurrenteDBLocale(r As Long) 'Write records to local file
     
     Application.ScreenUpdating = True
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:AjouterEJRecurrenteDBLocale", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:AjouterEJRecurrenteBDLocale", vbNullString, startTime)
     
 End Sub
 
@@ -924,7 +924,7 @@ Sub RetournerAuMenuComptabiliteEJ()
     
     'Rétablir la forme du bouton (Mettre à jour / Renverser)
     Dim shp As Shape
-    Set shp = wshGL_EJ.Shapes("btnUpdate")
+    Set shp = wshGL_EJ.Shapes("chkMettreAJour")
     Call RestaurerFormeEJ(shp)
 
     'Nouvelle façon de faire
@@ -1014,7 +1014,7 @@ Sub PreparerAfficherListeEcriture()
     For i = 2 To UBound(arrData, 1)
         source = CStr(arrData(i, fGlTSource))
         'Seulement les écritures de journal (exclure les autres)
-        If source = vbNullString Or Not ExclureTransaction(source) = True Then
+        If source = vbNullString Or Not Fn_ExclureTransaction(source) = True Then
             If InStr(strDejaVu, CStr(arrData(i, 1)) & ".|.") = 0 Then
                 compteur = compteur + 1
                 resultats(compteur, 1) = arrData(i, fGlTNoEntrée)
@@ -1037,43 +1037,33 @@ Sub PreparerAfficherListeEcriture()
     Call RedimensionnerTableau2D(resultats, compteur, UBound(resultats, 2))
     
     'Charger les résultats dans la ListBox
-    With ufListeEcritureGL.lsbListeEcritureGL
+    With ufListeEcritureGL.lstListeEcritureGL
         .ColumnCount = 5
         .ColumnWidths = "35;62;310;125;92"
         .List = resultats
     End With
     
-    ufListeEcritureGL.lsbListeEcritureGL.Clear
+    ufListeEcritureGL.lstListeEcritureGL.Clear
     
     'Ajouter chaque ligne de 'resultats' au ListBox
     i = 1
     Do While i <= compteur
-        ufListeEcritureGL.lsbListeEcritureGL.AddItem resultats(i, 1)
-        ufListeEcritureGL.lsbListeEcritureGL.List(ufListeEcritureGL.lsbListeEcritureGL.ListCount - 1, 1) = resultats(i, 2)
-        ufListeEcritureGL.lsbListeEcritureGL.List(ufListeEcritureGL.lsbListeEcritureGL.ListCount - 1, 2) = resultats(i, 3)
-        ufListeEcritureGL.lsbListeEcritureGL.List(ufListeEcritureGL.lsbListeEcritureGL.ListCount - 1, 3) = resultats(i, 4)
-        ufListeEcritureGL.lsbListeEcritureGL.List(ufListeEcritureGL.lsbListeEcritureGL.ListCount - 1, 4) = resultats(i, 5)
+        ufListeEcritureGL.lstListeEcritureGL.AddItem resultats(i, 1)
+        ufListeEcritureGL.lstListeEcritureGL.List(ufListeEcritureGL.lstListeEcritureGL.ListCount - 1, 1) = resultats(i, 2)
+        ufListeEcritureGL.lstListeEcritureGL.List(ufListeEcritureGL.lstListeEcritureGL.ListCount - 1, 2) = resultats(i, 3)
+        ufListeEcritureGL.lstListeEcritureGL.List(ufListeEcritureGL.lstListeEcritureGL.ListCount - 1, 3) = resultats(i, 4)
+        ufListeEcritureGL.lstListeEcritureGL.List(ufListeEcritureGL.lstListeEcritureGL.ListCount - 1, 4) = resultats(i, 5)
         i = i + 1
     Loop
 
     'Déplacer le focus sur la dernière ligne
-    If ufListeEcritureGL.lsbListeEcritureGL.ListCount > 0 Then
-        ufListeEcritureGL.lsbListeEcritureGL.ListIndex = ufListeEcritureGL.lsbListeEcritureGL.ListCount - 1
+    If ufListeEcritureGL.lstListeEcritureGL.ListCount > 0 Then
+        ufListeEcritureGL.lstListeEcritureGL.ListIndex = ufListeEcritureGL.lstListeEcritureGL.ListCount - 1
     End If
     
     'Afficher le UserForm
     ufListeEcritureGL.show
     
-End Sub
-
-Sub ckbRecurrente_Click()
-
-    If wshGL_EJ.ckbRecurrente.Value = True Then
-        wshGL_EJ.ckbRecurrente.BackColor = gCOULEUR_SAISIE
-    Else
-        wshGL_EJ.ckbRecurrente.BackColor = RGB(217, 217, 217)
-    End If
-
 End Sub
 
 

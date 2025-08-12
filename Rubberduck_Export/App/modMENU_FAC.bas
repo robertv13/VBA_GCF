@@ -2,7 +2,7 @@ Attribute VB_Name = "modMENU_FAC"
 Option Explicit
 
 'Option # 1
-Sub PreparationFacture_Click()
+Sub shpAccederPreparationFacture_Click()
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU_FAC:PreparationFacture_Click", vbNullString, 0)
 
@@ -25,7 +25,7 @@ Sub PreparationFacture_Click()
 End Sub
 
 'Option # 2
-Sub SuiviCC_Click()
+Sub shpAccederListeAgeeCC_Click()
 
     Application.ScreenUpdating = False
     
@@ -43,7 +43,7 @@ Sub SuiviCC_Click()
 End Sub
 
 'Option # 3
-Sub FAC_Historique_Click()
+Sub shpAccederInterrogationFacture_Click()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU_FAC:FAC_Historique_Click", vbNullString, 0)
 
@@ -69,7 +69,7 @@ Sub FAC_Historique_Click()
 End Sub
 
 'Option # 4
-Sub FAC_Confirmation_Click()
+Sub shpAccederConfirmationFacture_Click()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU_FAC:FAC_Confirmation_Click", vbNullString, 0)
     

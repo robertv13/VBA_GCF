@@ -58,7 +58,7 @@ Private Sub UserForm_Initialize()
         End If
     End With
     
-    ufConfirmation.cmdConfirmation.Visible = False
+    ufConfirmation.shpConfirmation.Visible = False
     ufConfirmation.lblFactureEmConfirmation.Visible = False
     ufConfirmation.txtNoFactureEnConfirmation.Visible = False
     
@@ -106,11 +106,11 @@ Private Sub ListView1_ItemCheck(ByVal item As MSComctlLib.listItem)
         ufConfirmation.txtNbFacturesSélectionnées.Value = _
             ufConfirmation.txtNbFacturesSélectionnées.Value + 1
         If ufConfirmation.txtNbFacturesSélectionnées.Value > 0 Then
-            ufConfirmation.cmdConfirmation.Visible = True
+            ufConfirmation.shpConfirmation.Visible = True
             If ufConfirmation.txtNbFacturesSélectionnées.Value = 1 Then
-                ufConfirmation.cmdConfirmation.Caption = "Confirmer cette facture"
+                ufConfirmation.shpConfirmation.Caption = "Confirmer cette facture"
             Else
-                ufConfirmation.cmdConfirmation.Caption = "Confirmer les (" & _
+                ufConfirmation.shpConfirmation.Caption = "Confirmer les (" & _
                  ufConfirmation.txtNbFacturesSélectionnées.Value & ") factures sélectionnées"
             End If
         End If
@@ -121,12 +121,12 @@ Private Sub ListView1_ItemCheck(ByVal item As MSComctlLib.listItem)
         ufConfirmation.txtNbFacturesSélectionnées = _
             ufConfirmation.txtNbFacturesSélectionnées - 1
         If ufConfirmation.txtNbFacturesSélectionnées.Value = 0 Then
-            ufConfirmation.cmdConfirmation.Visible = False
+            ufConfirmation.shpConfirmation.Visible = False
         Else
             If ufConfirmation.txtNbFacturesSélectionnées.Value = 1 Then
-                ufConfirmation.cmdConfirmation.Caption = "Confirmer cette facture"
+                ufConfirmation.shpConfirmation.Caption = "Confirmer cette facture"
             Else
-                ufConfirmation.cmdConfirmation.Caption = "Confirmer les (" & _
+                ufConfirmation.shpConfirmation.Caption = "Confirmer les (" & _
                  ufConfirmation.txtNbFacturesSélectionnées.Value & ") factures sélectionnées"
             End If
         End If
@@ -146,19 +146,19 @@ Public Sub MarquerLigneSelectionnee(item As listItem) '2025-06-17 @ 19:58
     
 End Sub
 
-Private Sub cmdCocherToutesCases_Click()
+Private Sub shpCocherToutesCases_Click()
 
     Call modFAC_Confirmation.CocherToutesLesCases(ListView1)
 
 End Sub
 
-Private Sub cmdDecocherToutesCases_Click()
+Private Sub shpDecocherToutesCases_Click()
 
     Call modFAC_Confirmation.DecocherToutesLesCases(ListView1)
 
 End Sub
 
-Private Sub cmdConfirmation_Click()
+Private Sub shpConfirmation_Click()
 
     Call modFAC_Confirmation.ConfirmerSauvegardeConfirmationFacture
 

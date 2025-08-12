@@ -43,19 +43,19 @@ Sub CreerListeAgeeCC() '2024-09-08 @ 15:55
     'Entêtes de colonnes en fonction du niveau de détail
     If LCase$(niveauDetail) = "client" Then
         wshCAR_Liste_Agee.Range("B8:G8").Value = Array("Client", "Solde", "- de 30 jours", "31 @ 60 jours", "61 @ 90 jours", "+ de 90 jours")
-        Call Make_It_As_Header(wshCAR_Liste_Agee.Range("B8:G8"), RGB(84, 130, 53))
+        Call CreerEnteteDeFeuille(wshCAR_Liste_Agee.Range("B8:G8"), RGB(84, 130, 53))
     End If
 
     'Entêtes de colonnes en fonction du niveau de détail (Facture)
     If LCase$(niveauDetail) = "facture" Then
         wshCAR_Liste_Agee.Range("B8:I8").Value = Array("Client", "No. Facture", "Date Facture", "Solde", "- de 30 jours", "31 @ 60 jours", "61 @ 90 jours", "+ de 90 jours")
-        Call Make_It_As_Header(wshCAR_Liste_Agee.Range("B8:I8"), RGB(84, 130, 53))
+        Call CreerEnteteDeFeuille(wshCAR_Liste_Agee.Range("B8:I8"), RGB(84, 130, 53))
     End If
 
     'Entêtes de colonnes en fonction du niveau de détail (Transaction)
     If LCase$(niveauDetail) = "transaction" Then
         wshCAR_Liste_Agee.Range("B8:J8").Value = Array("Client", "No. Facture", "Type", "Date", "Montant", "- de 30 jours", "31 @ 60 jours", "61 @ 90 jours", "+ de 90 jours")
-        Call Make_It_As_Header(wshCAR_Liste_Agee.Range("B8:J8"), RGB(84, 130, 53))
+        Call CreerEnteteDeFeuille(wshCAR_Liste_Agee.Range("B8:J8"), RGB(84, 130, 53))
     End If
 
     Application.EnableEvents = True
@@ -87,7 +87,7 @@ Sub CreerListeAgeeCC() '2024-09-08 @ 15:55
         'Récupérer les données de la facture directement du Range
         numFacture = CStr(rngFactures.Cells(i, fFacCCInvNo).Value)
         'Do not process non Confirmed invoice
-        If Fn_Get_Invoice_Type(numFacture) <> "C" Then
+        If Fn_TypeFacture(numFacture) <> "C" Then
             GoTo Next_Invoice
         End If
         
@@ -100,13 +100,13 @@ Sub CreerListeAgeeCC() '2024-09-08 @ 15:55
         
         client = rngFactures.Cells(i, fFacCCCodeClient).Value
         'Obtenir le nom du client (MF) pour trier par nom de client plutôt que par code de client
-        client = Fn_Get_Client_Name(client)
+        client = Fn_NomClientFeuilleBDCients(client)
         dateDue = rngFactures.Cells(i, fFacCCDueDate).Value
         montantFacture = CCur(rngFactures.Cells(i, fFacCCTotal).Value)
         
         'Obtenir les paiements et régularisations pour cette facture
-        montantPaye = Fn_Obtenir_Paiements_Facture(numFacture, wshCAR_Liste_Agee.Range("H4").Value)
-        montantRegul = Fn_Obtenir_Régularisations_Facture(numFacture, wshCAR_Liste_Agee.Range("H4").Value)
+        montantPaye = Fn_ObtenirPaiementsPourUneFacture(numFacture, wshCAR_Liste_Agee.Range("H4").Value)
+        montantRegul = Fn_ObtenirRegularisationsFacture(numFacture, wshCAR_Liste_Agee.Range("H4").Value)
         
         montantRestant = montantFacture - montantPaye + montantRegul
         
@@ -403,7 +403,7 @@ Next_Invoice:
     
     If DerniereLigne > (20 + ligneVolet) Then
         DerniereLigne = DerniereLigne - 20
-        Application.GoTo wshCAR_Liste_Agee.Cells(DerniereLigne, 1), Scroll:=True '2025-07-08 @ 13:39
+        Application.Goto wshCAR_Liste_Agee.Cells(DerniereLigne, 1), Scroll:=True '2025-07-08 @ 13:39
     End If
     
     Application.ScreenUpdating = True
@@ -707,7 +707,7 @@ Sub AllerAuCentreDesResultats() '2025-06-30@ 11:02
         'Centre la ligne dans la fenêtre visible si possible
         ligneCible = Application.Max(1, derLigne - Int(nbLignesVisibles / 2))
         
-        Application.GoTo Reference:=.Cells(ligneCible, 1), Scroll:=True
+        Application.Goto Reference:=.Cells(ligneCible, 1), Scroll:=True
     End With
     
 End Sub
@@ -720,7 +720,7 @@ End Sub
 
 Sub RetournerEnHaut() '2025-06-30 @ 11:08
 
-    Application.GoTo Reference:=ActiveSheet.Cells(1, 1), Scroll:=True
+    Application.Goto Reference:=ActiveSheet.Cells(1, 1), Scroll:=True
     
 End Sub
 

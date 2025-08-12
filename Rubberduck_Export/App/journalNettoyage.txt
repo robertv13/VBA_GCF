@@ -1,4 +1,4 @@
-﻿📘 Journal typographique — 08/08/2025 08:59:30
+﻿📘 Journal typographique — 08/12/2025 14:58:40
 
 🔧 Fichier : clsControlWrapper.cls
 
@@ -56,7 +56,6 @@
 🔧 Fichier : modConfig.bas
 
 🔧 Fichier : modCSV_Import.bas
-   ✅ Remplacé : .column ➜ .Column
    ✅ Remplacé : .row ➜ .Row
    ✅ Remplacé : .value ➜ .Value
 
@@ -158,10 +157,6 @@
    ✅ Remplacé : .font ➜ .Font
 
 🔧 Fichier : modGL_DataService.bas
-   ✅ Remplacé : .column ➜ .Column
-   ✅ Remplacé : .cells ➜ .Cells
-   ✅ Remplacé : .row ➜ .Row
-   ✅ Remplacé : .value ➜ .Value
 
 🔧 Fichier : modGL_EJ.bas
    ✅ Remplacé : .row ➜ .Row
@@ -230,6 +225,8 @@
    ✅ Remplacé : .value ➜ .Value
 
 🔧 Fichier : modTBD.bas
+   ✅ Remplacé : .column ➜ .Column
+   ✅ Remplacé : .cells ➜ .Cells
    ✅ Remplacé : .row ➜ .Row
    ✅ Remplacé : .value ➜ .Value
 

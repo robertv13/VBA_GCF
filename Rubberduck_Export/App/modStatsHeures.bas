@@ -1,11 +1,11 @@
 Attribute VB_Name = "modStatsHeures"
 Option Explicit
 
-Sub ExecuterAdvancedFilterSurTEC_TDB_Data()
+Sub ExecuterAdvancedFilterSurTECTDBData()
     
     'La cellule 'S7' doit contenir le Professionnel
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modStatsHeures:ExecuterAdvancedFilterSurTEC_TDB_Data", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modStatsHeures:ExecuterAdvancedFilterSurTECTDBData", vbNullString, 0)
 
     'On utilise la feuille TEC_TDB_Data
     Dim ws As Worksheet: Set ws = wshTEC_TDB_Data
@@ -21,7 +21,7 @@ Sub ExecuterAdvancedFilterSurTEC_TDB_Data()
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modStatsHeures:ExecuterAdvancedFilterSurTEC_TDB_Data", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modStatsHeures:ExecuterAdvancedFilterSurTECTDBData", vbNullString, startTime)
 
 End Sub
 
@@ -80,15 +80,15 @@ Sub ExecuterAdvancedFilter(ws As Worksheet, criteriaRange As String, resultStart
 
 End Sub
 
-Sub shp_Back_To_ufSaisieHeures_Click()
+Sub shpExitStats_Click()
 
-    Call Retourner_ufSaisieHeures
+    Call RetournerufSaisieHeures
     
 End Sub
 
-Sub Retourner_ufSaisieHeures()
+Sub RetournerufSaisieHeures()
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modStatsHeures:Retourner_ufSaisieHeures", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modStatsHeures:RetournerufSaisieHeures", vbNullString, 0)
    
     On Error Resume Next
     wshStatsHeuresPivotTables.Visible = xlSheetHidden
@@ -96,7 +96,7 @@ Sub Retourner_ufSaisieHeures()
     
     ufSaisieHeures.show vbModeless
 
-    Call modDev_Utils.EnregistrerLogApplication("modStatsHeures:Retourner_ufSaisieHeures", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modStatsHeures:RetournerufSaisieHeures", vbNullString, startTime)
 
 End Sub
 

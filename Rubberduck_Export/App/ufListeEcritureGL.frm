@@ -15,14 +15,14 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Private Sub lsbListeEcritureGL_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
+Private Sub lstListeEcritureGL_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim ligne As Long
     
-    ligne = lsbListeEcritureGL.ListIndex
+    ligne = lstListeEcritureGL.ListIndex
     
     If ligne <> -1 Then
-        wshGL_EJ.Range("B3").Value = lsbListeEcritureGL.List(ligne, 0)
+        wshGL_EJ.Range("B3").Value = lstListeEcritureGL.List(ligne, 0)
     End If
     
     Unload ufListeEcritureGL

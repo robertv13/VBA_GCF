@@ -29,7 +29,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Call modTEC_TDB.ActualiserTECTableauDeBord
             
             'Appliquer les 4 Advanced Filters (Semaine, Mois, Trimestre & Année Financière)
-            Call ExecuterAdvancedFilterSurTEC_TDB_Data
+            Call ExecuterAdvancedFilterSurTECTDBData
             
             'Mettre à jour les 4 tableaux croisés dynamiques (Semaine, Mois, Trimestre & Année Financière)
             Call MettreAJourPivotTables

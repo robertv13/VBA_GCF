@@ -28,7 +28,7 @@ Private Sub UserForm_Initialize()
     
     'Obtenir le plan comptable
     Dim arr As Variant
-    arr = Fn_Get_Plan_Comptable(2) 'Returns an array with 2 columns
+    arr = Fn_PlanComptableTableau2D(2) 'Returns an array with 2 columns
         
     'Ajoute les comptes, un à un dans la listBox
     Dim i As Long
@@ -46,7 +46,7 @@ Private Sub UserForm_Initialize()
     End With
     
     'Options du comboBox pour les périodes
-    cmbPeriode.Clear
+   cmbPeriode.Clear
     
     'Vérifier si la plage nommée existe
     On Error Resume Next
@@ -86,8 +86,8 @@ Private Sub cmbTypeRapport_Change()
         fraParDate.Top = 50
         'Activer la sélection de comptes
         lsbComptes.Enabled = True
-        cmdSelectAll.Enabled = True
-        cmdDeselectAll.Enabled = True
+        shpSelectAll.Enabled = True
+        shpDeselectAll.Enabled = True
     ElseIf cmbTypeRapport.ListIndex = 1 Then
         'Mode "Par numéro d'écriture"
         fraParDate.Visible = False
@@ -102,8 +102,8 @@ Private Sub cmbTypeRapport_Change()
         txtNoEcritureFin = maxNumeroEcriture
         'Désactiver la sélection de comptes (car non applicable)
         lsbComptes.Enabled = False
-        cmdSelectAll.Enabled = False
-        cmdDeselectAll.Enabled = False
+        shpSelectAll.Enabled = False
+        shpDeselectAll.Enabled = False
     Else
         'Mode "Par date de saisie"
         fraParDate.Visible = False
@@ -114,8 +114,8 @@ Private Sub cmbTypeRapport_Change()
         fraTypeEcriture.Top = 145
         'Désactiver la sélection de comptes (car non applicable)
         lsbComptes.Enabled = False
-        cmdSelectAll.Enabled = False
-        cmdDeselectAll.Enabled = False
+        shpSelectAll.Enabled = False
+        shpDeselectAll.Enabled = False
     End If
     
 End Sub
@@ -168,7 +168,7 @@ Private Sub txtDateDebut_Exit(ByVal Cancel As MSForms.ReturnBoolean)
     Dim dateCorrigee As String
     
     If Trim$(txtDateDebut.text) <> vbNullString Then
-        dateCorrigee = CorrigerDate(txtDateDebut.text)
+        dateCorrigee = Fn_DateCorrigee(txtDateDebut.text)
         If dateCorrigee = vbNullString Then
             MsgBox "La date saisie est invalide, veuillez saisir une date sous un" & vbNewLine & vbNewLine & _
                     "format valide (jj ou jj/mm ou jj/mm/aaaa ou aaaa/mm/jj)" & vbNewLine & vbNewLine & _
@@ -188,7 +188,7 @@ Private Sub txtDateFin_Exit(ByVal Cancel As MSForms.ReturnBoolean)
     Dim dateCorrigee As String
     
     If Trim$(txtDateFin.text) <> vbNullString Then
-        dateCorrigee = CorrigerDate(txtDateFin.text)
+        dateCorrigee = Fn_DateCorrigee(txtDateFin.text)
         If dateCorrigee = vbNullString Then
             MsgBox "La date saisie est invalide, veuillez saisir une date sous un" & vbNewLine & vbNewLine & _
                     "format valide (jj ou jj/mm ou jj/mm/aaaa ou aaaa/mm/jj)" & vbNewLine & vbNewLine & _
@@ -208,7 +208,7 @@ Private Sub txtDateSaisieDebut_Exit(ByVal Cancel As MSForms.ReturnBoolean)
     Dim dateCorrigee As String
     
     If Trim$(txtDateSaisieDebut.text) <> vbNullString Then
-        dateCorrigee = CorrigerDate(txtDateSaisieDebut.text)
+        dateCorrigee = Fn_DateCorrigee(txtDateSaisieDebut.text)
         If dateCorrigee = vbNullString Then
             MsgBox "La date saisie est invalide, veuillez saisir une date sous un" & vbNewLine & vbNewLine & _
                     "format valide (jj ou jj/mm ou jj/mm/aaaa ou aaaa/mm/jj)" & vbNewLine & vbNewLine & _
@@ -230,7 +230,7 @@ Private Sub txtDateSaisieFin_Exit(ByVal Cancel As MSForms.ReturnBoolean)
     Dim dateCorrigee As String
     
     If Trim$(txtDateSaisieFin.text) <> vbNullString Then
-        dateCorrigee = CorrigerDate(txtDateSaisieFin.text)
+        dateCorrigee = Fn_DateCorrigee(txtDateSaisieFin.text)
         If dateCorrigee = vbNullString Then
             MsgBox "La date saisie est invalide, veuillez saisir une date sous un" & vbNewLine & vbNewLine & _
                     "format valide (jj ou jj/mm ou jj/mm/aaaa ou aaaa/mm/jj)" & vbNewLine & vbNewLine & _
@@ -245,13 +245,7 @@ Private Sub txtDateSaisieFin_Exit(ByVal Cancel As MSForms.ReturnBoolean)
     End If
 End Sub
 
-Private Sub txtBoxSuivant_GotFocus()
-
-    Debug.Print "Le focus est maintenant sur txtBoxSuivant"
-    
-End Sub
-
-Private Sub cmdGenerer_Click()
+Private Sub shpGenerer_Click()
 
     'Vérification que le type de rapport est sélectionné
     Dim TypeRapport As String
@@ -296,7 +290,7 @@ Private Sub cmdGenerer_Click()
         
         'Vérification qu'au moins un compte est sélectionné
         Dim ligneSélectionnée As Boolean
-        ligneSélectionnée = EstLigneSelectionnee(Me.lsbComptes)
+        ligneSélectionnée = Fn_EstLigneSelectionnee(Me.lsbComptes)
         If ligneSélectionnée = False Then
             MsgBox "Veuillez sélectionner au moins un numéro de compte.", vbExclamation, "Erreur"
             Exit Sub
@@ -388,7 +382,7 @@ Private Sub cmdGenerer_Click()
 
 End Sub
 
-Private Sub cmdSelectAll_Click()
+Private Sub shpSelectAll_Click()
 
     'Boucle à travers tous les éléments du ListBox et les sélectionne
     Dim i As Integer
@@ -398,7 +392,7 @@ Private Sub cmdSelectAll_Click()
     
 End Sub
 
-Private Sub cmdDeselectAll_Click()
+Private Sub shpDeselectAll_Click()
 
     'Boucle à travers tous les éléments du ListBox et les désélectionne
     Dim i As Integer
@@ -408,7 +402,7 @@ Private Sub cmdDeselectAll_Click()
 
 End Sub
 
-Function CorrigerDate(txtDate As String) As String
+Function Fn_DateCorrigee(txtDate As String) As String
 
     Dim d As Integer, m As Integer, Y As Integer
     Dim arr() As String
@@ -422,8 +416,8 @@ Function CorrigerDate(txtDate As String) As String
 
     'Supprimer les espaces & n'accepter que les caractères valides
     txtDate = Trim$(txtDate)
-    If Not EstDateCaractereValide(txtDate) Then
-        CorrigerDate = vbNullString
+    If Not Fn_EstDateCaractereValide(txtDate) Then
+        Fn_DateCorrigee = vbNullString
         Exit Function
     End If
     'Uniformiser les séparateurs
@@ -441,7 +435,7 @@ Function CorrigerDate(txtDate As String) As String
     End If
 
     'Cas particulier 4, 6 ou 8 caractères sans séparateur
-    If EstSeulementChiffres(txtDate) Then
+    If Fn_EstSeulementChiffres(txtDate) Then
         If Len(txtDate) = 4 Then
             txtDate = Left$(txtDate, 2) & "/" & Right$(txtDate, 2)
         ElseIf Len(txtDate) = 6 Then
@@ -479,7 +473,7 @@ Function CorrigerDate(txtDate As String) As String
     ElseIf UBound(arr) = 1 Then 'Deux parties dans la date saisie
         'L'une des 2 parties est vide
         If arr(0) = vbNullString Or arr(1) = vbNullString Then
-            CorrigerDate = vbNullString
+            Fn_DateCorrigee = vbNullString
             Exit Function
         End If
         
@@ -493,20 +487,20 @@ Function CorrigerDate(txtDate As String) As String
     End If
     
 DerniereValidation:
-    If ValiderDateDernierJourDuMois(Y, m, d) <> vbNullString Then
+    If Fn_ValiderDateDernierJourDuMois(Y, m, d) <> vbNullString Then
         'Conversion en date (Toutes les validations sont terminées)
         dt = DateSerial(Y, m, d)
-        CorrigerDate = Format$(dt, "dd/mm/yyyy")
+        Fn_DateCorrigee = Format$(dt, "dd/mm/yyyy")
     Else
-        CorrigerDate = vbNullString
+        Fn_DateCorrigee = vbNullString
     End If
     Exit Function
 
 ErrorHandler:
-    CorrigerDate = vbNullString ' Retourne une chaîne vide si une erreur se produit
+    Fn_DateCorrigee = vbNullString ' Retourne une chaîne vide si une erreur se produit
 End Function
 
-Function EstDateCaractereValide(ByVal txt As String) As Boolean '2025-03-03 @ 09:49
+Function Fn_EstDateCaractereValide(ByVal txt As String) As Boolean '2025-03-03 @ 09:49
 
     Dim regex As Object
     Set regex = CreateObject("VBScript.RegExp")
@@ -517,14 +511,14 @@ Function EstDateCaractereValide(ByVal txt As String) As Boolean '2025-03-03 @ 09
     regex.Global = False
 
     'Teste si la chaîne correspond au modèle
-    EstDateCaractereValide = regex.test(txt)
+    Fn_EstDateCaractereValide = regex.test(txt)
 
     'Libérer la mémoire
     Set regex = Nothing
     
 End Function
 
-Function EstSeulementChiffres(ByVal txt As String) As Boolean '2025-03-03 @ 09:49
+Function Fn_EstSeulementChiffres(ByVal txt As String) As Boolean '2025-03-03 @ 09:49
 
     Dim regex As Object
     Set regex = CreateObject("VBScript.RegExp")
@@ -535,7 +529,7 @@ Function EstSeulementChiffres(ByVal txt As String) As Boolean '2025-03-03 @ 09:4
     regex.Global = False
 
     'Teste si la chaîne correspond au modèle
-    EstSeulementChiffres = regex.test(txt)
+    Fn_EstSeulementChiffres = regex.test(txt)
 
     'Libérer la mémoire
     Set regex = Nothing

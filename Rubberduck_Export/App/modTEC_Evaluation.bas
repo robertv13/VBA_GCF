@@ -205,11 +205,11 @@ Sub AfficherValeurTEC(cutoffDate As String, maxDate As Date)
         Application.EnableEvents = False
         Application.ScreenUpdating = False
 
-        For Each prof In Fn_Sort_Dictionary_By_Keys(gDictHours) 'Sort dictionary by keys in ascending order
+        For Each prof In Fn_TriDictionnaireParCles(gDictHours) 'Sort dictionary by keys in ascending order
             strProf = Mid$(prof, 4)
-            profID = Fn_GetID_From_Initials(strProf)
-            prenom = Fn_Get_Prenom_From_Initials(strProf)
-            nom = Fn_Get_Nom_From_Initials(strProf)
+            profID = Fn_ProfIDAPartirDesInitiales(strProf)
+            prenom = Fn_PrenomAPartirDesInitiales(strProf)
+            nom = Fn_NomAPartirDesInitiales(strProf)
             prenom = prenom & " " & Left$(nom, 1) & "."
             If gDictHours(prof)(i) <> 0 Then
                 tauxHoraire = Fn_Get_Hourly_Rate(profID, ws.Range("L3").Value)
@@ -265,12 +265,12 @@ Sub AfficherValeurTEC(cutoffDate As String, maxDate As Date)
         currentRow = currentRow + 2
     Next i
 
-    'Obtenir le solde au G/L pour le compte TEC avec ObtenirSoldesParCompteAvecADO - 2025-08-03 @ 09:23
+    'Obtenir le solde au G/L pour le compte TEC avec Fn_SoldesParCompteAvecADO - 2025-08-03 @ 09:23
     Dim glTEC As String
-    glTEC = ObtenirNoGlIndicateur("Travaux en cours")
+    glTEC = Fn_NoCompteAPartirIndicateurCompte("Travaux en cours")
     Dim dictSoldes As Object
     Set dictSoldes = CreateObject("Scripting.Dictionary")
-    Set dictSoldes = modGL_Stuff.ObtenirSoldesParCompteAvecADO(glTEC, "", maxDate, True)
+    Set dictSoldes = modGL_Stuff.Fn_SoldesParCompteAvecADO(glTEC, "", maxDate, True)
     Dim solde As Currency
     solde = dictSoldes(glTEC)
     
@@ -360,8 +360,8 @@ Sub ComptabiliserValeurTEC() '2025-06-08 @ 08:37
     Set ws = wshTEC_Evaluation
 
     ajustementTEC = ws.Range("B2").Value
-    glTEC = ObtenirNoGlIndicateur("Travaux en cours")
-    glREVTEC = ObtenirNoGlIndicateur("Revenus - Travaux en cours")
+    glTEC = Fn_NoCompteAPartirIndicateurCompte("Travaux en cours")
+    glREVTEC = Fn_NoCompteAPartirIndicateurCompte("Revenus - Travaux en cours")
     
     'Instanciation d'un objet GL_Entry
     Set ecr = New clsGL_Entry
@@ -389,22 +389,22 @@ Sub ComptabiliserValeurTEC() '2025-06-08 @ 08:37
 
 End Sub
 
-Sub shpRetourMenuTEC_Click()
+Sub shpRetournerMenuTEC_Click()
 
-    Call RetourMenuTEC
+    Call RetournerMenuTEC
     
 End Sub
 
-Sub RetourMenuTEC()
+Sub RetournerMenuTEC()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Evaluation:RetourMenuTEC", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Evaluation:RetournerMenuTEC", vbNullString, 0)
     
     wshTEC_Evaluation.Visible = xlSheetVeryHidden
     
     wshMenuTEC.Activate
     wshMenuTEC.Range("A1").Select
     
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Evaluation:RetourMenuTEC", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Evaluation:RetournerMenuTEC", vbNullString, startTime)
 
 End Sub
 

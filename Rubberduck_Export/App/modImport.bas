@@ -527,9 +527,12 @@ Sub ViderTableau(nomFeuille As String, nomTableau As String) '2025-05-07 @ 10:13
     Dim tbl As ListObject
     Set tbl = ws.ListObjects(nomTableau)
 
-    If tbl.ListRows.count > 0 Then
+'    Debug.Print tbl.DataBodyRange.Address, tbl.DataBodyRange.Cells.count
+    On Error Resume Next '2025-08-11 @ 08:49
+    If Not tbl.DataBodyRange Is Nothing Then
         tbl.DataBodyRange.Delete
     End If
+    On Error GoTo 0
 
 End Sub
 

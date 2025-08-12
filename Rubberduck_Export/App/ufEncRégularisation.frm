@@ -25,22 +25,22 @@ Private Sub UserForm_Initialize()
     Set factureRange = ws.Range("F12:F36")
     
     'Vider le ComboBox avant de charger de nouvelles données
-    ufEncRégularisation.cbbNoFacture.Clear
+    ufEncRégularisation.cmbNoFacture.Clear
 
     'Parcourir la plage et charger les factures
     Dim row As Range
     For Each row In factureRange.Rows
         If row.Cells(1, 1).Value <> vbNullString Then
-            ufEncRégularisation.cbbNoFacture.AddItem row.Cells(1, 1).Value
+            ufEncRégularisation.cmbNoFacture.AddItem row.Cells(1, 1).Value
         End If
     Next row
 
-    Call EffaceDonnéesRégularisation
+    Call EffacerDonneesRegularisation
     
     'Vérifier les éléments dans le ComboBox
-    If Me.cbbNoFacture.ListCount >= 1 Then
-        Me.cbbNoFacture.ListIndex = 0 'Sélectionne automatiquement le premier (et unique) élément
-        Call cbbNoFacture_AfterUpdate ' Appelle explicitement l'événement AfterUpdate
+    If Me.cmbNoFacture.ListCount >= 1 Then
+        Me.cmbNoFacture.ListIndex = 0 'Sélectionne automatiquement le premier (et unique) élément
+        Call cmbNoFacture_AfterUpdate ' Appelle explicitement l'événement AfterUpdate
     Else
         MsgBox "Aucune facture, avec solde, n'existe pour ce client.", vbExclamation
         Exit Sub
@@ -48,19 +48,19 @@ Private Sub UserForm_Initialize()
     
 End Sub
 
-Private Sub cbbNoFacture_Change()
+Private Sub cmbNoFacture_Change()
 
-    Call cbbNoFacture_AfterUpdate
+    Call cmbNoFacture_AfterUpdate
     
 End Sub
 
-Private Sub cbbNoFacture_AfterUpdate()
+Private Sub cmbNoFacture_AfterUpdate()
 
     Dim wsCC As Worksheet
     Set wsCC = wsdFAC_Comptes_Clients
     
     Dim invNo As String
-    invNo = ufEncRégularisation.cbbNoFacture.Value
+    invNo = ufEncRégularisation.cmbNoFacture.Value
     
     Dim rngTrouve As Range
     Set rngTrouve = wsCC.Columns(fFacCCInvNo).Find(What:=invNo, LookIn:=xlValues, LookAt:=xlWhole)
@@ -87,8 +87,8 @@ Private Sub cbbNoFacture_AfterUpdate()
         MsgBox "La facture " & invNo & " n'a pas été trouvée.", vbExclamation
     End If
     
-    ufEncRégularisation.cmbAccepte.Visible = False
-    ufEncRégularisation.cmbRejete.Visible = False
+    ufEncRégularisation.shpAccepte.Visible = False
+    ufEncRégularisation.shpRejete.Visible = False
     
 End Sub
 
@@ -126,8 +126,8 @@ Private Sub txtTotalFacture_Exit(ByVal Cancel As MSForms.ReturnBoolean)
         ufEncRégularisation.txtTPS.Value = Format$(tps, "###,##0.00 $")
         ufEncRégularisation.txtTVQ.Value = Format$(tvq, "###,##0.00 $")
         
-        ufEncRégularisation.cmbAccepte.Visible = True
-        ufEncRégularisation.cmbRejete.Visible = True
+        ufEncRégularisation.shpAccepte.Visible = True
+        ufEncRégularisation.shpRejete.Visible = True
     End If
     
 End Sub
@@ -173,26 +173,26 @@ Private Sub VerifierMontantsSaisis()
                                         CCur(.txtTPS.text) + _
                                         CCur(.txtTVQ.text) Then
                 .txtTotalFacture.ForeColor = vbBlack
-                ufEncRégularisation.cmbAccepte.Visible = True
+                ufEncRégularisation.shpAccepte.Visible = True
             Else
                 .txtTotalFacture.ForeColor = vbRed
-                ufEncRégularisation.cmbAccepte.Visible = False
+                ufEncRégularisation.shpAccepte.Visible = False
             End If
         End With
     End If
     
 End Sub
 
-Private Sub cmbRejete_Click()
+Private Sub shpRejete_Click()
 
-    Call EffaceDonnéesRégularisation
-    cmbAccepte.Visible = False
-    cmbRejete.Visible = False
+    Call EffacerDonneesRegularisation
+    shpAccepte.Visible = False
+    shpRejete.Visible = False
     txtTotalFacture.SetFocus
     
 End Sub
 
-Private Sub cmbAccepte_Click()
+Private Sub shpAccepte_Click()
 
     Dim reponse As VbMsgBoxResult
 
@@ -208,7 +208,7 @@ Private Sub cmbAccepte_Click()
     
 End Sub
 
-Sub EffaceDonnéesRégularisation()
+Sub EffacerDonneesRegularisation()
 
     With ufEncRégularisation
         

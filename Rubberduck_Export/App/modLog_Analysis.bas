@@ -1,7 +1,7 @@
 Attribute VB_Name = "modLog_Analysis"
 Option Explicit
 
-Sub Main_OuvrirRepertoireEtTraiterFichiers()
+Sub zz_OuvrirRepertoireEtTraiterFichiers()
 
     'Initialisation du FileDialog pour sélectionner un répertoire
     Dim fileDialog As fileDialog
@@ -34,11 +34,11 @@ Sub Main_OuvrirRepertoireEtTraiterFichiers()
         'Appliquer les traitements en fonction des fichiers
         Select Case file.Name
             Case "LogSaisieHeures.log"
-                Call Lire_LogSaisieHeures(file.path)
+                Call LireLogSaisieHeures(file.path)
             Case "LogMainApp.log"
-                Call Lire_LogMainApp(file.path)
+                Call LireLogMainApp(file.path)
             Case "LogClientsApp.log"
-                Call Lire_LogClientsApp(file.path)
+                Call LireLogClientsApp(file.path)
         End Select
     Next file
     
@@ -51,9 +51,9 @@ Sub Main_OuvrirRepertoireEtTraiterFichiers()
     
 End Sub
 
-Sub Lire_LogClientsApp(filePath As String)
+Sub LireLogClientsApp(filePath As String)
 
-    Application.StatusBar = "Traitement de '" & ExtraireNomFichier(filePath) & "'"
+    Application.StatusBar = "Traitement de '" & Fn_ExtraireNomFichier(filePath) & "'"
     
     'Ouvrir le fichier 'LogClientsApp.log'
     Dim fileNum As Integer
@@ -82,7 +82,7 @@ Sub Lire_LogClientsApp(filePath As String)
         Line Input #fileNum, lineContent
         lineNo = lineNo + 1
 '        If lineNo Mod 25 = 0 Then
-'            Application.StatusBar = "Traitement de '" & ExtraireNomFichier(filePath) & "' - " & Format$(lineNo, "###,##0") & " lignes"
+'            Application.StatusBar = "Traitement de '" & Fn_ExtraireNomFichier(filePath) & "' - " & Format$(lineNo, "###,##0") & " lignes"
 '        End If
         If InStr(lineContent, " | ") <> 0 Then
             Dim Fields() As String
@@ -96,7 +96,7 @@ Sub Lire_LogClientsApp(filePath As String)
             output(ligne, 5) = Trim$(Fields(2))
             output(ligne, 6) = Trim$(Fields(3))
             If InStr(Fields(3), " secondes'") <> 0 Then
-                duree = ExtraireSecondes(Fields(3))
+                duree = Fn_ExtraireSecondesChaineLog(Fields(3))
                 duree = Replace(duree, ".", ",")
                 If duree <> 0 Then
                     output(ligne, 7) = CDbl(duree)
@@ -128,13 +128,13 @@ Sub Lire_LogClientsApp(filePath As String)
     Application.StatusBar = False
     
 '    'Afficher le nombre de lignes ajoutées au fichier LOG
-'    MsgBox "Le fichier '" & ExtraireNomFichier(filePath) & "' a ajouté " & Format$(UBound(output, 1), "###,##0") & " lignes au fichier cumulatif", vbInformation
+'    MsgBox "Le fichier '" & Fn_ExtraireNomFichier(filePath) & "' a ajouté " & Format$(UBound(output, 1), "###,##0") & " lignes au fichier cumulatif", vbInformation
 '
 End Sub
 
-Sub Lire_LogMainApp(filePath As String)
+Sub LireLogMainApp(filePath As String)
 
-    Application.StatusBar = "Traitement de '" & ExtraireNomFichier(filePath) & "'"
+    Application.StatusBar = "Traitement de '" & Fn_ExtraireNomFichier(filePath) & "'"
     
     'Ouvrir le fichier .Log
     Dim fileNum As Integer
@@ -168,7 +168,7 @@ Sub Lire_LogMainApp(filePath As String)
             'Insérer les données dans le tableau
             ligne = ligne + 1
 '            If ligne Mod 250 = 0 Then
-'                Application.StatusBar = "Traitement de '" & ExtraireNomFichier(filePath) & "' - " & Format$(ligne, "###,##0") & " lignes"
+'                Application.StatusBar = "Traitement de '" & Fn_ExtraireNomFichier(filePath) & "' - " & Format$(ligne, "###,##0") & " lignes"
 '            End If
             If UBound(Fields) = 5 Then
                 output(ligne, 1) = env
@@ -179,7 +179,7 @@ Sub Lire_LogMainApp(filePath As String)
                 output(ligne, 6) = Trim$(Fields(3))
                 output(ligne, 7) = Trim$(Fields(4))
                 If InStr(Fields(5), " secondes") <> 0 Then
-                    duree = ExtraireSecondes(Fields(5))
+                    duree = Fn_ExtraireSecondesChaineLog(Fields(5))
                     duree = Replace(duree, ".", ",")
                     If duree <> 0 Then
                         output(ligne, 8) = CDbl(duree)
@@ -199,7 +199,7 @@ Sub Lire_LogMainApp(filePath As String)
                 output(ligne, 5) = Trim$(Fields(2))
                 output(ligne, 6) = Trim$(Fields(3))
                 If InStr(Fields(3), " secondes'") <> 0 Then
-                    duree = ExtraireSecondes(Fields(3))
+                    duree = Fn_ExtraireSecondesChaineLog(Fields(3))
                     duree = Replace(duree, ".", ",")
     '                    duree = Mid$(Fields(3), InStr(Fields(3), " *** = '") + 8)
     '                    duree = Left$(duree, InStr(duree, " ") - 1)
@@ -233,13 +233,13 @@ Sub Lire_LogMainApp(filePath As String)
     Application.StatusBar = False
     
 '    'Afficher le nombre de lignes ajoutées au fichier LOG
-'    MsgBox "Le fichier '" & ExtraireNomFichier(filePath) & "' a ajouté " & Format$(UBound(output, 1), "###,##0") & " lignes au fichier cumulatif", vbInformation
+'    MsgBox "Le fichier '" & Fn_ExtraireNomFichier(filePath) & "' a ajouté " & Format$(UBound(output, 1), "###,##0") & " lignes au fichier cumulatif", vbInformation
 '
 End Sub
 
-Sub Lire_LogSaisieHeures(filePath As String)
+Sub LireLogSaisieHeures(filePath As String)
 
-    Application.StatusBar = "Traitement de '" & ExtraireNomFichier(filePath) & "'"
+    Application.StatusBar = "Traitement de '" & Fn_ExtraireNomFichier(filePath) & "'"
     
     'Ouvrir le fichier 'LogClientsApp.log'
     Dim fileNum As Integer
@@ -268,7 +268,7 @@ Sub Lire_LogSaisieHeures(filePath As String)
         Line Input #fileNum, lineContent
         lineNo = lineNo + 1
 '        If lineNo Mod 25 = 0 Then
-'            Application.StatusBar = "Traitement de '" & ExtraireNomFichier(filePath) & "' - " & Format$(lineNo, "###,##0") & " lignes"
+'            Application.StatusBar = "Traitement de '" & Fn_ExtraireNomFichier(filePath) & "' - " & Format$(lineNo, "###,##0") & " lignes"
 '        End If
         If InStr(lineContent, " | ") <> 0 Then
             Dim Fields() As String
@@ -319,7 +319,7 @@ Sub Lire_LogSaisieHeures(filePath As String)
     Application.StatusBar = False
     
 '    'Afficher le nombre de lignes ajoutées au fichier LOG
-'    MsgBox "Le fichier '" & ExtraireNomFichier(filePath) & "' a ajouté " & Format$(UBound(output, 1), "###,##0") & " lignes au fichier cumulatif", vbInformation
+'    MsgBox "Le fichier '" & Fn_ExtraireNomFichier(filePath) & "' a ajouté " & Format$(UBound(output, 1), "###,##0") & " lignes au fichier cumulatif", vbInformation
 '
 End Sub
 

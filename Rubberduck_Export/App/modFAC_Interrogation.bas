@@ -38,7 +38,7 @@ Sub AfficherListeDesFactures()
     'What is the ID for the selected client ?
     Dim myInfo() As Variant
     Dim rng As Range: Set rng = wsdBD_Clients.Range("dnrClients_Names_Only")
-    myInfo = Fn_Find_Data_In_A_Range(rng, 1, clientName, fClntFMClientID)
+    myInfo = Fn_TrouveDataDansUnePlage(rng, 1, clientName, fClntFMClientID)
     If myInfo(1) = vbNullString Then
         MsgBox "Je ne peux retrouver ce client dans ma liste de clients", vbCritical
         GoTo Clean_Exit
@@ -47,7 +47,7 @@ Sub AfficherListeDesFactures()
     Dim codeClient As String
     codeClient = myInfo(3)
     
-    Call FAC_Get_Invoice_Client_AF(codeClient)
+    Call ObtenirFacturesClientAvecAF(codeClient)
     
     Call modFAC_Interrogation.CopierListeFacturesVersWorksheet(dateFrom, dateTo)
     
@@ -76,7 +76,7 @@ End Sub
 
 Sub SaisirAutreClient()
 
-    Call FAC_Historique_Clear_All_Cells
+    Call InitialiserToutesCellules
     
     Dim shp As Shape
     Set shp = wshFAC_Interrogation.Shapes("shpSaisirAutreClient")
@@ -84,7 +84,7 @@ Sub SaisirAutreClient()
 
 End Sub
 
-Sub FAC_Get_Invoice_Client_AF(codeClient As String) '2024-06-27 @ 15:27
+Sub ObtenirFacturesClientAvecAF(codeClient As String) '2024-06-27 @ 15:27
 
     Dim ws As Worksheet: Set ws = wsdFAC_Entete
     
@@ -175,11 +175,11 @@ Sub CopierListeFacturesVersWorksheet(dateMin As Date, dateMax As Date)
                 arr(r, 8) = .Range("AT" & i).Value 'PST $
                 arr(r, 9) = .Range("AV" & i).Value 'Deposit
                 arr(r, 10) = .Range("AU" & i).Value 'AR_Total
-                arr(r, 11) = modFunctions.Fn_Get_Invoice_Total_Payments_AF(.Range("AA" & i).Value) - _
-                                modFunctions.Fn_Get_Invoice_Total_Regul_AF(.Range("AA" & i).Value)
-                arr(r, 12) = CDate(modFunctions.Fn_Get_A_Cell_From_A_Worksheet("FAC_Comptes_Clients", .Range("AA" & i).Value, fFacCCInvNo, fFacCCDueDate))
+                arr(r, 11) = modFunctions.Fn_PaiementsTotalPourFactureAvecAF(.Range("AA" & i).Value) - _
+                                modFunctions.Fn_RegularisationsTotalPourFactureAvecAF(.Range("AA" & i).Value)
+                arr(r, 12) = CDate(modFunctions.Fn_CellAPartirUneFeuille("FAC_Comptes_Clients", .Range("AA" & i).Value, fFacCCInvNo, fFacCCDueDate))
                 'Obtenir les TEC facturés par cette facture
-                arr(r, 13) = modFunctions.Fn_Get_TEC_Total_Invoice_AF(.Range("AA" & i).Value, "Dollars")
+                arr(r, 13) = modFunctions.Fn_TECTotalOuHeuresPourFactureAvecAF(.Range("AA" & i).Value, "Dollars")
             End If
         Next i
     End With
@@ -234,9 +234,9 @@ Clean_Exit:
     
 End Sub
 
-Sub FAC_Historique_Clear_All_Cells()
+Sub InitialiserToutesCellules()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Interrogation:FAC_Historique_Clear_All_Cells", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Interrogation:InitialiserToutesCellules", vbNullString, 0)
     
     'Efface toutes les cellules de la feuille
     Application.EnableEvents = False
@@ -257,30 +257,30 @@ Sub FAC_Historique_Clear_All_Cells()
         .EnableSelection = xlUnlockedCells
     End With
 
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Interrogation:FAC_Historique_Clear_All_Cells", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Interrogation:InitialiserToutesCellules", vbNullString, startTime)
 
 End Sub
 
-Sub shp_FAC_Historique_Exit_Click()
+Sub shpExit_Click()
 
-    Call FAC_Historique_Back_To_FAC_Menu
+    Call RetournerMenuFAC
 
 End Sub
 
-Sub FAC_Historique_Back_To_FAC_Menu()
+Sub RetournerMenuFAC()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Interrogation:FAC_Historique_Back_To_FAC_Menu", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Interrogation:RetournerMenuFAC", vbNullString, 0)
     
     wshFAC_Interrogation.Visible = xlSheetHidden
     
     wshMenuFAC.Activate
     wshMenuFAC.Range("A1").Select
     
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Interrogation:FAC_Historique_Back_To_FAC_Menu", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Interrogation:RetournerMenuFAC", vbNullString, startTime)
 
 End Sub
 
-Sub FAC_Historique_Montrer_Bouton_Afficher()
+Sub AfficherBoutonAfficher()
 
     Dim shp As Shape: Set shp = wshFAC_Interrogation.Shapes("shpAfficherFactures")
     
@@ -304,23 +304,23 @@ Sub FAC_Historique_Montrer_Bouton_Afficher()
     
 End Sub
 
-Sub FAC_Historique_Montrer_Bouton_AutreClient()
-
-    Dim shp As Shape: Set shp = wshFAC_Interrogation.Shapes("shpSaisirAutreClient")
-    
-    Application.EnableEvents = False
-    
-    shp.Top = 70
-    shp.Visible = True
-    
-    Application.EnableEvents = True
-
-    'Libérer la mémoire
-    Set shp = Nothing
-    
-End Sub
-
-Sub FAC_Interrogation_AfficherMenuContextuel(ByVal Target As Range) '2025-01-28 @ 10:19
+'Sub AfficherBoutonAutreClient()
+'
+'    Dim shp As Shape: Set shp = wshFAC_Interrogation.Shapes("shpSaisirAutreClient")
+'
+'    Application.EnableEvents = False
+'
+'    shp.Top = 70
+'    shp.Visible = True
+'
+'    Application.EnableEvents = True
+'
+'    'Libérer la mémoire
+'    Set shp = Nothing
+'
+'End Sub
+'
+Sub AfficherMenuContextuelFACInterrogation(ByVal Target As Range) '2025-01-28 @ 10:19
 
     Dim menu As CommandBar
     Dim menuItem As CommandBarButton
@@ -348,7 +348,7 @@ Sub FAC_Interrogation_AfficherMenuContextuel(ByVal Target As Range) '2025-01-28 
     'Ajout de l'option 2 au menu contextuel
     Set menuItem = menu.Controls.Add(Type:=msoControlButton)
         menuItem.Caption = "TEC + Honoraires de la facture"
-        menuItem.OnAction = "'TEC_HONO_Facture """ & Target.Address & """'"
+        menuItem.OnAction = "'AfficherHonorairesEtTECPourUneFacture """ & Target.Address & """'"
 
     'Ajout de l'option 3 au menu contextuel
     Set menuItem = menu.Controls.Add(Type:=msoControlButton)
@@ -358,7 +358,7 @@ Sub FAC_Interrogation_AfficherMenuContextuel(ByVal Target As Range) '2025-01-28 
     'Ajout de l'option 4 au menu contextuel
     Set menuItem = menu.Controls.Add(Type:=msoControlButton)
         menuItem.Caption = "Transactions des Comptes-Clients"
-        menuItem.OnAction = "'TransactionComptesClients """ & Target.Address & """'"
+        menuItem.OnAction = "'AfficherTransactionComptesClients """ & Target.Address & """'"
 
     'Afficher le menu contextuel
     menu.ShowPopup
@@ -384,7 +384,7 @@ Sub VisualiserFacturePDF(noFact As String)
     
 End Sub
 
-Sub TEC_HONO_Facture(adresse As String)
+Sub AfficherHonorairesEtTECPourUneFacture(adresse As String)
 
     Dim numeroLigne As Long, numeroColonne As Long
     Call ExtraireLigneColonneCellule(adresse, numeroLigne, numeroColonne)
@@ -405,7 +405,7 @@ Sub TEC_HONO_Facture(adresse As String)
     
 End Sub
 
-Sub TransactionComptesClients(adresse As String)
+Sub AfficherTransactionComptesClients(adresse As String)
 
     Dim numeroLigne As Long, numeroColonne As Long
     Call ExtraireLigneColonneCellule(adresse, numeroLigne, numeroColonne)
@@ -440,15 +440,15 @@ Sub ObtenirFactureInfos(noFact As String, nomClient As String, dateFacture As Da
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Interrogation:ObtenirFactureInfos", vbNullString, 0)
     
-    Call AfficherNouvelleFeuille_Stats(noFact, nomClient, dateFacture)
+    Call AfficherNouvelleFeuillePourStatsFacture(noFact, nomClient, dateFacture)
     
     Call modDev_Utils.EnregistrerLogApplication("modFAC_Interrogation:ObtenirFactureInfos", vbNullString, startTime)
 
 End Sub
 
-Sub AfficherNouvelleFeuille_Stats(invNo As String, nomClient As String, dateFacture As Date)
+Sub AfficherNouvelleFeuillePourStatsFacture(invNo As String, nomClient As String, dateFacture As Date)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Interrogation:AfficherNouvelleFeuille_Stats", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Interrogation:AfficherNouvelleFeuillePourStatsFacture", vbNullString, 0)
     
     If invNo = vbNullString Then
         Exit Sub
@@ -523,9 +523,9 @@ Sub AfficherNouvelleFeuille_Stats(invNo As String, nomClient As String, dateFact
     
     'Obtenir les valeurs des tableaux pour TEC et HONORAIRES
     Dim tableauTEC As Variant
-    tableauTEC = ObtenirTableauTEC(invNo)
+    tableauTEC = Fn_ObtenirTableauTECPourUneFacture(invNo)
     Dim tableauHonoraires As Variant
-    tableauHonoraires = ObtenirTableauHonoraires(invNo)
+    tableauHonoraires = Fn_TableauHonorairesAPartirSommaireTaux(invNo)
 
     ws.Range("D8").Value = "Travaux en cours"
     ws.Range("D8").Font.Italic = True
@@ -669,7 +669,7 @@ Sub AfficherNouvelleFeuille_Stats(invNo As String, nomClient As String, dateFact
     
     'Rien d'imprimé
     If nbItemTEC = 0 And nbItemHono = 0 Then
-        Call RetourFeuilleSelection_Stats
+        Call RevenirDeFeuilleStats
         Exit Sub
     End If
     
@@ -746,7 +746,7 @@ Sub AfficherNouvelleFeuille_Stats(invNo As String, nomClient As String, dateFact
     Dim rngRetour As Range
     Set rngImprimer = ws.Range("C" & lastRowUsed + 1)
     Set rngRetour = ws.Range("H" & lastRowUsed + 1)
-    Call AjouterBoutons_Stats(ws, wsSelection, rngImprimer, rngRetour)
+    Call AjouterBoutonsStatsFacture(ws, wsSelection, rngImprimer, rngRetour)
     
     'Afficher la feuille nouvellement créée
     ws.Activate
@@ -754,11 +754,11 @@ Sub AfficherNouvelleFeuille_Stats(invNo As String, nomClient As String, dateFact
     'Libérer la mémoire
     Set rng = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Interrogation:AfficherNouvelleFeuille_Stats", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Interrogation:AfficherNouvelleFeuillePourStatsFacture", vbNullString, startTime)
 
 End Sub
 
-Function ObtenirTableauTEC(numeroFacture As String) As Variant
+Function Fn_ObtenirTableauTECPourUneFacture(numeroFacture As String) As Variant
 
     Dim tableauTEC(1 To 9, 1 To 4) As String
     
@@ -766,7 +766,7 @@ Function ObtenirTableauTEC(numeroFacture As String) As Variant
     
     Dim hresTEC As Currency
     
-    hresTEC = Fn_Get_TEC_Total_Invoice_AF(numeroFacture, "Heures")
+    hresTEC = Fn_TECTotalOuHeuresPourFactureAvecAF(numeroFacture, "Heures")
     
     'Utilisation du AF#1 généré dans la procédure précédente
     Dim lastUsedRow As Long
@@ -792,11 +792,11 @@ Function ObtenirTableauTEC(numeroFacture As String) As Variant
         Next r
     End If
     
-    ObtenirTableauTEC = tableauTEC
+    Fn_ObtenirTableauTECPourUneFacture = tableauTEC
     
 End Function
 
-Function ObtenirTableauHonoraires(numeroFacture As String) As Variant
+Function Fn_TableauHonorairesAPartirSommaireTaux(numeroFacture As String) As Variant
 
     Dim tableauHonoraires(1 To 9, 1 To 4) As String
     
@@ -840,11 +840,11 @@ Function ObtenirTableauHonoraires(numeroFacture As String) As Variant
     Set cell = Nothing
     Set wsFees = Nothing
     
-    ObtenirTableauHonoraires = tableauHonoraires
+    Fn_TableauHonorairesAPartirSommaireTaux = tableauHonoraires
     
 End Function
 
-Function ObtenirTransCC(numeroFacture As String) As Variant
+Function Fn_ObtenirTransCCPourUneFacture(numeroFacture As String) As Variant
 
     Dim tableauCC(1 To 100, 1 To 7) As String
     
@@ -855,7 +855,7 @@ Function ObtenirTransCC(numeroFacture As String) As Variant
     
     'Obtenir les informations sur la facture (wshComptes_Clients)
     Dim ligneFacture As Long
-    ligneFacture = TrouverLigneFacture(wsFactures, numeroFacture)
+    ligneFacture = Fn_RangeeFactureSpecifique(wsFactures, numeroFacture)
     Dim montantFacture As Currency
     Dim dateFacture As Date, dateDue As Date
     dateFacture = Format$(wsFactures.Cells(ligneFacture, fFacCCInvoiceDate).Value, wsdADMIN.Range("B1").Value)
@@ -864,8 +864,8 @@ Function ObtenirTransCC(numeroFacture As String) As Variant
     
     'Obtenir les paiements et régularisations pour cette facture
     Dim montantPaye As Currency, montantRegul As Currency, montantRestant As Currency
-    montantPaye = Fn_Obtenir_Paiements_Facture(numeroFacture, #12/31/2999#)
-    montantRegul = Fn_Obtenir_Régularisations_Facture(numeroFacture, #12/31/2999#)
+    montantPaye = Fn_ObtenirPaiementsPourUneFacture(numeroFacture, #12/31/2999#)
+    montantRegul = Fn_ObtenirRegularisationsFacture(numeroFacture, #12/31/2999#)
     
     montantRestant = montantFacture - montantPaye + montantRegul
     
@@ -931,19 +931,19 @@ Function ObtenirTransCC(numeroFacture As String) As Variant
         Loop While Not rngRégularisationAssoc Is Nothing And rngRégularisationAssoc.Address <> regulFirstAddress
     End If
     
-    ObtenirTransCC = tableauCC
+    Fn_ObtenirTransCCPourUneFacture = tableauCC
     
 End Function
 
-Sub AjouterBoutons_Stats(ws As Worksheet, wsSelection As Worksheet, rngImprimer As Range, rngRetour As Range)
+Sub AjouterBoutonsStatsFacture(ws As Worksheet, wsSelection As Worksheet, rngImprimer As Range, rngRetour As Range)
 
-    Dim btnImprimer As Shape
-    Dim btnRetour As Shape
+    Dim shpImprimerStats As Shape
+    Dim shpRetour As Shape
     
     ' Ajouter un bouton pour imprimer à la position de rngImprimer
-    Set btnImprimer = ws.Shapes.AddFormControl(xlButtonControl, rngImprimer.Left, rngImprimer.Top, 103, 30)
-    With btnImprimer
-        .Name = "btnImprimer"
+    Set shpImprimerStats = ws.Shapes.AddFormControl(xlButtonControl, rngImprimer.Left, rngImprimer.Top, 103, 30)
+    With shpImprimerStats
+        .Name = "shpImprimerStats"
         .TextFrame.Characters.text = "Imprimer"
         .TextFrame.Characters.Font.size = 14
         .TextFrame.Characters.Font.Bold = True
@@ -951,26 +951,26 @@ Sub AjouterBoutons_Stats(ws As Worksheet, wsSelection As Worksheet, rngImprimer 
     End With
     
     ' Ajouter un bouton pour retourner à la feuille de sélection à la position de rngRetour
-    Set btnRetour = ws.Shapes.AddFormControl(xlButtonControl, rngRetour.Left, rngRetour.Top, 103, 30)
-    With btnRetour
-        .Name = "btnRetour"
+    Set shpRetour = ws.Shapes.AddFormControl(xlButtonControl, rngRetour.Left, rngRetour.Top, 103, 30)
+    With shpRetour
+        .Name = "shpRetour"
         .TextFrame.Characters.text = "Retour"
         .TextFrame.Characters.Font.size = 14
         .TextFrame.Characters.Font.Bold = True
-        .OnAction = "RetourFeuilleSelection_Stats"
+        .OnAction = "RevenirDeFeuilleStats"
     End With
     
 End Sub
 
-Sub AjouterBoutons_CC(ws As Worksheet, wsSelection As Worksheet, rngImprimer As Range, rngRetour As Range)
+Sub AjouterBoutonsCCFacture(ws As Worksheet, wsSelection As Worksheet, rngImprimer As Range, rngRetour As Range)
 
-    Dim btnImprimer As Shape
-    Dim btnRetour As Shape
+    Dim shpImprimerCC As Shape
+    Dim shpRetour As Shape
     
     ' Ajouter un bouton pour imprimer à la position de rngImprimer
-    Set btnImprimer = ws.Shapes.AddFormControl(xlButtonControl, rngImprimer.Left, rngImprimer.Top, 103, 30)
-    With btnImprimer
-        .Name = "btnImprimer"
+    Set shpImprimerCC = ws.Shapes.AddFormControl(xlButtonControl, rngImprimer.Left, rngImprimer.Top, 103, 30)
+    With shpImprimerCC
+        .Name = "shpImprimerCC"
         .TextFrame.Characters.text = "Imprimer"
         .TextFrame.Characters.Font.size = 14
         .TextFrame.Characters.Font.Bold = True
@@ -978,13 +978,13 @@ Sub AjouterBoutons_CC(ws As Worksheet, wsSelection As Worksheet, rngImprimer As 
     End With
     
     ' Ajouter un bouton pour retourner à la feuille de sélection à la position de rngRetour
-    Set btnRetour = ws.Shapes.AddFormControl(xlButtonControl, rngRetour.Left, rngRetour.Top, 103, 30)
-    With btnRetour
-        .Name = "btnRetour"
+    Set shpRetour = ws.Shapes.AddFormControl(xlButtonControl, rngRetour.Left, rngRetour.Top, 103, 30)
+    With shpRetour
+        .Name = "shpRetour"
         .TextFrame.Characters.text = "Retour"
         .TextFrame.Characters.Font.size = 14
         .TextFrame.Characters.Font.Bold = True
-        .OnAction = "RetourFeuilleSelection_CC"
+        .OnAction = "RevenirDeFeuilleCC"
     End With
     
 End Sub
@@ -1063,7 +1063,7 @@ Sub ImprimerTransCC(ByVal plage As Range)
     
 End Sub
 
-Sub RetourFeuilleSelection_Stats()
+Sub RevenirDeFeuilleStats()
 
     Call SupprimerFeuillesFactureInfo
     
@@ -1073,7 +1073,7 @@ Sub RetourFeuilleSelection_Stats()
     
 End Sub
 
-Sub RetourFeuilleSelection_CC()
+Sub RevenirDeFeuilleCC()
 
     Call SupprimerFeuillesFactureCC
     
@@ -1139,7 +1139,7 @@ Sub ObtenirListeTECFactures(adresse As String)
     If lastUsedRow < 3 Then
         MsgBox "Il n'y a aucun TEC associé à la facture '" & invNo & "'"
     Else
-        Call PreparerRapportTECFacturés(invNo)
+        Call PreparerRapportTECFactures(invNo)
     End If
     
     'Libérer la mémoire
@@ -1249,13 +1249,13 @@ End Sub
 
 Sub ObtenirTransactionsCC(invNo As String, nomClient As String, dateFacture As Date)
 
-    Call AfficherNouvelleFeuille_CC(invNo, nomClient, dateFacture)
+    Call AfficherNouvelleFeuillePourCC(invNo, nomClient, dateFacture)
 
 End Sub
 
-Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture As Date)
+Sub AfficherNouvelleFeuillePourCC(invNo As String, nomClient As String, dateFacture As Date)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Interrogation:AfficherNouvelleFeuille_CC", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Interrogation:AfficherNouvelleFeuillePourCC", vbNullString, 0)
     
     If invNo = vbNullString Then
         Exit Sub
@@ -1342,7 +1342,7 @@ Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture
     
     'Obtenir les transactions pour la facture
     Dim tableauCC As Variant
-    tableauCC = ObtenirTransCC(invNo)
+    tableauCC = Fn_ObtenirTransCCPourUneFacture(invNo)
 
     'Transférer le tableauCC dans la plage
     Dim rOffset As Integer
@@ -1476,7 +1476,7 @@ Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture
     Dim rngRetour As Range
     Set rngImprimer = ws.Range("B" & lastRowUsed + 1)
     Set rngRetour = ws.Range("I" & lastRowUsed + 1)
-    Call AjouterBoutons_CC(ws, wsSelection, rngImprimer, rngRetour)
+    Call AjouterBoutonsCCFacture(ws, wsSelection, rngImprimer, rngRetour)
 
     'Afficher la feuille nouvellement créée
     ws.Activate
@@ -1488,13 +1488,13 @@ Sub AfficherNouvelleFeuille_CC(invNo As String, nomClient As String, dateFacture
     Set ws = Nothing
     Set wsSelection = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Interrogation:AfficherNouvelleFeuille_CC", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Interrogation:AfficherNouvelleFeuillePourCC", vbNullString, startTime)
 
 End Sub
 
-Sub PreparerRapportTECFacturés(numeroFacture As String)
+Sub PreparerRapportTECFactures(numeroFacture As String)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Interrogation:PreparerRapportTECFacturés", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Interrogation:PreparerRapportTECFactures", vbNullString, 0)
     
     'Assigner la feuille du rapport
     Dim strRapport As String
@@ -1639,7 +1639,7 @@ Sub PreparerRapportTECFacturés(numeroFacture As String)
     Set wsRapport = Nothing
     Set wsSource = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Interrogation:PreparerRapportTECFacturés", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Interrogation:PreparerRapportTECFactures", vbNullString, startTime)
     
 End Sub
 

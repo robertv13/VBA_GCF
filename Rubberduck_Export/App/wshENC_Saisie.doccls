@@ -56,7 +56,7 @@ Private Sub Worksheet_Activate()
     
     Call modDev_Utils.DeterminerOrdreDeTabulation(ws)
     
-    Call ENC_Remove_Check_Boxes(36)
+    Call EffacerCasesACocherENC(36)
     
     'Efface les données du bordereau total
     Dim lastUsedBordereau As Long
@@ -115,7 +115,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     
     'Première case à cocher a été sélectionnée
     If Not Intersect(Target, Me.Range("E12")) Is Nothing Then
-        Call ValiderEtLancerufEncRégularisation
+        Call ValiderEtLancerufEncRegularisation
     End If
     
     If Not Intersect(Target, Me.Range("G7")) Is Nothing Then
@@ -149,7 +149,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         End If
         Application.EnableEvents = False
         clientCode = allCols(fClntFMClientID)
-        Call ENC_Remove_Check_Boxes(36)
+        Call EffacerCasesACocherENC(36)
         Call ObtenirFacturesEnSuspens(clientCode)
         Application.EnableEvents = True
     End If
@@ -157,14 +157,14 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'Date has changed
     If Not Intersect(Target, Me.Range("K5")) Is Nothing Then
         Application.EnableEvents = False
-        fullDate = Fn_Complete_Date(Target.text, 30, 0)
+        fullDate = Fn_CompleteLaDate(Target.text, 30, 0)
         If fullDate <> "Invalid Date" Then
             Target.Value = Format$(fullDate, wsdADMIN.Range("B1").Value)
         Else
             Call modDataValidation.AfficherMessageDateInvalide("wshENC_Saisie_115")
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
         Target.Interior.Color = xlNone
         Application.EnableEvents = True

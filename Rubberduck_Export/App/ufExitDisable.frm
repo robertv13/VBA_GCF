@@ -17,7 +17,7 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
-Private Sub btnOK_Click() '2024-07-05 @ 06:25
+Private Sub shpOK_Click() '2024-07-05 @ 06:25
 
     Me.Hide
 

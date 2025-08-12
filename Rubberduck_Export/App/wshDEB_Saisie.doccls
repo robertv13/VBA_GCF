@@ -39,11 +39,11 @@ Private Sub Worksheet_Activate()
     
     Call modDev_Utils.DeterminerOrdreDeTabulation(ws)
     
-    Call DEB_Saisie_Clear_All_Cells
+    Call EffacerCellulesSaisieDEB
     
     'Rétablir le bouton "Mettre à jour / Renversement"
     Dim shp As Shape
-    Set shp = ws.Shapes("btnUpdate")
+    Set shp = ws.Shapes("shpMettreAJourDEB")
     With shp
         .Left = 665
         .Width = 138
@@ -53,7 +53,7 @@ Private Sub Worksheet_Activate()
         .TextFrame2.TextRange.Font.Fill.ForeColor.RGB = RGB(0, 0, 0) 'Noir
     End With
     
-    Call DEB_Forme_Sauvegarder(shp)
+    Call SauvegarderParametresForme(shp)
     
     'Protect the Worksheet
     With ws
@@ -197,7 +197,7 @@ End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
     
-    On Error GoTo ErrorHandler
+'    On Error GoTo ErrorHandler '@TODO
     
     Application.EnableEvents = False
     
@@ -241,7 +241,7 @@ Private Sub Process_Change(ByVal Target As Range)
             Exit Sub
         End If
         If Target.Value = "Renversement" Then
-            Call modDEB_Saisie.DEB_Renverser_Ecriture
+            Call modDEB_Saisie.ConstruireEcritureDEBRenversement
         End If
     End If
     
@@ -251,7 +251,7 @@ Private Sub Process_Change(ByVal Target As Range)
         Application.EnableEvents = False
         
         'Try to convert the input to a complete valid date
-        fullDate = Fn_Complete_Date(Target.text, 30, 15)
+        fullDate = Fn_CompleteLaDate(Target.text, 30, 15)
         
         'Update the cell with the full date, if valid
         If fullDate <> "Invalid Date" Then
@@ -261,7 +261,7 @@ Private Sub Process_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
         Application.EnableEvents = True
         Exit Sub

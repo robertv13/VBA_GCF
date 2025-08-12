@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufListeDebourse 
    Caption         =   "Liste des déboursés"
-   ClientHeight    =   5700
+   ClientHeight    =   7170
    ClientLeft      =   120
    ClientTop       =   465
-   ClientWidth     =   15345
+   ClientWidth     =   22980
    OleObjectBlob   =   "ufListeDebourse.frx":0000
 End
 Attribute VB_Name = "ufListeDebourse"
@@ -61,7 +61,7 @@ Private Sub ChargerDebDonnees()
     If rowCount > 0 Then
         ReDim recentArray(1 To rowCount, 1 To nbColonnesAffichees)
         'Définir la largeur des colonnes du listBox
-        Me.lsbListeDebourse.ColumnWidths = "60;160;190;55;72;72;72;72;190;160;20"
+        Me.lstListeDebourse.ColumnWidths = "60;160;190;50;72;72;72;72;190;160;20"
 
         'Filtrer les enregistrements de moins de 75 jours
         Dim j As Long
@@ -88,16 +88,16 @@ Private Sub ChargerDebDonnees()
         'Charger dans le ListBox après avoir effectué un tri sur la date et formater les colonnes
         Call TrierTableau2DBubble(recentArray)
         
-        Call FormatArrayBeforeAddingToDebListBox(recentArray)
+        Call FormaterTableauAvantAjouterListBox(recentArray)
         
-        Me.lsbListeDebourse.List = recentArray
+        Me.lstListeDebourse.List = recentArray
         
         'Positionne à la dernière entrée
-        If Me.lsbListeDebourse.ListCount > 0 Then
-            Me.lsbListeDebourse.ListIndex = Me.lsbListeDebourse.ListCount - 1
+        If Me.lstListeDebourse.ListCount > 0 Then
+            Me.lstListeDebourse.ListIndex = Me.lstListeDebourse.ListCount - 1
         End If
     Else
-        Me.lsbListeDebourse.Clear
+        Me.lstListeDebourse.Clear
     End If
     
     gNumeroDebourseARenverser = -1
@@ -108,11 +108,11 @@ End Sub
 Private Sub txtFiltre_Change()
 
     'Filtrer les données à chaque changement dans le TextBox
-    Call UpdateFilteredArray(Me.txtFiltre.text)
+    Call MettreAJourTableauFiltre(Me.txtFiltre.text)
     
 End Sub
 
-Private Sub UpdateFilteredArray(filtre As String)
+Private Sub MettreAJourTableauFiltre(filtre As String)
 
     'Récupérer le texte du TextBox pour filtrer
     Dim filterText As String
@@ -153,10 +153,10 @@ Private Sub UpdateFilteredArray(filtre As String)
             End If
         Next i
         'Charger filteredArray dans le ListBox
-'        Call FormatArrayBeforeAddingToDebListBox(filteredArray)
-        Me.lsbListeDebourse.List = filteredArray
+'        Call FormaterTableauAvantAjouterListBox(filteredArray)
+        Me.lstListeDebourse.List = filteredArray
     Else
-        Me.lsbListeDebourse.Clear  ' Si aucun enregistrement, vider la ListBox
+        Me.lstListeDebourse.Clear  ' Si aucun enregistrement, vider la ListBox
     End If
     
     gNumeroDebourseARenverser = -1
@@ -164,15 +164,15 @@ Private Sub UpdateFilteredArray(filtre As String)
     
 End Sub
 
-Private Sub lsbListeDebourse_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
+Private Sub lstListeDebourse_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim selectedRow As Long
     
     'Vérifier si une ligne a été sélectionnée
-    If lsbListeDebourse.ListIndex <> -1 Then
+    If lstListeDebourse.ListIndex <> -1 Then
         'Récupérer le numéro de déboursé à renverser
-        selectedRow = lsbListeDebourse.ListIndex
-        gNumeroDebourseARenverser = lsbListeDebourse.List(selectedRow, 10)
+        selectedRow = lstListeDebourse.ListIndex
+        gNumeroDebourseARenverser = lstListeDebourse.List(selectedRow, 10)
         wshDEB_Saisie.Range("B7").Value = True
     Else
         gNumeroDebourseARenverser = -1
@@ -183,7 +183,7 @@ Private Sub lsbListeDebourse_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     
 End Sub
 
-Sub FormatArrayBeforeAddingToDebListBox(ByRef arrData As Variant)
+Sub FormaterTableauAvantAjouterListBox(ByRef arrData As Variant)
     
     'Supposons que la première colonne (1) est une date
     Dim i As Long, j As Long
@@ -199,7 +199,7 @@ Sub FormatArrayBeforeAddingToDebListBox(ByRef arrData As Variant)
     
 End Sub
 
-Private Sub cmdFermer_Click()
+Private Sub shpFermer_Click()
 
     'Pas de rowNumber pour renverser
     gNumeroDebourseARenverser = -1

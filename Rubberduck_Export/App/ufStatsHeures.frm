@@ -30,36 +30,36 @@ Private Sub UserForm_Initialize()
     
 End Sub
 
-Private Sub lbxDatesSemaines_Click() '2024-12-04 @ 07:36
+Private Sub lstDatesSemaines_Click() '2024-12-04 @ 07:36
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:lbxDatesSemaines_Click", lbxDatesSemaines.Value, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:lstDatesSemaines_Click", lstDatesSemaines.Value, 0)
     
-    Call lbxDatesSemaines_Click_or_DblClick(lbxDatesSemaines.Value)
+    Call lstDatesSemaines_Click_or_DblClick(lstDatesSemaines.Value)
     
-    Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:lbxDatesSemaines_Click", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:lstDatesSemaines_Click", vbNullString, startTime)
 
 End Sub
 
-Private Sub lbxDatesSemaines_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
+Private Sub lstDatesSemaines_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:lbxDatesSemaines_DblClick", lbxDatesSemaines.Value, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:lstDatesSemaines_DblClick", lstDatesSemaines.Value, 0)
     
-    Call lbxDatesSemaines_Click_or_DblClick(lbxDatesSemaines.Value)
+    Call lstDatesSemaines_Click_or_DblClick(lstDatesSemaines.Value)
 
-    Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:lbxDatesSemaines_DblClick", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:lstDatesSemaines_DblClick", vbNullString, startTime)
 
 End Sub
 
-Private Sub lbxDatesSemaines_Click_or_DblClick(ByVal valeur As Variant) '2024-12-04 @ 07:36
+Private Sub lstDatesSemaines_Click_or_DblClick(ByVal valeur As Variant) '2024-12-04 @ 07:36
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:lbxDatesSemaines_Click_or_DblClick", lbxDatesSemaines.Value, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:lstDatesSemaines_Click_or_DblClick", lstDatesSemaines.Value, 0)
     
     Dim selectedWeek As String
     
     'Vérifier qu'un élément est bien sélectionné
-    If lbxDatesSemaines.ListIndex <> -1 Then
+    If lstDatesSemaines.ListIndex <> -1 Then
         'Récupérer la semaine sélectionnée
-        selectedWeek = lbxDatesSemaines.List(lbxDatesSemaines.ListIndex)
+        selectedWeek = lstDatesSemaines.List(lstDatesSemaines.ListIndex)
         Dim dateLundi As Date, dateDimanche As Date
         dateLundi = Left$(selectedWeek, InStr(selectedWeek, " au ") - 1)
         dateDimanche = Right$(selectedWeek, InStr(selectedWeek, " au ") - 1)
@@ -122,7 +122,7 @@ Private Sub lbxDatesSemaines_Click_or_DblClick(ByVal valeur As Variant) '2024-12
     Set rngCriteriaDate1 = Nothing
     Set rngCriteriaDate2 = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:lbxDatesSemaines_Click_or_DblClick", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:lstDatesSemaines_Click_or_DblClick", vbNullString, startTime)
 
 End Sub
 
@@ -259,7 +259,7 @@ Sub ChargerListBoxAvec52DernieresSemaines()
     
     'Référence à la ListBox
     Dim lstSemaines As Control
-    Set lstSemaines = ufStatsHeures.MultiPage1.Pages("pSemaine").Controls("lbxDatesSemaines")
+    Set lstSemaines = ufStatsHeures.MultiPage1.Pages("pSemaine").Controls("lstDatesSemaines")
     
     'Nettoyer la ListBox avant d'ajouter des éléments
     lstSemaines.Clear

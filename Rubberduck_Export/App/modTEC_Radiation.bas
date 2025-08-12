@@ -1,7 +1,7 @@
 Attribute VB_Name = "modTEC_Radiation"
 Option Explicit
 
-Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
+Sub AfficherTECARadier(codeClient As String, cutoffDate As String)
 
     If cutoffDate = vbNullString Then
         Exit Sub
@@ -20,14 +20,14 @@ Sub TEC_Radiation_Procedure(codeClient As String, cutoffDate As String)
     Dim wsSource As Worksheet: Set wsSource = wsdTEC_Local
     
     'AdvancedFilter # 2 avec TEC_Local (Heures Facturables, Non Facturées, Non Détruites à la date Limite)
-    Call Get_TEC_For_Client_AF(codeClient, CDate(cutoffDate), "VRAI", "FAUX", "FAUX")
+    Call ObtenirTECduClientAvecAF(codeClient, CDate(cutoffDate), "VRAI", "FAUX", "FAUX")
     
     'Avons-nous des résultats ?
     Dim lastUsedRow As Long
     lastUsedRow = wsSource.Cells(wsSource.Rows.count, "AQ").End(xlUp).Row
     If lastUsedRow < 3 Then
         MsgBox "Il n'y a aucun TEC pour ce client", vbInformation
-        Call Prepare_Pour_Nouvelle_Radiation
+        Call PreparerNouvelleRadiation
         wshTEC_Radiation.Range("F3").Activate
         GoTo exitSub
     End If
@@ -254,17 +254,17 @@ Sub CalculerTotaux()
     
 End Sub
 
-Sub shp_TEC_Radiation_GO_Click()
+Sub shpRadiationTEC_Click()
 
-    Call Radiation_Mise_À_Jour
+    Call MettreAJourRadiation
     
-    Call Prepare_Pour_Nouvelle_Radiation
+    Call PreparerNouvelleRadiation
     
     wshTEC_Radiation.Activate
 
 End Sub
 
-Sub Radiation_Mise_À_Jour()
+Sub MettreAJourRadiation()
 
     'Avons-nous des résultats ?
     Dim lastUsedRow As Long
@@ -374,13 +374,13 @@ Sub MettreAJourEstFactureeBDLocale(firstResultRow As Long, lastResultRow As Long
 
 End Sub
 
-Sub shp_TEC_Radiation_Impression_Click()
+Sub shpImpressionRadiationTEC_Click()
 
-    Call Radiation_Apercu_Avant_Impression
+    Call ImprimerApercuAvantRadiationTEC
 
 End Sub
 
-Sub Radiation_Apercu_Avant_Impression()
+Sub ImprimerApercuAvantRadiationTEC()
 
     Dim ws As Worksheet: Set ws = wshTEC_Radiation
     
@@ -406,15 +406,15 @@ Sub Radiation_Apercu_Avant_Impression()
     
 End Sub
 
-Sub shpRetourMenuTEC_Click()
+Sub shpRetournerMenuTEC_Click()
 
-    Call RetourMenuTEC
+    Call RetournerMenuTEC
     
 End Sub
 
-Sub RetourMenuTEC()
+Sub RetournerMenuTEC()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Radiation:RetourMenuTEC", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Radiation:RetournerMenuTEC", vbNullString, 0)
     
     wshTEC_Radiation.Visible = xlSheetHidden
     
@@ -423,11 +423,11 @@ Sub RetourMenuTEC()
     wshMenuTEC.Activate
     wshMenuTEC.Range("A1").Select
     
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Radiation:RetourMenuTEC", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Radiation:RetournerMenuTEC", vbNullString, startTime)
 
 End Sub
 
-Sub Prepare_Pour_Nouvelle_Radiation()
+Sub PreparerNouvelleRadiation()
 
     Dim ws As Worksheet
     Set ws = wshTEC_Radiation
@@ -436,8 +436,8 @@ Sub Prepare_Pour_Nouvelle_Radiation()
         .Range("B6:B32").Value = vbNullString
         .Range("D6:K32").ClearContents
         .Range("D6:K32").Font.Bold = False
-        .Shapes("Impression").Visible = False
-        .Shapes("Radiation").Visible = False
+        .Shapes("shpImpressionRadiationTEC").Visible = False
+        .Shapes("shpRadiationTEC").Visible = False
         Application.EnableEvents = False
             .Range("F3").Value = vbNullString
             .Range("K3").Value = vbNullString

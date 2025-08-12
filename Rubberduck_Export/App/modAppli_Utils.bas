@@ -84,7 +84,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
         .Range("B1").Value = "Message"
         .Range("C1").Value = "TimeStamp"
         .Columns("C").NumberFormat = wsdADMIN.Range("B1").Value & " hh:mm:ss"
-        Call Make_It_As_Header(.Range("A1:C1"), RGB(0, 112, 192))
+        Call CreerEnteteDeFeuille(.Range("A1:C1"), RGB(0, 112, 192))
     End With
 
     'Data starts at row 2
@@ -449,12 +449,12 @@ Sub ImprimerEcartsVerificationIntegrite(ws As Worksheet, r As Long, t As String,
     
     Call AjouterMessageAuxResultats(ws, r, 2, t)
     r = r + 1
-    Call AjouterMessageAuxResultats(ws, r, 2, Space(7) & Fn_Pad_A_String(s1, " ", 19, "R") & ":" & Space(14 - Len(str1)) & str1)
+    Call AjouterMessageAuxResultats(ws, r, 2, Space(7) & Fn_ChaineRemplie(s1, " ", 19, "R") & ":" & Space(14 - Len(str1)) & str1)
     r = r + 1
-    Call AjouterMessageAuxResultats(ws, r, 2, Space(7) & Fn_Pad_A_String(s2, " ", 19, "R") & ":" & Space(14 - Len(str2)) & str2)
+    Call AjouterMessageAuxResultats(ws, r, 2, Space(7) & Fn_ChaineRemplie(s2, " ", 19, "R") & ":" & Space(14 - Len(str2)) & str2)
     r = r + 1
     If Not Trim(s3) = vbNullString Then
-        Call AjouterMessageAuxResultats(ws, r, 2, Space(7) & Fn_Pad_A_String(s3, " ", 19, "R") & ":" & Space(14 - Len(str3)) & str3)
+        Call AjouterMessageAuxResultats(ws, r, 2, Space(7) & Fn_ChaineRemplie(s3, " ", 19, "R") & ":" & Space(14 - Len(str3)) & str3)
         r = r + 1
     End If
     r = r + 1
@@ -571,7 +571,7 @@ Sub CreerOuRemplacerFeuille(wsName As String)
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:CreerOuRemplacerFeuille", vbNullString, 0)
     
     Dim wsExists As Boolean
-    wsExists = NomFeuilleExiste(wsName)
+    wsExists = Fn_FeuilleExiste(wsName)
     
     'Si la feuille existe, on la supprime
     If wsExists Then
@@ -605,7 +605,7 @@ Private Sub VerifierPlanComptable(ByVal wsOutput As Worksheet, ByRef r As Long, 
     Dim arr As Variant
     Dim nbCol As Long
     nbCol = 4
-    arr = Fn_Get_Plan_Comptable(nbCol) 'Returns array with 4 columns (Code, Description)
+    arr = Fn_PlanComptableTableau2D(nbCol) 'Returns array with 4 columns (Code, Description)
     
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "Il y a " & Format$(UBound(arr, 1), "###,##0") & _
         " comptes et " & Format$(nbCol, "#,##0") & " colonnes dans cette table")
@@ -1944,27 +1944,27 @@ Private Sub VerifierFACEntete(ByVal wsOutput As Worksheet, ByRef r As Long, ByRe
     r = r + 1
 
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "       Honoraires  : " & _
-            Fn_Pad_A_String(Format$(totals(1, 1), "##,###,##0.00 $"), " ", 15, "L"))
+            Fn_ChaineRemplie(Format$(totals(1, 1), "##,###,##0.00 $"), " ", 15, "L"))
     r = r + 1
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "       Divers - 1  : " & _
-            Fn_Pad_A_String(Format$(totals(2, 1), "##,###,##0.00 $"), " ", 15, "L"))
+            Fn_ChaineRemplie(Format$(totals(2, 1), "##,###,##0.00 $"), " ", 15, "L"))
     r = r + 1
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "       Divers - 2  : " & _
-            Fn_Pad_A_String(Format$(totals(3, 1), "##,###,##0.00 $"), " ", 15, "L"))
+            Fn_ChaineRemplie(Format$(totals(3, 1), "##,###,##0.00 $"), " ", 15, "L"))
     r = r + 1
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "       Divers - 3  : " & _
-            Fn_Pad_A_String(Format$(totals(4, 1), "##,###,##0.00 $"), " ", 15, "L"))
+            Fn_ChaineRemplie(Format$(totals(4, 1), "##,###,##0.00 $"), " ", 15, "L"))
     r = r + 1
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "       TPS         : " & _
-            Fn_Pad_A_String(Format$(totals(5, 1), "##,###,##0.00 $"), " ", 15, "L"))
+            Fn_ChaineRemplie(Format$(totals(5, 1), "##,###,##0.00 $"), " ", 15, "L"))
     r = r + 1
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "       TVQ         : " & _
-            Fn_Pad_A_String(Format$(totals(6, 1), "##,###,##0.00 $"), " ", 15, "L"))
+            Fn_ChaineRemplie(Format$(totals(6, 1), "##,###,##0.00 $"), " ", 15, "L"))
     r = r + 1
     
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
-    rng.Value = "       Total Fact. : " & Fn_Pad_A_String(Format$(totals(7, 1), "##,###,##0.00 $"), " ", 15, "L")
+    rng.Value = "       Total Fact. : " & Fn_ChaineRemplie(Format$(totals(7, 1), "##,###,##0.00 $"), " ", 15, "L")
     rng.Characters(InStr(rng.Value, Left$(totals(7, 1), 1)), 15).Font.Color = vbRed
     rng.Characters(InStr(rng.Value, Left$(totals(7, 1), 1)), 15).Font.Bold = True
     gValeursAComparer(1, 1) = "Total Factures (Confirmées)"
@@ -1972,7 +1972,7 @@ Private Sub VerifierFACEntete(ByVal wsOutput As Worksheet, ByRef r As Long, ByRe
     r = r + 1
 
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "       Acompte payé: " & _
-            Fn_Pad_A_String(Format$(totals(8, 1), "##,###,##0.00 $"), " ", 15, "L"))
+            Fn_ChaineRemplie(Format$(totals(8, 1), "##,###,##0.00 $"), " ", 15, "L"))
     r = r + 2
     
     'Un peu de couleur
@@ -1983,27 +1983,27 @@ Private Sub VerifierFACEntete(ByVal wsOutput As Worksheet, ByRef r As Long, ByRe
     r = r + 1
     
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "       Honoraires  : " & _
-            Fn_Pad_A_String(Format$(totals(1, 2), "##,###,##0.00 $"), " ", 15, "L"))
+            Fn_ChaineRemplie(Format$(totals(1, 2), "##,###,##0.00 $"), " ", 15, "L"))
     r = r + 1
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "       Divers - 1  : " & _
-            Fn_Pad_A_String(Format$(totals(2, 2), "##,###,##0.00 $"), " ", 15, "L"))
+            Fn_ChaineRemplie(Format$(totals(2, 2), "##,###,##0.00 $"), " ", 15, "L"))
     r = r + 1
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "       Divers - 2  : " & _
-            Fn_Pad_A_String(Format$(totals(3, 2), "##,###,##0.00 $"), " ", 15, "L"))
+            Fn_ChaineRemplie(Format$(totals(3, 2), "##,###,##0.00 $"), " ", 15, "L"))
     r = r + 1
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "       Divers - 3  : " & _
-            Fn_Pad_A_String(Format$(totals(4, 2), "##,###,##0.00 $"), " ", 15, "L"))
+            Fn_ChaineRemplie(Format$(totals(4, 2), "##,###,##0.00 $"), " ", 15, "L"))
     r = r + 1
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "       TPS         : " & _
-            Fn_Pad_A_String(Format$(totals(5, 2), "##,###,##0.00 $"), " ", 15, "L"))
+            Fn_ChaineRemplie(Format$(totals(5, 2), "##,###,##0.00 $"), " ", 15, "L"))
     r = r + 1
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "       TVQ         : " & _
-            Fn_Pad_A_String(Format$(totals(6, 2), "##,###,##0.00 $"), " ", 15, "L"))
+            Fn_ChaineRemplie(Format$(totals(6, 2), "##,###,##0.00 $"), " ", 15, "L"))
     r = r + 1
     
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
-    rng.Value = "       Total Fact. : " & Fn_Pad_A_String(Format$(totals(7, 2), "##,###,##0.00 $"), " ", 15, "L")
+    rng.Value = "       Total Fact. : " & Fn_ChaineRemplie(Format$(totals(7, 2), "##,###,##0.00 $"), " ", 15, "L")
     rng.Characters(InStr(rng.Value, Left$(totals(7, 2), 1)), 15).Font.Color = vbRed
     rng.Characters(InStr(rng.Value, Left$(totals(7, 2), 1)), 15).Font.Bold = True
     gValeursAComparer(2, 1) = "Total Factures (À confirmer)"
@@ -2011,7 +2011,7 @@ Private Sub VerifierFACEntete(ByVal wsOutput As Worksheet, ByRef r As Long, ByRe
     r = r + 1
 
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "       Acompte payé: " & _
-            Fn_Pad_A_String(Format$(totals(8, 2), "##,###,##0.00 $"), " ", 15, "L"))
+            Fn_ChaineRemplie(Format$(totals(8, 2), "##,###,##0.00 $"), " ", 15, "L"))
     r = r + 2
     
     'Add number of rows processed (read)
@@ -2100,7 +2100,7 @@ Private Sub VerifierFACComptesClients(ByVal wsOutput As Worksheet, ByRef r As Lo
         End If
                 
         Dim invType As String
-        invType = Fn_Get_Invoice_Type(Inv_No)
+        invType = Fn_TypeFacture(Inv_No)
         If invType <> "C" And invType <> "AC" Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", le type de facture '" & invType & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
@@ -2121,7 +2121,7 @@ Private Sub VerifierFACComptesClients(ByVal wsOutput As Worksheet, ByRef r As Lo
         End If
         
         'Code client ?
-        If Fn_Validate_Client_Number(CStr(arr(i, fFacCCCodeClient))) = False Then
+        If Fn_ClientEstValide(CStr(arr(i, fFacCCCodeClient))) = False Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", le client '" & CStr(arr(i, fFacCCCodeClient)) & "' de la facture '" & Inv_No & "' est INVALIDE '")
             r = r + 1
             isFACCCValid = False
@@ -2216,7 +2216,7 @@ Private Sub VerifierFACComptesClients(ByVal wsOutput As Worksheet, ByRef r As Lo
     
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
-    rng.Value = "       Total des factures         : " & Fn_Pad_A_String(Format$(totals(1, 1), "##,###,##0.00 $"), " ", 15, "L")
+    rng.Value = "       Total des factures         : " & Fn_ChaineRemplie(Format$(totals(1, 1), "##,###,##0.00 $"), " ", 15, "L")
     rng.Characters(InStr(rng.Value, Left$(totals(1, 1), 1)), 15).Font.Color = vbRed
     rng.Characters(InStr(rng.Value, Left$(totals(1, 1), 1)), 15).Font.Bold = True
     gValeursAComparer(1, 3) = CCur(totals(1, 1))
@@ -2224,7 +2224,7 @@ Private Sub VerifierFACComptesClients(ByVal wsOutput As Worksheet, ByRef r As Lo
     
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
-    rng.Value = "       Montants encaissés à date  : " & Fn_Pad_A_String(Format$(totals(2, 1), "##,###,##0.00 $"), " ", 15, "L")
+    rng.Value = "       Montants encaissés à date  : " & Fn_ChaineRemplie(Format$(totals(2, 1), "##,###,##0.00 $"), " ", 15, "L")
     rng.Characters(InStr(rng.Value, Left$(totals(2, 1), 1)), 15).Font.Color = vbRed
     rng.Characters(InStr(rng.Value, Left$(totals(2, 1), 1)), 15).Font.Bold = True
     gValeursAComparer(3, 1) = "Total des montants encaissés à date"
@@ -2233,7 +2233,7 @@ Private Sub VerifierFACComptesClients(ByVal wsOutput As Worksheet, ByRef r As Lo
     
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
-    rng.Value = "       Montant régularisé à date  : " & Fn_Pad_A_String(Format$(totals(3, 1), "##,###,##0.00 $"), " ", 15, "L")
+    rng.Value = "       Montant régularisé à date  : " & Fn_ChaineRemplie(Format$(totals(3, 1), "##,###,##0.00 $"), " ", 15, "L")
     rng.Characters(InStr(rng.Value, Left$(totals(3, 1), 1)), 15).Font.Color = vbRed
     rng.Characters(InStr(rng.Value, Left$(totals(3, 1), 1)), 15).Font.Bold = True
     gValeursAComparer(4, 1) = "Total régularisé à date"
@@ -2242,7 +2242,7 @@ Private Sub VerifierFACComptesClients(ByVal wsOutput As Worksheet, ByRef r As Lo
     
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
-    rng.Value = "       Solde à recevoir           : " & Fn_Pad_A_String(Format$(totals(4, 1), "##,###,##0.00 $"), " ", 15, "L")
+    rng.Value = "       Solde à recevoir           : " & Fn_ChaineRemplie(Format$(totals(4, 1), "##,###,##0.00 $"), " ", 15, "L")
     rng.Characters(InStr(rng.Value, Left$(totals(4, 1), 1)), 15).Font.Color = vbRed
     rng.Characters(InStr(rng.Value, Left$(totals(4, 1), 1)), 15).Font.Bold = True
     gValeursAComparer(5, 1) = "Solde à recevoir"
@@ -2259,7 +2259,7 @@ Private Sub VerifierFACComptesClients(ByVal wsOutput As Worksheet, ByRef r As Lo
     
     'Un peu de couleur
     Set rng = wsOutput.Range("B" & r)
-    rng.Value = "       Total des factures        : " & Fn_Pad_A_String(Format$(totals(1, 2), "##,###,##0.00 $"), " ", 15, "L")
+    rng.Value = "       Total des factures        : " & Fn_ChaineRemplie(Format$(totals(1, 2), "##,###,##0.00 $"), " ", 15, "L")
     rng.Characters(InStr(rng.Value, Left$(totals(1, 2), 1)), 15).Font.Color = vbRed
     rng.Characters(InStr(rng.Value, Left$(totals(1, 2), 1)), 15).Font.Bold = True
     gValeursAComparer(2, 3) = CCur(totals(1, 2))
@@ -2324,7 +2324,7 @@ Private Sub VerifierFACSommaireTaux(ByVal wsOutput As Worksheet, ByRef r As Long
     
     'On a besoin des professionnels
     Dim rngProf As Range
-    Call Get_Range_From_Dynamic_Named_Range("dnrProf_Initials_Only", rngProf)
+    Call ObtenirPlageAPartirDynamicNamedRange("dnrProf_Initials_Only", rngProf)
 
     'Copie les données vers un tableau
     Dim rng As Range
@@ -2341,7 +2341,7 @@ Private Sub VerifierFACSommaireTaux(ByVal wsOutput As Worksheet, ByRef r As Long
     'On analyse chacune des lignes du tableau
     Dim i As Long
     For i = LBound(arr, 1) To UBound(arr, 1)
-        If Fn_Is_String_Valid(CStr(arr(i, 1)), rngMaster) = False Then
+        If Fn_ChaineValideAvecPlage(CStr(arr(i, 1)), rngMaster) = False Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la facture '" & arr(i, 1) & "' est INVALIDE")
             r = r + 1
             isFACSTValid = False
@@ -2352,7 +2352,7 @@ Private Sub VerifierFACSommaireTaux(ByVal wsOutput As Worksheet, ByRef r As Long
             isFACSTValid = False
         End If
         
-        If Fn_Is_String_Valid(CStr(arr(i, 3)), rngProf) = False Then
+        If Fn_ChaineValideAvecPlage(CStr(arr(i, 3)), rngProf) = False Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le professionnel '" & arr(i, 3) & "' est INVALIDE")
             r = r + 1
             isFACSTValid = False
@@ -2440,7 +2440,7 @@ Private Sub VerifierFACProjetsEntete(ByVal wsOutput As Worksheet, ByRef r As Lon
             projetID = arr(i, 1)
             'Client valide ?
             codeClient = Trim$(arr(i, 3))
-            If Fn_Validate_Client_Number(codeClient) = False Then
+            If Fn_ClientEstValide(codeClient) = False Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le Code de Client est INVALIDE '" & arr(i, 3) & "'")
                 r = r + 1
                 isFacProjetEntêteValid = False
@@ -2622,7 +2622,7 @@ Private Sub VerifierFACProjetsDetails(ByVal wsOutput As Worksheet, ByRef r As Lo
             End If
             'Client valide ?
             codeClient = Trim$(arr(i, 3))
-            If Fn_Validate_Client_Number(codeClient) = False Then
+            If Fn_ClientEstValide(codeClient) = False Then
                  Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le Code de Client est INVALIDE '" & arr(i, 3) & "'")
                  r = r + 1
                  isFacProjetDetailValid = False
@@ -2756,7 +2756,7 @@ Private Sub VerifierGLTrans(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef 
     Dim arTotal As Currency
     Dim GL_Entry_No As String, glCode As String, glDescr As String
     Dim CCGlNo As String
-    CCGlNo = ObtenirNoGlIndicateur("Comptes Clients")
+    CCGlNo = Fn_NoCompteAPartirIndicateurCompte("Comptes Clients")
     
     For i = LBound(arr, 1) To UBound(arr, 1)
         GL_Entry_No = arr(i, 1)
@@ -3053,7 +3053,7 @@ Private Sub VerifierTECTdBData(ByVal wsOutput As Worksheet, ByRef r As Long, ByR
     
     'On a besoin des professionnels
     Dim rngProf As Range
-    Call Get_Range_From_Dynamic_Named_Range("dnrProf_Initials_Only", rngProf)
+    Call ObtenirPlageAPartirDynamicNamedRange("dnrProf_Initials_Only", rngProf)
 
     'Copie les données vers un tableau - 2024-11-20 @ 14:19
     Dim rngData As Range
@@ -3082,7 +3082,7 @@ Private Sub VerifierTECTdBData(ByVal wsOutput As Worksheet, ByRef r As Long, ByR
     
     For i = LBound(arr, 1) To UBound(arr, 1)
         tecID = arr(i, 1)
-        If Fn_Is_String_Valid(CStr(arr(i, 3)), rngProf) = False Then
+        If Fn_ChaineValideAvecPlage(CStr(arr(i, 3)), rngProf) = False Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le professionnel '" & arr(i, 3) & "' est INVALIDE")
             r = r + 1
             isTECTDBValid = False
@@ -3549,7 +3549,7 @@ Sub ComparerHeuresFactureesSelon2Sources(ByVal wsOutput As Worksheet, ByRef r As
     Dim cas_Heures_Differentes As Integer
     
     For Each key In dictFacture.keys
-        totalHoursBilled = Fn_Get_TEC_Total_Invoice_AF(CStr(key), "Heures")
+        totalHoursBilled = Fn_TECTotalOuHeuresPourFactureAvecAF(CStr(key), "Heures")
         hresFactureesTEC_Local = dictFactureHres(key)
         If Not totalHoursBilled = hresFactureesTEC_Local Then
             Call AjouterMessage(wsOutput, r, 2, "********** Facture '" & CStr(key) & _
@@ -3650,7 +3650,7 @@ Sub ImprimerSommaireDateProf(ByVal wsOutput As Worksheet, ByRef r As Long, _
         r = r + 1
         
         keys = dictDateCharge.keys
-        Call Fn_Quick_Sort(keys, LBound(keys), UBound(keys))
+        Call TrierBubble(keys, LBound(keys), UBound(keys))
         'Parcourir les clés triées et afficher les heures
         Dim i As Long
         For i = LBound(keys) To UBound(keys)
@@ -3674,7 +3674,7 @@ Sub ImprimerSommaireTimeStampProf(ByVal wsOutput As Worksheet, ByRef r As Long, 
     If dictTimeStamp.count > 0 Then
         Call AjouterMessage(wsOutput, r, 2, "Sommaire des heures saisies selon le 'TIMESTAMP'")
         keys = dictTimeStamp.keys
-        Call Fn_Quick_Sort(keys, LBound(keys), UBound(keys))
+        Call TrierBubble(keys, LBound(keys), UBound(keys))
         'Parcourir les clés triées et afficher les valeurs
         Dim i As Long
         For i = LBound(keys) To UBound(keys)
@@ -3690,7 +3690,7 @@ Sub ImprimerSommaireTimeStampProf(ByVal wsOutput As Worksheet, ByRef r As Long, 
 
 End Sub
 
-Sub Make_It_As_Header(r As Range, couleurFond As Long) '2025-06-30 @ 14:08
+Sub CreerEnteteDeFeuille(r As Range, couleurFond As Long) '2025-06-30 @ 14:08
 
     On Error GoTo GestionErreur
 
@@ -3726,7 +3726,7 @@ Sub Make_It_As_Header(r As Range, couleurFond As Long) '2025-06-30 @ 14:08
     Exit Sub
 
 GestionErreur:
-    MsgBox "Erreur dans Make_It_As_Header : " & Err.description, vbExclamation, "Erreur VBA"
+    MsgBox "Erreur dans CreerEnteteDeFeuille : " & Err.description, vbExclamation, "Erreur VBA"
     
 End Sub
 
@@ -4073,7 +4073,7 @@ Sub ObtenirDeplacementsAPartirDesTEC()  '2024-09-05 @ 10:22
     wsOutput.Range("I1").Value = "CodePostal"
     wsOutput.Range("J1").Value = "DistanceKM"
     wsOutput.Range("K1").Value = "Montant"
-    Call Make_It_As_Header(wsOutput.Range("A1:K1"), RGB(0, 112, 192))
+    Call CreerEnteteDeFeuille(wsOutput.Range("A1:K1"), RGB(0, 112, 192))
     
     'Feuille pour les clients
     Dim wsMF As Worksheet: Set wsMF = wsdBD_Clients
@@ -4113,7 +4113,7 @@ Sub ObtenirDeplacementsAPartirDesTEC()  '2024-09-05 @ 10:22
                 output(rowOutput, 1) = arr(i, 4)
                 output(rowOutput, 2) = arr(i, 4)
                 output(rowOutput, 4) = arr(i, 8)
-                clientData = Fn_Rechercher_Client_Par_ID(Trim$(arr(i, 5)), wsMF)
+                clientData = Fn_LigneClientAPartirDuClientID(Trim$(arr(i, 5)), wsMF)
                 If IsArray(clientData) Then
                     output(rowOutput, 3) = clientData(1, fClntFMClientNom)
                     output(rowOutput, 5) = clientData(1, fClntFMAdresse1)
@@ -4260,39 +4260,39 @@ Sub ObtenirDateDernModifFichier(fileName As String, ByRef ddm As Date, _
     
 End Sub
 
-Sub RedefinirDnrPlanComptable() '2024-07-04 @ 10:39
-    
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:RedefinirDnrPlanComptable", vbNullString, 0)
-
-    'Redefine - dnrPlanComptable_Description_Only
-    'Delete existing dynamic named range (assuming it could exists)
-    On Error Resume Next
-    ThisWorkbook.Names("dnrPlanComptable_Description_Only").Delete
-    On Error GoTo 0
-    
-    'Define a new dynamic named range for 'dnrPlanComptable_Description_Only'
-    Dim newRangeFormula As String
-    newRangeFormula = "=OFFSET(Admin!$T$11,,,COUNTA(Admin!$T:$T)-2,1)"
-    
-    'Create the new dynamic named range
-    ThisWorkbook.Names.Add Name:="dnrPlanComptable_Description_Only", RefersTo:=newRangeFormula
-    
-    'Redefine - dnrPlanComptable_All
-    'Delete existing dynamic named range (assuming it could exists)
-    On Error Resume Next
-    ThisWorkbook.Names("dnrPlanComptable_All").Delete
-    On Error GoTo 0
-    
-    'Define a new dynamic named range for 'dnrPlanComptable_All'
-    newRangeFormula = "=OFFSET(Admin!$T$11,,,COUNTA(Admin!$T:$T)-2,4)"
-    
-    'Create the new dynamic named range
-    ThisWorkbook.Names.Add Name:="dnrPlanComptable_All", RefersTo:=newRangeFormula
-    
-    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:RedefinirDnrPlanComptable", vbNullString, startTime)
-
-End Sub
-
+'Sub RedefinirDnrPlanComptable() '2024-07-04 @ 10:39
+'
+'    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:RedefinirDnrPlanComptable", vbNullString, 0)
+'
+'    'Redefine - dnrPlanComptable_Description_Only
+'    'Delete existing dynamic named range (assuming it could exists)
+'    On Error Resume Next
+'    ThisWorkbook.Names("dnrPlanComptable_Description_Only").Delete
+'    On Error GoTo 0
+'
+'    'Define a new dynamic named range for 'dnrPlanComptable_Description_Only'
+'    Dim newRangeFormula As String
+'    newRangeFormula = "=OFFSET(Admin!$T$11,,,COUNTA(Admin!$T:$T)-2,1)"
+'
+'    'Create the new dynamic named range
+'    ThisWorkbook.Names.Add Name:="dnrPlanComptable_Description_Only", RefersTo:=newRangeFormula
+'
+'    'Redefine - dnrPlanComptable_All
+'    'Delete existing dynamic named range (assuming it could exists)
+'    On Error Resume Next
+'    ThisWorkbook.Names("dnrPlanComptable_All").Delete
+'    On Error GoTo 0
+'
+'    'Define a new dynamic named range for 'dnrPlanComptable_All'
+'    newRangeFormula = "=OFFSET(Admin!$T$11,,,COUNTA(Admin!$T:$T)-2,4)"
+'
+'    'Create the new dynamic named range
+'    ThisWorkbook.Names.Add Name:="dnrPlanComptable_All", RefersTo:=newRangeFormula
+'
+'    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:RedefinirDnrPlanComptable", vbNullString, startTime)
+'
+'End Sub
+'
 Sub RemplirPlageAvecCouleur(ByVal plage As Range, ByVal couleurRVB As Long)
 
     If Not plage Is Nothing Then
@@ -4582,8 +4582,8 @@ Private Function AnalyserLigneTEC(data As Variant, i As Long, ByVal wsOutput As 
         dCharge = data(i, fTECDate)
         dStamp = data(i, fTECDateSaisie)
     
-        strCharge = Format$(dCharge, "yyyy-mm-dd") & " - " & Fn_Pad_A_String(CStr(prof), " ", 5, "R")
-        strStamp = Format$(dStamp, "yyyy-mm-dd") & " - " & Fn_Pad_A_String(CStr(prof), " ", 5, "R")
+        strCharge = Format$(dCharge, "yyyy-mm-dd") & " - " & Fn_ChaineRemplie(CStr(prof), " ", 5, "R")
+        strStamp = Format$(dStamp, "yyyy-mm-dd") & " - " & Fn_ChaineRemplie(CStr(prof), " ", 5, "R")
     
         'Accumule dans un dictionary par Date de charge
         If dictDateCharge.Exists(strCharge) Then

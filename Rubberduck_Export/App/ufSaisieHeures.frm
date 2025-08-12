@@ -51,7 +51,7 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
     ufSaisieHeures.ListData = wsdBD_Clients.Range("Q1:Q" & lastUsedRow) '2025-01-11 @ 18:00
     
     With oEventHandler
-        Set .SearchListBox = lstboxNomClient
+        Set .SearchListBox = lstNomClient
         Set .SearchTextBox = txtClient
         .MaxRows = 10
         .ShowAllMatches = False
@@ -70,17 +70,17 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
     
 End Sub
 
-Private Sub lstboxNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
+Private Sub lstNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:lstboxNomClient_DblClick", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:lstNomClient_DblClick", vbNullString, 0)
     
     Dim i As Long
-    With Me.lstboxNomClient
+    With Me.lstNomClient
         For i = 0 To .ListCount - 1
             If .Selected(i) Then
                 Me.txtClient.Value = .List(i, 0)
-                Me.txtClientID.Value = Fn_Cell_From_BD_Client(Me.txtClient.Value, 17, 2)
-                Me.txtClientReel.Value = Fn_Cell_From_BD_Client(Me.txtClientID.Value, 2, 1)
+                Me.txtClientID.Value = Fn_CellSpecifiqueDeBDClient(Me.txtClient.Value, 17, 2)
+                Me.txtClientReel.Value = Fn_CellSpecifiqueDeBDClient(Me.txtClientID.Value, 2, 1)
                 Exit For
             End If
         Next i
@@ -88,12 +88,12 @@ Private Sub lstboxNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     
     'Force à cacher le listbox pour les résultats de recherche
     On Error Resume Next
-    Me.lstboxNomClient.Visible = False
+    Me.lstNomClient.Visible = False
     On Error GoTo 0
     
     Me.txtClient.TextAlign = fmTextAlignLeft
 
-    Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:lstboxNomClient_DblClick", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:lstNomClient_DblClick", vbNullString, startTime)
 
 End Sub
 
@@ -141,7 +141,7 @@ Private Sub cmbProfessionnel_Enter() '2025-05-31 @ 16:31
     Set plageInitiales = ws.Range("D68:D77")
 '    Set plageInitiales = ws.Range("D63:D78")
     
-    utilisateur = modFunctions.GetNomUtilisateur() ' Variable globale utilisateur Windows
+    utilisateur = modFunctions.Fn_NomUtilisateurWindows() ' Variable globale utilisateur Windows
 
     Set listeInitiales = New Collection
     toutesInitiales = False
@@ -197,7 +197,7 @@ Private Sub cmbProfessionnel_AfterUpdate() '2025-05-31 @ 16:11
 
     Dim initProfAutorises As String
     
-    initProfAutorises = GetInitialesObligatoiresFromADMIN(modFunctions.GetNomUtilisateur())
+    initProfAutorises = GetInitialesObligatoiresFromADMIN(modFunctions.Fn_NomUtilisateurWindows())
 
     Select Case initProfAutorises
         Case "INVALID"
@@ -216,7 +216,7 @@ Private Sub cmbProfessionnel_AfterUpdate() '2025-05-31 @ 16:11
 
     With ufSaisieHeures
         If .cmbProfessionnel.Value <> vbNullString Then
-            .txtProfID.Value = Fn_GetID_From_Initials(.cmbProfessionnel.Value)
+            .txtProfID.Value = Fn_ProfIDAPartirDesInitiales(.cmbProfessionnel.Value)
             If .txtDate.Value <> vbNullString Then
                 Call ObtenirTousLesTECDateAvecAF
                 Call RafraichirListBoxEtAddtionnerHeures
@@ -246,7 +246,7 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
     
     'Routine de validation de date
     Dim valeur As Variant
-    valeur = NormaliserDate(Me.txtDate.Value)
+    valeur = Fn_DateNormalisee(Me.txtDate.Value)
     
     If IsError(valeur) Then
         MsgBox "La date saisie est invalide. Veuillez corriger la saisie.", vbExclamation
@@ -257,9 +257,9 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
     
     Dim fullDate As Variant
     
-    fullDate = Fn_Complete_Date(ufSaisieHeures.txtDate.Value, 600, 15)
+    fullDate = Fn_CompleteLaDate(ufSaisieHeures.txtDate.Value, 600, 15)
     If fullDate <> "Invalid Date" Then
-        Call Log_Saisie_Heures("info     ", "@00199 - fullDate = " & fullDate & _
+        Call EnregistrerLogSaisieHeures("info     ", "@00199 - fullDate = " & fullDate & _
                                 "   y = " & year(fullDate) & _
                                 "   m = " & month(fullDate) & _
                                 "   d = " & day(fullDate) & _
@@ -337,7 +337,7 @@ Private Sub txtClient_AfterUpdate()
     
     'Force à cacher le listbox pour les résultats de recherche
     On Error Resume Next
-    Me.lstboxNomClient.Visible = False
+    Me.lstNomClient.Visible = False
     On Error GoTo 0
     
     Call MettreAJourEtatBoutons
@@ -350,7 +350,7 @@ Private Sub txtActivite_AfterUpdate()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:txtActivite_AfterUpdate", Me.txtActivite.Value, 0)
     
-    Me.txtActivite.Value = Fn_Nettoyer_Fin_Chaine(Me.txtActivite.Value)
+    Me.txtActivite.Value = Fn_ChaineNettoyeeCaracteresSpeciaux(Me.txtActivite.Value)
     
     Call MettreAJourEtatBoutons
     
@@ -392,7 +392,7 @@ Private Sub txtHeures_Exit(ByVal Cancel As MSForms.ReturnBoolean)
         Exit Sub
     End If
     
-    If Fn_Valider_Portion_Heures(heure) = False Then
+    If Fn_FractionHeureEstValide(heure) = False Then
         MsgBox _
             Prompt:="La portion fractionnaire (" & heure & ") des heures est invalide" & vbNewLine & vbNewLine & _
                     "Seules les valeurs de dixième et de quart d'heure sont" & vbNewLine & vbNewLine & _
@@ -427,12 +427,12 @@ Sub txtHeures_AfterUpdate()
     
 End Sub
 
-Private Sub chbFacturable_AfterUpdate()
+Private Sub chkFacturable_AfterUpdate()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:chbFacturable_AfterUpdate", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:chkFacturable_AfterUpdate", vbNullString, 0)
     
-    If Me.chbFacturable.Value <> valeurSauveeEstFacturable Then '2025-03-25 @ 13:05
-        Debug.Print "chbFacturable_AfterUpdate : ", Me.chbFacturable.Value, " vs ", valeurSauveeEstFacturable, " - TECID=" & Me.txtTECID
+    If Me.chkFacturable.Value <> valeurSauveeEstFacturable Then '2025-03-25 @ 13:05
+        Debug.Print "chkFacturable_AfterUpdate : ", Me.chkFacturable.Value, " vs ", valeurSauveeEstFacturable, " - TECID=" & Me.txtTECID
         If Me.txtTECID = vbNullString Then
             Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True) '2024-10-06 @ 14:33
         Else
@@ -442,7 +442,7 @@ Private Sub chbFacturable_AfterUpdate()
 
     Call MettreAJourEtatBoutons
     
-    Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:chbFacturable_AfterUpdate", Me.txtTECID, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:chkFacturable_AfterUpdate", Me.txtTECID, startTime)
     
 End Sub
 
@@ -465,13 +465,13 @@ Private Sub txtCommNote_AfterUpdate()
     
 End Sub
 
-Private Sub cmdAdd_Click()
+Private Sub shpAdd_Click()
 
     Call AjouterLigneTEC
 
 End Sub
 
-Private Sub cmdUpdate_Click()
+Private Sub shpUpdate_Click()
 
     If ufSaisieHeures.txtTECID.Value <> vbNullString Then
         Call ModifierLigneTEC
@@ -483,7 +483,7 @@ Private Sub cmdUpdate_Click()
 
 End Sub
 
-Private Sub cmdDelete_Click()
+Private Sub shpDelete_Click()
 
     If ufSaisieHeures.txtTECID.Value <> vbNullString Then
         Call DetruireLigneTEC
@@ -495,7 +495,7 @@ Private Sub cmdDelete_Click()
 
 End Sub
 
-Private Sub cmdClear_Click()
+Private Sub shpClear_Click()
 
     Call EffacerFormulaireTEC
     
@@ -504,15 +504,15 @@ Private Sub cmdClear_Click()
 End Sub
 
 'Get a specific row from listBox and display it in the userform
-Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
+Sub lstHresJour_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:lsbHresJour_dblClick", ufSaisieHeures.lsbHresJour.ListIndex, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:lstHresJour_dblClick", ufSaisieHeures.lstHresJour.ListIndex, 0)
     
     rmv_state = rmv_modeAffichage
     
     With ufSaisieHeures
         Dim tecID As Long
-        tecID = .lsbHresJour.List(.lsbHresJour.ListIndex, 0)
+        tecID = .lstHresJour.List(.lstHresJour.ListIndex, 0)
         ufSaisieHeures.txtTECID.Value = tecID
         txtTECID = tecID
         
@@ -528,27 +528,27 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
         'Remplir le userForm, si cette charge n'a pas été facturée
         If Not isBilled Then
             Application.EnableEvents = False
-            .cmbProfessionnel.Value = .lsbHresJour.List(.lsbHresJour.ListIndex, 1)
+            .cmbProfessionnel.Value = .lstHresJour.List(.lstHresJour.ListIndex, 1)
             .cmbProfessionnel.Enabled = False
     
-            .txtDate.Value = Format$(.lsbHresJour.List(.lsbHresJour.ListIndex, 2), wsdADMIN.Range("B1").Value) '2025-01-31 @ 13:31
+            .txtDate.Value = Format$(.lstHresJour.List(.lstHresJour.ListIndex, 2), wsdADMIN.Range("B1").Value) '2025-01-31 @ 13:31
             .txtDate.Enabled = False
     
-            .txtClient.Value = .lsbHresJour.List(.lsbHresJour.ListIndex, 3)
+            .txtClient.Value = .lstHresJour.List(.lstHresJour.ListIndex, 3)
             valeurSauveeClient = .txtClient.Value
             .txtClientID.Value = wsdTEC_Local.Range("E" & rowTECID).Value
     
-            .txtActivite.Value = .lsbHresJour.List(.lsbHresJour.ListIndex, 4)
+            .txtActivite.Value = .lstHresJour.List(.lstHresJour.ListIndex, 4)
             valeurSauveeActivite = .txtActivite.Value
     
-            .txtHeures.Value = Format$(.lsbHresJour.List(.lsbHresJour.ListIndex, 5), "#0.00")
+            .txtHeures.Value = Format$(.lstHresJour.List(.lstHresJour.ListIndex, 5), "#0.00")
             valeurSauveeHeures = CCur(.txtHeures.Value)
     
-            .txtCommNote.Value = .lsbHresJour.List(.lsbHresJour.ListIndex, 6)
+            .txtCommNote.Value = .lstHresJour.List(.lstHresJour.ListIndex, 6)
             valeurSauveeCommNote = .txtCommNote.Value
     
-            .chbFacturable.Value = CBool(.lsbHresJour.List(.lsbHresJour.ListIndex, 7))
-            valeurSauveeEstFacturable = .chbFacturable.Value
+            .chkFacturable.Value = CBool(.lstHresJour.List(.lstHresJour.ListIndex, 7))
+            valeurSauveeEstFacturable = .chkFacturable.Value
             Application.EnableEvents = True
 
         Else
@@ -565,7 +565,7 @@ Sub lsbHresJour_dblClick(ByVal Cancel As MSForms.ReturnBoolean)
     'Libérer la mémoire
     Set lookupRange = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:lsbHresJour_dblClick[" & tecID & "]", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:lstHresJour_dblClick[" & tecID & "]", vbNullString, startTime)
 
 End Sub
 
@@ -578,7 +578,7 @@ Sub imgLogoGCF_Click()
         
             Call modTEC_TDB.ActualiserTECTableauDeBord
             
-            Call ExecuterAdvancedFilterSurTEC_TDB_Data
+            Call ExecuterAdvancedFilterSurTECTDBData
             
             'Mettre à jour les 4 tableaux croisés dynamiques (Semaine, Mois, Trimestre & Année Financière)
             Call MettreAJourPivotTables
@@ -629,7 +629,7 @@ Private Sub MettreAJourEtatBoutons() '2025-07-03 @ 07:09
         Trim(Me.txtHeures.Value & vbNullString) <> vbNullString
 
     'Bouton Ajouter
-    Me.cmdAdd.Enabled = enAjout And tousChampsRemplis
+    Me.shpAdd.Enabled = enAjout And tousChampsRemplis
 
     'Comparaison avec valeurs originales (stockées à la lecture en BD)
     estModifie = False
@@ -637,17 +637,17 @@ Private Sub MettreAJourEtatBoutons() '2025-07-03 @ 07:09
         EstChampModifie(Me.txtClient.Value, valeurSauveeClient) Or _
         EstChampModifie(Me.txtActivite.Value, valeurSauveeActivite) Or _
         (Me.txtHeures.Value <> valeurSauveeHeures) Or _
-        (Me.chbFacturable.Value <> valeurSauveeEstFacturable) Or _
+        (Me.chkFacturable.Value <> valeurSauveeEstFacturable) Or _
         EstChampModifie(Me.txtCommNote.Value, valeurSauveeCommNote)
 
     'Bouton estModifier
-    Me.cmdUpdate.Enabled = enModification And estModifie
+    Me.shpUpdate.Enabled = enModification And estModifie
 
     'Bouton Détruire
-    Me.cmdDelete.Enabled = enModification And Not estModifie
+    Me.shpDelete.Enabled = enModification And Not estModifie
 
     'Bouton Annuler
-    Me.cmdClear.Enabled = Me.cmdAdd.Enabled Or Me.cmdUpdate.Enabled
+    Me.shpClear.Enabled = Me.shpAdd.Enabled Or Me.shpUpdate.Enabled
 
 End Sub
 

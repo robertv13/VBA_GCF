@@ -46,7 +46,7 @@ Private Sub Worksheet_Activate()
     
     Application.EnableEvents = False
     
-    Application.GoTo Reference:=Me.Cells(1, 3), Scroll:=True
+    Application.Goto Reference:=Me.Cells(1, 3), Scroll:=True
     
     Me.Range("O3").Value = Format$(Date, wsdADMIN.Range("B1").Value)
     Me.Range("B27").Value = False '2024-09-03 @ 06:33
@@ -58,7 +58,7 @@ Private Sub Worksheet_Activate()
 
     Application.ScreenUpdating = True
     
-    Call modFAC_Brouillon.FAC_Brouillon_New_Invoice
+    Call modFAC_Brouillon.CreerNouvelleFactureBrouillon
     
     Application.EnableEvents = True
     
@@ -172,7 +172,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'Invoice Date has changed
     If Not Intersect(Target, Me.Range("O3")) Is Nothing Then
         Application.EnableEvents = False
-        fullDate = Fn_Complete_Date(Target.text, 30, 15)
+        fullDate = Fn_CompleteLaDate(Target.text, 30, 15)
         If fullDate <> "Invalid Date" Then
             Target.Value = Format$(fullDate, wsdADMIN.Range("B1").Value)
         Else
@@ -180,7 +180,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
        
         'Future date ?
@@ -189,11 +189,11 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.GoTo Range(Target.Address)
+                Application.Goto Range(Target.Address)
             End If
         End If
 
-        Call FAC_Brouillon_Date_Change(CDate(wshFAC_Brouillon.Range("O3").Value))
+        Call FACBrouillonDate_Change(CDate(wshFAC_Brouillon.Range("O3").Value))
         
         Set rng = wshFAC_Brouillon.Range("O9")
         GoTo exitSub
@@ -202,7 +202,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'Template has changed
     If Not Intersect(Target, wshFAC_Brouillon.Range("O9")) Is Nothing Then
         If Target.Value <> vbNullString Then
-            Call Load_Invoice_Template(Target.Value)
+            Call ChargerGabaritDescriptionFacture(Target.Value)
         End If
         Set rng = wshFAC_Brouillon.Range("L11")
     End If

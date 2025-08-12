@@ -264,10 +264,10 @@ Sub SupprimerToutesFormesRetour(w As Worksheet)
 End Sub
     
 '@Description "Retourne un dictionnaire avec sommaire par noCompte & Solde à une date donnée"
-Function ObtenirSoldesParCompteAvecADO(noCompteGLMin As String, noCompteGLMax As String, dateLimite As Date, _
+Function Fn_SoldesParCompteAvecADO(noCompteGLMin As String, noCompteGLMax As String, dateLimite As Date, _
                                        inclureEcrCloture As Boolean) As Dictionary '2025-08-02 @ 10:04
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_BV:ObtenirSoldesParCompteAvecADO", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_BV:Fn_SoldesParCompteAvecADO", vbNullString, 0)
     
     Dim strSQL As String
     Dim dictSoldes As Object: Set dictSoldes = CreateObject("Scripting.Dictionary")
@@ -303,7 +303,7 @@ Function ObtenirSoldesParCompteAvecADO(noCompteGLMin As String, noCompteGLMax As
     
     strSQL = strSQL & " GROUP BY NoCompte"
 
-    Debug.Print "ObtenirSoldesParCompteAvecADO: " & strSQL
+    Debug.Print "Fn_SoldesParCompteAvecADO: " & strSQL
     
     recSet.Open strSQL, conn, 1, 1
 
@@ -322,19 +322,19 @@ Function ObtenirSoldesParCompteAvecADO(noCompteGLMin As String, noCompteGLMax As
     recSet.Close
     conn.Close
     
-    Set ObtenirSoldesParCompteAvecADO = dictSoldes
+    Set Fn_SoldesParCompteAvecADO = dictSoldes
     
     GoTo Exit_Function
 
 ErrHandler:
-    MsgBox "Erreur dans ObtenirSoldesParCompteAvecADO : " & Err.description, vbCritical
+    MsgBox "Erreur dans Fn_SoldesParCompteAvecADO : " & Err.description, vbCritical
     On Error Resume Next
     If Not recSet Is Nothing Then If recSet.state = 1 Then recSet.Close
     If Not conn Is Nothing Then If conn.state = 1 Then conn.Close
-    Set ObtenirSoldesParCompteAvecADO = Nothing
+    Set Fn_SoldesParCompteAvecADO = Nothing
     
 Exit_Function:
-    Call modDev_Utils.EnregistrerLogApplication("modGL_BV:ObtenirSoldesParCompteAvecADO", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_BV:Fn_SoldesParCompteAvecADO", vbNullString, startTime)
 
 End Function
 
@@ -348,7 +348,7 @@ Public Function Nz(val As Variant) As Currency '2025-07-17 @ 09:57
     
 End Function
 
-Function ObtenirFinExercice(dateSaisie As Date) As Date '2025-07-20 @ 08:49
+Function Fn_DateFinExercice(dateSaisie As Date) As Date '2025-07-20 @ 08:49
 
     Dim anneeExercice As Integer
     
@@ -363,7 +363,7 @@ Function ObtenirFinExercice(dateSaisie As Date) As Date '2025-07-20 @ 08:49
     End If
 
     ' Dernier jour du mois de fin d’exercice
-    ObtenirFinExercice = DateSerial(anneeExercice, moisFinExercice + 1, 0)
+    Fn_DateFinExercice = DateSerial(anneeExercice, moisFinExercice + 1, 0)
     
 End Function
 
@@ -487,7 +487,7 @@ CleanUpADO:
     
 End Sub
 
-Function ConstructionTableau24MoisGL(dateLimite As Date, periode As String, inclureEcrCloture As Boolean) As Variant '2025-08-05 @ 05:58
+Function Fn_Tableau24MoisSommeTransGL(dateLimite As Date, periode As String, inclureEcrCloture As Boolean) As Variant '2025-08-05 @ 05:58
 
     Dim collComptes As Collection
     Dim tableau24Mois() As Variant
@@ -582,11 +582,11 @@ Function ConstructionTableau24MoisGL(dateLimite As Date, periode As String, incl
     Set recSet = Nothing: Set conn = Nothing
     
     'Résultat
-    ConstructionTableau24MoisGL = tableau24Mois
+    Fn_Tableau24MoisSommeTransGL = tableau24Mois
     
 End Function
 
-Function Construire24PeriodesGL(dateLimite As Date) As String
+Function Fn_Construire24PeriodesGL(dateLimite As Date) As String
 
     Dim periodes As String
     Dim tmpAnnee As Long
@@ -604,11 +604,11 @@ Function Construire24PeriodesGL(dateLimite As Date) As String
         End If
     Next i
     
-    Construire24PeriodesGL = periodes
+    Fn_Construire24PeriodesGL = periodes
 
 End Function
 
-Sub TestTableau24MoisGLDansExcel() '2025-08-05 @ 05:58
+Sub zz_TestTableau24MoisGLDansExcel() '2025-08-05 @ 05:58
 
     Dim tableau() As Variant
     Dim i As Long, j As Long
@@ -617,7 +617,7 @@ Sub TestTableau24MoisGLDansExcel() '2025-08-05 @ 05:58
     dateCutoff = #7/31/2025#
     
     Dim periodes As String
-    periodes = Construire24PeriodesGL(dateCutoff)
+    periodes = Fn_Construire24PeriodesGL(dateCutoff)
     
     'Détermine le mois de l'année financière en fonction de la date limite
     Dim dernierMoisAnneeFinanciere As Long
@@ -645,7 +645,7 @@ Sub TestTableau24MoisGLDansExcel() '2025-08-05 @ 05:58
     'Appel de la fonction
     Dim inclureEcritureCloture As Boolean
     inclureEcritureCloture = False
-    tableau = ConstructionTableau24MoisGL(dateCutoff, periodes, inclureEcritureCloture)
+    tableau = Fn_Tableau24MoisSommeTransGL(dateCutoff, periodes, inclureEcritureCloture)
     
     With wsOutput
         .Cells(1, 1) = 0
@@ -697,24 +697,3 @@ Sub TestTableau24MoisGLDansExcel() '2025-08-05 @ 05:58
     wsOutput.Columns.AutoFit
     
 End Sub
-
-'Function SommePlageTableau(tableau As Variant, ligne As Long, debutCol As Long, finCol As Long) As Currency
-'
-'    Dim plage() As Long
-'    Dim i As Long
-'
-'    'Construire un tableau d’indices colonnes
-'    ReDim plage(1 To finCol - debutCol + 1)
-'    For i = debutCol To finCol
-'        plage(i - debutCol + 1) = i
-'    Next i
-'
-'    Dim extrait As Variant
-'    extrait = Application.index(tableau, ligne, plage)
-'    Debug.Print Join(extrait, ", ")
-'
-'    'Somme via Index + Sum
-'    SommePlageTableau = WorksheetFunction.Sum(Application.index(tableau, ligne, plage))
-'
-'End Function
-'

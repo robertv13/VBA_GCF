@@ -38,8 +38,8 @@ Sub SauvegarderRegularisation() '2025-01-14 @ 12:00
         Call AjouterRegularisationBDLocale
         
         'Update FAC_Comptes_Clients
-        Call MiseAJourRegulComptesClientsBDMaster
-        Call MiseAJourRegulComptesClientsBDLocale
+        Call MettreAJourRegulComptesClientsBDMaster
+        Call MettreAJourRegulComptesClientsBDLocale
                 
         'Prepare G/L posting
         Dim noRegul As String, nomClient As String, descRegul As String
@@ -130,7 +130,7 @@ Sub AjouterRegularisationBDMaster() 'Write to MASTER.xlsx
     'Add fields to the recordset before updating it
     recSet.AddNew
         recSet.Fields(fREGULRegulID - 1).Value = regulNo
-        recSet.Fields(fREGULInvNo - 1).Value = ufEncRégularisation.cbbNoFacture
+        recSet.Fields(fREGULInvNo - 1).Value = ufEncRégularisation.cmbNoFacture
         recSet.Fields(fREGULDate - 1).Value = CDate(wshENC_Saisie.Range("K5").Value)
         recSet.Fields(fREGULClientID - 1).Value = wshENC_Saisie.clientCode
         recSet.Fields(fREGULClientNom - 1).Value = wshENC_Saisie.Range("F5").Value
@@ -176,7 +176,7 @@ Sub AjouterRegularisationBDLocale() '2024-08-22 @ 10:38
     timeStamp = Now
     
     ws.Range("A" & rowToBeUsed).Value = regulNo
-    ws.Range("B" & rowToBeUsed).Value = ufEncRégularisation.cbbNoFacture
+    ws.Range("B" & rowToBeUsed).Value = ufEncRégularisation.cmbNoFacture
     ws.Range("C" & rowToBeUsed).Value = CDate(wshENC_Saisie.Range("K5").Value)
     ws.Range("D" & rowToBeUsed).Value = wshENC_Saisie.clientCode
     ws.Range("E" & rowToBeUsed).Value = wshENC_Saisie.Range("F5").Value
@@ -193,9 +193,9 @@ Sub AjouterRegularisationBDLocale() '2024-08-22 @ 10:38
 
 End Sub
 
-Sub MiseAJourRegulComptesClientsBDMaster() 'Write to MASTER.xlsx
+Sub MettreAJourRegulComptesClientsBDMaster() 'Write to MASTER.xlsx
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:MiseAJourRegulComptesClientsBDMaster", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:MettreAJourRegulComptesClientsBDMaster", vbNullString, 0)
     
     Dim errMsg As String
     
@@ -214,7 +214,7 @@ Sub MiseAJourRegulComptesClientsBDMaster() 'Write to MASTER.xlsx
 
     'Open the recordset for the specified invoice
     Dim Inv_No As String
-    Inv_No = ufEncRégularisation.cbbNoFacture.Value
+    Inv_No = ufEncRégularisation.cmbNoFacture.Value
     
     Dim strSQL As String
     strSQL = "SELECT * FROM [" & destinationTab & "] WHERE InvNo = '" & Inv_No & "'"
@@ -251,13 +251,13 @@ Sub MiseAJourRegulComptesClientsBDMaster() 'Write to MASTER.xlsx
     
     Application.ScreenUpdating = True
 
-    Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:MiseAJourRegulComptesClientsBDMaster", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:MettreAJourRegulComptesClientsBDMaster", vbNullString, startTime)
     
 End Sub
 
-Sub MiseAJourRegulComptesClientsBDLocale() '2024-08-22 @ 10:55
+Sub MettreAJourRegulComptesClientsBDLocale() '2024-08-22 @ 10:55
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:MiseAJourRegulComptesClientsBDLocale", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:MettreAJourRegulComptesClientsBDLocale", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -268,7 +268,7 @@ Sub MiseAJourRegulComptesClientsBDLocale() '2024-08-22 @ 10:55
     Dim lookupRange As Range: Set lookupRange = ws.Range("A3:A" & lastUsedRow)
     
     Dim Inv_No As String
-    Inv_No = ufEncRégularisation.cbbNoFacture.Value
+    Inv_No = ufEncRégularisation.cmbNoFacture.Value
     
     Dim foundRange As Range
     Set foundRange = lookupRange.Find(What:=Inv_No, LookIn:=xlValues, LookAt:=xlWhole)
@@ -304,7 +304,7 @@ Sub MiseAJourRegulComptesClientsBDLocale() '2024-08-22 @ 10:55
     Set lookupRange = Nothing
     Set ws = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:MiseAJourRegulComptesClientsBDLocale", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:MettreAJourRegulComptesClientsBDLocale", vbNullString, startTime)
 
 End Sub
 
@@ -337,16 +337,16 @@ Sub ComptabiliserRegularisation(no As Long, dt As Date, nom As String, desc As S
     comptesClients = honoraires + fraisDivers + tps + tvq
     
     'Comptes de GL et description du poste
-    glComptesClients = ObtenirNoGlIndicateur("Comptes Clients")
-    descGLComptesClients = ObtenirDescriptionCompte(glComptesClients)
-    glHonoraires = ObtenirNoGlIndicateur("Revenus de consultation")
-    descGLHonoraires = ObtenirDescriptionCompte(glHonoraires)
-    glFraisDivers = ObtenirNoGlIndicateur("Revenus frais de poste")
-    descGLFraisDivers = ObtenirDescriptionCompte(glFraisDivers)
-    glTPS = ObtenirNoGlIndicateur("TPS Facturée")
-    descGLTPS = ObtenirDescriptionCompte(glTPS)
-    glTVQ = ObtenirNoGlIndicateur("TVQ Facturée")
-    descGLTVQ = ObtenirDescriptionCompte(glTVQ)
+    glComptesClients = Fn_NoCompteAPartirIndicateurCompte("Comptes Clients")
+    descGLComptesClients = Fn_DescriptionAPartirNoCompte(glComptesClients)
+    glHonoraires = Fn_NoCompteAPartirIndicateurCompte("Revenus de consultation")
+    descGLHonoraires = Fn_DescriptionAPartirNoCompte(glHonoraires)
+    glFraisDivers = Fn_NoCompteAPartirIndicateurCompte("Revenus frais de poste")
+    descGLFraisDivers = Fn_DescriptionAPartirNoCompte(glFraisDivers)
+    glTPS = Fn_NoCompteAPartirIndicateurCompte("TPS Facturée")
+    descGLTPS = Fn_DescriptionAPartirNoCompte(glTPS)
+    glTVQ = Fn_NoCompteAPartirIndicateurCompte("TVQ Facturée")
+    descGLTVQ = Fn_DescriptionAPartirNoCompte(glTVQ)
     
     'Déclaration et instanciation d'un objet GL_Entry
     Dim ecr As clsGL_Entry

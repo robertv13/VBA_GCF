@@ -24,7 +24,7 @@ Private Sub UserForm_Initialize() '2025-06-01 @ 06:54
     Set lo = ws.ListObjects("l_tbl_FAC_Projets_Entete")
 
     'Vérifier qu’il y a des données réelles dans le tableau (ignore les lignes vides)
-    If Not TableauContientDesDonnees(lo) Then
+    If Not Fn_TableauContientDesDonnees(lo) Then
         Unload Me
         Exit Sub
     End If
@@ -47,7 +47,7 @@ Private Sub UserForm_Initialize() '2025-06-01 @ 06:54
             nbRows = nbRows + 1
             arr(nbRows, 1) = ligne.Columns(lo.ListColumns("nomClient").index).Value
             arr(nbRows, 2) = ligne.Columns(lo.ListColumns("date").index).Value
-            arr(nbRows, 3) = Fn_Pad_A_String(Format$(ligne.Columns(lo.ListColumns("HonoTotal").index).Value, "#,##0.00$"), " ", 11, "L")
+            arr(nbRows, 3) = Fn_ChaineRemplie(Format$(ligne.Columns(lo.ListColumns("HonoTotal").index).Value, "#,##0.00$"), " ", 11, "L")
             arr(nbRows, 4) = ligne.Columns(lo.ListColumns("ProjetID").index).Value
         End If
 
@@ -66,7 +66,7 @@ ProchaineLigne:
     Call TrierTableau2DBubble(arr)
 
     ' Préparer la ListBox
-    With Me.lsbProjetsFacture
+    With Me.lstProjetsFacture
         .Clear
         .ColumnHeads = True
         .ColumnCount = 4
@@ -81,18 +81,18 @@ ProchaineLigne:
     
 End Sub
 
-Private Sub lsbProjetsFacture_DblClick(ByVal Cancel As MSForms.ReturnBoolean) '2024-07-21 @ 16:38
+Private Sub lstProjetsFacture_DblClick(ByVal Cancel As MSForms.ReturnBoolean) '2024-07-21 @ 16:38
 
     Dim rowSelected As Long
     Dim nomClient As String, dte As Date
     Dim honorairesTotal As Double
     Dim projetID As Long
     
-    rowSelected = lsbProjetsFacture.ListIndex
-    nomClient = lsbProjetsFacture.List(rowSelected, 0)
-    dte = CDate(lsbProjetsFacture.List(rowSelected, 1))
-    honorairesTotal = lsbProjetsFacture.List(rowSelected, 2)
-    projetID = lsbProjetsFacture.List(rowSelected, 3)
+    rowSelected = lstProjetsFacture.ListIndex
+    nomClient = lstProjetsFacture.List(rowSelected, 0)
+    dte = CDate(lstProjetsFacture.List(rowSelected, 1))
+    honorairesTotal = lstProjetsFacture.List(rowSelected, 2)
+    projetID = lstProjetsFacture.List(rowSelected, 3)
     
     Application.EnableEvents = False
     

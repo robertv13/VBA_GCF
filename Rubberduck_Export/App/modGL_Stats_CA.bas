@@ -17,9 +17,9 @@ Sub ActualiserStatsChiffreAffaires()
     'Postes de revenus à considérer dans les REVENUS
     Dim glREV(1 To 2) As String
     Dim GL_Revenus_Consultation As String
-    glREV(1) = ObtenirNoGlIndicateur("Revenus de consultation")
+    glREV(1) = Fn_NoCompteAPartirIndicateurCompte("Revenus de consultation")
     Dim GL_Revenus_TEC As String
-    glREV(2) = ObtenirNoGlIndicateur("Revenus - Travaux en cours")
+    glREV(2) = Fn_NoCompteAPartirIndicateurCompte("Revenus - Travaux en cours")
     
     'Déterminer le dernier mois complété
     Dim moisPrécédent As Integer
@@ -82,7 +82,7 @@ Sub ActualiserStatsChiffreAffaires()
         revenus = 0
         revenus_mois = 0
         For r = 1 To UBound(glREV, 1)
-            revenus_mois = -Fn_Get_GL_Month_Trans_Total(glREV(r), dateFinMois)
+            revenus_mois = -Fn_TotalTransGLMois(glREV(r), dateFinMois)
             revenus = revenus + revenus_mois
         Next r
         ws.Cells(9, col).Value = revenus
@@ -101,7 +101,7 @@ Sub ActualiserStatsChiffreAffaires()
     'Parcourir chacun des professionnels à partir de gDictHours
     For Each prof In gDictHours
         strProf = Mid$(prof, 4)
-        profID = Fn_GetID_From_Initials(strProf)
+        profID = Fn_ProfIDAPartirDesInitiales(strProf)
         'Heures pour chacun des professionnels
         If gDictHours(prof)(0) <> 0 Then
             tauxHoraire = Fn_Get_Hourly_Rate(profID, Date)
@@ -110,12 +110,12 @@ Sub ActualiserStatsChiffreAffaires()
         End If
     Next prof
 
-    'Solde au G/L du compte Travaux en Cours en utilisant ObtenirSoldesParCompteAvecADO - 2025-08-03 @ 09:23
+    'Solde au G/L du compte Travaux en Cours en utilisant Fn_SoldesParCompteAvecADO - 2025-08-03 @ 09:23
     Dim glTEC As String
-    glTEC = ObtenirNoGlIndicateur("Travaux en cours")
+    glTEC = Fn_NoCompteAPartirIndicateurCompte("Travaux en cours")
     Dim dictSoldes As Object
     Set dictSoldes = CreateObject("Scripting.Dictionary")
-    Set dictSoldes = modGL_Stuff.ObtenirSoldesParCompteAvecADO(glTEC, "", Format$(Date, "yyyy-mm-dd"), True)
+    Set dictSoldes = modGL_Stuff.Fn_SoldesParCompteAvecADO(glTEC, "", Format$(Date, "yyyy-mm-dd"), True)
     Dim glTECSolde As Currency
     glTECSolde = dictSoldes(glTEC)
 
@@ -220,13 +220,13 @@ Sub AjusterTableauNouvelleAnnee(ws As Worksheet, dateFinAnnée As Date) '2025-08
     
 End Sub
 
-Sub shpRetourMenuGL_Click()
+Sub shpRetournerMenuGL_Click()
 
-    Call RetourMenuGL
+    Call RetournerMenuGL
 
 End Sub
 
-Sub RetourMenuGL()
+Sub RetournerMenuGL()
     
     wshGL_Stats_CA.Visible = xlSheetHidden
     

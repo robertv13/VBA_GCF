@@ -41,7 +41,7 @@ Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
     
     Call modDev_Utils.DeterminerOrdreDeTabulation(ws)
         
-    Call Prepare_Pour_Nouvelle_Radiation
+    Call PreparerNouvelleRadiation
     
     With ws
         .Protect UserInterfaceOnly:=True
@@ -73,7 +73,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     If Not Intersect(Target, wshTEC_Radiation.Range("F3")) Is Nothing Then
         Target.Interior.Color = gCOULEUR_SAISIE
         If wshTEC_Radiation.Range("E6").Value <> vbNullString Then
-            Call Prepare_Pour_Nouvelle_Radiation
+            Call PreparerNouvelleRadiation
         End If
     End If
     
@@ -125,7 +125,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'CutOffDate has changed
     If Not Intersect(Target, Range("K3")) Is Nothing Then
         Application.EnableEvents = False
-        fullDate = Fn_Complete_Date(Target.text, 99, 0)
+        fullDate = Fn_CompleteLaDate(Target.text, 99, 0)
         If fullDate <> "Invalid Date" Then
             wshTEC_Radiation.Range("I3").Value = vbNullString
             Target.Value = Format$(fullDate, wsdADMIN.Range("B1").Value)
@@ -135,7 +135,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
        
         'Future date ?
@@ -144,10 +144,10 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.GoTo Range(Target.Address)
+                Application.Goto Range(Target.Address)
             End If
         Else
-            Call TEC_Radiation_Procedure(clientCode, Target.Value)
+            Call AfficherTECARadier(clientCode, Target.Value)
         End If
         
     End If

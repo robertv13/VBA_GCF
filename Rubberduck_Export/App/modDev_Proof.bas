@@ -1,7 +1,7 @@
 Attribute VB_Name = "modDev_Proof"
 Option Explicit
 
-Sub ObtenirHeuresFacturéesParFacture() '2025-04-07 @ 04:51
+Sub zz_ObtenirHeuresFactureesParFacture() '2025-04-07 @ 04:51
 
     '1. Obtenir toutes les charges facturées
     Dim ws As Worksheet: Set ws = wsdTEC_Local
@@ -39,11 +39,11 @@ Sub ObtenirHeuresFacturéesParFacture() '2025-04-07 @ 04:51
     Dim t As Currency, st As Currency
     Dim r As Long: r = 1
     If dict.count <> 0 Then
-        For Each key In Fn_Sort_Dictionary_By_Keys(dict, False) 'Sort dictionary by hours in ascending order
+        For Each key In Fn_TriDictionnaireParCles(dict, False) 'Sort dictionary by hours in ascending order
             profID = Mid$(key, 10, Len(key) - 2)
-            prof = Fn_Get_Prof_From_ProfID(profID)
+            prof = Fn_InitialesAPartirProfID(profID)
             If Left$(key, 8) <> saveInvNo Then
-                Call SoustotalHeures(wsOutput, saveInvNo, r, st)
+                Call AfficherSousTotalHeures(wsOutput, saveInvNo, r, st)
             End If
             t = t + dict(key)
             st = st + dict(key)
@@ -54,7 +54,7 @@ Sub ObtenirHeuresFacturéesParFacture() '2025-04-07 @ 04:51
             wsOutput.Cells(r, 3).Value = dict(key)
             wsOutput.Cells(r, 3).NumberFormat = "##0.00"
         Next key
-        Call SoustotalHeures(wsOutput, saveInvNo, r, st)
+        Call AfficherSousTotalHeures(wsOutput, saveInvNo, r, st)
         
         r = r + 2
         wsOutput.Cells(r, 1).Value = "* TOTAL *"
@@ -66,7 +66,7 @@ Sub ObtenirHeuresFacturéesParFacture() '2025-04-07 @ 04:51
     
 End Sub
 
-Sub SoustotalHeures(ws As Worksheet, saveInv As String, ByRef r As Long, ByRef st As Currency)
+Sub AfficherSousTotalHeures(ws As Worksheet, saveInv As String, ByRef r As Long, ByRef st As Currency)
 
     If saveInv <> vbNullString Then
         With ws.Cells(r, 3).Borders(xlEdgeBottom)
@@ -83,7 +83,7 @@ Sub SoustotalHeures(ws As Worksheet, saveInv As String, ByRef r As Long, ByRef s
 
 End Sub
 
-Sub IdentifierÉcartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
+Sub zz_IdentifierEcartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
 
     'Initialisation
     Dim wsEntete As Worksheet

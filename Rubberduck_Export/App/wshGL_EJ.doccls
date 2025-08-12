@@ -227,7 +227,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     'Si la cellule de la DATE change, alors on essaie de construire une date
     If Not Intersect(Target, Range("K4")) Is Nothing Then
         Application.EnableEvents = False
-        fullDate = Fn_Complete_Date(Target.text, 999, 15)
+        fullDate = Fn_CompleteLaDate(Target.text, 999, 15)
         
         'Update the cell with the full date, if valid
         If fullDate <> "Invalid Date" Then
@@ -237,7 +237,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
         
         If CDate(Me.Range("K4").Value) > Date Then
@@ -299,5 +299,15 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             End With
         End If
     End If
+End Sub
+
+Private Sub chkRecurrente_Click()
+
+    If wshGL_EJ.chkRecurrente.Value = True Then
+        wshGL_EJ.chkRecurrente.BackColor = gCOULEUR_SAISIE
+    Else
+        wshGL_EJ.chkRecurrente.BackColor = RGB(217, 217, 217)
+    End If
+
 End Sub
 

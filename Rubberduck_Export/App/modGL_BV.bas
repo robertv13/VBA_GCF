@@ -33,7 +33,7 @@ Sub ActualiserBV() '2025-07-21 @ 13:01
     Dim soldes As Object
     Set soldes = CreateObject("Scripting.Dictionary")
     
-    Set soldes = modGL_Stuff.ObtenirSoldesParCompteAvecADO("0000", "9999", dateBV, False)
+    Set soldes = modGL_Stuff.Fn_SoldesParCompteAvecADO("0000", "9999", dateBV, False)
     If soldes Is Nothing Then
         MsgBox "Impossible d'obtenir les soldes par numéro de compte" & vbNewLine & vbNewLine & _
                 "en date du " & Format$(dateBV, wsdADMIN.Range("B1").Value) & _
@@ -47,7 +47,7 @@ Sub ActualiserBV() '2025-07-21 @ 13:01
     Call AfficherSoldesBV(soldes)
     
     Dim dateFinExercice As Date
-    dateFinExercice = ObtenirFinExercice(dateBV)
+    dateFinExercice = Fn_DateFinExercice(dateBV)
     ws.Range("B12").Value = dateFinExercice
     If dateBV = dateFinExercice Then
         ws.Shapes("shpEcritureCloture").Visible = True
@@ -79,7 +79,7 @@ Sub AfficherSoldesBV(soldes As Dictionary, Optional ligneDépart As Long = 4) '2
         montant = soldes(cpte)
 '        If montant <> 0 Then
             'Montant inverse pour solder le compte
-            descCompte = ObtenirDescriptionCompte(CStr(cpte))
+            descCompte = Fn_DescriptionAPartirNoCompte(CStr(cpte))
             wshGL_BV.Range("D" & ligne).Value = CStr(cpte)
             wshGL_BV.Range("E" & ligne).Value = descCompte
             If montant >= 0 Then
@@ -357,10 +357,10 @@ Sub ComptabiliserEcritureCloture() '2025-08-04 @ 07:15
     Dim cheminFichier As String
     cheminFichier = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & wsdADMIN.Range("MASTER_FILE").Value
     Dim compteBNR As String
-    compteBNR = ObtenirNoGlIndicateur("Bénéfices Non Répartis")
+    compteBNR = Fn_NoCompteAPartirIndicateurCompte("Bénéfices Non Répartis")
 
     'Récupération des soldes par ADO (classeur, feuille, premierGL, dernierGL, dateLimite, rejet écriture clôture)
-    Set soldes = ObtenirSoldesParCompteAvecADO("4000", "9999", dateCloture, False)
+    Set soldes = Fn_SoldesParCompteAvecADO("4000", "9999", dateCloture, False)
     If soldes Is Nothing Then
         MsgBox "Impossible d'effectuer l'écriture de clôture pour" & vbNewLine & vbNewLine & _
                 "l'exercice se terminant le " & Format$(dateCloture, wsdADMIN.Range("B1").Value) & _
@@ -394,7 +394,7 @@ Sub ComptabiliserEcritureCloture() '2025-08-04 @ 07:15
         montant = soldes(cpte)
         If montant <> 0 Then
             'Montant inverse pour solder le compte
-            descCompte = modFunctions.ObtenirDescriptionCompte(CStr(cpte))
+            descCompte = modFunctions.Fn_DescriptionAPartirNoCompte(CStr(cpte))
             ecr.AjouterLigne CStr(cpte), descCompte, -montant, "Générée par l'application" 'Inverse pour solder
             totalResultat = totalResultat + montant
         End If
@@ -402,7 +402,7 @@ Sub ComptabiliserEcritureCloture() '2025-08-04 @ 07:15
 
     'Ligne de contrepartie pour BNR
     If totalResultat <> 0 Then
-        descCompte = ObtenirDescriptionCompte(compteBNR)
+        descCompte = Fn_DescriptionAPartirNoCompte(compteBNR)
         ecr.AjouterLigne CStr(compteBNR), descCompte, totalResultat, "Générée par l'application"
     End If
     
@@ -641,16 +641,16 @@ Sub AjusterFormeDynamiqueBV()
                     texteFull = texteFull & vbCrLf
                 End If
             End If
-            texteOneLine = Fn_Pad_A_String(.Range("AG" & i).Value, " ", 5, "R") & _
-                            " - " & Fn_Pad_A_String(.Range("AH" & i).Value, " ", 35, "R") & _
-                            "  " & Fn_Pad_A_String(Format$(.Range("AI" & i).Value, "#,##0.00 $"), " ", 14, "L") & _
-                            "  " & Fn_Pad_A_String(Format$(.Range("AJ" & i).Value, "#,##0.00 $"), " ", 14, "L")
+            texteOneLine = Fn_ChaineRemplie(.Range("AG" & i).Value, " ", 5, "R") & _
+                            " - " & Fn_ChaineRemplie(.Range("AH" & i).Value, " ", 35, "R") & _
+                            "  " & Fn_ChaineRemplie(Format$(.Range("AI" & i).Value, "#,##0.00 $"), " ", 14, "L") & _
+                            "  " & Fn_ChaineRemplie(Format$(.Range("AJ" & i).Value, "#,##0.00 $"), " ", 14, "L")
             If Trim$(.Range("AF" & i).Value) = Trim$(wshGL_BV.Range("B6").Value) Then
                 texteOneLine = " * " & texteOneLine
             Else
                 texteOneLine = "   " & texteOneLine
             End If
-            texteOneLine = Fn_Pad_A_String(texteOneLine, " ", 79, "R")
+            texteOneLine = Fn_ChaineRemplie(texteOneLine, " ", 79, "R")
             If Trim$(.Range("AK" & i).Value) <> vbNullString Then
                 texteOneLine = texteOneLine & Trim$(.Range("AK" & i).Value)
             End If
@@ -757,11 +757,11 @@ Sub shpSortieBV_Click()
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call RetourMenuGL
+    Call RetournerMenuGL
 
 End Sub
 
-Sub RetourMenuGL()
+Sub RetournerMenuGL()
     
     Call EffacerFormesNonRequises
     

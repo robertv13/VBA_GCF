@@ -21,51 +21,57 @@ Private Sub UserForm_Initialize()
     Me.BackColor = RGB(198, 224, 190)
     
     'Définir la couleur de fond du bouton en utilisant le code RGB (118,181,75)
-    btnConvertir.BackColor = RGB(118, 181, 75)
+    shpConvertir.BackColor = RGB(118, 181, 75)
     
 End Sub
 
-Private Sub btnConvertir_Click()
+Private Sub shpConvertir_Click()
+
+    Call ConvertirNFenFacturable
+    
+End Sub
+
+Private Sub ConvertirNFenFacturable()
 
     Dim tecID As Long
     
     'Y a-t-il des lignes sélectionnées (donc à convertir en temps Facturable) ?
     Dim i As Integer, nbLigneSélectionnée As Integer
-    For i = 0 To lsbNonBillable.ListCount - 1
-        If lsbNonBillable.Selected(i) Then
+    For i = 0 To lstNonBillable.ListCount - 1
+        If lstNonBillable.Selected(i) Then
             nbLigneSélectionnée = nbLigneSélectionnée + 1
             
-            tecID = lsbNonBillable.List(i, 0)
+            tecID = lstNonBillable.List(i, 0)
             
-            Call Convertir_NF_en_Facturable_Dans_BD(tecID)
-            Call Convertir_NF_en_Facturable_Locally(tecID)
+            Call ConvertirNFenFacturableBDMaster(tecID)
+            Call ConvertirNFenFacturableBDLocale(tecID)
             
-            Debug.Print "#096 - La ligne # " & i + 1 & " a été sélectionné - " & lsbNonBillable.List(i, 0)
+            Debug.Print "#096 - La ligne # " & i + 1 & " a été sélectionné - " & lstNonBillable.List(i, 0)
         End If
     Next i
 
     'Informer du nombre de ligne convertie
     MsgBox "J'ai converti " & nbLigneSélectionnée & " ligne(s) en temps facturable", vbOKOnly + vbInformation, _
-           "Sur une possibilité de " & lsbNonBillable.ListCount & " ligne(s)..."
+           "Sur une possibilité de " & lstNonBillable.ListCount & " ligne(s)..."
     
     'La conversion est terminée
     Unload Me
     
 End Sub
 
-Private Sub lsbNonBillable_Change()
+Private Sub lstNonBillable_Change()
 
     Dim selectedCount As Integer, i As Integer
 
     selectedCount = 0
 
-    For i = 0 To lsbNonBillable.ListCount - 1
-        If lsbNonBillable.Selected(i) Then
+    For i = 0 To lstNonBillable.ListCount - 1
+        If lstNonBillable.Selected(i) Then
             selectedCount = selectedCount + 1
         End If
     Next i
 
-    btnConvertir.Visible = (selectedCount > 0)
+    shpConvertir.Visible = (selectedCount > 0)
     
 End Sub
 

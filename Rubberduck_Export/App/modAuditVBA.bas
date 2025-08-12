@@ -1,31 +1,40 @@
 Attribute VB_Name = "modAuditVBA"
 Option Explicit
 
-Sub zz_AnalyserToutesLesProcedures() '2025-08-05 @ 13:52
+Sub shpAuditVBAProcedures()
 
-    Dim tableProc(1 To 1000, 1 To 8) As Variant '[Nom, Module, Type, Direct, Préfixé, Indirect, Object, NonConformite]
+    Call AnalyserTousLesNomsDeProcedures
+
+End Sub
+
+Sub AnalyserTousLesNomsDeProcedures() '2025-08-05 @ 13:52
+
+    Dim tableProc(1 To 750, 1 To 9) As Variant '[Nom, TypeProc, Module, TypeMod, Direct, Préfixé, Indirect, Object, NonConformite]
     Dim indexMax As Long
     Dim dictIndex As Object
 
+    Application.ScreenUpdating = False
+    
     Debug.Print "Début du traitement : analyse des procédures VBA"
 
     'Étape 1 - Construction du tableau
     Call BatirTableProceduresEtFonctions(dictIndex, tableProc, indexMax)
 
-    'Étape 2 - Comptage des appels dans le code
+    'Étape 2 - Comptage des appels directs aux procédures dans le code
     Call IncrementerAppelsCodeDirect(dictIndex, tableProc, indexMax)
 
-    'Étape 3 : Analyse des objets Excel (formes, boutons, etc.)
+    'Étape 3 - Comptage des appels indirects aux procédures dans le code
     Call IncrementerAppelsIndirect(dictIndex, tableProc)
     
-    'Étape 4 : Export vers Excel trié et structuré
+    'Étape 4 - Comptage des appels aux fonctions dans le code
+    Call IncrementerAppelsFonctionsCodeDirect(dictIndex, tableProc, indexMax)
+    
+    'Étape 5 : Export vers Excel trié et structuré
     Call ExporterResultatsFeuille(tableProc, indexMax)
 
     Debug.Print "Traitement terminé (" & indexMax & " procédures analysées)"
     
     Application.ScreenUpdating = True
-    
-    ActiveWorkbook.Worksheets("DocAuditVBA").Activate
 
 End Sub
 
@@ -48,25 +57,28 @@ Sub BatirTableProceduresEtFonctions(ByRef dictIndex As Object, ByRef tableProc()
             Case vbext_ct_ClassModule: typeModule = "4_Classe"
             Case vbext_ct_MSForm: typeModule = "2_UserForm"
             Case vbext_ct_Document: typeModule = "1_Feuille Excel"
-            Case vbext_ct_MSForm: typeModule = "2_UserForm"
             Case Else: typeModule = "z_Autre"
         End Select
 
         For i = 1 To codeMod.CountOfLines
             ligne = Trim(codeMod.Lines(i, 1))
-            If Left(ligne, 1) = "'" Or InStr(ligne, "Function ") > 0 Or InStr(ligne, "Sub ") = 0 Then GoTo NextLigne
+            If Not ligne Like "Sub *" And Not ligne Like "Function *" Then GoTo NextLigne
 
             nomSub = codeMod.ProcOfLine(i, vbext_pk_Proc)
 
             If Not dictIndex.Exists(nomSub) Then
                 index = index + 1
                 tableProc(index, 1) = nomSub
-                tableProc(index, 2) = comp.Name
-                tableProc(index, 3) = typeModule
-                tableProc(index, 4) = 0
+                tableProc(index, 2) = IIf(ligne Like "Sub *", "Sub", "Function")
+                tableProc(index, 3) = comp.Name
+                tableProc(index, 4) = typeModule
                 tableProc(index, 5) = 0
                 tableProc(index, 6) = 0
+                tableProc(index, 7) = 0
                 dictIndex.Add nomSub, index
+                If nomSub = "Fn_AccesServeur" Then
+                    Debug.Print nomSub, index
+                End If
             End If
 
 NextLigne:
@@ -95,7 +107,6 @@ Sub IncrementerAppelsCodeDirect(dictIndex As Object, tableProc() As Variant, ind
                 If ligne = vbNullString Or Left(ligne, 1) = "'" Or _
                    LCase(Left(ligne, 12)) = "debug.print " Or _
                    LCase(Left(ligne, 7)) = "msgbox " Or _
-                   LCase(Left(ligne, 4)) = "set " Or _
                    LCase(Left(ligne, 4)) = "sub " Or _
                    LCase(Left(ligne, 9)) = "function " Then
                     GoTo LigneSuivante
@@ -104,7 +115,7 @@ Sub IncrementerAppelsCodeDirect(dictIndex As Object, tableProc() As Variant, ind
                 For Each nomProc In dictIndex.keys
                     'Appels préfixés (Module.nomProc)
                     If InStr(ligne, "." & nomProc) > 0 Then
-                        tableProc(dictIndex(nomProc), 5) = tableProc(dictIndex(nomProc), 5) + 1
+                        tableProc(dictIndex(nomProc), 5) = tableProc(dictIndex(nomProc), 6) + 1
                     End If
 
                     'Appels directs (nomProc)
@@ -116,11 +127,11 @@ Sub IncrementerAppelsCodeDirect(dictIndex As Object, tableProc() As Variant, ind
                             valeur = Left(valeur, InStr(valeur, "(") - 1)
                         End If
                         If valeur = LCase(nomProc) Then
-                            tableProc(dictIndex(nomProc), 4) = tableProc(dictIndex(nomProc), 4) + 1
+                            tableProc(dictIndex(nomProc), 5) = tableProc(dictIndex(nomProc), 5) + 1
                         End If
                     End If
                     
-                    'Appels indirects dynamiques : Application.Run, Evaluate, Excel4Macro
+                    'Appels indirects dynamiques : Application.Run, Evaluate, Excel4Macro & OnAction
                     If (InStr(LCase(ligne), "application.run") > 0 Or _
                         InStr(LCase(ligne), "evaluate(") > 0 Or _
                         InStr(LCase(ligne), "executeexcel4macro") > 0) Or _
@@ -136,9 +147,26 @@ Sub IncrementerAppelsCodeDirect(dictIndex As Object, tableProc() As Variant, ind
                                 If InStr(1, ligne, "'") Then
                                     valeur = Trim(Replace(valeur, "'", vbNullString))
                                 End If
-                                If valeur = "ObtenirListeTECFactures" And nomProc = "ObtenirListeTECFactures" Then Stop
+                                If nomProc = "FermerApplicationInactive" And InStr(ligne, "FermerApplicationInactive") Then Stop
                                 If LCase(valeur) = LCase(nomProc) Then
-                                    tableProc(dictIndex(nomProc), 6) = tableProc(dictIndex(nomProc), 6) + 1
+                                    tableProc(dictIndex(nomProc), 7) = tableProc(dictIndex(nomProc), 7) + 1
+                                End If
+                            End If
+                        End If
+                    End If
+                    
+                    'Appels indirects dynamiques : OnTime
+                    If InStr(LCase(ligne), ".ontime") > 0 Then
+
+                        pos1 = InStr(ligne, """")
+                        If pos1 > 0 Then
+                            pos2 = InStr(pos1 + 1, ligne, """")
+                            If pos2 > pos1 Then
+                                valeur = Mid(ligne, pos1 + 1, pos2 - pos1 - 1)
+                                valeur = Replace(valeur, "()", vbNullString)
+                                valeur = Trim(Split(valeur, "!")(UBound(Split(valeur, "!")))) 'garde le nom après ! s'il est là
+                                If LCase(valeur) = LCase(nomProc) Then
+                                    tableProc(dictIndex(nomProc), 7) = tableProc(dictIndex(nomProc), 7) + 1
                                 End If
                             End If
                         End If
@@ -165,6 +193,14 @@ Sub IncrementerAppelsIndirect(dictIndex As Object, tableProc() As Variant) '2025
     For Each ws In ThisWorkbook.Worksheets
         'Formes dessinées (Shapes)
         For Each shp In ws.Shapes
+            On Error Resume Next
+            nomMacro = shp.OnAction
+            If Err.Number <> 0 Then
+                Err.Clear
+                On Error GoTo 0
+                GoTo NextShape
+            End If
+            On Error GoTo 0
             If shp.OnAction <> vbNullString Then
                 nomMacro = shp.OnAction
                 If InStr(nomMacro, "!") > 0 Then
@@ -172,14 +208,15 @@ Sub IncrementerAppelsIndirect(dictIndex As Object, tableProc() As Variant) '2025
                 End If
                 If dictIndex.Exists(nomMacro) Then
                     idx = dictIndex(nomMacro)
-                    tableProc(idx, 6) = tableProc(idx, 6) + 1
-                    If tableProc(idx, 7) = vbNullString Then
-                        tableProc(idx, 7) = shp.Name & " (" & ws.Name & ")" 'nom de l’objet appelant
+                    tableProc(idx, 7) = tableProc(idx, 7) + 1
+                    If tableProc(idx, 8) = vbNullString Then
+                        tableProc(idx, 8) = shp.Name & " (" & ws.Name & ")" 'nom de l’objet appelant
                     Else
-                        tableProc(idx, 7) = tableProc(idx, 7) & vbCrLf & shp.Name & " (" & ws.Name & ")" 'nom de l’objet appelant
+                        tableProc(idx, 8) = tableProc(idx, 8) & vbCrLf & shp.Name & " (" & ws.Name & ")" 'nom de l’objet appelant
                     End If
                 End If
             End If
+NextShape:
         Next shp
 
         'Boutons de formulaire (si présents)
@@ -188,11 +225,11 @@ Sub IncrementerAppelsIndirect(dictIndex As Object, tableProc() As Variant) '2025
                 nomMacro = obj.OnAction
                 If dictIndex.Exists(nomMacro) Then
                 idx = dictIndex(nomMacro)
-                    tableProc(idx, 6) = tableProc(idx, 6) + 1
-                    If tableProc(idx, 7) = vbNullString Then
-                        tableProc(idx, 7) = obj.Name & " (" & ws.Name & ")"
+                    tableProc(idx, 7) = tableProc(idx, 7) + 1
+                    If tableProc(idx, 8) = vbNullString Then
+                        tableProc(idx, 8) = obj.Name & " (" & ws.Name & ")"
                     Else
-                        tableProc(idx, 7) = tableProc(idx, 7) & vbCrLf & obj.Name & " (" & ws.Name & ")"
+                        tableProc(idx, 8) = tableProc(idx, 8) & vbCrLf & obj.Name & " (" & ws.Name & ")"
                     End If
                 End If
             End If
@@ -201,16 +238,113 @@ Sub IncrementerAppelsIndirect(dictIndex As Object, tableProc() As Variant) '2025
     
 End Sub
 
+Sub IncrementerAppelsFonctionsCodeDirect(dictIndex As Object, tableProc() As Variant, indexMax As Long)
+
+    Debug.Print "   4. Comptage des appels aux fonctions (dans le code)"
+    
+    Dim comp As Object, lignes() As String, ligne As String
+    Dim i As Long, nomFonction As Variant, valeur As String
+    Dim pos1 As Long, pos2 As Long, idx As Long
+
+    For Each comp In ThisWorkbook.VBProject.VBComponents
+        If comp.Type = vbext_ct_StdModule Or comp.Type = vbext_ct_ClassModule Or _
+           comp.Type = vbext_ct_MSForm Or comp.Type = vbext_ct_Document Then
+
+            lignes = Split(comp.codeModule.Lines(1, comp.codeModule.CountOfLines), vbCrLf)
+
+            For i = 0 To UBound(lignes)
+                ligne = Trim(lignes(i))
+                If ligne = vbNullString Or Left(ligne, 1) = "'" Or _
+                   LCase(Left(ligne, 4)) = "sub " Or _
+                   LCase(Left(ligne, 9)) = "function " Then
+                    GoTo LigneSuivante
+                End If
+
+'                If ligne = ".Range(""O6"").Value = Fn_ProchainNumeroFacture" Then Stop
+                
+                For Each nomFonction In dictIndex.keys
+                
+'                    If nomFonction = "Fn_ProchainNumeroFacture" Then Stop
+                    
+                    idx = dictIndex(nomFonction)
+                    If LCase(tableProc(idx, 2)) <> "function" Then GoTo NextNom
+                    
+                    ' Appel direct
+                    If Fn_AppelDirectFonction(ligne, CStr(nomFonction)) Then
+                        tableProc(idx, 5) = tableProc(idx, 5) + 1
+                    End If
+
+                    ' Appel préfixé
+                    If Fn_AppelDirectFonctionAvecNomModule(ligne, CStr(nomFonction)) Then
+                        tableProc(idx, 6) = tableProc(idx, 6) + 1
+                    End If
+
+                    ' Appel indirect
+                    If (InStr(LCase(ligne), "application.run") > 0 Or _
+                        InStr(LCase(ligne), "evaluate(") > 0 Or _
+                        InStr(LCase(ligne), "executeexcel4macro") > 0) Then
+
+                        pos1 = InStr(ligne, """")
+                        If pos1 > 0 Then
+                            pos2 = InStr(pos1 + 1, ligne, """")
+                            If pos2 > pos1 Then
+                                valeur = Mid(ligne, pos1 + 1, pos2 - pos1 - 1)
+                                valeur = Replace(valeur, "()", vbNullString)
+                                valeur = Trim(Split(valeur, "!")(UBound(Split(valeur, "!"))))
+                                If LCase(valeur) = LCase(nomFonction) Then
+                                    tableProc(idx, 7) = tableProc(idx, 7) + 1
+                                End If
+                            End If
+                        End If
+                    End If
+NextNom:
+                Next nomFonction
+LigneSuivante:
+            Next i
+        End If
+    Next comp
+
+End Sub
+
+Function Fn_AppelDirectFonction(ligne As String, nomFonction As String) As Boolean
+
+    Dim l As String: l = " " & LCase(Trim(ligne)) & " "
+    Dim f As String: f = LCase(nomFonction)
+
+    Fn_AppelDirectFonction = _
+        (InStr(l, f & "(") > 0 Or _
+         InStr(l, " " & f & " ") > 0 Or _
+         InStr(l, "=" & f & " ") > 0 Or _
+         InStr(l, " " & f & "=") > 0 Or _
+         InStr(l, ".Value = " & f) > 0 Or _
+         InStr(l, "& " & f) > 0 Or _
+         InStr(l, "or " & f) > 0 Or InStr(l, "and " & f) > 0 Or _
+         InStr(l, "(" & f & ")") > 0 Or _
+         InStr(l, "if " & f) > 0 Or InStr(l, "then " & f) > 0)
+         
+End Function
+Function Fn_AppelDirectFonctionAvecNomModule(ligne As String, nomFonction As String) As Boolean
+
+    Dim l As String: l = LCase(ligne)
+    Dim f As String: f = LCase(nomFonction)
+
+    Fn_AppelDirectFonctionAvecNomModule = (l Like "*." & f & "*" Or _
+                       InStr(l, "." & f & "(") > 0)
+                       
+End Function
+
 Sub ExporterResultatsFeuille(tableProc() As Variant, indexMax As Long) '2025-07-07 @ 09:27
 
-    Debug.Print "   4. Exportation des résultats vers une feuille"
+    Debug.Print "   5. Exportation des résultats vers une feuille"
 
     Application.EnableEvents = False
     
     'Utilisation de la feuille DocAuditVBA (permanente)
     Dim ws As Worksheet
     Set ws = ActiveWorkbook.Worksheets("DocAuditVBA")
-    ws.Cells.Clear 'Efface le contenu, mais garde les événements
+    Dim lastUsedRow As Long
+    lastUsedRow = ws.Cells(ws.Rows.count, "A").End(xlUp).Row
+    ws.Range("A1:J" & lastUsedRow).Clear
 
     With ws
         'Légende interactive
@@ -225,15 +359,16 @@ Sub ExporterResultatsFeuille(tableProc() As Variant, indexMax As Long) '2025-07-
         .Cells(1, 1).WrapText = True
         .Rows(1).RowHeight = 30
         'Entêtes
-        .Cells(2, 1).Value = "Nom Procédure"
-        .Cells(2, 2).Value = "Module"
-        .Cells(2, 3).Value = "Type Module"
-        .Cells(2, 4).Value = "Appels directs"
-        .Cells(2, 5).Value = "Appels préfixés"
-        .Cells(2, 6).Value = "Appels indirects"
-        .Cells(2, 7).Value = "Total appels"
-        .Cells(2, 8).Value = "Objet .OnAction"
-        .Cells(2, 9).Value = "Non conformité"
+        .Cells(2, 1).Value = "Nom Procédure / Fonction"
+        .Cells(2, 2).Value = "Type proc"
+        .Cells(2, 3).Value = "Module"
+        .Cells(2, 4).Value = "Type Module"
+        .Cells(2, 5).Value = "Appels directs"
+        .Cells(2, 6).Value = "Appels préfixés"
+        .Cells(2, 7).Value = "Appels indirects"
+        .Cells(2, 8).Value = "Total appels"
+        .Cells(2, 9).Value = "Objet .OnAction"
+        .Cells(2, 10).Value = "Non conformité"
 
         'Contenu
         Dim i As Long
@@ -241,24 +376,25 @@ Sub ExporterResultatsFeuille(tableProc() As Variant, indexMax As Long) '2025-07-
             .Cells(i + 2, 1).Value = tableProc(i, 1)
             .Cells(i + 2, 2).Value = tableProc(i, 2)
             .Cells(i + 2, 3).Value = tableProc(i, 3)
-            .Cells(i + 2, 4).Value = tableProc(i, 4) 'directs
-            .Cells(i + 2, 5).Value = tableProc(i, 5) 'préfixés
-            .Cells(i + 2, 6).Value = tableProc(i, 6) 'indirects
-            .Cells(i + 2, 7).FormulaR1C1 = "=RC[-3]+RC[-2]+RC[-1]"
-            .Cells(i + 2, 8).Value = tableProc(i, 7)
-            If tableProc(i, 8) <> vbNullString Then
-                .Cells(i + 2, 9).Interior.Color = RGB(255, 230, 230) 'Rouge pâle
+            .Cells(i + 2, 4).Value = tableProc(i, 4)
+            .Cells(i + 2, 5).Value = tableProc(i, 5) 'directs
+            .Cells(i + 2, 6).Value = tableProc(i, 6) 'préfixés
+            .Cells(i + 2, 7).Value = tableProc(i, 7) 'indirects
+            .Cells(i + 2, 8).FormulaR1C1 = "=RC[-3]+RC[-2]+RC[-1]"
+            .Cells(i + 2, 9).Value = tableProc(i, 9)
+            If tableProc(i, 9) <> vbNullString Then
+                .Cells(i + 2, 10).Interior.Color = RGB(255, 230, 230) 'Rouge pâle
             End If
-            .Cells(i + 2, 9).Value = tableProc(i, 8)
+            .Cells(i + 2, 10).Value = tableProc(i, 9)
         Next i
 
         'Tri multicritère
         With .Sort
             .SortFields.Clear
             .SortFields.Add key:=ws.Range("A3:A" & indexMax + 1), Order:=xlAscending
-            .SortFields.Add key:=ws.Range("B3:B" & indexMax + 1), Order:=xlAscending
-            .SortFields.Add key:=ws.Range("G3:G" & indexMax + 1), Order:=xlDescending
-            .SetRange ws.Range("A2:I" & indexMax + 2)
+            .SortFields.Add key:=ws.Range("C3:C" & indexMax + 1), Order:=xlAscending
+            .SortFields.Add key:=ws.Range("H3:H" & indexMax + 1), Order:=xlDescending
+            .SetRange ws.Range("A2:J" & indexMax + 2)
             .Header = xlYes
             .Apply
         End With
@@ -268,12 +404,12 @@ Sub ExporterResultatsFeuille(tableProc() As Variant, indexMax As Long) '2025-07-
     
     'Mise en forme de la feuille
     With ws
-        .Columns("A:I").AutoFit
+        .Columns("A:J").AutoFit
         
         .Cells.VerticalAlignment = xlTop
     
         'Entêtes
-        With .Range("A2:I2")
+        With .Range("A2:J2")
             .HorizontalAlignment = xlCenter
             .Interior.Color = RGB(0, 102, 204) 'Bleu vif
             .Font.Color = vbWhite
@@ -283,14 +419,14 @@ Sub ExporterResultatsFeuille(tableProc() As Variant, indexMax As Long) '2025-07-
         End With
     
         'Colonnes spécifiques
-        .Columns("D").HorizontalAlignment = xlCenter
         .Columns("E").HorizontalAlignment = xlCenter
         .Columns("F").HorizontalAlignment = xlCenter
         .Columns("G").HorizontalAlignment = xlCenter
-        .Columns("I").HorizontalAlignment = xlCenter
+        .Columns("H").HorizontalAlignment = xlCenter
+        .Columns("J").HorizontalAlignment = xlCenter
     
         'Filtre sur toutes les colonnes
-        .Range("A2:I2").AutoFilter
+        .Range("A2:J2").AutoFilter
     
         'Volet figé entre ligne 2 et 3
         .Activate
@@ -309,7 +445,7 @@ Sub ExporterResultatsFeuille(tableProc() As Variant, indexMax As Long) '2025-07-
         'Légende des non-conformités à la fin
         Dim lastRow As Long: lastRow = indexMax + 4
         .Cells(lastRow, 1).Value = "Légende des non-conformités :"
-        .Cells(lastRow + 1, 1).Value = "R1 - Usage non autorisé de '_'sauf pour événements (_Click, _Change, etc)"
+        .Cells(lastRow + 1, 1).Value = "R1 - Usage non autorisé de '_' sauf pour événements (_Click, _Change, etc)"
         .Cells(lastRow + 2, 1).Value = "R2 - Le nom contient un caractère accentué"
         .Cells(lastRow + 3, 1).Value = "R3 - Le nom ne commence pas par une majuscule"
         .Cells(lastRow + 4, 1).Value = "R4 - Le nom ne commence pas par un verbe d’action reconnu"
@@ -368,22 +504,34 @@ Sub DiagnostiquerConformite(ws As Worksheet, tableProc() As Variant) '2025-07-07
         
         diagnostics = vbNullString
 
-        'R1 - "_" non autorisé sauf si le nom SE TERMINE par un gestionnaire d’événement
-        If InStr(nom, "_") > 0 And Not EstSuffixeEvenement(nom) Then
+        'R1 - "_" non autorisé sauf si le nom SE TERMINE par un gestionnaire d’événement ou commence par 'zz_'
+        If InStr(nom, "_") > 0 And _
+            Not Fn_EstSuffixeEvenement(nom) And _
+            Not Fn_EstProcedureAutonome(nom) And _
+            Not Fn_EstFonction(nom) Then
             diagnostics = diagnostics & "R1,"
         End If
 
         'R2 - Aucune accent dans les noms de procédures (choix personnel)
-        If ContientAccent(nom) Then diagnostics = diagnostics & "R2,"
+        If Fn_ChaineContientAccents(nom) Then diagnostics = diagnostics & "R2,"
 
         'R3 - Doit commencer pas par une lettre majuscule
-        If Left(nom, 1) <> UCase(Left(nom, 1)) Then diagnostics = diagnostics & "R3,"
-
+        If Left(nom, 1) <> UCase(Left(nom, 1)) And _
+            Not Fn_EstProcedureAutonome(nom) And _
+            Not Fn_EstPrefixeSpecial(nom) Then
+            diagnostics = diagnostics & "R3,"
+        End If
+        
         'R4 - Doit commencer par un verbe d’action
-        If Not ValiderCommenceParUnVerbe(nom) Then diagnostics = diagnostics & "R4,"
-
+        If Not Fn_ValiderCommenceParUnVerbe(nom) And _
+            Not Fn_EstProcedureAutonome(nom) And _
+            Not Fn_EstPrefixeSpecial(nom) And _
+            Not Fn_EstFonction(nom) Then
+            diagnostics = diagnostics & "R4,"
+        End If
+        
         'R5 - Procédure n'est jamais appelé par l'application
-        totalAppels = ws.Cells(i, 4).Value + ws.Cells(i, 5).Value + ws.Cells(i, 6).Value
+        totalAppels = ws.Cells(i, 5).Value + ws.Cells(i, 6).Value + ws.Cells(i, 7).Value
         procName = ws.Cells(i, 1)
         If totalAppels < 1 Then
             estEvenement = False
@@ -393,7 +541,7 @@ Sub DiagnostiquerConformite(ws As Worksheet, tableProc() As Variant) '2025-07-07
                     Exit For
                 End If
             Next suffixe
-            If Not estEvenement Then
+            If Not estEvenement And Not Fn_EstProcedureAutonome(nom) Then
                 diagnostics = diagnostics & "R5,"
             End If
         End If
@@ -404,30 +552,30 @@ Sub DiagnostiquerConformite(ws As Worksheet, tableProc() As Variant) '2025-07-07
         End If
         
         If diagnostics <> vbNullString Then
-            ws.Cells(i, 9).Value = diagnostics
+            ws.Cells(i, 10).Value = diagnostics
         End If
         
     Next i
     
 End Sub
 
-Function ContientAccent(texte As String) As Boolean '2025-07-07 @ 09:27
+Function Fn_ChaineContientAccents(texte As String) As Boolean '2025-07-07 @ 09:27
 
     Dim i As Long, code As Integer
     Const accents As String = "àâéèêîôùûäëïöüçÀÂÉÈÊÎÔÙÛÄËÏÖÜÇ"
     
     For i = 1 To Len(texte)
         If InStr(accents, Mid(texte, i, 1)) > 0 Then
-            ContientAccent = True
+            Fn_ChaineContientAccents = True
             Exit Function
         End If
     Next i
     
-    ContientAccent = False
+    Fn_ChaineContientAccents = False
     
 End Function
 
-Function EstSuffixeEvenement(nom As String) As Boolean '2025-07-07 @ 09:27
+Function Fn_EstSuffixeEvenement(nom As String) As Boolean '2025-07-07 @ 09:27
 
     Dim suffixes As Variant
     suffixes = Array("_Activate", "_AfterUpdate", "_BeforeClose", "_BeforeDoubleClick", _
@@ -443,50 +591,90 @@ Function EstSuffixeEvenement(nom As String) As Boolean '2025-07-07 @ 09:27
 
     'Plus d'un underscore = rejet immédiat
     If nbUnderscore > 1 Then
-        EstSuffixeEvenement = False
+        Fn_EstSuffixeEvenement = False
         Exit Function
     End If
 
     'Vérifie que le suffixe correspond à un événement reconnu
     For Each s In suffixes
         If LCase(Right(nom, Len(s))) = LCase(s) Then
-            EstSuffixeEvenement = True
+            Fn_EstSuffixeEvenement = True
             Exit Function
         End If
     Next s
 
-    EstSuffixeEvenement = False
+    Fn_EstSuffixeEvenement = False
     
 End Function
 
-Function ValiderCommenceParUnVerbe(nom As String) As Boolean '2025-07-07 @ 09:27
+Function Fn_EstProcedureAutonome(nom As String) As Boolean
+
+    If Len(nom) > 3 And Left(nom, 3) = "zz_" Then
+        Fn_EstProcedureAutonome = True
+    Else
+        Fn_EstProcedureAutonome = False
+    End If
+
+End Function
+
+Function Fn_EstFonction(nom As String) As Boolean
+
+    If Len(nom) > 3 And Left(nom, 3) = "Fn_" Then
+        Fn_EstFonction = True
+    Else
+        Fn_EstFonction = False
+    End If
+
+End Function
+
+Function Fn_EstPrefixeSpecial(nom As String) As Boolean
+
+    Fn_EstPrefixeSpecial = False
+    
+    If Len(nom) > 3 Then
+        Select Case Left(nom, 3)
+            Case "chk", "cmb", "img", "lst", "shp", "txt"
+                Fn_EstPrefixeSpecial = True
+        End Select
+        
+        Select Case Left(nom, 4)
+            Case "ctrl"
+                Fn_EstPrefixeSpecial = True
+        End Select
+    End If
+
+End Function
+
+Function Fn_ValiderCommenceParUnVerbe(nom As String) As Boolean '2025-07-07 @ 09:27
 
     Dim verbesAction As Variant
     verbesAction = Array("Acceder", "Activer", "Actualiser", "Additionner", "Afficher", "Ajouter", "Ajuster", _
                          "Aller", "Analyser", "Annuler", "Appeler", "Appliquer", "Arreter", "Assembler", "Batir", _
-                         "Calculer", "Charger", "Cocher", "Compter", "Comparer", "Connecter", "Construire", "Convertir", _
-                         "Copier", "Corriger", "Creer", "Decocher", "Demarrer", "Detecter", "Determiner", "Detruire", "Diagnostiquer", _
-                         "Effacer", "Enregistrer", "Envoyer", "Executer", "Exporter", "Extraire", "Fermer", "Filtrer", "Fixer", _
-                         "Fusionner", "Gerer", "Generer", "Identifier", "Importer", "Imprimer", "Incrementer", "Initialiser", "Inserer", _
-                         "Lire", "Lister", "MettreAJour", "Nettoyer", "Noter", "Obtenir", "Planifier", "Positionner", "Preparer", _
-                         "Rafraichir", "Rechercher", "Redefinir", "Redemmarer", "Reinitialiser", "Relancer", "Remplir", "Restaurer", _
-                         "Retourner", "Saisir", "Sauvegarder", "Scanner", "Selectionner", "Supprimer", "Tester", "Traiter", "Transferer", _
-                         "Trier", "UserForm", "Valider", "Verifier", "Vider", "Visualiser", "Workbook", "Worksheet", _
-                         "btn", "chk", "cmb", "cmd", "ctrl", "shp", "txt", _
-                         "DEB", "ENC", "FAC", "EJ", "GL", "REGUL", "TEC", "TEST")
+                         "Cacher", "Calculer", "Changer", "Charger", "Cocher", "Confirmer", "Comptabiliser", _
+                         "Compter", "Comparer", "Connecter", "Construire", "Convertir", "Copier", "Corriger", "Creer", _
+                         "Decocher", "Demarrer", "Deplacer", "Detecter", "Determiner", "Detruire", "Diagnostiquer", _
+                         "Ecrire", "Effacer", "Enregistrer", "Envoyer", "Evaluer", "Executer", "Exporter", "Extraire", _
+                         "Fermer", "Filtrer", "Finaliser", "Fixer", "Formater", "Fusionner", "Gerer", "Generer", "Identifier", _
+                         "Importer", "Imprimer", "Incrementer", "Initialiser", "Inserer", "Lire", "Lister", "Marquer", "Mettre", _
+                         "Modifier", "Montrer", "Nettoyer", "Noter", "Obtenir", "Organiser", "Ouvrir", "Planifier", "Positionner", _
+                         "Preparer", "Previsualiser", "Rafraichir", "Rechercher", "Redefinir", "Redemmarer", "Redimensionner", _
+                         "Reinitialiser", "Relancer", "Reorganiser", "Remplir", "Restaurer", "Retourner", "Revenir", "Saisir", _
+                         "Sauvegarder", "Scanner", "Selectionner", "Supprimer", "Tester", "Traiter", "Transferer", "Trier", _
+                         "UserForm", "Valider", "Verifier", "Vider", "Visualiser", "Workbook", "Worksheet", "btn", "chk", "cmb", _
+                         "cmd", "ctrl", "shp", "txt", "DEB", "ENC", "FAC", "EJ", "GL", "REGUL", "TEC", "TEST")
     
     Dim v As Variant
     For Each v In verbesAction
         If LCase(Left(nom, Len(v))) = LCase(v) Then
-            ValiderCommenceParUnVerbe = True
+            Fn_ValiderCommenceParUnVerbe = True
             Exit Function
         End If
     Next v
-    ValiderCommenceParUnVerbe = False
+    Fn_ValiderCommenceParUnVerbe = False
     
 End Function
 
-Function AllerVersCode(nomModule As String, Optional nomProcedure As String = vbNullString) As Boolean '2025-07-07 @ 09:27
+Function Fn_AllerVersCode(nomModule As String, Optional nomProcedure As String = vbNullString) As Boolean '2025-07-07 @ 09:27
 
     On Error GoTo Erreur
 
@@ -506,7 +694,7 @@ Function AllerVersCode(nomModule As String, Optional nomProcedure As String = vb
 
     'Si aucune procédure demandée, c'est terminé
     If nomProcedure = vbNullString Then
-        AllerVersCode = True
+        Fn_AllerVersCode = True
         Exit Function
     End If
 
@@ -525,13 +713,13 @@ Function AllerVersCode(nomModule As String, Optional nomProcedure As String = vb
                 .SetSelection startLine, 1, startLine, 1
             End With
 
-            AllerVersCode = True
+            Fn_AllerVersCode = True
             Exit Function
         End If
     Next
 
 Erreur:
-    AllerVersCode = False
+    Fn_AllerVersCode = False
     
 End Function
 
@@ -654,7 +842,7 @@ Sub zz_AuditMiseEnFormeConditionnelle() '2025-08-06 @ 08:52
                         If Len(formule) = 0 Then
                             auditWs.Cells(iRow, 4).Value = "[Formule vide]"
                         Else
-                            auditWs.Cells(iRow, 4).Value = Fn_FormuleSecuriseeTexte(formule)
+                            auditWs.Cells(iRow, 4).Value = Fn_TexteSecurise(formule)
                         End If
                         If Err.Number <> 0 Then
                             auditWs.Cells(iRow, 4).Value = "[Erreur lors de l’écriture]"
@@ -682,7 +870,7 @@ SkipRule:
     
 End Sub
 
-Function Fn_FormuleSecuriseeTexte(formule As String) As String
+Function Fn_TexteSecurise(formule As String) As String
 
     On Error GoTo Erreur
 
@@ -692,11 +880,11 @@ Function Fn_FormuleSecuriseeTexte(formule As String) As String
     formuleBrute = Replace(formule, """", """""")
 
     'Ajout de guillemets autour, pour usage VBA
-    Fn_FormuleSecuriseeTexte = Chr(34) & formuleBrute & Chr(34)
+    Fn_TexteSecurise = Chr(34) & formuleBrute & Chr(34)
     Exit Function
 
 Erreur:
-    Fn_FormuleSecuriseeTexte = "Erreur lors du traitement"
+    Fn_TexteSecurise = "Erreur lors du traitement"
     
 End Function
 
@@ -715,7 +903,7 @@ Sub zz_AuditDataValidationsInCells() '2025-08-06 @ 08:59
     wsOutput.Cells(1, 7).Value = "Operator"
     wsOutput.Cells(1, 8).Value = "TimeStamp"
     
-    Call Make_It_As_Header(wsOutput.Range("A1:H1"), RGB(0, 112, 192))
+    Call CreerEnteteDeFeuille(wsOutput.Range("A1:H1"), RGB(0, 112, 192))
     
     'Create the Array to store results in memory
     Dim arr() As Variant

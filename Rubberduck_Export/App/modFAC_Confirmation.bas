@@ -136,12 +136,12 @@ Sub CocherToutesLesCases(listView As listView) '2025-03-12 @ 12:40
     Next i
     
     If ufConfirmation.txtNbFacturesSélectionnées.Value = 1 Then
-        ufConfirmation.cmdConfirmation.Caption = "Confirmer cette facture"
+        ufConfirmation.shpConfirmation.Caption = "Confirmer cette facture"
     Else
-        ufConfirmation.cmdConfirmation.Caption = "Confirmer les (" & _
+        ufConfirmation.shpConfirmation.Caption = "Confirmer les (" & _
          ufConfirmation.txtNbFacturesSélectionnées.Value & ") factures sélectionnées"
     End If
-    ufConfirmation.cmdConfirmation.Visible = True
+    ufConfirmation.shpConfirmation.Visible = True
     
 End Sub
 
@@ -155,7 +155,7 @@ Sub DecocherToutesLesCases(listView As listView) '2025-03-12 @ 12:40
     
     ufConfirmation.txtTotalFacturesSélectionnées = Format$(0, "###,##0.00 $")
     ufConfirmation.txtNbFacturesSélectionnées = 0
-    ufConfirmation.cmdConfirmation.Visible = False
+    ufConfirmation.shpConfirmation.Visible = False
     
 End Sub
 
@@ -361,50 +361,50 @@ Sub ComptabiliserConfirmationFacture(invoice As String) '2025-08-04 @ 07:19
         
         'Débit Comptes Clients
         If hono + misc1 + misc2 + misc3 + tps + tvq <> 0 Then
-            codeGL = ObtenirNoGlIndicateur("Comptes Clients")
-            descGL = ObtenirDescriptionCompte(codeGL)
+            codeGL = Fn_NoCompteAPartirIndicateurCompte("Comptes Clients")
+            descGL = Fn_DescriptionAPartirNoCompte(codeGL)
             ecr.AjouterLigne codeGL, descGL, hono + misc1 + misc2 + misc3 + tps + tvq, vbNullString
         End If
         
         'Honoraires
         If hono Then
-            codeGL = ObtenirNoGlIndicateur("Revenus de consultation")
-            descGL = ObtenirDescriptionCompte(codeGL)
+            codeGL = Fn_NoCompteAPartirIndicateurCompte("Revenus de consultation")
+            descGL = Fn_DescriptionAPartirNoCompte(codeGL)
             ecr.AjouterLigne codeGL, descGL, -hono, vbNullString
         End If
         
         'Miscellaneous Amount # 1 (misc1)
         If misc1 Then
-            codeGL = ObtenirNoGlIndicateur("Revenus frais de poste")
-            descGL = ObtenirDescriptionCompte(codeGL)
+            codeGL = Fn_NoCompteAPartirIndicateurCompte("Revenus frais de poste")
+            descGL = Fn_DescriptionAPartirNoCompte(codeGL)
             ecr.AjouterLigne codeGL, descGL, -misc1, vbNullString
         End If
         
         'Miscellaneous Amount # 2 (misc2)
         If misc2 Then
-            codeGL = ObtenirNoGlIndicateur("Revenus sous-traitants")
-            descGL = ObtenirDescriptionCompte(codeGL)
+            codeGL = Fn_NoCompteAPartirIndicateurCompte("Revenus sous-traitants")
+            descGL = Fn_DescriptionAPartirNoCompte(codeGL)
             ecr.AjouterLigne codeGL, descGL, -misc2, vbNullString
         End If
         
         'Miscellaneous Amount # 3 (misc3)
         If misc3 Then
-            codeGL = ObtenirNoGlIndicateur("Revenus autres frais")
-            descGL = ObtenirDescriptionCompte(codeGL)
+            codeGL = Fn_NoCompteAPartirIndicateurCompte("Revenus autres frais")
+            descGL = Fn_DescriptionAPartirNoCompte(codeGL)
             ecr.AjouterLigne codeGL, descGL, -misc3, vbNullString
         End If
         
         'TPS à payer
         If tps Then
-            codeGL = ObtenirNoGlIndicateur("TPS Facturée")
-            descGL = ObtenirDescriptionCompte(codeGL)
+            codeGL = Fn_NoCompteAPartirIndicateurCompte("TPS Facturée")
+            descGL = Fn_DescriptionAPartirNoCompte(codeGL)
             ecr.AjouterLigne codeGL, descGL, -tps, vbNullString
         End If
         
         'TVQ à payer
         If tvq Then
-            codeGL = ObtenirNoGlIndicateur("TVQ Facturée")
-            descGL = ObtenirDescriptionCompte(codeGL)
+            codeGL = Fn_NoCompteAPartirIndicateurCompte("TVQ Facturée")
+            descGL = Fn_DescriptionAPartirNoCompte(codeGL)
             ecr.AjouterLigne codeGL, descGL, -tvq, vbNullString
         End If
         

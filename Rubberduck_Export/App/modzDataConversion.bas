@@ -55,7 +55,7 @@ Sub zz_CopierClientsEntreClasseursFermes() '2024-08-03 @ 09:40
     
 End Sub
 
-Sub ImporterDonnéesDeClasseursFermés_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 16:15
+Sub zz_ImporterDonneesDeClasseursFermesTEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 16:15
 
     Stop 'One shot deal !!!
     
@@ -109,7 +109,7 @@ Sub ImporterDonnéesDeClasseursFermés_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 
         'Is this a Valid Client ?
         Dim myInfo() As Variant
         Dim rng As Range: Set rng = wsdBD_Clients.Range("dnrClients_Names_Only")
-        myInfo = Fn_Find_Data_In_A_Range(rng, 2, clientCode, 1)
+        myInfo = Fn_TrouveDataDansUnePlage(rng, 2, clientCode, 1)
         If myInfo(1) = vbNullString Then
             If InStr(errorMesg, client) = 0 Then
                 errorMesg = errorMesg & clientCode & " - " & client & vbNewLine
@@ -120,7 +120,7 @@ Sub ImporterDonnéesDeClasseursFermés_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 
         
         tecID = tecID + 1
         wsDest.Range("A" & rowNum).Value = tecID
-        wsDest.Range("B" & rowNum).Value = ObtenirProfIDAvecInitiales(prof)
+        wsDest.Range("B" & rowNum).Value = Fn_ObtenirProfIDAvecInitiales(prof)
         wsDest.Range("C" & rowNum).Value = prof
         wsDest.Range("D" & rowNum).Value = recSet.Fields(1).Value
         wsDest.Range("E" & rowNum).Value = clientCode
@@ -157,27 +157,29 @@ Sub ImporterDonnéesDeClasseursFermés_TEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 
 End Sub
 
 'Only valid for this conversion process
-Function ObtenirProfIDAvecInitiales(p As String) As Long
+Function Fn_ObtenirProfIDAvecInitiales(p As String) As Long
 
     Stop 'One shot deal
     
     Select Case p
         Case "GC"
-            ObtenirProfIDAvecInitiales = 1
+            Fn_ObtenirProfIDAvecInitiales = 1
         Case "VG"
-            ObtenirProfIDAvecInitiales = 2
+            Fn_ObtenirProfIDAvecInitiales = 2
         Case "AR"
-            ObtenirProfIDAvecInitiales = 3
+            Fn_ObtenirProfIDAvecInitiales = 3
         Case "ML"
-            ObtenirProfIDAvecInitiales = 4
+            Fn_ObtenirProfIDAvecInitiales = 4
+        Case "OB"
+            Fn_ObtenirProfIDAvecInitiales = 5
         Case Else
-            ObtenirProfIDAvecInitiales = 0
+            Fn_ObtenirProfIDAvecInitiales = 0
     End Select
 
 End Function
 
 'Importation des fournisseurs à partir de ... \DataConversion\Fournisseurs.xlsx
-Sub ImporterDonnéesDeClasseursFermésFournisseurs() '2024-08-03 @ 18:10
+Sub zz_ImporterDonneesDeClasseursFermesFournisseurs() '2024-08-03 @ 18:10
 
     Stop 'One shot deal
     
@@ -230,7 +232,7 @@ Sub ImporterDonnéesDeClasseursFermésFournisseurs() '2024-08-03 @ 18:10
     
 End Sub
 
-Sub ImporterDonnéesDeClasseursFermés_GL_BV() '2024-08-03 @ 18:20
+Sub zz_ImporterDonneesDeClasseursFermesGL() '2024-08-03 @ 18:20
 
     Stop 'One shot deal
     
@@ -309,7 +311,7 @@ Sub ImporterDonnéesDeClasseursFermés_GL_BV() '2024-08-03 @ 18:20
     
 End Sub
 
-Sub ImporterDonnéesDeClasseursFermés_CAR() '2024-08-04 @ 07:31
+Sub zz_ImporterDonneesDeClasseursFermes_CAR() '2024-08-04 @ 07:31
 
     Stop 'One shot deal
     
@@ -383,7 +385,7 @@ Sub ImporterDonnéesDeClasseursFermés_CAR() '2024-08-04 @ 07:31
         'Is this a Valid Client ?
         Dim myInfo() As Variant
         Dim rng As Range: Set rng = wsdBD_Clients.Range("dnrClients_Names_Only")
-        myInfo = Fn_Find_Data_In_A_Range(rng, 1, client, 2)
+        myInfo = Fn_TrouveDataDansUnePlage(rng, 1, client, 2)
         If myInfo(1) = vbNullString Then
             If InStr(errorMesg, client) = 0 Then
                 errorMesg = errorMesg & clientCode & " - " & client & vbNewLine
@@ -554,7 +556,7 @@ Sub zz_AjusterNomClientDansCAR() '2024-08-07 @ 17:11
 
 End Sub
 
-Sub CheckClientName() '2024-08-10 @ 10:13
+Sub zz_CheckClientName() '2024-08-10 @ 10:13
 
     'Définir les chemins d'accès des fichiers (source & destination)
     Dim sourceFilePath As String
@@ -624,7 +626,7 @@ Sub CorrigerNomClientDansTEC()  '2025-03-04 @ 05:48
     wsOutput.Range("D1").Value = "TECID"
     wsOutput.Range("E1").Value = "TEC_Prof"
     wsOutput.Range("F1").Value = "TEC_Date"
-    Call Make_It_As_Header(wsOutput.Range("A1:F1"), RGB(0, 112, 192))
+    Call modAppli_Utils.CreerEnteteDeFeuille(wsOutput.Range("A1:F1"), RGB(0, 112, 192))
     
     'Build the dictionnary (Code, Nom du client) from Client's Master File
     Dim dictClients As Dictionary
@@ -736,7 +738,7 @@ Public Sub CorrigerNomClientDansCAR()  '2024-08-31 @ 06:52
     wsOutput.Range("C1").Value = "Nom de client (Facture)"
     wsOutput.Range("D1").Value = "Code_de_Client"
     wsOutput.Range("E1").Value = "Changé pour"
-    Call Make_It_As_Header(wsOutput.Range("A1:E1"), RGB(0, 112, 192))
+    Call CreerEnteteDeFeuille(wsOutput.Range("A1:E1"), RGB(0, 112, 192))
     Dim rowOutput As Long
     rowOutput = 2 'Skip the header
     
@@ -812,7 +814,7 @@ Public Sub CorrigerNomClientDansCAR()  '2024-08-31 @ 06:52
 '
 End Sub
 
-Sub ImporterDonnéesManquantes_CAR() '2024-08-24 @ 15:58
+Sub zz_ImporterDonneesManquantes_CAR() '2024-08-24 @ 15:58
 
     Application.ScreenUpdating = False
     
@@ -876,7 +878,7 @@ Sub ImporterDonnéesManquantes_CAR() '2024-08-24 @ 15:58
            
 End Sub
 
-Sub FusionnerDonnéesManquantes_CAR() '2024-08-29 @ 07:29
+Sub zz_FusionnerDonneesManquantes_CAR() '2024-08-29 @ 07:29
 
     Application.ScreenUpdating = False
     

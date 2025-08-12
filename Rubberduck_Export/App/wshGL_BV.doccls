@@ -133,7 +133,7 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
         Application.EnableEvents = False
         
        'Try to convert the input to a complete valid date
-        fullDate = Fn_Complete_Date(Target.Value, 999, 365)
+        fullDate = Fn_CompleteLaDate(Target.Value, 999, 365)
        
         'Update the cell with the full date, if valid
         If fullDate <> "Invalid Date" Then
@@ -143,7 +143,7 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.GoTo Range(Target.Address)
+            Application.Goto Range(Target.Address)
         End If
         
         Range("B8").Value = DateSerial(year(Range("J1").Value), month(Range("J1").Value), 1)
@@ -167,9 +167,9 @@ Private Sub Worksheet_Change(ByVal Target As Range) 'Worksheet wshBV - 2023-12-3
                 Case "Mois"
                     dateMin = DateSerial(year(dateMax), month(dateMax), 1)
                 Case "Trimestre"
-                    dateMin = PremierJourTrimestreFiscal(dateMax)
+                    dateMin = Fn_PremierJourTrimestreFiscal(dateMax)
                 Case "Année Financière"
-                    dateMin = PremierJourAnneeFinanciere(dateMax)
+                    dateMin = Fn_PremierJourAnneeFinanciere(dateMax)
                 Case "Toutes les dates"
                     dateMin = DateSerial(2024, 7, 31)
             End Select

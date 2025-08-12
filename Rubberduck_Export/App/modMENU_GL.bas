@@ -2,7 +2,23 @@ Attribute VB_Name = "modMENU_GL"
 Option Explicit
 
 'Option # 1
-Sub DEB_Saisie_Click()
+Sub shpAccederSaisieENC_Click()
+
+    Application.ScreenUpdating = False
+    
+    gFromMenu = True '2024-09-03 @ 06:20
+    
+    With wshENC_Saisie
+        .Visible = xlSheetVisible
+        .Select
+    End With
+    
+    Application.ScreenUpdating = True
+    
+End Sub
+
+'Option # 2
+Sub shpAccederSaisieDEB_Click()
     
     Application.ScreenUpdating = False
     
@@ -21,24 +37,8 @@ Sub DEB_Saisie_Click()
 
 End Sub
 
-'Option # 2
-Sub Encaissement_Click()
-
-    Application.ScreenUpdating = False
-    
-    gFromMenu = True '2024-09-03 @ 06:20
-    
-    With wshENC_Saisie
-        .Visible = xlSheetVisible
-        .Select
-    End With
-    
-    Application.ScreenUpdating = True
-    
-End Sub
-
 'Option # 3
-Sub EJ_Saisie_Click()
+Sub shpAccederSaisieEJ_Click()
     
     Application.ScreenUpdating = False
     
@@ -57,7 +57,7 @@ Sub EJ_Saisie_Click()
 End Sub
 
 'Option # 4
-Sub BV_Click()
+Sub shpAccederBV_Click()
     
     Application.ScreenUpdating = False
     
@@ -71,14 +71,14 @@ Sub BV_Click()
 End Sub
 
 'Option # 5
-Sub Rapport_GL_Click()
+Sub shpAccederRapportTransGL_Click()
 
     ufGL_Rapport.show 'vbModal
     
 End Sub
 
 'Option # 6
-Sub EF_Click()
+Sub shpAccederEF_Click()
 
     Application.ScreenUpdating = False
 
@@ -92,7 +92,7 @@ Sub EF_Click()
 End Sub
 
 'Option # 7
-Sub Stats_CA_Click()
+Sub shpAccederStatsCA_Click()
 
     Application.ScreenUpdating = False
 

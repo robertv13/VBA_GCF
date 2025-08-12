@@ -54,7 +54,7 @@ Sub TrierEtAjouterSousTotauxClient() '2024-08-24 @ 08:10
     Application.EnableEvents = False
     
     'Appel à AdvancedFilter # 2 dans TEC_Local
-    Call Get_TEC_For_Client_AF(vbNullString, CLng(CDate(wsDest.Range("H3").Value)), "VRAI", "FAUX", "FAUX")
+    Call ObtenirTECduClientAvecAF(vbNullString, CLng(CDate(wsDest.Range("H3").Value)), "VRAI", "FAUX", "FAUX")
     
     Dim lastUsedResult As Long
     lastUsedResult = wsdTEC_Local.Cells(wsdTEC_Local.Rows.count, "AQ").End(xlUp).Row
@@ -341,11 +341,11 @@ Sub ConstruireSommaireHeures(rowSelected As Long)
     Application.EnableEvents = False
     
     ws.Range("O" & rowSelected).Value = 0 'Reset the total WIP value
-    For Each prof In Fn_Sort_Dictionary_By_Value(dictHours, True) ' Sort dictionary by hours in descending order
+    For Each prof In Fn_TriDictionnaireParValeurs(dictHours, True) ' Sort dictionary by hours in descending order
         ActiveSheet.Cells(rowSelected, 10).Value = prof
         Dim strProf As String
         strProf = prof
-        profID = Fn_GetID_From_Initials(strProf)
+        profID = Fn_ProfIDAPartirDesInitiales(strProf)
         ActiveSheet.Cells(rowSelected, "K").HorizontalAlignment = xlRight
         ActiveSheet.Cells(rowSelected, "K").NumberFormat = "#,##0.00"
         ActiveSheet.Cells(rowSelected, "K").Value = dictHours(prof)
@@ -851,7 +851,7 @@ Sub EffacerCheckBox()
     
 End Sub
 
-Sub Groups_SubTotals_Collapse_A_Client(r As Long)
+Sub OrganiserEtFermerSousTotauxClient(r As Long)
     
     'Set the worksheet you want to work on
     Dim ws As Worksheet: Set ws = wshTEC_Analyse
@@ -923,15 +923,15 @@ Sub NettoyerProjetsDetruits(loDetails As ListObject, loEntete As ListObject) '20
 
 End Sub
 
-Sub shpRetourMenuTEC_Click()
+Sub shpRetournerMenuTEC_Click()
 
-    Call RetourMenuTEC
+    Call RetournerMenuTEC
 
 End Sub
 
-Sub RetourMenuTEC()
+Sub RetournerMenuTEC()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:RetourMenuTEC", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:RetournerMenuTEC", vbNullString, 0)
     
     Dim loDetails As ListObject
     Set loDetails = wsdFAC_Projets_Details.ListObjects("l_tbl_FAC_Projets_Details")
@@ -953,7 +953,7 @@ Sub RetourMenuTEC()
     wshMenuTEC.Activate
     wshMenuTEC.Range("A1").Select
     
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:RetourMenuTEC", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:RetournerMenuTEC", vbNullString, startTime)
 
 End Sub
 

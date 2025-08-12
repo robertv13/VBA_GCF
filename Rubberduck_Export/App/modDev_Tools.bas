@@ -3,7 +3,7 @@ Attribute VB_Name = "modDev_Tools"
 
 Option Explicit
 
-Sub Get_Range_From_Dynamic_Named_Range(dynamicRangeName As String, ByRef rng As Range)
+Sub ObtenirPlageAPartirDynamicNamedRange(dynamicRangeName As String, ByRef rng As Range)
     
     On Error Resume Next
     'Récupérer la formule associée au nom
@@ -82,7 +82,7 @@ Sub zz_Comparer2ClasseursFormatColonnes() '2024-08-19 @ 16:24
     wsDiff.Range("C1").Value = "Colonne"
     wsDiff.Range("D1").Value = "Valeur originale"
     wsDiff.Range("E1").Value = "Nouvelle valeur"
-    Call Make_It_As_Header(wsDiff.Range("A1:E1"), RGB(0, 112, 192))
+    Call CreerEnteteDeFeuille(wsDiff.Range("A1:E1"), RGB(0, 112, 192))
 
     'Set your workbooks and worksheets here
     Dim wb1 As Workbook
@@ -229,7 +229,7 @@ Sub zz_Comparer2ClasseursNiveauCellules() '2024-08-20 @ 05:14
     wsDiff.Range("G1").Value = "Colonne"
     wsDiff.Range("H1").Value = "Prod_Value"
     wsDiff.Range("I1").Value = "Dev_Value"
-    Call Make_It_As_Header(wsDiff.Range("A1:I1"), RGB(0, 112, 192))
+    Call CreerEnteteDeFeuille(wsDiff.Range("A1:I1"), RGB(0, 112, 192))
 
     'Set your workbooks and worksheets here
     Dim wb1 As Workbook
@@ -364,7 +364,7 @@ Sub zz_Comparer2ClasseursNiveauCellules() '2024-08-20 @ 05:14
     
 End Sub
 
-Sub Fix_Date_Format()
+Sub zz_CorrigerFormatErroneDate()
     
     'Initialisation de la boîte de dialogue FileDialog pour choisir le fichier Excel
     Dim fd As fileDialog
@@ -573,8 +573,8 @@ Sub zz_RechercherCodeVBAPourGestionMemoire()
     Dim i As Long
     For i = 2 To lastUsedRow
         If ws.Cells(i, 5).Value = vbNullString Then
-            Call SortDelimitedString(added, "|")
-            Call SortDelimitedString(cleared, "|")
+            Call TrierChaineAvecDelimiteurs(added, "|")
+            Call TrierChaineAvecDelimiteurs(cleared, "|")
             If added <> cleared Then
                 wsOutput.Cells(r, 1).Value = moduleName
                 wsOutput.Cells(r, 2).Value = procName
@@ -645,53 +645,6 @@ Next_For:
     'Libérer la mémoire
     Set ws = Nothing
     Set wsOutput = Nothing
-    
-End Sub
-
-Sub Get_UsedRange_In_Active_Workbook()
-
-    Dim output As String
-    
-    'Feuille pour les résultats
-    Dim feuilleNom As String
-    feuilleNom = "X_Cellules_Utilisées"
-    Call modDev_Utils.EffacerEtRecreerWorksheet(feuilleNom)
-    Dim wsOutput As Worksheet
-    Set wsOutput = ThisWorkbook.Sheets(feuilleNom)
-    Dim r As Long: r = 1
-    wsOutput.Cells(r, 1).Value = "Feuille"
-    wsOutput.Cells(r, 2).Value = "Plage utilisée"
-    wsOutput.Cells(r, 3).Value = "Lignes utilisée"
-    wsOutput.Cells(r, 4).Value = "Colonnes utilisée"
-    wsOutput.Cells(r, 5).Value = "Nb. Cellules"
-    r = r + 1
-    
-    'Parcourir chaque feuille du classeur
-    Dim ws As Worksheet
-    Dim cellCount As Long
-    For Each ws In ThisWorkbook.Worksheets
-        'Vérifier si UsedRange n'est pas vide
-        On Error Resume Next
-        Dim usedRange As Range
-        Set usedRange = ws.usedRange
-        On Error GoTo 0
-        
-        If Not usedRange Is Nothing Then
-            ' Ajouter les informations à la sortie
-            wsOutput.Cells(r, 1).Value = ws.Name
-            wsOutput.Cells(r, 2).Value = usedRange.Address
-            wsOutput.Cells(r, 3).Value = usedRange.Rows.count
-            wsOutput.Cells(r, 4).Value = usedRange.Columns.count
-            wsOutput.Cells(r, 5).Value = usedRange.Cells.count
-        Else
-            ' Si aucune cellule utilisée
-            wsOutput.Cells(r, 1).Value = ws.Name
-            wsOutput.Cells(r, 2).Value = "Aucune"
-        End If
-        r = r + 1
-    Next ws
-    
-    MsgBox "Le traitement est complété. Voir la feuille '" & feuilleNom & "'", vbInformation
     
 End Sub
 
@@ -950,7 +903,7 @@ Sub VerifierControlesAssociesToutesFeuilles()
                 End If
                 
                 ' Vérifier si la macro existe
-                found = VerifierMacroExiste(macroName)
+                found = Fn_VerifierMacroExiste(macroName)
                 
                 ' Résultat de la vérification
                 r = r + 1
@@ -973,7 +926,7 @@ Sub VerifierControlesAssociesToutesFeuilles()
                 macroName = oleObj.Name & "_Click"
                 
                 ' Vérifier si la macro existe
-                found = VerifierMacroExiste(macroName, ws.CodeName)
+                found = Fn_VerifierMacroExiste(macroName, ws.CodeName)
                 
                 ' Résultat de la vérification
                 r = r + 1
@@ -996,10 +949,10 @@ Sub VerifierControlesAssociesToutesFeuilles()
     
 End Sub
 
-Function VerifierMacroExiste(macroName As String, Optional moduleName As String = vbNullString) As Boolean
+Function Fn_VerifierMacroExiste(macroName As String, Optional moduleName As String = vbNullString) As Boolean
 
     'Par defaut...
-    VerifierMacroExiste = False
+    Fn_VerifierMacroExiste = False
     
     'Si un module spécifique est fourni, vérifier uniquement dans ce module
     Dim vbComp As Object
@@ -1014,7 +967,7 @@ Function VerifierMacroExiste(macroName As String, Optional moduleName As String 
             Set codeModule = vbComp.codeModule
             For ligne = 1 To codeModule.CountOfLines
                 If codeModule.ProcOfLine(ligne, vbext_pk_Proc) = macroName Then
-                    VerifierMacroExiste = True
+                    Fn_VerifierMacroExiste = True
                     Exit Function
                 End If
             Next ligne
@@ -1027,7 +980,7 @@ Function VerifierMacroExiste(macroName As String, Optional moduleName As String 
         Set codeModule = vbComp.codeModule
         For ligne = 1 To codeModule.CountOfLines
             If codeModule.ProcOfLine(ligne, vbext_pk_Proc) = macroName Then
-                VerifierMacroExiste = True
+                Fn_VerifierMacroExiste = True
                 Exit Function
             End If
         Next ligne
@@ -1035,7 +988,7 @@ Function VerifierMacroExiste(macroName As String, Optional moduleName As String 
     
 End Function
 
-Sub main() '2024-12-25 @ 15:27
+Sub zz_CreerFileLayouts() '2024-12-25 @ 15:27
 
     'Feuille pour la sortie
     Dim outputName As String
@@ -1054,29 +1007,29 @@ Sub main() '2024-12-25 @ 15:27
     
     Application.ScreenUpdating = False
     
-    Call ListeEnumsGenerique("BD_Clients", 1, outputArr, outputRow)
-    Call ListeEnumsGenerique("BD_Fournisseurs", 1, outputArr, outputRow)
+    Call ListerEnumsGenerique("BD_Clients", 1, outputArr, outputRow)
+    Call ListerEnumsGenerique("BD_Fournisseurs", 1, outputArr, outputRow)
     
-    Call ListeEnumsGenerique("CC_Regularisations", 1, outputArr, outputRow)
+    Call ListerEnumsGenerique("CC_Regularisations", 1, outputArr, outputRow)
     
-    Call ListeEnumsGenerique("DEB_Recurrent", 1, outputArr, outputRow)
-    Call ListeEnumsGenerique("DEB_Trans", 1, outputArr, outputRow)
+    Call ListerEnumsGenerique("DEB_Recurrent", 1, outputArr, outputRow)
+    Call ListerEnumsGenerique("DEB_Trans", 1, outputArr, outputRow)
     
-    Call ListeEnumsGenerique("ENC_Details", 1, outputArr, outputRow)
-    Call ListeEnumsGenerique("ENC_Entete", 1, outputArr, outputRow)
+    Call ListerEnumsGenerique("ENC_Details", 1, outputArr, outputRow)
+    Call ListerEnumsGenerique("ENC_Entete", 1, outputArr, outputRow)
     
-    Call ListeEnumsGenerique("FAC_Comptes_Clients", 2, outputArr, outputRow)
-    Call ListeEnumsGenerique("FAC_Details", 2, outputArr, outputRow)
-    Call ListeEnumsGenerique("FAC_Entete", 2, outputArr, outputRow)
-    Call ListeEnumsGenerique("FAC_Projets_Details", 1, outputArr, outputRow)
-    Call ListeEnumsGenerique("FAC_Projets_Entete", 1, outputArr, outputRow)
-    Call ListeEnumsGenerique("FAC_Sommaire_Taux", 1, outputArr, outputRow)
+    Call ListerEnumsGenerique("FAC_Comptes_Clients", 2, outputArr, outputRow)
+    Call ListerEnumsGenerique("FAC_Details", 2, outputArr, outputRow)
+    Call ListerEnumsGenerique("FAC_Entete", 2, outputArr, outputRow)
+    Call ListerEnumsGenerique("FAC_Projets_Details", 1, outputArr, outputRow)
+    Call ListerEnumsGenerique("FAC_Projets_Entete", 1, outputArr, outputRow)
+    Call ListerEnumsGenerique("FAC_Sommaire_Taux", 1, outputArr, outputRow)
     
-    Call ListeEnumsGenerique("GL_EJ_Recurrente", 1, outputArr, outputRow)
-    Call ListeEnumsGenerique("GL_Trans", 1, outputArr, outputRow)
+    Call ListerEnumsGenerique("GL_EJ_Recurrente", 1, outputArr, outputRow)
+    Call ListerEnumsGenerique("GL_Trans", 1, outputArr, outputRow)
     
-    Call ListeEnumsGenerique("TEC_Local", 2, outputArr, outputRow)
-    Call ListeEnumsGenerique("TEC_TDB_Data", 1, outputArr, outputRow)
+    Call ListerEnumsGenerique("TEC_Local", 2, outputArr, outputRow)
+    Call ListerEnumsGenerique("TEC_TDB_Data", 1, outputArr, outputRow)
     
     Application.ScreenUpdating = True
     
@@ -1088,7 +1041,7 @@ Sub main() '2024-12-25 @ 15:27
     
 End Sub
 
-Sub ListeEnumsGenerique(ByRef tableName As String, ByVal HeaderRow As Integer, ByRef arrArg() As String, ByRef outputRow As Long)
+Sub ListerEnumsGenerique(ByRef tableName As String, ByVal HeaderRow As Integer, ByRef arrArg() As String, ByRef outputRow As Long)
 
     'Obtenir la feuille de calcul
     Dim ws As Worksheet
@@ -1115,13 +1068,13 @@ Sub ListeEnumsGenerique(ByRef tableName As String, ByVal HeaderRow As Integer, B
     
     'Extraire la définition des Enum de la table à partir du code
     Dim arr() As Variant
-    Call ExtractEnumDefinition(tableName, arr)
+    Call ExtraireEnumDefinition(tableName, arr)
     
     'Boucle sur les colonnes
     Dim col As Long
     For col = LBound(arr, 1) To UBound(arr, 1)
         arrArg(outputRow, 1) = arr(col, 1)
-        arrArg(outputRow, 2) = NumeroEnLettre(col)
+        arrArg(outputRow, 2) = Fn_ChiffreEnLettres(col)
         arrArg(outputRow, 3) = arr(col, 2)
         'Nom de la colonne dans la table
         arrArg(outputRow, 4) = ws.Cells(HeaderRow, col).Value
@@ -1147,7 +1100,7 @@ Sub ListeEnumsGenerique(ByRef tableName As String, ByVal HeaderRow As Integer, B
     
 End Sub
 
-Sub ExtractEnumDefinition(tableName As String, ByRef arr() As Variant)
+Sub ExtraireEnumDefinition(tableName As String, ByRef arr() As Variant)
 
     Dim LineNum As Long
     Dim TotalLines As Long
@@ -1204,7 +1157,7 @@ Sub ExtractEnumDefinition(tableName As String, ByRef arr() As Variant)
     
 End Sub
 
-Function CouleurEnRGBTableau(ByVal couleur As Long) As Variant
+Function Fn_CouleurEnRGBTableau(ByVal couleur As Long) As Variant
 
     Dim rgbArray(1 To 3) As Integer
     
@@ -1214,11 +1167,11 @@ Function CouleurEnRGBTableau(ByVal couleur As Long) As Variant
     rgbArray(3) = (couleur \ 65536) Mod 256 ' Bleu
     
     'Retourner le tableau
-    CouleurEnRGBTableau = rgbArray
+    Fn_CouleurEnRGBTableau = rgbArray
     
 End Function
 
-Function Convertir_Couleur_RGB_Hex(ByVal couleur As Long) As String
+Function Fn_ConvertirCouleurRGB2Hex(ByVal couleur As Long) As String
 
     Dim rouge As Integer, vert As Integer, bleu As Integer
     
@@ -1228,7 +1181,7 @@ Function Convertir_Couleur_RGB_Hex(ByVal couleur As Long) As String
     bleu = (couleur \ 65536) Mod 256
     
     'Construire la valeur HEX (en format #RRGGBB)
-    Convertir_Couleur_RGB_Hex = "#" & Right$("00" & Hex$(rouge), 2) & _
+    Fn_ConvertirCouleurRGB2Hex = "#" & Right$("00" & Hex$(rouge), 2) & _
                                         Right$("00" & Hex$(vert), 2) & _
                                         Right$("00" & Hex$(bleu), 2)
     
@@ -1244,7 +1197,7 @@ Sub zz_AfficheCouleurEnRGB()
     
     couleur = gCOULEUR_BASE_FACTURATION
     
-    rgbArray = CouleurEnRGBTableau(couleur)
+    rgbArray = Fn_CouleurEnRGBTableau(couleur)
     
     'Afficher les composantes RGB
     MsgBox "Rouge: " & rgbArray(1) & ", Vert: " & rgbArray(2) & ", Bleu: " & rgbArray(3)
@@ -1260,14 +1213,14 @@ Sub zz_ConvertirCouleurEnHEX()
     couleur = 11854022
     
     'Convertir en HEX
-    couleurHex = Convertir_Couleur_RGB_Hex(couleur)
+    couleurHex = Fn_ConvertirCouleurRGB2Hex(couleur)
     
     'Afficher le résultat
     MsgBox "La couleur HEX de la couleur " & couleur & " est " & couleurHex
     
 End Sub
 
-Function ConvertiCouleurEnOLE(ByVal couleur As Long) As String
+Function Fn_ConvertiCouleurEnOLE(ByVal couleur As Long) As String
 
     Dim rouge As Integer, vert As Integer, bleu As Integer
     
@@ -1277,7 +1230,7 @@ Function ConvertiCouleurEnOLE(ByVal couleur As Long) As String
     bleu = (couleur \ 65536) Mod 256
     
     ' Construire le code OLE en inversant les composantes RGB en BGR
-    ConvertiCouleurEnOLE = "&H00" & Right$("00" & Hex$(bleu), 2) & _
+    Fn_ConvertiCouleurEnOLE = "&H00" & Right$("00" & Hex$(bleu), 2) & _
                                         Right$("00" & Hex$(vert), 2) & _
                                         Right$("00" & Hex$(rouge), 2) & "&"
                                         
@@ -1292,65 +1245,25 @@ Sub zz_ConvertirCouleurOLE()
     couleur = gCOULEUR_BASE_FACTURATION
     
     'Convertir en format OLE
-    couleurOLE = ConvertiCouleurEnOLE(couleur)
+    couleurOLE = Fn_ConvertiCouleurEnOLE(couleur)
     
     'Afficher la couleur en format OLE
     MsgBox "La couleur OLE est : " & couleurOLE
     
 End Sub
 
-Sub ValideNomProcedureCallLog()
-
-    Dim ws As Worksheet
-'    Set ws = Feuil5
-    
-    Dim lastUsedRow As Long
-    lastUsedRow = 874
-    
-    Dim module As String, procedure As String, code As String
-    Dim lineNo As Long
-    Dim posPO As Integer, posPF As Integer, posCL As Integer
-    Dim i As Integer
-    For i = 2 To lastUsedRow
-        module = ws.Range("C" & i).Value
-        If module <> vbNullString Then
-            lineNo = ws.Range("D" & i).Value
-            If lineNo = 325 Then Stop
-            procedure = ws.Range("E" & i).Value
-            procedure = Replace(procedure, "Sub ", vbNullString)
-            procedure = Replace(procedure, "Function ", vbNullString)
-            posPO = InStr(procedure, "(")
-            posPF = InStr(procedure, ")")
-            'Paramètres au complet sur la ligne -OU- Début seulement sur cette ligne
-            If posPF > posPO Or (posPF = 0 And posPO <> 0) Then
-                procedure = Trim$(Left$(procedure, posPO - 1))
-                If InStr(procedure, "(") <> 0 Then Stop
-            End If
-            code = ws.Range("F" & i).Value
-            posCL = InStr(code, "call modDev_utils.EnregistrerLogApplication")
-            code = Mid$(code, posCL + 17)
-            If InStr(code, module & ":" & procedure) = 0 Then
-                Debug.Print i, module & ":" & procedure, code
-            End If
-        End If
-    Next i
-    
-    MsgBox "Traitement terminé"
-    
-End Sub
-
-Function NumeroEnLettre(ByVal num As Long) As String
+Function Fn_ChiffreEnLettres(ByVal num As Long) As String
 
     'Assurer que le nombre soit positif et supérieur à zéro
     If num <= 0 Then
-        NumeroEnLettre = vbNullString
+        Fn_ChiffreEnLettres = vbNullString
         Exit Function
     End If
     
     'Construire la chaîne de caractères à partir du numéro
     Do
         num = num - 1
-        NumeroEnLettre = Chr$(65 + (num Mod 26)) & NumeroEnLettre
+        Fn_ChiffreEnLettres = Chr$(65 + (num Mod 26)) & Fn_ChiffreEnLettres
         num = num \ 26
     Loop While num > 0
     
@@ -1507,16 +1420,6 @@ Sub ExporterCodeVBA() '2025-03-11 @ 06:47
         
 End Sub
 
-Function VérifierAccesVBAAutorise() As Boolean
-
-    Dim test As Object
-    On Error Resume Next
-    Set test = ThisWorkbook.VBProject.VBComponents
-    VérifierAccesVBAAutorise = (Err.Number = 0)
-    On Error GoTo 0
-    
-End Function
-
 Sub zz_ComparerClasseursNiveauCellules()
 
     Dim wbOld As Workbook, wbNew As Workbook, wbReport As Workbook
@@ -1624,27 +1527,6 @@ Sub zz_ComparerClasseursNiveauCellules()
     
 End Sub
 
-'Fonction pour estimer la taille originale d'une image
-Sub LireTailleOriginaleImage(img As Shape, ByRef largeurOrig As Double, ByRef hauteurOrig As Double)
-
-    Dim ws As Worksheet
-    Dim copie As Shape
-
-    Set ws = img.Parent
-    img.Copy
-    ws.Paste
-    Set copie = ws.Shapes(ws.Shapes.count) 'la dernière collée
-
-    With copie
-        .ScaleWidth 1, msoTrue, msoScaleFromTopLeft
-        .ScaleHeight 1, msoTrue, msoScaleFromTopLeft
-        largeurOrig = .Width
-        hauteurOrig = .Height
-        .Delete
-    End With
-    
-End Sub
-
 '@Description ("Compter le nombre de lignes dans le projet actif")
 Sub CompterLignesCode() '2025-06-18 @ 13:55
 Attribute CompterLignesCode.VB_Description = "Compter le nombre de lignes dans le projet actif"
@@ -1690,7 +1572,7 @@ Sub zz_ObtenirListeAppelSubsSansCall() '2025-08-05 @ 13:44
     Dim codeMod As Object
     Dim dictSubs As Object
     
-    Set dictSubs = BatirDictionnaireProcedures()
+    Set dictSubs = Fn_BatirDictionnaireProcedures()
 
     Debug.Print "Liste des appels aux Subs SANS 'Call'"
 
@@ -1720,7 +1602,7 @@ Sub zz_ObtenirListeAppelSubsSansCall() '2025-08-05 @ 13:44
                     If InStr(" " & ligne & " ", " " & nomProc & " ") > 0 And _
                         InStr(LCase(ligne), "call " & LCase(nomProc)) = 0 And _
                         InStr(LCase(ligne), "set " & LCase(nomProc)) = 0 Then
-                        Debug.Print Pad(nomModule, 25) & " # " & Format(i + 1, "###0") & "   " & ligne
+                        Debug.Print Fn_PadDroite(nomModule, 25) & " # " & Format(i + 1, "###0") & "   " & ligne
                         cas = cas + 1
                     End If
                     
@@ -1745,7 +1627,7 @@ LigneSuivante:
     
 End Sub
 
-Function BatirDictionnaireProcedures() As Object '2025-07-03 @ 17:53
+Function Fn_BatirDictionnaireProcedures() As Object '2025-07-03 @ 17:53
 
     Dim comp As Object, codeMod As Object, dict As Object
     Dim ligne As String, nomSub As String
@@ -1771,17 +1653,17 @@ NextLigne:
         Next i
     Next comp
 
-    Set BatirDictionnaireProcedures = dict
+    Set Fn_BatirDictionnaireProcedures = dict
     
 End Function
 
-Function Pad(text As String, longueur As Integer) As String '2025-07-03 @ 17:54
+Function Fn_PadDroite(text As String, longueur As Integer) As String '2025-07-03 @ 17:54
 
-    Pad = Left(text & Space(longueur), longueur)
+    Fn_PadDroite = Left(text & Space(longueur), longueur)
     
 End Function
 
-Sub InventaireProceduresETFonctions() '2025-07-15 @ 22:56
+Sub zz_InventaireProceduresEtFonctions() '2025-08-11 @ 10:54
 
     Dim comp As VBIDE.VBComponent
     Dim i As Long, ligne As String
@@ -1830,9 +1712,9 @@ Sub InventaireProceduresETFonctions() '2025-07-15 @ 22:56
             ' Déclaration
             If regexDecl.test(ligne) Then
                 r = r + 1
-                Dim nomProc As String: nomProc = ExtraireNomProcedure(ligne)
+                Dim nomProc As String: nomProc = Fn_ExtraireNomProcedure(ligne)
                 Dim t As String, p As String
-                Call ExtraireTypeEtPortee(ligne, t, p)
+                Call Fn_ExtraireTypeEtPortee(ligne, t, p)
 
                 tableau(r, 1) = comp.Name
                 tableau(r, 2) = nomProc
@@ -1859,7 +1741,7 @@ Sub InventaireProceduresETFonctions() '2025-07-15 @ 22:56
                 Dim appel
                 For Each appel In matchesCall
                     r = r + 1
-                    Dim nomAppel As String: nomAppel = ExtraireNomAppelIndirect(appel.Value)
+                    Dim nomAppel As String: nomAppel = Fn_NomProcedureIndirect(appel.Value)
 
                     tableau(r, 1) = comp.Name
                     tableau(r, 2) = nomAppel
@@ -1950,7 +1832,7 @@ Sub InventaireProceduresETFonctions() '2025-07-15 @ 22:56
     
 End Sub
 
-Function ExtraireNomProcedure(ligne As String) As String '2025-07-15 @ 22:56
+Function Fn_ExtraireNomProcedure(ligne As String) As String '2025-07-15 @ 22:56
 
     Dim mots() As String, i As Long
     ligne = Trim(ligne)
@@ -1959,28 +1841,28 @@ Function ExtraireNomProcedure(ligne As String) As String '2025-07-15 @ 22:56
     mots = Split(ligne)
     For i = UBound(mots) To 0 Step -1
         If mots(i) <> "" Then
-            ExtraireNomProcedure = mots(i)
+            Fn_ExtraireNomProcedure = mots(i)
             Exit Function
         End If
     Next i
     
 End Function
 
-Function ExtraireNomAppelIndirect(texte As String) As String '2025-07-15 @ 22:56
+Function Fn_NomProcedureIndirect(texte As String) As String '2025-07-15 @ 22:56
 
     Dim debut As Long, fin As Long
-    ExtraireNomAppelIndirect = ""
+    Fn_NomProcedureIndirect = ""
     debut = InStr(texte, """")
     If debut > 0 Then
         fin = InStr(debut + 1, texte, """")
         If fin > debut Then
-            ExtraireNomAppelIndirect = Mid(texte, debut + 1, fin - debut - 1)
+            Fn_NomProcedureIndirect = Mid(texte, debut + 1, fin - debut - 1)
         End If
     End If
     
 End Function
 
-Function ExtraireTypeEtPortee(ligne As String, ByRef TypeRetour As String, ByRef PorteeRetour As String) '2025-07-15 @ 22:56
+Function Fn_ExtraireTypeEtPortee(ligne As String, ByRef TypeRetour As String, ByRef PorteeRetour As String) '2025-07-15 @ 22:56
 
     Dim reg As Object: Set reg = CreateObject("VBScript.RegExp")
     reg.Pattern = "^\s*(Public|Private)?\s*(Sub|Function|Property\s+(Get|Let|Set))"
@@ -2003,7 +1885,7 @@ Function ExtraireTypeEtPortee(ligne As String, ByRef TypeRetour As String, ByRef
     
 End Function
 
-Function ConstruireDictionnaireDeclarations() As Object '2025-07-15 @ 22:56
+Function Fn_ConstruireDictionnaireDeclarations() As Object '2025-07-15 @ 22:56
 
     Dim dict As Object: Set dict = CreateObject("Scripting.Dictionary")
     Dim ws As Worksheet: Set ws = Worksheets("InventaireProcedures")
@@ -2022,13 +1904,13 @@ Function ConstruireDictionnaireDeclarations() As Object '2025-07-15 @ 22:56
         End If
     Next i
 
-    Set ConstruireDictionnaireDeclarations = dict
+    Set Fn_ConstruireDictionnaireDeclarations = dict
     
 End Function
 
-Sub InjecterModuleDansAppels() '2025-07-15 @ 22:56
+Sub zz_InjecterModuleDansAppels() '2025-07-15 @ 22:56
 
-    Dim dict As Object: Set dict = ConstruireDictionnaireDeclarations()
+    Dim dict As Object: Set dict = Fn_ConstruireDictionnaireDeclarations()
     Dim ws As Worksheet: Set ws = Worksheets("InventaireProcedures")
     Dim lastRow As Long: lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).Row
 
@@ -2056,60 +1938,7 @@ Sub InjecterModuleDansAppels() '2025-07-15 @ 22:56
     
 End Sub
 
-Sub InjecterFormeModuleDansColonne10() '2025-07-15 @ 22:56
-
-    Dim ws As Worksheet: Set ws = Worksheets("InventaireProcedures")
-    Dim lastRow As Long: lastRow = ws.Cells(ws.Rows.count, 1).End(xlUp).Row
-
-    ' ?? Construire dictionnaire des procédures/fonctions
-    Dim dictNomModule As Object: Set dictNomModule = CreateObject("Scripting.Dictionary")
-    Dim i As Long, nom As String, moduleNom As String
-
-    For i = 2 To lastRow
-        If ws.Cells(i, 6).Value = "Déclaration" Then
-            nom = Trim(ws.Cells(i, 2).Value)
-            moduleNom = Trim(ws.Cells(i, 1).Value)
-            If nom <> "" Then
-                If Not dictNomModule.Exists(nom) Then
-                    dictNomModule.Add nom, moduleNom
-                End If
-            End If
-        End If
-    Next i
-
-    ' ?? Analyse des lignes appelantes
-    Dim nomAppel As String, moduleAppelant As String
-
-    Dim contenu As String
-    Dim injection As String
-
-    For i = 2 To lastRow
-        nomAppel = Trim(ws.Cells(i, 2).Value)
-        moduleAppelant = Trim(ws.Cells(i, 1).Value)
-
-        If nomAppel <> "" Then
-            If dictNomModule.Exists(nomAppel) Then
-                moduleNom = dictNomModule(nomAppel)
-                contenu = Trim(ws.Cells(i, 5).Value)
-                injection = moduleNom & "." & nomAppel
-                If moduleNom <> moduleAppelant And InStr(contenu, injection) = 0 Then
-                    ws.Cells(i, 10).Value = injection
-                Else
-                    ws.Cells(i, 10).Value = vbNullString
-                End If
-            Else
-                ws.Cells(i, 10).Value = "Inconnu"
-            End If
-        Else
-            ws.Cells(i, 10).Value = vbNullString
-        End If
-    Next i
-
-    MsgBox "Injection terminée dans la colonne 10", vbInformation
-    
-End Sub
-
-Sub VerifierCombinaisonClientIDClientNomDansTEC()
+Sub zz_VerifierCombinaisonClientIDClientNomDansTEC()
 
     'Fichier maître des clients
     Dim strFile As String
@@ -2299,7 +2128,7 @@ Sub zz_Comparer2Classeurs()
     wsDiff.Range("E1").Value = "Avant changement"
     wsDiff.Range("F1").Value = "Type"
     wsDiff.Range("G1").Value = "Après changement"
-    Call Make_It_As_Header(wsDiff.Range("A1:G1"), RGB(0, 112, 192))
+    Call CreerEnteteDeFeuille(wsDiff.Range("A1:G1"), RGB(0, 112, 192))
 
     Dim diffRow As Long
     diffRow = 2 'Take into consideration the Header
@@ -2419,7 +2248,7 @@ Sub zz_DetecterErreurCodeClientInTEC()  '2025-03-11 @ 08:29
     wsOutput.Range("E1").Value = "CodeClient"
     wsOutput.Range("F1").Value = "NomClientFM"
     wsOutput.Range("G1").Value = "DateSaisie"
-    Call Make_It_As_Header(wsOutput.Range("A1:G1"), RGB(0, 112, 192))
+    Call CreerEnteteDeFeuille(wsOutput.Range("A1:G1"), RGB(0, 112, 192))
     
     'Build the dictionnary (Code, Nom du client) from Client's Master File
     Dim dictClients As Dictionary

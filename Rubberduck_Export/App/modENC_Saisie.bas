@@ -38,7 +38,7 @@ Sub ObtenirFacturesEnSuspens(cc As String) '2024-08-21 @ 15:18
         For i = 3 To lastResultRow
 '        For i = 3 To WorksheetFunction.Min(27, lastResultRow) 'No space for more O/S invoices
             If .Range("X" & i).Value <> 0 And _
-                            Fn_Invoice_Is_Confirmed(.Range("S" & i).Value) = True Then
+                            Fn_FactureConfirmee(.Range("S" & i).Value) = True Then
                 Application.EnableEvents = False
                 wshENC_Saisie.Range("F" & rr).Value = .Range("S" & i).Value
                 wshENC_Saisie.Range("G" & rr).Value = Format$(.Range("T" & i).Value, wsdADMIN.Range("B1").Value)
@@ -129,7 +129,7 @@ Sub ObtenirFacturesEnSuspensAvecAF(cc As String)
 
 End Sub
 
-Sub shpMiseAJourEncaissement()
+Sub shpMettreAJourEncaissement_Click()
 
     Call MettreAJourEncaissement
 
@@ -226,6 +226,12 @@ Sub MettreAJourEncaissement() '2024-08-22 @ 09:46
 Clean_Exit:
 
     Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:MettreAJourEncaissement", vbNullString, startTime)
+
+End Sub
+
+Sub shpAnnulerEncaissement_Click()
+
+    Call CreerNouvelEncaissement
 
 End Sub
 
@@ -560,12 +566,12 @@ Sub ComptabiliserEncaissement(noEnc As Long, dt As Date, nom As String, _
     Dim glProduitPercuAvance As String, descGLProduitPercuAvance As String
     
     'Comptes de GL et description du poste
-    glEncaisse = ObtenirNoGlIndicateur("Encaisse")
-    descGLEncaisse = ObtenirDescriptionCompte(glEncaisse)
-    glComptesClients = ObtenirNoGlIndicateur("Comptes Clients")
-    descGLComptesClients = ObtenirDescriptionCompte(glComptesClients)
-    glProduitPercuAvance = ObtenirNoGlIndicateur("Produit perçu d'avance")
-    descGLProduitPercuAvance = ObtenirDescriptionCompte(glProduitPercuAvance)
+    glEncaisse = Fn_NoCompteAPartirIndicateurCompte("Encaisse")
+    descGLEncaisse = Fn_DescriptionAPartirNoCompte(glEncaisse)
+    glComptesClients = Fn_NoCompteAPartirIndicateurCompte("Comptes Clients")
+    descGLComptesClients = Fn_DescriptionAPartirNoCompte(glComptesClients)
+    glProduitPercuAvance = Fn_NoCompteAPartirIndicateurCompte("Produit perçu d'avance")
+    descGLProduitPercuAvance = Fn_DescriptionAPartirNoCompte(glProduitPercuAvance)
     
     'Déclaration et instanciation d'un objet GL_Entry
     Dim ecr As clsGL_Entry
@@ -624,7 +630,7 @@ Sub AjouterCheckBoxesEncaissement(row As Long)
                 .Value = False
                 .linkedCell = "B" & cell.row
                 .Display3DShading = True
-                .OnAction = "ckbAppliquerEncaissementLigne"
+                .OnAction = "chkAppliquerEncaissementLigne"
                 .Locked = False
             End With
     End If
@@ -648,9 +654,9 @@ Sub AjouterCheckBoxesEncaissement(row As Long)
 
 End Sub
 
-Sub ENC_Remove_Check_Boxes(row As Long)
+Sub EffacerCasesACocherENC(row As Long)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ENC_Remove_Check_Boxes", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:EffacerCasesACocherENC", vbNullString, 0)
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -669,7 +675,7 @@ Sub ENC_Remove_Check_Boxes(row As Long)
     'Libérer la mémoire
     Set cbx = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ENC_Remove_Check_Boxes", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:EffacerCasesACocherENC", vbNullString, startTime)
 
 End Sub
 
@@ -699,7 +705,7 @@ Sub EffacerFeuilleEncaissement()
         lastUsedRow = 36
     End If
     If lastUsedRow > 11 Then
-        Call ENC_Remove_Check_Boxes(lastUsedRow)
+        Call EffacerCasesACocherENC(lastUsedRow)
     End If
         
     With wshENC_Saisie.Range("F5:H5, K5, F7, K7, F9:I9").Interior '2024-08-25 @ 09:21
@@ -708,8 +714,8 @@ Sub EffacerFeuilleEncaissement()
             .PatternTintAndShade = 0
     End With
     
-    wshENC_Saisie.Shapes("btnENC_Sauvegarde").Visible = False
-    wshENC_Saisie.Shapes("btnENC_Annule").Visible = False
+    wshENC_Saisie.Shapes("shpSauvegarderENC").Visible = False
+    wshENC_Saisie.Shapes("shpAnnulerSaisieENC").Visible = False
     
     Application.EnableEvents = True
     
@@ -722,7 +728,7 @@ Sub EffacerFeuilleEncaissement()
 
 End Sub
 
-Sub ckbAppliquerEncaissementLigne()
+Sub chkAppliquerEncaissementLigne()
 
     Dim chkBox As checkBox
     Set chkBox = ActiveSheet.CheckBoxes(Application.Caller)
@@ -812,7 +818,7 @@ Sub AjusterLibelleDansEncaissement(typeTrans As String)
 
 End Sub
 
-Sub ValiderEtLancerufEncRégularisation()
+Sub ValiderEtLancerufEncRegularisation()
 
     Dim ws As Worksheet
     Set ws = wshENC_Saisie

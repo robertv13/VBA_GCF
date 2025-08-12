@@ -26,17 +26,17 @@ Private Sub UserForm_Initialize()
     Me.lblMessage.BackColor = RGB(255, 255, 255)
     Me.lblMessage.ForeColor = RGB(0, 0, 0)
     
-    Me.cmdGarderOuverte.BackColor = RGB(210, 255, 210)
-    Me.cmdGarderOuverte.ForeColor = RGB(0, 100, 0)
+    Me.shpGarderOuverte.BackColor = RGB(210, 255, 210)
+    Me.shpGarderOuverte.ForeColor = RGB(0, 100, 0)
     
-    Me.cmdFermerMaintenant.BackColor = RGB(210, 255, 210)
-    Me.cmdFermerMaintenant.ForeColor = RGB(160, 0, 0)
+    Me.shpFermerMaintenant.BackColor = RGB(210, 255, 210)
+    Me.shpFermerMaintenant.ForeColor = RGB(160, 0, 0)
     
 End Sub
 
-Private Sub cmdGarderOuverte_Click() '2025-07-01 @ 17:13
+Private Sub shpGarderOuverte_Click() '2025-07-01 @ 17:13
     
-    Debug.Print "[cmdGarderOuverte_Click] Utilisateur a cliqué sur 'Garder l'application ouverte' à : " & Format(Now, "hh:mm:ss")
+    Debug.Print "[shpGarderOuverte_Click] Utilisateur a cliqué sur 'Garder l'application ouverte' à : " & Format(Now, "hh:mm:ss")
     
     On Error Resume Next
     
@@ -61,12 +61,12 @@ Private Sub cmdGarderOuverte_Click() '2025-07-01 @ 17:13
     
 End Sub
 
-Private Sub cmdFermerMaintenant_Click() '2025-07-01 @ 15:46
+Private Sub shpFermerMaintenant_Click() '2025-07-01 @ 15:46
 
-    Debug.Print "[cmdFermerMaintenant_Click] Utilisateur a cliqué sur 'Fermer maintenant' à : " & Format(Now, "hh:mm:ss")
+    Debug.Print "[shpFermerMaintenant_Click] Utilisateur a cliqué sur 'Fermer maintenant' à : " & Format(Now, "hh:mm:ss")
     
     Me.Hide
-    Call FermerApplicationNormalement(modFunctions.GetNomUtilisateur())
+    Call FermerApplicationNormalement(modFunctions.Fn_NomUtilisateurWindows())
     
 End Sub
 

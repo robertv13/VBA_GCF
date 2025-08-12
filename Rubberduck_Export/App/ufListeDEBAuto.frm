@@ -41,9 +41,9 @@ Private Sub UserForm_Initialize()
     End With
     
     'Nettoyer le listBox et le charger
-    ufListeDEBAuto.lsbDEB_AutoDesc.Clear
+    ufListeDEBAuto.lstDEBRecurrent.Clear
     
-    With ufListeDEBAuto.lsbDEB_AutoDesc
+    With ufListeDEBAuto.lstDEBRecurrent
         .ColumnHeads = False
         .ColumnCount = 4
         .ColumnWidths = "30; 287; 65; 35"
@@ -56,14 +56,14 @@ Private Sub UserForm_Initialize()
     
 End Sub
 
-Private Sub lsbDEB_AutoDesc_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
+Private Sub lstDEBRecurrent_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim rowSelected As Long
-    rowSelected = lsbDEB_AutoDesc.ListIndex
+    rowSelected = lstDEBRecurrent.ListIndex
     Dim noDEBAuto As Long
-    noDEBAuto = lsbDEB_AutoDesc.List(rowSelected, 0)
+    noDEBAuto = lstDEBRecurrent.List(rowSelected, 0)
     Dim descDEBAuto As String
-    descDEBAuto = lsbDEB_AutoDesc.List(rowSelected, 1)
+    descDEBAuto = lstDEBRecurrent.List(rowSelected, 1)
     
     wshDEB_Saisie.Range("B3").Value = rowSelected '2024-06-14 @ 07:23
     
