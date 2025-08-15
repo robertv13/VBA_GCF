@@ -105,7 +105,8 @@ Sub CM_Verify_DDM(fullFileName As String)
 
 End Sub
 
-Sub Max_Code_Values_From_GCF_Entree(ByRef maxSmallCodes As String, ByRef maxLargeCodes As String, ByRef maxVeryLargeCodes As String)
+Sub Max_Code_Values_From_GCF_Entree(ByRef maxSmallCodes As String, ByRef maxLargeCodes As String, _
+            ByRef codesVladimir As String, ByRef codesOlivier As String)
 
     'Analyze Clients List from 'GCF_BD_Entrée.xlsx
     Dim strFilePath As String, strSheet As String
@@ -142,7 +143,7 @@ Sub Max_Code_Values_From_GCF_Entree(ByRef maxSmallCodes As String, ByRef maxLarg
     rs.Close
 
     'Requête pour trouver la valeur maximale pour les codes supérieurs ou égaux à 1000
-    sqlQuery = "SELECT MAX(Val(ClientID)) AS MaxLargeCodes FROM [" & strSheet & "] WHERE Len(ClientID) >= 4 AND Val(ClientID) >= 1000 AND Val(ClientID) < 2000"
+    sqlQuery = "SELECT MAX(Val(ClientID)) AS MaxLargeCodes FROM [" & strSheet & "] WHERE Len(ClientID) >= 4 AND Val(ClientID) >= 1000 AND Val(ClientID) < 5000"
     Set rs = cn.Execute(sqlQuery)
 
     If Not rs.EOF Then
@@ -154,19 +155,32 @@ Sub Max_Code_Values_From_GCF_Entree(ByRef maxSmallCodes As String, ByRef maxLarg
     'Fermer le Recordset et la connexion
     rs.Close
     
-    'Requête pour trouver la valeur maximale pour les codes supérieurs ou égaux à 1000
-    sqlQuery = "SELECT MAX(Val(ClientID)) AS MaxVeryLargeCodes FROM [" & strSheet & "] WHERE Len(ClientID) >= 4 AND Val(ClientID) >= 5000"
+    'Requête pour trouver la valeur maximale pour les codes de Vladimir
+    sqlQuery = "SELECT MAX(Val(ClientID)) AS codesVladimir FROM [" & strSheet & "] WHERE Len(ClientID) >= 4 AND Val(ClientID) >= 5000 and val(ClientID) < 6000"
     Set rs = cn.Execute(sqlQuery)
 
     If Not rs.EOF Then
-        maxVeryLargeCodes = rs.Fields("MaxVeryLargeCodes").Value
+        codesVladimir = rs.Fields("codesVladimir").Value
     Else
-        maxVeryLargeCodes = ""
+        codesVladimir = ""
     End If
 
     'Fermer le Recordset et la connexion
     rs.Close
     
+    'Requête pour trouver la valeur maximale pour les codes d'Olivier
+    sqlQuery = "SELECT MAX(Val(ClientID)) AS codesOlivier FROM [" & strSheet & "] WHERE Len(ClientID) >= 4 AND Val(ClientID) >= 6000 and val(ClientID) < 7000"
+    Set rs = cn.Execute(sqlQuery)
+
+    If Not rs.EOF Then
+        codesOlivier = rs.Fields("codesOlivier").Value
+    Else
+        codesOlivier = ""
+    End If
+
+    'Fermer le Recordset et la connexion
+    rs.Close
+   
     cn.Close
     
     If maxSmallCodes <> "" Then
@@ -177,10 +191,14 @@ Sub Max_Code_Values_From_GCF_Entree(ByRef maxSmallCodes As String, ByRef maxLarg
         maxLargeCodes = Fn_Incremente_Code(maxLargeCodes)
     End If
 
-    If maxVeryLargeCodes <> "" Then
-        maxVeryLargeCodes = Fn_Incremente_Code(maxVeryLargeCodes)
+    If codesVladimir <> "" Then
+        codesVladimir = Fn_Incremente_Code(codesVladimir)
     End If
 
+    If codesOlivier <> "" Then
+        codesOlivier = Fn_Incremente_Code(codesOlivier)
+    End If
+    
     'Nettoyer les objets
     Set rs = Nothing
     Set cn = Nothing
@@ -218,12 +236,12 @@ Sub Valider_Client_Avant_Effacement(ClientID As String, Optional ByRef clientExi
             'Boucle sur les feuilles à vérifier (exemple: "Sheet1", "Sheet2")
             Dim feuilleRechercher As Variant
             Dim plageRechercher As String, colName As String, feuilleName As String
-            For Each feuilleRechercher In Array("CC_Régularisations|ClientID", _
-                                                "ENC_Entête|CodeClient", _
+            For Each feuilleRechercher In Array("CC_Regularisations|ClientID", _
+                                                "ENC_Entete|CodeClient", _
                                                 "FAC_Comptes_Clients|CodeClient", _
-                                                "FAC_Entête|CustID", _
-                                                "FAC_Projets_Détails|ClientID", _
-                                                "FAC_Projets_Entête|ClientID", _
+                                                "FAC_Entete|CustID", _
+                                                "FAC_Projets_Details|ClientID", _
+                                                "FAC_Projets_Entete|ClientID", _
                                                 "TEC_Local|ClientID")
                 colName = Mid(feuilleRechercher, InStr(feuilleRechercher, "|") + 1)
                 feuilleName = Left(feuilleRechercher, InStr(feuilleRechercher, "|") - 1)
@@ -234,7 +252,7 @@ Sub Valider_Client_Avant_Effacement(ClientID As String, Optional ByRef clientExi
                 
                 Set rs = conn.Execute(sql)
                 If Not rs.EOF Then
-                    message1 = message1 & "Le client '" & ClientID & "'existe dans la feuille '" & feuilleName & "'" & vbNewLine & vbNewLine & _
+                    message1 = message1 & "Le client '" & ClientID & "' existe dans la feuille '" & feuilleName & "'" & vbNewLine & vbNewLine & _
                                           "du classeur '" & listeWorkbooks(i) & "'" & vbCrLf
                     Debug.Print message1
                     clientExiste = True
@@ -262,7 +280,7 @@ Sub Valider_Client_Avant_Effacement(ClientID As String, Optional ByRef clientExi
             End If
             Set foundCell = ws.Cells.Find(What:=ClientID, LookIn:=xlValues, LookAt:=xlWhole)
             If Not foundCell Is Nothing Then
-                message2 = message2 & "Le client '" & ClientID & "'existe dans la feuille '" & ws.Name & "'du Workbook '" & wb.Name & "'" & vbCrLf
+                message2 = message2 & "Le client '" & ClientID & "' existe dans la feuille '" & ws.Name & "' du Workbook '" & wb.Name & "'" & vbCrLf
                 Debug.Print message2
                 clientExiste = True
 '               GoTo Exit_Sub

@@ -157,9 +157,9 @@ Sub CM_Update_External_GCF_Entree_BD(action As String, client As DonneesClient) 
         rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
         rs.AddNew
     Else
-        rs.Open "SELECT * FROM [" & destinationTab & "] WHERE ClientID='" & client.ClientID & "'", conn, 2, 3
+        rs.Open "SELECT * FROM [" & destinationTab & "] WHERE ClientID='" & client.ClientID & "' ", conn, 2, 3
         If rs.EOF Then
-            MsgBox "Le client '" & client.ClientID & "'n'a pas été ajouté au fichier!" & vbNewLine & vbNewLine & _
+            MsgBox "Le client '" & client.ClientID & "' n'a pas été ajouté au fichier!" & vbNewLine & vbNewLine & _
                    "Veuillez le saisir à nouveau", vbCritical, "ERREUR dans la mise à jour du fichier client"
             GoTo Nettoyage
         End If

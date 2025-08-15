@@ -75,15 +75,18 @@ Private Sub cmdAddClient_Click()
     ufClientMF.txtCodeClient.SetFocus
     
     'Obtenir le dernier numéro de client utilisé (particulier / corporatif)
-    Dim maxSmallCode As String, maxLargeCode As String, maxVeryLargeCode As String
-    Call Max_Code_Values_From_GCF_Entree(maxSmallCode, maxLargeCode, maxVeryLargeCode)
+    Dim maxSmallCode As String, maxLargeCode As String, codesVladimir As String, codesOlivier As String
+    Call Max_Code_Values_From_GCF_Entree(maxSmallCode, maxLargeCode, codesVladimir, codesOlivier)
     
     MsgBox _
         Prompt:="Code à utiliser pour les particuliers = '" & maxSmallCode & "'" & vbNewLine & vbNewLine & _
                 "Code à utiliser pour les entreprises  = '" & maxLargeCode & "'" & vbNewLine & vbNewLine & _
-                "Code à utiliser pour > 5000  = '" & maxVeryLargeCode & "'", _
+                "Code à utiliser pour Vladimir  = '" & codesVladimir & "'" & vbNewLine & vbNewLine & _
+                "Code à utiliser pour Olivier  = '" & codesOlivier & "'", _
         Title:="Codes à utiliser pour la création d'un nouveau client", _
         Buttons:=vbInformation
+        
+        NouveauClient = True '2025-08-15 @ 07:58
         
     Call CM_Log_Activities("ufClientMF:cmdAddClient_Click", "", startTime)
 
@@ -256,7 +259,7 @@ Private Sub Delete_Client(ClientID As String)
         If Not foundCell Is Nothing Then
             ws.Rows(foundCell.Row).Delete
         Else
-            MsgBox "Le client '" & ClientID & "'ne peut être trouvé dans Clients", vbCritical
+            MsgBox "Le client '" & ClientID & "' ne peut être trouvé dans Clients", vbCritical
             msgValue = vbNo
         End If
         
@@ -266,7 +269,7 @@ Private Sub Delete_Client(ClientID As String)
         If Not foundCell Is Nothing Then
             ws.Rows(foundCell.Row).Delete
         Else
-            MsgBox "Le client '" & ClientID & "'ne peut être trouvé dans Donnees", vbCritical
+            MsgBox "Le client '" & ClientID & "' ne peut être trouvé dans Donnees", vbCritical
             msgValue = vbNo
         End If
         
@@ -277,7 +280,7 @@ Private Sub Delete_Client(ClientID As String)
             ws.Rows(foundCell.Row).Delete
         End If
         
-        MsgBox "Le client '" & Me.txtCodeClient.Value & "'a été détruit" & vbNewLine & _
+        MsgBox "Le client '" & Me.txtCodeClient.Value & "' a été détruit" & vbNewLine & _
                 vbNewLine & "de façon PERMANENTE", vbInformation
     End If
     
@@ -412,9 +415,9 @@ Private Sub txtCodeClient_Exit(ByVal Cancel As MSForms.ReturnBoolean)
     Dim clientExists As Boolean
     clientExists = Fn_Is_Client_Code_Already_Used
     
-    If clientExists = True And NouveauClient = True Then
+    If (clientExists = True Or LCase(clientExists) = "vrai") And (NouveauClient = True Or LCase(NouveauClient) = "vrai") Then
         ufClientMF.txtCodeClient.BackColor = vbRed
-        MsgBox "Ce code de client '" & ufClientMF.txtCodeClient.Value & "'existe déjà en base de Donnees." & vbNewLine & vbNewLine & _
+        MsgBox "Ce code de client '" & ufClientMF.txtCodeClient.Value & "'existe déjà en base de Données." & vbNewLine & vbNewLine & _
                "Veuillez choisir un AUTRE code qui n'existe pas, SVP", vbCritical + vbOKOnly, "Doublon de code de client"
         ufClientMF.txtCodeClient.BackColor = vbWhite
         ufClientMF.txtCodeClient.Value = ""
