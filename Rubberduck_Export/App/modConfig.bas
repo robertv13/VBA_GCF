@@ -7,8 +7,6 @@ Attribute VB_Name = "modConfig"
 
 Option Explicit
 
-Public Const gVERSION_APPLICATION As String = "7.B.07"
-
 Public Const gDATA_PATH As String = "\DataFiles"
 Public Const gFACT_PDF_PATH As String = "\Factures_PDF"
 Public Const gFACT_EXCEL_PATH As String = "\Factures_Excel"

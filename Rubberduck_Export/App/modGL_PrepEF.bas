@@ -13,9 +13,37 @@ Public gTotalRevenuNet_AC As Currency, gTotalRevenuNet_AP As Currency
 Public gBNR_Début_Année_AC As Currency, gBNR_Début_Année_AP As Currency
 Public gDividendes_Année_AC As Currency, gDividendes_Année_AP As Currency
 
-Sub CalculerSoldesPourEF(ws As Worksheet, dateCutoff As Date) '2025-02-05 @ 04:26
+Sub CalculerSoldesPourEF(ws As Worksheet, dateCutOff As Date) '2025-08-14 @ 06:50
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:CalculerSoldesPourEF", ws.Name & ", " & dateCutoff, 0)
+    Application.EnableEvents = True
+    
+    Dim reponse As String
+    Dim comparatif As String
+    Dim choixEstValide As Boolean
+
+    Do
+        reponse = InputBox( _
+            "Pour la colonne comparatif (année précédente), voulez-vous :" & vbNewLine & vbNewLine & _
+            "1) La même période que l'année courante pour l'année dernière" & vbNewLine & vbNewLine & _
+            "2) L'année dernière au complet (12 mois)", _
+            "Choix du comparatif")
+
+        Select Case Trim(reponse)
+            Case "1"
+                comparatif = "periode"
+                choixEstValide = True
+            Case "2"
+                comparatif = "annee"
+                choixEstValide = True
+            Case Else
+                MsgBox "Votre réponse est invalide..." & vbCrLf & vbCrLf & _
+                        "Veuillez choisir entre 1 et 2 ?", vbExclamation
+        End Select
+    Loop Until choixEstValide
+    
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:CalculerSoldesPourEF", ws.Name & ", " & dateCutOff, 0)
+    
+    Dim i As Long
     
     Application.EnableEvents = False
     Application.ScreenUpdating = False
@@ -26,59 +54,49 @@ Sub CalculerSoldesPourEF(ws As Worksheet, dateCutoff As Date) '2025-02-05 @ 04:2
         isDeveloppeur = True
     End If
     
-    'Déterminer la date de cutoff pour l'an passé
-    Dim cutOffAnPassé As Date
-    cutOffAnPassé = dateCutoff
-    cutOffAnPassé = DateAdd("yyyy", -1, cutOffAnPassé)
-    ws.Range("F5").Value = Format$(dateCutoff, wsdADMIN.Range("B1").Value)
-    ws.Range("H5").Value = Format$(cutOffAnPassé, wsdADMIN.Range("B1").Value)
+    'Déterminer la date de cutoff pour le comparatif (même période -OU- année complète)
+    Dim cutOffAnPasse As Date
+    If comparatif = "periode" Then
+        cutOffAnPasse = Fn_DateMoinsUnAn(dateCutOff)
+    Else
+        cutOffAnPasse = Fn_DateMoinsUnAn(Fn_DernierJourAnneeFinanciere(dateCutOff))
+    End If
     
-    'The Chart of Account will drive the results, so the sort order is determined by COA
+    ws.Range("F5").Value = Format$(dateCutOff, wsdADMIN.Range("B1").Value)
+    ws.Range("H5").Value = Format$(cutOffAnPasse, wsdADMIN.Range("B1").Value)
+    'Effacer les cellules en place (contenu & format)
+    
+    ws.Unprotect
+    ws.Range("C6:K199").ClearContents
+
+    'Préparer l'appel à Fn_Tableau24MoisSommeTransGL
+    Dim periodes As String
+    periodes = Fn_Construire24PeriodesGL(dateCutOff)
+
+    'Le tableau contiendra la somme des transactions par mois pour les 25 derniers mois
+    Dim tableau() As Variant
+    Dim inclureEcritureCloture As Boolean: inclureEcritureCloture = False
+    tableau = Fn_Tableau24MoisSommeTransGL(dateCutOff, inclureEcritureCloture)
+    ReDim gSoldeCodeEF(1 To UBound(tableau, 1), 1 To 3)
+    
+    'Déterminer le mois dans l'année financière
+    Dim moisAnneeFinanciere As Long
+    If month((dateCutOff)) > wsdADMIN.Range("MoisFinAnnéeFinancière").Value Then
+        moisAnneeFinanciere = month(dateCutOff) - wsdADMIN.Range("MoisFinAnnéeFinancière").Value
+    Else
+        moisAnneeFinanciere = month(dateCutOff) + 12 - wsdADMIN.Range("MoisFinAnnéeFinancière").Value
+    End If
+    
+    'Le plan comptable établit l'ordre de traitement
     Dim arr As Variant
     arr = Fn_PlanComptableTableau2D(4) 'Retourne un tableau avec 4 colonnes
-    
-    'Effacer les cellules en place (contenu & format)
-    ws.Unprotect
-    ws.Range("C6" & ":K" & UBound(arr, 1) + 6 + 2).ClearContents
-
-    'Step # 1 - Use AdvancedFilter on GL_Trans for ALL accounts and transactions between the 2 dates
-    Dim rngResultAF As Range
-    Call modGL_Stuff.ObtenirSoldeCompteEntreDebutEtFin(vbNullString, #7/31/2024#, dateCutoff, rngResultAF)
-
-    'The SORT method does not sort correctly the GLNo, since there is NUMBER and NUMBER+LETTER !!!
-    Dim lastUsedRow As Long
-    lastUsedRow = rngResultAF.Rows.count
-    If lastUsedRow < 2 Then Exit Sub
-    
-    'Charge en mémoire (matrice) toutes les transactions du G/L
-    Dim arrTrans As Variant
-    arrTrans = rngResultAF.Value2
-    
-    'Dictionary par code d'état financier, pointe vers une matrice
-    Dim dictSoldesParGL As Dictionary: Set dictSoldesParGL = New Dictionary
-    Dim rowID_to_arrSoldesParGL As Long 'Pointeur à la matrice
-    Dim arrSoldesParGL() As Variant 'Soldes Année Courante & Année précédente
-    ReDim arrSoldesParGL(1 To UBound(arr, 1), 1 To 3)
-    
-    'Lire chacune des lignes de transaction du résultat (GL_Trans_AF#1)
-    Dim currRowID As Long
-    Dim i As Long, glNo As String, MyValue As String, t1 As Currency, t2 As Currency
-    For i = 2 To UBound(arrTrans, 1)
-        glNo = arrTrans(i, 5)
-        If Not dictSoldesParGL.Exists(glNo) Then
-            rowID_to_arrSoldesParGL = rowID_to_arrSoldesParGL + 1
-            dictSoldesParGL.Add glNo, rowID_to_arrSoldesParGL
-            arrSoldesParGL(rowID_to_arrSoldesParGL, 1) = glNo
-        End If
-        currRowID = dictSoldesParGL(glNo)
-        'Mettre à jour la matrice des soldes
-        arrSoldesParGL(currRowID, 2) = arrSoldesParGL(currRowID, 2) + arrTrans(i, 7) - arrTrans(i, 8)
-        If CDate(arrTrans(i, 2)) <= cutOffAnPassé Then
-            arrSoldesParGL(currRowID, 3) = arrSoldesParGL(currRowID, 3) + arrTrans(i, 7) - arrTrans(i, 8)
-        End If
+    'Construire un Dictionary à partir du plan comptable
+    Dim dictPlanComptable As Dictionary: Set dictPlanComptable = New Dictionary
+    For i = LBound(arr, 1) To UBound(arr, 1)
+        dictPlanComptable.Add arr(i, 1), arr(i, 2) & "|" & arr(i, 4) 'Description + | + Code E/F
     Next i
     
-    Dim currRow As Long
+    'Mise en forme des cellules qui contiendront les montants
     ws.Range("C6:C" & UBound(arr, 1) + 7).HorizontalAlignment = xlCenter
     ws.Range("D6:D" & UBound(arr, 1) + 7).HorizontalAlignment = xlLeft
     ws.Range("E6:E" & UBound(arr, 1) + 7).HorizontalAlignment = xlCenter
@@ -86,121 +104,149 @@ Sub CalculerSoldesPourEF(ws As Worksheet, dateCutoff As Date) '2025-02-05 @ 04:2
     ws.Range("C6:H" & UBound(arr, 1) + 7).Font.Name = "Aptos Narrow"
     ws.Range("C6:H" & UBound(arr, 1) + 7).Font.size = 10
     
-    'Maintenant on affiche des résulats, piloté par le plan comptable
-    'Utilisation d'un dictionary pour sommariser les lignes de EF
+    'Instantiation du Dictionary
     If Not gDictSoldeCodeEF Is Nothing Then
         gDictSoldeCodeEF.RemoveAll
     End If
     If gDictSoldeCodeEF Is Nothing Then
         Set gDictSoldeCodeEF = CreateObject("Scripting.Dictionary")
     End If
-    Dim rowID_to_gSoldeCodeEF As Long
-    ReDim gSoldeCodeEF(1 To UBound(arr, 1), 1 To 3)
-    Dim codeEF As String
-    Dim dictPreuve As Dictionary
-    Set dictPreuve = New Dictionary
-    
-    'Dictionary de type Global
-    Dim dictSectionSub As Object
-    If Not dictSectionSub Is Nothing Then
-        dictSectionSub.RemoveAll
-    End If
-    If dictSectionSub Is Nothing Then
-        Set dictSectionSub = CreateObject("Scripting.Dictionary")
-    End If
-    Dim section As String
-    
-    Dim soldeAC As Currency, soldeAP As Currency, totalAC As Currency, totalAP As Currency
+
+    'Lire chacune des lignes du tableau à 26 colonnes pour calculer les 2 soldes
+    Dim currRow As Long: currRow = 6
+    Dim noCompteGL As String
     Dim descGL As String
-    currRow = 5
-    Dim r As Long
-    'arr est la matrice contenant le plan comptable
-    For i = LBound(arr, 1) To UBound(arr, 1)
-        glNo = arr(i, 1)
-        descGL = arr(i, 2)
-        codeEF = arr(i, 4)
-        
-        r = dictSoldesParGL.item(glNo)
-        If r <> 0 Then 'r <> 0 indique qu'il y a un solde pour ce G/L
-            If arrSoldesParGL(r, 2) <> 0 Or arrSoldesParGL(r, 3) <> 0 Then
-                currRow = currRow + 1
-                ws.Range("C" & currRow).Value = glNo
-                ws.Range("D" & currRow).Value = descGL
-                ws.Range("E" & currRow).Value = codeEF
-                If isDeveloppeur = True Then
-                    ws.Range("M" & currRow).Value = codeEF
-                    ws.Range("N" & currRow).Value = glNo
-                End If
-                'Accumule les montants par ligne d'état financier (codeEF)
-                If Not gDictSoldeCodeEF.Exists(codeEF) Then
-                    rowID_to_gSoldeCodeEF = rowID_to_gSoldeCodeEF + 1
-                    gDictSoldeCodeEF.Add codeEF, rowID_to_gSoldeCodeEF
-                    gSoldeCodeEF(rowID_to_gSoldeCodeEF, 1) = codeEF
-                End If
-                currRowID = gDictSoldeCodeEF(codeEF)
-                
-                ws.Range("F" & currRow).Value = arrSoldesParGL(r, 2)
-                gSoldeCodeEF(currRowID, 2) = gSoldeCodeEF(currRowID, 2) + arrSoldesParGL(r, 2)
-                totalAC = totalAC + arrSoldesParGL(r, 2)
-                ws.Range("H" & currRow).Value = arrSoldesParGL(r, 3)
-                gSoldeCodeEF(currRowID, 3) = gSoldeCodeEF(currRowID, 3) + arrSoldesParGL(r, 3)
-                totalAP = totalAP + CCur(arrSoldesParGL(r, 3))
-                
-                'Preuve
-                If Not dictPreuve.Exists(codeEF & "-" & glNo) Then
-                    dictPreuve.Add codeEF & "-" & glNo, 0
-                End If
-                dictPreuve(codeEF & "-" & glNo) = dictPreuve(codeEF & "-" & glNo) + arrSoldesParGL(r, 2)
-                
-                'Preuve - Sous-total par section
-                section = Left$(codeEF, 1)
-                If Not dictSectionSub.Exists(section) Then
-                    dictSectionSub.Add section, 0
-                End If
-                dictSectionSub(section) = dictSectionSub(section) + arrSoldesParGL(r, 2)
-            End If
+    Dim codeEF As String
+    Dim itemDict As String
+    Dim soldeCourant As Currency
+    Dim TotalAC As Currency
+    Dim soldeComparatif As Currency
+    Dim TotalAP As Currency
+    Dim rowSommCodeEF As Long
+    Dim ii As Long
+    For i = LBound(tableau, 1) To UBound(tableau, 1)
+        noCompteGL = CStr(tableau(i, 0))
+        ws.Range("C" & currRow).Value = noCompteGL
+        itemDict = dictPlanComptable(noCompteGL)
+        descGL = Left(itemDict, InStr(itemDict, "|") - 1)
+        codeEF = Mid$(itemDict, InStr(itemDict, "|") + 1)
+        ws.Range("D" & currRow).Value = descGL
+        ws.Range("E" & currRow).Value = codeEF
+        If isDeveloppeur = True Then
+            ws.Range("M" & currRow).Value = codeEF
+            ws.Range("N" & currRow).Value = noCompteGL
         End If
+        Dim ligne(1 To 25) As Variant
+        For ii = 1 To 25
+            ligne(ii) = tableau(i, ii)
+        Next ii
+        Call CalculerSoldesCourantEtComparatif(noCompteGL, moisAnneeFinanciere, ligne(), soldeCourant, soldeComparatif)
+        ws.Range("F" & currRow).Value = soldeCourant
+        TotalAC = TotalAC + soldeCourant
+        ws.Range("H" & currRow).Value = soldeComparatif
+        TotalAP = TotalAP + soldeComparatif
+        If Not gDictSoldeCodeEF.Exists(codeEF) Then
+            rowSommCodeEF = rowSommCodeEF + 1
+            gDictSoldeCodeEF.Add codeEF, rowSommCodeEF
+            gSoldeCodeEF(rowSommCodeEF, 1) = codeEF
+        End If
+        gSoldeCodeEF(rowSommCodeEF, 2) = gSoldeCodeEF(rowSommCodeEF, 2) + soldeCourant
+        gSoldeCodeEF(rowSommCodeEF, 3) = gSoldeCodeEF(rowSommCodeEF, 3) + soldeComparatif
         
         'Sauvegarde des BNR au début de l'année et Dividendes
-        If glNo = "3100" Then
-            gBNR_Début_Année_AC = ws.Range("F" & currRow).Value
-            gBNR_Début_Année_AP = ws.Range("H" & currRow).Value
-        ElseIf glNo = "3200" Then
-            gDividendes_Année_AC = ws.Range("F" & currRow).Value
-            gDividendes_Année_AP = ws.Range("H" & currRow).Value
+        If noCompteGL = "3100" Then
+            gBNR_Début_Année_AC = soldeCourant
+            gBNR_Début_Année_AP = soldeComparatif
+        ElseIf noCompteGL = "3200" Then
+            gDividendes_Année_AC = soldeCourant
+            gDividendes_Année_AP = soldeComparatif
         End If
-    
-        If isDeveloppeur = True Then
-            ws.Range("O" & currRow).Value = ws.Range("F" & currRow).Value
-            ws.Range("P" & currRow).Value = ws.Range("H" & currRow).Value
-        End If
-    Next i
 
-    currRow = currRow + 2
+        If isDeveloppeur = True Then
+            ws.Range("O" & currRow).Value = soldeCourant
+            ws.Range("P" & currRow).Value = soldeComparatif
+        End If
+        
+        currRow = currRow + 1
     
-    'Output GL totals
-    ws.Range("D" & currRow).Value = "Totaux"
-    ws.Range("F" & currRow).Value = totalAC
-    ws.Range("H" & currRow).Value = totalAP
+    Next i
     
     'Ajuste le format des montants
     ws.Range("F6:F" & currRow).NumberFormat = "###,###,##0.00 ;(###,###,##0.00);0.00"
     ws.Range("H6:H" & currRow).NumberFormat = "###,###,##0.00 ;(###,###,##0.00);0.00"
-    
+
     ws.Protect UserInterfaceOnly:=True
     ws.EnableSelection = xlUnlockedCells
-    
+
     Application.EnableEvents = True
-    
+
     ActiveWindow.ScrollRow = 1
-    
+
     Application.EnableEvents = False
     ws.Range("C6").Select
     Application.EnableEvents = True
-    
+
     'Libérer la mémoire
-    Set dictPreuve = Nothing
-    Set dictSoldesParGL = Nothing
+    Set dictPlanComptable = Nothing
+    
+'    For i = LBound(arr, 1) To UBound(arr, 1)
+'
+'            If arrSoldesParGL(r, 2) <> 0 Or arrSoldesParGL(r, 3) <> 0 Then
+'                'Accumule les montants par ligne d'état financier (codeEF)
+'                If Not gDictSoldeCodeEF.Exists(codeEF) Then
+'                    rowID_to_gSoldeCodeEF = rowID_to_gSoldeCodeEF + 1
+'                    gDictSoldeCodeEF.Add codeEF, rowID_to_gSoldeCodeEF
+'                    gSoldeCodeEF(rowID_to_gSoldeCodeEF, 1) = codeEF
+'                End If
+'                currRowID = gDictSoldeCodeEF(codeEF)
+'
+'                ws.Range("F" & currRow).Value = arrSoldesParGL(r, 2)
+'                gSoldeCodeEF(currRowID, 2) = gSoldeCodeEF(currRowID, 2) + arrSoldesParGL(r, 2)
+'                totalAC = totalAC + arrSoldesParGL(r, 2)
+'                ws.Range("H" & currRow).Value = arrSoldesParGL(r, 3)
+'                gSoldeCodeEF(currRowID, 3) = gSoldeCodeEF(currRowID, 3) + arrSoldesParGL(r, 3)
+'                totalAP = totalAP + CCur(arrSoldesParGL(r, 3))
+'
+'                'Preuve
+'                If Not dictPreuve.Exists(codeEF & "-" & glNo) Then
+'                    dictPreuve.Add codeEF & "-" & glNo, 0
+'                End If
+'                dictPreuve(codeEF & "-" & glNo) = dictPreuve(codeEF & "-" & glNo) + arrSoldesParGL(r, 2)
+'
+'                'Preuve - Sous-total par section
+'                section = Left$(codeEF, 1)
+'                If Not dictSectionSub.Exists(section) Then
+'                    dictSectionSub.Add section, 0
+'                End If
+'                dictSectionSub(section) = dictSectionSub(section) + arrSoldesParGL(r, 2)
+'            End If
+'        End If
+'
+'    currRow = currRow + 2
+'
+'    'Output GL totals
+'    ws.Range("D" & currRow).Value = "Totaux"
+'    ws.Range("F" & currRow).Value = totalAC
+'    ws.Range("H" & currRow).Value = totalAP
+'
+'    'Ajuste le format des montants
+'    ws.Range("F6:F" & currRow).NumberFormat = "###,###,##0.00 ;(###,###,##0.00);0.00"
+'    ws.Range("H6:H" & currRow).NumberFormat = "###,###,##0.00 ;(###,###,##0.00);0.00"
+'
+'    ws.Protect UserInterfaceOnly:=True
+'    ws.EnableSelection = xlUnlockedCells
+'
+'    Application.EnableEvents = True
+'
+'    ActiveWindow.ScrollRow = 1
+'
+'    Application.EnableEvents = False
+'    ws.Range("C6").Select
+'    Application.EnableEvents = True
+'
+'    'Libérer la mémoire
+'    Set dictPreuve = Nothing
+'    Set dictSoldesParGL = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:CalculerSoldesPourEF", vbNullString, startTime)
 
@@ -208,9 +254,6 @@ End Sub
 
 Sub shpPreparerEF_Click()
 
-    Dim ws As Worksheet
-    Set ws = wshGL_PrepEF
-    
     Call AssemblerEtatsFinanciers
     
 End Sub
@@ -225,12 +268,14 @@ Sub RetournerMenuGL()
     
     wshGL_PrepEF.Visible = xlSheetHidden
     
+    Application.EnableEvents = True
+    
     wshMenuGL.Activate
     wshMenuGL.Range("A1").Select
     
 End Sub
 
-Sub AssemblerEtatsFinanciers() '2025-08-01 @ 21:44
+Sub AssemblerEtatsFinanciers() '2025-08-14 @ 08:05
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerEtatsFinanciers", vbNullString, 0)
     
@@ -278,7 +323,7 @@ Sub AssemblerEtatsFinanciers() '2025-08-01 @ 21:44
 
 End Sub
 
-Sub CreerFeuillesEtFormat()
+Sub CreerFeuillesEtFormat() '2025-08-14 @ 09:32
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:CreerFeuillesEtFormat", vbNullString, 0)
     
@@ -288,22 +333,13 @@ Sub CreerFeuillesEtFormat()
 
     Application.ScreenUpdating = False
     
-    'Création des feuilles et application des formats
     Dim ws As Worksheet
     Dim i As Integer
     For i = LBound(nomsFeuilles) To UBound(nomsFeuilles)
-        On Error Resume Next
         Application.StatusBar = "Création de " & nomsFeuilles(i)
-        Set ws = ThisWorkbook.Sheets(nomsFeuilles(i)) 'Vérifier si la feuille existe déjà
-        On Error GoTo 0
-        
-        If ws Is Nothing Then ' Si la feuille n'existe pas, la créer
-            Set ws = ThisWorkbook.Sheets.Add(After:=ThisWorkbook.Sheets(ThisWorkbook.Sheets.count)) 'ThisWorkbook.Sheets()(Sheets.count))
-            ws.Name = nomsFeuilles(i)
-        End If
-        
-        'Appliquer une mise en page standard pour toutes les feuilles
-        With ThisWorkbook.Sheets(nomsFeuilles(i)).PageSetup
+        Set ws = Fn_ObtenirOuCreerFeuille(nomsFeuilles(i))
+
+        With ws.PageSetup
             .Orientation = xlPortrait
             .FitToPagesWide = False
             .FitToPagesTall = False
@@ -313,19 +349,15 @@ Sub CreerFeuillesEtFormat()
             .BottomMargin = Application.InchesToPoints(0.75)
             .CenterHorizontally = False
         End With
-        
         Set ws = Nothing
-        
     Next i
 
     Application.StatusBar = False
-    
     Application.ScreenUpdating = True
     
     Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:CreerFeuillesEtFormat", vbNullString, startTime)
     
 End Sub
-
 
 Sub AssemblerPageTitre0Main(dateAC As Date, dateAP As Date)
 
@@ -362,21 +394,15 @@ Sub AssemblerPageTitre1EtArrierePlanEtEntete(ws As Worksheet, dateAC As Date, da
     Call PositionnerCellule(ws, UCase$(Format$(dateAC, "dd mmmm yyyy")), 28, 2, 20, True, xlCenter)
     
     'Ajuster la largeur des colonnes et la hauteur de lignes
-    ws.Columns("A").ColumnWidth = 3
-    ws.Columns("B").ColumnWidth = 87
-    ws.Columns("C").ColumnWidth = 3
-    ws.Rows("1:28").RowHeight = 20
+    Call ConfigurerColonnesEtLignes(ws, Array(3, 87, 3), "1:28")
     
     'Ajuster la police pour la feuille
-    With ws.Cells
-        .Font.Name = "Verdana"
-        .Font.size = 20
-        .Font.Color = RGB(140, 131, 117)
-    End With
+    Call AppliquerMiseEnPageEF(ws, 20)
 
     'Fixer le printArea selon le nombre de lignes ET 3 colonnes
-    ActiveSheet.PageSetup.PrintArea = "$A1:$C" & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3
-
+    ws.PageSetup.PrintArea = "$A$1:$C$" & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 4
+    Debug.Print "Page Titre (Entête) - $A$1:$C$' & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 4"
+    
     Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerPageTitre1EtArrierePlanEtEntete", vbNullString, startTime)
 
 End Sub
@@ -412,10 +438,7 @@ Sub AssemblerTM1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As D
     ws.Cells.VerticalAlignment = xlCenter
     
     'Appliquer le format d'en-tête
-    Call PositionnerCellule(ws, UCase$(wsdADMIN.Range("NomEntreprise")), 1, 2, 12, True, xlLeft)
-    Call PositionnerCellule(ws, UCase$("Table des Matières"), 2, 2, 12, True, xlLeft)
-    Call PositionnerCellule(ws, UCase$("États Financiers"), 3, 2, 12, True, xlLeft)
-    Call PositionnerCellule(ws, UCase$("Au " & Format$(dateAC, "dd mmmm yyyy")), 4, 2, 12, True, xlLeft)
+    Call AjouterEnteteEF(ws, wsdADMIN.Range("NomEntreprise"), dateAC, 1)
     
     With ws.Range("B5:C5").Borders(xlEdgeBottom)
 '    With ws.Range("B6:E6").Borders(xlEdgeBottom)
@@ -433,7 +456,8 @@ Sub AssemblerTM1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As D
     ws.Rows("1:25").RowHeight = 15
     
     'Fixer le printArea selon le nombre de lignes ET 3 colonnes
-    ActiveSheet.PageSetup.PrintArea = "$A1:$D" & ws.Cells(ws.Rows.count, "B").End(xlUp).Row + 3
+    ws.PageSetup.PrintArea = "$A$1:$D$" & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3
+    Debug.Print "Table des matières (entête) - $A$1:$D$' & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3"
     
     Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerTM1ArrierePlanEtEntete", vbNullString, startTime)
 
@@ -466,16 +490,13 @@ Sub AssemblerTM2Lignes(ws As Worksheet)
         .Range("C:C").HorizontalAlignment = xlRight
         
        'Ajuster la police pour la feuille
-        With .Cells
-            .Font.Name = "Verdana"
-            .Font.size = 11
-            .Font.Color = RGB(140, 131, 117)
-        End With
+        Call AppliquerMiseEnPageEF(ws, 11)
     
     End With
     
     'Fixer le printArea selon le nombre de lignes ET 3 colonnes
-    ActiveSheet.PageSetup.PrintArea = "$A1:$D" & ws.Cells(ws.Rows.count, "B").End(xlUp).Row
+    ws.PageSetup.PrintArea = "$A$1:$D$" & ws.Cells(ws.Rows.count, 2).End(xlUp).Row
+    Debug.Print "Table des matières (lignes) - $A$1:$D$' & ws.Cells(ws.Rows.count, 2).End(xlUp).Row"
     
     Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerTM2Lignes", vbNullString, startTime)
 
@@ -522,19 +543,9 @@ Sub AssemblerER1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As D
     jourAC = day(dateAC)
     moisAC = month(dateAC)
     anneeAC = year(dateAC)
+    
     Dim titre As String
-    Dim nbMois As Integer
-    If moisAC > wsdADMIN.Range("MoisFinAnnéeFinancière") Then
-        nbMois = moisAC - wsdADMIN.Range("MoisFinAnnéeFinancière")
-    Else
-        nbMois = moisAC + 12 - wsdADMIN.Range("MoisFinAnnéeFinancière")
-    End If
-    If moisAC = wsdADMIN.Range("MoisFinAnnéeFinancière") And jourAC = DateSerial(anneeAC, moisAC + 1, 0) Then
-        titre = "Pour l'exercice financier se terminant le "
-    Else
-        titre = "Pour la période de " & nbMois & " mois terminée le "
-    End If
-    titre = titre & Format$(dateAC, "dd mmmm yyyy")
+    titre = Fn_TitreSelonNombreDeMois(dateAC)
     
     'Appliquer le format d'en-tête
     Call PositionnerCellule(ws, UCase$(wsdADMIN.Range("NomEntreprise")), 1, 2, 12, True, xlLeft)
@@ -547,8 +558,7 @@ Sub AssemblerER1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As D
     ws.Range("E5").Font.Bold = True
     With ws.Range("B5:E5").Borders(xlEdgeBottom)
         .LineStyle = xlContinuous
-        .ColorIndex = 0
-        .TintAndShade = 0
+        .Color = -11511710
         .Weight = xlMedium
     End With
     
@@ -601,11 +611,7 @@ Sub AssemblerER2Lignes(ws As Worksheet)
     Next rngRow
     
     'Ajuster la police pour la feuille
-    With ws.Cells
-        .Font.Name = "Verdana"
-        .Font.size = 10
-        .Font.Color = RGB(140, 131, 117)
-    End With
+    Call AppliquerMiseEnPageEF(ws, 10)
 
     'Augmenter la taille de police pour les 3 premières lignes
     ws.Range("1:3").Font.size = 12
@@ -633,7 +639,8 @@ Sub AssemblerER2Lignes(ws As Worksheet)
     End With
     
     'Fixer le printArea selon le nombre de lignes ET colonnes
-    ActiveSheet.PageSetup.PrintArea = "$A1:$F" & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3
+    ActiveSheet.PageSetup.PrintArea = "$A$1:$F$" & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3
+    Debug.Print "État des Résultats (Lignes) - $A$1:$F$' & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3"
     
     Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerER2Lignes", vbNullString, startTime)
 
@@ -735,11 +742,7 @@ Sub AssemblerBilan2Lignes(ws As Worksheet)
     Next rngRow
     
     'Ajuster la police pour la feuille
-    With ws.Cells
-        .Font.Name = "Verdana"
-        .Font.size = 10
-        .Font.Color = RGB(140, 131, 117)
-    End With
+    Call AppliquerMiseEnPageEF(ws, 10)
 
     'Augmenter la taille de police pour les 3 premières lignes
     ws.Range("1:3").Font.size = 12
@@ -755,7 +758,8 @@ Sub AssemblerBilan2Lignes(ws As Worksheet)
     ws.Range("G7:I38").Clear
     
     'Fixer le printArea selon le nombre de lignes ET colonnes
-    ActiveSheet.PageSetup.PrintArea = "$A1:$F" & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3
+    ActiveSheet.PageSetup.PrintArea = "$A$1:$F$" & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3
+    Debug.Print "Bilan (lignes) - $A$1:$F$' & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3"
     
     Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBilan2Lignes", vbNullString, startTime)
 
@@ -796,19 +800,9 @@ Sub AssemblerBNR1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As 
     jourAC = day(dateAC)
     moisAC = month(dateAC)
     anneeAC = year(dateAC)
+    
     Dim titre As String
-    Dim nbMois As Integer
-    If moisAC > wsdADMIN.Range("MoisFinAnnéeFinancière") Then
-        nbMois = moisAC - wsdADMIN.Range("MoisFinAnnéeFinancière")
-    Else
-        nbMois = moisAC + 12 - wsdADMIN.Range("MoisFinAnnéeFinancière")
-    End If
-    If moisAC = wsdADMIN.Range("MoisFinAnnéeFinancière") And jourAC = DateSerial(anneeAC, moisAC + 1, 0) Then
-        titre = "Pour l'exercice financier se terminant le "
-    Else
-        titre = "Pour la période de " & nbMois & " mois terminée le "
-    End If
-    titre = titre & Format$(dateAC, "dd mmmm yyyy")
+    titre = Fn_TitreSelonNombreDeMois(dateAC)
     
     'Appliquer le format d'en-tête
     Call PositionnerCellule(ws, UCase$(wsdADMIN.Range("NomEntreprise")), 1, 2, 12, True, xlLeft)
@@ -873,11 +867,7 @@ Sub AssemblerBNR2Lignes(ws As Worksheet)
     Next rngRow
     
     'Ajuster la police pour la feuille
-    With ws.Cells
-        .Font.Name = "Verdana"
-        .Font.size = 10
-        .Font.Color = RGB(140, 131, 117)
-    End With
+    Call AppliquerMiseEnPageEF(ws, 10)
     
     'Augmenter la taille de police pour les 3 premières lignes
     ws.Range("1:3").Font.size = 12
@@ -893,7 +883,8 @@ Sub AssemblerBNR2Lignes(ws As Worksheet)
     ws.Range("G:J").Delete '2025-08-01 @ 21:53
     
     'Fixer le printArea selon le nombre de lignes ET colonnes
-    ActiveSheet.PageSetup.PrintArea = "$A1:$F" & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3
+    ActiveSheet.PageSetup.PrintArea = "$A$1:$F$" & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3
+    Debug.Print "BNR (lignes) - $A$1:$F$' & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3"
     
     Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBNR2Lignes", vbNullString, startTime)
 
@@ -1094,3 +1085,97 @@ Sub ImprimerLigneEF(ws As Worksheet, ByRef currRow As Integer, LigneEF As String
     
 End Sub
 
+Sub AppliquerMiseEnPageEF(ws As Worksheet, taillePolice As Integer) '2025-08-14 @ 09:12
+
+    With ws.Cells
+        .Font.Name = "Verdana"
+        .Font.size = taillePolice
+        .Font.Color = RGB(140, 131, 117)
+    End With
+
+End Sub
+
+Sub ConfigurerColonnesEtLignes(ws As Worksheet, largeurCols As Variant, hauteurLignes As String) '2025-08-14 @ 09:37
+
+    Dim i As Integer
+    For i = LBound(largeurCols) To UBound(largeurCols)
+        ws.Columns(Chr(65 + i)).ColumnWidth = largeurCols(i)
+    Next i
+    ws.Rows(hauteurLignes).RowHeight = 20
+    
+End Sub
+
+Sub AjouterEnteteEF(ws As Worksheet, nomEntreprise As String, dateEF As Date, ligneDépart As Integer) '2025-08-14 @ 09:40
+
+    Call PositionnerCellule(ws, UCase$(nomEntreprise), ligneDépart, 2, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$("Table des Matières"), ligneDépart + 1, 2, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$("États Financiers"), ligneDépart + 2, 2, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$("Au " & Format$(dateEF, "dd mmmm yyyy")), ligneDépart + 3, 2, 12, True, xlLeft)
+    
+End Sub
+
+Function Fn_TitreSelonNombreDeMois(dateAC As Date) As String '2025-08-14 @ 19:42
+
+    Dim dateFinAnneeFinanciere As Date
+    dateFinAnneeFinanciere = Fn_DernierJourAnneeFinanciere(dateAC)
+    
+    Dim nbMois As Integer
+    
+    If month(dateAC) > wsdADMIN.Range("MoisFinAnnéeFinancière") Then
+        nbMois = month(dateAC) - wsdADMIN.Range("MoisFinAnnéeFinancière")
+    Else
+        nbMois = month(dateAC) + 12 - wsdADMIN.Range("MoisFinAnnéeFinancière")
+    End If
+    If month(dateAC) = wsdADMIN.Range("MoisFinAnnéeFinancière") And day(dateAC) = day(dateFinAnneeFinanciere) Then
+        Fn_TitreSelonNombreDeMois = "Pour l'exercice financier se terminant le " & Format$(dateAC, "dd mmmm yyyy")
+    Else
+        Fn_TitreSelonNombreDeMois = "Pour la période de " & nbMois & " mois terminée le " & Format$(dateAC, "dd mmmm yyyy")
+    End If
+    
+End Function
+
+Sub ImprimerEtatsFinanciers() '2025-08-14 @ 09:12
+
+    Dim nomsFeuilles As Variant
+    nomsFeuilles = Array("Page titre", "Table des Matières", "État des Résultats", "BNR", "Bilan")
+
+    Dim nomFeuille As Variant
+    For Each nomFeuille In nomsFeuilles
+        With ThisWorkbook.Sheets(nomFeuille)
+            .Visible = xlSheetVisible
+            .Activate
+            .PrintOut
+        End With
+    Next nomFeuille
+    
+End Sub
+
+Sub CalculerSoldesCourantEtComparatif(noCompteGL As String, moisCloture As Long, ligne() As Variant, _
+                         ByRef soldeCourant As Currency, ByRef soldeComparatif As Currency) '2025-08-14 @ 07:54
+
+    'Initialiser les soldes
+    soldeCourant = 0
+    soldeComparatif = 0
+
+    'Traitement différent pour les postes du bilan & état des résultats
+    Dim k As Long
+    If noCompteGL < "4000" Then
+        For k = 1 To 13
+            soldeComparatif = soldeComparatif + ligne(k)
+        Next k
+        For k = 1 To 25
+            soldeCourant = soldeCourant + ligne(k)
+        Next k
+    Else
+        For k = (13 - moisCloture + 1) To 13
+            soldeComparatif = soldeComparatif + ligne(k)
+        Next k
+        For k = (25 - moisCloture + 1) To 25
+            soldeCourant = soldeCourant + ligne(k)
+        Next k
+    End If
+
+    Debug.Print "# G/L : " & noCompteGL & " " & Right(Space(15) & Format(soldeComparatif, "#,##0.00"), 15) & " " & _
+                            Right(Space(15) & Format(soldeCourant, "#,##0.00"), 15)
+    
+End Sub

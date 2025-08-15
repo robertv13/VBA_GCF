@@ -10,9 +10,7 @@ Sub AfficherFormulaireConfirmation() '2025-03-12 @ 12:40
     Call PreparerDonneesPourListView
     
     'Vérifiez si la collection de factures est vide
-    If Factures Is Nothing Then
-        MsgBox "Il n'y a aucune facture à confirmer", vbInformation, "Toutes les factures ont été confirmées"
-    ElseIf Factures.count = 0 Then
+    If Factures Is Nothing Or Factures.count = 0 Then
         MsgBox "Il n'y a aucune facture à confirmer", vbInformation, "Toutes les factures ont été confirmées"
     Else
         'Charger le UserForm seulement avec une collection qui n'est pas vide

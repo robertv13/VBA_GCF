@@ -1,7 +1,13 @@
 Attribute VB_Name = "modLog_Analysis"
 Option Explicit
 
-Sub zz_OuvrirRepertoireEtTraiterFichiers()
+Sub shpTraiterLogFiles_Click()
+
+    Call OuvrirRepertoireLogEtTraiterFichiers
+
+End Sub
+
+Sub OuvrirRepertoireLogEtTraiterFichiers()
 
     'Initialisation du FileDialog pour sélectionner un répertoire
     Dim fileDialog As fileDialog

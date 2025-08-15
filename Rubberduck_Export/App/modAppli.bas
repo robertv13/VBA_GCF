@@ -76,33 +76,35 @@ ErrorHandler:
     
 End Sub
 
-Function Fn_VersionCompare(v1 As String, v2 As String) As Integer '2025-08-12 @ 06:04
+Sub VerifierVersionApplication(path As String, versionApplication As String) '2025-08-12 @ 16:08
 
-    Dim arr1() As String
-    Dim arr2() As String
-    Dim i As Integer
-
-    arr1 = Split(v1, ".")
-    arr2 = Split(v2, ".")
-
-    For i = 0 To Application.WorksheetFunction.Max(UBound(arr1), UBound(arr2))
-        Dim n1 As Integer
-        Dim n2 As Integer
-        If i <= UBound(arr1) Then n1 = val(arr1(i))
-        If i <= UBound(arr2) Then n2 = val(arr2(i))
-
-        If n1 < n2 Then
-            Fn_VersionCompare = -1
-            Exit Function
-        ElseIf n1 > n2 Then
-            Fn_VersionCompare = 1
-            Exit Function
-        End If
-    Next i
-
-    Fn_VersionCompare = 0 'Versions égales
+    Dim versionData As String
     
-End Function
+    On Error GoTo ErreurLecture
+    
+    versionData = Trim(Fn_LireFichierTXT(path & Application.PathSeparator & "APP_Version.txt"))
+    
+    If versionData <> versionApplication Then
+        MsgBox "La version de l'application (" & versionApplication & ") ne correspond pas" & vbCrLf & vbCrLf & _
+               "à la version des données (" & versionData & ")." & vbCrLf & vbCrLf & _
+               "Veuillez mettre à jour votre application -OU-" & vbCrLf & vbCrLf & _
+               "contactez le développeur", _
+               vbCritical, _
+               "Version de l'application incompatible avec les données"
+               
+        Call FermerApplicationNormalement(modFunctions.Fn_NomUtilisateurWindows())
+    End If
+    Exit Sub
+
+ErreurLecture:
+    MsgBox "Impossible de lire le fichier de version du répertoire" & vbNewLine & vbNewLine & _
+            path, _
+            vbExclamation, _
+            "Impossible de lire la version des données"
+    
+    Call FermerApplicationNormalement(modFunctions.Fn_NomUtilisateurWindows())
+    
+End Sub
 
 Function Fn_RepertoireBaseApplication() As String '2025-03-03 @ 20:28
    

@@ -1,4 +1,4 @@
-﻿📘 Journal typographique — 08/12/2025 14:58:40
+﻿📘 Journal typographique — 08/14/2025 20:11:01
 
 🔧 Fichier : clsControlWrapper.cls
 
@@ -15,6 +15,12 @@
 🔧 Fichier : Feuil2.doccls
 
 🔧 Fichier : Feuil3.doccls
+
+🔧 Fichier : Feuil4.doccls
+
+🔧 Fichier : Feuil5.doccls
+
+🔧 Fichier : Feuil7.doccls
 
 🔧 Fichier : modAPIWindows.bas
 
@@ -466,6 +472,9 @@
 🔧 Fichier : wshzDocNamedRange.doccls
 
 🔧 Fichier : wshzDocSubsAndFunctions.doccls
+
+🔧 Fichier : wshzDocTestsAndTodos.doccls
+   ✅ Remplacé : .value ➜ .Value
 
 🔧 Fichier : wshzDocTests_And_Todos.doccls
    ✅ Remplacé : .value ➜ .Value

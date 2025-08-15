@@ -487,7 +487,7 @@ CleanUpADO:
     
 End Sub
 
-Function Fn_Tableau24MoisSommeTransGL(dateLimite As Date, periode As String, inclureEcrCloture As Boolean) As Variant '2025-08-05 @ 05:58
+Function Fn_Tableau24MoisSommeTransGL(dateLimite As Date, inclureEcrCloture As Boolean) As Variant '2025-08-05 @ 05:58
 
     Dim collComptes As Collection
     Dim tableau24Mois() As Variant
@@ -495,6 +495,9 @@ Function Fn_Tableau24MoisSommeTransGL(dateLimite As Date, periode As String, inc
     Dim strSQL As String
     Dim dateDebutOperations As Date
     Dim compteTrouve As Boolean
+    Dim periode As String
+    
+    periode = Fn_Construire24PeriodesGL(dateLimite)
     
     'Chemin du classeur MASTER.xlsx
     fichier = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & wsdADMIN.Range("MASTER_FILE").Value
@@ -568,6 +571,8 @@ Function Fn_Tableau24MoisSommeTransGL(dateLimite As Date, periode As String, inc
                 Else
                     j = 1
                 End If
+                Debug.Print "C", i, tableau24Mois(i, 0), annee, mois, j, CCur(recSet("transTotal"))
+                
                 tableau24Mois(i, j) = tableau24Mois(i, j) + CCur(recSet("transTotal"))
                 compteTrouve = True
                 Exit For
@@ -613,24 +618,24 @@ Sub zz_TestTableau24MoisGLDansExcel() '2025-08-05 @ 05:58
     Dim tableau() As Variant
     Dim i As Long, j As Long
     
-    Dim dateCutoff As Date
-    dateCutoff = #7/31/2025#
+    Dim dateCutOff As Date
+    dateCutOff = #7/31/2025#
     
     Dim periodes As String
-    periodes = Fn_Construire24PeriodesGL(dateCutoff)
+    periodes = Fn_Construire24PeriodesGL(dateCutOff)
     
     'Détermine le mois de l'année financière en fonction de la date limite
     Dim dernierMoisAnneeFinanciere As Long
     dernierMoisAnneeFinanciere = wsdADMIN.Range("MoisFinAnnéeFinancière")
     Dim moisAnneeFinanciere As Long
-    moisAnneeFinanciere = month(dateCutoff)
+    moisAnneeFinanciere = month(dateCutOff)
     If moisAnneeFinanciere > dernierMoisAnneeFinanciere Then
         moisAnneeFinanciere = moisAnneeFinanciere - dernierMoisAnneeFinanciere
     Else
         moisAnneeFinanciere = moisAnneeFinanciere + 12 - dernierMoisAnneeFinanciere
     End If
     
-    Debug.Print "Pour la date '" & Format$(dateCutoff, "yyyy-mm-dd") & "' le mois de l'année financière est " & moisAnneeFinanciere
+    Debug.Print "Pour la date '" & Format$(dateCutOff, "yyyy-mm-dd") & "' le mois de l'année financière est " & moisAnneeFinanciere
     
     'Feuille de travail
     Dim feuilleNom As String
@@ -645,7 +650,7 @@ Sub zz_TestTableau24MoisGLDansExcel() '2025-08-05 @ 05:58
     'Appel de la fonction
     Dim inclureEcritureCloture As Boolean
     inclureEcritureCloture = False
-    tableau = Fn_Tableau24MoisSommeTransGL(dateCutoff, periodes, inclureEcritureCloture)
+    tableau = Fn_Tableau24MoisSommeTransGL(dateCutOff, inclureEcritureCloture)
     
     With wsOutput
         .Cells(1, 1) = 0
@@ -697,3 +702,59 @@ Sub zz_TestTableau24MoisGLDansExcel() '2025-08-05 @ 05:58
     wsOutput.Columns.AutoFit
     
 End Sub
+
+Sub zz_TestTableau24MoisMemoire() '2025-08-12 @ 19:39
+
+    Dim tableau() As Variant
+    Dim i As Long, j As Long
+    
+    Dim dateCutOff As Date
+    dateCutOff = #7/31/2025#
+    
+    Dim periodes As String
+    periodes = Fn_Construire24PeriodesGL(dateCutOff)
+    
+    'Détermine le mois de l'année financière en fonction de la date limite
+    Dim dernierMoisAnneeFinanciere As Long
+    dernierMoisAnneeFinanciere = wsdADMIN.Range("MoisFinAnnéeFinancière")
+    Dim moisAnneeFinanciere As Long
+    moisAnneeFinanciere = month(dateCutOff)
+    If moisAnneeFinanciere > dernierMoisAnneeFinanciere Then
+        moisAnneeFinanciere = moisAnneeFinanciere - dernierMoisAnneeFinanciere
+    Else
+        moisAnneeFinanciere = moisAnneeFinanciere + 12 - dernierMoisAnneeFinanciere
+    End If
+    
+    'Appel de la fonction
+    Dim inclureEcritureCloture As Boolean
+    inclureEcritureCloture = False
+    tableau = Fn_Tableau24MoisSommeTransGL(dateCutOff, inclureEcritureCloture)
+    
+    'Exemple d’affichage dans la fenêtre de débogage
+    Dim soldeAC As Currency
+    Dim soldeAP As Currency
+    Dim k As Long
+    Dim r As Long
+    For i = LBound(tableau, 1) To UBound(tableau, 1)
+        soldeAC = 0
+        soldeAP = 0
+        If tableau(i, 0) < "4000" Then
+            For k = 1 To 13
+                soldeAP = soldeAP + tableau(i, k)
+            Next k
+            For k = 1 To 25
+                soldeAC = soldeAC + tableau(i, k)
+            Next k
+        Else
+            For k = (13 - moisAnneeFinanciere + 1) To 13
+                soldeAP = soldeAP + tableau(i, k)
+            Next k
+            For k = (25 - moisAnneeFinanciere + 1) To 25
+                soldeAC = soldeAC + tableau(i, k)
+            Next k
+        End If
+        Debug.Print tableau(i, 0), Format$(soldeAP, "#,##0.00"), Format$(soldeAC, "#,##0.00")
+    Next i
+    
+End Sub
+

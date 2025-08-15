@@ -479,15 +479,15 @@ Sub zz_ComparerValeursTECLocalVsTECTDBData()
     
     Dim i As Long
     Dim tecID As Long
-    Dim dateCutoff As Date
-    dateCutoff = Date
+    Dim dateCutOff As Date
+    dateCutOff = Date
     
     Dim h As Currency, hTEC As Currency
     'Boucle dans TEC_Local
     Debug.Print "#048 - Mise en mémoire TEC_LOCAL"
     For i = 3 To lurTEC
         With wsTEC
-            If .Range("D" & i).Value > dateCutoff Then Stop
+            If .Range("D" & i).Value > dateCutOff Then Stop
             tecID = CLng(.Range("A" & i).Value)
             If arr(tecID, 1) <> vbNullString Then Stop
             arr(tecID, 1) = tecID
@@ -498,7 +498,7 @@ Sub zz_ComparerValeursTECLocalVsTECTDBData()
             If h <> 0 Then
                 If UCase$(.Range("J" & i).Value) = "VRAI" And Len(.Range("E" & i).Value) > 2 Then
                     If UCase$(.Range("L" & i).Value) = "FAUX" Then
-                        If .Range("M" & i).Value <= dateCutoff Then
+                        If .Range("M" & i).Value <= dateCutOff Then
                             arr(tecID, 2) = h
                         Else
                             Stop
@@ -514,7 +514,7 @@ Sub zz_ComparerValeursTECLocalVsTECTDBData()
     Debug.Print "#049 - Mise en mémoire TEC_TDB"
     For i = 2 To lurTDB
         With wsTDB
-            If .Range("D" & i).Value > dateCutoff Then Stop
+            If .Range("D" & i).Value > dateCutOff Then Stop
             tecID = CLng(.Range("A" & i).Value)
             arr(tecID, 1) = tecID
             arr(tecID, 3) = .Range("Q" & i).Value

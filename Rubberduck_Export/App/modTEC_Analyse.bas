@@ -838,15 +838,15 @@ Sub EffacerCheckBox()
     Dim ws As Worksheet: Set ws = wshTEC_Analyse
     
     'Check if any CheckBox exists and then delete it/them
-    Dim Sh As Shape
-    For Each Sh In ws.Shapes
-        If InStr(Sh.Name, "CheckBox") Then
-            Sh.Delete
+    Dim sh As Shape
+    For Each sh In ws.Shapes
+        If InStr(sh.Name, "CheckBox") Then
+            sh.Delete
         End If
-    Next Sh
+    Next sh
     
     'Libérer la mémoire
-    Set Sh = Nothing
+    Set sh = Nothing
     Set ws = Nothing
     
 End Sub
@@ -882,15 +882,15 @@ Sub EffacerSectionHonorairesEtCheckBox() 'RMV_15
     Application.EnableEvents = True
     
     'Clear any leftover CheckBox
-    Dim Sh As Shape
-    For Each Sh In ws.Shapes
-        If InStr(Sh.Name, "CheckBox") Then
-            Sh.Delete
+    Dim sh As Shape
+    For Each sh In ws.Shapes
+        If InStr(sh.Name, "CheckBox") Then
+            sh.Delete
         End If
-    Next Sh
+    Next sh
 
     'Libérer la mémoire
-    Set Sh = Nothing
+    Set sh = Nothing
     Set ws = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:EffacerSectionHonorairesEtCheckBox", vbNullString, startTime)

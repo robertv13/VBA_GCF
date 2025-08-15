@@ -549,7 +549,7 @@ Sub InsererBoutonRetourMenu() '2025-07-01 @ 08:54
 
 End Sub
 
-Sub shpRetourMenu_Click()
+Sub shpRetourMenuGL_Click()
 
     wshMenuGL.Activate 'Adapte le nom de ta feuille menu si nécessaire
     

@@ -113,7 +113,7 @@ Sub DetruireLigneTEC() '2023-12-23 @ 07:05
     
     Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:DetruireLigneTEC - Le DELETE est confirmé - " & CStr(-ufSaisieHeures.txtTECID.Value), -1) '2024-10-05 @ 07:21
     
-    Dim Sh As Worksheet: Set Sh = wsdTEC_Local
+    Dim sh As Worksheet: Set sh = wsdTEC_Local
     
     Dim tecID As Long
     'With a negative ID value, it means to soft delete this record
@@ -150,7 +150,7 @@ Clean_Exit:
     ufSaisieHeures.txtClient.SetFocus
 
     'Libérer la mémoire
-    Set Sh = Nothing
+    Set sh = Nothing
 
     Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:DetruireLigneTEC", vbNullString, startTime)
 

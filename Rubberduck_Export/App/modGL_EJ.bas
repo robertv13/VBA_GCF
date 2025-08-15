@@ -924,7 +924,7 @@ Sub RetournerAuMenuComptabiliteEJ()
     
     'Rétablir la forme du bouton (Mettre à jour / Renverser)
     Dim shp As Shape
-    Set shp = wshGL_EJ.Shapes("chkMettreAJour")
+    Set shp = wshGL_EJ.Shapes("shpMettreAJour")
     Call RestaurerFormeEJ(shp)
 
     'Nouvelle façon de faire

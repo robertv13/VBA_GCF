@@ -3337,7 +3337,7 @@ Private Sub VerifierTEC(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef read
     Dim ws As Worksheet: Set ws = wsdTEC_Local
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 8055 'What is the last TECID analyzed ?
+    lastTECIDReported = 8167 'What is the last TECID analyzed ?
     
     'Réference au UserDefined structure 'StatistiquesTEC'
     Dim stats As StatistiquesTEC
@@ -4616,6 +4616,22 @@ Private Function AnalyserLigneTEC(data As Variant, i As Long, ByVal wsOutput As 
     
     'À la fin, retourner le résultat global pour cette ligne
     AnalyserLigneTEC = isValid
+    
+End Function
+
+Function Fn_LireFichierTXT(chemin As String) As String '2025-08-12 @ 15:46
+
+    Dim fso As Object
+    Set fso = CreateObject("Scripting.FileSystemObject")
+    Dim fichier As Object
+    
+    If fso.fileExists(chemin) Then
+        Set fichier = fso.OpenTextFile(chemin, 1)
+        Fn_LireFichierTXT = fichier.ReadLine
+        fichier.Close
+    Else
+        Fn_LireFichierTXT = ""
+    End If
     
 End Function
 

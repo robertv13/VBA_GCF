@@ -1981,6 +1981,28 @@ Function Fn_PremierJourAnneeFinanciere(maxDate As Date) As Date
     
 End Function
 
+Function Fn_DernierJourAnneeFinanciere(dateReference As Date) As Date '2025-08-14 @ 20:05
+
+    Dim dt As Date
+    Dim finExercice As Date
+    Dim anneeCloture As Integer
+    Dim dernierJour As Integer
+
+    'Calcul de l'année du début d'exercice
+    If month(dateReference) > wsdADMIN.Range("MoisFinAnnéeFinancière") Then
+        anneeCloture = year(dateReference) + 1
+    Else
+        anneeCloture = year(dateReference)
+    End If
+
+    'Retourner le 1er jour du mois suivant la fin d'exercice
+    dernierJour = day(DateSerial(anneeCloture, wsdADMIN.Range("MoisFinAnnéeFinancière") + 1, 0))
+    finExercice = DateSerial(anneeCloture, wsdADMIN.Range("MoisFinAnnéeFinancière"), dernierJour)
+
+    Fn_DernierJourAnneeFinanciere = finExercice
+    
+End Function
+
 Function Fn_TableauContientDesDonnees(lo As ListObject) As Boolean '2025-06-01 @ 06:41
 
     If lo.DataBodyRange Is Nothing Then
@@ -2113,21 +2135,89 @@ Function Fn_ConsidereOuPasCetteEcriture(ByVal source As String) As Boolean '2025
     
 End Function
 
-'Function CompterOccurrences(texte As String, motif As String) As Long
-'
-'    'Initialiser la position et trouver la position
-'    Dim position As Long
-'    position = InStr(1, texte, motif, vbTextCompare)
-'
-'    'Parcourir le texte pour trouver toutes les occurrences
-'    Dim compteur As Long
-'    Do While position > 0
-'        compteur = compteur + 1
-'        position = InStr(position + Len(motif), texte, motif, vbTextCompare)
-'    Loop
-'
-'    'Retourner le nombre d'occurrences
-'    CompterOccurrences = compteur
-'
-'End Function
-'
+Function Fn_ExtraireVersionDepuisNomClasseur() As String '2025-08-12 @ 16:04
+
+    Dim posV As Long
+    Dim posExt As Long
+    Dim versionBrute As String
+    Dim nomFichier As String
+    nomFichier = ThisWorkbook.Name
+
+    posV = InStr(nomFichier, "APP_v")
+    If posV = 0 Then
+        Fn_ExtraireVersionDepuisNomClasseur = ""
+        Exit Function
+    End If
+
+    versionBrute = Mid(nomFichier, posV + 5)
+    posExt = InStr(versionBrute, ".xlsb")
+    If posExt > 0 Then
+        versionBrute = Left(versionBrute, posExt - 1)
+    End If
+
+    Fn_ExtraireVersionDepuisNomClasseur = versionBrute
+    
+End Function
+
+Function Fn_DateMoinsUnAn(dateInitiale As Date) As Date '2025-08-13 @ 16:46
+
+    Dim anneeCible As Integer
+    Dim mois As Integer
+    Dim jour As Integer
+    Dim tentative As Date
+
+    anneeCible = year(dateInitiale) - 1
+    mois = month(dateInitiale)
+    jour = day(dateInitiale)
+
+    'Cas spécial : dernier jour de février
+    If mois = 2 And jour = day(DateSerial(year(dateInitiale), 3, 0)) Then
+        'On retourne le dernier jour de février de l'année précédente
+        tentative = DateSerial(anneeCible, 3, 0)
+    Else
+        On Error Resume Next
+        tentative = DateSerial(anneeCible, mois, jour)
+        If Err.Number <> 0 Then
+            Err.Clear
+            tentative = DateSerial(anneeCible, mois + 1, 0)
+        End If
+        On Error GoTo 0
+    End If
+
+    Fn_DateMoinsUnAn = tentative
+    
+End Function
+
+Function Fn_ObtenirOuCreerFeuille(ByVal nomFeuille As String) As Worksheet '2025-08-14 @ 09:47
+
+    Dim ws As Worksheet
+    Dim feuilleExiste As Boolean
+    Dim sh As Worksheet
+
+    feuilleExiste = False
+    'Vérifie si la feuille existe
+    For Each sh In ThisWorkbook.Worksheets
+        If sh.Name = nomFeuille Then
+            Set ws = sh
+            feuilleExiste = True
+            Exit For
+        End If
+    Next sh
+
+    'Si elle n'existe pas, on la crée
+    If Not feuilleExiste Then
+        Set ws = ThisWorkbook.Worksheets.Add(After:=ThisWorkbook.Worksheets(ThisWorkbook.Worksheets.count))
+        On Error Resume Next
+        ws.Name = nomFeuille
+        If Err.Number <> 0 Then
+            MsgBox "Impossible de nommer la feuille '" & nomFeuille & "'.", vbExclamation
+            Err.Clear
+        End If
+        On Error GoTo 0
+    End If
+
+    'Retourne la feuille
+    Set Fn_ObtenirOuCreerFeuille = ws
+    
+End Function
+

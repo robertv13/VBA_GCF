@@ -46,7 +46,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:08
     
     'Rétablir le bouton "Mettre à jour / Renversement"
     Dim shp As Shape
-    Set shp = ws.Shapes("btnUpdate")
+    Set shp = ws.Shapes("shpMettreAJour")
     
     With shp
         .Left = 530

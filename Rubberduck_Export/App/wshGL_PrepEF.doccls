@@ -22,7 +22,7 @@ Private Sub Worksheet_Activate()
 
     'Cache le bouton 'Actualiser'
     Dim shp As Shape
-    Set shp = ws.Shapes("Actualiser")
+    Set shp = ws.Shapes("shpPreparationEtatsFinanciers")
     shp.Visible = False
     
     'Clear the display area & display the account number & description
@@ -99,9 +99,11 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         
         'Afficher le bouton 'Actualiser'
         Dim shp As Shape
-        Set shp = ws.Shapes("Actualiser")
+        Set shp = ws.Shapes("shpPreparationEtatsFinanciers")
         shp.Visible = True
         
     End If
+
+    Application.EnableEvents = True
 
 End Sub
