@@ -11,10 +11,8 @@ Sub AccederMenuTEC()
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMenu:AccederMenuTEC", vbNullString, 0)
     
-    wshMenuTEC.Visible = xlSheetVisible
-    wshMenuTEC.Activate
-    wshMenuTEC.Range("A1").Select
-
+    Call modAppli.QuitterFeuillePourMenu(wshMenuTEC, True) '2025-08-19 @ 06:59
+    
     Call modDev_Utils.EnregistrerLogApplication("modMenu:AccederMenuTEC", vbNullString, startTime)
 
 End Sub
@@ -38,9 +36,9 @@ Sub AccederMenuFacturation()
             modFunctions.Fn_NomUtilisateurWindows() = "vgervais" Or _
             modFunctions.Fn_NomUtilisateurWindows() = "Vlad_Portable" Or _
             modFunctions.Fn_NomUtilisateurWindows() = "Oli_Portable" Then
-        wshMenuFAC.Visible = xlSheetVisible
-        wshMenuFAC.Activate
-        wshMenuFAC.Range("A1").Select
+            
+        Call modAppli.QuitterFeuillePourMenu(wshMenuFAC, True) '2025-08-19 @ 07:12
+        
     Else
         Application.EnableEvents = False
         wshMenu.Activate
@@ -67,9 +65,9 @@ Sub AccederMenuComptabilite()
             modFunctions.Fn_NomUtilisateurWindows() = "RobertMV" Or _
             modFunctions.Fn_NomUtilisateurWindows() = "robertmv" Or _
             modFunctions.Fn_NomUtilisateurWindows() = "User" Then
-        wshMenuGL.Visible = xlSheetVisible
-        wshMenuGL.Activate
-        wshMenuGL.Range("A1").Select
+            
+        Call modAppli.QuitterFeuillePourMenu(wshMenuGL, True) '2025-08-21 @ 07:12
+        
     Else
         Application.EnableEvents = False
         wshMenu.Activate
@@ -143,10 +141,6 @@ Sub FermerApplicationNormalement(ByVal userName As String) 'Nouvelle procédure 
     
     Dim ws As Worksheet
     Set ws = wsdADMIN
-'    With ws
-'        .Range("USER_DATE_FORMAT").Value = vbNullString
-'        .Range("B2").Value = vbNullString
-'    End With
     
     Call ViderTableauxStructures
     
@@ -211,6 +205,8 @@ Sub CacherFormesEnFonctionUtilisateur(ByVal userName As String) '2025-06-06 @ 11
         "shpImporterCorrigerMASTER", _
         "shpVérificationIntégrité", _
         "shpTraitementFichiersLog", _
+        "shpSynchronisationDEVversPROD", _
+        "shpAuditVBAProcedures", _
         "shpCompterLignesCode", _
         "shpRechercherCode", _
         "shpCorrigerNomClientTEC", _

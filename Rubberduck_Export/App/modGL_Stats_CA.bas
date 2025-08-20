@@ -220,18 +220,14 @@ Sub AjusterTableauNouvelleAnnee(ws As Worksheet, dateFinAnnée As Date) '2025-08
     
 End Sub
 
-Sub shpRetournerMenuGL_Click()
+Sub shpRetournerAuMenu_Click()
 
-    Call RetournerMenuGL
+    Call RetournerAuMenu
 
 End Sub
 
-Sub RetournerMenuGL()
-    
-    wshGL_Stats_CA.Visible = xlSheetHidden
-    
-    wshMenuGL.Activate
-    wshMenuGL.Range("A1").Select
-    
-End Sub
+Sub RetournerAuMenu()
 
+    Call modAppli.QuitterFeuillePourMenu(wshMenuGL, True) '2025-08-19 @ 07:22
+
+End Sub

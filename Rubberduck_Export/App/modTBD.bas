@@ -546,4 +546,20 @@ Option Explicit
 '
 'End Function
 '
+'Sub EffacerFormesNonRequises() '2024-08-15 @ 14:42
+'
+'    Dim ws As Worksheet: Set ws = wshGL_BV
+'
+'    Dim shp As Shape
+'    For Each shp In ws.Shapes
+'        If InStr(shp.Name, "Rounded Rectangle ") Then
+'            shp.Delete
+'        End If
+'    Next shp
+'
+'    'Libérer la mémoire
+'    Set shp = Nothing
+'    Set ws = Nothing
+'
+'End Sub
 '

@@ -239,7 +239,7 @@ Sub CreerNouvelEncaissement() '2024-08-21 @ 14:58
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:CreerNouvelEncaissement", vbNullString, 0)
 
-    Call EffacerFeuilleEncaissement
+    Call NettoyerFeuilleEncaissement
     
     Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:CreerNouvelEncaissement", vbNullString, startTime)
     
@@ -679,23 +679,23 @@ Sub EffacerCasesACocherENC(row As Long)
 
 End Sub
 
-Sub EffacerFeuilleEncaissement()
+Sub NettoyerFeuilleEncaissement()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:EffacerFeuilleEncaissement", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:NettoyerFeuilleEncaissement", vbNullString, 0)
     
-    wshENC_Saisie.Unprotect
+    If wshENC_Saisie.ProtectContents Then
+        wshENC_Saisie.Unprotect
+    End If
+    
+    Application.EnableEvents = False
     
     With wshENC_Saisie
-    
-        Application.EnableEvents = False
-        
         .Range("B5,F5:H5,K7,F9:I9,E12:K36").ClearContents 'Clear Fields
         .Range("B12:B36").ClearContents
         
         .Range("K5").Value = vbNullString
         .Range("F7").Value = "Banque" 'Set Default type
         .Range("F5").Activate
-        
     End With
     
     'Note the lastUsedRow for checkBox deletion
@@ -724,7 +724,7 @@ Sub EffacerFeuilleEncaissement()
         .EnableSelection = xlUnlockedCells
     End With
 
-    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:EffacerFeuilleEncaissement", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:NettoyerFeuilleEncaissement", vbNullString, startTime)
 
 End Sub
 
@@ -757,44 +757,32 @@ Sub chkAppliquerEncaissementLigne()
     
 End Sub
 
-Sub shpSortirEncaissement_Click()
+Sub shpRetournerAuMenu_Click()
 
+    Call RetournerAuMenu
+    
+End Sub
+
+Sub RetournerAuMenu()
+    
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:RetournerAuMenu", vbNullString, 0)
+   
     If ActiveSheet.Range("K7").Value <> 0 Then
         Dim reponse As VbMsgBoxResult
         reponse = MsgBox("Voulez-vous vraiment quitter SANS enregistrer" & vbNewLine & vbNewLine & _
                 "l'encaissement qui n'a pas été mis à jour ?", _
                 vbExclamation + vbYesNo + vbDefaultButton2, "Confirmation avant de quitter SANS enregistrer")
         If reponse = vbYes Then
-            'Exemple d'action : retour à la feuille "MenuPrincipal"
-            Call RetournerMenuComptabilite
-'            Application.GoTo Worksheets("MenuPrincipal").Range("A1")
+            'Retour au menu
+            Call modAppli.QuitterFeuillePourMenu(wshMenuGL, True) '2025-08-19 @ 06:52
+        Else
+            Exit Sub
         End If
     Else
-        Call RetournerMenuComptabilite
+        Call modAppli.QuitterFeuillePourMenu(wshMenuGL, True) '2025-08-19 @ 06:52
     End If
     
-End Sub
-
-Sub RetournerMenuComptabilite()
-    
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:RetournerMenuComptabilite", vbNullString, 0)
-   
-    If wshENC_Saisie.ProtectContents Then
-        wshENC_Saisie.Unprotect
-    End If
-    
-    Application.EnableEvents = False
-    
-    Call EffacerFeuilleEncaissement
-    
-    Application.EnableEvents = True
-    
-    wshENC_Saisie.Visible = xlSheetVeryHidden
-
-    wshMenuGL.Activate
-    wshMenuGL.Range("A1").Select
-    
-    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:RetournerMenuComptabilite", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:RetournerAuMenu", vbNullString, startTime)
 
 End Sub
 

@@ -891,10 +891,10 @@ Sub EffacerCellulesSaisieDEB()
 
 End Sub
 
-Sub shpRetourAuMenu_Click()
+Sub shpRetournerAuMenu_Click()
 
     Call RetournerAuMenu
-
+    
 End Sub
 
 Sub RetournerAuMenu()
@@ -904,14 +904,7 @@ Sub RetournerAuMenu()
     Set shp = wshDEB_Saisie.Shapes("shpMettreAJourDEB")
     Call RestaurerParametresForme(shp)
 
-    wshDEB_Saisie.Visible = xlSheetHidden
-    
-    Application.ScreenUpdating = False
-    
-    wshMenuGL.Activate
-    wshMenuGL.Range("A1").Select
-    
-    Application.ScreenUpdating = True
+    Call modAppli.QuitterFeuillePourMenu(wshMenuGL, True) '2025-08-19 @ 06:52
     
 End Sub
 

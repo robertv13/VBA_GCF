@@ -498,6 +498,7 @@ DerniereValidation:
 
 ErrorHandler:
     Fn_DateCorrigee = vbNullString ' Retourne une chaîne vide si une erreur se produit
+    
 End Function
 
 Function Fn_EstDateCaractereValide(ByVal txt As String) As Boolean '2025-03-03 @ 09:49

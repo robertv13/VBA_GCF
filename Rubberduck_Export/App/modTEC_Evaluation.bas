@@ -389,22 +389,19 @@ Sub ComptabiliserValeurTEC() '2025-06-08 @ 08:37
 
 End Sub
 
-Sub shpRetournerMenuTEC_Click()
+Sub shpRetournerMenu_Click()
 
-    Call RetournerMenuTEC
-    
+    Call RetournerAuMenu
+
 End Sub
 
-Sub RetournerMenuTEC()
+Sub RetournerAuMenu()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Evaluation:RetournerMenuTEC", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Evaluation:RetournerMenu", vbNullString, 0)
     
-    wshTEC_Evaluation.Visible = xlSheetVeryHidden
+    Call modAppli.QuitterFeuillePourMenu(wshMenuTEC, True)
     
-    wshMenuTEC.Activate
-    wshMenuTEC.Range("A1").Select
-    
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Evaluation:RetournerMenuTEC", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Evaluation:RetournerMenu", vbNullString, startTime)
 
 End Sub
 

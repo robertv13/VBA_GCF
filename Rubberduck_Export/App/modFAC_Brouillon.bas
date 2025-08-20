@@ -962,7 +962,7 @@ Depot_Checked:
 
 End Sub
 
-Sub shpRetournerMenuFAC_Click()
+Sub shpRetournerAuMenu_Click()
 
     Call RetournerMenuFAC
 
@@ -989,18 +989,12 @@ Sub RetournerMenuFAC()
     End If
     On Error GoTo 0
     
-    Application.EnableEvents = True
-    
-    wshFAC_Brouillon.Visible = xlSheetHidden
-    
-    wshMenuFAC.Activate
-    
-    wshMenuFAC.Range("A1").Select
-    
     'Libérer la mémoire
     Set shapeTextBox = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:RetournerMenuFAC", vbNullString, startTime)
+    
+    Call modAppli.QuitterFeuillePourMenu(wshMenuFAC, True)
 
 End Sub
 

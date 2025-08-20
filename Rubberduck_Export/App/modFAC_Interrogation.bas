@@ -261,22 +261,19 @@ Sub InitialiserToutesCellules()
 
 End Sub
 
-Sub shpExit_Click()
+Sub shpRetournerAuMenu_Click()
 
-    Call RetournerMenuFAC
+    Call RetournerAuMenu
 
 End Sub
 
-Sub RetournerMenuFAC()
+Sub RetournerAuMenu()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Interrogation:RetournerMenuFAC", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Interrogation:RetournerAuMenu", vbNullString, 0)
     
-    wshFAC_Interrogation.Visible = xlSheetHidden
+    Call modAppli.QuitterFeuillePourMenu(wshMenuFAC, True)
     
-    wshMenuFAC.Activate
-    wshMenuFAC.Range("A1").Select
-    
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Interrogation:RetournerMenuFAC", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Interrogation:RetournerAuMenu", vbNullString, startTime)
 
 End Sub
 

@@ -25,7 +25,7 @@ Sub CalculerSoldesPourEF(ws As Worksheet, dateCutOff As Date) '2025-08-14 @ 06:5
         reponse = InputBox( _
             "Pour la colonne comparatif (année précédente), voulez-vous :" & vbNewLine & vbNewLine & _
             "1) La même période que l'année courante pour l'année dernière" & vbNewLine & vbNewLine & _
-            "2) L'année dernière au complet (12 mois)", _
+            "2) L'année dernière au complet (12 mois)" & vbNewLine, _
             "Choix du comparatif")
 
         Select Case Trim(reponse)
@@ -258,23 +258,17 @@ Sub shpPreparerEF_Click()
     
 End Sub
 
-Sub shpRetournerMenuGL_Click()
+Sub shpRetournerAuMenu_Click()
 
-    Call RetournerMenuGL
+    Call RetournerAuMenu
 
 End Sub
 
-Sub RetournerMenuGL()
-    
-    wshGL_PrepEF.Visible = xlSheetHidden
-    
-    Application.EnableEvents = True
-    
-    wshMenuGL.Activate
-    wshMenuGL.Range("A1").Select
-    
-End Sub
+Sub RetournerAuMenu()
 
+    Call modAppli.QuitterFeuillePourMenu(wshMenuGL, True) '2025-08-19 @ 06:59
+
+End Sub
 Sub AssemblerEtatsFinanciers() '2025-08-14 @ 08:05
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerEtatsFinanciers", vbNullString, 0)
@@ -584,13 +578,17 @@ Sub AssemblerER2Lignes(ws As Worksheet)
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerER2Lignes", vbNullString, 0)
     
-    Dim wsAdmin As Worksheet
-    Set wsAdmin = wsdADMIN
+    Dim wsAdmin As Worksheet: Set wsAdmin = wsdADMIN
     
     Dim tbl As ListObject
     Set tbl = wsAdmin.ListObjects("tblÉtatsFinanciersCodes")
     
-    Dim LigneEF As String, codeEF As String, typeLigne As String, gras As String, souligne As String
+    Dim LigneEF As String
+    Dim codeEF As String
+    Dim typeLigne As String
+    Dim gras As String
+    Dim souligne As String
+    Dim ligneTotalDepenses As Long
     Dim size As Long
     'Première ligne
     Dim currRow As Integer
@@ -605,6 +603,9 @@ Sub AssemblerER2Lignes(ws As Worksheet)
             gras = UCase$(rngRow.Range.Cells(1, 4).Value)
             souligne = UCase$(rngRow.Range.Cells(1, 5).Value)
             size = rngRow.Range.Cells(1, 6).Value
+            If codeEF = "D99" Then
+                ligneTotalDepenses = currRow
+            End If
             Call ImprimerLigneEF(ws, currRow, LigneEF, codeEF, typeLigne, gras, souligne, size)
         End If
         
@@ -629,8 +630,8 @@ Sub AssemblerER2Lignes(ws As Worksheet)
     'Tri par ordre descendant une plage
     With ws.Sort
         .SortFields.Clear
-        .SortFields.Add key:=ws.Range("C17:C31"), Order:=xlDescending
-        .SetRange ws.Range("B17:E31")
+        .SortFields.Add key:=ws.Range("C17:C" & ligneTotalDepenses - 2), Order:=xlDescending
+        .SetRange ws.Range("B17:E" & ligneTotalDepenses)
         .Header = xlNo
         .MatchCase = False
         .Orientation = xlTopToBottom
@@ -1133,22 +1134,6 @@ Function Fn_TitreSelonNombreDeMois(dateAC As Date) As String '2025-08-14 @ 19:42
     End If
     
 End Function
-
-Sub ImprimerEtatsFinanciers() '2025-08-14 @ 09:12
-
-    Dim nomsFeuilles As Variant
-    nomsFeuilles = Array("Page titre", "Table des Matières", "État des Résultats", "BNR", "Bilan")
-
-    Dim nomFeuille As Variant
-    For Each nomFeuille In nomsFeuilles
-        With ThisWorkbook.Sheets(nomFeuille)
-            .Visible = xlSheetVisible
-            .Activate
-            .PrintOut
-        End With
-    Next nomFeuille
-    
-End Sub
 
 Sub CalculerSoldesCourantEtComparatif(noCompteGL As String, moisCloture As Long, ligne() As Variant, _
                          ByRef soldeCourant As Currency, ByRef soldeComparatif As Currency) '2025-08-14 @ 07:54

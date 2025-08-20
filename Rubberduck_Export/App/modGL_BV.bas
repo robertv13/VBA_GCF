@@ -580,23 +580,6 @@ Sub MettreEnPageEtPrevisualiserBVOuTrans(myPrintRange As Range, pagesTall As Lon
  
 End Sub
 
-Sub EffacerFormesNonRequises() '2024-08-15 @ 14:42
-
-    Dim ws As Worksheet: Set ws = wshGL_BV
-    
-    Dim shp As Shape
-    For Each shp In ws.Shapes
-        If InStr(shp.Name, "Rounded Rectangle ") Then
-            shp.Delete
-        End If
-    Next shp
-
-    'Libérer la mémoire
-    Set shp = Nothing
-    Set ws = Nothing
-    
-End Sub
-
 Sub AfficherDetailEcritureAvecForme()
 
     Call CreerFormeDynamiquePourAfficherDetailEcriture
@@ -741,7 +724,13 @@ Public Sub shpEcritureCloture_Click()
 
 End Sub
 
-Sub shpSortieBV_Click()
+Sub shpRetournerAuMenu_Click()
+
+    Call RetournerAuMenu
+    
+End Sub
+
+Sub RetournerAuMenu()
 
     Dim ws As Worksheet
     Set ws = wshGL_BV
@@ -752,24 +741,11 @@ Sub shpSortieBV_Click()
     
     ws.Shapes("shpEcritureCloture").Visible = False
     
-    DoEvents
-    
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call RetournerMenuGL
+    Call modAppli.QuitterFeuillePourMenu(wshMenuGL, True) '2025-08-21 @ 06:52
 
-End Sub
-
-Sub RetournerMenuGL()
-    
-    Call EffacerFormesNonRequises
-    
-    wshGL_BV.Visible = xlSheetHidden
-    
-    wshMenuGL.Activate
-    wshMenuGL.Range("A1").Select
-    
 End Sub
 
 

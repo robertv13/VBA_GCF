@@ -772,43 +772,7 @@ Sub GererBoutonsNavigation(totauxImprimes As Boolean) '2025-06-30 @ 11:40
     
 End Sub
 
-'Sub AjouterBoutonRetourHaut() '2025-06-30 @ 11:06
-'
-'    Dim f As Worksheet: Set f = ActiveSheet
-'    Dim forme As Shape
-'    Dim derLigne As Long
-'    Dim topPosition As Double
-'    Dim leftPosition As Long
-'    Dim existe As Boolean
-'
-'    'Recherche de la forme existante
-'    On Error Resume Next
-'    Set forme = f.Shapes("shpHaut")
-'    existe = Not forme Is Nothing
-'    On Error GoTo 0
-'
-'    'Détermination de la dernière ligne utilisée
-'    derLigne = f.Cells(f.Rows.count, 2).End(xlUp).Row
-'    topPosition = f.Rows(derLigne).Top
-'    leftPosition = f.Cells(derLigne - 2, 11).Left
-'
-'    'Crée ou déplace le bouton
-'    If Not existe Then
-'        Set forme = f.Shapes.AddShape(msoShapeRoundedRectangle, 10, topPosition, 100, 25)
-'        With forme
-'            .Name = "shpHaut"
-'            .TextFrame.Characters.Text = "Retour en haut"
-'            .OnAction = "RetourAuDébut"
-'            .Fill.ForeColor.RGB = RGB(200, 200, 255)
-'        End With
-'    Else
-'        forme.Top = topPosition
-'        forme.Left = leftPosition
-'    End If
-'
-'End Sub
-
-Sub shpRetournerMenuFacturation_Click()
+Sub shpRetournerAuMenu_Click()
 
     Call EffacerResultatAnterieur(wshCAR_Liste_Agee)
     
@@ -818,10 +782,7 @@ End Sub
 
 Sub RetournerMenuFacturation()
 
-    wshCAR_Liste_Agee.Visible = xlSheetHidden
-    
-    wshMenuFAC.Activate
-    wshMenuFAC.Range("A1").Select
+    Call modAppli.QuitterFeuillePourMenu(wshMenuFAC, True) '2025-08-20 @ 07:17
 
 End Sub
 

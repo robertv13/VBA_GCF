@@ -912,32 +912,26 @@ Sub AjouterEJRecurrenteBDLocale(r As Long) 'Write records to local file
     
 End Sub
 
-Sub shpRetourAuMenuEJ_Click()
+Sub shpRetournerAuMenu_Click()
 
-    Call RetournerAuMenuComptabiliteEJ
+    Call RetournerAuMenu
 
 End Sub
 
-Sub RetournerAuMenuComptabiliteEJ()
-    
-    ActiveSheet.Unprotect
+Sub RetournerAuMenu()
+
+     ActiveSheet.Unprotect
     
     'Rétablir la forme du bouton (Mettre à jour / Renverser)
     Dim shp As Shape
     Set shp = wshGL_EJ.Shapes("shpMettreAJour")
     Call RestaurerFormeEJ(shp)
-
-    'Nouvelle façon de faire
-    wshGL_EJ.Visible = xlSheetHidden
-    
-    wshMenuGL.Activate
-    wshMenuGL.Range("A1").Select
-    
-    gFromMenu = True
     
     'Libérer la mémoire
     Set shp = Nothing
     
+    Call modAppli.QuitterFeuillePourMenu(wshMenuGL, True) '2025-08-21 @ 06:48
+
 End Sub
 
 Sub SauvegarderFormeEJ(forme As Shape)

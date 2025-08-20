@@ -188,28 +188,20 @@ Private Sub UserForm_QueryClose(Cancel As Integer, CloseMode As Integer)
 End Sub
 
 Private Sub UserForm_Terminate()
+
+    Call RetournerAuMenu
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufConfirmation:UserForm_Terminate", vbNullString, 0)
+End Sub
+
+Sub RetournerAuMenu()
+
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufConfirmation:RetournerAuMenu", vbNullString, 0)
 
     ufConfirmation.Hide
     Unload ufConfirmation
     
-    If ufConfirmation.Name = "ufConfirmation" Then
-        On Error GoTo MenuSelect
-        wshMenuFAC.Select
-        On Error GoTo 0
-    Else
-        wshMenu.Select
-    End If
-    
-    GoTo Exit_Sub
-    
-MenuSelect:
-    wshMenu.Activate
-    wshMenu.Select
-    
-Exit_Sub:
-    Call modDev_Utils.EnregistrerLogApplication("ufConfirmation:UserForm_Terminate", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("ufConfirmation:RetournerAuMenu", vbNullString, startTime)
+
+    Call modAppli.QuitterFeuillePourMenu(wshMenuFAC, True)
 
 End Sub
-

@@ -923,38 +923,33 @@ Sub NettoyerProjetsDetruits(loDetails As ListObject, loEntete As ListObject) '20
 
 End Sub
 
-Sub shpRetournerMenuTEC_Click()
+Sub shpRetournerMenu_Click()
 
-    Call RetournerMenuTEC
-
+    Call RetournerAuMenu
+    
 End Sub
 
-Sub RetournerMenuTEC()
+Sub RetournerAuMenu()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:RetournerMenuTEC", vbNullString, 0)
-    
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:RetournerAuMenu", vbNullString, 0)
+
     Dim loDetails As ListObject
     Set loDetails = wsdFAC_Projets_Details.ListObjects("l_tbl_FAC_Projets_Details")
     Dim loEntete As ListObject
     Set loEntete = wsdFAC_Projets_Entete.ListObjects("l_tbl_FAC_Projets_Entete")
-    
+
     Call NettoyerProjetsDetruits(loDetails, loEntete)
-    
+
     Call EffacerSectionHonorairesEtCheckBox
-    
+
     Dim usedLastRow As Long
     usedLastRow = wshTEC_Analyse.Cells(wshTEC_Analyse.Rows.count, "C").End(xlUp).Row
     Application.EnableEvents = False
     wshTEC_Analyse.Range("C7:O" & usedLastRow).Clear
     Application.EnableEvents = True
-    
-    wshTEC_Analyse.Visible = xlSheetVeryHidden
-    
-    wshMenuTEC.Activate
-    wshMenuTEC.Range("A1").Select
-    
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:RetournerMenuTEC", vbNullString, startTime)
+
+    Call modAppli.QuitterFeuillePourMenu(wshMenuTEC, True)
+
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:RetournerAuMenu", vbNullString, startTime)
 
 End Sub
-
-

@@ -109,3 +109,49 @@ Sub shpListeDesDeplacements_Click()
     
 End Sub
 
+'Sub QuitterFeuillePourMenuTEC(ByVal nomFeuilleDestination As Worksheet, Optional masquerFeuilleActive As Boolean = False) '2025-08-18 @ 06:25
+'
+'    Application.EnableEvents = False
+'    Application.ScreenUpdating = False
+'
+'    If masquerFeuilleActive Then ActiveSheet.Visible = xlSheetHidden
+'
+'    nomFeuilleDestination.Visible = xlSheetVisible
+'    nomFeuilleDestination.Activate
+'    nomFeuilleDestination.Range("A24").Select
+'
+'    Application.ScreenUpdating = True
+'    Application.EnableEvents = True
+'
+'End Sub
+'
+'    On Error GoTo GestionErreur
+'
+'    Application.EnableEvents = False
+'    Application.ScreenUpdating = False
+'
+'    Dim feuilleCible As Worksheet
+'    Set feuilleCible = ThisWorkbook.Sheets(nomFeuilleDestination)
+'
+'    ' Masquer la feuille active si demandé
+'    If masquerFeuilleActive And Not ActiveSheet Is Nothing Then
+'        ActiveSheet.Visible = xlSheetHidden
+'    End If
+'
+'    ' Activer la feuille cible
+'    feuilleCible.Visible = xlSheetVisible
+'    feuilleCible.Activate
+'    feuilleCible.Range("A1").Select
+'
+'    Application.ScreenUpdating = True
+'    Application.EnableEvents = True
+'    Exit Sub
+'
+'GestionErreur:
+'    MsgBox "Erreur lors de la transition vers la feuille '" & nomFeuilleDestination & "' : " & Err.description, vbCritical
+'    Application.ScreenUpdating = True
+'    Application.EnableEvents = True
+'
+'End Sub
+
+

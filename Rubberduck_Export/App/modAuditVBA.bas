@@ -357,7 +357,14 @@ Sub ExporterResultatsFeuille(tableProc() As Variant, indexMax As Long) '2025-07-
         .Cells(1, 1).HorizontalAlignment = xlCenter
         .Cells(1, 1).VerticalAlignment = xlCenter
         .Cells(1, 1).WrapText = True
-        .Rows(1).RowHeight = 30
+        .Cells(1, 10).Value = Format$(Now, "yyyy-mm-dd hh:mm:ss")
+        .Cells(1, 10).Font.Name = "Aptos Narrow"
+        .Cells(1, 10).Font.size = 10
+        .Cells(1, 10).Font.Bold = True
+        .Cells(1, 10).Font.Color = vbRed
+        .Cells(1, 10).HorizontalAlignment = xlCenter
+        .Cells(1, 10).VerticalAlignment = xlCenter
+       .Rows(1).RowHeight = 30
         'Entêtes
         .Cells(2, 1).Value = "Nom Procédure / Fonction"
         .Cells(2, 2).Value = "Type proc"
@@ -651,15 +658,15 @@ Function Fn_ValiderCommenceParUnVerbe(nom As String) As Boolean '2025-07-07 @ 09
     verbesAction = Array("Acceder", "Activer", "Actualiser", "Additionner", "Afficher", "Ajouter", "Ajuster", _
                          "Aller", "Analyser", "Annuler", "Appeler", "Appliquer", "Arreter", "Assembler", "Batir", _
                          "Cacher", "Calculer", "Changer", "Charger", "Cocher", "Confirmer", "Comptabiliser", _
-                         "Compter", "Comparer", "Connecter", "Construire", "Convertir", "Copier", "Corriger", "Creer", _
+                         "Compter", "Comparer", "Configurer", "Connecter", "Construire", "Convertir", "Copier", "Corriger", "Creer", _
                          "Decocher", "Demarrer", "Deplacer", "Detecter", "Determiner", "Detruire", "Diagnostiquer", _
                          "Ecrire", "Effacer", "Enregistrer", "Envoyer", "Evaluer", "Executer", "Exporter", "Extraire", _
                          "Fermer", "Filtrer", "Finaliser", "Fixer", "Formater", "Fusionner", "Gerer", "Generer", "Identifier", _
                          "Importer", "Imprimer", "Incrementer", "Initialiser", "Inserer", "Lire", "Lister", "Marquer", "Mettre", _
                          "Modifier", "Montrer", "Nettoyer", "Noter", "Obtenir", "Organiser", "Ouvrir", "Planifier", "Positionner", _
-                         "Preparer", "Previsualiser", "Rafraichir", "Rechercher", "Redefinir", "Redemmarer", "Redimensionner", _
+                         "Preparer", "Previsualiser", "Quitter", "Rafraichir", "Rechercher", "Redefinir", "Redemmarer", "Redimensionner", _
                          "Reinitialiser", "Relancer", "Reorganiser", "Remplir", "Restaurer", "Retourner", "Revenir", "Saisir", _
-                         "Sauvegarder", "Scanner", "Selectionner", "Supprimer", "Tester", "Traiter", "Transferer", "Trier", _
+                         "Sauvegarder", "Scanner", "Selectionner", "Supprimer", "Synchroniser", "Tester", "Traiter", "Transferer", "Trier", _
                          "UserForm", "Valider", "Verifier", "Vider", "Visualiser", "Workbook", "Worksheet", "btn", "chk", "cmb", _
                          "cmd", "ctrl", "shp", "txt", "DEB", "ENC", "FAC", "EJ", "GL", "REGUL", "TEC", "TEST")
     

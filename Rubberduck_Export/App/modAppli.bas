@@ -431,3 +431,21 @@ Public Sub EnregistrerActiviteAuLog(ByVal message As String) '2025-07-03 @ 10:29
     Close #fileNum
     
 End Sub
+
+Sub QuitterFeuillePourMenu(ByVal nomFeuilleMenu As Worksheet, Optional masquerFeuilleActive As Boolean = False) '2025-08-19 @ 06:46
+
+    Application.EnableEvents = False
+    Application.ScreenUpdating = False
+
+    If masquerFeuilleActive And ActiveSheet.Name <> "Menu" Then ActiveSheet.Visible = xlSheetHidden
+
+    nomFeuilleMenu.Visible = xlSheetVisible
+    nomFeuilleMenu.Activate
+    nomFeuilleMenu.Range("A1").Select
+
+    Application.ScreenUpdating = True
+    Application.EnableEvents = True
+    
+End Sub
+    
+

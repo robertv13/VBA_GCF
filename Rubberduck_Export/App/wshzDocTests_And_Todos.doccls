@@ -28,7 +28,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         End If
     End If
     
-    'LibÃ©rer la mÃ©moire
+    'LibÃƒÂ©rer la mÃƒÂ©moire
     Set cell = Nothing
     Set intersectRange = Nothing
     Set rng = Nothing

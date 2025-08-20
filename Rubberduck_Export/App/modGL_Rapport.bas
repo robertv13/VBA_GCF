@@ -544,15 +544,21 @@ Sub InsererBoutonRetourMenu() '2025-07-01 @ 08:54
         .TextFrame2.TextRange.Font.Bold = True
         .TextFrame2.TextRange.Font.Fill.ForeColor.RGB = RGB(255, 255, 255) 'Blanc
         .Placement = xlFreeFloating
-        .OnAction = "shpRetournerMenuGL_Click"
+        .OnAction = "shpRetournerAuMenu_Click"
     End With
 
 End Sub
 
-Sub shpRetourMenuGL_Click()
+Sub shpRetournerAuMenu_Click()
 
-    wshMenuGL.Activate 'Adapte le nom de ta feuille menu si nécessaire
+    Call RetournerAuMenu
     
+End Sub
+
+Sub RetournerAuMenu()
+
+    Call modAppli.QuitterFeuillePourMenu(wshMenuGL, True) '2025-08-21 @ 06:53
+
 End Sub
 
 Sub AjusterEntetesEtColonnesParCompte(ws As Worksheet)

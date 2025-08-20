@@ -767,6 +767,74 @@ Sub CreerRepertoireEtImporterFichiers() '2025-07-02 @ 13:57
 
 End Sub
 
+
+Sub shpSynchroniserDEVversPROD_Click()
+
+    Call SynchroniserFichiers
+
+End Sub
+
+Sub SynchroniserFichiers() '2025-08-17 @ 18:43
+
+    Dim cheminProd As String
+    Dim cheminDev As String
+    Dim fichierMaster As String
+    Dim fichierEntree As String
+    Dim fichierLock As String
+    Dim dateModifDev As Date
+    Dim dateModifProd As Date
+
+    'Définir les chemins
+    cheminProd = "P:\Administration\APP\GCF" & gDATA_PATH
+    cheminDev = wsdADMIN.Range("PATH_DATA_FILES") & gDATA_PATH
+    
+    fichierLock = cheminProd & "GCF_BD_MASTER.lock"
+    fichierMaster = "GCF_BD_MASTER.xlsx"
+    fichierEntree = "GCF_BD_Entrée.xlsx"
+
+    On Error GoTo GestionErreur
+
+    'Étape 1 - Supprimer le fichier .lock
+    If Dir(fichierLock) <> "" Then Kill fichierLock
+
+    'Étape 2 - Copier GCF_BD_MASTER.xlsx si DEV est plus récent
+    If Dir(cheminDev & fichierMaster) <> "" Then
+        If Dir(cheminProd & fichierMaster) <> "" Then
+            dateModifDev = FileDateTime(cheminDev & fichierMaster)
+            dateModifProd = FileDateTime(cheminProd & fichierMaster)
+            
+            If dateModifDev > dateModifProd Then
+                FileCopy cheminDev & fichierMaster, cheminProd & fichierMaster
+            End If
+        Else
+            'Si le fichier n'existe pas en PROD, on le copie
+            FileCopy cheminDev & fichierMaster, cheminProd & fichierMaster
+        End If
+    End If
+
+    'Étape 3 - Copier GCF_BD_Entree.xlsx si DEV est plus récent
+    If Dir(cheminDev & fichierEntree) <> "" Then
+        If Dir(cheminProd & fichierEntree) <> "" Then
+            dateModifDev = FileDateTime(cheminDev & fichierEntree)
+            dateModifProd = FileDateTime(cheminProd & fichierEntree)
+            
+            If dateModifDev > dateModifProd Then
+                FileCopy cheminDev & fichierEntree, cheminProd & fichierEntree
+            End If
+        Else
+            'Si le fichier n'existe pas en PROD, on le copie
+            FileCopy cheminDev & fichierEntree, cheminProd & fichierEntree
+        End If
+    End If
+
+    MsgBox "Synchronisation terminée avec succès.", vbInformation
+    Exit Sub
+
+GestionErreur:
+    MsgBox "SynchroniserFichiers - Erreur : " & Err.description, vbCritical
+    
+End Sub
+
 Sub AjusterEpurerTablesDeMaster() '2024-12-07 @ 06:47
 
     'Chemin du classeur à ajuster

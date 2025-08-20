@@ -107,23 +107,15 @@ Private Sub UserForm_Terminate()
     ufSaisieHeures.Hide
     Unload ufSaisieHeures
     
-    If ufSaisieHeures.Name = "ufSaisieHeures" Then
-        On Error GoTo MenuSelect
-        wshMenuTEC.Select
-        On Error GoTo 0
-    Else
-        wshMenu.Select
-    End If
-    
-    GoTo Exit_Sub
-    
-MenuSelect:
-    wshMenu.Activate
-    wshMenu.Select
-    
-Exit_Sub:
+    Call RetournerAuMenu
 
     Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:UserForm_Terminate", vbNullString, startTime)
+
+End Sub
+
+Sub RetournerAuMenu()
+
+    Call modAppli.QuitterFeuillePourMenu(wshMenuTEC, True)
 
 End Sub
 

@@ -78,7 +78,7 @@ Sub PreparerNouvelleRegularisation() '2024-08-21 @ 14:58
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:PreparerNouvelleRegularisation", vbNullString, 0)
 
-    Call EffacerFeuilleEncaissement
+    Call NettoyerFeuilleEncaissement
     
     Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:PreparerNouvelleRegularisation", vbNullString, startTime)
     

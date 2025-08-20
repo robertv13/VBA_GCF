@@ -1,22 +1,15 @@
 Attribute VB_Name = "modTEC_TDB"
 Option Explicit
 
-Sub shpRetournerAuMenuTEC_Click()
+Sub shpRetournerAuMenu_Click()
 
-    Call RetournerAuMenuTEC
-
+    Call RetournerAuMenu
+    
 End Sub
 
-Sub RetournerAuMenuTEC()
+Sub RetournerAuMenu()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_TDB:RetournerAuMenuTEC", vbNullString, 0)
-    
-    wshTEC_TDB.Visible = xlSheetHidden
-    
-    wshMenuTEC.Activate
-    wshMenuTEC.Range("A1").Select
-    
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_TDB:RetournerAuMenuTEC", vbNullString, startTime)
+    Call modAppli.QuitterFeuillePourMenu(wshMenuTEC, True)
 
 End Sub
 
