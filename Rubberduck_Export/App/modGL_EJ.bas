@@ -149,7 +149,7 @@ Sub SauvegarderEJRecurrente(ll As Long)
     Dim rowEJLast As Long
     rowEJLast = wshGL_EJ.Cells(wshGL_EJ.Rows.count, "E").End(xlUp).Row  'Last Used Row in wshGL_EJ
     
-    Call AjouterEJRecurrenteDBMaster(ll)
+    Call AjouterEJRecurrenteBDMaster(ll)
     Call AjouterEJRecurrenteBDLocale(ll)
     
     Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:SauvegarderEJRecurrente", vbNullString, startTime)
@@ -787,9 +787,9 @@ Sub MettreAJourEcritureRenverseeBDLocale()
     
 End Sub
 
-Sub AjouterEJRecurrenteDBMaster(r As Long) 'Write/Update a record to external .xlsx file
+Sub AjouterEJRecurrenteBDMaster(r As Long) 'Write/Update a record to external .xlsx file
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:AjouterEJRecurrenteDBMaster", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:AjouterEJRecurrenteBDMaster", vbNullString, 0)
 
     Application.ScreenUpdating = False
     
@@ -863,7 +863,7 @@ Sub AjouterEJRecurrenteDBMaster(r As Long) 'Write/Update a record to external .x
     Set conn = Nothing
     Set recSet = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:AjouterEJRecurrenteDBMaster", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:AjouterEJRecurrenteBDMaster", vbNullString, startTime)
 
 End Sub
 

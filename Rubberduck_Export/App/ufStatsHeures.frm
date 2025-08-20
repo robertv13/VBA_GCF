@@ -71,8 +71,8 @@ Private Sub lstDatesSemaines_Click_or_DblClick(ByVal valeur As Variant) '2024-12
         End If
         
         'Initialisation du listBox et des totaux
-        ufStatsHeures.MultiPage1.Pages("pSemaine").lbxSemaine.RowSource = vbNullString
-        ufStatsHeures.MultiPage1.Pages("pSemaine").lbxSemaine.Clear
+        ufStatsHeures.MultiPage1.Pages("pSemaine").lstSemaine.RowSource = vbNullString
+        ufStatsHeures.MultiPage1.Pages("pSemaine").lstSemaine.Clear
         ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresNettes.Value = Format$(0, "##0.00") 'Formatage du total en deux décimales
         ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresFact.Value = Format$(0, "##0.00") 'Formatage du total en deux décimales
         ufStatsHeures.MultiPage1.Pages("pSemaine").txtSemaineHresNF.Value = Format$(0, "##0.00") 'Formatage du total en deux décimales
@@ -95,11 +95,11 @@ Private Sub lstDatesSemaines_Click_or_DblClick(ByVal valeur As Variant) '2024-12
         
         If wshTEC_TDB_Data.Range("W2").Value <> vbNullString Then
             'Force une mise à jour du listBox en changeant le RowSource
-            ufStatsHeures.MultiPage1.Pages("pSemaine").lbxSemaine.RowSource = vbNullString
+            ufStatsHeures.MultiPage1.Pages("pSemaine").lstSemaine.RowSource = vbNullString
             Dim lastUsedRow As Long
             lastUsedRow = wshTEC_TDB_Data.Cells(wshTEC_TDB_Data.Rows.count, "W").End(xlUp).Row
-            ufStatsHeures.MultiPage1.Pages("pSemaine").lbxSemaine.RowSource = wshTEC_TDB_Data.Name & "!" & "StatsHeuresSemaine_uf"
-'            ufStatsHeures.MultiPage1.Pages("pSemaine").lbxSemaine.RowSource = wshTEC_TDB_Data.Range("W2:AD" & lastUsedRow).Address(external:=True)
+            ufStatsHeures.MultiPage1.Pages("pSemaine").lstSemaine.RowSource = wshTEC_TDB_Data.Name & "!" & "StatsHeuresSemaine_uf"
+'            ufStatsHeures.MultiPage1.Pages("pSemaine").lstSemaine.RowSource = wshTEC_TDB_Data.Range("W2:AD" & lastUsedRow).Address(external:=True)
 '            Debug.Print wshTEC_TDB_Data.Name & "!" & "StatsHeuresSemaine_uf"
             
             DoEvents

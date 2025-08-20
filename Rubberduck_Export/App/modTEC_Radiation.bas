@@ -100,8 +100,8 @@ Sub AfficherTECARadier(codeClient As String, cutoffDate As String)
     Application.ScreenUpdating = True
     Application.EnableEvents = True
 
-    ws.Shapes("Impression").Visible = True
-    ws.Shapes("Radiation").Visible = False
+    ws.Shapes("shpImpressionRadiationTEC").Visible = True
+    ws.Shapes("shpRadiationTEC").Visible = False
     
 exitSub:
 
@@ -247,9 +247,9 @@ Sub CalculerTotaux()
     ws.Cells(rowNum + 1, 11).Value = Format$(totalValeur, "###,##0.00 $")
     
     If Not totalHres = 0 Then
-        ws.Shapes("Radiation").Visible = True
+        ws.Shapes("shpRadiationTEC").Visible = True
     Else
-        ws.Shapes("Radiation").Visible = False
+        ws.Shapes("shpRadiationTEC").Visible = False
     End If
     
 End Sub

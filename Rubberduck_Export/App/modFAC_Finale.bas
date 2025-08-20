@@ -68,7 +68,7 @@ Sub SauvegarderFacture() '2024-03-28 @ 07:19
     Dim projetID As Long
     projetID = wshFAC_Brouillon.Range("B52").Value
     If projetID <> 0 Then
-        Call DetruireLogiquementProjetsDetailsDBMaster(projetID)
+        Call DetruireLogiquementProjetsDetailsBDMaster(projetID)
         Call DetruireLogiquementProjetsDetailsBDLocale(projetID)
         
         Call DetruireLogiquementProjetsEnteteBDMaster(projetID)
@@ -709,9 +709,9 @@ Sub MettreAJourTECEstFactureeBDLocale(firstResultRow As Long, lastResultRow As L
 
 End Sub
 
-Sub DetruireLogiquementProjetsDetailsDBMaster(projetID As Long)
+Sub DetruireLogiquementProjetsDetailsBDMaster(projetID As Long)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:DetruireLogiquementProjetsDetailsDBMaster", CStr(projetID), 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:DetruireLogiquementProjetsDetailsBDMaster", CStr(projetID), 0)
 
     Application.ScreenUpdating = False
     
@@ -745,7 +745,7 @@ Sub DetruireLogiquementProjetsDetailsDBMaster(projetID As Long)
     Set conn = Nothing
     Set recSet = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:DetruireLogiquementProjetsDetailsDBMaster", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:DetruireLogiquementProjetsDetailsBDMaster", vbNullString, startTime)
 
 End Sub
 

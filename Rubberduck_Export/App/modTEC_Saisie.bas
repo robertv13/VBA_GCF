@@ -26,7 +26,7 @@ Sub AjouterLigneTEC() 'Add an entry to DB
             ufSaisieHeures.txtDate.Value = Format$(DateSerial(Y, m, d), "yyyy-mm-dd")
         On Error GoTo 0
         
-        Call AjouterOuModifierTECdansDBMaster(0)
+        Call AjouterOuModifierTECdansBDMaster(0)
         Call AjouterOuModifierTECdansBDLocale(0)
         
         'Clear the userForm fields after saving
@@ -48,7 +48,7 @@ Sub AjouterLigneTEC() 'Add an entry to DB
         'Back to client
         ufSaisieHeures.txtClient.SetFocus
     Else
-        Stop
+        Exit Sub
     End If
     
     Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:AjouterLigneTEC", vbNullString, startTime)
@@ -64,7 +64,7 @@ Sub ModifierLigneTEC() '2023-12-23 @ 07:04
     'Obtenir le ID du client pur (à partir de son nom pur) - 2025-03-04 @ 08:02
     ufSaisieHeures.txtClientID.Value = Fn_CellSpecifiqueDeBDClient(ufSaisieHeures.txtClient.Value, 1, 2)
         
-    Call AjouterOuModifierTECdansDBMaster(ufSaisieHeures.txtTECID.Value)
+    Call AjouterOuModifierTECdansBDMaster(ufSaisieHeures.txtTECID.Value)
     Call AjouterOuModifierTECdansBDLocale(ufSaisieHeures.txtTECID.Value)
  
     'Initialize dynamic variables
@@ -119,7 +119,7 @@ Sub DetruireLigneTEC() '2023-12-23 @ 07:05
     'With a negative ID value, it means to soft delete this record
     tecID = -ufSaisieHeures.txtTECID.Value
     
-    Call AjouterOuModifierTECdansDBMaster(tecID)  'Write to external XLSX file - 2023-12-23 @ 07:07
+    Call AjouterOuModifierTECdansBDMaster(tecID)  'Write to external XLSX file - 2023-12-23 @ 07:07
     Call AjouterOuModifierTECdansBDLocale(tecID)  'Write to local worksheet - 2024-02-25 @ 10:40
     
     'Empty the dynamic fields after deleting
@@ -281,9 +281,9 @@ Sub EffacerFormulaireTEC() '2025-07-03 @ 07:31
 
 End Sub
 
-Sub AjouterOuModifierTECdansDBMaster(tecID As Long) 'Write -OR- Update a record to external .xlsx file
+Sub AjouterOuModifierTECdansBDMaster(tecID As Long) 'Write -OR- Update a record to external .xlsx file
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:AjouterOuModifierTECdansDBMaster", CStr(tecID), 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:AjouterOuModifierTECdansBDMaster", CStr(tecID), 0)
 
     Application.ScreenUpdating = False
     
@@ -465,7 +465,7 @@ Sub AjouterOuModifierTECdansDBMaster(tecID As Long) 'Write -OR- Update a record 
     Set conn = Nothing
     Set recSet = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:AjouterOuModifierTECdansDBMaster", CStr(tecID), startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:AjouterOuModifierTECdansBDMaster", CStr(tecID), startTime)
 
     Exit Sub
     
@@ -486,7 +486,7 @@ ErrorHandler:
         On Error GoTo 0
     End If
     
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:AjouterOuModifierTECdansDBMaster", CStr(tecID), startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:AjouterOuModifierTECdansBDMaster", CStr(tecID), startTime)
     
 End Sub
 

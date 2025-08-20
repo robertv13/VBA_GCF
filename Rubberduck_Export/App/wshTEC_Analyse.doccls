@@ -5,61 +5,63 @@ Option Explicit
 Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("wshTEC_Analyse:Worksheet_Activate", vbNullString, 0)
-    
+
+    On Error GoTo CleanUp
+
     Application.ScreenUpdating = False
     Application.EnableEvents = False
-    
+
     Dim ws As Worksheet: Set ws = wshTEC_Analyse
-    ws.Activate
-    
+'    ws.Activate
+
     'Import transactions from MASTER file
     Call modImport.ImporterClients
     Call modImport.ImporterTEC
     Call modImport.ImporterFacProjetsDetails
     Call modImport.ImporterFacProjetsEntete
-    
-    'Set the zoom factor to 100% when this worksheet is activated
-    ActiveWindow.Zoom = 100
 
-    Application.EnableEvents = True '2025-05-09 @ 23:04
-    
-    Me.Application.Calculation = xlCalculationAutomatic
+    'Set the zoom factor to 100% when this worksheet is activated
+
+    Application.Calculation = xlCalculationManual
 
    'Mettre la date du jour comme date butoir, AVANT d'effectuer un premier traitement
-    Me.Range("H3").NumberFormat = wsdADMIN.Range("B1").Value
-    Me.Range("H3").Value = Date
-    
+    Application.EnableEvents = True
+    ws.Range("H3").NumberFormat = wsdADMIN.Range("B1").Value
+    ws.Range("H3").Value = Date
+    Application.EnableEvents = False
+
     Call modDev_Utils.DeterminerOrdreDeTabulation(ws)
-    
+
     'Indique la dernière ligne explosé, qui doit être refermé en passant au suivant
-'    Application.EnableEvents = False
     ws.Range("B2").Value = 0
-'    Application.EnableEvents = True
-    
+
     With ws
         .Unprotect
         gPreviousCellAddress = .Range("H3").Address
     End With
-    
+
     'Fige le volet à la ligne 8 (première ligne de détail) - 2025-07-09 @ 06:54
     With ws
+        .Visible = xlSheetVisible
         .Activate
+        ActiveWindow.Zoom = 100
         ActiveWindow.FreezePanes = False
-        .Range("A8").Select 'Ligne 8 devient le haut du volet inférieur
+        Application.Goto .Range("A8"), Scroll:=False
+        .Range("A8").Select
         ActiveWindow.FreezePanes = True
     End With
-    
-    Application.Goto ws.Range("A8"), Scroll:=True
-    
-    'Reactive les événements
-    Application.EnableEvents = True
-    
-    ws.Visible = xlSheetVisible
+
+    ws.Select
     
     'Libérer la mémoire
     Set ws = Nothing
-    
+
     Call modDev_Utils.EnregistrerLogApplication("wshTEC_Analyse:Worksheet_Activate", vbNullString, startTime)
+
+CleanUp:
+    Application.Calculation = xlCalculationAutomatic
+    Application.EnableEvents = True
+    Application.ScreenUpdating = True
 
 End Sub
 
@@ -168,15 +170,15 @@ exitSub:
   
 End Sub
 
-Sub shpCheckBox1_Click() '2024-07-18 @ 18:53
+Sub CheckBox1_Click() '2024-07-18 @ 18:53
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("wshTEC_Analyse:shpCheckBox1_Click", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("wshTEC_Analyse:shpCheckBox_Click", vbNullString, 0)
     
     Dim ws As Worksheet: Set ws = wshTEC_Analyse
     
     'Reference your checkbox by name
     Dim chkBox As OLEObject
-    Set chkBox = ws.OLEObjects("shpCheckBox1")
+    Set chkBox = ws.OLEObjects("CheckBox1")
     
     'Get the address of the checkbox
     Dim chkBoxPosition As String
@@ -282,7 +284,6 @@ Sub shpCheckBox1_Click() '2024-07-18 @ 18:53
     Set rngSummary = Nothing
     Set ws = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("wshTEC_Analyse:shpCheckBox1_Click", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("wshTEC_Analyse:shpCheckBox_Click", vbNullString, startTime)
 
 End Sub
-
