@@ -143,7 +143,7 @@ Sub Max_Code_Values_From_GCF_Entree(ByRef maxSmallCodes As String, ByRef maxLarg
     rs.Close
 
     'Requête pour trouver la valeur maximale pour les codes supérieurs ou égaux à 1000
-    sqlQuery = "SELECT MAX(Val(ClientID)) AS MaxLargeCodes FROM [" & strSheet & "] WHERE Len(ClientID) >= 4 AND Val(ClientID) >= 1000 AND Val(ClientID) < 5000"
+    sqlQuery = "SELECT MAX(Val(ClientID)) AS MaxLargeCodes FROM [" & strSheet & "] WHERE Len(ClientID) >= 4 AND Val(ClientID) >= 1000 AND Val(ClientID) < 2000"
     Set rs = cn.Execute(sqlQuery)
 
     If Not rs.EOF Then

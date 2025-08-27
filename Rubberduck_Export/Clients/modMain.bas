@@ -18,7 +18,7 @@ Sub CM_Reset_UserForm()
     Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("modMain:CM_Reset_UserForm", "", 0)
     
     Dim iRow As Long, lastUsedRow As Long
-    iRow = Application.WorksheetFunction.CountA(wshClients.Range("A:A"))
+    iRow = Application.WorksheetFunction.CountA(Sheets("Donnees").Range("A:A"))
     lastUsedRow = wshClients.Cells(wshClients.Rows.Count, "A").End(xlUp).Row
     
     With ufClientMF
@@ -84,7 +84,7 @@ Sub CM_Reset_UserForm()
         '.RowSource
         Err.Clear
         On Error Resume Next
-        iRow = Application.WorksheetFunction.CountA(wshSearchData.Range("A:A"))
+'        iRow = Application.WorksheetFunction.CountA(wshSearchData.Range("A:A"))
         If iRow > 1 Then
             .lstDonnees.RowSource = "Donnees!A2:R" & iRow
         End If
@@ -157,7 +157,7 @@ Sub CM_Update_External_GCF_Entree_BD(action As String, client As DonneesClient) 
         rs.Open "SELECT * FROM [" & destinationTab & "] WHERE 1=0", conn, 2, 3
         rs.AddNew
     Else
-        rs.Open "SELECT * FROM [" & destinationTab & "] WHERE ClientID='" & client.ClientID & "' ", conn, 2, 3
+        rs.Open "SELECT * FROM [" & destinationTab & "] WHERE ClientID='" & client.ClientID & "'", conn, 2, 3
         If rs.EOF Then
             MsgBox "Le client '" & client.ClientID & "' n'a pas été ajouté au fichier!" & vbNewLine & vbNewLine & _
                    "Veuillez le saisir à nouveau", vbCritical, "ERREUR dans la mise à jour du fichier client"
