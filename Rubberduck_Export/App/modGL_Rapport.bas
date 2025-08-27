@@ -583,7 +583,7 @@ Sub AjusterEntetesEtColonnesParCompte(ws As Worksheet)
             .Font.size = 9
             .HorizontalAlignment = xlCenter
             With .Interior
-                .Pattern = xlSolid
+                .pattern = xlSolid
                 .PatternColorIndex = xlAutomatic
                 .ThemeColor = xlThemeColorDark1
                 .TintAndShade = -0.149998474074526
@@ -651,7 +651,7 @@ Sub AjusterEntetesEtColonnesParEcriture(ws As Worksheet)
             .Font.size = 9
             .HorizontalAlignment = xlCenter
             With .Interior
-                .Pattern = xlSolid
+                .pattern = xlSolid
                 .PatternColorIndex = xlAutomatic
                 .ThemeColor = xlThemeColorDark1
                 .TintAndShade = -0.149998474074526
@@ -732,7 +732,7 @@ Sub AjusterEntetesEtColonnesParDateSaisie(ws As Worksheet)
             .Font.size = 9
             .HorizontalAlignment = xlCenter
             With .Interior
-                .Pattern = xlSolid
+                .pattern = xlSolid
                 .PatternColorIndex = xlAutomatic
                 .ThemeColor = xlThemeColorDark1
                 .TintAndShade = -0.149998474074526

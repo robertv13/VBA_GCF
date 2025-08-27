@@ -3337,7 +3337,7 @@ Private Sub VerifierTEC(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef read
     Dim ws As Worksheet: Set ws = wsdTEC_Local
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 8197 'What is the last TECID analyzed ?
+    lastTECIDReported = 8308 'What is the last TECID analyzed ?
     
     'Réference au UserDefined structure 'StatistiquesTEC'
     Dim stats As StatistiquesTEC
@@ -3702,7 +3702,7 @@ Sub CreerEnteteDeFeuille(r As Range, couleurFond As Long) '2025-06-30 @ 14:08
 
     With r
         With .Interior
-            .Pattern = xlSolid
+            .pattern = xlSolid
             .PatternColorIndex = xlAutomatic
             .Color = couleurFond
             .TintAndShade = 0

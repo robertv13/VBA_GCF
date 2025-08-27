@@ -1042,3 +1042,171 @@ Sub zz_AuditDataValidationsInCells() '2025-08-06 @ 08:59
     
 End Sub
 
+Sub zz_VerifierControlesAssociesToutesFeuilles() '2025-08-21 @ 08:45
+
+    Dim wsOut As Worksheet
+    Set wsOut = ThisWorkbook.Sheets("Feuil4")
+    wsOut.Range("A1").CurrentRegion.offset(1).Clear
+    Dim r As Long
+    
+    Dim ws As Worksheet
+    Dim shp As Shape
+    Dim btn As Object
+    Dim macroNameRaw As String
+    Dim macroName As String
+    Dim vbComp As Object
+    Dim codeModule As Object
+    Dim ligne As Long
+    Dim found As Boolean
+    Dim oleObj As OLEObject
+    
+    With wsOut
+    .Range("A1").Value = "Feuille"
+    .Range("B1").Value = "Contrôle"
+    .Range("C1").Value = "Macro assignée"
+    .Range("D1").Value = "Type"
+    .Range("E1").Value = "Statut"
+    End With
+    r = 1 ' Commencer à la ligne 2 pour les données
+
+    ' Parcourir toutes les feuilles du classeur
+    For Each ws In ThisWorkbook.Worksheets
+        Debug.Print "#079 - Vérification des contrôles sur la feuille : " & ws.Name
+        
+        ' Vérification des Shapes (Formulaires ou Boutons assignés)
+        For Each shp In ws.Shapes
+            On Error Resume Next
+            macroNameRaw = shp.OnAction
+            On Error GoTo 0
+            
+            If macroNameRaw <> vbNullString Then
+                ' Extraire uniquement le nom de la macro après le "!"
+                If InStr(1, macroNameRaw, "!") > 0 Then
+                    macroName = Split(macroNameRaw, "!")(1)
+                Else
+                    macroName = macroNameRaw
+                End If
+                
+                ' Vérifier si la macro existe
+                found = Fn_VerifierMacroExiste(macroName)
+                
+                ' Résultat de la vérification
+                r = r + 1
+                wsOut.Cells(r, 1).Value = ws.Name
+                wsOut.Cells(r, 2).Value = shp.Name
+                wsOut.Cells(r, 3).Value = macroName
+                wsOut.Cells(r, 4).Value = "shape"
+                If found Then
+                    wsOut.Cells(r, 5).Value = "Valide"
+                Else
+                    wsOut.Cells(r, 5).Value = "Manquante"
+                End If
+            End If
+        Next shp
+        
+        ' Vérification des contrôles ActiveX
+        For Each oleObj In ws.OLEObjects
+            If TypeOf oleObj.Object Is MSForms.CommandButton Then
+                ' Construire le nom de la macro à partir du nom du contrôle
+                macroName = oleObj.Name & "_Click"
+                
+                ' Vérifier si la macro existe
+                found = Fn_VerifierMacroExiste(macroName, ws.CodeName)
+                
+                ' Résultat de la vérification
+                r = r + 1
+                wsOut.Cells(r, 1).Value = ws.Name
+                wsOut.Cells(r, 2).Value = oleObj.Name
+                wsOut.Cells(r, 3).Value = macroName
+                wsOut.Cells(r, 4).Value = "CommandButton"
+                If found Then
+                    wsOut.Cells(r, 5).Value = "Valide"
+                Else
+                    wsOut.Cells(r, 5).Value = "Manquante"
+                End If
+            End If
+        Next oleObj
+    Next ws
+
+    With wsOut
+        .Range("A1").CurrentRegion.Sort Key1:=.Range("A2"), Order1:=xlAscending, _
+                                        Key2:=.Range("B2"), Order2:=xlAscending, _
+                                        Header:=xlYes
+    End With
+    
+    Call AppliquerZebrage
+    
+    wsOut.Activate
+    
+    MsgBox "Vérification terminée sur toutes les feuilles. Consultez la fenêtre Exécution pour les résultats.", vbInformation
+    
+End Sub
+
+Function Fn_VerifierMacroExiste(macroName As String, Optional moduleName As String = vbNullString) As Boolean '2025-08-21 @ 08:46
+
+    Dim vbComp As Object
+    Dim codeModule As Object
+    Dim ligne As Long
+    Dim nomModule As String
+    Dim nomProc As String
+
+    Fn_VerifierMacroExiste = False
+
+    ' Si macroName contient un ".", on le découpe
+    If InStr(macroName, ".") > 0 Then
+        nomModule = Split(macroName, ".")(0)
+        nomProc = Split(macroName, ".")(1)
+    Else
+        nomProc = macroName
+        nomModule = moduleName ' Peut être vide
+    End If
+
+    ' Si un module est spécifié, chercher uniquement dedans
+    If nomModule <> vbNullString Then
+        On Error Resume Next
+        Set vbComp = ThisWorkbook.VBProject.VBComponents(nomModule)
+        On Error GoTo 0
+        If Not vbComp Is Nothing Then
+            Set codeModule = vbComp.codeModule
+            For ligne = 1 To codeModule.CountOfLines
+                If codeModule.ProcOfLine(ligne, vbext_pk_Proc) = nomProc Then
+                    Fn_VerifierMacroExiste = True
+                    Exit Function
+                End If
+            Next ligne
+        End If
+        Exit Function
+    End If
+
+    ' Sinon, chercher dans tous les modules
+    For Each vbComp In ThisWorkbook.VBProject.VBComponents
+        Set codeModule = vbComp.codeModule
+        For ligne = 1 To codeModule.CountOfLines
+            If codeModule.ProcOfLine(ligne, vbext_pk_Proc) = nomProc Then
+                Fn_VerifierMacroExiste = True
+                Exit Function
+            End If
+        Next ligne
+    Next vbComp
+End Function
+
+Sub AppliquerZebrage() '2025-08-21 @ 08:46
+
+    Dim wsOut As Worksheet
+    Set wsOut = ThisWorkbook.Sheets("Feuil4")
+    
+    Dim lastRow As Long
+    Dim i As Long
+    
+    lastRow = wsOut.Cells(wsOut.Rows.count, "A").End(xlUp).Row
+    
+    For i = 2 To lastRow
+        If i Mod 2 = 1 Then
+            wsOut.Range("A" & i & ":E" & i).Interior.Color = RGB(240, 240, 240)
+        Else
+            wsOut.Range("A" & i & ":E" & i).Interior.ColorIndex = xlNone
+        End If
+    Next i
+    
+End Sub
+

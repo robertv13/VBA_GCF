@@ -280,6 +280,11 @@ Sub LireLogSaisieHeures(filePath As String)
             Dim Fields() As String
             Fields = Split(lineContent, " | ") 'Diviser la ligne en champs avec le délimiteur "|"
             'Insérer les données dans le tableau
+            If UBound(Fields, 1) = 12 Then '2025-08-25 @ 20:19
+                Fields(8) = Fields(8) & Fields(9)
+                Fields(9) = Fields(10)
+                Fields(10) = Fields(11)
+            End If
             ligne = ligne + 1
             output(ligne, 1) = env
             output(ligne, 2) = CStr(Left$(Fields(0), 10))

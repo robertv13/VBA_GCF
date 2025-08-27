@@ -785,8 +785,8 @@ Sub SynchroniserFichiers() '2025-08-17 @ 18:43
     Dim dateModifProd As Date
 
     'Définir les chemins
-    cheminProd = "P:\Administration\APP\GCF" & gDATA_PATH
-    cheminDev = wsdADMIN.Range("PATH_DATA_FILES") & gDATA_PATH
+    cheminProd = "P:\Administration\APP\GCF" & gDATA_PATH & Application.PathSeparator
+    cheminDev = wsdADMIN.Range("PATH_DATA_FILES") & gDATA_PATH & Application.PathSeparator
     
     fichierLock = cheminProd & "GCF_BD_MASTER.lock"
     fichierMaster = "GCF_BD_MASTER.xlsx"
@@ -933,128 +933,6 @@ Sub AjusterEpurerTablesDeMaster() '2024-12-07 @ 06:47
     MsgBox "Tous les tableaux ont été ajustés avec succès.", vbInformation, "Traitement est terminé"
     
 End Sub
-
-Sub VerifierControlesAssociesToutesFeuilles()
-
-    Dim wsOut As Worksheet
-    Set wsOut = ThisWorkbook.Sheets("Feuil4")
-    wsOut.Range("A1").CurrentRegion.offset(1).Clear
-    Dim r As Long
-    
-    Dim ws As Worksheet
-    Dim shp As Shape
-    Dim btn As Object
-    Dim macroNameRaw As String
-    Dim macroName As String
-    Dim vbComp As Object
-    Dim codeModule As Object
-    Dim ligne As Long
-    Dim found As Boolean
-    Dim oleObj As OLEObject
-    
-    ' Parcourir toutes les feuilles du classeur
-    For Each ws In ThisWorkbook.Worksheets
-        Debug.Print "#079 - Vérification des contrôles sur la feuille : " & ws.Name
-        
-        ' Vérification des Shapes (Formulaires ou Boutons assignés)
-        For Each shp In ws.Shapes
-            On Error Resume Next
-            macroNameRaw = shp.OnAction
-            On Error GoTo 0
-            
-            If macroNameRaw <> vbNullString Then
-                ' Extraire uniquement le nom de la macro après le "!"
-                If InStr(1, macroNameRaw, "!") > 0 Then
-                    macroName = Split(macroNameRaw, "!")(1)
-                Else
-                    macroName = macroNameRaw
-                End If
-                
-                ' Vérifier si la macro existe
-                found = Fn_VerifierMacroExiste(macroName)
-                
-                ' Résultat de la vérification
-                r = r + 1
-                wsOut.Cells(r, 1).Value = ws.Name
-                wsOut.Cells(r, 2).Value = shp.Name
-                wsOut.Cells(r, 3).Value = macroName
-                wsOut.Cells(r, 4).Value = "shape"
-                If found Then
-                    wsOut.Cells(r, 5).Value = "Valide"
-                Else
-                    wsOut.Cells(r, 5).Value = "Manquante"
-                End If
-            End If
-        Next shp
-        
-        ' Vérification des contrôles ActiveX
-        For Each oleObj In ws.OLEObjects
-            If TypeOf oleObj.Object Is MSForms.CommandButton Then
-                ' Construire le nom de la macro à partir du nom du contrôle
-                macroName = oleObj.Name & "_Click"
-                
-                ' Vérifier si la macro existe
-                found = Fn_VerifierMacroExiste(macroName, ws.CodeName)
-                
-                ' Résultat de la vérification
-                r = r + 1
-                wsOut.Cells(r, 1).Value = ws.Name
-                wsOut.Cells(r, 2).Value = oleObj.Name
-                wsOut.Cells(r, 3).Value = macroName
-                wsOut.Cells(r, 4).Value = "CommandButton"
-                If found Then
-                    wsOut.Cells(r, 5).Value = "Valide"
-                Else
-                    wsOut.Cells(r, 5).Value = "Manquante"
-                End If
-            End If
-        Next oleObj
-    Next ws
-
-    wsOut.Activate
-    
-    MsgBox "Vérification terminée sur toutes les feuilles. Consultez la fenêtre Exécution pour les résultats.", vbInformation
-    
-End Sub
-
-Function Fn_VerifierMacroExiste(macroName As String, Optional moduleName As String = vbNullString) As Boolean
-
-    'Par defaut...
-    Fn_VerifierMacroExiste = False
-    
-    'Si un module spécifique est fourni, vérifier uniquement dans ce module
-    Dim vbComp As Object
-    Dim codeModule As Object
-    Dim ligne As Long
-    
-    If moduleName <> vbNullString Then
-        On Error Resume Next
-        Set vbComp = ThisWorkbook.VBProject.VBComponents(moduleName)
-        On Error GoTo 0
-        If Not vbComp Is Nothing Then
-            Set codeModule = vbComp.codeModule
-            For ligne = 1 To codeModule.CountOfLines
-                If codeModule.ProcOfLine(ligne, vbext_pk_Proc) = macroName Then
-                    Fn_VerifierMacroExiste = True
-                    Exit Function
-                End If
-            Next ligne
-        End If
-        Exit Function
-    End If
-    
-    'Parcourir tous les modules si aucun module spécifique n'est fourni
-    For Each vbComp In ThisWorkbook.VBProject.VBComponents
-        Set codeModule = vbComp.codeModule
-        For ligne = 1 To codeModule.CountOfLines
-            If codeModule.ProcOfLine(ligne, vbext_pk_Proc) = macroName Then
-                Fn_VerifierMacroExiste = True
-                Exit Function
-            End If
-        Next ligne
-    Next vbComp
-    
-End Function
 
 Sub zz_CreerFileLayouts() '2024-12-25 @ 15:27
 
@@ -1742,14 +1620,14 @@ Sub zz_InventaireProceduresEtFonctions() '2025-08-11 @ 10:54
     ' Initialiser expressions régulières
     Set regexDecl = CreateObject("VBScript.RegExp")
     With regexDecl
-        .Pattern = "^\s*(Public|Private)?\s*(Sub|Function|Property\s+(Get|Let|Set))"
+        .pattern = "^\s*(Public|Private)?\s*(Sub|Function|Property\s+(Get|Let|Set))"
         .IgnoreCase = True
         .Global = False
     End With
 
     Set regexCall = CreateObject("VBScript.RegExp")
     With regexCall
-        .Pattern = "(OnAction\s*=\s*""[^""]+""|Application\.Run\s*""[^""]+""|CallByName\s*\(.*?""[^""]+""[^)]*\))"
+        .pattern = "(OnAction\s*=\s*""[^""]+""|Application\.Run\s*""[^""]+""|CallByName\s*\(.*?""[^""]+""[^)]*\))"
         .IgnoreCase = True
         .Global = True
     End With
@@ -1933,7 +1811,7 @@ End Function
 Function Fn_ExtraireTypeEtPortee(ligne As String, ByRef TypeRetour As String, ByRef PorteeRetour As String) '2025-07-15 @ 22:56
 
     Dim reg As Object: Set reg = CreateObject("VBScript.RegExp")
-    reg.Pattern = "^\s*(Public|Private)?\s*(Sub|Function|Property\s+(Get|Let|Set))"
+    reg.pattern = "^\s*(Public|Private)?\s*(Sub|Function|Property\s+(Get|Let|Set))"
     reg.IgnoreCase = True
     reg.Global = False
 

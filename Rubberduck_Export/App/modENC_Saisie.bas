@@ -709,13 +709,13 @@ Sub NettoyerFeuilleEncaissement()
     End If
         
     With wshENC_Saisie.Range("F5:H5, K5, F7, K7, F9:I9").Interior '2024-08-25 @ 09:21
-            .Pattern = xlNone
+            .pattern = xlNone
             .TintAndShade = 0
             .PatternTintAndShade = 0
     End With
     
-    wshENC_Saisie.Shapes("shpSauvegarderENC").Visible = False
-    wshENC_Saisie.Shapes("shpAnnulerSaisieENC").Visible = False
+    wshENC_Saisie.Shapes("shpMettreAJour").Visible = False
+    wshENC_Saisie.Shapes("shpAnnulerSaisie").Visible = False
     
     Application.EnableEvents = True
     
@@ -745,8 +745,8 @@ Sub chkAppliquerEncaissementLigne()
             End If
             Application.EnableEvents = True
         End If
-        wshENC_Saisie.Shapes("btnENC_Sauvegarde").Visible = True
-        wshENC_Saisie.Shapes("btnENC_Annule").Visible = True
+        wshENC_Saisie.Shapes("shpMettreAJour").Visible = True
+        wshENC_Saisie.Shapes("shpAnnulerSaisie").Visible = True
     Else
         ActiveSheet.Range("K" & linkedCell.row).Value = 0
     End If

@@ -285,7 +285,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         End If
         If Range("H26").Value <> Range("I26").Value Then
             With Range("H26:I26").Interior
-                .Pattern = xlSolid
+                .pattern = xlSolid
                 .PatternColorIndex = xlAutomatic
                 .Color = 65535
                 .TintAndShade = 0
@@ -293,7 +293,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             End With
         Else
             With Range("H26:I26").Interior
-                .Pattern = xlNone
+                .pattern = xlNone
                 .TintAndShade = 0
                 .PatternTintAndShade = 0
             End With

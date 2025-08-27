@@ -362,7 +362,7 @@ End Sub
 
 Sub shpVerificationMacrosControles_Click()
 
-    Call modDev_Tools.VerifierControlesAssociesToutesFeuilles
+    Call modAuditVBA.zz_VerifierControlesAssociesToutesFeuilles
 
 End Sub
 

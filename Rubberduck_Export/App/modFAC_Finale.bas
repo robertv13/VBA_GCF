@@ -7,7 +7,7 @@ Private invRow As Long, itemDBRow As Long, invitemRow As Long, invNumb As Long
 Private lastRow As Long, lastResultRow As Long, resultRow As Long
 
 '@Description ("Clic sur le bouton Sauvegarde")
-Sub shpSauvegardeFacture_Click() '2025-06-21 @ 08:20
+Sub shpMettreAJourFAC_Click() '2025-06-21 @ 08:20
 
     Call SauvegarderFacture
     
@@ -1005,16 +1005,19 @@ Sub CreerPDFSauvegarderExcelEnvoyerCourriel() '2025-05-06 @ 11:07
 
     'Étape 1 - Création du document PDF
     Call CreerFactureFormatPDF(numeroFacture)
-    DoEvents: Application.Wait Now + TimeValue("0:00:01")
+    DoEvents
+    Application.Wait Now + TimeValue("0:00:01")
     
     'Étape 2 - Copie vers fichier Excel client
     Call SauvegarderCopieFactureDansExcel(nomClient, nomFichier, numeroFacture, dateFacture)
-    DoEvents: Application.Wait Now + TimeValue("0:00:01")
+    DoEvents
+    Application.Wait Now + TimeValue("0:00:01")
     gFlagEtapeFacture = 3
 
     'Étape 3 - Création du courriel avec pièce jointe PDF
     Call EnvoyerFactureParCourriel(numeroFacture, nomClient)
-    DoEvents: Application.Wait Now + TimeValue("0:00:01")
+    DoEvents
+    Application.Wait Now + TimeValue("0:00:01")
     gFlagEtapeFacture = 4
 
     'Étape 4 - Activation du bouton Sauvegarde
@@ -1317,7 +1320,7 @@ Sub CopierFormeEnteteEnTouteSecurite(wsSource As Worksheet, wsCible As Worksheet
 
     Dim forme As Shape, newForme As Shape
     On Error Resume Next
-    Set forme = wsSource.Shapes("GCF_Entete")
+    Set forme = wsSource.Shapes("shpGCFLogo")
     On Error GoTo 0
 
     If Not forme Is Nothing Then
@@ -1349,7 +1352,7 @@ Sub CopierFormeEnteteEnTouteSecurite(wsSource As Worksheet, wsCible As Worksheet
 
         Application.CutCopyMode = False
     Else
-        Debug.Print "Forme 'GCF_Entete' introuvable sur la feuille source."
+        Debug.Print "Forme 'shpGCFLogo' introuvable sur la feuille source."
     End If
     
 End Sub
@@ -1497,13 +1500,13 @@ Sub CacherSommaireTaux()
     
 End Sub
 
-Sub shpAfficherSommaireTaux_Click()
+Sub shpMontrerSommaireTaux_Click()
 
-    Call AfficherSommaireTaux
+    Call MontrerSommaireTaux
 
 End Sub
 
-Sub AfficherSommaireTaux()
+Sub MontrerSommaireTaux()
 
     'Épure le sommaire des honoraires
     Dim hres As Currency
@@ -1576,7 +1579,7 @@ Sub AfficherSommaireTaux()
     
 End Sub
 
-Sub shpRetourFeuilleBrouillon_Click()
+Sub shpDeplacerVersFeuilleBrouillon_Click()
 
     If wshFAC_Brouillon.Range("FactureStatut").Value = "En attente de mise à jour" Then '2025-07-19 @ 18:44
         MsgBox "Vous devez d'abord mettre à jour la facture en cours" & vbNewLine & vbNewLine & _
@@ -1584,13 +1587,13 @@ Sub shpRetourFeuilleBrouillon_Click()
         Exit Sub
     End If
     
-    Call RetournerFeuilleBrouillon
+    Call DeplacerVersFeuilleBrouillon
 
 End Sub
 
-Sub RetournerFeuilleBrouillon()
+Sub DeplacerVersFeuilleBrouillon()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:RetournerFeuilleBrouillon", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:DeplacerVersFeuilleBrouillon", vbNullString, 0)
    
     Application.ScreenUpdating = False
     
@@ -1600,13 +1603,13 @@ Sub RetournerFeuilleBrouillon()
 
     Application.ScreenUpdating = True
     
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:RetournerFeuilleBrouillon", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:DeplacerVersFeuilleBrouillon", vbNullString, startTime)
 
 End Sub
 
 Sub AfficherBoutonSauvegarder()
 
-    Dim shp As Shape: Set shp = wshFAC_Finale.Shapes("shpSauvegardeFacture")
+    Dim shp As Shape: Set shp = wshFAC_Finale.Shapes("shpMettreAJour")
     shp.Visible = True
     
     gFlagEtapeFacture = 3
@@ -1618,7 +1621,7 @@ End Sub
 
 Sub CacherBoutonSauvegarder()
 
-    Dim shp As Shape: Set shp = wshFAC_Finale.Shapes("shpSauvegardeFacture")
+    Dim shp As Shape: Set shp = wshFAC_Finale.Shapes("shpMettreAJour")
     shp.Visible = False
 
     'Libérer la mémoire
@@ -1626,46 +1629,146 @@ Sub CacherBoutonSauvegarder()
     
 End Sub
 
-Sub RestaurerFeuilleFinaleIntact() '2025-06-06 @ 18:38
-    
-    Dim wsSource As Worksheet, wsDest As Worksheet
-    Dim shp As Shape
+Sub RestaurerFeuilleFinaleIntact() '2025-08-22 @ 16:07
 
+    Dim wsSource As Worksheet
+    Dim wsDest As Worksheet
     Set wsSource = ThisWorkbook.Sheets("FAC_Finale_Intact")
     Set wsDest = ThisWorkbook.Sheets("FAC_Finale")
 
     Application.EnableEvents = False
     Application.ScreenUpdating = False
 
-    '1. Effacer toutes les cellules, formules, formats
-    wsDest.Cells.Clear
+    '1. Nettoyer la feuille destination
+    Call NettoyerFeuille(wsDest)
 
-    '2. Effacer toutes les formes
-    For Each shp In wsDest.Shapes
-        shp.Delete
-    Next shp
-
-    '3. Copier tout le contenu cellules + formats + formules
+    '2. Copier le contenu des cellules
+    Call SupprimerNomsLocaux(wsDest)
     wsSource.Cells.Copy
-    wsDest.Cells.PasteSpecial xlPasteAll 'Tout copier (valeurs, formules, formats, etc.)
-
-    '4. Copier chaque forme individuellement
-    For Each shp In wsSource.Shapes
-        shp.Copy
-        wsDest.Paste
-        'Optionnel : replacer la forme exactement
-        With wsDest.Shapes(wsDest.Shapes.count)
-            .Top = shp.Top
-            .Left = shp.Left
-            .Width = shp.Width
-            .Height = shp.Height
-        End With
-    Next shp
-
+    wsDest.Cells.PasteSpecial xlPasteAll
     Application.CutCopyMode = False
+
+    '3. Copier les formes avec positionnement
+    Call CopierFormesAvecActions(wsSource, wsDest)
+
+    '4. Recréer les plages nommées dynamiques
+    Call ReassignerPlagesNomées(wsSource, wsDest)
+
     Application.EnableEvents = True
     Application.ScreenUpdating = True
+
+    MsgBox "La feuille 'FAC_Finale' a été restaurée avec succès.", vbInformation
+
+End Sub
+
+Sub NettoyerFeuille(ws As Worksheet) '2025-08-22 @ 16:08
+
+    On Error Resume Next
+    ws.Cells.Clear
+    Dim shp As Shape
+    For Each shp In ws.Shapes
+        shp.Delete
+    Next shp
+    On Error GoTo 0
     
 End Sub
 
+Sub SupprimerNomsLocaux(ws As Worksheet) '2025-08-22 @ 16:20
+
+    Dim nom As Name
+    For Each nom In ThisWorkbook.Names
+        If nom.RefersTo Like "='" & ws.Name & "'!*" Then
+            Debug.Print nom.RefersTo
+            nom.Delete
+        End If
+    Next nom
+    
+End Sub
+
+Sub CopierFormesAvecActions(wsSource As Worksheet, wsDest As Worksheet) '2025-08-22 @ 16:09
+
+    Dim shpSource As Shape
+    Dim shpDest As Shape
+
+    For Each shpSource In wsSource.Shapes
+        shpSource.Copy
+        wsDest.Paste
+
+        Set shpDest = wsDest.Shapes(wsDest.Shapes.count)
+
+        With shpDest
+            .Top = shpSource.Top
+            .Left = shpSource.Left
+            .Width = shpSource.Width
+            .Height = shpSource.Height
+            On Error Resume Next
+            .OnAction = shpSource.OnAction
+            On Error GoTo 0
+        End With
+    Next shpSource
+    
+End Sub
+
+Sub ReassignerPlagesNomées(wsSource As Worksheet, wsDest As Worksheet) '2025-08-22 @ 16:09
+
+    Dim nom As Name
+    Dim nouveauNom As String
+    Dim nouvelleRef As String
+
+    For Each nom In ThisWorkbook.Names
+        If InStr(1, nom.RefersTo, wsSource.Name, vbTextCompare) > 0 Then
+            nouveauNom = nom.Name
+            nouvelleRef = Replace(nom.RefersTo, wsSource.Name, wsDest.Name)
+
+            On Error Resume Next
+            ThisWorkbook.Names(nouveauNom).Delete 'Supprimer si déjà existant
+            ThisWorkbook.Names.Add Name:=nouveauNom, RefersTo:=nouvelleRef
+            On Error GoTo 0
+        End If
+    Next nom
+    
+End Sub
+
+'Sub RestaurerFeuilleFinaleIntact() '2025-06-06 @ 18:38
+'
+'    Dim wsSource As Worksheet, wsDest As Worksheet
+'    Dim shp As Shape
+'
+'    Set wsSource = ThisWorkbook.Sheets("FAC_Finale_Intact")
+'    Set wsDest = ThisWorkbook.Sheets("FAC_Finale")
+'
+'    Application.EnableEvents = False
+'    Application.ScreenUpdating = False
+'
+'    '1. Effacer toutes les cellules, formules, formats
+'    wsDest.Cells.Clear
+'
+'    '2. Effacer toutes les formes
+'    For Each shp In wsDest.Shapes
+'        shp.Delete
+'    Next shp
+'
+'    '3. Copier tout le contenu cellules + formats + formules
+'    wsSource.Cells.Copy
+'    wsDest.Cells.PasteSpecial xlPasteAll 'Tout copier (valeurs, formules, formats, etc.)
+'
+'    '4. Copier chaque forme individuellement
+'    For Each shp In wsSource.Shapes
+'        shp.Copy
+'        wsDest.Paste
+'        'Optionnel : replacer la forme exactement
+'        With wsDest.Shapes(wsDest.Shapes.count)
+'            .Top = shp.Top
+'            .Left = shp.Left
+'            .Width = shp.Width
+'            .Height = shp.Height
+'        End With
+'    Next shp
+'
+'    Application.CutCopyMode = False
+'    Application.EnableEvents = True
+'    Application.ScreenUpdating = True
+'
+'End Sub
+'
 

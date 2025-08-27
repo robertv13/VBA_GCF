@@ -778,7 +778,7 @@ Function Fn_ValiderCourriel(ByVal adresses As String) As Boolean '2024-10-26 @ 1
     
     'Initialisation de l'expression régulière pour valider une adresse courriel
     With regex
-        .Pattern = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+        .pattern = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
         .IgnoreCase = True
         .Global = False
     End With

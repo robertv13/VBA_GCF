@@ -110,7 +110,7 @@ Sub SauvegarderRenversementEntreeJournal()
     'Reorganise wshGL_EJ
     Application.ScreenUpdating = False
     Dim shp As Shape
-    Set shp = wshGL_EJ.Shapes("btnUpdate")
+    Set shp = wshGL_EJ.Shapes("shpMettreAJour")
     Call RestaurerFormeEJ(shp)
     
     'Renverser les montants (DT --> CT & CT ---> DT)
@@ -518,7 +518,7 @@ Sub AfficherEntreeJournalARenverser()
     
     'Change le libellé du Bouton & caractéristiques
     Dim shp As Shape
-    Set shp = wshGL_EJ.Shapes("btnUpdate")
+    Set shp = wshGL_EJ.Shapes("shpMettreAJour")
     Call ModifierTexteFormeSauvegardeEJ(shp)
     
     'Libérer la mémoire

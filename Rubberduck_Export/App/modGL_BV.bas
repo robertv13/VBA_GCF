@@ -477,7 +477,7 @@ Sub ImprimerBV()
     Dim pagesRequired As Long
     pagesRequired = Int((lastRow - 1) / 60) + 1
     
-    Dim shp As Shape: Set shp = wshGL_BV.Shapes("GL_BV_Print")
+    Dim shp As Shape: Set shp = wshGL_BV.Shapes("shpImpressionBV")
     shp.Visible = msoFalse
     
     Call MettreEnPageEtPrevisualiserBVOuTrans(printRange, pagesRequired)
@@ -516,7 +516,7 @@ Sub ImprimerBVTransactions()
     Dim pagesRequired As Long
     pagesRequired = Int((lastRow - 1) / 80) + 1
     
-    Dim shp As Shape: Set shp = ActiveSheet.Shapes("GL_BV_Print_Trans")
+    Dim shp As Shape: Set shp = ActiveSheet.Shapes("shpImpressionDetailUnCompte")
     shp.Visible = msoFalse
     
     Call MettreEnPageEtPrevisualiserBVOuTrans(printRange, pagesRequired)
@@ -647,7 +647,7 @@ Sub AjusterFormeDynamiqueBV()
         texteFull = Left$(texteFull, Len(texteFull) - 2)
     End If
     
-    Dim dynamicShape As Shape: Set dynamicShape = wshGL_BV.Shapes("JE_Detail_Trans")
+    Dim dynamicShape As Shape: Set dynamicShape = wshGL_BV.Shapes("shpLignesDetailTrans")
 
     'Set shape properties
     With dynamicShape
@@ -680,7 +680,7 @@ End Sub
 
 Sub AfficherFormeDynamiqueBV()
 
-    Dim shp As Shape: Set shp = wshGL_BV.Shapes("JE_Detail_Trans")
+    Dim shp As Shape: Set shp = wshGL_BV.Shapes("shpLignesDetailTrans")
     shp.Visible = msoTrue
     
     'Libérer la mémoire
@@ -690,7 +690,7 @@ End Sub
 
 Sub EffacerFormeDynamique()
 
-    Dim shp As Shape: Set shp = wshGL_BV.Shapes("JE_Detail_Trans")
+    Dim shp As Shape: Set shp = wshGL_BV.Shapes("shpLignesDetailTrans")
     shp.Visible = msoFalse
 
     'Libérer la mémoire

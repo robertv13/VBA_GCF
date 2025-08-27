@@ -507,7 +507,7 @@ Function Fn_EstDateCaractereValide(ByVal txt As String) As Boolean '2025-03-03 @
     Set regex = CreateObject("VBScript.RegExp")
 
     'Expression régulière : accepte uniquement chiffres (0-9) et les séparateurs . / - et espace
-    regex.Pattern = "^[0-9./\-\s]+$"
+    regex.pattern = "^[0-9./\-\s]+$"
     regex.IgnoreCase = True
     regex.Global = False
 
@@ -525,7 +525,7 @@ Function Fn_EstSeulementChiffres(ByVal txt As String) As Boolean '2025-03-03 @ 0
     Set regex = CreateObject("VBScript.RegExp")
 
     'Expression régulière en fonction du nombre de caractères
-    regex.Pattern = "^\d{4}$|^\d{6}$|^\d{8}$"
+    regex.pattern = "^\d{4}$|^\d{6}$|^\d{8}$"
     regex.IgnoreCase = True
     regex.Global = False
 

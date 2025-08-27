@@ -153,7 +153,7 @@ Sub CreerNouvelleFactureBrouillon() 'Clear contents
                         wshFAC_Brouillon.Range("S" & r).Value = arr(ii - 43, 2)
                         If wshFAC_Brouillon.Range("S" & r).Value <> 0 Then
                             With wshFAC_Brouillon.Range("S" & r).Interior
-                                .Pattern = xlNone
+                                .pattern = xlNone
                                 .TintAndShade = 0
                                 .PatternTintAndShade = 0
                             End With
@@ -411,7 +411,7 @@ Sub MettreEnPlaceCellulesFACBrouillon()
         
         'ON élimine les cellules qui pourraient avoir du vert pâle...
         With .Range("E3:F3,O3,O9,L11:N45,O48:O50,M48:M50").Interior
-            .Pattern = xlNone
+            .pattern = xlNone
             .TintAndShade = 0
             .PatternTintAndShade = 0
         End With
@@ -793,11 +793,11 @@ Sub CopierTECFiltresVersFACBrouillon(cutOffDateProjet As Date) '2024-03-21 @ 07:
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.listBox1.Clear
+        ufFraisDivers.ListBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.listBox1.AddItem item
+            ufFraisDivers.ListBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless
@@ -946,7 +946,7 @@ Depot_Checked:
     wshFAC_Brouillon.Range("B27").Value = True
     
     Call CacherHeuresParLigne
-    Call AfficherSommaireTaux
+    Call MontrerSommaireTaux
     
     'Afficher le code et le nom du client, pour faciliter la sauvegarde de la facture (format EXCEL)
     wshFAC_Finale.Range("L79").Value = wshFAC_Brouillon.Range("B18").Value

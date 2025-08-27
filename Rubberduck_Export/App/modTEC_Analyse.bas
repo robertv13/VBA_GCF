@@ -137,7 +137,7 @@ Sub TrierEtAjouterSousTotauxClient() '2024-08-24 @ 08:10
     'Change the format of the top row (Total General)
     With wsDest.Range("C7:D7")
         With .Interior
-            .Pattern = xlSolid
+            .pattern = xlSolid
             .PatternColorIndex = xlAutomatic
             .Color = 65535
             .TintAndShade = 0
@@ -154,7 +154,7 @@ Sub TrierEtAjouterSousTotauxClient() '2024-08-24 @ 08:10
     'Change the format of the top row (Hours)
     With wsDest.Range("H7")
         With .Interior
-            .Pattern = xlSolid
+            .pattern = xlSolid
             .PatternColorIndex = xlAutomatic
             .Color = 255
             .TintAndShade = 0
@@ -383,7 +383,7 @@ Sub ConstruireSommaireHeures(rowSelected As Long)
     End With
     
     With ActiveSheet.Range("J" & saveR & ":M" & rowSelected).Interior
-        .Pattern = xlSolid
+        .pattern = xlSolid
         .PatternColorIndex = xlAutomatic
         .ThemeColor = xlThemeColorAccent1
         .TintAndShade = 0.799981688894314

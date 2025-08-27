@@ -92,7 +92,7 @@ Sub AjusterBordurePivotTable() '2025-02-01 @ 05:49
     
     Set rng = ws.Range("D9")
     With rng.Interior
-        .Pattern = xlSolid
+        .pattern = xlSolid
         .PatternColorIndex = xlAutomatic
         .ThemeColor = xlThemeColorAccent4
         .TintAndShade = 0.399975585192419

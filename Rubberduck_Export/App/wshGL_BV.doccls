@@ -108,13 +108,13 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
         Application.EnableEvents = True
         Dim shp As Shape
         On Error Resume Next
-            Set shp = wshGL_BV.Shapes("JE_Detail_Trans")
+            Set shp = wshGL_BV.Shapes("shpLignesDetailTrans")
         On Error GoTo 0
         If shp Is Nothing Then
             Set shp = wshGL_BV.Shapes.AddShape(msoShapeRoundedRectangle, 50, 50, 100, 50)
             shp.Name = "JE_Detail_Trans"
         End If
-        Set shp = wshGL_BV.Shapes("JE_Detail_Trans")
+        Set shp = wshGL_BV.Shapes("shpLignesDetailTrans")
         shp.Visible = msoFalse
     End If
     

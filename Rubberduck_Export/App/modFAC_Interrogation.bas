@@ -1426,7 +1426,7 @@ Sub AfficherNouvelleFeuillePourCC(invNo As String, nomClient As String, dateFact
 
     'Entête un peu plus foncé
     With ws.Range("C8:I8").Interior
-        .Pattern = xlSolid
+        .pattern = xlSolid
         .PatternColorIndex = xlAutomatic
         .ThemeColor = xlThemeColorAccent6
         .TintAndShade = 0.399975585192419
@@ -1435,7 +1435,7 @@ Sub AfficherNouvelleFeuillePourCC(invNo As String, nomClient As String, dateFact
 
     'Zone de données sans couleur
     With ws.Range("C9:I" & lastRowUsed - 2).Interior
-        .Pattern = xlNone
+        .pattern = xlNone
         .TintAndShade = 0
         .PatternTintAndShade = 0
     End With
@@ -1495,7 +1495,7 @@ Sub PreparerRapportTECFactures(numeroFacture As String)
     
     'Assigner la feuille du rapport
     Dim strRapport As String
-    strRapport = "Rapport TEC facturés"
+    strRapport = "Rapport TEC factures"
     Dim wsRapport As Worksheet: Set wsRapport = wshTECFacture
     On Error Resume Next
     wsRapport.Unprotect
@@ -1567,7 +1567,7 @@ Sub PreparerRapportTECFactures(numeroFacture As String)
         'Corps du rapport
         .Range("A5:D" & r).VerticalAlignment = xlCenter
         With .Range("A4:D4").Interior
-            .Pattern = xlSolid
+            .pattern = xlSolid
             .PatternColorIndex = xlAutomatic
             .Color = 12611584
             .TintAndShade = 0

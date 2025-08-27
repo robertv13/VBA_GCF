@@ -127,7 +127,7 @@ Sub MettreAJourDEBRenversement()
     'Reorganise wsdDEB_Trans
     Application.ScreenUpdating = False
     Dim shp As Shape
-    Set shp = ws.Shapes("btnUpdate")
+    Set shp = ws.Shapes("shpMettreAJour")
     Call RestaurerParametresForme(shp)
     
     Application.EnableEvents = False
@@ -495,7 +495,7 @@ Sub ConstruireEcritureDEBRenversement() '2025-02-23 @ 16:56
 
     'Change le libellé du Bouton & caractéristiques
     Dim shp As Shape
-    Set shp = wshDEB_Saisie.Shapes("shpMettreAJourDEB")
+    Set shp = wshDEB_Saisie.Shapes("shpMettreAJour")
     Call ModifierForme(shp)
 
 Nettoyage:
@@ -865,7 +865,7 @@ Sub EffacerCellulesSaisieDEB()
     
     'Toutes les cellules sont sans surbrillance (élimine le vert pâle)
     With ws.Range("F4:H4, J4:M4, O4, F6:J6, M6, O6, E9:O23").Interior
-        .Pattern = xlNone
+        .pattern = xlNone
         .TintAndShade = 0
         .PatternTintAndShade = 0
     End With
@@ -901,7 +901,7 @@ Sub RetournerAuMenu()
     
     'Rétablir la forme du bouton (Mettre à jour / Renverser)
     Dim shp As Shape
-    Set shp = wshDEB_Saisie.Shapes("shpMettreAJourDEB")
+    Set shp = wshDEB_Saisie.Shapes("shpMettreAJour")
     Call RestaurerParametresForme(shp)
 
     Call modAppli.QuitterFeuillePourMenu(wshMenuGL, True) '2025-08-19 @ 06:52

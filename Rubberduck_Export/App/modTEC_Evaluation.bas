@@ -24,9 +24,9 @@ Sub ViderFeuilleEvaluationTEC()
     
     With ws
         .Range("D3").Value = vbNullString 'Message pour écriture de G/L
-        .Range("D6:L28").Clear
-        .Shapes("Impression").Visible = msoFalse
-        .Shapes("EcritureGL").Visible = msoFalse
+        .Range("D6:L28").ClearContents
+        .Shapes("shpImpression").Visible = msoFalse
+        .Shapes("shpEcritureGL").Visible = msoFalse
         .Protect UserInterfaceOnly:=True
         .EnableSelection = xlUnlockedCells
     End With
@@ -251,7 +251,7 @@ Sub AfficherValeurTEC(cutoffDate As String, maxDate As Date)
         ws.Range("H" & currentRow).Value = Format$(totalValeurTEC, "###,##0.00 $")
         If i = 0 Then
             With ws.Range("H" & currentRow).Interior
-                .Pattern = xlSolid
+                .pattern = xlSolid
                 .PatternColorIndex = xlAutomatic
                 .Color = 65535
                 .TintAndShade = 0
@@ -291,14 +291,14 @@ Sub AfficherValeurTEC(cutoffDate As String, maxDate As Date)
     ws.Range("D3").Value = message
     
     If valeurTEC - solde <> 0 Then '2025-06-07 @ 13:58
-        ws.Shapes("EcritureGL").Visible = msoTrue
+        ws.Shapes("shpEcritureGL").Visible = msoTrue
         ws.Range("B2").Value = valeurTEC - solde
     End If
 
     Application.ScreenUpdating = True
     Application.EnableEvents = True
 
-    ws.Shapes("Impression").Visible = True
+    ws.Shapes("shpImpression").Visible = True
     ws.Range("L3").Select
 
     'Libérer la mémoire
@@ -383,7 +383,7 @@ Sub ComptabiliserValeurTEC() '2025-06-08 @ 08:37
     'Écriture
     Call modGL_Stuff.AjouterEcritureGLADOPlusLocale(ecr, True)
     
-    wshTEC_Evaluation.Shapes("EcritureGL").Visible = msoFalse
+    wshTEC_Evaluation.Shapes("shpEcritureGL").Visible = msoFalse
     
     Call modDev_Utils.EnregistrerLogApplication("modTEC_Evaluation:ComptabiliserValeurTEC", vbNullString, startTime)
 
