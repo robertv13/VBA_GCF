@@ -432,6 +432,10 @@ Private Sub txtNomClient_Exit(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim startTime As Double: startTime = Timer: Call CM_Log_Activities("ufClientMF:txtNomClient_Exit", "", 0)
     
+    If ufClientMF.txtNomClient <> vbNullString Then
+        Call VerifierDoublonClient
+    End If
+    
     If Trim(ufClientMF.txtNomClient.Value) <> "" Then
         ufClientMF.cmdSave.Enabled = True
     End If
@@ -439,6 +443,12 @@ Private Sub txtNomClient_Exit(ByVal Cancel As MSForms.ReturnBoolean)
     ufClientMF.cmdCancel.Enabled = True
 
     Call CM_Log_Activities("ufClientMF:txtNomClient_Exit", ufClientMF.txtNomClient.Value, startTime)
+
+End Sub
+
+Private Sub txtCodePostal_Exit(ByVal Cancel As MSForms.ReturnBoolean)
+
+    Call VerifierDoublonClient
 
 End Sub
 
@@ -483,4 +493,58 @@ Private Sub UserForm_Initialize()
 
 End Sub
 
+Private Sub VerifierDoublonClient() '2025-08-30 @ 08:28
+
+    Dim nomSaisi As String
+    Dim cpSaisi As String
+    Dim nomExistant As String
+    Dim cpExistant As String
+    Dim i As Long
+    Dim msg As String
+    Dim doublonTrouve As Boolean
+    
+    nomSaisi = Trim(Me.txtNomClient.Text)
+    cpSaisi = Trim(Me.txtCodePostal.Text)
+    doublonTrouve = False
+    If nomSaisi = vbNullString And cpSaisi = vbNullString Then
+        Exit Sub
+    End If
+    
+    Dim nomTrouve As String
+    Dim cpTrouve As String
+    Dim nbClientSimilaire As Long
+    
+    With wshClients
+        For i = 2 To .Cells(.Rows.Count, 1).End(xlUp).Row
+            nomExistant = Trim(.Cells(i, 1).Value) 'Colonne du nom
+            cpExistant = Trim(.Cells(i, 11).Value) 'Colonne du code postal
+            
+            If (nomSaisi <> vbNullString And InStr(1, nomExistant, nomSaisi, vbTextCompare) > 0) Or _
+               (cpSaisi <> vbNullString And StrComp(cpExistant, cpSaisi, vbTextCompare) = 0) Then
+               
+                If nbClientSimilaire = 0 Then
+                    nomTrouve = nomExistant
+                    cpTrouve = cpExistant
+                End If
+                nbClientSimilaire = nbClientSimilaire + 1
+                doublonTrouve = True
+            End If
+        Next i
+    
+        If doublonTrouve Then
+            If nbClientSimilaire = 1 Then
+                msg = "Un client SIMILAIRE semble déjà exister : " & vbCrLf & vbCrLf & _
+                      "Nom : " & nomTrouve & vbCrLf & _
+                      "Code postal : " & cpTrouve & vbCrLf & vbCrLf & _
+                      "Veuillez bien vérifier avant de créer ce nouveau client."
+            Else
+                msg = "J'ai retrouvé " & nbClientSimilaire & " clients SIMILAIRES dans la base de données" & vbCrLf & vbCrLf & _
+                      "Veuillez bien vérifier avant de créer ce nouveau client."
+            End If
+            MsgBox msg, vbExclamation, "DOUBLON potentiel"
+        End If
+
+    End With
+    
+End Sub
 

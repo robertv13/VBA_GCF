@@ -249,10 +249,10 @@ Sub Valider_Client_Avant_Effacement(ClientID As String, Optional ByRef clientExi
                 
                 'Construire la requête SQL pour chercher le client
                 sql = "SELECT * FROM [" & plageRechercher & "] WHERE [" & colName & "] = '" & ClientID & "'"
-                
+                Debug.Print sql '2025-08-29 @ 07:24
                 Set rs = conn.Execute(sql)
                 If Not rs.EOF Then
-                    message1 = message1 & "Le client '" & ClientID & "' existe dans la feuille '" & feuilleName & "'" & vbNewLine & vbNewLine & _
+                    message1 = message1 & "Le client '" & ClientID & "' existe dans la feuille '" & feuilleName & "'" & vbNewLine & _
                                           "du classeur '" & listeWorkbooks(i) & "'" & vbCrLf
                     Debug.Print message1
                     clientExiste = True
