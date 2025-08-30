@@ -1,4 +1,4 @@
-﻿📘 Journal typographique — 08/27/2025 18:13:37
+﻿📘 Journal typographique — 08/30/2025 09:05:49
 
 🔧 Fichier : clsControlWrapper.cls
 
@@ -9,6 +9,8 @@
 🔧 Fichier : clsSearchableDropdown.cls
    ✅ Remplacé : .text ➜ .Text
    ✅ Remplacé : .value ➜ .Value
+
+🔧 Fichier : clsSurveillanceActivite.cls
 
 🔧 Fichier : modAPIWindows.bas
 
@@ -200,8 +202,6 @@
    ✅ Remplacé : .row ➜ .Row
    ✅ Remplacé : .value ➜ .Value
 
-🔧 Fichier : modMain.bas
-
 🔧 Fichier : modMenu.bas
    ✅ Remplacé : .value ➜ .Value
    ✅ Remplacé : .range ➜ .Range
@@ -264,10 +264,6 @@
 🔧 Fichier : modTEC_TDB.bas
    ✅ Remplacé : .borders ➜ .Borders
    ✅ Remplacé : .row ➜ .Row
-
-🔧 Fichier : modTestJump.bas
-
-🔧 Fichier : Module1.bas
 
 🔧 Fichier : modzDataConversion.bas
    ✅ Remplacé : .column ➜ .Column
@@ -462,9 +458,6 @@
 🔧 Fichier : wshzDocSubsAndFunctions.doccls
 
 🔧 Fichier : wshzDocTestsAndTodos.doccls
-   ✅ Remplacé : .value ➜ .Value
-
-🔧 Fichier : wshzDocTests_And_Todos.doccls
    ✅ Remplacé : .value ➜ .Value
 
 🔧 Fichier : wshzDocUserFormParams.doccls

@@ -1,6 +1,8 @@
 Attribute VB_Name = "modAppli"
 Option Explicit
 
+Public ProchaineVérifUserForm As Date
+
 Sub DemarrerApplication() '2025-07-11 @ 15:16
 
     Dim rootPath As String
@@ -429,6 +431,32 @@ Public Sub EnregistrerActiviteAuLog(ByVal message As String) '2025-07-03 @ 10:29
     Open cheminLog For Append As #fileNum
     Print #fileNum, "[" & Format(Now, "yyyy-mm-dd hh:nn:ss") & "] [" & Fn_UtilisateurWindows & "] " & message
     Close #fileNum
+    
+End Sub
+
+Sub LancerSurveillanceUserForm() '2025-08-29 @ 18:32
+
+    ProchaineVérifUserForm = Now + TimeSerial(0, 0, 10) ' toutes les 10 secondes
+    Application.OnTime ProchaineVérifUserForm, "VerifierInactivitéUserForm"
+    
+End Sub
+
+Sub AnnulerSurveillanceUserForm() '2025-08-29 @ 18:32
+
+    On Error Resume Next
+    Application.OnTime ProchaineVérifUserForm, "VerifierInactivitéUserForm", , False
+    
+End Sub
+
+Sub VerifierInactivitéUserForm() '2025-08-29 @ 18:32
+
+    If Fn_MinutesDepuisDerniereActivite() >= gMAXIMUM_MINUTES_INACTIVITE Then
+        If gMODE_DEBUG Then Debug.Print "[modAppli:VerifierInactivitéUserForm] Inactivité détectée dans UserForm — fermeture"
+        Unload ufSaisieHeures
+        Call FermerApplicationInactive
+    Else
+        Call LancerSurveillanceUserForm
+    End If
     
 End Sub
 
