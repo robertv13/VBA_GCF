@@ -46,7 +46,7 @@ Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
         .Activate
         ActiveWindow.Zoom = 100
         ActiveWindow.FreezePanes = False
-        Application.Goto .Range("A8"), Scroll:=False
+        Application.GoTo .Range("A8"), Scroll:=False
         .Range("A8").Select
         ActiveWindow.FreezePanes = True
     End With
@@ -145,7 +145,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = False
             Target.ClearContents
             Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
+            Application.GoTo Range(Target.Address)
         End If
        
         'Future date ?
@@ -154,7 +154,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 Application.EnableEvents = False
                 Target.ClearContents
                 Application.EnableEvents = True
-                Application.Goto Range(Target.Address)
+                Application.GoTo Range(Target.Address)
             End If
         End If
 

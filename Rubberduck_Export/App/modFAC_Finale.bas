@@ -11,7 +11,8 @@ Sub shpMettreAJourFAC_Click() '2025-06-21 @ 08:20
 
     Call SauvegarderFacture
     
-    Call RestaurerFeuilleFinaleIntact
+    Call Reinitialiser_FAC_Finale
+'    Call RestaurerFeuilleFinaleIntact
 
 End Sub
 
@@ -1629,6 +1630,116 @@ Sub CacherBoutonSauvegarder()
     
 End Sub
 
+Sub Reinitialiser_FAC_Finale() '2025-09-05 @ 07:42 - @TODO
+
+    Dim FeuilleSource As Worksheet
+    Dim FeuilleCible As Worksheet
+    Dim nm As Name, shp As Shape, lo As ListObject
+    Dim c As Range
+    
+    Application.ScreenUpdating = False
+    Application.DisplayAlerts = False
+    Application.Calculation = xlCalculationManual
+    
+    '--- Feuilles source et cible ---
+    Set FeuilleSource = Worksheets("FAC_Finale_Intact")
+    Set FeuilleCible = Worksheets("FAC_Finale")
+    
+    '--- 1. Nettoyer la feuille cible ---
+    FeuilleCible.Cells.Clear
+    On Error Resume Next
+    FeuilleCible.Cells.Validation.Delete
+    FeuilleCible.Cells.FormatConditions.Delete
+    On Error GoTo 0
+    
+    'Supprimer toutes les formes (images, boutons, graphiques, etc.)
+    For Each shp In FeuilleCible.Shapes
+        shp.Delete
+    Next shp
+    
+    'Supprimer les noms locaux liés à la feuille
+    For Each nm In FeuilleCible.Parent.Names
+        If nm.Name Like FeuilleCible.Name & "!*" Then nm.Delete
+    Next nm
+    
+    'Supprimer les tableaux structurés s'il y en a
+    On Error Resume Next
+    For Each lo In FeuilleCible.ListObjects
+        lo.Unlist
+    Next lo
+    On Error GoTo 0
+    
+    '--- 2. Copier contenu et formats ---
+    FeuilleSource.Cells.Copy
+    FeuilleCible.Cells.PasteSpecial xlPasteAll
+    FeuilleCible.Cells.PasteSpecial xlPasteColumnWidths
+    Application.CutCopyMode = False
+    
+    '--- 3. Copier les formes ---
+    For Each shp In FeuilleSource.Shapes
+        shp.Copy
+        FeuilleCible.Paste
+        '?? Optionnel : ajuster position si besoin
+    Next shp
+    
+    '--- 4. Copier les noms locaux ---
+    For Each nm In FeuilleSource.Parent.Names
+        If nm.Name Like FeuilleSource.Name & "!*" Then
+            On Error Resume Next
+            FeuilleCible.Parent.Names.Add _
+                Name:=Replace(nm.Name, FeuilleSource.Name, FeuilleCible.Name), _
+                RefersTo:=Replace(nm.RefersTo, FeuilleSource.Name, FeuilleCible.Name)
+            On Error GoTo 0
+        End If
+    Next nm
+    
+    '--- 5. Copier la mise en page ---
+    On Error Resume Next
+    FeuilleCible.PageSetup = FeuilleSource.PageSetup
+    On Error GoTo 0
+    
+    '--- 6. Copier zoom et FreezePanes ---
+    With ActiveWindow
+        .Zoom = 100
+        FeuilleSource.Activate
+        .Zoom = .Zoom
+        .FreezePanes = False
+        If FeuilleSource.Parent.Windows(1).FreezePanes Then
+            FeuilleSource.Parent.Windows(1).SplitColumn = _
+                FeuilleSource.Parent.Windows(1).SplitColumn
+            FeuilleSource.Parent.Windows(1).SplitRow = _
+                FeuilleSource.Parent.Windows(1).SplitRow
+            FeuilleCible.Parent.Windows(1).FreezePanes = True
+        End If
+    End With
+    
+    '--- 7. Corriger les formules qui pointent vers FAC_Finale_Intact ---
+    For Each c In FeuilleCible.usedRange.Cells
+        If c.HasFormula Then
+            c.formula = Replace(c.formula, "FAC_Finale_Intact", "FAC_Finale")
+        End If
+    Next c
+    
+    '--- 8. Corriger les hyperliens qui pointent vers FAC_Finale_Intact ---
+    Dim hl As Hyperlink
+    For Each hl In FeuilleCible.Hyperlinks
+        If InStr(hl.Address, "FAC_Finale_Intact") > 0 Then
+            hl.Address = Replace(hl.Address, "FAC_Finale_Intact", "FAC_Finale")
+        End If
+        If InStr(hl.SubAddress, "FAC_Finale_Intact") > 0 Then
+            hl.SubAddress = Replace(hl.SubAddress, "FAC_Finale_Intact", "FAC_Finale")
+        End If
+    Next hl
+    
+    '--- Fin ---
+    Application.Calculation = xlCalculationAutomatic
+    Application.DisplayAlerts = True
+    Application.ScreenUpdating = True
+    
+    MsgBox "La feuille 'FAC_Finale' a été réinitialisée à partir de 'FAC_Finale_Intact'.", vbInformation
+    
+End Sub
+
 Sub RestaurerFeuilleFinaleIntact() '2025-08-22 @ 16:07
 
     Dim wsSource As Worksheet
@@ -1771,4 +1882,3 @@ End Sub
 '
 'End Sub
 '
-
