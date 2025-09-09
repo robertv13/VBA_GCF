@@ -1,6 +1,6 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufClientMF 
-   Caption         =   "Gestion du fichier Clients (version 5.9A)"
+   Caption         =   "Gestion du fichier Clients (version 5.9C)"
    ClientHeight    =   12930
    ClientLeft      =   6615
    ClientTop       =   2460
@@ -493,58 +493,66 @@ Private Sub UserForm_Initialize()
 
 End Sub
 
-Private Sub VerifierDoublonClient() '2025-08-30 @ 08:28
+Private Sub VerifierDoublonClient() '2025-09-09 @ 06:12
 
     Dim nomSaisi As String
     Dim cpSaisi As String
-    Dim nomExistant As String
-    Dim cpExistant As String
-    Dim i As Long
-    Dim msg As String
-    Dim doublonTrouve As Boolean
     
-    nomSaisi = Trim(Me.txtNomClient.Text)
-    cpSaisi = Trim(Me.txtCodePostal.Text)
-    doublonTrouve = False
+    Dim nomBD As String
+    Dim nomBDNettoye As String
+    Dim codeClientBD As String
+    Dim cpBD As String
+    Dim cpBDNettoye As String
+    
+    Dim i As Long
+
+    nomSaisi = LCase(NettoyerNom(SupprimerAccents(Trim(Me.txtNomClient.Text))))
+    cpSaisi = LCase(Trim(Me.txtCodePostal.Text))
+    Debug.Print nomSaisi & " -OU- " & cpSaisi
     If nomSaisi = vbNullString And cpSaisi = vbNullString Then
         Exit Sub
     End If
-    
-    Dim nomTrouve As String
-    Dim cpTrouve As String
+
     Dim nbClientSimilaire As Long
-    
+    Dim msg As String
+
     With wshClients
         For i = 2 To .Cells(.Rows.Count, 1).End(xlUp).Row
-            nomExistant = Trim(.Cells(i, 1).Value) 'Colonne du nom
-            cpExistant = Trim(.Cells(i, 11).Value) 'Colonne du code postal
-            
-            If (nomSaisi <> vbNullString And InStr(1, nomExistant, nomSaisi, vbTextCompare) > 0) Or _
-               (cpSaisi <> vbNullString And StrComp(cpExistant, cpSaisi, vbTextCompare) = 0) Then
-               
-                If nbClientSimilaire = 0 Then
-                    nomTrouve = nomExistant
-                    cpTrouve = cpExistant
-                End If
+            nomBD = Trim(.Cells(i, 1).Value) 'Colonne du nom
+            nomBDNettoye = LCase(NettoyerNom(SupprimerAccents(nomBD)))
+            codeClientBD = Trim(.Cells(i, 2).Value)  'Colonne du code de client
+            cpBD = Trim(.Cells(i, 11).Value) 'Colonne du code postal
+            cpBDNettoye = LCase(cpBD)
+
+            If (nomSaisi <> vbNullString And InStr(1, nomBDNettoye, nomSaisi, vbTextCompare) > 0) Or _
+               (cpSaisi <> vbNullString And StrComp(cpBDNettoye, cpSaisi, vbTextCompare) = 0) Then
+
                 nbClientSimilaire = nbClientSimilaire + 1
-                doublonTrouve = True
+                Debug.Print i
+                msg = msg & "* Code Client : " & codeClientBD & vbCrLf & _
+                    "  Nom : " & nomBD & vbCrLf & _
+                    "  Code postal : " & cpBD & vbCrLf & vbCrLf
             End If
         Next i
+    End With
     
-        If doublonTrouve Then
-            If nbClientSimilaire = 1 Then
+        Select Case nbClientSimilaire
+            Case 0
+                msg = ""
+            Case 1
                 msg = "Un client SIMILAIRE semble déjà exister : " & vbCrLf & vbCrLf & _
-                      "Nom : " & nomTrouve & vbCrLf & _
-                      "Code postal : " & cpTrouve & vbCrLf & vbCrLf & _
-                      "Veuillez bien vérifier avant de créer ce nouveau client."
-            Else
+                      msg & "Veuillez VÉRIFIER avant de créer ce NOUVEAU client."
+            Case 2, 3, 4, 5
+                msg = nbClientSimilaire & " clients SIMILAIRES semblent déjà exister : " & vbCrLf & vbCrLf & _
+                      msg & "Veuillez VÉRIFIER avant de créer ce NOUVEAU client."
+            Case Is > 5
                 msg = "J'ai retrouvé " & nbClientSimilaire & " clients SIMILAIRES dans la base de données" & vbCrLf & vbCrLf & _
-                      "Veuillez bien vérifier avant de créer ce nouveau client."
-            End If
+                      "Veuillez VÉRIFIER avant de créer ce nouveau client."
+        End Select
+        
+        If nbClientSimilaire > 0 Then
             MsgBox msg, vbExclamation, "DOUBLON potentiel"
         End If
 
-    End With
-    
 End Sub
 

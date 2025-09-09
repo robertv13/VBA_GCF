@@ -342,4 +342,63 @@ Function Fn_NormaliserAdressesCourriel(ByVal strEmails As String) As String
     
 End Function
 
+Function Levenshtein(s1 As String, s2 As String) As Long '2025-08-30 @ 09:34
+
+    Dim i As Long
+    Dim j As Long
+    Dim d() As Long
+    Dim s1Len As Long
+    Dim s2Len As Long
+    s1Len = Len(s1)
+    s2Len = Len(s2)
+    ReDim d(0 To s1Len, 0 To s2Len)
+
+    For i = 0 To s1Len: d(i, 0) = i: Next i
+    For j = 0 To s2Len: d(0, j) = j: Next j
+
+    For i = 1 To s1Len
+        For j = 1 To s2Len
+            If Mid(s1, i, 1) = Mid(s2, j, 1) Then
+                d(i, j) = d(i - 1, j - 1)
+            Else
+                d(i, j) = Application.Min(d(i - 1, j) + 1, _
+                                          d(i, j - 1) + 1, _
+                                          d(i - 1, j - 1) + 1)
+            End If
+        Next j
+    Next i
+
+    Levenshtein = d(s1Len, s2Len)
+    
+End Function
+
+Function NettoyerNom(nom As String) As String '2025-09-09 @ 06:47
+
+    nom = LCase(nom)
+    nom = Replace(nom, ".", "")
+    nom = Replace(nom, ",", "")
+    nom = Replace(nom, "-", " ")
+    nom = Trim(nom)
+    NettoyerNom = nom
+    
+End Function
+
+Function SupprimerAccents(ByVal Texte As String) As String '2025-09-09 @ 06:44
+
+    Dim Accents As String
+    Dim SansAccents As String
+    Dim i As Long
+    
+    ' Table de correspondance
+    Accents = "¿¬ƒ‡‚‰…» ÀÈËÍÎŒœÓÔ‘÷ÙˆŸ€‹˘˚¸«Á"
+    SansAccents = "AAAaaaEEEEeeeeIIiiOOooUUUuuuCc"
+    
+    'Remplacement caractËre par caractËre
+    For i = 1 To Len(Accents)
+        Texte = Replace(Texte, Mid$(Accents, i, 1), Mid$(SansAccents, i, 1))
+    Next i
+    
+    SupprimerAccents = Texte
+    
+End Function
 
