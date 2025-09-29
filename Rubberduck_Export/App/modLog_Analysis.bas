@@ -76,7 +76,7 @@ Sub LireLogClientsApp(filePath As String)
     
     'Lire le fichier ligne par ligne et emmagasiner les champs dans un tableau
     Dim output() As Variant
-    ReDim output(1 To 25000, 1 To 9)
+    ReDim output(1 To 100000, 1 To 9)
     Dim ligne As Long
     Dim lineContent As String
     Dim lineNo As Long
@@ -87,9 +87,9 @@ Sub LireLogClientsApp(filePath As String)
     Do While Not EOF(fileNum)
         Line Input #fileNum, lineContent
         lineNo = lineNo + 1
-'        If lineNo Mod 25 = 0 Then
-'            Application.StatusBar = "Traitement de '" & Fn_ExtraireNomFichier(filePath) & "' - " & Format$(lineNo, "###,##0") & " lignes"
-'        End If
+        If lineNo Mod 250 = 0 Then
+            Application.StatusBar = "Traitement de '" & Fn_ExtraireNomFichier(filePath) & "' - " & Format$(lineNo, "###,##0") & " lignes"
+        End If
         If InStr(lineContent, " | ") <> 0 Then
             Dim Fields() As String
             Fields = Split(lineContent, " | ") 'Diviser la ligne en champs avec le délimiteur "|"
@@ -133,9 +133,6 @@ Sub LireLogClientsApp(filePath As String)
 
     Application.StatusBar = False
     
-'    'Afficher le nombre de lignes ajoutées au fichier LOG
-'    MsgBox "Le fichier '" & Fn_ExtraireNomFichier(filePath) & "' a ajouté " & Format$(UBound(output, 1), "###,##0") & " lignes au fichier cumulatif", vbInformation
-'
 End Sub
 
 Sub LireLogMainApp(filePath As String)
@@ -157,7 +154,7 @@ Sub LireLogMainApp(filePath As String)
     
     'Lire le fichier ligne par ligne et emmagasiner les champs dans un tableau
     Dim output() As Variant
-    ReDim output(1 To 125000, 1 To 10)
+    ReDim output(1 To 200000, 1 To 10)
     Dim ligne As Long
     Dim lineNo As Long
     Dim lineContent As String
@@ -167,57 +164,61 @@ Sub LireLogMainApp(filePath As String)
     ligne = 0
     Do While Not EOF(fileNum)
         Line Input #fileNum, lineContent
-        lineNo = lineNo + 1
-        If InStr(lineContent, " | ") <> 0 Then
-            Dim Fields() As String
-            Fields = Split(lineContent, " | ") 'Diviser la ligne en champs avec le délimiteur " | "
-            'Insérer les données dans le tableau
-            ligne = ligne + 1
-'            If ligne Mod 250 = 0 Then
-'                Application.StatusBar = "Traitement de '" & Fn_ExtraireNomFichier(filePath) & "' - " & Format$(ligne, "###,##0") & " lignes"
-'            End If
-            If UBound(Fields) = 5 Then
-                output(ligne, 1) = env
-                output(ligne, 2) = CStr(Left$(Fields(0), 10))
-                output(ligne, 3) = CStr(Right$(Fields(0), 11))
-                output(ligne, 4) = Trim$(Fields(1))
-                output(ligne, 5) = Trim$(Fields(2))
-                output(ligne, 6) = Trim$(Fields(3))
-                output(ligne, 7) = Trim$(Fields(4))
-                If InStr(Fields(5), " secondes") <> 0 Then
-                    duree = Fn_ExtraireSecondesChaineLog(Fields(5))
-                    duree = Replace(duree, ".", ",")
-                    If duree <> 0 Then
-                        output(ligne, 8) = CDbl(duree)
-                    Else
-                        output(ligne, 8) = 0
-                    End If
-                    output(ligne, 6) = Fields(3) & " (S)"
+        If Not Trim(lineContent) = vbNullString Then
+            lineNo = lineNo + 1
+            If InStr(lineContent, " | ") <> 0 Then
+                Dim Fields() As String
+                Fields = Split(lineContent, " | ") 'Diviser la ligne en champs avec le délimiteur " | "
+                'Insérer les données dans le tableau
+                ligne = ligne + 1
+                If ligne Mod 250 = 0 Then
+                    Application.StatusBar = "Traitement de '" & Fn_ExtraireNomFichier(filePath) & "' - " & Format$(ligne, "###,##0") & " lignes"
                 End If
-                output(ligne, 9) = lineNo
-                output(ligne, 10) = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
-            End If
-            If UBound(Fields) = 4 Then
-                output(ligne, 1) = env
-                output(ligne, 2) = CStr(Left$(Fields(0), 10))
-                output(ligne, 3) = CStr(Right$(Fields(0), 11))
-                output(ligne, 4) = Trim$(Fields(1))
-                output(ligne, 5) = Trim$(Fields(2))
-                output(ligne, 6) = Trim$(Fields(3))
-                If InStr(Fields(3), " secondes'") <> 0 Then
-                    duree = Fn_ExtraireSecondesChaineLog(Fields(3))
-                    duree = Replace(duree, ".", ",")
-    '                    duree = Mid$(Fields(3), InStr(Fields(3), " *** = '") + 8)
-    '                    duree = Left$(duree, InStr(duree, " ") - 1)
-                    If duree <> 0 Then
-                        output(ligne, 7) = CDbl(duree)
-                    Else
-                        output(ligne, 7) = 0
+                If UBound(Fields) = 5 Then
+                    output(ligne, 1) = env
+                    output(ligne, 2) = CStr(Left$(Fields(0), 10))
+                    output(ligne, 3) = CStr(Right$(Fields(0), 11))
+                    output(ligne, 4) = Trim$(Fields(1))
+                    output(ligne, 5) = Trim$(Fields(2))
+                    output(ligne, 6) = Trim$(Fields(3))
+                    output(ligne, 7) = Trim$(Fields(4))
+                    If InStr(Fields(5), " secondes") <> 0 Then
+                        duree = Fn_ExtraireSecondesChaineLog(Fields(5))
+                        duree = Replace(duree, ".", ",")
+                        If duree <> 0 Then
+                            output(ligne, 8) = CDbl(duree)
+                        Else
+                            output(ligne, 8) = 0
+                        End If
+                        output(ligne, 6) = Fields(3) & " (S)"
                     End If
-                    output(ligne, 6) = Trim$(Left$(Fields(3), InStr(Fields(3), " = ") - 1)) & " (S)"
+                    output(ligne, 9) = lineNo
+                    output(ligne, 10) = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
                 End If
-                output(ligne, 8) = lineNo
-                output(ligne, 9) = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+                If UBound(Fields) <= 4 Then
+                    output(ligne, 1) = env
+                    output(ligne, 2) = CStr(Left$(Fields(0), 10))
+                    output(ligne, 3) = CStr(Right$(Fields(0), 11))
+                    output(ligne, 4) = Trim$(Fields(1))
+                    output(ligne, 5) = Trim$(Fields(2))
+                    output(ligne, 6) = Trim$(Fields(3))
+                    If UBound(Fields) = 4 Then
+                        If InStr(Fields(4), " secondes") <> 0 Then
+                            duree = Fn_ExtraireSecondesChaineLog(Fields(4))
+                            duree = Replace(duree, ".", ",")
+            '                    duree = Mid$(Fields(3), InStr(Fields(3), " *** = '") + 8)
+            '                    duree = Left$(duree, InStr(duree, " ") - 1)
+                            If duree <> 0 Then
+                                output(ligne, 8) = CDbl(duree)
+                            Else
+                                output(ligne, 8) = 0
+                            End If
+    '                        output(ligne, 6) = Trim$(Left$(Fields(4), InStr(Fields(4), " = ") - 1)) & " (S)"
+                        End If
+                    End If
+                    output(ligne, 9) = lineNo
+                    output(ligne, 10) = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+                End If
             End If
         End If
     Loop
@@ -238,9 +239,6 @@ Sub LireLogMainApp(filePath As String)
     
     Application.StatusBar = False
     
-'    'Afficher le nombre de lignes ajoutées au fichier LOG
-'    MsgBox "Le fichier '" & Fn_ExtraireNomFichier(filePath) & "' a ajouté " & Format$(UBound(output, 1), "###,##0") & " lignes au fichier cumulatif", vbInformation
-'
 End Sub
 
 Sub LireLogSaisieHeures(filePath As String)
@@ -262,7 +260,7 @@ Sub LireLogSaisieHeures(filePath As String)
     
     'Lire le fichier ligne par ligne et emmagasiner les champs dans un tableau
     Dim output() As Variant
-    ReDim output(1 To 2500, 1 To 16)
+    ReDim output(1 To 5000, 1 To 16)
     Dim ligne As Long
     Dim lineContent As String
     Dim lineNo As Long
@@ -273,9 +271,9 @@ Sub LireLogSaisieHeures(filePath As String)
     Do While Not EOF(fileNum)
         Line Input #fileNum, lineContent
         lineNo = lineNo + 1
-'        If lineNo Mod 25 = 0 Then
-'            Application.StatusBar = "Traitement de '" & Fn_ExtraireNomFichier(filePath) & "' - " & Format$(lineNo, "###,##0") & " lignes"
-'        End If
+        If lineNo Mod 250 = 0 Then
+            Application.StatusBar = "Traitement de '" & Fn_ExtraireNomFichier(filePath) & "' - " & Format$(lineNo, "###,##0") & " lignes"
+        End If
         If InStr(lineContent, " | ") <> 0 Then
             Dim Fields() As String
             Fields = Split(lineContent, " | ") 'Diviser la ligne en champs avec le délimiteur "|"
@@ -329,9 +327,6 @@ Sub LireLogSaisieHeures(filePath As String)
     
     Application.StatusBar = False
     
-'    'Afficher le nombre de lignes ajoutées au fichier LOG
-'    MsgBox "Le fichier '" & Fn_ExtraireNomFichier(filePath) & "' a ajouté " & Format$(UBound(output, 1), "###,##0") & " lignes au fichier cumulatif", vbInformation
-'
 End Sub
 
 Sub AjouterTableauClasseurFerme(ByVal tableau As Variant, ByVal cheminFichier As String, ByVal feuilleNom As String)

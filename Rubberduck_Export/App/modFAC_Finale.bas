@@ -1672,7 +1672,7 @@ Sub Reinitialiser_FAC_Finale() '2025-09-05 @ 07:42 - @TODO
     '--- 2. Copier contenu et formats ---
     FeuilleSource.Cells.Copy
     FeuilleCible.Cells.PasteSpecial xlPasteAll
-    FeuilleCible.Cells.PasteSpecial xlPasteColumnWidths
+    FeuilleCible.Cells.PasteSpecial xlPasteColumnWidths '@TODO
     Application.CutCopyMode = False
     
     '--- 3. Copier les formes ---

@@ -118,17 +118,25 @@ Sub SauvegarderEtSortirApplication() '2024-08-30 @ 07:37
     Application.EnableEvents = False
     Application.ScreenUpdating = False
     
-    Dim confirmation As VbMsgBoxResult
-    confirmation = MsgBox("Êtes-vous certain de vouloir quitter" & vbNewLine & vbNewLine & _
+    Dim shiftEnfonce As Boolean
+    shiftEnfonce = (GetKeyState(vbKeyShift) < 0)
+    Debug.Print "SHIFT enfoncé : " & shiftEnfonce
+
+    If Not shiftEnfonce Then
+        Dim confirmation As VbMsgBoxResult
+        confirmation = MsgBox("Êtes-vous certain de vouloir quitter" & vbNewLine & vbNewLine & _
                         "l'application de gestion (sauvegarde automatique) ?", vbYesNo + vbQuestion, "Confirmation de sortie")
     
-    If confirmation = vbYes Then
-        Call FermerApplicationNormalement(modFunctions.Fn_NomUtilisateurWindows())
+        If confirmation = vbYes Then
+            Call FermerApplicationNormalement(modFunctions.Fn_NomUtilisateurWindows(), False)
+        End If
+    Else
+        Call FermerApplicationNormalement(modFunctions.Fn_NomUtilisateurWindows(), True)
     End If
     
 End Sub
 
-Sub FermerApplicationNormalement(ByVal userName As String) 'Nouvelle procédure - 2025-05-30 @ 11:07
+Sub FermerApplicationNormalement(ByVal userName As String, Optional ByVal ignorerSauvegarde As Boolean = False) '2025-09-10 @ 08:14
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMenu:FermerApplicationNormalement", vbNullString, startTime)
     
@@ -146,7 +154,8 @@ Sub FermerApplicationNormalement(ByVal userName As String) 'Nouvelle procédure 
     
     'Effacer fichier utilisateur actif + Fermeture de la journalisation
     Call EffacerFichierUtilisateurActif(modFunctions.Fn_NomUtilisateurWindows())
-    Call modDev_Utils.EnregistrerLogApplication("----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) -----", vbNullString, 0)
+    Call modDev_Utils.EnregistrerLogApplication("----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) -----", _
+        IIf(ignorerSauvegarde, "S A N S   S A U V E G A R D E", ""), 0)
     Call modDev_Utils.EnregistrerLogApplication(vbNullString, vbNullString, -1)
 
     'Fermer la vérification d'inactivité
@@ -163,7 +172,13 @@ Sub FermerApplicationNormalement(ByVal userName As String) 'Nouvelle procédure 
     End If
     
     'Fermeture du classeur de l'application uniquement
-    ThisWorkbook.Close SaveChanges:=True
+    If ignorerSauvegarde Then
+        'Pas de sauvegarde
+        ThisWorkbook.Close SaveChanges:=False
+    Else
+        'Avec sauvegarde
+        ThisWorkbook.Close SaveChanges:=True
+    End If
     
 ExitPoint:
     Application.EnableEvents = True
@@ -390,5 +405,4 @@ Sub RetournerMenuPrincipal()
     Set ws = Nothing
     
 End Sub
-
 

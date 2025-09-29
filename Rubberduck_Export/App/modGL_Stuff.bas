@@ -303,8 +303,6 @@ Function Fn_SoldesParCompteAvecADO(noCompteGLMin As String, noCompteGLMax As Str
     
     strSQL = strSQL & " GROUP BY NoCompte"
 
-    Debug.Print "Fn_SoldesParCompteAvecADO: " & strSQL
-    
     recSet.Open strSQL, conn, 1, 1
 
     Do While Not recSet.EOF

@@ -1809,8 +1809,12 @@ Private Sub VerifierFACEntete(ByVal wsOutput As Worksheet, ByRef r As Long, ByRe
     
     'Creer une liste des factures en format PDF (PROD)
     Dim dictFacturesPDF As Object
-    Set dictFacturesPDF = modDev_Tools.ListerPDFs("P:\Administration\APP\GCF\Factures_PDF")
-    
+    If modFunctions.Fn_NomUtilisateurWindows() = "RobertMV" Or modFunctions.Fn_NomUtilisateurWindows() = "robertmv" Then
+        Set dictFacturesPDF = modDev_Tools.ListerPDFs("C:\VBA\GC_FISCALITÉ\Factures_PDF")
+    Else
+        Set dictFacturesPDF = modDev_Tools.ListerPDFs("P:\Administration\APP\GCF\Factures_PDF")
+    End If
+
     'wsdFAC_Entete
     Dim ws As Worksheet: Set ws = wsdFAC_Entete
     
@@ -3337,7 +3341,7 @@ Private Sub VerifierTEC(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef read
     Dim ws As Worksheet: Set ws = wsdTEC_Local
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 8435 'What is the last TECID analyzed ?
+    lastTECIDReported = 8851 'What is the last TECID analyzed ?
     
     'Réference au UserDefined structure 'StatistiquesTEC'
     Dim stats As StatistiquesTEC
