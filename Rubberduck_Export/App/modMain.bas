@@ -39,7 +39,7 @@ Private Sub CompterLignesProjet()
 
     Debug.Print String(45, "=")
     Debug.Print "Analyse du projet VBA : " & nomProjet
-    Debug.Print "Analyse effectuee à " & Format$(Now(), "yyyy/mm/dd - hh:mm:ss")
+    Debug.Print "Analyse effectuee Ã  " & Format$(Now(), "yyyy/mm/dd - hh:mm:ss")
     Debug.Print String(45, "-")
     Debug.Print "Module" & Space(34 - Len("Module")) & "Nb. Lignes"
     Debug.Print String(45, "-")
@@ -54,13 +54,13 @@ Private Sub CompterLignesProjet()
     
     MsgBox "Pour le projet '" & nomProjet & "'" & vbNewLine & vbNewLine & _
            "Le nombre total de lignes est de " & Format$(totalLignes, "#,##0") & vbNewLine & vbNewLine & _
-           "Voir la fenêtre immédiate pour le détail par module", _
+           "Voir la fenÃªtre immÃ©diate pour le dÃ©tail par module", _
            vbInformation, _
            "Resultat du decompte"
     
 End Sub
 
-'@Description "Fonction utilisée par 'CompterLignesProjet' pour déterminer le projet - 2025-06-18 @ 13:21
+'@Description "Fonction utilisÃ©e par 'CompterLignesProjet' pour dÃ©terminer le projet - 2025-06-18 @ 13:21
 Private Function ProjetActifVBA() As VBIDE.VBProject
 
     If Not Application.ActiveWorkbook Is Nothing Then
@@ -71,7 +71,7 @@ Private Function ProjetActifVBA() As VBIDE.VBProject
     
 End Function
 
-'@Description "Fonction utilisée par 'CompterLignesProjet' pour trier les modules - 2025-06-18 @ 13:21
+'@Description "Fonction utilisÃ©e par 'CompterLignesProjet' pour trier les modules - 2025-06-18 @ 13:21
 Private Sub TriAlphaTableau1D(arr As Variant)
 
     Dim i As Long, j As Long

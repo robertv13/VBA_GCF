@@ -86,7 +86,7 @@ Sub VerifierVersionApplication(path As String, versionApplication As String) '20
     
     versionData = Trim(Fn_LireFichierTXT(path & Application.PathSeparator & "APP_Version.txt"))
     
-    If versionData <> versionApplication Then
+    If versionData <> versionApplication And modFunctions.Fn_NomUtilisateurWindows() <> "RobertMV" Then
         MsgBox "La version de l'application (" & versionApplication & ") ne correspond pas" & vbCrLf & vbCrLf & _
                "à la version des données (" & versionData & ")." & vbCrLf & vbCrLf & _
                "Veuillez mettre à jour votre application -OU-" & vbCrLf & vbCrLf & _

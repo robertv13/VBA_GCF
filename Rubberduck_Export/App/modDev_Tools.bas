@@ -2267,5 +2267,28 @@ Sub zz_DetecterErreurCodeClientInTEC()  '2025-03-11 @ 08:29
     
 End Sub
 
+Sub ReplacerFormesDepuisIntact()
+    Dim wsSource As Worksheet, wsDest As Worksheet
+    Dim shpSrc As Shape, shpDest As Shape
+    
+    Set wsSource = ThisWorkbook.Worksheets("FAC_Finale_Intact")
+    Set wsDest = ThisWorkbook.Worksheets("FAC_Finale")
+    
+    On Error Resume Next ' si une forme n'existe pas dans FAC_Finale
+    For Each shpSrc In wsSource.Shapes
+        Set shpDest = wsDest.Shapes(shpSrc.Name)
+        If Not shpDest Is Nothing Then
+            ' Repositionner et redimensionner
+            shpDest.Top = shpSrc.Top
+            shpDest.Left = shpSrc.Left
+            shpDest.Width = shpSrc.Width
+            shpDest.Height = shpSrc.Height
+        End If
+        Set shpDest = Nothing
+    Next shpSrc
+    On Error GoTo 0
+    
+    MsgBox "Formes replacées selon FAC_Finale_Intact.", vbInformation
+End Sub
 
 

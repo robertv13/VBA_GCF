@@ -1630,7 +1630,7 @@ Sub CacherBoutonSauvegarder()
     
 End Sub
 
-Sub Reinitialiser_FAC_Finale() '2025-09-05 @ 07:42 - @TODO
+Sub Reinitialiser_FAC_Finale() '2025-09-05 @ 07:42
 
     Dim FeuilleSource As Worksheet
     Dim FeuilleCible As Worksheet
@@ -1660,28 +1660,54 @@ Sub Reinitialiser_FAC_Finale() '2025-09-05 @ 07:42 - @TODO
     'Supprimer les noms locaux liés à la feuille
     For Each nm In FeuilleCible.Parent.Names
         If nm.Name Like FeuilleCible.Name & "!*" Then nm.Delete
+        Debug.Print "Noms locaux - " & nm.Name
     Next nm
     
     'Supprimer les tableaux structurés s'il y en a
     On Error Resume Next
     For Each lo In FeuilleCible.ListObjects
         lo.Unlist
+        Debug.Print "Tableaux structurés - " & lo.Name
     Next lo
     On Error GoTo 0
     
     '--- 2. Copier contenu et formats ---
     FeuilleSource.Cells.Copy
     FeuilleCible.Cells.PasteSpecial xlPasteAll
-    FeuilleCible.Cells.PasteSpecial xlPasteColumnWidths '@TODO
     Application.CutCopyMode = False
     
-    '--- 3. Copier les formes ---
-    For Each shp In FeuilleSource.Shapes
-        shp.Copy
-        FeuilleCible.Paste
-        '?? Optionnel : ajuster position si besoin
-    Next shp
+    '--- 2a. Copier les largeurs de colonnes sans utiliser le presse-papier --- 2025-09-29 @ 08:16
+    Dim col As Long
+    For col = 1 To FeuilleSource.usedRange.Columns.count
+        FeuilleCible.Columns(col).ColumnWidth = FeuilleSource.Columns(col).ColumnWidth
+        Debug.Print "Largeurs de colonnes - " & col & " = " & FeuilleSource.Columns(col).ColumnWidth
+    Next col
     
+    '--- 3. Copier les formes avec leur position et taille --- '2025-10-02 @ 15:47
+    Dim shpNew As Shape
+    
+    Application.EnableEvents = False
+    
+    For Each shp In FeuilleSource.Shapes
+        shp.Copy ' Copie la forme
+        FeuilleCible.Paste ' Colle la forme sur la feuille cible
+        Set shpNew = FeuilleCible.Shapes(FeuilleCible.Shapes.count) 'Récupère la dernière forme collée
+        shpNew.Top = shp.Top
+        shpNew.Left = shp.Left
+        shpNew.Width = shp.Width
+        shpNew.Height = shp.Height
+        'Déplacer la forme dupliquée sur la feuille cible
+        Debug.Print "Copie des formes - " & shp.Name
+    Next shp
+
+    Application.EnableEvents = True
+
+'    For Each shp In FeuilleSource.Shapes
+'        shp.Copy
+'        FeuilleCible.Paste
+'        '?? Optionnel : ajuster position si besoin
+'    Next shp
+'
     '--- 4. Copier les noms locaux ---
     For Each nm In FeuilleSource.Parent.Names
         If nm.Name Like FeuilleSource.Name & "!*" Then
