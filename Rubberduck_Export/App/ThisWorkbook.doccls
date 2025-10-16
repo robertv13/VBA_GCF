@@ -44,11 +44,12 @@ Private Sub Workbook_SheetActivate(ByVal sh As Object) '2025-07-03 @ 10:58
     Dim statutFacture As String: statutFacture = Trim(ThisWorkbook.Names("FactureStatut").RefersToRange.Value)
 
     If statutFacture = "En attente de mise à jour" Then
-        If sh.Name <> nomFeuilleFacture Then
+        If sh.Name <> nomFeuilleFacture And sh.Name <> "FAC_Finale_Intact" Then
+            Debug.Print "777 - " & sh.Name
             Application.EnableEvents = False
-            MsgBox "Veuillez d'abord finaliser la facture (Sauvegarde)" & vbNewLine & vbNewLine & _
+            MsgBox "Veuillez d'abord SAUVEGARDER la facture actuelle" & vbNewLine & vbNewLine & _
                     "avant de quitter la facture FINALE", vbExclamation, _
-                    "Contrôle imposé par l'application"
+                    "Contrôle imposé par l'application (ThisWorkbook)"
             Sheets(nomFeuilleFacture).Activate
             Application.EnableEvents = True
         End If

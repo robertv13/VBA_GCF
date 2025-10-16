@@ -13,12 +13,6 @@ Sub RetournerAuMenu()
 
 End Sub
 
-Sub shpActualiserTECTableauDeBord_Click()
-
-    Call ActualiserTECTableauDeBord
-
-End Sub
-
 Sub ActualiserTECTableauDeBord()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_TDB:ActualiserTECTableauDeBord", vbNullString, 0)

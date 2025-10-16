@@ -11,8 +11,11 @@ Sub shpMettreAJourFAC_Click() '2025-06-21 @ 08:20
 
     Call SauvegarderFacture
     
+    Application.StatusBar = "Réinitialisation de la feuille en cours..."
     Call Reinitialiser_FAC_Finale
-'    Call RestaurerFeuilleFinaleIntact
+    Application.StatusBar = False
+    
+    Call PreparerFAC_Brouillon '2025-10-15 @ 23:03
 
 End Sub
 
@@ -80,19 +83,28 @@ Sub SauvegarderFacture() '2024-03-28 @ 07:19
     Dim invoice_Total As Currency
     invoice_Total = wshFAC_Brouillon.Range("O51").Value
         
-    'Update TEC_DashBoard
-    Call modTEC_TDB.ActualiserTECTableauDeBord '2024-03-21 @ 12:32
-
-    Call modFAC_Brouillon.EffacerTECAffiches
-    
-    wshFAC_Brouillon.Range("FactureStatut").Value = "" '2025-07-19 @ 19:02
-    
-    Application.ScreenUpdating = True
-    
     MsgBox "La facture '" & wshFAC_Brouillon.Range("O6").Value & "' est enregistrée." & _
         vbNewLine & vbNewLine & "Le total de la facture est " & _
         Trim$(Format$(invoice_Total, "### ##0.00 $")) & _
         " (avant les taxes)", vbOKOnly, "Confirmation d'enregistrement"
+    
+Fast_Exit_Sub:
+
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:SauvegarderFacture", vbNullString, startTime)
+    
+End Sub
+
+Sub PreparerFAC_Brouillon() '2025-10-15 @ 23:01
+
+    wshFAC_Brouillon.Range("FactureStatut").Value = "" '2025-07-19 @ 19:02
+    
+    'Update TEC_DashBoard
+    Call modTEC_TDB.ActualiserTECTableauDeBord '2024-03-21 @ 12:32
+
+    wshFAC_Brouillon.Select
+    Call modFAC_Brouillon.EffacerTECAffiches
+    
+    Application.ScreenUpdating = True
     
     wshFAC_Brouillon.Select
     Application.Wait (Now + TimeValue("0:00:02"))
@@ -101,13 +113,7 @@ Sub SauvegarderFacture() '2024-03-28 @ 07:19
     wshFAC_Brouillon.Range("B27").Value = False
     
     Call modFAC_Brouillon.CreerNouvelleFactureBrouillon '2024-03-12 @ 08:08 - Maybe ??
-    
-Fast_Exit_Sub:
 
-    wshFAC_Brouillon.Select
-    
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:SauvegarderFacture", vbNullString, startTime)
-    
 End Sub
 
 Sub AjouterFACEnteteBDMaster()
@@ -987,6 +993,8 @@ End Sub
 
 Sub SauvegarderPDFSauvegarderExcelEnvoyerCourriel() '2025-05-06 @ 11:07
 
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:SauvegarderPDFSauvegarderExcelEnvoyerCourriel", wshFAC_Finale.Range("E28").Value, 0)
+    
     Dim startTime As Double: startTime = Timer
     Dim numeroFacture As String: numeroFacture = wshFAC_Finale.Range("E28").Value
     Dim nomClient As String: nomClient = wshFAC_Brouillon.Range("B18").Value
@@ -995,7 +1003,6 @@ Sub SauvegarderPDFSauvegarderExcelEnvoyerCourriel() '2025-05-06 @ 11:07
     
     'État initial
     gFlagEtapeFacture = 1
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:SauvegarderPDFSauvegarderExcelEnvoyerCourriel", numeroFacture, 0)
     
     'Sécuriser l’environnement
     With Application
@@ -1008,20 +1015,21 @@ Sub SauvegarderPDFSauvegarderExcelEnvoyerCourriel() '2025-05-06 @ 11:07
     On Error GoTo GestionErreur
 
     'Étape 1 - Création du document PDF
+    wshFAC_Finale.PageSetup.PrintArea = "$A1:$F88" '2025-10-15 @ 23:51
     Call SauvegarderFactureFormatPDF(numeroFacture)
     DoEvents
-    Application.Wait Now + TimeValue("0:00:01")
+    Application.Wait Now + TimeValue("0:00:02")
     
     'Étape 2 - Copie vers fichier Excel client
     Call SauvegarderCopieFactureDansExcel(nomClient, nomFichier, numeroFacture, dateFacture)
     DoEvents
-    Application.Wait Now + TimeValue("0:00:01")
+    Application.Wait Now + TimeValue("0:00:02")
     gFlagEtapeFacture = 3
 
     'Étape 3 - Création du courriel avec pièce jointe PDF
     Call EnvoyerFactureParCourriel(numeroFacture, nomClient)
     DoEvents
-    Application.Wait Now + TimeValue("0:00:01")
+    Application.Wait Now + TimeValue("0:00:02")
     gFlagEtapeFacture = 4
 
     'Étape 4 - Activation du bouton Sauvegarde
@@ -1584,7 +1592,7 @@ End Sub
 Sub shpDeplacerVersFeuilleBrouillon_Click()
 
     If wshFAC_Brouillon.Range("FactureStatut").Value = "En attente de mise à jour" Then '2025-07-19 @ 18:44
-        MsgBox "Vous devez d'abord mettre à jour la facture en cours" & vbNewLine & vbNewLine & _
+        MsgBox "Veuillez d'abord SAUVEGARDER la présente facture" & vbNewLine & vbNewLine & _
                 "avant d'en créer une nouvelle.", vbExclamation
         Exit Sub
     End If
@@ -1633,6 +1641,8 @@ End Sub
 
 Sub Reinitialiser_FAC_Finale() '2025-09-05 @ 07:42
 
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:Reinitialiser_FAC_Finale", vbNullString, 0)
+    
     Dim FeuilleSource As Worksheet
     Dim FeuilleCible As Worksheet
     Dim nm As Name, shp As Shape, lo As ListObject
@@ -1702,15 +1712,9 @@ Sub Reinitialiser_FAC_Finale() '2025-09-05 @ 07:42
         'Déplacer la forme dupliquée sur la feuille cible
         Debug.Print "Copie des formes - " & shp.Name
     Next shp
-
+    
     Application.EnableEvents = True
 
-'    For Each shp In FeuilleSource.Shapes
-'        shp.Copy
-'        FeuilleCible.Paste
-'        '?? Optionnel : ajuster position si besoin
-'    Next shp
-'
     '--- 4. Copier les noms locaux ---
     For Each nm In FeuilleSource.Parent.Names
         If nm.Name Like FeuilleSource.Name & "!*" Then
@@ -1765,8 +1769,14 @@ Sub Reinitialiser_FAC_Finale() '2025-09-05 @ 07:42
     Application.DisplayAlerts = True
     Application.ScreenUpdating = True
     
-    MsgBox "La feuille 'FAC_Finale' a été réinitialisée à partir de 'FAC_Finale_Intact'.", vbInformation
+    DoEvents
+    Application.Wait (Now + TimeValue("0:00:02"))
+    DoEvents
     
+'    MsgBox "La feuille 'FAC_Finale' a été réinitialisée à partir de 'FAC_Finale_Intact'.", vbInformation
+    
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:Reinitialiser_FAC_Finale", vbNullString, startTime)
+
 End Sub
 
 Sub RestaurerFeuilleFinaleIntact() '2025-08-22 @ 16:07

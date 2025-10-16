@@ -6,12 +6,6 @@ Option Explicit
 Private invRow As Long, itemDBRow As Long, invitemRow As Long, invNumb As Long
 Private lastRow As Long, lastResultRow As Long, resultRow As Long
 
-Sub shpCreerNouvelleFacture_Click()
-
-    Call CreerNouvelleFactureBrouillon
-    
-End Sub
-
 Sub CreerNouvelleFactureBrouillon() 'Clear contents
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:CreerNouvelleFactureBrouillon", vbNullString, 0)
@@ -516,18 +510,20 @@ Sub EffacerTECAffiches()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:EffacerTECAffiches", vbNullString, 0)
     
+    Application.EnableEvents = False
+    
     Dim lastRow As Long
     lastRow = wshFAC_Brouillon.Cells(wshFAC_Brouillon.Rows.count, "F").End(xlUp).Row 'First line of data is at row 7
     If lastRow > 6 Then
-        Application.EnableEvents = False
         'Verrouiller les cellules des descriptions des TEC - 2025-03-02 @ 21:53
         wshFAC_Brouillon.Unprotect
         wshFAC_Brouillon.Range("F7:F" & lastRow).Locked = True
         wshFAC_Brouillon.Protect UserInterfaceOnly:=True
         wshFAC_Brouillon.Range("D7:I" & lastRow + 2).ClearContents
         Call EffacerCasesACocherFACBrouillon(lastRow - 2)
-        Application.EnableEvents = True
     End If
+    
+    Application.EnableEvents = True
     
     Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:EffacerTECAffiches", vbNullString, startTime)
 
@@ -553,7 +549,7 @@ Sub ObtenirTousLesTECPourClientAvecAF(d As Date, includeBilledTEC As Boolean)
     End If
     c5 = Fn_Convert_Value_Boolean_To_Text(False)
 
-    Call EffacerTECAffiches
+'    Call EffacerTECAffiches
     
     Call ObtenirTECduClientAvecAF(c1, c2, c3, c4, c5)
     
@@ -629,7 +625,7 @@ Sub ObtenirTECNonFacturableDansUserForm()
         .List = arr
     End With
     
-    ufNonBillableTime.btnConvertir.Visible = False
+    ufNonBillableTime.shpConvertir.Visible = False
 
     ufNonBillableTime.show vbModeless
         
@@ -793,11 +789,11 @@ Sub CopierTECFiltresVersFACBrouillon(cutOffDateProjet As Date) '2024-03-21 @ 07:
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.listBox1.Clear
+        ufFraisDivers.ListBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.listBox1.AddItem item
+            ufFraisDivers.ListBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless
