@@ -2749,7 +2749,7 @@ Private Sub VerifierGLTrans(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef 
     
     Dim dict_GL_Entry As New Dictionary
     Dim sum_arr() As Currency
-    ReDim sum_arr(1 To 2500, 1 To 3)
+    ReDim sum_arr(1 To 5000, 1 To 3)
     
     'Array pointer
     Dim row As Long: row = 1
@@ -3341,7 +3341,7 @@ Private Sub VerifierTEC(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef read
     Dim ws As Worksheet: Set ws = wsdTEC_Local
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 8851 'What is the last TECID analyzed ?
+    lastTECIDReported = 9189 'What is the last TECID analyzed ?
     
     'Réference au UserDefined structure 'StatistiquesTEC'
     Dim stats As StatistiquesTEC

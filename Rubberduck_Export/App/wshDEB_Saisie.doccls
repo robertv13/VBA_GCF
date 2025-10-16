@@ -43,7 +43,7 @@ Private Sub Worksheet_Activate()
     
     'Rétablir le bouton "Mettre à jour / Renversement"
     Dim shp As Shape
-    Set shp = ws.Shapes("shpMettreAJourDEB")
+    Set shp = ws.Shapes("shpMettreAJour")
     With shp
         .Left = 665
         .Width = 138

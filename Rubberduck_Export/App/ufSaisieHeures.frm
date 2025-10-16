@@ -155,7 +155,6 @@ Private Sub cmbProfessionnel_Enter() '2025-05-31 @ 16:31
     Set ws = wsdADMIN
     'Plage de la table WindowsUser_Initials : colonnes D à F, lignes 63 à 78
     Set plageInitiales = ws.Range("D68:D77")
-'    Set plageInitiales = ws.Range("D63:D78")
     
     utilisateur = modFunctions.Fn_NomUtilisateurWindows() ' Variable globale utilisateur Windows
 

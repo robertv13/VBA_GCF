@@ -2291,4 +2291,9 @@ Sub ReplacerFormesDepuisIntact()
     MsgBox "Formes replacées selon FAC_Finale_Intact.", vbInformation
 End Sub
 
+Sub AfficherNomImprimanteActive() '2025-10-15 @ 10:04
+
+    MsgBox Application.ActivePrinter
+    
+End Sub
 

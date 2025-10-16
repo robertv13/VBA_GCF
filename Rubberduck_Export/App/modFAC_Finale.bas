@@ -962,6 +962,9 @@ Sub PrevisualiserFacturePDF() '2024-03-02 @ 16:18
     On Error GoTo 0
     Debug.Print "#083 - Imprimante actuelle : " & imprimanteCourante
     
+    'On définit la zone d'impression '2025-10-15 @ 10:27
+    wshFAC_Finale.PageSetup.PrintArea = "$A1:$F88"
+    
     'On imprime la facture
     wshFAC_Finale.PrintOut , , 1, True, True, , , , False
    
@@ -976,13 +979,13 @@ Sub PrevisualiserFacturePDF() '2024-03-02 @ 16:18
 
 End Sub
 
-Sub shpCreerPDFSauvegarderExcelEnvoyerCourriel_Click()
+Sub shpSauvegarderPDFSauvegarderExcelEnvoyerCourriel_Click()
 
-    Call CreerPDFSauvegarderExcelEnvoyerCourriel
+    Call SauvegarderPDFSauvegarderExcelEnvoyerCourriel
     
 End Sub
 
-Sub CreerPDFSauvegarderExcelEnvoyerCourriel() '2025-05-06 @ 11:07
+Sub SauvegarderPDFSauvegarderExcelEnvoyerCourriel() '2025-05-06 @ 11:07
 
     Dim startTime As Double: startTime = Timer
     Dim numeroFacture As String: numeroFacture = wshFAC_Finale.Range("E28").Value
@@ -992,7 +995,7 @@ Sub CreerPDFSauvegarderExcelEnvoyerCourriel() '2025-05-06 @ 11:07
     
     'État initial
     gFlagEtapeFacture = 1
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:CreerPDFSauvegarderExcelEnvoyerCourriel", numeroFacture, 0)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:SauvegarderPDFSauvegarderExcelEnvoyerCourriel", numeroFacture, 0)
     
     'Sécuriser l’environnement
     With Application
@@ -1005,7 +1008,7 @@ Sub CreerPDFSauvegarderExcelEnvoyerCourriel() '2025-05-06 @ 11:07
     On Error GoTo GestionErreur
 
     'Étape 1 - Création du document PDF
-    Call CreerFactureFormatPDF(numeroFacture)
+    Call SauvegarderFactureFormatPDF(numeroFacture)
     DoEvents
     Application.Wait Now + TimeValue("0:00:01")
     
@@ -1032,7 +1035,7 @@ Sub CreerPDFSauvegarderExcelEnvoyerCourriel() '2025-05-06 @ 11:07
 GestionErreur:
     MsgBox "Une erreur est survenue à l'étape " & gFlagEtapeFacture & "." & vbCrLf & _
            "Erreur: " & Err.Number & " - " & Err.description, vbCritical
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:CreerPDFSauvegarderExcelEnvoyerCourriel", numeroFacture & " ÉTAPE " & gFlagEtapeFacture & " > " & Err.description, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:SauvegarderPDFSauvegarderExcelEnvoyerCourriel", numeroFacture & " ÉTAPE " & gFlagEtapeFacture & " > " & Err.description, startTime)
 
 fin:
     'Restaurer l’environnement
@@ -1043,17 +1046,17 @@ fin:
         .Calculation = xlCalculationAutomatic
     End With
 
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:CreerPDFSauvegarderExcelEnvoyerCourriel", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:SauvegarderPDFSauvegarderExcelEnvoyerCourriel", vbNullString, startTime)
     
 End Sub
 
-Sub CreerFactureFormatPDF(noFacture As String)
+Sub SauvegarderFactureFormatPDF(noFacture As String)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:CreerFactureFormatPDF", noFacture, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:SauvegarderFactureFormatPDF", noFacture, 0)
     
     'Création du fichier (NoFacture).PDF dans le répertoire de factures PDF de GCF
     Dim result As Boolean
-    result = Fn_CreerFactureFormatPDF(noFacture, "SaveOnly")
+    result = Fn_SauvegarderFactureFormatPDF(noFacture, "SaveOnly")
     
     If result = False Then
         MsgBox "ATTENTION... Impossible de sauvegarder la facture en format PDF", _
@@ -1062,13 +1065,13 @@ Sub CreerFactureFormatPDF(noFacture As String)
         gFlagEtapeFacture = -1
     End If
 
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:CreerFactureFormatPDF", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:SauvegarderFactureFormatPDF", vbNullString, startTime)
 
 End Sub
 
-Function Fn_CreerFactureFormatPDF(noFacture As String, Optional action As String = "SaveOnly") As Boolean
+Function Fn_SauvegarderFactureFormatPDF(noFacture As String, Optional action As String = "SaveOnly") As Boolean
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:Fn_CreerFactureFormatPDF", noFacture & ", " & action, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:Fn_SauvegarderFactureFormatPDF", noFacture & ", " & action, 0)
     
     Dim SaveAs As String
 
@@ -1114,19 +1117,17 @@ Function Fn_CreerFactureFormatPDF(noFacture As String, Optional action As String
     On Error GoTo 0
     
 SaveOnly:
-    Fn_CreerFactureFormatPDF = True 'Return value
-'    FAC_Finale_Create_Email = True 'Return value
+    Fn_SauvegarderFactureFormatPDF = True 'Return value
     GoTo EndMacro
     
 RefLibError:
     MsgBox "Incapable de préparer le courriel. La librairie n'est pas disponible"
-    Fn_CreerFactureFormatPDF = False 'Function return value
-'    FAC_Finale_Create_Email = False 'Function return value
+    Fn_SauvegarderFactureFormatPDF = False 'Function return value
 
 EndMacro:
     Application.ScreenUpdating = True
     
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:Fn_CreerFactureFormatPDF", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:Fn_SauvegarderFactureFormatPDF", vbNullString, startTime)
 
 End Function
 
@@ -1657,10 +1658,12 @@ Sub Reinitialiser_FAC_Finale() '2025-09-05 @ 07:42
         shp.Delete
     Next shp
     
-    'Supprimer les noms locaux liés à la feuille
+    'Supprimer les noms locaux liés à la feuille @TODO
     For Each nm In FeuilleCible.Parent.Names
-        If nm.Name Like FeuilleCible.Name & "!*" Then nm.Delete
-        Debug.Print "Noms locaux - " & nm.Name
+        If nm.Name Like FeuilleCible.Name & "!*" Then
+            Debug.Print "Noms locaux - " & nm.Name
+            nm.Delete
+        End If
     Next nm
     
     'Supprimer les tableaux structurés s'il y en a
