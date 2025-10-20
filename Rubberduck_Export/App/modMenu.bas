@@ -27,15 +27,18 @@ Sub AccederMenuFacturation()
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMenu:AccederMenuFacturation", vbNullString, 0)
     
-    If modFunctions.Fn_NomUtilisateurWindows() = "Guillaume" Or _
-            modFunctions.Fn_NomUtilisateurWindows() = "GuillaumeCharron" Or _
-            modFunctions.Fn_NomUtilisateurWindows() = "gchar" Or _
-            modFunctions.Fn_NomUtilisateurWindows() = "RobertMV" Or _
-            modFunctions.Fn_NomUtilisateurWindows() = "robertmv" Or _
-            modFunctions.Fn_NomUtilisateurWindows() = "User" Or _
-            modFunctions.Fn_NomUtilisateurWindows() = "vgervais" Or _
-            modFunctions.Fn_NomUtilisateurWindows() = "Vlad_Portable" Or _
-            modFunctions.Fn_NomUtilisateurWindows() = "Oli_Portable" Then
+    Dim utilisateurWindows As String
+    utilisateurWindows = modFunctions.Fn_UtilisateurWindows()
+    
+    If modFunctions.Fn_UtilisateurWindows() = "Guillaume" Or _
+            modFunctions.Fn_UtilisateurWindows() = "GuillaumeCharron" Or _
+            modFunctions.Fn_UtilisateurWindows() = "gchar" Or _
+            modFunctions.Fn_UtilisateurWindows() = "RobertMV" Or _
+            modFunctions.Fn_UtilisateurWindows() = "robertmv" Or _
+            modFunctions.Fn_UtilisateurWindows() = "User" Or _
+            modFunctions.Fn_UtilisateurWindows() = "vgervais" Or _
+            modFunctions.Fn_UtilisateurWindows() = "Vlad_Portable" Or _
+            modFunctions.Fn_UtilisateurWindows() = "Oli_Portable" Then
             
         Call modAppli.QuitterFeuillePourMenu(wshMenuFAC, True) '2025-08-19 @ 07:12
         
@@ -59,12 +62,12 @@ Sub AccederMenuComptabilite()
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMenu:AccederMenuComptabilite", vbNullString, 0)
     
-    If modFunctions.Fn_NomUtilisateurWindows() = "Guillaume" Or _
-            modFunctions.Fn_NomUtilisateurWindows() = "GuillaumeCharron" Or _
-            modFunctions.Fn_NomUtilisateurWindows() = "gchar" Or _
-            modFunctions.Fn_NomUtilisateurWindows() = "RobertMV" Or _
-            modFunctions.Fn_NomUtilisateurWindows() = "robertmv" Or _
-            modFunctions.Fn_NomUtilisateurWindows() = "User" Then
+    If modFunctions.Fn_UtilisateurWindows() = "Guillaume" Or _
+            modFunctions.Fn_UtilisateurWindows() = "GuillaumeCharron" Or _
+            modFunctions.Fn_UtilisateurWindows() = "gchar" Or _
+            modFunctions.Fn_UtilisateurWindows() = "RobertMV" Or _
+            modFunctions.Fn_UtilisateurWindows() = "robertmv" Or _
+            modFunctions.Fn_UtilisateurWindows() = "User" Then
             
         Call modAppli.QuitterFeuillePourMenu(wshMenuGL, True) '2025-08-21 @ 07:12
         
@@ -88,11 +91,11 @@ Sub AccederFeuilleADMIN()
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMenu:AccederFeuilleADMIN", vbNullString, 0)
     
-    If modFunctions.Fn_NomUtilisateurWindows() = "Guillaume" Or _
-            modFunctions.Fn_NomUtilisateurWindows() = "GuillaumeCharron" Or _
-            modFunctions.Fn_NomUtilisateurWindows() = "gchar" Or _
-            modFunctions.Fn_NomUtilisateurWindows() = "RobertMV" Or _
-            modFunctions.Fn_NomUtilisateurWindows() = "robertmv" Then
+    If modFunctions.Fn_UtilisateurWindows() = "Guillaume" Or _
+            modFunctions.Fn_UtilisateurWindows() = "GuillaumeCharron" Or _
+            modFunctions.Fn_UtilisateurWindows() = "gchar" Or _
+            modFunctions.Fn_UtilisateurWindows() = "RobertMV" Or _
+            modFunctions.Fn_UtilisateurWindows() = "robertmv" Then
         wsdADMIN.Visible = xlSheetVisible
         wsdADMIN.Select
     Else
@@ -128,10 +131,10 @@ Sub SauvegarderEtSortirApplication() '2024-08-30 @ 07:37
                         "l'application de gestion (sauvegarde automatique) ?", vbYesNo + vbQuestion, "Confirmation de sortie")
     
         If confirmation = vbYes Then
-            Call FermerApplicationNormalement(modFunctions.Fn_NomUtilisateurWindows(), False)
+            Call FermerApplicationNormalement(modFunctions.Fn_UtilisateurWindows(), False)
         End If
     Else
-        Call FermerApplicationNormalement(modFunctions.Fn_NomUtilisateurWindows(), True)
+        Call FermerApplicationNormalement(modFunctions.Fn_UtilisateurWindows(), True)
     End If
     
 End Sub
@@ -153,7 +156,7 @@ Sub FermerApplicationNormalement(ByVal userName As String, Optional ByVal ignore
     Call ViderTableauxStructures
     
     'Effacer fichier utilisateur actif + Fermeture de la journalisation
-    Call EffacerFichierUtilisateurActif(modFunctions.Fn_NomUtilisateurWindows())
+    Call EffacerFichierUtilisateurActif(modFunctions.Fn_UtilisateurWindows())
     Call modDev_Utils.EnregistrerLogApplication("----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) -----", _
         IIf(ignorerSauvegarde, "S A N S   S A U V E G A R D E", ""), 0)
     Call modDev_Utils.EnregistrerLogApplication(vbNullString, vbNullString, -1)
@@ -197,7 +200,7 @@ Sub CacherToutesFeuillesSaufMenu() '2024-02-20 @ 07:28
     Dim ws As Worksheet
     For Each ws In ThisWorkbook.Worksheets
         If ws.CodeName <> "wshMenu" Then
-            If modFunctions.Fn_NomUtilisateurWindows() <> "RobertMV" Or InStr(ws.CodeName, "wshzDoc") = 0 Then
+            If modFunctions.Fn_UtilisateurWindows() <> "RobertMV" Or InStr(ws.CodeName, "wshzDoc") = 0 Then
                 ws.Visible = xlSheetHidden
             End If
         End If
@@ -315,16 +318,13 @@ End Sub
 
 Sub shpImporterCorrigerMASTER_Click()
 
-    If modFunctions.Fn_NomUtilisateurWindows() <> "RobertMV" And modFunctions.Fn_NomUtilisateurWindows() <> "robertmv" Then
+    If modFunctions.Fn_UtilisateurWindows() <> "RobertMV" And modFunctions.Fn_UtilisateurWindows() <> "robertmv" Then
         Exit Sub
     End If
     
     'Crée un répertoire local et importe les fichiers à analyser
     Call CreerRepertoireEtImporterFichiers
     
-    'Ajuste les tableaux (tables) de toutes les feuilles de GCF_BD_MASTER.xlsx
-    Call AjusterEpurerTablesDeMaster
-
 End Sub
 
 Sub shpVerificationIntegrite_Click()

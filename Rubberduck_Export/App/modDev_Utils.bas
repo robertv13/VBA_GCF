@@ -1152,7 +1152,7 @@ Sub EnregistrerLogApplication(ByVal procedureName As String, ByVal param As Stri
 
     'En attendant de trouver la problématique... 2025-06-01 @ 05:06
     If gUtilisateurWindows = vbNullString Then
-        gUtilisateurWindows = Fn_UtilisateurWindows
+        gUtilisateurWindows = modFunctions.Fn_UtilisateurWindows
         Debug.Print "Réinitialisation forcée de gUtilisateurWindows - " & Format$(Now, "yyyy-mm-dd hh:nn:ss")
     End If
     
@@ -1180,19 +1180,19 @@ Sub EnregistrerLogApplication(ByVal procedureName As String, ByVal param As Stri
         Print #fileNum, vbNullString
     ElseIf startTime = 0 Then 'On marque le départ d'une procédure/fonction
         Print #fileNum, timeStamp & " | " & _
-                        modFunctions.Fn_NomUtilisateurWindows() & " | " & _
+                        modFunctions.Fn_UtilisateurWindows() & " | " & _
                         ThisWorkbook.Name & " | " & _
                         procedureName & param
     ElseIf startTime < 0 Then 'On enregistre une entrée intermédiaire (au coeur d'un procédure/fonction)
         Print #fileNum, timeStamp & " | " & _
-                        modFunctions.Fn_NomUtilisateurWindows() & " | " & _
+                        modFunctions.Fn_UtilisateurWindows() & " | " & _
                         ThisWorkbook.Name & " | " & _
                         procedureName & param
     Else 'On marque la fin d'une procédure/fonction
         Dim elapsedTime As Double
         elapsedTime = Round(Timer - startTime, 4) 'Calculate elapsed time
         Print #fileNum, timeStamp & " | " & _
-                        modFunctions.Fn_NomUtilisateurWindows() & " | " & _
+                        modFunctions.Fn_UtilisateurWindows() & " | " & _
                         ThisWorkbook.Name & " | " & _
                         procedureName & param & " | " & _
                         Format$(elapsedTime, "0.0000") & " secondes"
@@ -1207,16 +1207,19 @@ Sub EnregistrerLogApplication(ByVal procedureName As String, ByVal param As Stri
     
 ErrorHandler:
 
-    MsgBox "Une erreur est survenue à l'ouverture du fichier 'LogMainApp.log' " & vbNewLine & vbNewLine & _
-                "Erreur : " & Err & " = " & Err.description, vbCritical, "Répertoire utilisé '" & wsdADMIN.Range("PATH_DATA_FILES").Value & "'"
+    MsgBox "Une erreur est survenue à l'ouverture du fichier" & vbNewLine & vbNewLine & _
+                "'LogMainApp.log' " & vbNewLine & vbNewLine & _
+                "Erreur " & Err & " = " & Err.description, _
+                vbCritical, _
+                "Répertoire utilisé '" & wsdADMIN.Range("PATH_DATA_FILES").Value & "'"
     
     'Nettoyage : réactivation des événements, calculs, etc.
     Application.EnableEvents = True
     Application.ScreenUpdating = True
     Application.Calculation = xlCalculationAutomatic
 
-    'Fermeture des classeurs sans sauvegarde si nécessaire
-    On Error Resume Next 'Ignorer les erreurs pendant la fermeture des fichiers
+    'Fermeture du classeur sans sauvegarde
+    On Error Resume Next 'Ignorer les erreurs pendant la fermeture du classeur
     ThisWorkbook.Close SaveChanges:=False
 
     'Sortir gracieusement de l'application
@@ -1257,7 +1260,7 @@ Sub EnregistrerLogSaisieHeures(oper As String, txt As String, Optional blankline
     End If
     
     Print #fileNum, timeStamp & " | " & _
-                        Left$(modFunctions.Fn_NomUtilisateurWindows() & Space(19), 19) & " | " & _
+                        Left$(modFunctions.Fn_UtilisateurWindows() & Space(19), 19) & " | " & _
                         ThisWorkbook.Name & " | " & _
                         oper & " | " & _
                         txt

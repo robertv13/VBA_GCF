@@ -2,40 +2,42 @@ Option Explicit
 
 Private Sub Workbook_Open()
 
+    Dim utilisateurWindows As String
+    utilisateurWindows = modFunctions.Fn_UtilisateurWindows
     'Chemin du dossier contenant les fichiers PROD - 2025-08-12 @ 05:51
     
     Dim cheminSourcePROD As String
-    cheminSourcePROD = Fn_RepertoireBaseApplication
+    cheminSourcePROD = Fn_RepertoireBaseApplication(utilisateurWindows)
     
-    If Fn_UtilisateurWindows <> "RobertMV" And Fn_UtilisateurWindows <> "Robertmv" Then
+    If utilisateurWindows <> "RobertMV" And utilisateurWindows <> "Robertmv" Then
         If Dir(cheminSourcePROD & "\GCF_BD_MASTER.lock") <> vbNullString Then
             MsgBox "Cette application est actuellement en maintenance." & vbNewLine & vbNewLine & _
                    "Le fichier principal est verrouillé par le développeur." & vbNewLine & vbNewLine & _
                    "Veuillez ressayer dans 5 à 10 minutes SVP", _
                    vbCritical, _
                    "L'application APP n'est pas disponible"
-            Call modMenu.FermerApplicationNormalement(modFunctions.Fn_NomUtilisateurWindows())
+            Call modMenu.FermerApplicationNormalement(utilisateurWindows)
         End If
     End If
 
     Dim versionApplication As String
     versionApplication = Fn_ExtraireVersionDepuisNomClasseur
     
+    gDerniereActivite = Now
+    gProchaineVerification = Now + TimeSerial(0, gFREQUENCE_VERIFICATION_INACTIVITE, 0)
+
+    Application.OnTime gProchaineVerification, "VerifierDerniereActivite"
+
+    Call modAppli.DemarrerApplication(utilisateurWindows)
+
     'Message de bienvenue
-    MsgBox "Bienvenue " & Fn_UtilisateurWindows & " !" & vbNewLine & vbNewLine & _
+    MsgBox "Bienvenue " & UtilisateurActif("Prenom") & " !" & vbNewLine & vbNewLine & _
            "Version de l'application : " & versionApplication, _
            vbInformation, _
            "Démarrage de l'application GCF"
 
     Call VerifierVersionApplication(cheminSourcePROD, versionApplication)
     
-    gDerniereActivite = Now
-    gProchaineVerification = Now + TimeSerial(0, gFREQUENCE_VERIFICATION_INACTIVITE, 0)
-
-    Application.OnTime gProchaineVerification, "VerifierDerniereActivite"
-
-    Call modAppli.DemarrerApplication
-
 End Sub
     
 Private Sub Workbook_SheetActivate(ByVal sh As Object) '2025-07-03 @ 10:58

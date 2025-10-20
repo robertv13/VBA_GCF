@@ -1,4 +1,4 @@
-﻿📘 Journal typographique — 10/16/2025 00:03:22
+﻿📘 Journal typographique — 10/20/2025 09:35:06
 
 🔧 Fichier : clsControlWrapper.cls
 
@@ -13,6 +13,8 @@
 🔧 Fichier : clsSurveillanceActivite.cls
 
 🔧 Fichier : Feuil1.doccls
+
+🔧 Fichier : modADO.bas
 
 🔧 Fichier : modAPIWindows.bas
 
@@ -215,6 +217,9 @@
 🔧 Fichier : modMENU_GL.bas
 
 🔧 Fichier : modMENU_TEC.bas
+
+🔧 Fichier : modSessionUtilisateur.bas
+   ✅ Remplacé : .value ➜ .Value
 
 🔧 Fichier : modStatsHeures.bas
    ✅ Remplacé : .column ➜ .Column

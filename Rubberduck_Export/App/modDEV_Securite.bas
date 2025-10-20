@@ -49,6 +49,7 @@ Public Function GetInitialesAutorises(ByVal userName As String) As String '2025-
     dict.Add "User", "ML"
     dict.Add "Annie", "AR"
     dict.Add "Oli_Portable", "OB"
+    dict.Add "MARIE_FRANCE", "MFP"
     
     'Les utilisateurs avec toutes les autorisations retourne ""
     Select Case userName

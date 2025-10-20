@@ -368,7 +368,7 @@ End Function
 Public Sub AjouterEcritureGLADOPlusLocale(entry As clsGL_Entry, Optional afficheMessage As Boolean = True) '2025-06-08 @ 09:37
 
     '=== BLOC 1 : Écriture dans GCF_BD_MASTER.xslx en utilisant ADO ===
-    Dim cheminMaster As String
+    Dim cheminMASTER As String
     Dim nextNoEntree As Long
     Dim ts As String
     Dim i As Long
@@ -378,11 +378,11 @@ Public Sub AjouterEcritureGLADOPlusLocale(entry As clsGL_Entry, Optional affiche
     On Error GoTo CleanUpADO
 
     'Chemin du classeur MASTER.xlsx
-    cheminMaster = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & wsdADMIN.Range("MASTER_FILE").Value
+    cheminMASTER = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & wsdADMIN.Range("MASTER_FILE").Value
     
     'Ouvre connexion ADO
     Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
-    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & cheminMaster & ";" & _
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & cheminMASTER & ";" & _
               "Extended Properties=""Excel 12.0 XML;HDR=YES"";"
 
     'Détermine le prochain numéro d'écriture

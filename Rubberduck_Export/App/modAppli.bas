@@ -1,21 +1,21 @@
 Attribute VB_Name = "modAppli"
 Option Explicit
 
-Public ProchaineVérifUserForm As Date
+Public ProchaineVerifUserForm As Date
 
-Sub DemarrerApplication() '2025-07-11 @ 15:16
+Sub DemarrerApplication(uw As String) '2025-07-11 @ 15:16
 
+    'Mise en place du répertoire de base (C:\... ou P:\...)
     Dim rootPath As String
-    rootPath = Fn_RepertoireBaseApplication
-
+    rootPath = Fn_RepertoireBaseApplication(Fn_UtilisateurWindows)
     Application.EnableEvents = False
     wsdADMIN.Range("PATH_DATA_FILES").Value = rootPath
     Application.EnableEvents = True
    
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("----- DÉBUT D'UNE NOUVELLE SESSION (modAppli:DemarrerApplication) -----", vbNullString, 0)
     
-    'Quel est l'utilisateur Windows ?
-    gUtilisateurWindows = modFunctions.Fn_NomUtilisateurWindows()
+    'Initialisation de la session utilisateur '2025-10-19 @ 11:24
+    Call InitialiserSessionUtilisateur
     
     On Error GoTo ErrorHandler
     
@@ -33,12 +33,12 @@ Sub DemarrerApplication() '2025-07-11 @ 15:16
     End If
     Application.StatusBar = False
 
-    Call CreerFichierUtilisateurActif(gUtilisateurWindows)
-    Call FixerFormatDateUtilisateur(gUtilisateurWindows)
+    Call CreerFichierUtilisateurActif(uw)
+    Call FixerFormatDateUtilisateur(uw)
     Call CreerSauvegardeMaster
-    Call EcrireInformationsConfigAuMenu(gUtilisateurWindows)
+    Call EcrireInformationsConfigAuMenu
     wshMenu.Range("A1").Value = wsdADMIN.Range("NomEntreprise").Value
-    Call modMenu.CacherFormesEnFonctionUtilisateur(gUtilisateurWindows)
+    Call modMenu.CacherFormesEnFonctionUtilisateur(uw)
     
     'Protection de la feuille wshMenu
     With wshMenu
@@ -59,7 +59,7 @@ Sub DemarrerApplication() '2025-07-11 @ 15:16
     
     wshMenu.Activate
 
-    If gUtilisateurWindows = "RobertMV" Or gUtilisateurWindows = "robertmv" Then
+    If uw = "RobertMV" Or uw = "robertmv" Then
         Call DemarrerSauvegardeCodeVBAAutomatique
     End If
     
@@ -81,20 +81,21 @@ End Sub
 Sub VerifierVersionApplication(path As String, versionApplication As String) '2025-08-12 @ 16:08
 
     Dim versionData As String
-    
+    Dim utilisateurWindows As String
     On Error GoTo ErreurLecture
-    
     versionData = Trim(Fn_LireFichierTXT(path & Application.PathSeparator & "APP_Version.txt"))
     
-    If versionData <> versionApplication And modFunctions.Fn_NomUtilisateurWindows() <> "RobertMV" Then
+    If versionData <> versionApplication And _
+        modFunctions.Fn_UtilisateurWindows() <> "RobertMV" And _
+        modFunctions.Fn_UtilisateurWindows() <> "robertmv" Then
         MsgBox "La version de l'application (" & versionApplication & ") ne correspond pas" & vbCrLf & vbCrLf & _
                "à la version des données (" & versionData & ")." & vbCrLf & vbCrLf & _
                "Veuillez mettre à jour votre application -OU-" & vbCrLf & vbCrLf & _
-               "contactez le développeur", _
+               "Contactez le développeur", _
                vbCritical, _
                "Version de l'application incompatible avec les données"
                
-        Call FermerApplicationNormalement(modFunctions.Fn_NomUtilisateurWindows())
+        Call FermerApplicationNormalement(modFunctions.Fn_UtilisateurWindows())
     End If
     Exit Sub
 
@@ -104,15 +105,15 @@ ErreurLecture:
             vbExclamation, _
             "Impossible de lire la version des données"
     
-    Call FermerApplicationNormalement(modFunctions.Fn_NomUtilisateurWindows())
+    Call FermerApplicationNormalement(modFunctions.Fn_UtilisateurWindows())
     
 End Sub
 
-Function Fn_RepertoireBaseApplication() As String '2025-03-03 @ 20:28
+Function Fn_RepertoireBaseApplication(uw As String) As String '2025-03-03 @ 20:28
    
     DoEvents
     
-    If modFunctions.Fn_NomUtilisateurWindows() = "RobertMV" Or modFunctions.Fn_NomUtilisateurWindows() = "robertmv" Then
+    If uw = "RobertMV" Or uw = "robertmv" Then
         Fn_RepertoireBaseApplication = "C:\VBA\GC_FISCALITÉ"
     Else
         Fn_RepertoireBaseApplication = "P:\Administration\APP\GCF"
@@ -156,20 +157,11 @@ Sub FixerFormatDateUtilisateur(ByVal user As String)
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:FixerFormatDateUtilisateur", vbNullString, 0)
 
     Dim userDateFormat As String
+    userDateFormat = UtilisateurActif("FormatDate")
+    If userDateFormat = vbNullString Then
+        userDateFormat = "dd/mm/yyyy"
+    End If
     
-    Select Case user
-        Case "GuillaumeCharron", "Guillaume", "gchar"
-            userDateFormat = "dd/mm/yy"
-        Case "vgervais", "Vlad_Portable", "User", "Oli_Portable"
-            userDateFormat = "dd/mm/yyyy"
-        Case "Annie"
-            userDateFormat = "yyyy/mm/dd"
-        Case "RobertMV", "robertmv"
-            userDateFormat = "dd/mm/yyyy"
-        Case Else
-            userDateFormat = "dd/mm/yyyy"
-    End Select
-
     wsdADMIN.Range("B1").Value = userDateFormat
     
     Call modDev_Utils.EnregistrerLogApplication("modAppli:FixerFormatDateUtilisateur", vbNullString, startTime)
@@ -188,7 +180,7 @@ Sub CreerSauvegardeMaster()
     
     Dim backupFilePath As String
     backupFilePath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
-                     "GCF_BD_MASTER_" & Format$(Now, "YYYYMMDD_HHMMSS") & ".xlsx"
+                     wsdADMIN.Range("MASTER_FILE").Value & "_" & Format$(Now, "YYYYMMDD_HHMMSS") & ".xlsx"
     
     'Créer directement une copie du fichier sans ouvrir Excel
     FileCopy masterFilePath, backupFilePath
@@ -207,7 +199,7 @@ MASTER_NOT_AVAILABLE:
 
 End Sub
 
-Sub EcrireInformationsConfigAuMenu(ByVal user As String)
+Sub EcrireInformationsConfigAuMenu()
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:EcrireInformationsConfigAuMenu", vbNullString, 0)
     
@@ -232,7 +224,7 @@ Sub EcrireInformationsConfigAuMenu(ByVal user As String)
     valeurs = Array( _
         "Heure - " & Format$(Now(), formatDate & " hh:mm:ss"), _
         "Version - " & ThisWorkbook.Name, _
-        "Utilisateur - " & user, _
+        "Utilisateur - " & UtilisateurActif("Prenom"), _
         "Environnement - " & environnement, _
         "Format de la date - " & formatDate)
 
@@ -404,7 +396,7 @@ Public Sub FermerApplicationInactive() '2025-07-02 @ 06:19
     If gMODE_DEBUG Then Debug.Print "[modAppli:FermerApplicationInactive] Fermeture automatique déclenchée à : " & Format(Now, "hh:mm:ss")
 
     'Appel direct de la procédure de fermeture
-    Call FermerApplicationNormalement(modFunctions.Fn_NomUtilisateurWindows())
+    Call FermerApplicationNormalement(modFunctions.Fn_UtilisateurWindows())
     
 End Sub
 
@@ -429,29 +421,29 @@ Public Sub EnregistrerActiviteAuLog(ByVal message As String) '2025-07-03 @ 10:29
     fileNum = FreeFile
 
     Open cheminLog For Append As #fileNum
-    Print #fileNum, "[" & Format(Now, "yyyy-mm-dd hh:nn:ss") & "] [" & Fn_UtilisateurWindows & "] " & message
+    Print #fileNum, "[" & Format(Now, "yyyy-mm-dd hh:nn:ss") & "] [" & modFunctions.Fn_UtilisateurWindows & "] " & message
     Close #fileNum
     
 End Sub
 
 Sub LancerSurveillanceUserForm() '2025-08-29 @ 18:32
 
-    ProchaineVérifUserForm = Now + TimeSerial(0, 0, 10) ' toutes les 10 secondes
-    Application.OnTime ProchaineVérifUserForm, "VerifierInactivitéUserForm"
+    ProchaineVerifUserForm = Now + TimeSerial(0, 0, 10) ' toutes les 10 secondes
+    Application.OnTime ProchaineVerifUserForm, "VerifierInactiviteUserForm"
     
 End Sub
 
 Sub AnnulerSurveillanceUserForm() '2025-08-29 @ 18:32
 
     On Error Resume Next
-    Application.OnTime ProchaineVérifUserForm, "VerifierInactivitéUserForm", , False
+    Application.OnTime ProchaineVerifUserForm, "VerifierInactiviteUserForm", , False
     
 End Sub
 
-Sub VerifierInactivitéUserForm() '2025-08-29 @ 18:32
+Sub VerifierInactiviteUserForm() '2025-08-29 @ 18:32
 
     If Fn_MinutesDepuisDerniereActivite() >= gMAXIMUM_MINUTES_INACTIVITE Then
-        If gMODE_DEBUG Then Debug.Print "[modAppli:VerifierInactivitéUserForm] Inactivité détectée dans UserForm — fermeture"
+        If gMODE_DEBUG Then Debug.Print "[modAppli:VerifierInactiviteUserForm] Inactivité détectée dans UserForm — fermeture"
         Unload ufSaisieHeures
         Call FermerApplicationInactive
     Else
@@ -476,4 +468,32 @@ Sub QuitterFeuillePourMenu(ByVal nomFeuilleMenu As Worksheet, Optional masquerFe
     
 End Sub
     
+Function ObtenirInfosWindows(nomWindows As String) As Object
+
+    Dim rs As Object, infos As Object
+    Set infos = CreateObject("Scripting.Dictionary")
+
+    Set rs = OuvrirRecordsetADO("P:\Administration\APP\LIAISON_UTILISATEURS.xlsx", "UtilisateursWindows$")
+
+    Do Until rs.EOF
+        If rs("Utilisateur Windows") = nomWindows Then
+            infos("UtilisateurID") = rs("UtilisateurID")
+            infos("Environnement") = rs("Environnement")
+            Exit Do
+        End If
+        rs.MoveNext
+    Loop
+
+    rs.Close
+    Set ObtenirInfosWindows = infos
+    
+End Function
+
+Sub AfficherErreurCritique(message As String) '2025-10-19 @ 10:36
+
+    MsgBox message, _
+        vbCritical, _
+        "Erreur critique dans l'application"
+    
+End Sub
 

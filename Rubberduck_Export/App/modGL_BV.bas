@@ -432,11 +432,11 @@ Public Sub SupprimerEcritureClotureCourante(dateCloture As Date) '2025-07-21 @ 1
     
     Dim wb As Workbook
     Dim ws As Worksheet
-    Dim cheminMaster As String
+    Dim cheminMASTER As String
     
-    cheminMaster = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & wsdADMIN.Range("MASTER_FILE").Value
+    cheminMASTER = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & wsdADMIN.Range("MASTER_FILE").Value
     Application.ScreenUpdating = False
-    Set wb = Workbooks.Open(cheminMaster, ReadOnly:=False)
+    Set wb = Workbooks.Open(cheminMASTER, ReadOnly:=False)
     Set ws = wb.Sheets("GL_Trans")
 
     Dim i As Long

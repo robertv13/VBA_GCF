@@ -50,7 +50,7 @@ Sub CalculerSoldesPourEF(ws As Worksheet, dateCutOff As Date) '2025-08-14 @ 06:5
     
     'Qui exécute ce programme ?
     Dim isDeveloppeur As Boolean
-    If modFunctions.Fn_NomUtilisateurWindows() = "RobertMV" Or modFunctions.Fn_NomUtilisateurWindows() = "robertmv" Then
+    If modFunctions.Fn_UtilisateurWindows() = "RobertMV" Or modFunctions.Fn_UtilisateurWindows() = "robertmv" Then
         isDeveloppeur = True
     End If
     

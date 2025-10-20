@@ -662,7 +662,9 @@ Sub CreerRepertoireEtImporterFichiers() '2025-07-02 @ 13:57
     
     If actifExists Then
         MsgBox "Un ou plusieurs utilisateurs utilisent encore l'application." & vbNewLine & vbNewLine & _
-               "La copie est annulée.", vbExclamation
+               "La copie est annulée.", _
+               vbCritical, _
+               "Impossible d'importer MASTER"
         Exit Sub
     End If
     
@@ -764,9 +766,11 @@ Sub CreerRepertoireEtImporterFichiers() '2025-07-02 @ 13:57
     End If
 
     MsgBox "Fichiers copiés dans le dossier : " & nouveauDossier, vbInformation, "Terminé"
+    
+    'Ajuste les tableaux (tables) de toutes les feuilles de GCF_BD_MASTER.xlsx
+    Call AjusterEpurerTablesDeMaster
 
 End Sub
-
 
 Sub shpSynchroniserDEVversPROD_Click()
 
@@ -2293,7 +2297,23 @@ End Sub
 
 Sub AfficherNomImprimanteActive() '2025-10-15 @ 10:04
 
-    MsgBox Application.ActivePrinter
+'    MsgBox Application.ActivePrinter
+    Debug.Print Fn_ObtenirPortFonctionnelAdobePDF
     
 End Sub
+
+Function Fn_ObtenirPortFonctionnelAdobePDF() As String
+
+    Dim i As Integer
+    For i = 0 To 10
+        On Error Resume Next
+        Application.ActivePrinter = "Adobe PDF sur Ne" & Format(i, "00") & ":"
+        If Err.Number = 0 Then
+            Fn_ObtenirPortFonctionnelAdobePDF = Application.ActivePrinter
+            Exit Function
+        End If
+        On Error GoTo 0
+    Next i
+    
+End Function
 

@@ -1201,32 +1201,69 @@ Function Fn_DateEstElleValide(d As String) As Boolean
 
 End Function
 
-Function Fn_UtilisateurWindows() As String '2025-06-01 @ 05:36
-
-    Dim buffer As String * 255
-    Dim size As Long: size = 255
-
-    '@Ignore UnassignedVariableUsage
-    If GetUserName(buffer, size) Then
-        '@Ignore UnassignedVariableUsage
-        Fn_UtilisateurWindows = Trim(Left$(buffer, size - 1))
-    Else
-        Debug.Print "Fn_UtilisateurWindows : Incapable de déterminer l'utilisateur Windows !"
-        Fn_UtilisateurWindows = "Unknown"
-    End If
-    
-End Function
-
-Function Fn_NomUtilisateurWindows() As String '2025-06-01 @ 05:48
+Public Function Fn_UtilisateurWindows() As String '2025-10-19 @ 09:54
 
     If Len(gUtilisateurWindows) = 0 Then
-        gUtilisateurWindows = Fn_UtilisateurWindows()
+        Dim buffer As String * 255
+        Dim size As Long: size = 255
+
+        If GetUserName(buffer, size) Then
+            gUtilisateurWindows = Trim(Left$(buffer, size - 1))
+        Else
+            MsgBox "Incapable de déterminer l'utilisateur Windows !", _
+                vbCritical, _
+                "Fn_UtilisateurWindows"
+            gUtilisateurWindows = "Unknown"
+        End If
+        
+        If Len(gUtilisateurWindows) = 0 Then '2ème tentative
+        MsgBox "Nom d'utilisateur Windows vide après tentative de récupération.", _
+            vbCritical, _
+            "Fn_UtilisateurWindows"
+        End If
     End If
-    
-    Fn_NomUtilisateurWindows = gUtilisateurWindows
+
+    Fn_UtilisateurWindows = gUtilisateurWindows
     
 End Function
 
+'Function Fn_UtilisateurWindows() As String '2025-06-01 @ 05:36
+'
+'    Dim buffer As String * 255
+'    Dim size As Long: size = 255
+'
+'    '@Ignore UnassignedVariableUsage
+'    If GetUserName(buffer, size) Then
+'        '@Ignore UnassignedVariableUsage
+'        gUtilisateurWindows = Trim(Left$(buffer, size - 1))
+'    Else
+'        MsgBox "Incapable de déterminer l'utilisateur Windows !", _
+'            vbCritical, _
+'            "Fn_UtilisateurWindows"
+'        gUtilisateurWindows = "Unknown"
+'    End If
+'
+'    Fn_UtilisateurWindows = gUtilisateurWindows
+'
+'End Function
+'
+'Function Fn_UtilisateurWindows() As String '2025-06-01 @ 05:48
+'
+'    If Len(gUtilisateurWindows) = 0 Then
+'        gUtilisateurWindows = modFunctions.Fn_UtilisateurWindows()
+'    End If
+'
+'    If Len(gUtilisateurWindows) = 0 Then
+'        MsgBox "Impossible de détecter l'utilisateur Windows.", _
+'            vbCritical, _
+'            "modFunctions.Fn_UtilisateurWindows"
+'        End
+'    End If
+'
+'    Fn_UtilisateurWindows = gUtilisateurWindows
+'
+'End Function
+'
 Function Fn_FactureConfirmee(invNo As String) As Boolean
 
     Fn_FactureConfirmee = False

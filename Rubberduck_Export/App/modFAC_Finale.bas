@@ -5,6 +5,7 @@ Option Explicit
 
 Private invRow As Long, itemDBRow As Long, invitemRow As Long, invNumb As Long
 Private lastRow As Long, lastResultRow As Long, resultRow As Long
+Public gCheminPDF As String
 
 '@Description ("Clic sur le bouton Sauvegarde")
 Sub shpMettreAJourFAC_Click() '2025-06-21 @ 08:20
@@ -950,23 +951,21 @@ Sub PrevisualiserFacturePDF() '2024-03-02 @ 16:18
     Dim ws As Worksheet
     Set ws = wshFAC_Finale
     
-    'Imprimante PDF à utiliser
-    Dim imprimantePDF As String
-    If modFunctions.Fn_NomUtilisateurWindows() = "RobertMV" Or modFunctions.Fn_NomUtilisateurWindows() = "robertmv" Then
-        imprimantePDF = "Adobe PDF"
-    Else
-        imprimantePDF = "Microsoft Print to PDF"
-    End If
-    
-    Dim imprimanteCourante As String
+    'Sauvegarder l'imprimante actuelle
+    Dim imprimanteActuelle As String
     'Vérifiez si l'imprimante existe
     On Error Resume Next
     If Len(Application.ActivePrinter) > 0 Then
         'Mémoriser l'imprimante actuelle pour la réinitialiser après
-        imprimanteCourante = Application.ActivePrinter
+        imprimanteActuelle = Application.ActivePrinter
     End If
     On Error GoTo 0
-    Debug.Print "#083 - Imprimante actuelle : " & imprimanteCourante
+    Debug.Print "#083 - Imprimante actuelle : " & imprimanteActuelle
+    
+    'Imprimante PDF à utiliser
+    Dim imprimantePDF As String
+    imprimantePDF = Fn_ObtenirPortFonctionnelAdobePDF '2025-10-17 @ 13:44
+    Application.ActivePrinter = imprimantePDF
     
     'On définit la zone d'impression '2025-10-15 @ 10:27
     wshFAC_Finale.PageSetup.PrintArea = "$A1:$F88"
@@ -975,9 +974,9 @@ Sub PrevisualiserFacturePDF() '2024-03-02 @ 16:18
     wshFAC_Finale.PrintOut , , 1, True, True, , , , False
    
     'Restaurer l'imprimante précédente après l'impression
-    If imprimanteCourante <> vbNullString Then
+    If imprimanteActuelle <> vbNullString Then
         On Error Resume Next
-        Application.ActivePrinter = imprimanteCourante
+        Application.ActivePrinter = imprimanteActuelle
         On Error GoTo 0
     End If
     
@@ -1014,30 +1013,48 @@ Sub SauvegarderPDFSauvegarderExcelEnvoyerCourriel() '2025-05-06 @ 11:07
     
     On Error GoTo GestionErreur
 
+    Call TracerEtape("Début traitement facture")
+    
     'Étape 1 - Création du document PDF
+    Call TracerEtape("Début création PDF")
     wshFAC_Finale.PageSetup.PrintArea = "$A1:$F88" '2025-10-15 @ 23:51
     Call SauvegarderFactureFormatPDF(numeroFacture)
-    DoEvents
-    Application.Wait Now + TimeValue("0:00:02")
+    
+    If Dir(gCheminPDF) = "" Then
+        Call TracerEtape("Échec création PDF")
+        Exit Sub
+    End If
+    Call TracerEtape("PDF créé avec succès")
+'    Call PauseActive(1)
     
     'Étape 2 - Copie vers fichier Excel client
+    Call TracerEtape("Début sauvegarde Excel client")
     Call SauvegarderCopieFactureDansExcel(nomClient, nomFichier, numeroFacture, dateFacture)
-    DoEvents
-    Application.Wait Now + TimeValue("0:00:02")
+    Call TracerEtape("Sauvegarde Excel client réussi")
     gFlagEtapeFacture = 3
+    Call PauseActive(1)
 
     'Étape 3 - Création du courriel avec pièce jointe PDF
+    If Dir(gCheminPDF) = "" Then
+        MsgBox "Le fichier PDF est introuvable pour l’envoi.", vbCritical
+        Call TracerEtape("Échec envoi courriel : PDF manquant")
+        Exit Sub
+    End If
+    Call TracerEtape("Prêt pour envoi courriel")
     Call EnvoyerFactureParCourriel(numeroFacture, nomClient)
-    DoEvents
-    Application.Wait Now + TimeValue("0:00:02")
+    Call TracerEtape("Courriel envoyé avec succès")
+    
+    Debug.Print "Fin - La facture a été envoyée par courriel"
     gFlagEtapeFacture = 4
+    Call PauseActive(1)
 
     'Étape 4 - Activation du bouton Sauvegarde
+    Call TracerEtape("Activation bouton Sauvegarde")
     Call AfficherBoutonSauvegarder
     gFlagEtapeFacture = 5
     
     wshFAC_Brouillon.Range("FactureStatut").Value = "En attente de mise à jour" '2025-07-19 @ 18:35
-
+    Call TracerEtape("Fin traitement facture")
     GoTo fin
 
 GestionErreur:
@@ -1080,18 +1097,16 @@ End Sub
 Function Fn_SauvegarderFactureFormatPDF(noFacture As String, Optional action As String = "SaveOnly") As Boolean
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:Fn_SauvegarderFactureFormatPDF", noFacture & ", " & action, 0)
-    
-    Dim SaveAs As String
 
     Application.ScreenUpdating = False
 
-    'Construct the SaveAs filename
-    SaveAs = wsdADMIN.Range("PATH_DATA_FILES").Value & gFACT_PDF_PATH & Application.PathSeparator & _
+    'Construct the gCheminPDF filename
+    gCheminPDF = wsdADMIN.Range("PATH_DATA_FILES").Value & gFACT_PDF_PATH & Application.PathSeparator & _
                      noFacture & ".pdf" '2023-12-19 @ 07:28
 
     'Check if the file already exists
     Dim fileExists As Boolean
-    fileExists = Dir(SaveAs) <> vbNullString
+    fileExists = Dir(gCheminPDF) <> vbNullString
     
     'If the file exists, prompt the user for confirmation
     Dim reponse As VbMsgBoxResult
@@ -1104,6 +1119,22 @@ Function Fn_SauvegarderFactureFormatPDF(noFacture As String, Optional action As 
         End If
     End If
 
+    'Sauvegarder l'imprimante actuelle
+    Dim imprimanteActuelle As String
+    'Vérifiez si l'imprimante existe
+    On Error Resume Next
+    If Len(Application.ActivePrinter) > 0 Then
+        'Mémoriser l'imprimante actuelle pour la réinitialiser après
+        imprimanteActuelle = Application.ActivePrinter
+    End If
+    On Error GoTo 0
+    Debug.Print "#0883 - Imprimante actuelle : " & imprimanteActuelle
+    
+    'Imprimante PDF à utiliser
+    Dim imprimantePDF As String
+    imprimantePDF = Fn_ObtenirPortFonctionnelAdobePDF '2025-10-20 @ 06:29
+    Application.ActivePrinter = imprimantePDF
+    
     'Set Print Quality
     On Error Resume Next
     ActiveSheet.PageSetup.PrintQuality = 600
@@ -1120,10 +1151,19 @@ Function Fn_SauvegarderFactureFormatPDF(noFacture As String, Optional action As 
     
     'Create the PDF file and Save It
     On Error GoTo RefLibError
-    ActiveSheet.ExportAsFixedFormat Type:=xlTypePDF, fileName:=SaveAs, Quality:=xlQualityStandard, _
+    ActiveSheet.ExportAsFixedFormat Type:=xlTypePDF, fileName:=gCheminPDF, Quality:=xlQualityStandard, _
         IncludeDocProperties:=True, IgnorePrintAreas:=False, OpenAfterPublish:=True
     On Error GoTo 0
     
+    'Restaurer l'imprimante précédente après l'impression
+    If imprimanteActuelle <> vbNullString Then
+        On Error Resume Next
+        Application.ActivePrinter = imprimanteActuelle
+        On Error GoTo 0
+    End If
+    
+    Debug.Print "#0884 - Imprimante restaurée : " & Application.ActivePrinter
+
 SaveOnly:
     Fn_SauvegarderFactureFormatPDF = True 'Return value
     GoTo EndMacro
@@ -1141,15 +1181,16 @@ End Function
 
 Sub SauvegarderCopieFactureDansExcel(clientID As String, clientName As String, invNo As String, invDate As String)
     
+   'Call SauvegarderCopieFactureDansExcel(nomClient, nomFichier, numeroFacture, dateFacture)
+ 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:SauvegarderCopieFactureDansExcel", _
         clientID & " - " & clientName & " - " & invNo & " - " & invDate, 0)
-    
-    Dim clientNamePurged As String
-    clientNamePurged = clientName
     
     Application.ScreenUpdating = False
     
     'Purge le nom du client
+    Dim clientNamePurged As String
+    clientNamePurged = clientName
     Do While InStr(clientNamePurged, "[") > 0 And InStr(clientNamePurged, "]") > 0
         clientNamePurged = Fn_Strip_Contact_From_Client_Name(clientNamePurged)
     Loop
@@ -1205,8 +1246,8 @@ Sub SauvegarderCopieFactureDansExcel(clientID As String, clientName As String, i
     If wsExist Then
         reponse = MsgBox("La feuille '" & strNameBase & "' existe déjà dans ce fichier" & vbCrLf & vbCrLf & _
                          "Voulez-vous :" & vbCrLf & vbCrLf & _
-                         "1. Remplacer l'onglet existant par la facture courante ?" & vbCrLf & vbCrLf & _
-                         "2. Créer un nouvel onglet avec un suffixe ?" & vbCrLf & vbCrLf & _
+                         "Oui = Remplacer l'onglet existant par la facture courante ?" & vbCrLf & vbCrLf & _
+                         "Non = Créer un nouvel onglet avec un suffixe ?" & vbCrLf & vbCrLf & _
                          "Cliquez sur Oui pour remplacer, ou sur Non pour créer un nouvel onglet.", _
                          vbYesNoCancel + vbQuestion, "Le nouvel onglet à créer existe déjà")
 
@@ -1243,8 +1284,6 @@ Sub SauvegarderCopieFactureDansExcel(clientID As String, clientName As String, i
         Set wsCible = wbCible.Worksheets.Add(After:=wbCible.Sheets(wbCible.Sheets.count))
         wsCible.Name = strNameBase
     End If
-    
-'    wsCible.Name = strName 'Renommer la nouvelle feuille
     
     '1. Copier les valeurs uniquement
     plageSource.Copy
@@ -1879,45 +1918,18 @@ Sub ReassignerPlagesNomées(wsSource As Worksheet, wsDest As Worksheet) '2025-08
     
 End Sub
 
-'Sub RestaurerFeuilleFinaleIntact() '2025-06-06 @ 18:38
-'
-'    Dim wsSource As Worksheet, wsDest As Worksheet
-'    Dim shp As Shape
-'
-'    Set wsSource = ThisWorkbook.Sheets("FAC_Finale_Intact")
-'    Set wsDest = ThisWorkbook.Sheets("FAC_Finale")
-'
-'    Application.EnableEvents = False
-'    Application.ScreenUpdating = False
-'
-'    '1. Effacer toutes les cellules, formules, formats
-'    wsDest.Cells.Clear
-'
-'    '2. Effacer toutes les formes
-'    For Each shp In wsDest.Shapes
-'        shp.Delete
-'    Next shp
-'
-'    '3. Copier tout le contenu cellules + formats + formules
-'    wsSource.Cells.Copy
-'    wsDest.Cells.PasteSpecial xlPasteAll 'Tout copier (valeurs, formules, formats, etc.)
-'
-'    '4. Copier chaque forme individuellement
-'    For Each shp In wsSource.Shapes
-'        shp.Copy
-'        wsDest.Paste
-'        'Optionnel : replacer la forme exactement
-'        With wsDest.Shapes(wsDest.Shapes.count)
-'            .Top = shp.Top
-'            .Left = shp.Left
-'            .Width = shp.Width
-'            .Height = shp.Height
-'        End With
-'    Next shp
-'
-'    Application.CutCopyMode = False
-'    Application.EnableEvents = True
-'    Application.ScreenUpdating = True
-'
-'End Sub
-'
+Sub TracerEtape(nomEtape As String)
+
+    Debug.Print Format(Now, "hh:nn:ss") & " - " & nomEtape
+    
+End Sub
+
+Sub PauseActive(seconde As Double)
+
+    Dim t0 As Double: t0 = Timer
+    Do While Timer < t0 + seconde
+        DoEvents
+    Loop
+    
+End Sub
+
