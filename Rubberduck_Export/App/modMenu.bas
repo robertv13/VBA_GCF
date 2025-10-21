@@ -9,11 +9,11 @@ End Sub
 
 Sub AccederMenuTEC()
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMenu:AccederMenuTEC", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU:AccederMenuTEC", vbNullString, 0)
     
     Call modAppli.QuitterFeuillePourMenu(wshMenuTEC, True) '2025-08-19 @ 06:59
     
-    Call modDev_Utils.EnregistrerLogApplication("modMenu:AccederMenuTEC", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modMENU:AccederMenuTEC", vbNullString, startTime)
 
 End Sub
 
@@ -25,7 +25,7 @@ End Sub
 
 Sub AccederMenuFacturation()
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMenu:AccederMenuFacturation", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU:AccederMenuFacturation", vbNullString, 0)
     
     Dim utilisateurWindows As String
     utilisateurWindows = modFunctions.Fn_UtilisateurWindows()
@@ -48,7 +48,7 @@ Sub AccederMenuFacturation()
         Application.EnableEvents = True
     End If
     
-    Call modDev_Utils.EnregistrerLogApplication("modMenu:AccederMenuFacturation", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modMENU:AccederMenuFacturation", vbNullString, startTime)
 
 End Sub
 
@@ -60,7 +60,7 @@ End Sub
 
 Sub AccederMenuComptabilite()
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMenu:AccederMenuComptabilite", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU:AccederMenuComptabilite", vbNullString, 0)
     
     If modFunctions.Fn_UtilisateurWindows() = "Guillaume" Or _
             modFunctions.Fn_UtilisateurWindows() = "GuillaumeCharron" Or _
@@ -77,7 +77,7 @@ Sub AccederMenuComptabilite()
         Application.EnableEvents = True
     End If
 
-    Call modDev_Utils.EnregistrerLogApplication("modMenu:AccederMenuComptabilite", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modMENU:AccederMenuComptabilite", vbNullString, startTime)
 
 End Sub
 
@@ -89,7 +89,7 @@ End Sub
 
 Sub AccederFeuilleADMIN()
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMenu:AccederFeuilleADMIN", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU:AccederFeuilleADMIN", vbNullString, 0)
     
     If modFunctions.Fn_UtilisateurWindows() = "Guillaume" Or _
             modFunctions.Fn_UtilisateurWindows() = "GuillaumeCharron" Or _
@@ -104,7 +104,7 @@ Sub AccederFeuilleADMIN()
         Application.EnableEvents = True
     End If
     
-    Call modDev_Utils.EnregistrerLogApplication("modMenu:AccederFeuilleADMIN", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modMENU:AccederFeuilleADMIN", vbNullString, startTime)
 
 End Sub
 
@@ -116,7 +116,7 @@ End Sub
 
 Sub SauvegarderEtSortirApplication() '2024-08-30 @ 07:37
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMenu:SauvegarderEtSortirApplication", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU:SauvegarderEtSortirApplication", vbNullString, 0)
     
     Application.EnableEvents = False
     Application.ScreenUpdating = False
@@ -141,7 +141,7 @@ End Sub
 
 Sub FermerApplicationNormalement(ByVal userName As String, Optional ByVal ignorerSauvegarde As Boolean = False) '2025-09-10 @ 08:14
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMenu:FermerApplicationNormalement", vbNullString, startTime)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU:FermerApplicationNormalement", vbNullString, startTime)
     
     On Error GoTo ExitPoint
     
@@ -195,7 +195,7 @@ Sub CacherToutesFeuillesSaufMenu() '2024-02-20 @ 07:28
     
     DoEvents
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMenu:CacherToutesFeuillesSaufMenu", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU:CacherToutesFeuillesSaufMenu", vbNullString, 0)
     
     Dim ws As Worksheet
     For Each ws In ThisWorkbook.Worksheets
@@ -209,13 +209,13 @@ Sub CacherToutesFeuillesSaufMenu() '2024-02-20 @ 07:28
     'Libérer la mémoire
     Set ws = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modMenu:CacherToutesFeuillesSaufMenu", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modMENU:CacherToutesFeuillesSaufMenu", vbNullString, startTime)
     
 End Sub
 
 Sub CacherFormesEnFonctionUtilisateur(ByVal userName As String) '2025-06-06 @ 11:17
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMenu:CacherFormesEnFonctionUtilisateur", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU:CacherFormesEnFonctionUtilisateur", vbNullString, 0)
     
     Dim ws As Worksheet: Set ws = wshMenu
     Dim devShapes As Variant
@@ -251,7 +251,7 @@ Sub CacherFormesEnFonctionUtilisateur(ByVal userName As String) '2025-06-06 @ 11
         On Error GoTo 0
     Next i
 
-    Call modDev_Utils.EnregistrerLogApplication("modMenu:CacherFormesEnFonctionUtilisateur", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modMENU:CacherFormesEnFonctionUtilisateur", vbNullString, startTime)
 
 End Sub
 
@@ -268,7 +268,7 @@ End Sub
 
 Sub ViderTableauxStructures() '2025-07-01 @ 10:38
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMenu:ViderTableauxStructures", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU:ViderTableauxStructures", vbNullString, 0)
     
     Dim feuilles As Variant, tableaux As Variant
     Dim ws As Worksheet
@@ -312,7 +312,7 @@ Sub ViderTableauxStructures() '2025-07-01 @ 10:38
 
     On Error GoTo 0
 
-    Call modDev_Utils.EnregistrerLogApplication("modMenu:ViderTableauxStructures", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modMENU:ViderTableauxStructures", vbNullString, startTime)
 
 End Sub
 

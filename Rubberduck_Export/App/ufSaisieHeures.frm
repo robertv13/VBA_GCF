@@ -242,6 +242,8 @@ Private Sub cmbProfessionnel_AfterUpdate() '2025-05-31 @ 16:11
     'Lorsqu'on change de professionnel, on force l'importation des TEC - 2025-06-13 @ 08:46
     Call ImporterTEC
     Me.txtLastImport.Value = "Les TEC ont été importés à " & Format$(Now, "hh:mm:ss")
+    
+    Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:cmbProfessionnel_AfterUpdate", vbNullString, startTime)
 
 End Sub
 

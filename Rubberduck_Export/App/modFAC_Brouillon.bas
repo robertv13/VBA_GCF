@@ -1288,7 +1288,7 @@ Sub ChargerGabaritDescriptionFacture(t As String)
         facRow = facRow + 2
     Next i
         
-    Application.GoTo wshFAC_Brouillon.Range("L" & facRow)
+    Application.Goto wshFAC_Brouillon.Range("L" & facRow)
     
 End Sub
 

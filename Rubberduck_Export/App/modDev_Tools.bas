@@ -1814,13 +1814,13 @@ End Function
 
 Function Fn_ExtraireTypeEtPortee(ligne As String, ByRef TypeRetour As String, ByRef PorteeRetour As String) '2025-07-15 @ 22:56
 
-    Dim reg As Object: Set reg = CreateObject("VBScript.RegExp")
-    reg.pattern = "^\s*(Public|Private)?\s*(Sub|Function|Property\s+(Get|Let|Set))"
-    reg.IgnoreCase = True
-    reg.Global = False
+    Dim Reg As Object: Set Reg = CreateObject("VBScript.RegExp")
+    Reg.pattern = "^\s*(Public|Private)?\s*(Sub|Function|Property\s+(Get|Let|Set))"
+    Reg.IgnoreCase = True
+    Reg.Global = False
 
-    If reg.test(ligne) Then
-        Dim matches: Set matches = reg.Execute(ligne)
+    If Reg.test(ligne) Then
+        Dim matches: Set matches = Reg.Execute(ligne)
         PorteeRetour = matches(0).SubMatches(0)
         If PorteeRetour = "" Then PorteeRetour = "Public"
 
