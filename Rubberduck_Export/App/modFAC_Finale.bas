@@ -1011,45 +1011,43 @@ Sub SauvegarderPDFSauvegarderExcelEnvoyerCourriel() '2025-05-06 @ 11:07
         .CutCopyMode = False
     End With
     
-    On Error GoTo GestionErreur
+'    On Error GoTo GestionErreur
 
     Call TracerEtape("Début traitement facture")
     
     'Étape 1 - Création du document PDF
-    Call TracerEtape("Début création PDF")
+    Call TracerEtape("     Début création PDF")
     wshFAC_Finale.PageSetup.PrintArea = "$A1:$F88" '2025-10-15 @ 23:51
     Call SauvegarderFactureFormatPDF(numeroFacture)
-    
     If Dir(gCheminPDF) = "" Then
-        Call TracerEtape("Échec création PDF")
+        Call TracerEtape("     Échec création PDF")
         Exit Sub
     End If
-    Call TracerEtape("PDF créé avec succès")
-'    Call PauseActive(1)
+    Call TracerEtape("     PDF créé avec succès")
+    gFlagEtapeFacture = 2
     
     'Étape 2 - Copie vers fichier Excel client
-    Call TracerEtape("Début sauvegarde Excel client")
+    Call TracerEtape("     Début sauvegarde Excel client")
     Call SauvegarderCopieFactureDansExcel(nomClient, nomFichier, numeroFacture, dateFacture)
-    Call TracerEtape("Sauvegarde Excel client réussi")
+    Call TracerEtape("     Sauvegarde Excel client réussi")
     gFlagEtapeFacture = 3
-    Call PauseActive(1)
+'    Call PauseActive(1)
 
     'Étape 3 - Création du courriel avec pièce jointe PDF
     If Dir(gCheminPDF) = "" Then
         MsgBox "Le fichier PDF est introuvable pour l’envoi.", vbCritical
-        Call TracerEtape("Échec envoi courriel : PDF manquant")
+        Call TracerEtape("     Échec envoi courriel : PDF manquant")
         Exit Sub
     End If
-    Call TracerEtape("Prêt pour envoi courriel")
+    Call TracerEtape("     Prêt pour envoi courriel")
     Call EnvoyerFactureParCourriel(numeroFacture, nomClient)
-    Call TracerEtape("Courriel envoyé avec succès")
-    
-    Debug.Print "Fin - La facture a été envoyée par courriel"
+    Call TracerEtape("     La facture a été envoyée par courriel")
     gFlagEtapeFacture = 4
-    Call PauseActive(1)
+'    Call PauseActive(1)
 
     'Étape 4 - Activation du bouton Sauvegarde
-    Call TracerEtape("Activation bouton Sauvegarde")
+    Call TracerEtape("     Activation bouton Sauvegarde")
+    DoEvents
     Call AfficherBoutonSauvegarder
     gFlagEtapeFacture = 5
     
@@ -1058,8 +1056,10 @@ Sub SauvegarderPDFSauvegarderExcelEnvoyerCourriel() '2025-05-06 @ 11:07
     GoTo fin
 
 GestionErreur:
-    MsgBox "Une erreur est survenue à l'étape " & gFlagEtapeFacture & "." & vbCrLf & _
-           "Erreur: " & Err.Number & " - " & Err.description, vbCritical
+    MsgBox "Une erreur est survenue à l'étape " & gFlagEtapeFacture & "." & vbCrLf & vbCrLf & _
+           "Erreur: " & Err.Number & " - " & Err.description, _
+           vbCritical, _
+           "Gestion d'erreur dans 'SauvegarderPDFSauvegarderExcelEnvoyerCourriel'"
     Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:SauvegarderPDFSauvegarderExcelEnvoyerCourriel", numeroFacture & " ÉTAPE " & gFlagEtapeFacture & " > " & Err.description, startTime)
 
 fin:
@@ -1080,10 +1080,10 @@ Sub SauvegarderFactureFormatPDF(noFacture As String)
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:SauvegarderFactureFormatPDF", noFacture, 0)
     
     'Création du fichier (NoFacture).PDF dans le répertoire de factures PDF de GCF
-    Dim result As Boolean
-    result = Fn_SauvegarderFactureFormatPDF(noFacture, "SaveOnly")
+    Dim cheminPDF As String
+    cheminPDF = Fn_ExporterFactureEnPDF(noFacture)
     
-    If result = False Then
+    If cheminPDF = vbNullString Then
         MsgBox "ATTENTION... Impossible de sauvegarder la facture en format PDF", _
                 vbCritical, _
                 "Impossible de sauvegarder la facture en format PDF"
@@ -1094,9 +1094,9 @@ Sub SauvegarderFactureFormatPDF(noFacture As String)
 
 End Sub
 
-Function Fn_SauvegarderFactureFormatPDF(noFacture As String, Optional action As String = "SaveOnly") As Boolean
+Function Fn_ExporterFactureEnPDF(noFacture As String) As String
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:Fn_SauvegarderFactureFormatPDF", noFacture & ", " & action, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:Fn_ExporterFactureEnPDF", noFacture, 0)
 
     Application.ScreenUpdating = False
 
@@ -1129,12 +1129,12 @@ Function Fn_SauvegarderFactureFormatPDF(noFacture As String, Optional action As 
     End If
     On Error GoTo 0
     Debug.Print "#0883 - Imprimante actuelle : " & imprimanteActuelle
-    
+
     'Imprimante PDF à utiliser
     Dim imprimantePDF As String
     imprimantePDF = Fn_ObtenirPortFonctionnelAdobePDF '2025-10-20 @ 06:29
     Application.ActivePrinter = imprimantePDF
-    
+
     'Set Print Quality
     On Error Resume Next
     ActiveSheet.PageSetup.PrintQuality = 600
@@ -1161,21 +1161,19 @@ Function Fn_SauvegarderFactureFormatPDF(noFacture As String, Optional action As 
         Application.ActivePrinter = imprimanteActuelle
         On Error GoTo 0
     End If
-    
-    Debug.Print "#0884 - Imprimante restaurée : " & Application.ActivePrinter
 
 SaveOnly:
-    Fn_SauvegarderFactureFormatPDF = True 'Return value
+    Fn_ExporterFactureEnPDF = True 'Return value
     GoTo EndMacro
     
 RefLibError:
     MsgBox "Incapable de préparer le courriel. La librairie n'est pas disponible"
-    Fn_SauvegarderFactureFormatPDF = False 'Function return value
+    Fn_ExporterFactureEnPDF = False 'Function return value
 
 EndMacro:
     Application.ScreenUpdating = True
     
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:Fn_SauvegarderFactureFormatPDF", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:Fn_ExporterFactureEnPDF", vbNullString, startTime)
 
 End Function
 
@@ -1194,6 +1192,9 @@ Sub SauvegarderCopieFactureDansExcel(clientID As String, clientName As String, i
     Do While InStr(clientNamePurged, "[") > 0 And InStr(clientNamePurged, "]") > 0
         clientNamePurged = Fn_Strip_Contact_From_Client_Name(clientNamePurged)
     Loop
+    If Right(clientNamePurged, 1) = "." Then
+        clientNamePurged = Left(clientNamePurged, Len(clientNamePurged) - 1)
+    End If
     
     'Définir le chemin complet du répertoire des fichiers Excel
     Dim ExcelFilesFullPath As String
@@ -1310,7 +1311,7 @@ Sub SauvegarderCopieFactureDansExcel(clientID As String, clientName As String, i
         wsCible.Rows(i).RowHeight = plageSource.Rows(i).RowHeight
     Next i
 
-    '5. Copier l'entête de la facture (logo)
+    '5. Copier le logo de l'entreprise
     Call CopierFormeEnteteEnTouteSecurite(wsSource, wsCible) '2025-05-06 @ 10:59
 
     '6. Copier les paramètres d'impression
@@ -1341,9 +1342,10 @@ Sub SauvegarderCopieFactureDansExcel(clientID As String, clientName As String, i
     'Optionnel : Sauvegarder le workbook cible sous un nouveau nom si nécessaire
     If strCible = vbNullString Then
         wbCible.SaveAs ExcelFilesFullPath & Application.PathSeparator & clientID & " - " & clientNamePurged & ".xlsx"
-        MsgBox "Un nouveau fichier Excel (" & clientID & " - " & clientNamePurged & ".xlsx" & ")" & vbNewLine & vbNewLine & _
-                "A été créé pour sauvegarder la facture", _
-                vbInformation
+        MsgBox "Un nouveau fichier Excel a été créé pour sauvegarder la facture" & vbNewLine & vbNewLine & _
+                "'" & clientID & " - " & clientNamePurged & ".xlsx" & "'", _
+                vbInformation, _
+                "Première facture pour ce client"
     End If
     
     'Réactiver les événements après l'ouverture
@@ -1367,42 +1369,60 @@ End Sub
 
 Sub CopierFormeEnteteEnTouteSecurite(wsSource As Worksheet, wsCible As Worksheet) '2025-05-06 @ 11:12
 
+    Application.ScreenUpdating = False
+    
     Dim forme As Shape, newForme As Shape
     On Error Resume Next
     Set forme = wsSource.Shapes("shpGCFLogo")
     On Error GoTo 0
 
     If Not forme Is Nothing Then
+        Dim limiteMaxTop As Double
+        limiteMaxTop = wsCible.Rows(21).Top 'Ligne de la date
         'Mémoriser la taille et la position exacte de la forme source
         Dim topPos As Double, leftPos As Double, heightVal As Double, widthVal As Double
         topPos = forme.Top
         leftPos = forme.Left
         heightVal = forme.Height
+        If topPos + heightVal > limiteMaxTop Then
+            heightVal = limiteMaxTop - topPos
+        End If
         widthVal = forme.Width
         
         forme.Copy
         DoEvents
-        Application.Wait Now + TimeValue("0:00:01")
+        Call PauseActive(1)
         
         'Coller en tant qu'image (Enhanced Metafile pour plus de compatibilité)
         wsCible.PasteSpecial Format:="Picture (Enhanced Metafile)"
         DoEvents
+        Call PauseActive(1)
 
         'Récupérer la dernière forme collée
         Set newForme = wsCible.Shapes(wsCible.Shapes.count)
         
         'Réappliquer taille et position exactes
-        With newForme
-            .Top = topPos
-            .Left = leftPos
-            .Height = heightVal
-            .Width = widthVal
-         End With
+        If Not newForme Is Nothing Then
+            With newForme
+                .LockAspectRatio = msoFalse ' Permet de modifier Height sans contrainte
+                .Top = topPos
+                Debug.Print "Top = " & topPos
+                .Left = leftPos
+                .Height = heightVal
+                .Width = widthVal
+            End With
+        Else
+            MsgBox "Erreur : le logo de GCF n’a pas été reconnu.", vbCritical
+        End If
 
+        Debug.Print "Hauteur de la nouvelle forme " & newForme.Height
+        
         Application.CutCopyMode = False
     Else
         Debug.Print "Forme 'shpGCFLogo' introuvable sur la feuille source."
     End If
+    
+    Application.ScreenUpdating = True
     
 End Sub
 

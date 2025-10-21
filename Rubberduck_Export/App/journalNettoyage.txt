@@ -1,4 +1,4 @@
-﻿📘 Journal typographique — 10/20/2025 09:35:06
+﻿📘 Journal typographique — 10/20/2025 23:34:21
 
 🔧 Fichier : clsControlWrapper.cls
 
@@ -13,6 +13,8 @@
 🔧 Fichier : clsSurveillanceActivite.cls
 
 🔧 Fichier : Feuil1.doccls
+
+🔧 Fichier : Feuil3.doccls
 
 🔧 Fichier : modADO.bas
 
