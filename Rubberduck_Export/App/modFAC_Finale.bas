@@ -12,10 +12,6 @@ Sub shpMettreAJourFAC_Click() '2025-06-21 @ 08:20
 
     Call SauvegarderFacture
     
-    Application.StatusBar = "Réinitialisation de la feuille en cours..."
-    Call Reinitialiser_FAC_Finale
-    Application.StatusBar = False
-    
     Call PreparerFAC_Brouillon '2025-10-15 @ 23:03
 
 End Sub
@@ -80,10 +76,17 @@ Sub SauvegarderFacture() '2024-03-28 @ 07:19
         Call DetruireLogiquementProjetsEnteteBDLocale(projetID)
     End If
         
+    'Rétablir FAC_Finale à partir de FAC_Finale_Intact et vérifier - 2025-10-23 @ 12:19
+    Application.StatusBar = "Réinitialisation de la feuille en cours..."
+    Call ReinitialiserFAC_Finale
+'    Call RestaurerFeuilleFAC_Finale
+    Call VerifierIntegriteFAC_Finale
+    Application.StatusBar = False
+        
     'Save Invoice total amount
     Dim invoice_Total As Currency
     invoice_Total = wshFAC_Brouillon.Range("O51").Value
-        
+    
     MsgBox "La facture '" & wshFAC_Brouillon.Range("O6").Value & "' est enregistrée." & _
         vbNewLine & vbNewLine & "Le total de la facture est " & _
         Trim$(Format$(invoice_Total, "### ##0.00 $")) & _
@@ -1698,178 +1701,283 @@ Sub CacherBoutonSauvegarder()
     
 End Sub
 
-Sub Reinitialiser_FAC_Finale() '2025-09-05 @ 07:42
+Sub RestaurerFeuilleFAC_Finale() '2025-10-23 @ 12:02
+
+    'Recrée FAC_Finale à partir de FAC_Finale_Intact, en supprimant l’ancienne version si elle existe
+    
+    Application.ScreenUpdating = False
+    Application.DisplayAlerts = False
+
+    'Supprimer FAC_Finale si elle existe
+    Dim ws As Worksheet
+    On Error Resume Next
+    Set ws = ThisWorkbook.Worksheets("FAC_Finale")
+    If Not ws Is Nothing Then ws.Delete
+    On Error GoTo 0
+
+    'Recréer FAC_Finale à partir du modèle intact
+    ThisWorkbook.Worksheets("FAC_Finale_Intact").Copy After:=ThisWorkbook.Worksheets("FAC_Finale_Intact")
+    ActiveSheet.Name = "FAC_Finale"
+
+    Application.DisplayAlerts = True
+    Application.ScreenUpdating = True
+    
+End Sub
+
+Sub VerifierIntegriteFAC_Finale(Optional ws As Worksheet)
+
+    'Si aucun paramètre, on prend FAC_Finale
+    If ws Is Nothing Then
+        On Error Resume Next
+        Set ws = ThisWorkbook.Worksheets("FAC_Finale")
+        On Error GoTo 0
+        If ws Is Nothing Then
+            Debug.Print "Feuille FAC_Finale introuvable."
+            Exit Sub
+        End If
+    End If
+
+    Debug.Print "Vérification de FAC_Finale à " & Format(Now, "hh:mm:ss dd-mm-yyyy")
+
+    'Vérifier quelques formes clés
+    Dim forme As Shape
+    Dim nomsFormesAttendus As Variant
+    nomsFormesAttendus = Array("btnSauvegarde", "btnImprimer", "zoneClient", "zoneAdresse")
+
+    Dim nom As Variant
+    For Each nom In nomsFormesAttendus
+        On Error Resume Next
+        Set forme = ws.Shapes(nom)
+        If forme Is Nothing Then
+            Debug.Print "Forme manquante : " & nom
+        Else
+            Debug.Print "Forme présente : " & nom
+        End If
+        On Error GoTo 0
+    Next nom
+
+    'Vérifier la présence du code Worksheet_Activate
+    Dim codeModule As String
+    On Error Resume Next
+    codeModule = ws.CodeName
+    If Err.Number <> 0 Then
+        Debug.Print "Code événementiel inaccessible."
+    Else
+        Debug.Print "Code VBA attaché à : " & codeModule
+    End If
+    On Error GoTo 0
+
+    'Vérifier quelques plages nommées locales
+    Dim nomPlage As Name
+    Dim nomTrouve As Boolean
+    For Each nom In Array("ZoneClient", "ZoneAdresse", "ZoneMontant")
+        nomTrouve = False
+        For Each nomPlage In ws.Names
+            If nomPlage.Name Like "*" & nom Then
+                nomTrouve = True
+                Exit For
+            End If
+        Next nomPlage
+        If nomTrouve Then
+            Debug.Print "Plage nommée locale : " & nom
+        Else
+            Debug.Print "Plage nommée absente : " & nom
+        End If
+    Next nom
+
+    Debug.Print "Vérification terminée."
+
+End Sub
+
+Sub ReinitialiserFAC_Finale() '2025-10-23 @ 12:50
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:Reinitialiser_FAC_Finale", vbNullString, 0)
     
     Dim FeuilleSource As Worksheet
     Dim FeuilleCible As Worksheet
-    Dim nm As Name, shp As Shape, lo As ListObject
-    Dim c As Range
+'    Dim nm As Name, shp As Shape, lo As ListObject
+'    Dim c As Range
     
     Application.ScreenUpdating = False
     Application.DisplayAlerts = False
     Application.Calculation = xlCalculationManual
+    Application.EnableEvents = False
     
     '--- Feuilles source et cible ---
     Set FeuilleSource = Worksheets("FAC_Finale_Intact")
     Set FeuilleCible = Worksheets("FAC_Finale")
     
     '--- 1. Nettoyer la feuille cible ---
-    FeuilleCible.Cells.Clear
-    On Error Resume Next
-    FeuilleCible.Cells.Validation.Delete
-    FeuilleCible.Cells.FormatConditions.Delete
-    On Error GoTo 0
+    Call NettoyerFeuilleCible(FeuilleCible)
     
-    'Supprimer toutes les formes (images, boutons, graphiques, etc.)
-    For Each shp In FeuilleCible.Shapes
-        shp.Delete
-    Next shp
-    
-    'Supprimer les noms locaux liés à la feuille @TODO
-    For Each nm In FeuilleCible.Parent.Names
-        If nm.Name Like FeuilleCible.Name & "!*" Then
-            Debug.Print "Noms locaux - " & nm.Name
-            nm.Delete
-        End If
-    Next nm
-    
-    'Supprimer les tableaux structurés s'il y en a
-    On Error Resume Next
-    For Each lo In FeuilleCible.ListObjects
-        lo.Unlist
-        Debug.Print "Tableaux structurés - " & lo.Name
-    Next lo
-    On Error GoTo 0
-    
+'    FeuilleCible.Cells.Clear
+'    On Error Resume Next
+'    FeuilleCible.Cells.Validation.Delete
+'    FeuilleCible.Cells.FormatConditions.Delete
+'    On Error GoTo 0
+'
+'    'Supprimer toutes les formes (images, boutons, graphiques, etc.)
+'    For Each shp In FeuilleCible.Shapes
+'        shp.Delete
+'    Next shp
+'
+'    'Supprimer les noms locaux liés à la feuille @TODO
+'    For Each nm In FeuilleCible.Parent.Names
+'        If nm.Name Like FeuilleCible.Name & "!*" Then
+'            Debug.Print "Noms locaux - " & nm.Name
+'            nm.Delete
+'        End If
+'    Next nm
+'
+'    'Supprimer les tableaux structurés s'il y en a
+'    On Error Resume Next
+'    For Each lo In FeuilleCible.ListObjects
+'        lo.Unlist
+'        Debug.Print "Tableaux structurés - " & lo.Name
+'    Next lo
+'    On Error GoTo 0
+'
     '--- 2. Copier contenu et formats ---
-    FeuilleSource.Cells.Copy
-    FeuilleCible.Cells.PasteSpecial xlPasteAll
-    Application.CutCopyMode = False
+    Call CopierContenuEtFormats(FeuilleSource, FeuilleCible)
     
-    '--- 2a. Copier les largeurs de colonnes sans utiliser le presse-papier --- 2025-09-29 @ 08:16
-    Dim col As Long
-    For col = 1 To FeuilleSource.usedRange.Columns.count
-        FeuilleCible.Columns(col).ColumnWidth = FeuilleSource.Columns(col).ColumnWidth
-        Debug.Print "Largeurs de colonnes - " & col & " = " & FeuilleSource.Columns(col).ColumnWidth
-    Next col
-    
+'    FeuilleSource.Cells.Copy
+'    FeuilleCible.Cells.PasteSpecial xlPasteAll
+'    Application.CutCopyMode = False
+'
+'    '--- 2a. Copier les largeurs de colonnes sans utiliser le presse-papier --- 2025-09-29 @ 08:16
+'    Dim col As Long
+'    For col = 1 To FeuilleSource.usedRange.Columns.count
+'        FeuilleCible.Columns(col).ColumnWidth = FeuilleSource.Columns(col).ColumnWidth
+'        Debug.Print "Largeurs de colonnes - " & col & " = " & FeuilleSource.Columns(col).ColumnWidth
+'    Next col
+'
     '--- 3. Copier les formes avec leur position et taille --- '2025-10-02 @ 15:47
-    Dim shpNew As Shape
-    
-    Application.EnableEvents = False
-    
-    For Each shp In FeuilleSource.Shapes
-        shp.Copy ' Copie la forme
-        FeuilleCible.Paste ' Colle la forme sur la feuille cible
-        Set shpNew = FeuilleCible.Shapes(FeuilleCible.Shapes.count) 'Récupère la dernière forme collée
-        shpNew.Top = shp.Top
-        shpNew.Left = shp.Left
-        shpNew.Width = shp.Width
-        shpNew.Height = shp.Height
-        'Déplacer la forme dupliquée sur la feuille cible
-        Debug.Print "Copie des formes - " & shp.Name
-    Next shp
-    
-    Application.EnableEvents = True
+    Call CopierFormes(FeuilleSource, FeuilleCible)
+    Call VerifierActionsFormes(FeuilleCible)
 
+'    Dim shpNew As Shape
+'
+'    Application.EnableEvents = False
+'
+'    For Each shp In FeuilleSource.Shapes
+'        shp.Copy ' Copie la forme
+'        FeuilleCible.Paste ' Colle la forme sur la feuille cible
+'        Set shpNew = FeuilleCible.Shapes(FeuilleCible.Shapes.count) 'Récupère la dernière forme collée
+'        shpNew.Top = shp.Top
+'        shpNew.Left = shp.Left
+'        shpNew.Width = shp.Width
+'        shpNew.Height = shp.Height
+'        'Déplacer la forme dupliquée sur la feuille cible
+'        Debug.Print "Copie des formes - " & shp.Name
+'    Next shp
+'
+'    Application.EnableEvents = True
+'
     '--- 4. Copier les noms locaux ---
-    For Each nm In FeuilleSource.Parent.Names
-        If nm.Name Like FeuilleSource.Name & "!*" Then
-            On Error Resume Next
-            FeuilleCible.Parent.Names.Add _
-                Name:=Replace(nm.Name, FeuilleSource.Name, FeuilleCible.Name), _
-                RefersTo:=Replace(nm.RefersTo, FeuilleSource.Name, FeuilleCible.Name)
-            On Error GoTo 0
-        End If
-    Next nm
+    Call CopierNomsLocaux(FeuilleSource, FeuilleCible)
+
+'    For Each nm In FeuilleSource.Parent.Names
+'        If nm.Name Like FeuilleSource.Name & "!*" Then
+'            On Error Resume Next
+'            FeuilleCible.Parent.Names.Add _
+'                Name:=Replace(nm.Name, FeuilleSource.Name, FeuilleCible.Name), _
+'                RefersTo:=Replace(nm.RefersTo, FeuilleSource.Name, FeuilleCible.Name)
+'            On Error GoTo 0
+'        End If
+'    Next nm
     
     '--- 5. Copier la mise en page ---
-    On Error Resume Next
-    FeuilleCible.PageSetup = FeuilleSource.PageSetup
-    On Error GoTo 0
+    Call CopierMiseEnPage(FeuilleSource, FeuilleCible)
+
+'    On Error Resume Next
+'    FeuilleCible.PageSetup = FeuilleSource.PageSetup
+'    On Error GoTo 0
     
     '--- 6. Copier zoom et FreezePanes ---
-    With ActiveWindow
-        .Zoom = 100
-        FeuilleSource.Activate
-        .Zoom = .Zoom
-        .FreezePanes = False
-        If FeuilleSource.Parent.Windows(1).FreezePanes Then
-            FeuilleSource.Parent.Windows(1).SplitColumn = _
-                FeuilleSource.Parent.Windows(1).SplitColumn
-            FeuilleSource.Parent.Windows(1).SplitRow = _
-                FeuilleSource.Parent.Windows(1).SplitRow
-            FeuilleCible.Parent.Windows(1).FreezePanes = True
-        End If
-    End With
-    
+    Call AppliquerZoomEtFreeze(FeuilleSource, FeuilleCible)
+
+'    With ActiveWindow
+'        .Zoom = 100
+'        FeuilleSource.Activate
+'        .Zoom = .Zoom
+'        .FreezePanes = False
+'        If FeuilleSource.Parent.Windows(1).FreezePanes Then
+'            FeuilleSource.Parent.Windows(1).SplitColumn = _
+'                FeuilleSource.Parent.Windows(1).SplitColumn
+'            FeuilleSource.Parent.Windows(1).SplitRow = _
+'                FeuilleSource.Parent.Windows(1).SplitRow
+'            FeuilleCible.Parent.Windows(1).FreezePanes = True
+'        End If
+'    End With
+'
     '--- 7. Corriger les formules qui pointent vers FAC_Finale_Intact ---
-    For Each c In FeuilleCible.usedRange.Cells
-        If c.HasFormula Then
-            c.formula = Replace(c.formula, "FAC_Finale_Intact", "FAC_Finale")
-        End If
-    Next c
-    
+    Call CorrigerFormules(FeuilleCible, "FAC_Finale_Intact", "FAC_Finale")
+
+'    For Each c In FeuilleCible.usedRange.Cells
+'        If c.HasFormula Then
+'            c.formula = Replace(c.formula, "FAC_Finale_Intact", "FAC_Finale")
+'        End If
+'    Next c
+'
     '--- 8. Corriger les hyperliens qui pointent vers FAC_Finale_Intact ---
-    Dim hl As Hyperlink
-    For Each hl In FeuilleCible.Hyperlinks
-        If InStr(hl.Address, "FAC_Finale_Intact") > 0 Then
-            hl.Address = Replace(hl.Address, "FAC_Finale_Intact", "FAC_Finale")
-        End If
-        If InStr(hl.SubAddress, "FAC_Finale_Intact") > 0 Then
-            hl.SubAddress = Replace(hl.SubAddress, "FAC_Finale_Intact", "FAC_Finale")
-        End If
-    Next hl
-    
+    Call CorrigerHyperliens(FeuilleCible, "FAC_Finale_Intact", "FAC_Finale")
+
+'    Dim hl As Hyperlink
+'    For Each hl In FeuilleCible.Hyperlinks
+'        If InStr(hl.Address, "FAC_Finale_Intact") > 0 Then
+'            hl.Address = Replace(hl.Address, "FAC_Finale_Intact", "FAC_Finale")
+'        End If
+'        If InStr(hl.SubAddress, "FAC_Finale_Intact") > 0 Then
+'            hl.SubAddress = Replace(hl.SubAddress, "FAC_Finale_Intact", "FAC_Finale")
+'        End If
+'    Next hl
+'
     '--- Fin ---
     Application.Calculation = xlCalculationAutomatic
     Application.DisplayAlerts = True
     Application.ScreenUpdating = True
+    Application.EnableEvents = True
     
     DoEvents
     Application.Wait (Now + TimeValue("0:00:02"))
     DoEvents
     
-'    MsgBox "La feuille 'FAC_Finale' a été réinitialisée à partir de 'FAC_Finale_Intact'.", vbInformation
-    
     Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:Reinitialiser_FAC_Finale", vbNullString, startTime)
 
 End Sub
 
-Sub RestaurerFeuilleFinaleIntact() '2025-08-22 @ 16:07
-
-    Dim wsSource As Worksheet
-    Dim wsDest As Worksheet
-    Set wsSource = ThisWorkbook.Sheets("FAC_Finale_Intact")
-    Set wsDest = ThisWorkbook.Sheets("FAC_Finale")
-
-    Application.EnableEvents = False
-    Application.ScreenUpdating = False
-
-    '1. Nettoyer la feuille destination
-    Call NettoyerFeuille(wsDest)
-
-    '2. Copier le contenu des cellules
-    Call SupprimerNomsLocaux(wsDest)
-    wsSource.Cells.Copy
-    wsDest.Cells.PasteSpecial xlPasteAll
-    Application.CutCopyMode = False
-
-    '3. Copier les formes avec positionnement
-    Call CopierFormesAvecActions(wsSource, wsDest)
-
-    '4. Recréer les plages nommées dynamiques
-    Call ReassignerPlagesNomées(wsSource, wsDest)
-
-    Application.EnableEvents = True
-    Application.ScreenUpdating = True
-
-    MsgBox "La feuille 'FAC_Finale' a été restaurée avec succès.", vbInformation
-
-End Sub
-
+'Sub RestaurerFeuilleFinaleIntact() '2025-08-22 @ 16:07
+'
+'    Dim wsSource As Worksheet
+'    Dim wsDest As Worksheet
+'    Set wsSource = ThisWorkbook.Sheets("FAC_Finale_Intact")
+'    Set wsDest = ThisWorkbook.Sheets("FAC_Finale")
+'
+'    Application.EnableEvents = False
+'    Application.ScreenUpdating = False
+'
+'    '1. Nettoyer la feuille destination
+'    Call NettoyerFeuille(wsDest)
+'
+'    '2. Copier le contenu des cellules
+'    Call SupprimerNomsLocaux(wsDest)
+'    wsSource.Cells.Copy
+'    wsDest.Cells.PasteSpecial xlPasteAll
+'    Application.CutCopyMode = False
+'
+'    '3. Copier les formes avec positionnement
+'    Call CopierFormesAvecActions(wsSource, wsDest)
+'
+'    '4. Recréer les plages nommées dynamiques
+'    Call ReassignerPlagesNomées(wsSource, wsDest)
+'
+'    Application.EnableEvents = True
+'    Application.ScreenUpdating = True
+'
+'    MsgBox "La feuille 'FAC_Finale' a été restaurée avec succès.", vbInformation
+'
+'End Sub
+'
 Sub NettoyerFeuille(ws As Worksheet) '2025-08-22 @ 16:08
 
     On Error Resume Next
@@ -1936,6 +2044,241 @@ Sub ReassignerPlagesNomées(wsSource As Worksheet, wsDest As Worksheet) '2025-08
         End If
     Next nom
     
+End Sub
+
+Public Sub NettoyerFeuilleCible(ws As Worksheet)
+
+    Dim nm As Name, shp As Shape, lo As ListObject
+
+    If ws Is Nothing Then Exit Sub
+
+    On Error Resume Next
+
+    ' 1. Vider les cellules
+    ws.Cells.Clear
+    ws.Cells.Validation.Delete
+    ws.Cells.FormatConditions.Delete
+
+    ' 2. Supprimer les formes
+    For Each shp In ws.Shapes
+        shp.Delete
+    Next shp
+
+    ' 3. Supprimer les noms locaux liés à la feuille
+    For Each nm In ws.Parent.Names
+        If nm.Name Like ws.Name & "!*" Then
+            nm.Delete
+        End If
+    Next nm
+
+    ' 4. Supprimer les tableaux structurés
+    For Each lo In ws.ListObjects
+        lo.Unlist
+    Next lo
+
+    On Error GoTo 0
+
+End Sub
+
+Public Sub CopierContenuEtFormats(wsSource As Worksheet, wsCible As Worksheet)
+
+    If wsSource Is Nothing Or wsCible Is Nothing Then Exit Sub
+
+    ' Copier le contenu et les formats
+    wsSource.Cells.Copy
+    wsCible.Cells.PasteSpecial xlPasteAll
+    Application.CutCopyMode = False
+
+    ' Copier les largeurs de colonnes sans presse-papier
+    Dim col As Long
+    For col = 1 To wsSource.usedRange.Columns.count
+        wsCible.Columns(col).ColumnWidth = wsSource.Columns(col).ColumnWidth
+    Next col
+
+End Sub
+
+Public Sub CopierFormes(wsSource As Worksheet, wsCible As Worksheet)
+
+    If wsSource Is Nothing Or wsCible Is Nothing Then Exit Sub
+
+    Dim shp As Shape, shpNew As Shape
+    Dim actionMacro As String
+
+    For Each shp In wsSource.Shapes
+        shp.Copy
+        wsCible.Paste
+        Set shpNew = wsCible.Shapes(wsCible.Shapes.count)
+
+        ' Repositionner et redimensionner
+        With shpNew
+            .Top = shp.Top
+            .Left = shp.Left
+            .Width = shp.Width
+            .Height = shp.Height
+
+            ' Restaurer l'action si elle existe
+            On Error Resume Next
+            actionMacro = shp.OnAction
+            If Len(actionMacro) > 0 Then
+                .OnAction = actionMacro
+                Debug.Print "? Forme copiée : " & shp.Name & " | Action : " & actionMacro
+            Else
+                Debug.Print "? Forme copiée : " & shp.Name & " | Action : [aucune]"
+            End If
+            On Error GoTo 0
+        End With
+    Next shp
+
+End Sub
+
+Public Sub VerifierActionsFormes(ws As Worksheet)
+
+    If ws Is Nothing Then Exit Sub
+
+    Dim shp As Shape
+    Dim actionMacro As String
+
+    Debug.Print "?? Vérification des .OnAction dans " & ws.Name & " à " & Format(Now, "hh:mm:ss dd-mm-yyyy")
+
+    For Each shp In ws.Shapes
+        On Error Resume Next
+        actionMacro = shp.OnAction
+        On Error GoTo 0
+
+        If Len(actionMacro) > 0 Then
+            Debug.Print "? Forme : " & shp.Name & " | Action : " & actionMacro
+        Else
+            Debug.Print "? Forme : " & shp.Name & " | Action manquante"
+        End If
+    Next shp
+
+    Debug.Print "? Vérification terminée."
+
+End Sub
+
+Public Sub CopierNomsLocaux(wsSource As Worksheet, wsCible As Worksheet)
+
+    If wsSource Is Nothing Or wsCible Is Nothing Then Exit Sub
+
+    Dim nm As Name
+    Dim nomOrigine As String, nomCible As String
+    Dim refOrigine As String, refCible As String
+
+    For Each nm In wsSource.Parent.Names
+        If nm.Name Like wsSource.Name & "!*" Then
+            nomOrigine = nm.Name
+            refOrigine = nm.RefersTo
+
+            ' Adapter le nom et la référence à la feuille cible
+            nomCible = Replace(nomOrigine, wsSource.Name, wsCible.Name)
+            refCible = Replace(refOrigine, wsSource.Name, wsCible.Name)
+
+            On Error Resume Next
+            wsCible.Parent.Names.Add Name:=nomCible, RefersTo:=refCible
+            If Err.Number = 0 Then
+                Debug.Print "? Nom local copié : " & nomCible
+            Else
+                Debug.Print "? Échec copie nom : " & nomCible
+            End If
+            On Error GoTo 0
+        End If
+    Next nm
+
+End Sub
+
+Public Sub CopierMiseEnPage(wsSource As Worksheet, wsCible As Worksheet)
+
+    If wsSource Is Nothing Or wsCible Is Nothing Then Exit Sub
+
+    On Error Resume Next
+    wsCible.PageSetup = wsSource.PageSetup
+    On Error GoTo 0
+
+    Debug.Print "? Mise en page copiée de " & wsSource.Name & " vers " & wsCible.Name
+
+End Sub
+
+Public Sub AppliquerZoomEtFreeze(wsSource As Worksheet, wsCible As Worksheet)
+
+    If wsSource Is Nothing Or wsCible Is Nothing Then Exit Sub
+
+    On Error Resume Next
+
+    ' Appliquer le zoom de la feuille source
+    Dim zoomValue As Long
+    zoomValue = wsSource.Parent.Windows(1).Zoom
+    wsCible.Parent.Windows(1).Zoom = zoomValue
+    Debug.Print "? Zoom appliqué : " & zoomValue & "%"
+
+    ' Réinitialiser les volets figés
+    With wsCible.Parent.Windows(1)
+        .FreezePanes = False
+        .SplitColumn = 0
+        .SplitRow = 0
+    End With
+
+    ' Reproduire le gel des volets si actif dans la source
+    With wsSource.Parent.Windows(1)
+        If .FreezePanes Then
+            wsCible.Activate
+            wsCible.Cells(.SplitRow + 1, .SplitColumn + 1).Select
+            wsCible.Parent.Windows(1).FreezePanes = True
+            Debug.Print "? FreezePanes appliqué : ligne " & .SplitRow & ", colonne " & .SplitColumn
+        Else
+            Debug.Print "?? Aucun FreezePanes à appliquer"
+        End If
+    End With
+
+    On Error GoTo 0
+
+End Sub
+
+Public Sub CorrigerFormules(wsCible As Worksheet, nomFeuilleSource As String, nomFeuilleCible As String)
+
+    If wsCible Is Nothing Then Exit Sub
+    If Len(nomFeuilleSource) = 0 Or Len(nomFeuilleCible) = 0 Then Exit Sub
+
+    Dim c As Range
+    Dim formuleAvant As String
+
+    For Each c In wsCible.usedRange.Cells
+        If c.HasFormula Then
+            formuleAvant = c.formula
+            If InStr(formuleAvant, nomFeuilleSource) > 0 Then
+                c.formula = Replace(formuleAvant, nomFeuilleSource, nomFeuilleCible)
+                Debug.Print "?? Formule corrigée en " & c.Address
+            End If
+        End If
+    Next c
+
+End Sub
+
+Public Sub CorrigerHyperliens(wsCible As Worksheet, nomFeuilleSource As String, nomFeuilleCible As String)
+
+    If wsCible Is Nothing Then Exit Sub
+    If Len(nomFeuilleSource) = 0 Or Len(nomFeuilleCible) = 0 Then Exit Sub
+
+    Dim hl As Hyperlink
+    Dim modif As Boolean
+
+    For Each hl In wsCible.Hyperlinks
+        modif = False
+
+        If InStr(hl.Address, nomFeuilleSource) > 0 Then
+            hl.Address = Replace(hl.Address, nomFeuilleSource, nomFeuilleCible)
+            modif = True
+        End If
+
+        If InStr(hl.SubAddress, nomFeuilleSource) > 0 Then
+            hl.SubAddress = Replace(hl.SubAddress, nomFeuilleSource, nomFeuilleCible)
+            modif = True
+        End If
+
+        If modif Then
+            Debug.Print "?? Hyperlien corrigé : " & hl.TextToDisplay
+        End If
+    Next hl
+
 End Sub
 
 Sub TracerEtape(nomEtape As String)
