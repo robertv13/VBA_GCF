@@ -148,7 +148,7 @@ NextForm:
     If InStr(rapport, "? Erreur") > 0 Or InStr(rapport, "?") > 0 Then
         MsgBox rapport, vbExclamation, "?? Problèmes détectés"
     Else
-        MsgBox "? Aucun contrôle problématique trouvé sur les feuilles ou les UserForms.", vbInformation, "Tout est OK"
+        MsgBox "Aucun contrôle problématique trouvé sur les feuilles ou les UserForms.", vbInformation, "Tout est OK"
     End If
 End Sub
 
@@ -186,7 +186,8 @@ Sub zz_ScannerSuppressionAmbigue_VersFenetreImmediate() '2025-07-01 @ 09:36
         Next numLigne
     Next vbComp
 
-    Debug.Print "? --- Scan terminé ---"
+    Debug.Print "--- Scan terminé ---"
+    
 End Sub
 
 
