@@ -175,15 +175,21 @@ Sub CreerSauvegardeMaster()
     On Error GoTo MASTER_NOT_AVAILABLE
     
     'Chemin source (fichier principal) et destination (sauvegarde)
-    Dim masterFilePath As String
-    masterFilePath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & wsdADMIN.Range("MASTER_FILE").Value
+    Dim masterFileFullPath As String
+    Dim masterFileName As String
     
-    Dim backupFilePath As String
-    backupFilePath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
-                     wsdADMIN.Range("MASTER_FILE").Value & "_" & Format$(Now, "YYYYMMDD_HHMMSS") & ".xlsx"
+    masterFileFullPath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & wsdADMIN.Range("MASTER_FILE").Value
+    masterFileName = wsdADMIN.Range("MASTER_FILE").Value
+    If Right(masterFileName, 5) = ".xlsx" Then
+        masterFileName = Left(masterFileName, Len(masterFileName) - 5)
+    End If
+    
+    Dim backupFileFullPath As String
+    backupFileFullPath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                         masterFileName & "_" & Format$(Now, "YYYYMMDD_HHMMSS") & ".xlsx"
     
     'Créer directement une copie du fichier sans ouvrir Excel
-    FileCopy masterFilePath, backupFilePath
+    FileCopy masterFileFullPath, backupFileFullPath
 
     Call modDev_Utils.EnregistrerLogApplication("modAppli:CreerSauvegardeMaster", vbNullString, startTime)
     
@@ -468,27 +474,6 @@ Sub QuitterFeuillePourMenu(ByVal nomFeuilleMenu As Worksheet, Optional masquerFe
     
 End Sub
     
-Function ObtenirInfosWindows(nomWindows As String) As Object
-
-    Dim rs As Object, infos As Object
-    Set infos = CreateObject("Scripting.Dictionary")
-
-    Set rs = OuvrirRecordsetADO("P:\Administration\APP\LIAISON_UTILISATEURS.xlsx", "UtilisateursWindows$")
-
-    Do Until rs.EOF
-        If rs("Utilisateur Windows") = nomWindows Then
-            infos("UtilisateurID") = rs("UtilisateurID")
-            infos("Environnement") = rs("Environnement")
-            Exit Do
-        End If
-        rs.MoveNext
-    Loop
-
-    rs.Close
-    Set ObtenirInfosWindows = infos
-    
-End Function
-
 Sub AfficherErreurCritique(message As String) '2025-10-19 @ 10:36
 
     MsgBox message, _

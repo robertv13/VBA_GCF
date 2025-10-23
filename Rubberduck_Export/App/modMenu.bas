@@ -11,6 +11,7 @@ Sub AccederMenuTEC()
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU:AccederMenuTEC", vbNullString, 0)
     
+    'Tous les utilisateurs ont accès au menu TEC
     Call modAppli.QuitterFeuillePourMenu(wshMenuTEC, True) '2025-08-19 @ 06:59
     
     Call modDev_Utils.EnregistrerLogApplication("modMENU:AccederMenuTEC", vbNullString, startTime)
@@ -27,23 +28,13 @@ Sub AccederMenuFacturation()
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU:AccederMenuFacturation", vbNullString, 0)
     
-    Dim utilisateurWindows As String
-    utilisateurWindows = modFunctions.Fn_UtilisateurWindows()
-    
-    If modFunctions.Fn_UtilisateurWindows() = "Guillaume" Or _
-            modFunctions.Fn_UtilisateurWindows() = "GuillaumeCharron" Or _
-            modFunctions.Fn_UtilisateurWindows() = "gchar" Or _
-            modFunctions.Fn_UtilisateurWindows() = "RobertMV" Or _
-            modFunctions.Fn_UtilisateurWindows() = "robertmv" Or _
-            modFunctions.Fn_UtilisateurWindows() = "User" Or _
-            modFunctions.Fn_UtilisateurWindows() = "vgervais" Or _
-            modFunctions.Fn_UtilisateurWindows() = "Vlad_Portable" Or _
-            modFunctions.Fn_UtilisateurWindows() = "Oli_Portable" Then
-            
+    If UCase(UtilisateurActif("AccesFACT")) = "VRAI" Then
         Call modAppli.QuitterFeuillePourMenu(wshMenuFAC, True) '2025-08-19 @ 07:12
-        
     Else
         Application.EnableEvents = False
+        MsgBox "Vous n'êtes pas autorisé à accéder à cette option", _
+            vbInformation, _
+            "Vérification des accès par utilisateur Windows"
         wshMenu.Activate
         Application.EnableEvents = True
     End If
@@ -62,17 +53,13 @@ Sub AccederMenuComptabilite()
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU:AccederMenuComptabilite", vbNullString, 0)
     
-    If modFunctions.Fn_UtilisateurWindows() = "Guillaume" Or _
-            modFunctions.Fn_UtilisateurWindows() = "GuillaumeCharron" Or _
-            modFunctions.Fn_UtilisateurWindows() = "gchar" Or _
-            modFunctions.Fn_UtilisateurWindows() = "RobertMV" Or _
-            modFunctions.Fn_UtilisateurWindows() = "robertmv" Or _
-            modFunctions.Fn_UtilisateurWindows() = "User" Then
-            
-        Call modAppli.QuitterFeuillePourMenu(wshMenuGL, True) '2025-08-21 @ 07:12
-        
+    If UCase(UtilisateurActif("AccesGL")) = "VRAI" Then
+        Call modAppli.QuitterFeuillePourMenu(wshMenuGL, True) '2025-08-19 @ 07:12
     Else
         Application.EnableEvents = False
+        MsgBox "Vous n'êtes pas autorisé à accéder à cette option", _
+            vbInformation, _
+            "Vérification des accès par utilisateur Windows"
         wshMenu.Activate
         Application.EnableEvents = True
     End If

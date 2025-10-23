@@ -1915,7 +1915,7 @@ Sub CopierFormesAvecActions(wsSource As Worksheet, wsDest As Worksheet) '2025-08
             On Error GoTo 0
         End With
     Next shpSource
-    
+
 End Sub
 
 Sub ReassignerPlagesNomées(wsSource As Worksheet, wsDest As Worksheet) '2025-08-22 @ 16:09
