@@ -124,7 +124,7 @@ Sub CM_Ecrire_Client(action As String) '2025-06-27 @ 10:04
 
 End Sub
 
-Sub CM_Update_External_GCF_Entree_BD(action As String, client As DonneesClient) '2025-06-27 @ 10:05
+Sub CM_Update_External_GCF_Entree_BD(action As String, client As DonneesClient) '2025-10-23 @ 15:13
 
     Dim startTime As Double: startTime = Timer
     Call CM_Log_Activities("modMain:Update_External_GCF_BD_Entree", action, 0)
