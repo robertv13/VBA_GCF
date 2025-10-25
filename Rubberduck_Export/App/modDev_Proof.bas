@@ -114,16 +114,16 @@ Sub zz_IdentifierEcartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
     Set dictComptesClients = CreateObject("Scripting.Dictionary")
     
     'Lire wsdFAC_Entete
-    Dim Facture As String
+    Dim facture As String
     Dim lastRowEntete As Long, lastRowComptes As Long
     lastRowEntete = wsEntete.Cells(wsEntete.Rows.count, 1).End(xlUp).Row
     Dim montantEntete As Currency, totalEntêteCC As Currency
     Dim i As Long
     For i = 3 To lastRowEntete
-        Facture = wsEntete.Cells(i, fFacEInvNo).Value
+        facture = wsEntete.Cells(i, fFacEInvNo).Value
         montantEntete = wsEntete.Cells(i, fFacEARTotal).Value
         totalEntêteCC = totalEntêteCC + montantEntete
-        If Len(Facture) > 0 Then dictEntete(Facture) = montantEntete
+        If Len(facture) > 0 Then dictEntete(facture) = montantEntete
     Next i
     
     'Lire wsdFAC_Comptes_Clients
@@ -132,7 +132,7 @@ Sub zz_IdentifierEcartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
     Dim solde As Currency, soldeCC1 As Currency, soldeCC2 As Currency
     lastRowComptes = wsComptesClients.Cells(wsComptesClients.Rows.count, 1).End(xlUp).Row
     For i = 3 To lastRowComptes
-        Facture = wsComptesClients.Cells(i, fFacCCInvNo).Value
+        facture = wsComptesClients.Cells(i, fFacCCInvNo).Value
         montantCompte = wsComptesClients.Cells(i, fFacCCTotal).Value
         totalComptesClients = totalComptesClients + montantCompte
         montantPayé = wsComptesClients.Cells(i, fFacCCTotalPaid).Value
@@ -142,7 +142,7 @@ Sub zz_IdentifierEcartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
         soldeCC1 = soldeCC1 + solde
         soldeCC2 = soldeCC2 + montantCompte - montantPayé - montantRégul
         If soldeCC1 <> soldeCC2 Then Stop
-        If Len(Facture) > 0 Then dictComptesClients(Facture) = montantCompte
+        If Len(facture) > 0 Then dictComptesClients(facture) = montantCompte
     Next i
     
     'Comparer et générer le rapport

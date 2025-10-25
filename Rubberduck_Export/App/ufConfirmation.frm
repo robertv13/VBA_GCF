@@ -32,15 +32,15 @@ Private Sub UserForm_Initialize()
         'Vérifiez que la collection Factures est définie et contient des données
         If Not Factures Is Nothing And Factures.count > 0 Then
             Dim nomClient As String
-            Dim Facture As Variant
-            For Each Facture In Factures
-                If IsArray(Facture) Then
+            Dim facture As Variant
+            For Each facture In Factures
+                If IsArray(facture) Then
                     Dim newItem As listItem
                     Set newItem = .ListItems.Add(, , vbNullString)
-                    newItem.SubItems(1) = Facture(0)
-                    newItem.SubItems(2) = Facture(1)
+                    newItem.SubItems(1) = facture(0)
+                    newItem.SubItems(2) = facture(1)
                     'Ajustement sur le nom du client
-                    nomClient = Trim$(Facture(2))
+                    nomClient = Trim$(facture(2))
                     If Len(nomClient) > 60 Then
                         nomClient = Left$(nomClient, 60)
                     Else
@@ -48,11 +48,11 @@ Private Sub UserForm_Initialize()
                     End If
 '                    nomClient = Left$(nomClient, 55) & "   * Sélectionnée *"
                     newItem.SubItems(3) = nomClient
-                    newItem.SubItems(4) = Facture(3)
+                    newItem.SubItems(4) = facture(3)
                 Else
                     MsgBox "Erreur : L'élément n'est pas un tableau"
                 End If
-            Next Facture
+            Next facture
         Else
             Debug.Print "#091 - La collection Factures est vide ou non initialisée."
         End If

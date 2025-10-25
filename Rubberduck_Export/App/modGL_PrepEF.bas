@@ -189,65 +189,6 @@ Sub CalculerSoldesPourEF(ws As Worksheet, dateCutOff As Date) '2025-08-14 @ 06:5
     'Libérer la mémoire
     Set dictPlanComptable = Nothing
     
-'    For i = LBound(arr, 1) To UBound(arr, 1)
-'
-'            If arrSoldesParGL(r, 2) <> 0 Or arrSoldesParGL(r, 3) <> 0 Then
-'                'Accumule les montants par ligne d'état financier (codeEF)
-'                If Not gDictSoldeCodeEF.Exists(codeEF) Then
-'                    rowID_to_gSoldeCodeEF = rowID_to_gSoldeCodeEF + 1
-'                    gDictSoldeCodeEF.Add codeEF, rowID_to_gSoldeCodeEF
-'                    gSoldeCodeEF(rowID_to_gSoldeCodeEF, 1) = codeEF
-'                End If
-'                currRowID = gDictSoldeCodeEF(codeEF)
-'
-'                ws.Range("F" & currRow).Value = arrSoldesParGL(r, 2)
-'                gSoldeCodeEF(currRowID, 2) = gSoldeCodeEF(currRowID, 2) + arrSoldesParGL(r, 2)
-'                totalAC = totalAC + arrSoldesParGL(r, 2)
-'                ws.Range("H" & currRow).Value = arrSoldesParGL(r, 3)
-'                gSoldeCodeEF(currRowID, 3) = gSoldeCodeEF(currRowID, 3) + arrSoldesParGL(r, 3)
-'                totalAP = totalAP + CCur(arrSoldesParGL(r, 3))
-'
-'                'Preuve
-'                If Not dictPreuve.Exists(codeEF & "-" & glNo) Then
-'                    dictPreuve.Add codeEF & "-" & glNo, 0
-'                End If
-'                dictPreuve(codeEF & "-" & glNo) = dictPreuve(codeEF & "-" & glNo) + arrSoldesParGL(r, 2)
-'
-'                'Preuve - Sous-total par section
-'                section = Left$(codeEF, 1)
-'                If Not dictSectionSub.Exists(section) Then
-'                    dictSectionSub.Add section, 0
-'                End If
-'                dictSectionSub(section) = dictSectionSub(section) + arrSoldesParGL(r, 2)
-'            End If
-'        End If
-'
-'    currRow = currRow + 2
-'
-'    'Output GL totals
-'    ws.Range("D" & currRow).Value = "Totaux"
-'    ws.Range("F" & currRow).Value = totalAC
-'    ws.Range("H" & currRow).Value = totalAP
-'
-'    'Ajuste le format des montants
-'    ws.Range("F6:F" & currRow).NumberFormat = "###,###,##0.00 ;(###,###,##0.00);0.00"
-'    ws.Range("H6:H" & currRow).NumberFormat = "###,###,##0.00 ;(###,###,##0.00);0.00"
-'
-'    ws.Protect UserInterfaceOnly:=True
-'    ws.EnableSelection = xlUnlockedCells
-'
-'    Application.EnableEvents = True
-'
-'    ActiveWindow.ScrollRow = 1
-'
-'    Application.EnableEvents = False
-'    ws.Range("C6").Select
-'    Application.EnableEvents = True
-'
-'    'Libérer la mémoire
-'    Set dictPreuve = Nothing
-'    Set dictSoldesParGL = Nothing
-    
     Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:CalculerSoldesPourEF", vbNullString, startTime)
 
 End Sub
@@ -284,9 +225,12 @@ Sub AssemblerEtatsFinanciers() '2025-08-14 @ 08:05
     Call AssemblerER0Main(dateAC, dateAP)
     Call AssemblerBNR0Main(dateAC, dateAP)
     Call AssemblerBilan0Main(dateAC, dateAP)
+    Call AssemblerNEFA_0Main(dateAC, dateAP)
+    Call AssemblerNEFA2_0Main(dateAC, dateAP)
+''    Call AssemblerNEFA3_0Main(dateAC, dateAP)
     
     Dim nomsFeuilles As Variant
-    nomsFeuilles = Array("Page titre", "Table des Matières", "État des Résultats", "BNR", "Bilan")
+    nomsFeuilles = Array("Page titre", "Table des Matières", "État des Résultats", "BNR", "Bilan", "A.tmp", "A2.tmp", "A3.tmp")
     
     Dim ws As Worksheet
     Dim i As Integer
@@ -323,7 +267,7 @@ Sub CreerFeuillesEtFormat() '2025-08-14 @ 09:32
     
     'Liste des feuilles à créer
     Dim nomsFeuilles As Variant
-    nomsFeuilles = Array("Page titre", "Table des Matières", "État des Résultats", "BNR", "Bilan")
+    nomsFeuilles = Array("Page titre", "Table des Matières", "État des Résultats", "BNR", "Bilan", "A.tmp", "A2.tmp", "A3.tmp")
 
     Application.ScreenUpdating = False
     
@@ -888,6 +832,526 @@ Sub AssemblerBNR2Lignes(ws As Worksheet)
     Debug.Print "BNR (lignes) - $A$1:$F$' & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3"
     
     Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBNR2Lignes", vbNullString, startTime)
+
+End Sub
+
+Sub AssemblerNEFA_0Main(dateAC As Date, dateAP As Date)
+
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA_0Main", vbNullString, 0)
+    
+    Application.ScreenUpdating = False
+    
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Sheets("A.tmp")
+    
+    Application.StatusBar = "Construction des notes"
+    
+    Call AssemblerNEFA_1ArrierePlanEtEntete(ws, dateAC, dateAP)
+    Call AssemblerNEFA_2Lignes(ws)
+    
+    Application.StatusBar = False
+    
+    Application.ScreenUpdating = True
+    
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA_0Main", vbNullString, startTime)
+    
+End Sub
+
+Sub AssemblerNEFA_1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As Date)
+
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA_1ArrierePlanEtEntete", vbNullString, 0)
+    
+    'Effacer le contenu existant
+    ws.Cells.Clear
+    ws.Cells.VerticalAlignment = xlCenter
+    
+    'Appliquer le format d'en-tête
+    ws.Range("A1:E1").Merge
+    Call PositionnerCellule(ws, UCase$(wsdADMIN.Range("NomEntreprise")), 1, 1, 12, True, xlLeft)
+    ws.Range("A1").IndentLevel = 3
+    
+    Call PositionnerCellule(ws, UCase$("NOTES AUX ÉTATS FINANCIERS"), 2, 1, 12, True, xlLeft)
+    ws.Range("A2").IndentLevel = 3
+    
+    Call PositionnerCellule(ws, UCase$("Au " & Format$(dateAC, "dd mmmm yyyy")), 3, 1, 12, True, xlLeft)
+    ws.Range("A3").IndentLevel = 3
+    
+    With ws.Range("F4")
+        .HorizontalAlignment = xlCenter
+        .Font.Bold = True
+        .Value = "5"
+    End With
+    With ws.Range("A4:F4").Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .Color = -11511710
+        .Weight = xlMedium
+    End With
+    
+    'Entête
+    With ws.Range("A1:F3")
+        .Font.Name = "Verdana"
+        .Font.size = 12
+        .Font.Color = RGB(140, 131, 117)
+    End With
+
+    'Corps
+    With ws.Range("A4:F26")
+        .Font.Name = "Verdana"
+        .Font.size = 11
+        .Font.Color = RGB(140, 131, 117)
+    End With
+    
+    'Hauteur de lignes
+    ws.Rows("1:3").RowHeight = 15
+    ws.Rows("4").RowHeight = 16.5
+    ws.Rows("5:7").RowHeight = 14.25
+    ws.Rows("8").RowHeight = 40
+    ws.Rows("9:14").RowHeight = 14.25
+    ws.Rows("15:16").RowHeight = 15
+    ws.Rows("17:19").RowHeight = 14.25
+    ws.Rows("20").RowHeight = 28.5
+    ws.Rows("21:27").RowHeight = 14.25
+    
+    Dim currRow As Integer
+    currRow = 7
+
+    'Note # 1 - Lignes 7 @ 8
+    With ws.Range("A7")
+        .HorizontalAlignment = xlCenter
+        .Value = "1"
+        .Font.Bold = True
+    End With
+    
+    With ws.Range("B7")
+        .HorizontalAlignment = xlLeft
+        .Value = "CONSTITUTION DE LA SOCIÉTÉ"
+        .Font.Bold = True
+    End With
+    
+    With ws.Range("B8:E8")
+        .MergeCells = True
+        .ShrinkToFit = False
+        .WrapText = True
+        .HorizontalAlignment = xlLeft
+        .Font.Bold = False
+        .Value = "La société a été constituée le 24 juillet 2008 en vertue de la Partie IA de la Loi " & _
+                 "sur les Compagnies du Québec. Elle œuvre dans le domaine de la consultation en fiscalité."
+    End With
+        
+    'Note # 2 - Lignes 11 @ 15
+    With ws.Range("A11")
+        .HorizontalAlignment = xlCenter
+        .Value = "2"
+        .Font.Bold = True
+    End With
+    
+    With ws.Range("B11")
+        .HorizontalAlignment = xlLeft
+        .Value = "FRAIS PAYÉS D'AVANCES"
+        .Font.Bold = True
+    End With
+    
+    With ws.Range("B12:E12")
+        .MergeCells = True
+        .ShrinkToFit = False
+        .WrapText = False
+        .HorizontalAlignment = xlLeft
+        .Value = "Les frais payés d'avance sont constitués des éléments suivants:"
+        .Font.Bold = False
+    End With
+    
+    With ws.Range("B13")
+        .WrapText = False
+        .HorizontalAlignment = xlLeft
+        .Value = "Cotisation et Assurances professionnelle"
+        .IndentLevel = 2
+        .Font.Bold = False
+    End With
+    
+    With ws.Range("D13")
+        .HorizontalAlignment = xlRight
+        .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
+        .formula = "=ROUND((2927.5+4846.14)*8/12,0)" '@TODO - 2025-10-24 @ 05:41
+    End With
+    
+    With ws.Range("B14")
+        .WrapText = False
+        .HorizontalAlignment = xlLeft
+        .IndentLevel = 2
+        .Value = "Loyer payé d'avance - 1 mois"
+        .Font.Bold = False
+    End With
+    
+    With ws.Range("D14")
+        .HorizontalAlignment = xlRight
+        .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
+        .Value = 645 '@TODO - 2025-10-24 @ 05:41
+    End With
+    
+    With ws.Range("B15")
+        .HorizontalAlignment = xlLeft
+        .Value = "TOTAL"
+        .Font.Bold = True
+    End With
+    
+    With ws.Range("D15")
+        .HorizontalAlignment = xlRight
+        .Font.Bold = True
+        .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
+        .formula = "=SUM(D13:D14)" '@TODO - 2025-10-24 @ 05:41
+        With .Borders(xlEdgeTop)
+            .LineStyle = xlContinuous
+            .ColorIndex = xlAutomatic
+            .TintAndShade = 0
+            .Weight = xlThin
+        End With
+        With .Borders(xlEdgeBottom)
+            .LineStyle = xlDouble
+            .ColorIndex = xlAutomatic
+            .TintAndShade = 0
+            .Weight = xlThick
+        End With
+    End With
+    
+    'Note # 3 - Lignes 18 @ 26
+    With ws.Range("A18")
+        .HorizontalAlignment = xlCenter
+        .Value = "3"
+        .Font.Bold = True
+    End With
+    
+    With ws.Range("B18")
+        .HorizontalAlignment = xlLeft
+        .Value = "IMMOBILISATIONS"
+        .Font.Bold = True
+    End With
+    
+    With ws.Range("B19:E19")
+        .MergeCells = True
+        .ShrinkToFit = False
+        .WrapText = False
+        .HorizontalAlignment = xlLeft
+        .Value = "Les immobilisations sont constitués des éléments suivants:"
+        .Font.Bold = False
+    End With
+    
+    With ws.Range("C20")
+        .HorizontalAlignment = xlCenter
+        .Value = "Coût"
+        .Font.Bold = True
+    End With
+    
+    With ws.Range("D20")
+        .WrapText = True
+        .HorizontalAlignment = xlCenter
+        .Value = "Amortissement cumulé"
+        .Font.Bold = True
+    End With
+    
+    With ws.Range("E20")
+        .HorizontalAlignment = xlCenter
+        .Value = "Valeur nette"
+        .Font.Bold = True
+    End With
+    
+    '@TODO - Aller chercher les soldes
+    With ws.Range("E21")
+        .HorizontalAlignment = xlRight
+        .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
+        .formula = "=SUM(C21:D21)"
+    End With
+    
+    With ws.Range("E22")
+        .HorizontalAlignment = xlRight
+        .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
+        .formula = "=SUM(C22:D22)"
+    End With
+    
+    With ws.Range("E23")
+        .HorizontalAlignment = xlRight
+        .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
+        .formula = "=SUM(C23:D23)"
+    End With
+    
+    With ws.Range("E24")
+        .HorizontalAlignment = xlRight
+        .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
+        .formula = "=SUM(C24:D24)"
+    End With
+    
+    With ws.Range("C24:E24")
+        With .Borders(xlEdgeBottom)
+            .LineStyle = xlContinuous
+            .ColorIndex = xlAutomatic
+            .TintAndShade = 0
+            .Weight = xlThin
+        End With
+    End With
+    
+    With ws.Range("B26")
+        .HorizontalAlignment = xlLeft
+        .Value = "TOTAL"
+        .Font.Bold = True
+    End With
+    
+    With ws.Range("C26")
+        .HorizontalAlignment = xlRight
+        .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
+        .Font.Bold = True
+        .formula = "=SUM(C21:C24)"
+    End With
+    
+    With ws.Range("D26")
+        .HorizontalAlignment = xlRight
+        .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
+        .Font.Bold = True
+        .formula = "=SUM(D21:D24)"
+    End With
+    
+    With ws.Range("E26")
+        .HorizontalAlignment = xlRight
+        .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
+        .Font.Bold = True
+        .formula = "=SUM(E21:E24)"
+    End With
+    
+    ws.Columns("A").ColumnWidth = 8
+    ws.Columns("B").ColumnWidth = 39
+    ws.Columns("C").ColumnWidth = 15
+    ws.Columns("D").ColumnWidth = 15
+    ws.Columns("E").ColumnWidth = 14
+    ws.Columns("F").ColumnWidth = 3.75
+    
+    ws.PageSetup.CenterFooter = 5
+    
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA_1ArrierePlanEtEntete", vbNullString, startTime)
+
+End Sub
+
+Sub AssemblerNEFA_2Lignes(ws As Worksheet)
+
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA_2Lignes", vbNullString, 0)
+    
+    'Fixer le printArea selon le nombre de lignes ET colonnes
+    ActiveSheet.PageSetup.PrintArea = "$A$1:$F$27"
+    Debug.Print "Notes A (lignes) - $A$1:$F$27"
+    
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA_2Lignes", vbNullString, startTime)
+
+End Sub
+
+Sub AssemblerNEFA2_0Main(dateAC As Date, dateAP As Date)
+
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA2_0Main", vbNullString, 0)
+    
+    Application.ScreenUpdating = False
+    
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Sheets("A2.tmp")
+    
+    Application.StatusBar = "Construction des notes"
+    
+    Call AssemblerNEFA2_1ArrierePlanEtEntete(ws, dateAC, dateAP)
+    Call AssemblerNEFA2_2Lignes(ws)
+    
+    Application.StatusBar = False
+    
+    Application.ScreenUpdating = True
+    
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA2_0Main", vbNullString, startTime)
+    
+End Sub
+
+Sub AssemblerNEFA2_1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As Date)
+
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA2_1ArrierePlanEtEntete", vbNullString, 0)
+    
+    'Effacer le contenu existant
+    ws.Cells.Clear
+    ws.Cells.VerticalAlignment = xlCenter
+    
+    'Appliquer le format d'en-tête
+    ws.Range("A1:E1").Merge
+    Call PositionnerCellule(ws, UCase$(wsdADMIN.Range("NomEntreprise")), 1, 1, 12, True, xlLeft)
+    ws.Range("A1").IndentLevel = 3
+    
+    ws.Range("A2:E2").Merge
+    Call PositionnerCellule(ws, UCase$("NOTES AUX ÉTATS FINANCIERS"), 2, 1, 12, True, xlLeft)
+    ws.Range("A2").IndentLevel = 3
+    
+    Call PositionnerCellule(ws, UCase$("Au " & Format$(dateAC, "dd mmmm yyyy")), 3, 1, 12, True, xlLeft)
+    ws.Range("A3").IndentLevel = 3
+    
+    With ws.Range("H4")
+        .HorizontalAlignment = xlCenter
+        .Font.Bold = True
+        .Value = "6"
+    End With
+    With ws.Range("A4:H4").Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .Color = -11511710
+        .Weight = xlMedium
+    End With
+    
+    'Entête
+    With ws.Range("A1:H3")
+        .Font.Name = "Verdana"
+        .Font.size = 12
+        .Font.Color = RGB(140, 131, 117)
+    End With
+
+    'Corps
+    With ws.Range("A4:G19")
+        .Font.Name = "Verdana"
+        .Font.size = 11
+        .Font.Color = RGB(140, 131, 117)
+    End With
+    
+    'Hauteur de lignes
+    ws.Rows("1:19").RowHeight = 14.25
+    ws.Rows("9").RowHeight = 30
+    ws.Rows("14").RowHeight = 65
+    
+    'Note # 4 - Lignes 8 @ 17
+    With ws.Range("A8")
+        .HorizontalAlignment = xlCenter
+        .Value = "4"
+        .Font.Bold = True
+    End With
+    
+    With ws.Range("B8")
+        .HorizontalAlignment = xlLeft
+        .Value = "AMORTISSEMENT"
+        .Font.Bold = True
+    End With
+    
+    With ws.Range("B9:G9")
+        .MergeCells = True
+        .ShrinkToFit = False
+        .WrapText = True
+        .HorizontalAlignment = xlLeft
+        .Font.Bold = False
+        .Value = "L'amortissement des immobilisation et des frais de constitution est effectuée de la façon suivante:"
+    End With
+        
+    'Note # 2 - Lignes 11 @ 15
+    With ws.Range("E13")
+        .HorizontalAlignment = xlCenter
+        .Value = "Dégressif"
+    End With
+    
+    With ws.Range("F13")
+        .HorizontalAlignment = xlCenter
+        .NumberFormat = "##0.00 %"
+        .Value = ".55"
+    End With
+    
+    With ws.Range("G13")
+        .HorizontalAlignment = xlCenter
+        .Value = "Variable"
+    End With
+    
+    With ws.Range("H13")
+        .HorizontalAlignment = xlRight
+        .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
+        .Value = 0
+    End With
+    
+    With ws.Range("E14")
+        .HorizontalAlignment = xlCenter
+        .Value = "Dégressif"
+    End With
+    
+    With ws.Range("F14")
+        .HorizontalAlignment = xlCenter
+        .NumberFormat = "##0.00 %"
+        .Value = ".20"
+    End With
+    
+    With ws.Range("G14")
+        .HorizontalAlignment = xlCenter
+        .WrapText = True
+        .Value = "Demi taux la première année"
+    End With
+    
+    With ws.Range("H14")
+        .HorizontalAlignment = xlRight
+        .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
+        .Value = 0
+    End With
+    
+     With ws.Range("E15")
+        .HorizontalAlignment = xlCenter
+        .Value = "Dégressif"
+    End With
+    
+    With ws.Range("F15")
+        .HorizontalAlignment = xlCenter
+        .NumberFormat = "##0.00 %"
+        .Value = 1
+    End With
+    
+    With ws.Range("G15")
+        .HorizontalAlignment = xlCenter
+        .WrapText = True
+        .Value = "Variable"
+    End With
+    
+    With ws.Range("H15")
+        .HorizontalAlignment = xlRight
+        .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
+        .Value = 0
+    End With
+    
+    With ws.Range("B17")
+        .HorizontalAlignment = xlLeft
+        .Font.Bold = True
+        .Value = "TOTAL DES AMORTISSEMENTS"
+    End With
+    
+    With ws.Range("H17")
+        .HorizontalAlignment = xlRight
+        .Font.Bold = True
+        .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
+        .formula = "=SUM(H13:H15)"
+        With .Borders(xlEdgeTop)
+            .LineStyle = xlContinuous
+            .ColorIndex = xlAutomatic
+            .TintAndShade = 0
+            .Weight = xlThin
+        End With
+        With .Borders(xlEdgeBottom)
+            .LineStyle = xlDouble
+            .ColorIndex = xlAutomatic
+            .TintAndShade = 0
+            .Weight = xlThick
+        End With
+    End With
+    
+    ws.Columns("A").ColumnWidth = 8
+    ws.Columns("B").ColumnWidth = 36
+    ws.Columns("C").ColumnWidth = 1
+    ws.Columns("D").ColumnWidth = 1
+    ws.Columns("E").ColumnWidth = 11
+    ws.Columns("F").ColumnWidth = 11
+    ws.Columns("G").ColumnWidth = 11
+    ws.Columns("H").ColumnWidth = 14
+    
+    ws.PageSetup.CenterFooter = 6
+    
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA2_1ArrierePlanEtEntete", vbNullString, startTime)
+
+End Sub
+
+Sub AssemblerNEFA2_2Lignes(ws As Worksheet)
+
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA2_2Lignes", vbNullString, 0)
+    
+    'Fixer le printArea selon le nombre de lignes ET colonnes
+    ActiveSheet.PageSetup.PrintArea = "$A$1:$H$19"
+    Debug.Print "Notes A2 (lignes) - $A$1:$H$19"
+    
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA2_2Lignes", vbNullString, startTime)
 
 End Sub
 

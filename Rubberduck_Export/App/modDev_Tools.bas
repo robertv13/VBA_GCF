@@ -2020,7 +2020,7 @@ Public Function ListerPDFs(dossier As String) As Object '2025-07-23 @ 12:40
     Dim nomSansExtension As String
     For Each fichier In dossierObj.Files
         If LCase(fso.GetExtensionName(fichier.Name)) = "pdf" Then
-            Debug.Print fso.GetBaseName(fichier.Name)
+'            Debug.Print fso.GetBaseName(fichier.Name)
             nomSansExtension = fso.GetBaseName(fichier.Name)
             If InStr(facturesManquantesConnues, nomSansExtension & ".") = 0 Then
                 dictPDFs(nomSansExtension) = False

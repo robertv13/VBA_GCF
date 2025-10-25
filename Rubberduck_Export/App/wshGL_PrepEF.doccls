@@ -88,6 +88,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Call modDataValidation.AfficherMessageDateInvalide("wshGL_PrepEF_139")
             Target.ClearContents
             Application.Goto Range(Target.Address)
+            Exit Sub
         End If
         
         Application.EnableEvents = True

@@ -170,6 +170,10 @@ Sub FermerApplicationNormalement(ByVal userName As String, Optional ByVal ignore
         ThisWorkbook.Close SaveChanges:=True
     End If
     
+    Open Environ("TEMP") & "\APP_FermetureEnCours.txt" For Output As #1
+    Print #1, "Session fermee volontairement"
+    Close #1
+
 ExitPoint:
     Application.EnableEvents = True
     Application.ScreenUpdating = True

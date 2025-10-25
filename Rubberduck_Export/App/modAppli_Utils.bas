@@ -26,6 +26,7 @@ End Type
 
 'Variables globales pour le module
 Private gverificationIntegriteOK As Boolean
+Private gNombreErreur As Long
 Private gsoldeComptesClients As Currency
 Private gValeursAComparer() As Variant
 Private gdictTotalFacture As New Dictionary
@@ -129,6 +130,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     Dim readRows As Long
     'Tableau pour comparer les montants entre procédures
     ReDim gValeursAComparer(1 To 12, 1 To 4)
+    gNombreErreur = 0
     
     'dnrPlanComptable ----------------------------------------------------- Plan Comptable
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "Plan Comptable")
@@ -137,7 +139,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     r = r + 1
     
     Call VerifierPlanComptable(wsOutput, r, readRows)
-
+    
     'wsdBD_Clients --------------------------------------------------------------- Clients
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "BD_Clients")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "La feuille a été importée du fichier BD_Entrée.xlsx")
@@ -145,7 +147,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     r = r + 1
     
     Call VerifierClients(wsOutput, r, readRows)
-    
+        
     'wsdBD_Fournisseurs ----------------------------------------------------- Fournisseurs
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "BD_Fournisseurs")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "La feuille a été importée du fichier BD_Entrée.xlsx")
@@ -153,7 +155,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     r = r + 1
     
     Call VerifierFournisseurs(wsOutput, r, readRows)
-    
+        
     'wsdDEB_Recurrent ------------------------------------------------------ DEB_Recurrent
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "DEB_Recurrent")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "DEB_Recurrent a été importée du fichier GCF_BD_MASTER.xlsx")
@@ -161,7 +163,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     r = r + 1
     
     Call VerifierDEBRecurrent(wsOutput, r, readRows)
-    
+        
     'wsdDEB_Trans -------------------------------------------------------------- DEB_Trans
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "DEB_Trans")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "DEB_Trans a été importée du fichier GCF_BD_MASTER.xlsx")
@@ -169,7 +171,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     r = r + 1
     
     Call VerifierDEBTrans(wsOutput, r, readRows)
-    
+        
     'wsdFAC_Entete ------------------------------------------------------------ FAC_Entete
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "FAC_Entete")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "FAC_Entete a été importée du fichier GCF_BD_MASTER.xlsx")
@@ -177,7 +179,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     r = r + 1
     
     Call VerifierFACEntete(wsOutput, r, readRows)
-    
+        
     'wsdFAC_Details ---------------------------------------------------------- FAC_Details
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "FAC_Details")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "FAC_Details a été importée du fichier GCF_BD_MASTER.xlsx")
@@ -185,7 +187,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     r = r + 1
     
     Call VerifierFACDetails(wsOutput, r, readRows)
-    
+        
     'wsdFAC_Comptes_Clients ------------------------------------------ FAC_Comptes_Clients
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "FAC_Comptes_Clients")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "FAC_Comptes_Clients a été importée du fichier GCF_BD_MASTER.xlsx")
@@ -193,7 +195,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     r = r + 1
     
     Call VerifierFACComptesClients(wsOutput, r, readRows)
-    
+        
     'wsdFAC_Sommaire_Taux ---------------------------------------------- FAC_Sommaire_Taux
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "FAC_Sommaire_Taux")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "FAC_Sommaire_Taux a été importée du fichier GCF_BD_MASTER.xlsx")
@@ -201,7 +203,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     r = r + 1
     
     Call VerifierFACSommaireTaux(wsOutput, r, readRows)
-    
+        
     'wsdENC_Entete ------------------------------------------------------------ ENC_Entete
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "ENC_Entete")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "ENC_Entete a été importée du fichier GCF_BD_MASTER.xlsx")
@@ -209,7 +211,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     r = r + 1
     
     Call VerifierENCEntete(wsOutput, r, readRows)
-    
+        
     'wsdENC_Details ---------------------------------------------------------- ENC_Details
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "ENC_Details")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "ENC_Details a été importée du fichier GCF_BD_MASTER.xlsx")
@@ -217,7 +219,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     r = r + 1
     
     Call VerifierENCDetails(wsOutput, r, readRows)
-    
+        
     'wsdCC_Regularisations ---------------------------------------------------------- CC_Regularisations
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "CC_Regularisations")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "CC_Regularisations a été importée du fichier GCF_BD_MASTER.xlsx")
@@ -225,7 +227,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     r = r + 1
     
     Call VerifierCCRegularisations(wsOutput, r, readRows)
-    
+        
     'wsdFAC_Projets_Entete -------------------------------------------- FAC_Projets_Entete
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "FAC_Projets_Entete")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "FAC_Projets_Entete a été importée du fichier GCF_BD_MASTER.xlsx")
@@ -233,7 +235,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     r = r + 1
     
     Call VerifierFACProjetsEntete(wsOutput, r, readRows)
-    
+        
     'wsdFAC_Projets_Details ------------------------------------------ FAC_Projets_Details
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "FAC_Projets_Details")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "FAC_Projets_Details a été importée du fichier GCF_BD_MASTER.xlsx")
@@ -241,7 +243,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     r = r + 1
     
     Call VerifierFACProjetsDetails(wsOutput, r, readRows)
-    
+        
     'wsdGL_Trans ---------------------------------------------------------------- GL_Trans
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "GL_Trans")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "GL_Trans a été importée du fichier GCF_BD_MASTER.xlsx")
@@ -249,7 +251,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     r = r + 1
     
     Call VerifierGLTrans(wsOutput, r, readRows)
-    
+        
     'wsdGL_EJ_Recurrente ------------------------------------------------ GL_EJ_Recurrente
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "GL_EJ_Recurrente")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "GL_EJ_Recurrente a été importée du fichier GCF_BD_MASTER.xlsx")
@@ -265,7 +267,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     r = r + 1
     
     Call VerifierTECTdBData(wsOutput, r, readRows)
-    
+        
     'wsdTEC_Local -------------------------------------------------------------- TEC_Local
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "TEC_Local")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "TEC_Local a été importée du fichier GCF_BD_MASTER.xlsx")
@@ -418,7 +420,7 @@ Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
     If gverificationIntegriteOK = True Then
         MsgBox "La vérification d'intégrité est terminé SANS PROBLÈME" & vbNewLine & vbNewLine & "Voir la feuille 'X_Analyse_Intégrité'", vbInformation
     Else
-        MsgBox "La vérification a détecté AU MOINS UN PROBLÈME" & vbNewLine & vbNewLine & "Voir la feuille 'X_Analyse_Intégrité'", vbInformation
+        MsgBox "La vérification a détecté " & gNombreErreur & " erreurs" & vbNewLine & vbNewLine & "Voir la feuille 'X_Analyse_Intégrité'", vbInformation
     End If
     
     ThisWorkbook.Worksheets("X_Analyse_Integrite").Activate
@@ -639,6 +641,7 @@ Private Sub VerifierPlanComptable(ByVal wsOutput As Worksheet, ByRef r As Long, 
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "La description '" & descrGL & "' est un doublon pour le code de G/L '" & codeGL & "'")
             r = r + 1
             cas_doublon_descr = cas_doublon_descr + 1
+            gNombreErreur = gNombreErreur + 1
         End If
         
         If dict_code_GL.Exists(codeGL) = False Then
@@ -647,14 +650,15 @@ Private Sub VerifierPlanComptable(ByVal wsOutput As Worksheet, ByRef r As Long, 
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "Le code de G/L '" & codeGL & "' est un doublon pour la description '" & descrGL & "'")
             r = r + 1
             cas_doublon_code = cas_doublon_code + 1
+            gNombreErreur = gNombreErreur + 1
         End If
         
-'        GL_ID = arr(i, 3)
         typeGL = arr(i, 4)
         If Len(typeGL) <> 3 Or InStr("A^P^E^R^D^B^I^X^", Left$(typeGL, 1) & "^") = 0 Or IsNumeric(Right$(typeGL, 2)) = False Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "Le type de compte '" & typeGL & "' est INVALIDE pour le code de G/L '" & codeGL & "'")
             r = r + 1
             cas_type = cas_type + 1
+            gNombreErreur = gNombreErreur + 1
         End If
         
     Next i
@@ -755,6 +759,7 @@ Private Sub VerifierClients(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef 
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "À la ligne " & i & ", le nom '" & nom & "' est un doublon pour le code '" & code & "'")
                 r = r + 1
                 cas_doublon_nom = cas_doublon_nom + 1
+                gNombreErreur = gNombreErreur + 1
             End If
             
             'Doublon sur le code de client ?
@@ -764,6 +769,7 @@ Private Sub VerifierClients(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef 
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "À la ligne " & i & ", le code '" & code & "' est un doublon pour le client '" & nom & "'")
                 r = r + 1
                 cas_doublon_code = cas_doublon_code + 1
+                gNombreErreur = gNombreErreur + 1
             End If
             
             If Trim$(arr(i, 6)) <> vbNullString Then
@@ -771,6 +777,7 @@ Private Sub VerifierClients(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef 
                     Call AjouterMessageAuxResultats(wsOutput, r, 2, "À la ligne " & i & ", le courriel '" & arr(i, 6) & "' est INVALIDE pour le code '" & code & "'")
                     r = r + 1
                     cas_courriel_invalide = cas_courriel_invalide + 1
+                    gNombreErreur = gNombreErreur + 1
                 End If
             End If
         End If
@@ -882,6 +889,7 @@ Private Sub VerifierFournisseurs(ByVal wsOutput As Worksheet, ByRef r As Long, B
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "Le nom '" & nom & "' est un doublon pour le code '" & code & "'")
             r = r + 1
             cas_doublon_nom = cas_doublon_nom + 1
+            gNombreErreur = gNombreErreur + 1
         End If
         If dict_code_fournisseur.Exists(code) = False Then
             dict_code_fournisseur.Add code, nom
@@ -889,6 +897,7 @@ Private Sub VerifierFournisseurs(ByVal wsOutput As Worksheet, ByRef r As Long, B
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "Le code '" & code & "' est un doublon pour le nom '" & nom & "'")
             r = r + 1
             cas_doublon_code = cas_doublon_code + 1
+            gNombreErreur = gNombreErreur + 1
         End If
     Next i
     
@@ -999,12 +1008,14 @@ Private Sub VerifierCCRegularisations(ByVal wsOutput As Worksheet, ByRef r As Lo
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** La facture '" & Inv_No & "', ligne " & i & ", de la régularisation '" & regulNo & "' n'existe pas dans FAC_Entete")
             r = r + 1
             isRegularisationValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         
         If IsDate(ws.Cells(i, fREGULDate).Value) = False Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** La date '" & ws.Cells(i, fREGULDate).Value & "', ligne " & i & ", de la régularisation '" & regulNo & "' est INVALIDE '")
             r = r + 1
             isRegularisationValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         
         Dim codeClient As String
@@ -1019,6 +1030,7 @@ Private Sub VerifierCCRegularisations(ByVal wsOutput As Worksheet, ByRef r As Lo
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le client '" & codeClient & "' de la régularisation '" & regulNo & "' est INVALIDE")
             r = r + 1
             isRegularisationValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         
         'Vérification du montant des honoraires
@@ -1026,6 +1038,7 @@ Private Sub VerifierCCRegularisations(ByVal wsOutput As Worksheet, ByRef r As Lo
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le montant des honoraires '" & ws.Cells(i, fREGULHono).Value & "' de la régularisation '" & regulNo & "' n'est pas numérique")
             r = r + 1
             isRegularisationValid = False
+            gNombreErreur = gNombreErreur + 1
         Else
             If dictRegul.Exists(Inv_No) Then
                 dictRegul(Inv_No) = dictRegul(Inv_No) + ws.Cells(i, fREGULHono).Value
@@ -1040,6 +1053,7 @@ Private Sub VerifierCCRegularisations(ByVal wsOutput As Worksheet, ByRef r As Lo
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le montant des frais '" & ws.Cells(i, fREGULFrais).Value & "' de la régularisation '" & regulNo & "' n'est pas numérique")
             r = r + 1
             isRegularisationValid = False
+            gNombreErreur = gNombreErreur + 1
         Else
             If dictRegul.Exists(Inv_No) Then
                 dictRegul(Inv_No) = dictRegul(Inv_No) + ws.Cells(i, fREGULFrais).Value
@@ -1054,6 +1068,7 @@ Private Sub VerifierCCRegularisations(ByVal wsOutput As Worksheet, ByRef r As Lo
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le montant de TPS '" & ws.Cells(i, fREGULTPS).Value & "' de la régularisation '" & regulNo & "' n'est pas numérique")
             r = r + 1
             isRegularisationValid = False
+            gNombreErreur = gNombreErreur + 1
         Else
             If dictRegul.Exists(Inv_No) Then
                 dictRegul(Inv_No) = dictRegul(Inv_No) + ws.Cells(i, fREGULTPS).Value
@@ -1068,6 +1083,7 @@ Private Sub VerifierCCRegularisations(ByVal wsOutput As Worksheet, ByRef r As Lo
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le montant de TPS '" & ws.Cells(i, fREGULTVQ).Value & "' de la régularisation '" & regulNo & "' n'est pas numérique")
             r = r + 1
             isRegularisationValid = False
+            gNombreErreur = gNombreErreur + 1
         Else
             If dictRegul.Exists(Inv_No) Then
                 dictRegul(Inv_No) = dictRegul(Inv_No) + ws.Cells(i, fREGULTVQ).Value
@@ -1097,6 +1113,7 @@ Private Sub VerifierCCRegularisations(ByVal wsOutput As Worksheet, ByRef r As Lo
                             & " est <> du détail des régularisations (wsdCC_Regularisations) " & Format$(dictRegul(Inv_No), "###,##0.00 $"))
             r = r + 1
             isRegularisationValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
     Next i
     
@@ -1172,6 +1189,7 @@ Private Sub VerifierDEBRecurrent(ByVal wsOutput As Worksheet, ByRef r As Long, B
         Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée!")
         r = r + 1
         isDebRécurrentValid = False
+        gNombreErreur = gNombreErreur + 1
         GoTo Clean_Exit
     End If
     
@@ -1200,6 +1218,7 @@ Private Sub VerifierDEBRecurrent(ByVal wsOutput As Worksheet, ByRef r As Long, B
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la valeur du numéro de déboursé '" & arr(i, 1) & "' est INVALIDE")
             r = r + 1
             isDebRécurrentValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         
         If IsDate(arr(i, 2)) = False Or arr(i, 2) <> Int(arr(i, 2)) Or arr(i, 2) > Date Then
@@ -1213,6 +1232,7 @@ Private Sub VerifierDEBRecurrent(ByVal wsOutput As Worksheet, ByRef r As Long, B
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le poste de G/L '" & arr(i, 6) & "' est INVALIDE")
             r = r + 1
             isDebRécurrentValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         If p > 0 Then
             GL = Mid$(strGL, p + 3)
@@ -1221,6 +1241,7 @@ Private Sub VerifierDEBRecurrent(ByVal wsOutput As Worksheet, ByRef r As Long, B
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la description du G/L '" & arr(i, 7) & "' est INVALIDE")
                 r = r + 1
                 isDebRécurrentValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
         End If
         
@@ -1229,30 +1250,35 @@ Private Sub VerifierDEBRecurrent(ByVal wsOutput As Worksheet, ByRef r As Long, B
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant total '" & arr(i, 9) & "' est INVALIDE")
             r = r + 1
             isDebRécurrentValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         'TPS
         If IsNumeric(arr(i, 10)) = False Or arr(i, 10) * 100 <> Int(arr(i, 10) * 100) Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant TPS '" & arr(i, 10) & "' est INVALIDE")
             r = r + 1
             isDebRécurrentValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         'TVQ
         If IsNumeric(arr(i, 11)) = False Or arr(i, 11) * 100 <> Int(arr(i, 11) * 100) Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant TVQ '" & arr(i, 11) & "' est INVALIDE")
             r = r + 1
             isDebRécurrentValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         'Intrant TPS
         If IsNumeric(arr(i, 12)) = False Or arr(i, 12) * 100 <> Int(arr(i, 12) * 100) Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant d'intrant pour la TPS '" & arr(i, 12) & "' est INVALIDE")
             r = r + 1
             isDebRécurrentValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         'Intrant TVQ
         If IsNumeric(arr(i, 13)) = False Or arr(i, 13) * 100 <> Int(arr(i, 13) * 100) Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant d'intrant pour la TVQ '" & arr(i, 13) & "' est INVALIDE")
             r = r + 1
             isDebRécurrentValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         '$ dépense
         readRows = readRows + 1
@@ -1319,6 +1345,7 @@ Private Sub VerifierDEBTrans(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef
         Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée!")
         r = r + 1
         isDebTransValid = False
+        gNombreErreur = gNombreErreur + 1
         Exit Sub
     End If
     
@@ -1347,12 +1374,14 @@ Private Sub VerifierDEBTrans(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la valeur du numéro de déboursé '" & arr(i, 1) & "' est INVALIDE")
             r = r + 1
             isDebTransValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         
         If IsDate(arr(i, 2)) = False Or arr(i, 2) <> Int(arr(i, 2)) Or arr(i, 2) > Date + 10 Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la date '" & arr(i, 2) & "' est INVALIDE")
             r = r + 1
             isDebTransValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         
         p = InStr(strGL, "^C:" & arr(i, 8))
@@ -1360,6 +1389,7 @@ Private Sub VerifierDEBTrans(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le poste de G/L '" & arr(i, 8) & "' est INVALIDE")
             r = r + 1
             isDebTransValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         If p > 0 Then
             GL = Mid$(strGL, p + 3)
@@ -1368,6 +1398,7 @@ Private Sub VerifierDEBTrans(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la description du G/L '" & arr(i, 8) & "' est INVALIDE")
                 r = r + 1
                 isDebTransValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
         End If
         
@@ -1376,36 +1407,42 @@ Private Sub VerifierDEBTrans(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant total '" & arr(i, 11) & "' est INVALIDE")
             r = r + 1
             isDebTransValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         'TPS
         If IsNumeric(arr(i, 12)) = False Or arr(i, 12) <> Round(arr(i, 12), 2) Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant TPS '" & arr(i, 12) & "' est INVALIDE")
             r = r + 1
             isDebTransValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         'TVQ
         If IsNumeric(arr(i, 13)) = False Or arr(i, 13) <> Round(arr(i, 13), 2) Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant TVQ '" & arr(i, 13) & "' est INVALIDE")
             r = r + 1
             isDebTransValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         'Intrant TPS
         If IsNumeric(arr(i, 14)) = False Or arr(i, 14) <> Round(arr(i, 14), 2) Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant d'intrant pour la TPS '" & arr(i, 14) & "' est INVALIDE")
             r = r + 1
             isDebTransValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         'Intrant TVQ
         If IsNumeric(arr(i, 15)) = False Or arr(i, 15) <> Round(arr(i, 15), 2) Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant d'intrant pour la TVQ '" & arr(i, 15) & "' est INVALIDE")
             r = r + 1
             isDebTransValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         '$ dépense
         If IsNumeric(arr(i, 16)) = False Or arr(i, 16) <> Round(arr(i, 16), 2) Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le montant de la dépense '" & arr(i, 16) & "' est INVALIDE")
             r = r + 1
             isDebTransValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         readRows = readRows + 1
     Next i
@@ -1494,6 +1531,7 @@ Private Sub VerifierENCDetails(ByVal wsOutput As Worksheet, ByRef r As Long, ByR
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le paiement '" & pmtNo & "' à la ligne " & i & " n'existe pas dans ENC_Entete")
                 r = r + 1
                 isEncDetailsValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
             strPmtNo = strPmtNo & pmtNo & "|"
             oldpmtNo = pmtNo
@@ -1517,12 +1555,14 @@ Private Sub VerifierENCDetails(ByVal wsOutput As Worksheet, ByRef r As Long, ByR
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** La date '" & ws.Cells(i, fEncDPayDate).Value & "', ligne " & i & ", du paiment '" & pmtNo & "' est INVALIDE '")
             r = r + 1
             isEncDetailsValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         
         If IsNumeric(ws.Cells(i, fEncDPayAmount).Value) = False Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le montant '" & ws.Cells(i, fEncDPayAmount).Value & "' du paiement '" & pmtNo & "' n'est pas numérique")
             r = r + 1
             isEncDetailsValid = False
+            gNombreErreur = gNombreErreur + 1
         Else
             If dictENC.Exists(Inv_No) Then
                 dictENC(Inv_No) = dictENC(Inv_No) + ws.Cells(i, fEncDPayAmount).Value
@@ -1551,6 +1591,7 @@ Private Sub VerifierENCDetails(ByVal wsOutput As Worksheet, ByRef r As Long, ByR
                             & " est <> du détail des enc. " & Format$(dictENC(Inv_No), "###,##0.00 $"))
             r = r + 1
             isEncDetailsValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
     Next i
     
@@ -1643,6 +1684,7 @@ Private Sub VerifierENCEntete(ByVal wsOutput As Worksheet, ByRef r As Long, ByRe
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** La date de paiement '" & arr(i, 2) & "' du paiement '" & arr(i, 1) & "' n'est pas VALIDE")
             r = r + 1
             isEncEntêteValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         
         Dim codeClient As String
@@ -1657,6 +1699,7 @@ Private Sub VerifierENCEntete(ByVal wsOutput As Worksheet, ByRef r As Long, ByRe
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le client '" & codeClient & "' du paiement '" & pmtNo & "' est INVALIDE")
             r = r + 1
             isEncEntêteValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         totals = totals + arr(i, 6)
     Next i
@@ -1756,21 +1799,25 @@ Private Sub VerifierFACDetails(ByVal wsOutput As Worksheet, ByRef r As Long, ByR
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** La facture '" & Inv_No & "' à la ligne " & i & " n'existe pas dans FAC_Entete")
             r = r + 1
             isFACDetailsValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         If IsNumeric(arr(i, 3)) = False Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** La facture '" & Inv_No & "' à la ligne " & i & " le nombre d'heures est INVALIDE '" & arr(i, 3) & "'")
             r = r + 1
             isFACDetailsValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         If IsNumeric(arr(i, 4)) = False Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** La facture '" & Inv_No & "' à la ligne " & i & " le taux horaire est INVALIDE '" & arr(i, 5) & "'")
             r = r + 1
             isFACDetailsValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         If IsNumeric(arr(i, 5)) = False Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** La facture '" & Inv_No & "' à la ligne " & i & " le montant est INVALIDE '" & arr(i, 5) & "'")
             r = r + 1
             isFACDetailsValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
     Next i
     
@@ -1871,28 +1918,33 @@ Private Sub VerifierFACEntete(ByVal wsOutput As Worksheet, ByRef r As Long, ByRe
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** La facture '" & Inv_No & "' à la ligne " & i & " a déja été vue (DOUBLON) ...")
             r = r + 1
             isFACEntêteValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         
         If IsDate(arr(i, 2)) = False Or arr(i, 2) > Date Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** La facture '" & Inv_No & "' à la ligne " & i & " la date est INVALIDE '" & arr(i, 2) & "'")
             r = r + 1
             isFACEntêteValid = False
+            gNombreErreur = gNombreErreur + 1
         Else
             If arr(i, 2) <> Int(arr(i, 2)) Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** La facture '" & Inv_No & "' à la ligne " & i & ", la date est de mauvais format '" & arr(i, 2) & "'")
                 r = r + 1
                 isFACEntêteValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
         End If
         If arr(i, 3) <> "C" And arr(i, 3) <> "AC" Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le type de facture '" & arr(i, 3) & "' pour la facture '" & Inv_No & "' est INVALIDE")
-            isFACEntêteValid = False
             r = r + 1
+            isFACEntêteValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         If arr(i, 19) <> 0.09975 Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le % de TVQ, soit '" & arr(i, 19) & "' pour la facture '" & Inv_No & "' est ERRONÉ")
             r = r + 1
             isFACEntêteValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         If arr(i, 3) = "C" Then
             totals(1, 1) = totals(1, 1) + arr(i, fFacEHonoraires)
@@ -1928,6 +1980,8 @@ Private Sub VerifierFACEntete(ByVal wsOutput As Worksheet, ByRef r As Long, ByRe
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Une facture PDF '" & f & "' a été créée, MAIS n'existe pas dans FAC_Entete!")
             r = r + 1
             casFactureNonSauvegardee = casFactureNonSauvegardee + 1
+            isFACEntêteValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
     Next f
 
@@ -1935,6 +1989,7 @@ Private Sub VerifierFACEntete(ByVal wsOutput As Worksheet, ByRef r As Long, ByRe
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Un total de " & casFactureNonSauvegardee & " factures n'ont pas été sauvegardées")
             r = r + 1
             isFACEntêteValid = False
+            gNombreErreur = gNombreErreur + 1
     Else
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "Toutes les factures du répertoire PDF ont été sauvegardées")
             r = r + 1
@@ -2096,6 +2151,7 @@ Private Sub VerifierFACComptesClients(ByVal wsOutput As Worksheet, ByRef r As Lo
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + 1 & " (facture = " & Inv_No & "), total (" & arr(i, fFacCCTotal) & " <> total FAC_Entete (" & totalFacture & ")")
                 r = r + 1
                 isFACCCValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
         Else
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + 1 & " (facture = " & Inv_No & "), la facture n'existe pas dans FAC_Entete")
@@ -2109,6 +2165,7 @@ Private Sub VerifierFACComptesClients(ByVal wsOutput As Worksheet, ByRef r As Lo
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", le type de facture '" & invType & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
             isFACCCValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         
         'Date ?
@@ -2116,11 +2173,13 @@ Private Sub VerifierFACComptesClients(ByVal wsOutput As Worksheet, ByRef r As Lo
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", la date '" & arr(i, fFacCCInvoiceDate) & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
             isFACCCValid = False
+            gNombreErreur = gNombreErreur + 1
         Else
             If arr(i, fFacCCInvoiceDate) <> Int(arr(i, fFacCCInvoiceDate)) Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", la facture '" & Inv_No & "', la date est de mauvais format '" & arr(i, fFacCCInvoiceDate) & "'")
                 r = r + 1
                 isFACCCValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
         End If
         
@@ -2129,6 +2188,7 @@ Private Sub VerifierFACComptesClients(ByVal wsOutput As Worksheet, ByRef r As Lo
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", le client '" & CStr(arr(i, fFacCCCodeClient)) & "' de la facture '" & Inv_No & "' est INVALIDE '")
             r = r + 1
             isFACCCValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         
         'Status (Paid or Unpaid)
@@ -2136,6 +2196,7 @@ Private Sub VerifierFACComptesClients(ByVal wsOutput As Worksheet, ByRef r As Lo
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", le statut '" & arr(i, fFacCCStatus) & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
             isFACCCValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         
         'Date due
@@ -2143,13 +2204,15 @@ Private Sub VerifierFACComptesClients(ByVal wsOutput As Worksheet, ByRef r As Lo
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", la date due '" & arr(i, fFacCCDueDate) & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
             isFACCCValid = False
-        End If
+            gNombreErreur = gNombreErreur + 1
+       End If
         
         'Total
         If IsNumeric(arr(i, fFacCCTotal)) = False Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", le total de la facture '" & arr(i, fFacCCTotal) & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
             isFACCCValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         
         'Encaissé à date
@@ -2157,6 +2220,7 @@ Private Sub VerifierFACComptesClients(ByVal wsOutput As Worksheet, ByRef r As Lo
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", le montant payé à date '" & arr(i, fFacCCTotalPaid) & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
             isFACCCValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         
         'Régularisation à date
@@ -2164,6 +2228,7 @@ Private Sub VerifierFACComptesClients(ByVal wsOutput As Worksheet, ByRef r As Lo
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", le montant régularisé à date '" & arr(i, fFacCCTotalRegul) & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
             isFACCCValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         
         'Solde à recevoir
@@ -2171,6 +2236,7 @@ Private Sub VerifierFACComptesClients(ByVal wsOutput As Worksheet, ByRef r As Lo
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + 2 & ", le solde de la facture '" & arr(i, fFacCCBalance) & "' de la facture '" & Inv_No & "' est INVALIDE")
             r = r + 1
             isFACCCValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         
         'PLUG pour s'assurer que le solde impayé est bel et bien aligné sur le total moins le payé à date + les régularisations
@@ -2180,6 +2246,7 @@ Private Sub VerifierFACComptesClients(ByVal wsOutput As Worksheet, ByRef r As Lo
                     "'" & Format$(arr(i, fFacCCTotal) - arr(i, fFacCCTotalPaid) + arr(i, fFacCCTotalRegul), "###,##0.00 $") & "'")
             r = r + 1
             isFACCCValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         
         'Le statut est-il exact
@@ -2187,11 +2254,13 @@ Private Sub VerifierFACComptesClients(ByVal wsOutput As Worksheet, ByRef r As Lo
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le statut '" & arr(i, fFacCCStatus) & "' de la facture '" & Inv_No & "', avec un solde de " & Format$(arr(i, fFacCCBalance), "#,##0.00 $") & " est INVALIDE")
             r = r + 1
             isFACCCValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         If arr(i, fFacCCBalance) <> 0 And arr(i, fFacCCStatus) = "Paid" Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le statut '" & arr(i, fFacCCStatus) & "' de la facture '" & Inv_No & "', avec un solde de " & Format$(arr(i, fFacCCBalance), "#,##0.00 $") & " est INVALIDE")
             r = r + 1
             isFACCCValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         If invType = "C" Then
             totals(1, 1) = totals(1, 1) + arr(i, fFacCCTotal)
@@ -2349,17 +2418,20 @@ Private Sub VerifierFACSommaireTaux(ByVal wsOutput As Worksheet, ByRef r As Long
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la facture '" & arr(i, 1) & "' est INVALIDE")
             r = r + 1
             isFACSTValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         If IsNumeric(arr(i, 2)) = False Or arr(i, 2) <> CLng(Int(arr(i, 2))) Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la valeur de la séquence '" & arr(i, 2) & "' est INVALIDE")
             r = r + 1
             isFACSTValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         
         If Fn_ChaineValideAvecPlage(CStr(arr(i, 3)), rngProf) = False Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le professionnel '" & arr(i, 3) & "' est INVALIDE")
             r = r + 1
             isFACSTValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         
         'Heures
@@ -2367,6 +2439,7 @@ Private Sub VerifierFACSommaireTaux(ByVal wsOutput As Worksheet, ByRef r As Long
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", les heures '" & arr(i, 4) & "' sont INVALIDES")
             r = r + 1
             isFACSTValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         
         'Taux Horaire
@@ -2374,6 +2447,7 @@ Private Sub VerifierFACSommaireTaux(ByVal wsOutput As Worksheet, ByRef r As Long
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le taux horaire '" & arr(i, 5) & "' est INVALIDE")
             r = r + 1
             isFACSTValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         readRows = readRows + 1
     Next i
@@ -2448,90 +2522,109 @@ Private Sub VerifierFACProjetsEntete(ByVal wsOutput As Worksheet, ByRef r As Lon
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le Code de Client est INVALIDE '" & arr(i, 3) & "'")
                 r = r + 1
                 isFacProjetEntêteValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
             If IsDate(arr(i, 4)) = False Or arr(i, 4) > Date Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " la date est INVALIDE '" & arr(i, 4) & "'")
                 r = r + 1
                 isFacProjetEntêteValid = False
-            End If
+                gNombreErreur = gNombreErreur + 1
+           End If
             If IsNumeric(arr(i, 5)) = False Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le total des honoraires est INVALIDE '" & arr(i, 5) & "'")
                 r = r + 1
                 isFacProjetEntêteValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
             If IsNumeric(arr(i, 7)) = False Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les heures du premier sommaire sont INVALIDES '" & arr(i, 7) & "'")
                 r = r + 1
                 isFacProjetEntêteValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
             If IsNumeric(arr(i, 8)) = False Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le taux horaire du premier sommaire est INVALIDE '" & arr(i, 8) & "'")
                 r = r + 1
                 isFacProjetEntêteValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
             If IsNumeric(arr(i, 9)) = False Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les Honoraires du premier sommaire sont INVALIDES '" & arr(i, 9) & "'")
                 r = r + 1
                 isFacProjetEntêteValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
             If arr(i, 11) <> vbNullString And IsNumeric(arr(i, 11)) = False Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les heures du second sommaire sont INVALIDES '" & arr(i, 11) & "'")
                 r = r + 1
                 isFacProjetEntêteValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
             If arr(i, 12) <> vbNullString And IsNumeric(arr(i, 12)) = False Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le taux horaire du second sommaire est INVALIDE '" & arr(i, 12) & "'")
                 r = r + 1
+                isFacProjetEntêteValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
             If arr(i, 13) <> vbNullString And IsNumeric(arr(i, 13)) = False Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les Honoraires du second sommaire sont INVALIDES '" & arr(i, 13) & "'")
                 r = r + 1
                 isFacProjetEntêteValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
             If arr(i, 15) <> vbNullString And IsNumeric(arr(i, 15)) = False Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les heures du troisième sommaire sont INVALIDES '" & arr(i, 15) & "'")
                 r = r + 1
                 isFacProjetEntêteValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
             If arr(i, 16) <> vbNullString And IsNumeric(arr(i, 16)) = False Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le taux horaire du troisième sommaire est INVALIDE '" & arr(i, 16) & "'")
                 r = r + 1
                 isFacProjetEntêteValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
             If arr(i, 17) <> vbNullString And IsNumeric(arr(i, 17)) = False Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les Honoraires du troisième sommaire sont INVALIDES '" & arr(i, 17) & "'")
                 r = r + 1
                 isFacProjetEntêteValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
             If arr(i, 19) <> vbNullString And IsNumeric(arr(i, 19)) = False Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les heures du quatrième sommaire sont INVALIDES '" & arr(i, 19) & "'")
                 r = r + 1
                 isFacProjetEntêteValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
             If arr(i, 20) <> vbNullString And IsNumeric(arr(i, 20)) = False Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le taux horaire du quatrième sommaire est INVALIDE '" & arr(i, 20) & "'")
                 r = r + 1
                 isFacProjetEntêteValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
             If arr(i, 21) <> vbNullString And IsNumeric(arr(i, 21)) = False Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les Honoraires du quatrième sommaire sont INVALIDES '" & arr(i, 21) & "'")
                 r = r + 1
                 isFacProjetEntêteValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
             If arr(i, 23) <> vbNullString And IsNumeric(arr(i, 23)) = False Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les heures du cinquième sommaire sont INVALIDES '" & arr(i, 23) & "'")
                 r = r + 1
                 isFacProjetEntêteValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
             If arr(i, 24) <> vbNullString And IsNumeric(arr(i, 24)) = False Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le taux horaire du cinquième sommaire est INVALIDE '" & arr(i, 24) & "'")
                 r = r + 1
                 isFacProjetEntêteValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
             If arr(i, 25) <> vbNullString And IsNumeric(arr(i, 25)) = False Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " les Honoraires du cinquième sommaire sont INVALIDES '" & arr(i, 25) & "'")
                 r = r + 1
                 isFacProjetEntêteValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
         End If
     Next i
@@ -2620,35 +2713,42 @@ Private Sub VerifierFACProjetsDetails(ByVal wsOutput As Worksheet, ByRef r As Lo
                 oldProjetID = projetID
             End If
             If result = "Not Found" Then
-                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " n'existe pas dans FAC_Projets_Entete")
-                 r = r + 1
-                 isFacProjetDetailValid = False
+                Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " n'existe pas dans FAC_Projets_Entete")
+                r = r + 1
+                isFacProjetDetailValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
             'Client valide ?
             codeClient = Trim$(arr(i, 3))
             If Fn_ClientEstValide(codeClient) = False Then
-                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le Code de Client est INVALIDE '" & arr(i, 3) & "'")
-                 r = r + 1
-                 isFacProjetDetailValid = False
+                Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Dans le projet '" & projetID & "' à la ligne " & i & " le Code de Client est INVALIDE '" & arr(i, 3) & "'")
+                r = r + 1
+                isFacProjetDetailValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
             If IsNumeric(arr(i, 4)) = False Then
-                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " le TECID est INVALIDE '" & arr(i, 4) & "'")
-                 r = r + 1
+                Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " le TECID est INVALIDE '" & arr(i, 4) & "'")
+                r = r + 1
+                isFacProjetDetailValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
             If IsNumeric(arr(i, 5)) = False Then
-                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " le ProfID est INVALIDE '" & arr(i, 5) & "'")
-                 r = r + 1
-                 isFacProjetDetailValid = False
+                Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " le ProfID est INVALIDE '" & arr(i, 5) & "'")
+                r = r + 1
+                isFacProjetDetailValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
             If IsDate(arr(i, 6)) = False Or CDate(arr(i, 6)) > Date Then
-                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " la Date est INVALIDE '" & arr(i, 6) & "'")
-                 r = r + 1
-                 isFacProjetDetailValid = False
+                Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " la Date est INVALIDE '" & arr(i, 6) & "'")
+                r = r + 1
+                isFacProjetDetailValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
             If IsNumeric(arr(i, 8)) = False Then
-                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " les Heures sont INVALIDES '" & arr(i, 8) & "'")
-                 r = r + 1
-                 isFacProjetDetailValid = False
+                Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le projet '" & projetID & "' à la ligne " & i & " les Heures sont INVALIDES '" & arr(i, 8) & "'")
+                r = r + 1
+                isFacProjetDetailValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
         End If
     Next i
@@ -2727,6 +2827,7 @@ Private Sub VerifierGLTrans(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef 
         Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée!")
         r = r + 1
         isGLTransValid = False
+        gNombreErreur = gNombreErreur + 1
         Exit Sub
     End If
     
@@ -2749,7 +2850,7 @@ Private Sub VerifierGLTrans(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef 
     
     Dim dict_GL_Entry As New Dictionary
     Dim sum_arr() As Currency
-    ReDim sum_arr(1 To 5000, 1 To 3)
+    ReDim sum_arr(1 To 10000, 1 To 3)
     
     'Array pointer
     Dim row As Long: row = 1
@@ -2773,11 +2874,13 @@ Private Sub VerifierGLTrans(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef 
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** L'écriture #  " & GL_Entry_No & " ' à la ligne " & i & " a une date INVALIDE '" & arr(i, 2) & "'")
             r = r + 1
             isGLTransValid = False
+            gNombreErreur = gNombreErreur + 1
         Else
             If arr(i, 2) <> Int(arr(i, 2)) Then
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** L'écriture #  " & GL_Entry_No & " ' à la ligne " & i & " a une date avec le mauvais format '" & arr(i, 2) & "'")
                 r = r + 1
                 isGLTransValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
         End If
         glCode = CStr(arr(i, 5))
@@ -2785,6 +2888,7 @@ Private Sub VerifierGLTrans(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef 
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le compte '" & glCode & "' à la ligne " & i & " est INVALIDE '")
             r = r + 1
             isGLTransValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         If glCode = CCGlNo Then
             arTotal = arTotal + arr(i, 7) - arr(i, 8)
@@ -2794,18 +2898,21 @@ Private Sub VerifierGLTrans(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef 
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** La description du compte '" & glDescr & "' à la ligne " & i & " est INVALIDE")
             r = r + 1
             isGLTransValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         dt = arr(i, 7)
         If IsNumeric(dt) = False Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le montant du débit '" & dt & "' à la ligne " & i & " n'est pas une valeur numérique")
             r = r + 1
             isGLTransValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         ct = arr(i, 8)
         If IsNumeric(ct) = False Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le montant du débit '" & ct & "' à la ligne " & i & " n'est pas une valeur numérique")
             r = r + 1
             isGLTransValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         currentRow = dict_GL_Entry(GL_Entry_No)
         sum_arr(currentRow, 2) = sum_arr(currentRow, 2) + dt
@@ -2815,6 +2922,7 @@ Private Sub VerifierGLTrans(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef 
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le TimeStamp '" & arr(i, 10) & "' à la ligne " & i & " n'est pas une date VALIDE")
                 r = r + 1
                 isGLTransValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
         End If
     Next i
@@ -2830,6 +2938,7 @@ Private Sub VerifierGLTrans(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef 
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Écriture # " & GL_Entry_No & " ne balance pas... Dt = " & Format$(dt, "###,###,##0.00") & " et Ct = " & Format$(ct, "###,###,##0.00"))
             r = r + 1
             isGLTransValid = False
+            gNombreErreur = gNombreErreur + 1
             cas_hors_balance = cas_hors_balance + 1
         End If
         sum_dt = sum_dt + dt
@@ -2945,6 +3054,7 @@ Private Sub VerifierGLEJRecurrente(ByVal wsOutput As Worksheet, ByRef r As Long,
         Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** La plage nommée 'dnrPlanComptable_All' n'a pas été trouvée!")
         r = r + 1
         isGlEjRécurrenteValid = False
+        gNombreErreur = gNombreErreur + 1
         Exit Sub
     End If
     
@@ -2971,6 +3081,7 @@ Private Sub VerifierGLEJRecurrente(ByVal wsOutput As Worksheet, ByRef r As Long,
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le numéro d'écriture '" & arr(i, 1) & "' est INVALIDE")
             r = r + 1
             isGlEjRécurrenteValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         
         p = InStr(strGL, Trim$(arr(i, 3)))
@@ -2978,6 +3089,7 @@ Private Sub VerifierGLEJRecurrente(ByVal wsOutput As Worksheet, ByRef r As Long,
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le poste de G/L '" & arr(i, 3) & "' est INVALIDE")
             r = r + 1
             isGlEjRécurrenteValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         If p > 0 Then
             GL = Mid$(strGL, p)
@@ -2986,6 +3098,7 @@ Private Sub VerifierGLEJRecurrente(ByVal wsOutput As Worksheet, ByRef r As Long,
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", la description du G/L '" & arr(i, 4) & "' est INVALIDE")
                 r = r + 1
                 isGlEjRécurrenteValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
         End If
         If arr(i, 5) <> vbNullString Then
@@ -2993,6 +3106,7 @@ Private Sub VerifierGLEJRecurrente(ByVal wsOutput As Worksheet, ByRef r As Long,
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le $ du débit '" & arr(i, 5) & "' est INVALIDE")
                 r = r + 1
                 isGlEjRécurrenteValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
         End If
         If arr(i, 6) <> vbNullString Then
@@ -3000,6 +3114,7 @@ Private Sub VerifierGLEJRecurrente(ByVal wsOutput As Worksheet, ByRef r As Long,
                 Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le $ du crédit '" & arr(i, 6) & "' est INVALIDE")
                 r = r + 1
                 isGlEjRécurrenteValid = False
+                gNombreErreur = gNombreErreur + 1
             End If
         End If
         readRows = readRows + 1
@@ -3090,12 +3205,14 @@ Private Sub VerifierTECTdBData(ByVal wsOutput As Worksheet, ByRef r As Long, ByR
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** À la ligne " & i + headerRows & ", le professionnel '" & arr(i, 3) & "' est INVALIDE")
             r = r + 1
             isTECTDBValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         dateTEC = arr(i, 4)
         If IsDate(dateTEC) = False Or arr(i, 4) > Date Then
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** TECID =" & tecID & " a une date INVALIDE '" & dateTEC & " !!!")
             r = r + 1
             isTECTDBValid = False
+            gNombreErreur = gNombreErreur + 1
             cas_date_invalide = cas_date_invalide + 1
         Else
             If dateTEC < minDate Then minDate = dateTEC
@@ -3105,6 +3222,7 @@ Private Sub VerifierTECTdBData(ByVal wsOutput As Worksheet, ByRef r As Long, ByR
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** La date du TEC '" & dateTEC & "' n'est pas du bon format (H:M:S) pour le TECID =" & tecID)
             r = r + 1
             isTECTDBValid = False
+            gNombreErreur = gNombreErreur + 1
         End If
         clientCode = arr(i, 5)
         hres = arr(i, 8)
@@ -3113,6 +3231,7 @@ Private Sub VerifierTECTdBData(ByVal wsOutput As Worksheet, ByRef r As Long, ByR
             r = r + 1
             isTECTDBValid = False
             cas_hres_invalide = cas_hres_invalide + 1
+            gNombreErreur = gNombreErreur + 1
         End If
         estFacturable = arr(i, 9)
         If InStr("Vrai^Faux^", estFacturable & "^") = 0 Or Len(estFacturable) <> 2 Then
@@ -3120,6 +3239,7 @@ Private Sub VerifierTECTdBData(ByVal wsOutput As Worksheet, ByRef r As Long, ByR
             r = r + 1
             isTECTDBValid = False
             cas_estFacturable_invalide = cas_estFacturable_invalide + 1
+            gNombreErreur = gNombreErreur + 1
         End If
         estFacturee = arr(i, 10)
         If InStr("Vrai^Faux^", estFacturee & "^") = 0 Or Len(estFacturee) <> 2 Then
@@ -3127,6 +3247,7 @@ Private Sub VerifierTECTdBData(ByVal wsOutput As Worksheet, ByRef r As Long, ByR
             r = r + 1
             isTECTDBValid = False
             cas_estFacturee_invalide = cas_estFacturee_invalide + 1
+            gNombreErreur = gNombreErreur + 1
         End If
         estDetruit = arr(i, 11)
         If InStr("Vrai^Faux^", estDetruit & "^") = 0 Or Len(estDetruit) <> 2 Then
@@ -3134,6 +3255,7 @@ Private Sub VerifierTECTdBData(ByVal wsOutput As Worksheet, ByRef r As Long, ByR
             r = r + 1
             isTECTDBValid = False
             cas_estDetruit_invalide = cas_estDetruit_invalide + 1
+            gNombreErreur = gNombreErreur + 1
         End If
         
         'Heures Inscrites
@@ -3172,7 +3294,8 @@ Private Sub VerifierTECTdBData(ByVal wsOutput As Worksheet, ByRef r As Long, ByR
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Le TECID '" & tecID & "' est un doublon pour la ligne '" & i & "'")
             r = r + 1
             isTECTDBValid = False
-           cas_doublon_TecID = cas_doublon_TecID + 1
+            cas_doublon_TecID = cas_doublon_TecID + 1
+            gNombreErreur = gNombreErreur + 1
         End If
         
     Next i
@@ -3367,14 +3490,14 @@ Private Sub VerifierTEC(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef read
         " lignes et " & Format$(lo.ListColumns.count, "#,##0") & _
         " colonnes dans cette table")
     
-    'Charger les données dans le tableau 2D
+    'Charger toutes les lignes dans un tableau 2D
     Dim arrTEC_Local_Data As Variant
     arrTEC_Local_Data = lo.DataBodyRange.Value
     
     'Création de quelques dictionnaires pour accumuler les données
     Dim arr As Variant
     
-    '1. Remplir le dictionnaire dictClient
+    '1. Remplir le dictionnaire (dictClient) pour tous les clients
     Set lo = wsdBD_Clients.ListObjects("l_tbl_BD_Clients")
     arr = lo.DataBodyRange.Value
     
@@ -3400,7 +3523,7 @@ Private Sub VerifierTEC(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef read
     'Créer des dictionnaires vides pour accumuler des informations
     Dim dictDateCharge As New Dictionary
     Dim dictDict As New Dictionary
-    Dim dictFactureHres As New Dictionary
+    Dim dictHresFactureesTEC As New Dictionary
     Dim dictProf As New Dictionary
     Dim dictTimeStamp As New Dictionary
     
@@ -3416,11 +3539,12 @@ Private Sub VerifierTEC(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef read
         isTECvalid = True
         If Not AnalyserLigneTEC(arrTEC_Local_Data, i, wsOutput, r, _
                                 minDate, maxDate, _
-                                dictClient, dictFacture, dictFactureHres, _
+                                dictClient, dictFacture, dictHresFactureesTEC, _
                                 dictDateCharge, dictTimeStamp, dictDict, dictProf, _
                                 stats, lastTECIDReported) Then
             isTECvalid = False
             stats.nbInvalid = stats.nbInvalid + 1
+            gNombreErreur = gNombreErreur + 1
         Else
             stats.nbValid = stats.nbValid + 1
         End If
@@ -3439,7 +3563,7 @@ Private Sub VerifierTEC(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef read
     Call ImprimerCasProbleme(arrTEC_Local_Data, wsOutput, r, minDate, maxDate, _
                              stats, isTECvalid)
                                 
-    Call ComparerHeuresFactureesSelon2Sources(wsOutput, r, dictFacture, dictFactureHres, isTECvalid)
+    Call ComparerHeuresFactureesSelon2Sources(wsOutput, r, dictFacture, dictHresFactureesTEC, isTECvalid)
     
     Call ImprimerSommaireHeuresTEC(wsOutput, r, stats)
     
@@ -3541,25 +3665,53 @@ Sub ImprimerCasProbleme(data As Variant, ByVal wsOutput As Worksheet, ByRef r As
 End Sub
 
 Sub ComparerHeuresFactureesSelon2Sources(ByVal wsOutput As Worksheet, ByRef r As Long, _
-                                         ByRef dictFacture As Object, ByRef dictFactureHres As Object, _
+                                         ByRef dictFacture As Object, ByRef dictHresFactureesTEC As Object, _
                                          ByRef isTECvalid As Boolean)
 
     Call AjouterMessage(wsOutput, r, 2, "Vérification des Heures Facturées par Facture")
 
-    'Vérification des heures facturées selon 2 sources (TEC_Local vs. FAC_Details)
+    'Construire le dictionary des Heures Facturées via FAC_Details
+    Dim ws As Worksheet: Set ws = wsdFAC_Details
+    Dim dictHresFactureesFACDetails As Object
+    Set dictHresFactureesFACDetails = CreateObject("Scripting.Dictionary")
+    
+    Dim arrFAC As Variant
+    arrFAC = ws.ListObjects("l_tbl_FAC_Details").DataBodyRange.Value
+    Dim PREFIX_SOMMAIRE_TEC As String
+    PREFIX_SOMMAIRE_TEC = "*** - [Sommaire des TEC] pour la facture - "
+
+    Dim i As Long, facture As String, heures As Currency
+
+    For i = 2 To UBound(arrFAC, 1)
+        facture = Trim(arrFAC(i, fFacDInvNo))
+        If Len(facture) > 0 Then
+            If Left(CStr(arrFAC(i, fFacDDescription)), Len(PREFIX_SOMMAIRE_TEC)) = PREFIX_SOMMAIRE_TEC Then
+            heures = arrFAC(i, fFacDHeures)
+                If dictHresFactureesFACDetails.Exists(facture) Then
+                    dictHresFactureesFACDetails(facture) = dictHresFactureesFACDetails(facture) + heures
+                Else
+                    dictHresFactureesFACDetails.Add facture, heures
+                End If
+            End If
+        End If
+    Next i
+
+    'Vérification des heures facturées selon 2 dictionary (TEC_Local vs. FAC_Details)
     Dim key As Variant
     Dim totalHoursBilled As Currency
-    Dim hresFactureesTEC_Local As Currency
+    Dim hresFactureesTEC As Currency
+    Dim hresFactureesFAC As Currency
     Dim cas_Heures_Differentes As Integer
     
     For Each key In dictFacture.keys
-        totalHoursBilled = Fn_TECTotalOuHeuresPourFactureAvecAF(CStr(key), "Heures")
-        hresFactureesTEC_Local = dictFactureHres(key)
-        If Not totalHoursBilled = hresFactureesTEC_Local Then
+        hresFactureesFAC = dictHresFactureesFACDetails(key)
+        hresFactureesTEC = dictHresFactureesTEC(key)
+        If Not hresFactureesFAC = hresFactureesTEC Then
             Call AjouterMessage(wsOutput, r, 2, "********** Facture '" & CStr(key) & _
                     "', il y a un écart d'heures facturées entre TEC_Local & FAC_Details - " & _
-                        Round(hresFactureesTEC_Local, 2) & " vs. " & Round(totalHoursBilled, 2))
+                        Round(hresFactureesTEC, 2) & " vs. " & Round(hresFactureesFAC, 2))
             isTECvalid = False
+            gNombreErreur = gNombreErreur + 1
             cas_Heures_Differentes = cas_Heures_Differentes + 1
         End If
     Next key
@@ -3571,6 +3723,9 @@ Sub ComparerHeuresFactureesSelon2Sources(ByVal wsOutput As Worksheet, ByRef r As
         isTECvalid = False
     End If
         
+    'Libérer la mémoire
+    Set dictHresFactureesFACDetails = Nothing
+    
 End Sub
 
 Sub ImprimerSommaireHeuresTEC(ByVal wsOutput As Worksheet, ByRef r As Long, _
@@ -4388,7 +4543,7 @@ End Sub
 Private Function AnalyserLigneTEC(data As Variant, i As Long, ByVal wsOutput As Worksheet, ByRef r As Long, _
                                   ByRef minDate As Date, ByRef maxDate As Date, _
                                   ByRef dictClient As Object, ByRef dictFacture As Object, _
-                                  ByRef dictFactureHres As Object, ByRef dictDateCharge As Object, _
+                                  ByRef dictHresFactureesTEC As Object, ByRef dictDateCharge As Object, _
                                   ByRef dictTimeStamp As Object, ByRef dictDict As Object, dict_Prof As Object, _
                                   ByRef stats As StatistiquesTEC, lastTECIDReported As Long) As Boolean
                                   
@@ -4560,11 +4715,11 @@ Private Function AnalyserLigneTEC(data As Variant, i As Long, ByVal wsOutput As 
                     "', Le numéro de facture '" & invNo & "' n'existe pas dans le fichier FAC_Entete")
                 isValid = False
             Else
-                'Accumuler les heures dans dictFactureHres
-                If dictFactureHres.Exists(invNo) Then
-                    dictFactureHres(invNo) = dictFactureHres(invNo) + data(i, fTECHeures)
+                'Accumuler les heures dans dictHresFactureesTEC
+                If dictHresFactureesTEC.Exists(invNo) Then
+                    dictHresFactureesTEC(invNo) = dictHresFactureesTEC(invNo) + data(i, fTECHeures)
                 Else
-                    dictFactureHres.Add invNo, data(i, fTECHeures)
+                    dictHresFactureesTEC.Add invNo, data(i, fTECHeures)
                 End If
             End If
         End If
