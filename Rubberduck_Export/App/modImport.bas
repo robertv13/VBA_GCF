@@ -51,6 +51,9 @@ Sub ImporterMASTERGenerique(sourceWb As String, ws As Worksheet, onglet As Strin
         targetCell.CopyFromRecordset recSet
     End If
     
+    'S'assurer qu'il n'y a pas de filtres appliqués - 2025-10-25 @ 11:34
+    If ws.AutoFilterMode Then ws.ShowAllData
+
     Dim rng As Range: Set rng = ws.Range("A1").CurrentRegion
     Call AppliquerFormatColonnesParTable(ws, rng, tbl.HeaderRowRange.row)
     

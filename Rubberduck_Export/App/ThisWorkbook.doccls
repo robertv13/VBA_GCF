@@ -36,7 +36,7 @@ Private Sub Workbook_Open()
     Call modAppli.DemarrerApplication(utilisateurWindows)
 
     'Message de bienvenue
-    MsgBox "Bienvenue " & UtilisateurActif("Prenom") & " !" & vbNewLine & vbNewLine & _
+    MsgBox "Bienvenue " & utilisateurActif("Prenom") & " !" & vbNewLine & vbNewLine & _
            "Version de l'application : " & versionApplication, _
            vbInformation, _
            "Démarrage de l'application GCF"

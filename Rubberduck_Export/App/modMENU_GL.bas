@@ -44,6 +44,8 @@ Sub shpAccederSaisieEJ_Click()
     
     wshGL_EJ.Application.Calculation = xlCalculationAutomatic
     
+    gFromMenu = True '2025-10-26 @ 07:59
+    
     With wshGL_EJ
         .Visible = xlSheetVisible
         .Activate
@@ -61,6 +63,8 @@ Sub shpAccederBV_Click()
     
     Application.ScreenUpdating = False
     
+    gFromMenu = True '2025-10-26 @ 07:59
+    
     With wshGL_BV
         .Visible = xlSheetVisible
         .Activate
@@ -73,6 +77,8 @@ End Sub
 'Option # 5
 Sub shpAccederRapportTransGL_Click()
 
+    gFromMenu = True '2025-10-26 @ 07:59
+    
     ufGL_Rapport.show 'vbModal
     
 End Sub
@@ -82,6 +88,8 @@ Sub shpAccederEF_Click()
 
     Application.ScreenUpdating = False
 
+    gFromMenu = True '2025-10-26 @ 07:59
+    
     With wshGL_PrepEF
         .Visible = xlSheetVisible
         .Activate
@@ -96,6 +104,8 @@ Sub shpAccederStatsCA_Click()
 
     Application.ScreenUpdating = False
 
+    gFromMenu = True '2025-10-26 @ 07:59
+    
     With wshGL_Stats_CA
         .Visible = xlSheetVisible
         .Activate

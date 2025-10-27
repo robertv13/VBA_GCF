@@ -1637,12 +1637,12 @@ Sub MontrerSommaireTaux()
         Dim rngFeesSummary As Range: Set rngFeesSummary = wshFAC_Finale.Range("C" & rowFAC_Finale & ":D66")
         wshFAC_Finale.Range("C" & rowFAC_Finale).Value = "Heures"
         wshFAC_Finale.Range("C" & rowFAC_Finale).Font.Bold = True
-        wshFAC_Finale.Range("C" & rowFAC_Finale).Font.underline = True
+        wshFAC_Finale.Range("C" & rowFAC_Finale).Font.Underline = True
         wshFAC_Finale.Range("C" & rowFAC_Finale).HorizontalAlignment = xlCenter
 
         wshFAC_Finale.Range("D" & rowFAC_Finale).Value = "Taux"
         wshFAC_Finale.Range("D" & rowFAC_Finale).Font.Bold = True
-        wshFAC_Finale.Range("D" & rowFAC_Finale).Font.underline = True
+        wshFAC_Finale.Range("D" & rowFAC_Finale).Font.Underline = True
         wshFAC_Finale.Range("D" & rowFAC_Finale).HorizontalAlignment = xlCenter
 
         Dim t As Variant
@@ -1652,14 +1652,14 @@ Sub MontrerSommaireTaux()
             wshFAC_Finale.Range("C" & i).NumberFormat = "##0.00"
             wshFAC_Finale.Range("C" & i).HorizontalAlignment = xlCenter
             wshFAC_Finale.Range("C" & i).Font.Bold = False
-            wshFAC_Finale.Range("C" & i).Font.underline = False
+            wshFAC_Finale.Range("C" & i).Font.Underline = False
             wshFAC_Finale.Range("C" & i).Font.Name = "Verdana"
             wshFAC_Finale.Range("C" & i).Font.size = 11
             wshFAC_Finale.Range("C" & i).Value = dictTaux(t)
             wshFAC_Finale.Range("D" & i).Font.Bold = False
             wshFAC_Finale.Range("D" & i).NumberFormat = "#,##0.00 $"
             wshFAC_Finale.Range("D" & i).HorizontalAlignment = xlCenter
-            wshFAC_Finale.Range("D" & i).Font.underline = False
+            wshFAC_Finale.Range("D" & i).Font.Underline = False
             wshFAC_Finale.Range("D" & i).Font.Name = "Verdana"
             wshFAC_Finale.Range("D" & i).Font.size = 11
             wshFAC_Finale.Range("D" & i).Value = t

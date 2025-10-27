@@ -756,3 +756,62 @@ Sub zz_TestTableau24MoisMemoire() '2025-08-12 @ 19:39
     
 End Sub
 
+Function Fn_ObtenirMontantPartirPrepEF(descLigne As String, annee As String) As Currency '2025-10-26 @ 11:24
+
+    Dim ws As Worksheet
+    Dim rng As Range
+    Dim cell As Range
+    Dim ligne As Long
+
+    Set ws = wshGL_PrepEF
+    Dim dernLigne As Long
+    dernLigne = ws.Cells(ws.Rows.count, "C").End(xlUp).Row
+
+    Set rng = ws.Range("D6:D" & dernLigne) 'Colonne Description
+
+    For Each cell In rng
+        If Trim(cell.Value) = descLigne Then
+            ligne = cell.row
+            If annee = "AC" Then
+                Fn_ObtenirMontantPartirPrepEF = ws.Cells(ligne, "F").Value 'Montant (année courante)
+            Else
+                Fn_ObtenirMontantPartirPrepEF = ws.Cells(ligne, "H").Value 'Montant (comparatif)
+            End If
+            Exit Function
+        End If
+    Next cell
+
+    Debug.Print "Incapable de trouver la ligne recherchée (EF) - '" & descLigne & "' " & Now()
+    Fn_ObtenirMontantPartirPrepEF = 0 'Si non trouvé
+    
+End Function
+
+Function Fn_ObtenirMontantPartirER(descLigne As String, annee As String) As Currency '2025-10-27 @ 07:15
+
+    Dim ws As Worksheet
+    Dim rng As Range
+    Dim cell As Range
+    Dim ligne As Long
+
+    Set ws = ThisWorkbook.Worksheets("État des Résultats")
+    Dim dernLigne As Long
+    dernLigne = ws.Cells(ws.Rows.count, "B").End(xlUp).Row
+
+    Set rng = ws.Range("B6:B" & dernLigne) 'Colonne Description
+
+    For Each cell In rng
+        If Trim(cell.Value) = descLigne Then
+            ligne = cell.row
+            If annee = "AC" Then
+                Fn_ObtenirMontantPartirER = ws.Cells(ligne, "C").Value 'Montant (année courante)
+            Else
+                Fn_ObtenirMontantPartirER = ws.Cells(ligne, "E").Value 'Montant (comparatif)
+            End If
+            Exit Function
+        End If
+    Next cell
+
+    Debug.Print "Incapable de trouver la ligne recherchée (ER) - '" & descLigne & "' " & Now()
+    Fn_ObtenirMontantPartirER = 0 'Si non trouvé
+
+End Function

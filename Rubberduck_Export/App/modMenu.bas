@@ -28,7 +28,7 @@ Sub AccederMenuFacturation()
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU:AccederMenuFacturation", vbNullString, 0)
     
-    If UCase(UtilisateurActif("AccesFACT")) = "VRAI" Then
+    If UCase(utilisateurActif("AccesFACT")) = "VRAI" Then
         Call modAppli.QuitterFeuillePourMenu(wshMenuFAC, True) '2025-08-19 @ 07:12
     Else
         Application.EnableEvents = False
@@ -53,7 +53,7 @@ Sub AccederMenuComptabilite()
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU:AccederMenuComptabilite", vbNullString, 0)
     
-    If UCase(UtilisateurActif("AccesGL")) = "VRAI" Then
+    If UCase(utilisateurActif("AccesGL")) = "VRAI" Then
         Call modAppli.QuitterFeuillePourMenu(wshMenuGL, True) '2025-08-19 @ 07:12
     Else
         Application.EnableEvents = False
@@ -143,7 +143,7 @@ Sub FermerApplicationNormalement(ByVal userName As String, Optional ByVal ignore
     Call ViderTableauxStructures
     
     'Effacer fichier utilisateur actif + Fermeture de la journalisation
-    Call EffacerFichierUtilisateurActif(modFunctions.Fn_UtilisateurWindows())
+    Call EffacerFichierutilisateurActif(modFunctions.Fn_UtilisateurWindows())
     Call modDev_Utils.EnregistrerLogApplication("----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) -----", _
         IIf(ignorerSauvegarde, "S A N S   S A U V E G A R D E", ""), 0)
     Call modDev_Utils.EnregistrerLogApplication(vbNullString, vbNullString, -1)
@@ -246,7 +246,7 @@ Sub CacherFormesEnFonctionUtilisateur(ByVal userName As String) '2025-06-06 @ 11
 
 End Sub
 
-Sub EffacerFichierUtilisateurActif(ByVal userName As String)
+Sub EffacerFichierutilisateurActif(ByVal userName As String)
 
     Dim traceFilePath As String
     traceFilePath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"

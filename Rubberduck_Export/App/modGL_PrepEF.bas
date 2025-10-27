@@ -116,7 +116,7 @@ Sub CalculerSoldesPourEF(ws As Worksheet, dateCutOff As Date) '2025-08-14 @ 06:5
     Dim currRow As Long: currRow = 6
     Dim noCompteGL As String
     Dim descGL As String
-    Dim codeEF As String
+    Dim CodeEF As String
     Dim itemDict As String
     Dim soldeCourant As Currency
     Dim TotalAC As Currency
@@ -129,11 +129,11 @@ Sub CalculerSoldesPourEF(ws As Worksheet, dateCutOff As Date) '2025-08-14 @ 06:5
         ws.Range("C" & currRow).Value = noCompteGL
         itemDict = dictPlanComptable(noCompteGL)
         descGL = Left(itemDict, InStr(itemDict, "|") - 1)
-        codeEF = Mid$(itemDict, InStr(itemDict, "|") + 1)
+        CodeEF = Mid$(itemDict, InStr(itemDict, "|") + 1)
         ws.Range("D" & currRow).Value = descGL
-        ws.Range("E" & currRow).Value = codeEF
+        ws.Range("E" & currRow).Value = CodeEF
         If isDeveloppeur = True Then
-            ws.Range("M" & currRow).Value = codeEF
+            ws.Range("M" & currRow).Value = CodeEF
             ws.Range("N" & currRow).Value = noCompteGL
         End If
         Dim ligne(1 To 25) As Variant
@@ -145,10 +145,10 @@ Sub CalculerSoldesPourEF(ws As Worksheet, dateCutOff As Date) '2025-08-14 @ 06:5
         TotalAC = TotalAC + soldeCourant
         ws.Range("H" & currRow).Value = soldeComparatif
         TotalAP = TotalAP + soldeComparatif
-        If Not gDictSoldeCodeEF.Exists(codeEF) Then
+        If Not gDictSoldeCodeEF.Exists(CodeEF) Then
             rowSommCodeEF = rowSommCodeEF + 1
-            gDictSoldeCodeEF.Add codeEF, rowSommCodeEF
-            gSoldeCodeEF(rowSommCodeEF, 1) = codeEF
+            gDictSoldeCodeEF.Add CodeEF, rowSommCodeEF
+            gSoldeCodeEF(rowSommCodeEF, 1) = CodeEF
         End If
         gSoldeCodeEF(rowSommCodeEF, 2) = gSoldeCodeEF(rowSommCodeEF, 2) + soldeCourant
         gSoldeCodeEF(rowSommCodeEF, 3) = gSoldeCodeEF(rowSommCodeEF, 3) + soldeComparatif
@@ -227,7 +227,7 @@ Sub AssemblerEtatsFinanciers() '2025-08-14 @ 08:05
     Call AssemblerBilan0Main(dateAC, dateAP)
     Call AssemblerNEFA_0Main(dateAC, dateAP)
     Call AssemblerNEFA2_0Main(dateAC, dateAP)
-''    Call AssemblerNEFA3_0Main(dateAC, dateAP)
+    Call AssemblerNEFA3_0Main(dateAC, dateAP)
     
     Dim nomsFeuilles As Variant
     nomsFeuilles = Array("Page titre", "Table des Matières", "État des Résultats", "BNR", "Bilan", "A.tmp", "A2.tmp", "A3.tmp")
@@ -242,8 +242,8 @@ Sub AssemblerEtatsFinanciers() '2025-08-14 @ 08:05
             .Visible = xlSheetVisible
             'Afficher en mode aperçu des sauts de page
             ActiveWindow.View = xlPageBreakPreview
-            'Affichage de la feuille à 80 %
-            ActiveWindow.Zoom = 80
+            'Affichage de la feuille à 100 %
+            ActiveWindow.Zoom = 100
             'Police de base
             .Cells.Font.Name = "Verdana"
             'Remplir toutes les cellules avec la couleur blanche
@@ -281,10 +281,10 @@ Sub CreerFeuillesEtFormat() '2025-08-14 @ 09:32
             .Orientation = xlPortrait
             .FitToPagesWide = False
             .FitToPagesTall = False
-            .LeftMargin = Application.InchesToPoints(0.5)
-            .RightMargin = Application.InchesToPoints(0.5)
-            .TopMargin = Application.InchesToPoints(0.75)
-            .BottomMargin = Application.InchesToPoints(0.75)
+            .LeftMargin = Application.InchesToPoints(0#)
+            .RightMargin = Application.InchesToPoints(0#)
+            .TopMargin = Application.InchesToPoints(0.5)
+            .BottomMargin = Application.InchesToPoints(0.5)
             .CenterHorizontally = False
         End With
         Set ws = Nothing
@@ -528,7 +528,7 @@ Sub AssemblerER2Lignes(ws As Worksheet)
     Set tbl = wsAdmin.ListObjects("tblÉtatsFinanciersCodes")
     
     Dim LigneEF As String
-    Dim codeEF As String
+    Dim CodeEF As String
     Dim typeLigne As String
     Dim gras As String
     Dim souligne As String
@@ -540,17 +540,17 @@ Sub AssemblerER2Lignes(ws As Worksheet)
     Dim rngRow As ListRow
     For Each rngRow In tbl.ListRows
         LigneEF = rngRow.Range.Cells(1, 1).Value
-        codeEF = UCase$(rngRow.Range.Cells(1, 2).Value)
+        CodeEF = UCase$(rngRow.Range.Cells(1, 2).Value)
         'On ne traite que les lignes de l'État des résultats (R, D, X & I)
-        If InStr("RDXI", Left$(codeEF, 1)) <> 0 Then
+        If InStr("RDXI", Left$(CodeEF, 1)) <> 0 Then
             typeLigne = UCase$(rngRow.Range.Cells(1, 3).Value)
             gras = UCase$(rngRow.Range.Cells(1, 4).Value)
             souligne = UCase$(rngRow.Range.Cells(1, 5).Value)
             size = rngRow.Range.Cells(1, 6).Value
-            If codeEF = "D99" Then
+            If CodeEF = "D99" Then
                 ligneTotalDepenses = currRow
             End If
-            Call ImprimerLigneEF(ws, currRow, LigneEF, codeEF, typeLigne, gras, souligne, size)
+            Call ImprimerLigneEF(ws, currRow, LigneEF, CodeEF, typeLigne, gras, souligne, size)
         End If
         
     Next rngRow
@@ -667,21 +667,21 @@ Sub AssemblerBilan2Lignes(ws As Worksheet)
     Dim tbl As ListObject
     Set tbl = wsAdmin.ListObjects("tblÉtatsFinanciersCodes")
     
-    Dim LigneEF As String, codeEF As String, typeLigne As String, gras As String, souligne As String
+    Dim LigneEF As String, CodeEF As String, typeLigne As String, gras As String, souligne As String
     Dim size As Long
     Dim currRow As Integer
     currRow = 8
     Dim rngRow As ListRow
     For Each rngRow In tbl.ListRows
         LigneEF = rngRow.Range.Cells(1, 1).Value
-        codeEF = rngRow.Range.Cells(1, 2).Value
+        CodeEF = rngRow.Range.Cells(1, 2).Value
         'Ne traite que les lignes du bilan (A, P & E)
-        If InStr("APE", Left$(codeEF, 1)) <> 0 Then
+        If InStr("APE", Left$(CodeEF, 1)) <> 0 Then
             typeLigne = rngRow.Range.Cells(1, 3).Value
             gras = rngRow.Range.Cells(1, 4).Value
             souligne = rngRow.Range.Cells(1, 5).Value
             size = rngRow.Range.Cells(1, 6).Value
-            Call ImprimerLigneEF(ws, currRow, LigneEF, codeEF, typeLigne, gras, souligne, size)
+            Call ImprimerLigneEF(ws, currRow, LigneEF, CodeEF, typeLigne, gras, souligne, size)
         End If
         
     Next rngRow
@@ -792,21 +792,21 @@ Sub AssemblerBNR2Lignes(ws As Worksheet)
     Dim tbl As ListObject
     Set tbl = wsAdmin.ListObjects("tblÉtatsFinanciersCodes")
     
-    Dim LigneEF As String, codeEF As String, typeLigne As String, gras As String, souligne As String
+    Dim LigneEF As String, CodeEF As String, typeLigne As String, gras As String, souligne As String
     Dim size As Long
     Dim currRow As Integer
     currRow = 8
     Dim rngRow As ListRow
     For Each rngRow In tbl.ListRows
         LigneEF = rngRow.Range.Cells(1, 1).Value
-        codeEF = rngRow.Range.Cells(1, 2).Value
+        CodeEF = rngRow.Range.Cells(1, 2).Value
         'Ne traite que les lignes du bilan (A, P & E)
-        If InStr("B", Left$(codeEF, 1)) <> 0 Then
+        If InStr("B", Left$(CodeEF, 1)) <> 0 Then
             typeLigne = rngRow.Range.Cells(1, 3).Value
             gras = rngRow.Range.Cells(1, 4).Value
             souligne = rngRow.Range.Cells(1, 5).Value
             size = rngRow.Range.Cells(1, 6).Value
-            Call ImprimerLigneEF(ws, currRow, LigneEF, codeEF, typeLigne, gras, souligne, size)
+            Call ImprimerLigneEF(ws, currRow, LigneEF, CodeEF, typeLigne, gras, souligne, size)
         End If
         
     Next rngRow
@@ -844,13 +844,12 @@ Sub AssemblerNEFA_0Main(dateAC As Date, dateAP As Date)
     Dim ws As Worksheet
     Set ws = ThisWorkbook.Sheets("A.tmp")
     
-    Application.StatusBar = "Construction des notes"
+    Application.StatusBar = "Construction des notes 1 à 3"
     
     Call AssemblerNEFA_1ArrierePlanEtEntete(ws, dateAC, dateAP)
     Call AssemblerNEFA_2Lignes(ws)
     
     Application.StatusBar = False
-    
     Application.ScreenUpdating = True
     
     Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA_0Main", vbNullString, startTime)
@@ -865,56 +864,50 @@ Sub AssemblerNEFA_1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP A
     ws.Cells.Clear
     ws.Cells.VerticalAlignment = xlCenter
     
+    Dim titre As String
+    titre = Fn_TitreSelonNombreDeMois(dateAC)
+    
+    'Polices
+    With ws.Range("A1:F27")
+        .Font.Name = "Verdana"
+        .Font.Color = RGB(140, 131, 117)
+    End With
+
+    With ws.Range("A1:F3")
+        .Font.size = 12
+    End With
+
+    With ws.Range("A4:F27")
+        .Font.size = 11
+    End With
+
     'Appliquer le format d'en-tête
-    ws.Range("A1:E1").Merge
+    ws.Range("A1:F1").Merge
     Call PositionnerCellule(ws, UCase$(wsdADMIN.Range("NomEntreprise")), 1, 1, 12, True, xlLeft)
     ws.Range("A1").IndentLevel = 3
     
     Call PositionnerCellule(ws, UCase$("NOTES AUX ÉTATS FINANCIERS"), 2, 1, 12, True, xlLeft)
     ws.Range("A2").IndentLevel = 3
     
-    Call PositionnerCellule(ws, UCase$("Au " & Format$(dateAC, "dd mmmm yyyy")), 3, 1, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$(titre), 3, 1, 12, True, xlLeft)
     ws.Range("A3").IndentLevel = 3
     
     With ws.Range("F4")
-        .HorizontalAlignment = xlCenter
-        .Font.Bold = True
+        .HorizontalAlignment = xlRight
         .Value = "5"
     End With
+    
     With ws.Range("A4:F4").Borders(xlEdgeBottom)
         .LineStyle = xlContinuous
         .Color = -11511710
         .Weight = xlMedium
     End With
     
-    'Entête
-    With ws.Range("A1:F3")
-        .Font.Name = "Verdana"
-        .Font.size = 12
-        .Font.Color = RGB(140, 131, 117)
-    End With
-
-    'Corps
-    With ws.Range("A4:F26")
-        .Font.Name = "Verdana"
-        .Font.size = 11
-        .Font.Color = RGB(140, 131, 117)
-    End With
-    
     'Hauteur de lignes
-    ws.Rows("1:3").RowHeight = 15
-    ws.Rows("4").RowHeight = 16.5
-    ws.Rows("5:7").RowHeight = 14.25
+    ws.Rows("1:27").RowHeight = 15
     ws.Rows("8").RowHeight = 40
-    ws.Rows("9:14").RowHeight = 14.25
-    ws.Rows("15:16").RowHeight = 15
-    ws.Rows("17:19").RowHeight = 14.25
-    ws.Rows("20").RowHeight = 28.5
-    ws.Rows("21:27").RowHeight = 14.25
+    ws.Rows("20").RowHeight = 30
     
-    Dim currRow As Integer
-    currRow = 7
-
     'Note # 1 - Lignes 7 @ 8
     With ws.Range("A7")
         .HorizontalAlignment = xlCenter
@@ -990,7 +983,7 @@ Sub AssemblerNEFA_1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP A
     
     With ws.Range("B15")
         .HorizontalAlignment = xlLeft
-        .Value = "TOTAL"
+        .Value = "Total"
         .Font.Bold = True
     End With
     
@@ -1032,7 +1025,6 @@ Sub AssemblerNEFA_1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP A
         .WrapText = False
         .HorizontalAlignment = xlLeft
         .Value = "Les immobilisations sont constitués des éléments suivants:"
-        .Font.Bold = False
     End With
     
     With ws.Range("C20")
@@ -1054,7 +1046,29 @@ Sub AssemblerNEFA_1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP A
         .Font.Bold = True
     End With
     
-    '@TODO - Aller chercher les soldes
+    '@TODO - Aller chercher les soldes (C21 @ D24)
+    With ws.Range("B21:B24")
+        .HorizontalAlignment = xlLeft
+    End With
+    
+    With ws.Range("C21:E24")
+        .HorizontalAlignment = xlRight
+        .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
+    End With
+    
+    ws.Range("B21").Value = "Mobilier de bureau"
+    ws.Range("C21").Value = Fn_ObtenirMontantPartirPrepEF(ws.Range("B21").Value, "AC")
+    ws.Range("D21").Value = Fn_ObtenirMontantPartirPrepEF("Amort. Cum - mobil. de bureau", "AC")
+    ws.Range("B22").Value = "Matériel informatique"
+    ws.Range("C22").Value = Fn_ObtenirMontantPartirPrepEF(ws.Range("B22").Value, "AC")
+    ws.Range("D22").Value = Fn_ObtenirMontantPartirPrepEF("Amort. Cum - mat. Inform.", "AC")
+    ws.Range("B23").Value = "Logiciels"
+    ws.Range("C23").Value = Round(Fn_ObtenirMontantPartirPrepEF("Logiciel informatique", "AC"), 0)
+    ws.Range("D23").Value = Round(Fn_ObtenirMontantPartirPrepEF("Amort. Cum - logiciels", "AC"), 0)
+    ws.Range("B24").Value = "Frais de constitution"
+    ws.Range("C24").Value = Round(Fn_ObtenirMontantPartirPrepEF(ws.Range("B24").Value, "AC"), 0)
+    ws.Range("D24").Value = Round(Fn_ObtenirMontantPartirPrepEF("", "AC"), 0)
+    
     With ws.Range("E21")
         .HorizontalAlignment = xlRight
         .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
@@ -1090,7 +1104,7 @@ Sub AssemblerNEFA_1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP A
     
     With ws.Range("B26")
         .HorizontalAlignment = xlLeft
-        .Value = "TOTAL"
+        .Value = "Total"
         .Font.Bold = True
     End With
     
@@ -1115,14 +1129,12 @@ Sub AssemblerNEFA_1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP A
         .formula = "=SUM(E21:E24)"
     End With
     
-    ws.Columns("A").ColumnWidth = 8
-    ws.Columns("B").ColumnWidth = 39
-    ws.Columns("C").ColumnWidth = 15
-    ws.Columns("D").ColumnWidth = 15
+    ws.Columns("A").ColumnWidth = 8.57
+    ws.Columns("B").ColumnWidth = 38.71
+    ws.Columns("C").ColumnWidth = 15.29
+    ws.Columns("D").ColumnWidth = 15.29
     ws.Columns("E").ColumnWidth = 14
-    ws.Columns("F").ColumnWidth = 3.75
-    
-    ws.PageSetup.CenterFooter = 5
+    ws.Columns("F").ColumnWidth = 3.71
     
     Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA_1ArrierePlanEtEntete", vbNullString, startTime)
 
@@ -1149,7 +1161,7 @@ Sub AssemblerNEFA2_0Main(dateAC As Date, dateAP As Date)
     Dim ws As Worksheet
     Set ws = ThisWorkbook.Sheets("A2.tmp")
     
-    Application.StatusBar = "Construction des notes"
+    Application.StatusBar = "Construction de la note 4"
     
     Call AssemblerNEFA2_1ArrierePlanEtEntete(ws, dateAC, dateAP)
     Call AssemblerNEFA2_2Lignes(ws)
@@ -1170,6 +1182,23 @@ Sub AssemblerNEFA2_1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP 
     ws.Cells.Clear
     ws.Cells.VerticalAlignment = xlCenter
     
+    Dim titre As String
+    titre = Fn_TitreSelonNombreDeMois(dateAC)
+    
+    'Polices
+    With ws.Range("A1:H19")
+        .Font.Name = "Verdana"
+        .Font.Color = RGB(140, 131, 117)
+    End With
+
+    With ws.Range("A1:G3")
+        .Font.size = 12
+    End With
+
+    With ws.Range("A4:H19")
+        .Font.size = 11
+    End With
+
     'Appliquer le format d'en-tête
     ws.Range("A1:E1").Merge
     Call PositionnerCellule(ws, UCase$(wsdADMIN.Range("NomEntreprise")), 1, 1, 12, True, xlLeft)
@@ -1179,36 +1208,22 @@ Sub AssemblerNEFA2_1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP 
     Call PositionnerCellule(ws, UCase$("NOTES AUX ÉTATS FINANCIERS"), 2, 1, 12, True, xlLeft)
     ws.Range("A2").IndentLevel = 3
     
-    Call PositionnerCellule(ws, UCase$("Au " & Format$(dateAC, "dd mmmm yyyy")), 3, 1, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$(titre), 3, 1, 12, True, xlLeft)
     ws.Range("A3").IndentLevel = 3
     
     With ws.Range("H4")
-        .HorizontalAlignment = xlCenter
-        .Font.Bold = True
+        .HorizontalAlignment = xlRight
         .Value = "6"
     End With
+    
     With ws.Range("A4:H4").Borders(xlEdgeBottom)
         .LineStyle = xlContinuous
         .Color = -11511710
         .Weight = xlMedium
     End With
     
-    'Entête
-    With ws.Range("A1:H3")
-        .Font.Name = "Verdana"
-        .Font.size = 12
-        .Font.Color = RGB(140, 131, 117)
-    End With
-
-    'Corps
-    With ws.Range("A4:G19")
-        .Font.Name = "Verdana"
-        .Font.size = 11
-        .Font.Color = RGB(140, 131, 117)
-    End With
-    
     'Hauteur de lignes
-    ws.Rows("1:19").RowHeight = 14.25
+    ws.Rows("1:19").RowHeight = 15
     ws.Rows("9").RowHeight = 30
     ws.Rows("14").RowHeight = 65
     
@@ -1234,77 +1249,91 @@ Sub AssemblerNEFA2_1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP 
         .Value = "L'amortissement des immobilisation et des frais de constitution est effectuée de la façon suivante:"
     End With
         
-    'Note # 2 - Lignes 11 @ 15
-    With ws.Range("E13")
+    With ws.Range("B13:B17")
+        .HorizontalAlignment = xlLeft
+    End With
+    
+    With ws.Range("E13:G15")
         .HorizontalAlignment = xlCenter
+    End With
+    
+    With ws.Range("H13:H17")
+        .HorizontalAlignment = xlRight
+    End With
+    
+    With ws.Range("E13")
         .Value = "Dégressif"
     End With
     
     With ws.Range("F13")
-        .HorizontalAlignment = xlCenter
         .NumberFormat = "##0.00 %"
         .Value = ".55"
     End With
     
     With ws.Range("G13")
-        .HorizontalAlignment = xlCenter
         .Value = "Variable"
     End With
     
     With ws.Range("H13")
-        .HorizontalAlignment = xlRight
         .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
-        .Value = 0
+        .formula = "=ROUND((F13*I13)+(J13*F13),0)"
     End With
     
+    With ws.Range("I13:J15")
+        .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
+    End With
+    
+    ws.Range("I13").Value = 1989
+    ws.Range("J13").Value = ThisWorkbook.Worksheets("A.tmp").Range("C22").Value - _
+                            Fn_ObtenirMontantPartirPrepEF("Matériel informatique", "COMPARATIF")
+    
     With ws.Range("E14")
-        .HorizontalAlignment = xlCenter
         .Value = "Dégressif"
     End With
     
     With ws.Range("F14")
-        .HorizontalAlignment = xlCenter
         .NumberFormat = "##0.00 %"
         .Value = ".20"
     End With
     
     With ws.Range("G14")
-        .HorizontalAlignment = xlCenter
         .WrapText = True
         .Value = "Demi taux la première année"
     End With
     
     With ws.Range("H14")
-        .HorizontalAlignment = xlRight
         .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
-        .Value = 0
+        .formula = "=ROUND((F14*I14)+(J14*F14),0)"
     End With
     
-     With ws.Range("E15")
-        .HorizontalAlignment = xlCenter
+    ws.Range("I14").Value = 12660
+    ws.Range("J14").Value = ThisWorkbook.Worksheets("A.tmp").Range("C21").Value - _
+                            Fn_ObtenirMontantPartirPrepEF("Mobilier de bureau", "COMPARATIF")
+    
+    With ws.Range("E15")
         .Value = "Dégressif"
     End With
     
     With ws.Range("F15")
-        .HorizontalAlignment = xlCenter
         .NumberFormat = "##0.00 %"
         .Value = 1
     End With
     
     With ws.Range("G15")
-        .HorizontalAlignment = xlCenter
         .WrapText = True
         .Value = "Variable"
     End With
     
     With ws.Range("H15")
-        .HorizontalAlignment = xlRight
         .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
-        .Value = 0
+        .formula = "=(I15*F15)+((J15*0.5)*(F15*2))"
     End With
     
+    ws.Range("I15").Value = 0
+    ws.Range("J15").Value = ThisWorkbook.Worksheets("A.tmp").Range("C23").Value - _
+                            Fn_ObtenirMontantPartirPrepEF("Amort. Cum - logiciels", "COMPARATIF")
+    
     With ws.Range("B17")
-        .HorizontalAlignment = xlLeft
         .Font.Bold = True
         .Value = "TOTAL DES AMORTISSEMENTS"
     End With
@@ -1329,15 +1358,15 @@ Sub AssemblerNEFA2_1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP 
     End With
     
     ws.Columns("A").ColumnWidth = 8
-    ws.Columns("B").ColumnWidth = 36
-    ws.Columns("C").ColumnWidth = 1
-    ws.Columns("D").ColumnWidth = 1
-    ws.Columns("E").ColumnWidth = 11
-    ws.Columns("F").ColumnWidth = 11
-    ws.Columns("G").ColumnWidth = 11
-    ws.Columns("H").ColumnWidth = 14
-    
-    ws.PageSetup.CenterFooter = 6
+    ws.Columns("B").ColumnWidth = 36.29
+    ws.Columns("C").ColumnWidth = 0.92
+    ws.Columns("D").ColumnWidth = 0.75
+    ws.Columns("E").ColumnWidth = 10.29
+    ws.Columns("F").ColumnWidth = 11.43
+    ws.Columns("G").ColumnWidth = 11.14
+    ws.Columns("H").ColumnWidth = 14.14
+    ws.Columns("I").ColumnWidth = 15
+    ws.Columns("J").ColumnWidth = 13
     
     Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA2_1ArrierePlanEtEntete", vbNullString, startTime)
 
@@ -1348,10 +1377,456 @@ Sub AssemblerNEFA2_2Lignes(ws As Worksheet)
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA2_2Lignes", vbNullString, 0)
     
     'Fixer le printArea selon le nombre de lignes ET colonnes
-    ActiveSheet.PageSetup.PrintArea = "$A$1:$H$19"
-    Debug.Print "Notes A2 (lignes) - $A$1:$H$19"
+    ws.PageSetup.PrintArea = "$A$1:$H$19"
     
     Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA2_2Lignes", vbNullString, startTime)
+
+End Sub
+
+Sub AssemblerNEFA3_0Main(dateAC As Date, dateAP As Date)
+
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA3_0Main", vbNullString, 0)
+    
+    Application.ScreenUpdating = False
+    
+    Dim ws As Worksheet
+    Set ws = ThisWorkbook.Sheets("A3.tmp")
+    
+    Application.StatusBar = "Construction de la note 5"
+    
+    Call AssemblerNEFA3_1ArrierePlanEtEntete(ws, dateAC, dateAP)
+    Call AssemblerNEFA3_2Lignes(ws)
+    
+    Application.StatusBar = False
+    
+    Application.ScreenUpdating = True
+    
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA3_0Main", vbNullString, startTime)
+    
+End Sub
+
+Sub AssemblerNEFA3_1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As Date)
+
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA3_1ArrierePlanEtEntete", vbNullString, 0)
+    
+    'Effacer le contenu existant
+    ws.Cells.Clear
+    ws.Cells.VerticalAlignment = xlCenter
+    
+    Dim titre As String
+    titre = Fn_TitreSelonNombreDeMois(dateAC)
+    
+    'Polices
+    With ws.Range("A1:G50")
+        .Font.Name = "Verdana"
+        .Font.Color = RGB(140, 131, 117)
+    End With
+
+    With ws.Range("A1:G3")
+        .Font.size = 12
+    End With
+
+    With ws.Range("A4:G50")
+        .Font.size = 11
+    End With
+
+    'Appliquer le format d'en-tête
+    ws.Range("A1:E1").Merge
+    Call PositionnerCellule(ws, UCase$(wsdADMIN.Range("NomEntreprise")), 1, 1, 12, True, xlLeft)
+    ws.Range("A1").IndentLevel = 3
+    
+    ws.Range("A2:E2").Merge
+    Call PositionnerCellule(ws, UCase$("NOTES AUX ÉTATS FINANCIERS"), 2, 1, 12, True, xlLeft)
+    ws.Range("A2").IndentLevel = 3
+    
+    Call PositionnerCellule(ws, UCase$(titre), 3, 1, 12, True, xlLeft)
+    ws.Range("A3").IndentLevel = 3
+    
+    With ws.Range("G4")
+        .HorizontalAlignment = xlRight
+        .Value = "7"
+    End With
+    
+    With ws.Range("A4:G4").Borders(xlEdgeBottom)
+        .LineStyle = xlContinuous
+        .Color = -11511710
+        .Weight = xlMedium
+    End With
+    
+    'Hauteur de lignes
+    ws.Rows("1:50").RowHeight = 14.25
+    
+    'Note # 5 - Lignes 7 @ 49
+    With ws.Range("A7")
+        .HorizontalAlignment = xlCenter
+        .Value = "5"
+        .Font.Bold = True
+    End With
+    
+    With ws.Range("B7")
+        .HorizontalAlignment = xlLeft
+        .Value = "IMPÔTS EXIGIBLES"
+        .Font.Bold = True
+    End With
+    
+    With ws.Range("B8:G49")
+        .HorizontalAlignment = xlLeft
+    End With
+    
+    With ws.Range("B8:G8")
+        .MergeCells = True
+        .ShrinkToFit = False
+        .WrapText = True
+        .HorizontalAlignment = xlLeft
+        .Font.Bold = False
+        .Value = "Un impôt exigible a été déterminé comme suit:"
+    End With
+        
+    ws.Range("B10").Value = "Bénéfice comptable:"
+    ws.Range("D10").Value = Round(ThisWorkbook.Worksheets("État des Résultats").Range("C36").Value, 0)
+    
+    With ws.Range("B12")
+        .Value = "Plus:"
+        .Font.Underline = True
+    End With
+    ws.Range("B13").Value = "50% Frais de représentation"
+    ws.Range("D13").formula = "=ROUND(0.5 * Fn_ObtenirMontantPartirPrepEF(""Frais de représentation"", ""AC"") _ " & _
+             "                      - ws.range(""D15"").Value, 0)"
+             
+    ws.Range("B14").Value = "Dons"
+    ws.Range("D14").Value = 100
+    
+    ws.Range("B15").Value = "Frais de golf, pourvoirie autres non déductibles"
+    ws.Range("D15").Value = Round(Fn_ObtenirMontantPartirPrepEF("Golf / Pourvoirie", "AC"), 0)
+    
+    ws.Range("B16").Value = "Amortissement comptable"
+    ws.Range("D16").Value = Round(Fn_ObtenirMontantPartirER("Amortissement", "AC"), 0)
+    
+    ws.Range("B17").Value = "Travaux en cours de début"
+    ws.Range("B18").Value = "Frais d'intérêts non déductibles"
+    ws.Range("B19").Value = "Location auto > 800$/mois en 2024 et >1100$/mois en 2025"
+    ws.Range("B20").Value = "Constats d'infractions - frais de déplacement"
+    ws.Range("B21").Value = "Travaux en cours de fin au coût des salaires"
+    With ws.Range("B23")
+        .Value = "Moins:"
+        .Font.Underline = True
+    End With
+    ws.Range("B24").Value = "Déduction pour amortissement (DPA Fiscale)"
+    ws.Range("B25").Value = "DPA sur catégorie 14.1"
+    ws.Range("B26").Value = "Dons"
+    ws.Range("B27").Value = "Travaux en cours de fin à la JVM"
+    
+    With ws.Range("D9:E9")
+        .HorizontalAlignment = xlCenter
+        .Font.Bold = True
+        .Font.Underline = True
+    End With
+    
+    With ws.Range("D9")
+        .Value = "Fédéral"
+    End With
+    
+    With ws.Range("E9")
+        .Value = "Québec"
+    End With
+    
+    With ws.Range("D10:D29,E24,E29")
+        .HorizontalAlignment = xlCenter
+        .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
+    End With
+
+    With ws.Range("B29")
+        .Value = "Revenu net fiscal"
+    End With
+    
+    With ws.Range("D29,E29")
+        With .Borders(xlEdgeTop)
+            .LineStyle = xlContinuous
+            .ColorIndex = xlAutomatic
+            .TintAndShade = 0
+            .Weight = xlThin
+        End With
+        With .Borders(xlEdgeBottom)
+            .LineStyle = xlDouble
+            .ColorIndex = xlAutomatic
+            .TintAndShade = 0
+            .Weight = xlThick
+        End With
+    End With
+    
+    With ws.Range("D29")
+        .formula = "=sum(D10:D27)"
+    End With
+    
+    ws.Range("D29").Value = 2618020
+    
+    With ws.Range("E29")
+        .formula = "=D29+E24"
+    End With
+    
+    ws.Range("E29").Value = 2617456
+    
+    With ws.Range("D31:F31")
+        .HorizontalAlignment = xlLeft
+        .Font.Bold = True
+    End With
+    
+    ws.Range("B32").Value = "Premier 500 000 $ - DPE"
+    ws.Range("B33").Value = "Taux d'imposition"
+        
+    With ws.Range("E33:F41")
+        .HorizontalAlignment = xlCenter
+    End With
+    
+    With ws.Range("E33:F33,E38:F38")
+        .NumberFormat = "##0.00 %"
+    End With
+    
+    ws.Range("E33").Value = 0.09
+    ws.Range("F33").Value = 0.032
+    
+    ws.Range("E34").formula = "=Min(500000,D29)"
+    ws.Range("F34").formula = "=E34"
+    
+    ws.Range("E35:F35").NumberFormat = "#,##0 $;(#,##0) $; 0 $"
+    
+    With ws.Range("E35")
+        .formula = "=E33*E34"
+        With .Borders(xlEdgeTop)
+            .LineStyle = xlContinuous
+            .ColorIndex = xlAutomatic
+            .TintAndShade = 0
+            .Weight = xlThin
+        End With
+        With .Borders(xlEdgeBottom)
+            .LineStyle = xlDouble
+            .ColorIndex = xlAutomatic
+            .TintAndShade = 0
+            .Weight = xlThick
+        End With
+    End With
+    
+    With ws.Range("F35")
+        .formula = "=F33*F34"
+        With .Borders(xlEdgeTop)
+            .LineStyle = xlContinuous
+            .ColorIndex = xlAutomatic
+            .TintAndShade = 0
+            .Weight = xlThin
+        End With
+        With .Borders(xlEdgeBottom)
+            .LineStyle = xlDouble
+            .ColorIndex = xlAutomatic
+            .TintAndShade = 0
+            .Weight = xlThick
+        End With
+    End With
+    
+    ws.Range("B37").Value = "Excédent de 500 000 $"
+
+    With ws.Range("E37")
+        .formula = "=max(0,D29-E34)"
+    End With
+    
+    ws.Range("E38").Value = 0.15
+    
+    With ws.Range("F37")
+        .formula = "=max(0,E29-F34)"
+    End With
+    
+    ws.Range("F38").Value = 0.115
+    
+    ws.Range("E39:F39").NumberFormat = "#,##0 $;(#,##0) $; 0 $"
+    
+    With ws.Range("E39")
+        .formula = "=E37*E38"
+        With .Borders(xlEdgeTop)
+            .LineStyle = xlContinuous
+            .ColorIndex = xlAutomatic
+            .TintAndShade = 0
+            .Weight = xlThin
+        End With
+        With .Borders(xlEdgeBottom)
+            .LineStyle = xlDouble
+            .ColorIndex = xlAutomatic
+            .TintAndShade = 0
+            .Weight = xlThick
+        End With
+    End With
+    
+    With ws.Range("F39")
+        .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
+        .formula = "=F37*F38"
+        With .Borders(xlEdgeTop)
+            .LineStyle = xlContinuous
+            .ColorIndex = xlAutomatic
+            .TintAndShade = 0
+            .Weight = xlThin
+        End With
+        With .Borders(xlEdgeBottom)
+            .LineStyle = xlDouble
+            .ColorIndex = xlAutomatic
+            .TintAndShade = 0
+            .Weight = xlThick
+        End With
+    End With
+    
+    With ws.Range("B41:F41")
+        .Font.Bold = True
+        With .Borders(xlEdgeTop)
+            .LineStyle = xlContinuous
+            .ColorIndex = xlAutomatic
+            .TintAndShade = 0
+            .Weight = xlThin
+        End With
+        With .Borders(xlEdgeBottom)
+            .LineStyle = xlDouble
+            .ColorIndex = xlAutomatic
+            .TintAndShade = 0
+            .Weight = xlThick
+        End With
+    End With
+
+    With ws.Range("E41:F41")
+        .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
+    End With
+    
+    ws.Range("B41").Value = "Impôts totaux"
+    
+    ws.Range("E41").formula = "=E35+E39"
+    ws.Range("F41").formula = "=F35+F39"
+    
+    With ws.Range("B43:B49")
+        .HorizontalAlignment = xlLeft
+        .Font.Bold = True
+    End With
+    
+    ws.Range("B43").Value = "IMPÔTS EXIGIBLES"
+    ws.Range("B45").Value = "IMPÔT DE LA PARTIE IV À PAYER"
+    ws.Range("B47").Value = "RTD SUR DIVIDENDE VERSÉ"
+    ws.Range("B49").Value = "IMPÔTS TOTAL"
+    
+    With ws.Range("D43,D45,D47,D49")
+        .HorizontalAlignment = xlCenter
+        .Font.Bold = True
+        With .Borders(xlEdgeTop)
+            .LineStyle = xlContinuous
+            .ColorIndex = xlAutomatic
+            .TintAndShade = 0
+            .Weight = xlThin
+        End With
+        With .Borders(xlEdgeBottom)
+            .LineStyle = xlDouble
+            .ColorIndex = xlAutomatic
+            .TintAndShade = 0
+            .Weight = xlThick
+        End With
+    End With
+    
+    With ws.Range("D43:D49")
+        .Font.Bold = True
+        .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
+    End With
+    
+    With ws.Range("D43")
+        .formula = "=E41+F41"
+    End With
+    
+    ws.Range("D49").formula = "=D43+D45+d47"
+    
+    With ws.Range("L9")
+        .HorizontalAlignment = xlRight
+        .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
+        .formula = "=(D13*2)+D15"
+    End With
+    
+    With ws.Range("M14:O14")
+        .HorizontalAlignment = xlCenter
+    End With
+    
+    ws.Range("M14").Value = "Taux horaire payé"
+    ws.Range("N14").Value = "Nombre d'heures"
+    ws.Range("O14").Value = "Coût"
+    
+    With ws.Range("L15:L17")
+        .HorizontalAlignment = xlLeft
+    End With
+    
+    ws.Range("L15").Value = "Guillaume"
+    ws.Range("L16").Value = "Vladimir"
+    ws.Range("L17").Value = "Olivier"
+    
+    With ws.Range("M15:O18")
+        .HorizontalAlignment = xlRight
+    End With
+    
+    With ws.Range("M15:M17,O15:O18")
+        .NumberFormat = "#,##0.00 $;(#,##0.00) $;0.00 $"
+    End With
+    
+    With ws.Range("N15:N17")
+        .NumberFormat = "#,##0.00;(#,##0.00);0.00"
+    End With
+    
+    ws.Range("M15").formula = "=100000/2080*1.1"
+    ws.Range("M16").formula = "=175000/2080*(1+(10000/175000))"
+    ws.Range("M17").formula = "=175000/2080*(1+(10000/175000))"
+    
+    ws.Range("N15").Value = 168.4
+    ws.Range("N16").Value = 117.8
+    ws.Range("N17").Value = 51.8
+    
+    ws.Range("O15").formula = "=M15*N15"
+    ws.Range("O16").formula = "=M16*N16"
+    ws.Range("O17").formula = "=M17*N17"
+    
+    With ws.Range("O18")
+        .Font.Bold = True
+        With .Borders(xlEdgeTop)
+            .LineStyle = xlContinuous
+            .ColorIndex = xlAutomatic
+            .TintAndShade = 0
+            .Weight = xlThin
+        End With
+        With .Borders(xlEdgeBottom)
+            .LineStyle = xlDouble
+            .ColorIndex = xlAutomatic
+            .TintAndShade = 0
+            .Weight = xlThick
+        End With
+    End With
+    
+    ws.Range("O18").formula = "=sum(O15:O17)"
+    
+    ws.Columns("A").ColumnWidth = 7.29
+    ws.Columns("B").ColumnWidth = 51
+    ws.Columns("C").ColumnWidth = 1.71
+    ws.Columns("D").ColumnWidth = 15.14
+    ws.Columns("E").ColumnWidth = 16.86
+    ws.Columns("F").ColumnWidth = 17.43
+    ws.Columns("G").ColumnWidth = 2
+    ws.Columns("H").ColumnWidth = 1
+    ws.Columns("I").ColumnWidth = 1
+    ws.Columns("J").ColumnWidth = 0.75
+    ws.Columns("K").ColumnWidth = 1.14
+    ws.Columns("L").ColumnWidth = 15.43
+    ws.Columns("M").ColumnWidth = 16.14
+    ws.Columns("N").ColumnWidth = 15.43
+    ws.Columns("O").ColumnWidth = 16.57
+    
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA3_1ArrierePlanEtEntete", vbNullString, startTime)
+
+End Sub
+
+Sub AssemblerNEFA3_2Lignes(ws As Worksheet)
+
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA3_2Lignes", vbNullString, 0)
+    
+    'Fixer le printArea selon le nombre de lignes ET colonnes
+    ActiveSheet.PageSetup.PrintArea = "$A$1:$G$50"
+    Debug.Print "Notes A2 (lignes) - $A$1:$G$50"
+    
+    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA3_2Lignes", vbNullString, startTime)
 
 End Sub
 
@@ -1366,11 +1841,11 @@ Sub PositionnerCellule(ws As Worksheet, cell As String, ligne As Integer, col As
     
 End Sub
 
-Sub ImprimerLigneEF(ws As Worksheet, ByRef currRow As Integer, LigneEF As String, codeEF As String, typeLigne As String, gras As String, souligne As String, size As Long)
+Sub ImprimerLigneEF(ws As Worksheet, ByRef currRow As Integer, LigneEF As String, CodeEF As String, typeLigne As String, gras As String, souligne As String, size As Long)
     
     Dim correcteurSigne As Integer
     Dim section As String
-    section = Left$(codeEF, 1)
+    section = Left$(CodeEF, 1)
     correcteurSigne = IIf(InStr("PERIB", section), -1, 1)
     
     Dim doitImprimer As Boolean
@@ -1379,10 +1854,10 @@ Sub ImprimerLigneEF(ws As Worksheet, ByRef currRow As Integer, LigneEF As String
     Select Case typeLigne
     
         Case "E" 'Entête
-            If InStr("E00^D00^", codeEF & "^") = 0 Then 'Saute une ligne AVANT d'imprimer
+            If InStr("E00^D00^", CodeEF & "^") = 0 Then 'Saute une ligne AVANT d'imprimer
                 currRow = currRow + 1
             End If
-            If codeEF = "B00" Then
+            If CodeEF = "B00" Then
                 ws.Range("G" & currRow).Value = gBNR_Début_Année_AC * correcteurSigne
                 ws.Range("I" & currRow).Value = gBNR_Début_Année_AP * correcteurSigne
                 gSavePremiereLigne = currRow
@@ -1393,7 +1868,7 @@ Sub ImprimerLigneEF(ws As Worksheet, ByRef currRow As Integer, LigneEF As String
             If gSavePremiereLigne = 0 Then Stop
             
         Case "G" 'Groupement
-            index = gDictSoldeCodeEF(codeEF)
+            index = gDictSoldeCodeEF(CodeEF)
             If index <> 0 Then
                 If Round(gSoldeCodeEF(index, 2), 2) <> 0 Or Round(gSoldeCodeEF(index, 3), 2) <> 0 Then
                     ws.Range("G" & currRow).Value = gSoldeCodeEF(index, 2) * correcteurSigne
@@ -1406,10 +1881,10 @@ Sub ImprimerLigneEF(ws As Worksheet, ByRef currRow As Integer, LigneEF As String
             End If
         
         Case "T" 'Totaux
-            If InStr("E50^E60^", codeEF & "^") = 0 Then 'Saute une ligne AVANT d'imprimer
+            If InStr("E50^E60^", CodeEF & "^") = 0 Then 'Saute une ligne AVANT d'imprimer
                 currRow = currRow + 1
             End If
-            If codeEF <> "E60" And codeEF <> "B10" Then 'Bordure en haut de la cellule
+            If CodeEF <> "E60" And CodeEF <> "B10" Then 'Bordure en haut de la cellule
                 With ws.Range("C" & currRow).Borders(xlEdgeTop)
                     .LineStyle = xlContinuous
                     .Color = -11511710
@@ -1422,13 +1897,13 @@ Sub ImprimerLigneEF(ws As Worksheet, ByRef currRow As Integer, LigneEF As String
                 End With
             End If
             
-            If codeEF = "E60" Then
+            If CodeEF = "E60" Then
                 ws.Range("G" & currRow).formula = "=sum(G" & gLigneTotalPassif & ", G" & gLigneTotalADA & ")"
                 ws.Range("I" & currRow).formula = "=sum(I" & gLigneTotalPassif & ", I" & gLigneTotalADA & ")"
-            ElseIf codeEF = "I01" Then
+            ElseIf CodeEF = "I01" Then
                 ws.Range("G" & currRow).formula = "=sum(G" & gLigneTotalRevenus & " - G" & gLigneTotalDépenses & " + G" & gLigneAutresRevenus & ")"
                 ws.Range("I" & currRow).formula = "=sum(I" & gLigneTotalRevenus & " - I" & gLigneTotalDépenses & " + I" & gLigneAutresRevenus & ")"
-            ElseIf codeEF = "I03" Then
+            ElseIf CodeEF = "I03" Then
                 ws.Range("G" & currRow).formula = "=sum(G" & gLigneRevenuNetAvantImpôts & ":G" & currRow - 1 & ")"
                 ws.Range("I" & currRow).formula = "=sum(I" & gLigneRevenuNetAvantImpôts & ":I" & currRow - 1 & ")"
             Else
@@ -1436,7 +1911,7 @@ Sub ImprimerLigneEF(ws As Worksheet, ByRef currRow As Integer, LigneEF As String
                 ws.Range("I" & currRow).formula = "=sum(I" & gSavePremiereLigne & ":I" & currRow - 1 & ")"
             End If
             'Bordures dans le bas de la cellule
-            If codeEF = "I01" Or codeEF = "I03" Then
+            If CodeEF = "I01" Or CodeEF = "I03" Then
                 With ws.Range("C" & currRow).Borders(xlEdgeBottom)
                     .LineStyle = xlContinuous
                     .Color = -11511710
@@ -1450,20 +1925,20 @@ Sub ImprimerLigneEF(ws As Worksheet, ByRef currRow As Integer, LigneEF As String
             End If
             
             'Partir un nouveau sous-total, sans entête
-            If codeEF = "B10" Then gSavePremiereLigne = currRow
+            If CodeEF = "B10" Then gSavePremiereLigne = currRow
             
     End Select
         
     'Certaines lignes ont besoin d'être notées pour utilisation particulière
-    If codeEF = "P99" Then gLigneTotalPassif = currRow
-    If codeEF = "E50" Then gLigneTotalADA = currRow
-    If codeEF = "R99" Then gLigneTotalRevenus = currRow
-    If codeEF = "D99" Then gLigneTotalDépenses = currRow
-    If codeEF = "R04" Then gLigneAutresRevenus = currRow
-    If codeEF = "I01" Then gLigneRevenuNetAvantImpôts = currRow
+    If CodeEF = "P99" Then gLigneTotalPassif = currRow
+    If CodeEF = "E50" Then gLigneTotalADA = currRow
+    If CodeEF = "R99" Then gLigneTotalRevenus = currRow
+    If CodeEF = "D99" Then gLigneTotalDépenses = currRow
+    If CodeEF = "R04" Then gLigneAutresRevenus = currRow
+    If CodeEF = "I01" Then gLigneRevenuNetAvantImpôts = currRow
     
     'Sauvegarder les 2 montants de Revenu Net
-    If codeEF = "I03" Then
+    If CodeEF = "I03" Then
         gTotalRevenuNet_AC = ws.Range("G" & currRow).Value2
         gTotalRevenuNet_AP = ws.Range("I" & currRow).Value2
     End If
@@ -1473,18 +1948,18 @@ Sub ImprimerLigneEF(ws As Worksheet, ByRef currRow As Integer, LigneEF As String
             .Bold = True
         End If
         If UCase$(souligne) = "VRAI" Then
-            .underline = xlUnderlineStyleSingle
+            .Underline = xlUnderlineStyleSingle
         End If
         If size <> 0 Then
             .size = size
         End If
     End With
     
-    If codeEF = "I02" Then
+    If CodeEF = "I02" Then
         ws.Range("C" & currRow & ":E" & currRow).Font.Bold = False
     End If
     
-    If codeEF = "B01" Then 'Bénéfice net / Revenu net
+    If CodeEF = "B01" Then 'Bénéfice net / Revenu net
         ws.Range("B" & currRow).Value = LigneEF
         ws.Range("G" & currRow).Value = gTotalRevenuNet_AC
         ws.Range("I" & currRow).Value = gTotalRevenuNet_AP
@@ -1501,14 +1976,14 @@ Sub ImprimerLigneEF(ws As Worksheet, ByRef currRow As Integer, LigneEF As String
         currRow = currRow + 1
     End If
     
-    If codeEF = "B20" Then 'Dividendes
+    If CodeEF = "B20" Then 'Dividendes
         ws.Range("B" & currRow).Value = LigneEF
         ws.Range("G" & currRow).Value = -gDividendes_Année_AC
         ws.Range("I" & currRow).Value = -gDividendes_Année_AP
         currRow = currRow + 1
     End If
     
-    If codeEF = "B50" Then 'Solde de fin (BNR)
+    If CodeEF = "B50" Then 'Solde de fin (BNR)
         With ws.Range("C" & currRow).Borders(xlEdgeTop)
             .LineStyle = xlContinuous
             .ColorIndex = 0
@@ -1544,7 +2019,7 @@ Sub ImprimerLigneEF(ws As Worksheet, ByRef currRow As Integer, LigneEF As String
         currRow = currRow + 1
     End If
     
-    If codeEF = "R00" Or codeEF = "D00" Or codeEF = "B00" Then
+    If CodeEF = "R00" Or CodeEF = "D00" Or CodeEF = "B00" Then
         currRow = currRow + 1
     End If
     

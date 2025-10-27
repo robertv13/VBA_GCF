@@ -33,7 +33,7 @@ Sub DemarrerApplication(uw As String) '2025-07-11 @ 15:16
     End If
     Application.StatusBar = False
 
-    Call CreerFichierUtilisateurActif(uw)
+    Call CreerFichierutilisateurActif(uw)
     Call FixerFormatDateUtilisateur(uw)
     Call CreerSauvegardeMaster
     Call EcrireInformationsConfigAuMenu
@@ -121,9 +121,9 @@ Function Fn_RepertoireBaseApplication(uw As String) As String '2025-03-03 @ 20:2
 
 End Function
 
-Sub CreerFichierUtilisateurActif(ByVal userName As String)
+Sub CreerFichierutilisateurActif(ByVal userName As String)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:CreerFichierUtilisateurActif", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:CreerFichierutilisateurActif", vbNullString, 0)
     
     Dim traceFilePath As String
     traceFilePath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
@@ -138,7 +138,7 @@ Sub CreerFichierUtilisateurActif(ByVal userName As String)
     Print #FileNumber, "Utilisateur " & userName & " a ouvert l'application à " & Format$(Now(), "yyyy-mm-dd hh:mm:ss") & " - Version " & ThisWorkbook.Name
     Close FileNumber
     
-    Call modDev_Utils.EnregistrerLogApplication("modAppli:CreerFichierUtilisateurActif", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli:CreerFichierutilisateurActif", vbNullString, startTime)
     
     Exit Sub
 
@@ -157,7 +157,7 @@ Sub FixerFormatDateUtilisateur(ByVal user As String)
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:FixerFormatDateUtilisateur", vbNullString, 0)
 
     Dim userDateFormat As String
-    userDateFormat = UtilisateurActif("FormatDate")
+    userDateFormat = utilisateurActif("FormatDate")
     If userDateFormat = vbNullString Then
         userDateFormat = "dd/mm/yyyy"
     End If
@@ -230,7 +230,7 @@ Sub EcrireInformationsConfigAuMenu()
     valeurs = Array( _
         "Heure - " & Format$(Now(), formatDate & " hh:mm:ss"), _
         "Version - " & ThisWorkbook.Name, _
-        "Utilisateur - " & UtilisateurActif("Prenom"), _
+        "Utilisateur - " & utilisateurActif("Prenom"), _
         "Environnement - " & environnement, _
         "Format de la date - " & formatDate)
 
