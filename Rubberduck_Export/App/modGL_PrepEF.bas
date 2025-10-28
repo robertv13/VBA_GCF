@@ -12,6 +12,7 @@ Public gLigneRevenuNetAvantImpôts As Integer
 Public gTotalRevenuNet_AC As Currency, gTotalRevenuNet_AP As Currency
 Public gBNR_Début_Année_AC As Currency, gBNR_Début_Année_AP As Currency
 Public gDividendes_Année_AC As Currency, gDividendes_Année_AP As Currency
+Private Const NOM_FEUILLES_EF As String = "Page titre, Table des Matières, État des Résultats, BNR, Bilan, A.tmp, A2.tmp, A3.tmp"
 
 Sub CalculerSoldesPourEF(ws As Worksheet, dateCutOff As Date) '2025-08-14 @ 06:50
     
@@ -257,6 +258,8 @@ Sub AssemblerEtatsFinanciers() '2025-08-14 @ 08:05
     MsgBox "Les états financiers ont été produits" & vbNewLine & vbNewLine & _
             "Voir les onglets respectifs au bas du classeur", vbOKOnly, "Fin de traitement"
     
+    Call ProposerExportEF
+
     Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerEtatsFinanciers", vbNullString, startTime)
 
 End Sub
@@ -2103,3 +2106,84 @@ Sub CalculerSoldesCourantEtComparatif(noCompteGL As String, moisCloture As Long,
                             Right(Space(15) & Format(soldeCourant, "#,##0.00"), 15)
     
 End Sub
+
+Public Sub ProposerExportEF() '2025-10-28 @ 06:24
+
+    Dim choix As VbMsgBoxResult
+    choix = MsgBox("Les 8 pages d'États Financiers sont prêtes." & vbCrLf & vbCrLf & _
+                   "Souhaitez-vous" & vbCrLf & _
+                   "   (Oui) - Pour les imprimer ou" & vbCrLf & "   (Non) - Pour les sauvegarder (PDF) ?", _
+                   vbYesNoCancel + vbQuestion, "Export des États Financiers")
+
+    Select Case choix
+    
+        Case vbYes: ImprimerFeuillesEF
+        Case vbNo: SauvegarderFeuillesEFenPDF
+        Case vbCancel: MsgBox "L'export est annulé.", vbInformation
+        
+    End Select
+    
+End Sub
+
+Private Sub ImprimerFeuillesEF() '2025-10-28 @ 06:24
+
+    Dim noms As Variant: noms = Split(NOM_FEUILLES_EF, ",")
+    
+    On Error Resume Next
+    ThisWorkbook.Worksheets(noms).PrintOut
+    On Error GoTo 0
+    
+    MsgBox "L'impression est lancée pour les 8 pages", vbInformation
+    
+End Sub
+
+Private Sub SauvegarderFeuillesEFenPDF() '2025-10-28 @ 06:58
+
+    Dim noms As Variant: noms = Split(NOM_FEUILLES_EF, ",")
+    Dim chemin As String
+    Dim feuilles As Collection
+    Dim i As Long
+    Dim ws As Worksheet
+
+    chemin = ThisWorkbook.path & "\ÉtatsFinanciers_" & Format(Now, "yyyymmdd_hhmmss") & ".pdf"
+
+    Set feuilles = New Collection
+
+    ' Vérifier et collecter les feuilles existantes
+    For i = LBound(noms) To UBound(noms)
+        If FeuilleExiste(Trim(noms(i))) Then
+            feuilles.Add ThisWorkbook.Worksheets(Trim(noms(i)))
+        Else
+            MsgBox "La feuille '" & noms(i) & "' est introuvable.", vbCritical
+            Exit Sub
+        End If
+    Next i
+
+    ' Sélectionner les feuilles
+    Application.ScreenUpdating = False
+    Application.DisplayAlerts = False
+    feuilles.item(1).Select
+    For i = 2 To feuilles.count
+        feuilles.item(i).Select Replace:=False
+    Next i
+
+    ' Exporter en PDF
+    feuilles.item(1).ExportAsFixedFormat Type:=xlTypePDF, fileName:=chemin, _
+        Quality:=xlQualityStandard, IncludeDocProperties:=True, IgnorePrintAreas:=False, OpenAfterPublish:=True
+
+    Application.DisplayAlerts = True
+    Application.ScreenUpdating = True
+
+    MsgBox "Les états financiers ont été sauvegardés en PDF :" & vbCrLf & vbCrLf & chemin, vbInformation
+
+End Sub
+
+Private Function FeuilleExiste(nomFeuille As String) As Boolean
+
+    On Error Resume Next
+    FeuilleExiste = Not ThisWorkbook.Worksheets(nomFeuille) Is Nothing
+    On Error GoTo 0
+    
+End Function
+
+

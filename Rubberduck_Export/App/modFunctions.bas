@@ -2228,21 +2228,21 @@ End Function
 Function Fn_ObtenirOuCreerFeuille(ByVal nomFeuille As String) As Worksheet '2025-08-14 @ 09:47
 
     Dim ws As Worksheet
-    Dim feuilleExiste As Boolean
+    Dim FeuilleExiste As Boolean
     Dim sh As Worksheet
 
-    feuilleExiste = False
+    FeuilleExiste = False
     'Vérifie si la feuille existe
     For Each sh In ThisWorkbook.Worksheets
         If sh.Name = nomFeuille Then
             Set ws = sh
-            feuilleExiste = True
+            FeuilleExiste = True
             Exit For
         End If
     Next sh
 
     'Si elle n'existe pas, on la crée
-    If Not feuilleExiste Then
+    If Not FeuilleExiste Then
         Set ws = ThisWorkbook.Worksheets.Add(After:=ThisWorkbook.Worksheets(ThisWorkbook.Worksheets.count))
         On Error Resume Next
         ws.Name = nomFeuille

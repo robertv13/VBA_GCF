@@ -6,7 +6,7 @@ Option Explicit
 'Auteur : Robert + Copilot
 'Rôle : Initialisation de session utilisateur, chargement des données métier, journalisation
 
-Public utilisateurActif As Object
+Public UtilisateurActif As Object
 
 '--- Étape 1 : Récupération UtilisateurID à partir de l'utilisateur Windows ---
 Public Function Fn_InfosWindows() As Object
@@ -92,13 +92,13 @@ Public Sub InitialiserSessionUtilisateur()
     Dim infos As Object
     Set infos = Fn_InfosWindows()
 
-    Set utilisateurActif = Fn_ChargerUtilisateur(infos("UtilisateurID"))
+    Set UtilisateurActif = Fn_ChargerUtilisateur(infos("UtilisateurID"))
 
-    If UCase(utilisateurActif("Actif")) <> "VRAI" Then
+    If UCase(UtilisateurActif("Actif")) <> "VRAI" Then
         MsgBox "Votre utilisateur n'est pas actif dans l'application.", _
             vbCritical
         Call modAppli.AfficherErreurCritique("Votre utilisateur n'est pas actif dans l'application" & _
-            vbNewLine & vbNewLine & utilisateurActif("Prenom"))
+            vbNewLine & vbNewLine & UtilisateurActif("Prenom"))
     End If
 
     Call MettreAJourDerniereConnexion(infos("UtilisateurID"))
