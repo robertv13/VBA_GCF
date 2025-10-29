@@ -683,7 +683,7 @@ End Function
 
 Function Fn_AllerVersCode(nomModule As String, Optional nomProcedure As String = vbNullString) As Boolean '2025-07-07 @ 09:27
 
-    On Error GoTo Erreur
+    On Error GoTo erreur
 
     Dim comp As VBComponent
     Dim cm As codeModule
@@ -695,7 +695,7 @@ Function Fn_AllerVersCode(nomModule As String, Optional nomProcedure As String =
         If Trim(comp.Name) = Trim(nomModule) Then Exit For
     Next
 
-    If comp Is Nothing Then GoTo Erreur
+    If comp Is Nothing Then GoTo erreur
 
     comp.Activate
 
@@ -708,7 +708,7 @@ Function Fn_AllerVersCode(nomModule As String, Optional nomProcedure As String =
     'Recherche de la procédure dans le module
     Set cm = comp.codeModule
     startLine = cm.ProcStartLine(nomProcedure, vbext_pk_Proc)
-    If startLine < 1 Then GoTo Erreur
+    If startLine < 1 Then GoTo erreur
 
     numLines = cm.ProcCountLines(nomProcedure, vbext_pk_Proc)
 
@@ -725,7 +725,7 @@ Function Fn_AllerVersCode(nomModule As String, Optional nomProcedure As String =
         End If
     Next
 
-Erreur:
+erreur:
     Fn_AllerVersCode = False
     
 End Function
@@ -879,7 +879,7 @@ End Sub
 
 Function Fn_TexteSecurise(formule As String) As String
 
-    On Error GoTo Erreur
+    On Error GoTo erreur
 
     Dim formuleBrute As String
 
@@ -890,7 +890,7 @@ Function Fn_TexteSecurise(formule As String) As String
     Fn_TexteSecurise = Chr(34) & formuleBrute & Chr(34)
     Exit Function
 
-Erreur:
+erreur:
     Fn_TexteSecurise = "Erreur lors du traitement"
     
 End Function

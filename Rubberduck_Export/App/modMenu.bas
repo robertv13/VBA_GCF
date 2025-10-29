@@ -116,18 +116,19 @@ Sub SauvegarderEtSortirApplication() '2024-08-30 @ 07:37
         Dim confirmation As VbMsgBoxResult
         confirmation = MsgBox("Êtes-vous certain de vouloir quitter" & vbNewLine & vbNewLine & _
                         "l'application de gestion (sauvegarde automatique) ?", vbYesNo + vbQuestion, "Confirmation de sortie")
-    
         If confirmation = vbYes Then
-            Call FermerApplicationNormalement(modFunctions.Fn_UtilisateurWindows(), False)
+            Call FermerApplicationNormalement(modFunctions.Fn_UtilisateurWindows(), "Fermeture normale")
         End If
     Else
-        Call FermerApplicationNormalement(modFunctions.Fn_UtilisateurWindows(), True)
+        Call FermerApplicationNormalement(modFunctions.Fn_UtilisateurWindows(), "Sauvegarde outrepassée")
     End If
     
 End Sub
 
-Sub FermerApplicationNormalement(ByVal userName As String, Optional ByVal ignorerSauvegarde As Boolean = False) '2025-09-10 @ 08:14
+Sub FermerApplicationNormalement(ByVal userName As String, flag As String, Optional ByVal ignorerSauvegarde As Boolean = False) '2025-09-10 @ 08:14
 
+    Call modDev_Utils.EnregistrerLogApplication("modMENU:FermerApplicationNormalement - " & flag, vbNullString, -1)
+    
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU:FermerApplicationNormalement", vbNullString, startTime)
     
     On Error GoTo ExitPoint
@@ -144,8 +145,10 @@ Sub FermerApplicationNormalement(ByVal userName As String, Optional ByVal ignore
     
     'Effacer fichier utilisateur actif + Fermeture de la journalisation
     Call EffacerFichierUtilisateurActif(modFunctions.Fn_UtilisateurWindows())
+    
     Call modDev_Utils.EnregistrerLogApplication("----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) -----", _
         IIf(ignorerSauvegarde, "S A N S   S A U V E G A R D E", ""), 0)
+        
     Call modDev_Utils.EnregistrerLogApplication(vbNullString, vbNullString, -1)
 
     'Fermer la vérification d'inactivité
@@ -155,25 +158,28 @@ Sub FermerApplicationNormalement(ByVal userName As String, Optional ByVal ignore
         On Error GoTo 0
     End If
 
-    'Fermer la sauvegarde automtique du code VBA (seul le développeur déclenche la sauvegarde automtique)
+    'Fermer la sauvegarde automatique du code VBA (seul le développeur déclenche la sauvegarde automtique)
     If userName = "RobertMV" Or userName = "robertmv" Then
         Call ArreterSauvegardeCodeVBA
         Call ExporterCodeVBA
     End If
     
+'    'Log de fermeture (fichier autre que log normal)
+'    Open Environ("TEMP") & "\APP_FermetureEnCours.txt" For Output As #1
+'    Print #1, "Session fermee volontairement"
+'    Close #1
+'
     'Fermeture du classeur de l'application uniquement
     If ignorerSauvegarde Then
         'Pas de sauvegarde
+        Debug.Print Now() & " Fermeture du classeur - SANS SAUVEGARDE"
         ThisWorkbook.Close SaveChanges:=False
     Else
         'Avec sauvegarde
+        Debug.Print Now() & " Fermeture du classeur - Avec sauvegarde"
         ThisWorkbook.Close SaveChanges:=True
     End If
     
-    Open Environ("TEMP") & "\APP_FermetureEnCours.txt" For Output As #1
-    Print #1, "Session fermee volontairement"
-    Close #1
-
 ExitPoint:
     Application.EnableEvents = True
     Application.ScreenUpdating = True
@@ -248,12 +254,16 @@ End Sub
 
 Sub EffacerFichierUtilisateurActif(ByVal userName As String)
 
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU:EffacerFichierUtilisateurActif", vbNullString, 0)
+    
     Dim traceFilePath As String
     traceFilePath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
     
     If Dir(traceFilePath) <> vbNullString Then
         Kill traceFilePath
     End If
+    
+    Call modDev_Utils.EnregistrerLogApplication("modMENU:EffacerFichierUtilisateurActif", vbNullString, startTime)
 
 End Sub
 
@@ -380,6 +390,8 @@ End Sub
 
 Sub RetournerMenuPrincipal()
 
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU:RetournerMenuPrincipal", ActiveSheet.Name, 0)
+    
     Dim ws As Worksheet
     For Each ws In ActiveWorkbook.Worksheets
         If ws.Name <> "Menu" Then ws.Visible = xlSheetHidden
@@ -394,6 +406,8 @@ Sub RetournerMenuPrincipal()
 
     'Libérer la mémoire
     Set ws = Nothing
+    
+    Call modDev_Utils.EnregistrerLogApplication("modMENU:RetournerMenuPrincipal", vbNullString, startTime)
     
 End Sub
 

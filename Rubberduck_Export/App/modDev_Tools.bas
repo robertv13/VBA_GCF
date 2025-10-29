@@ -1157,16 +1157,16 @@ End Sub
 Sub zz_ConvertirCouleurEnHEX()
 
     Dim couleur As Long
-    Dim couleurHex As String
+    Dim CouleurHex As String
     
     'Obtenir la couleur de remplissage de la cellule
     couleur = 11854022
     
     'Convertir en HEX
-    couleurHex = Fn_ConvertirCouleurRGB2Hex(couleur)
+    CouleurHex = Fn_ConvertirCouleurRGB2Hex(couleur)
     
     'Afficher le résultat
-    MsgBox "La couleur HEX de la couleur " & couleur & " est " & couleurHex
+    MsgBox "La couleur HEX de la couleur " & couleur & " est " & CouleurHex
     
 End Sub
 

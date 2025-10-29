@@ -12,7 +12,7 @@ Public gLigneRevenuNetAvantImpôts As Integer
 Public gTotalRevenuNet_AC As Currency, gTotalRevenuNet_AP As Currency
 Public gBNR_Début_Année_AC As Currency, gBNR_Début_Année_AP As Currency
 Public gDividendes_Année_AC As Currency, gDividendes_Année_AP As Currency
-Private Const NOM_FEUILLES_EF As String = "Page titre, Table des Matières, État des Résultats, BNR, Bilan, A.tmp, A2.tmp, A3.tmp"
+Private Const NOM_FEUILLES_EF As String = "Page titre.tmp, Table des Matières.tmp, État des Résultats.tmp, BNR.tmp, Bilan.tmp, A.tmp, A2.tmp, A3.tmp"
 
 Sub CalculerSoldesPourEF(ws As Worksheet, dateCutOff As Date) '2025-08-14 @ 06:50
     
@@ -42,7 +42,7 @@ Sub CalculerSoldesPourEF(ws As Worksheet, dateCutOff As Date) '2025-08-14 @ 06:5
         End Select
     Loop Until choixEstValide
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:CalculerSoldesPourEF", ws.Name & ", " & dateCutOff, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:CalculerSoldesPourEF", dateCutOff, 0)
     
     Dim i As Long
     
@@ -51,7 +51,7 @@ Sub CalculerSoldesPourEF(ws As Worksheet, dateCutOff As Date) '2025-08-14 @ 06:5
     
     'Qui exécute ce programme ?
     Dim isDeveloppeur As Boolean
-    If modFunctions.Fn_UtilisateurWindows() = "RobertMV" Or modFunctions.Fn_UtilisateurWindows() = "robertmv" Then
+    If UtilisateurActif("Role") = "Dev" Then
         isDeveloppeur = True
     End If
     
@@ -211,9 +211,10 @@ Sub RetournerAuMenu()
     Call modAppli.QuitterFeuillePourMenu(wshMenuGL, True) '2025-08-19 @ 06:59
 
 End Sub
+
 Sub AssemblerEtatsFinanciers() '2025-08-14 @ 08:05
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerEtatsFinanciers", vbNullString, 0)
+''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerEtatsFinanciers", vbNullString, 0)
     
     Dim dateAC As Date, dateAP As Date
     dateAC = wshGL_PrepEF.Range("F5").Value
@@ -231,7 +232,7 @@ Sub AssemblerEtatsFinanciers() '2025-08-14 @ 08:05
     Call AssemblerNEFA3_0Main(dateAC, dateAP)
     
     Dim nomsFeuilles As Variant
-    nomsFeuilles = Array("Page titre", "Table des Matières", "État des Résultats", "BNR", "Bilan", "A.tmp", "A2.tmp", "A3.tmp")
+    nomsFeuilles = Split(NOM_FEUILLES_EF, ", ")
     
     Dim ws As Worksheet
     Dim i As Integer
@@ -260,37 +261,57 @@ Sub AssemblerEtatsFinanciers() '2025-08-14 @ 08:05
     
     Call ProposerExportEF
 
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerEtatsFinanciers", vbNullString, startTime)
+''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerEtatsFinanciers", vbNullString, startTime)
 
 End Sub
 
-Sub CreerFeuillesEtFormat() '2025-08-14 @ 09:32
+Sub CreerFeuillesEtFormat() '2025-10-28 @ 10:33
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:CreerFeuillesEtFormat", vbNullString, 0)
     
     'Liste des feuilles à créer
     Dim nomsFeuilles As Variant
-    nomsFeuilles = Array("Page titre", "Table des Matières", "État des Résultats", "BNR", "Bilan", "A.tmp", "A2.tmp", "A3.tmp")
+    nomsFeuilles = Split(NOM_FEUILLES_EF, ", ")
+'    nomsFeuilles = Array("Page titre.tmp", "Table des Matières.tmp", "État des Résultats.tmp", "BNR.tmp", "Bilan.tmp", "A.tmp", "A2.tmp", "A3.tmp")
 
     Application.ScreenUpdating = False
     
     Dim ws As Worksheet
     Dim i As Integer
     For i = LBound(nomsFeuilles) To UBound(nomsFeuilles)
+        nomsFeuilles(i) = Trim(nomsFeuilles(i))
         Application.StatusBar = "Création de " & nomsFeuilles(i)
         Set ws = Fn_ObtenirOuCreerFeuille(nomsFeuilles(i))
 
         With ws.PageSetup
+            .PaperSize = xlPaperLetter
             .Orientation = xlPortrait
-            .FitToPagesWide = False
-            .FitToPagesTall = False
+            .Zoom = False
+            .FitToPagesWide = 1
+            .FitToPagesTall = 1
             .LeftMargin = Application.InchesToPoints(0#)
             .RightMargin = Application.InchesToPoints(0#)
-            .TopMargin = Application.InchesToPoints(0.5)
-            .BottomMargin = Application.InchesToPoints(0.5)
+            .TopMargin = Application.InchesToPoints(0#)
+            .HeaderMargin = Application.InchesToPoints(0#)
+            .BottomMargin = Application.InchesToPoints(0#)
+            .FooterMargin = Application.InchesToPoints(0#)
             .CenterHorizontally = False
         End With
+        
+        With ws.Cells
+            .Font.Name = "Verdana"
+            .Font.size = 11
+            .Font.Color = RGB(140, 131, 117)
+            .Interior.Color = RGB(255, 255, 255)
+            .NumberFormat = ""
+            .HorizontalAlignment = xlLeft
+            .VerticalAlignment = xlBottom
+            .WrapText = False
+            .MergeCells = False
+        End With
+        
         Set ws = Nothing
+        
     Next i
 
     Application.StatusBar = False
@@ -307,11 +328,36 @@ Sub AssemblerPageTitre0Main(dateAC As Date, dateAP As Date)
     Application.ScreenUpdating = False
     
     Dim ws As Worksheet
-    Set ws = ThisWorkbook.Sheets("Page Titre")
+    Set ws = ThisWorkbook.Sheets("Page Titre.tmp")
     
     Application.StatusBar = "Construction de la page titre"
         
+    'Particularités
+    ws.PageSetup.CenterHorizontally = True
+    'Hauteur des lignes
+    Dim lastRow As Long: lastRow = 27
+    Dim i As Long
+    For i = 1 To lastRow
+        Select Case i
+            Case 1 To 4
+                ws.Rows(i).RowHeight = 15
+            Case 5 To 14, 17 To 22, 26, 27
+                ws.Rows(i).RowHeight = 24.75
+            Case Else
+                ws.Rows(i).RowHeight = 29.25
+        End Select
+    Next i
+    'Largeur des colonnes
+    ws.Columns("A").ColumnWidth = 52.86
+    
     Call AssemblerPageTitre1EtArrierePlanEtEntete(ws, dateAC, dateAP)
+    
+    With ws
+        .Activate
+        .DisplayPageBreaks = True
+        ActiveWindow.View = xlPageBreakPreview
+        ActiveWindow.Zoom = 100
+    End With
     
     Application.StatusBar = False
     
@@ -325,24 +371,13 @@ Sub AssemblerPageTitre1EtArrierePlanEtEntete(ws As Worksheet, dateAC As Date, da
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerPageTitre1EtArrierePlanEtEntete", vbNullString, 0)
     
-    'Effacer le contenu existant
-    ws.Cells.Clear
-    ws.Cells.HorizontalAlignment = xlCenter
-    ws.Cells.VerticalAlignment = xlCenter
+    Call PositionnerCellule(ws, UCase$(wsdADMIN.Range("NomEntreprise")), 8, 1, 20, True, xlCenter)
+    Call PositionnerCellule(ws, UCase$("États Financiers"), 15, 1, 20, True, xlCenter)
+    Call PositionnerCellule(ws, Format$(dateAC, "dd mmmm yyyy"), 25, 1, 20, True, xlCenter)
     
-    Call PositionnerCellule(ws, UCase$(wsdADMIN.Range("NomEntreprise")), 8, 2, 20, True, xlCenter)
-    Call PositionnerCellule(ws, UCase$("États Financiers"), 15, 2, 20, True, xlCenter)
-    Call PositionnerCellule(ws, UCase$(Format$(dateAC, "dd mmmm yyyy")), 28, 2, 20, True, xlCenter)
-    
-    'Ajuster la largeur des colonnes et la hauteur de lignes
-    Call ConfigurerColonnesEtLignes(ws, Array(3, 87, 3), "1:28")
-    
-    'Ajuster la police pour la feuille
-    Call AppliquerMiseEnPageEF(ws, 20)
-
-    'Fixer le printArea selon le nombre de lignes ET 3 colonnes
-    ws.PageSetup.PrintArea = "$A$1:$C$" & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 4
-    Debug.Print "Page Titre (Entête) - $A$1:$C$' & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 4"
+    'Fixer le printArea selon le nombre de lignes
+    ws.PageSetup.PrintArea = "$A$1:$A$27"
+    Debug.Print "Page Titre.tmp : " & ws.Name & " - " & ws.PageSetup.PrintArea
     
     Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerPageTitre1EtArrierePlanEtEntete", vbNullString, startTime)
 
@@ -350,112 +385,170 @@ End Sub
 
 Sub AssemblerTM0Main(dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerTM0Main", vbNullString, 0)
+''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerTM0Main", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
     Dim ws As Worksheet
-    Set ws = ThisWorkbook.Sheets("Table des Matières")
+    Set ws = ThisWorkbook.Sheets("Table des Matières.tmp")
     
-    Application.StatusBar = "Construction de la table des matières"
+    Application.StatusBar = "Construction de la Table des Matières"
+    
+    'Particularités
+    ws.PageSetup.LeftMargin = Application.CentimetersToPoints(2.5)
+    'Hauteurs des lignes
+    Dim lastRow As Long: lastRow = 35
+    Dim i As Long
+    For i = 1 To lastRow
+        Select Case i
+            Case 12, 13
+                ws.Rows(i).RowHeight = 10
+            Case 14
+                ws.Rows(i).RowHeight = 9.75
+            Case 28
+                ws.Rows(i).RowHeight = 18
+            Case Else
+                ws.Rows(i).RowHeight = 14.25
+        End Select
+    Next i
+    'Largeurs des colonnes
+    ws.Columns("A").ColumnWidth = 58.14
+    ws.Columns("B").ColumnWidth = 0.67
+    ws.Columns("C").ColumnWidth = 0.67
+    ws.Columns("D").ColumnWidth = 0.67
+    ws.Columns("E").ColumnWidth = 0.92
+    ws.Columns("F").ColumnWidth = 0.17
+    ws.Columns("G").ColumnWidth = 0.17
+    ws.Columns("H").ColumnWidth = 5.71
+    ws.Columns("I").ColumnWidth = 1.71
     
     Call AssemblerTM1ArrierePlanEtEntete(ws, dateAC, dateAP)
     Call AssemblerTM2Lignes(ws)
+    
+    With ws
+        .Activate
+        .DisplayPageBreaks = True
+        ActiveWindow.View = xlPageBreakPreview
+        ActiveWindow.Zoom = 100
+    End With
     
     Application.StatusBar = False
     
     Application.ScreenUpdating = True
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerTM0Main", vbNullString, startTime)
+''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerTM0Main", vbNullString, startTime)
 
 End Sub
 
 Sub AssemblerTM1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerTM1ArrierePlanEtEntete", vbNullString, 0)
+''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerTM1ArrierePlanEtEntete", vbNullString, 0)
     
-    'Effacer le contenu existant
-    ws.Cells.Clear
-    ws.Cells.VerticalAlignment = xlCenter
+    Call PositionnerCellule(ws, UCase$(wsdADMIN.Range("NomEntreprise")), 8, 1, 11, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$("Table des Matières"), 9, 1, 11, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$("États Financiers"), 10, 1, 11, True, xlLeft)
+    Call PositionnerCellule(ws, Format$(dateAC, "dd mmmm yyyy"), 11, 1, 11, True, xlLeft)
+    ws.Range("A8:A11").IndentLevel = 3
     
-    'Appliquer le format d'en-tête
-    Call AjouterEnteteEF(ws, wsdADMIN.Range("NomEntreprise"), dateAC, 1)
-    
-    With ws.Range("B5:C5").Borders(xlEdgeBottom)
-'    With ws.Range("B6:E6").Borders(xlEdgeBottom)
+    With ws.Range("A12:I12").Borders(xlEdgeBottom)
         .LineStyle = xlContinuous
         .ColorIndex = 0
         .TintAndShade = 0
         .Weight = xlMedium
     End With
     
-    'Ajuster la largeur des colonnes et la hauteur des lignes
-    ws.Columns("A").ColumnWidth = 3
-    ws.Columns("B").ColumnWidth = 75
-    ws.Columns("C").ColumnWidth = 11
-    ws.Columns("D").ColumnWidth = 3
-    ws.Rows("1:25").RowHeight = 15
-    
-    'Fixer le printArea selon le nombre de lignes ET 3 colonnes
-    ws.PageSetup.PrintArea = "$A$1:$D$" & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3
-    Debug.Print "Table des matières (entête) - $A$1:$D$' & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3"
-    
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerTM1ArrierePlanEtEntete", vbNullString, startTime)
+''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerTM1ArrierePlanEtEntete", vbNullString, startTime)
 
 End Sub
 
 Sub AssemblerTM2Lignes(ws As Worksheet)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerTM2Lignes", vbNullString, 0)
+''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerTM2Lignes", vbNullString, 0)
     
     'Première ligne
     Dim currRow As Integer
-    currRow = 15
+    currRow = 23
     
     With ws
-        .Range("C" & currRow).Value = "Page"
-        currRow = currRow + 3
+        .Range("H" & currRow).Value = "Page"
+        currRow = currRow + 5
         
-        .Range("B" & currRow).Value = "États des résultats"
-        .Range("C" & currRow).Value = "2"
+        .Range("A" & currRow).Value = "États des résultats"
+        .Range("A" & currRow).IndentLevel = 3
+        .Range("H" & currRow).Value = "2"
         currRow = currRow + 2
         
-        .Range("B" & currRow).Value = "États des Bénéfices non répartis"
-        .Range("C" & currRow).Value = "3"
+        .Range("A" & currRow).Value = "États des Bénéfices non répartis"
+        .Range("A" & currRow).IndentLevel = 3
+        .Range("H" & currRow).Value = "3"
         currRow = currRow + 2
         
-        .Range("B" & currRow).Value = "Bilan"
-        .Range("C" & currRow).Value = "4"
+        .Range("A" & currRow).Value = "Bilan"
+        .Range("A" & currRow).IndentLevel = 3
+        .Range("H" & currRow).Value = "4"
         currRow = currRow + 2
         
-        .Range("C:C").HorizontalAlignment = xlRight
+        .Range("H:H").HorizontalAlignment = xlRight
         
-       'Ajuster la police pour la feuille
-        Call AppliquerMiseEnPageEF(ws, 11)
-    
     End With
     
-    'Fixer le printArea selon le nombre de lignes ET 3 colonnes
-    ws.PageSetup.PrintArea = "$A$1:$D$" & ws.Cells(ws.Rows.count, 2).End(xlUp).Row
-    Debug.Print "Table des matières (lignes) - $A$1:$D$' & ws.Cells(ws.Rows.count, 2).End(xlUp).Row"
+    'Fixer le printArea selon le nombre de lignes ET 9 colonnes
+    ws.PageSetup.PrintArea = "$A$1:$I$35"
+    Debug.Print "Table des matières.tmp : " & ws.Name & " - " & ws.PageSetup.PrintArea
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerTM2Lignes", vbNullString, startTime)
+''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerTM2Lignes", vbNullString, startTime)
 
 End Sub
 
 Sub AssemblerER0Main(dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerER0Main", vbNullString, 0)
+''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerER0Main", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
     Dim ws As Worksheet
-    Set ws = ThisWorkbook.Sheets("État des résultats")
+    Set ws = ThisWorkbook.Sheets("État des résultats.tmp")
     
     Application.StatusBar = "Construction de l'état des résultats"
     
+    'Particularités
+    'Hauteur des lignes
+    Dim lastRow As Long: lastRow = 48
+    Dim i As Long
+    For i = 1 To lastRow
+        Select Case i
+'            Case 1 To 6, 11
+'                ws.Rows(i).RowHeight = 14.25
+            Case 7 To 9
+                ws.Rows(i).RowHeight = 15
+            Case 10, 12 To 18, 20 To 48
+                ws.Rows(i).RowHeight = 12.75
+            Case 19
+                ws.Rows(i).RowHeight = 18.75
+            Case Else
+                ws.Rows(i).RowHeight = 14.25
+        End Select
+    Next i
+    'Largeur des colonnes
+    ws.Columns("A").ColumnWidth = 84.86
+    ws.Columns("B").ColumnWidth = 14.29
+    ws.Columns("C").ColumnWidth = 0.67
+    ws.Columns("D").ColumnWidth = 14.29
+    ws.Columns("E").ColumnWidth = 3.71
+    'Police
+    ws.Range("A12:E48").Font.size = 10
+    'Alignement
+    ws.Range("B16:D48").HorizontalAlignment = xlRight
+    
     Call AssemblerER1ArrierePlanEtEntete(ws, dateAC, dateAP)
     Call AssemblerER2Lignes(ws)
+    
+    With ws
+        .Activate
+        .DisplayPageBreaks = True
+        ActiveWindow.View = xlPageBreakPreview
+        ActiveWindow.Zoom = 100
+    End With
     
     'On ajoute le Revenu Net au BNR du bilan via variables Globales
     Dim indice As Integer
@@ -467,17 +560,13 @@ Sub AssemblerER0Main(dateAC As Date, dateAP As Date)
     
     Application.ScreenUpdating = True
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerER0Main", vbNullString, startTime)
+''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerER0Main", vbNullString, startTime)
 
 End Sub
 
 Sub AssemblerER1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerER1ArrierePlanEtEntete", vbNullString, 0)
-    
-    'Effacer le contenu existant
-    ws.Cells.Clear
-    ws.Cells.VerticalAlignment = xlCenter
+''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerER1ArrierePlanEtEntete", vbNullString, 0)
     
     'Titre de l'état des résultats
     Dim jourAC As Integer, moisAC As Integer, anneeAC As Integer
@@ -489,41 +578,53 @@ Sub AssemblerER1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As D
     titre = Fn_TitreSelonNombreDeMois(dateAC)
     
     'Appliquer le format d'en-tête
-    Call PositionnerCellule(ws, UCase$(wsdADMIN.Range("NomEntreprise")), 1, 2, 12, True, xlLeft)
-    Call PositionnerCellule(ws, UCase$("État des Résultats"), 2, 2, 12, True, xlLeft)
-    Call PositionnerCellule(ws, UCase$(titre), 3, 2, 12, True, xlLeft)
-    ws.Range("C5:E6").HorizontalAlignment = xlRight
-    ws.Range("C5").Value = year(dateAC)
-    ws.Range("C5").Font.Bold = True
-    ws.Range("E5").Value = year(dateAP)
-    ws.Range("E5").Font.Bold = True
-    With ws.Range("B5:E5").Borders(xlEdgeBottom)
+    Call PositionnerCellule(ws, UCase$(wsdADMIN.Range("NomEntreprise")), 7, 1, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$("État des Résultats"), 8, 1, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$(titre), 9, 1, 12, True, xlLeft)
+    ws.Range("A1:A48").IndentLevel = 3
+    
+    ws.Range("E10").Value = 2
+    ws.Range("E10").HorizontalAlignment = xlCenter
+    
+    With ws.Range("A10:E10").Borders(xlEdgeBottom)
         .LineStyle = xlContinuous
         .Color = -11511710
         .Weight = xlMedium
     End With
     
-    ws.Range("C7:C45").NumberFormat = "###,##0 $;(###,##0) $; 0 $"
-    ws.Range("E7:E45").NumberFormat = "###,##0 $;(###,##0) $; 0 $"
+    ws.Range("B12:D12").HorizontalAlignment = xlRight
+    With ws.Range("B12")
+        .Value = year(dateAC)
+        .Font.Bold = True
+        .HorizontalAlignment = xlCenter
+        With .Borders(xlEdgeBottom)
+            .LineStyle = xlContinuous
+            .ColorIndex = xlAutomatic
+            .TintAndShade = 0
+            .Weight = xlThin
+        End With
+    End With
+    With ws.Range("D12")
+        .Value = year(dateAP)
+        .Font.Bold = True
+        .HorizontalAlignment = xlCenter
+        With .Borders(xlEdgeBottom)
+            .LineStyle = xlContinuous
+            .ColorIndex = xlAutomatic
+            .TintAndShade = 0
+            .Weight = xlThin
+        End With
+    End With
+    
+    ws.Range("B16:B48", "D16:D48").NumberFormat = "###,##0 $;(###,##0) $; 0 $"
 
-    'Ajuster la largeur des colonnes et la hauteur de lignes
-    ws.Columns("A").ColumnWidth = 3
-    ws.Columns("B").ColumnWidth = 52
-    ws.Columns("C").ColumnWidth = 15
-    ws.Columns("D").ColumnWidth = 3
-    ws.Columns("E").ColumnWidth = 15
-    ws.Columns("F").ColumnWidth = 3
-    ws.Rows("1:45").RowHeight = 15
-
-    ws.PageSetup.CenterFooter = 2
-     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerER1ArrierePlanEtEntete", vbNullString, startTime)
+''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerER1ArrierePlanEtEntete", vbNullString, startTime)
 
 End Sub
 
 Sub AssemblerER2Lignes(ws As Worksheet)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerER2Lignes", vbNullString, 0)
+''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerER2Lignes", vbNullString, 0)
     
     Dim wsAdmin As Worksheet: Set wsAdmin = wsdADMIN
     
@@ -539,13 +640,14 @@ Sub AssemblerER2Lignes(ws As Worksheet)
     Dim size As Long
     'Première ligne
     Dim currRow As Integer
-    currRow = 8
+    
+    currRow = 13
     Dim rngRow As ListRow
     For Each rngRow In tbl.ListRows
         LigneEF = rngRow.Range.Cells(1, 1).Value
         CodeEF = UCase$(rngRow.Range.Cells(1, 2).Value)
         'On ne traite que les lignes de l'État des résultats (R, D, X & I)
-        If InStr("RDXI", Left$(CodeEF, 1)) <> 0 Then
+        If InStr("RDI", Left$(CodeEF, 1)) <> 0 Then
             typeLigne = UCase$(rngRow.Range.Cells(1, 3).Value)
             gras = UCase$(rngRow.Range.Cells(1, 4).Value)
             souligne = UCase$(rngRow.Range.Cells(1, 5).Value)
@@ -558,18 +660,12 @@ Sub AssemblerER2Lignes(ws As Worksheet)
         
     Next rngRow
     
-    'Ajuster la police pour la feuille
-    Call AppliquerMiseEnPageEF(ws, 10)
-
-    'Augmenter la taille de police pour les 3 premières lignes
-    ws.Range("1:3").Font.size = 12
-    
     'Transfère les montants NON arrondis dans les cellules sans les cents
     Dim i As Integer
-    For i = 7 To currRow
+    For i = 16 To currRow
         If ws.Range("G" & i).Value <> vbNullString Then
-            ws.Range("C" & i).Value = ws.Range("G" & i).Value
-            ws.Range("E" & i).Value = ws.Range("I" & i).Value
+            ws.Range("B" & i).Value = ws.Range("G" & i).Value
+            ws.Range("D" & i).Value = ws.Range("I" & i).Value
         End If
     Next i
     ws.Range("G:J").Delete
@@ -577,8 +673,8 @@ Sub AssemblerER2Lignes(ws As Worksheet)
     'Tri par ordre descendant une plage
     With ws.Sort
         .SortFields.Clear
-        .SortFields.Add key:=ws.Range("C17:C" & ligneTotalDepenses - 2), Order:=xlDescending
-        .SetRange ws.Range("B17:E" & ligneTotalDepenses)
+        .SortFields.Add key:=ws.Range("B23:B" & ligneTotalDepenses - 2), Order:=xlDescending
+        .SetRange ws.Range("A23:E" & ligneTotalDepenses)
         .Header = xlNo
         .MatchCase = False
         .Orientation = xlTopToBottom
@@ -587,82 +683,120 @@ Sub AssemblerER2Lignes(ws As Worksheet)
     End With
     
     'Fixer le printArea selon le nombre de lignes ET colonnes
-    ActiveSheet.PageSetup.PrintArea = "$A$1:$F$" & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3
-    Debug.Print "État des Résultats (Lignes) - $A$1:$F$' & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3"
+    ws.PageSetup.PrintArea = "$A$1:$E$48"
+    Debug.Print "État des Résultats.tmp : " & ws.Name & " - " & ws.PageSetup.PrintArea
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerER2Lignes", vbNullString, startTime)
+''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerER2Lignes", vbNullString, startTime)
 
 End Sub
 
 Sub AssemblerBilan0Main(dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBilan0Main", vbNullString, 0)
+''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBilan0Main", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
     Dim ws As Worksheet
-    Set ws = ThisWorkbook.Sheets("Bilan")
+    Set ws = ThisWorkbook.Sheets("Bilan.tmp")
     
     Application.StatusBar = "Construction du bilan"
     
+    'Particularités
+    'Hauteur des lignes
+    Dim lastRow As Long: lastRow = 50
+    Dim i As Long
+    For i = 1 To lastRow
+        Select Case i
+            Case 20, 28, 31, 32, 33
+                ws.Rows(i).RowHeight = 0
+            Case 1, 10
+                ws.Rows(i).RowHeight = 10
+            Case 44 To 50
+                ws.Rows(i).RowHeight = 12.75
+            Case 9
+                ws.Rows(i).RowHeight = 13.5
+            Case 3 To 8
+                ws.Rows(i).RowHeight = 15
+            Case 11 To 19, 22 To 27, 29, 30, 34 To 43
+                ws.Rows(i).RowHeight = 15
+            Case Else
+                ws.Rows(i).RowHeight = 14.25
+        End Select
+    Next i
+    'Largeur des colonnes
+    ws.Columns("A").ColumnWidth = 59.57
+    ws.Columns("B").ColumnWidth = 20
+    ws.Columns("C").ColumnWidth = 0.33
+    ws.Columns("D").ColumnWidth = 26.14
+    ws.Columns("E").ColumnWidth = 3.71
+    
+    'Police
+    ws.Range("A11:E50").Font.size = 10
+    'Alignement
+    ws.Range("B13:D50").HorizontalAlignment = xlRight
+    
     Call AssemblerBilan1ArrierePlanEtEntete(ws, dateAC, dateAP)
     Call AssemblerBilan2Lignes(ws)
+    
+    With ws
+        .Activate
+        .DisplayPageBreaks = True
+        ActiveWindow.View = xlPageBreakPreview
+        ActiveWindow.Zoom = 100
+    End With
     
     Application.StatusBar = False
     
     Application.ScreenUpdating = True
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBilan0Main", vbNullString, startTime)
+''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBilan0Main", vbNullString, startTime)
     
 End Sub
 
 Sub AssemblerBilan1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBilan1ArrierePlanEtEntete", vbNullString, 0)
-    
-    'Effacer le contenu existant
-    ws.Cells.Clear
-    ws.Cells.VerticalAlignment = xlCenter
+''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBilan1ArrierePlanEtEntete", vbNullString, 0)
     
     'Appliquer le format d'en-tête
-    Call PositionnerCellule(ws, UCase$(wsdADMIN.Range("NomEntreprise")), 1, 2, 12, True, xlLeft)
-    Call PositionnerCellule(ws, UCase$("Bilan"), 2, 2, 12, True, xlLeft)
-    Call PositionnerCellule(ws, UCase$("Au " & Format$(dateAC, "dd mmmm yyyy")), 3, 2, 12, True, xlLeft)
-    ws.Range("C5:E6").HorizontalAlignment = xlRight
-    ws.Range("C5").Value = year(dateAC)
-    ws.Range("C5").Font.Bold = True
-    ws.Range("E5").Value = year(dateAP)
-    ws.Range("E5").Font.Bold = True
-    With ws.Range("B5:E5").Borders(xlEdgeBottom)
+    Call PositionnerCellule(ws, UCase$(wsdADMIN.Range("NomEntreprise")), 6, 1, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$("Bilan"), 7, 1, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$("Au " & Format$(dateAC, "dd mmmm yyyy")), 8, 1, 12, True, xlLeft)
+    ws.Range("A1:A50").IndentLevel = 3
+    
+    ws.Range("E9").HorizontalAlignment = xlLeft
+    ws.Range("E9").Value = "4"
+    
+    With ws.Range("B11")
+        .HorizontalAlignment = xlCenter
+        .Value = year(dateAC)
+        .Font.Underline = True
+        .Font.Bold = True
+    End With
+    With ws.Range("D11")
+        .HorizontalAlignment = xlCenter
+        .Value = year(dateAP)
+        .Font.Underline = True
+        .Font.Bold = True
+    End With
+    With ws.Range("A9:E9").Borders(xlEdgeBottom)
         .LineStyle = xlContinuous
         .Color = -11511710
         .Weight = xlMedium
     End With
     
     Dim currRow As Integer
-    currRow = 8
+    currRow = 12
 
-    ws.Range("C" & currRow & ":C40").NumberFormat = "#,##0 $;(#,##0) $; 0 $"
-    ws.Range("E" & currRow & ":E40").NumberFormat = "#,##0 $;(#,##0) $; 0 $"
+    ws.Range("B" & currRow & ":B50").NumberFormat = "#,##0 $;(#,##0) $; 0 $"
+    ws.Range("D" & currRow & ":D40").NumberFormat = "#,##0 $;(#,##0) $; 0 $"
 
-    'Ajuster la largeur des colonnes et la hauteur des lignes
-    ws.Columns("A").ColumnWidth = 3
-    ws.Columns("B").ColumnWidth = 52
-    ws.Columns("C").ColumnWidth = 15
-    ws.Columns("D").ColumnWidth = 3
-    ws.Columns("E").ColumnWidth = 15
-    ws.Columns("F").ColumnWidth = 3
-    ws.Rows("1:40").RowHeight = 15
-    
-    ws.PageSetup.CenterFooter = 4
-    
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBilan1ArrierePlanEtEntete", vbNullString, startTime)
+''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBilan1ArrierePlanEtEntete", vbNullString, startTime)
 
 End Sub
 
 Sub AssemblerBilan2Lignes(ws As Worksheet)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBilan2Lignes", vbNullString, 0)
+''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBilan2Lignes", vbNullString, 0)
     
     Dim wsAdmin As Worksheet
     Set wsAdmin = wsdADMIN
@@ -673,7 +807,7 @@ Sub AssemblerBilan2Lignes(ws As Worksheet)
     Dim LigneEF As String, CodeEF As String, typeLigne As String, gras As String, souligne As String
     Dim size As Long
     Dim currRow As Integer
-    currRow = 8
+    currRow = 11
     Dim rngRow As ListRow
     For Each rngRow In tbl.ListRows
         LigneEF = rngRow.Range.Cells(1, 1).Value
@@ -689,59 +823,91 @@ Sub AssemblerBilan2Lignes(ws As Worksheet)
         
     Next rngRow
     
-    'Ajuster la police pour la feuille
-    Call AppliquerMiseEnPageEF(ws, 10)
-
-    'Augmenter la taille de police pour les 3 premières lignes
-    ws.Range("1:3").Font.size = 12
-    
     'Transfère les montants NON arrondis dans les cellules sans les cents
     Dim i As Integer
-    For i = 7 To currRow
+    For i = 11 To currRow
         If ws.Range("G" & i).Value <> vbNullString Then
-            ws.Range("C" & i).Value = ws.Range("G" & i).Value
-            ws.Range("E" & i).Value = ws.Range("I" & i).Value
+            ws.Range("B" & i).Value = ws.Range("G" & i).Value
+            ws.Range("D" & i).Value = ws.Range("I" & i).Value
         End If
     Next i
-    ws.Range("G7:I38").Clear
+    ws.Range("G11:I50").Clear
     
     'Fixer le printArea selon le nombre de lignes ET colonnes
-    ActiveSheet.PageSetup.PrintArea = "$A$1:$F$" & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3
-    Debug.Print "Bilan (lignes) - $A$1:$F$' & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3"
+    ws.PageSetup.PrintArea = "$A$1:$E$50"
+    Debug.Print "Bilan.tmp : " & ws.Name & " - " & ws.PageSetup.PrintArea
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBilan2Lignes", vbNullString, startTime)
+''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBilan2Lignes", vbNullString, startTime)
 
 End Sub
 
 Sub AssemblerBNR0Main(dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBNR0Main", vbNullString, 0)
+''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBNR0Main", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
     Dim ws As Worksheet
-    Set ws = ThisWorkbook.Sheets("BNR")
+    Set ws = ThisWorkbook.Sheets("BNR.tmp")
     
     Application.StatusBar = "Construction de l'état des bénéfices non répartis"
     
+    'Particularités
+    'Hauteur des lignes
+    Dim lastRow As Long: lastRow = 36
+    Dim i As Long
+    For i = 1 To lastRow
+        Select Case i
+            Case 1, 12
+                ws.Rows(i).RowHeight = 10
+            Case 3, 6 To 10, 16 To 25
+                ws.Rows(i).RowHeight = 15
+            Case 11
+                ws.Rows(i).RowHeight = 12.75
+            Case 15
+                ws.Rows(i).RowHeight = 15.75
+            Case 26
+                ws.Rows(i).RowHeight = 20
+            Case 27
+                ws.Rows(i).RowHeight = 13.5
+            Case Else
+                ws.Rows(i).RowHeight = 14.25
+        End Select
+    Next i
+    'Largeur des colonnes
+    ws.Columns("A").ColumnWidth = 44.43
+    ws.Columns("B").ColumnWidth = 11
+    ws.Columns("C").ColumnWidth = 13.57
+    ws.Columns("D").ColumnWidth = 0.33
+    ws.Columns("E").ColumnWidth = 13.57
+    ws.Columns("F").ColumnWidth = 2
+    
+    'Police
+    ws.Range("A14:E26").Font.size = 10
+    'Alignement
+    ws.Range("C18:E26").HorizontalAlignment = xlRight
+    
     Call AssemblerBNR1ArrierePlanEtEntete(ws, dateAC, dateAP)
     Call AssemblerBNR2Lignes(ws)
+    
+    With ws
+        .Activate
+        .DisplayPageBreaks = True
+        ActiveWindow.View = xlPageBreakPreview
+        ActiveWindow.Zoom = 100
+    End With
     
     Application.StatusBar = False
     
     Application.ScreenUpdating = True
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBNR0Main", vbNullString, startTime)
+''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBNR0Main", vbNullString, startTime)
     
 End Sub
 
 Sub AssemblerBNR1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBNR1ArrierePlanEtEntete", vbNullString, 0)
-    
-    'Effacer le contenu existant
-    ws.Cells.Clear
-    ws.Cells.VerticalAlignment = xlCenter
+''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBNR1ArrierePlanEtEntete", vbNullString, 0)
     
     'Titre de l'état des résultats
     Dim jourAC As Integer, moisAC As Integer, anneeAC As Integer
@@ -753,41 +919,35 @@ Sub AssemblerBNR1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As 
     titre = Fn_TitreSelonNombreDeMois(dateAC)
     
     'Appliquer le format d'en-tête
-    Call PositionnerCellule(ws, UCase$(wsdADMIN.Range("NomEntreprise")), 1, 2, 12, True, xlLeft)
-    Call PositionnerCellule(ws, UCase$("Bénéfices non répartis"), 2, 2, 12, True, xlLeft)
-    Call PositionnerCellule(ws, UCase$(titre), 3, 2, 12, True, xlLeft)
-    ws.Range("C5:E6").HorizontalAlignment = xlRight
-    ws.Range("C5").Value = year(dateAC)
-    ws.Range("C5").Font.Bold = True
-    ws.Range("E5").Value = year(dateAP)
-    ws.Range("E5").Font.Bold = True
-    With ws.Range("B5:E5").Borders(xlEdgeBottom)
+    Call PositionnerCellule(ws, UCase$(wsdADMIN.Range("NomEntreprise")), 8, 1, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$("Bénéfices non répartis"), 9, 1, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$(titre), 10, 1, 12, True, xlLeft)
+    ws.Range("A1:A36").IndentLevel = 3
+    ws.Range("F11").Value = "3"
+    ws.Range("F11").HorizontalAlignment = xlLeft
+    
+    ws.Range("C15:E15").HorizontalAlignment = xlCenter
+    ws.Range("C15").Value = year(dateAC)
+    ws.Range("C15").Font.Bold = True
+    ws.Range("E15").Value = year(dateAP)
+    ws.Range("E15").Font.Bold = True
+    
+    With ws.Range("A11:F11").Borders(xlEdgeBottom)
         .LineStyle = xlContinuous
         .Color = -11511710
         .Weight = xlMedium
     End With
     
-    ws.Range("C7:C20").NumberFormat = "#,##0 $;(#,##0) $; 0 $"
-    ws.Range("E7:E20").NumberFormat = "#,##0 $;(#,##0) $; 0 $"
-
-    'Ajuster la largeur des colonnes et la hauteur des lignes
-    ws.Columns("A").ColumnWidth = 3
-    ws.Columns("B").ColumnWidth = 52
-    ws.Columns("C").ColumnWidth = 15
-    ws.Columns("D").ColumnWidth = 3
-    ws.Columns("E").ColumnWidth = 15
-    ws.Columns("F").ColumnWidth = 3
-    ws.Rows("1:20").RowHeight = 15
+    ws.Range("C18:C26").NumberFormat = "#,##0 $;(#,##0) $; 0 $"
+    ws.Range("E18:E26").NumberFormat = "#,##0 $;(#,##0) $; 0 $"
     
-    ws.PageSetup.CenterFooter = 3
-    
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBNR1ArrierePlanEtEntete", vbNullString, startTime)
+''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBNR1ArrierePlanEtEntete", vbNullString, startTime)
 
 End Sub
 
 Sub AssemblerBNR2Lignes(ws As Worksheet)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBNR2Lignes", vbNullString, 0)
+''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBNR2Lignes", vbNullString, 0)
     
     Dim wsAdmin As Worksheet
     Set wsAdmin = wsdADMIN
@@ -798,7 +958,7 @@ Sub AssemblerBNR2Lignes(ws As Worksheet)
     Dim LigneEF As String, CodeEF As String, typeLigne As String, gras As String, souligne As String
     Dim size As Long
     Dim currRow As Integer
-    currRow = 8
+    currRow = 17
     Dim rngRow As ListRow
     For Each rngRow In tbl.ListRows
         LigneEF = rngRow.Range.Cells(1, 1).Value
@@ -814,15 +974,9 @@ Sub AssemblerBNR2Lignes(ws As Worksheet)
         
     Next rngRow
     
-    'Ajuster la police pour la feuille
-    Call AppliquerMiseEnPageEF(ws, 10)
-    
-    'Augmenter la taille de police pour les 3 premières lignes
-    ws.Range("1:3").Font.size = 12
-
     'Transfère les montants NON arrondis dans les cellules sans les cents
     Dim i As Integer
-    For i = 7 To currRow
+    For i = 17 To currRow
         If ws.Range("G" & i).Value <> vbNullString Then
             ws.Range("C" & i).Value = ws.Range("G" & i).Value
             ws.Range("E" & i).Value = ws.Range("I" & i).Value
@@ -831,16 +985,16 @@ Sub AssemblerBNR2Lignes(ws As Worksheet)
     ws.Range("G:J").Delete '2025-08-01 @ 21:53
     
     'Fixer le printArea selon le nombre de lignes ET colonnes
-    ActiveSheet.PageSetup.PrintArea = "$A$1:$F$" & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3
-    Debug.Print "BNR (lignes) - $A$1:$F$' & ws.Cells(ws.Rows.count, 2).End(xlUp).Row + 3"
+    ws.PageSetup.PrintArea = "$A$1:$F$36"
+    Debug.Print "BNR.tmp : " & ws.Name & " - " & ws.PageSetup.PrintArea
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBNR2Lignes", vbNullString, startTime)
+''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerBNR2Lignes", vbNullString, startTime)
 
 End Sub
 
 Sub AssemblerNEFA_0Main(dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA_0Main", vbNullString, 0)
+''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA_0Main", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -849,19 +1003,60 @@ Sub AssemblerNEFA_0Main(dateAC As Date, dateAP As Date)
     
     Application.StatusBar = "Construction des notes 1 à 3"
     
+    'Particularités
+    'Hauteur des lignes
+    Dim lastRow As Long: lastRow = 33
+    Dim i As Long
+    For i = 1 To lastRow
+        Select Case i
+            Case 1
+                ws.Rows(i).RowHeight = 10
+            Case 6, 7
+                ws.Rows(i).RowHeight = 18
+            Case 8 To 10, 22, 23
+                ws.Rows(i).RowHeight = 15
+            Case 11
+                ws.Rows(i).RowHeight = 16.5
+            Case 15
+                ws.Rows(i).RowHeight = 39.75
+            Case 27
+                ws.Rows(i).RowHeight = 28.5
+            Case Else
+                ws.Rows(i).RowHeight = 14.25
+        End Select
+    Next i
+    'Largeur des colonnes
+    ws.Columns("A").ColumnWidth = 8.57
+    ws.Columns("B").ColumnWidth = 38.71
+    ws.Columns("C").ColumnWidth = 15.29
+    ws.Columns("D").ColumnWidth = 15.29
+    ws.Columns("E").ColumnWidth = 14
+    ws.Columns("F").ColumnWidth = 3.71
+    
+    'Police
+    ws.Range("A12:F33").Font.size = 10
+    
     Call AssemblerNEFA_1ArrierePlanEtEntete(ws, dateAC, dateAP)
     Call AssemblerNEFA_2Lignes(ws)
     
+    With ws
+        .Activate
+        .DisplayPageBreaks = True
+        ActiveWindow.View = xlPageBreakPreview
+        ActiveWindow.Zoom = 100
+    End With
+    
     Application.StatusBar = False
+    
     Application.ScreenUpdating = True
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA_0Main", vbNullString, startTime)
+''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA_0Main", vbNullString, startTime)
     
 End Sub
 
 Sub AssemblerNEFA_1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA_1ArrierePlanEtEntete", vbNullString, 0)
+''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA_1ArrierePlanEtEntete", vbNullString, 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -870,61 +1065,36 @@ Sub AssemblerNEFA_1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP A
     Dim titre As String
     titre = Fn_TitreSelonNombreDeMois(dateAC)
     
-    'Polices
-    With ws.Range("A1:F27")
-        .Font.Name = "Verdana"
-        .Font.Color = RGB(140, 131, 117)
-    End With
-
-    With ws.Range("A1:F3")
-        .Font.size = 12
-    End With
-
-    With ws.Range("A4:F27")
-        .Font.size = 11
-    End With
-
     'Appliquer le format d'en-tête
     ws.Range("A1:F1").Merge
-    Call PositionnerCellule(ws, UCase$(wsdADMIN.Range("NomEntreprise")), 1, 1, 12, True, xlLeft)
-    ws.Range("A1").IndentLevel = 3
+    Call PositionnerCellule(ws, UCase$(wsdADMIN.Range("NomEntreprise")), 8, 1, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$("NOTES AUX ÉTATS FINANCIERS"), 9, 1, 12, True, xlLeft)
+    Call PositionnerCellule(ws, UCase$(titre), 10, 1, 12, True, xlLeft)
+    ws.Range("A8:A34").IndentLevel = 3
     
-    Call PositionnerCellule(ws, UCase$("NOTES AUX ÉTATS FINANCIERS"), 2, 1, 12, True, xlLeft)
-    ws.Range("A2").IndentLevel = 3
-    
-    Call PositionnerCellule(ws, UCase$(titre), 3, 1, 12, True, xlLeft)
-    ws.Range("A3").IndentLevel = 3
-    
-    With ws.Range("F4")
-        .HorizontalAlignment = xlRight
+    With ws.Range("F11")
+        .HorizontalAlignment = xlLeft
         .Value = "5"
     End With
     
-    With ws.Range("A4:F4").Borders(xlEdgeBottom)
+    With ws.Range("A11:F11").Borders(xlEdgeBottom)
         .LineStyle = xlContinuous
         .Color = -11511710
         .Weight = xlMedium
     End With
     
-    'Hauteur de lignes
-    ws.Rows("1:27").RowHeight = 15
-    ws.Rows("8").RowHeight = 40
-    ws.Rows("20").RowHeight = 30
-    
-    'Note # 1 - Lignes 7 @ 8
-    With ws.Range("A7")
-        .HorizontalAlignment = xlCenter
+    'Note # 1 - Lignes 14 & 15
+    With ws.Range("A14")
         .Value = "1"
         .Font.Bold = True
     End With
     
-    With ws.Range("B7")
-        .HorizontalAlignment = xlLeft
+    With ws.Range("B14")
         .Value = "CONSTITUTION DE LA SOCIÉTÉ"
         .Font.Bold = True
     End With
     
-    With ws.Range("B8:E8")
+    With ws.Range("B15:E15")
         .MergeCells = True
         .ShrinkToFit = False
         .WrapText = True
@@ -934,20 +1104,18 @@ Sub AssemblerNEFA_1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP A
                  "sur les Compagnies du Québec. Elle œuvre dans le domaine de la consultation en fiscalité."
     End With
         
-    'Note # 2 - Lignes 11 @ 15
-    With ws.Range("A11")
-        .HorizontalAlignment = xlCenter
+    'Note # 2 - Lignes 18 @ 22
+    With ws.Range("A18")
         .Value = "2"
         .Font.Bold = True
     End With
     
-    With ws.Range("B11")
-        .HorizontalAlignment = xlLeft
+    With ws.Range("B18")
         .Value = "FRAIS PAYÉS D'AVANCES"
         .Font.Bold = True
     End With
     
-    With ws.Range("B12:E12")
+    With ws.Range("B19:F19")
         .MergeCells = True
         .ShrinkToFit = False
         .WrapText = False
@@ -956,45 +1124,42 @@ Sub AssemblerNEFA_1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP A
         .Font.Bold = False
     End With
     
-    With ws.Range("B13")
+    With ws.Range("B20")
         .WrapText = False
-        .HorizontalAlignment = xlLeft
         .Value = "Cotisation et Assurances professionnelle"
         .IndentLevel = 2
         .Font.Bold = False
     End With
     
-    With ws.Range("D13")
+    With ws.Range("D20")
         .HorizontalAlignment = xlRight
         .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
         .formula = "=ROUND((2927.5+4846.14)*8/12,0)" '@TODO - 2025-10-24 @ 05:41
     End With
     
-    With ws.Range("B14")
+    With ws.Range("B21")
         .WrapText = False
-        .HorizontalAlignment = xlLeft
         .IndentLevel = 2
         .Value = "Loyer payé d'avance - 1 mois"
         .Font.Bold = False
     End With
     
-    With ws.Range("D14")
+    With ws.Range("D21")
         .HorizontalAlignment = xlRight
         .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
-        .Value = 645 '@TODO - 2025-10-24 @ 05:41
+        .Value = 645
     End With
     
-    With ws.Range("B15")
-        .HorizontalAlignment = xlLeft
+    With ws.Range("B22")
         .Value = "Total"
         .Font.Bold = True
     End With
     
-    With ws.Range("D15")
+    With ws.Range("D22")
         .HorizontalAlignment = xlRight
         .Font.Bold = True
         .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
-        .formula = "=SUM(D13:D14)" '@TODO - 2025-10-24 @ 05:41
+        .formula = "=SUM(D20:D21)" '@TODO - 2025-10-24 @ 05:41
         With .Borders(xlEdgeTop)
             .LineStyle = xlContinuous
             .ColorIndex = xlAutomatic
@@ -1009,94 +1174,80 @@ Sub AssemblerNEFA_1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP A
         End With
     End With
     
-    'Note # 3 - Lignes 18 @ 26
-    With ws.Range("A18")
-        .HorizontalAlignment = xlCenter
+    'Note # 3 - Lignes 25 @ 33
+    With ws.Range("A25")
         .Value = "3"
         .Font.Bold = True
     End With
     
-    With ws.Range("B18")
-        .HorizontalAlignment = xlLeft
+    With ws.Range("B25")
         .Value = "IMMOBILISATIONS"
         .Font.Bold = True
     End With
     
-    With ws.Range("B19:E19")
+    With ws.Range("B26:E26")
         .MergeCells = True
         .ShrinkToFit = False
         .WrapText = False
-        .HorizontalAlignment = xlLeft
         .Value = "Les immobilisations sont constitués des éléments suivants:"
     End With
     
-    With ws.Range("C20")
+    With ws.Range("C27")
         .HorizontalAlignment = xlCenter
         .Value = "Coût"
         .Font.Bold = True
     End With
     
-    With ws.Range("D20")
+    With ws.Range("D27")
         .WrapText = True
         .HorizontalAlignment = xlCenter
         .Value = "Amortissement cumulé"
         .Font.Bold = True
     End With
     
-    With ws.Range("E20")
+    With ws.Range("E27")
         .HorizontalAlignment = xlCenter
         .Value = "Valeur nette"
         .Font.Bold = True
     End With
     
-    '@TODO - Aller chercher les soldes (C21 @ D24)
-    With ws.Range("B21:B24")
-        .HorizontalAlignment = xlLeft
-    End With
-    
-    With ws.Range("C21:E24")
+    'Aller chercher les soldes (C28 @ D30)
+    With ws.Range("C28:E30")
         .HorizontalAlignment = xlRight
         .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
     End With
     
-    ws.Range("B21").Value = "Mobilier de bureau"
-    ws.Range("C21").Value = Fn_ObtenirMontantPartirPrepEF(ws.Range("B21").Value, "AC")
-    ws.Range("D21").Value = Fn_ObtenirMontantPartirPrepEF("Amort. Cum - mobil. de bureau", "AC")
-    ws.Range("B22").Value = "Matériel informatique"
-    ws.Range("C22").Value = Fn_ObtenirMontantPartirPrepEF(ws.Range("B22").Value, "AC")
-    ws.Range("D22").Value = Fn_ObtenirMontantPartirPrepEF("Amort. Cum - mat. Inform.", "AC")
-    ws.Range("B23").Value = "Logiciels"
-    ws.Range("C23").Value = Round(Fn_ObtenirMontantPartirPrepEF("Logiciel informatique", "AC"), 0)
-    ws.Range("D23").Value = Round(Fn_ObtenirMontantPartirPrepEF("Amort. Cum - logiciels", "AC"), 0)
-    ws.Range("B24").Value = "Frais de constitution"
-    ws.Range("C24").Value = Round(Fn_ObtenirMontantPartirPrepEF(ws.Range("B24").Value, "AC"), 0)
-    ws.Range("D24").Value = Round(Fn_ObtenirMontantPartirPrepEF("", "AC"), 0)
+    ws.Range("B28").Value = "Mobilier de bureau"
+    ws.Range("C28").Value = Fn_ObtenirMontantPartirPrepEF(ws.Range("B21").Value, "AC")
+    ws.Range("D28").Value = Fn_ObtenirMontantPartirPrepEF("Amort. Cum - mobil. de bureau", "AC")
     
-    With ws.Range("E21")
+    ws.Range("B29").Value = "Matériel informatique"
+    ws.Range("C29").Value = Fn_ObtenirMontantPartirPrepEF(ws.Range("B22").Value, "AC")
+    ws.Range("D29").Value = Fn_ObtenirMontantPartirPrepEF("Amort. Cum - mat. Inform.", "AC")
+    
+    ws.Range("B30").Value = "Logiciels"
+    ws.Range("C30").Value = Round(Fn_ObtenirMontantPartirPrepEF("Logiciel informatique", "AC"), 0)
+    ws.Range("D30").Value = Round(Fn_ObtenirMontantPartirPrepEF("Amort. Cum - logiciels", "AC"), 0)
+    
+    With ws.Range("E28")
         .HorizontalAlignment = xlRight
         .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
-        .formula = "=SUM(C21:D21)"
+        .formula = "=SUM(C28:D28)"
     End With
     
-    With ws.Range("E22")
+    With ws.Range("E29")
         .HorizontalAlignment = xlRight
         .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
-        .formula = "=SUM(C22:D22)"
+        .formula = "=SUM(C29:D29)"
     End With
     
-    With ws.Range("E23")
+    With ws.Range("E30")
         .HorizontalAlignment = xlRight
         .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
-        .formula = "=SUM(C23:D23)"
+        .formula = "=SUM(C30:D30)"
     End With
     
-    With ws.Range("E24")
-        .HorizontalAlignment = xlRight
-        .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
-        .formula = "=SUM(C24:D24)"
-    End With
-    
-    With ws.Range("C24:E24")
+    With ws.Range("C30:E30")
         With .Borders(xlEdgeBottom)
             .LineStyle = xlContinuous
             .ColorIndex = xlAutomatic
@@ -1105,59 +1256,51 @@ Sub AssemblerNEFA_1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP A
         End With
     End With
     
-    With ws.Range("B26")
-        .HorizontalAlignment = xlLeft
+    With ws.Range("B32")
         .Value = "Total"
         .Font.Bold = True
     End With
     
-    With ws.Range("C26")
+    With ws.Range("C32")
         .HorizontalAlignment = xlRight
         .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
         .Font.Bold = True
-        .formula = "=SUM(C21:C24)"
+        .formula = "=SUM(C28:C30)"
     End With
     
-    With ws.Range("D26")
+    With ws.Range("D32")
         .HorizontalAlignment = xlRight
         .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
         .Font.Bold = True
-        .formula = "=SUM(D21:D24)"
+        .formula = "=SUM(D28:D30)"
     End With
     
-    With ws.Range("E26")
+    With ws.Range("E32")
         .HorizontalAlignment = xlRight
         .NumberFormat = "#,##0 $;(#,##0) $; 0 $"
         .Font.Bold = True
-        .formula = "=SUM(E21:E24)"
+        .formula = "=SUM(E28:E30)"
     End With
     
-    ws.Columns("A").ColumnWidth = 8.57
-    ws.Columns("B").ColumnWidth = 38.71
-    ws.Columns("C").ColumnWidth = 15.29
-    ws.Columns("D").ColumnWidth = 15.29
-    ws.Columns("E").ColumnWidth = 14
-    ws.Columns("F").ColumnWidth = 3.71
-    
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA_1ArrierePlanEtEntete", vbNullString, startTime)
+''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA_1ArrierePlanEtEntete", vbNullString, startTime)
 
 End Sub
 
 Sub AssemblerNEFA_2Lignes(ws As Worksheet)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA_2Lignes", vbNullString, 0)
+''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA_2Lignes", vbNullString, 0)
     
     'Fixer le printArea selon le nombre de lignes ET colonnes
-    ActiveSheet.PageSetup.PrintArea = "$A$1:$F$27"
-    Debug.Print "Notes A (lignes) - $A$1:$F$27"
+    ws.PageSetup.PrintArea = "$A$1:$F$33"
+    Debug.Print "A.tmp : " & ws.Name & " - " & ws.PageSetup.PrintArea
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA_2Lignes", vbNullString, startTime)
+''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA_2Lignes", vbNullString, startTime)
 
 End Sub
 
 Sub AssemblerNEFA2_0Main(dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA2_0Main", vbNullString, 0)
+''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA2_0Main", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -1166,20 +1309,62 @@ Sub AssemblerNEFA2_0Main(dateAC As Date, dateAP As Date)
     
     Application.StatusBar = "Construction de la note 4"
     
+    'Particularités
+    'Hauteur des lignes
+    Dim lastRow As Long: lastRow = 24
+    Dim i As Long
+    For i = 1 To lastRow
+        Select Case i
+            Case 1, 12, 13
+                ws.Rows(i).RowHeight = 10
+            Case 4
+                ws.Rows(i).RowHeight = 12.75
+            Case 6, 7
+                ws.Rows(i).RowHeight = 18
+            Case 8 To 10, 24
+                ws.Rows(i).RowHeight = 15
+            Case 16
+                ws.Rows(i).RowHeight = 32.25
+            Case 21
+                ws.Rows(i).RowHeight = 38.25
+            Case Else
+                ws.Rows(i).RowHeight = 14.25
+        End Select
+    Next i
+    'Largeur des colonnes
+    ws.Columns("A").ColumnWidth = 8
+    ws.Columns("B").ColumnWidth = 36.29
+    ws.Columns("C").ColumnWidth = 0.92
+    ws.Columns("D").ColumnWidth = 0.75
+    ws.Columns("E").ColumnWidth = 10.29
+    ws.Columns("F").ColumnWidth = 10.71
+    ws.Columns("G").ColumnWidth = 11.14
+    ws.Columns("H").ColumnWidth = 14.14
+    
+    'Police
+    ws.Range("A12:J24").Font.size = 10
+    
     Call AssemblerNEFA2_1ArrierePlanEtEntete(ws, dateAC, dateAP)
     Call AssemblerNEFA2_2Lignes(ws)
+    
+    With ws
+        .Activate
+        .DisplayPageBreaks = True
+        ActiveWindow.View = xlPageBreakPreview
+        ActiveWindow.Zoom = 100
+    End With
     
     Application.StatusBar = False
     
     Application.ScreenUpdating = True
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA2_0Main", vbNullString, startTime)
+''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA2_0Main", vbNullString, startTime)
     
 End Sub
 
 Sub AssemblerNEFA2_1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA2_1ArrierePlanEtEntete", vbNullString, 0)
+''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA2_1ArrierePlanEtEntete", vbNullString, 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -1371,24 +1556,25 @@ Sub AssemblerNEFA2_1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP 
     ws.Columns("I").ColumnWidth = 15
     ws.Columns("J").ColumnWidth = 13
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA2_1ArrierePlanEtEntete", vbNullString, startTime)
+''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA2_1ArrierePlanEtEntete", vbNullString, startTime)
 
 End Sub
 
 Sub AssemblerNEFA2_2Lignes(ws As Worksheet)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA2_2Lignes", vbNullString, 0)
+''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA2_2Lignes", vbNullString, 0)
     
     'Fixer le printArea selon le nombre de lignes ET colonnes
     ws.PageSetup.PrintArea = "$A$1:$H$19"
+    Debug.Print "A2.tmp : " & ws.Name & " - " & ws.PageSetup.PrintArea; ""
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA2_2Lignes", vbNullString, startTime)
+''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA2_2Lignes", vbNullString, startTime)
 
 End Sub
 
 Sub AssemblerNEFA3_0Main(dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA3_0Main", vbNullString, 0)
+''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA3_0Main", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -1400,17 +1586,24 @@ Sub AssemblerNEFA3_0Main(dateAC As Date, dateAP As Date)
     Call AssemblerNEFA3_1ArrierePlanEtEntete(ws, dateAC, dateAP)
     Call AssemblerNEFA3_2Lignes(ws)
     
+    With ws
+        .Activate
+        .DisplayPageBreaks = True
+        ActiveWindow.View = xlPageBreakPreview
+        ActiveWindow.Zoom = 100
+    End With
+    
     Application.StatusBar = False
     
     Application.ScreenUpdating = True
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA3_0Main", vbNullString, startTime)
+''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA3_0Main", vbNullString, startTime)
     
 End Sub
 
 Sub AssemblerNEFA3_1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA3_1ArrierePlanEtEntete", vbNullString, 0)
+''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA3_1ArrierePlanEtEntete", vbNullString, 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -1817,19 +2010,19 @@ Sub AssemblerNEFA3_1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP 
     ws.Columns("N").ColumnWidth = 15.43
     ws.Columns("O").ColumnWidth = 16.57
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA3_1ArrierePlanEtEntete", vbNullString, startTime)
+''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA3_1ArrierePlanEtEntete", vbNullString, startTime)
 
 End Sub
 
 Sub AssemblerNEFA3_2Lignes(ws As Worksheet)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA3_2Lignes", vbNullString, 0)
+''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA3_2Lignes", vbNullString, 0)
     
     'Fixer le printArea selon le nombre de lignes ET colonnes
-    ActiveSheet.PageSetup.PrintArea = "$A$1:$G$50"
-    Debug.Print "Notes A2 (lignes) - $A$1:$G$50"
+    ws.PageSetup.PrintArea = "$A$1:$G$50"
+    Debug.Print "A3.tmp : " & ws.Name & " - " & ws.PageSetup.PrintArea
     
-    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA3_2Lignes", vbNullString, startTime)
+''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA3_2Lignes", vbNullString, startTime)
 
 End Sub
 
@@ -1884,16 +2077,29 @@ Sub ImprimerLigneEF(ws As Worksheet, ByRef currRow As Integer, LigneEF As String
             End If
         
         Case "T" 'Totaux
-            If InStr("E50^E60^", CodeEF & "^") = 0 Then 'Saute une ligne AVANT d'imprimer
-                currRow = currRow + 1
-            End If
-            If CodeEF <> "E60" And CodeEF <> "B10" Then 'Bordure en haut de la cellule
+'            If InStr("E50^E60^", CodeEF & "^") = 0 Then 'Saute une ligne AVANT d'imprimer
+            currRow = currRow + 1
+'            End If
+            If CodeEF = "A99" Then Stop
+            
+            If CodeEF = "B10" Then
                 With ws.Range("C" & currRow).Borders(xlEdgeTop)
                     .LineStyle = xlContinuous
                     .Color = -11511710
                     .Weight = xlThin
                 End With
                 With ws.Range("E" & currRow).Borders(xlEdgeTop)
+                    .LineStyle = xlContinuous
+                    .Color = -11511710
+                    .Weight = xlThin
+                End With
+            Else
+                With ws.Range("B" & currRow).Borders(xlEdgeTop)
+                    .LineStyle = xlContinuous
+                    .Color = -11511710
+                    .Weight = xlThin
+                End With
+                With ws.Range("D" & currRow).Borders(xlEdgeTop)
                     .LineStyle = xlContinuous
                     .Color = -11511710
                     .Weight = xlThin
@@ -1915,12 +2121,12 @@ Sub ImprimerLigneEF(ws As Worksheet, ByRef currRow As Integer, LigneEF As String
             End If
             'Bordures dans le bas de la cellule
             If CodeEF = "I01" Or CodeEF = "I03" Then
-                With ws.Range("C" & currRow).Borders(xlEdgeBottom)
+                With ws.Range("B" & currRow).Borders(xlEdgeBottom)
                     .LineStyle = xlContinuous
                     .Color = -11511710
                     .Weight = xlThin
                 End With
-                With ws.Range("E" & currRow).Borders(xlEdgeBottom)
+                With ws.Range("D" & currRow).Borders(xlEdgeBottom)
                     .LineStyle = xlContinuous
                     .Color = -11511710
                     .Weight = xlThin
@@ -1946,7 +2152,7 @@ Sub ImprimerLigneEF(ws As Worksheet, ByRef currRow As Integer, LigneEF As String
         gTotalRevenuNet_AP = ws.Range("I" & currRow).Value2
     End If
     
-    With ws.Range("B" & currRow & ":E" & currRow).Font
+    With ws.Range("A" & currRow & ":E" & currRow).Font
         If UCase$(gras) = "VRAI" Then
             .Bold = True
         End If
@@ -1959,11 +2165,11 @@ Sub ImprimerLigneEF(ws As Worksheet, ByRef currRow As Integer, LigneEF As String
     End With
     
     If CodeEF = "I02" Then
-        ws.Range("C" & currRow & ":E" & currRow).Font.Bold = False
+        ws.Range("A" & currRow & ":D" & currRow).Font.Bold = False
     End If
     
     If CodeEF = "B01" Then 'Bénéfice net / Revenu net
-        ws.Range("B" & currRow).Value = LigneEF
+        ws.Range("A" & currRow).Value = LigneEF
         ws.Range("G" & currRow).Value = gTotalRevenuNet_AC
         ws.Range("I" & currRow).Value = gTotalRevenuNet_AP
         With ws.Range("C" & currRow).Borders(xlEdgeBottom)
@@ -1980,7 +2186,7 @@ Sub ImprimerLigneEF(ws As Worksheet, ByRef currRow As Integer, LigneEF As String
     End If
     
     If CodeEF = "B20" Then 'Dividendes
-        ws.Range("B" & currRow).Value = LigneEF
+        ws.Range("A" & currRow).Value = LigneEF
         ws.Range("G" & currRow).Value = -gDividendes_Année_AC
         ws.Range("I" & currRow).Value = -gDividendes_Année_AP
         currRow = currRow + 1
@@ -2014,7 +2220,7 @@ Sub ImprimerLigneEF(ws As Worksheet, ByRef currRow As Integer, LigneEF As String
     End If
     
     If doitImprimer = True Then
-        ws.Range("B" & currRow).Value = LigneEF
+        ws.Range("A" & currRow).Value = LigneEF
         currRow = currRow + 1
     End If
     
@@ -2038,25 +2244,25 @@ Sub AppliquerMiseEnPageEF(ws As Worksheet, taillePolice As Integer) '2025-08-14 
 
 End Sub
 
-Sub ConfigurerColonnesEtLignes(ws As Worksheet, largeurCols As Variant, hauteurLignes As String) '2025-08-14 @ 09:37
-
-    Dim i As Integer
-    For i = LBound(largeurCols) To UBound(largeurCols)
-        ws.Columns(Chr(65 + i)).ColumnWidth = largeurCols(i)
-    Next i
-    ws.Rows(hauteurLignes).RowHeight = 20
-    
-End Sub
-
-Sub AjouterEnteteEF(ws As Worksheet, nomEntreprise As String, dateEF As Date, ligneDépart As Integer) '2025-08-14 @ 09:40
-
-    Call PositionnerCellule(ws, UCase$(nomEntreprise), ligneDépart, 2, 12, True, xlLeft)
-    Call PositionnerCellule(ws, UCase$("Table des Matières"), ligneDépart + 1, 2, 12, True, xlLeft)
-    Call PositionnerCellule(ws, UCase$("États Financiers"), ligneDépart + 2, 2, 12, True, xlLeft)
-    Call PositionnerCellule(ws, UCase$("Au " & Format$(dateEF, "dd mmmm yyyy")), ligneDépart + 3, 2, 12, True, xlLeft)
-    
-End Sub
-
+'Sub ConfigurerColonnesEtLignes(ws As Worksheet, largeurCols As Variant, hauteurLignes As String) '2025-08-14 @ 09:37
+'
+'    Dim i As Integer
+'    For i = LBound(largeurCols) To UBound(largeurCols)
+'        ws.Columns(Chr(65 + i)).ColumnWidth = largeurCols(i)
+'    Next i
+'    ws.Rows(hauteurLignes).RowHeight = 20
+'
+'End Sub
+'
+'Sub AjouterEnteteEF(ws As Worksheet, nomEntreprise As String, dateEF As Date, ligneDépart As Integer) '2025-08-14 @ 09:40
+'
+'    Call PositionnerCellule(ws, UCase$(nomEntreprise), ligneDépart, 2, 12, True, xlLeft)
+'    Call PositionnerCellule(ws, UCase$("Table des Matières"), ligneDépart + 1, 2, 12, True, xlLeft)
+'    Call PositionnerCellule(ws, UCase$("États Financiers"), ligneDépart + 2, 2, 12, True, xlLeft)
+'    Call PositionnerCellule(ws, UCase$("Au " & Format$(dateEF, "dd mmmm yyyy")), ligneDépart + 3, 2, 12, True, xlLeft)
+'
+'End Sub
+'
 Function Fn_TitreSelonNombreDeMois(dateAC As Date) As String '2025-08-14 @ 19:42
 
     Dim dateFinAnneeFinanciere As Date
@@ -2127,7 +2333,7 @@ End Sub
 
 Private Sub ImprimerFeuillesEF() '2025-10-28 @ 06:24
 
-    Dim noms As Variant: noms = Split(NOM_FEUILLES_EF, ",")
+    Dim noms As Variant: noms = Split(NOM_FEUILLES_EF, ", ")
     
     On Error Resume Next
     ThisWorkbook.Worksheets(noms).PrintOut
@@ -2139,7 +2345,7 @@ End Sub
 
 Private Sub SauvegarderFeuillesEFenPDF() '2025-10-28 @ 06:58
 
-    Dim noms As Variant: noms = Split(NOM_FEUILLES_EF, ",")
+    Dim noms As Variant: noms = Split(NOM_FEUILLES_EF, ", ")
     Dim chemin As String
     Dim feuilles As Collection
     Dim i As Long

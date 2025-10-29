@@ -1,4 +1,4 @@
-﻿📘 Journal typographique — 10/28/2025 07:26:22
+﻿📘 Journal typographique — 10/29/2025 10:53:40
 
 🔧 Fichier : clsControlWrapper.cls
 
@@ -182,8 +182,8 @@
 
 🔧 Fichier : modGL_PrepEF.bas
    ✅ Remplacé : .borders ➜ .Borders
+   ✅ Remplacé : .interior ➜ .Interior
    ✅ Remplacé : .cells ➜ .Cells
-   ✅ Remplacé : .row ➜ .Row
    ✅ Remplacé : .value ➜ .Value
    ✅ Remplacé : .range ➜ .Range
    ✅ Remplacé : .font ➜ .Font
@@ -283,6 +283,11 @@
 🔧 Fichier : modTEC_TDB.bas
    ✅ Remplacé : .borders ➜ .Borders
    ✅ Remplacé : .row ➜ .Row
+
+🔧 Fichier : modTemp.bas
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
+   ✅ Remplacé : .font ➜ .Font
 
 🔧 Fichier : Module1.bas
 

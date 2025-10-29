@@ -95,7 +95,7 @@ Sub VerifierVersionApplication(path As String, versionApplication As String) '20
                vbCritical, _
                "Version de l'application incompatible avec les données"
                
-        Call FermerApplicationNormalement(modFunctions.Fn_UtilisateurWindows())
+        Call FermerApplicationNormalement(modFunctions.Fn_UtilisateurWindows(), "Erreur de Version")
     End If
     Exit Sub
 
@@ -105,7 +105,7 @@ ErreurLecture:
             vbExclamation, _
             "Impossible de lire la version des données"
     
-    Call FermerApplicationNormalement(modFunctions.Fn_UtilisateurWindows())
+    Call FermerApplicationNormalement(modFunctions.Fn_UtilisateurWindows(), "Impossible de comparer la Version")
     
 End Sub
 
@@ -317,7 +317,7 @@ Attribute VerifierDerniereActivite.VB_Description = "Vérifie l'inactivité et f
 
     'Vérification de l'initialisation
     If gDerniereActivite = 0 Then
-        If gMODE_DEBUG Then Debug.Print "[modAppli:VerifierDerniereActivite] gDerniereActivite non initialisée"
+        If gMODE_DEBUG Then Debug.Print Now() & " [modAppli:VerifierDerniereActivite] gDerniereActivite non initialisée"
         Exit Sub
     End If
 
@@ -325,7 +325,7 @@ Attribute VerifierDerniereActivite.VB_Description = "Vérifie l'inactivité et f
     Dim minutesInactives As Double
     minutesInactives = Round(Fn_MinutesDepuisDerniereActivite(), 1)
 
-    If gMODE_DEBUG Then Debug.Print "[modAppli:VerifierDerniereActivite] Vérification @ " & minutesInactives & " min. - " & _
+    If gMODE_DEBUG Then Debug.Print Now() & " [modAppli:VerifierDerniereActivite] Vérification @ " & minutesInactives & " min. - " & _
                                     "Fréq. vérification = "; gFREQUENCE_VERIFICATION_INACTIVITE & " min., " & _
                                     "Durée max. sans activité = " & gMAXIMUM_MINUTES_INACTIVITE & " min., " & _
                                     "Délai de grâce (dernière chance) = " & gDELAI_GRACE_SECONDES & " sec."
@@ -356,14 +356,14 @@ Attribute VerifierDerniereActivite.VB_Description = "Vérifie l'inactivité et f
 
     'Fermeture si délai dépassé, on passe à la dernier chance...
     If minutesInactives >= gMAXIMUM_MINUTES_INACTIVITE Then
-        If gMODE_DEBUG Then Debug.Print "[modAppli:VerifierDerniereActivite] Inactivité trop longue (" & Format$(minutesInactives, "0") & " minutes) — fermeture de l'application"
+        If gMODE_DEBUG Then Debug.Print Now() & " [modAppli:VerifierDerniereActivite] Inactivité trop longue (" & Format$(minutesInactives, "0") & " minutes) — fermeture de l'application"
         gFermeturePlanifiee = GetProchaineFermeture()
-        If gMODE_DEBUG Then Debug.Print "[modAppli:VerifierDerniereActivite] Avant l'ajout de " & gDELAI_GRACE_SECONDES & " secondes, gFermeture = " & Format(gFermeturePlanifiee, "; hh: mm: ss "); vbNullString
+        If gMODE_DEBUG Then Debug.Print Now() & " [modAppli:VerifierDerniereActivite] Avant l'ajout de " & gDELAI_GRACE_SECONDES & " secondes, gFermeture = " & Format(gFermeturePlanifiee, "; hh: mm: ss "); vbNullString
         gFermeturePlanifiee = Now + TimeSerial(0, 0, gDELAI_GRACE_SECONDES)
-        If gMODE_DEBUG Then Debug.Print "[modAppli:VerifierDerniereActivite] Après l'ajout de " & gDELAI_GRACE_SECONDES & " secondes, gFermeture = " & Format(gFermeturePlanifiee, "hh:mm:ss")
+        If gMODE_DEBUG Then Debug.Print Now() & " [modAppli:VerifierDerniereActivite] Après l'ajout de " & gDELAI_GRACE_SECONDES & " secondes, gFermeture = " & Format(gFermeturePlanifiee, "hh:mm:ss")
         
         On Error Resume Next
-        If gMODE_DEBUG Then Debug.Print "[modAppli:VerifierDerniereActivite] OnTime prévu pour : " & Format(gFermeturePlanifiee, "hh:mm:ss")
+        If gMODE_DEBUG Then Debug.Print Now() & " [modAppli:VerifierDerniereActivite] OnTime prévu pour : " & Format(gFermeturePlanifiee, "hh:mm:ss")
         Application.OnTime gFermeturePlanifiee, "FermerApplicationInactive"
         On Error GoTo 0
         
@@ -390,7 +390,7 @@ Public Sub PlanifierVerificationDerniereActivite() '2025-07-01 @ 13:53
     
     gProchaineVerification = Now + TimeSerial(0, gFREQUENCE_VERIFICATION_INACTIVITE, 0)
     Application.OnTime gProchaineVerification, "VerifierDerniereActivite"
-    If gMODE_DEBUG Then Debug.Print "[modAppli:PlanifierVerificationDerniereActivite] Prochaine vérification à " & Format(gProchaineVerification, "hh:mm:ss")
+    If gMODE_DEBUG Then Debug.Print Now() & " [modAppli:PlanifierVerificationDerniereActivite] Prochaine vérification est prévue à " & Format(gProchaineVerification, "hh:mm:ss")
     
 End Sub
 
@@ -399,16 +399,18 @@ Public Sub FermerApplicationInactive() '2025-07-02 @ 06:19
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:FermerApplicationInactive", vbNullString, 0)
     
     'Ajoute un log pour vérification
-    If gMODE_DEBUG Then Debug.Print "[modAppli:FermerApplicationInactive] Fermeture automatique déclenchée à : " & Format(Now, "hh:mm:ss")
+    If gMODE_DEBUG Then Debug.Print Now() & " [modAppli:FermerApplicationInactive] Fermeture AUTOMATIQUE déclenchée à : " & Format(Now, "hh:mm:ss")
 
+    Call modDev_Utils.EnregistrerLogApplication("modAppli:FermerApplicationInactive", vbNullString, startTime)
+    
     'Appel direct de la procédure de fermeture
-    Call FermerApplicationNormalement(modFunctions.Fn_UtilisateurWindows())
+    Call FermerApplicationNormalement(modFunctions.Fn_UtilisateurWindows(), "Application est Inactive")
     
 End Sub
 
 Public Sub RelancerTimer() '2025-07-02 @ 06:43
 
-    If gMODE_DEBUG Then Debug.Print "[modAppli:RelancerTimer] Appel de 'ufConfirmationFermeture.RafraichirTimer'"
+    If gMODE_DEBUG Then Debug.Print Now() & " [modAppli:RelancerTimer] Appel de 'ufConfirmationFermeture.RafraichirTimer'"
     ufConfirmationFermeture.RafraichirTimer
     
 End Sub
@@ -427,7 +429,7 @@ Public Sub EnregistrerActiviteAuLog(ByVal message As String) '2025-07-03 @ 10:29
     fileNum = FreeFile
 
     Open cheminLog For Append As #fileNum
-    Print #fileNum, "[" & Format(Now, "yyyy-mm-dd hh:nn:ss") & "] [" & modFunctions.Fn_UtilisateurWindows & "] " & message
+    Print #fileNum, "[" & Format(Now, "yyyy-mm-dd hh:nn:ss") & "] [" & ThisWorkbook.Name & "] [" & modFunctions.Fn_UtilisateurWindows & "] " & message
     Close #fileNum
     
 End Sub
@@ -449,7 +451,7 @@ End Sub
 Sub VerifierInactiviteUserForm() '2025-08-29 @ 18:32
 
     If Fn_MinutesDepuisDerniereActivite() >= gMAXIMUM_MINUTES_INACTIVITE Then
-        If gMODE_DEBUG Then Debug.Print "[modAppli:VerifierInactiviteUserForm] Inactivité détectée dans UserForm — fermeture"
+        If gMODE_DEBUG Then Debug.Print Now() & " [modAppli:VerifierInactiviteUserForm] Inactivité détectée dans UserForm — fermeture"
         Unload ufSaisieHeures
         Call FermerApplicationInactive
     Else

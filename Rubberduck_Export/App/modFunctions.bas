@@ -2066,7 +2066,7 @@ Function Fn_DateNormalisee(chaine As String) As Variant '2025-06-12 @ 08:22
     parties = Split(Replace(chaine, "-", "/"), "/")
     nbParties = UBound(parties) - LBound(parties) + 1
 
-    On Error GoTo Erreur
+    On Error GoTo erreur
 
     Select Case nbParties
         Case 1 ' Juste le jour
@@ -2109,7 +2109,7 @@ Function Fn_DateNormalisee(chaine As String) As Variant '2025-06-12 @ 08:22
     Fn_DateNormalisee = resultDate
     Exit Function
 
-Erreur:
+erreur:
     Fn_DateNormalisee = CVErr(xlErrValue)
     
 End Function

@@ -41,10 +41,14 @@ Public Const INTERVALLE_MINUTES_SAUVEGARDE As Double = 15
 Public gDerniereActivite As Date
 Public gProchaineVerification As Date
 Public gFermeturePlanifiee As Date
-Public Const gFREQUENCE_VERIFICATION_INACTIVITE As Long = 15
-Public Const gMAXIMUM_MINUTES_INACTIVITE As Long = 60
-Public Const gDELAI_GRACE_SECONDES As Long = 300
-Public Const gHEURE_DEBUT_SURVEILLANCE As Long = 20
+Public Const gFREQUENCE_VERIFICATION_INACTIVITE As Long = 3 '2025-10-29 @ 04:55
+Public Const gMAXIMUM_MINUTES_INACTIVITE As Long = 6
+Public Const gDELAI_GRACE_SECONDES As Long = 60
+Public Const gHEURE_DEBUT_SURVEILLANCE As Long = 5
+'Public Const gFREQUENCE_VERIFICATION_INACTIVITE As Long = 15
+'Public Const gMAXIMUM_MINUTES_INACTIVITE As Long = 60
+'Public Const gDELAI_GRACE_SECONDES As Long = 300
+'Public Const gHEURE_DEBUT_SURVEILLANCE As Long = 20
 
 'On affiche ou pas certains Debug.print (mécanisme de fermeture automatique de l'application
 Public Const gMODE_DEBUG As Boolean = True

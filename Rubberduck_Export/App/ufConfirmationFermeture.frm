@@ -66,7 +66,7 @@ Private Sub shpFermerMaintenant_Click() '2025-07-01 @ 15:46
     Debug.Print "[shpFermerMaintenant_Click] Utilisateur a cliqué sur 'Fermer maintenant' à : " & Format(Now, "hh:mm:ss")
     
     Me.Hide
-    Call FermerApplicationNormalement(modFunctions.Fn_UtilisateurWindows())
+    Call FermerApplicationNormalement(modFunctions.Fn_UtilisateurWindows(), "Application est inactive - Fermeture confirmée")
     
 End Sub
 
@@ -80,10 +80,10 @@ Public Sub AfficherMessage(Optional minutesInactives As Double = 0) '2025-07-01 
     
     tFermeture = Now + TimeSerial(0, 0, gDELAI_GRACE_SECONDES)
     gFermeturePlanifiee = tFermeture
-    Debug.Print "[AfficherMessage] gFermeturePlanifiee synchronisé à : " & Format(gFermeturePlanifiee, "hh:mm:ss")
+    Debug.Print Now() & " [AfficherMessage] gFermeturePlanifiee synchronisé à : " & Format(gFermeturePlanifiee, "hh:mm:ss")
     lblTimer.Caption = vbNullString
-    Debug.Print "[AfficherMessage] Affichage du formulaire de confirmation à : " & Format(Now, "hh:mm:ss")
-    Debug.Print "[AfficherMessage] Fermeture prévue à (tFermeture) : " & Format(tFermeture, "hh:mm:ss")
+    Debug.Print Now() & " [AfficherMessage] Affichage du formulaire de confirmation à : " & Format(Now, "hh:mm:ss")
+    Debug.Print Now() & " [AfficherMessage] Fermeture prévue à (tFermeture) : " & Format(tFermeture, "hh:mm:ss")
     Call ufConfirmationFermeture.RafraichirTimer
     
     Me.StartUpPosition = 1
@@ -94,7 +94,7 @@ End Sub
 Public Sub RafraichirTimer() '2025-07-02 @ 06:56
 
     If tFermeture = 0 Then
-        Debug.Print "RafraichirTimer déclenché alors que tFermeture = 0 — arrêt immédiat"
+        Debug.Print Now() & " RafraichirTimer déclenché alors que tFermeture = 0 — arrêt immédiat"
         Exit Sub
     End If
     
@@ -102,7 +102,7 @@ Public Sub RafraichirTimer() '2025-07-02 @ 06:56
     delta = DateDiff("s", Now, tFermeture)
     
     'Journal : moment d’exécution et delta
-    Debug.Print "[RafraichirTimer] RafraichirTimer à " & Format(Now, "hh:mm:ss") & _
+    Debug.Print Now() & " [RafraichirTimer] RafraichirTimer à " & Format(Now, "hh:mm:ss") & _
                 " | tFermeture : " & Format(tFermeture, "hh:mm:ss") & _
                 " | Secondes restantes : " & delta
                 
@@ -110,7 +110,7 @@ Public Sub RafraichirTimer() '2025-07-02 @ 06:56
         lblTimer.Caption = "Temps écoulé — fermeture en cours..."
         lblTimer.ForeColor = RGB(120, 0, 0)
         'Journal : fin du countdown
-        Debug.Print "Temps écoulé — arrêt du timer visuel"
+        Debug.Print Now() & " Temps écoulé — arrêt du timer visuel"
         Exit Sub
     End If
 
@@ -135,7 +135,7 @@ Public Sub RafraichirTimer() '2025-07-02 @ 06:56
     'Replanification dans 1 s
     tProchainTick = Now + TimeSerial(0, 0, 1)
     'Journal : programmation du prochain appel
-    Debug.Print "[RafraichirTimer] Prochain appel prévu à : " & Format(tProchainTick, "hh:mm:ss")
+    Debug.Print Now() & " [RafraichirTimer] Prochain appel prévu à : " & Format(tProchainTick, "hh:mm:ss")
     Application.OnTime tProchainTick, "RelancerTimer"
     
 End Sub

@@ -2,15 +2,19 @@ Option Explicit
 
 Private Sub Workbook_Open()
 
-    If Dir(Environ("TEMP") & "\APP_FermetureEnCours.txt") <> "" Then '2025-10-24 @ 15:34
-        Kill Environ("TEMP") & "\APP_FermetureEnCours.txt"
-        Exit Sub 'Ne pas relancer l'application
-    End If
-
+'    If Dir(Environ("TEMP") & "\APP_FermetureEnCours.txt") <> "" Then '2025-10-24 @ 15:34
+'        Kill Environ("TEMP") & "\APP_FermetureEnCours.txt"
+'        MsgBox "L'application est en cours de fermeture...", _
+'               vbCritical, _
+'               "Contrôle de l'application"
+'        ThisWorkbook.Close SaveChanges:=False
+'        Exit Sub 'Ne pas relancer l'application
+'    End If
+'
     Dim utilisateurWindows As String
     utilisateurWindows = modFunctions.Fn_UtilisateurWindows
-    'Chemin du dossier contenant les fichiers PROD - 2025-08-12 @ 05:51
     
+    'Chemin du dossier contenant les fichiers PROD - 2025-08-12 @ 05:51
     Dim cheminSourcePROD As String
     cheminSourcePROD = Fn_RepertoireBaseApplication(utilisateurWindows)
     
@@ -21,7 +25,7 @@ Private Sub Workbook_Open()
                    "Veuillez ressayer dans 5 à 10 minutes SVP", _
                    vbCritical, _
                    "L'application APP n'est pas disponible"
-            Call modMenu.FermerApplicationNormalement(utilisateurWindows)
+            Call modMenu.FermerApplicationNormalement(utilisateurWindows, "Application non disponible")
         End If
     End If
 
