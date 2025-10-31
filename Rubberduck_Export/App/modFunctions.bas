@@ -103,31 +103,44 @@ Function Fn_ClientIDAPartirDuNomDeClient(nomClient As String) '2024-02-14 @ 06:0
 
 End Function
 
-Function Fn_CellSpecifiqueDeBDClient(nomClient As String, ByRef colNumberSearch As Integer, ByRef colNumberData As Integer) As String '2025-01-12 @ 08:12
+Function Fn_CellSpecifiqueDeBDClient(nomClient As String, ByRef colNumberSearch As Integer, ByRef colNumberData As Integer) As String '2025-10-31 @ 05:37
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFunctions:Fn_CellSpecifiqueDeBDClient", nomClient, 0)
     
+    nomClient = Trim(nomClient)
     Dim ws As Worksheet: Set ws = wsdBD_Clients
+    If ws Is Nothing Then
+        MsgBox "La feuille 'Clients' est introuvable !", vbCritical
+        Exit Function
+    End If
     
+    Dim dynamicRange As Range
     On Error Resume Next
-    Dim dynamicRange As Range: Set dynamicRange = ws.Range("dnrClients_All")
+    Set dynamicRange = ws.Range("dnrClients_All")
     On Error GoTo 0
-
-    If ws Is Nothing Or dynamicRange Is Nothing Then
-        MsgBox "La feuille 'Clients' ou le DynamicRange 'dnrClients_All' n'a pas été trouvé!", _
-            vbExclamation
+    
+    If dynamicRange Is Nothing Then
+        MsgBox "Le DynamicRange 'dnrClients_All' n'a pas été trouvé!", _
+            vbCritical, _
+            "Problème important avec l'application"
         Exit Function
     End If
     
     'Using XLOOKUP to find the result directly, requires EXACT match (5th parameter = 0 ) - 2025-01-12 @ 14:49
+    If colNumberSearch < 1 Or colNumberSearch > dynamicRange.Columns.count Then Exit Function
+    If colNumberData < 1 Or colNumberData > dynamicRange.Columns.count Then Exit Function
     Dim result As Variant
-    result = Application.WorksheetFunction.XLookup(nomClient, _
-                                                   dynamicRange.Columns(colNumberSearch), _
-                                                   dynamicRange.Columns(colNumberData), _
-                                                   "Not Found", _
-                                                   0, _
-                                                   1)
-    If result <> "Not Found" Then
+    result = Application.XLookup(nomClient, _
+                dynamicRange.Columns(colNumberSearch), _
+                dynamicRange.Columns(colNumberData), _
+                "Not Found", 0, 1)
+'    result = Application.WorksheetFunction.XLookup(nomClient, _
+'                                                   dynamicRange.Columns(colNumberSearch), _
+'                                                   dynamicRange.Columns(colNumberData), _
+'                                                   "Not Found", _
+'                                                   0, _
+'                                                   1)
+    If Not result = "Not Found" Then
         Fn_CellSpecifiqueDeBDClient = result
     Else
         MsgBox _
@@ -137,7 +150,6 @@ Function Fn_CellSpecifiqueDeBDClient(nomClient As String, ByRef colNumberSearch 
             Buttons:=vbCritical
     End If
     
-    'Libérer la mémoire
     Set dynamicRange = Nothing
     Set ws = Nothing
     
@@ -590,10 +602,8 @@ Public Function Fn_Find_Row_Number_TECID(ByVal uniqueID As Variant, ByVal lookup
         Set cell = lookupRange.Find(What:=uniqueID, LookIn:=xlValues, LookAt:=xlWhole)
         If Not cell Is Nothing Then
             Fn_Find_Row_Number_TECID = cell.row
-            Call modDev_Utils.EnregistrerLogApplication("modFunctions:Fn_Find_Row_Number_TECID" & " - Row # = " & Fn_Find_Row_Number_TECID, -1)
         Else
             Fn_Find_Row_Number_TECID = -1 'Not found
-            Call modDev_Utils.EnregistrerLogApplication("modFunctions:Fn_Find_Row_Number_TECID" & " - TECID = WAS NOT FOUND...", -1)
         End If
     On Error GoTo 0
     
@@ -778,7 +788,7 @@ Function Fn_ValiderCourriel(ByVal adresses As String) As Boolean '2024-10-26 @ 1
     
     'Initialisation de l'expression régulière pour valider une adresse courriel
     With regex
-        .pattern = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
+        .Pattern = "^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,}$"
         .IgnoreCase = True
         .Global = False
     End With
@@ -2257,4 +2267,50 @@ Function Fn_ObtenirOuCreerFeuille(ByVal nomFeuille As String) As Worksheet '2025
     Set Fn_ObtenirOuCreerFeuille = ws
     
 End Function
+
+Function Fn_ContexteActifComplet() As String '2025-10-30 @ 06:20
+
+    Dim nomFeuille As String: nomFeuille = ""
+    Dim nomFormulaire As String: nomFormulaire = ""
+    Dim nomControle As String: nomControle = ""
+
+    'Feuille active (sécurisée)
+    On Error Resume Next
+    If Not Application.ActiveSheet Is Nothing Then
+        nomFeuille = Application.ActiveSheet.Name
+    End If
+    On Error GoTo 0
+
+    'Formulaire actif + contrôle actif
+    Dim uf As Object
+    For Each uf In VBA.UserForms
+        If uf.Visible Then
+            nomFormulaire = uf.Name
+            On Error Resume Next
+            If Not uf.ActiveControl Is Nothing Then
+                nomControle = uf.ActiveControl.Name
+            End If
+            On Error GoTo 0
+            Exit For
+        End If
+    Next uf
+
+    'Construction du message
+    Dim message As String
+    If nomFeuille <> vbNullString Then
+        message = message & "Feuille: " & nomFeuille & " / "
+    End If
+    If nomFormulaire <> vbNullString Then
+        message = message & "Formulaire: " & nomFormulaire & " / "
+    End If
+    If nomControle <> vbNullString Then
+        message = message & "Contrôle: " & nomControle
+    End If
+    If Right(message, 3) = " / " Then
+        message = Left(message, Len(message) - 3)
+    End If
+    Fn_ContexteActifComplet = message
+    
+End Function
+
 

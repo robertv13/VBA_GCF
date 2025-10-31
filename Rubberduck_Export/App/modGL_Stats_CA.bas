@@ -162,12 +162,12 @@ Sub AjusterTableauNouvelleAnnee(ws As Worksheet, dateFinAnnée As Date) '2025-08
     
     'Ajustement de la surbrillance pour les 3 dernières années
     With Range("C9:C24").Interior
-        .pattern = xlNone
+        .Pattern = xlNone
         .TintAndShade = 0
         .PatternTintAndShade = 0
     End With
     With Range("C10:C12").Interior
-        .pattern = xlSolid
+        .Pattern = xlSolid
         .PatternColorIndex = xlAutomatic
         .Color = 5296274
         .TintAndShade = 0

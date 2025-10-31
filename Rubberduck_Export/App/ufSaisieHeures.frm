@@ -259,8 +259,6 @@ End Sub
 
 Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:txtDate_BeforeUpdate", vbNullString, 0)
-    
     'Routine de validation de date
     Dim valeur As Variant
     valeur = Fn_DateNormalisee(Me.txtDate.Value)
@@ -310,14 +308,11 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
     
     Cancel = False
     
-    Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:txtDate_BeforeUpdate", vbNullString, startTime)
-    
 End Sub
 
 Private Sub txtDate_AfterUpdate()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:txtDate_AfterUpdate", vbNullString, 0)
-    
     
     If IsDate(ufSaisieHeures.txtDate.Value) Then
         Dim dateStr As String, dateFormated As Date
@@ -365,13 +360,9 @@ End Sub
 
 Private Sub txtActivite_AfterUpdate()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:txtActivite_AfterUpdate", Me.txtActivite.Value, 0)
-    
     Me.txtActivite.Value = Fn_ChaineNettoyeeCaracteresSpeciaux(Me.txtActivite.Value)
     
     Call MettreAJourEtatBoutons
-    
-    Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:txtActivite_AfterUpdate", Me.txtTECID, startTime)
     
 End Sub
 
@@ -428,8 +419,6 @@ End Sub
 
 Sub txtHeures_AfterUpdate()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:txtHeures_AfterUpdate", Me.txtHeures.Value, 0)
-    
     'Validation des heures saisies
     Dim strHeures As String
     strHeures = Me.txtHeures.Value
@@ -440,8 +429,6 @@ Sub txtHeures_AfterUpdate()
     
     Call MettreAJourEtatBoutons
     
-    Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:txtHeures_AfterUpdate", Me.txtTECID, startTime)
-    
 End Sub
 
 Private Sub chkFacturable_AfterUpdate()
@@ -449,7 +436,6 @@ Private Sub chkFacturable_AfterUpdate()
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:chkFacturable_AfterUpdate", vbNullString, 0)
     
     If Me.chkFacturable.Value <> valeurSauveeEstFacturable Then '2025-03-25 @ 13:05
-        Debug.Print "chkFacturable_AfterUpdate : ", Me.chkFacturable.Value, " vs ", valeurSauveeEstFacturable, " - TECID=" & Me.txtTECID
         If Me.txtTECID = vbNullString Then
             Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True) '2024-10-06 @ 14:33
         Else

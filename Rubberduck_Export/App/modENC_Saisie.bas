@@ -709,7 +709,7 @@ Sub NettoyerFeuilleEncaissement()
     End If
         
     With wshENC_Saisie.Range("F5:H5, K5, F7, K7, F9:I9").Interior '2024-08-25 @ 09:21
-            .pattern = xlNone
+            .Pattern = xlNone
             .TintAndShade = 0
             .PatternTintAndShade = 0
     End With

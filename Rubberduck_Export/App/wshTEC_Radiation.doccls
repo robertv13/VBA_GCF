@@ -106,6 +106,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             Application.EnableEvents = True
         Else
             MsgBox "Valeur non trouvée !!!", vbCritical
+            Exit Sub
         End If
         Application.EnableEvents = False
         Target.Interior.Color = gCOULEUR_BASE_TEC

@@ -865,7 +865,7 @@ Sub EffacerCellulesSaisieDEB()
     
     'Toutes les cellules sont sans surbrillance (élimine le vert pâle)
     With ws.Range("F4:H4, J4:M4, O4, F6:J6, M6, O6, E9:O23").Interior
-        .pattern = xlNone
+        .Pattern = xlNone
         .TintAndShade = 0
         .PatternTintAndShade = 0
     End With

@@ -544,7 +544,7 @@ Sub InsererBoutonRetourMenu() '2025-07-01 @ 08:54
         .TextFrame2.TextRange.Font.Bold = True
         .TextFrame2.TextRange.Font.Fill.ForeColor.RGB = RGB(255, 255, 255) 'Blanc
         .Placement = xlFreeFloating
-        .OnAction = "shpRetournerAuMenu_Click"
+        .OnAction = "modGL_Rapport.shpRetournerAuMenu_Click"
     End With
 
 End Sub
@@ -583,7 +583,7 @@ Sub AjusterEntetesEtColonnesParCompte(ws As Worksheet)
             .Font.size = 9
             .HorizontalAlignment = xlCenter
             With .Interior
-                .pattern = xlSolid
+                .Pattern = xlSolid
                 .PatternColorIndex = xlAutomatic
                 .ThemeColor = xlThemeColorDark1
                 .TintAndShade = -0.149998474074526
@@ -651,7 +651,7 @@ Sub AjusterEntetesEtColonnesParEcriture(ws As Worksheet)
             .Font.size = 9
             .HorizontalAlignment = xlCenter
             With .Interior
-                .pattern = xlSolid
+                .Pattern = xlSolid
                 .PatternColorIndex = xlAutomatic
                 .ThemeColor = xlThemeColorDark1
                 .TintAndShade = -0.149998474074526
@@ -732,7 +732,7 @@ Sub AjusterEntetesEtColonnesParDateSaisie(ws As Worksheet)
             .Font.size = 9
             .HorizontalAlignment = xlCenter
             With .Interior
-                .pattern = xlSolid
+                .Pattern = xlSolid
                 .PatternColorIndex = xlAutomatic
                 .ThemeColor = xlThemeColorDark1
                 .TintAndShade = -0.149998474074526

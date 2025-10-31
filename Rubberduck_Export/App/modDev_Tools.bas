@@ -1322,15 +1322,15 @@ Sub DemarrerSauvegardeCodeVBAAutomatique() '2025-03-03 @ 07:19
     
 End Sub
 
-Sub ArreterSauvegardeCodeVBA()
-
-    'Annuler la prochaine exécution prévue
-    On Error Resume Next
-    Application.OnTime gNextBackupTime, "DemarrerSauvegardeCodeVBAAutomatique", , False
-    On Error GoTo 0
-    
-End Sub
-
+'Sub ArreterSauvegardeCodeVBA()
+'
+'    'Annuler la prochaine exécution prévue
+'    On Error Resume Next
+'    Application.OnTime gNextBackupTime, "DemarrerSauvegardeCodeVBAAutomatique", , False
+'    On Error GoTo 0
+'
+'End Sub
+'
 Sub ExporterCodeVBA() '2025-03-11 @ 06:47
 
     'Définir le dossier où enregistrer les modules
@@ -1624,14 +1624,14 @@ Sub zz_InventaireProceduresEtFonctions() '2025-08-11 @ 10:54
     ' Initialiser expressions régulières
     Set regexDecl = CreateObject("VBScript.RegExp")
     With regexDecl
-        .pattern = "^\s*(Public|Private)?\s*(Sub|Function|Property\s+(Get|Let|Set))"
+        .Pattern = "^\s*(Public|Private)?\s*(Sub|Function|Property\s+(Get|Let|Set))"
         .IgnoreCase = True
         .Global = False
     End With
 
     Set regexCall = CreateObject("VBScript.RegExp")
     With regexCall
-        .pattern = "(OnAction\s*=\s*""[^""]+""|Application\.Run\s*""[^""]+""|CallByName\s*\(.*?""[^""]+""[^)]*\))"
+        .Pattern = "(OnAction\s*=\s*""[^""]+""|Application\.Run\s*""[^""]+""|CallByName\s*\(.*?""[^""]+""[^)]*\))"
         .IgnoreCase = True
         .Global = True
     End With
@@ -1815,7 +1815,7 @@ End Function
 Function Fn_ExtraireTypeEtPortee(ligne As String, ByRef TypeRetour As String, ByRef PorteeRetour As String) '2025-07-15 @ 22:56
 
     Dim Reg As Object: Set Reg = CreateObject("VBScript.RegExp")
-    Reg.pattern = "^\s*(Public|Private)?\s*(Sub|Function|Property\s+(Get|Let|Set))"
+    Reg.Pattern = "^\s*(Public|Private)?\s*(Sub|Function|Property\s+(Get|Let|Set))"
     Reg.IgnoreCase = True
     Reg.Global = False
 

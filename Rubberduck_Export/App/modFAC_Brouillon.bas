@@ -147,7 +147,7 @@ Sub CreerNouvelleFactureBrouillon() 'Clear contents
                         wshFAC_Brouillon.Range("S" & r).Value = arr(ii - 43, 2)
                         If wshFAC_Brouillon.Range("S" & r).Value <> 0 Then
                             With wshFAC_Brouillon.Range("S" & r).Interior
-                                .pattern = xlNone
+                                .Pattern = xlNone
                                 .TintAndShade = 0
                                 .PatternTintAndShade = 0
                             End With
@@ -405,7 +405,7 @@ Sub MettreEnPlaceCellulesFACBrouillon()
         
         'ON élimine les cellules qui pourraient avoir du vert pâle...
         With .Range("E3:F3,O3,O9,L11:N45,O48:O50,M48:M50").Interior
-            .pattern = xlNone
+            .Pattern = xlNone
             .TintAndShade = 0
             .PatternTintAndShade = 0
         End With

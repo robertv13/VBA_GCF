@@ -301,22 +301,6 @@ Sub AfficherBoutonAfficher()
     
 End Sub
 
-'Sub AfficherBoutonAutreClient()
-'
-'    Dim shp As Shape: Set shp = wshFAC_Interrogation.Shapes("shpSaisirAutreClient")
-'
-'    Application.EnableEvents = False
-'
-'    shp.Top = 70
-'    shp.Visible = True
-'
-'    Application.EnableEvents = True
-'
-'    'Libérer la mémoire
-'    Set shp = Nothing
-'
-'End Sub
-'
 Sub AfficherMenuContextuelFACInterrogation(ByVal Target As Range) '2025-01-28 @ 10:19
 
     Dim menu As CommandBar
@@ -1426,7 +1410,7 @@ Sub AfficherNouvelleFeuillePourCC(invNo As String, nomClient As String, dateFact
 
     'Entête un peu plus foncé
     With ws.Range("C8:I8").Interior
-        .pattern = xlSolid
+        .Pattern = xlSolid
         .PatternColorIndex = xlAutomatic
         .ThemeColor = xlThemeColorAccent6
         .TintAndShade = 0.399975585192419
@@ -1435,7 +1419,7 @@ Sub AfficherNouvelleFeuillePourCC(invNo As String, nomClient As String, dateFact
 
     'Zone de données sans couleur
     With ws.Range("C9:I" & lastRowUsed - 2).Interior
-        .pattern = xlNone
+        .Pattern = xlNone
         .TintAndShade = 0
         .PatternTintAndShade = 0
     End With
@@ -1567,7 +1551,7 @@ Sub PreparerRapportTECFactures(numeroFacture As String)
         'Corps du rapport
         .Range("A5:D" & r).VerticalAlignment = xlCenter
         With .Range("A4:D4").Interior
-            .pattern = xlSolid
+            .Pattern = xlSolid
             .PatternColorIndex = xlAutomatic
             .Color = 12611584
             .TintAndShade = 0

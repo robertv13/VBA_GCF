@@ -251,7 +251,7 @@ Sub AfficherValeurTEC(cutoffDate As String, maxDate As Date)
         ws.Range("H" & currentRow).Value = Format$(totalValeurTEC, "###,##0.00 $")
         If i = 0 Then
             With ws.Range("H" & currentRow).Interior
-                .pattern = xlSolid
+                .Pattern = xlSolid
                 .PatternColorIndex = xlAutomatic
                 .Color = 65535
                 .TintAndShade = 0

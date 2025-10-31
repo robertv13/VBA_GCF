@@ -151,24 +151,15 @@ Sub FermerApplicationNormalement(ByVal userName As String, flag As String, Optio
         
     Call modDev_Utils.EnregistrerLogApplication(vbNullString, vbNullString, -1)
 
-    'Fermer la vérification d'inactivité
-    If gProchaineVerification > 0 Then
-        On Error Resume Next
-        Application.OnTime gProchaineVerification, "VerifierDerniereActivite", , False
-        On Error GoTo 0
-    End If
-
     'Fermer la sauvegarde automatique du code VBA (seul le développeur déclenche la sauvegarde automtique)
     If userName = "RobertMV" Or userName = "robertmv" Then
-        Call ArreterSauvegardeCodeVBA
+'        Call ArreterSauvegardeCodeVBA
         Call ExporterCodeVBA
     End If
     
-'    'Log de fermeture (fichier autre que log normal)
-'    Open Environ("TEMP") & "\APP_FermetureEnCours.txt" For Output As #1
-'    Print #1, "Session fermee volontairement"
-'    Close #1
-'
+    'Fermer TOUTES les Application.OnTime
+    Call AnnulerToutesTachesPlanifiees
+    
     'Fermeture du classeur de l'application uniquement
     If ignorerSauvegarde Then
         'Pas de sauvegarde
@@ -408,6 +399,18 @@ Sub RetournerMenuPrincipal()
     Set ws = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modMENU:RetournerMenuPrincipal", vbNullString, startTime)
+    
+End Sub
+
+Sub AnnulerToutesTachesPlanifiees() '2025-10-30 @ 08:16
+
+    On Error Resume Next
+        Application.OnTime gProchaineVerification, "VerifierDerniereActivite", , False
+        Application.OnTime gFermeturePlanifiee, "FermerApplicationInactive", , False
+        Application.OnTime gNextBackupTime, "DemarrerSauvegardeCodeVBAAutomatique", , False
+        Application.OnTime gProchainTick, "RelancerTimer", , False
+        Application.OnTime gProchaineVerifUserForm, "VerifierInactiviteUserForm", , False
+    On Error GoTo 0
     
 End Sub
 

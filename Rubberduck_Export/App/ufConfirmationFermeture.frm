@@ -15,10 +15,6 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
-Dim tFermeture As Date
-Public tProchainTick As Date
-Dim gClignoteEtat As Boolean
-
 Private Sub UserForm_Initialize()
 
     Me.BackColor = RGB(245, 245, 245) 'Gris clair
@@ -44,7 +40,7 @@ Private Sub shpGarderOuverte_Click() '2025-07-01 @ 17:13
     Application.OnTime gFermeturePlanifiee, "FermerApplicationInactive", , False
     
     'Annule le clignotement du timer (si encore actif)
-    Application.OnTime tProchainTick, "RelancerTimer", , False
+    Application.OnTime gProchainTick, "RelancerTimer", , False
         
     On Error GoTo 0
     
@@ -78,12 +74,12 @@ Public Sub AfficherMessage(Optional minutesInactives As Double = 0) '2025-07-01 
 
     lblMessage.Caption = msg
     
-    tFermeture = Now + TimeSerial(0, 0, gDELAI_GRACE_SECONDES)
-    gFermeturePlanifiee = tFermeture
+    gHeurePrevueFermetureAutomatique = Now + TimeSerial(0, 0, gDELAI_GRACE_SECONDES)
+    gFermeturePlanifiee = gHeurePrevueFermetureAutomatique
     Debug.Print Now() & " [AfficherMessage] gFermeturePlanifiee synchronisé à : " & Format(gFermeturePlanifiee, "hh:mm:ss")
     lblTimer.Caption = vbNullString
     Debug.Print Now() & " [AfficherMessage] Affichage du formulaire de confirmation à : " & Format(Now, "hh:mm:ss")
-    Debug.Print Now() & " [AfficherMessage] Fermeture prévue à (tFermeture) : " & Format(tFermeture, "hh:mm:ss")
+    Debug.Print Now() & " [AfficherMessage] Fermeture prévue à (gHeurePrevueFermetureAutomatique) : " & Format(gHeurePrevueFermetureAutomatique, "hh:mm:ss")
     Call ufConfirmationFermeture.RafraichirTimer
     
     Me.StartUpPosition = 1
@@ -93,17 +89,17 @@ End Sub
 
 Public Sub RafraichirTimer() '2025-07-02 @ 06:56
 
-    If tFermeture = 0 Then
-        Debug.Print Now() & " RafraichirTimer déclenché alors que tFermeture = 0 — arrêt immédiat"
+    If gHeurePrevueFermetureAutomatique = 0 Then
+        Debug.Print Now() & " RafraichirTimer déclenché alors que gHeurePrevueFermetureAutomatique = 0 — arrêt immédiat"
         Exit Sub
     End If
     
     Dim delta As Double
-    delta = DateDiff("s", Now, tFermeture)
+    delta = DateDiff("s", Now, gHeurePrevueFermetureAutomatique)
     
     'Journal : moment d’exécution et delta
     Debug.Print Now() & " [RafraichirTimer] RafraichirTimer à " & Format(Now, "hh:mm:ss") & _
-                " | tFermeture : " & Format(tFermeture, "hh:mm:ss") & _
+                " | gHeurePrevueFermetureAutomatique : " & Format(gHeurePrevueFermetureAutomatique, "hh:mm:ss") & _
                 " | Secondes restantes : " & delta
                 
     If delta <= 0 Then
@@ -133,16 +129,16 @@ Public Sub RafraichirTimer() '2025-07-02 @ 06:56
     End If
 
     'Replanification dans 1 s
-    tProchainTick = Now + TimeSerial(0, 0, 1)
+    gProchainTick = Now + TimeSerial(0, 0, 1)
     'Journal : programmation du prochain appel
-    Debug.Print Now() & " [RafraichirTimer] Prochain appel prévu à : " & Format(tProchainTick, "hh:mm:ss")
-    Application.OnTime tProchainTick, "RelancerTimer"
+    Debug.Print Now() & " [RafraichirTimer] Prochain appel prévu à : " & Format(gProchainTick, "hh:mm:ss")
+    Application.OnTime gProchainTick, "RelancerTimer"
     
 End Sub
 
 Public Function ProchainTick() As Date '2025-07-02 @ 08:19
 
-    ProchainTick = tProchainTick
+    ProchainTick = gProchainTick
     
 End Function
 

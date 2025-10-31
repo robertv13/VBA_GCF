@@ -1,7 +1,10 @@
 Attribute VB_Name = "modAppli"
 Option Explicit
 
-Public ProchaineVerifUserForm As Date
+Public gProchaineVerifUserForm As Date
+Public gHeurePrevueFermetureAutomatique As Date 'Heure à laquelle l'application devrait fermer
+Public gProchainTick As Date                 'Heure du compte à rebours
+Public gClignoteEtat As Boolean
 
 Sub DemarrerApplication(uw As String) '2025-07-11 @ 15:16
 
@@ -59,7 +62,7 @@ Sub DemarrerApplication(uw As String) '2025-07-11 @ 15:16
     
     wshMenu.Activate
 
-    If uw = "RobertMV" Or uw = "robertmv" Then
+    If UtilisateurActif("Role") = "Dev" Then
         Call DemarrerSauvegardeCodeVBAAutomatique
     End If
     
@@ -294,7 +297,7 @@ Public Sub EnregistrerActivite(Optional ByVal msg As String = vbNullString) '202
 
     'Enregistrer la dernière activité
     gDerniereActivite = Now
-    Call EnregistrerActiviteAuLog("[modAppli:EnregistrerActivite] " & msg) '2025-07-03 @ 10:31
+    Call EnregistrerActiviteAuLog(msg) '2025-07-03 @ 10:31
     
     'Rétablir l'état de EnableEvents
     If activeEvents <> Application.EnableEvents Then
@@ -325,7 +328,7 @@ Attribute VerifierDerniereActivite.VB_Description = "Vérifie l'inactivité et f
     Dim minutesInactives As Double
     minutesInactives = Round(Fn_MinutesDepuisDerniereActivite(), 1)
 
-    If gMODE_DEBUG Then Debug.Print Now() & " [modAppli:VerifierDerniereActivite] Vérification @ " & minutesInactives & " min. - " & _
+    If gMODE_DEBUG Then Debug.Print Now() & " [modAppli:VerifierDerniereActivite] Inactif depuis " & minutesInactives & " min. - " & _
                                     "Fréq. vérification = "; gFREQUENCE_VERIFICATION_INACTIVITE & " min., " & _
                                     "Durée max. sans activité = " & gMAXIMUM_MINUTES_INACTIVITE & " min., " & _
                                     "Délai de grâce (dernière chance) = " & gDELAI_GRACE_SECONDES & " sec."
@@ -384,6 +387,12 @@ End Sub
 
 Public Sub PlanifierVerificationDerniereActivite() '2025-07-01 @ 13:53
     
+    'Ne rien faire avant l'heure de début de la surveillance '2025-10-31 @08:24
+    If TimeValue(Now) < TimeSerial(gHEURE_DEBUT_SURVEILLANCE, 0, 0) Then
+        Call PlanifierVerificationDerniereActivite
+        Exit Sub
+    End If
+    
     On Error Resume Next
     Application.OnTime gProchaineVerification, "VerifierDerniereActivite", , False
     On Error GoTo 0
@@ -415,7 +424,7 @@ Public Sub RelancerTimer() '2025-07-02 @ 06:43
     
 End Sub
 
-Public Sub EnregistrerActiviteAuLog(ByVal message As String) '2025-07-03 @ 10:29
+Public Sub EnregistrerActiviteAuLog(ByVal message As String) '2025-10-30 @ 07:44
 
     'Ne rien faire avant l'heure de début de la surveillance
     If TimeValue(Now) < TimeSerial(gHEURE_DEBUT_SURVEILLANCE, 0, 0) Then
@@ -429,22 +438,23 @@ Public Sub EnregistrerActiviteAuLog(ByVal message As String) '2025-07-03 @ 10:29
     fileNum = FreeFile
 
     Open cheminLog For Append As #fileNum
-    Print #fileNum, "[" & Format(Now, "yyyy-mm-dd hh:nn:ss") & "] [" & ThisWorkbook.Name & "] [" & modFunctions.Fn_UtilisateurWindows & "] " & message
+    Print #fileNum, "[" & Format(Now, "yyyy-mm-dd hh:nn:ss") & "] [" & ThisWorkbook.Name & "] [" & modFunctions.Fn_UtilisateurWindows & "] [" & _
+                        Fn_ContexteActifComplet() & "] [" & message & "]"
     Close #fileNum
     
 End Sub
 
 Sub LancerSurveillanceUserForm() '2025-08-29 @ 18:32
 
-    ProchaineVerifUserForm = Now + TimeSerial(0, 0, 10) ' toutes les 10 secondes
-    Application.OnTime ProchaineVerifUserForm, "VerifierInactiviteUserForm"
+    gProchaineVerifUserForm = Now + TimeSerial(0, 0, 10) ' toutes les 10 secondes
+    Application.OnTime gProchaineVerifUserForm, "VerifierInactiviteUserForm"
     
 End Sub
 
 Sub AnnulerSurveillanceUserForm() '2025-08-29 @ 18:32
 
     On Error Resume Next
-    Application.OnTime ProchaineVerifUserForm, "VerifierInactiviteUserForm", , False
+    Application.OnTime gProchaineVerifUserForm, "VerifierInactiviteUserForm", , False
     
 End Sub
 
