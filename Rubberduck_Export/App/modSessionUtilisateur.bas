@@ -11,6 +11,9 @@ Public UtilisateurActif As Object
 '--- Étape 1 : Récupération UtilisateurID à partir de l'utilisateur Windows ---
 Public Function Fn_InfosWindows() As Object
 
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication( _
+        "modSessionUtilisateur:Fn_InfosWindows", vbNullString, 0)
+
     Dim cn As Object, rs As Object
     Dim infos As Object
     Set infos = CreateObject("Scripting.Dictionary")
@@ -45,11 +48,16 @@ Public Function Fn_InfosWindows() As Object
     
     Set Fn_InfosWindows = infos
     
+    Call modDev_Utils.EnregistrerLogApplication("modSessionUtilisateur:Fn_InfosWindows", vbNullString, startTime)
+
 End Function
 
 ' --- Étape 2 : Chargement des données d'utilisateur ---
 Public Function Fn_ChargerUtilisateur(utilisateurID As Long) As Object
 
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication( _
+        "modSessionUtilisateur:Fn_ChargerUtilisateur", vbNullString, 0)
+    
     Dim cn As Object, rs As Object
     Dim user As Object
     Set user = CreateObject("Scripting.Dictionary")
@@ -84,10 +92,15 @@ Public Function Fn_ChargerUtilisateur(utilisateurID As Long) As Object
     
     Set Fn_ChargerUtilisateur = user
     
+    Call modDev_Utils.EnregistrerLogApplication("modSessionUtilisateur:Fn_ChargerUtilisateur", vbNullString, startTime)
+
 End Function
 
 '--- Étape 3 : Initialisation complète ---
 Public Sub InitialiserSessionUtilisateur()
+
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication( _
+        "modSessionUtilisateur:InitialiserSessionUtilisateur", vbNullString, 0)
 
     Dim infos As Object
     Set infos = Fn_InfosWindows()
@@ -103,10 +116,15 @@ Public Sub InitialiserSessionUtilisateur()
 
     Call MettreAJourDerniereConnexion(infos("UtilisateurID"))
     
+    Call modDev_Utils.EnregistrerLogApplication("modSessionUtilisateur:InitialiserSessionUtilisateur", vbNullString, startTime)
+
 End Sub
 
 ' --- Étape 4 : Journalisation ---
 Private Sub MettreAJourDerniereConnexion(utilisateurID As Long)
+
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication( _
+        "modSessionUtilisateur:MettreAJourDerniereConnexion", vbNullString, 0)
 
     Dim cheminMASTER As String
     cheminMASTER = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
@@ -125,6 +143,8 @@ Private Sub MettreAJourDerniereConnexion(utilisateurID As Long)
     cn.Execute sql
 
     cn.Close
+    
+    Call modDev_Utils.EnregistrerLogApplication("modSessionUtilisateur:MettreAJourDerniereConnexion", vbNullString, startTime)
     
 End Sub
 

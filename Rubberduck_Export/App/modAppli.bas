@@ -3,7 +3,7 @@ Option Explicit
 
 Public gProchaineVerifUserForm As Date
 Public gHeurePrevueFermetureAutomatique As Date 'Heure à laquelle l'application devrait fermer
-Public gProchainTick As Date                 'Heure du compte à rebours
+Public gProchainTick As Date                    'Heure du compte à rebours
 Public gClignoteEtat As Boolean
 
 Sub DemarrerApplication(uw As String) '2025-07-11 @ 15:16
@@ -15,7 +15,8 @@ Sub DemarrerApplication(uw As String) '2025-07-11 @ 15:16
     wsdADMIN.Range("PATH_DATA_FILES").Value = rootPath
     Application.EnableEvents = True
    
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("----- DÉBUT D'UNE NOUVELLE SESSION (modAppli:DemarrerApplication) -----", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication( _
+                    "----- DÉBUT D'UNE NOUVELLE SESSION (modAppli:DemarrerApplication) -----", vbNullString, 0)
     
     'Initialisation de la session utilisateur '2025-10-19 @ 11:24
     Call InitialiserSessionUtilisateur
@@ -310,13 +311,12 @@ End Sub
 Public Sub VerifierDerniereActivite() '2025-07-02 @ 12:10
 Attribute VerifierDerniereActivite.VB_Description = "Vérifie l'inactivité et ferme si plus de x minutes"
 
-    On Error GoTo GestionErreur
-
     'Ne rien faire avant l'heure de début de la surveillance
     If TimeValue(Now) < TimeSerial(gHEURE_DEBUT_SURVEILLANCE, 0, 0) Then
-        Call PlanifierVerificationDerniereActivite
         Exit Sub
     End If
+
+    On Error GoTo GestionErreur
 
     'Vérification de l'initialisation
     If gDerniereActivite = 0 Then
@@ -389,7 +389,6 @@ Public Sub PlanifierVerificationDerniereActivite() '2025-07-01 @ 13:53
     
     'Ne rien faire avant l'heure de début de la surveillance '2025-10-31 @08:24
     If TimeValue(Now) < TimeSerial(gHEURE_DEBUT_SURVEILLANCE, 0, 0) Then
-        Call PlanifierVerificationDerniereActivite
         Exit Sub
     End If
     
@@ -493,4 +492,94 @@ Sub AfficherErreurCritique(message As String) '2025-10-19 @ 10:36
         "Erreur critique dans l'application"
     
 End Sub
+
+Public Sub TracerBloc(label As String) '2025-10-31 @ 10:31
+
+    Static t0 As Double
+    If label = "Départ" Then
+        Debug.Print Now() & " - Début du chronomètre"
+        t0 = Timer
+    Else
+        Debug.Print Now() & " - " & label & " : " & Format(Timer - t0, "0.0000") & " sec"
+        t0 = 0
+    End If
+    
+End Sub
+
+Public Sub EnregistrerLogPerformanceTXT(nomProcedure As String, Optional duree As Double = -1) '2025-10-31 @ 14:05
+
+    On Error Resume Next
+
+    'Définir le chemin du fichier log (local ou partagé)
+    Dim fullPathPerformanceLog As String
+    fullPathPerformanceLog = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & _
+                                Application.PathSeparator & "Performance.log"
+    
+    'Obtenir l'utilisateur Windows
+    Dim utilisateur As String
+    utilisateur = Environ("USERNAME")
+
+    'Horodatage complet
+    Dim horodatage As String
+    horodatage = Format(Now, "yyyy-mm-dd hh:nn:ss")
+
+    'Construire la ligne de log
+    Dim ligneLog As String
+    If duree >= 0 Then
+        ligneLog = horodatage & " | " & utilisateur & " | " & nomProcedure & " | " & Format(duree, "0.000") & " sec"
+    Else
+        ligneLog = horodatage & " | " & utilisateur & " | " & nomProcedure
+    End If
+
+    Dim canalLog As Integer
+    canalLog = FreeFile
+    
+    Open fullPathPerformanceLog For Append As #canalLog
+    
+    'Écrire dans le fichier
+    Print #canalLog, ligneLog
+    
+    Close #canalLog
+
+    On Error GoTo 0
+    
+End Sub
+
+Public Sub EnregistrerErreurs(nomModule As String, nomProcedure As String, comments As String, _
+                        errNo As Long, errDescription As String) '2025-11-01 @ 07:04
+
+    On Error Resume Next
+    
+    Dim fullPathErreurLog As String
+    Dim utilisateur As String
+    Dim maintenant As String
+    
+    fullPathErreurLog = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & _
+                                Application.PathSeparator & "Erreurs.log"
+    
+    utilisateur = Environ("USERNAME")
+    maintenant = Format(Now, "yyyy-mm-dd hh:nn:ss")
+
+    'Ouverture de log des erreurs
+    Dim canalErreurLog As Integer
+    canalErreurLog = FreeFile
+    Open fullPathErreurLog For Append As #canalErreurLog
+    
+    'Écrire dans le fichier
+    Print #canalErreurLog, maintenant & "|" _
+                                & ActiveWorkbook.Name & "|" _
+                                & utilisateur & "|" _
+                                & nomModule & "|" _
+                                & nomProcedure & "|" _
+                                & comments & "|" & _
+                                errNo & "|" & _
+                                errDescription & "|"
+    
+    Close #canalErreurLog
+
+    On Error GoTo 0
+    
+End Sub
+
+
 

@@ -257,6 +257,9 @@ Sub ChangerNomDuClient(clientName As String)
         Application.EnableEvents = False
         .Range("B23").Value = allCols(fClntFMContactFacturation)
         .Range("B24").Value = clientNamePurged
+        If Trim(.Range("B23").Value) = Trim(.Range("B24").Value) Then 'Contact = Nom du client 2025-11-01 @ 05:36
+            .Range("B23").Value = ""
+        End If
         .Range("B25").Value = allCols(fClntFMAdresse1) 'Adresse1
         If Trim$(allCols(fClntFMAdresse2)) <> vbNullString Then
             .Range("B26").Value = allCols(fClntFMAdresse2) 'Adresse2
@@ -332,7 +335,7 @@ Sub FACBrouillonDate_Change(d As String)
     Dim rng As Range: Set rng = wshFAC_Brouillon.Range("L11")
 
     On Error Resume Next
-    wshFAC_Brouillon.Range("L11").Select 'Move on to Services Entry
+    wshFAC_Brouillon.Range("L11").Select
     On Error GoTo 0
     
     Application.EnableEvents = True
@@ -549,8 +552,6 @@ Sub ObtenirTousLesTECPourClientAvecAF(d As Date, includeBilledTEC As Boolean)
     End If
     c5 = Fn_Convert_Value_Boolean_To_Text(False)
 
-'    Call EffacerTECAffiches
-    
     Call ObtenirTECduClientAvecAF(c1, c2, c3, c4, c5)
     
     Dim cutOffDateProjet As Date

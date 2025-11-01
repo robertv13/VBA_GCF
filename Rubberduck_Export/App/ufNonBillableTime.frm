@@ -23,6 +23,12 @@ Private Sub UserForm_Initialize()
     'Définir la couleur de fond du bouton en utilisant le code RGB (118,181,75)
     shpConvertir.BackColor = RGB(118, 181, 75)
     
+    'Approximation : centré dans la fenêtre Excel
+    Me.StartUpPosition = 0
+    Me.Left = Application.Left + (Application.Width - Me.Width) / 2
+    'Décalage vertical vers le bas (˜ 5 à 6 lignes Excel)
+    Me.Top = Application.Top + (Application.Height - Me.Height) / 2 + 100
+
 End Sub
 
 Private Sub shpConvertir_Click()
@@ -56,6 +62,10 @@ Private Sub ConvertirNFenFacturable()
     
     'La conversion est terminée
     Unload Me
+    
+    Call modFAC_Brouillon.EffacerTECAffiches
+    
+    Call ObtenirTousLesTECPourClientAvecAF(wshFAC_Brouillon.Range("O3").Value, False)
     
 End Sub
 

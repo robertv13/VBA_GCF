@@ -1,4 +1,4 @@
-﻿📘 Journal typographique — 10/31/2025 08:47:45
+﻿📘 Journal typographique — 11/01/2025 11:38:51
 
 🔧 Fichier : clsControlWrapper.cls
 
@@ -335,6 +335,7 @@
    ✅ Remplacé : .range ➜ .Range
 
 🔧 Fichier : ufNonBillableTime.frm
+   ✅ Remplacé : .value ➜ .Value
 
 🔧 Fichier : ufSaisieHeures.frm
    ✅ Remplacé : .text ➜ .Text

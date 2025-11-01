@@ -65,7 +65,7 @@ ProchaineLigne:
     'Trier les données (si souhaité)
     Call TrierTableau2DBubble(arr)
 
-    ' Préparer la ListBox
+    'Préparer la ListBox
     With Me.lstProjetsFacture
         .Clear
         .ColumnHeads = True
@@ -74,6 +74,12 @@ ProchaineLigne:
         .List = arr
     End With
 
+    'Approximation : centré dans la fenêtre Excel
+    Me.StartUpPosition = 0
+    Me.Left = Application.Left + (Application.Width - Me.Width) / 2
+    'Décalage vertical vers le bas (˜ 5 à 6 lignes Excel)
+    Me.Top = Application.Top + (Application.Height - Me.Height) / 2 + 100
+    
     'Nettoyage
     Set ligne = Nothing
     Set lo = Nothing

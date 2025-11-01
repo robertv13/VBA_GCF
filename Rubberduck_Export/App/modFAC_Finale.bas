@@ -7,7 +7,6 @@ Private invRow As Long, itemDBRow As Long, invitemRow As Long, invNumb As Long
 Private lastRow As Long, lastResultRow As Long, resultRow As Long
 Public gCheminPDF As String
 
-'@Description ("Clic sur le bouton Sauvegarde")
 Sub shpMettreAJourFAC_Click() '2025-06-21 @ 08:20
 
     Call SauvegarderFacture
@@ -79,7 +78,6 @@ Sub SauvegarderFacture() '2024-03-28 @ 07:19
     'Rétablir FAC_Finale à partir de FAC_Finale_Intact et vérifier - 2025-10-23 @ 12:19
     Application.StatusBar = "Réinitialisation de la feuille en cours..."
     Call ReinitialiserFAC_Finale
-'    Call RestaurerFeuilleFAC_Finale
     Call VerifierIntegriteFAC_Finale
     Application.StatusBar = False
         
@@ -983,8 +981,6 @@ Sub PrevisualiserFacturePDF() '2024-03-02 @ 16:18
         On Error GoTo 0
     End If
     
-    Debug.Print "#084 - Imprimante restaurée : " & Application.ActivePrinter
-
 End Sub
 
 Sub shpSauvegarderPDFSauvegarderExcelEnvoyerCourriel_Click()
@@ -1016,46 +1012,32 @@ Sub SauvegarderPDFSauvegarderExcelEnvoyerCourriel() '2025-05-06 @ 11:07
     
 '    On Error GoTo GestionErreur
 
-    Call TracerEtape("Début traitement facture")
-    
     'Étape 1 - Création du document PDF
-    Call TracerEtape("     Début création PDF")
     wshFAC_Finale.PageSetup.PrintArea = "$A1:$F88" '2025-10-15 @ 23:51
     Call SauvegarderFactureFormatPDF(numeroFacture)
     If Dir(gCheminPDF) = "" Then
-        Call TracerEtape("     Échec création PDF")
         Exit Sub
     End If
-    Call TracerEtape("     PDF créé avec succès")
     gFlagEtapeFacture = 2
     
     'Étape 2 - Copie vers fichier Excel client
-    Call TracerEtape("     Début sauvegarde Excel client")
     Call SauvegarderCopieFactureDansExcel(nomClient, nomFichier, numeroFacture, dateFacture)
-    Call TracerEtape("     Sauvegarde Excel client réussi")
     gFlagEtapeFacture = 3
-'    Call PauseActive(1)
 
     'Étape 3 - Création du courriel avec pièce jointe PDF
     If Dir(gCheminPDF) = "" Then
         MsgBox "Le fichier PDF est introuvable pour l’envoi.", vbCritical
-        Call TracerEtape("     Échec envoi courriel : PDF manquant")
         Exit Sub
     End If
-    Call TracerEtape("     Prêt pour envoi courriel")
     Call EnvoyerFactureParCourriel(numeroFacture, nomClient)
-    Call TracerEtape("     La facture a été envoyée par courriel")
     gFlagEtapeFacture = 4
-'    Call PauseActive(1)
 
     'Étape 4 - Activation du bouton Sauvegarde
-    Call TracerEtape("     Activation bouton Sauvegarde")
     DoEvents
     Call AfficherBoutonSauvegarder
     gFlagEtapeFacture = 5
     
     wshFAC_Brouillon.Range("FactureStatut").Value = "En attente de mise à jour" '2025-07-19 @ 18:35
-    Call TracerEtape("Fin traitement facture")
     GoTo fin
 
 GestionErreur:
@@ -1131,7 +1113,6 @@ Function Fn_ExporterFactureEnPDF(noFacture As String) As String
         imprimanteActuelle = Application.ActivePrinter
     End If
     On Error GoTo 0
-    Debug.Print "#0883 - Imprimante actuelle : " & imprimanteActuelle
 
     'Imprimante PDF à utiliser
     Dim imprimantePDF As String
@@ -1202,6 +1183,10 @@ Sub SauvegarderCopieFactureDansExcel(clientID As String, clientName As String, i
     'Définir le chemin complet du répertoire des fichiers Excel
     Dim ExcelFilesFullPath As String
     ExcelFilesFullPath = wsdADMIN.Range("PATH_DATA_FILES").Value & gFACT_EXCEL_PATH
+    MsgBox "Répertoire pour sauvegarder les factures en Excel" & vbCrLf & vbCrLf & _
+            "'" & ExcelFilesFullPath & "'", _
+            vbInformation, _
+            "1192 - Message temporaire à enlever par développeur"
     ChDir ExcelFilesFullPath
     
     'Définir la feuille source et la plage à copier
@@ -1398,30 +1383,9 @@ Sub CopierFormeEnteteEnTouteSecurite(wsSource As Worksheet, wsCible As Worksheet
         
         'Coller en tant qu'image (Enhanced Metafile pour plus de compatibilité)
         Call CollerFormeInvisibleEtRedimensionner(wsCible, topPos, leftPos, heightVal, widthVal)
-'        wsCible.PasteSpecial Format:="Picture (Enhanced Metafile)"
-'        DoEvents
-'        Call PauseActive(1)
-'
-'        'Récupérer la dernière forme collée
-'        Set newForme = wsCible.Shapes(wsCible.Shapes.count)
-'
-'        'Réappliquer taille et position exactes
-'        If Not newForme Is Nothing Then
-'            With newForme
-'                .LockAspectRatio = msoFalse ' Permet de modifier Height sans contrainte
-'                .Top = topPos
-'                Debug.Print "Top = " & topPos
-'                .Left = leftPos
-'                .Height = heightVal
-'                .Width = widthVal
-'            End With
-'        Else
-'            MsgBox "Erreur : le logo de GCF n’a pas été reconnu.", vbCritical
-'        End If
-
         Application.CutCopyMode = False
     Else
-        Debug.Print "Forme 'shpGCFLogo' introuvable sur la feuille source."
+        Debug.Print Now() & " [CopierFormeEnteteEnTouteSecurite] : Forme 'shpGCFLogo' introuvable sur la feuille source."
     End If
     
     Application.ScreenUpdating = True
@@ -1725,29 +1689,6 @@ Sub CacherBoutonSauvegarder()
     
 End Sub
 
-Sub RestaurerFeuilleFAC_Finale() '2025-10-23 @ 12:02
-
-    'Recrée FAC_Finale à partir de FAC_Finale_Intact, en supprimant l’ancienne version si elle existe
-    
-    Application.ScreenUpdating = False
-    Application.DisplayAlerts = False
-
-    'Supprimer FAC_Finale si elle existe
-    Dim ws As Worksheet
-    On Error Resume Next
-    Set ws = ThisWorkbook.Worksheets("FAC_Finale")
-    If Not ws Is Nothing Then ws.Delete
-    On Error GoTo 0
-
-    'Recréer FAC_Finale à partir du modèle intact
-    ThisWorkbook.Worksheets("FAC_Finale_Intact").Copy After:=ThisWorkbook.Worksheets("FAC_Finale_Intact")
-    ActiveSheet.Name = "FAC_Finale"
-
-    Application.DisplayAlerts = True
-    Application.ScreenUpdating = True
-    
-End Sub
-
 Sub VerifierIntegriteFAC_Finale(Optional ws As Worksheet)
 
     'Si aucun paramètre, on prend FAC_Finale
@@ -1756,18 +1697,22 @@ Sub VerifierIntegriteFAC_Finale(Optional ws As Worksheet)
         Set ws = ThisWorkbook.Worksheets("FAC_Finale")
         On Error GoTo 0
         If ws Is Nothing Then
-            Debug.Print "Feuille FAC_Finale introuvable."
+            Debug.Print Now() & " [VerifierIntegriteFAC_Finale] : Feuille FAC_Finale introuvable."
+            Call EnregistrerErreurs("modFAC_Finale", "VerifierIntegriteFAC_Finale", "Feuille FAC_Finale introuvable", 0, "")
             Exit Sub
         End If
     End If
 
-    Debug.Print "*** Vérification de FAC_Finale à " & Format(Now, "hh:mm:ss dd-mm-yyyy")
+    Debug.Print Now() & " [VerifierIntegriteFAC_Finale] : Vérification de FAC_Finale"
 
     'Vérifier quelques formes clés
     Dim forme As Shape
     Dim nbForme As Long, formeOK As Long
     Dim nomsFormesAttendus As Variant
-    nomsFormesAttendus = Array("shpMontrerSommaireHeures", "shpCacherSommaireHeures", "shpCacherHeures")
+    nomsFormesAttendus = Array("Cadre 2", "shpGCFLogo", "shpRetourAuBrouillon", "shpMettreAJour", _
+                               "shpPDFCopieExcelCourriel", "shpPrevisualisation", "Cadre 1", "shpMontrerHeures", _
+                               "shpCacherHeures", "shpCacherSommaireHeures", "shpMontrerSommaireHeures", _
+                               "shpNouveau")
     nbForme = UBound(nomsFormesAttendus, 1) + 1
 
     Dim nom As Variant
@@ -1775,22 +1720,23 @@ Sub VerifierIntegriteFAC_Finale(Optional ws As Worksheet)
         On Error Resume Next
         Set forme = ws.Shapes(nom)
         If forme Is Nothing Then
-            Debug.Print "   Forme manquante : " & nom
+            Debug.Print Now() & " [VerifierIntegriteFAC_Finale] : Forme manquante '" & nom & "'"
+            Call EnregistrerErreurs("ModFAC_Finale", "VerifierIntegriteFAC_Finale", "Forme manquante : " & nom, 0, "")
         Else
             formeOK = formeOK + 1
         End If
         On Error GoTo 0
     Next nom
-    Debug.Print "   " & formeOK & " de " & nbForme & " formes, sont présentes"
+    Debug.Print Now() & " [VerifierIntegriteFAC_Finale] : " & formeOK & " de " & nbForme & " formes sont présentes dans FAC_Finale"
 
     'Vérifier la présence du code Worksheet_Activate
     Dim codeModule As String
     On Error Resume Next
     codeModule = ws.CodeName
     If Err.Number <> 0 Then
-        Debug.Print "Code événementiel inaccessible."
+        Debug.Print Now() & " [VerifierIntegriteFAC_Finale] : Code événementiel inaccessible."
     Else
-        Debug.Print "   Le code est accessible"
+        Debug.Print Now() & " [VerifierIntegriteFAC_Finale] : Le code est accessible"
     End If
     On Error GoTo 0
 
@@ -1806,13 +1752,13 @@ Sub VerifierIntegriteFAC_Finale(Optional ws As Worksheet)
             End If
         Next nomPlage
         If nomTrouve Then
-            Debug.Print "   Plage nommée locale : " & nom
+            Debug.Print Now() & " [VerifierIntegriteFAC_Finale] : Plage nommée locale '" & nom & "'"
         Else
-            Debug.Print "   Plage nommée absente : " & nom
+            Debug.Print Now() & " [VerifierIntegriteFAC_Finale] : PLAGE NOMMÉE ABSENTE '" & nom & "'"
         End If
     Next nom
 
-    Debug.Print "*** Vérification terminée." & vbNewLine
+    Debug.Print Now() & " [VerifierIntegriteFAC_Finale] : Vérification terminée." & vbNewLine
 
 End Sub
 
@@ -1822,8 +1768,6 @@ Sub ReinitialiserFAC_Finale() '2025-10-23 @ 12:50
     
     Dim FeuilleSource As Worksheet
     Dim FeuilleCible As Worksheet
-'    Dim nm As Name, shp As Shape, lo As ListObject
-'    Dim c As Range
     
     Application.ScreenUpdating = False
     Application.DisplayAlerts = False
@@ -1841,7 +1785,8 @@ Sub ReinitialiserFAC_Finale() '2025-10-23 @ 12:50
     Call CopierContenuEtFormats(FeuilleSource, FeuilleCible)
     
     '--- 3. Copier les formes avec leur position et taille --- '2025-10-02 @ 15:47
-    Call CopierFormes(FeuilleSource, FeuilleCible)
+    Call ReinitialiserFormesFACFinale(FeuilleSource, FeuilleCible) '2025-11-01 @ 06:48
+    Call VerifierFormesCritiques(FeuilleSource, FeuilleCible) '2025-11-01 @ 06:48
     Call VerifierActionsFormes(FeuilleCible)
 
     '--- 4. Copier les noms locaux ---
@@ -1866,81 +1811,13 @@ Sub ReinitialiserFAC_Finale() '2025-10-23 @ 12:50
     Application.EnableEvents = True
     
     DoEvents
-    Application.Wait (Now + TimeValue("0:00:02"))
+    Call PauseActive(1)
     DoEvents
     
     Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:Reinitialiser_FAC_Finale", vbNullString, startTime)
 
 End Sub
 
-'Sub NettoyerFeuille(ws As Worksheet) '2025-08-22 @ 16:08
-'
-'    On Error Resume Next
-'    ws.Cells.Clear
-'    Dim shp As Shape
-'    For Each shp In ws.Shapes
-'        shp.Delete
-'    Next shp
-'    On Error GoTo 0
-'
-'End Sub
-'
-'Sub SupprimerNomsLocaux(ws As Worksheet) '2025-08-22 @ 16:20
-'
-'    Dim nom As Name
-'    For Each nom In ThisWorkbook.Names
-'        If nom.RefersTo Like "='" & ws.Name & "'!*" Then
-'            Debug.Print nom.RefersTo
-'            nom.Delete
-'        End If
-'    Next nom
-'
-'End Sub
-'
-'Sub CopierFormesAvecActions(wsSource As Worksheet, wsDest As Worksheet) '2025-08-22 @ 16:09
-'
-'    Dim shpSource As Shape
-'    Dim shpDest As Shape
-'
-'    For Each shpSource In wsSource.Shapes
-'        shpSource.Copy
-'        wsDest.Paste
-'
-'        Set shpDest = wsDest.Shapes(wsDest.Shapes.count)
-'
-'        With shpDest
-'            .Top = shpSource.Top
-'            .Left = shpSource.Left
-'            .Width = shpSource.Width
-'            .Height = shpSource.Height
-'            On Error Resume Next
-'            .OnAction = shpSource.OnAction
-'            On Error GoTo 0
-'        End With
-'    Next shpSource
-'
-'End Sub
-'
-'Sub ReassignerPlagesNomées(wsSource As Worksheet, wsDest As Worksheet) '2025-08-22 @ 16:09
-'
-'    Dim nom As Name
-'    Dim nouveauNom As String
-'    Dim nouvelleRef As String
-'
-'    For Each nom In ThisWorkbook.Names
-'        If InStr(1, nom.RefersTo, wsSource.Name, vbTextCompare) > 0 Then
-'            nouveauNom = nom.Name
-'            nouvelleRef = Replace(nom.RefersTo, wsSource.Name, wsDest.Name)
-'
-'            On Error Resume Next
-'            ThisWorkbook.Names(nouveauNom).Delete 'Supprimer si déjà existant
-'            ThisWorkbook.Names.Add Name:=nouveauNom, RefersTo:=nouvelleRef
-'            On Error GoTo 0
-'        End If
-'    Next nom
-'
-'End Sub
-'
 Public Sub NettoyerFeuilleCible(ws As Worksheet) '2025-10-23 @ 13:42
 
     Dim nm As Name, shp As Shape, lo As ListObject
@@ -1954,20 +1831,16 @@ Public Sub NettoyerFeuilleCible(ws As Worksheet) '2025-10-23 @ 13:42
     ws.Cells.Validation.Delete
     ws.Cells.FormatConditions.Delete
 
-    '2. Supprimer les formes
-    For Each shp In ws.Shapes
-        shp.Delete
-    Next shp
-
-    '3. Supprimer les noms locaux liés à la feuille
+    '2. Supprimer les noms locaux liés à la feuille
+    Debug.Print vbNewLine
     For Each nm In ws.Parent.Names
         If nm.Name Like ws.Name & "!*" Then
-            Debug.Print "Plage nommée '" & nm.Name & "' a été effacée"
+            Debug.Print Now() & " [NettoyerFeuilleCible] : Plage nommée '" & nm.Name & "' a été effacée"
             nm.Delete
         End If
     Next nm
 
-    '4. Supprimer les tableaux structurés
+    '3. Supprimer les tableaux structurés
     For Each lo In ws.ListObjects
         lo.Unlist
     Next lo
@@ -1993,35 +1866,137 @@ Public Sub CopierContenuEtFormats(wsSource As Worksheet, wsCible As Worksheet) '
 
 End Sub
 
-Public Sub CopierFormes(wsSource As Worksheet, wsCible As Worksheet) '2025-10-23 @ 13:42
+'Public Sub CopierFormes(wsSource As Worksheet, wsCible As Worksheet) '2025-10-23 @ 13:42
+'
+'    If wsSource Is Nothing Or wsCible Is Nothing Then Exit Sub
+'
+'    Dim shp As Shape, shpNew As Shape
+'    Dim actionMacro As String
+'
+'    For Each shp In wsSource.Shapes
+'        shp.Copy
+'        Debug.Print "Tenter de copier la forme '" & shp.Name & "'"
+'        On Error GoTo Next_Shape
+'        wsCible.Activate
+'        DoEvents
+'        wsCible.Paste
+'        DoEvents
+'        Set shpNew = wsCible.Shapes(wsCible.Shapes.count)
+'        On Error GoTo 0
+'
+'        'Repositionner et redimensionner
+'        With shpNew
+'            .Top = shp.Top
+'            .Left = shp.Left
+'            .Width = shp.Width
+'            .Height = shp.Height
+'
+'            'Restaurer l'action si elle existe
+'            On Error Resume Next
+'            actionMacro = shp.OnAction
+'            If Len(actionMacro) > 0 Then
+'                .OnAction = actionMacro
+'                Debug.Print "Forme copiée (avec .Action) : " & shp.Name & " | Action : " & actionMacro
+'            End If
+'            On Error GoTo 0
+'        End With
+'Next_Shape:
+'    Next shp
+'
+'End Sub
+'
+Public Sub ReinitialiserFormesFACFinale(wsSource As Worksheet, wsCible As Worksheet) '2025-11-01 @ 06:39
 
     If wsSource Is Nothing Or wsCible Is Nothing Then Exit Sub
 
     Dim shp As Shape, shpNew As Shape
     Dim actionMacro As String
+    Dim nbAvant As Long, nbApres As Long
 
+    'Supprimer toutes les formes existantes
+    Dim shpCible As Shape
+    For Each shpCible In wsCible.Shapes
+        shpCible.Delete
+    Next shpCible
+
+    'Dupliquer chaque forme
     For Each shp In wsSource.Shapes
-        shp.Copy
-        wsCible.Paste
-        Set shpNew = wsCible.Shapes(wsCible.Shapes.count)
+        On Error GoTo Next_Shape
 
-        'Repositionner et redimensionner
+        nbAvant = wsCible.Shapes.count
+
+        Set shpNew = shp.Duplicate
+        shpNew.Cut
+        wsCible.Paste
+        DoEvents
+
+        nbApres = wsCible.Shapes.count
+        If nbApres <= nbAvant Then
+            Debug.Print Now() & " [ReinitialiserFormesFACFinale] : Échec de la copie : " & shp.Name
+            Call EnregistrerErreurs("modFAC_Finale", "ReinitialiserFormesFACFinale", "Échec de la copie : " & shp.Name, 0, "")
+            GoTo Next_Shape
+        End If
+
+        Set shpNew = wsCible.Shapes(nbApres)
+
         With shpNew
             .Top = shp.Top
             .Left = shp.Left
             .Width = shp.Width
             .Height = shp.Height
-
-            'Restaurer l'action si elle existe
             On Error Resume Next
             actionMacro = shp.OnAction
-            If Len(actionMacro) > 0 Then
-                .OnAction = actionMacro
-                Debug.Print "Forme copiée (avec .Action) : " & shp.Name & " | Action : " & actionMacro
-            End If
+            If Len(actionMacro) > 0 Then .OnAction = actionMacro
+            If Err Then Call EnregistrerErreurs("modFAC_Finale", "ReinitialiserFormesFACFinale", "Len(actionMacro) > 0", 0, "Resume Next")
             On Error GoTo 0
         End With
+
+        Debug.Print Now() & " [ReinitialiserFormesFACFinale] : ReinitialiserFormesFACFinale - Forme restaurée '" & shp.Name & "'"
+
+Next_Shape:
+        On Error GoTo 0
     Next shp
+
+End Sub
+
+Public Sub VerifierFormesCritiques(wsSource As Worksheet, wsCible As Worksheet) '2025-11-01 @ 06:45
+
+    If wsSource Is Nothing Or wsCible Is Nothing Then Exit Sub
+
+    Dim dictSource As Object: Set dictSource = CreateObject("Scripting.Dictionary")
+    Dim dictCible As Object: Set dictCible = CreateObject("Scripting.Dictionary")
+    Dim shp As Shape
+    Dim formesManquantes As Collection: Set formesManquantes = New Collection
+
+    'Indexer les formes source
+    For Each shp In wsSource.Shapes
+        dictSource(shp.Name) = True
+    Next shp
+
+    'Indexer les formes cible
+    For Each shp In wsCible.Shapes
+        dictCible(shp.Name) = True
+    Next shp
+
+    'Comparer
+    Dim nom As Variant
+    For Each nom In dictSource.keys
+        If Not dictCible.Exists(nom) Then
+            formesManquantes.Add nom
+            Call EnregistrerErreurs("modFAC_Finale", "VerifierFormesCritiques", "Forme manquante : " & nom, 0, "")
+        End If
+    Next nom
+
+    'Alerte si au moins une forme est absente
+    If formesManquantes.count > 0 Then
+        Dim msg As String: msg = "Formes manquantes dans FAC_Finale :"
+        Dim item As Variant
+        For Each item In formesManquantes
+            msg = msg & vbCrLf & "- " & item
+        Next item
+        MsgBox msg, vbCritical, "Intégrité de la feuille compromise"
+        Call EnregistrerErreurs("modFAC_Finale", "VerifierFormesCritiques", "Formes manquantes au total = " & formesManquantes.count, 0, "")
+    End If
 
 End Sub
 
@@ -2032,7 +2007,7 @@ Public Sub VerifierActionsFormes(ws As Worksheet) '2025-10-23 @ 13:42
     Dim shp As Shape
     Dim actionMacro As String
 
-    Debug.Print "Vérification des .OnAction dans " & ws.Name & " à " & Format(Now, "hh:mm:ss dd-mm-yyyy")
+    Debug.Print Now() & " [VerifierActionsFormes] : Vérification des .OnAction dans " & ws.Name
 
     For Each shp In ws.Shapes
         On Error Resume Next
@@ -2040,11 +2015,11 @@ Public Sub VerifierActionsFormes(ws As Worksheet) '2025-10-23 @ 13:42
         On Error GoTo 0
 
         If Len(actionMacro) > 0 Then
-            Debug.Print "Forme : " & shp.Name & " | Action : " & actionMacro
+            Debug.Print Now() & " [VerifierActionsFormes] : Forme '" & shp.Name & "' | Action '" & actionMacro & "'"
         End If
     Next shp
 
-    Debug.Print "Vérification des .OnAction terminée."
+    Debug.Print Now() & " [VerifierActionsFormes] : Vérification des .OnAction terminée."
 
 End Sub
 
@@ -2068,9 +2043,10 @@ Public Sub CopierNomsLocaux(wsSource As Worksheet, wsCible As Worksheet) '2025-1
             On Error Resume Next
             wsCible.Parent.Names.Add Name:=nomCible, RefersTo:=refCible
             If Err.Number = 0 Then
-                Debug.Print "Nom local copié : " & nomCible
+                Debug.Print Now() & " [CopierNomsLocaux] : Nom local copié '" & nomCible & "'"
             Else
-                Debug.Print "Échec copie nom : " & nomCible
+                Debug.Print Now() & " [CopierNomsLocaux] : ÉCHEC copie nom '" & nomCible & "'"
+                Call EnregistrerErreurs("modFAC_Finale", "CopierNomsLocaux", "Échec de la copie de '" & nomCible, 0, "")
             End If
             On Error GoTo 0
         End If
@@ -2086,7 +2062,7 @@ Public Sub CopierMiseEnPage(wsSource As Worksheet, wsCible As Worksheet) '2025-1
     wsCible.PageSetup = wsSource.PageSetup
     On Error GoTo 0
 
-    Debug.Print "Mise en page copiée de " & wsSource.Name & " vers " & wsCible.Name
+    Debug.Print Now() & " [CopierMiseEnPage] : Mise en page copiée de '" & wsSource.Name & "' vers '" & wsCible.Name & "'"
 
 End Sub
 
@@ -2100,7 +2076,7 @@ Public Sub AppliquerZoomEtFreeze(wsSource As Worksheet, wsCible As Worksheet) '2
     Dim zoomValue As Long
     zoomValue = wsSource.Parent.Windows(1).Zoom
     wsCible.Parent.Windows(1).Zoom = zoomValue
-    Debug.Print "Zoom appliqué : " & zoomValue & "%"
+    Debug.Print Now() & " [AppliquerZoomEtFreeze] : Zoom appliqué à " & zoomValue & "%"
 
     'Réinitialiser les volets figés
     With wsCible.Parent.Windows(1)
@@ -2115,9 +2091,9 @@ Public Sub AppliquerZoomEtFreeze(wsSource As Worksheet, wsCible As Worksheet) '2
             wsCible.Activate
             wsCible.Cells(.SplitRow + 1, .SplitColumn + 1).Select
             wsCible.Parent.Windows(1).FreezePanes = True
-            Debug.Print "FreezePanes appliqué : ligne " & .SplitRow & ", colonne " & .SplitColumn
+            Debug.Print Now() & " [AppliquerZoomEtFreeze] : FreezePanes appliqué à la ligne " & .SplitRow & ", et à la colonne " & .SplitColumn
         Else
-            Debug.Print "Aucun FreezePanes à appliquer"
+            Debug.Print Now() & " [AppliquerZoomEtFreeze] : Aucun FreezePanes à appliquer"
         End If
     End With
 
@@ -2138,7 +2114,7 @@ Public Sub CorrigerFormules(wsCible As Worksheet, nomFeuilleSource As String, no
             formuleAvant = c.formula
             If InStr(formuleAvant, nomFeuilleSource) > 0 Then
                 c.formula = Replace(formuleAvant, nomFeuilleSource, nomFeuilleCible)
-                Debug.Print "Formule corrigée en " & c.Address
+                Debug.Print Now() & " [CorrigerFormules] : Formule corrigée à la cellule '" & c.Address & "'"
             End If
         End If
     Next c
@@ -2167,16 +2143,10 @@ Public Sub CorrigerHyperliens(wsCible As Worksheet, nomFeuilleSource As String, 
         End If
 
         If modif Then
-            Debug.Print "Hyperlien corrigé : " & hl.TextToDisplay
+            Debug.Print Now() & " [CorrigerHyperliens] : Hyperlien corrigé : " & hl.TextToDisplay
         End If
     Next hl
 
-End Sub
-
-Sub TracerEtape(nomEtape As String)
-
-    Debug.Print Format(Now, "hh:nn:ss") & " - " & nomEtape
-    
 End Sub
 
 Sub PauseActive(seconde As Double)
@@ -2188,3 +2158,24 @@ Sub PauseActive(seconde As Double)
     
 End Sub
 
+Sub testErreurLog()
+
+    On Error Resume Next
+    Dim a As Long
+    a = "a"
+    Debug.Print Err.source
+    Call EnregistrerErreurs("modFAC_Finale", "testErreurLog", "2165", Err, Err.description)
+    On Error GoTo 0
+    
+    On Error Resume Next
+    Debug.Print 1 / 0
+    Call EnregistrerErreurs("modFAC_Finale", "testErreurLog", "2170", Err, Err.description)
+    On Error GoTo 0
+    
+    On Error Resume Next
+    Dim s As String
+    s = CDate(s)
+    Call EnregistrerErreurs("modFAC_Finale", "testErreurLog", "2176", Err, Err.description)
+    On Error GoTo 0
+    
+End Sub

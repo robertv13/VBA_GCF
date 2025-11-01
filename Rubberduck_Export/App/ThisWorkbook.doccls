@@ -2,15 +2,8 @@ Option Explicit
 
 Private Sub Workbook_Open()
 
-'    If Dir(Environ("TEMP") & "\APP_FermetureEnCours.txt") <> "" Then '2025-10-24 @ 15:34
-'        Kill Environ("TEMP") & "\APP_FermetureEnCours.txt"
-'        MsgBox "L'application est en cours de fermeture...", _
-'               vbCritical, _
-'               "Contrôle de l'application"
-'        ThisWorkbook.Close SaveChanges:=False
-'        Exit Sub 'Ne pas relancer l'application
-'    End If
-'
+    Dim tt0 As Double: tt0 = Timer: Call EnregistrerLogPerformanceTXT("Workbook_Open - Début")
+    
     Dim utilisateurWindows As String
     utilisateurWindows = modFunctions.Fn_UtilisateurWindows
     
@@ -46,6 +39,8 @@ Private Sub Workbook_Open()
            "Démarrage de l'application GCF"
 
     Call VerifierVersionApplication(cheminSourcePROD, versionApplication)
+    
+    Call EnregistrerLogPerformanceTXT("ThisWorkbook:Workbook_Open", Timer - tt0)
     
 End Sub
     
