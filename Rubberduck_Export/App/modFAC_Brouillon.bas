@@ -179,7 +179,8 @@ Sub CreerNouvelleFactureBrouillon() 'Clear contents
             wshFAC_Brouillon.Range("O3").Value = Format$(Date, wsdADMIN.Range("B1").Value)
             Call FACBrouillonDate_Change(wshFAC_Brouillon.Range("O3").Value)
             
-            wshFAC_Brouillon.Range("O9").Select
+            wshFAC_Brouillon.Range("L11").Select '2025-11-01 @ 14:04
+'            wshFAC_Brouillon.Range("O9").Select
             
             Application.EnableEvents = True
         Else
@@ -790,11 +791,11 @@ Sub CopierTECFiltresVersFACBrouillon(cutOffDateProjet As Date) '2024-03-21 @ 07:
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.listBox1.Clear
+        ufFraisDivers.ListBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.listBox1.AddItem item
+            ufFraisDivers.ListBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless

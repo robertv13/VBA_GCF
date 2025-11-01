@@ -1788,6 +1788,7 @@ Sub ReinitialiserFAC_Finale() '2025-10-23 @ 12:50
     Call ReinitialiserFormesFACFinale(FeuilleSource, FeuilleCible) '2025-11-01 @ 06:48
     Call VerifierFormesCritiques(FeuilleSource, FeuilleCible) '2025-11-01 @ 06:48
     Call VerifierActionsFormes(FeuilleCible)
+    wshFAC_Finale.Range("I50").Select 'Pour libérer le select de la dernière forme - 2025-11-01 @ 14:11
 
     '--- 4. Copier les noms locaux ---
     Call CopierNomsLocaux(FeuilleSource, FeuilleCible)
