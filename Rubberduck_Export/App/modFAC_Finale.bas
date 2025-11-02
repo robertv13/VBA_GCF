@@ -1182,12 +1182,16 @@ Sub SauvegarderCopieFactureDansExcel(clientID As String, clientName As String, i
     
     'Définir le chemin complet du répertoire des fichiers Excel
     Dim ExcelFilesFullPath As String
-    ExcelFilesFullPath = wsdADMIN.Range("PATH_DATA_FILES").Value & gFACT_EXCEL_PATH
+    ExcelFilesFullPath = wsdADMIN.Range("PATH_DATA_FILES").Value & gFACT_EXCEL_PATH & Application.PathSeparator
     MsgBox "Répertoire pour sauvegarder les factures en Excel" & vbCrLf & vbCrLf & _
             "'" & ExcelFilesFullPath & "'", _
             vbInformation, _
             "1192 - Message temporaire à enlever par développeur"
+    
+    On Error Resume Next
+    ChDrive ExcelFilesFullPath
     ChDir ExcelFilesFullPath
+    On Error GoTo 0
     
     'Définir la feuille source et la plage à copier
     Dim wbSource As Workbook: Set wbSource = ThisWorkbook
@@ -1329,7 +1333,7 @@ Sub SauvegarderCopieFactureDansExcel(clientID As String, clientName As String, i
     
     'Optionnel : Sauvegarder le workbook cible sous un nouveau nom si nécessaire
     If strCible = vbNullString Then
-        wbCible.SaveAs ExcelFilesFullPath & Application.PathSeparator & clientID & " - " & clientNamePurged & ".xlsx"
+        wbCible.SaveAs ExcelFilesFullPath & clientID & " - " & clientNamePurged & ".xlsx"
         MsgBox "Un nouveau fichier Excel créé pour sauvegarder la facture" & vbNewLine & vbNewLine & _
                 "'" & clientID & " - " & clientNamePurged & ".xlsx" & "'", _
                 vbInformation, _
@@ -1867,45 +1871,6 @@ Public Sub CopierContenuEtFormats(wsSource As Worksheet, wsCible As Worksheet) '
 
 End Sub
 
-'Public Sub CopierFormes(wsSource As Worksheet, wsCible As Worksheet) '2025-10-23 @ 13:42
-'
-'    If wsSource Is Nothing Or wsCible Is Nothing Then Exit Sub
-'
-'    Dim shp As Shape, shpNew As Shape
-'    Dim actionMacro As String
-'
-'    For Each shp In wsSource.Shapes
-'        shp.Copy
-'        Debug.Print "Tenter de copier la forme '" & shp.Name & "'"
-'        On Error GoTo Next_Shape
-'        wsCible.Activate
-'        DoEvents
-'        wsCible.Paste
-'        DoEvents
-'        Set shpNew = wsCible.Shapes(wsCible.Shapes.count)
-'        On Error GoTo 0
-'
-'        'Repositionner et redimensionner
-'        With shpNew
-'            .Top = shp.Top
-'            .Left = shp.Left
-'            .Width = shp.Width
-'            .Height = shp.Height
-'
-'            'Restaurer l'action si elle existe
-'            On Error Resume Next
-'            actionMacro = shp.OnAction
-'            If Len(actionMacro) > 0 Then
-'                .OnAction = actionMacro
-'                Debug.Print "Forme copiée (avec .Action) : " & shp.Name & " | Action : " & actionMacro
-'            End If
-'            On Error GoTo 0
-'        End With
-'Next_Shape:
-'    Next shp
-'
-'End Sub
-'
 Public Sub ReinitialiserFormesFACFinale(wsSource As Worksheet, wsCible As Worksheet) '2025-11-01 @ 06:39
 
     If wsSource Is Nothing Or wsCible Is Nothing Then Exit Sub
@@ -1914,14 +1879,10 @@ Public Sub ReinitialiserFormesFACFinale(wsSource As Worksheet, wsCible As Worksh
     Dim actionMacro As String
     Dim nbAvant As Long, nbApres As Long
 
-'    'Supprimer toutes les formes existantes
-'    Dim shpCible As Shape
-'    For Each shpCible In wsCible.Shapes
-'        shpCible.Delete
-'    Next shpCible
-'
-    'Dupliquer chaque forme
-    For Each shp In wsSource.Shapes
+    'Dupliquer chaque forme dans l'ordre
+    Dim i As Long
+    For i = 1 To wsSource.Shapes.count
+        Set shp = wsSource.Shapes(i)
         On Error GoTo Next_Shape
     
         Dim nom As String: nom = shp.Name
@@ -1957,52 +1918,10 @@ Public Sub ReinitialiserFormesFACFinale(wsSource As Worksheet, wsCible As Worksh
         Else
             Debug.Print Now() & " [ReinitialiserFormesFACFinale] : Forme inchangée '" & nom & "'"
         End If
-    
-'Next_Shape:
-'        On Error GoTo 0
-'    Next shp
-'
-'    For Each shp In wsSource.Shapes
-'        On Error GoTo Next_Shape
-'
-'        nbAvant = wsCible.Shapes.count
-'
-'        shp.Copy
-'        wsCible.Activate
-'        wsCible.Paste
-'        Set shpNew = wsCible.Shapes(wsCible.Shapes.count)
-'
-''        Set shpNew = shp.Duplicate
-''        shpNew.Cut
-''        wsCible.Paste
-''        DoEvents
-''
-'        nbApres = wsCible.Shapes.count
-'        If nbApres <= nbAvant Then
-'            Debug.Print Now() & " [ReinitialiserFormesFACFinale] : Échec de la copie : " & shp.Name
-'            Call EnregistrerErreurs("modFAC_Finale", "ReinitialiserFormesFACFinale", "Échec de la copie : " & shp.Name, 0, "")
-'            GoTo Next_Shape
-'        End If
-'
-''        Set shpNew = wsCible.Shapes(nbApres)
-'
-'        With shpNew
-'            .Top = shp.Top
-'            .Left = shp.Left
-'            .Width = shp.Width
-'            .Height = shp.Height
-'            On Error Resume Next
-'            actionMacro = shp.OnAction
-'            If Len(actionMacro) > 0 Then .OnAction = actionMacro
-'            If Err Then Call EnregistrerErreurs("modFAC_Finale", "ReinitialiserFormesFACFinale", "Len(actionMacro) > 0", 0, "Resume Next")
-'            On Error GoTo 0
-'        End With
-
-        Debug.Print Now() & " [ReinitialiserFormesFACFinale] : ReinitialiserFormesFACFinale - Forme restaurée '" & shp.Name & "'"
 
 Next_Shape:
         On Error GoTo 0
-    Next shp
+    Next i
     
     wsCible.Range("I50").Select
 
@@ -2230,6 +2149,33 @@ Public Function Fn_ExisteForme(ws As Worksheet, nom As String) As Boolean '2025-
     On Error GoTo 0
     
 End Function
+
+Public Sub ReinitialiserFormesManuellement() '2025-11-02 @ 09:26
+
+    Dim wsSource As Worksheet, wsCible As Worksheet
+    Set wsSource = Worksheets("FAC_Finale_Intact")
+    Set wsCible = Worksheets("FAC_Finale")
+
+    If wsSource Is Nothing Or wsCible Is Nothing Then Exit Sub
+
+    Dim confirmation As VbMsgBoxResult
+    confirmation = MsgBox("Voulez-vous vraiment restaurer les formes de la feuille FAC_Finale ?" & vbCrLf & vbCrLf & _
+                          "Cette opération ne modifie pas les données, mais peut écraser des formes personnalisées.", _
+                          vbYesNo + vbQuestion, _
+                          "Réinitialisation des formes (FAC_Finale_Intacte ---> FAC_Finale)")
+
+    If confirmation = vbNo Then Exit Sub
+
+    Application.ScreenUpdating = False
+
+    Call ReinitialiserFormesFACFinale(wsSource, wsCible)
+    Call VerifierFormesCritiques(wsSource, wsCible)
+
+    Application.ScreenUpdating = True
+
+    MsgBox "Les formes ont été restaurées avec succès.", vbInformation, "Réinitialisation terminée"
+
+End Sub
 
 Sub testErreurLog()
 

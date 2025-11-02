@@ -1425,4 +1425,3 @@ Sub zz_ObtenirLigneAPartirCelluleRecherche() '2025-01-13 @ 08:49
     End If
     
 End Sub
-

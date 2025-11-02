@@ -2,7 +2,7 @@ Option Explicit
 
 Private Sub Workbook_Open()
 
-    Dim tt0 As Double: tt0 = Timer: Call EnregistrerLogPerformanceTXT("Workbook_Open - Début")
+    Dim tt0 As Double: tt0 = Timer: Call EnregistrerLogPerformanceTXT("ThisWorkbook:Workbook_Open - Début")
     
     Dim utilisateurWindows As String
     utilisateurWindows = modFunctions.Fn_UtilisateurWindows

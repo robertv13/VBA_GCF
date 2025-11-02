@@ -35,7 +35,7 @@ Public gFlagEtapeFacture As Long
 
 'Sauvegarde AUTOMATIQUE du code VBA - 2025-03-03 @ 07:18
 Public gNextBackupTime As Date
-Public Const INTERVALLE_MINUTES_SAUVEGARDE As Double = 15
+Public Const INTERVALLE_MINUTES_SAUVEGARDE As Double = 20
 
 'Fermeture AUTOMATIQUE de l'application - 2025-07-02 @ 09:47
 Public gDerniereActivite As Date

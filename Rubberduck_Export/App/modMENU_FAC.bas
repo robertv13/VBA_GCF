@@ -89,3 +89,10 @@ Sub shpAccederConfirmationFacture_Click()
 
 End Sub
 
+Public Sub shpReinitialiserFormesManuellement_Click() '2025-11-02 @ 09:20
+
+    Call ReinitialiserFormesManuellement
+
+End Sub
+
+

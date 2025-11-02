@@ -433,10 +433,28 @@ End Sub
 
 Sub OuvrirEtCopierAncienneFacture() '2024-07-27 @ 07:46
 
+    'Définir le chemin complet du répertoire des fichiers Excel par client
+    Dim DossierCopieFactureExcel As String
+    DossierCopieFactureExcel = wsdADMIN.Range("PATH_DATA_FILES").Value & gFACT_EXCEL_PATH & Application.PathSeparator
+    If Len(Dir(DossierCopieFactureExcel, vbDirectory)) = 0 Then
+        MsgBox "Le dossier est introuvable : " & DossierCopieFactureExcel, vbExclamation
+        Exit Sub
+    End If
+    
+    On Error Resume Next
+    ChDrive DossierCopieFactureExcel
+    ChDir DossierCopieFactureExcel
+    On Error GoTo 0
+
     'Step 1 - Open the Excel file
-    Dim filePath As String
-    filePath = Application.GetOpenFilename("Excel Files (*.xlsx), *.xlsx", , "Fichier Excel à ouvrir")
-    If filePath = "False" Then Exit Sub 'User canceled
+    Dim filePath As Variant
+    filePath = Application.GetOpenFilename("Fichiers Excel (*.xlsx), *.xlsx", , "Fichier Excel à ouvrir")
+        
+'    filePath = Application.GetOpenFilename( _
+'                    "Fichiers Excel (*.xlsx), *.xlsx", , _
+'                    "Fichier Excel à ouvrir", , DossierCopieFactureExcel)
+    
+    If UCase(filePath) = "FALSE" Or UCase(filePath) = "FAUX" Then Exit Sub 'User canceled
 
     Dim wbSource As Workbook: Set wbSource = Workbooks.Open(filePath)
     Dim wsSource As Worksheet: Set wsSource = wbSource.Sheets(wbSource.Sheets.count) 'Position to the last worksheet
@@ -791,11 +809,11 @@ Sub CopierTECFiltresVersFACBrouillon(cutOffDateProjet As Date) '2024-03-21 @ 07:
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.ListBox1.Clear
+        ufFraisDivers.listBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.ListBox1.AddItem item
+            ufFraisDivers.listBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless
@@ -970,7 +988,12 @@ Sub RetournerMenuFAC()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:RetournerMenuFAC", vbNullString, 0)
    
-    DoEvents
+    On Error Resume Next
+        DoEvents
+        Unload ufFraisDivers
+        Unload ufNonBillableTime
+    On Error GoTo 0
+            
     
     Application.Wait (Now + TimeValue("0:00:01")) '2024-09-06 @ 13:42
     
@@ -1294,4 +1317,21 @@ Sub ChargerGabaritDescriptionFacture(t As String)
     
 End Sub
 
+Public Sub test()
 
+    Dim testPath As String
+    testPath = "C:\VBA\GC_FISCALITÉ\Factures_Excel"
+    
+    If Len(Dir(testPath, vbDirectory)) > 0 Then
+        MsgBox "Le dossier existe bien."
+    Else
+        MsgBox "Le dossier est introuvable."
+    End If
+    
+    If GetAttr(testPath) And vbDirectory Then
+    MsgBox "C'est bien un dossier."
+    
+End If
+
+    
+End Sub

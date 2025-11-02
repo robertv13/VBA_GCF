@@ -589,6 +589,12 @@ Sub RafraichirListBoxEtAddtionnerHeures() 'Load the listBox with the appropriate
     Dim nbLignes As Long: nbLignes = UBound(data, 1)
     Dim nbColonnes As Long: nbColonnes = UBound(data, 2)
     
+    Dim totaux As Collection
+    Set totaux = New Collection
+    totaux.Add 0
+    totaux.Add 0
+    totaux.Add 0
+    
     If lastRow >= 3 Then
 '        Set rng = wsdTEC_Local.Range("V3:AI" & lastRow)
         For i = 1 To nbLignes
@@ -605,34 +611,7 @@ Sub RafraichirListBoxEtAddtionnerHeures() 'Load the listBox with the appropriate
                     End If
                 Next ColIndex
             End With
-'            With ufSaisieHeures.lstHresJour
-'                .AddItem rng.Cells(i, 1).Value
-'                Dim idx As Long: idx = .ListCount - 1
-'                For ColIndex = 2 To 9
-'                    If ColIndex <> 6 Then '2025-01-31 @ 14:42
-'                        .List(idx, ColIndex - 1) = rng.Cells(i, ColIndex).Value
-'                    Else
-'                        hresFormat = Format$(rng.Cells(i, ColIndex).Value, "#0.00")
-'                        hresFormat = Space(5 - Len(hresFormat)) & hresFormat
-'                        .List(idx, ColIndex - 1) = hresFormat
-'                    End If
-'                Next ColIndex
-'            End With
-'        totalHeures = totalHeures + CCur(data(i, 6))
-'        If Fn_Is_Client_Facturable(data(i, 14)) Then
-'            totalHresFact = totalHresFact + CCur(data(i, 6))
-'        Else
-'            totalHresNonFact = totalHresNonFact + CCur(data(i, 6))
-'        End If
-'        totalHeures = totalHeures + CCur(rng.Cells(i, 6).Value)
-'        'Calcul des heures facturables
-'        If Fn_Is_Client_Facturable(rng.Cells(i, 14).Value) Then
-'            totalHresFact = totalHresFact + CCur(rng.Cells(i, 6).Value)
-'        Else
-'            totalHresNonFact = totalHresNonFact + CCur(rng.Cells(i, 6).Value)
-'        End If
         Next i
-        Dim totaux As Collection
         Set totaux = CalculerTotaux(data)
     End If
     
@@ -640,9 +619,6 @@ Sub RafraichirListBoxEtAddtionnerHeures() 'Load the listBox with the appropriate
     ufSaisieHeures.txtTotalHeures.Value = Format$(totaux(1), "#0.00")
     ufSaisieHeures.txtHresFact.Value = Format$(totaux(2), "#0.00")
     ufSaisieHeures.txtHresNF.Value = Format$(totaux(3), "#0.00")
-'    ufSaisieHeures.txtTotalHeures.Value = Format$(totalHeures, "#0.00")
-'    ufSaisieHeures.txtHresFact.Value = Format$(totalHresFact, "#0.00")
-'    ufSaisieHeures.txtHresNF.Value = Format$(totalHresNonFact, "#0.00")
     
     'Maintenant, on traite la semaine à partir de wshTEC_TDB_Data
     Dim totalHresFactSemaine As Currency
@@ -690,7 +666,9 @@ EndOfProcedure:
     
 ErrorHandler:
 
+    Call EnregistrerErreurs("modTEC_Saisie", "RafraichierListBoxEtAdditionnerHeures", "", Err.Number, Err.description)
     MsgBox "Erreur : " & Err.description, vbCritical, "Erreur # APP-003"
+    
     Resume EndOfProcedure
     
 End Sub
@@ -828,8 +806,14 @@ Public Function ConstruireLigneLog() As String '2025-10-31 @ 06:07
                          
 End Function
 
-Function CalculerTotaux(data As Variant) As Collection '2025-10-31 @ 07:18
+Function CalculerTotaux(data As Variant) As Collection '2025-11-02 @ 09:58
 
+    'Au cas où il n'y a rien...
+    If IsEmpty(data) Or UBound(data, 1) = 0 Then
+        Set CalculerTotaux = Nothing
+        Exit Function
+    End If
+    
     Dim total As Currency, fact As Currency, nonFact As Currency
     Dim i As Long
     For i = 1 To UBound(data, 1)
@@ -841,7 +825,9 @@ Function CalculerTotaux(data As Variant) As Collection '2025-10-31 @ 07:18
         End If
     Next i
     Dim result As New Collection
-    result.Add total: result.Add fact: result.Add nonFact
+    result.Add total
+    result.Add fact
+    result.Add nonFact
     Set CalculerTotaux = result
     
 End Function
