@@ -1,4 +1,4 @@
-﻿📘 Journal typographique — 11/01/2025 14:16:27
+﻿📘 Journal typographique — 11/02/2025 00:02:57
 
 🔧 Fichier : clsControlWrapper.cls
 
@@ -143,6 +143,7 @@
    ✅ Remplacé : .row ➜ .Row
    ✅ Remplacé : .value ➜ .Value
    ✅ Remplacé : .range ➜ .Range
+   ✅ Remplacé : .name ➜ .Name
    ✅ Remplacé : .font ➜ .Font
 
 🔧 Fichier : modFAC_Interrogation.bas

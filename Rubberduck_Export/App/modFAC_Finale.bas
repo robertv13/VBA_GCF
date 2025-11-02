@@ -76,10 +76,8 @@ Sub SauvegarderFacture() '2024-03-28 @ 07:19
     End If
         
     'Rétablir FAC_Finale à partir de FAC_Finale_Intact et vérifier - 2025-10-23 @ 12:19
-    Application.StatusBar = "Réinitialisation de la feuille en cours..."
     Call ReinitialiserFAC_Finale
     Call VerifierIntegriteFAC_Finale
-    Application.StatusBar = False
         
     'Save Invoice total amount
     Dim invoice_Total As Currency
@@ -88,7 +86,9 @@ Sub SauvegarderFacture() '2024-03-28 @ 07:19
     MsgBox "La facture '" & wshFAC_Brouillon.Range("O6").Value & "' est enregistrée." & _
         vbNewLine & vbNewLine & "Le total de la facture est " & _
         Trim$(Format$(invoice_Total, "### ##0.00 $")) & _
-        " (avant les taxes)", vbOKOnly, "Confirmation d'enregistrement"
+        " (avant les taxes)", _
+        vbInformation, _
+        "Confirmation d'enregistrement"
     
 Fast_Exit_Sub:
 
@@ -1914,49 +1914,97 @@ Public Sub ReinitialiserFormesFACFinale(wsSource As Worksheet, wsCible As Worksh
     Dim actionMacro As String
     Dim nbAvant As Long, nbApres As Long
 
-    'Supprimer toutes les formes existantes
-    Dim shpCible As Shape
-    For Each shpCible In wsCible.Shapes
-        shpCible.Delete
-    Next shpCible
-
+'    'Supprimer toutes les formes existantes
+'    Dim shpCible As Shape
+'    For Each shpCible In wsCible.Shapes
+'        shpCible.Delete
+'    Next shpCible
+'
     'Dupliquer chaque forme
     For Each shp In wsSource.Shapes
         On Error GoTo Next_Shape
-
-        nbAvant = wsCible.Shapes.count
-
-        Set shpNew = shp.Duplicate
-        shpNew.Cut
-        wsCible.Paste
-        DoEvents
-
-        nbApres = wsCible.Shapes.count
-        If nbApres <= nbAvant Then
-            Debug.Print Now() & " [ReinitialiserFormesFACFinale] : Échec de la copie : " & shp.Name
-            Call EnregistrerErreurs("modFAC_Finale", "ReinitialiserFormesFACFinale", "Échec de la copie : " & shp.Name, 0, "")
-            GoTo Next_Shape
+    
+        Dim nom As String: nom = shp.Name
+        Dim doitCopier As Boolean: doitCopier = False
+    
+        If Not Fn_ExisteForme(wsCible, nom) Then
+            doitCopier = True
+        Else
+            If FormeEstDifférente(shp, wsCible.Shapes(nom)) Then
+                doitCopier = True
+                On Error Resume Next
+                wsCible.Shapes(nom).Delete
+                On Error GoTo 0
+            End If
         End If
-
-        Set shpNew = wsCible.Shapes(nbApres)
-
-        With shpNew
-            .Top = shp.Top
-            .Left = shp.Left
-            .Width = shp.Width
-            .Height = shp.Height
-            On Error Resume Next
-            actionMacro = shp.OnAction
-            If Len(actionMacro) > 0 Then .OnAction = actionMacro
-            If Err Then Call EnregistrerErreurs("modFAC_Finale", "ReinitialiserFormesFACFinale", "Len(actionMacro) > 0", 0, "Resume Next")
-            On Error GoTo 0
-        End With
+    
+        If doitCopier Then
+            shp.Copy
+            wsCible.Activate
+            wsCible.Paste
+            Set shpNew = wsCible.Shapes(wsCible.Shapes.count)
+    
+            With shpNew
+                .Name = nom
+                .Top = shp.Top
+                .Left = shp.Left
+                .Width = shp.Width
+                .Height = shp.Height
+                .OnAction = shp.OnAction
+            End With
+    
+            Debug.Print Now() & " [ReinitialiserFormesFACFinale] : Forme copiée '" & nom & "'"
+        Else
+            Debug.Print Now() & " [ReinitialiserFormesFACFinale] : Forme inchangée '" & nom & "'"
+        End If
+    
+'Next_Shape:
+'        On Error GoTo 0
+'    Next shp
+'
+'    For Each shp In wsSource.Shapes
+'        On Error GoTo Next_Shape
+'
+'        nbAvant = wsCible.Shapes.count
+'
+'        shp.Copy
+'        wsCible.Activate
+'        wsCible.Paste
+'        Set shpNew = wsCible.Shapes(wsCible.Shapes.count)
+'
+''        Set shpNew = shp.Duplicate
+''        shpNew.Cut
+''        wsCible.Paste
+''        DoEvents
+''
+'        nbApres = wsCible.Shapes.count
+'        If nbApres <= nbAvant Then
+'            Debug.Print Now() & " [ReinitialiserFormesFACFinale] : Échec de la copie : " & shp.Name
+'            Call EnregistrerErreurs("modFAC_Finale", "ReinitialiserFormesFACFinale", "Échec de la copie : " & shp.Name, 0, "")
+'            GoTo Next_Shape
+'        End If
+'
+''        Set shpNew = wsCible.Shapes(nbApres)
+'
+'        With shpNew
+'            .Top = shp.Top
+'            .Left = shp.Left
+'            .Width = shp.Width
+'            .Height = shp.Height
+'            On Error Resume Next
+'            actionMacro = shp.OnAction
+'            If Len(actionMacro) > 0 Then .OnAction = actionMacro
+'            If Err Then Call EnregistrerErreurs("modFAC_Finale", "ReinitialiserFormesFACFinale", "Len(actionMacro) > 0", 0, "Resume Next")
+'            On Error GoTo 0
+'        End With
 
         Debug.Print Now() & " [ReinitialiserFormesFACFinale] : ReinitialiserFormesFACFinale - Forme restaurée '" & shp.Name & "'"
 
 Next_Shape:
         On Error GoTo 0
     Next shp
+    
+    wsCible.Range("I50").Select
 
 End Sub
 
@@ -2158,6 +2206,30 @@ Sub PauseActive(seconde As Double)
     Loop
     
 End Sub
+
+Public Function FormeEstDifférente(shpSource As Shape, shpCible As Shape) As Boolean '2025-11-01 @ 23:14
+
+    If Abs(shpSource.Top - shpCible.Top) > 0.1 _
+    Or Abs(shpSource.Left - shpCible.Left) > 0.1 _
+    Or Abs(shpSource.Width - shpCible.Width) > 0.1 _
+    Or Abs(shpSource.Height - shpCible.Height) > 0.1 _
+    Or shpSource.OnAction <> shpCible.OnAction Then
+        FormeEstDifférente = True
+    ElseIf shpSource.Type = msoTextBox And shpCible.Type = msoTextBox Then
+        FormeEstDifférente = (shpSource.TextFrame.Characters.text <> shpCible.TextFrame.Characters.text)
+    Else
+        FormeEstDifférente = False
+    End If
+    
+End Function
+
+Public Function Fn_ExisteForme(ws As Worksheet, nom As String) As Boolean '2025-11-01 @ 23:21
+
+    On Error Resume Next
+    Fn_ExisteForme = Not ws.Shapes(nom) Is Nothing
+    On Error GoTo 0
+    
+End Function
 
 Sub testErreurLog()
 
