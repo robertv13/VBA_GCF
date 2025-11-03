@@ -1859,7 +1859,7 @@ Private Sub VerifierFACEntete(ByVal wsOutput As Worksheet, ByRef r As Long, ByRe
     If modFunctions.Fn_UtilisateurWindows() = "RobertMV" Or modFunctions.Fn_UtilisateurWindows() = "robertmv" Then
         Set dictFacturesPDF = modDev_Tools.ListerPDFs("C:\VBA\GC_FISCALITÉ\Factures_PDF")
     Else
-        Set dictFacturesPDF = modDev_Tools.ListerPDFs("P:\Administration\APP\GCF\Factures_PDF")
+        Set dictFacturesPDF = modDev_Tools.ListerPDFs("\\ServeurFichiers\Administration\APP\GCF\Factures_PDF")
     End If
 
     'wsdFAC_Entete
@@ -3464,7 +3464,7 @@ Private Sub VerifierTEC(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef read
     Dim ws As Worksheet: Set ws = wsdTEC_Local
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 9498 'What is the last TECID analyzed ?
+    lastTECIDReported = 9504 'What is the last TECID analyzed ?
     
     'Réference au UserDefined structure 'StatistiquesTEC'
     Dim stats As StatistiquesTEC
@@ -3934,6 +3934,8 @@ End Sub
 
 Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As Long)
 
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:AppliquerFormatColonnesParTable", vbNullString, 0)
+    
     '1) Define the usedRange to data only (exclude header row(s))
         Dim numRows As Long
         numRows = rng.CurrentRegion.Rows.count - HeaderRow
@@ -4207,6 +4209,8 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
     Set usedRange = Nothing
     On Error GoTo 0
     
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:AppliquerFormatColonnesParTable", vbNullString, startTime)
+
 End Sub
 
 Sub ObtenirDeplacementsAPartirDesTEC()  '2024-09-05 @ 10:22

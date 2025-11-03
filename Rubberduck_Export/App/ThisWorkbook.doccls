@@ -73,8 +73,12 @@ End Sub
 
 Private Sub Workbook_BeforeClose(Cancel As Boolean)
     
-    'La sortie du classeur ne peut se faire par le X rouge à droite en haut de EXCEL
-    Cancel = True
-    ufExitDisable.show
-
+    If gFermetureForcee Then
+        Cancel = False 'Autoriser la fermeture réelle
+    Else
+        Cancel = True
+        ufExitDisable.show
+        If ufExitDisable.Visible Then Unload ufExitDisable
+    End If
+    
 End Sub

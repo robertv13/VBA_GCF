@@ -652,7 +652,7 @@ Sub CreerRepertoireEtImporterFichiers() '2025-07-02 @ 13:57
 
     'Chemin du dossier contenant les fichiers PROD
     Dim cheminSourcePROD As String
-    cheminSourcePROD = "P:\Administration\APP\GCF\DataFiles\"
+    cheminSourcePROD = "\\ServeurFichiers\Administration\APP\GCF\DataFiles\"
     
     'Vérifier si des fichiers Actif_*.txt existent (utilisateurs encore présents)
     Dim actifFile As String
@@ -789,7 +789,7 @@ Sub SynchroniserFichiers() '2025-08-17 @ 18:43
     Dim dateModifProd As Date
 
     'Définir les chemins
-    cheminProd = "P:\Administration\APP\GCF" & gDATA_PATH & Application.PathSeparator
+    cheminProd = "\\ServeurFichiers\Administration\APP\GCF" & gDATA_PATH & Application.PathSeparator
     cheminDev = wsdADMIN.Range("PATH_DATA_FILES") & gDATA_PATH & Application.PathSeparator
     
     fichierLock = cheminProd & "GCF_BD_MASTER.lock"

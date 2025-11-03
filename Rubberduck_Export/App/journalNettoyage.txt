@@ -1,4 +1,4 @@
-﻿📘 Journal typographique — 11/02/2025 10:58:54
+﻿📘 Journal typographique — 11/02/2025 19:32:26
 
 🔧 Fichier : clsControlWrapper.cls
 
@@ -216,7 +216,6 @@
    ✅ Remplacé : .font ➜ .Font
 
 🔧 Fichier : modImport.bas
-   ✅ Remplacé : .cells ➜ .Cells
    ✅ Remplacé : .value ➜ .Value
 
 🔧 Fichier : modLog_Analysis.bas

@@ -56,6 +56,8 @@ Public Const gMODE_DEBUG As Boolean = True
 'Pour capturer évènements sur tous les controls des userForm - 2025-05-30 @ 13:11
 Public colWrappers As Collection
 
+Public gFermetureForcee As Boolean '2025-11-02 @ 13:40
+
 'Using Enum to specify the column number of worksheets (data)
 Public Enum BD_Clients '2024-10-26 @ 17:41
     [_First] = 1

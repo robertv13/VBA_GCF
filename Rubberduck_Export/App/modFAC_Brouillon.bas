@@ -292,7 +292,7 @@ Sub ChangerNomDuClient(clientName As String)
 
 Clean_Exit:
 
-    Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:ChangerNomDuClient - clientCode = '" & wshFAC_Brouillon.Range("B18").Value & "'", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:ChangerNomDuClient" & wshFAC_Brouillon.Range("B18").Value & "'", vbNullString, startTime)
     
 End Sub
 

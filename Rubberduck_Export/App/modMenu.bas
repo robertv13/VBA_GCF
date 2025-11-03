@@ -127,16 +127,12 @@ End Sub
 
 Sub FermerApplicationNormalement(ByVal userName As String, flag As String, Optional ByVal ignorerSauvegarde As Boolean = False) '2025-09-10 @ 08:14
 
-    Call modDev_Utils.EnregistrerLogApplication("modMENU:FermerApplicationNormalement - " & flag, vbNullString, -1)
-    
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU:FermerApplicationNormalement", vbNullString, startTime)
     
-    On Error GoTo ExitPoint
-    
+'    On Error GoTo ExitPoint '2025-11-02 @ 13:08
+'
     Application.EnableEvents = False
     Application.ScreenUpdating = False
-    
-    Application.StatusBar = False
     
     Dim ws As Worksheet
     Set ws = wsdADMIN
@@ -148,34 +144,31 @@ Sub FermerApplicationNormalement(ByVal userName As String, flag As String, Optio
     
     Call modDev_Utils.EnregistrerLogApplication("----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) -----", _
         IIf(ignorerSauvegarde, "S A N S   S A U V E G A R D E", ""), 0)
+    Call modDev_Utils.EnregistrerLogApplication(vbNullString, vbNullString, -1) 'Ligne blanche
         
-    Call modDev_Utils.EnregistrerLogApplication(vbNullString, vbNullString, -1)
-
-    'Fermer la sauvegarde automatique du code VBA (seul le développeur déclenche la sauvegarde automtique)
-    If userName = "RobertMV" Or userName = "robertmv" Then
-'        Call ArreterSauvegardeCodeVBA
-        Call ExporterCodeVBA
-    End If
+    'Fermer TOUS les formulaires (UserForm)
+    Dim uf As Object
+    For Each uf In VBA.UserForms
+        On Error Resume Next
+        Unload uf
+        On Error GoTo 0
+    Next
     
     'Fermer TOUTES les Application.OnTime
-    Call AnnulerToutesTachesPlanifiees
-    
-    'Fermeture du classeur de l'application uniquement
-    If ignorerSauvegarde Then
-        'Pas de sauvegarde
-        Debug.Print Now() & " Fermeture du classeur - SANS SAUVEGARDE"
-        ThisWorkbook.Close SaveChanges:=False
-    Else
-        'Avec sauvegarde
-        Debug.Print Now() & " Fermeture du classeur - Avec sauvegarde"
-        ThisWorkbook.Close SaveChanges:=True
-    End If
-    
-ExitPoint:
-    Application.EnableEvents = True
-    Application.ScreenUpdating = True
-    Set ws = Nothing
+    On Error Resume Next
+        Application.OnTime gProchaineVerification, "VerifierDerniereActivite", , False
+        Application.OnTime gProchaineVerifUserForm, "VerifierInactiviteUserForm", , False
+        Application.OnTime gFermeturePlanifiee, "FermerApplicationInactive", , False
+        Application.OnTime gProchainTick, "RelancerTimer", , False
+        Application.OnTime gNextBackupTime, "DemarrerSauvegardeCodeVBAAutomatique", , False
     On Error GoTo 0
+    
+    gFermetureForcee = True
+    Application.EnableEvents = False
+    If ignorerSauvegarde = False Then
+        ThisWorkbook.Saved = True
+    End If
+    ThisWorkbook.Close SaveChanges:=False
     
 End Sub
 

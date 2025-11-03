@@ -120,7 +120,7 @@ Function Fn_RepertoireBaseApplication(uw As String) As String '2025-03-03 @ 20:2
     If uw = "RobertMV" Or uw = "robertmv" Then
         Fn_RepertoireBaseApplication = "C:\VBA\GC_FISCALITÉ"
     Else
-        Fn_RepertoireBaseApplication = "P:\Administration\APP\GCF"
+        Fn_RepertoireBaseApplication = "\\ServeurFichiers\Administration\APP\GCF"
     End If
 
 End Function
@@ -193,7 +193,9 @@ Sub CreerSauvegardeMaster()
                          masterFileName & "_" & Format$(Now, "YYYYMMDD_HHMMSS") & ".xlsx"
     
     'Créer directement une copie du fichier sans ouvrir Excel
+    Dim t0 As Double: t0 = Timer
     FileCopy masterFileFullPath, backupFileFullPath
+    Debug.Print "Durée FileCopy : " & Format(Timer - t0, "0.0000") & " secondes"
 
     Call modDev_Utils.EnregistrerLogApplication("modAppli:CreerSauvegardeMaster", vbNullString, startTime)
     

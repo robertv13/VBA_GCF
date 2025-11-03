@@ -3,7 +3,7 @@ Option Explicit
 
 Sub ImporterMASTERGenerique(sourceWb As String, ws As Worksheet, onglet As String, table As String) '2025-05-07 @ 18:00
 
-'    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterMASTERGenerique:" & onglet, vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterMASTERGenerique:" & onglet, vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -11,60 +11,62 @@ Sub ImporterMASTERGenerique(sourceWb As String, ws As Worksheet, onglet As Strin
     Call ViderTableau(onglet, table)
     
     '2. Importer les enregistrements de la source via ADO
-    Dim fullPathSourceWb As String, sourceTab As String
+    Dim fullPathSourceWb As String
     fullPathSourceWb = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
                        sourceWb
-    sourceTab = onglet & "$"
+    Dim sourceTab As String: sourceTab = onglet & "$"
                      
-    'ADODB connection
-    Dim conn As Object: Set conn = New ADODB.Connection
-    
-    'Connection String specific to EXCEL
+    '3. Connection ADO
+    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
+    Dim t0 As Double: t0 = Timer
     conn.Open = "Provider = Microsoft.ACE.OLEDB.12.0;Data Source = " & fullPathSourceWb & ";" & _
                 "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
-    Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
-    
-    Dim strSQL As String
-    strSQL = "SELECT * FROM [" & sourceTab & "]"
+    Debug.Print "Temps requis pour 'conn.Open' (" & sourceTab & ") : " & Format(Timer - t0, "0.0000") & " secondes"
+    Dim recSet As ADODB.Recordset: Set recSet = CreateObject("ADODB.Recordset")
     With recSet
         .ActiveConnection = conn
         .CursorType = adOpenStatic
         .LockType = adLockReadOnly
-        .source = strSQL
+        .source = "SELECT * FROM [" & sourceTab & "]"
         .Open
     End With
     
-    'Déclaration du tableau structuré de la feuille
-    Dim tbl As ListObject
-    Set tbl = ws.ListObjects(table)
-    
-    'Copy to local worksheet
-    Dim targetCell As Range
-    If Not recSet.EOF Then
-        If Not tbl.DataBodyRange Is Nothing Then
-            'Si la table a déjà des lignes, on remplace à partir de la première
-            Set targetCell = tbl.DataBodyRange.Cells(1, 1)
-        Else
-            'Si la table est vide, on commence une ligne après l’en-tête
-            Set targetCell = tbl.HeaderRowRange.offset(1, 0).Cells(1, 1)
-        End If
-        targetCell.CopyFromRecordset recSet
-    End If
-    
-    'S'assurer qu'il n'y a pas de filtres appliqués - 2025-10-25 @ 11:34
-    If ws.AutoFilterMode Then ws.ShowAllData
+    Debug.Print "recSet.State = " & recSet.state
+    Debug.Print "recSet.EOF = " & recSet.EOF
+    Debug.Print "recSet.RecordCount = " & recSet.RecordCount
 
+    '4. Copie vers feuille temporaire
+    Dim tempWs As Worksheet: Set tempWs = Worksheets.Add
+    tempWs.Visible = xlSheetVisible
+    tempWs.Activate
+    tempWs.Range("A1").CopyFromRecordset recSet
+    
+    '5. Injection dans la table structurée
+    Dim tbl As ListObject: Set tbl = ws.ListObjects(table)
+    If Not tbl.DataBodyRange Is Nothing Then tbl.DataBodyRange.ClearContents
+    
+    Dim nbCols As Long: nbCols = tempWs.usedRange.Columns.count
+    Dim nbRows As Long: nbRows = tempWs.usedRange.Rows.count
+    tempWs.Range("A1").Resize(nbRows, nbCols).Copy Destination:=tbl.HeaderRowRange.offset(1, 0)
+    
+    '6. Nettoyage
+    Application.DisplayAlerts = False: tempWs.Delete: Application.DisplayAlerts = True
+    If ws.AutoFilterMode Then ws.ShowAllData
+    
     Dim rng As Range: Set rng = ws.Range("A1").CurrentRegion
     Call AppliquerFormatColonnesParTable(ws, rng, tbl.HeaderRowRange.row)
+
+    '7. Libération mémoire
+    Set rng = Nothing: Set tbl = Nothing: Set recSet = Nothing: Set conn = Nothing
     
-    Application.ScreenUpdating = True
+    Application.ScreenUpdating = False
     
-    'Libérer la mémoire
+    Set conn = Nothing
     Set rng = Nothing
-    Set targetCell = Nothing
+    Set recSet = Nothing
     Set tbl = Nothing
     
-'    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterMASTERGenerique:" & onglet, vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterMASTERGenerique:" & onglet, vbNullString, startTime)
 
 End Sub
 
@@ -498,25 +500,27 @@ End Sub
 
 Sub ImporterTEC() '2024-02-14 @ 06:19
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterTEC", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterTEC", vbNullString, 0)
     
-    Application.StatusBar = "Importation des TEC à partir de GCF_MASTER.xlsx" '2025-06-13 @ 08:47
+    Application.StatusBar = "Importation des TEC à partir de GCF_MASTER.xlsx"
+    Application.Calculation = xlCalculationManual
+    Application.ScreenUpdating = False
     
     'Mettre en place les variables (paramètres)
-    Dim sourceWb As String
-    sourceWb = wsdADMIN.Range("MASTER_FILE").Value
-    Dim ws As Worksheet
-    Set ws = wsdTEC_Local
-    Dim onglet As String, table As String
-    onglet = "TEC_Local"
-    table = "l_tbl_TEC_Local"
+    Dim sourceWb As String: sourceWb = wsdADMIN.Range("MASTER_FILE").Value
+    Dim ws As Worksheet: Set ws = wsdTEC_Local
+    
+    Dim onglet As String: onglet = "TEC_Local"
+    Dim table As String: table = "l_tbl_TEC_Local"
 
     Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
-    'Libérer la mémoire
-    Set ws = Nothing
+    Application.Calculation = xlCalculationAutomatic
+    Application.ScreenUpdating = True
+    Application.StatusBar = False
     
-    Application.StatusBar = False '2025-06-13 @ 08:47
+    Set ws = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterTEC", vbNullString, startTime)
 
