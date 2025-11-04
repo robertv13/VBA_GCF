@@ -2313,4 +2313,3 @@ Function Fn_ContexteActifComplet() As String '2025-10-30 @ 06:20
     
 End Function
 
-

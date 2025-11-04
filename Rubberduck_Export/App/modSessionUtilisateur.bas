@@ -6,7 +6,7 @@ Option Explicit
 'Auteur : Robert + Copilot
 'Rôle : Initialisation de session utilisateur, chargement des données métier, journalisation
 
-Public UtilisateurActif As Object
+Public UtilisateurActif As Scripting.Dictionary
 
 '--- Étape 1 : Récupération UtilisateurID à partir de l'utilisateur Windows ---
 Public Function Fn_InfosWindows() As Object
@@ -53,14 +53,14 @@ Public Function Fn_InfosWindows() As Object
 End Function
 
 ' --- Étape 2 : Chargement des données d'utilisateur ---
-Public Function Fn_ChargerUtilisateur(utilisateurID As Long) As Object
+Public Function Fn_ChargerUtilisateur(utilisateurID As Long) As Scripting.Dictionary
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication( _
         "modSessionUtilisateur:Fn_ChargerUtilisateur", vbNullString, 0)
     
     Dim cn As Object, rs As Object
-    Dim user As Object
-    Set user = CreateObject("Scripting.Dictionary")
+    Dim user As Scripting.Dictionary
+    Set user = New Scripting.Dictionary
 
     Dim cheminMASTER As String
     cheminMASTER = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _

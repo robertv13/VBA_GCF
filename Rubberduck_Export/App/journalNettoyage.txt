@@ -1,4 +1,4 @@
-﻿📘 Journal typographique — 11/02/2025 19:32:26
+﻿📘 Journal typographique — 11/04/2025 10:15:45
 
 🔧 Fichier : clsControlWrapper.cls
 
@@ -46,6 +46,8 @@
    ✅ Remplacé : .value ➜ .Value
    ✅ Remplacé : .range ➜ .Range
    ✅ Remplacé : .font ➜ .Font
+
+🔧 Fichier : modAuditLog.bas
 
 🔧 Fichier : modAuditVBA.bas
    ✅ Remplacé : .interior ➜ .Interior

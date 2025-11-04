@@ -652,7 +652,7 @@ Sub CreerRepertoireEtImporterFichiers() '2025-07-02 @ 13:57
 
     'Chemin du dossier contenant les fichiers PROD
     Dim cheminSourcePROD As String
-    cheminSourcePROD = "\\ServeurFichiers\Administration\APP\GCF\DataFiles\"
+    cheminSourcePROD = "P:\Administration\APP\GCF\DataFiles\"
     
     'Vérifier si des fichiers Actif_*.txt existent (utilisateurs encore présents)
     Dim actifFile As String
@@ -789,7 +789,7 @@ Sub SynchroniserFichiers() '2025-08-17 @ 18:43
     Dim dateModifProd As Date
 
     'Définir les chemins
-    cheminProd = "\\ServeurFichiers\Administration\APP\GCF" & gDATA_PATH & Application.PathSeparator
+    cheminProd = "P:\Administration\APP\GCF" & gDATA_PATH & Application.PathSeparator
     cheminDev = wsdADMIN.Range("PATH_DATA_FILES") & gDATA_PATH & Application.PathSeparator
     
     fichierLock = cheminProd & "GCF_BD_MASTER.lock"
@@ -1800,13 +1800,13 @@ End Function
 
 Function Fn_NomProcedureIndirect(texte As String) As String '2025-07-15 @ 22:56
 
-    Dim debut As Long, fin As Long
+    Dim debut As Long, FIN As Long
     Fn_NomProcedureIndirect = ""
     debut = InStr(texte, """")
     If debut > 0 Then
-        fin = InStr(debut + 1, texte, """")
-        If fin > debut Then
-            Fn_NomProcedureIndirect = Mid(texte, debut + 1, fin - debut - 1)
+        FIN = InStr(debut + 1, texte, """")
+        If FIN > debut Then
+            Fn_NomProcedureIndirect = Mid(texte, debut + 1, FIN - debut - 1)
         End If
     End If
     

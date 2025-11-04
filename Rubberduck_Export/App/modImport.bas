@@ -3,70 +3,94 @@ Option Explicit
 
 Sub ImporterMASTERGenerique(sourceWb As String, ws As Worksheet, onglet As String, table As String) '2025-05-07 @ 18:00
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterMASTERGenerique:" & onglet, vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterMASTERGenerique:" & onglet, vbNullString, 0)
     
+    On Error GoTo ERREUR_IMPORT
     Application.ScreenUpdating = False
+    Application.EnableEvents = False
+    Application.Calculation = xlCalculationManual
     
     '1. Vider la table locale
     Call ViderTableau(onglet, table)
     
-    '2. Importer les enregistrements de la source via ADO
+    '2. Construire le chemin complet
     Dim fullPathSourceWb As String
-    fullPathSourceWb = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
-                       sourceWb
-    Dim sourceTab As String: sourceTab = onglet & "$"
-                     
-    '3. Connection ADO
-    Dim conn As Object: Set conn = CreateObject("ADODB.Connection")
+    fullPathSourceWb = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & sourceWb
+
+    If Dir(fullPathSourceWb) = "" Then
+        MsgBox "Fichier source introuvable : " & fullPathSourceWb, _
+        vbCritical, _
+        "Le fichier source (MASTER) est introuvable"
+        Call EnregistrerErreurs("modImport", "ImporterMASTERGenerique", "Ouverture", Err.Number, Err.description)
+        GoTo FIN
+    End If
+    
+    '3. Connexion ADO
+    Dim conn As ADODB.Connection: Set conn = New ADODB.Connection
     Dim t0 As Double: t0 = Timer
-    conn.Open = "Provider = Microsoft.ACE.OLEDB.12.0;Data Source = " & fullPathSourceWb & ";" & _
-                "Extended Properties = 'Excel 12.0 Xml; HDR = YES';"
-    Debug.Print "Temps requis pour 'conn.Open' (" & sourceTab & ") : " & Format(Timer - t0, "0.0000") & " secondes"
-    Dim recSet As ADODB.Recordset: Set recSet = CreateObject("ADODB.Recordset")
-    With recSet
-        .ActiveConnection = conn
-        .CursorType = adOpenStatic
-        .LockType = adLockReadOnly
-        .source = "SELECT * FROM [" & sourceTab & "]"
-        .Open
-    End With
-    
-    Debug.Print "recSet.State = " & recSet.state
-    Debug.Print "recSet.EOF = " & recSet.EOF
-    Debug.Print "recSet.RecordCount = " & recSet.RecordCount
+    conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & fullPathSourceWb & ";" & _
+              "Extended Properties='Excel 12.0 Xml;HDR=YES';"
+    Debug.Print "Temps 'conn.Open' (" & onglet & ") : " & Format(Timer - t0, "0.0000") & " sec"
 
-    '4. Copie vers feuille temporaire
-    Dim tempWs As Worksheet: Set tempWs = Worksheets.Add
-    tempWs.Visible = xlSheetVisible
-    tempWs.Activate
-    tempWs.Range("A1").CopyFromRecordset recSet
+    '4. Lecture ADO
+    Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
+    Dim sourceTab As String: sourceTab = "[" & onglet & "$]"
+    recSet.Open "SELECT * FROM " & sourceTab, conn, adOpenStatic, adLockReadOnly
+
+'    If recSet.EOF Then
+'        MsgBox "Aucun enregistrement trouvé dans '" & sourceTab & "'", vbInformation
+'        GoTo fin
+'    End If
     
-    '5. Injection dans la table structurée
+    Debug.Print sourceTab & " - recSet.State       = " & recSet.state
+    Debug.Print sourceTab & " - recSet.EOF         = " & recSet.EOF
+    Debug.Print sourceTab & " - recSet.RecordCount = " & recSet.RecordCount
+
+    '5. Injection directe dans la table structurée
     Dim tbl As ListObject: Set tbl = ws.ListObjects(table)
-    If Not tbl.DataBodyRange Is Nothing Then tbl.DataBodyRange.ClearContents
-    
-    Dim nbCols As Long: nbCols = tempWs.usedRange.Columns.count
-    Dim nbRows As Long: nbRows = tempWs.usedRange.Rows.count
-    tempWs.Range("A1").Resize(nbRows, nbCols).Copy Destination:=tbl.HeaderRowRange.offset(1, 0)
-    
-    '6. Nettoyage
-    Application.DisplayAlerts = False: tempWs.Delete: Application.DisplayAlerts = True
-    If ws.AutoFilterMode Then ws.ShowAllData
-    
-    Dim rng As Range: Set rng = ws.Range("A1").CurrentRegion
-    Call AppliquerFormatColonnesParTable(ws, rng, tbl.HeaderRowRange.row)
+    If tbl Is Nothing Then
+        MsgBox "Table Excel introuvable : " & table, _
+            vbCritical, _
+            "Impossible de trouver de '" & table & "'"
+        Call EnregistrerErreurs("modImport", "ImporterMASTERGenerique", "Impossible de trouver de '" & _
+                                table & "'", Err.Number, Err.description)
+        GoTo FIN
+    End If
 
-    '7. Libération mémoire
-    Set rng = Nothing: Set tbl = Nothing: Set recSet = Nothing: Set conn = Nothing
+    If Not tbl.DataBodyRange Is Nothing Then
+        tbl.DataBodyRange.ClearContents
+        tbl.DataBodyRange.Cells(1, 1).CopyFromRecordset recSet
+    Else
+        ' Table vide : injecter juste sous l’en-tête
+        tbl.HeaderRowRange.offset(1, 0).CopyFromRecordset recSet
+    End If
     
-    Application.ScreenUpdating = False
+    '6. Audit et format
+    If ws.AutoFilterMode Then ws.ShowAllData
+    Call AppliquerFormatColonnesParTable(ws, ws.Range("A1").CurrentRegion, tbl.HeaderRowRange.row)
     
+FIN:
+    '7. Nettoyage
+    If Not recSet Is Nothing Then If recSet.state <> 0 Then recSet.Close
+    If Not conn Is Nothing Then If conn.state <> 0 Then conn.Close
     Set conn = Nothing
-    Set rng = Nothing
     Set recSet = Nothing
     Set tbl = Nothing
+
+    Application.EnableEvents = True
+    Application.ScreenUpdating = True
+    Application.Calculation = xlCalculationAutomatic
     
-    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterMASTERGenerique:" & onglet, vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterMASTERGeneriqueSécurisée:" & onglet, vbNullString, startTime)
+    Exit Sub
+    
+ERREUR_IMPORT:
+    MsgBox "Erreur [" & Err.Number & "] : " & Err.description, _
+        vbCritical, _
+        "Importation de " & sourceTab
+    Call EnregistrerErreurs("modImport", "ImporterMASTERGenerique", sourceTab, Err.Number, Err.description)
+    Resume FIN
 
 End Sub
 

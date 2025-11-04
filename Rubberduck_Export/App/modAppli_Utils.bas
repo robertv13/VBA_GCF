@@ -1859,7 +1859,7 @@ Private Sub VerifierFACEntete(ByVal wsOutput As Worksheet, ByRef r As Long, ByRe
     If modFunctions.Fn_UtilisateurWindows() = "RobertMV" Or modFunctions.Fn_UtilisateurWindows() = "robertmv" Then
         Set dictFacturesPDF = modDev_Tools.ListerPDFs("C:\VBA\GC_FISCALITÉ\Factures_PDF")
     Else
-        Set dictFacturesPDF = modDev_Tools.ListerPDFs("\\ServeurFichiers\Administration\APP\GCF\Factures_PDF")
+        Set dictFacturesPDF = modDev_Tools.ListerPDFs("P:\Administration\APP\GCF\Factures_PDF")
     End If
 
     'wsdFAC_Entete

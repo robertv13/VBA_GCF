@@ -1,7 +1,7 @@
 Attribute VB_Name = "modTemp"
 Option Explicit
 
-Sub main()
+Sub MAIN()
 
 '    Call AuditerPlageVersSpecs(Sheets("Couv.").Range("A1:F27"))
 '    Call AuditerPlageVersSpecs(Sheets("TM").Range("A1:I35"))

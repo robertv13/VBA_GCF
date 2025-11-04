@@ -120,7 +120,7 @@ Function Fn_RepertoireBaseApplication(uw As String) As String '2025-03-03 @ 20:2
     If uw = "RobertMV" Or uw = "robertmv" Then
         Fn_RepertoireBaseApplication = "C:\VBA\GC_FISCALITÉ"
     Else
-        Fn_RepertoireBaseApplication = "\\ServeurFichiers\Administration\APP\GCF"
+        Fn_RepertoireBaseApplication = "P:\Administration\APP\GCF"
     End If
 
 End Function

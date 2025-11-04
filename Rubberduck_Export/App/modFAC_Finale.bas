@@ -1038,7 +1038,7 @@ Sub SauvegarderPDFSauvegarderExcelEnvoyerCourriel() '2025-05-06 @ 11:07
     gFlagEtapeFacture = 5
     
     wshFAC_Brouillon.Range("FactureStatut").Value = "En attente de mise à jour" '2025-07-19 @ 18:35
-    GoTo fin
+    GoTo FIN
 
 GestionErreur:
     MsgBox "Une erreur est survenue à l'étape " & gFlagEtapeFacture & "." & vbCrLf & vbCrLf & _
@@ -1047,7 +1047,7 @@ GestionErreur:
            "Gestion d'erreur dans 'SauvegarderPDFSauvegarderExcelEnvoyerCourriel'"
     Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:SauvegarderPDFSauvegarderExcelEnvoyerCourriel", numeroFacture & " ÉTAPE " & gFlagEtapeFacture & " > " & Err.description, startTime)
 
-fin:
+FIN:
     'Restaurer l’environnement
     With Application
         .CutCopyMode = False
