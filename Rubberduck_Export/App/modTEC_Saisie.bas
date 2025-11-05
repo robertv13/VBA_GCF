@@ -666,7 +666,7 @@ EndOfProcedure:
     
 ErrorHandler:
 
-    Call EnregistrerErreurs("modTEC_Saisie", "RafraichierListBoxEtAdditionnerHeures", "", Err.Number, Err.description)
+    Call EnregistrerErreurs("modTEC_Saisie", "RafraichierListBoxEtAdditionnerHeures", "", Err.Number)
     MsgBox "Erreur : " & Err.description, vbCritical, "Erreur # APP-003"
     
     Resume EndOfProcedure

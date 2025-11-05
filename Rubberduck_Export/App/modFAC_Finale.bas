@@ -1702,7 +1702,8 @@ Sub VerifierIntegriteFAC_Finale(Optional ws As Worksheet)
         On Error GoTo 0
         If ws Is Nothing Then
             Debug.Print Now() & " [VerifierIntegriteFAC_Finale] : Feuille FAC_Finale introuvable."
-            Call EnregistrerErreurs("modFAC_Finale", "VerifierIntegriteFAC_Finale", "Feuille FAC_Finale introuvable", 0, "")
+            Call EnregistrerErreurs("modFAC_Finale", "VerifierIntegriteFAC_Finale", _
+                                        "Feuille FAC_Finale introuvable", 0, "CRITICAL")
             Exit Sub
         End If
     End If
@@ -1725,7 +1726,8 @@ Sub VerifierIntegriteFAC_Finale(Optional ws As Worksheet)
         Set forme = ws.Shapes(nom)
         If forme Is Nothing Then
             Debug.Print Now() & " [VerifierIntegriteFAC_Finale] : Forme manquante '" & nom & "'"
-            Call EnregistrerErreurs("ModFAC_Finale", "VerifierIntegriteFAC_Finale", "Forme manquante : " & nom, 0, "")
+            Call EnregistrerErreurs("ModFAC_Finale", "VerifierIntegriteFAC_Finale", _
+                                                    "Forme manquante : " & nom, 0, "CRITICAL")
         Else
             formeOK = formeOK + 1
         End If
@@ -1951,7 +1953,8 @@ Public Sub VerifierFormesCritiques(wsSource As Worksheet, wsCible As Worksheet) 
     For Each nom In dictSource.keys
         If Not dictCible.Exists(nom) Then
             formesManquantes.Add nom
-            Call EnregistrerErreurs("modFAC_Finale", "VerifierFormesCritiques", "Forme manquante : " & nom, 0, "")
+            Call EnregistrerErreurs("modFAC_Finale", "VerifierFormesCritiques", _
+                                            "Forme manquante : " & nom, 0, "CRITICAL")
         End If
     Next nom
 
@@ -1963,7 +1966,8 @@ Public Sub VerifierFormesCritiques(wsSource As Worksheet, wsCible As Worksheet) 
             msg = msg & vbCrLf & "- " & item
         Next item
         MsgBox msg, vbCritical, "Intégrité de la feuille compromise"
-        Call EnregistrerErreurs("modFAC_Finale", "VerifierFormesCritiques", "Formes manquantes au total = " & formesManquantes.count, 0, "")
+        Call EnregistrerErreurs("modFAC_Finale", "VerifierFormesCritiques", _
+                    "Formes manquantes au total = " & formesManquantes.count, 0, "CRITICAL")
     End If
 
 End Sub
@@ -2014,7 +2018,8 @@ Public Sub CopierNomsLocaux(wsSource As Worksheet, wsCible As Worksheet) '2025-1
                 Debug.Print Now() & " [CopierNomsLocaux] : Nom local copié '" & nomCible & "'"
             Else
                 Debug.Print Now() & " [CopierNomsLocaux] : ÉCHEC copie nom '" & nomCible & "'"
-                Call EnregistrerErreurs("modFAC_Finale", "CopierNomsLocaux", "Échec de la copie de '" & nomCible, 0, "")
+                Call EnregistrerErreurs("modFAC_Finale", "CopierNomsLocaux", _
+                                            "Échec de la copie de '" & nomCible, 0, "CRITICAL")
             End If
             On Error GoTo 0
         End If
@@ -2182,19 +2187,23 @@ Sub testErreurLog()
     On Error Resume Next
     Dim a As Long
     a = "a"
-    Debug.Print Err.source
-    Call EnregistrerErreurs("modFAC_Finale", "testErreurLog", "2165", Err, Err.description)
+    Call EnregistrerErreurs("modFAC_Finale", "testErreurLog", "2189", Err.Number)
     On Error GoTo 0
     
     On Error Resume Next
     Debug.Print 1 / 0
-    Call EnregistrerErreurs("modFAC_Finale", "testErreurLog", "2170", Err, Err.description)
+    Call EnregistrerErreurs("modFAC_Finale", "testErreurLog", "2194", Err.Number)
     On Error GoTo 0
     
     On Error Resume Next
     Dim s As String
     s = CDate(s)
-    Call EnregistrerErreurs("modFAC_Finale", "testErreurLog", "2176", Err, Err.description)
+    Call EnregistrerErreurs("modFAC_Finale", "testErreurLog", "2200", Err.Number)
     On Error GoTo 0
     
+    Call EnregistrerErreurs("modFAC_Finale", "testErreurLog", "Test de la routine", 0, "CRITICAL")
+    
+    Call modAppli.AfficherErreurCritique("modFAC_Finale", "testErreurLog", _
+                "Il y a eu quelques erreurs dans la procédure")
+
 End Sub

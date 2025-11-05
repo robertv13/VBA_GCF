@@ -22,7 +22,7 @@ Sub ImporterMASTERGenerique(sourceWb As String, ws As Worksheet, onglet As Strin
         MsgBox "Fichier source introuvable : " & fullPathSourceWb, _
         vbCritical, _
         "Le fichier source (MASTER) est introuvable"
-        Call EnregistrerErreurs("modImport", "ImporterMASTERGenerique", "Ouverture", Err.Number, Err.description)
+        Call EnregistrerErreurs("modImport", "ImporterMASTERGenerique", "Ouverture", Err.Number)
         GoTo FIN
     End If
     
@@ -54,7 +54,7 @@ Sub ImporterMASTERGenerique(sourceWb As String, ws As Worksheet, onglet As Strin
             vbCritical, _
             "Impossible de trouver de '" & table & "'"
         Call EnregistrerErreurs("modImport", "ImporterMASTERGenerique", "Impossible de trouver de '" & _
-                                table & "'", Err.Number, Err.description)
+                                table & "'", Err.Number)
         GoTo FIN
     End If
 
@@ -89,7 +89,7 @@ ERREUR_IMPORT:
     MsgBox "Erreur [" & Err.Number & "] : " & Err.description, _
         vbCritical, _
         "Importation de " & sourceTab
-    Call EnregistrerErreurs("modImport", "ImporterMASTERGenerique", sourceTab, Err.Number, Err.description)
+    Call EnregistrerErreurs("modImport", "ImporterMASTERGenerique", sourceTab, Err.Number)
     Resume FIN
 
 End Sub

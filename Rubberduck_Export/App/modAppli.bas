@@ -257,13 +257,19 @@ End Sub
 
 Public Sub ConnecterControlesDeForme(frm As Object) '2025-05-30 @ 13:22
 
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:ConnecterControlesDeForme", vbNullString, 0)
+    
     Set colWrappers = New Collection
     Call ConnecterControlesDeFormeRecursivement(frm.Controls)
     
+    Call modDev_Utils.EnregistrerLogApplication("modAppli:ConnecterControlesDeForme", vbNullString, startTime)
+
 End Sub
 
 Private Sub ConnecterControlesDeFormeRecursivement(ctrls As MSForms.Controls) '2025-05-30 @ 13:22
 
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:ConnecterControlesDeFormeRecursivement", vbNullString, 0)
+    
     Dim ctrl As MSForms.Control
     For Each ctrl In ctrls
         If TypeName(ctrl) <> "Label" Then
@@ -285,6 +291,8 @@ Private Sub ConnecterControlesDeFormeRecursivement(ctrls As MSForms.Controls) '2
         End If
     Next ctrl
     
+    Call modDev_Utils.EnregistrerLogApplication("modAppli:ConnecterControlesDeFormeRecursivement", vbNullString, startTime)
+
 End Sub
 
 Public Sub EnregistrerActivite(Optional ByVal msg As String = vbNullString) '2025-07-02 @ 15:19
@@ -293,6 +301,8 @@ Public Sub EnregistrerActivite(Optional ByVal msg As String = vbNullString) '202
         Exit Sub
     End If
 
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:EnregistrerActivite", vbNullString, 0)
+    
     'Noter état de EnableEvents
     Dim activeEvents As Boolean
     activeEvents = Application.EnableEvents
@@ -307,6 +317,8 @@ Public Sub EnregistrerActivite(Optional ByVal msg As String = vbNullString) '202
         Application.EnableEvents = activeEvents
     End If
 
+    Call modDev_Utils.EnregistrerLogApplication("modAppli:EnregistrerActivite", vbNullString, startTime)
+
 End Sub
 
 '@Description ("Vérifie la dernière activité et lance fermeture si plus de x minutes")
@@ -318,11 +330,13 @@ Attribute VerifierDerniereActivite.VB_Description = "Vérifie l'inactivité et f
         Exit Sub
     End If
 
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:VerifierDerniereActivite", vbNullString, 0)
+    
     On Error GoTo GestionErreur
 
     'Vérification de l'initialisation
     If gDerniereActivite = 0 Then
-        If gMODE_DEBUG Then Debug.Print Now() & " [modAppli:VerifierDerniereActivite] gDerniereActivite non initialisée"
+        Debug.Print Now() & " [modAppli:VerifierDerniereActivite] gDerniereActivite non initialisée"
         Exit Sub
     End If
 
@@ -330,10 +344,11 @@ Attribute VerifierDerniereActivite.VB_Description = "Vérifie l'inactivité et f
     Dim minutesInactives As Double
     minutesInactives = Round(Fn_MinutesDepuisDerniereActivite(), 1)
 
-    If gMODE_DEBUG Then Debug.Print Now() & " [modAppli:VerifierDerniereActivite] Inactif depuis " & minutesInactives & " min. - " & _
-                                    "Fréq. vérification = "; gFREQUENCE_VERIFICATION_INACTIVITE & " min., " & _
-                                    "Durée max. sans activité = " & gMAXIMUM_MINUTES_INACTIVITE & " min., " & _
-                                    "Délai de grâce (dernière chance) = " & gDELAI_GRACE_SECONDES & " sec."
+    Debug.Print Now() & " [modAppli:VerifierDerniereActivite] Inactif depuis " & minutesInactives & _
+                                " min. - " & "Fréq. vérification = "; gFREQUENCE_VERIFICATION_INACTIVITE & _
+                                " min., " & "Durée max. sans activité = " & gMAXIMUM_MINUTES_INACTIVITE & _
+                                " min., " & "Délai de grâce (dernière chance) = " & gDELAI_GRACE_SECONDES & _
+                                " sec."
     
     'Barre d’état informative
     Dim minute1 As String
@@ -380,6 +395,9 @@ Attribute VerifierDerniereActivite.VB_Description = "Vérifie l'inactivité et f
 
     'Replanification
     Call PlanifierVerificationDerniereActivite
+    
+    Call modDev_Utils.EnregistrerLogApplication("modAppli:VerifierDerniereActivite", vbNullString, startTime)
+    
     Exit Sub
 
 GestionErreur:
@@ -394,6 +412,8 @@ Public Sub PlanifierVerificationDerniereActivite() '2025-07-01 @ 13:53
         Exit Sub
     End If
     
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:PlanifierVerificationDerniereActivite", vbNullString, 0)
+    
     On Error Resume Next
     Application.OnTime gProchaineVerification, "VerifierDerniereActivite", , False
     On Error GoTo 0
@@ -402,6 +422,8 @@ Public Sub PlanifierVerificationDerniereActivite() '2025-07-01 @ 13:53
     Application.OnTime gProchaineVerification, "VerifierDerniereActivite"
     If gMODE_DEBUG Then Debug.Print Now() & " [modAppli:PlanifierVerificationDerniereActivite] Prochaine vérification est prévue à " & Format(gProchaineVerification, "hh:mm:ss")
     
+    Call modDev_Utils.EnregistrerLogApplication("modAppli:PlanifierVerificationDerniereActivite", vbNullString, startTime)
+
 End Sub
 
 Public Sub FermerApplicationInactive() '2025-07-02 @ 06:19
@@ -420,9 +442,13 @@ End Sub
 
 Public Sub RelancerTimer() '2025-07-02 @ 06:43
 
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:RelancerTimer", vbNullString, 0)
+    
     If gMODE_DEBUG Then Debug.Print Now() & " [modAppli:RelancerTimer] Appel de 'ufConfirmationFermeture.RafraichirTimer'"
     ufConfirmationFermeture.RafraichirTimer
     
+    Call modDev_Utils.EnregistrerLogApplication("modAppli:RelancerTimer", vbNullString, startTime)
+
 End Sub
 
 Public Sub EnregistrerActiviteAuLog(ByVal message As String) '2025-10-30 @ 07:44
@@ -432,6 +458,8 @@ Public Sub EnregistrerActiviteAuLog(ByVal message As String) '2025-10-30 @ 07:44
         Exit Sub
     End If
 
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:EnregistrerActiviteAuLog", vbNullString, 0)
+    
     Dim cheminLog As String
     cheminLog = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & "\ActiviteDurantSurveillance.txt"
 
@@ -443,36 +471,53 @@ Public Sub EnregistrerActiviteAuLog(ByVal message As String) '2025-10-30 @ 07:44
                         Fn_ContexteActifComplet() & "] [" & message & "]"
     Close #fileNum
     
+    Call modDev_Utils.EnregistrerLogApplication("modAppli:EnregistrerActiviteAuLog", vbNullString, startTime)
+
 End Sub
 
 Sub LancerSurveillanceUserForm() '2025-08-29 @ 18:32
 
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:LancerSurveillanceUserForm", vbNullString, 0)
+    
     gProchaineVerifUserForm = Now + TimeSerial(0, 0, 10) ' toutes les 10 secondes
     Application.OnTime gProchaineVerifUserForm, "VerifierInactiviteUserForm"
     
+    Call modDev_Utils.EnregistrerLogApplication("modAppli:LancerSurveillanceUserForm", vbNullString, startTime)
+
 End Sub
 
 Sub AnnulerSurveillanceUserForm() '2025-08-29 @ 18:32
 
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:AnnulerSurveillanceUserForm", vbNullString, 0)
+    
     On Error Resume Next
     Application.OnTime gProchaineVerifUserForm, "VerifierInactiviteUserForm", , False
+    On Error GoTo 0
     
+    Call modDev_Utils.EnregistrerLogApplication("modAppli:AnnulerSurveillanceUserForm", vbNullString, startTime)
+
 End Sub
 
 Sub VerifierInactiviteUserForm() '2025-08-29 @ 18:32
 
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:VerifierInactiviteUserForm", vbNullString, 0)
+    
     If Fn_MinutesDepuisDerniereActivite() >= gMAXIMUM_MINUTES_INACTIVITE Then
-        If gMODE_DEBUG Then Debug.Print Now() & " [modAppli:VerifierInactiviteUserForm] Inactivité détectée dans UserForm — fermeture"
+        Debug.Print Now() & " [modAppli:VerifierInactiviteUserForm] Inactivité détectée dans UserForm — fermeture"
         Unload ufSaisieHeures
         Call FermerApplicationInactive
     Else
         Call LancerSurveillanceUserForm
     End If
     
+    Call modDev_Utils.EnregistrerLogApplication("modAppli:VerifierInactiviteUserForm", vbNullString, startTime)
+
 End Sub
 
 Sub QuitterFeuillePourMenu(ByVal nomFeuilleMenu As Worksheet, Optional masquerFeuilleActive As Boolean = False) '2025-08-19 @ 06:46
 
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:QuitterFeuillePourMenu", vbNullString, 0)
+    
     Application.EnableEvents = False
     Application.ScreenUpdating = False
 
@@ -485,26 +530,16 @@ Sub QuitterFeuillePourMenu(ByVal nomFeuilleMenu As Worksheet, Optional masquerFe
     Application.ScreenUpdating = True
     Application.EnableEvents = True
     
+    Call modDev_Utils.EnregistrerLogApplication("modAppli:QuitterFeuillePourMenu", vbNullString, startTime)
+
 End Sub
     
-Sub AfficherErreurCritique(message As String) '2025-10-19 @ 10:36
+Sub AfficherErreurCritique(modApp As String, procName As String, message As String) '2025-11-05 @ 07:39
 
+    Call EnregistrerErreurs(modApp, procName, message, 0, "CRITICAL")
     MsgBox message, _
         vbCritical, _
         "Erreur critique dans l'application"
-    
-End Sub
-
-Public Sub TracerBloc(label As String) '2025-10-31 @ 10:31
-
-    Static t0 As Double
-    If label = "Départ" Then
-        Debug.Print Now() & " - Début du chronomètre"
-        t0 = Timer
-    Else
-        Debug.Print Now() & " - " & label & " : " & Format(Timer - t0, "0.0000") & " sec"
-        t0 = 0
-    End If
     
 End Sub
 
@@ -547,35 +582,41 @@ Public Sub EnregistrerLogPerformanceTXT(nomProcedure As String, Optional duree A
     
 End Sub
 
-Public Sub EnregistrerErreurs(nomModule As String, nomProcedure As String, comments As String, _
-                        errNo As Long, errDescription As String) '2025-11-01 @ 07:04
-
-    On Error Resume Next
+Public Sub EnregistrerErreurs(moduleAppelant As String, _
+                                nomProcedure As String, _
+                                commentaire As String, _
+                                Optional numeroErreur As Variant = 0, _
+                                Optional niveauGravite As String = "ERREUR") '2025-11-05 @ 07:16
+                       
+    Dim horodatage As String: horodatage = Format(Now, "yyyy-mm-dd hh:nn:ss")
     
-    Dim fullPathErreurLog As String
+    Dim description As String
+    If IsNumeric(numeroErreur) And numeroErreur <> 0 Then
+        description = Err.description
+    Else
+        description = commentaire ' commentaire métier si pas d’erreur système
+    End If
+    
     Dim utilisateur As String
-    Dim maintenant As String
+    utilisateur = Environ("USERNAME")
+    
+    Dim ligneLog As String
+    ligneLog = horodatage & " | " & utilisateur & " | " & ActiveWorkbook.Name & " | " & moduleAppelant & _
+                "." & nomProcedure & " | " & niveauGravite & " | " & _
+                CStr(numeroErreur) & " | " & description
+               
+    Dim fullPathErreurLog As String
     
     fullPathErreurLog = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & _
                                 Application.PathSeparator & "Erreurs.log"
     
-    utilisateur = Environ("USERNAME")
-    maintenant = Format(Now, "yyyy-mm-dd hh:nn:ss")
-
     'Ouverture de log des erreurs
     Dim canalErreurLog As Integer
     canalErreurLog = FreeFile
     Open fullPathErreurLog For Append As #canalErreurLog
     
     'Écrire dans le fichier
-    Print #canalErreurLog, maintenant & "|" _
-                                & ActiveWorkbook.Name & "|" _
-                                & utilisateur & "|" _
-                                & nomModule & "|" _
-                                & nomProcedure & "|" _
-                                & comments & "|" & _
-                                errNo & "|" & _
-                                errDescription & "|"
+    Print #canalErreurLog, ligneLog
     
     Close #canalErreurLog
 

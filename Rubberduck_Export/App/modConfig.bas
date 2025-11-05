@@ -46,8 +46,8 @@ Public gFermeturePlanifiee As Date
 'Public Const gDELAI_GRACE_SECONDES As Long = 60
 'Public Const gHEURE_DEBUT_SURVEILLANCE As Long = 5
 Public Const gFREQUENCE_VERIFICATION_INACTIVITE As Long = 15
-Public Const gMAXIMUM_MINUTES_INACTIVITE As Long = 60
-Public Const gDELAI_GRACE_SECONDES As Long = 300
+Public Const gMAXIMUM_MINUTES_INACTIVITE As Long = 30
+Public Const gDELAI_GRACE_SECONDES As Long = 120
 Public Const gHEURE_DEBUT_SURVEILLANCE As Long = 20
 
 'On affiche ou pas certains Debug.print (mécanisme de fermeture automatique de l'application

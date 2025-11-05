@@ -22,7 +22,7 @@ Public Function Fn_InfosWindows() As Object
     cheminMASTER = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
                    "GCF_BD_MASTER.xlsx"
     If Dir(cheminMASTER) = "" Then
-        Call modAppli.AfficherErreurCritique("Fichier GCF_BD_MASTER est introuvable" & vbNewLine & vbNewLine & cheminMASTER)
+        Call modAppli.AfficherErreurCritique("modSessionUtilisateur", "Fn_INfoWindows", "Fichier GCF_BD_MASTER est introuvable" & cheminMASTER)
         Exit Function
     End If
 
@@ -39,8 +39,8 @@ Public Function Fn_InfosWindows() As Object
     Else
         MsgBox "Utilisateur Windows non reconnu dans GCF_BD_MASTER.", _
             vbCritical
-        Call modAppli.AfficherErreurCritique("Utilisateur Windows non reconnu dans GCF_BD_MASTER" & _
-            vbNewLine & vbNewLine & Fn_UtilisateurWindows)
+        Call modAppli.AfficherErreurCritique("modSessionUtilisateur", "Fn_InfosWindows", _
+                "Utilisateur Windows non reconnu dans GCF_BD_MASTER" & Fn_UtilisateurWindows)
     End If
 
     rs.Close
@@ -66,7 +66,8 @@ Public Function Fn_ChargerUtilisateur(utilisateurID As Long) As Scripting.Dictio
     cheminMASTER = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
                    "GCF_BD_MASTER.xlsx"
     If Dir(cheminMASTER) = "" Then
-        Call modAppli.AfficherErreurCritique("Fichier GCF_BD_MASTER est introuvable" & vbNewLine & vbNewLine & cheminMASTER)
+        Call modAppli.AfficherErreurCritique("modSessionUtilisateur", "Fn_ChargerUtilisateur", _
+                                                "Fichier GCF_BD_MASTER est introuvable" & cheminMASTER)
         Exit Function
     End If
 
@@ -83,8 +84,8 @@ Public Function Fn_ChargerUtilisateur(utilisateurID As Long) As Scripting.Dictio
     Else
         MsgBox "UtilisateurID introuvable dans GCF_BD_MASTER.", _
             vbCritical
-        Call modAppli.AfficherErreurCritique("UtilisateurID est introuvable dans GCF_BD_MASTER" & _
-            vbNewLine & vbNewLine & utilisateurID)
+        Call modAppli.AfficherErreurCritique("modSessionUtilisateur", "Fn_ChargerUtilisateur", _
+                                    "UtilisateurID est introuvable dans GCF_BD_MASTER" & utilisateurID)
     End If
 
     rs.Close
@@ -110,8 +111,8 @@ Public Sub InitialiserSessionUtilisateur()
     If UCase(UtilisateurActif("Actif")) <> "VRAI" Then
         MsgBox "Votre utilisateur n'est pas actif dans l'application.", _
             vbCritical
-        Call modAppli.AfficherErreurCritique("Votre utilisateur n'est pas actif dans l'application" & _
-            vbNewLine & vbNewLine & UtilisateurActif("Prenom"))
+        Call modAppli.AfficherErreurCritique("modSessionUtilisateur", "InitialiserSessionUtilisateur", _
+                    "Votre utilisateur n'est pas actif dans l'application" & UtilisateurActif("Prenom"))
     End If
 
     Call MettreAJourDerniereConnexion(infos("UtilisateurID"))
@@ -130,7 +131,8 @@ Private Sub MettreAJourDerniereConnexion(utilisateurID As Long)
     cheminMASTER = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
                    "GCF_BD_MASTER.xlsx"
     If Dir(cheminMASTER) = "" Then
-        Call modAppli.AfficherErreurCritique("Fichier GCF_BD_MASTER est introuvable" & vbNewLine & vbNewLine & cheminMASTER)
+        Call modAppli.AfficherErreurCritique("modSessionUtilisateur", "MettreAJourDerniereConnexion", _
+                                                "Fichier GCF_BD_MASTER est introuvable" & cheminMASTER)
         Exit Sub
     End If
 
