@@ -37,15 +37,15 @@ Private Sub shpGarderOuverte_Click() '2025-07-01 @ 17:13
     On Error Resume Next
     
     'Annule la fermeture automatique planifiée
-    Application.OnTime gFermeturePlanifiee, "FermerApplicationInactive", , False
+'    Application.OnTime gFermeturePlanifiee, "FermerApplicationInactive", , False
     
     'Annule le clignotement du timer (si encore actif)
-    Application.OnTime gProchainTick, "RelancerTimer", , False
+'    Application.OnTime gProchainTick, "RelancerTimer", , False
         
     On Error GoTo 0
     
     'Réinitialise le timestamp d'activité
-    gDerniereActivite = Now
+'    gDerniereActivite = Now
     
     'Nettoie le formulaire (optionnel mais propre)
     lblMessage.Caption = vbNullString
@@ -75,8 +75,8 @@ Public Sub AfficherMessage(Optional minutesInactives As Double = 0) '2025-07-01 
     lblMessage.Caption = msg
     
     gHeurePrevueFermetureAutomatique = Now + TimeSerial(0, 0, gDELAI_GRACE_SECONDES)
-    gFermeturePlanifiee = gHeurePrevueFermetureAutomatique
-    Debug.Print Now() & " [AfficherMessage] gFermeturePlanifiee synchronisé à : " & Format(gFermeturePlanifiee, "hh:mm:ss")
+'    gFermeturePlanifiee = gHeurePrevueFermetureAutomatique
+'    Debug.Print Now() & " [AfficherMessage] gFermeturePlanifiee synchronisé à : " & Format(gFermeturePlanifiee, "hh:mm:ss")
     lblTimer.Caption = vbNullString
     Debug.Print Now() & " [AfficherMessage] Affichage du formulaire de confirmation à : " & Format(Now, "hh:mm:ss")
     Debug.Print Now() & " [AfficherMessage] Fermeture prévue à (gHeurePrevueFermetureAutomatique) : " & Format(gHeurePrevueFermetureAutomatique, "hh:mm:ss")

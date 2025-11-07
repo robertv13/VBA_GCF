@@ -15,6 +15,8 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+Private wrappers As Collection
+
 Private Sub UserForm_Initialize()
 
     'Définir la couleur de fond du UserForm en utilisant le code RGB (198,224,190)
@@ -29,6 +31,8 @@ Private Sub UserForm_Initialize()
     'Décalage vertical vers le bas (˜ 5 à 6 lignes Excel)
     Me.Top = Application.Top + (Application.Height - Me.Height) / 2 + 100
 
+    Call InitialiserSurveillanceForm(Me, wrappers)
+    
 End Sub
 
 Private Sub shpConvertir_Click()

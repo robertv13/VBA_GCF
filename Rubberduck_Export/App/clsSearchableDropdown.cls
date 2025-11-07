@@ -235,8 +235,8 @@ End Sub
 
 Private Sub AfficherListBox(Optional ByVal show As Boolean = True)
     
-    If rmv_state = rmv_modeInitial Or _
-        rmv_state = rmv_modeAffichage Or _
+    If rmv_state = MODE_INITIAL_FAC Or _
+        rmv_state = MODE_AFFICHAGE_FAC Or _
         m_textboxStartingState = True Then
         show = False
     End If

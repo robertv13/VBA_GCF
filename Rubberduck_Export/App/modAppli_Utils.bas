@@ -3576,9 +3576,6 @@ Private Sub VerifierTEC(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef read
         gverificationIntegriteOK = False
     End If
     
-    Call AjouterMessage(wsOutput, r, 2, "Temps d’exécution : " & Format(Timer - startTime, "0.00") & " seconde(s)")
-    r = r + 1
-
     'Libérer la mémoire (test)
     On Error Resume Next
     Set dictClient = Nothing
@@ -3600,6 +3597,8 @@ Sub ImprimerCasProbleme(data As Variant, ByVal wsOutput As Worksheet, ByRef r As
                         ByRef minDate As Date, ByRef maxDate As Date, _
                         ByRef stats As StatistiquesTEC, isTECvalid As Boolean)
 
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:ImprimerCasProbleme", vbNullString, 0)
+    
     Call AjouterMessage(wsOutput, r, 2, "Un total de " & Format$(UBound(data, 1), "##,##0") & " charges de temps ont été analysées!")
     
     'Impression du sommaire de l'analyse
@@ -3662,12 +3661,17 @@ Sub ImprimerCasProbleme(data As Variant, ByVal wsOutput As Worksheet, ByRef r As
         isTECvalid = False
     End If
 
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:ImprimerCasProbleme", vbNullString, startTime)
+
 End Sub
 
 Sub ComparerHeuresFactureesSelon2Sources(ByVal wsOutput As Worksheet, ByRef r As Long, _
                                          ByRef dictFacture As Object, ByRef dictHresFactureesTEC As Object, _
                                          ByRef isTECvalid As Boolean)
 
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:ComparerHeuresFactureesSelon2Sources", vbNullString, 0)
+    
     Call AjouterMessage(wsOutput, r, 2, "Vérification des Heures Facturées par Facture")
 
     'Construire le dictionary des Heures Facturées via FAC_Details
@@ -3726,10 +3730,16 @@ Sub ComparerHeuresFactureesSelon2Sources(ByVal wsOutput As Worksheet, ByRef r As
     'Libérer la mémoire
     Set dictHresFactureesFACDetails = Nothing
     
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:ComparerHeuresFactureesSelon2Sources", _
+                            vbNullString, startTime)
+
 End Sub
 
 Sub ImprimerSommaireHeuresTEC(ByVal wsOutput As Worksheet, ByRef r As Long, _
                               ByRef stats As StatistiquesTEC)
+    
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:ImprimerSommaireHeuresTEC", vbNullString, 0)
     
     Call AjouterMessage(wsOutput, r, 2, "La somme des heures SAISIES donne ces résultats:")
     
@@ -3789,10 +3799,16 @@ Sub ImprimerSommaireHeuresTEC(ByVal wsOutput As Worksheet, ByRef r As Long, _
     gValeursAComparer(12, 3) = CCur(formattedHours)
     r = r + 2
     
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:ImprimerSommaireHeuresTEC", _
+                            vbNullString, startTime)
+
 End Sub
 
 Sub ImprimerSommaireDateProf(ByVal wsOutput As Worksheet, ByRef r As Long, _
                              ByRef dictDateCharge As Object, maxTECID As Long)
+    
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:ImprimerSommaireDateProf", vbNullString, 0)
     
     Dim formattedHours As String
     Dim key As Variant
@@ -3820,11 +3836,17 @@ Sub ImprimerSommaireDateProf(ByVal wsOutput As Worksheet, ByRef r As Long, _
         Next i
     End If
 
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:ImprimerSommaireDateProf", _
+                            vbNullString, startTime)
+
 End Sub
 
 Sub ImprimerSommaireTimeStampProf(ByVal wsOutput As Worksheet, ByRef r As Long, _
                                   ByRef dictTimeStamp As Object, lastTECIDReported As Long, _
                                   ByRef isTECvalid As Boolean)
+    
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:ImprimerSommaireTimeStampProf", vbNullString, 0)
     
     Dim keys As Variant
     Dim key As Variant
@@ -3846,6 +3868,9 @@ Sub ImprimerSommaireTimeStampProf(ByVal wsOutput As Worksheet, ByRef r As Long, 
         Call AjouterMessage(wsOutput, r, 2, "Aucune nouvelle saisie d'heures (TECID > " & lastTECIDReported & ") ")
         r = r + 1
     End If
+
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:ImprimerSommaireTimeStampProf", _
+                            vbNullString, startTime)
 
 End Sub
 
@@ -4238,6 +4263,10 @@ Sub ObtenirDeplacementsAPartirDesTEC()  '2024-09-05 @ 10:22
     wsOutput.Range("K1").Value = "Montant"
     Call CreerEnteteDeFeuille(wsOutput.Range("A1:K1"), RGB(0, 112, 192))
     
+    'Analyse de TEC_Local
+    Call modImport.ImporterClients
+    Call modImport.ImporterTEC
+    
     'Feuille pour les clients
     Dim wsMF As Worksheet: Set wsMF = wsdBD_Clients
     Dim lastUsedRowClientMF As Long
@@ -4249,9 +4278,6 @@ Sub ObtenirDeplacementsAPartirDesTEC()  '2024-09-05 @ 10:22
     Dim dateFrom As Date, dateTo As Date
     dateFrom = wsdADMIN.Range("MoisPrecDe").Value
     dateTo = wsdADMIN.Range("MoisPrecA").Value
-    
-    'Analyse de TEC_Local
-    Call modImport.ImporterTEC
     
     Dim wsTEC As Worksheet: Set wsTEC = wsdTEC_Local
     
@@ -4479,6 +4505,11 @@ Sub NoterNombreLignesParFeuille() '2025-01-22 @ 16:19
     'Spécifiez les chemins des classeurs
     Dim cheminClasseurUsage As String
     cheminClasseurUsage = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & "GCF_File_Usage.xlsx"
+    If Not Dir(cheminClasseurUsage, vbNormal) <> "" Then
+        Call EnregistrerErreurs("modAppli_Utils", "NoterNombreLignesParFeuille", "Classeur d’usage introuvable", 0, "CRITICAL")
+        Exit Sub
+    End If
+
     Dim cheminClasseurMASTER As String
     cheminClasseurMASTER = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & wsdADMIN.Range("MASTER_FILE").Value
     
@@ -4510,24 +4541,21 @@ Sub NoterNombreLignesParFeuille() '2025-01-22 @ 16:19
     col = 2 'Commence à la col 2
     Do While wsUsage.Cells(1, col).Value <> vbNullString
         feuilleNom = wsUsage.Cells(1, col).Value
-        
-        'Vérifier si la feuille existe dans le classeur maître
-        On Error Resume Next
-        Dim wsMaster As Worksheet
-        Set wsMaster = wbMaster.Sheets(feuilleNom)
-        On Error GoTo 0
-        
-        If Not wsMaster Is Nothing Then
-            'Compter les lignes utilisées dans la col A
-            lastUsedRow = wsMaster.Cells(wsMaster.Rows.count, 1).End(xlUp).Row
-        Else
-            'Si la feuille n'existe pas, assigner 0
+        If Trim(feuilleNom) <> vbNullString Then
+            'Vérifier si la feuille existe dans le classeur maître
+            On Error Resume Next
+            Dim wsMaster As Worksheet
+            Set wsMaster = wbMaster.Sheets(feuilleNom)
+            On Error GoTo 0
+            
             lastUsedRow = 0
+            If Not wsMaster Is Nothing Then
+                lastUsedRow = wsMaster.Cells(wsMaster.Rows.count, 1).End(xlUp).Row
+            End If
+            
+            'Écrire le résultat dans la ligne disponible
+            wsUsage.Cells(LigneDisponible, col).Value = lastUsedRow
         End If
-        
-        'Écrire le résultat dans la ligne disponible
-        wsUsage.Cells(LigneDisponible, col).Value = lastUsedRow
-        
         'Passer à la col suivante
         col = col + 1
     Loop

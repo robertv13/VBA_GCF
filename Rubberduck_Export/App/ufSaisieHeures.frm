@@ -19,6 +19,8 @@ Private oEventHandler As New clsSearchableDropdown '2023-03-21 @ 09:16
 
 Private colSurveillance As Collection
 
+Private wrappers As Collection
+
 'Sauvegarde des valeurs lues
 Public valeurSauveeClient As String
 Public valeurSauveeActivite As String
@@ -33,29 +35,41 @@ Public Property Let ListData(ByVal rg As Range)
 
 End Property
 
-Private Sub UserForm_Deactivate() '2025-08-29 @ 18:29
-
-    Call AnnulerSurveillanceUserForm
-
-End Sub
-
+'Private Sub UserForm_Deactivate() '2025-08-29 @ 18:29
+'
+'    Call AnnulerSurveillanceUserForm
+'
+'End Sub
+'
 Private Sub UserForm_Initialize() '2025-05-30 @ 13:26
 
     Set colSurveillance = New Collection
     Dim ctrl As Control
     Dim obj As clsSurveillanceActivite
 
+    Dim ctrlType As String
     For Each ctrl In Me.Controls
-        Set obj = New clsSurveillanceActivite
-        Select Case TypeName(ctrl)
-            Case "TextBox": Set obj.tb = ctrl
-            Case "ComboBox": Set obj.cb = ctrl
-            Case "CommandButton": Set obj.btn = ctrl
+        ctrlType = TypeName(ctrl)
+        Debug.Print ctrl.Name & " - " & ctrlType
+        Select Case ctrlType
+            Case "TextBox", "ComboBox", "CommandButton"
+                Set obj = New clsSurveillanceActivite
+                Select Case ctrlType
+                    Case "TextBox": Set obj.tb = ctrl
+                    Case "ComboBox": Set obj.cb = ctrl
+                    Case "CommandButton": Set obj.btn = ctrl
+                End Select
+                If obj Is Nothing Then
+                    Debug.Print "Objet non initialisé pour : " & ctrl.Name
+                Else
+                    colSurveillance.Add obj
+                End If
+            Case Else
+                Debug.Print "Contrôle ignoré : " & ctrl.Name & " (" & ctrlType & ")"
         End Select
-        colSurveillance.Add obj
     Next ctrl
     
-    Call ConnecterControlesDeForme(Me)
+    Call InitialiserSurveillanceForm(Me, wrappers)
     
 End Sub
 
@@ -63,8 +77,8 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:UserForm_Activate", vbNullString, 0)
     
-    Call LancerSurveillanceUserForm '2025-09-29 @ 18:29
-    
+'    Call LancerSurveillanceUserForm '2025-09-29 @ 18:29
+
     gLogSaisieHeuresVeryDetailed = False
     
     Call ImporterClients
@@ -88,7 +102,7 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
     ufSaisieHeures.cmbProfessionnel.SetFocus
     On Error GoTo 0
    
-    rmv_state = rmv_modeInitial
+    rmv_state = MODE_INITIAL_FAC
     
     Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:UserForm_Activate", vbNullString, startTime)
     
@@ -337,8 +351,8 @@ End Sub
 
 Private Sub txtClient_Enter()
 
-    If rmv_state = rmv_modeInitial Then
-        rmv_state = rmv_modeCreation
+    If rmv_state = MODE_INITIAL_FAC Then
+        rmv_state = MODE_CREATION_FAC
     End If
 
 End Sub
@@ -511,7 +525,7 @@ Sub lstHresJour_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:lstHresJour_dblClick", ufSaisieHeures.lstHresJour.ListIndex, 0)
     
-    rmv_state = rmv_modeAffichage
+    rmv_state = MODE_AFFICHAGE_FAC
     
     With ufSaisieHeures
         Dim tecID As Long
@@ -563,7 +577,7 @@ Sub lstHresJour_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     
     Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, False, True, True)    'Ajustement des boutons
     
-    rmv_state = rmv_modeModification
+    rmv_state = MODE_MODIFICATION_FAC
     
     'Libérer la mémoire
     Set lookupRange = Nothing

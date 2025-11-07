@@ -21,18 +21,18 @@ Attribute btn.VB_VarHelpID = -1
 Private Sub tb_Change()
 
     EnregistrerActivite "TextBox"
-    
+
 End Sub
 
 Private Sub cb_Change()
 
     EnregistrerActivite "ComboBox"
-    
+
 End Sub
 
 Private Sub btn_Click()
 
     EnregistrerActivite "Bouton"
-    
+
 End Sub
 

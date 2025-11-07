@@ -2124,16 +2124,16 @@ erreur:
     
 End Function
 
-Function Fn_MinutesDepuisDerniereActivite() As Double '2025-07-01 @ 14:06
-    
-    If gDerniereActivite = 0 Then
-        Fn_MinutesDepuisDerniereActivite = 0
-    Else
-        Fn_MinutesDepuisDerniereActivite = DateDiff("s", gDerniereActivite, Now) / 60
-    End If
-    
-End Function
-
+'Function Fn_MinutesDepuisDerniereActivite() As Double '2025-07-01 @ 14:06
+'
+'    If gDerniereActivite = 0 Then
+'        Fn_MinutesDepuisDerniereActivite = 0
+'    Else
+'        Fn_MinutesDepuisDerniereActivite = DateDiff("s", gDerniereActivite, Now) / 60
+'    End If
+'
+'End Function
+'
 Public Function GetProchaineFermeture() As Date '2025-07-02 @ 09:38
 
     GetProchaineFermeture = Now + TimeSerial(0, 0, gDELAI_GRACE_SECONDES)
@@ -2239,17 +2239,17 @@ Function Fn_ObtenirOuCreerFeuille(ByVal nomFeuille As String) As Worksheet '2025
 
     Dim ws As Worksheet
     Dim FeuilleExiste As Boolean
-    Dim sh As Worksheet
+    Dim Sh As Worksheet
 
     FeuilleExiste = False
     'Vérifie si la feuille existe
-    For Each sh In ThisWorkbook.Worksheets
-        If sh.Name = nomFeuille Then
-            Set ws = sh
+    For Each Sh In ThisWorkbook.Worksheets
+        If Sh.Name = nomFeuille Then
+            Set ws = Sh
             FeuilleExiste = True
             Exit For
         End If
-    Next sh
+    Next Sh
 
     'Si elle n'existe pas, on la crée
     If Not FeuilleExiste Then

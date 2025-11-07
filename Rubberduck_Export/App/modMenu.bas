@@ -142,6 +142,8 @@ Sub FermerApplicationNormalement(ByVal userName As String, flag As String, Optio
     'Effacer fichier utilisateur actif + Fermeture de la journalisation
     Call EffacerFichierUtilisateurActif(modFunctions.Fn_UtilisateurWindows())
     
+    Call EnregistrerLogPerformance("ignoreSauvegarde = " & ignorerSauvegarde, 0)
+    
     Call modDev_Utils.EnregistrerLogApplication("----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) -----", _
         IIf(ignorerSauvegarde, "S A N S   S A U V E G A R D E", ""), 0)
     Call modDev_Utils.EnregistrerLogApplication(vbNullString, vbNullString, -1) 'Ligne blanche
@@ -156,17 +158,19 @@ Sub FermerApplicationNormalement(ByVal userName As String, flag As String, Optio
     
     'Fermer TOUTES les Application.OnTime
     On Error Resume Next
-        Application.OnTime gProchaineVerification, "VerifierDerniereActivite", , False
+'        Application.OnTime gProchaineVerification, "VerifierDerniereActivite", , False
         Application.OnTime gProchaineVerifUserForm, "VerifierInactiviteUserForm", , False
-        Application.OnTime gFermeturePlanifiee, "FermerApplicationInactive", , False
+'        Application.OnTime gFermeturePlanifiee, "FermerApplicationInactive", , False
         Application.OnTime gProchainTick, "RelancerTimer", , False
         Application.OnTime gNextBackupTime, "DemarrerSauvegardeCodeVBAAutomatique", , False
     On Error GoTo 0
     
     gFermetureForcee = True
     Application.EnableEvents = False
-    If ignorerSauvegarde = False Then
-        ThisWorkbook.Saved = True
+    Dim tt0 As Double: tt0 = Timer
+    If ignorerSauvegarde = Faux Or ignorerSauvegarde = False Then
+        ThisWorkbook.Save
+        Call EnregistrerLogPerformance("Classeur est sauvegardé", Timer - tt0)
     End If
     ThisWorkbook.Close SaveChanges:=False
     
@@ -330,18 +334,18 @@ Sub shpCompterLignesCodeProjet_Click()
 
 End Sub
 
-Sub shpCorrigerNomClientTEC_Click()
-
-    Call modzDataConversion.CorrigerNomClientDansTEC
-    
-End Sub
-
-Sub shpCorrigerNomClientCAR_Click()
-
-    Call modzDataConversion.CorrigerNomClientDansCAR
-    
-End Sub
-
+'Sub shpCorrigerNomClientTEC_Click()
+'
+'    Call modzDataConversion.CorrigerNomClientDansTEC
+'
+'End Sub
+'
+'Sub shpCorrigerNomClientCAR_Click()
+'
+'    Call modzDataConversion.CorrigerNomClientDansCAR
+'
+'End Sub
+'
 Sub shpChercherReferencesCirculaires_Click() '2024-11-22 @ 13:33
 
     Call modDev_Tools.DetecterReferenceCirculaireDansClasseur
@@ -392,18 +396,6 @@ Sub RetournerMenuPrincipal()
     Set ws = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modMENU:RetournerMenuPrincipal", vbNullString, startTime)
-    
-End Sub
-
-Sub AnnulerToutesTachesPlanifiees() '2025-10-30 @ 08:16
-
-    On Error Resume Next
-        Application.OnTime gProchaineVerification, "VerifierDerniereActivite", , False
-        Application.OnTime gFermeturePlanifiee, "FermerApplicationInactive", , False
-        Application.OnTime gNextBackupTime, "DemarrerSauvegardeCodeVBAAutomatique", , False
-        Application.OnTime gProchainTick, "RelancerTimer", , False
-        Application.OnTime gProchaineVerifUserForm, "VerifierInactiviteUserForm", , False
-    On Error GoTo 0
     
 End Sub
 

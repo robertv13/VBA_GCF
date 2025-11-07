@@ -15,6 +15,8 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+Private wrappers As Collection
+
 Private Sub UserForm_Initialize()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:UserForm_Initialize", vbNullString, 0)
@@ -25,6 +27,8 @@ Private Sub UserForm_Initialize()
     Call AdditionnerAjouterColonnesDuMois
     Call AdditionnerAjouterColonnesDuTrimestre
     Call AdditionnerColonnesDeAnneeFinanciere
+    
+    Call InitialiserSurveillanceForm(Me, wrappers)
     
     Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:UserForm_Initialize", vbNullString, startTime)
     

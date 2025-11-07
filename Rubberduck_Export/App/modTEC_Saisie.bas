@@ -1,10 +1,10 @@
 Attribute VB_Name = "modTEC_Saisie"
 Option Explicit
 
-Public Const rmv_modeInitial As Long = 1
-Public Const rmv_modeCreation As Long = 2
-Public Const rmv_modeAffichage As Long = 3
-Public Const rmv_modeModification As Long = 4
+Public Const MODE_INITIAL_FAC As Long = 1
+Public Const MODE_CREATION_FAC As Long = 2
+Public Const MODE_AFFICHAGE_FAC As Long = 3
+Public Const MODE_MODIFICATION_FAC As Long = 4
 
 Public rmv_state As Long
 
@@ -12,6 +12,8 @@ Sub AjouterLigneTEC()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:AjouterLigneTEC", vbNullString, 0)
 
+    Dim timerPerformance As Double: timerPerformance = Timer
+    
     'Obtenir le ID du client pur (à partir de son nom pur)
     ufSaisieHeures.txtClientID.Value = Fn_CellSpecifiqueDeBDClient(ufSaisieHeures.txtClient.Value, 1, 2)
         
@@ -29,9 +31,11 @@ Sub AjouterLigneTEC()
         End If
         
         Call AjouterTECdansBDMaster
-'        Call AjouterOuModifierTECdansBDMaster(0)
         Call AjouterOuModifierTECdansBDLocale(0)
         
+        Dim saveTECID As String '2025-11-05 @ 08:41
+        saveTECID = CStr(ufSaisieHeures.txtTECID.Value)
+    
         'Clear the userForm fields after saving
         With ufSaisieHeures
             .txtTECID.Value = vbNullString
@@ -54,6 +58,9 @@ Sub AjouterLigneTEC()
         Exit Sub
     End If
     
+    Call EnregistrerLogPerformance("modTEC_Saisie.AjouterLigneTEC - " & saveTECID, _
+                                        Timer - timerPerformance) '2025-11-05 @ 08:41
+    
     Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:AjouterLigneTEC", vbNullString, startTime)
 
 End Sub
@@ -64,6 +71,8 @@ Sub ModifierLigneTEC() '2023-12-23 @ 07:04
 
     If Fn_TEC_Is_Data_Valid() = False Then Exit Sub
 
+    Dim timerPerformance As Double: timerPerformance = Timer
+        
     'Obtenir le ID du client pur (à partir de son nom pur) - 2025-03-04 @ 08:02
     ufSaisieHeures.txtClientID.Value = Fn_CellSpecifiqueDeBDClient(ufSaisieHeures.txtClient.Value, 1, 2)
         
@@ -72,9 +81,11 @@ Sub ModifierLigneTEC() '2023-12-23 @ 07:04
     End If
     
     Call ModifierTECdansBDMaster(ufSaisieHeures.txtTECID.Value) '2025-10-31 @ 06:43
-'    Call AjouterOuModifierTECdansBDMaster(ufSaisieHeures.txtTECID.Value)
     Call AjouterOuModifierTECdansBDLocale(ufSaisieHeures.txtTECID.Value)
  
+    Dim saveTECID As String '2025-11-05 @ 08:41
+    saveTECID = CStr(ufSaisieHeures.txtTECID.Value)
+    
     'Initialize dynamic variables
     With ufSaisieHeures
         .txtTECID.Value = vbNullString
@@ -90,10 +101,12 @@ Sub ModifierLigneTEC() '2023-12-23 @ 07:04
     Call ObtenirTousLesTECDateAvecAF
     Call RafraichirListBoxEtAddtionnerHeures
     
-    rmv_state = rmv_modeCreation
+    rmv_state = MODE_CREATION_FAC
     
     ufSaisieHeures.txtClient.SetFocus
     
+    Call EnregistrerLogPerformance("modTEC_Saisie.ModifierLigneTEC - " & saveTECID, _
+                                        Timer - timerPerformance) '2025-11-05 @ 08:41
     Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:ModifierLigneTEC", vbNullString, startTime)
 
 End Sub
@@ -121,10 +134,11 @@ Sub DetruireLigneTEC() '2023-12-23 @ 07:05
     
     Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:DetruireLigneTEC - Le DELETE est confirmé - " & CStr(-ufSaisieHeures.txtTECID.Value), -1) '2024-10-05 @ 07:21
     
-    Dim sh As Worksheet: Set sh = wsdTEC_Local
+    Dim timerPerformance As Double: timerPerformance = Timer
+        
+    Dim Sh As Worksheet: Set Sh = wsdTEC_Local
     
     Dim tecID As Long
-    'With a negative ID value, it means to soft delete this record
     tecID = -ufSaisieHeures.txtTECID.Value
     
     If Fn_Is_Client_Facturable(ufSaisieHeures.txtClientID) = False Then '2025-10-31 @ 08:30
@@ -132,7 +146,6 @@ Sub DetruireLigneTEC() '2023-12-23 @ 07:05
     End If
     
     Call SupprimerTECdansBDMaster(tecID) '2025-10-31@ 06:44
-'    Call AjouterOuModifierTECdansBDMaster(tecID)
     Call AjouterOuModifierTECdansBDLocale(tecID)
     
     'Empty the dynamic fields after deleting
@@ -144,6 +157,8 @@ Sub DetruireLigneTEC() '2023-12-23 @ 07:05
         .chkFacturable = True
     End With
     
+    Call EnregistrerLogPerformance("modTEC_Saisie.DetruireLigneTEC - " & CStr(Abs(tecID)), _
+                                        Timer - timerPerformance) '2025-11-05 @ 08:41
     MsgBox _
         Prompt:="L'enregistrement a été DÉTRUIT !", _
         Title:="Confirmation", _
@@ -151,7 +166,7 @@ Sub DetruireLigneTEC() '2023-12-23 @ 07:05
         
     ufSaisieHeures.cmbProfessionnel.Enabled = True
     ufSaisieHeures.txtDate.Enabled = True
-    rmv_state = rmv_modeCreation
+    rmv_state = MODE_CREATION_FAC
     
     Call ObtenirTousLesTECDateAvecAF
     Call RafraichirListBoxEtAddtionnerHeures
@@ -162,7 +177,7 @@ Clean_Exit:
     ufSaisieHeures.txtClient.SetFocus
 
     'Libérer la mémoire
-    Set sh = Nothing
+    Set Sh = Nothing
 
     Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:DetruireLigneTEC", vbNullString, startTime)
 

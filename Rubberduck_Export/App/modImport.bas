@@ -31,21 +31,16 @@ Sub ImporterMASTERGenerique(sourceWb As String, ws As Worksheet, onglet As Strin
     Dim t0 As Double: t0 = Timer
     conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & fullPathSourceWb & ";" & _
               "Extended Properties='Excel 12.0 Xml;HDR=YES';"
-    Debug.Print "Temps 'conn.Open' (" & onglet & ") : " & Format(Timer - t0, "0.0000") & " sec"
+    Debug.Print Now() & " Temps 'conn.Open' (" & onglet & ") : " & Format(Timer - t0, "0.0000") & " sec"
 
     '4. Lecture ADO
     Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
     Dim sourceTab As String: sourceTab = "[" & onglet & "$]"
     recSet.Open "SELECT * FROM " & sourceTab, conn, adOpenStatic, adLockReadOnly
 
-'    If recSet.EOF Then
-'        MsgBox "Aucun enregistrement trouvé dans '" & sourceTab & "'", vbInformation
-'        GoTo fin
-'    End If
-    
-    Debug.Print sourceTab & " - recSet.State       = " & recSet.state
-    Debug.Print sourceTab & " - recSet.EOF         = " & recSet.EOF
-    Debug.Print sourceTab & " - recSet.RecordCount = " & recSet.RecordCount
+    Debug.Print Now() & sourceTab & " - recSet.State       = " & recSet.state
+    Debug.Print Now() & sourceTab & " - recSet.EOF         = " & recSet.EOF
+    Debug.Print Now() & sourceTab & " - recSet.RecordCount = " & recSet.RecordCount
 
     '5. Injection directe dans la table structurée
     Dim tbl As ListObject: Set tbl = ws.ListObjects(table)
@@ -82,7 +77,7 @@ FIN:
     Application.ScreenUpdating = True
     Application.Calculation = xlCalculationAutomatic
     
-    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterMASTERGeneriqueSécurisée:" & onglet, vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterMASTERGenerique:" & onglet, vbNullString, startTime)
     Exit Sub
     
 ERREUR_IMPORT:

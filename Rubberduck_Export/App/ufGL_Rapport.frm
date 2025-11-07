@@ -13,16 +13,17 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-
 Option Explicit
+
+Private wrappers As Collection
 
 Private Sub UserForm_Initialize()
 
     Call modImport.ImporterGLTransactions
     
-    'Noter l'activité
-    Call ConnecterControlesDeForme(Me)
-    
+'    'Noter l'activité
+'    Call ConnecterControlesDeForme(Me)
+'
     'Efface le contenu de la listBox
     Me.lsbComptes.Clear
     
@@ -71,6 +72,8 @@ Private Sub UserForm_Initialize()
     'Libérer la mémoire
     Set cellule = Nothing
     Set plage = Nothing
+    
+    Call InitialiserSurveillanceForm(Me, wrappers)
     
 End Sub
 

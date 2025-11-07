@@ -16,6 +16,8 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
+Private wrappers As Collection
+
 Private Sub UserForm_Initialize()
 
     Dim ws As Worksheet
@@ -45,6 +47,8 @@ Private Sub UserForm_Initialize()
         MsgBox "Aucune facture, avec solde, n'existe pour ce client.", vbExclamation
         Exit Sub
     End If
+    
+    Call InitialiserSurveillanceForm(Me, wrappers)
     
 End Sub
 

@@ -13,8 +13,9 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-
 Option Explicit
+
+Private wrappers As Collection
 
 Private Sub UserForm_Initialize()
     
@@ -53,6 +54,8 @@ Private Sub UserForm_Initialize()
     
     'Libérer la mémoire
     Set ws = Nothing
+    
+    Call InitialiserSurveillanceForm(Me, wrappers)
     
 End Sub
 

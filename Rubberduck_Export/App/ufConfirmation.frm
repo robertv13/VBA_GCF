@@ -16,6 +16,8 @@ Attribute VB_Exposed = False
 
 Option Explicit
 
+Private wrappers As Collection
+
 Private Sub UserForm_Initialize()
     
     With ListView1
@@ -61,6 +63,8 @@ Private Sub UserForm_Initialize()
     ufConfirmation.shpConfirmation.Visible = False
     ufConfirmation.lblFactureEmConfirmation.Visible = False
     ufConfirmation.txtNoFactureEnConfirmation.Visible = False
+    
+    Call InitialiserSurveillanceForm(Me, wrappers)
     
 End Sub
 

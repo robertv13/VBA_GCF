@@ -14,6 +14,7 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+Private wrappers As Collection
 Private dataArray() As Variant     'Tous les renregistrements DEB_Trans
 Private recentArray() As Variant   'Enregistrements récents (< 75 jours)
 Private filteredArray() As Variant 'Enregistrements filtrés (si filtre)
@@ -22,6 +23,8 @@ Private filteredArray() As Variant 'Enregistrements filtrés (si filtre)
 Private Sub UserForm_Initialize()
     
     Call ChargerDebDonnees
+    
+    Call InitialiserSurveillanceForm(Me, wrappers)
     
 End Sub
 

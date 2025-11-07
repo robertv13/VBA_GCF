@@ -15,6 +15,8 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+Private wrappers As Collection
+
 Private Sub UserForm_Initialize() '2025-11-02 @ 10:51
 
     'Approximation : centré dans la fenêtre Excel
@@ -23,4 +25,6 @@ Private Sub UserForm_Initialize() '2025-11-02 @ 10:51
     'Décalage vertical vers le bas (˜ 5 à 6 lignes Excel)
     Me.Top = Application.Top + (Application.Height - Me.Height) / 2 + 100
 
+    Call InitialiserSurveillanceForm(Me, wrappers)
+    
 End Sub

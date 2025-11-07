@@ -10,10 +10,3 @@ Declare PtrSafe Function GetUserName Lib "advapi32.dll" Alias "GetUserNameA" (By
 #Else
     Declare Function GetKeyState Lib "user32" (ByVal vKey As Long) As Integer
 #End If
-
-#If VBA7 Then
-    Private Declare PtrSafe Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As LongPtr)
-#Else
-    Private Declare Sub Sleep Lib "kernel32" (ByVal dwMilliseconds As Long)
-#End If
-

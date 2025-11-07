@@ -13,9 +13,9 @@ Attribute VB_GlobalNameSpace = False
 Attribute VB_Creatable = False
 Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
-
-
 Option Explicit
+
+Private wrappers As Collection
 
 Private Sub shpOK_Click() '2024-07-05 @ 06:25
 
@@ -28,4 +28,6 @@ Private Sub UserForm_Initialize()
     Me.Label1.Caption = "Pour quitter cette application, vous devez OBLIGATOIREMENT" & vbCrLf & vbCrLf & _
                      "utiliser l'option prévue à cet effet (en bas à gauche, du menu principal)"
 
+    Call InitialiserSurveillanceForm(Me, wrappers)
+    
 End Sub

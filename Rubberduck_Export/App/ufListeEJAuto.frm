@@ -14,6 +14,8 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+Private wrappers As Collection
+
 Private Sub UserForm_Initialize()
     
     Dim lastUsedRow As Long
@@ -27,6 +29,8 @@ Private Sub UserForm_Initialize()
         .RowSource = wsdGL_EJ_Recurrente.Name & "!J2:K" & lastUsedRow
     End With
    
+    Call InitialiserSurveillanceForm(Me, wrappers)
+    
 End Sub
 
 Private Sub lstEJRecurrente_DblClick(ByVal Cancel As MSForms.ReturnBoolean)

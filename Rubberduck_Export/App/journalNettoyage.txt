@@ -1,4 +1,4 @@
-﻿📘 Journal typographique — 11/05/2025 08:03:58
+﻿📘 Journal typographique — 11/07/2025 05:14:07
 
 🔧 Fichier : clsControlWrapper.cls
 
@@ -11,6 +11,20 @@
    ✅ Remplacé : .value ➜ .Value
 
 🔧 Fichier : clsSurveillanceActivite.cls
+
+🔧 Fichier : clsWrapperCheckBox.cls
+
+🔧 Fichier : clsWrapperComboBox.cls
+
+🔧 Fichier : clsWrapperCommandButton.cls
+
+🔧 Fichier : clsWrapperControl.cls
+
+🔧 Fichier : clsWrapperListBox.cls
+
+🔧 Fichier : clsWrapperOptionButton.cls
+
+🔧 Fichier : clsWrapperTextBox.cls
 
 🔧 Fichier : Feuil1.doccls
 
@@ -242,6 +256,8 @@
    ✅ Remplacé : .cells ➜ .Cells
    ✅ Remplacé : .row ➜ .Row
    ✅ Remplacé : .value ➜ .Value
+
+🔧 Fichier : modSurveillance.bas
 
 🔧 Fichier : modTBD.bas
 

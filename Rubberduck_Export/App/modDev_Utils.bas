@@ -1168,7 +1168,7 @@ Sub EnregistrerLogApplication(ByVal procedureName As String, ByVal param As Stri
     
     Dim logFile As String
     logFile = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & _
-                                        Application.PathSeparator & "LogMainApp.log"
+                                        Application.PathSeparator & "LogMainApp." & gUtilisateurWindows & ".log"
     
     Dim fileNum As Integer
     fileNum = FreeFile

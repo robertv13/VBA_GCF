@@ -195,7 +195,6 @@ Sub CreerSauvegardeMaster()
     'Créer directement une copie du fichier sans ouvrir Excel
     Dim t0 As Double: t0 = Timer
     FileCopy masterFileFullPath, backupFileFullPath
-    Debug.Print "Durée FileCopy : " & Format(Timer - t0, "0.0000") & " secondes"
 
     Call modDev_Utils.EnregistrerLogApplication("modAppli:CreerSauvegardeMaster", vbNullString, startTime)
     
@@ -255,183 +254,182 @@ CleanUp:
     
 End Sub
 
-Public Sub ConnecterControlesDeForme(frm As Object) '2025-05-30 @ 13:22
-
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:ConnecterControlesDeForme", vbNullString, 0)
-    
-    Set colWrappers = New Collection
-    Call ConnecterControlesDeFormeRecursivement(frm.Controls)
-    
-    Call modDev_Utils.EnregistrerLogApplication("modAppli:ConnecterControlesDeForme", vbNullString, startTime)
-
-End Sub
-
-Private Sub ConnecterControlesDeFormeRecursivement(ctrls As MSForms.Controls) '2025-05-30 @ 13:22
-
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:ConnecterControlesDeFormeRecursivement", vbNullString, 0)
-    
-    Dim ctrl As MSForms.Control
-    For Each ctrl In ctrls
-        If TypeName(ctrl) <> "Label" Then
-            Select Case TypeName(ctrl)
-                Case "Frame", "TabStrip"
-                    Call ConnecterControlesDeFormeRecursivement(ctrl.Controls)
-                Case "MultiPage"
-                    Dim i As Integer
-                    For i = 0 To ctrl.Pages.count - 1
-                        Call ConnecterControlesDeFormeRecursivement(ctrl.Pages(i).Controls)
-                    Next i
-                Case Else
-                    On Error Resume Next
-                    Dim wrapper As New clsControlWrapper
-                    Set wrapper.ctrl = ctrl
-                    colWrappers.Add wrapper, ctrl.Name
-                    On Error GoTo 0
-            End Select
-        End If
-    Next ctrl
-    
-    Call modDev_Utils.EnregistrerLogApplication("modAppli:ConnecterControlesDeFormeRecursivement", vbNullString, startTime)
-
-End Sub
-
-Public Sub EnregistrerActivite(Optional ByVal msg As String = vbNullString) '2025-07-02 @ 15:19
-    
-    If TimeValue(Now) < TimeSerial(gHEURE_DEBUT_SURVEILLANCE, 0, 0) Then
-        Exit Sub
-    End If
-
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:EnregistrerActivite", vbNullString, 0)
-    
-    'Noter état de EnableEvents
-    Dim activeEvents As Boolean
-    activeEvents = Application.EnableEvents
-    If activeEvents = True Then Application.EnableEvents = False
-
-    'Enregistrer la dernière activité
-    gDerniereActivite = Now
-    Call EnregistrerActiviteAuLog(msg) '2025-07-03 @ 10:31
-    
-    'Rétablir l'état de EnableEvents
-    If activeEvents <> Application.EnableEvents Then
-        Application.EnableEvents = activeEvents
-    End If
-
-    Call modDev_Utils.EnregistrerLogApplication("modAppli:EnregistrerActivite", vbNullString, startTime)
-
-End Sub
-
+'Public Sub ConnecterControlesDeForme(frm As Object) '2025-05-30 @ 13:22
+'
+'    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:ConnecterControlesDeForme", vbNullString, 0)
+'
+'    Set colWrappers = New Collection
+'    Call ConnecterControlesDeFormeRecursivement(frm.Controls)
+'
+'    Call modDev_Utils.EnregistrerLogApplication("modAppli:ConnecterControlesDeForme", vbNullString, startTime)
+'
+'End Sub
+'
+'Private Sub ConnecterControlesDeFormeRecursivement(ctrls As MSForms.Controls) '2025-05-30 @ 13:22
+'
+'    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:ConnecterControlesDeFormeRecursivement", vbNullString, 0)
+'
+'    Dim ctrl As MSForms.Control
+'    For Each ctrl In ctrls
+'        If TypeName(ctrl) <> "Label" Then
+'            Select Case TypeName(ctrl)
+'                Case "Frame", "TabStrip"
+'                    Call ConnecterControlesDeFormeRecursivement(ctrl.Controls)
+'                Case "MultiPage"
+'                    Dim i As Integer
+'                    For i = 0 To ctrl.Pages.count - 1
+'                        Call ConnecterControlesDeFormeRecursivement(ctrl.Pages(i).Controls)
+'                    Next i
+'                Case Else
+'                    On Error Resume Next
+'                    Dim wrapper As New clsControlWrapper
+'                    Set wrapper.ctrl = ctrl
+'                    colWrappers.Add wrapper, ctrl.Name
+'                    On Error GoTo 0
+'            End Select
+'        End If
+'    Next ctrl
+'
+'    Call modDev_Utils.EnregistrerLogApplication("modAppli:ConnecterControlesDeFormeRecursivement", vbNullString, startTime)
+'
+'End Sub
+'
+'Public Sub EnregistrerActivite(Optional ByVal msg As String = vbNullString) '2025-07-02 @ 15:19
+'
+'    If TimeValue(Now) < TimeSerial(gHEURE_DEBUT_SURVEILLANCE, 0, 0) Then
+'        Exit Sub
+'    End If
+'
+'    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:EnregistrerActivite", vbNullString, 0)
+'
+'    'Noter état de EnableEvents
+'    Dim activeEvents As Boolean
+'    activeEvents = Application.EnableEvents
+'    If activeEvents = True Then Application.EnableEvents = False
+'
+'    'Enregistrer la dernière activité
+'    gDerniereActivite = Now
+'    Call EnregistrerActiviteAuLog(msg) '2025-07-03 @ 10:31
+'
+'    'Rétablir l'état de EnableEvents
+'    If activeEvents <> Application.EnableEvents Then
+'        Application.EnableEvents = activeEvents
+'    End If
+'
+'    Call modDev_Utils.EnregistrerLogApplication("modAppli:EnregistrerActivite", vbNullString, startTime)
+'
+'End Sub
+'
 '@Description ("Vérifie la dernière activité et lance fermeture si plus de x minutes")
-Public Sub VerifierDerniereActivite() '2025-07-02 @ 12:10
-Attribute VerifierDerniereActivite.VB_Description = "Vérifie l'inactivité et ferme si plus de x minutes"
-
-    'Ne rien faire avant l'heure de début de la surveillance
-    If TimeValue(Now) < TimeSerial(gHEURE_DEBUT_SURVEILLANCE, 0, 0) Then
-        Exit Sub
-    End If
-
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:VerifierDerniereActivite", vbNullString, 0)
-    
-    On Error GoTo GestionErreur
-
-    'Vérification de l'initialisation
-    If gDerniereActivite = 0 Then
-        Debug.Print Now() & " [modAppli:VerifierDerniereActivite] gDerniereActivite non initialisée"
-        Exit Sub
-    End If
-
-    'Calcul du temps d'inactivité en minutes
-    Dim minutesInactives As Double
-    minutesInactives = Round(Fn_MinutesDepuisDerniereActivite(), 1)
-
-    Debug.Print Now() & " [modAppli:VerifierDerniereActivite] Inactif depuis " & minutesInactives & _
-                                " min. - " & "Fréq. vérification = "; gFREQUENCE_VERIFICATION_INACTIVITE & _
-                                " min., " & "Durée max. sans activité = " & gMAXIMUM_MINUTES_INACTIVITE & _
-                                " min., " & "Délai de grâce (dernière chance) = " & gDELAI_GRACE_SECONDES & _
-                                " sec."
-    
-    'Barre d’état informative
-    Dim minute1 As String
-    Dim minute2 As String
-    'Minute ou minutes (minute1)
-    If minutesInactives <= 1 Then
-        minute1 = "minute"
-    Else
-        minute1 = "minutes"
-    End If
-    'Minute ou minutes (minute2)
-    If gMAXIMUM_MINUTES_INACTIVITE - minutesInactives <= 1 Then
-        minute2 = "minute"
-    Else
-        minute2 = "minutes"
-    End If
-    If minutesInactives < gMAXIMUM_MINUTES_INACTIVITE Then
-        Application.StatusBar = "Aucune activité dans l'application depuis " & _
-            Format$(minutesInactives, "0") & " " & minute1 & " - Fermeture planifiée dans " & _
-            Format$(gMAXIMUM_MINUTES_INACTIVITE - minutesInactives, "0") & " " & minute2 & " - " & _
-            Format$(Now, "hh:mm:ss")
-    Else
-        Application.StatusBar = False
-    End If
-
-    'Fermeture si délai dépassé, on passe à la dernier chance...
-    If minutesInactives >= gMAXIMUM_MINUTES_INACTIVITE Then
-        If gMODE_DEBUG Then Debug.Print Now() & " [modAppli:VerifierDerniereActivite] Inactivité trop longue (" & Format$(minutesInactives, "0") & " minutes) — fermeture de l'application"
-        gFermeturePlanifiee = GetProchaineFermeture()
-        If gMODE_DEBUG Then Debug.Print Now() & " [modAppli:VerifierDerniereActivite] Avant l'ajout de " & gDELAI_GRACE_SECONDES & " secondes, gFermeture = " & Format(gFermeturePlanifiee, "; hh: mm: ss "); vbNullString
-        gFermeturePlanifiee = Now + TimeSerial(0, 0, gDELAI_GRACE_SECONDES)
-        If gMODE_DEBUG Then Debug.Print Now() & " [modAppli:VerifierDerniereActivite] Après l'ajout de " & gDELAI_GRACE_SECONDES & " secondes, gFermeture = " & Format(gFermeturePlanifiee, "hh:mm:ss")
-        
-        On Error Resume Next
-        If gMODE_DEBUG Then Debug.Print Now() & " [modAppli:VerifierDerniereActivite] OnTime prévu pour : " & Format(gFermeturePlanifiee, "hh:mm:ss")
-        Application.OnTime gFermeturePlanifiee, "FermerApplicationInactive"
-        On Error GoTo 0
-        
-        Unload ufConfirmationFermeture '2025-07-02 @ 07:54
-        
-        Call ufConfirmationFermeture.AfficherMessage(minutesInactives)
-        Exit Sub
-    End If
-
-    'Replanification
-    Call PlanifierVerificationDerniereActivite
-    
-    Call modDev_Utils.EnregistrerLogApplication("modAppli:VerifierDerniereActivite", vbNullString, startTime)
-    
-    Exit Sub
-
-GestionErreur:
-    Debug.Print "[modAppli:VerifierDerniereActivite] Erreur dans VerifierDerniereActivite : " & Err.Number & " - " & Err.description
-
-End Sub
-
-Public Sub PlanifierVerificationDerniereActivite() '2025-07-01 @ 13:53
-    
-    'Ne rien faire avant l'heure de début de la surveillance '2025-10-31 @08:24
-    If TimeValue(Now) < TimeSerial(gHEURE_DEBUT_SURVEILLANCE, 0, 0) Then
-        Exit Sub
-    End If
-    
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:PlanifierVerificationDerniereActivite", vbNullString, 0)
-    
-    On Error Resume Next
-    Application.OnTime gProchaineVerification, "VerifierDerniereActivite", , False
-    On Error GoTo 0
-    
-    gProchaineVerification = Now + TimeSerial(0, gFREQUENCE_VERIFICATION_INACTIVITE, 0)
-    Application.OnTime gProchaineVerification, "VerifierDerniereActivite"
-    If gMODE_DEBUG Then Debug.Print Now() & " [modAppli:PlanifierVerificationDerniereActivite] Prochaine vérification est prévue à " & Format(gProchaineVerification, "hh:mm:ss")
-    
-    Call modDev_Utils.EnregistrerLogApplication("modAppli:PlanifierVerificationDerniereActivite", vbNullString, startTime)
-
-End Sub
-
+'Public Sub VerifierDerniereActivite() '2025-07-02 @ 12:10
+'
+'    'Ne rien faire avant l'heure de début de la surveillance
+'    If TimeValue(Now) < TimeSerial(gHEURE_DEBUT_SURVEILLANCE, 0, 0) Then
+'        Exit Sub
+'    End If
+'
+'    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:VerifierDerniereActivite", vbNullString, 0)
+'
+'    On Error GoTo GestionErreur
+'
+'    'Vérification de l'initialisation
+'    If gDerniereActivite = 0 Then
+'        Debug.Print Now() & " [modAppli:VerifierDerniereActivite] gDerniereActivite non initialisée"
+'        Exit Sub
+'    End If
+'
+'    'Calcul du temps d'inactivité en minutes
+'    Dim minutesInactives As Double
+'    minutesInactives = Round(Fn_MinutesDepuisDerniereActivite(), 1)
+'
+'    Debug.Print Now() & " [modAppli:VerifierDerniereActivite] Inactif depuis " & minutesInactives & _
+'                                " min. - " & "Fréq. vérification = "; gFREQUENCE_VERIFICATION_INACTIVITE & _
+'                                " min., " & "Durée max. sans activité = " & gMAXIMUM_MINUTES_INACTIVITE & _
+'                                " min., " & "Délai de grâce (dernière chance) = " & gDELAI_GRACE_SECONDES & _
+'                                " sec."
+'
+'    'Barre d’état informative
+'    Dim minute1 As String
+'    Dim minute2 As String
+'    'Minute ou minutes (minute1)
+'    If minutesInactives <= 1 Then
+'        minute1 = "minute"
+'    Else
+'        minute1 = "minutes"
+'    End If
+'    'Minute ou minutes (minute2)
+'    If gMAXIMUM_MINUTES_INACTIVITE - minutesInactives <= 1 Then
+'        minute2 = "minute"
+'    Else
+'        minute2 = "minutes"
+'    End If
+'    If minutesInactives < gMAXIMUM_MINUTES_INACTIVITE Then
+'        Application.StatusBar = "Aucune activité dans l'application depuis " & _
+'            Format$(minutesInactives, "0") & " " & minute1 & " - Fermeture planifiée dans " & _
+'            Format$(gMAXIMUM_MINUTES_INACTIVITE - minutesInactives, "0") & " " & minute2 & " - " & _
+'            Format$(Now, "hh:mm:ss")
+'    Else
+'        Application.StatusBar = False
+'    End If
+'
+'    'Fermeture si délai dépassé, on passe à la dernier chance...
+'    If minutesInactives >= gMAXIMUM_MINUTES_INACTIVITE Then
+'        Debug.Print Now() & " [modAppli:VerifierDerniereActivite] Inactivité trop longue (" & Format$(minutesInactives, "0") & " minutes) — fermeture de l'application"
+'        gFermeturePlanifiee = GetProchaineFermeture()
+'        Debug.Print Now() & " [modAppli:VerifierDerniereActivite] Avant l'ajout de " & gDELAI_GRACE_SECONDES & " secondes, gFermeture = " & Format(gFermeturePlanifiee, "; hh: mm: ss "); vbNullString
+'        gFermeturePlanifiee = Now + TimeSerial(0, 0, gDELAI_GRACE_SECONDES)
+'        Debug.Print Now() & " [modAppli:VerifierDerniereActivite] Après l'ajout de " & gDELAI_GRACE_SECONDES & " secondes, gFermeture = " & Format(gFermeturePlanifiee, "hh:mm:ss")
+'
+'        On Error Resume Next
+'        Debug.Print Now() & " [modAppli:VerifierDerniereActivite] OnTime prévu pour : " & Format(gFermeturePlanifiee, "hh:mm:ss")
+'        Application.OnTime gFermeturePlanifiee, "FermerApplicationInactive"
+'        On Error GoTo 0
+'
+'        Unload ufConfirmationFermeture '2025-07-02 @ 07:54
+'
+'        Call ufConfirmationFermeture.AfficherMessage(minutesInactives)
+'        Exit Sub
+'    End If
+'
+'    'Replanification
+'    Call PlanifierVerificationDerniereActivite
+'
+'    Call modDev_Utils.EnregistrerLogApplication("modAppli:VerifierDerniereActivite", vbNullString, startTime)
+'
+'    Exit Sub
+'
+'GestionErreur:
+'    Debug.Print "[modAppli:VerifierDerniereActivite] Erreur dans VerifierDerniereActivite : " & Err.Number & " - " & Err.description
+'
+'End Sub
+'
+'Public Sub PlanifierVerificationDerniereActivite() '2025-07-01 @ 13:53
+'
+'    'Ne rien faire avant l'heure de début de la surveillance '2025-10-31 @08:24
+'    If TimeValue(Now) < TimeSerial(gHEURE_DEBUT_SURVEILLANCE, 0, 0) Then
+'        Exit Sub
+'    End If
+'
+'    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:PlanifierVerificationDerniereActivite", vbNullString, 0)
+'
+'    On Error Resume Next
+'    Application.OnTime gProchaineVerification, "VerifierDerniereActivite", , False
+'    On Error GoTo 0
+'
+'    gProchaineVerification = Now + TimeSerial(0, gFREQUENCE_VERIFICATION_INACTIVITE, 0)
+'    Application.OnTime gProchaineVerification, "VerifierDerniereActivite"
+'    Debug.Print Now() & " [modAppli:PlanifierVerificationDerniereActivite] Prochaine vérification est prévue à " & Format(gProchaineVerification, "hh:mm:ss")
+'
+'    Call modDev_Utils.EnregistrerLogApplication("modAppli:PlanifierVerificationDerniereActivite", vbNullString, startTime)
+'
+'End Sub
+'
 Public Sub FermerApplicationInactive() '2025-07-02 @ 06:19
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:FermerApplicationInactive", vbNullString, 0)
     
     'Ajoute un log pour vérification
-    If gMODE_DEBUG Then Debug.Print Now() & " [modAppli:FermerApplicationInactive] Fermeture AUTOMATIQUE déclenchée à : " & Format(Now, "hh:mm:ss")
+    Debug.Print Now() & " [modAppli:FermerApplicationInactive] Fermeture AUTOMATIQUE déclenchée à : " & Format(Now, "hh:mm:ss")
 
     Call modDev_Utils.EnregistrerLogApplication("modAppli:FermerApplicationInactive", vbNullString, startTime)
     
@@ -440,80 +438,84 @@ Public Sub FermerApplicationInactive() '2025-07-02 @ 06:19
     
 End Sub
 
-Public Sub RelancerTimer() '2025-07-02 @ 06:43
-
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:RelancerTimer", vbNullString, 0)
-    
-    If gMODE_DEBUG Then Debug.Print Now() & " [modAppli:RelancerTimer] Appel de 'ufConfirmationFermeture.RafraichirTimer'"
-    ufConfirmationFermeture.RafraichirTimer
-    
-    Call modDev_Utils.EnregistrerLogApplication("modAppli:RelancerTimer", vbNullString, startTime)
-
-End Sub
-
-Public Sub EnregistrerActiviteAuLog(ByVal message As String) '2025-10-30 @ 07:44
-
-    'Ne rien faire avant l'heure de début de la surveillance
-    If TimeValue(Now) < TimeSerial(gHEURE_DEBUT_SURVEILLANCE, 0, 0) Then
-        Exit Sub
-    End If
-
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:EnregistrerActiviteAuLog", vbNullString, 0)
-    
-    Dim cheminLog As String
-    cheminLog = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & "\ActiviteDurantSurveillance.txt"
-
-    Dim fileNum As Integer
-    fileNum = FreeFile
-
-    Open cheminLog For Append As #fileNum
-    Print #fileNum, "[" & Format(Now, "yyyy-mm-dd hh:nn:ss") & "] [" & ThisWorkbook.Name & "] [" & modFunctions.Fn_UtilisateurWindows & "] [" & _
-                        Fn_ContexteActifComplet() & "] [" & message & "]"
-    Close #fileNum
-    
-    Call modDev_Utils.EnregistrerLogApplication("modAppli:EnregistrerActiviteAuLog", vbNullString, startTime)
-
-End Sub
-
-Sub LancerSurveillanceUserForm() '2025-08-29 @ 18:32
-
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:LancerSurveillanceUserForm", vbNullString, 0)
-    
-    gProchaineVerifUserForm = Now + TimeSerial(0, 0, 10) ' toutes les 10 secondes
-    Application.OnTime gProchaineVerifUserForm, "VerifierInactiviteUserForm"
-    
-    Call modDev_Utils.EnregistrerLogApplication("modAppli:LancerSurveillanceUserForm", vbNullString, startTime)
-
-End Sub
-
-Sub AnnulerSurveillanceUserForm() '2025-08-29 @ 18:32
-
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:AnnulerSurveillanceUserForm", vbNullString, 0)
-    
-    On Error Resume Next
-    Application.OnTime gProchaineVerifUserForm, "VerifierInactiviteUserForm", , False
-    On Error GoTo 0
-    
-    Call modDev_Utils.EnregistrerLogApplication("modAppli:AnnulerSurveillanceUserForm", vbNullString, startTime)
-
-End Sub
-
-Sub VerifierInactiviteUserForm() '2025-08-29 @ 18:32
-
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:VerifierInactiviteUserForm", vbNullString, 0)
-    
-    If Fn_MinutesDepuisDerniereActivite() >= gMAXIMUM_MINUTES_INACTIVITE Then
-        Debug.Print Now() & " [modAppli:VerifierInactiviteUserForm] Inactivité détectée dans UserForm — fermeture"
-        Unload ufSaisieHeures
-        Call FermerApplicationInactive
-    Else
-        Call LancerSurveillanceUserForm
-    End If
-    
-    Call modDev_Utils.EnregistrerLogApplication("modAppli:VerifierInactiviteUserForm", vbNullString, startTime)
-
-End Sub
-
+'Public Sub RelancerTimer() '2025-07-02 @ 06:43
+'
+'    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:RelancerTimer", vbNullString, 0)
+'
+'    Debug.Print Now() & " [modAppli:RelancerTimer] Appel de 'ufConfirmationFermeture.RafraichirTimer'"
+'    ufConfirmationFermeture.RafraichirTimer
+'
+'    Call modDev_Utils.EnregistrerLogApplication("modAppli:RelancerTimer", vbNullString, startTime)
+'
+'End Sub
+'
+'Public Sub EnregistrerActiviteAuLog(ByVal message As String) '2025-10-30 @ 07:44
+'
+'    'Ne rien faire avant l'heure de début de la surveillance
+'    If TimeValue(Now) < TimeSerial(gHEURE_DEBUT_SURVEILLANCE, 0, 0) Then
+'        Exit Sub
+'    End If
+'
+'    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:EnregistrerActiviteAuLog", vbNullString, 0)
+'
+'    Dim cheminLog As String
+'    cheminLog = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & "\ActiviteDurantSurveillance.txt"
+'
+'    Dim fileNum As Integer
+'    fileNum = FreeFile
+'
+'    Open cheminLog For Append As #fileNum
+'    Print #fileNum, "[" & Format(Now, "yyyy-mm-dd hh:nn:ss") & "] [" & ThisWorkbook.Name & "] [" & modFunctions.Fn_UtilisateurWindows & "] [" & _
+'                        Fn_ContexteActifComplet() & "] [" & message & "]"
+'    Close #fileNum
+'
+'    Call modDev_Utils.EnregistrerLogApplication("modAppli:EnregistrerActiviteAuLog", vbNullString, startTime)
+'
+'End Sub
+'
+'Sub LancerSurveillanceUserForm() '2025-08-29 @ 18:32
+'
+'    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:LancerSurveillanceUserForm", vbNullString, 0)
+'
+'    gProchaineVerifUserForm = Now + TimeSerial(0, 1, 0) 'À toute les minutes
+'    Application.OnTime gProchaineVerifUserForm, "VerifierInactiviteUserForm"
+'
+'    Call modDev_Utils.EnregistrerLogApplication("modAppli:LancerSurveillanceUserForm", vbNullString, startTime)
+'
+'End Sub
+'
+'Sub AnnulerSurveillanceUserForm() '2025-08-29 @ 18:32
+'
+'    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:AnnulerSurveillanceUserForm", vbNullString, 0)
+'
+'    On Error Resume Next
+'    Application.OnTime gProchaineVerifUserForm, "VerifierInactiviteUserForm", , False
+'    On Error GoTo 0
+'
+'    Call modDev_Utils.EnregistrerLogApplication("modAppli:AnnulerSurveillanceUserForm", vbNullString, startTime)
+'
+'End Sub
+'
+'Sub VerifierInactiviteUserForm() '2025-08-29 @ 18:32
+'
+'    If TimeValue(Now) < TimeSerial(gHEURE_DEBUT_SURVEILLANCE, 0, 0) Then
+'        Exit Sub
+'    End If
+'
+'    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:VerifierInactiviteUserForm", vbNullString, 0)
+'
+'    If Fn_MinutesDepuisDerniereActivite() >= gMAXIMUM_MINUTES_INACTIVITE Then
+'        Debug.Print Now() & " [modAppli:VerifierInactiviteUserForm] Inactivité détectée dans UserForm — fermeture"
+'        Unload ufSaisieHeures
+'        Call FermerApplicationInactive
+'    Else
+'        Call LancerSurveillanceUserForm
+'    End If
+'
+'    Call modDev_Utils.EnregistrerLogApplication("modAppli:VerifierInactiviteUserForm", vbNullString, startTime)
+'
+'End Sub
+'
 Sub QuitterFeuillePourMenu(ByVal nomFeuilleMenu As Worksheet, Optional masquerFeuilleActive As Boolean = False) '2025-08-19 @ 06:46
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:QuitterFeuillePourMenu", vbNullString, 0)
@@ -543,7 +545,7 @@ Sub AfficherErreurCritique(modApp As String, procName As String, message As Stri
     
 End Sub
 
-Public Sub EnregistrerLogPerformanceTXT(nomProcedure As String, Optional duree As Double = -1) '2025-10-31 @ 14:05
+Public Sub EnregistrerLogPerformance(nomProcedure As String, Optional duree As Double = -1) '2025-10-31 @ 14:05
 
     On Error Resume Next
 
@@ -563,9 +565,11 @@ Public Sub EnregistrerLogPerformanceTXT(nomProcedure As String, Optional duree A
     'Construire la ligne de log
     Dim ligneLog As String
     If duree >= 0 Then
-        ligneLog = horodatage & " | " & utilisateur & " | " & nomProcedure & " | " & Format(duree, "0.000") & " sec"
+        ligneLog = horodatage & " | " & utilisateur & " | " & ThisWorkbook.Name & " | " & _
+                                        nomProcedure & " | " & Format(duree, "0.000") & " sec"
     Else
-        ligneLog = horodatage & " | " & utilisateur & " | " & nomProcedure
+        ligneLog = horodatage & " | " & utilisateur & " | " & ThisWorkbook.Name & " | " & _
+                                        nomProcedure
     End If
 
     Dim canalLog As Integer

@@ -15,6 +15,8 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+Private wrappers As Collection
+
 Private Sub UserForm_Initialize() '2025-06-01 @ 06:54
 
     Dim ws As Worksheet
@@ -86,6 +88,8 @@ ProchaineLigne:
     Set ligne = Nothing
     Set lo = Nothing
     Set ws = Nothing
+    
+    Call InitialiserSurveillanceForm(Me, wrappers)
     
 End Sub
 

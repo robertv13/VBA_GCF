@@ -15,6 +15,14 @@ Attribute VB_PredeclaredId = True
 Attribute VB_Exposed = False
 Option Explicit
 
+Private wrappers As Collection
+
+Private Sub UserForm_Initialize()
+
+    Call InitialiserSurveillanceForm(Me, wrappers)
+    
+End Sub
+
 Private Sub lstListeEcritureGL_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim ligne As Long

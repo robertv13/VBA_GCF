@@ -2,7 +2,7 @@ Option Explicit
 
 Private Sub Workbook_Open()
 
-    Dim tt0 As Double: tt0 = Timer: Call EnregistrerLogPerformanceTXT("ThisWorkbook:Workbook_Open - Début")
+    Dim tt0 As Double: tt0 = Timer
     
     Dim utilisateurWindows As String
     utilisateurWindows = modFunctions.Fn_UtilisateurWindows
@@ -25,11 +25,17 @@ Private Sub Workbook_Open()
     Dim versionApplication As String
     versionApplication = Fn_ExtraireVersionDepuisNomClasseur
     
-    gDerniereActivite = Now
-    gProchaineVerification = Now + TimeSerial(0, gFREQUENCE_VERIFICATION_INACTIVITE, 0)
-
-    Application.OnTime gProchaineVerification, "VerifierDerniereActivite"
-
+    Call modSurveillance.LancerSurveillance '2025-11-06 @ 15:56
+    
+    gNomFeuilleDerniereActivite = ActiveSheet.Name
+    gAdresseDerniereSelection = Selection.Address
+    gDerniereInteraction = Timer
+    
+'    gDerniereActivite = Now
+'    gProchaineVerification = Now + TimeSerial(0, gFREQUENCE_VERIFICATION_INACTIVITE, 0)
+'
+'    Application.OnTime gProchaineVerification, "VerifierDerniereActivite"
+'
     Call modAppli.DemarrerApplication(utilisateurWindows)
 
     'Message de bienvenue
@@ -40,18 +46,18 @@ Private Sub Workbook_Open()
 
     Call VerifierVersionApplication(cheminSourcePROD, versionApplication)
     
-    Call EnregistrerLogPerformanceTXT("ThisWorkbook:Workbook_Open", Timer - tt0)
+    Call EnregistrerLogPerformance("Ouverture de session", Timer - tt0)
     
 End Sub
     
-Private Sub Workbook_SheetActivate(ByVal sh As Object) '2025-07-03 @ 10:58
+Private Sub Workbook_SheetActivate(ByVal Sh As Object) '2025-07-03 @ 10:58
 
     Dim nomFeuilleFacture As String: nomFeuilleFacture = "FAC_Finale" '2025-07-19 @ 18:46
     Dim statutFacture As String: statutFacture = Trim(ThisWorkbook.Names("FactureStatut").RefersToRange.Value)
 
     If statutFacture = "En attente de mise à jour" Then
-        If sh.Name <> nomFeuilleFacture And sh.Name <> "FAC_Finale_Intact" Then
-            Debug.Print "777 - " & sh.Name
+        If Sh.Name <> nomFeuilleFacture And Sh.Name <> "FAC_Finale_Intact" Then
+            Debug.Print "777 - " & Sh.Name
             Application.EnableEvents = False
             MsgBox "Veuillez d'abord SAUVEGARDER la facture actuelle" & vbNewLine & vbNewLine & _
                     "avant de quitter la facture FINALE", vbExclamation, _
@@ -61,16 +67,19 @@ Private Sub Workbook_SheetActivate(ByVal sh As Object) '2025-07-03 @ 10:58
         End If
     End If
     
-    Call modAppli.EnregistrerActivite(sh.Name & " - Workbook_SheetActivate")
+    gNomFeuilleDerniereActivite = Sh.Name '2025-11-06 @ 16:15
+    gDerniereInteraction = Timer
     
+'    Call modAppli.EnregistrerActivite(Sh.Name & " - Workbook_SheetActivate")
+'
 End Sub
 
-Private Sub Workbook_SheetDeactivate(ByVal sh As Object) '2025-07-03 @ 10:58
-
-    Call modAppli.EnregistrerActivite(sh.Name & " - Workbook_SheetDeactivate")
-    
-End Sub
-
+'Private Sub Workbook_SheetDeactivate(ByVal Sh As Object) '2025-07-03 @ 10:58
+'
+'    Call modAppli.EnregistrerActivite(Sh.Name & " - Workbook_SheetDeactivate")
+'
+'End Sub
+'
 Private Sub Workbook_BeforeClose(Cancel As Boolean)
     
     If gFermetureForcee Then
@@ -81,4 +90,11 @@ Private Sub Workbook_BeforeClose(Cancel As Boolean)
         If ufExitDisable.Visible Then Unload ufExitDisable
     End If
     
+End Sub
+
+Private Sub Workbook_SheetSelectionChange(ByVal Sh As Object, ByVal Target As Range) '2025-11-06 @ 16:16
+    
+    gAdresseDerniereSelection = Target.Address
+    gDerniereInteraction = Timer
+
 End Sub
