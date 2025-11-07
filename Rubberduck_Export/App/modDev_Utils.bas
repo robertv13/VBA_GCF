@@ -1180,19 +1180,19 @@ Sub EnregistrerLogApplication(ByVal procedureName As String, ByVal param As Stri
         Print #fileNum, vbNullString
     ElseIf startTime = 0 Then 'On marque le départ d'une procédure/fonction
         Print #fileNum, timeStamp & " | " & _
-                        modFunctions.Fn_UtilisateurWindows() & " | " & _
+                        Left$(modFunctions.Fn_UtilisateurWindows() & Space(16), 16) & " | " & _
                         ThisWorkbook.Name & " | " & _
                         procedureName & param
     ElseIf startTime < 0 Then 'On enregistre une entrée intermédiaire (au coeur d'un procédure/fonction)
         Print #fileNum, timeStamp & " | " & _
-                        modFunctions.Fn_UtilisateurWindows() & " | " & _
+                        Left$(modFunctions.Fn_UtilisateurWindows() & Space(16), 16) & " | " & _
                         ThisWorkbook.Name & " | " & _
                         procedureName & param
     Else 'On marque la fin d'une procédure/fonction
         Dim elapsedTime As Double
         elapsedTime = Round(Timer - startTime, 4) 'Calculate elapsed time
         Print #fileNum, timeStamp & " | " & _
-                        modFunctions.Fn_UtilisateurWindows() & " | " & _
+                        Left$(modFunctions.Fn_UtilisateurWindows() & Space(16), 16) & " | " & _
                         ThisWorkbook.Name & " | " & _
                         procedureName & param & " | " & _
                         Format$(elapsedTime, "0.0000") & " secondes"
@@ -1260,7 +1260,7 @@ Sub EnregistrerLogSaisieHeures(oper As String, txt As String, Optional blankline
     End If
     
     Print #fileNum, timeStamp & " | " & _
-                        Left$(modFunctions.Fn_UtilisateurWindows() & Space(19), 19) & " | " & _
+                        Left$(modFunctions.Fn_UtilisateurWindows() & Space(16), 16) & " | " & _
                         ThisWorkbook.Name & " | " & _
                         oper & " | " & _
                         txt

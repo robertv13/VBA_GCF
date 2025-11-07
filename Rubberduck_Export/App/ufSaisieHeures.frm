@@ -17,8 +17,8 @@ Option Explicit
 
 Private oEventHandler As New clsSearchableDropdown '2023-03-21 @ 09:16
 
-Private colSurveillance As Collection
-
+'Private colSurveillance As Collection
+'
 Private wrappers As Collection
 
 'Sauvegarde des valeurs lues
@@ -35,39 +35,33 @@ Public Property Let ListData(ByVal rg As Range)
 
 End Property
 
-'Private Sub UserForm_Deactivate() '2025-08-29 @ 18:29
-'
-'    Call AnnulerSurveillanceUserForm
-'
-'End Sub
-'
 Private Sub UserForm_Initialize() '2025-05-30 @ 13:26
 
-    Set colSurveillance = New Collection
-    Dim ctrl As Control
-    Dim obj As clsSurveillanceActivite
-
-    Dim ctrlType As String
-    For Each ctrl In Me.Controls
-        ctrlType = TypeName(ctrl)
-        Debug.Print ctrl.Name & " - " & ctrlType
-        Select Case ctrlType
-            Case "TextBox", "ComboBox", "CommandButton"
-                Set obj = New clsSurveillanceActivite
-                Select Case ctrlType
-                    Case "TextBox": Set obj.tb = ctrl
-                    Case "ComboBox": Set obj.cb = ctrl
-                    Case "CommandButton": Set obj.btn = ctrl
-                End Select
-                If obj Is Nothing Then
-                    Debug.Print "Objet non initialisé pour : " & ctrl.Name
-                Else
-                    colSurveillance.Add obj
-                End If
-            Case Else
-                Debug.Print "Contrôle ignoré : " & ctrl.Name & " (" & ctrlType & ")"
-        End Select
-    Next ctrl
+'    Set colSurveillance = New Collection
+'    Dim ctrl As Control
+'    Dim obj As clsSurveillanceActivite
+'
+'    Dim ctrlType As String
+'    For Each ctrl In Me.Controls
+'        ctrlType = TypeName(ctrl)
+'        Debug.Print ctrl.Name & " - " & ctrlType
+'        Select Case ctrlType
+'            Case "TextBox", "ComboBox", "CommandButton"
+'                Set obj = New clsSurveillanceActivite
+'                Select Case ctrlType
+'                    Case "TextBox": Set obj.tb = ctrl
+'                    Case "ComboBox": Set obj.cb = ctrl
+'                    Case "CommandButton": Set obj.btn = ctrl
+'                End Select
+'                If obj Is Nothing Then
+'                    Debug.Print "Objet non initialisé pour : " & ctrl.Name
+'                Else
+'                    colSurveillance.Add obj
+'                End If
+'            Case Else
+'                Debug.Print "Contrôle ignoré : " & ctrl.Name & " (" & ctrlType & ")"
+'        End Select
+'    Next ctrl
     
     Call InitialiserSurveillanceForm(Me, wrappers)
     
@@ -77,8 +71,6 @@ Sub UserForm_Activate() '2024-07-31 @ 07:57
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:UserForm_Activate", vbNullString, 0)
     
-'    Call LancerSurveillanceUserForm '2025-09-29 @ 18:29
-
     gLogSaisieHeuresVeryDetailed = False
     
     Call ImporterClients

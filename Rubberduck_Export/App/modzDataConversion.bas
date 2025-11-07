@@ -1,16 +1,16 @@
 Attribute VB_Name = "modzDataConversion"
 Option Explicit
 
-'Importation des clients Ã  partir de ... \DataConversion\Clients.xlsx
+'Importation des clients ÃƒÂ  partir de ... \DataConversion\Clients.xlsx
 Sub zz_CopierClientsEntreClasseursFermes() '2024-08-03 @ 09:40
 
     Stop 'One shot deal !!!
     
     Dim sourceRange As Range
     
-    'DÃ©finir les chemins d'accÃ¨s des fichiers (source & destination)
+    'DÃƒÂ©finir les chemins d'accÃƒÂ¨s des fichiers (source & destination)
     Dim sourceFilePath As String
-    sourceFilePath = "C:\VBA\GC_FISCALITÃ‰\DataConversion\Clients.xlsx"
+    sourceFilePath = "C:\VBA\GC_FISCALITÃƒâ€°\DataConversion\Clients.xlsx"
     Dim destinationFilePath As String
     destinationFilePath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & wsdADMIN.Range("CLIENTS_FILE").Value
     
@@ -18,7 +18,7 @@ Sub zz_CopierClientsEntreClasseursFermes() '2024-08-03 @ 09:40
     Dim sourceWorkbook As Workbook: Set sourceWorkbook = Workbooks.Open(sourceFilePath)
     Dim sourceSheet As Worksheet: Set sourceSheet = sourceWorkbook.Worksheets("Feuil1")
     
-    'DÃ©termine la derniÃ¨re rangÃ©e utilisÃ©e dans le fichier Source
+    'DÃƒÂ©termine la derniÃƒÂ¨re rangÃƒÂ©e utilisÃƒÂ©e dans le fichier Source
     Dim lastUsedRow As Long
     lastUsedRow = sourceSheet.Cells(sourceSheet.Rows.count, 1).End(xlUp).Row
     Dim lastUsedCol As Long
@@ -44,14 +44,14 @@ Sub zz_CopierClientsEntreClasseursFermes() '2024-08-03 @ 09:40
     'Close the source workbook without saving
     sourceWorkbook.Close SaveChanges:=False
     
-    'LibÃ©rer la mÃ©moire
+    'LibÃƒÂ©rer la mÃƒÂ©moire
     Set sourceSheet = Nothing
     Set sourceRange = Nothing
     Set sourceWorkbook = Nothing
     Set destinationSheet = Nothing
     Set destinationWorkbook = Nothing
     
-    MsgBox "Les donnÃ©es ont Ã©tÃ© copiÃ©es avec succÃ¨s dans le fichier destination."
+    MsgBox "Les donnÃƒÂ©es ont ÃƒÂ©tÃƒÂ© copiÃƒÂ©es avec succÃƒÂ¨s dans le fichier destination."
     
 End Sub
 
@@ -63,7 +63,7 @@ Sub zz_ImporterDonneesDeClasseursFermesTEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 
     
     'Define the path to the closed workbook
     Dim strFilePath As String
-    strFilePath = "C:\VBA\GC_FISCALITÃ‰\DataConversion\TEC_20240814.xlsx"
+    strFilePath = "C:\VBA\GC_FISCALITÃƒâ€°\DataConversion\TEC_20240814.xlsx"
     Dim strSheetName As String
     strSheetName = "TEC$"
     Dim strRange As String
@@ -143,10 +143,10 @@ Sub zz_ImporterDonneesDeClasseursFermesTEC() '2024-08-14 @ 06:43 & 2024-08-03 @ 
     If errorMesg <> vbNullString Then
         MsgBox errorMesg
     Else
-        MsgBox "Tous les TEC ont Ã©tÃ© importÃ©s, pour un total de " & totHres & " heures"
+        MsgBox "Tous les TEC ont ÃƒÂ©tÃƒÂ© importÃƒÂ©s, pour un total de " & totHres & " heures"
     End If
     
-    'LibÃ©rer la mÃ©moire
+    'LibÃƒÂ©rer la mÃƒÂ©moire
     recSet.Close
     conn.Close
     Set recSet = Nothing
@@ -178,14 +178,14 @@ Function Fn_ObtenirProfIDAvecInitiales(p As String) As Long
 
 End Function
 
-'Importation des fournisseurs Ã  partir de ... \DataConversion\Fournisseurs.xlsx
+'Importation des fournisseurs ÃƒÂ  partir de ... \DataConversion\Fournisseurs.xlsx
 Sub zz_ImporterDonneesDeClasseursFermesFournisseurs() '2024-08-03 @ 18:10
 
     Stop 'One shot deal
     
-    'DÃ©finir les chemins d'accÃ¨s des fichiers (source & destination)
+    'DÃƒÂ©finir les chemins d'accÃƒÂ¨s des fichiers (source & destination)
     Dim sourceFilePath As String
-    sourceFilePath = "C:\VBA\GC_FISCALITÃ‰\DataConversion\Fournisseurs.xlsx"
+    sourceFilePath = "C:\VBA\GC_FISCALITÃƒâ€°\DataConversion\Fournisseurs.xlsx"
     Dim destinationFilePath As String
     destinationFilePath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & wsdADMIN.Range("CLIENTS_FILE").Value
     
@@ -193,7 +193,7 @@ Sub zz_ImporterDonneesDeClasseursFermesFournisseurs() '2024-08-03 @ 18:10
     Dim sourceWorkbook As Workbook: Set sourceWorkbook = Workbooks.Open(sourceFilePath)
     Dim sourceSheet As Worksheet: Set sourceSheet = sourceWorkbook.Worksheets("Fournisseurs")
     
-    'DÃ©termine la derniÃ¨re rangÃ©e utilisÃ©e dans le fichier Source
+    'DÃƒÂ©termine la derniÃƒÂ¨re rangÃƒÂ©e utilisÃƒÂ©e dans le fichier Source
     Dim lastUsedRow As Long
     lastUsedRow = sourceSheet.Cells(sourceSheet.Rows.count, 1).End(xlUp).Row
     Dim lastUsedCol As Long
@@ -220,14 +220,14 @@ Sub zz_ImporterDonneesDeClasseursFermesFournisseurs() '2024-08-03 @ 18:10
     'Close the source workbook without saving
     sourceWorkbook.Close SaveChanges:=False
     
-    'LibÃ©rer la mÃ©moire
+    'LibÃƒÂ©rer la mÃƒÂ©moire
     Set sourceSheet = Nothing
     Set sourceRange = Nothing
     Set sourceWorkbook = Nothing
     Set destinationSheet = Nothing
     Set destinationWorkbook = Nothing
     
-    MsgBox "Les donnÃ©es (fournisseurs) ont Ã©tÃ© copiÃ©es avec succÃ¨s dans" & vbNewLine & _
+    MsgBox "Les donnÃƒÂ©es (fournisseurs) ont ÃƒÂ©tÃƒÂ© copiÃƒÂ©es avec succÃƒÂ¨s dans" & vbNewLine & _
             vbNewLine & "le fichier destination."
     
 End Sub
@@ -238,7 +238,7 @@ Sub zz_ImporterDonneesDeClasseursFermesGL() '2024-08-03 @ 18:20
     
     'Define the path to the closed workbook
     Dim strFilePath As String
-    strFilePath = "C:\VBA\GC_FISCALITÃ‰\DataConversion\GL_BV.xlsx"
+    strFilePath = "C:\VBA\GC_FISCALITÃƒâ€°\DataConversion\GL_BV.xlsx"
     Dim strSheetName As String
     strSheetName = "BV$"
     Dim strRange As String
@@ -265,8 +265,8 @@ Sub zz_ImporterDonneesDeClasseursFermesGL() '2024-08-03 @ 18:20
     'Loop through the recordset and write data to the destination sheet
     Dim descriptionGL As String
     Dim codeGL As String
-    Dim No_EntrÃ©e As Long
-    No_EntrÃ©e = 1
+    Dim No_EntrÃƒÂ©e As Long
+    No_EntrÃƒÂ©e = 1
     Dim amount As Double
     Dim totalDT As Double, totalCT As Double
     
@@ -281,7 +281,7 @@ Sub zz_ImporterDonneesDeClasseursFermesGL() '2024-08-03 @ 18:20
             totalCT = totalCT - amount
         End If
         
-        wsDest.Range("A" & rowNum).Value = No_EntrÃ©e
+        wsDest.Range("A" & rowNum).Value = No_EntrÃƒÂ©e
         wsDest.Range("B" & rowNum).Value = "07/31/2024"
         wsDest.Range("C" & rowNum).Value = "Solde de fermeture (conversion)"
         wsDest.Range("D" & rowNum).Value = "Conv."
@@ -299,10 +299,10 @@ Sub zz_ImporterDonneesDeClasseursFermesGL() '2024-08-03 @ 18:20
         
     Loop
     
-    MsgBox "Tous les soldes ont Ã©tÃ© importÃ©s, pour un total dÃ©bit de " & totalDT & _
-                vbNewLine & vbNewLine & "un total crÃ©dit de " & totalCT
+    MsgBox "Tous les soldes ont ÃƒÂ©tÃƒÂ© importÃƒÂ©s, pour un total dÃƒÂ©bit de " & totalDT & _
+                vbNewLine & vbNewLine & "un total crÃƒÂ©dit de " & totalCT
     
-    'LibÃ©rer la mÃ©moire
+    'LibÃƒÂ©rer la mÃƒÂ©moire
     recSet.Close
     conn.Close
     Set recSet = Nothing
@@ -325,7 +325,7 @@ Sub zz_ImporterDonneesDeClasseursFermes_CAR() '2024-08-04 @ 07:31
     
     'Define the path to the closed workbook
     Dim strFilePath As String
-    strFilePath = "C:\VBA\GC_FISCALITÃ‰\DataConversion\CAR.xlsx"
+    strFilePath = "C:\VBA\GC_FISCALITÃƒâ€°\DataConversion\CAR.xlsx"
     Dim strSheetName As String
     strSheetName = "CAR$"
     Dim strRange As String
@@ -420,10 +420,10 @@ Sub zz_ImporterDonneesDeClasseursFermes_CAR() '2024-08-04 @ 07:31
     If errorMesg <> vbNullString Then
         MsgBox errorMesg
     Else
-        MsgBox "Tous les CAR ont Ã©tÃ© importÃ©s, pour un total de " & Format$(totCAR, "#,##0.00$")
+        MsgBox "Tous les CAR ont ÃƒÂ©tÃƒÂ© importÃƒÂ©s, pour un total de " & Format$(totCAR, "#,##0.00$")
     End If
     
-    'LibÃ©rer la mÃ©moire
+    'LibÃƒÂ©rer la mÃƒÂ©moire
     recSet.Close
     conn.Close
     Set rng = Nothing
@@ -436,17 +436,17 @@ End Sub
 '@Description - Utilitaire pour ajuster le nom du client dans la table TEC_Local
 Sub zz_AjusterNomClientDansTEC() '2024-08-03 @ 09:40
 
-    'DÃ©finir les chemins d'accÃ¨s des fichiers (source & destination)
+    'DÃƒÂ©finir les chemins d'accÃƒÂ¨s des fichiers (source & destination)
     Dim sourceFilePath As String
-    sourceFilePath = "C:\VBA\GC_FISCALITÃ‰\DataFiles\GCF_BD_Master.xlsx"
+    sourceFilePath = "C:\VBA\GC_FISCALITÃƒâ€°\DataFiles\GCF_BD_Master.xlsx"
     Dim clientMF As String
-    clientMF = "C:\VBA\GC_FISCALITÃ‰\DataFiles\GCF_BD_EntrÃ©e.xlsx"
+    clientMF = "C:\VBA\GC_FISCALITÃƒâ€°\DataFiles\GCF_BD_EntrÃƒÂ©e.xlsx"
     
     'Declare le Workbook & le Worksheet (source)
     Dim sourceWorkbook As Workbook: Set sourceWorkbook = Workbooks.Open(sourceFilePath)
     Dim sourceSheet As Worksheet: Set sourceSheet = sourceWorkbook.Worksheets("TEC_Local")
     
-    'DÃ©termine la derniÃ¨re rangÃ©e utilisÃ©e dans le fichier Source
+    'DÃƒÂ©termine la derniÃƒÂ¨re rangÃƒÂ©e utilisÃƒÂ©e dans le fichier Source
     Dim lastUsedRow As Long
     lastUsedRow = sourceSheet.Cells(sourceSheet.Rows.count, 1).End(xlUp).Row
     Dim lastUsedCol As Long
@@ -482,7 +482,7 @@ Sub zz_AjusterNomClientDansTEC() '2024-08-03 @ 09:40
     sourceWorkbook.Save
     sourceWorkbook.Close
     
-    'LibÃ©rer la mÃ©moire
+    'LibÃƒÂ©rer la mÃƒÂ©moire
     Set dictClients = Nothing
     Set sourceSheet = Nothing
     Set sourceRange = Nothing
@@ -490,7 +490,7 @@ Sub zz_AjusterNomClientDansTEC() '2024-08-03 @ 09:40
     Set referenceSheet = Nothing
     Set referenceWorkbook = Nothing
     
-    MsgBox "Les donnÃ©es ont Ã©tÃ© copiÃ©es avec succÃ¨s dans le fichier destination."
+    MsgBox "Les donnÃƒÂ©es ont ÃƒÂ©tÃƒÂ© copiÃƒÂ©es avec succÃƒÂ¨s dans le fichier destination."
     
 End Sub
 
@@ -499,17 +499,17 @@ Sub zz_AjusterNomClientDansCAR() '2024-08-07 @ 17:11
 
     Dim sourceRange As Range
 
-    'DÃ©finir les chemins d'accÃ¨s des fichiers (source & destination)
+    'DÃƒÂ©finir les chemins d'accÃƒÂ¨s des fichiers (source & destination)
     Dim sourceFilePath As String
-    sourceFilePath = "C:\VBA\GC_FISCALITÃ‰\DataFiles\GCF_BD_MASTER.xlsx"
+    sourceFilePath = "C:\VBA\GC_FISCALITÃƒâ€°\DataFiles\GCF_BD_MASTER.xlsx"
     Dim clientMF As String
-    clientMF = "C:\VBA\GC_FISCALITÃ‰\DataFiles\GCF_BD_EntrÃ©e.xlsx"
+    clientMF = "C:\VBA\GC_FISCALITÃƒâ€°\DataFiles\GCF_BD_EntrÃƒÂ©e.xlsx"
 
     'Declare le Workbook & le Worksheet (source)
     Dim sourceWorkbook As Workbook: Set sourceWorkbook = Workbooks.Open(sourceFilePath)
     Dim sourceSheet As Worksheet: Set sourceSheet = sourceWorkbook.Worksheets("CAR")
 
-    'DÃ©termine la derniÃ¨re rangÃ©e utilisÃ©e dans le fichier Source
+    'DÃƒÂ©termine la derniÃƒÂ¨re rangÃƒÂ©e utilisÃƒÂ©e dans le fichier Source
     Dim lastUsedRow As Long
     lastUsedRow = sourceSheet.Cells(sourceSheet.Rows.count, 1).End(xlUp).Row
     Dim lastUsedCol As Long
@@ -544,7 +544,7 @@ Sub zz_AjusterNomClientDansCAR() '2024-08-07 @ 17:11
     sourceWorkbook.Save
     sourceWorkbook.Close
 
-    'LibÃ©rer la mÃ©moire
+    'LibÃƒÂ©rer la mÃƒÂ©moire
     Set dictClients = Nothing
     Set sourceSheet = Nothing
     Set sourceRange = Nothing
@@ -552,21 +552,21 @@ Sub zz_AjusterNomClientDansCAR() '2024-08-07 @ 17:11
     Set referenceSheet = Nothing
     Set referenceWorkbook = Nothing
 
-    MsgBox "Les donnÃ©es ont Ã©tÃ© copiÃ©es avec succÃ¨s dans le fichier destination."
+    MsgBox "Les donnÃƒÂ©es ont ÃƒÂ©tÃƒÂ© copiÃƒÂ©es avec succÃƒÂ¨s dans le fichier destination."
 
 End Sub
 
 Sub zz_CheckClientName() '2024-08-10 @ 10:13
 
-    'DÃ©finir les chemins d'accÃ¨s des fichiers (source & destination)
+    'DÃƒÂ©finir les chemins d'accÃƒÂ¨s des fichiers (source & destination)
     Dim sourceFilePath As String
-    sourceFilePath = "C:\VBA\GC_FISCALITÃ‰\DataFiles\GCF_BD_EntrÃ©e.xlsx"
+    sourceFilePath = "C:\VBA\GC_FISCALITÃƒâ€°\DataFiles\GCF_BD_EntrÃƒÂ©e.xlsx"
     
     'Declare le Workbook & le Worksheet (source)
     Dim sourceWorkbook As Workbook: Set sourceWorkbook = Workbooks.Open(sourceFilePath)
     Dim sourceSheet As Worksheet: Set sourceSheet = sourceWorkbook.Worksheets("Clients")
     
-    'DÃ©termine la derniÃ¨re rangÃ©e utilisÃ©e dans le fichier Source
+    'DÃƒÂ©termine la derniÃƒÂ¨re rangÃƒÂ©e utilisÃƒÂ©e dans le fichier Source
     Dim lastUsedRow As Long
     lastUsedRow = sourceSheet.Cells(sourceSheet.Rows.count, 1).End(xlUp).Row
     
@@ -585,24 +585,24 @@ Sub zz_CheckClientName() '2024-08-10 @ 10:13
     sourceWorkbook.Save
     sourceWorkbook.Close
     
-    'LibÃ©rer la mÃ©moire
+    'LibÃƒÂ©rer la mÃƒÂ©moire
     Set sourceSheet = Nothing
     Set sourceWorkbook = Nothing
     
-    MsgBox "Les donnÃ©es ont Ã©tÃ© vÃ©rifiÃ©es avec succÃ¨s dans le fichier Clients."
+    MsgBox "Les donnÃƒÂ©es ont ÃƒÂ©tÃƒÂ© vÃƒÂ©rifiÃƒÂ©es avec succÃƒÂ¨s dans le fichier Clients."
     
 End Sub
 
 Sub CorrigerNomClientDansTEC()  '2025-03-04 @ 05:48
 
-    'Source - DÃ©finir les chemins d'accÃ¨s des fichiers, le Workbook, le Worksheet et le Range
+    'Source - DÃƒÂ©finir les chemins d'accÃƒÂ¨s des fichiers, le Workbook, le Worksheet et le Range
     Dim sourceFilePath As String
     sourceFilePath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
                      wsdADMIN.Range("MASTER_FILE").Value
     Dim wbSource As Workbook: Set wbSource = Workbooks.Open(sourceFilePath)
     Dim wsSource As Worksheet: Set wsSource = wbSource.Worksheets("TEC_Local")
     
-    'DÃ©termine la derniÃ¨re rangÃ©e et derniÃ¨re colonne utilisÃ©es dans wsdTEC_Local
+    'DÃƒÂ©termine la derniÃƒÂ¨re rangÃƒÂ©e et derniÃƒÂ¨re colonne utilisÃƒÂ©es dans wsdTEC_Local
     Dim lastUsedRowTEC As Long
     lastUsedRowTEC = wsSource.Cells(wsSource.Rows.count, 1).End(xlUp).Row
     
@@ -663,7 +663,7 @@ Sub CorrigerNomClientDansTEC()  '2025-03-04 @ 05:48
     'Result print setup - 2024-08-05 @ 05:16
     rowOutput = rowOutput + 1
     wsOutput.Range("A" & rowOutput).Value = "**** " & Format$(lastUsedRowTEC - 1, "###,##0") & _
-                                        " lignes analysÃ©es dans l'ensemble du fichier ***"
+                                        " lignes analysÃƒÂ©es dans l'ensemble du fichier ***"
                                     
     'Set conditional formatting for the worksheet (alternate colors)
     Dim rngArea As Range: Set rngArea = wsOutput.Range("A2:F" & rowOutput)
@@ -679,7 +679,7 @@ Sub CorrigerNomClientDansTEC()  '2025-03-04 @ 05:48
     wbSource.Close SaveChanges:=False
     wbMF.Close SaveChanges:=False
 
-    'LibÃ©rer la mÃ©moire
+    'LibÃƒÂ©rer la mÃƒÂ©moire
     Set dictClients = Nothing
     Set rngArea = Nothing
     Set rngToPrint = Nothing
@@ -689,8 +689,8 @@ Sub CorrigerNomClientDansTEC()  '2025-03-04 @ 05:48
     Set wsMF = Nothing
     Set wbMF = Nothing
     
-    MsgBox "Il y a " & casDelta & " cas oÃ¹ le nom du client (TEC) diffÃ¨re" & _
-            vbNewLine & vbNewLine & "du nom de client du Fichier MAÃŽTRE", vbInformation
+    MsgBox "Il y a " & casDelta & " cas oÃƒÂ¹ le nom du client (TEC) diffÃƒÂ¨re" & _
+            vbNewLine & vbNewLine & "du nom de client du Fichier MAÃƒÅ½TRE", vbInformation
     
 End Sub
 
@@ -720,7 +720,7 @@ Public Sub CorrigerNomClientDansCAR()  '2024-08-31 @ 06:52
     Set dictClients = New Dictionary
     Dim i As Long
     For i = 2 To lastUsedRowClientMF
-        'EnlÃ¨ve les informations de contact
+        'EnlÃƒÂ¨ve les informations de contact
         clientName = wsMF.Cells(i, fClntFMClientNom).Value
         Do While InStr(clientName, "[") > 0 And InStr(clientName, "]") > 0
             clientName = Fn_Strip_Contact_From_Client_Name(clientName)
@@ -737,7 +737,7 @@ Public Sub CorrigerNomClientDansCAR()  '2024-08-31 @ 06:52
     wsOutput.Range("B1").Value = "No Facture"
     wsOutput.Range("C1").Value = "Nom de client (Facture)"
     wsOutput.Range("D1").Value = "Code_de_Client"
-    wsOutput.Range("E1").Value = "ChangÃ© pour"
+    wsOutput.Range("E1").Value = "ChangÃƒÂ© pour"
     Call CreerEnteteDeFeuille(wsOutput.Range("A1:E1"), RGB(0, 112, 192))
     Dim rowOutput As Long
     rowOutput = 2 'Skip the header
@@ -755,7 +755,7 @@ Public Sub CorrigerNomClientDansCAR()  '2024-08-31 @ 06:52
         colClientName = Right$(param, Len(param) - InStr(param, "|"))
         'Set the worksheet Object
         Set wsSource = wbSource.Sheets(ws)
-        'DÃ©termine la derniÃ¨re rangÃ©e utilisÃ©e dans la feuille
+        'DÃƒÂ©termine la derniÃƒÂ¨re rangÃƒÂ©e utilisÃƒÂ©e dans la feuille
         Dim lastUsedRow As Long
         lastUsedRow = wsSource.Cells(wsSource.Rows.count, 1).End(xlUp).Row
         Dim codeClientCAR As String, nomClientCAR As String, nomClientFromMF As String
@@ -782,7 +782,7 @@ Public Sub CorrigerNomClientDansCAR()  '2024-08-31 @ 06:52
     'Result print setup - 2024-08-05 @ 05:16
     rowOutput = rowOutput + 1
     wsOutput.Range("A" & rowOutput).Value = "**** " & Format$(lastUsedRow - 1, "###,##0") & _
-                                        " lignes analysÃ©es dans l'ensemble du fichier ***"
+                                        " lignes analysÃƒÂ©es dans l'ensemble du fichier ***"
                                     
     'Set conditional formatting for the worksheet (alternate colors)
     Dim rngArea As Range: Set rngArea = wsOutput.Range("A2:F" & rowOutput)
@@ -798,7 +798,7 @@ Public Sub CorrigerNomClientDansCAR()  '2024-08-31 @ 06:52
     wbSource.Close SaveChanges:=True
     wbMF.Close SaveChanges:=False
 
-    'LibÃ©rer la mÃ©moire
+    'LibÃƒÂ©rer la mÃƒÂ©moire
     Set dictClients = Nothing
     Set rngArea = Nothing
     Set rngToPrint = Nothing
@@ -809,8 +809,8 @@ Public Sub CorrigerNomClientDansCAR()  '2024-08-31 @ 06:52
     Set wsMF = Nothing
     Set wbMF = Nothing
     
-''    MsgBox "Il y a " & casDelta & " cas oÃ¹ le nom du client (TEC) diffÃ¨re" & _
-''            vbNewLine & vbNewLine & "du nom de client du Fichier MAÃŽTRE", vbInformation
+''    MsgBox "Il y a " & casDelta & " cas oÃƒÂ¹ le nom du client (TEC) diffÃƒÂ¨re" & _
+''            vbNewLine & vbNewLine & "du nom de client du Fichier MAÃƒÅ½TRE", vbInformation
 '
 End Sub
 
@@ -820,9 +820,9 @@ Sub zz_ImporterDonneesManquantes_CAR() '2024-08-24 @ 15:58
     
     'Declare and open the 2 workbooks
     Dim wb1 As Workbook
-    Set wb1 = Workbooks.Open("C:\VBA\GC_FISCALITÃ‰\DataFiles\GCF_BD_MASTER - Copie.xlsx")
+    Set wb1 = Workbooks.Open("C:\VBA\GC_FISCALITÃƒâ€°\DataFiles\GCF_BD_MASTER - Copie.xlsx")
     Dim wb2 As Workbook
-    Set wb2 = Workbooks.Open("C:\VBA\GC_FISCALITÃ‰\DataFiles\GCF_BD_MASTER.xlsx")
+    Set wb2 = Workbooks.Open("C:\VBA\GC_FISCALITÃƒâ€°\DataFiles\GCF_BD_MASTER.xlsx")
 
     'Declare the 2 worksheets
     Dim ws1 As Worksheet: Set ws1 = wb1.Worksheets("FAC_Comptes_Clients")
@@ -868,13 +868,13 @@ Sub zz_ImporterDonneesManquantes_CAR() '2024-08-24 @ 15:58
     wb1.Close SaveChanges:=False
     wb2.Close SaveChanges:=True
     
-    'LibÃ©rer la mÃ©moire
+    'LibÃƒÂ©rer la mÃƒÂ©moire
     Set wb1 = Nothing
     Set wb2 = Nothing
     Set ws1 = Nothing
     Set ws2 = Nothing
     
-    MsgBox "Le traitement est complÃ©tÃ©", vbInformation
+    MsgBox "Le traitement est complÃƒÂ©tÃƒÂ©", vbInformation
            
 End Sub
 
@@ -884,9 +884,9 @@ Sub zz_FusionnerDonneesManquantes_CAR() '2024-08-29 @ 07:29
     
     'Declare and open the 2 workbooks
     Dim wb1 As Workbook
-    Set wb1 = Workbooks.Open("C:\VBA\GC_FISCALITÃ‰\GCF_DataFiles\CAR_A_COMPLÃ‰TER.xlsx")
+    Set wb1 = Workbooks.Open("C:\VBA\GC_FISCALITÃƒâ€°\GCF_DataFiles\CAR_A_COMPLÃƒâ€°TER.xlsx")
     Dim wb2 As Workbook
-    Set wb2 = Workbooks.Open("C:\VBA\GC_FISCALITÃ‰\DataFiles\GCF_BD_MASTER.xlsx")
+    Set wb2 = Workbooks.Open("C:\VBA\GC_FISCALITÃƒâ€°\DataFiles\GCF_BD_MASTER.xlsx")
 
     'Declare the 2 worksheets
     Dim ws1 As Worksheet: Set ws1 = wb1.Worksheets("Feuil1")
@@ -932,13 +932,13 @@ Sub zz_FusionnerDonneesManquantes_CAR() '2024-08-29 @ 07:29
         'Find the InvNo in wsdFAC_Entete
         Set foundCells = rngTarget.Columns(1).Find(What:=invNo, LookIn:=xlValues, LookAt:=xlWhole)
         If foundCells Is Nothing Then
-            MsgBox "**** Je n'ai pas trouvÃ© la facture '" & invNo & "' dans wsdFAC_Entete", vbCritical
+            MsgBox "**** Je n'ai pas trouvÃƒÂ© la facture '" & invNo & "' dans wsdFAC_Entete", vbCritical
         Else
             ii = foundCells.row
         End If
         
         If ws2.Cells(ii, 21).Value <> arTotal Then
-            MsgBox "ProblÃ¨me d'intÃ©gritÃ© pour la facture '" & invNo & "' au niveau de arTotal", vbCritical
+            MsgBox "ProblÃƒÂ¨me d'intÃƒÂ©gritÃƒÂ© pour la facture '" & invNo & "' au niveau de arTotal", vbCritical
         End If
         
         'Replace values in Target, with the Source info
@@ -965,7 +965,7 @@ Sub zz_FusionnerDonneesManquantes_CAR() '2024-08-29 @ 07:29
         
         If ws2.Cells(ii, 10) + ws2.Cells(ii, 12) + ws2.Cells(ii, 14) + ws2.Cells(ii, 16) + _
             ws2.Cells(ii, 18) + ws2.Cells(ii, 20) <> ws2.Cells(ii, 21).Value Then
-            MsgBox "ProblÃ¨me avec les assignations...", vbCritical
+            MsgBox "ProblÃƒÂ¨me avec les assignations...", vbCritical
         End If
         
         t(1) = t(1) + ws2.Cells(ii, 10)
@@ -989,7 +989,7 @@ Sub zz_FusionnerDonneesManquantes_CAR() '2024-08-29 @ 07:29
     wb1.Close SaveChanges:=False
     wb2.Close SaveChanges:=True
     
-    'LibÃ©rer la mÃ©moire
+    'LibÃƒÂ©rer la mÃƒÂ©moire
     Set foundCells = Nothing
     Set rngTarget = Nothing
     Set wb1 = Nothing
@@ -997,7 +997,7 @@ Sub zz_FusionnerDonneesManquantes_CAR() '2024-08-29 @ 07:29
     Set ws1 = Nothing
     Set ws2 = Nothing
     
-    MsgBox "Le traitement est complÃ©tÃ©", vbInformation
+    MsgBox "Le traitement est complÃƒÂ©tÃƒÂ©", vbInformation
            
 End Sub
 

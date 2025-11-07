@@ -18,7 +18,7 @@ Private Sub Workbook_Open()
                    "Veuillez ressayer dans 5 à 10 minutes SVP", _
                    vbCritical, _
                    "L'application APP n'est pas disponible"
-            Call modMenu.FermerApplicationNormalement(utilisateurWindows, "Application non disponible")
+            Call modMenu.FermerApplication("Application verrouillée", True)
         End If
     End If
 
@@ -27,15 +27,10 @@ Private Sub Workbook_Open()
     
     Call modSurveillance.LancerSurveillance '2025-11-06 @ 15:56
     
-    gNomFeuilleDerniereActivite = ActiveSheet.Name
-    gAdresseDerniereSelection = Selection.Address
-    gDerniereInteraction = Timer
+    gDerniereActiviteNomFeuille = ActiveSheet.Name
+    gDerniereActiviteAdresseSelection = Selection.Address
+    gDerniereInteractionTimer = Timer
     
-'    gDerniereActivite = Now
-'    gProchaineVerification = Now + TimeSerial(0, gFREQUENCE_VERIFICATION_INACTIVITE, 0)
-'
-'    Application.OnTime gProchaineVerification, "VerifierDerniereActivite"
-'
     Call modAppli.DemarrerApplication(utilisateurWindows)
 
     'Message de bienvenue
@@ -47,6 +42,18 @@ Private Sub Workbook_Open()
     Call VerifierVersionApplication(cheminSourcePROD, versionApplication)
     
     Call EnregistrerLogPerformance("Ouverture de session", Timer - tt0)
+    
+    If UtilisateurActif("Role") = "Dev" Then
+        Application.VBE.MainWindow.Visible = True
+        Debug.Print Now() & " gHeureProchaineVerification @ '" & gHeureProchaineVerification & "'"
+        Debug.Print Now() & " gDELAI_GRACE_SECONDES = " & gDELAI_GRACE_SECONDES & " secondes"
+        Dim heures As Long, minutes As Long
+        heures = Int(gHEURE_DEBUT_SURVEILLANCE)
+        minutes = (gHEURE_DEBUT_SURVEILLANCE - heures) * 60
+        Debug.Print Now() & " gHEURE_DEBUT_SURVEILLANCE à compter de " & Format$(heures, "00") & ":" & Format$(minutes, "00")
+        Debug.Print Now() & " gFREQUENCE_VERIFICATION_INACTIVITE = " & gFREQUENCE_VERIFICATION_INACTIVITE & " minutes."
+        Debug.Print Now() & " gMAXIMUM_INACTIVITE = " & gMAXIMUM_INACTIVITE & " minutes."
+    End If
     
 End Sub
     
@@ -67,8 +74,8 @@ Private Sub Workbook_SheetActivate(ByVal Sh As Object) '2025-07-03 @ 10:58
         End If
     End If
     
-    gNomFeuilleDerniereActivite = Sh.Name '2025-11-06 @ 16:15
-    gDerniereInteraction = Timer
+    gDerniereActiviteNomFeuille = Sh.Name '2025-11-06 @ 16:15
+    gDerniereInteractionTimer = Timer
     
 '    Call modAppli.EnregistrerActivite(Sh.Name & " - Workbook_SheetActivate")
 '
@@ -94,7 +101,7 @@ End Sub
 
 Private Sub Workbook_SheetSelectionChange(ByVal Sh As Object, ByVal Target As Range) '2025-11-06 @ 16:16
     
-    gAdresseDerniereSelection = Target.Address
-    gDerniereInteraction = Timer
+    gDerniereActiviteAdresseSelection = Target.Address
+    gDerniereInteractionTimer = Timer
 
 End Sub

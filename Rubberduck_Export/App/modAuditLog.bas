@@ -44,7 +44,7 @@ Sub AuditerSessionsAvecContexteEtReapparition(logPath As String)
         Dim description As String: description = champs(3)
 
         ' --- Fin de session normale ---
-        If InStr(description, "Session terminée NORMALEMENT") > 0 Then
+        If InStr(description, "FIN DE LA SESSION") > 0 Then
             fermetureEnAttente(utilisateur) = True
             fermetureInfos(utilisateur & "_ligne") = i
             fermetureInfos(utilisateur & "_horodatage") = horodatage

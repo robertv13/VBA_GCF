@@ -1322,15 +1322,6 @@ Sub DemarrerSauvegardeCodeVBAAutomatique() '2025-03-03 @ 07:19
     
 End Sub
 
-'Sub ArreterSauvegardeCodeVBA()
-'
-'    'Annuler la prochaine exécution prévue
-'    On Error Resume Next
-'    Application.OnTime gNextBackupTime, "DemarrerSauvegardeCodeVBAAutomatique", , False
-'    On Error GoTo 0
-'
-'End Sub
-'
 Sub ExporterCodeVBA() '2025-03-11 @ 06:47
 
     'Définir le dossier où enregistrer les modules

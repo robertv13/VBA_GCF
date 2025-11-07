@@ -1,75 +1,104 @@
 Attribute VB_Name = "modSurveillance"
 Option Explicit
 
-Public gNomFeuilleDerniereActivite As String
-Public gAdresseDerniereSelection As String
-Public gDerniereInteraction As Double
+Public gDerniereActiviteNomFeuille As String
+Public gDerniereActiviteAdresseSelection As String
+Public gDerniereInteractionTimer As Double
 
 Sub LancerSurveillance() '2025-11-06 @ 15:57
 
-    Application.OnTime Now + TimeSerial(0, 5, 0), "modSurveillance.VerifierActivite" 'Aux 5 minutes
+    gHeureProchaineVerification = Now + TimeSerial(0, gFREQUENCE_VERIFICATION_INACTIVITE, 0)
+    Application.OnTime gHeureProchaineVerification, "modSurveillance.VerifierActivite" 'Aux 5 minutes
     
 End Sub
 
 Sub VerifierActivite() '2025-11-06 @ 15:57
 
-    If Hour(Now) < 16 Then Exit Sub 'Pas avant 18:00 heures
+    If Hour(Now) < gHEURE_DEBUT_SURVEILLANCE Then Exit Sub
 
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modSurveillance:VerifierActivite", vbNullString, 0)
+    
     Debug.Print Now() & " VerifierActivite"
     If Not ActiviteDetectee() Then
         Call ProposerFermeture
     Else
+        Dim prochaineVerification As Date
+        prochaineVerification = gHeureProchaineVerification + TimeSerial(0, gFREQUENCE_VERIFICATION_INACTIVITE, 0)
+        Application.StatusBar = "Prochaine vérification d'activité prévue à " & gHeureProchaineVerification
         Call LancerSurveillance 'Relance la surveillance
     End If
     
+    Call modDev_Utils.EnregistrerLogApplication("modSurveillance:VerifierActivite", vbNullString, _
+                                                        startTime)
+
 End Sub
 
 Function ActiviteDetectee() As Boolean '2025-11-06 @ 15:57
 
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modSurveillance:ActiviteDetectee", vbNullString, 0)
+    
     ActiviteDetectee = False
     
-    Debug.Print Now() & " Test sur activité avec [ActiviteDetectee] ?"
-    If ActiveSheet.Name <> gNomFeuilleDerniereActivite Then
-        Debug.Print Now() & " La feuille a changé"
+    'Vérification de contexte : l'utilisateur est-il dans le classeur de l'application ?
+    If Not ActiveWorkbook Is ThisWorkbook Then
+        Debug.Print Now() & " L'utilisateur est dans un autre classeur"
+        GoTo FIN_VERIFICATION
+    End If
+    
+    If ActiveSheet.Name <> gDerniereActiviteNomFeuille Then
+        Debug.Print Now() & " Ça bouge - La feuille a changé"
         ActiviteDetectee = True
     End If
     
-    If Selection.Address <> gAdresseDerniereSelection Then
-        Debug.Print Now() & " La sélection a changé"
+    If Selection.Address <> gDerniereActiviteAdresseSelection Then
+        Debug.Print Now() & " Ça bouge - La sélection a changé"
         ActiviteDetectee = True
     End If
     
-    If Timer - gDerniereInteraction < 300 Then 'Moins de 5 min
-        Debug.Print Now() & " Activité dans les 5 dernières minutes"
+    If Timer - gDerniereInteractionTimer < (gMAXIMUM_INACTIVITE * 60) Then
+        Debug.Print Now() & " [ActiviteDetectee] Il y a eu au minimum UNE activité dans les " & gMAXIMUM_INACTIVITE & " dernières minutes."
         ActiviteDetectee = True
     End If
     
+FIN_VERIFICATION:
+
     If ActiviteDetectee = False Then
-        Debug.Print Now() & " Aucune activité selon 'ActiviteDetectee'"
+        Debug.Print Now() & " A U C U N E   A C T I V I T É !"
+    Else
+        gDerniereActiviteNomFeuille = ActiveSheet.Name
+        gDerniereActiviteAdresseSelection = Selection.Address
     End If
     
+    Call modDev_Utils.EnregistrerLogApplication("modSurveillance:ActiviteDetectee", vbNullString, _
+                                                        startTime)
+
 End Function
 
 Sub ProposerFermeture() '2025-11-06 @ 15:57
 
+    Debug.Print Now() & " Aucune activité, on demande à l'utilisateur de fermer ou de garder l'application active ?"
     Dim choix As VbMsgBoxResult
-    choix = MsgBox("Aucune activité détectée depuis 5 minutes." & vbCrLf & _
-                   "Souhaitez-vous fermer l'application ?", _
-                   vbYesNoCancel + vbCritical, "Fermeture automatique")
+    choix = MsgBox("Aucune activité détectée depuis au moins " & gMAXIMUM_INACTIVITE & " minutes." & _
+                    vbCrLf & vbCrLf & "Souhaitez-vous fermer l'application ?", _
+                    vbYesNoCancel + vbCritical, _
+                    "APP GCF - Aucune activité - Fermeture automatique")
 
     Select Case choix
-        Case vbYes: Call FermerApplication
-        Case vbNo: Call LancerSurveillance 'Relance après délai
-        Case vbCancel: gDerniereInteraction = Timer 'Reset
+        Case vbYes
+            Call modSurveillance.FermerApplicationConfirme
+        Case vbNo
+            Call LancerSurveillance 'Relance après délai
+        Case vbCancel
+            gDerniereInteractionTimer = Timer 'Reset
     End Select
     
 End Sub
 
-Sub FermerApplication()  '2025-11-06 @ 15:57
+Sub FermerApplicationConfirme()  '2025-11-06 @ 15:57
 
-'    Call PurgerObjets
-'    Call EnregistrerLogApplication("modSurveillance", "Fermeture automatique", "CRITICAL")
-'    Application.Quit
+    Call modMenu.FermerApplication("Fermeture confirmée par l'utilisateur", False)
     
 End Sub
 
@@ -100,7 +129,6 @@ Public Sub InitialiserSurveillanceForm(frm As Object, ByRef wrappers As Collecti
                 Set wrapper = New clsWrapperOptionButton
                 Set wrapper.opt = ctrl
             Case Else
-                Debug.Print "Contrôle ignoré : " & ctrl.Name & " (" & TypeName(ctrl) & ")"
                 Set wrapper = Nothing
         End Select
         If Not wrapper Is Nothing Then wrappers.Add wrapper
@@ -110,11 +138,10 @@ End Sub
 
 Public Sub EnregistrerActivite(source As String) '2025-11-06 @ 17:36
 
-    gDerniereInteraction = Timer
+    gDerniereInteractionTimer = Timer
     Dim ligne As String
-    ligne = Format(Now, "yyyy-mm-dd hh:nn:ss") & " | " & source & " | Feuille: " & Fn_NomFeuilleActive()
+    ligne = Now() & " | " & source & " | Feuille: " & Fn_NomFeuilleActive()
     
-    Debug.Print ligne
     Call EcrireDansLog(ligne)
     
 End Sub

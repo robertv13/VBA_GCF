@@ -62,7 +62,8 @@ Private Sub shpFermerMaintenant_Click() '2025-07-01 @ 15:46
     Debug.Print "[shpFermerMaintenant_Click] Utilisateur a cliqué sur 'Fermer maintenant' à : " & Format(Now, "hh:mm:ss")
     
     Me.Hide
-    Call FermerApplicationNormalement(modFunctions.Fn_UtilisateurWindows(), "Application est inactive - Fermeture confirmée")
+    
+    Call modMenu.FermerApplication("Application inactive - Fermeture souhaitée", False)
     
 End Sub
 

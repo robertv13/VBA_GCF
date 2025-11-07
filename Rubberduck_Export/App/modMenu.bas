@@ -97,13 +97,13 @@ End Sub
 
 Sub shpSortieApplication_Click()
 
-    Call SauvegarderEtSortirApplication
+    Call ConfirmerSortieApplication
 
 End Sub
 
-Sub SauvegarderEtSortirApplication() '2024-08-30 @ 07:37
+Sub ConfirmerSortieApplication() '2024-08-30 @ 07:37
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU:SauvegarderEtSortirApplication", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU:ConfirmerSortieApplication", vbNullString, 0)
     
     Application.EnableEvents = False
     Application.ScreenUpdating = False
@@ -117,22 +117,26 @@ Sub SauvegarderEtSortirApplication() '2024-08-30 @ 07:37
         confirmation = MsgBox("Êtes-vous certain de vouloir quitter" & vbNewLine & vbNewLine & _
                         "l'application de gestion (sauvegarde automatique) ?", vbYesNo + vbQuestion, "Confirmation de sortie")
         If confirmation = vbYes Then
-            Call FermerApplicationNormalement(modFunctions.Fn_UtilisateurWindows(), "Fermeture normale")
+            Call modMenu.FermerApplication("Fermeture normale", False)
         End If
     Else
-        Call FermerApplicationNormalement(modFunctions.Fn_UtilisateurWindows(), "Sauvegarde outrepassée")
+        Call modMenu.FermerApplication("Sauvegarde outrepassée", True)
     End If
     
 End Sub
 
-Sub FermerApplicationNormalement(ByVal userName As String, flag As String, Optional ByVal ignorerSauvegarde As Boolean = False) '2025-09-10 @ 08:14
+Sub FermerApplication(methode As String, ignorerSauvegarde As Boolean) '2025-09-10 @ 08:14
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU:FermerApplicationNormalement", vbNullString, startTime)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modMENU:FermerApplication", vbNullString, startTime)
     
 '    On Error GoTo ExitPoint '2025-11-02 @ 13:08
 '
     Application.EnableEvents = False
     Application.ScreenUpdating = False
+    
+    Dim userName As String
+    userName = modFunctions.Fn_UtilisateurWindows
     
     Dim ws As Worksheet
     Set ws = wsdADMIN
@@ -142,10 +146,10 @@ Sub FermerApplicationNormalement(ByVal userName As String, flag As String, Optio
     'Effacer fichier utilisateur actif + Fermeture de la journalisation
     Call EffacerFichierUtilisateurActif(modFunctions.Fn_UtilisateurWindows())
     
-    Call EnregistrerLogPerformance("ignoreSauvegarde = " & ignorerSauvegarde, 0)
+    Call EnregistrerLogPerformance("Fermeture = '" & methode & "'", -1)
     
-    Call modDev_Utils.EnregistrerLogApplication("----- Session terminée NORMALEMENT (modMenu:SauvegarderEtSortirApplication) -----", _
-        IIf(ignorerSauvegarde, "S A N S   S A U V E G A R D E", ""), 0)
+    Call modDev_Utils.EnregistrerLogApplication("----- FIN DE LA SESSION - modMenu:FermerApplication - Statut = " & _
+                        methode & " -----", IIf(ignorerSauvegarde, "S A N S   S A U V E G A R D E", ""), 0)
     Call modDev_Utils.EnregistrerLogApplication(vbNullString, vbNullString, -1) 'Ligne blanche
         
     'Fermer TOUS les formulaires (UserForm)
@@ -158,19 +162,17 @@ Sub FermerApplicationNormalement(ByVal userName As String, flag As String, Optio
     
     'Fermer TOUTES les Application.OnTime
     On Error Resume Next
-'        Application.OnTime gProchaineVerification, "VerifierDerniereActivite", , False
-        Application.OnTime gProchaineVerifUserForm, "VerifierInactiviteUserForm", , False
-'        Application.OnTime gFermeturePlanifiee, "FermerApplicationInactive", , False
-        Application.OnTime gProchainTick, "RelancerTimer", , False
         Application.OnTime gNextBackupTime, "DemarrerSauvegardeCodeVBAAutomatique", , False
+        Application.OnTime gHeureProchaineVerification, "modSurveillance.VerifierActivite", , False
+        Application.OnTime gProchainTick, "RelancerTimer", , False
     On Error GoTo 0
     
     gFermetureForcee = True
     Application.EnableEvents = False
     Dim tt0 As Double: tt0 = Timer
-    If ignorerSauvegarde = Faux Or ignorerSauvegarde = False Then
+    If ignorerSauvegarde = False Then
         ThisWorkbook.Save
-        Call EnregistrerLogPerformance("Classeur est sauvegardé", Timer - tt0)
+        Call EnregistrerLogPerformance("Sauvegarde du classeur", Timer - tt0)
     End If
     ThisWorkbook.Close SaveChanges:=False
     

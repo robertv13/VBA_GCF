@@ -37,22 +37,13 @@ Public gFlagEtapeFacture As Long
 Public gNextBackupTime As Date
 Public Const INTERVALLE_MINUTES_SAUVEGARDE As Double = 20
 
-'Fermeture AUTOMATIQUE de l'application - 2025-07-02 @ 09:47
-'Public gDerniereActivite As Date
-'Public gProchaineVerification As Date
-'Public gFermeturePlanifiee As Date
-'Public Const gFREQUENCE_VERIFICATION_INACTIVITE As Long = 2 '2025-10-29 @ 04:55
-'Public Const gMAXIMUM_MINUTES_INACTIVITE As Long = 6
+'Fermeture AUTOMATIQUE de l'application - 2025-11-07 @ 13:47
+Public gHeureProchaineVerification As Date
 Public Const gDELAI_GRACE_SECONDES As Long = 30
-'Public Const gHEURE_DEBUT_SURVEILLANCE As Long = 17
-'Public Const gFREQUENCE_VERIFICATION_INACTIVITE As Long = 15
-'Public Const gMAXIMUM_MINUTES_INACTIVITE As Long = 30
-'Public Const gDELAI_GRACE_SECONDES As Long = 120
-'Public Const gHEURE_DEBUT_SURVEILLANCE As Long = 20
+Public Const gHEURE_DEBUT_SURVEILLANCE As Long = 9
+Public Const gFREQUENCE_VERIFICATION_INACTIVITE As Long = 2
+Public Const gMAXIMUM_INACTIVITE As Long = 5
 
-''Pour capturer évènements sur tous les controls des userForm - 2025-05-30 @ 13:11
-'Public colWrappers As Collection
-'
 Public gFermetureForcee As Boolean '2025-11-02 @ 13:40
 
 'Using Enum to specify the column number of worksheets (data)

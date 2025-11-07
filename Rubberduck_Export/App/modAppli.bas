@@ -99,7 +99,7 @@ Sub VerifierVersionApplication(path As String, versionApplication As String) '20
                vbCritical, _
                "Version de l'application incompatible avec les données"
                
-        Call FermerApplicationNormalement(modFunctions.Fn_UtilisateurWindows(), "Erreur de Version")
+        Call modMenu.FermerApplication("Erreur de numéro de version", True)
     End If
     Exit Sub
 
@@ -109,7 +109,7 @@ ErreurLecture:
             vbExclamation, _
             "Impossible de lire la version des données"
     
-    Call FermerApplicationNormalement(modFunctions.Fn_UtilisateurWindows(), "Impossible de comparer la Version")
+    Call modMenu.FermerApplication("Impossible de comparer la Version", True)
     
 End Sub
 
@@ -424,20 +424,20 @@ End Sub
 '
 'End Sub
 '
-Public Sub FermerApplicationInactive() '2025-07-02 @ 06:19
-
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:FermerApplicationInactive", vbNullString, 0)
-    
-    'Ajoute un log pour vérification
-    Debug.Print Now() & " [modAppli:FermerApplicationInactive] Fermeture AUTOMATIQUE déclenchée à : " & Format(Now, "hh:mm:ss")
-
-    Call modDev_Utils.EnregistrerLogApplication("modAppli:FermerApplicationInactive", vbNullString, startTime)
-    
-    'Appel direct de la procédure de fermeture
-    Call FermerApplicationNormalement(modFunctions.Fn_UtilisateurWindows(), "Application est Inactive")
-    
-End Sub
-
+'Public Sub FermerApplicationInactive() '2025-07-02 @ 06:19
+'
+'    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:FermerApplicationInactive", vbNullString, 0)
+'
+'    'Ajoute un log pour vérification
+'    Debug.Print Now() & " [modAppli:FermerApplicationInactive] Fermeture AUTOMATIQUE déclenchée à : " & Format(Now, "hh:mm:ss")
+'
+'    Call modDev_Utils.EnregistrerLogApplication("modAppli:FermerApplicationInactive", vbNullString, startTime)
+'
+'    'Appel direct de la procédure de fermeture
+'    Call modMenu.FermerApplication(modFunctions.Fn_UtilisateurWindows(), "Application est Inactive", False)
+'
+'End Sub
+'
 'Public Sub RelancerTimer() '2025-07-02 @ 06:43
 '
 '    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:RelancerTimer", vbNullString, 0)
@@ -507,7 +507,7 @@ End Sub
 '    If Fn_MinutesDepuisDerniereActivite() >= gMAXIMUM_MINUTES_INACTIVITE Then
 '        Debug.Print Now() & " [modAppli:VerifierInactiviteUserForm] Inactivité détectée dans UserForm — fermeture"
 '        Unload ufSaisieHeures
-'        Call FermerApplicationInactive
+'        Call modMenu.FermerApplicationInactive
 '    Else
 '        Call LancerSurveillanceUserForm
 '    End If
@@ -556,7 +556,7 @@ Public Sub EnregistrerLogPerformance(nomProcedure As String, Optional duree As D
     
     'Obtenir l'utilisateur Windows
     Dim utilisateur As String
-    utilisateur = Environ("USERNAME")
+    utilisateur = Left$(Trim(Environ("USERNAME")) & Space(16), 16)
 
     'Horodatage complet
     Dim horodatage As String

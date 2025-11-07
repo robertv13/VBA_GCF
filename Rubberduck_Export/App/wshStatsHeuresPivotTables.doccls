@@ -40,7 +40,7 @@ Private Sub Worksheet_Activate()
     Dim listeChoixValides As String
     Select Case modFunctions.Fn_UtilisateurWindows()
         Case "Guillaume", "GuillaumeCharron", "gchar", "RobertMV", "robertmv"
-            listeChoixValides = "Tous,Guillaume,Vladimir,Olivier,Michel,Annie"
+            listeChoixValides = "Tous,Guillaume,Vladimir,Olivier,Michel,Marie-France,Annie"
         Case "vgervais", "Vlad_Portable"
             listeChoixValides = "Vladimir"
         Case "User"
@@ -49,6 +49,8 @@ Private Sub Worksheet_Activate()
             listeChoixValides = "Annie"
         Case "Oli_Portable"
             listeChoixValides = "Olivier"
+        Case "MARIE-FRANCE"
+            listeChoixValides = "Marie-France"
         Case Else
             listeChoixValides = vbNullString
     End Select
@@ -98,29 +100,31 @@ Private Sub Worksheet_Change(ByVal Target As Range)
                 wshTEC_TDB_Data.Range("S7").Value = "VG"
             Case "Michel"
                 wshTEC_TDB_Data.Range("S7").Value = "ML"
-            Case "Annie"
-                wshTEC_TDB_Data.Range("S7").Value = "AR"
             Case "Olivier"
                 wshTEC_TDB_Data.Range("S7").Value = "OB"
+            Case "Marie-France"
+                wshTEC_TDB_Data.Range("S7").Value = "MFP"
+            Case "Annie"
+                wshTEC_TDB_Data.Range("S7").Value = "AR"
             Case "Tous"
                 wshTEC_TDB_Data.Range("S7").Value = vbNullString
         End Select
         
-        If wshTEC_TDB_Data.Range("BJ2").Value <> vbNullString Then
-            ws.Range("S:V").EntireColumn.Hidden = False
-        End If
-    
-        If wshTEC_TDB_Data.Range("AW2").Value <> vbNullString Then
-            ws.Range("N:R").EntireColumn.Hidden = False
-        End If
-    
-        If wshTEC_TDB_Data.Range("AJ2").Value <> vbNullString Then
-            ws.Range("I:M").EntireColumn.Hidden = False
-        End If
-    
-        If wshTEC_TDB_Data.Range("W2").Value <> vbNullString Then
-            ws.Range("D:H").EntireColumn.Hidden = False
-        End If
+'        If wshTEC_TDB_Data.Range("BJ2").Value <> vbNullString Then
+'            ws.Range("S:V").EntireColumn.Hidden = False
+'        End If
+'
+'        If wshTEC_TDB_Data.Range("AW2").Value <> vbNullString Then
+'            ws.Range("N:R").EntireColumn.Hidden = False
+'        End If
+'
+'        If wshTEC_TDB_Data.Range("AJ2").Value <> vbNullString Then
+'            ws.Range("I:M").EntireColumn.Hidden = False
+'        End If
+'
+'        If wshTEC_TDB_Data.Range("W2").Value <> vbNullString Then
+'            ws.Range("D:H").EntireColumn.Hidden = False
+'        End If
     
     End If
     

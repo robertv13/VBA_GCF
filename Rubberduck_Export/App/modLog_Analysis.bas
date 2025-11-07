@@ -36,15 +36,18 @@ Sub OuvrirRepertoireLogEtTraiterFichiers()
     Dim fileSystem As Object
     Set fileSystem = CreateObject("Scripting.FileSystemObject")
     Dim file As Object
+    Dim nomFichier As String
+    
     For Each file In fileSystem.GetFolder(folderPath).Files
+        nomFichier = file.Name
         'Appliquer les traitements en fonction des fichiers
-        Select Case file.Name
-            Case "LogSaisieHeures.log"
+        Select Case True
+            Case nomFichier = "LogSaisieHeures.log"
                 Call LireLogSaisieHeures(file.path)
-            Case "LogMainApp.log"
-                Call LireLogMainApp(file.path)
-            Case "LogClientsApp.log"
+            Case nomFichier = "LogClientsApp.log"
                 Call LireLogClientsApp(file.path)
+            Case Left(nomFichier, 12) = "LogMainApp." And Right(nomFichier, 4) = ".log"
+                Call LireLogMainApp(file.path)
         End Select
     Next file
     

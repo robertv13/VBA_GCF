@@ -737,7 +737,7 @@ Sub RafraichirTableauxCroisesTEC()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:RafraichirTableauxCroisesTEC", vbNullString, 0)
 
-    Dim pt As pivotTable
+    Dim pt As PivotTable
     For Each pt In wshTEC_TDB.PivotTables
         pt.RefreshTable
     Next pt
@@ -765,7 +765,7 @@ Sub MettreAJourPivotTables()
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:MettreAJourPivotTables", vbNullString, 0)
     
     Dim ws As Worksheet: Set ws = wshStatsHeuresPivotTables
-    Dim pt As pivotTable
+    Dim pt As PivotTable
     
     'Parcourt tous les PivotTables dans chaque feuille
     For Each pt In ws.PivotTables
