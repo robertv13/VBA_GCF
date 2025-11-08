@@ -1,6 +1,8 @@
-﻿📘 Journal typographique — 11/07/2025 16:58:57
+﻿📘 Journal typographique — 11/08/2025 09:59:43
 
 🔧 Fichier : clsControlWrapper.cls
+
+🔧 Fichier : clsFermetureAuto.cls
 
 🔧 Fichier : clsGL_Entry.cls
 

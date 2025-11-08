@@ -1,10 +1,10 @@
 VERSION 5.00
 Begin {C62A69F0-16DC-11CE-9E98-00AA00574A4F} ufConfirmationFermeture 
-   Caption         =   "Confirmation de fermeture de l'application"
-   ClientHeight    =   3210
+   Caption         =   "Confirmation AVANT la fermeture de l'application"
+   ClientHeight    =   3510
    ClientLeft      =   120
    ClientTop       =   465
-   ClientWidth     =   7155
+   ClientWidth     =   7350
    OleObjectBlob   =   "ufConfirmationFermeture.frx":0000
    StartUpPosition =   1  'CenterOwner
 End
@@ -22,118 +22,83 @@ Private Sub UserForm_Initialize()
     Me.lblMessage.BackColor = RGB(255, 255, 255)
     Me.lblMessage.ForeColor = RGB(0, 0, 0)
     
-    Me.shpGarderOuverte.BackColor = RGB(210, 255, 210)
-    Me.shpGarderOuverte.ForeColor = RGB(0, 100, 0)
+    Me.btnGarderOuverte.BackColor = RGB(210, 255, 210)
+    Me.btnGarderOuverte.ForeColor = RGB(0, 100, 0)
     
-    Me.shpFermerMaintenant.BackColor = RGB(210, 255, 210)
-    Me.shpFermerMaintenant.ForeColor = RGB(160, 0, 0)
+    Me.btnFermerMaintenant.BackColor = RGB(210, 255, 210)
+    Me.btnFermerMaintenant.ForeColor = RGB(160, 0, 0)
     
+    'Positionnement manuel
+    Me.StartUpPosition = 0
+
 End Sub
 
-Private Sub shpGarderOuverte_Click() '2025-07-01 @ 17:13
-    
-    Debug.Print "[shpGarderOuverte_Click] Utilisateur a cliqué sur 'Garder l'application ouverte' à : " & Format(Now, "hh:mm:ss")
-    
-    On Error Resume Next
-    
-    'Annule la fermeture automatique planifiée
-'    Application.OnTime gFermeturePlanifiee, "FermerApplicationInactive", , False
-    
-    'Annule le clignotement du timer (si encore actif)
-'    Application.OnTime gProchainTick, "RelancerTimer", , False
-        
-    On Error GoTo 0
-    
-    'Réinitialise le timestamp d'activité
-'    gDerniereActivite = Now
-    
-    'Nettoie le formulaire (optionnel mais propre)
-    lblMessage.Caption = vbNullString
-    lblTimer.Caption = vbNullString
-    gClignoteEtat = False
-    
-    'Ferme le UserForm
-    Me.Hide
-    
-End Sub
+Private Sub btnFermerMaintenant_Click() '2025-11-08 @ 06:11
 
-Private Sub shpFermerMaintenant_Click() '2025-07-01 @ 15:46
+    Debug.Print Now() & " [btnFermerMaintenant_Click] Utilisateur a cliqué sur 'Fermer maintenant' à : " & Format(Now, "hh:mm:ss")
+    
+    fermetureAuto.Annuler
+    
+    Unload Me
+    Call modSurveillance.FermerApplicationConfirme
+    gTimerFermetureActif = False
+    Application.StatusBar = False
 
-    Debug.Print "[shpFermerMaintenant_Click] Utilisateur a cliqué sur 'Fermer maintenant' à : " & Format(Now, "hh:mm:ss")
-    
-    Me.Hide
-    
     Call modMenu.FermerApplication("Application inactive - Fermeture souhaitée", False)
     
 End Sub
 
-Public Sub AfficherMessage(Optional minutesInactives As Double = 0) '2025-07-01 @ 15:56
+Private Sub btnGarderOuverte_Click() '2025-11-08 @ 06:16
+    
+    Debug.Print Now() & " [btnGarderOuverte_Click] Utilisateur a cliqué sur 'Garder l'application ouverte' à : " & Format(Now, "hh:mm:ss")
+    
+    fermetureAuto.Annuler
+    
+    Unload Me
+    Call modSurveillance.LancerSurveillance
+    gTimerFermetureActif = False
+    Application.StatusBar = False
+    
+End Sub
+
+Public Sub AfficherMessageFermetureAPP(Optional minutesInactives As Double = 0) '2025-11-08 @ 05:58
 
     Dim msg As String
-    msg = "Aucune activité détectée depuis " & Format$(minutesInactives, "0") & " minutes..." & vbCrLf & vbCrLf
+    msg = "Aucune activité de détectée depuis " & Format$(minutesInactives, "0") & " minutes..." & vbCrLf & vbCrLf
     msg = msg & "Souhaitez-vous garder l’application ouverte quand même ?"
 
     lblMessage.Caption = msg
     
     gHeurePrevueFermetureAutomatique = Now + TimeSerial(0, 0, gDELAI_GRACE_SECONDES)
-'    gFermeturePlanifiee = gHeurePrevueFermetureAutomatique
-'    Debug.Print Now() & " [AfficherMessage] gFermeturePlanifiee synchronisé à : " & Format(gFermeturePlanifiee, "hh:mm:ss")
     lblTimer.Caption = vbNullString
-    Debug.Print Now() & " [AfficherMessage] Affichage du formulaire de confirmation à : " & Format(Now, "hh:mm:ss")
-    Debug.Print Now() & " [AfficherMessage] Fermeture prévue à (gHeurePrevueFermetureAutomatique) : " & Format(gHeurePrevueFermetureAutomatique, "hh:mm:ss")
-    Call ufConfirmationFermeture.RafraichirTimer
     
+    Call ufConfirmationFermeture.RafraichirTimer
+
     Me.StartUpPosition = 1
     Me.show vbModeless
-    
+
+    Call DémarrerTimerVisuel
+
 End Sub
 
 Public Sub RafraichirTimer() '2025-07-02 @ 06:56
 
-    If gHeurePrevueFermetureAutomatique = 0 Then
-        Debug.Print Now() & " RafraichirTimer déclenché alors que gHeurePrevueFermetureAutomatique = 0 — arrêt immédiat"
-        Exit Sub
-    End If
-    
-    Dim delta As Double
-    delta = DateDiff("s", Now, gHeurePrevueFermetureAutomatique)
-    
-    'Journal : moment d’exécution et delta
-    Debug.Print Now() & " [RafraichirTimer] RafraichirTimer à " & Format(Now, "hh:mm:ss") & _
-                " | gHeurePrevueFermetureAutomatique : " & Format(gHeurePrevueFermetureAutomatique, "hh:mm:ss") & _
-                " | Secondes restantes : " & delta
-                
-    If delta <= 0 Then
-        lblTimer.Caption = "Temps écoulé — fermeture en cours..."
-        lblTimer.ForeColor = RGB(120, 0, 0)
-        'Journal : fin du countdown
-        Debug.Print Now() & " Temps écoulé — arrêt du timer visuel"
-        Exit Sub
-    End If
+    If Not gTimerFermetureActif Then Exit Sub
 
-    'Mise à jour du texte
-    lblTimer.Caption = "Fermeture automatique dans " & _
-        Format$(delta \ 60, "00") & ":" & Format$(delta Mod 60, "00")
-    
-    'Clignotement si < 60 s
-    If delta <= 30 Then
-        gClignoteEtat = Not gClignoteEtat
-        If gClignoteEtat Then
-            lblTimer.ForeColor = RGB(200, 0, 0) 'Rouge vif
-        Else
-            lblTimer.ForeColor = RGB(255, 255, 255) 'Invisible (blanc sur fond clair)
-        End If
-        'Journal : clignotement actif
-'        Debug.Print "[ufConfirmationFermeture:RafraichirTimer] Clignotement actif — gClignoteEtat = " & gClignoteEtat
+    Dim secondesRestantes As Long
+    secondesRestantes = DateDiff("s", Now, gHeurePrevueFermetureAutomatique)
+
+    If secondesRestantes <= 0 Then
+        lblTimer.Caption = "Fermeture imminente..."
+        gTimerFermetureActif = False
+        Unload Me
+        Call modSurveillance.FermerApplicationConfirme
     Else
-        lblTimer.ForeColor = RGB(0, 0, 128) 'Bleu foncé normal
+        lblTimer.Caption = "Fermeture dans " & Format$(secondesRestantes \ 60, "00") & ":" & _
+                                                    Format$(secondesRestantes Mod 60, "00") & "..."
+        gProchainRafraichir = Now + TimeSerial(0, 0, 1)
+        Application.OnTime gProchainRafraichir, "ufConfirmationFermeture.RafraichirTimer"
     End If
-
-    'Replanification dans 1 s
-    gProchainTick = Now + TimeSerial(0, 0, 1)
-    'Journal : programmation du prochain appel
-    Debug.Print Now() & " [RafraichirTimer] Prochain appel prévu à : " & Format(gProchainTick, "hh:mm:ss")
-    Application.OnTime gProchainTick, "RelancerTimer"
     
 End Sub
 
@@ -143,4 +108,10 @@ Public Function ProchainTick() As Date '2025-07-02 @ 08:19
     
 End Function
 
+Public Sub DémarrerTimerVisuel() '2025-11-08 @ 06:26
+
+    gTimerFermetureActif = True
+    Call RafraichirTimer
+    
+End Sub
 

@@ -39,10 +39,10 @@ Public Const INTERVALLE_MINUTES_SAUVEGARDE As Double = 20
 
 'Fermeture AUTOMATIQUE de l'application - 2025-11-07 @ 13:47
 Public gHeureProchaineVerification As Date
-Public Const gDELAI_GRACE_SECONDES As Long = 30
-Public Const gHEURE_DEBUT_SURVEILLANCE As Long = 9
-Public Const gFREQUENCE_VERIFICATION_INACTIVITE As Long = 2
-Public Const gMAXIMUM_INACTIVITE As Long = 5
+Public Const gHEURE_DEBUT_SURVEILLANCE As Long = 20 'Heure
+Public Const gFREQUENCE_VERIFICATION_INACTIVITE As Long = 5 'Minutes
+Public Const gMAXIMUM_INACTIVITE As Long = 30 'Minutes
+Public Const gDELAI_GRACE_SECONDES As Long = 60 'Secondes
 
 Public gFermetureForcee As Boolean '2025-11-02 @ 13:40
 

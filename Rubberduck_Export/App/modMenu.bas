@@ -148,7 +148,7 @@ Sub FermerApplication(methode As String, ignorerSauvegarde As Boolean) '2025-09-
     
     Call EnregistrerLogPerformance("Fermeture = '" & methode & "'", -1)
     
-    Call modDev_Utils.EnregistrerLogApplication("----- FIN DE LA SESSION - modMenu:FermerApplication - Statut = " & _
+    Call modDev_Utils.EnregistrerLogApplication("----- SESSION TERMINÉE - modMenu:FermerApplication - Statut = " & _
                         methode & " -----", IIf(ignorerSauvegarde, "S A N S   S A U V E G A R D E", ""), 0)
     Call modDev_Utils.EnregistrerLogApplication(vbNullString, vbNullString, -1) 'Ligne blanche
         
@@ -164,7 +164,8 @@ Sub FermerApplication(methode As String, ignorerSauvegarde As Boolean) '2025-09-
     On Error Resume Next
         Application.OnTime gNextBackupTime, "DemarrerSauvegardeCodeVBAAutomatique", , False
         Application.OnTime gHeureProchaineVerification, "modSurveillance.VerifierActivite", , False
-        Application.OnTime gProchainTick, "RelancerTimer", , False
+        Application.OnTime gProchainTick, "modSurveillance.SurveillerFermetureAuto", , False
+        Application.OnTime gProchainRafraichir, "ufConfirmationFermeture.Rafraichir", , False
     On Error GoTo 0
     
     gFermetureForcee = True

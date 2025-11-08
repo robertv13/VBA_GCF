@@ -4,11 +4,16 @@ Option Explicit
 Public gDerniereActiviteNomFeuille As String
 Public gDerniereActiviteAdresseSelection As String
 Public gDerniereInteractionTimer As Double
+Public gTimerFermetureActif As Boolean
+Public gProchainTick As Date                    'Prochain compte à rebours
+Public gProchainRafraichir As Date                    'Prochain compte à rebours
+Public fermetureAuto As clsFermetureAuto
 
 Sub LancerSurveillance() '2025-11-06 @ 15:57
 
     gHeureProchaineVerification = Now + TimeSerial(0, gFREQUENCE_VERIFICATION_INACTIVITE, 0)
     Application.OnTime gHeureProchaineVerification, "modSurveillance.VerifierActivite" 'Aux 5 minutes
+    Debug.Print Now() & " La prochaine vérification se fera à " & gHeureProchaineVerification
     
 End Sub
 
@@ -25,7 +30,7 @@ Sub VerifierActivite() '2025-11-06 @ 15:57
     Else
         Dim prochaineVerification As Date
         prochaineVerification = gHeureProchaineVerification + TimeSerial(0, gFREQUENCE_VERIFICATION_INACTIVITE, 0)
-        Application.StatusBar = "Prochaine vérification d'activité prévue à " & gHeureProchaineVerification
+        Application.StatusBar = "Vérification d'inactivité faite - Prochaine vérification d'inactivité prévue à " & Right(prochaineVerification, 8)
         Call LancerSurveillance 'Relance la surveillance
     End If
     
@@ -48,17 +53,17 @@ Function ActiviteDetectee() As Boolean '2025-11-06 @ 15:57
     End If
     
     If ActiveSheet.Name <> gDerniereActiviteNomFeuille Then
-        Debug.Print Now() & " Ça bouge - La feuille a changé"
+        Debug.Print Now() & " Ça bouge - Une feuille a changé"
         ActiviteDetectee = True
     End If
     
     If Selection.Address <> gDerniereActiviteAdresseSelection Then
-        Debug.Print Now() & " Ça bouge - La sélection a changé"
+        Debug.Print Now() & " Ça bouge - Une sélection a changé"
         ActiviteDetectee = True
     End If
     
     If Timer - gDerniereInteractionTimer < (gMAXIMUM_INACTIVITE * 60) Then
-        Debug.Print Now() & " [ActiviteDetectee] Il y a eu au minimum UNE activité dans les " & gMAXIMUM_INACTIVITE & " dernières minutes."
+        Debug.Print Now() & " Il y a eu au minimum UNE activité dans les " & gMAXIMUM_INACTIVITE & " dernières minutes."
         ActiviteDetectee = True
     End If
     
@@ -78,21 +83,8 @@ End Function
 
 Sub ProposerFermeture() '2025-11-06 @ 15:57
 
-    Debug.Print Now() & " Aucune activité, on demande à l'utilisateur de fermer ou de garder l'application active ?"
-    Dim choix As VbMsgBoxResult
-    choix = MsgBox("Aucune activité détectée depuis au moins " & gMAXIMUM_INACTIVITE & " minutes." & _
-                    vbCrLf & vbCrLf & "Souhaitez-vous fermer l'application ?", _
-                    vbYesNoCancel + vbCritical, _
-                    "APP GCF - Aucune activité - Fermeture automatique")
-
-    Select Case choix
-        Case vbYes
-            Call modSurveillance.FermerApplicationConfirme
-        Case vbNo
-            Call LancerSurveillance 'Relance après délai
-        Case vbCancel
-            gDerniereInteractionTimer = Timer 'Reset
-    End Select
+    Set fermetureAuto = New clsFermetureAuto
+    Call AfficherFormulaireUrgent(gMAXIMUM_INACTIVITE)
     
 End Sub
 
@@ -165,10 +157,81 @@ Public Sub EcrireDansLog(texte As String) '2025-11-07 @ 04:36
     
 End Sub
 
+Public Sub InitierFermetureSilencieuse(Optional minutesInactives As Double = 0) '2025-11-08 @ 06:20
+
+    'Affiche le formulaire avec délai de grâce
+    If ufConfirmationFermeture.Visible = False Then
+        Call ufConfirmationFermeture.AfficherMessageFermetureAPP(minutesInactives)
+        gProchainTick = Now + TimeSerial(0, 0, 1)
+        Application.OnTime gProchainTick, "modSurveillance.SurveillerFermetureAuto"
+    End If
+    
+End Sub
+
+Public Sub SurveillerFermetureAuto()
+
+    If fermetureAuto Is Nothing Then Exit Sub
+    fermetureAuto.Rafraichir
+    
+End Sub
+
 Public Function Fn_NomFeuilleActive() As String '2025-11-07 @ 04:38
 
     On Error Resume Next
     Fn_NomFeuilleActive = ActiveSheet.Name
     
 End Function
+
+Public Sub AfficherFormulaireUrgent(Optional minutesInactives As Double = 0) '2025-11-08 @ 07:26
+
+    On Error Resume Next
+
+    '1. Ramener Excel au premier plan
+    AppActivate Application.Caption
+
+    '2. S'assurer que la fenêtre Excel est visible
+    Application.Visible = True
+'    Application.WindowState = xlNormal
+
+    '3. Centrer le formulaire dans Excel
+    With ufConfirmationFermeture
+        .StartUpPosition = 0
+        .Left = Application.Left + (Application.Width - .Width) / 2
+        .Top = Application.Top + (Application.Height - .Height) / 2 + 100
+
+    '4. Préparer le message
+        .lblMessage.Caption = "Aucune activité détectée depuis " & Format$(minutesInactives, "0") & " minutes..." & vbCrLf & vbCrLf & _
+                              "Souhaitez-vous garder l’application ouverte quand même ?"
+        .lblTimer.Caption = vbNullString
+
+    '5. Afficher le formulaire
+        .show vbModeless
+    End With
+
+    '6. Lancer le décompte visuel
+    Set fermetureAuto = New clsFermetureAuto
+    Call fermetureAuto.FermetureDansXSecondes(gDELAI_GRACE_SECONDES)
+    
+End Sub
+
+Public Sub PlanifierTick()
+
+    gProchainTick = Now + TimeSerial(0, 0, 1)
+    Application.OnTime gProchainTick, "modSurveillance.SurveillerFermetureAuto"
+    
+End Sub
+
+Public Sub AnnulerTick()
+
+    On Error Resume Next
+    Application.OnTime gProchainTick, "modSurveillance.SurveillerFermetureAuto", , False
+    
+End Sub
+
+Sub TesterFermeture() '2025-11-08 @ 06:37
+
+    Set fermetureAuto = New clsFermetureAuto
+    fermetureAuto.SimulerFermetureDansXSecondes 20 'Test avec 15 secondes
+    
+End Sub
 

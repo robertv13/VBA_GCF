@@ -3,7 +3,6 @@ Option Explicit
 
 Public gProchaineVerifUserForm As Date
 Public gHeurePrevueFermetureAutomatique As Date 'Heure à laquelle l'application devrait fermer
-Public gProchainTick As Date                    'Heure du compte à rebours
 Public gClignoteEtat As Boolean
 
 Sub DemarrerApplication(uw As String) '2025-07-11 @ 15:16

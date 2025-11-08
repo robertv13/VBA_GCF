@@ -45,14 +45,16 @@ Private Sub Workbook_Open()
     
     If UtilisateurActif("Role") = "Dev" Then
         Application.VBE.MainWindow.Visible = True
-        Debug.Print Now() & " gHeureProchaineVerification @ '" & gHeureProchaineVerification & "'"
-        Debug.Print Now() & " gDELAI_GRACE_SECONDES = " & gDELAI_GRACE_SECONDES & " secondes"
-        Dim heures As Long, minutes As Long
-        heures = Int(gHEURE_DEBUT_SURVEILLANCE)
-        minutes = (gHEURE_DEBUT_SURVEILLANCE - heures) * 60
-        Debug.Print Now() & " gHEURE_DEBUT_SURVEILLANCE à compter de " & Format$(heures, "00") & ":" & Format$(minutes, "00")
-        Debug.Print Now() & " gFREQUENCE_VERIFICATION_INACTIVITE = " & gFREQUENCE_VERIFICATION_INACTIVITE & " minutes."
-        Debug.Print Now() & " gMAXIMUM_INACTIVITE = " & gMAXIMUM_INACTIVITE & " minutes."
+        Debug.Print Now() & " Constantes pour vérification d'inactivité"
+        Dim heures As Long: heures = Int(gHEURE_DEBUT_SURVEILLANCE)
+        Dim minutes As Long: minutes = (gHEURE_DEBUT_SURVEILLANCE - heures) * 60
+        Debug.Print Now() & "    gHEURE_DEBUT_SURVEILLANCE à compter de " & Format$(heures, "00") & _
+                                                                        ":" & Format$(minutes, "00")
+        Debug.Print Now() & "    gFREQUENCE_VERIFICATION_INACTIVITE au " & _
+                                                    gFREQUENCE_VERIFICATION_INACTIVITE & " minutes"
+        Debug.Print Now() & "    gMAXIMUM_INACTIVITE = " & gMAXIMUM_INACTIVITE & " minutes"
+        Debug.Print vbCrLf
+'        Debug.Print Now() & " gHeureProchaineVerification @ '" & gHeureProchaineVerification & "'"
     End If
     
 End Sub

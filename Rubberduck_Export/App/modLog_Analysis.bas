@@ -40,13 +40,16 @@ Sub OuvrirRepertoireLogEtTraiterFichiers()
     
     For Each file In fileSystem.GetFolder(folderPath).Files
         nomFichier = file.Name
+        Debug.Print nomFichier
         'Appliquer les traitements en fonction des fichiers
         Select Case True
             Case nomFichier = "LogSaisieHeures.log"
                 Call LireLogSaisieHeures(file.path)
             Case nomFichier = "LogClientsApp.log"
                 Call LireLogClientsApp(file.path)
-            Case Left(nomFichier, 12) = "LogMainApp." And Right(nomFichier, 4) = ".log"
+            Case nomFichier = "LogMainApp.log"
+                Call LireLogMainApp(file.path)
+            Case Left(nomFichier, 11) = "LogMainApp." And Right(nomFichier, 4) = ".log"
                 Call LireLogMainApp(file.path)
         End Select
     Next file

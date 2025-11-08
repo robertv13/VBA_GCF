@@ -2134,12 +2134,12 @@ End Function
 '
 'End Function
 '
-Public Function GetProchaineFermeture() As Date '2025-07-02 @ 09:38
-
-    GetProchaineFermeture = Now + TimeSerial(0, 0, gDELAI_GRACE_SECONDES)
-
-End Function
-
+'Public Function GetProchaineFermeture() As Date '2025-07-02 @ 09:38
+'
+'    GetProchaineFermeture = Now + TimeSerial(0, 0, gDELAI_GRACE_SECONDES)
+'
+'End Function
+'
 Public Function EstChampModifie(champ As String, valeurOrigine As String) As Boolean '2025-07-03 @ 07:15
 
     EstChampModifie = (Trim(champ & vbNullString) <> Trim(valeurOrigine & vbNullString))

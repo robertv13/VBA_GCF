@@ -91,20 +91,20 @@ End Sub
 
 Sub ImporterClients() 'Using ADODB - 2024-02-25 @ 10:23
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterClients", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterClients", vbNullString, 0)
     
+    Application.StatusBar = "Importation des Clients à partir de GCF_MASTER.xlsx"
+    Application.Calculation = xlCalculationManual
     Application.ScreenUpdating = False
     
     '1. Vider la table locale
-    Dim strFeuille As String
-    strFeuille = "BD_Clients"
-    Dim strTable As String
-    strTable = "l_tbl_BD_Clients"
+    Dim strFeuille As String: strFeuille = "BD_Clients"
+    Dim strTable As String: strTable = "l_tbl_BD_Clients"
     Call ViderTableau(strFeuille, strTable)
     
     '2. Importer les enregistrements de GCF_MASTER.xlsx
-    Dim ws As Worksheet
-    Set ws = wsdBD_Clients
+    Dim ws As Worksheet: Set ws = wsdBD_Clients
     
     'Import Clients List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
     Dim sourceWorkbook As String, sourceTab As String
@@ -135,6 +135,10 @@ Sub ImporterClients() 'Using ADODB - 2024-02-25 @ 10:23
     recSet.Close
     conn.Close
     
+    Application.Calculation = xlCalculationAutomatic
+    Application.ScreenUpdating = True
+    Application.StatusBar = False
+    
     'Libérer la mémoire
     Set conn = Nothing
     Set recSet = Nothing
@@ -146,20 +150,25 @@ End Sub
 
 Sub ImporterDebRecurrent() '2025-05-07 @ 14:14
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterDebRecurrent", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterDebRecurrent", vbNullString, 0)
+    
+    Application.StatusBar = "Importation des Déboursés récurrents à partir de GCF_MASTER.xlsx"
+    Application.Calculation = xlCalculationManual
+    Application.ScreenUpdating = False
     
     'Mettre en place les variables (paramètres)
-    Dim sourceWb As String
-    sourceWb = wsdADMIN.Range("MASTER_FILE").Value
-    Dim ws As Worksheet
-    Set ws = wsdDEB_Recurrent
-    Dim onglet As String, table As String
-    onglet = "DEB_Recurrent"
-    table = "l_tbl_DEB_Recurrent"
+    Dim sourceWb As String: sourceWb = wsdADMIN.Range("MASTER_FILE").Value
+    Dim ws As Worksheet: Set ws = wsdDEB_Recurrent
+    Dim onglet As String: onglet = "DEB_Recurrent"
+    Dim table As String: table = "l_tbl_DEB_Recurrent"
 
     Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
-    'Libérer la mémoire
+    Application.Calculation = xlCalculationAutomatic
+    Application.ScreenUpdating = True
+    Application.StatusBar = False
+    
     Set ws = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterDebRecurrent", vbNullString, startTime)
@@ -168,20 +177,25 @@ End Sub
 
 Sub ImporterDebTrans() '2025-05-07 @ 14:25
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterDebTrans", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterDebTrans", vbNullString, 0)
+    
+    Application.StatusBar = "Importation des déboursés à partir de GCF_MASTER.xlsx"
+    Application.Calculation = xlCalculationManual
+    Application.ScreenUpdating = False
     
     'Mettre en place les variables (paramètres)
-    Dim sourceWb As String
-    sourceWb = wsdADMIN.Range("MASTER_FILE").Value
-    Dim ws As Worksheet
-    Set ws = wsdDEB_Trans
-    Dim onglet As String, table As String
-    onglet = "DEB_Trans"
-    table = "l_tbl_DEB_Trans"
+    Dim sourceWb As String: sourceWb = wsdADMIN.Range("MASTER_FILE").Value
+    Dim ws As Worksheet: Set ws = wsdDEB_Trans
+    Dim onglet As String: onglet = "DEB_Trans"
+    Dim table As String: table = "l_tbl_DEB_Trans"
 
     Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
-    'Libérer la mémoire
+    Application.Calculation = xlCalculationAutomatic
+    Application.ScreenUpdating = True
+    Application.StatusBar = False
+    
     Set ws = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterDebTrans", vbNullString, startTime)
@@ -190,20 +204,25 @@ End Sub
 
 Sub ImporterEncDetails() '2025-05-07 @ 14:45
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterEncDetails", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterEncDetails", vbNullString, 0)
+    
+    Application.StatusBar = "Importation du détail des encaissements à partir de GCF_MASTER.xlsx"
+    Application.Calculation = xlCalculationManual
+    Application.ScreenUpdating = False
     
     'Mettre en place les variables (paramètres)
-    Dim sourceWb As String
-    sourceWb = wsdADMIN.Range("MASTER_FILE").Value
-    Dim ws As Worksheet
-    Set ws = wsdENC_Details
-    Dim onglet As String, table As String
-    onglet = "ENC_Details"
-    table = "l_tbl_ENC_Details"
+    Dim sourceWb As String: sourceWb = wsdADMIN.Range("MASTER_FILE").Value
+    Dim ws As Worksheet: Set ws = wsdENC_Details
+    Dim onglet As String: onglet = "ENC_Details"
+    Dim table As String: table = "l_tbl_ENC_Details"
 
     Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
-    'Libérer la mémoire
+    Application.Calculation = xlCalculationAutomatic
+    Application.ScreenUpdating = True
+    Application.StatusBar = False
+    
     Set ws = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterEncDetails", vbNullString, startTime)
@@ -212,20 +231,25 @@ End Sub
 
 Sub ImporterEncEntete() '2025-05-07 @ 14:50
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterEncEntete", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterEncEntete", vbNullString, 0)
+    
+    Application.StatusBar = "Importation des encaissements à partir de GCF_MASTER.xlsx"
+    Application.Calculation = xlCalculationManual
+    Application.ScreenUpdating = False
     
     'Mettre en place les variables (paramètres)
-    Dim sourceWb As String
-    sourceWb = wsdADMIN.Range("MASTER_FILE").Value
-    Dim ws As Worksheet
-    Set ws = wsdENC_Entete
-    Dim onglet As String, table As String
-    onglet = "ENC_Entete"
-    table = "l_tbl_ENC_Entete"
+    Dim sourceWb As String: sourceWb = wsdADMIN.Range("MASTER_FILE").Value
+    Dim ws As Worksheet: Set ws = wsdENC_Entete
+    Dim onglet As String: onglet = "ENC_Entete"
+    Dim table As String: table = "l_tbl_ENC_Entete"
 
     Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
-    'Libérer la mémoire
+    Application.Calculation = xlCalculationAutomatic
+    Application.ScreenUpdating = True
+    Application.StatusBar = False
+    
     Set ws = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterEncEntete", vbNullString, startTime)
@@ -234,20 +258,25 @@ End Sub
 
 Sub ImporterCCRegularisations() '2025-05-07 @ 13:58
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterCCRegularisations", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterCCRegularisations", vbNullString, 0)
+    
+    Application.StatusBar = "Importation des Régularisations à partir de GCF_MASTER.xlsx"
+    Application.Calculation = xlCalculationManual
+    Application.ScreenUpdating = False
     
     'Mettre en place les variables (paramètres)
-    Dim sourceWb As String
-    sourceWb = wsdADMIN.Range("MASTER_FILE").Value
-    Dim ws As Worksheet
-    Set ws = wsdCC_Regularisations
-    Dim onglet As String, table As String
-    onglet = "CC_Regularisations"
-    table = "l_tbl_CC_Regularisations"
+    Dim sourceWb As String: sourceWb = wsdADMIN.Range("MASTER_FILE").Value
+    Dim ws As Worksheet: Set ws = wsdCC_Regularisations
+    Dim onglet As String: onglet = "CC_Regularisations"
+    Dim table As String: table = "l_tbl_CC_Regularisations"
 
     Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
-    'Libérer la mémoire
+    Application.Calculation = xlCalculationAutomatic
+    Application.ScreenUpdating = True
+    Application.StatusBar = False
+    
     Set ws = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterCCRegularisations", vbNullString, startTime)
@@ -256,20 +285,25 @@ End Sub
 
 Sub ImporterFacComptesClients() '2025-05-07 @ 14:52
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFacComptesClients", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFacComptesClients", vbNullString, 0)
+    
+    Application.StatusBar = "Importation des comptes-clients à partir de GCF_MASTER.xlsx"
+    Application.Calculation = xlCalculationManual
+    Application.ScreenUpdating = False
     
     'Mettre en place les variables (paramètres)
-    Dim sourceWb As String
-    sourceWb = wsdADMIN.Range("MASTER_FILE").Value
-    Dim ws As Worksheet
-    Set ws = wsdFAC_Comptes_Clients
-    Dim onglet As String, table As String
-    onglet = "FAC_Comptes_Clients"
-    table = "l_tbl_FAC_Comptes_Clients"
+    Dim sourceWb As String: sourceWb = wsdADMIN.Range("MASTER_FILE").Value
+    Dim ws As Worksheet: Set ws = wsdFAC_Comptes_Clients
+    Dim onglet As String: onglet = "FAC_Comptes_Clients"
+    Dim table As String: table = "l_tbl_FAC_Comptes_Clients"
 
     Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
-    'Libérer la mémoire
+    Application.Calculation = xlCalculationAutomatic
+    Application.ScreenUpdating = True
+    Application.StatusBar = False
+    
     Set ws = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFacComptesClients", vbNullString, startTime)
@@ -278,20 +312,25 @@ End Sub
 
 Sub ImporterFacDetails() '2025-05-07 @ 14:59
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFacDetails", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFacDetails", vbNullString, 0)
+    
+    Application.StatusBar = "Importation des détails de Facture à partir de GCF_MASTER.xlsx"
+    Application.Calculation = xlCalculationManual
+    Application.ScreenUpdating = False
     
     'Mettre en place les variables (paramètres)
-    Dim sourceWb As String
-    sourceWb = wsdADMIN.Range("MASTER_FILE").Value
-    Dim ws As Worksheet
-    Set ws = wsdFAC_Details
-    Dim onglet As String, table As String
-    onglet = "FAC_Details"
-    table = "l_tbl_FAC_Details"
+    Dim sourceWb As String: sourceWb = wsdADMIN.Range("MASTER_FILE").Value
+    Dim ws As Worksheet: Set ws = wsdFAC_Details
+    Dim onglet As String: onglet = "FAC_Details"
+    Dim table As String: table = "l_tbl_FAC_Details"
 
     Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
-    'Libérer la mémoire
+    Application.Calculation = xlCalculationAutomatic
+    Application.ScreenUpdating = True
+    Application.StatusBar = False
+    
     Set ws = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFacDetails", vbNullString, startTime)
@@ -300,20 +339,25 @@ End Sub
 
 Sub ImporterFacEntete() '2025-05-07 @ 15:02
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFacEntete", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFacEntete", vbNullString, 0)
+    
+    Application.StatusBar = "Importation des entêtes de Facture à partir de GCF_MASTER.xlsx"
+    Application.Calculation = xlCalculationManual
+    Application.ScreenUpdating = False
     
     'Mettre en place les variables (paramètres)
-    Dim sourceWb As String
-    sourceWb = wsdADMIN.Range("MASTER_FILE").Value
-    Dim ws As Worksheet
-    Set ws = wsdFAC_Entete
-    Dim onglet As String, table As String
-    onglet = "FAC_Entete"
-    table = "l_tbl_FAC_Entete"
+    Dim sourceWb As String: sourceWb = wsdADMIN.Range("MASTER_FILE").Value
+    Dim ws As Worksheet: Set ws = wsdFAC_Entete
+    Dim onglet As String: onglet = "FAC_Entete"
+    Dim table As String: table = "l_tbl_FAC_Entete"
 
     Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
-    'Libérer la mémoire
+    Application.Calculation = xlCalculationAutomatic
+    Application.ScreenUpdating = True
+    Application.StatusBar = False
+    
     Set ws = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFacEntete", vbNullString, startTime)
@@ -322,20 +366,25 @@ End Sub
 
 Sub ImporterFacSommaireTaux() '2025-05-07 @ 16:08
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFacSommaireTaux", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFacSommaireTaux", vbNullString, 0)
+    
+    Application.StatusBar = "Importation des sommaire de taux (facture) à partir de GCF_MASTER.xlsx"
+    Application.Calculation = xlCalculationManual
+    Application.ScreenUpdating = False
     
     'Mettre en place les variables (paramètres)
-    Dim sourceWb As String
-    sourceWb = wsdADMIN.Range("MASTER_FILE").Value
-    Dim ws As Worksheet
-    Set ws = wsdFAC_Sommaire_Taux
-    Dim onglet As String, table As String
-    onglet = "FAC_Sommaire_Taux"
-    table = "l_tbl_FAC_Sommaire_Taux"
+    Dim sourceWb As String: sourceWb = wsdADMIN.Range("MASTER_FILE").Value
+    Dim ws As Worksheet: Set ws = wsdFAC_Sommaire_Taux
+    Dim onglet As String: onglet = "FAC_Sommaire_Taux"
+    Dim table As String: table = "l_tbl_FAC_Sommaire_Taux"
 
     Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
-    'Libérer la mémoire
+    Application.Calculation = xlCalculationAutomatic
+    Application.ScreenUpdating = True
+    Application.StatusBar = False
+    
     Set ws = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFacSommaireTaux", vbNullString, startTime)
@@ -344,16 +393,18 @@ End Sub
 
 Sub ImporterFacProjetsDetails() '2025-05-07 @ 15:57
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFacProjetsDetails", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFacProjetsDetails", vbNullString, 0)
     
+    Application.StatusBar = "Importation du détail des projets de facture à partir de GCF_MASTER.xlsx"
+    Application.Calculation = xlCalculationManual
+    Application.ScreenUpdating = False
+        
     'Mettre en place les variables (paramètres)
-    Dim sourceWb As String
-    sourceWb = wsdADMIN.Range("MASTER_FILE").Value
-    Dim ws As Worksheet
-    Set ws = wsdFAC_Projets_Details
-    Dim onglet As String, table As String
-    onglet = "FAC_Projets_Details"
-    table = "l_tbl_FAC_Projets_Details"
+    Dim sourceWb As String: sourceWb = wsdADMIN.Range("MASTER_FILE").Value
+    Dim ws As Worksheet: Set ws = wsdFAC_Projets_Details
+    Dim onglet As String: onglet = "FAC_Projets_Details"
+    Dim table As String: table = "l_tbl_FAC_Projets_Details"
 
     Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
@@ -373,7 +424,10 @@ Sub ImporterFacProjetsDetails() '2025-05-07 @ 15:57
         End If
     End If
     
-    'Libérer la mémoire
+    Application.Calculation = xlCalculationAutomatic
+    Application.ScreenUpdating = True
+    Application.StatusBar = False
+    
     Set lo = Nothing
     Set ws = Nothing
     
@@ -383,16 +437,18 @@ End Sub
 
 Sub ImporterFacProjetsEntete() '2025-05-07 @ 16:05
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFacProjetsEntete", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFacProjetsEntete", vbNullString, 0)
+    
+    Application.StatusBar = "Importation des entêtes de projets de facture à partir de GCF_MASTER.xlsx"
+    Application.Calculation = xlCalculationManual
+    Application.ScreenUpdating = False
     
     'Mettre en place les variables (paramètres)
-    Dim sourceWb As String
-    sourceWb = wsdADMIN.Range("MASTER_FILE").Value
-    Dim ws As Worksheet
-    Set ws = wsdFAC_Projets_Entete
-    Dim onglet As String, table As String
-    onglet = "FAC_Projets_Entete"
-    table = "l_tbl_FAC_Projets_Entete"
+    Dim sourceWb As String: sourceWb = wsdADMIN.Range("MASTER_FILE").Value
+    Dim ws As Worksheet: Set ws = wsdFAC_Projets_Entete
+    Dim onglet As String: onglet = "FAC_Projets_Entete"
+    Dim table As String: table = "l_tbl_FAC_Projets_Entete"
 
     Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
@@ -412,7 +468,10 @@ Sub ImporterFacProjetsEntete() '2025-05-07 @ 16:05
         End If
     End If
     
-    'Libérer la mémoire
+    Application.Calculation = xlCalculationAutomatic
+    Application.ScreenUpdating = True
+    Application.StatusBar = False
+    
     Set lo = Nothing
     Set ws = Nothing
     
@@ -422,8 +481,11 @@ End Sub
 
 Sub ImporterFournisseurs() 'Using ADODB - 2024-07-03 @ 15:43
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFournisseurs", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterFournisseurs", vbNullString, 0)
     
+    Application.StatusBar = "Importation des Fournisseurs à partir de GCF_MASTER.xlsx"
+    Application.Calculation = xlCalculationManual
     Application.ScreenUpdating = False
     
     'Clear all cells, but the headers, in the destination worksheet
@@ -460,9 +522,10 @@ Sub ImporterFournisseurs() 'Using ADODB - 2024-07-03 @ 15:43
     recSet.Close
     conn.Close
     
+    Application.Calculation = xlCalculationAutomatic
     Application.ScreenUpdating = True
+    Application.StatusBar = False
     
-    'Libérer la mémoire
     Set conn = Nothing
     Set recSet = Nothing
     Set rng = Nothing
@@ -473,22 +536,27 @@ End Sub
 
 Sub ImporterEJRecurrente() '2025-05-07 @ 14:35
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterEJRecurrente", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterEJRecurrente", vbNullString, 0)
+    
+    Application.StatusBar = "Importation des écritures récurrentes à partir de GCF_MASTER.xlsx"
+    Application.Calculation = xlCalculationManual
+    Application.ScreenUpdating = False
     
     'Mettre en place les variables (paramètres)
-    Dim sourceWb As String
-    sourceWb = wsdADMIN.Range("MASTER_FILE").Value
-    Dim ws As Worksheet
-    Set ws = wsdGL_EJ_Recurrente
-    Dim onglet As String, table As String
-    onglet = "GL_EJ_Recurrente"
-    table = "l_tbl_GL_EJ_Auto"
+    Dim sourceWb As String: sourceWb = wsdADMIN.Range("MASTER_FILE").Value
+    Dim ws As Worksheet: Set ws = wsdGL_EJ_Recurrente
+    Dim onglet As String: onglet = "GL_EJ_Recurrente"
+    Dim table As String: table = "l_tbl_GL_EJ_Auto"
 
     Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
     Call ConstruireSommaireEJRecurrente '2024-03-14 @ 07:38
     
-    'Libérer la mémoire
+    Application.Calculation = xlCalculationAutomatic
+    Application.ScreenUpdating = True
+    Application.StatusBar = False
+    
     Set ws = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterEJRecurrente", vbNullString, startTime)
@@ -497,20 +565,25 @@ End Sub
 
 Sub ImporterGLTransactions() '2025-05-07 @ 16:10
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterGLTransactions", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterGLTransactions", vbNullString, 0)
+    
+    Application.StatusBar = "Importation des transactions du G/L à partir de GCF_MASTER.xlsx"
+    Application.Calculation = xlCalculationManual
+    Application.ScreenUpdating = False
     
     'Mettre en place les variables (paramètres)
-    Dim sourceWb As String
-    sourceWb = wsdADMIN.Range("MASTER_FILE").Value
-    Dim ws As Worksheet
-    Set ws = wsdGL_Trans
-    Dim onglet As String, table As String
-    onglet = "GL_Trans"
-    table = "l_tbl_GL_Trans"
+    Dim sourceWb As String: sourceWb = wsdADMIN.Range("MASTER_FILE").Value
+    Dim ws As Worksheet: Set ws = wsdGL_Trans
+    Dim onglet As String: onglet = "GL_Trans"
+    Dim table As String: table = "l_tbl_GL_Trans"
 
     Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
-    'Libérer la mémoire
+    Application.Calculation = xlCalculationAutomatic
+    Application.ScreenUpdating = True
+    Application.StatusBar = False
+    
     Set ws = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterGLTransactions", vbNullString, startTime)
@@ -529,7 +602,6 @@ Sub ImporterTEC() '2024-02-14 @ 06:19
     'Mettre en place les variables (paramètres)
     Dim sourceWb As String: sourceWb = wsdADMIN.Range("MASTER_FILE").Value
     Dim ws As Worksheet: Set ws = wsdTEC_Local
-    
     Dim onglet As String: onglet = "TEC_Local"
     Dim table As String: table = "l_tbl_TEC_Local"
 
