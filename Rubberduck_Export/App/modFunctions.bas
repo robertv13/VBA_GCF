@@ -134,12 +134,6 @@ Function Fn_CellSpecifiqueDeBDClient(nomClient As String, ByRef colNumberSearch 
                 dynamicRange.Columns(colNumberSearch), _
                 dynamicRange.Columns(colNumberData), _
                 "Not Found", 0, 1)
-'    result = Application.WorksheetFunction.XLookup(nomClient, _
-'                                                   dynamicRange.Columns(colNumberSearch), _
-'                                                   dynamicRange.Columns(colNumberData), _
-'                                                   "Not Found", _
-'                                                   0, _
-'                                                   1)
     If Not result = "Not Found" Then
         Fn_CellSpecifiqueDeBDClient = result
     Else
@@ -305,23 +299,8 @@ Function Fn_DetruireLigneSiValeurEstTrouvee(valueToFind As Variant, hono As Doub
             End If
         Next i
     End With
-    
-'    'Define the range to search in (Column 1)
-'    Dim searchRange As Range: Set searchRange = ws.Columns(2)
-'
-'    'Search for the first occurrence of the value
-'    Dim cell As Range
-'    Set cell = searchRange.Find(What:=valueToFind, _
-'                                LookIn:=xlValues, _
-'                                LookAt:=xlWhole)
-'
-'    'Check if the value is found
-'    Dim firstAddress As String
 
     If rowsToDelete.count > 0 Then
-'    If Not cell Is Nothing Then
-'        Fn_DetruireLigneSiValeurEstTrouvee = firstAddress
-        
         'Confirm with the user
         Dim reponse As Long
         reponse = MsgBox("Il existe déjà une demande de facture pour ce client" & _
@@ -356,14 +335,6 @@ Function Fn_DetruireLigneSiValeurEstTrouvee(valueToFind As Variant, hono As Doub
                     End If
                 Next i
                 
-'                Set cell = lo.ListColumns(2).DataBodyRange.Find(valueToFind, LookIn:=xlValues, LookAt:=xlWhole)
-'
-'                If Not cell Is Nothing Then
-'                    lo.ListRows(cell.row).Range.Cells(1, 26).Value = -1
-'                Else
-'                    MsgBox "Valeur non trouvée"
-'                End If
-'
                 'Update rows from MASTER file (details)
                 Dim destinationFileName As String, destinationTab As String
                 destinationFileName = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
@@ -1237,43 +1208,6 @@ Public Function Fn_UtilisateurWindows() As String '2025-10-19 @ 09:54
     
 End Function
 
-'Function Fn_UtilisateurWindows() As String '2025-06-01 @ 05:36
-'
-'    Dim buffer As String * 255
-'    Dim size As Long: size = 255
-'
-'    '@Ignore UnassignedVariableUsage
-'    If GetUserName(buffer, size) Then
-'        '@Ignore UnassignedVariableUsage
-'        gUtilisateurWindows = Trim(Left$(buffer, size - 1))
-'    Else
-'        MsgBox "Incapable de déterminer l'utilisateur Windows !", _
-'            vbCritical, _
-'            "Fn_UtilisateurWindows"
-'        gUtilisateurWindows = "Unknown"
-'    End If
-'
-'    Fn_UtilisateurWindows = gUtilisateurWindows
-'
-'End Function
-'
-'Function Fn_UtilisateurWindows() As String '2025-06-01 @ 05:48
-'
-'    If Len(gUtilisateurWindows) = 0 Then
-'        gUtilisateurWindows = modFunctions.Fn_UtilisateurWindows()
-'    End If
-'
-'    If Len(gUtilisateurWindows) = 0 Then
-'        MsgBox "Impossible de détecter l'utilisateur Windows.", _
-'            vbCritical, _
-'            "modFunctions.Fn_UtilisateurWindows"
-'        End
-'    End If
-'
-'    Fn_UtilisateurWindows = gUtilisateurWindows
-'
-'End Function
-'
 Function Fn_FactureConfirmee(invNo As String) As Boolean
 
     Fn_FactureConfirmee = False
@@ -2124,22 +2058,6 @@ erreur:
     
 End Function
 
-'Function Fn_MinutesDepuisDerniereActivite() As Double '2025-07-01 @ 14:06
-'
-'    If gDerniereActivite = 0 Then
-'        Fn_MinutesDepuisDerniereActivite = 0
-'    Else
-'        Fn_MinutesDepuisDerniereActivite = DateDiff("s", gDerniereActivite, Now) / 60
-'    End If
-'
-'End Function
-'
-'Public Function GetProchaineFermeture() As Date '2025-07-02 @ 09:38
-'
-'    GetProchaineFermeture = Now + TimeSerial(0, 0, gDELAI_GRACE_SECONDES)
-'
-'End Function
-'
 Public Function EstChampModifie(champ As String, valeurOrigine As String) As Boolean '2025-07-03 @ 07:15
 
     EstChampModifie = (Trim(champ & vbNullString) <> Trim(valeurOrigine & vbNullString))

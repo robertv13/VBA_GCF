@@ -3,14 +3,7 @@ Option Explicit
 
 Sub MAIN()
 
-'    Call AuditerPlageVersSpecs(Sheets("Couv.").Range("A1:F27"))
-'    Call AuditerPlageVersSpecs(Sheets("TM").Range("A1:I35"))
-'    Call AuditerPlageVersSpecs(Sheets("ER").Range("A1:E48"))
-'    Call AuditerPlageVersSpecs(Sheets("BNR").Range("A1:F36"))
     Call AuditerPlageVersSpecs(Sheets("Bilan").Range("A1:E50"))
-'    Call AuditerPlageVersSpecs(Sheets("A").Range("A1:F34"))
-'    Call AuditerPlageVersSpecs(Sheets("A2").Range("A1:H24"))
-'    Call AuditerPlageVersSpecs(Sheets("A3").Range("A1:G55"))
 
 End Sub
 

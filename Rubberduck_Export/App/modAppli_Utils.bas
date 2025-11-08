@@ -4449,39 +4449,6 @@ Sub ObtenirDateDernModifFichier(fileName As String, ByRef ddm As Date, _
     
 End Sub
 
-'Sub RedefinirDnrPlanComptable() '2024-07-04 @ 10:39
-'
-'    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:RedefinirDnrPlanComptable", vbNullString, 0)
-'
-'    'Redefine - dnrPlanComptable_Description_Only
-'    'Delete existing dynamic named range (assuming it could exists)
-'    On Error Resume Next
-'    ThisWorkbook.Names("dnrPlanComptable_Description_Only").Delete
-'    On Error GoTo 0
-'
-'    'Define a new dynamic named range for 'dnrPlanComptable_Description_Only'
-'    Dim newRangeFormula As String
-'    newRangeFormula = "=OFFSET(Admin!$T$11,,,COUNTA(Admin!$T:$T)-2,1)"
-'
-'    'Create the new dynamic named range
-'    ThisWorkbook.Names.Add Name:="dnrPlanComptable_Description_Only", RefersTo:=newRangeFormula
-'
-'    'Redefine - dnrPlanComptable_All
-'    'Delete existing dynamic named range (assuming it could exists)
-'    On Error Resume Next
-'    ThisWorkbook.Names("dnrPlanComptable_All").Delete
-'    On Error GoTo 0
-'
-'    'Define a new dynamic named range for 'dnrPlanComptable_All'
-'    newRangeFormula = "=OFFSET(Admin!$T$11,,,COUNTA(Admin!$T:$T)-2,4)"
-'
-'    'Create the new dynamic named range
-'    ThisWorkbook.Names.Add Name:="dnrPlanComptable_All", RefersTo:=newRangeFormula
-'
-'    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:RedefinirDnrPlanComptable", vbNullString, startTime)
-'
-'End Sub
-'
 Sub RemplirPlageAvecCouleur(ByVal plage As Range, ByVal couleurRVB As Long)
 
     If Not plage Is Nothing Then

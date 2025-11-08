@@ -314,21 +314,6 @@ Public Function AjouterTECdansBDMaster() As Boolean '2025-10-31 @ 06:03
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:AjouterTECdansBDMaster", vbNullString, 0)
 
-'    'Mécanisme de verrou sur MASTER
-'    Dim verrouPath As String
-'    verrouPath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & "\LOCK_MASTER.TXT"
-'
-'    If Dir(verrouPath) <> "" Then
-'        MsgBox "Le fichier GCF_BD_MASTER.xlsx est actuellement en cours de modification par un autre utilisateur." & vbNewLine & _
-'               "Veuillez réessayer dans quelques secondes.", vbExclamation
-'        Exit Function
-'    End If
-'
-'    ' Créer le verrou
-'    Open verrouPath For Output As #1
-'    Print #1, "Verrou actif - " & Environ("Username") & " - " & Format(Now, "yyyy-mm-dd hh:nn:ss")
-'    Close #1
-
     Dim conn As Object, recSet As Object
     Set conn = CreateObject("ADODB.Connection")
     Set recSet = CreateObject("ADODB.Recordset")

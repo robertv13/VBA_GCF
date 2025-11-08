@@ -231,9 +231,6 @@ Public Sub GenererRapportGLParEcriture(wsRapport As Worksheet, noEcritureDebut A
         Dim DateTrans As Date
         Dim currentEcriture As Long
         i = 1 'Numéro de ligne à traiter
-'        Debug.Print "X - ", ufGL_Rapport.chkDebourse, ufGL_Rapport.chkDepotClient, ufGL_Rapport.chkEJ, _
-'                    ufGL_Rapport.chkEcrCloture, ufGL_Rapport.chkEncaissement, ufGL_Rapport.chkFacture, _
-'                    ufGL_Rapport.chkRegularisation
         For Each row In filteredRange.Rows
             If Not row.Hidden And modFunctions.Fn_ConsidereOuPasCetteEcriture(row.Cells(fGlTSource).Value) = True Then
                 'Traitement des données visibles seulement
@@ -401,9 +398,6 @@ Public Sub GenererRapportGLParDateSaisie(wsRapport As Worksheet, dtSaisieDebut A
         Dim tDebit As Currency, tCredit As Currency
         Dim DateTrans As Date
         Dim currentTimeStamp As Double
-'        Debug.Print "X - ", ufGL_Rapport.chkDebourse, ufGL_Rapport.chkDepotClient, ufGL_Rapport.chkEJ, _
-'                    ufGL_Rapport.chkEcrCloture, ufGL_Rapport.chkEncaissement, ufGL_Rapport.chkFacture, _
-'                    ufGL_Rapport.chkRegularisation
         For Each row In filteredRange.Rows
             If Not row.Hidden And modFunctions.Fn_ConsidereOuPasCetteEcriture(row.Cells(fGlTSource).Value) = True Then
                 'Traitement des données visibles seulement
@@ -914,9 +908,6 @@ Sub FinaliserGLRapportParDateSaisie(ws As Worksheet, h1 As String, h2 As String,
     
     Application.PrintCommunication = True
 
-'    'Keep header rows always displayed
-'    ActiveWindow.SplitRow = 2
-'
     ws.Range("A" & lastUsedRow).Select
     
     Call modDev_Utils.EnregistrerLogApplication("modGL_Rapport:FinaliserGLRapportParDateSaisie", vbNullString, startTime)

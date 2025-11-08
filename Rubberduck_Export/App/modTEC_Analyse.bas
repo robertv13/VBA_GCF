@@ -189,9 +189,6 @@ Sub TrierEtAjouterSousTotauxClient() '2024-08-24 @ 08:10
                 .TintAndShade = 0
             End With
             With wsDest.Range("C" & r)
-'                If InStr(.Value, "Total ") = 1 Then
-'                    .Value = Mid$(.Value, 7)
-'                End If
                 If .Value = "Total général" Then
                     .Value = "G r a n d   T o t a l"
                 End If

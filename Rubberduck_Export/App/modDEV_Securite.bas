@@ -38,30 +38,3 @@ ErrHandler:
     
 End Function
 
-'Public Function GetInitialesAutorises(ByVal userName As String) As String '2025-05-31 @ 15:41
-'
-'    Dim dict As Object
-'    Set dict = CreateObject("Scripting.Dictionary")
-'
-'    'Associer les utilisateurs Windows à leurs initiales autorisées
-'    dict.Add "vgervais", "VG"
-'    dict.Add "Vlad_Portable", "VG"
-'    dict.Add "User", "ML"
-'    dict.Add "Annie", "AR"
-'    dict.Add "Oli_Portable", "OB"
-'    dict.Add "MARIE_FRANCE", "MFP"
-'
-'    'Les utilisateurs avec toutes les autorisations retourne ""
-'    Select Case userName
-'        Case "Guillaume", "GuillaumeCharron", "gchar", "RobertMV", "robertmv"
-'            GetInitialesAutorises = vbNullString 'Toutes les initiales sont permises
-'        Case Else
-'            If dict.Exists(userName) Then
-'                GetInitialesAutorises = dict(userName)
-'            Else
-'                GetInitialesAutorises = "INVALID"
-'            End If
-'    End Select
-'
-'End Function
-'

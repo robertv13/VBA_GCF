@@ -1210,3 +1210,102 @@ Sub AppliquerZebrage() '2025-08-21 @ 08:46
     
 End Sub
 
+Public Sub AuditerBlocsCommentes()
+    Dim comp As VBComponent
+    Dim lignes() As String
+    Dim i As Long, debutBloc As Long
+    Dim blocActif As Boolean
+    Dim nomProc As String
+    Dim listeProcedures As Collection, listeBlocs As Collection
+    Set listeProcedures = New Collection
+    Set listeBlocs = New Collection
+
+    For Each comp In ThisWorkbook.VBProject.VBComponents
+        lignes = Split(comp.codeModule.Lines(1, comp.codeModule.CountOfLines), vbCrLf)
+        blocActif = False
+
+        For i = 0 To UBound(lignes)
+            If Left(Trim(lignes(i)), 1) = "'" Then
+                If Not blocActif Then debutBloc = i
+                blocActif = True
+            Else
+                If blocActif And (i - debutBloc >= 3) Then
+                    nomProc = ExtraireNomProcedure(lignes(debutBloc))
+                    If nomProc <> "" Then
+                        listeProcedures.Add comp.Name & " ? " & nomProc & " (lignes " & (debutBloc + 1) & " à " & i & ")"
+                    Else
+                        listeBlocs.Add comp.Name & " : lignes " & (debutBloc + 1) & " à " & i
+                    End If
+                End If
+                blocActif = False
+            End If
+        Next i
+
+        ' Cas en fin de module
+        If blocActif And (UBound(lignes) - debutBloc >= 2) Then
+            nomProc = ExtraireNomProcedure(lignes(debutBloc))
+            If nomProc <> "" Then
+                listeProcedures.Add comp.Name & " ? " & nomProc & " (lignes " & (debutBloc + 1) & " à " & (UBound(lignes) + 1) & ")"
+            Else
+                listeBlocs.Add comp.Name & " : lignes " & (debutBloc + 1) & " à " & (UBound(lignes) + 1)
+            End If
+        End If
+    Next comp
+
+    ' Tri des procédures
+    Dim tableau() As String
+    ReDim tableau(1 To listeProcedures.count)
+    For i = 1 To listeProcedures.count
+        tableau(i) = listeProcedures(i)
+    Next i
+    Call TriRapide(tableau, LBound(tableau), UBound(tableau))
+
+    ' Affichage
+    Debug.Print String(60, "-")
+    Debug.Print "?? Procédures mises en sommeil (= 3 lignes commentées)"
+    Debug.Print String(60, "-")
+    For i = 1 To UBound(tableau)
+        Debug.Print tableau(i)
+    Next i
+
+    Debug.Print vbCrLf & String(60, "-")
+    Debug.Print "?? Blocs génériques commentés (= 3 lignes)"
+    Debug.Print String(60, "-")
+    For i = 1 To listeBlocs.count
+        Debug.Print listeBlocs(i)
+    Next i
+    Debug.Print String(60, "-")
+End Sub
+
+Private Function ExtraireNomProcedure(ligne As String) As String
+    Dim txt As String
+    txt = LCase(Replace(ligne, "'", ""))
+    If txt Like "*sub *" Or txt Like "*function *" Then
+        txt = Replace(txt, "public", "")
+        txt = Replace(txt, "private", "")
+        txt = Replace(txt, "sub", "")
+        txt = Replace(txt, "function", "")
+        txt = Trim(Split(txt, "(")(0))
+        ExtraireNomProcedure = txt
+    Else
+        ExtraireNomProcedure = ""
+    End If
+End Function
+
+Private Sub TriRapide(arr() As String, ByVal bas As Long, ByVal haut As Long)
+    Dim i As Long, j As Long
+    Dim pivot As String, temp As String
+    i = bas: j = haut
+    pivot = arr((bas + haut) \ 2)
+    Do While i <= j
+        Do While arr(i) < pivot: i = i + 1: Loop
+        Do While arr(j) > pivot: j = j - 1: Loop
+        If i <= j Then
+            temp = arr(i): arr(i) = arr(j): arr(j) = temp
+            i = i + 1: j = j - 1
+        End If
+    Loop
+    If bas < j Then Call TriRapide(arr, bas, j)
+    If i < haut Then Call TriRapide(arr, i, haut)
+End Sub
+

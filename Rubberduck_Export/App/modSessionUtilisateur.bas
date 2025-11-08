@@ -1,11 +1,6 @@
 Attribute VB_Name = "modSessionUtilisateur"
 Option Explicit
 
-'Module : modSessionUtilisateur
-'Date : 2025-10-19
-'Auteur : Robert + Copilot
-'Rôle : Initialisation de session utilisateur, chargement des données métier, journalisation
-
 Public UtilisateurActif As Scripting.Dictionary
 
 '--- Étape 1 : Récupération UtilisateurID à partir de l'utilisateur Windows ---

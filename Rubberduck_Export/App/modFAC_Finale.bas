@@ -1183,10 +1183,6 @@ Sub SauvegarderCopieFactureDansExcel(clientID As String, clientName As String, i
     'Définir le chemin complet du répertoire des fichiers Excel
     Dim ExcelFilesFullPath As String
     ExcelFilesFullPath = wsdADMIN.Range("PATH_DATA_FILES").Value & gFACT_EXCEL_PATH & Application.PathSeparator
-'    MsgBox "Répertoire pour sauvegarder les factures en Excel" & vbCrLf & vbCrLf & _
-'            "'" & ExcelFilesFullPath & "'", _
-'            vbInformation, _
-'            "1192 - Message temporaire à enlever par développeur"
     
     On Error Resume Next
     ChDrive ExcelFilesFullPath

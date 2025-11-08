@@ -1,4 +1,4 @@
-﻿📘 Journal typographique — 11/08/2025 09:59:43
+﻿📘 Journal typographique — 11/08/2025 10:45:59
 
 🔧 Fichier : clsControlWrapper.cls
 
@@ -9,8 +9,6 @@
 🔧 Fichier : clsGL_EntryLine.cls
 
 🔧 Fichier : clsSearchableDropdown.cls
-   ✅ Remplacé : .text ➜ .Text
-   ✅ Remplacé : .value ➜ .Value
 
 🔧 Fichier : clsSurveillanceActivite.cls
 
@@ -301,7 +299,6 @@
    ✅ Remplacé : .value ➜ .Value
 
 🔧 Fichier : modTEC_TDB.bas
-   ✅ Remplacé : .borders ➜ .Borders
    ✅ Remplacé : .row ➜ .Row
 
 🔧 Fichier : modTemp.bas

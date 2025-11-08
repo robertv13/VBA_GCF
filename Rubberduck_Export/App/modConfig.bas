@@ -1,10 +1,4 @@
 Attribute VB_Name = "modConfig"
-'=======================================================
-' modConfig.bas - 2025-07-02 @ 09:49
-' Déclaration des constantes et des variables globales
-'             ainsi que les ENum pour colonnes de tables
-'=======================================================
-
 Option Explicit
 
 Public Const gDATA_PATH As String = "\DataFiles"

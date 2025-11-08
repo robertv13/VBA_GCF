@@ -405,11 +405,6 @@ Sub ComptabiliserConfirmationFacture(invoice As String) '2025-08-04 @ 07:19
             descGL = Fn_DescriptionAPartirNoCompte(codeGL)
             ecr.AjouterLigne codeGL, descGL, -tvq, vbNullString
         End If
-        
-        'Mise à jour du posting GL des confirmations de facture
-'        Dim GLEntryNo As Long
-'        Call modGL_Stuff.GL_Posting_To_DB(dateFact, descGL_Trans, Source, MyArray, GLEntryNo)
-'        Call modGL_Stuff.GL_Posting_Locally(dateFact, descGL_Trans, Source, MyArray, GLEntryNo)
     Else
         MsgBox "La facture '" & invoice & "' n'existe pas dans FAC_Entete.", vbCritical
     End If

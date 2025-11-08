@@ -154,17 +154,6 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range)
     gPreviousCellAddress = Target.Address
     
     ActiveSheet.Protect UserInterfaceOnly:=True
-    
-'    'Passe à la cellule suivante
-'    Application.EnableEvents = False
-'    If target.Address = "$F$4" Then
-'        Me.Range("K4").Select
-'    End If
-'     If target.Address = "$K$4" Then
-'        Me.Range("F6").Select
-'    End If
-'    Application.EnableEvents = True
-'
 
 End Sub
 

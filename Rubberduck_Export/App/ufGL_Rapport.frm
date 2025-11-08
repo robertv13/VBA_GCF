@@ -21,9 +21,6 @@ Private Sub UserForm_Initialize()
 
     Call modImport.ImporterGLTransactions
     
-'    'Noter l'activité
-'    Call ConnecterControlesDeForme(Me)
-'
     'Efface le contenu de la listBox
     Me.lsbComptes.Clear
     

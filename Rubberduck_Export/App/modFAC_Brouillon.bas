@@ -450,10 +450,6 @@ Sub OuvrirEtCopierAncienneFacture() '2024-07-27 @ 07:46
     Dim filePath As Variant
     filePath = Application.GetOpenFilename("Fichiers Excel (*.xlsx), *.xlsx", , "Fichier Excel à ouvrir")
         
-'    filePath = Application.GetOpenFilename( _
-'                    "Fichiers Excel (*.xlsx), *.xlsx", , _
-'                    "Fichier Excel à ouvrir", , DossierCopieFactureExcel)
-    
     If UCase(filePath) = "FALSE" Or UCase(filePath) = "FAUX" Then Exit Sub 'User canceled
 
     Dim wbSource As Workbook: Set wbSource = Workbooks.Open(filePath)
@@ -1064,10 +1060,6 @@ Sub AjouterCasesACocherFACBrouillon(row As Long, dateCutOffProjet As Date)
     End If
     Next cell
     
-'    'Unlock the checkbox to view Billed charges
-'    Call UnprotectCells(ws.Range("B16"))
-''    ws.Range("B16").Locked = False
-     
     With ws
         .Range("D7:D" & row).NumberFormat = "dd/mm/yyyy"
         .Range("D7:D" & row).Font.Bold = False

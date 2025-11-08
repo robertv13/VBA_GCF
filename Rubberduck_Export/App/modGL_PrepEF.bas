@@ -2244,25 +2244,6 @@ Sub AppliquerMiseEnPageEF(ws As Worksheet, taillePolice As Integer) '2025-08-14 
 
 End Sub
 
-'Sub ConfigurerColonnesEtLignes(ws As Worksheet, largeurCols As Variant, hauteurLignes As String) '2025-08-14 @ 09:37
-'
-'    Dim i As Integer
-'    For i = LBound(largeurCols) To UBound(largeurCols)
-'        ws.Columns(Chr(65 + i)).ColumnWidth = largeurCols(i)
-'    Next i
-'    ws.Rows(hauteurLignes).RowHeight = 20
-'
-'End Sub
-'
-'Sub AjouterEnteteEF(ws As Worksheet, nomEntreprise As String, dateEF As Date, ligneDépart As Integer) '2025-08-14 @ 09:40
-'
-'    Call PositionnerCellule(ws, UCase$(nomEntreprise), ligneDépart, 2, 12, True, xlLeft)
-'    Call PositionnerCellule(ws, UCase$("Table des Matières"), ligneDépart + 1, 2, 12, True, xlLeft)
-'    Call PositionnerCellule(ws, UCase$("États Financiers"), ligneDépart + 2, 2, 12, True, xlLeft)
-'    Call PositionnerCellule(ws, UCase$("Au " & Format$(dateEF, "dd mmmm yyyy")), ligneDépart + 3, 2, 12, True, xlLeft)
-'
-'End Sub
-'
 Function Fn_TitreSelonNombreDeMois(dateAC As Date) As String '2025-08-14 @ 19:42
 
     Dim dateFinAnneeFinanciere As Date

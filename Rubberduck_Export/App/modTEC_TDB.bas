@@ -52,47 +52,6 @@ Sub AjusterBordurePivotTable() '2025-02-01 @ 05:49
     
     Call AppliquerBordures(rng)
     
-'    With rng
-'        'Bordures extérieures (4)
-'        With .Borders(xlEdgeLeft)
-'            .LineStyle = xlContinuous
-'            .ColorIndex = 0
-'            .TintAndShade = 0
-'            .Weight = xlMedium
-'        End With
-'        With .Borders(xlEdgeTop)
-'            .LineStyle = xlContinuous
-'            .ColorIndex = xlAutomatic
-'            .TintAndShade = 0
-'            .Weight = xlMedium
-'        End With
-'        With .Borders(xlEdgeBottom)
-'            .LineStyle = xlContinuous
-'            .ColorIndex = 0
-'            .TintAndShade = 0
-'            .Weight = xlMedium
-'        End With
-'        With .Borders(xlEdgeRight)
-'            .LineStyle = xlContinuous
-'            .ColorIndex = 0
-'            .TintAndShade = 0
-'            .Weight = xlMedium
-'        End With
-'        'Bordures intérieures (2)
-'        With .Borders(xlInsideVertical)
-'            .LineStyle = xlContinuous
-'            .ColorIndex = 0
-'            .TintAndShade = 0
-'            .Weight = xlHairline
-'        End With
-'        With .Borders(xlInsideHorizontal)
-'            .LineStyle = xlContinuous
-'            .ColorIndex = 0
-'            .TintAndShade = 0
-'            .Weight = xlHairline
-'        End With
-'    End With
-    
     Set rng = ws.Range("D9")
     If rng.Interior.ThemeColor <> xlThemeColorAccent4 Then
         With rng.Interior

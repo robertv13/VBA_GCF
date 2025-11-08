@@ -337,18 +337,6 @@ Sub shpCompterLignesCodeProjet_Click()
 
 End Sub
 
-'Sub shpCorrigerNomClientTEC_Click()
-'
-'    Call modzDataConversion.CorrigerNomClientDansTEC
-'
-'End Sub
-'
-'Sub shpCorrigerNomClientCAR_Click()
-'
-'    Call modzDataConversion.CorrigerNomClientDansCAR
-'
-'End Sub
-'
 Sub shpChercherReferencesCirculaires_Click() '2024-11-22 @ 13:33
 
     Call modDev_Tools.DetecterReferenceCirculaireDansClasseur

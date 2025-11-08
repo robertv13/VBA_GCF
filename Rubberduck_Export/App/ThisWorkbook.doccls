@@ -43,20 +43,6 @@ Private Sub Workbook_Open()
     
     Call EnregistrerLogPerformance("Ouverture de session", Timer - tt0)
     
-    If UtilisateurActif("Role") = "Dev" Then
-        Application.VBE.MainWindow.Visible = True
-        Debug.Print Now() & " Constantes pour vérification d'inactivité"
-        Dim heures As Long: heures = Int(gHEURE_DEBUT_SURVEILLANCE)
-        Dim minutes As Long: minutes = (gHEURE_DEBUT_SURVEILLANCE - heures) * 60
-        Debug.Print Now() & "    gHEURE_DEBUT_SURVEILLANCE à compter de " & Format$(heures, "00") & _
-                                                                        ":" & Format$(minutes, "00")
-        Debug.Print Now() & "    gFREQUENCE_VERIFICATION_INACTIVITE au " & _
-                                                    gFREQUENCE_VERIFICATION_INACTIVITE & " minutes"
-        Debug.Print Now() & "    gMAXIMUM_INACTIVITE = " & gMAXIMUM_INACTIVITE & " minutes"
-        Debug.Print vbCrLf
-'        Debug.Print Now() & " gHeureProchaineVerification @ '" & gHeureProchaineVerification & "'"
-    End If
-    
 End Sub
     
 Private Sub Workbook_SheetActivate(ByVal Sh As Object) '2025-07-03 @ 10:58
@@ -83,12 +69,6 @@ Private Sub Workbook_SheetActivate(ByVal Sh As Object) '2025-07-03 @ 10:58
 '
 End Sub
 
-'Private Sub Workbook_SheetDeactivate(ByVal Sh As Object) '2025-07-03 @ 10:58
-'
-'    Call modAppli.EnregistrerActivite(Sh.Name & " - Workbook_SheetDeactivate")
-'
-'End Sub
-'
 Private Sub Workbook_BeforeClose(Cancel As Boolean)
     
     If gFermetureForcee Then

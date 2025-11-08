@@ -37,32 +37,6 @@ End Property
 
 Private Sub UserForm_Initialize() '2025-05-30 @ 13:26
 
-'    Set colSurveillance = New Collection
-'    Dim ctrl As Control
-'    Dim obj As clsSurveillanceActivite
-'
-'    Dim ctrlType As String
-'    For Each ctrl In Me.Controls
-'        ctrlType = TypeName(ctrl)
-'        Debug.Print ctrl.Name & " - " & ctrlType
-'        Select Case ctrlType
-'            Case "TextBox", "ComboBox", "CommandButton"
-'                Set obj = New clsSurveillanceActivite
-'                Select Case ctrlType
-'                    Case "TextBox": Set obj.tb = ctrl
-'                    Case "ComboBox": Set obj.cb = ctrl
-'                    Case "CommandButton": Set obj.btn = ctrl
-'                End Select
-'                If obj Is Nothing Then
-'                    Debug.Print "Objet non initialisé pour : " & ctrl.Name
-'                Else
-'                    colSurveillance.Add obj
-'                End If
-'            Case Else
-'                Debug.Print "Contrôle ignoré : " & ctrl.Name & " (" & ctrlType & ")"
-'        End Select
-'    Next ctrl
-    
     Call InitialiserSurveillanceForm(Me, wrappers)
     
 End Sub
