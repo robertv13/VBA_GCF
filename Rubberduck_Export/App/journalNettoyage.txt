@@ -1,4 +1,4 @@
-﻿📘 Journal typographique — 11/08/2025 10:45:59
+﻿📘 Journal typographique — 11/10/2025 16:08:08
 
 🔧 Fichier : clsControlWrapper.cls
 
@@ -251,6 +251,8 @@
 🔧 Fichier : modSessionUtilisateur.bas
    ✅ Remplacé : .value ➜ .Value
 
+🔧 Fichier : modSessionVerrou.bas
+
 🔧 Fichier : modStatsHeures.bas
    ✅ Remplacé : .column ➜ .Column
    ✅ Remplacé : .cells ➜ .Cells
@@ -305,6 +307,9 @@
    ✅ Remplacé : .value ➜ .Value
    ✅ Remplacé : .range ➜ .Range
    ✅ Remplacé : .font ➜ .Font
+
+🔧 Fichier : modTraceSession.bas
+   ✅ Remplacé : .value ➜ .Value
 
 🔧 Fichier : Module1.bas
 

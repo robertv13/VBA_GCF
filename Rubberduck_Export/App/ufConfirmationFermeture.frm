@@ -40,12 +40,10 @@ Private Sub btnFermerMaintenant_Click() '2025-11-08 @ 06:11
     fermetureAuto.Annuler
     
     Unload Me
-    Call modSurveillance.FermerApplicationConfirme
+    Call modMenu.FermerApplication("Application inactive - Fermeture confirmée par utilisateur", False)
     gTimerFermetureActif = False
     Application.StatusBar = False
 
-    Call modMenu.FermerApplication("Application inactive - Fermeture souhaitée", False)
-    
 End Sub
 
 Private Sub btnGarderOuverte_Click() '2025-11-08 @ 06:16
@@ -92,7 +90,7 @@ Public Sub RafraichirTimer() '2025-07-02 @ 06:56
         lblTimer.Caption = "Fermeture imminente..."
         gTimerFermetureActif = False
         Unload Me
-        Call modSurveillance.FermerApplicationConfirme
+        Call modMenu.FermerApplication("Fermeture forcée après TimeOut", False)
     Else
         lblTimer.Caption = "Fermeture dans " & Format$(secondesRestantes \ 60, "00") & ":" & _
                                                     Format$(secondesRestantes Mod 60, "00") & "..."

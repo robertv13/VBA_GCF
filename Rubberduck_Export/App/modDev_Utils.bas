@@ -1148,7 +1148,7 @@ Sub DeterminerOrdreDeTabulation(ws As Worksheet) '2024-06-15 @ 13:58
 
 End Sub
 
-Sub EnregistrerLogApplication(ByVal procedureName As String, ByVal param As String, Optional ByVal startTime As Double = 0) '2025-02-03 @ 17:17
+Sub EnregistrerLogApplication(procedureName As String, param As String, startTime As Double) '2025-02-03 @ 17:17
 
     'En attendant de trouver la problématique... 2025-06-01 @ 05:06
     If gUtilisateurWindows = vbNullString Then
@@ -1207,6 +1207,8 @@ Sub EnregistrerLogApplication(ByVal procedureName As String, ByVal param As Stri
     
 ErrorHandler:
 
+    Call EnregistrerErreurs("modDev_Utils", "EnregistrerLogApplication", "Impossible d'écrire", Err.Number, "ERREUR")
+    
     MsgBox "Une erreur est survenue à l'ouverture du fichier" & vbNewLine & vbNewLine & _
                 "'LogMainApp.log' " & vbNewLine & vbNewLine & _
                 "Erreur " & Err & " = " & Err.description, _
@@ -1222,7 +1224,6 @@ ErrorHandler:
     On Error Resume Next 'Ignorer les erreurs pendant la fermeture du classeur
     ThisWorkbook.Close SaveChanges:=False
 
-    'Sortir gracieusement de l'application
     Application.Quit
     
 End Sub
@@ -1270,9 +1271,14 @@ Sub EnregistrerLogSaisieHeures(oper As String, txt As String, Optional blankline
     
 Error_Handler:
 
+    Call EnregistrerErreurs("modDev_Utils", "EnregistrerLogSaisieHeures", _
+                                        "Erreur dans la procédure", Err.Number, "ERREUR")
+    
     MsgBox "Une erreur est survenue : " & Err.description, vbCritical, "EnregistrerLogSaisieHeures"
-    'Sortir gracieusement de l'application
-    Application.Quit 'No save...
+    
+    ThisWorkbook.Close SaveChanges:=False
+    
+    Application.Quit
     
 End Sub
 
@@ -1425,3 +1431,15 @@ Sub zz_ObtenirLigneAPartirCelluleRecherche() '2025-01-13 @ 08:49
     End If
     
 End Sub
+
+Public Sub Arreter(sec As Long) '2025-11-10 @ 10:06
+
+    Debug.Print "Arrêt volontaire de '" & CStr(sec) & "' seconde(s)"
+    
+    Dim t0 As Double: t0 = Timer
+    Do While Timer < t0 + sec
+        DoEvents 'Laisse respirer l'interface
+    Loop
+    
+End Sub
+

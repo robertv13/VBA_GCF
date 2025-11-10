@@ -14,8 +14,10 @@ Sub DemarrerApplication(uw As String) '2025-07-11 @ 15:16
     wsdADMIN.Range("PATH_DATA_FILES").Value = rootPath
     Application.EnableEvents = True
    
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication( _
-                    "----- DÉBUT D'UNE NOUVELLE SESSION (modAppli:DemarrerApplication) -----", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer:
+    Call modDev_Utils.EnregistrerLogApplication( _
+                    "----- DÉBUT D'UNE NOUVELLE SESSION (modAppli:DemarrerApplication) -----", _
+                    vbNullString, 0)
     
     'Initialisation de la session utilisateur '2025-10-19 @ 11:24
     Call InitialiserSessionUtilisateur
@@ -40,14 +42,8 @@ Sub DemarrerApplication(uw As String) '2025-07-11 @ 15:16
     Call FixerFormatDateUtilisateur(uw)
     Call CreerSauvegardeMaster
     Call EcrireInformationsConfigAuMenu
-    wshMenu.Range("A1").Value = wsdADMIN.Range("NomEntreprise").Value
-    Call modMenu.CacherFormesEnFonctionUtilisateur(uw)
     
-    'Protection de la feuille wshMenu
-    With wshMenu
-        .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlUnlockedCells
-    End With
+    wshMenu.Range("A1").Value = wsdADMIN.Range("NomEntreprise").Value
     
     Dim wb As Workbook: Set wb = ActiveWorkbook
     'Efface les feuilles dont le codename n'est pas wsh* -ET- dont le nom commence par 'Feuil'
@@ -60,7 +56,7 @@ Sub DemarrerApplication(uw As String) '2025-07-11 @ 15:16
     Next ws
     Application.DisplayAlerts = True
     
-    wshMenu.Activate
+    Call InitialiserMenuPrincipal("DemarrerApplication") '2025-11-10 @ 08:51
 
     If UtilisateurActif("Role") = "Dev" Then
         Call DemarrerSauvegardeCodeVBAAutomatique
@@ -77,7 +73,8 @@ ErrorHandler:
     Application.EnableEvents = True 'On s'assure de toujours restaurer l'état
     Application.DisplayAlerts = True
     Application.StatusBar = False
-    Call modDev_Utils.EnregistrerLogApplication("modAppli:DemarrerApplication (ERREUR) : " & Err.description, Timer)
+    Call EnregistrerErreurs("modAppli", "DemarrerApplication", "Au démarrage", Err.Number, "ERREUR")
+    Call modDev_Utils.EnregistrerLogApplication("modAppli:DemarrerApplication (ERREUR) : " & Err.description, "", startTime)
     
 End Sub
 
@@ -98,7 +95,7 @@ Sub VerifierVersionApplication(path As String, versionApplication As String) '20
                vbCritical, _
                "Version de l'application incompatible avec les données"
                
-        Call modMenu.FermerApplication("Erreur de numéro de version", True)
+        Call modMenu.FermerApplication("Incompatibilité de numéro de version", True)
     End If
     Exit Sub
 
@@ -108,7 +105,7 @@ ErreurLecture:
             vbExclamation, _
             "Impossible de lire la version des données"
     
-    Call modMenu.FermerApplication("Impossible de comparer la Version", True)
+    Call modMenu.FermerApplication("Incapable de vérifier numéro de version", True)
     
 End Sub
 
@@ -126,7 +123,8 @@ End Function
 
 Sub CreerFichierUtilisateurActif(ByVal userName As String)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:CreerFichierUtilisateurActif", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modAppli:CreerFichierUtilisateurActif", vbNullString, 0)
     
     Dim traceFilePath As String
     traceFilePath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
@@ -200,11 +198,16 @@ Sub CreerSauvegardeMaster()
     Exit Sub
     
 MASTER_NOT_AVAILABLE:
+    
+    Call EnregistrerErreurs("modAppli", "CreerSauvegardeMaster", "Fichier MASTER n'est pas disponible - ", _
+            Err.Number, "ERREUR")
     MsgBox _
         Prompt:="Le fichier GCF_MASTER.xlsx ne peut être accédé..." & vbNewLine & vbNewLine & _
                     "Le fichier nécessite une réparation manuelle", _
         Title:="Situation anormale (" & Err.Number & " " & Err.description & ")", _
         Buttons:=vbCritical
+    ThisWorkbook.Close SaveChanges:=False
+
     Application.Quit
 
 End Sub
@@ -282,7 +285,7 @@ Sub AfficherErreurCritique(modApp As String, procName As String, message As Stri
     
 End Sub
 
-Public Sub EnregistrerLogPerformance(nomProcedure As String, Optional duree As Double = -1) '2025-10-31 @ 14:05
+Public Sub EnregistrerLogPerformance(nomProcedure As String, duree As Double) '2025-10-31 @ 14:05
 
     On Error Resume Next
 
@@ -301,13 +304,16 @@ Public Sub EnregistrerLogPerformance(nomProcedure As String, Optional duree As D
 
     'Construire la ligne de log
     Dim ligneLog As String
-    If duree >= 0 Then
-        ligneLog = horodatage & " | " & utilisateur & " | " & ThisWorkbook.Name & " | " & _
-                                        nomProcedure & " | " & Format(duree, "0.000") & " sec"
-    Else
-        ligneLog = horodatage & " | " & utilisateur & " | " & ThisWorkbook.Name & " | " & _
-                                        nomProcedure
-    End If
+    Select Case duree
+        Case Is > 0
+            ligneLog = horodatage & " | " & utilisateur & " | " & ThisWorkbook.Name & " | " & _
+                                            nomProcedure & " | " & Format(duree, "0.000") & " sec"
+        Case Is = 0
+            ligneLog = horodatage & " | " & utilisateur & " | " & ThisWorkbook.Name & " | " & _
+                                            nomProcedure
+        Case Is < 0
+            ligneLog = vbNullString
+        End Select
 
     Dim canalLog As Integer
     canalLog = FreeFile
@@ -365,5 +371,29 @@ Public Sub EnregistrerErreurs(moduleAppelant As String, _
     
 End Sub
 
+Public Sub InitialiserMenuPrincipal(Optional source As String = "Appel inconnu") '2025-11-10 @ 08:47
+
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modAppli:InitialiserMenuPrincipal — Source : " & source, vbNullString, 0)
+
+    'Vérification d’ouverture silencieuse
+    Call modTraceSession.VerifierOuvertureSilencieuse
+
+    'Mise à jour des formes selon l’utilisateur
+    Call modMenu.CacherFormesEnFonctionUtilisateur(Fn_UtilisateurWindows)
+
+    'Protection de la feuille menu
+    With wshMenu
+        .Protect UserInterfaceOnly:=True
+        .EnableSelection = xlUnlockedCells
+    End With
+
+    'Positionnement visuel
+    wshMenu.Activate
+
+    'Journalisation de la durée
+    Call modDev_Utils.EnregistrerLogApplication("modAppli:InitialiserMenuPrincipal terminé", vbNullString, startTime)
+
+End Sub
 
 

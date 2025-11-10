@@ -4,8 +4,8 @@ Option Explicit
 Sub MAIN() '2025-11-04 @ 09:33
 
     Dim logPath As String
-    ChDrive "C:\VBA\GC_FISCALITÉ"
-    ChDir "C:\VBA\GC_FISCALITÉ"
+    ChDrive wsdADMIN.Range("PATH_DATA_FILES")
+    ChDir wsdADMIN.Range("PATH_DATA_FILES")
     logPath = Application.GetOpenFilename("Fichiers texte (*.txt; *.log), *.txt; *.log", , "Fichier log à analyser")
 
     Call AuditerSessionsAvecContexteEtReapparition(logPath)
@@ -26,7 +26,7 @@ Sub AuditerSessionsAvecContexteEtReapparition(logPath As String)
 
     Debug.Print vbCrLf
     Dim parts As Variant
-    parts = Split(logPath, "\")
+    parts = Split(logPath, Application.PathSeparator)
     Debug.Print parts(4) & vbCrLf & "---------------"
     Dim i As Long
     Dim fermetureEnAttente As Object: Set fermetureEnAttente = CreateObject("Scripting.Dictionary")

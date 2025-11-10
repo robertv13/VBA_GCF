@@ -309,7 +309,7 @@ Sub AjouterDebBDLocale(r As Long) 'Write records locally
             ws.Cells(rowToBeUsed, fDebTTimeStamp).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
         End With
         rowToBeUsed = rowToBeUsed + 1
-        Call modDev_Utils.EnregistrerLogApplication("    modDEB_Saisie:AjouterDebBDLocale", -1)
+        Call modDev_Utils.EnregistrerLogApplication("    modDEB_Saisie:AjouterDebBDLocale", "", -1)
     Next i
     
     Call modDev_Utils.EnregistrerLogApplication("modDEB_Saisie:AjouterDebBDLocale", vbNullString, startTime)

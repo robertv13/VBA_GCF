@@ -4,6 +4,15 @@ Option Explicit
 
 Private Sub Worksheet_Activate()
 
+    Call modSessionVerrou.VerrouillerSiSessionInvalide("Activation Feuille 'Menu Comptabilité'")
+    
+    If Not gSessionInitialisee Then
+        MsgBox "L'application n'a pas été initialisée correctement.", _
+            vbCritical, _
+            "Menu de Comptabilité"
+        ThisWorkbook.Close SaveChanges:=False
+    End If
+    
     Dim ws As Worksheet: Set ws = wshMenuGL
     
     With ws
@@ -13,7 +22,10 @@ Private Sub Worksheet_Activate()
 
     Application.EnableEvents = True
     
-    'Libérer la mémoire
     Set ws = Nothing
     
+    Call modTraceSession.VerifierOuvertureSilencieuse '2025-11-10 @ 08:42
+
+    Call modDev_Utils.EnregistrerLogApplication("wshMenuGL:Activate", "Au menu de la comptabilité", -1)
+
 End Sub

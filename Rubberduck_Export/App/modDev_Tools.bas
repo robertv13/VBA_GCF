@@ -88,7 +88,7 @@ Sub zz_Comparer2ClasseursFormatColonnes() '2024-08-19 @ 16:24
     Dim wb1 As Workbook
     Set wb1 = Workbooks.Open("C:\VBA\GC_FISCALITÉ\GCF_DataFiles\GCF_BD_MASTER_COPY.xlsx")
     Dim wb2 As Workbook
-    Set wb2 = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx")
+    Set wb2 = Workbooks.Open(wsdADMIN.Range("PATH_DATA_FILES") & Application.PathSeparator & gDATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx")
     
     Dim wso As Worksheet
     Dim wsn As Worksheet
@@ -235,7 +235,7 @@ Sub zz_Comparer2ClasseursNiveauCellules() '2024-08-20 @ 05:14
     Dim wb1 As Workbook
     Set wb1 = Workbooks.Open("C:\VBA\GC_FISCALITÉ\GCF_DataFiles\GCF_BD_MASTER_COPY.xlsx")
     Dim wb2 As Workbook
-    Set wb2 = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx")
+    Set wb2 = Workbooks.Open(wsdADMIN.Range("PATH_DATA_FILES") & Application.PathSeparator & gDATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx")
     
     Dim diffRow As Long
     diffRow = 1
@@ -652,7 +652,7 @@ Sub CreerRepertoireEtImporterFichiers() '2025-07-02 @ 13:57
 
     'Chemin du dossier contenant les fichiers PROD
     Dim cheminSourcePROD As String
-    cheminSourcePROD = "P:\Administration\APP\GCF\DataFiles\"
+    cheminSourcePROD = "P:\Administration\APP\GCF\" & gDATA_PATH & Application.PathSeparator & ""
     
     'Vérifier si des fichiers Actif_*.txt existent (utilisateurs encore présents)
     Dim actifFile As String
@@ -670,7 +670,8 @@ Sub CreerRepertoireEtImporterFichiers() '2025-07-02 @ 13:57
     
     'Définir le chemin racine (local) pour la création du nouveau dossier
     Dim cheminRacineDestination As String
-    cheminRacineDestination = "C:\VBA\GC_FISCALITÉ\GCF_DataFiles\"
+    cheminRacineDestination = wsdADMIN.Range("PATH_DATA_FILES") & Application.PathSeparator & _
+                    "GCF_DataFiles" & Application.PathSeparator
     
     'Construire le nom du répertoire basé sur la date et l'heure actuelle
     Dim dateHeure As String
@@ -749,7 +750,7 @@ Sub CreerRepertoireEtImporterFichiers() '2025-07-02 @ 13:57
     'Copie des deux fichiers du dossier temporaire vers le dossier DEV (but ultime)
     
     Dim dossierDEV As String
-    dossierDEV = "C:\VBA\GC_FISCALITÉ\DataFiles\"
+    dossierDEV = wsdADMIN.Range("PATH_DATA_FILES") & Application.PathSeparator & gDATA_PATH & Application.PathSeparator & ""
     
     'Copier le premier fichier
     If fso.fileExists(nouveauDossier & nomFichier1) Then
@@ -843,7 +844,7 @@ Sub AjusterEpurerTablesDeMaster() '2024-12-07 @ 06:47
 
     'Chemin du classeur à ajuster
     Dim cheminClasseur As String
-    cheminClasseur = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx"
+    cheminClasseur = wsdADMIN.Range("PATH_DATA_FILES") & Application.PathSeparator & gDATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
 
     'Ouvrir le classeur
     Dim wb As Workbook
@@ -1001,10 +1002,10 @@ Sub ListerEnumsGenerique(ByRef tableName As String, ByVal HeaderRow As Integer, 
     
     Dim wb As Workbook
     If tableName = "BD_Clients" Or tableName = "BD_Fournisseurs" Then
-        Set wb = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx")
+        Set wb = Workbooks.Open(wsdADMIN.Range("PATH_DATA_FILES") & Application.PathSeparator & gDATA_PATH & Application.PathSeparator & "GCF_BD_Entrée.xlsx")
         tableName = Replace(tableName, "BD_", vbNullString)
     Else
-        Set wb = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx")
+        Set wb = Workbooks.Open(wsdADMIN.Range("PATH_DATA_FILES") & Application.PathSeparator & gDATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx")
     End If
     Dim wsMaster As Worksheet
     If tableName <> "TEC_TDB_Data" Then
@@ -1312,13 +1313,19 @@ End Sub
 
 Sub DemarrerSauvegardeCodeVBAAutomatique() '2025-03-03 @ 07:19
 
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modDev_Tools:DemarrerSauvegardeCodeVBAAutomatique", _
+                                                                                        vbNullString, 0)
+    
     'Lancer l'export des modules VBA
     Call ExporterCodeVBA
     
     'Programmer la prochaine sauvegarde
     gNextBackupTime = Now + TimeValue("00:" & INTERVALLE_MINUTES_SAUVEGARDE & ":00")
-    
     Application.OnTime gNextBackupTime, "DemarrerSauvegardeCodeVBAAutomatique"
+    
+    Call modDev_Utils.EnregistrerLogApplication("modDev_Tools:DemarrerSauvegardeCodeVBAAutomatique", _
+                                                                                vbNullString, startTime)
     
 End Sub
 
@@ -1327,7 +1334,7 @@ Sub ExporterCodeVBA() '2025-03-11 @ 06:47
     'Définir le dossier où enregistrer les modules
     Dim dossierBackup As String
     dossierBackup = "C:\Users\RobertMV\OneDrive\_P E R S O N N E L\00_AU CAS OÙ\Backup_VBA\" & _
-                            Format$(Now, "yyyy-mm-dd_HHMMSS") & "-" & ThisWorkbook.Name & "\"
+                            Format$(Now, "yyyy-mm-dd_HHMMSS") & "-" & ThisWorkbook.Name & Application.PathSeparator
     
     'Vérifier si le dossier existe, sinon le créer
     If Dir(dossierBackup, vbDirectory) = vbNullString Then
@@ -1883,7 +1890,7 @@ Sub zz_VerifierCombinaisonClientIDClientNomDansTEC()
 
     'Fichier maître des clients
     Dim strFile As String
-    strFile = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx"
+    strFile = wsdADMIN.Range("PATH_DATA_FILES") & Application.PathSeparator & gDATA_PATH & Application.PathSeparator & "GCF_BD_Entrée.xlsx"
     Dim wb As Workbook
     Set wb = Workbooks.Open(strFile)
     
@@ -1960,7 +1967,7 @@ Sub zz_FixEstFacturable() '2025-07-23 @ 08:26
     Dim valeurActuelle As Variant
     
     'Chemin d’accès au classeur cible
-    cheminFichier = "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_MASTER.xlsx"
+    cheminFichier = wsdADMIN.Range("PATH_DATA_FILES") & Application.PathSeparator & gDATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
 
     Application.ScreenUpdating = False
     Application.DisplayAlerts = False
@@ -2035,10 +2042,10 @@ Sub zz_Comparer2Classeurs()
     
     'Declare and open the 2 workbooks
     Dim wbWas As Workbook
-    Set wbWas = Workbooks.Open("C:\VBA\GC_FISCALITÉ\DataFiles\GCF_BD_Entrée.xlsx", ReadOnly:=True)
+    Set wbWas = Workbooks.Open(wsdADMIN.Range("PATH_DATA_FILES") & Application.PathSeparator & gDATA_PATH & Application.PathSeparator & "GCF_BD_Entrée.xlsx", ReadOnly:=True)
     Debug.Print "#066 - " & wbWas.Name
     Dim wbNow As Workbook
-    Set wbNow = Workbooks.Open("C:\VBA\GC_FISCALITÉ\GCF_DataFiles\2024_09_01_1835\GCF_BD_Entrée_TBA.xlsx", ReadOnly:=True)
+    Set wbNow = Workbooks.Open(wsdADMIN.Range("PATH_DATA_FILES") & Application.PathSeparator & "GCF_DataFiles\2024_09_01_1835\GCF_BD_Entrée_TBA.xlsx", ReadOnly:=True)
     Debug.Print "#067 - " & wbNow.Name
 
     'Declare the 2 worksheets

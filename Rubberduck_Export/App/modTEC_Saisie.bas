@@ -132,7 +132,8 @@ Sub DetruireLigneTEC() '2023-12-23 @ 07:05
         GoTo Clean_Exit
     End If
     
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:DetruireLigneTEC - Le DELETE est confirmé - " & CStr(-ufSaisieHeures.txtTECID.Value), -1) '2024-10-05 @ 07:21
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:DetruireLigneTEC - Le DELETE est confirmé - ", _
+                CStr(-ufSaisieHeures.txtTECID.Value), -1) '2024-10-05 @ 07:21
     
     Dim timerPerformance As Double: timerPerformance = Timer
         

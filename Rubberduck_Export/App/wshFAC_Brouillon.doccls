@@ -244,7 +244,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     If Not Intersect(Target, Range("O48:O50")) Is Nothing And Range("B24").Value = False And Range("B25").Value = False Then
         With wshFAC_Finale
             If Target.row = 48 Then
-                Call modDev_Utils.EnregistrerLogApplication("wshFAC_Brouillon:Worksheet_Change" & ":" & _
+                Call modDev_Utils.EnregistrerLogApplication("wshFAC_Brouillon:Worksheet_Change", _
                     targetAddress & " - " & wshFAC_Brouillon.Range("O48").Value, -1)
                 wshFAC_Finale.Range("E70").Value = wshFAC_Brouillon.Range("O48").Value
                 wshFAC_Brouillon.Range("O49").Select

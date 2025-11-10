@@ -103,7 +103,8 @@ End Sub
 
 Sub ConfirmerSortieApplication() '2024-08-30 @ 07:37
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU:ConfirmerSortieApplication", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modMENU:ConfirmerSortieApplication", vbNullString, 0)
     
     Application.EnableEvents = False
     Application.ScreenUpdating = False
@@ -120,38 +121,32 @@ Sub ConfirmerSortieApplication() '2024-08-30 @ 07:37
             Call modMenu.FermerApplication("Fermeture normale", False)
         End If
     Else
-        Call modMenu.FermerApplication("Sauvegarde outrepassée", True)
+        Call modMenu.FermerApplication("Fermeture normale - Sauvegarde outrepassée", True)
     End If
     
+'    Call modDev_Utils.EnregistrerLogApplication("modMENU:ConfirmerSortieApplication", CStr(shiftEnfonce), startTime)
+
 End Sub
 
 Sub FermerApplication(methode As String, ignorerSauvegarde As Boolean) '2025-09-10 @ 08:14
 
     Dim startTime As Double: startTime = Timer
-    Call modDev_Utils.EnregistrerLogApplication("modMENU:FermerApplication", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modMENU:FermerApplication", CStr(ignorerSauvegarde), 0)
     
-'    On Error GoTo ExitPoint '2025-11-02 @ 13:08
-'
     Application.EnableEvents = False
     Application.ScreenUpdating = False
     
-    Dim userName As String
-    userName = modFunctions.Fn_UtilisateurWindows
+    Dim userName As String: userName = modFunctions.Fn_UtilisateurWindows
     
-    Dim ws As Worksheet
-    Set ws = wsdADMIN
+    Dim ws As Worksheet: Set ws = wsdADMIN
     
     Call ViderTableauxStructures
     
     'Effacer fichier utilisateur actif + Fermeture de la journalisation
     Call EffacerFichierUtilisateurActif(modFunctions.Fn_UtilisateurWindows())
     
-    Call EnregistrerLogPerformance("Fermeture = '" & methode & "'", -1)
+    Call EnregistrerLogPerformance("Fermeture = '" & methode & "'", 0)
     
-    Call modDev_Utils.EnregistrerLogApplication("----- SESSION TERMINÉE - modMenu:FermerApplication - Statut = " & _
-                        methode & " -----", IIf(ignorerSauvegarde, "S A N S   S A U V E G A R D E", ""), 0)
-    Call modDev_Utils.EnregistrerLogApplication(vbNullString, vbNullString, -1) 'Ligne blanche
-        
     'Fermer TOUS les formulaires (UserForm)
     Dim uf As Object
     For Each uf In VBA.UserForms
@@ -160,13 +155,12 @@ Sub FermerApplication(methode As String, ignorerSauvegarde As Boolean) '2025-09-
         On Error GoTo 0
     Next
     
-    'Fermer TOUTES les Application.OnTime
-    On Error Resume Next
-        Application.OnTime gNextBackupTime, "DemarrerSauvegardeCodeVBAAutomatique", , False
-        Application.OnTime gHeureProchaineVerification, "modSurveillance.VerifierActivite", , False
-        Application.OnTime gProchainTick, "modSurveillance.SurveillerFermetureAuto", , False
-        Application.OnTime gProchainRafraichir, "ufConfirmationFermeture.Rafraichir", , False
-    On Error GoTo 0
+    'Fermer TOUS les Timer
+    Call AnnulerTousLesTimers
+
+    Call modDev_Utils.EnregistrerLogApplication("----- SESSION TERMINÉE - modMenu:FermerApplication - Statut = " & _
+            methode & " -----", IIf(ignorerSauvegarde, "S A N S   S A U V E G A R D E", ""), startTime)
+'    Call modDev_Utils.EnregistrerLogApplication(vbNullString, vbNullString, -1) 'Ligne blanche
     
     gFermetureForcee = True
     Application.EnableEvents = False
@@ -175,7 +169,14 @@ Sub FermerApplication(methode As String, ignorerSauvegarde As Boolean) '2025-09-
         ThisWorkbook.Save
         Call EnregistrerLogPerformance("Sauvegarde du classeur", Timer - tt0)
     End If
-    ThisWorkbook.Close SaveChanges:=False
+    
+    Call modTraceSession.SupprimerTraceOuverture '2025-11-10 @ 08:38
+
+    If Workbooks.count = 1 Then '2025-11-10 @ 10:25
+        Application.Quit
+    Else
+        ThisWorkbook.Close SaveChanges:=False
+    End If
     
 End Sub
 
@@ -203,7 +204,8 @@ End Sub
 
 Sub CacherFormesEnFonctionUtilisateur(ByVal userName As String) '2025-06-06 @ 11:17
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU:CacherFormesEnFonctionUtilisateur", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modMENU:CacherFormesEnFonctionUtilisateur", vbNullString, 0)
     
     Dim ws As Worksheet: Set ws = wshMenu
     Dim devShapes As Variant
@@ -260,7 +262,8 @@ End Sub
 
 Sub ViderTableauxStructures() '2025-07-01 @ 10:38
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU:ViderTableauxStructures", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modMENU:ViderTableauxStructures", vbNullString, 0)
     
     Dim feuilles As Variant, tableaux As Variant
     Dim ws As Worksheet
@@ -306,6 +309,38 @@ Sub ViderTableauxStructures() '2025-07-01 @ 10:38
 
     Call modDev_Utils.EnregistrerLogApplication("modMENU:ViderTableauxStructures", vbNullString, startTime)
 
+End Sub
+
+Public Sub AnnulerTousLesTimers() '2025-11-10 @ 06:32
+
+    Debug.Print String(40, "-")
+    Debug.Print "Annulation des timers OnTime en cours..."
+    Debug.Print String(40, "-")
+
+    If gNextBackupTime <> 0 Then Call AnnulerTimer("DemarrerSauvegardeCodeVBAAutomatique", gNextBackupTime)
+    If gHeureProchaineVerification <> 0 Then Call AnnulerTimer("modSurveillance.VerifierActivite", gHeureProchaineVerification)
+    If gProchainTick <> 0 Then Call AnnulerTimer("modSurveillance.SurveillerFermetureAuto", gProchainTick)
+    If gProchainRafraichir <> 0 Then Call AnnulerTimer("ufConfirmationFermeture.RafraichirTimer", gProchainRafraichir)
+
+    Debug.Print String(40, "-")
+    Debug.Print "Fin de l’annulation des timers"
+    Debug.Print String(40, "-")
+    
+End Sub
+
+Public Sub AnnulerTimer(nomProcedure As String, heurePlanifiee As Date) '2025-11-10 @ 06:28
+
+    On Error Resume Next
+    
+    Application.OnTime heurePlanifiee, nomProcedure, , False
+    If Err.Number = 0 Then
+        Debug.Print Left(nomProcedure & Space(36), 36) & " - Timer annulé"
+    Else
+        Debug.Print Left(nomProcedure & Space(36), 36) & " - É C H E C annulation - " & Err.Number & " - " & Err.description
+    End If
+    
+    On Error GoTo 0
+    
 End Sub
 
 Sub shpImporterCorrigerMASTER_Click()

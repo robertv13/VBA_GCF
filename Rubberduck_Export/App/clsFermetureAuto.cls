@@ -45,14 +45,14 @@ Public Sub Rafraichir()
     If secondesRestantes <= 0 Then
         timerActif = False
         Unload ufConfirmationFermeture
-        Call modSurveillance.FermerApplicationConfirme
+        Call modMenu.FermerApplication("Fermeture forcée après TimeOut", False)
     Else
         ufConfirmationFermeture.lblTimer.Caption = "Fermeture dans " & _
                                     Format$(secondesRestantes \ 60, "00") & ":" & _
                                     Format$(secondesRestantes Mod 60, "00")
         Call modSurveillance.PlanifierTick
     End If
-    
+
 End Sub
 
 Public Sub Annuler()

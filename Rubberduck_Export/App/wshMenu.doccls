@@ -4,11 +4,26 @@ Option Explicit
 
 Private Sub Worksheet_Activate()
 
-    Call CacherToutesFeuillesSaufMenu
-
-    With wshMenu
-        .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlUnlockedCells
-    End With
+    Call modSessionVerrou.VerrouillerSiSessionInvalide("Activation Feuille 'Menu' principal")
     
+    If Not gSessionInitialisee Then
+        MsgBox "L'application n'a pas été initialisée correctement.", _
+            vbCritical, _
+            "Menu principal"
+        ThisWorkbook.Close SaveChanges:=False
+    End If
+    
+    Call InitialiserMenuPrincipal("wshMenu.Activate")
+    
+    Call EnregistrerLogApplication("wshMenu:Activate", "Au menu principal", -1)
+    
+'    Call CacherToutesFeuillesSaufMenu
+'
+'    With wshMenu
+'        .Protect UserInterfaceOnly:=True
+'        .EnableSelection = xlUnlockedCells
+'    End With
+'
+'    Call modTraceSession.VerifierOuvertureSilencieuse '2025-11-10 @ 08:42
+
 End Sub

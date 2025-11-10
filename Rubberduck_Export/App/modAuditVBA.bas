@@ -147,7 +147,7 @@ Sub IncrementerAppelsCodeDirect(dictIndex As Object, tableProc() As Variant, ind
                                 If InStr(1, ligne, "'") Then
                                     valeur = Trim(Replace(valeur, "'", vbNullString))
                                 End If
-                                If nomProc = "FermerApplicationInactive" And InStr(ligne, "FermerApplicationInactive") Then Stop
+                                If nomProc = "FermerApplication" And InStr(ligne, "FermerApplication") Then Stop
                                 If LCase(valeur) = LCase(nomProc) Then
                                     tableProc(dictIndex(nomProc), 7) = tableProc(dictIndex(nomProc), 7) + 1
                                 End If
@@ -260,12 +260,8 @@ Sub IncrementerAppelsFonctionsCodeDirect(dictIndex As Object, tableProc() As Var
                     GoTo LigneSuivante
                 End If
 
-'                If ligne = ".Range(""O6"").Value = Fn_ProchainNumeroFacture" Then Stop
-                
                 For Each nomFonction In dictIndex.keys
                 
-'                    If nomFonction = "Fn_ProchainNumeroFacture" Then Stop
-                    
                     idx = dictIndex(nomFonction)
                     If LCase(tableProc(idx, 2)) <> "function" Then GoTo NextNom
                     

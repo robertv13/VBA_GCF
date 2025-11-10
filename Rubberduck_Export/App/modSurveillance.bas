@@ -88,12 +88,6 @@ Sub ProposerFermeture() '2025-11-06 @ 15:57
     
 End Sub
 
-Sub FermerApplicationConfirme()  '2025-11-06 @ 15:57
-
-    Call modMenu.FermerApplication("Fermeture confirmée par l'utilisateur", False)
-    
-End Sub
-
 Public Sub InitialiserSurveillanceForm(frm As Object, ByRef wrappers As Collection) '2025-11-06 @ 16:21
 
     Set wrappers = New Collection
@@ -132,13 +126,13 @@ Public Sub EnregistrerActivite(source As String) '2025-11-06 @ 17:36
 
     gDerniereInteractionTimer = Timer
     Dim ligne As String
-    ligne = Now() & " | " & source & " | Feuille: " & Fn_NomFeuilleActive()
+    ligne = Format$(Now(), "yyyy-mm-dd hh:nn:ss") & " | " & source & " | Feuille: " & Fn_NomFeuilleActive()
     
-    Call EcrireDansLog(ligne)
+    Call EnregistrerActiviteDurantSurveillance(ligne)
     
 End Sub
 
-Public Sub EcrireDansLog(texte As String) '2025-11-07 @ 04:36
+Public Sub EnregistrerActiviteDurantSurveillance(texte As String) '2025-11-07 @ 04:36
 
     Dim chemin As String
     chemin = ThisWorkbook.path & "\journal_activite.txt"

@@ -6,8 +6,8 @@ Public UtilisateurActif As Scripting.Dictionary
 '--- Étape 1 : Récupération UtilisateurID à partir de l'utilisateur Windows ---
 Public Function Fn_InfosWindows() As Object
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication( _
-        "modSessionUtilisateur:Fn_InfosWindows", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modSessionUtilisateur:Fn_InfosWindows", vbNullString, 0)
 
     Dim cn As Object, rs As Object
     Dim infos As Object

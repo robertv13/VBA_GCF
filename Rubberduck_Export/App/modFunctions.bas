@@ -445,7 +445,7 @@ Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 
         dynamicRange.Columns(1), dynamicRange.Columns(2), _
         "Not Found", 0, 1)
     
-    Call modDev_Utils.EnregistrerLogApplication("     modFunctions:Fn_GetGL_Code_From_GL_Description - " & result, -1)
+    Call modDev_Utils.EnregistrerLogApplication("     modFunctions:Fn_GetGL_Code_From_GL_Description - " & result, "", -1)
     
     If result <> "Not Found" Then
         Fn_GetGL_Code_From_GL_Description = result
@@ -1712,7 +1712,7 @@ End Sub
 Function Fn_ExtraireNomFichier(path As String) As String
 
     Dim parts() As String
-    parts = Split(path, "\")
+    parts = Split(path, Application.PathSeparator)
     
     Fn_ExtraireNomFichier = parts(UBound(parts, 1))
 

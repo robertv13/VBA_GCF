@@ -74,7 +74,7 @@ Sub LireLogClientsApp(filePath As String)
     
     'Détermine l'environnement (DEV/PROD) ?
     Dim env As String
-    If Not InStr(filePath, "C:\VBA\GC_FISCALITÉ\DataFiles\") = 1 Then
+    If Not InStr(filePath, wsdADMIN.Range("PATH_DATA_FILES") & Application.PathSeparator & gDATA_PATH) = 1 Then
         env = "PROD"
     Else
         env = "DEV"
@@ -129,7 +129,7 @@ Sub LireLogClientsApp(filePath As String)
     Close #fileNum
     
     'Ajout du tableau à un classeur fermé
-    Call AjouterTableauClasseurFerme(output, "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_Logs_Data.xlsb", "Log_Clients")
+    Call AjouterTableauClasseurFerme(output, wsdADMIN.Range("PATH_DATA_FILES") & Application.PathSeparator & gDATA_PATH & Application.PathSeparator & "GCF_Logs_Data.xlsb", "Log_Clients")
     
     'S'il s'agit du fichier DEV, on l'efface (on garde les fichiers logs de la PROD)
     Debug.Print env, filePath
@@ -152,7 +152,7 @@ Sub LireLogMainApp(filePath As String)
     
     'Détermine l'environnement (DEV/PROD) ?
     Dim env As String
-    If Not InStr(filePath, "C:\VBA\GC_FISCALITÉ\DataFiles\") = 1 Then
+    If Not InStr(filePath, wsdADMIN.Range("PATH_DATA_FILES") & Application.PathSeparator & gDATA_PATH) = 1 Then
         env = "PROD"
     Else
         env = "DEV"
@@ -236,7 +236,7 @@ Sub LireLogMainApp(filePath As String)
     Close #fileNum
     
     'Ajout du tableau au classeur des logs
-    Call AjouterTableauClasseurFerme(output, "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_Logs_Data.xlsb", "Log_Application")
+    Call AjouterTableauClasseurFerme(output, wsdADMIN.Range("PATH_DATA_FILES") & Application.PathSeparator & gDATA_PATH & Application.PathSeparator & "GCF_Logs_Data.xlsb", "Log_Application")
     
     'S'il s'agit du fichier DEV, on l'efface (on garde les fichiers logs de la PROD)
     If env = "DEV" Then
@@ -258,7 +258,7 @@ Sub LireLogSaisieHeures(filePath As String)
     
     'Détermine l'environnement (DEV/PROD) ?
     Dim env As String
-    If Not InStr(filePath, "C:\VBA\GC_FISCALITÉ\DataFiles\") = 1 Then
+    If Not InStr(filePath, wsdADMIN.Range("PATH_DATA_FILES") & Application.PathSeparator & gDATA_PATH) = 1 Then
         env = "PROD"
     Else
         env = "DEV"
@@ -323,7 +323,7 @@ Sub LireLogSaisieHeures(filePath As String)
     Close #fileNum
     
     'Ajout du tableau à un classeur fermé
-    Call AjouterTableauClasseurFerme(output, "C:\VBA\GC_FISCALITÉ\DataFiles\GCF_Logs_Data.xlsb", "Log_Heures")
+    Call AjouterTableauClasseurFerme(output, wsdADMIN.Range("PATH_DATA_FILES") & Application.PathSeparator & gDATA_PATH & Application.PathSeparator & "GCF_Logs_Data.xlsb", "Log_Heures")
     
     'S'il s'agit du fichier DEV, on l'efface (on garde les fichiers logs de la PROD)
     Debug.Print env, filePath

@@ -43,6 +43,8 @@ End Sub
 
 Sub UserForm_Activate() '2024-07-31 @ 07:57
 
+    Call modSessionVerrou.VerrouillerSiSessionInvalide("L'application n'a pas été relancé adéquatement")
+    
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:UserForm_Activate", vbNullString, 0)
     
     gLogSaisieHeuresVeryDetailed = False
