@@ -1148,7 +1148,7 @@ Sub DeterminerOrdreDeTabulation(ws As Worksheet) '2024-06-15 @ 13:58
 
 End Sub
 
-Sub EnregistrerLogApplication(procedureName As String, param As String, startTime As Double) '2025-02-03 @ 17:17
+Sub EnregistrerLogApplication(procedureName As String, param As String, ByVal sTime As Double) '2025-02-03 @ 17:17
 
     'En attendant de trouver la problématique... 2025-06-01 @ 05:06
     If gUtilisateurWindows = vbNullString Then
@@ -1175,29 +1175,34 @@ Sub EnregistrerLogApplication(procedureName As String, param As String, startTim
     
     Open logFile For Append As #fileNum
     
+'    If InStr(1, procedureName, "SESSION TERMINÉE", vbTextCompare) > 0 Then
+'        Debug.Print sTime, Timer - sTime
+'        Stop
+'    End If
+'
     'On laisse une ligne blanche dans le fichier Log
     If Trim$(procedureName) = vbNullString Then
         Print #fileNum, vbNullString
-    ElseIf startTime = 0 Then 'On marque le départ d'une procédure/fonction
+    ElseIf sTime = 0 Then 'On marque le départ d'une procédure/fonction
         Print #fileNum, timeStamp & " | " & _
                         Left$(modFunctions.Fn_UtilisateurWindows() & Space(16), 16) & " | " & _
                         ThisWorkbook.Name & " | " & _
                         procedureName & param
-    ElseIf startTime < 0 Then 'On enregistre une entrée intermédiaire (au coeur d'un procédure/fonction)
+    ElseIf sTime < 0 Then 'On enregistre une entrée intermédiaire (au coeur d'un procédure/fonction)
         Print #fileNum, timeStamp & " | " & _
                         Left$(modFunctions.Fn_UtilisateurWindows() & Space(16), 16) & " | " & _
                         ThisWorkbook.Name & " | " & _
                         procedureName & param
     Else 'On marque la fin d'une procédure/fonction
         Dim elapsedTime As Double
-        elapsedTime = Round(Timer - startTime, 4) 'Calculate elapsed time
+        elapsedTime = Round(Timer - sTime, 4) 'Calculate elapsed time
         Print #fileNum, timeStamp & " | " & _
                         Left$(modFunctions.Fn_UtilisateurWindows() & Space(16), 16) & " | " & _
                         ThisWorkbook.Name & " | " & _
                         procedureName & param & " | " & _
                         Format$(elapsedTime, "0.0000") & " secondes"
         If Not Left(procedureName, 1) = " " Then
-            Print #fileNum, ""
+            Print #fileNum, vbNullString
         End If
     End If
     

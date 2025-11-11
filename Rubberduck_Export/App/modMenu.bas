@@ -124,8 +124,6 @@ Sub ConfirmerSortieApplication() '2024-08-30 @ 07:37
         Call modMenu.FermerApplication("Fermeture normale - Sauvegarde outrepassée", True)
     End If
     
-'    Call modDev_Utils.EnregistrerLogApplication("modMENU:ConfirmerSortieApplication", CStr(shiftEnfonce), startTime)
-
 End Sub
 
 Sub FermerApplication(methode As String, ignorerSauvegarde As Boolean) '2025-09-10 @ 08:14
@@ -160,14 +158,12 @@ Sub FermerApplication(methode As String, ignorerSauvegarde As Boolean) '2025-09-
 
     Call modDev_Utils.EnregistrerLogApplication("----- SESSION TERMINÉE - modMenu:FermerApplication - Statut = " & _
             methode & " -----", IIf(ignorerSauvegarde, "S A N S   S A U V E G A R D E", ""), startTime)
-'    Call modDev_Utils.EnregistrerLogApplication(vbNullString, vbNullString, -1) 'Ligne blanche
     
     gFermetureForcee = True
     Application.EnableEvents = False
     Dim tt0 As Double: tt0 = Timer
     If ignorerSauvegarde = False Then
         ThisWorkbook.Save
-        Call EnregistrerLogPerformance("Sauvegarde du classeur", Timer - tt0)
     End If
     
     Call modTraceSession.SupprimerTraceOuverture '2025-11-10 @ 08:38
@@ -298,6 +294,12 @@ Sub ViderTableauxStructures() '2025-07-01 @ 10:38
 
         If Not lo Is Nothing Then
             If Not lo.DataBodyRange Is Nothing Then
+                'Désactiver les filtres s'ils sont actifs '2025-11-11 @ 06:37
+                If Not lo.AutoFilter Is Nothing Then
+                    If lo.AutoFilter.FilterMode Then
+                        lo.AutoFilter.ShowAllData
+                    End If
+                End If
                 lo.DataBodyRange.Delete
             End If
         Else

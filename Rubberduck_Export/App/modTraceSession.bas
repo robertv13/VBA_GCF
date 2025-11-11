@@ -34,6 +34,9 @@ End Sub
 
 Public Sub VerifierOuvertureSilencieuse()
 
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modTraceSession:VerifierOuvertureSilencieuse", vbNullString, 0)
+    
     On Error Resume Next
         Dim chemin As String: chemin = Fn_RepertoireBaseApplication(Fn_UtilisateurWindows)
         If Dir(chemin & Application.PathSeparator & gDATA_PATH & Application.PathSeparator & "" & NOM_FICHIER_TRACE) <> vbNullString Then
@@ -44,6 +47,8 @@ Public Sub VerifierOuvertureSilencieuse()
         End If
     On Error GoTo 0
     
+    Call modDev_Utils.EnregistrerLogApplication("modTraceSession:VerifierOuvertureSilencieuse", vbNullString, startTime)
+
 End Sub
 
 Private Sub AppelLogSessionAnormale(msg As String)

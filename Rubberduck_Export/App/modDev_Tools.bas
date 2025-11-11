@@ -652,7 +652,7 @@ Sub CreerRepertoireEtImporterFichiers() '2025-07-02 @ 13:57
 
     'Chemin du dossier contenant les fichiers PROD
     Dim cheminSourcePROD As String
-    cheminSourcePROD = "P:\Administration\APP\GCF\" & gDATA_PATH & Application.PathSeparator & ""
+    cheminSourcePROD = "P:\Administration\APP\GCF" & gDATA_PATH & Application.PathSeparator & ""
     
     'Vérifier si des fichiers Actif_*.txt existent (utilisateurs encore présents)
     Dim actifFile As String

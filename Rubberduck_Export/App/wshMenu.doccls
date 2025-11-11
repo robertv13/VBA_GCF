@@ -17,13 +17,4 @@ Private Sub Worksheet_Activate()
     
     Call EnregistrerLogApplication("wshMenu:Activate", "Au menu principal", -1)
     
-'    Call CacherToutesFeuillesSaufMenu
-'
-'    With wshMenu
-'        .Protect UserInterfaceOnly:=True
-'        .EnableSelection = xlUnlockedCells
-'    End With
-'
-'    Call modTraceSession.VerifierOuvertureSilencieuse '2025-11-10 @ 08:42
-
 End Sub

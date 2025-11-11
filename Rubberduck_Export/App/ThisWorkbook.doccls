@@ -4,6 +4,15 @@ Private Sub Workbook_Open()
 
     Dim tt0 As Double: tt0 = Timer
     
+    If Not Application.Visible Then
+        Call EnregistrerErreurs("ThisWorkbook", "Workbook_Open", "Excel est en mode INVISIBLE", _
+                                                                                Err.Number, "ERREUR")
+        MsgBox "Ouverture non autorisée en mode invisible.", _
+        vbCritical, _
+        "Vérification au démarrage (ThisWorkbook_Open)"
+        ThisWorkbook.Close SaveChanges:=False
+    End If
+    
     If Application.EnableEvents = False Then
         Call EnregistrerErreurs("ThisWorkBook", "Open", "Démarrage ANORMAL", Err.Number, "ERREUR")
         MsgBox "Les événements Excel sont désactivés." & vbCrLf & vbCrLf & _
@@ -67,13 +76,13 @@ End Sub
     
 Private Sub Workbook_Activate() '2025-11-10 @ 11:15
 
-    Call modDev_Utils.EnregistrerLogApplication("ThisWorkbook_Activate déclenché", vbNullString, 0)
+    Call modDev_Utils.EnregistrerLogApplication("ThisWorkbook_Activate déclenché", ThisWorkbook.Name, 0)
     
 End Sub
 
 Private Sub Workbook_Deactivate()  '2025-11-10 @ 11:15
 
-    Call modDev_Utils.EnregistrerLogApplication("ThisWorkbook_Deactivate déclenché", vbNullString, 0)
+    Call modDev_Utils.EnregistrerLogApplication("ThisWorkbook_Deactivate déclenché", ThisWorkbook.Name, 0)
     
 End Sub
 
@@ -97,8 +106,8 @@ Private Sub Workbook_SheetActivate(ByVal Sh As Object) '2025-07-03 @ 10:58
     gDerniereActiviteNomFeuille = Sh.Name '2025-11-06 @ 16:15
     gDerniereInteractionTimer = Timer
     
-'    Call modAppli.EnregistrerActivite(Sh.Name & " - Workbook_SheetActivate")
-'
+    Call modDev_Utils.EnregistrerLogApplication("Workbook_SheetActivate déclenché", Sh.Name, 0)
+
 End Sub
 
 Private Sub Workbook_BeforeClose(Cancel As Boolean)
@@ -111,6 +120,12 @@ Private Sub Workbook_BeforeClose(Cancel As Boolean)
         If ufExitDisable.Visible Then Unload ufExitDisable
     End If
     
+End Sub
+
+Private Sub Workbook_SheetDeactivate(ByVal Sh As Object)
+    
+    Call modDev_Utils.EnregistrerLogApplication("Workbook_SheetDeactivate déclenché", Sh.Name, 0)
+
 End Sub
 
 Private Sub Workbook_SheetSelectionChange(ByVal Sh As Object, ByVal Target As Range) '2025-11-06 @ 16:16

@@ -8,7 +8,8 @@ Private lastRow As Long, lastResultRow As Long, resultRow As Long
 
 Sub CreerNouvelleFactureBrouillon() 'Clear contents
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:CreerNouvelleFactureBrouillon", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:CreerNouvelleFactureBrouillon", vbNullString, 0)
     
     Application.EnableEvents = False
     Application.ScreenUpdating = False

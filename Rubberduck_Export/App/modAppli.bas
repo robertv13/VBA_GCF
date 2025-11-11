@@ -258,7 +258,8 @@ End Sub
 
 Sub QuitterFeuillePourMenu(ByVal nomFeuilleMenu As Worksheet, Optional masquerFeuilleActive As Boolean = False) '2025-08-19 @ 06:46
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli:QuitterFeuillePourMenu", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modAppli:QuitterFeuillePourMenu", vbNullString, 0)
     
     Application.EnableEvents = False
     Application.ScreenUpdating = False
@@ -287,6 +288,9 @@ End Sub
 
 Public Sub EnregistrerLogPerformance(nomProcedure As String, duree As Double) '2025-10-31 @ 14:05
 
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modAppli:EnregistrerLogPerformance", vbNullString, 0)
+    
     On Error Resume Next
 
     'Définir le chemin du fichier log (local ou partagé)
@@ -327,6 +331,8 @@ Public Sub EnregistrerLogPerformance(nomProcedure As String, duree As Double) '2
 
     On Error GoTo 0
     
+    Call modDev_Utils.EnregistrerLogApplication("modAppli:EnregistrerLogPerformance", vbNullString, startTime)
+
 End Sub
 
 Public Sub EnregistrerErreurs(moduleAppelant As String, _
@@ -378,6 +384,8 @@ Public Sub InitialiserMenuPrincipal(Optional source As String = "Appel inconnu")
 
     'Vérification d’ouverture silencieuse
     Call modTraceSession.VerifierOuvertureSilencieuse
+
+    Call CacherToutesFeuillesSaufMenu
 
     'Mise à jour des formes selon l’utilisateur
     Call modMenu.CacherFormesEnFonctionUtilisateur(Fn_UtilisateurWindows)

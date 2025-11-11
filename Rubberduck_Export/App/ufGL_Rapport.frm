@@ -225,8 +225,6 @@ End Sub
 
 Private Sub txtDateSaisieFin_Exit(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Debug.Print "DateSaisieFin_Exit déclenché"
-    
     Dim dateCorrigee As String
     
     If Trim$(txtDateSaisieFin.text) <> vbNullString Then
