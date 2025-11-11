@@ -7,6 +7,7 @@ Sub ImporterMASTERGenerique(sourceWb As String, ws As Worksheet, onglet As Strin
     Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterMASTERGenerique:" & onglet, vbNullString, 0)
     
     On Error GoTo ERREUR_IMPORT
+    
     Application.ScreenUpdating = False
     Application.EnableEvents = False
     Application.Calculation = xlCalculationManual
@@ -81,10 +82,10 @@ FIN:
     Exit Sub
     
 ERREUR_IMPORT:
+    Call EnregistrerErreurs("modImport", "ImporterMASTERGenerique", sourceTab, Err.Number, "ERREUR")
     MsgBox "Erreur [" & Err.Number & "] : " & Err.description, _
         vbCritical, _
         "Importation de " & sourceTab
-    Call EnregistrerErreurs("modImport", "ImporterMASTERGenerique", sourceTab, Err.Number)
     Resume FIN
 
 End Sub

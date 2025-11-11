@@ -370,7 +370,7 @@ End Sub
 
 Sub shpCompterLignesCodeProjet_Click()
 
-    Call CompterLignesCode
+    Call modDev_Tools.CompterLignesCode
 
 End Sub
 

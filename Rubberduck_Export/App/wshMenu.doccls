@@ -4,17 +4,6 @@ Option Explicit
 
 Private Sub Worksheet_Activate()
 
-    Call modSessionVerrou.VerrouillerSiSessionInvalide("Activation Feuille 'Menu' principal")
-    
-    If Not gSessionInitialisee Then
-        MsgBox "L'application n'a pas été initialisée correctement.", _
-            vbCritical, _
-            "Menu principal"
-        ThisWorkbook.Close SaveChanges:=False
-    End If
-    
-    Call InitialiserMenuPrincipal("wshMenu.Activate")
-    
-    Call EnregistrerLogApplication("wshMenu:Activate", "Au menu principal", -1)
-    
+    Call InitialiserFeuilleMenu(Me, "principal", "Menu principal")
+
 End Sub

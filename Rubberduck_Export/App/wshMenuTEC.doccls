@@ -4,26 +4,6 @@ Option Explicit
 
 Private Sub Worksheet_Activate()
 
-    Call modSessionVerrou.VerrouillerSiSessionInvalide("Activation Feuille 'Menu TEC'")
-   
-    If Not gSessionInitialisee Then
-        MsgBox "L'application n'a pas été initialisée correctement.", _
-            vbCritical, _
-            "Menu TEC"
-        ThisWorkbook.Close SaveChanges:=False
-    End If
-
-    Dim ws As Worksheet: Set ws = wshMenuTEC
+    Call InitialiserFeuilleMenu(Me, "des TEC", "Menu TEC")
     
-    With ws
-        .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlUnlockedCells
-    End With
-    
-    Set ws = Nothing
-  
-    Call modTraceSession.VerifierOuvertureSilencieuse '2025-11-10 @ 08:42
-
-    Call modDev_Utils.EnregistrerLogApplication("wshMenuTEC:Activate", "Au menu des TEC", -1)
-
 End Sub
