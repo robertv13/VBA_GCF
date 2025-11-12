@@ -110,7 +110,7 @@ Sub ImporterClients() 'Using ADODB - 2024-02-25 @ 10:23
     'Import Clients List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
     Dim sourceWorkbook As String, sourceTab As String
     sourceWorkbook = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
-                     wsdADMIN.Range("CLIENTS_FILE").Value '2024-02-14 @ 07:04
+                     wsdADMIN.Range("CLIENTS_FILE").Value
     sourceTab = "Clients$"
     
     'ADODB connection
@@ -495,7 +495,7 @@ Sub ImporterFournisseurs() 'Using ADODB - 2024-07-03 @ 15:43
     'Import Suppliers List from 'GCF_BD_Entrée.xlsx, in order to always have the LATEST version
     Dim sourceWorkbook As String, sourceTab As String
     sourceWorkbook = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
-                     wsdADMIN.Range("CLIENTS_FILE").Value '2024-02-14 @ 07:04
+                     wsdADMIN.Range("CLIENTS_FILE").Value
     sourceTab = "Fournisseurs$"
     
     'ADODB connection
@@ -552,7 +552,7 @@ Sub ImporterEJRecurrente() '2025-05-07 @ 14:35
 
     Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
-    Call ConstruireSommaireEJRecurrente '2024-03-14 @ 07:38
+    Call ConstruireSommaireEJRecurrente
     
     Application.Calculation = xlCalculationAutomatic
     Application.ScreenUpdating = True
@@ -591,7 +591,7 @@ Sub ImporterGLTransactions() '2025-05-07 @ 16:10
 
 End Sub
 
-Sub ImporterTEC() '2024-02-14 @ 06:19
+Sub ImporterTEC()
     
     Dim startTime As Double: startTime = Timer
     Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterTEC", vbNullString, 0)

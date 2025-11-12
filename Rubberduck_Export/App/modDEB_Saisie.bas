@@ -788,7 +788,7 @@ Sub AjouterDEBRecurrentBDLocale(r As Long) 'Write records to local file
         rowToBeUsed = rowToBeUsed + 1
     Next i
     
-    Call ConstruireSommaireDEBRecurrent '2024-03-14 @ 07:40
+    Call ConstruireSommaireDEBRecurrent
     
     Application.ScreenUpdating = True
     

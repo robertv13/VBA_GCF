@@ -66,7 +66,7 @@ Public Sub ConvertirPlageABooleen(rng As Range)
     
 End Sub
 
-Public Sub VerifierIntegriteTablesLocales() '2024-11-20 @ 06:55
+Public Sub VerifierIntegriteTablesLocales()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:VerifierIntegriteTablesLocales", vbNullString, 0)
 
@@ -1989,7 +1989,6 @@ Private Sub VerifierFACEntete(ByVal wsOutput As Worksheet, ByRef r As Long, ByRe
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "********** Un total de " & casFactureNonSauvegardee & " factures n'ont pas été sauvegardées")
             r = r + 1
             isFACEntêteValid = False
-            gNombreErreur = gNombreErreur + 1
     Else
             Call AjouterMessageAuxResultats(wsOutput, r, 2, "Toutes les factures du répertoire PDF ont été sauvegardées")
             r = r + 1
@@ -3464,7 +3463,7 @@ Private Sub VerifierTEC(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef read
     Dim ws As Worksheet: Set ws = wsdTEC_Local
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 9624 'What is the last TECID analyzed ?
+    lastTECIDReported = 9687 'What is the last TECID analyzed ?
     
     'Réference au UserDefined structure 'StatistiquesTEC'
     Dim stats As StatistiquesTEC
@@ -4238,7 +4237,7 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
 
 End Sub
 
-Sub ObtenirDeplacementsAPartirDesTEC()  '2024-09-05 @ 10:22
+Sub ObtenirDeplacementsAPartirDesTEC()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:ObtenirDeplacementsAPartirDesTEC", vbNullString, 0)
     

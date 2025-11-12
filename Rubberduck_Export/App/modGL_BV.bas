@@ -574,7 +574,7 @@ Sub MettreEnPageEtPrevisualiserBVOuTrans(myPrintRange As Range, pagesTall As Lon
     Application.EnableEvents = True
     Application.Calculation = xlCalculationAutomatic
 
-    wshGL_BV.PrintPreview '2024-08-15 @ 14:53
+    wshGL_BV.PrintPreview
  
     Call modDev_Utils.EnregistrerLogApplication("      modGL_BV:MettreEnPageEtPrevisualiserBVOuTrans", vbNullString, startTime)
  

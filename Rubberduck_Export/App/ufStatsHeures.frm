@@ -34,7 +34,7 @@ Private Sub UserForm_Initialize()
     
 End Sub
 
-Private Sub lstDatesSemaines_Click() '2024-12-04 @ 07:36
+Private Sub lstDatesSemaines_Click()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:lstDatesSemaines_Click", lstDatesSemaines.Value, 0)
     
@@ -54,7 +54,7 @@ Private Sub lstDatesSemaines_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
 End Sub
 
-Private Sub lstDatesSemaines_Click_or_DblClick(ByVal valeur As Variant) '2024-12-04 @ 07:36
+Private Sub lstDatesSemaines_Click_or_DblClick(ByVal valeur As Variant)
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:lstDatesSemaines_Click_or_DblClick", lstDatesSemaines.Value, 0)
     
@@ -291,7 +291,7 @@ Sub ChargerListBoxAvec52DernieresSemaines()
     
     'On se positionne à la fin de la liste (évite de monter/descendre)
     lstSemaines.TopIndex = lstSemaines.ListCount - 1
-    lstSemaines.ListIndex = lstSemaines.ListCount - 1 '2024-12-04 @ 07:49
+    lstSemaines.ListIndex = lstSemaines.ListCount - 1
 
     'Libérer la mémoire
 '    Set lstSemaines = Nothing

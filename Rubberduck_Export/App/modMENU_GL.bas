@@ -6,7 +6,7 @@ Sub shpAccederSaisieENC_Click()
 
     Application.ScreenUpdating = False
     
-    gFromMenu = True '2024-09-03 @ 06:20
+    gFromMenu = True
     
     With wshENC_Saisie
         .Visible = xlSheetVisible
@@ -24,7 +24,7 @@ Sub shpAccederSaisieDEB_Click()
     
     Application.EnableEvents = True
     
-    gFromMenu = True '2024-09-30 @ 09:33
+    gFromMenu = True
     
     With wshDEB_Saisie
         .Visible = xlSheetVisible

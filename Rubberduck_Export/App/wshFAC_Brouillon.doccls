@@ -49,9 +49,9 @@ Private Sub Worksheet_Activate()
     Application.Goto Reference:=Me.Cells(1, 3), Scroll:=True
     
     Me.Range("O3").Value = Format$(Date, wsdADMIN.Range("B1").Value)
-    Me.Range("B27").Value = False '2024-09-03 @ 06:33
+    Me.Range("B27").Value = False
 
-    Me.Range("E3").Value = vbNullString '2024-09-02 @ 23:36
+    Me.Range("E3").Value = vbNullString
     Me.Range("E3").Select 'The first input is the customer name
     
     gFromMenu = False

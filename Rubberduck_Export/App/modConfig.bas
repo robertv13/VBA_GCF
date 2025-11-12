@@ -5,7 +5,7 @@ Public Const gDATA_PATH As String = "\DataFiles"
 Public Const gFACT_PDF_PATH As String = "\Factures_PDF"
 Public Const gFACT_EXCEL_PATH As String = "\Factures_Excel"
 
-Public Const gNB_MAX_LIGNE_FAC As Long = 35 '2024-06-18 @ 12:18
+Public Const gNB_MAX_LIGNE_FAC As Long = 35
 
 Public Const gCOULEUR_SAISIE As String = &HCCFFCC 'Light green (Pastel Green)
 Public Const gCOULEUR_BASE_TEC As Long = 6740479
@@ -19,7 +19,7 @@ Public gUtilisateurWindows As String
 Public gPreviousCellAddress As String
 
 'Variable utilisée pour éviter l'évènement Activate à chaque fois que l'on revient dans une feuille
-Public gFromMenu As Boolean '2024-09-03 @ 06:14
+Public gFromMenu As Boolean
 
 'Niveau de détail pour le log de SaisieHeures
 Public gLogSaisieHeuresVeryDetailed As Boolean
@@ -41,7 +41,7 @@ Public Const gDELAI_GRACE_SECONDES As Long = 60 'Secondes
 Public gFermetureForcee As Boolean '2025-11-02 @ 13:40
 
 'Using Enum to specify the column number of worksheets (data)
-Public Enum BD_Clients '2024-10-26 @ 17:41
+Public Enum BD_Clients
     [_First] = 1
     fClntFMClientNom = [_First]
     fClntFMClientID
@@ -64,7 +64,7 @@ Public Enum BD_Clients '2024-10-26 @ 17:41
     [_Last]
 End Enum
 
-Public Enum BD_Fournisseurs '2024-12-24 @ 07:34
+Public Enum BD_Fournisseurs
     [_First] = 1
     fFourFMNomFournisseur = [_First]
     fFourFMFournID

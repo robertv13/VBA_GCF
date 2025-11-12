@@ -61,7 +61,7 @@ Function Fn_ObtenirLigneDeFeuille(feuille As String, cle As Variant, cleCol As I
     
 End Function
 
-Function Fn_ClientIDAPartirDuNomDeClient(nomClient As String) '2024-02-14 @ 06:07
+Function Fn_ClientIDAPartirDuNomDeClient(nomClient As String)
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFunctions:Fn_ClientIDAPartirDuNomDeClient", nomClient, 0)
     
@@ -151,7 +151,7 @@ Function Fn_CellSpecifiqueDeBDClient(nomClient As String, ByRef colNumberSearch 
 
 End Function
 
-Function Fn_ClientIDAPartirDuNomDeFournisseur(nomFournisseur As String) '2024-07-03 @ 16:13
+Function Fn_ClientIDAPartirDuNomDeFournisseur(nomFournisseur As String)
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFunctions:Fn_ClientIDAPartirDuNomDeFournisseur", nomFournisseur, 0)
     
@@ -250,13 +250,12 @@ Function Fn_ValeurAPartirUniqueID(ws As Worksheet, uniqueID As String, keyColumn
     
 End Function
 
-Function Fn_TrouveDataDansUnePlage(r As Range, cs As Long, ss As String, cr As Long) As Variant() '2024-03-29 @ 05:39
+Function Fn_TrouveDataDansUnePlage(r As Range, cs As Long, ss As String, cr As Long) As Variant()
     
     'This function is used to retrieve information from in a range(r) at column (cs) the value of (ss)
     'If found, it returns an array, with the cell address(1), the row(2) and the value of column cr(3)
     'Otherwise it return an empty array
-    '2024-03-09 - First version
-    
+        
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFunctions:Fn_TrouveDataDansUnePlage", vbNullString, 0)
     
     Dim foundInfo(1 To 3) As Variant 'Cell Address, Row, Value
@@ -355,7 +354,7 @@ Function Fn_DetruireLigneSiValeurEstTrouvee(valueToFind As Variant, hono As Doub
                 Call DetruireEnteteSiEnteteEstDetruite(destinationFileName, _
                                                         destinationTab, _
                                                         columnName, _
-                                                        valueToFind) '2024-07-19 @ 15:31
+                                                        valueToFind)
             Case vbNo
                 Fn_DetruireLigneSiValeurEstTrouvee = "RIEN_CHANGER"
         End Select
@@ -564,7 +563,7 @@ Function Fn_TECTotalOuHeuresPourFactureAvecAF(invNo As String, t As String) As C
     
 End Function
 
-Public Function Fn_Find_Row_Number_TECID(ByVal uniqueID As Variant, ByVal lookupRange As Range) As Long '2024-08-10 @ 05:41
+Public Function Fn_Find_Row_Number_TECID(ByVal uniqueID As Variant, ByVal lookupRange As Range) As Long
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFunctions:Fn_Find_Row_Number_TECID", vbNullString, 0)
     
@@ -725,10 +724,8 @@ Function Fn_CellAPartirUneFeuille(feuille As String, cle As String, cleCol As In
 
 End Function
 
-Function Fn_ClientEstValide(clientCode As String) As Boolean '2024-10-26 @ 18:30
+Function Fn_ClientEstValide(clientCode As String) As Boolean
 
-    '2024-08-14 @ 10:17 - Verify that a client exists, based on clientCode
-    
     Fn_ClientEstValide = False
     
     Dim lastUsedRow As Long
@@ -748,7 +745,7 @@ Function Fn_ClientEstValide(clientCode As String) As Boolean '2024-10-26 @ 18:30
     
 End Function
 
-Function Fn_ValiderCourriel(ByVal adresses As String) As Boolean '2024-10-26 @ 14:30
+Function Fn_ValiderCourriel(ByVal adresses As String) As Boolean
     
     'Supporte de 0 à 2 courriels (séparés par '; ')
     
@@ -814,7 +811,7 @@ Function Fn_JourMoisSpecifiqueEstIlValide(d As Long, m As Long, Y As Long) As Bo
 
 End Function
 
-Function Fn_AccesServeur(serverPath As String) As Boolean '2024-09-24 @ 17:14
+Function Fn_AccesServeur(serverPath As String) As Boolean
 
     DoEvents
     
@@ -921,7 +918,7 @@ Invalid_Date:
     
 End Function
 
-Function Fn_TriDictionnaireParCles(dict As Object, Optional descending As Boolean = False) As Variant '2024-10-02 @ 12:02
+Function Fn_TriDictionnaireParCles(dict As Object, Optional descending As Boolean = False) As Variant
     
     'Sort a dictionary by its keys and return keys in an array
     Dim keys() As Variant
@@ -960,7 +957,7 @@ Function Fn_TriDictionnaireParCles(dict As Object, Optional descending As Boolea
     
 End Function
 
-Function Fn_TriDictionnaireParValeurs(dict As Object, Optional descending As Boolean = False) As Variant '2024-07-11 @ 15:16
+Function Fn_TriDictionnaireParValeurs(dict As Object, Optional descending As Boolean = False) As Variant
     
     'Sort a dictionary by its values and return keys in an array
     Dim keys() As Variant
@@ -1006,7 +1003,7 @@ Function Fn_TriDictionnaireParValeurs(dict As Object, Optional descending As Boo
     
 End Function
 
-Public Function Fn_Strip_Contact_From_Client_Name(cn As String) '2024-08-15 @ 07:44
+Public Function Fn_Strip_Contact_From_Client_Name(cn As String)
 
     Fn_Strip_Contact_From_Client_Name = cn
     
@@ -1120,7 +1117,7 @@ Public Function Fn_Get_Hourly_Rate(profID As Long, dte As Date)
     
 End Function
 
-Function Fn_TypeFacture(invNo As String) As String '2024-08-17 @ 06:55
+Function Fn_TypeFacture(invNo As String) As String
 
     'Return the Type of invoice - 'C' for confirmed, 'AC' to be confirmed
     
@@ -1315,7 +1312,7 @@ Public Function Fn_ChaineRemplie(s As String, fillCaracter As String, length As 
         
 End Function
 
-Function Fn_ProchainNumeroFacture() As String '2024-09-17 @ 14:00
+Function Fn_ProchainNumeroFacture() As String
 
     Dim ws As Worksheet: Set ws = wsdFAC_Entete
     
@@ -1339,9 +1336,9 @@ Function Fn_ProchainNumeroFacture() As String '2024-09-17 @ 14:00
     
 End Function
 
-Function Fn_PlanComptableTableau2D(nbCol As Long) As Variant '2024-06-07 @ 07:31
+Function Fn_PlanComptableTableau2D(nbCol As Long) As Variant
 
-    Debug.Assert nbCol >= 1 And nbCol <= 4 '2024-07-31 @ 19:26
+    Debug.Assert nbCol >= 1 And nbCol <= 4
     
     'Reference the named range
     Dim planComptable As Range: Set planComptable = wsdADMIN.Range("dnrPlanComptable_All")
@@ -1497,7 +1494,7 @@ Function Fn_ChaineValideAvecPlage(searchString As String, rng As Range) As Boole
 End Function
 
 'Fonction de tri rapide (QuickSort) pour trier un tableau
-Sub TrierBubble(arr As Variant, ByVal first As Long, ByVal last As Long) '2024-09-05 @ 05:09
+Sub TrierBubble(arr As Variant, ByVal first As Long, ByVal last As Long)
     
     Dim pivot As Variant, tmp As Variant
     Dim i As Long, j As Long
@@ -1564,7 +1561,7 @@ Function Fn_DateDuLundi(d As Date)
 
 End Function
 
-Function Fn_ChaineNettoyeeCaracteresSpeciaux(s As String) '2024-11-07 @ 16:57
+Function Fn_ChaineNettoyeeCaracteresSpeciaux(s As String)
 
     Fn_ChaineNettoyeeCaracteresSpeciaux = s
     

@@ -40,7 +40,7 @@ Private Sub lstEJRecurrente_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     rowSelected = lstEJRecurrente.ListIndex
     DescEJAuto = lstEJRecurrente.List(rowSelected, 0)
     NoEJAuto = lstEJRecurrente.List(rowSelected, 1)
-    wshGL_EJ.Range("B2").Value = rowSelected '2024-01-08 @ 13:58
+    wshGL_EJ.Range("B2").Value = rowSelected
     
     Unload ufListeEJAuto
     

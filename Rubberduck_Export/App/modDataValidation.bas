@@ -1,7 +1,7 @@
 Attribute VB_Name = "modDataValidation"
 Option Explicit
 
-Public Sub AfficherMessageDateInvalide(location As String) '2024-06-13 @ 12:40
+Public Sub AfficherMessageDateInvalide(location As String)
 
     MsgBox "La date saisie ne peut être acceptée tel qu'elle est entrée." & vbNewLine & vbNewLine & _
            "Elle doit être obligatoirement de format:" & vbNewLine & _

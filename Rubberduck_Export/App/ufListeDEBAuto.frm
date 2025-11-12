@@ -68,7 +68,7 @@ Private Sub lstDEBRecurrent_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     Dim descDEBAuto As String
     descDEBAuto = lstDEBRecurrent.List(rowSelected, 1)
     
-    wshDEB_Saisie.Range("B3").Value = rowSelected '2024-06-14 @ 07:23
+    wshDEB_Saisie.Range("B3").Value = rowSelected
     
     Unload ufListeDEBAuto
     

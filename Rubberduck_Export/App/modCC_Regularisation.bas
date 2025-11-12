@@ -74,7 +74,7 @@ Clean_Exit:
 
 End Sub
 
-Sub PreparerNouvelleRegularisation() '2024-08-21 @ 14:58
+Sub PreparerNouvelleRegularisation()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:PreparerNouvelleRegularisation", vbNullString, 0)
 
@@ -155,7 +155,7 @@ Sub AjouterRegularisationBDMaster() 'Write to MASTER.xlsx
     
 End Sub
 
-Sub AjouterRegularisationBDLocale() '2024-08-22 @ 10:38
+Sub AjouterRegularisationBDLocale()
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:AjouterRegularisationBDLocale", vbNullString, 0)
     
@@ -255,7 +255,7 @@ Sub MettreAJourRegulComptesClientsBDMaster() 'Write to MASTER.xlsx
     
 End Sub
 
-Sub MettreAJourRegulComptesClientsBDLocale() '2024-08-22 @ 10:55
+Sub MettreAJourRegulComptesClientsBDLocale()
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modCC_Regularisation:MettreAJourRegulComptesClientsBDLocale", vbNullString, 0)
     

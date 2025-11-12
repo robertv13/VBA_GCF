@@ -5,7 +5,7 @@ Public gProchaineVerifUserForm As Date
 Public gHeurePrevueFermetureAutomatique As Date 'Heure à laquelle l'application devrait fermer
 Public gClignoteEtat As Boolean
 
-Sub DemarrerApplication(uw As String) '2025-07-11 @ 15:16
+Sub DemarrerApplication(userWindows As String) '2025-07-11 @ 15:16
 
     'Mise en place du répertoire de base (C:\... ou P:\...)
     Dim rootPath As String
@@ -22,7 +22,7 @@ Sub DemarrerApplication(uw As String) '2025-07-11 @ 15:16
     'Initialisation de la session utilisateur '2025-10-19 @ 11:24
     Call InitialiserSessionUtilisateur
     
-    On Error GoTo ErrorHandler
+'    On Error GoTo ErrorHandler
     
     If Application.EnableEvents = False Then Application.EnableEvents = True
     Application.Calculation = xlCalculationAutomatic
@@ -38,8 +38,8 @@ Sub DemarrerApplication(uw As String) '2025-07-11 @ 15:16
     End If
     Application.StatusBar = False
 
-    Call CreerFichierUtilisateurActif(uw)
-    Call FixerFormatDateUtilisateur(uw)
+    Call CreerFichierUtilisateurActif(userWindows)
+    Call FixerFormatDateUtilisateur(userWindows)
     Call CreerSauvegardeMaster
     Call EcrireInformationsConfigAuMenu
     
@@ -56,12 +56,13 @@ Sub DemarrerApplication(uw As String) '2025-07-11 @ 15:16
     Next ws
     Application.DisplayAlerts = True
     
-    Call InitialiserFeuilleMenu(ws, "DemarrerApplication", "") '2025-11-10 @ 08:51
-
     If UtilisateurActif("Role") = "Dev" Then
         Call DemarrerSauvegardeCodeVBAAutomatique
     End If
     
+    Set ws = wshMenu
+    Call InitialiserFeuilleMenu(ws, "modAppli:DemarrerApplication", "Menu Principal - 1") '2025-11-10 @ 08:51
+
     'Libérer la mémoire
     Set wb = Nothing
     Set ws = Nothing
@@ -421,7 +422,7 @@ Public Sub InitialiserFeuilleMenu(ws As Worksheet, contexte As String, etiquette
     
     Call modTraceSession.VerifierOuvertureSilencieuse
     
-    Call modDev_Utils.EnregistrerLogApplication(ws.Name & ":Activate", "Au menu " & contexte, -1)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli:InitialiserFeuilleMenu", etiquette, -1)
     
 End Sub
 

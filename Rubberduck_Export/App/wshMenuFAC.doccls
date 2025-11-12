@@ -4,6 +4,6 @@ Option Explicit
 
 Private Sub Worksheet_Activate()
     
-    Call InitialiserFeuilleMenu(Me, "de la facturation", "Menu de Facturation")
+    Call InitialiserFeuilleMenu(Me, "wshMenuFAC.Worksheet_Activate", "Menu Facturation")
     
 End Sub

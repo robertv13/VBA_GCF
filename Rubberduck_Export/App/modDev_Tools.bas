@@ -28,7 +28,7 @@ Sub ObtenirPlageAPartirDynamicNamedRange(dynamicRangeName As String, ByRef rng A
     
 End Sub
 
-Sub DetecterReferenceCirculaireDansClasseur() '2024-07-24 @ 07:31
+Sub DetecterReferenceCirculaireDansClasseur()
     
     Dim circRef As String
     circRef = vbNullString
@@ -71,7 +71,7 @@ Sub DetecterReferenceCirculaireDansClasseur() '2024-07-24 @ 07:31
     
 End Sub
 
-Sub zz_Comparer2ClasseursFormatColonnes() '2024-08-19 @ 16:24
+Sub zz_Comparer2ClasseursFormatColonnes()
 
     'Erase and create a new worksheet for differences
     Dim wsDiff As Worksheet
@@ -214,7 +214,7 @@ Sub zz_Comparer2ClasseursFormatColonnes() '2024-08-19 @ 16:24
     
 End Sub
 
-Sub zz_Comparer2ClasseursNiveauCellules() '2024-08-20 @ 05:14
+Sub zz_Comparer2ClasseursNiveauCellules()
 
     'Erase and create a new worksheet for differences
     Dim wsDiff As Worksheet
@@ -840,7 +840,7 @@ GestionErreur:
     
 End Sub
 
-Sub AjusterEpurerTablesDeMaster() '2024-12-07 @ 06:47
+Sub AjusterEpurerTablesDeMaster()
 
     'Chemin du classeur à ajuster
     Dim cheminClasseur As String
@@ -939,7 +939,7 @@ Sub AjusterEpurerTablesDeMaster() '2024-12-07 @ 06:47
     
 End Sub
 
-Sub zz_CreerFileLayouts() '2024-12-25 @ 15:27
+Sub zz_CreerFileLayouts()
 
     'Feuille pour la sortie
     Dim outputName As String

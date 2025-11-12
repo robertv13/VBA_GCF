@@ -4,7 +4,7 @@ Option Explicit
 
 Private Sub Worksheet_Activate()
 
-    Call InitialiserFeuilleMenu(Me, "de la comptabilité", "Menu de Comptabilité")
+    Call InitialiserFeuilleMenu(Me, "wshMenuGL.Worksheet_Activate", "Menu Comptabilité")
     Application.EnableEvents = True 'Si nécessaire uniquement ici
 
 End Sub

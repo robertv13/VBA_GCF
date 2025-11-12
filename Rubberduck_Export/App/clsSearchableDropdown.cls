@@ -374,7 +374,7 @@ Private Function FilterData() As Variant
     If textPattern = vbNullString Then
         Exit Function
     End If
-    Dim textPatternWithoutAccent As String '2024-09-25 @ 07:19
+    Dim textPatternWithoutAccent As String
     textPatternWithoutAccent = Fn_ChaineSansAccents(textPattern)
     
     'Create an array to store the filtered items
@@ -387,7 +387,7 @@ Private Function FilterData() As Variant
     Dim clientNameWithoutAccent As String
         For i = LBound(m_listOfItems) To UBound(m_listOfItems)
         'Using Instr instead of Like so we can set the case sensitivity
-        clientNameWithoutAccent = Fn_ChaineSansAccents(m_listOfItems(i, 1)) '2024-09-25 @ 07:19
+        clientNameWithoutAccent = Fn_ChaineSansAccents(m_listOfItems(i, 1))
         If InStr(1, clientNameWithoutAccent, textPatternWithoutAccent, m_compareMethod) > 0 Then
             filteredItems(count) = m_listOfItems(i, 1)
             count = count + 1

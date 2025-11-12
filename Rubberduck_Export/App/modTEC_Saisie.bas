@@ -133,7 +133,7 @@ Sub DetruireLigneTEC() '2023-12-23 @ 07:05
     End If
     
     Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:DetruireLigneTEC - Le DELETE est confirmé - ", _
-                CStr(-ufSaisieHeures.txtTECID.Value), -1) '2024-10-05 @ 07:21
+                CStr(-ufSaisieHeures.txtTECID.Value), -1)
     
     Dim timerPerformance As Double: timerPerformance = Timer
         
@@ -184,7 +184,7 @@ Clean_Exit:
 
 End Sub
 
-Sub ObtenirTousLesTECDateAvecAF() '2024-11-19 @ 10:39
+Sub ObtenirTousLesTECDateAvecAF()
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:ObtenirTousLesTECDateAvecAF", _
                                                                  ufSaisieHeures.txtProfID.Value & " / " & ufSaisieHeures.txtDate.Value, 0)
@@ -289,7 +289,7 @@ Sub EffacerFormulaireTEC() '2025-07-03 @ 07:31
 
     'Empty the dynamic fields after reseting the form
     With ufSaisieHeures
-        .txtTECID.Value = vbNullString '2024-03-01 @ 09:56
+        .txtTECID.Value = vbNullString
         .txtClient.Value = vbNullString
         .txtClientID.Value = vbNullString
         .txtActivite.Value = vbNullString
@@ -464,7 +464,7 @@ Sub AjouterOuModifierTECdansBDLocale(tecID As Long)
     'What is the row number of this TECID ?
     Dim lastUsedRow As Long
     
-    Dim hoursValue As Double '2024-03-01 @ 05:40
+    Dim hoursValue As Double
     hoursValue = CDbl(ufSaisieHeures.txtHeures.Value)
     
     'timeStamp uniforme
@@ -564,7 +564,7 @@ Sub RafraichirListBoxEtAddtionnerHeures() 'Load the listBox with the appropriate
     ufSaisieHeures.txtHresNFSemaine.Value = vbNullString
 
     ufSaisieHeures.lstHresJour.RowSource = vbNullString
-    ufSaisieHeures.lstHresJour.Clear '2024-08-10 @ 05:59
+    ufSaisieHeures.lstHresJour.Clear
     
     With ufSaisieHeures.lstHresJour
         .ColumnHeads = False
@@ -648,7 +648,7 @@ Sub RafraichirListBoxEtAddtionnerHeures() 'Load the listBox with the appropriate
     
     ufSaisieHeures.Repaint
     
-    DoEvents '2024-08-12 @ 10:31
+    DoEvents
     
     Application.ScreenUpdating = True
 

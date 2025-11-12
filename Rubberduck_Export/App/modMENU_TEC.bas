@@ -6,10 +6,10 @@ Sub shpAccederSaisieHeures_Click()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU_TEC:shpAccederSaisieHeures_Click", vbNullString, 0)
     
-    gFromMenu = True '2024-09-03 @ 06:20
+    gFromMenu = True
 
     Load ufSaisieHeures
-    ufSaisieHeures.show vbModeless '2024-08-08 @ 13:56
+    ufSaisieHeures.show vbModeless
     
     Call modDev_Utils.EnregistrerLogApplication("modMENU_TEC:shpAccederSaisieHeures_Click", vbNullString, startTime)
 
@@ -20,7 +20,7 @@ Sub shpAccederTECTDB_Click()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU_TEC:AccederTECTDB_Click", vbNullString, 0)
     
-    gFromMenu = True '2024-09-03 @ 06:20
+    gFromMenu = True
 
     Application.ScreenUpdating = False
     
@@ -42,7 +42,7 @@ Sub shpAccederProjetFacture_Click()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU_TEC:shpAccederProjetFacture_Click", vbNullString, 0)
     
-    gFromMenu = True '2024-09-03 @ 06:20
+    gFromMenu = True
 
     Application.ScreenUpdating = False
     
@@ -64,7 +64,7 @@ Sub shpAccederEvaluationTEC_Click()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU_TEC:shpAccederEvaluationTEC_Click", vbNullString, 0)
     
-    gFromMenu = True '2024-09-03 @ 06:20
+    gFromMenu = True
 
     Application.ScreenUpdating = False
     
@@ -86,7 +86,7 @@ Sub shpAccederRadiationTEC_Click()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU_TEC:shpAccederRadiationTEC_Click", vbNullString, 0)
     
-    gFromMenu = True '2024-09-03 @ 06:20
+    gFromMenu = True
 
     Application.ScreenUpdating = False
     

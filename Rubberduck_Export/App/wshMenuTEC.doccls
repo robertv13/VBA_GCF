@@ -4,6 +4,6 @@ Option Explicit
 
 Private Sub Worksheet_Activate()
 
-    Call InitialiserFeuilleMenu(Me, "des TEC", "Menu TEC")
+    Call InitialiserFeuilleMenu(Me, "wshMenuTEC.Worksheet_Activate", "Menu TEC")
     
 End Sub

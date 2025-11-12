@@ -1,7 +1,7 @@
 Attribute VB_Name = "modTEC_Analyse"
 Option Explicit
 
-Sub TrierEtAjouterSousTotauxClient() '2024-08-24 @ 08:10
+Sub TrierEtAjouterSousTotauxClient()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:TrierEtAjouterSousTotauxClient", vbNullString, 0)
     
@@ -600,7 +600,7 @@ End Sub
 Sub DetruireDetailSiEnteteEstDetruite(filePath As String, _
                                                     sheetName As String, _
                                                     columnName As String, _
-                                                    valueToFind As Variant) '2024-07-19 @ 15:31
+                                                    valueToFind As Variant)
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:DetruireDetailSiEnteteEstDetruite", vbNullString, 0)
     
     'Create a new ADODB connection
@@ -761,7 +761,7 @@ End Sub
 Sub DetruireEnteteSiEnteteEstDetruite(filePath As String, _
                                       sheetName As String, _
                                       columnName As String, _
-                                      valueToFind As Variant) '2024-07-19 @ 15:31
+                                      valueToFind As Variant)
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Analyse:DetruireEnteteSiEnteteEstDetruite", vbNullString, 0)
     
     'Create a new ADODB connection

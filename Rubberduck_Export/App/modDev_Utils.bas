@@ -1,7 +1,7 @@
 Attribute VB_Name = "modDev_Utils"
 Option Explicit
 
-Sub TrierTableau2DBubble(ByRef arr() As Variant) '2024-06-23 @ 07:05
+Sub TrierTableau2DBubble(ByRef arr() As Variant)
     
     Dim i As Long, j As Long, numRows As Long, numCols As Long
     Dim temp As Variant
@@ -72,7 +72,7 @@ Sub RedimensionnerTableau2D(ByRef inputArray As Variant, ByVal nRows As Long, By
     
 End Sub
 
-Sub TrierTableauBubble(MyArray() As String) '2024-07-02 @ 15:18
+Sub TrierTableauBubble(MyArray() As String)
     
     Dim i As Long, j As Long
     Dim temp As Variant
@@ -88,7 +88,7 @@ Sub TrierTableauBubble(MyArray() As String) '2024-07-02 @ 15:18
     
 End Sub
 
-Sub zz_ListerToutesLesFeuillesClasseurFerme() '2024-07-14 @ 07:02
+Sub zz_ListerToutesLesFeuillesClasseurFerme()
     
     Call EffacerEtRecreerWorksheet("X_Feuilles_du_Classeur")
 
@@ -163,7 +163,7 @@ Sub zz_ListerToutesLesFeuillesClasseurFerme() '2024-07-14 @ 07:02
 End Sub
 
 '@Description ("Saisie des chaines, construction du tableau des lignes de code")
-Sub RechercherCodeProjet() '2024-10-26 @ 10:41
+Sub RechercherCodeProjet()
     
     'Declare lineOfCode() as variant
     Dim allLinesOfCode As Variant
@@ -255,7 +255,7 @@ Sub EffacerEtRecreerWorksheet(sheetName As String)
     
 End Sub
 
-Sub zz_ListerToutesLesFormules() '2024-06-22 @ 15:42
+Sub zz_ListerToutesLesFormules()
     
     Dim wb As Workbook: Set wb = ThisWorkbook
     
@@ -318,7 +318,7 @@ nextIteration:
 
 End Sub
 
-Function Fn_TraiteRemarquesDansLeCode(ByVal codeLine As String, action As String) As String '2024-06-30 @ 10:45
+Function Fn_TraiteRemarquesDansLeCode(ByVal codeLine As String, action As String) As String
     
     'R as action will remove the comments
     'U as action will UPPERCASE the comments
@@ -361,7 +361,7 @@ Function Fn_TraiteRemarquesDansLeCode(ByVal codeLine As String, action As String
     
 End Function
 
-Sub zz_ListerProprietesToutesLesFormes() '2024-08-07 @ 19:37
+Sub zz_ListerProprietesToutesLesFormes()
 
     Dim ws As Worksheet: Set ws = ThisWorkbook.ActiveSheet
     
@@ -422,7 +422,7 @@ Sub zz_ListerTousLesObjetsDeToutesLesFeuilles()
     
 End Sub
 
-Sub zz_ListerTousLesDynamicNamedRange() '2024-06-23 @ 07:40
+Sub zz_ListerTousLesDynamicNamedRange()
     
     'Setup and clear the output worksheet
     Dim ws As Worksheet: Set ws = wshzDocNamedRange
@@ -497,7 +497,7 @@ Sub shpReorganiserTestsEtTodo_Click()
 
 End Sub
 
-Sub ReorganiserTestsEtTodo() '2024-03-02 @ 15:21
+Sub ReorganiserTestsEtTodo()
 
     Application.ScreenUpdating = False
     
@@ -724,7 +724,7 @@ Sub RechercherToutesLesLignesDeCode(arr As Variant, lignesLues As Long, search1 
     
 End Sub
 
-Sub zz_List_All_Columns() '2024-08-09 @ 11:52
+Sub zz_List_All_Columns()
 
     Dim colType As String
     
@@ -789,7 +789,7 @@ Sub zz_List_All_Columns() '2024-08-09 @ 11:52
     
 End Sub
 
-Sub zz_ListAllMacrosUsedWithShapesOrActiveXControls() '2024-11-26 @ 20:14
+Sub zz_ListAllMacrosUsedWithShapesOrActiveXControls()
     
     'Prepare the result worksheet
     Call EffacerEtRecreerWorksheet("DocAllIndirectMacros")
@@ -895,7 +895,7 @@ Sub zz_ListAllMacrosUsedWithShapesOrActiveXControls() '2024-11-26 @ 20:14
     
 End Sub
 
-Sub ListerToutesProceduresEtFonctions() '2024-11-26 @ 20:02
+Sub ListerToutesProceduresEtFonctions()
     
     Dim ws As Worksheet: Set ws = wshzDocSubsAndFunctions
     
@@ -1042,7 +1042,7 @@ Sub ChangerSystemeReferenceCellules()
 
 End Sub
 
-Sub zz_ListerToutesLesFeuillesClasseurCourant() '2024-07-24 @ 10:14
+Sub zz_ListerToutesLesFeuillesClasseurCourant()
     
     Call EffacerEtRecreerWorksheet("X_Feuilles_du_Classeur")
 
@@ -1102,7 +1102,7 @@ Sub zz_ListerToutesLesFeuillesClasseurCourant() '2024-07-24 @ 10:14
 
 End Sub
 
-Sub DeterminerOrdreDeTabulation(ws As Worksheet) '2024-06-15 @ 13:58
+Sub DeterminerOrdreDeTabulation(ws As Worksheet)
 
     Dim startTime As Double: startTime = Timer: Call EnregistrerLogApplication("modDev_Utils:DeterminerOrdreDeTabulation", ws.CodeName, 0)
 
@@ -1233,7 +1233,7 @@ ErrorHandler:
     
 End Sub
 
-Sub EnregistrerLogSaisieHeures(oper As String, txt As String, Optional blankline As Boolean = False) '2024-09-14 @ 06:56
+Sub EnregistrerLogSaisieHeures(oper As String, txt As String, Optional blankline As Boolean = False)
 
     On Error GoTo Error_Handler
     

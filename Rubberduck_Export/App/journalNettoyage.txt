@@ -1,4 +1,4 @@
-﻿📘 Journal typographique — 11/11/2025 14:23:44
+﻿📘 Journal typographique — 11/11/2025 19:17:25
 
 🔧 Fichier : clsControlWrapper.cls
 

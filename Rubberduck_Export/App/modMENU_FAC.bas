@@ -10,7 +10,7 @@ Sub shpAccederPreparationFacture_Click()
     
     Application.EnableEvents = True
     
-    gFromMenu = True '2024-09-03 @ 06:20
+    gFromMenu = True
     
     wshFAC_Brouillon.Visible = xlSheetVisible
     wshFAC_Brouillon.Activate
@@ -31,7 +31,7 @@ Sub shpAccederListeAgeeCC_Click()
     
     wshCAR_Liste_Agee.Application.Calculation = xlCalculationAutomatic
     
-    gFromMenu = True '2024-09-03 @ 06:20
+    gFromMenu = True
     
     With wshCAR_Liste_Agee
         .Visible = xlSheetVisible
@@ -55,7 +55,7 @@ Sub shpAccederInterrogationFacture_Click()
 
     Application.EnableEvents = True
     
-    gFromMenu = True '2024-09-03 @ 06:20
+    gFromMenu = True
 
     wshFAC_Interrogation.Visible = xlSheetVisible
     wshFAC_Interrogation.Activate
@@ -73,7 +73,7 @@ Sub shpAccederConfirmationFacture_Click()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU_FAC:FAC_Confirmation_Click", vbNullString, 0)
     
-    gFromMenu = True '2024-09-03 @ 06:20
+    gFromMenu = True
 
     Call modImport.ImporterClients
     Call modImport.ImporterFacComptesClients

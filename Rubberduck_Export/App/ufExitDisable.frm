@@ -17,7 +17,7 @@ Option Explicit
 
 Private wrappers As Collection
 
-Private Sub shpOK_Click() '2024-07-05 @ 06:25
+Private Sub shpOK_Click()
 
     Me.Hide
 

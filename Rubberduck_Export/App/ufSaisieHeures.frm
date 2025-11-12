@@ -41,7 +41,7 @@ Private Sub UserForm_Initialize() '2025-05-30 @ 13:26
     
 End Sub
 
-Sub UserForm_Activate() '2024-07-31 @ 07:57
+Sub UserForm_Activate()
 
     Call modSessionVerrou.VerrouillerSiSessionInvalide("L'application n'a pas été relancé adéquatement")
     
@@ -419,7 +419,7 @@ Private Sub chkFacturable_AfterUpdate()
     
     If Me.chkFacturable.Value <> valeurSauveeEstFacturable Then '2025-03-25 @ 13:05
         If Me.txtTECID = vbNullString Then
-            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True) '2024-10-06 @ 14:33
+            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True)
         Else
             Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, True, False, True)
         End If
@@ -438,7 +438,7 @@ Private Sub txtCommNote_AfterUpdate()
     If Me.txtCommNote.Value <> valeurSauveeCommNote Then '2025-03-25 @ 13:05
         Debug.Print "txtCommNote_AfterUpdate : ", Me.txtCommNote.Value, " vs ", valeurSauveeCommNote, " - TECID=" & Me.txtTECID
         If Me.txtTECID = vbNullString Then
-            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True) '2024-10-06 @ 14:33
+            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True)
         Else
             Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, True, True, True)
         End If

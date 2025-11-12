@@ -83,7 +83,7 @@ Sub AfficherSousTotalHeures(ws As Worksheet, saveInv As String, ByRef r As Long,
 
 End Sub
 
-Sub zz_IdentifierEcartsDeuxSourcesDeFacture() '2024-12-12 @ 10:55
+Sub zz_IdentifierEcartsDeuxSourcesDeFacture()
 
     'Initialisation
     Dim wsEntete As Worksheet

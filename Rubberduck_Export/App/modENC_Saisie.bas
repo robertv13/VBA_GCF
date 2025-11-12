@@ -4,7 +4,7 @@ Option Explicit
 Public lastRow As Long
 Private gNumeroEcritureARenverser As Long
 
-Sub ObtenirFacturesEnSuspens(cc As String) '2024-08-21 @ 15:18
+Sub ObtenirFacturesEnSuspens(cc As String)
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ObtenirFacturesEnSuspens", vbNullString, 0)
     
@@ -22,7 +22,7 @@ Sub ObtenirFacturesEnSuspens(cc As String) '2024-08-21 @ 15:18
     
     Dim i As Integer
     'Unlock the required area
-    With ws '2024-08-21 @ 16:06
+    With ws
         If lastResultRow >= 3 Then
             .Unprotect
             .Range("B12:B" & 11 + lastResultRow - 2).Locked = False
@@ -135,7 +135,7 @@ Sub shpMettreAJourEncaissement_Click()
 
 End Sub
 
-Sub MettreAJourEncaissement() '2024-08-22 @ 09:46
+Sub MettreAJourEncaissement()
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:MettreAJourEncaissement", vbNullString, 0)
     
@@ -235,7 +235,7 @@ Sub shpAnnulerEncaissement_Click()
 
 End Sub
 
-Sub CreerNouvelEncaissement() '2024-08-21 @ 14:58
+Sub CreerNouvelEncaissement()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:CreerNouvelEncaissement", vbNullString, 0)
 
@@ -314,7 +314,7 @@ Sub AjouterEncEnteteDansBDMaster() 'Write to MASTER.xlsx
     
 End Sub
 
-Sub AjouterEncEnteteDansBDLocale() '2024-08-22 @ 10:38
+Sub AjouterEncEnteteDansBDLocale()
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:AjouterEncEnteteDansBDLocale", vbNullString, 0)
     
@@ -400,7 +400,7 @@ Sub AjouterEncDetailDansBDMaster(pmtNo As Long, firstRow As Integer, lastApplied
     
 End Sub
 
-Sub AjouterEncDetailDansBDLocale(pmtNo As Long, firstRow As Integer, lastAppliedRow As Integer) '2024-08-22 @ 10:55
+Sub AjouterEncDetailDansBDLocale(pmtNo As Long, firstRow As Integer, lastAppliedRow As Integer)
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:AjouterEncDetailDansBDLocale", vbNullString, 0)
     
@@ -505,7 +505,7 @@ Clean_Exit:
     
 End Sub
 
-Sub MettreAJourEncComptesClientsDansBDLocale(firstRow As Integer, lastRow As Integer) '2024-08-22 @ 10:55
+Sub MettreAJourEncComptesClientsDansBDLocale(firstRow As Integer, lastRow As Integer)
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:MettreAJourEncComptesClientsDansBDLocale", vbNullString, 0)
     
@@ -708,7 +708,7 @@ Sub NettoyerFeuilleEncaissement()
         Call EffacerCasesACocherENC(lastUsedRow)
     End If
         
-    With wshENC_Saisie.Range("F5:H5, K5, F7, K7, F9:I9").Interior '2024-08-25 @ 09:21
+    With wshENC_Saisie.Range("F5:H5, K5, F7, K7, F9:I9").Interior
             .Pattern = xlNone
             .TintAndShade = 0
             .PatternTintAndShade = 0

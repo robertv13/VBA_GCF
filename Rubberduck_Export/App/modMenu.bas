@@ -101,7 +101,7 @@ Sub shpSortieApplication_Click()
 
 End Sub
 
-Sub ConfirmerSortieApplication() '2024-08-30 @ 07:37
+Sub ConfirmerSortieApplication()
     
     Dim startTime As Double: startTime = Timer
     Call modDev_Utils.EnregistrerLogApplication("modMENU:ConfirmerSortieApplication", vbNullString, 0)
@@ -129,7 +129,7 @@ End Sub
 Sub FermerApplication(methode As String, ignorerSauvegarde As Boolean) '2025-09-10 @ 08:14
 
     Dim startTime As Double: startTime = Timer
-    Call modDev_Utils.EnregistrerLogApplication("modMENU:FermerApplication", CStr(ignorerSauvegarde), 0)
+    Call modDev_Utils.EnregistrerLogApplication("modMENU:FermerApplication", "ignoreSauvegarde = '" & CStr(ignorerSauvegarde) & "'", 0)
     
     Application.EnableEvents = False
     Application.ScreenUpdating = False
@@ -156,7 +156,7 @@ Sub FermerApplication(methode As String, ignorerSauvegarde As Boolean) '2025-09-
     'Fermer TOUS les Timer
     Call AnnulerTousLesTimers
 
-    Call modDev_Utils.EnregistrerLogApplication("----- SESSION TERMINÉE - modMenu:FermerApplication - Statut = " & _
+    Call modDev_Utils.EnregistrerLogApplication("----- SESSION TERMINÉE - modMenu:FermerApplication - " & _
             methode & " -----", IIf(ignorerSauvegarde, "S A N S   S A U V E G A R D E", ""), startTime)
     
     gFermetureForcee = True
@@ -176,7 +176,7 @@ Sub FermerApplication(methode As String, ignorerSauvegarde As Boolean) '2025-09-
     
 End Sub
 
-Sub CacherToutesFeuillesSaufMenu() '2024-02-20 @ 07:28
+Sub CacherToutesFeuillesSaufMenu()
     
     DoEvents
     
@@ -374,19 +374,19 @@ Sub shpCompterLignesCodeProjet_Click()
 
 End Sub
 
-Sub shpChercherReferencesCirculaires_Click() '2024-11-22 @ 13:33
+Sub shpChercherReferencesCirculaires_Click()
 
     Call modDev_Tools.DetecterReferenceCirculaireDansClasseur
     
 End Sub
 
-Sub shpChangerReferenceSystem_Click() '2024-11-22 @ 13:33
+Sub shpChangerReferenceSystem_Click()
 
     Call modDev_Utils.ChangerSystemeReferenceCellules
     
 End Sub
 
-Sub shpListerModulesEtRoutines_Click() '2024-11-22 @ 13:33
+Sub shpListerModulesEtRoutines_Click()
 
     Call modDev_Utils.ListerToutesProceduresEtFonctions
     

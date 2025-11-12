@@ -432,7 +432,7 @@ Sub shpOuvrirEtCopierAncienneFacture_Click()
     
 End Sub
 
-Sub OuvrirEtCopierAncienneFacture() '2024-07-27 @ 07:46
+Sub OuvrirEtCopierAncienneFacture()
 
     'Définir le chemin complet du répertoire des fichiers Excel par client
     Dim DossierCopieFactureExcel As String
@@ -753,7 +753,7 @@ No_Sort_Required:
 
 End Sub
 
-Sub CopierTECFiltresVersFACBrouillon(cutOffDateProjet As Date) '2024-03-21 @ 07:10
+Sub CopierTECFiltresVersFACBrouillon(cutOffDateProjet As Date)
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:CopierTECFiltresVersFACBrouillon", vbNullString, 0)
 
@@ -806,11 +806,11 @@ Sub CopierTECFiltresVersFACBrouillon(cutOffDateProjet As Date) '2024-03-21 @ 07:
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.ListBox1.Clear
+        ufFraisDivers.listBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.ListBox1.AddItem item
+            ufFraisDivers.listBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless
@@ -992,7 +992,7 @@ Sub RetournerMenuFAC()
     On Error GoTo 0
             
     
-    Application.Wait (Now + TimeValue("0:00:01")) '2024-09-06 @ 13:42
+    Application.Wait (Now + TimeValue("0:00:01"))
     
     Application.EnableEvents = False
     

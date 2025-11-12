@@ -93,7 +93,7 @@ Public Sub ObtenirSoldeCompteEntreDebutEtFin(glNo As String, dateDeb As Date, da
 
 End Sub
 
-Sub ObtenirEcritureAvecAF(noEJ As Long) '2024-11-17 @ 12:08
+Sub ObtenirEcritureAvecAF(noEJ As Long)
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_EJ:ObtenirEcritureAvecAF", vbNullString, 0)
 

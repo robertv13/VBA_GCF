@@ -2,7 +2,7 @@
 
 Option Explicit
 
-Private Sub Worksheet_Activate() '2024-06-13 @ 18:07
+Private Sub Worksheet_Activate()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("wshTEC_Analyse:Worksheet_Activate", vbNullString, 0)
 
@@ -170,7 +170,7 @@ exitSub:
   
 End Sub
 
-Sub CheckBox1_Click() '2024-07-18 @ 18:53
+Sub CheckBox1_Click()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("wshTEC_Analyse:shpCheckBox_Click", vbNullString, 0)
     

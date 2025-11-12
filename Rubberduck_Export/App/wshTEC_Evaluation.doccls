@@ -1,6 +1,6 @@
 Option Explicit
 
-Private Sub Worksheet_Activate() '2024-09-29 @ 07:23
+Private Sub Worksheet_Activate()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("wshTEC_Evaluation:Worksheet_Activate", vbNullString, 0)
     

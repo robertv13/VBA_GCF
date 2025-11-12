@@ -904,7 +904,7 @@ Sub AjouterEJRecurrenteBDLocale(r As Long) 'Write records to local file
         rowToBeUsed = rowToBeUsed + 1
     Next i
     
-    Call ConstruireSommaireEJRecurrente '2024-03-14 @ 07:40
+    Call ConstruireSommaireEJRecurrente
     
     Application.ScreenUpdating = True
     

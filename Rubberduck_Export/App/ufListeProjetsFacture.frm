@@ -93,7 +93,7 @@ ProchaineLigne:
     
 End Sub
 
-Private Sub lstProjetsFacture_DblClick(ByVal Cancel As MSForms.ReturnBoolean) '2024-07-21 @ 16:38
+Private Sub lstProjetsFacture_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim rowSelected As Long
     Dim nomClient As String, dte As Date

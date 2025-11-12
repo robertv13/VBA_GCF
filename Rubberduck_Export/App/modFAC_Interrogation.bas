@@ -84,7 +84,7 @@ Sub SaisirAutreClient()
 
 End Sub
 
-Sub ObtenirFacturesClientAvecAF(codeClient As String) '2024-06-27 @ 15:27
+Sub ObtenirFacturesClientAvecAF(codeClient As String)
 
     Dim ws As Worksheet: Set ws = wsdFAC_Entete
     
@@ -1130,7 +1130,7 @@ Sub ObtenirListeTECFactures(adresse As String)
     
 End Sub
 
-Sub ObtenirListeTECFacturesAF(noFact As String) '2024-10-20 @ 11:11
+Sub ObtenirListeTECFacturesAF(noFact As String)
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Interrogation:ObtenirListeTECFacturesAF", vbNullString, 0)
 

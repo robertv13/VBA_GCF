@@ -15,7 +15,7 @@ Sub shpMettreAJourFAC_Click() '2025-06-21 @ 08:20
 
 End Sub
 
-Sub SauvegarderFacture() '2024-03-28 @ 07:19
+Sub SauvegarderFacture()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:SauvegarderFacture", _
         "# = " & wshFAC_Finale.Range("E28").Value & " - Date = " & Format$(wshFAC_Brouillon.Range("O3").Value, "dd/mm/yyyy"), 0)
@@ -101,7 +101,7 @@ Sub PreparerFAC_Brouillon() '2025-10-15 @ 23:01
     wshFAC_Brouillon.Range("FactureStatut").Value = "" '2025-07-19 @ 19:02
     
     'Update TEC_DashBoard
-    Call modTEC_TDB.ActualiserTECTableauDeBord '2024-03-21 @ 12:32
+    Call modTEC_TDB.ActualiserTECTableauDeBord
 
     wshFAC_Brouillon.Select
     Call modFAC_Brouillon.EffacerTECAffiches
@@ -114,7 +114,7 @@ Sub PreparerFAC_Brouillon() '2025-10-15 @ 23:01
     
     wshFAC_Brouillon.Range("B27").Value = False
     
-    Call modFAC_Brouillon.CreerNouvelleFactureBrouillon '2024-03-12 @ 08:08 - Maybe ??
+    Call modFAC_Brouillon.CreerNouvelleFactureBrouillon
 
 End Sub
 
@@ -169,7 +169,7 @@ Sub AjouterFACEnteteBDMaster()
         
         recSet.Fields(fFacETauxTPS - 1).Value = Format$(.Range("C74").Value, "0.00")
         recSet.Fields(fFacEMntTPS - 1).Value = Format$(.Range("E74").Value, "0.00")
-        recSet.Fields(fFacETauxTVQ - 1).Value = Format$(.Range("C75").Value, "0.00000") '2024-10-15 @ 05:49
+        recSet.Fields(fFacETauxTVQ - 1).Value = Format$(.Range("C75").Value, "0.00000")
         recSet.Fields(fFacEMntTVQ - 1).Value = Format$(.Range("E75").Value, "0.00")
         
         recSet.Fields(fFacEARTotal - 1).Value = Format$(.Range("E77").Value, "0.00")
@@ -196,7 +196,7 @@ Sub AjouterFACEnteteBDMaster()
 
 End Sub
 
-Sub AjouterFACEnteteBDLocale() '2024-03-11 @ 08:19 - Write records locally
+Sub AjouterFACEnteteBDLocale()
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:AjouterFACEnteteBDLocale", _
         "# = " & wshFAC_Finale.Range("E28").Value & " - Date = " & Format$(wshFAC_Brouillon.Range("O3").Value, "dd/mm/yyyy"), 0)
@@ -343,7 +343,7 @@ nothing_to_update:
 
 End Sub
 
-Sub AjouterFACDetailsBDLocale() '2024-03-11 @ 08:19 - Write records locally
+Sub AjouterFACDetailsBDLocale()
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:AjouterFACDetailsBDLocale", _
         "# = " & wshFAC_Finale.Range("E28").Value & " - Date = " & Format$(wshFAC_Brouillon.Range("O3").Value, "dd/mm/yyyy"), 0)
@@ -585,7 +585,7 @@ Sub AjouterTransComptesClientsBDMaster()
 
 End Sub
 
-Sub AjouterTransComptesClientsBDLocale() '2024-03-11 @ 08:49 - Write records locally
+Sub AjouterTransComptesClientsBDLocale()
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:AjouterTransComptesClientsBDLocale", _
          "# = " & wshFAC_Finale.Range("E28").Value & " - Date = " & Format$(wshFAC_Brouillon.Range("O3").Value, "dd/mm/yyyy"), 0)
@@ -947,7 +947,7 @@ Sub shpPrevisualiserFacture_Click()
 
 End Sub
 
-Sub PrevisualiserFacturePDF() '2024-03-02 @ 16:18
+Sub PrevisualiserFacturePDF()
 
     Dim ws As Worksheet
     Set ws = wshFAC_Finale
@@ -1305,8 +1305,8 @@ Sub SauvegarderCopieFactureDansExcel(clientID As String, clientName As String, i
     '6. Copier les paramètres d'impression
     With wsCible.PageSetup
         .Orientation = wsSource.PageSetup.Orientation
-        On Error Resume Next '2024-10-15 @ 06:51
-        .PaperSize = xlPaperLetter '2024-10-13 @ 07:45
+        On Error Resume Next
+        .PaperSize = xlPaperLetter
         On Error GoTo 0
         .Zoom = wsSource.PageSetup.Zoom
         .FitToPagesWide = wsSource.PageSetup.FitToPagesWide
@@ -1417,7 +1417,7 @@ Public Sub CollerFormeInvisibleEtRedimensionner(wsCible As Worksheet, _
 
 End Sub
 
-Sub EnvoyerFactureParCourriel(noFacture As String, clientID As String) '2024-10-13 @ 11:33
+Sub EnvoyerFactureParCourriel(noFacture As String, clientID As String)
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:EnvoyerFactureParCourriel", _
         noFacture & "," & clientID, 0)
@@ -1427,7 +1427,7 @@ Sub EnvoyerFactureParCourriel(noFacture As String, clientID As String) '2024-10-
     '1a. Chemin de la pièce jointe (Facture en format PDF)
     Dim attachmentFullPathName As String
     attachmentFullPathName = wsdADMIN.Range("PATH_DATA_FILES").Value & gFACT_PDF_PATH & Application.PathSeparator & _
-                     noFacture & ".pdf" '2024-09-03 @ 16:43
+                     noFacture & ".pdf"
     
     '1b. Vérification de l'existence de la pièce jointe
     fileExists = Dir(attachmentFullPathName) <> vbNullString
