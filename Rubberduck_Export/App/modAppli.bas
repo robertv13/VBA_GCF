@@ -128,7 +128,8 @@ Sub CreerFichierUtilisateurActif(ByVal userName As String)
     Call modDev_Utils.EnregistrerLogApplication("modAppli:CreerFichierUtilisateurActif", vbNullString, 0)
     
     Dim traceFilePath As String
-    traceFilePath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
+    traceFilePath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                                            Fn_NomFichierControleSession(NOM_FICHIER_SESSION_ACTIVE)
     
     Dim FileNumber As Long
     FileNumber = FreeFile
@@ -137,10 +138,12 @@ Sub CreerFichierUtilisateurActif(ByVal userName As String)
     Open traceFilePath For Output As FileNumber
     On Error GoTo 0
     
-    Print #FileNumber, "Utilisateur " & userName & " a ouvert l'application à " & Format$(Now(), "yyyy-mm-dd hh:mm:ss") & " - Version " & ThisWorkbook.Name
+    Print #FileNumber, "Utilisateur " & userName & " a ouvert l'application à " & _
+                                Format$(Now(), "yyyy-mm-dd hh:mm:ss") & " - Version " & ThisWorkbook.Name
     Close FileNumber
     
-    Call modDev_Utils.EnregistrerLogApplication("modAppli:CreerFichierUtilisateurActif", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modAppli:CreerFichierUtilisateurActif", _
+                                                                                vbNullString, startTime)
     
     Exit Sub
 
@@ -297,7 +300,7 @@ Public Sub EnregistrerLogPerformance(nomProcedure As String, duree As Double) '2
     'Définir le chemin du fichier log (local ou partagé)
     Dim fullPathPerformanceLog As String
     fullPathPerformanceLog = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & _
-                                Application.PathSeparator & "Performance.log"
+                                                          Application.PathSeparator & "Performance.log"
     
     'Obtenir l'utilisateur Windows
     Dim utilisateur As String
@@ -312,7 +315,7 @@ Public Sub EnregistrerLogPerformance(nomProcedure As String, duree As Double) '2
     Select Case duree
         Case Is > 0
             ligneLog = horodatage & " | " & utilisateur & " | " & ThisWorkbook.Name & " | " & _
-                                            nomProcedure & " | " & Format(duree, "0.000") & " sec"
+                                            nomProcedure & " | " & Format(duree, "0.0000") & " sec"
         Case Is = 0
             ligneLog = horodatage & " | " & utilisateur & " | " & ThisWorkbook.Name & " | " & _
                                             nomProcedure

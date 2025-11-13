@@ -103,10 +103,13 @@ Function Fn_ClientIDAPartirDuNomDeClient(nomClient As String)
 
 End Function
 
-Function Fn_CellSpecifiqueDeBDClient(nomClient As String, ByRef colNumberSearch As Integer, ByRef colNumberData As Integer) As String '2025-10-31 @ 05:37
+Function Fn_CellSpecifiqueDeBDClient(nomClient As String, colNumberSearch As Integer, _
+                                            colNumberData As Integer) As String '2025-10-31 @ 05:37
 
-    Dim startTime As Double: startTime = Timer
-    Call modDev_Utils.EnregistrerLogApplication("modFunctions:Fn_CellSpecifiqueDeBDClient", nomClient, 0)
+'    Dim startTime As Double: startTime = Timer
+'    Call modDev_Utils.EnregistrerLogApplication("modFunctions:Fn_CellSpecifiqueDeBDClient", nomClient, 0)
+    
+    Debug.Print "AfterUpdate déclenché à " & Now & " - Valeur = " & ufSaisieHeures.txtClient.Value
     
     nomClient = Trim(nomClient)
     
@@ -126,6 +129,8 @@ Function Fn_CellSpecifiqueDeBDClient(nomClient As String, ByRef colNumberSearch 
     On Error GoTo 0
     
     If dynamicRange Is Nothing Then
+        Call EnregistrerErreurs("modFunctions", "Fn_CellSpecifiqueDeBDClient", "dnrClients_All", _
+                                                                             Err.Number, "ERREUR")
         MsgBox "Le DynamicRange 'dnrClients_All' n'a pas été trouvé!", _
             vbCritical, _
             "Problème important avec l'application"
@@ -154,8 +159,8 @@ Function Fn_CellSpecifiqueDeBDClient(nomClient As String, ByRef colNumberSearch 
     Set dynamicRange = Nothing
     Set ws = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modFunctions:Fn_CellSpecifiqueDeBDClient", vbNullString, startTime)
-
+'    Call modDev_Utils.EnregistrerLogApplication("modFunctions:Fn_CellSpecifiqueDeBDClient", vbNullString, startTime)
+'
 End Function
 
 Function Fn_ClientIDAPartirDuNomDeFournisseur(nomFournisseur As String)
@@ -2248,10 +2253,14 @@ Function Fn_PlageNommeeEstVide(nomPlage As String) As Boolean
     On Error Resume Next
     Dim nbLignes As Long
     nbLignes = Evaluate("ROWS(" & nomPlage & ")")
-'    Debug.Print "Lignes de données dans '" & nomPlage & "' = " & nbLignes - 1
-    'On considère qu'une seule ligne = en-tête seule
     Fn_PlageNommeeEstVide = (nbLignes <= 1)
     On Error GoTo 0
+    
+End Function
+
+Function Fn_NomFichierControleSession(baseNom As String) As String
+
+    Fn_NomFichierControleSession = baseNom & "_" & gUtilisateurWindows & ".txt"
     
 End Function
 

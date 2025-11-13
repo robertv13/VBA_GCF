@@ -105,9 +105,9 @@ Public Sub InitialiserSurveillanceForm(frm As Object, ByRef wrappers As Collecti
             Case "CommandButton"
                 Set wrapper = New clsWrapperCommandButton
                 Set wrapper.btn = ctrl
-            Case "ListBox"
-                Set wrapper = New clsWrapperListBox
-                Set wrapper.lb = ctrl
+'            Case "ListBox"
+'                Set wrapper = New clsWrapperListBox
+'                Set wrapper.lb = ctrl
             Case "CheckBox"
                 Set wrapper = New clsWrapperCheckBox
                 Set wrapper.chk = ctrl

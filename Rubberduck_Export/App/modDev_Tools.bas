@@ -657,7 +657,7 @@ Sub CreerRepertoireEtImporterFichiers() '2025-07-02 @ 13:57
     'Vérifier si des fichiers Actif_*.txt existent (utilisateurs encore présents)
     Dim actifFile As String
     Dim actifExists As Boolean
-    actifFile = Dir(cheminSourcePROD & "Actif_*.txt")
+    actifFile = Dir(cheminSourcePROD & "SessionActive_*.txt")
     actifExists = (actifFile <> vbNullString)
     
     If actifExists Then
@@ -2006,7 +2006,7 @@ Public Function ListerPDFs(dossier As String) As Object '2025-07-23 @ 12:40
     Dim facturesManquantesConnues As String
     facturesManquantesConnues = "24-24540A.24-24540B.24-24548A.24-24548B.24-24552v2.24-24566v2." & _
         "24-24655 v2.24-24721 V2.25-24756A.25-24756B.25-24761v2.25-24937V2.25-25074A.25-25074B." & _
-        "25-25078-25-25107.99-25046.Facture #23466.Facture #24059.Facture #24133.Facture #24224." & _
+        "25-25078-25-25107.25-25180V2.99-25046.Facture #23466.Facture #24059.Facture #24133.Facture #24224." & _
         "Facture #24324."
         
     Dim fso As Object

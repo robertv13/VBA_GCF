@@ -14,11 +14,9 @@ Sub AjouterLigneTEC()
 
     Dim timerPerformance As Double: timerPerformance = Timer
     
-    If ufSaisieHeures.txtClientID.Value <> Fn_CellSpecifiqueDeBDClient(ufSaisieHeures.txtClient.Value, 1, 2) Then Stop '2025-11-12 @ 18:20
+    ufSaisieHeures.txtClientID.Value = Fn_CellSpecifiqueDeBDClient(ufSaisieHeures.txtClient.Value, _
+                                        fClntFMClientNom, fClntFMClientID)
     
-'    'Obtenir le ID du client pur (à partir de son nom pur)
-'    ufSaisieHeures.txtClientID.Value = Fn_CellSpecifiqueDeBDClient(ufSaisieHeures.txtClient.Value, 1, 2)
-'
     If Fn_TEC_Is_Data_Valid() = True Then
         Dim Y As Integer, m As Integer, d As Integer
         On Error Resume Next
@@ -75,12 +73,10 @@ Sub ModifierLigneTEC() '2023-12-23 @ 07:04
 
     If Fn_TEC_Is_Data_Valid() = False Then Exit Sub
 
-    Dim timerPerformance As Double: timerPerformance = Timer
-        
-    If ufSaisieHeures.txtClientID.Value <> Fn_CellSpecifiqueDeBDClient(ufSaisieHeures.txtClient.Value, 1, 2) Then Stop '2025-11-12 @ 18:20
+    ufSaisieHeures.txtClientID.Value = Fn_CellSpecifiqueDeBDClient(ufSaisieHeures.txtClient.Value, _
+                                                                        fClntFMClientNom, fClntFMClientID)
     
-    'Obtenir le ID du client pur (à partir de son nom pur) - 2025-03-04 @ 08:02
-    ufSaisieHeures.txtClientID.Value = Fn_CellSpecifiqueDeBDClient(ufSaisieHeures.txtClient.Value, 1, 2)
+    Dim timerPerformance As Double: timerPerformance = Timer
         
     If Fn_Is_Client_Facturable(ufSaisieHeures.txtClientID) = False Then '2025-10-31 @ 08:30
         ufSaisieHeures.chkFacturable = False
@@ -746,17 +742,17 @@ Sub RafraichirTableauxCroisesTEC()
     
 End Sub
 
-Sub ActiverButtonsVraiOuFaux(a As Boolean, u As Boolean, d As Boolean, c As Boolean)
-                                  
-    With ufSaisieHeures
-        .shpAdd.Enabled = a
-        .shpUpdate.Enabled = u
-        .shpDelete.Enabled = d
-        .shpClear.Enabled = c
-    End With
-
-End Sub
-
+'Sub ActiverButtonsVraiOuFaux(a As Boolean, u As Boolean, d As Boolean, c As Boolean)
+'
+'    With ufSaisieHeures
+'        .shpAdd.Enabled = a
+'        .shpUpdate.Enabled = u
+'        .shpDelete.Enabled = d
+'        .shpClear.Enabled = c
+'    End With
+'
+'End Sub
+'
 Sub MettreAJourPivotTables() '2025-11-12 @ 08:33
 
     Dim ws As Worksheet: Set ws = wshStatsHeuresPivotTables
@@ -796,12 +792,12 @@ End Sub
 
 Public Function ConstruireLigneLog() As String '2025-10-31 @ 06:07
 
-    ConstruireLigneLog = ufSaisieHeures.cmbProfessionnel.Value & " | " & _
+    ConstruireLigneLog = Left(ufSaisieHeures.cmbProfessionnel.Value & Space(4), 4) & " | " & _
                          Format$(ufSaisieHeures.txtDate.Value, "YYYY-MM-DD") & " | " & _
-                         CStr(ufSaisieHeures.txtClientID.Value) & " | " & _
-                         ufSaisieHeures.txtClient.Value & " | " & _
+                         Left(CStr(ufSaisieHeures.txtClientID.Value) & Space(5), 5) & " | " & _
+                         Left(ufSaisieHeures.txtClient.Value & Space(35), 35) & " | " & _
                          ufSaisieHeures.txtActivite.Value & " | " & _
-                         Format$(ufSaisieHeures.txtHeures.Value, "#0.00") & " | " & _
+                         Left(Format$(ufSaisieHeures.txtHeures.Value, "#0.00") & Space(5), 5) & " | " & _
                          Fn_Convert_Value_Boolean_To_Text(ufSaisieHeures.chkFacturable.Value) & " | " & _
                          ufSaisieHeures.txtCommNote.Value
                          
@@ -832,14 +828,3 @@ Function CalculerTotaux(data As Variant) As Collection '2025-11-02 @ 09:58
     Set CalculerTotaux = result
     
 End Function
-
-Sub testObtenirNomPivotTable()
-
-    Dim pt As PivotTable
-    Dim ws As Worksheet: Set ws = wshStatsHeuresPivotTables
-    
-    For Each pt In ws.PivotTables
-        Debug.Print "Nom du PivotTable : [" & pt.Name & "]"
-    Next pt
-
-End Sub

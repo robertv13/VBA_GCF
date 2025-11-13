@@ -17,8 +17,6 @@ Option Explicit
 
 Private oEventHandler As New clsSearchableDropdown '2023-03-21 @ 09:16
 
-'Private colSurveillance As Collection
-'
 Private wrappers As Collection
 
 'Sauvegarde des valeurs lues
@@ -45,7 +43,8 @@ Sub UserForm_Activate()
 
     Call modSessionVerrou.VerrouillerSiSessionInvalide("L'application n'a pas été relancé adéquatement")
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:UserForm_Activate", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:UserForm_Activate", vbNullString, 0)
     
     gLogSaisieHeuresVeryDetailed = False
     
@@ -86,8 +85,10 @@ Private Sub lstNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
         For i = 0 To .ListCount - 1
             If .Selected(i) Then
                 Me.txtClient.Value = .List(i, 0)
-                Me.txtClientID.Value = Fn_CellSpecifiqueDeBDClient(Me.txtClient.Value, 17, 2)
-                Me.txtClientReel.Value = Fn_CellSpecifiqueDeBDClient(Me.txtClientID.Value, 2, 1)
+                Me.txtClientID.Value = Fn_CellSpecifiqueDeBDClient(Me.txtClient.Value, _
+                                                    fClntFMNomClientPlusNomClientSystème, fClntFMClientID)
+                Me.txtClientReel.Value = Fn_CellSpecifiqueDeBDClient(Me.txtClientID.Value, _
+                                                                       fClntFMClientID, fClntFMClientNom)
                 Exit For
             End If
         Next i
@@ -336,12 +337,7 @@ Private Sub txtClient_AfterUpdate()
     On Error Resume Next
     Me.lstNomClient.Visible = False
     On Error GoTo 0
-    
-    Dim codeClient As String
-    codeClient = Fn_CellSpecifiqueDeBDClient(Me.txtClient.Value, 17, 2)
-    If codeClient = "Not Found" Then Stop
-    Me.txtClientID.Value = CStr(codeClient)
-    
+
     Call MettreAJourEtatBoutons
     
     Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:txtClient_AfterUpdate", _
@@ -426,14 +422,14 @@ Private Sub chkFacturable_AfterUpdate()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:chkFacturable_AfterUpdate", vbNullString, 0)
     
-    If Me.chkFacturable.Value <> valeurSauveeEstFacturable Then '2025-03-25 @ 13:05
-        If Me.txtTECID = vbNullString Then
-            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True)
-        Else
-            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, True, False, True)
-        End If
-    End If
-
+'    If Me.chkFacturable.Value <> valeurSauveeEstFacturable Then '2025-03-25 @ 13:05
+'        If Me.txtTECID = vbNullString Then
+'            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True)
+'        Else
+'            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, True, False, True)
+'        End If
+'    End If
+'
     Call MettreAJourEtatBoutons
     
     Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:chkFacturable_AfterUpdate", Me.txtTECID, startTime)
@@ -444,15 +440,15 @@ Private Sub txtCommNote_AfterUpdate()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:txtCommNote_AfterUpdate", Me.txtCommNote.Value, 0)
     
-    If Me.txtCommNote.Value <> valeurSauveeCommNote Then '2025-03-25 @ 13:05
-        Debug.Print "txtCommNote_AfterUpdate : ", Me.txtCommNote.Value, " vs ", valeurSauveeCommNote, " - TECID=" & Me.txtTECID
-        If Me.txtTECID = vbNullString Then
-            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True)
-        Else
-            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, True, True, True)
-        End If
-    End If
-
+'    If Me.txtCommNote.Value <> valeurSauveeCommNote Then '2025-03-25 @ 13:05
+'        Debug.Print "txtCommNote_AfterUpdate : ", Me.txtCommNote.Value, " vs ", valeurSauveeCommNote, " - TECID=" & Me.txtTECID
+'        If Me.txtTECID = vbNullString Then
+'            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(True, False, False, True)
+'        Else
+'            Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, True, True, True)
+'        End If
+'    End If
+'
     Call MettreAJourEtatBoutons
     
     Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:txtCommNote_AfterUpdate", Me.txtTECID, startTime)
@@ -552,7 +548,10 @@ Sub lstHresJour_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
         
     End With
     
-    Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, False, True, True)    'Ajustement des boutons
+'    Call modTEC_Saisie.ActiverButtonsVraiOuFaux(False, False, True, True)    'Ajustement des boutons
+'
+    Call MettreAJourEtatBoutons
+    
     
     rmv_state = MODE_MODIFICATION_FAC
     

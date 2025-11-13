@@ -168,17 +168,16 @@ Sub FermerApplication(methode As String, ignorerSauvegarde As Boolean) '2025-09-
     
     Call modTraceSession.SupprimerTraceOuverture '2025-11-10 @ 08:38
 
-    If Workbooks.count = 1 Then '2025-11-10 @ 10:25
-        Application.DisplayAlerts = False
-        ThisWorkbook.Saved = True
+    Application.DisplayAlerts = False
+    If ignorerSauvegarde = False Then ThisWorkbook.Save
+    ThisWorkbook.Saved = True
+    
+    If Workbooks.count = 1 Then
         Application.Quit
-        Application.DisplayAlerts = True
     Else
-        Application.DisplayAlerts = False
-        ThisWorkbook.Saved = True
         ThisWorkbook.Close SaveChanges:=False
-        Application.DisplayAlerts = True
     End If
+    Application.DisplayAlerts = True
     
 End Sub
 
@@ -253,7 +252,8 @@ Sub EffacerFichierUtilisateurActif(ByVal userName As String)
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU:EffacerFichierUtilisateurActif", vbNullString, 0)
     
     Dim traceFilePath As String
-    traceFilePath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & "Actif_" & userName & ".txt"
+    traceFilePath = wsdADMIN.Range("PATH_DATA_FILES").Value & gDATA_PATH & Application.PathSeparator & _
+                    "SessionActive_" & userName & ".txt"
     
     If Dir(traceFilePath) <> vbNullString Then
         Kill traceFilePath

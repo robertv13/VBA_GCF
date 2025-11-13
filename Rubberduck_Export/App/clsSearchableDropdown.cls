@@ -160,10 +160,12 @@ Private Sub List_MoveDown()
     m_UpdateControl = True
     If m_textboxStartingState = False Then
         With MyListBox
-            .SetFocus
+'            .SetFocus '2025-11-13 @ 08:09
             If .ListIndex < .ListCount - 1 Then
+                Application.EnableEvents = False '2025-11-13 @ 08:11
                 .ListIndex = .ListIndex + 1
-                .Selected(.ListIndex) = True
+                Application.EnableEvents = True
+                .Selected(.ListIndex) = True '2025-11-13 @ 08:11
             End If
         End With
     End If
@@ -374,7 +376,7 @@ Private Function FilterData() As Variant
     If textPattern = vbNullString Then
         Exit Function
     End If
-    Dim textPatternWithoutAccent As String
+    Dim textPatternWithoutAccent As String '2024-09-25 @ 07:19
     textPatternWithoutAccent = Fn_ChaineSansAccents(textPattern)
     
     'Create an array to store the filtered items
@@ -387,7 +389,7 @@ Private Function FilterData() As Variant
     Dim clientNameWithoutAccent As String
         For i = LBound(m_listOfItems) To UBound(m_listOfItems)
         'Using Instr instead of Like so we can set the case sensitivity
-        clientNameWithoutAccent = Fn_ChaineSansAccents(m_listOfItems(i, 1))
+        clientNameWithoutAccent = Fn_ChaineSansAccents(m_listOfItems(i, 1)) '2024-09-25 @ 07:19
         If InStr(1, clientNameWithoutAccent, textPatternWithoutAccent, m_compareMethod) > 0 Then
             filteredItems(count) = m_listOfItems(i, 1)
             count = count + 1
@@ -410,5 +412,7 @@ Private Function FilterData() As Variant
     FilterData = finalItems
 
 End Function
+
+
 
 
