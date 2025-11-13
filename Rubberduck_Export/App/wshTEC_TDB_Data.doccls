@@ -31,8 +31,11 @@ Private Sub Worksheet_Change(ByVal Target As Range)
             'Appliquer les 4 Advanced Filters (Semaine, Mois, Trimestre & Année Financière)
             Call ExecuterAdvancedFilterSurTECTDBData
             
+            Application.Calculate '2025-11-12 @ 07:17
+            DoEvents
+            
             'Mettre à jour les 4 tableaux croisés dynamiques (Semaine, Mois, Trimestre & Année Financière)
-            Call MettreAJourPivotTables
+            Call modTEC_Saisie.MettreAJourPivotTables
             
             Application.EnableEvents = True
         

@@ -5,7 +5,9 @@ Sub ExecuterAdvancedFilterSurTECTDBData()
     
     'La cellule 'S7' doit contenir le Professionnel
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modStatsHeures:ExecuterAdvancedFilterSurTECTDBData", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modStatsHeures:ExecuterAdvancedFilterSurTECTDBData", _
+                                                                            vbNullString, 0)
 
     'On utilise la feuille TEC_TDB_Data
     Dim ws As Worksheet: Set ws = wshTEC_TDB_Data
@@ -77,6 +79,8 @@ Sub ExecuterAdvancedFilter(ws As Worksheet, criteriaRange As String, resultStart
             .Apply
         End With
     End If
+    
+    
 
 End Sub
 

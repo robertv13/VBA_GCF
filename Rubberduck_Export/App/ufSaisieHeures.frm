@@ -78,7 +78,8 @@ End Sub
 
 Private Sub lstNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:lstNomClient_DblClick", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:lstNomClient_DblClick", vbNullString, 0)
     
     Dim i As Long
     With Me.lstNomClient
@@ -322,22 +323,30 @@ Private Sub txtClient_Enter()
     If rmv_state = MODE_INITIAL_FAC Then
         rmv_state = MODE_CREATION_FAC
     End If
-
+    
 End Sub
 
 Private Sub txtClient_AfterUpdate()
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:txtClient_AfterUpdate", ufSaisieHeures.txtClient.Value, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:txtClient_AfterUpdate", _
+                                                            ufSaisieHeures.txtClient.Value, 0)
     
     'Force à cacher le listbox pour les résultats de recherche
     On Error Resume Next
     Me.lstNomClient.Visible = False
     On Error GoTo 0
     
+    Dim codeClient As String
+    codeClient = Fn_CellSpecifiqueDeBDClient(Me.txtClient.Value, 17, 2)
+    If codeClient = "Not Found" Then Stop
+    Me.txtClientID.Value = CStr(codeClient)
+    
     Call MettreAJourEtatBoutons
     
-    Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:txtClient_AfterUpdate", Me.txtTECID, startTime)
-    
+    Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:txtClient_AfterUpdate", _
+                                                                        Me.txtTECID, startTime)
+
 End Sub
 
 Private Sub txtActivite_AfterUpdate()
@@ -566,7 +575,7 @@ Sub imgLogoGCF_Click()
             Call ExecuterAdvancedFilterSurTECTDBData
             
             'Mettre à jour les 4 tableaux croisés dynamiques (Semaine, Mois, Trimestre & Année Financière)
-            Call MettreAJourPivotTables
+            Call modTEC_Saisie.MettreAJourPivotTables
             
             Application.EnableEvents = True
             
@@ -596,7 +605,7 @@ Sub imgStats_Click()
 
 End Sub
 
-Private Sub MettreAJourEtatBoutons() '2025-07-03 @ 07:09
+Public Sub MettreAJourEtatBoutons() '2025-07-03 @ 07:09
 
     Dim enAjout As Boolean
     Dim enModification As Boolean

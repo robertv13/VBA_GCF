@@ -1148,7 +1148,7 @@ Sub DeterminerOrdreDeTabulation(ws As Worksheet)
 
 End Sub
 
-Sub EnregistrerLogApplication(procedureName As String, param As String, ByVal sTime As Double) '2025-02-03 @ 17:17
+Sub EnregistrerLogApplication(ByVal procedureName As String, ByVal param As String, ByVal sTime As Double) '2025-02-03 @ 17:17
 
     'En attendant de trouver la problématique... 2025-06-01 @ 05:06
     If gUtilisateurWindows = vbNullString Then

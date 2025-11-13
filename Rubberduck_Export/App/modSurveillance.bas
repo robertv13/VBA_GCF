@@ -134,6 +134,8 @@ End Sub
 
 Public Sub EnregistrerActiviteDurantSurveillance(texte As String) '2025-11-07 @ 04:36
 
+    If Hour(Now) < gHEURE_DEBUT_SURVEILLANCE Then Exit Sub
+    
     Dim chemin As String
     chemin = ThisWorkbook.path & "\journal_activite.txt"
     

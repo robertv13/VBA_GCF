@@ -87,7 +87,7 @@ Function Fn_ClientIDAPartirDuNomDeClient(nomClient As String)
                                                    1)
     If result <> "Not Found" Then
         Fn_ClientIDAPartirDuNomDeClient = result
-        ufSaisieHeures.txtClientID.Value = result
+        ufSaisieHeures.txtClientID.Value = CStr(result)
     Else
         MsgBox "Impossible de retrouver le nom du client dans la feuille" & vbNewLine & vbNewLine & _
                "BD_Clients (" & nomClient & ")" & vbNewLine & vbNewLine & _
@@ -105,12 +105,18 @@ End Function
 
 Function Fn_CellSpecifiqueDeBDClient(nomClient As String, ByRef colNumberSearch As Integer, ByRef colNumberData As Integer) As String '2025-10-31 @ 05:37
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFunctions:Fn_CellSpecifiqueDeBDClient", nomClient, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modFunctions:Fn_CellSpecifiqueDeBDClient", nomClient, 0)
     
     nomClient = Trim(nomClient)
+    
     Dim ws As Worksheet: Set ws = wsdBD_Clients
     If ws Is Nothing Then
-        MsgBox "La feuille 'Clients' est introuvable !", vbCritical
+        Call EnregistrerErreurs("modFunctions", "Fn_CellSpecifiqueDeBDClient", _
+                                        "wsdBD_Clients introuvable!", Err.Number, "ERREUR")
+        MsgBox "La feuille 'Clients' est introuvable !", _
+        vbCritical, _
+        "Contactez le développeur"
         Exit Function
     End If
     
@@ -142,6 +148,7 @@ Function Fn_CellSpecifiqueDeBDClient(nomClient As String, ByRef colNumberSearch 
                     "VOUS DEVEZ SAISIR À NOUVEAU LE NOM DU CLIENT", _
             Title:="Erreur grave - Impossible de retrouver le nom du client - ", _
             Buttons:=vbCritical
+            Exit Function
     End If
     
     Set dynamicRange = Nothing
@@ -2225,6 +2232,26 @@ Function Fn_ContexteActifComplet() As String '2025-10-30 @ 06:20
         message = Left(message, Len(message) - 3)
     End If
     Fn_ContexteActifComplet = message
+    
+End Function
+
+Function AdressePlageNommee(nom As String) As String
+
+    On Error Resume Next
+    AdressePlageNommee = Evaluate(nom).Address
+    On Error GoTo 0
+    
+End Function
+
+Function Fn_PlageNommeeEstVide(nomPlage As String) As Boolean
+
+    On Error Resume Next
+    Dim nbLignes As Long
+    nbLignes = Evaluate("ROWS(" & nomPlage & ")")
+'    Debug.Print "Lignes de données dans '" & nomPlage & "' = " & nbLignes - 1
+    'On considère qu'une seule ligne = en-tête seule
+    Fn_PlageNommeeEstVide = (nbLignes <= 1)
+    On Error GoTo 0
     
 End Function
 

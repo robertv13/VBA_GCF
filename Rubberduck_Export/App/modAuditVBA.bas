@@ -1305,3 +1305,26 @@ Private Sub TriRapide(arr() As String, ByVal bas As Long, ByVal haut As Long)
     If i < haut Then Call TriRapide(arr, i, haut)
 End Sub
 
+Sub ListerNomsExternes() '2025-11-12 @ 09:35
+
+    Dim nm As Name
+    Dim formule As String
+    Dim nomClasseur As String: nomClasseur = ThisWorkbook.Name
+
+    Debug.Print "=== Noms définis avec références externes ==="
+    
+    For Each nm In ThisWorkbook.Names
+        formule = nm.RefersTo
+        
+        ' Vérifie si la formule contient un nom de classeur différent
+        If InStr(1, formule, ".xlsb", vbTextCompare) > 0 Then
+            If InStr(1, formule, nomClasseur, vbTextCompare) = 0 Then
+                Debug.Print nm.Name & " ? " & formule
+            End If
+        End If
+    Next nm
+
+    Debug.Print "=== Fin de la liste ==="
+
+End Sub
+

@@ -4,10 +4,11 @@ Option Explicit
 
 Private Sub Worksheet_Activate()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("wshStatsHeuresPivotTables:Worksheet_Activate", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("wshStatsHeuresPivotTables:Worksheet_Activate", _
+                                                                    vbNullString, 0)
 
     If gFromMenu = False Then
-        Debug.Print "#012 - wshFAC_Brouillon_Worksheet_Activate - Je ne viens pas du menu"
         Exit Sub
     End If
 
@@ -21,20 +22,24 @@ Private Sub Worksheet_Activate()
     'Masquer toutes les colonnes, pour la confidentialité
     ws.Range("D:V").EntireColumn.Hidden = True
     
+    'Ajuste les entêtes de colonnes
+    ws.Range("D2").Value = "Données du " & wsdADMIN.Range("DateDebutSemaine") & " au " & wsdADMIN.Range("DateFinSemaine")
+    ws.Range("I2").Value = "Données du " & wsdADMIN.Range("MoisDe") & " au " & wsdADMIN.Range("MoisA")
+    ws.Range("N2").Value = "Données du " & wsdADMIN.Range("TrimDe") & " au " & wsdADMIN.Range("TrimA")
+    ws.Range("S2").Value = "Données du " & wsdADMIN.Range("AnneeDe") & " au " & wsdADMIN.Range("AnneeA")
+    
     Call modImport.ImporterTEC
     
     'Set the zoom factor to 100% when this worksheet is activated
     ActiveWindow.Zoom = 100
     
-    Application.Calculation = xlCalculationAutomatic
-    
-    'Ensure all pending events are processed - 2024-10-12 @ 11:33
     DoEvents
     
     Me.Range("B4").Value = vbNullString
     
     Application.ScreenUpdating = True
     Application.EnableEvents = True
+    Application.Calculation = xlCalculationAutomatic
     
     'Batir la liste des options valides en fonction de l'utilisateur
     Dim listeChoixValides As String
@@ -45,12 +50,12 @@ Private Sub Worksheet_Activate()
             listeChoixValides = "Vladimir"
         Case "User"
             listeChoixValides = "Michel"
-        Case "Annie"
-            listeChoixValides = "Annie"
         Case "Oli_Portable"
             listeChoixValides = "Olivier"
         Case "MARIE-FRANCE"
             listeChoixValides = "Marie-France"
+        Case "Annie"
+            listeChoixValides = "Annie"
         Case Else
             listeChoixValides = vbNullString
     End Select
@@ -85,7 +90,9 @@ End Sub
 
 Private Sub Worksheet_Change(ByVal Target As Range)
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("wshStatsHeuresPivotTables:Worksheet_Change", Target.Address, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("wshStatsHeuresPivotTables:Worksheet_Change", _
+                                                              Target.Address, 0)
     
     Dim ws As Worksheet: Set ws = wshStatsHeuresPivotTables
     
@@ -93,38 +100,40 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         ws.Unprotect
         
         'Changer la valeur sur la feuille TEC_TDB_Data pour les Advanced Filter
+        Dim initProf As String
         Select Case Target.Value
-            Case "Guillaume", "GuillaumeCharron", "gchar"
-                wshTEC_TDB_Data.Range("S7").Value = "GC"
+            Case "Guillaume"
+                initProf = "GC"
             Case "Vladimir"
-                wshTEC_TDB_Data.Range("S7").Value = "VG"
+                initProf = "VG"
             Case "Michel"
-                wshTEC_TDB_Data.Range("S7").Value = "ML"
+                initProf = "ML"
             Case "Olivier"
-                wshTEC_TDB_Data.Range("S7").Value = "OB"
+                initProf = "OB"
             Case "Marie-France"
-                wshTEC_TDB_Data.Range("S7").Value = "MFP"
+                initProf = "MFP"
             Case "Annie"
-                wshTEC_TDB_Data.Range("S7").Value = "AR"
+                initProf = "AR"
             Case "Tous"
-                wshTEC_TDB_Data.Range("S7").Value = vbNullString
+                initProf = vbNullString
+            Case Else
+                initProf = vbNullString
         End Select
         
-'        If wshTEC_TDB_Data.Range("BJ2").Value <> vbNullString Then
-'            ws.Range("S:V").EntireColumn.Hidden = False
-'        End If
-'
-'        If wshTEC_TDB_Data.Range("AW2").Value <> vbNullString Then
-'            ws.Range("N:R").EntireColumn.Hidden = False
-'        End If
-'
-'        If wshTEC_TDB_Data.Range("AJ2").Value <> vbNullString Then
-'            ws.Range("I:M").EntireColumn.Hidden = False
-'        End If
-'
-'        If wshTEC_TDB_Data.Range("W2").Value <> vbNullString Then
-'            ws.Range("D:H").EntireColumn.Hidden = False
-'        End If
+        wshTEC_TDB_Data.Range("S7").Value = initProf
+        
+        DoEvents
+        
+        Dim zones As Variant
+        zones = Array( _
+            Array("BJ2", "S:V"), Array("AW2", "N:R"), Array("AJ2", "I:M"), Array("W2", "D:H"))
+        
+        Dim i As Long
+        For i = LBound(zones) To UBound(zones)
+            ws.Range(zones(i)(1)).EntireColumn.Hidden = (Trim(wshTEC_TDB_Data.Range(zones(i)(0)).Value) = "")
+        Next i
+        
+        Application.ScreenUpdating = True
     
     End If
     

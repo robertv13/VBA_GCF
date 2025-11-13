@@ -169,9 +169,15 @@ Sub FermerApplication(methode As String, ignorerSauvegarde As Boolean) '2025-09-
     Call modTraceSession.SupprimerTraceOuverture '2025-11-10 @ 08:38
 
     If Workbooks.count = 1 Then '2025-11-10 @ 10:25
+        Application.DisplayAlerts = False
+        ThisWorkbook.Saved = True
         Application.Quit
+        Application.DisplayAlerts = True
     Else
+        Application.DisplayAlerts = False
+        ThisWorkbook.Saved = True
         ThisWorkbook.Close SaveChanges:=False
+        Application.DisplayAlerts = True
     End If
     
 End Sub
@@ -180,7 +186,8 @@ Sub CacherToutesFeuillesSaufMenu()
     
     DoEvents
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU:CacherToutesFeuillesSaufMenu", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modMENU:CacherToutesFeuillesSaufMenu", vbNullString, 0)
     
     Dim ws As Worksheet
     For Each ws In ThisWorkbook.Worksheets

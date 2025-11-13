@@ -14,9 +14,11 @@ Sub AjouterLigneTEC()
 
     Dim timerPerformance As Double: timerPerformance = Timer
     
-    'Obtenir le ID du client pur (à partir de son nom pur)
-    ufSaisieHeures.txtClientID.Value = Fn_CellSpecifiqueDeBDClient(ufSaisieHeures.txtClient.Value, 1, 2)
-        
+    If ufSaisieHeures.txtClientID.Value <> Fn_CellSpecifiqueDeBDClient(ufSaisieHeures.txtClient.Value, 1, 2) Then Stop '2025-11-12 @ 18:20
+    
+'    'Obtenir le ID du client pur (à partir de son nom pur)
+'    ufSaisieHeures.txtClientID.Value = Fn_CellSpecifiqueDeBDClient(ufSaisieHeures.txtClient.Value, 1, 2)
+'
     If Fn_TEC_Is_Data_Valid() = True Then
         Dim Y As Integer, m As Integer, d As Integer
         On Error Resume Next
@@ -58,6 +60,8 @@ Sub AjouterLigneTEC()
         Exit Sub
     End If
     
+    Call ufSaisieHeures.MettreAJourEtatBoutons '2025-11-12 @ 12:41
+    
     Call EnregistrerLogPerformance("modTEC_Saisie.AjouterLigneTEC - " & saveTECID, _
                                         Timer - timerPerformance) '2025-11-05 @ 08:41
     
@@ -73,6 +77,8 @@ Sub ModifierLigneTEC() '2023-12-23 @ 07:04
 
     Dim timerPerformance As Double: timerPerformance = Timer
         
+    If ufSaisieHeures.txtClientID.Value <> Fn_CellSpecifiqueDeBDClient(ufSaisieHeures.txtClient.Value, 1, 2) Then Stop '2025-11-12 @ 18:20
+    
     'Obtenir le ID du client pur (à partir de son nom pur) - 2025-03-04 @ 08:02
     ufSaisieHeures.txtClientID.Value = Fn_CellSpecifiqueDeBDClient(ufSaisieHeures.txtClient.Value, 1, 2)
         
@@ -102,6 +108,8 @@ Sub ModifierLigneTEC() '2023-12-23 @ 07:04
     Call RafraichirListBoxEtAddtionnerHeures
     
     rmv_state = MODE_CREATION_FAC
+    
+    Call ufSaisieHeures.MettreAJourEtatBoutons '2025-11-12 @ 12:41
     
     ufSaisieHeures.txtClient.SetFocus
     
@@ -151,6 +159,7 @@ Sub DetruireLigneTEC() '2023-12-23 @ 07:05
     
     'Empty the dynamic fields after deleting
     With ufSaisieHeures
+        .txtTECID.Value = 0
         .txtClient.Value = vbNullString
         .txtActivite.Value = vbNullString
         .txtHeures.Value = vbNullString
@@ -159,7 +168,7 @@ Sub DetruireLigneTEC() '2023-12-23 @ 07:05
     End With
     
     Call EnregistrerLogPerformance("modTEC_Saisie.DetruireLigneTEC - " & CStr(Abs(tecID)), _
-                                        Timer - timerPerformance) '2025-11-05 @ 08:41
+                                             Timer - timerPerformance)
     MsgBox _
         Prompt:="L'enregistrement a été DÉTRUIT !", _
         Title:="Confirmation", _
@@ -172,6 +181,8 @@ Sub DetruireLigneTEC() '2023-12-23 @ 07:05
     Call ObtenirTousLesTECDateAvecAF
     Call RafraichirListBoxEtAddtionnerHeures
     
+    Call ufSaisieHeures.MettreAJourEtatBoutons '2025-11-12 @ 12:41
+
 Clean_Exit:
 
     ufSaisieHeures.txtTECID.Value = vbNullString
@@ -483,7 +494,7 @@ Sub AjouterOuModifierTECdansBDLocale(tecID As Long)
             .Range("B" & nextRowNumber).Value = ufSaisieHeures.txtProfID.Value
             .Range("C" & nextRowNumber).Value = ufSaisieHeures.cmbProfessionnel.Value
             .Range("D" & nextRowNumber).Value = dateValue
-            .Range("E" & nextRowNumber).Value = ufSaisieHeures.txtClientID.Value
+            .Range("E" & nextRowNumber).Value = CStr(ufSaisieHeures.txtClientID.Value)
             .Range("F" & nextRowNumber).Value = ufSaisieHeures.txtClient.Value
             .Range("G" & nextRowNumber).Value = ufSaisieHeures.txtActivite.Value
             .Range("H" & nextRowNumber).Value = hoursValue
@@ -511,7 +522,7 @@ Sub AjouterOuModifierTECdansBDLocale(tecID As Long)
 
         If tecID > 0 Then 'Modify the record
             With wsdTEC_Local
-                .Range("E" & rowToBeUpdated).Value = ufSaisieHeures.txtClientID.Value
+                .Range("E" & rowToBeUpdated).Value = CStr(ufSaisieHeures.txtClientID.Value)
                 .Range("F" & rowToBeUpdated).Value = ufSaisieHeures.txtClient.Value
                 .Range("G" & rowToBeUpdated).Value = ufSaisieHeures.txtActivite.Value
                 .Range("H" & rowToBeUpdated).Value = hoursValue
@@ -746,28 +757,17 @@ Sub ActiverButtonsVraiOuFaux(a As Boolean, u As Boolean, d As Boolean, c As Bool
 
 End Sub
 
-Sub MettreAJourPivotTables()
+Sub MettreAJourPivotTables() '2025-11-12 @ 08:33
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:MettreAJourPivotTables", vbNullString, 0)
-    
     Dim ws As Worksheet: Set ws = wshStatsHeuresPivotTables
-    Dim pt As PivotTable
-    
-    'Parcourt tous les PivotTables dans chaque feuille
-    For Each pt In ws.PivotTables
-        On Error Resume Next
-        Application.EnableEvents = False
-        pt.PivotCache.Refresh 'Actualise le cache Pivot
-        Application.EnableEvents = True
-        On Error GoTo 0
-    Next pt
 
-    'Libérer la mémoire
-    Set pt = Nothing
-    Set ws = Nothing
-    
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:MettreAJourPivotTables", vbNullString, startTime)
-    
+    With ws
+        If Not Fn_PlageNommeeEstVide("StatsHeuresSemaine") Then .PivotTables("ptStatsHeuresSemaine").RefreshTable
+        If Not Fn_PlageNommeeEstVide("StatsHeuresMois") Then .PivotTables("ptStatsHeuresMois").RefreshTable
+        If Not Fn_PlageNommeeEstVide("StatsHeuresTrimestre") Then .PivotTables("ptStatsHeuresTrimestre").RefreshTable
+        If Not Fn_PlageNommeeEstVide("StatsHeuresAnneeFinanciere") Then .PivotTables("ptStatsHeuresAnnee").RefreshTable
+    End With
+
 End Sub
 
 Public Sub RemplirChampsRecordset(ByRef rs As Object, ByVal tecID As Long, ByVal dateValue As Date, _
@@ -778,7 +778,7 @@ Public Sub RemplirChampsRecordset(ByRef rs As Object, ByVal tecID As Long, ByVal
         .Fields(fTECProfID - 1).Value = ufSaisieHeures.txtProfID.Value
         .Fields(fTECProf - 1).Value = ufSaisieHeures.cmbProfessionnel.Value
         .Fields(fTECDate - 1).Value = dateValue
-        .Fields(fTECClientID - 1).Value = ufSaisieHeures.txtClientID.Value
+        .Fields(fTECClientID - 1).Value = CStr(ufSaisieHeures.txtClientID.Value)
         .Fields(fTECClientNom - 1).Value = ufSaisieHeures.txtClient.Value
         .Fields(fTECDescription - 1).Value = Left$(ufSaisieHeures.txtActivite.Value, 255)
         .Fields(fTECHeures - 1).Value = Format$(ufSaisieHeures.txtHeures.Value, "#0.00")
@@ -798,7 +798,7 @@ Public Function ConstruireLigneLog() As String '2025-10-31 @ 06:07
 
     ConstruireLigneLog = ufSaisieHeures.cmbProfessionnel.Value & " | " & _
                          Format$(ufSaisieHeures.txtDate.Value, "YYYY-MM-DD") & " | " & _
-                         ufSaisieHeures.txtClientID.Value & " | " & _
+                         CStr(ufSaisieHeures.txtClientID.Value) & " | " & _
                          ufSaisieHeures.txtClient.Value & " | " & _
                          ufSaisieHeures.txtActivite.Value & " | " & _
                          Format$(ufSaisieHeures.txtHeures.Value, "#0.00") & " | " & _
@@ -833,3 +833,13 @@ Function CalculerTotaux(data As Variant) As Collection '2025-11-02 @ 09:58
     
 End Function
 
+Sub testObtenirNomPivotTable()
+
+    Dim pt As PivotTable
+    Dim ws As Worksheet: Set ws = wshStatsHeuresPivotTables
+    
+    For Each pt In ws.PivotTables
+        Debug.Print "Nom du PivotTable : [" & pt.Name & "]"
+    Next pt
+
+End Sub

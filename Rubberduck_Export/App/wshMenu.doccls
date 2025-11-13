@@ -5,5 +5,7 @@ Option Explicit
 Private Sub Worksheet_Activate()
 
     Call InitialiserFeuilleMenu(Me, "wshMenu.Worksheet_Activate", "Menu principal - 2")
+    
+    Call CacherToutesFeuillesSaufMenu
 
 End Sub

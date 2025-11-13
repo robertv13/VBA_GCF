@@ -5,19 +5,21 @@ Public Sub VerrouillerSiSessionInvalide(Optional contexte As String = "Interacti
 
     Dim startTime As Double: startTime = Timer
     Call modDev_Utils.EnregistrerLogApplication("modSessionVerrou:VerrouillerSiSessionInvalide", vbNullString, 0)
-    
+
     If Not SessionEstValideComplet() Then
         Call EnregistrerErreurs("modSessionVerrou", "VerrouillerSiSessionInvalide", _
-                        "trace_session.txt et/ou Actif_.txt sont présents", Err.Number, "ERREUR")
-        MsgBox "Session invalide détectée : " & contexte & vbNewLine & vbNewLine & _
+                        "trace_session.txt manquant -ET/OU- Actif_.txt manquant", Err.Number, "ERREUR")
+        MsgBox "La présente session est INVALIDE" & vbNewLine & vbNewLine & _
+               contexte & vbNewLine & vbNewLine & _
                "Veuillez relancer l'application via le raccourci prévu.", _
                vbCritical, _
                "VerrouillerSiSessionInvalide"
         Call FermerApplication("Session invalide détectée", True)
     End If
     
-    Call modDev_Utils.EnregistrerLogApplication("modSessionVerrou:VerrouillerSiSessionInvalide", vbNullString, startTime)
-    
+    Call modDev_Utils.EnregistrerLogApplication("modSessionVerrou:VerrouillerSiSessionInvalide", _
+                                                            vbNullString, startTime)
+
 End Sub
 
 Public Function SessionEstValideComplet() As Boolean '2025-11-11 @ 07:35
@@ -33,6 +35,14 @@ Public Function SessionEstValideComplet() As Boolean '2025-11-11 @ 07:35
               "Actif_" & Fn_UtilisateurWindows & ".txt") <> vbNullString)
     
     SessionEstValideComplet = gSessionInitialisee And traceOK And actifOK
+    
+    If Fn_UtilisateurWindows = "RobertMV" And gSessionInitialisee = False Then gSessionInitialisee = True '2025-11-12 @ 18:54
+    
+    If SessionEstValideComplet = False Then
+        Debug.Print "gSessionInitialisee = " & gSessionInitialisee & "    traceOK = " & traceOK & _
+                                                    "     actifOK = " & actifOK & "     ALORS = " & _
+                                                    (gSessionInitialisee And traceOK And actifOK)
+    End If
     
 End Function
 

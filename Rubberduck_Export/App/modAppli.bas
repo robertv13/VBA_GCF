@@ -378,33 +378,6 @@ Public Sub EnregistrerErreurs(moduleAppelant As String, _
     
 End Sub
 
-'Public Sub InitialiserMenuPrincipal(Optional source As String = "Appel inconnu") '2025-11-10 @ 08:47
-'
-'    Dim startTime As Double: startTime = Timer
-'    Call modDev_Utils.EnregistrerLogApplication("modAppli:InitialiserMenuPrincipal — Source : " & source, vbNullString, 0)
-'
-'    'Vérification d’ouverture silencieuse
-'    Call modTraceSession.VerifierOuvertureSilencieuse
-'
-'    Call CacherToutesFeuillesSaufMenu
-'
-'    'Mise à jour des formes selon l’utilisateur
-'    Call modMenu.CacherFormesEnFonctionUtilisateur(Fn_UtilisateurWindows)
-'
-'    'Protection de la feuille menu
-'    With wshMenu
-'        .Protect UserInterfaceOnly:=True
-'        .EnableSelection = xlUnlockedCells
-'    End With
-'
-'    'Positionnement visuel
-'    wshMenu.Activate
-'
-'    'Journalisation de la durée
-'    Call modDev_Utils.EnregistrerLogApplication("modAppli:InitialiserMenuPrincipal terminé", vbNullString, startTime)
-'
-'End Sub
-'
 Public Sub InitialiserFeuilleMenu(ws As Worksheet, contexte As String, etiquette As String) '2025-11-11 @ 10:01
     
     Call modSessionVerrou.VerrouillerSiSessionInvalide("Activation Feuille '" & ws.Name & "'")

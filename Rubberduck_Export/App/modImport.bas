@@ -32,17 +32,18 @@ Sub ImporterMASTERGenerique(sourceWb As String, ws As Worksheet, onglet As Strin
     Dim t0 As Double: t0 = Timer
     conn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & fullPathSourceWb & ";" & _
               "Extended Properties='Excel 12.0 Xml;HDR=YES';"
-    Debug.Print Now() & " Temps 'conn.Open' (" & onglet & ") : " & Format(Timer - t0, "0.0000") & " sec"
 
     '4. Lecture ADO
     Dim recSet As ADODB.Recordset: Set recSet = New ADODB.Recordset
     Dim sourceTab As String: sourceTab = "[" & onglet & "$]"
     recSet.Open "SELECT * FROM " & sourceTab, conn, adOpenStatic, adLockReadOnly
 
-    Debug.Print Now() & sourceTab & " - recSet.State       = " & recSet.state
-    Debug.Print Now() & sourceTab & " - recSet.EOF         = " & recSet.EOF
-    Debug.Print Now() & sourceTab & " - recSet.RecordCount = " & recSet.RecordCount
-
+    Debug.Print vbNewLine
+    Debug.Print Now() & " Importation générique pour " & sourceTab & " - recSet.State       = " & recSet.state
+    Debug.Print Now() & " Importation générique pour " & sourceTab & " - recSet.EOF         = " & recSet.EOF
+    Debug.Print Now() & " Importation générique pour " & sourceTab & " - recSet.RecordCount = " & recSet.RecordCount
+    Debug.Print Now() & " Importation générique pour " & sourceTab & " - Temps requis       = " & Format$(Timer - startTime, "0.0000 secondes")
+    
     '5. Injection directe dans la table structurée
     Dim tbl As ListObject: Set tbl = ws.ListObjects(table)
     If tbl Is Nothing Then
