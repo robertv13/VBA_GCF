@@ -152,7 +152,7 @@ Sub LireLogMainApp(filePath As String)
     
     'Détermine l'environnement (DEV/PROD) ?
     Dim env As String
-    If Not InStr(filePath, wsdADMIN.Range("PATH_DATA_FILES") & Application.PathSeparator & gDATA_PATH) = 1 Then
+    If Not InStr(filePath, wsdADMIN.Range("PATH_DATA_FILES") & gDATA_PATH) = 1 Then
         env = "PROD"
     Else
         env = "DEV"

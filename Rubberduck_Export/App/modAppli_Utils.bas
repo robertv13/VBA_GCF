@@ -3958,280 +3958,410 @@ End Sub
 
 Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As Long)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:AppliquerFormatColonnesParTable", vbNullString, 0)
+    Dim lo As ListObject
+    Dim rngUnion As Range
     
-    '1) Define the usedRange to data only (exclude header row(s))
-        Dim numRows As Long
-        numRows = rng.CurrentRegion.Rows.count - HeaderRow
-        Dim usedRange As Range
-        If numRows > 0 Then
-            On Error Resume Next
-            Set usedRange = rng.offset(HeaderRow, 0).Resize(numRows, rng.Columns.count)
-            On Error GoTo 0
-        End If
-        
-    '2) Specific columns formats to worksheets
-        Dim lastUsedRow As Long
-        lastUsedRow = rng.Rows.count
-        If lastUsedRow = HeaderRow Then
-            Exit Sub
-        End If
-        
-        Dim rngUnion As Range
-        
-        Select Case rng.Worksheet.CodeName
-            Case "wsdCC_Regularisations" '2025-02-12 @ 07:58
-                With wsdCC_Regularisations
-                    .Range(.Cells(2, fREGULRegulID), .Cells(lastUsedRow, fREGULTimeStamp)).HorizontalAlignment = xlCenter
-                    .Range(.Cells(2, fREGULInvNo), .Cells(lastUsedRow, fREGULInvNo)).NumberFormat = "yyyy-mm-dd"
-                    .Range(.Cells(2, fREGULClientNom), .Cells(lastUsedRow, fREGULClientNom)).HorizontalAlignment = xlLeft
-                    .Range(.Cells(2, fREGULDescription), .Cells(lastUsedRow, fREGULDescription)).HorizontalAlignment = xlLeft
-                    With .Range(.Cells(2, fREGULHono), .Cells(lastUsedRow, fREGULTVQ))
-                        .HorizontalAlignment = xlRight
-                        .NumberFormat = "#,##0.00"
-                    End With
-                    .Range(.Cells(2, fREGULTimeStamp), .Cells(lastUsedRow, fREGULTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
-                End With
-                    
-            Case "wsdDEB_Recurrent"  '2025-02-12 @ 08:06
-                With wsdDEB_Recurrent
-                    .Range(.Cells(2, fDebRNoDebRec), .Cells(lastUsedRow, fDebRTimeStamp)).HorizontalAlignment = xlCenter
-                    .Range(.Cells(2, fDebRDate), .Cells(lastUsedRow, fDebRDate)).NumberFormat = "yyyy-mm-dd"
-                    .Range(.Cells(2, fDebRType), .Cells(lastUsedRow, fDebRReference)).HorizontalAlignment = xlLeft
-                    .Range(.Cells(2, fDebRCompte), .Cells(lastUsedRow, fDebRCompte)).HorizontalAlignment = xlLeft
-                    With .Range(.Cells(2, fDebRTotal), .Cells(lastUsedRow, fDebRCréditTVQ))
-                        .HorizontalAlignment = xlRight
-                        .NumberFormat = "#,##0.00"
-                    End With
-                    .Range(.Cells(2, fDebRTimeStamp), .Cells(lastUsedRow, fDebRTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
-                End With
-           
-            Case "wsdDEB_Trans" '2025-02-12 @ 08:22
-                With wsdDEB_Trans
-                    Set rngUnion = Application.Union( _
-                        .Range(ws.Cells(2, fDebTType), ws.Cells(lastUsedRow, fDebTBeneficiaire)), _
-                        .Range(ws.Cells(2, fDebTDescription), ws.Cells(lastUsedRow, fDebTReference)), _
-                        .Range(ws.Cells(2, fDebTCompte), ws.Cells(lastUsedRow, fDebTCompte)), _
-                        .Range(ws.Cells(2, fDebTAutreRemarque), ws.Cells(lastUsedRow, fDebTAutreRemarque)))
-                    If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlLeft
-                    .Range(.Cells(2, fDebTNoEntrée), .Cells(lastUsedRow, fDebTDate)).HorizontalAlignment = xlCenter
-                    .Range(.Cells(2, fDebTDate), .Cells(lastUsedRow, fDebTDate)).NumberFormat = "yyyy-mm-dd"
-                    With .Range(.Cells(2, fDebTTotal), .Cells(lastUsedRow, fDebTDépense))
-                        .HorizontalAlignment = xlRight
-                        .NumberFormat = "#,##0.00"
-                    End With
-                    .Range(.Cells(2, fDebTTimeStamp), .Cells(lastUsedRow, fDebTTimeStamp)).HorizontalAlignment = xlCenter
-                    .Range(.Cells(2, fDebTTimeStamp), .Cells(lastUsedRow, fDebTTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
-                End With
-            
-            Case "wsdENC_Details" '2025-02-12 @ 08:33
-                With wsdENC_Details
-                    Set rngUnion = Application.Union( _
-                        .Range(.Cells(2, fEncDPayID), .Cells(lastUsedRow, fEncDPayID)), _
-                        .Range(.Cells(2, fEncDInvNo), .Cells(lastUsedRow, fEncDInvNo)), _
-                        .Range(.Cells(2, fEncDPayDate), .Cells(lastUsedRow, fEncDPayDate)))
-                    If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlCenter
-                    .Range(.Cells(2, fEncDCustomer), .Cells(lastUsedRow, fEncDCustomer)).HorizontalAlignment = xlLeft
-                    With .Range(.Cells(2, fEncDPayAmount), .Cells(lastUsedRow, fEncDPayAmount))
-                        .HorizontalAlignment = xlRight
-                        .NumberFormat = "#,##0.00"
-                    End With
-                    .Range(.Cells(2, fEncDPayID), .Cells(lastUsedRow, fEncDPayID)).NumberFormat = "0"
-                    .Range(.Cells(2, fEncDPayDate), .Cells(lastUsedRow, fEncDPayDate)).NumberFormat = "yyyy-mm-dd"
-                    .Range(.Cells(2, fEncDTimeStamp), .Cells(lastUsedRow, fEncDTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
-                End With
-            
-            Case "wsdENC_Entete" '2025-02-12 @ 08:39
-                With wsdENC_Entete
-                    Set rngUnion = Application.Union( _
-                        .Range(.Cells(2, fEncEPayID), .Cells(lastUsedRow, fEncEPayID)), _
-                        .Range(.Cells(2, fEncEPayDate), .Cells(lastUsedRow, fEncEPayDate)), _
-                        .Range(.Cells(2, fEncECodeClient), .Cells(lastUsedRow, fEncECodeClient)))
-                    If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlCenter
-                    Set rngUnion = Application.Union( _
-                        .Range(.Cells(2, fEncECustomer), .Cells(lastUsedRow, fEncECustomer)), _
-                        .Range(.Cells(2, fEncEPayType), .Cells(lastUsedRow, fEncEPayType)), _
-                        .Range(.Cells(2, fEncENotes), .Cells(lastUsedRow, fEncENotes)))
-                    If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlLeft
-                    .Range(.Cells(2, fEncEAmount), .Cells(lastUsedRow, fEncEAmount)).HorizontalAlignment = xlRight
-                    .Range(.Cells(2, fEncEPayID), .Cells(lastUsedRow, fEncEPayID)).NumberFormat = "0"
-                    .Range(.Cells(2, fEncEPayDate), .Cells(lastUsedRow, fEncEPayDate)).NumberFormat = "yyyy-mm-dd"
-                    .Range(.Cells(2, fEncEAmount), .Cells(lastUsedRow, fEncEAmount)).NumberFormat = "#,##0.00"
-                    .Range(.Cells(2, fEncETimeStamp), .Cells(lastUsedRow, fEncETimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
-                End With
-            
-            Case "wsdFAC_Comptes_Clients" '2025-01-25 @ 15:35
-                With wsdFAC_Comptes_Clients
-                    .Range(.Cells(3, fFacCCInvNo), .Cells(lastUsedRow, fFacCCInvoiceDate)).HorizontalAlignment = xlCenter
-                    .Range(.Cells(3, fFacCCCodeClient), .Cells(lastUsedRow, fFacCCDueDate)).HorizontalAlignment = xlCenter
-                    .Range(.Cells(3, fFacCCCustomer), .Cells(lastUsedRow, fFacCCCustomer)).HorizontalAlignment = xlLeft
-                    .Range(.Cells(3, fFacCCTotal), .Cells(lastUsedRow, fFacCCBalance)).HorizontalAlignment = xlRight
-                    .Range(.Cells(3, fFacCCInvoiceDate), .Cells(lastUsedRow, fFacCCInvoiceDate)).NumberFormat = "yyyy-mm-dd"
-                    .Range(.Cells(3, fFacCCDueDate), .Cells(lastUsedRow, fFacCCDueDate)).NumberFormat = "yyyy-mm-dd"
-                    .Range(.Cells(3, fFacCCTotal), .Cells(lastUsedRow, fFacCCBalance)).NumberFormat = "###,##0.00"
-                    .Range(.Cells(3, fFacCCTimeStamp), .Cells(lastUsedRow, fFacCCTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
-                End With
-            
-            Case "wsdFAC_Details" '2025-02-12 @ 10:15
-                With wsdFAC_Details
-                    Set rngUnion = Application.Union( _
-                        .Range(.Cells(3, fFacDInvNo), .Cells(lastUsedRow, fFacDInvNo)), _
-                        .Range(.Cells(3, fFacDInvRow), .Cells(lastUsedRow, fFacDInvRow)), _
-                        .Range(.Cells(3, fFacDTimeStamp), .Cells(lastUsedRow, fFacDTimeStamp)))
-                    If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlCenter
-                    .Range(.Cells(3, fFacDDescription), .Cells(lastUsedRow, fFacDDescription)).HorizontalAlignment = xlLeft
-                    .Range(.Cells(3, fFacDHeures), .Cells(lastUsedRow, fFacDHonoraires)).HorizontalAlignment = xlRight
-                    .Range(.Cells(3, fFacDHeures), .Cells(lastUsedRow, fFacDHonoraires)).NumberFormat = "#,##0.00"
-                    .Range(.Cells(3, fFacDTimeStamp), .Cells(lastUsedRow, fFacDTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
-                End With
-            
-            Case "wsdFAC_Entete" '2025-02-12 @ 10:36
-                With wsdFAC_Entete
-                    .Range(.Cells(3, fFacEInvNo), .Cells(lastUsedRow, fFacECustID)).HorizontalAlignment = xlCenter
-                    .Range(.Cells(3, fFacETimeStamp), .Cells(lastUsedRow, fFacETimeStamp)).HorizontalAlignment = xlCenter
-                    .Range(.Cells(3, fFacEContact), .Cells(lastUsedRow, fFacEAdresse3)).HorizontalAlignment = xlLeft
-                    .Range(.Cells(3, fFacEAF1Desc), .Cells(lastUsedRow, fFacEAF1Desc)).HorizontalAlignment = xlLeft
-                    .Range(.Cells(3, fFacEAF2Desc), .Cells(lastUsedRow, fFacEAF2Desc)).HorizontalAlignment = xlLeft
-                    .Range(.Cells(3, fFacEAF3Desc), .Cells(lastUsedRow, fFacEAF3Desc)).HorizontalAlignment = xlLeft
-                    .Range(.Cells(3, fFacEHonoraires), .Cells(lastUsedRow, fFacEHonoraires)).HorizontalAlignment = xlRight
-                    .Range(.Cells(3, fFacEHonoraires), .Cells(lastUsedRow, fFacEHonoraires)).NumberFormat = "#,##0.00"
-                    .Range(.Cells(3, fFacEAutresFrais1), .Cells(lastUsedRow, fFacEAutresFrais1)).HorizontalAlignment = xlRight
-                    .Range(.Cells(3, fFacEAutresFrais1), .Cells(lastUsedRow, fFacEAutresFrais1)).NumberFormat = "#,##0.00"
-                    .Range(.Cells(3, fFacEAutresFrais2), .Cells(lastUsedRow, fFacEAutresFrais2)).HorizontalAlignment = xlRight
-                    .Range(.Cells(3, fFacEAutresFrais2), .Cells(lastUsedRow, fFacEAutresFrais2)).NumberFormat = "#,##0.00"
-                    .Range(.Cells(3, fFacEAutresFrais3), .Cells(lastUsedRow, fFacEAutresFrais3)).HorizontalAlignment = xlRight
-                    .Range(.Cells(3, fFacEAutresFrais3), .Cells(lastUsedRow, fFacEAutresFrais3)).NumberFormat = "#,##0.00"
-                    .Range(.Cells(3, fFacEMntTPS), .Cells(lastUsedRow, fFacEMntTPS)).HorizontalAlignment = xlRight
-                    .Range(.Cells(3, fFacEMntTPS), .Cells(lastUsedRow, fFacEMntTPS)).NumberFormat = "#,##0.00"
-                    .Range(.Cells(3, fFacEMntTVQ), .Cells(lastUsedRow, fFacEMntTVQ)).HorizontalAlignment = xlRight
-                    .Range(.Cells(3, fFacEMntTVQ), .Cells(lastUsedRow, fFacEMntTVQ)).NumberFormat = "#,##0.00"
-                    .Range(.Cells(3, fFacEARTotal), .Cells(lastUsedRow, fFacEARTotal)).HorizontalAlignment = xlRight
-                    .Range(.Cells(3, fFacEARTotal), .Cells(lastUsedRow, fFacEARTotal)).NumberFormat = "#,##0.00"
-                    .Range(.Cells(3, fFacEDépôt), .Cells(lastUsedRow, fFacEDépôt)).HorizontalAlignment = xlRight
-                    .Range(.Cells(3, fFacEDépôt), .Cells(lastUsedRow, fFacEDépôt)).NumberFormat = "#,##0.00"
-                    .Range(.Cells(3, fFacEDateFacture), .Cells(lastUsedRow, fFacEDateFacture)).NumberFormat = "yyyy-mm-dd"
-                    .Range(.Cells(3, fFacETauxTPS), .Cells(lastUsedRow, fFacETauxTPS)).HorizontalAlignment = xlCenter
-                    .Range(.Cells(3, fFacETauxTPS), .Cells(lastUsedRow, fFacETauxTPS)).NumberFormat = "#0.000 %"
-                    .Range(.Cells(3, fFacETauxTVQ), .Cells(lastUsedRow, fFacETauxTVQ)).HorizontalAlignment = xlCenter
-                    .Range(.Cells(3, fFacETauxTVQ), .Cells(lastUsedRow, fFacETauxTVQ)).NumberFormat = "#0.000 %"
-                    .Range(.Cells(3, fFacETimeStamp), .Cells(lastUsedRow, fFacETimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
-                End With
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:AppliquerFormatColonnesParTable", vbNullString, 0)
     
-            Case "wsdFAC_Projets_Details" '2025-02-12 @ 11:42
-                With wsdFAC_Projets_Details
-                    Set rngUnion = Application.Union( _
-                        .Range(.Cells(2, fFacPDProjetID), .Cells(lastUsedRow, fFacPDProjetID)) _
-                        .Range(.Cells(2, fFacPDClientID), .Cells(lastUsedRow, fFacPDProf)), _
-                        .Range(.Cells(2, fFacPDestDetruite), .Cells(lastUsedRow, fFacPDTimeStamp)))
-                    If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlCenter
-                    .Range(.Cells(2, fFacPDNomClient), .Cells(lastUsedRow, fFacPDNomClient)).HorizontalAlignment = xlLeft
-                    .Range(.Cells(2, fFacPDHeures), .Cells(lastUsedRow, fFacPDHeures)).HorizontalAlignment = xlRight
-                    .Range(.Cells(2, fFacPDDate), .Cells(lastUsedRow, fFacPDDate)).NumberFormat = "yyyy-mm-dd"
-                    .Range(.Cells(2, fFacPDHeures), .Cells(lastUsedRow, fFacPDHeures)).NumberFormat = "#,##0.00"
-                    .Range(.Cells(2, fFacPDTimeStamp), .Cells(lastUsedRow, fFacPDTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
-                End With
-            
-            Case "wsdFAC_Projets_Entete" '2025-02-12 @ 12:41
-                With wsdFAC_Projets_Entete
-                    Set rngUnion = Application.Union( _
-                        .Range(.Cells(2, fFacPEProjetID), .Cells(lastUsedRow, fFacPEProjetID)) _
-                        .Range(.Cells(2, fFacPEClientID), .Cells(lastUsedRow, fFacPEDate)), _
-                        .Range(.Cells(2, fFacPEProf1), .Cells(lastUsedRow, fFacPEProf1)), _
-                        .Range(.Cells(2, fFacPEProf2), .Cells(lastUsedRow, fFacPEProf2)), _
-                        .Range(.Cells(2, fFacPEProf3), .Cells(lastUsedRow, fFacPEProf3)), _
-                        .Range(.Cells(2, fFacPEProf4), .Cells(lastUsedRow, fFacPEProf4)), _
-                        .Range(.Cells(2, fFacPEProf5), .Cells(lastUsedRow, fFacPEProf5)), _
-                        .Range(.Cells(2, fFacPEestDetruite), .Cells(lastUsedRow, fFacPETimeStamp)))
-                    If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlCenter
-                    .Range(.Cells(2, fFacPENomClient), .Cells(lastUsedRow, fFacPENomClient)).HorizontalAlignment = xlLeft
-                    Set rngUnion = Application.Union( _
-                        .Range(.Cells(2, fFacPEHonoTotal), .Cells(lastUsedRow, fFacPEHonoTotal)) _
-                        .Range(.Cells(2, fFacPEHres1), .Cells(lastUsedRow, fFacPEHono1)), _
-                        .Range(.Cells(2, fFacPEHres2), .Cells(lastUsedRow, fFacPEHono2)), _
-                        .Range(.Cells(2, fFacPEHres3), .Cells(lastUsedRow, fFacPEHono3)), _
-                        .Range(.Cells(2, fFacPEHres4), .Cells(lastUsedRow, fFacPEHono4)), _
-                        .Range(.Cells(2, fFacPEHres5), .Cells(lastUsedRow, fFacPEHono5)))
-                     If Not rngUnion Is Nothing Then
-                        rngUnion.HorizontalAlignment = xlRight
-                        rngUnion.NumberFormat = "###,##0.00"
-                    End If
-                End With
-            
-            Case "wsdFAC_Sommaire_Taux" '2025-02-12 @ 12:50
-                With wsdFAC_Sommaire_Taux
-                    .Range(.Cells(2, fFacSTInvNo), .Cells(lastUsedRow, fFacSTProf)).HorizontalAlignment = xlCenter
-                    .Range(.Cells(2, fFacSTHeures), .Cells(lastUsedRow, fFacSTTaux)).HorizontalAlignment = xlRight
-                    .Range(.Cells(2, fFacSTHeures), .Cells(lastUsedRow, fFacSTTaux)).NumberFormat = "#,##0.00"
-                    .Range(.Cells(2, fFacSTTimeStamp), .Cells(lastUsedRow, fFacSTTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
-                End With
-            
-            Case "wsdGL_EJ_Recurrente" '2025-02-12 @ 12:59
-                With wsdGL_EJ_Recurrente
-                    Set rngUnion = Application.Union( _
-                        .Range(.Cells(2, fGlEjRNoEjR), .Cells(lastUsedRow, fGlEjRNoEjR)) _
-                        .Range(.Cells(2, fGlEjRNoCompte), .Cells(lastUsedRow, fGlEjRNoCompte)), _
-                        .Range(.Cells(2, fGlEjRTimeStamp), .Cells(lastUsedRow, fGlEjRTimeStamp)))
-                    If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlCenter
-                    Set rngUnion = Application.Union( _
-                        .Range(.Cells(2, fGlEjRDescription), .Cells(lastUsedRow, fGlEjRDescription)) _
-                        .Range(.Cells(2, fGlEjRCompte), .Cells(lastUsedRow, fGlEjRCompte)), _
-                        .Range(.Cells(2, fGlEjRAutreRemarque), .Cells(lastUsedRow, fGlEjRAutreRemarque)))
-                    If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlLeft
-                    .Range(.Cells(2, fGlEjRDébit), .Cells(lastUsedRow, fGlEjRCrédit)).HorizontalAlignment = xlRight
-                    .Range(.Cells(2, fGlEjRDébit), .Cells(lastUsedRow, fGlEjRCrédit)).NumberFormat = "###,##0.00 $"
-                    .Range(.Cells(2, fGlEjRTimeStamp), .Cells(lastUsedRow, fGlEjRTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
-                End With
-            
-            Case "wsdGL_Trans" '2025-02-12 @ 13:06
-                With wsdGL_Trans
-                    .Range(.Cells(2, fGlTNoCompte), .Cells(lastUsedRow, fGlTTimeStamp)).HorizontalAlignment = xlCenter
-                    Set rngUnion = Application.Union( _
-                        .Range(.Cells(2, fGlTDate), .Cells(lastUsedRow, fGlTSource)), _
-                        .Range(.Cells(2, fGlTCompte), .Cells(lastUsedRow, fGlTCompte)), _
-                        .Range(.Cells(2, fGlTAutreRemarque), .Cells(lastUsedRow, fGlTAutreRemarque)))
-                    If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlLeft
-                    .Range(.Cells(2, fGlTDébit), .Cells(lastUsedRow, fGlTCrédit)).HorizontalAlignment = xlRight
-                    .Range(.Cells(2, fGlTDébit), .Cells(lastUsedRow, fGlTCrédit)).NumberFormat = "###,##0.00"
-                    .Range(.Cells(2, fGlTDate), .Cells(lastUsedRow, fGlTDate)).NumberFormat = "yyyy-mm-dd"
-                    .Range(.Cells(2, fGlTTimeStamp), .Cells(lastUsedRow, fGlTTimeStamp)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
-                End With
-            
-            Case "wsdTEC_Local" '2025-02-12 @ 13:14
-                With wsdTEC_Local
-                    .Range(.Cells(3, fTECTECID), .Cells(lastUsedRow, fTECNoFacture)).HorizontalAlignment = xlCenter
-                    Set rngUnion = Application.Union( _
-                        .Range(.Cells(3, fTECClientNom), .Cells(lastUsedRow, fTECDescription)), _
-                        .Range(.Cells(3, fTECCommentaireNote), .Cells(lastUsedRow, fTECCommentaireNote)), _
-                        .Range(.Cells(3, fTECVersionApp), .Cells(lastUsedRow, fTECVersionApp)))
-                    If Not rngUnion Is Nothing Then rngUnion.HorizontalAlignment = xlLeft
-                    .Range(.Cells(3, fTECHeures), .Cells(lastUsedRow, fTECHeures)).NumberFormat = "#0.00"
-                    .Range(.Cells(3, fTECDate), .Cells(lastUsedRow, fTECDate)).NumberFormat = "yyyy-mm-dd"
-                    .Range(.Cells(3, fTECDateFacturee), .Cells(lastUsedRow, fTECDateFacturee)).NumberFormat = "yyyy-mm-dd"
-                    .Range(.Cells(3, fTECDateSaisie), .Cells(lastUsedRow, fTECDateSaisie)).NumberFormat = "yyyy-mm-dd hh:mm:ss"
-                    .Columns(fTECClientNom).ColumnWidth = 40
-                    .Columns(fTECDescription).ColumnWidth = 55
-                    .Columns(fTECCommentaireNote).ColumnWidth = 20
-                End With
-        End Select
+    Select Case rng.Worksheet.CodeName
+       Case "wsdCC_Regularisations" '2025-11-14 @ 16:31
+            Set lo = ws.ListObjects("l_tbl_CC_Regularisations")
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fREGULClientNom).DataBodyRange, _
+                lo.ListColumns(fREGULDescription).DataBodyRange _
+                )
+            Call modFormats.SetAlignLeft(rngUnion)
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fREGULRegulID).DataBodyRange, _
+                lo.ListColumns(fREGULInvNo).DataBodyRange, _
+                lo.ListColumns(fREGULDate).DataBodyRange, _
+                lo.ListColumns(fREGULTimeStamp).DataBodyRange _
+                )
+            Call modFormats.SetAlignCenter(rngUnion)
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fREGULHono).DataBodyRange, _
+                lo.ListColumns(fREGULFrais).DataBodyRange, _
+                lo.ListColumns(fREGULTPS).DataBodyRange, _
+                lo.ListColumns(fREGULTVQ).DataBodyRange _
+                )
+            Call modFormats.SetAlignRight(rngUnion)
+            Call modFormats.SetNumberFormat(rngUnion, modFormats.fmtMntCurrDollars)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fREGULInvNo).DataBodyRange, modFormats.fmtDate)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fREGULTimeStamp).DataBodyRange, modFormats.fmtDateTime)
 
-    '3) Common stuff to all worksheets
-        rng.EntireColumn.AutoFit
-        rng.RowHeight = 15
+        Case "wsdDEB_Recurrent"  '2025-11-14 @ 09:53
+            Set lo = ws.ListObjects("l_tbl_DEB_Recurrent")
+            Call modFormats.SetAlignCenter(lo.ListColumns(fDebRNoDebRec).DataBodyRange)
+            Call modFormats.SetAlignCenter(lo.ListColumns(fDebRTimeStamp).DataBodyRange)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fDebRDate).DataBodyRange, modFormats.fmtDate)
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fDebRType).DataBodyRange, _
+                lo.ListColumns(fDebRReference).DataBodyRange, _
+                lo.ListColumns(fDebRCompte).DataBodyRange _
+                )
+            Call modFormats.SetAlignLeft(rngUnion)
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fDebRTotal).DataBodyRange, _
+                lo.ListColumns(fDebRTPS).DataBodyRange, _
+                lo.ListColumns(fDebRTVQ).DataBodyRange, _
+                lo.ListColumns(fDebRCréditTPS).DataBodyRange, _
+                lo.ListColumns(fDebRCréditTVQ).DataBodyRange _
+                )
+            Call modFormats.SetAlignRight(rngUnion)
+            Call modFormats.SetNumberFormat(rngUnion, modFormats.fmtMntCurrDollars)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fDebRTimeStamp).DataBodyRange, modFormats.fmtDateTime)
+
+            'Hors tableau structuré (Sommaire)
+            ws.Columns("P").NumberFormat = modFormats.fmtEntier
+            ws.Columns("R").HorizontalAlignment = xlRight
+            ws.Columns("R").NumberFormat = modFormats.fmtMntCurrDollars
+            ws.Columns("S").NumberFormat = modFormats.fmtDateTime
+    
+        Case "wsdDEB_Trans" '2025-11-14 @ 09:53
+            Set lo = ws.ListObjects("l_tbl_DEB_Trans")
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fDebTType).DataBodyRange, _
+                lo.ListColumns(fDebTBeneficiaire).DataBodyRange, _
+                lo.ListColumns(fDebTDescription).DataBodyRange, _
+                lo.ListColumns(fDebTReference).DataBodyRange, _
+                lo.ListColumns(fDebTCompte).DataBodyRange, _
+                lo.ListColumns(fDebTAutreRemarque).DataBodyRange _
+                )
+            Call modFormats.SetAlignLeft(rngUnion)
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fDebTNoEntrée).DataBodyRange, _
+                lo.ListColumns(fDebTDate).DataBodyRange, _
+                lo.ListColumns(fDebTFournID).DataBodyRange, _
+                lo.ListColumns(fDebTNoCompte).DataBodyRange, _
+                lo.ListColumns(fDebTCodeTaxe).DataBodyRange, _
+                lo.ListColumns(fDebTTimeStamp).DataBodyRange _
+                )
+            Call modFormats.SetAlignCenter(rngUnion)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fDebTDate).DataBodyRange, modFormats.fmtDate)
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fDebTTotal).DataBodyRange, _
+                lo.ListColumns(fDebTTPS).DataBodyRange, _
+                lo.ListColumns(fDebTTVQ).DataBodyRange, _
+                lo.ListColumns(fDebTCréditTPS).DataBodyRange, _
+                lo.ListColumns(fDebTCréditTVQ).DataBodyRange, _
+                lo.ListColumns(fDebTDépense).DataBodyRange _
+                )
+            Call modFormats.SetAlignRight(rngUnion)
+            Call modFormats.SetNumberFormat(rngUnion, modFormats.fmtMntCurrDollars)
+            
+            Call modFormats.SetNumberFormat(lo.ListColumns(fDebTTimeStamp).DataBodyRange, modFormats.fmtDateTime)
+
+        Case "wsdENC_Details" '2025-11-14 @ 16:43
+            Set lo = ws.ListObjects("l_tbl_ENC_Details")
+            Call modFormats.SetAlignLeft(lo.ListColumns(fEncDCustomer).DataBodyRange)
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fEncDPayID).DataBodyRange, _
+                lo.ListColumns(fEncDInvNo).DataBodyRange, _
+                lo.ListColumns(fEncDPayDate).DataBodyRange, _
+                lo.ListColumns(fEncDTimeStamp).DataBodyRange _
+                )
+            Call modFormats.SetAlignCenter(rngUnion)
+            Call modFormats.SetAlignRight(lo.ListColumns(fEncDPayAmount).DataBodyRange)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fEncDPayAmount).DataBodyRange, modFormats.fmtMntCurrency)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fEncDPayDate).DataBodyRange, modFormats.fmtDate)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fEncDTimeStamp).DataBodyRange, modFormats.fmtDateTime)
+
+        Case "wsdENC_Entete" '2025-11-14 @ 16:50
+            Set lo = ws.ListObjects("l_tbl_ENC_Entete")
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fEncECustomer).DataBodyRange, _
+                lo.ListColumns(fEncEPayType).DataBodyRange, _
+                lo.ListColumns(fEncENotes).DataBodyRange _
+                )
+            Call modFormats.SetAlignLeft(rngUnion)
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fEncEPayID).DataBodyRange, _
+                lo.ListColumns(fEncEPayDate).DataBodyRange, _
+                lo.ListColumns(fEncECodeClient).DataBodyRange, _
+                lo.ListColumns(fEncETimeStamp).DataBodyRange _
+                )
+            Call modFormats.SetAlignCenter(rngUnion)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fEncEPayID).DataBodyRange, modFormats.fmtEntier)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fEncEPayDate).DataBodyRange, modFormats.fmtDate)
+            Call modFormats.SetAlignRight(lo.ListColumns(fEncEAmount).DataBodyRange)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fEncEAmount).DataBodyRange, modFormats.fmtMntCurrDollars)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fEncETimeStamp).DataBodyRange, modFormats.fmtDateTime)
+
+        Case "wsdFAC_Comptes_Clients" '2025-11-14 @ 16:56
+            Set lo = ws.ListObjects("l_tbl_FAC_Comptes_Clients")
+            Call modFormats.SetAlignLeft(lo.ListColumns(fFacCCCustomer).DataBodyRange)
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fFacCCInvNo).DataBodyRange, _
+                lo.ListColumns(fFacCCInvoiceDate).DataBodyRange, _
+                lo.ListColumns(fFacCCCodeClient).DataBodyRange, _
+                lo.ListColumns(fFacCCStatus).DataBodyRange, _
+                lo.ListColumns(fFacCCTerms).DataBodyRange, _
+                lo.ListColumns(fFacCCDueDate).DataBodyRange, _
+                lo.ListColumns(fFacCCDaysOverdue).DataBodyRange _
+                )
+            Call modFormats.SetAlignCenter(rngUnion)
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fFacCCTotal).DataBodyRange, _
+                lo.ListColumns(fFacCCTotalPaid).DataBodyRange, _
+                lo.ListColumns(fFacCCTotalRegul).DataBodyRange, _
+                lo.ListColumns(fFacCCBalance).DataBodyRange _
+                )
+            Call modFormats.SetAlignRight(rngUnion)
+            Call modFormats.SetNumberFormat(rngUnion, modFormats.fmtMntCurrDollars)
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fFacCCInvoiceDate).DataBodyRange, _
+                lo.ListColumns(fFacCCDueDate).DataBodyRange _
+                )
+            Call modFormats.SetNumberFormat(rngUnion, modFormats.fmtDate)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fFacCCDaysOverdue).DataBodyRange, modFormats.fmtEntier)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fFacCCTimeStamp).DataBodyRange, modFormats.fmtDateTime)
+
+        Case "wsdFAC_Details" '2025-11-14 @ 10:13
+            Set lo = ws.ListObjects("l_tbl_FAC_Details")
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fFacDInvNo).DataBodyRange, _
+                lo.ListColumns(fFacDInvRow).DataBodyRange, _
+                lo.ListColumns(fFacDTimeStamp).DataBodyRange _
+                )
+            Call modFormats.SetAlignCenter(rngUnion)
+            Call modFormats.SetAlignLeft(lo.ListColumns(fFacDDescription).DataBodyRange)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fFacDHeures).DataBodyRange, modFormats.fmtMntCurrency)
+            Call modFormats.SetAlignRight(lo.ListColumns(fFacDHeures).DataBodyRange)
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fFacDTaux).DataBodyRange, _
+                lo.ListColumns(fFacDHonoraires).DataBodyRange _
+                )
+            Call modFormats.SetAlignRight(rngUnion)
+            Call modFormats.SetNumberFormat(rngUnion, modFormats.fmtMntCurrDollars)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fFacDTimeStamp).DataBodyRange, modFormats.fmtDateTime)
         
-        'Exceptions pour la largeur de colonne - 2025-07-09 @ 06:32
-        If rng.Worksheet.CodeName = "wsdTEC_Local" Then
-            With wsdTEC_Local
-                .Columns(fTECClientNom).ColumnWidth = 45
-                .Columns(fTECDescription).ColumnWidth = 65
-                .Columns(fTECCommentaireNote).ColumnWidth = 30
-            End With
-        End If
+        Case "wsdFAC_Entete" '2025-11-14 @ 09:54
+            Set lo = ws.ListObjects("l_tbl_FAC_Entete")
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fFacEContact).DataBodyRange, _
+                lo.ListColumns(fFacENomClient).DataBodyRange, _
+                lo.ListColumns(fFacEAdresse1).DataBodyRange, _
+                lo.ListColumns(fFacEAdresse2).DataBodyRange, _
+                lo.ListColumns(fFacEAdresse3).DataBodyRange, _
+                lo.ListColumns(fFacEAF1Desc).DataBodyRange, _
+                lo.ListColumns(fFacEAF2Desc).DataBodyRange, _
+                lo.ListColumns(fFacEAF3Desc).DataBodyRange _
+                )
+            Call modFormats.SetAlignLeft(rngUnion)
+            
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fFacEInvNo).DataBodyRange, _
+                lo.ListColumns(fFacEDateFacture).DataBodyRange, _
+                lo.ListColumns(fFacEACouC).DataBodyRange, _
+                lo.ListColumns(fFacECustID).DataBodyRange, _
+                lo.ListColumns(fFacETauxTPS).DataBodyRange, _
+                lo.ListColumns(fFacETauxTVQ).DataBodyRange, _
+                lo.ListColumns(fFacETimeStamp).DataBodyRange _
+                )
+            Call modFormats.SetAlignCenter(rngUnion)
+            
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fFacEHonoraires).DataBodyRange, _
+                lo.ListColumns(fFacEAutresFrais1).DataBodyRange, _
+                lo.ListColumns(fFacEAutresFrais2).DataBodyRange, _
+                lo.ListColumns(fFacEAutresFrais3).DataBodyRange, _
+                lo.ListColumns(fFacEMntTPS).DataBodyRange, _
+                lo.ListColumns(fFacEMntTVQ).DataBodyRange, _
+                lo.ListColumns(fFacEARTotal).DataBodyRange, _
+                lo.ListColumns(fFacEDépôt).DataBodyRange _
+                )
+            Call modFormats.SetAlignRight(rngUnion)
+            Call modFormats.SetNumberFormat(rngUnion, modFormats.fmtMntCurrDollars)
+            
+            Call modFormats.SetNumberFormat(lo.ListColumns(fFacEDateFacture).DataBodyRange, modFormats.fmtDate)
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fFacETauxTPS).DataBodyRange, _
+                lo.ListColumns(fFacETauxTVQ).DataBodyRange _
+                )
+            Call modFormats.SetNumberFormat(rngUnion, modFormats.fmtTaux3Pct)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fFacETimeStamp).DataBodyRange, modFormats.fmtDateTime)
+
+        Case "wsdFAC_Projets_Details" '2025-11-14 @ 16:58
+            Set lo = ws.ListObjects("l_tbl_FAC_Projets_Details")
+            Call modFormats.SetAlignLeft(lo.ListColumns(fFacPDProjetID).DataBodyRange)
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fFacPDProjetID).DataBodyRange, _
+                lo.ListColumns(fFacPDClientID).DataBodyRange, _
+                lo.ListColumns(fFacPDTECID).DataBodyRange, _
+                lo.ListColumns(fFacPDProfID).DataBodyRange, _
+                lo.ListColumns(fFacPDDate).DataBodyRange, _
+                lo.ListColumns(fFacPDProf).DataBodyRange, _
+                lo.ListColumns(fFacPDestDetruite).DataBodyRange, _
+                lo.ListColumns(fFacPDTimeStamp).DataBodyRange _
+                )
+            Call modFormats.SetAlignCenter(rngUnion)
+            Call modFormats.SetAlignRight(lo.ListColumns(fFacPDHeures).DataBodyRange)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fFacPDDate).DataBodyRange, modFormats.fmtDate)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fFacPDHeures).DataBodyRange, modFormats.fmtMntCurrency)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fFacPDTimeStamp).DataBodyRange, modFormats.fmtDateTime)
+
+        Case "wsdFAC_Projets_Entete" '2025-11-14 @ 17:10
+            Set lo = ws.ListObjects("l_tbl_FAC_Projets_Entete")
+            Call modFormats.SetAlignLeft(lo.ListColumns(fFacPENomClient).DataBodyRange)
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fFacPEProjetID).DataBodyRange, _
+                lo.ListColumns(fFacPEClientID).DataBodyRange, _
+                lo.ListColumns(fFacPEDate).DataBodyRange, _
+                lo.ListColumns(fFacPEProf1).DataBodyRange, _
+                lo.ListColumns(fFacPEProf2).DataBodyRange, _
+                lo.ListColumns(fFacPEProf3).DataBodyRange, _
+                lo.ListColumns(fFacPEProf4).DataBodyRange, _
+                lo.ListColumns(fFacPEProf5).DataBodyRange, _
+                lo.ListColumns(fFacPEestDetruite).DataBodyRange, _
+                lo.ListColumns(fFacPETimeStamp).DataBodyRange _
+                )
+            Call modFormats.SetAlignCenter(rngUnion)
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fFacPEHonoTotal).DataBodyRange, _
+                lo.ListColumns(fFacPEHres1).DataBodyRange, _
+                lo.ListColumns(fFacPETauxH1).DataBodyRange, _
+                lo.ListColumns(fFacPEHono1).DataBodyRange, _
+                lo.ListColumns(fFacPEHres2).DataBodyRange, _
+                lo.ListColumns(fFacPETauxH2).DataBodyRange, _
+                lo.ListColumns(fFacPEHono2).DataBodyRange, _
+                lo.ListColumns(fFacPEHres3).DataBodyRange, _
+                lo.ListColumns(fFacPETauxH4).DataBodyRange, _
+                lo.ListColumns(fFacPEHono3).DataBodyRange, _
+                lo.ListColumns(fFacPEHres4).DataBodyRange, _
+                lo.ListColumns(fFacPETauxH4).DataBodyRange, _
+                lo.ListColumns(fFacPEHono4).DataBodyRange, _
+                lo.ListColumns(fFacPEHres5).DataBodyRange, _
+                lo.ListColumns(fFacPETauxH5).DataBodyRange, _
+                lo.ListColumns(fFacPEHono5).DataBodyRange _
+                )
+            Call modFormats.SetAlignRight(rngUnion)
+            Call modFormats.SetNumberFormat(rngUnion, modFormats.fmtMntCurrDollars)
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fFacPETauxH1).DataBodyRange, _
+                lo.ListColumns(fFacPETauxH2).DataBodyRange, _
+                lo.ListColumns(fFacPETauxH4).DataBodyRange, _
+                lo.ListColumns(fFacPETauxH4).DataBodyRange, _
+                lo.ListColumns(fFacPETauxH5).DataBodyRange _
+                )
+            Call modFormats.SetNumberFormat(rngUnion, modFormats.fmtMntCurrency)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fFacPEDate).DataBodyRange, modFormats.fmtDate)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fFacPETimeStamp).DataBodyRange, modFormats.fmtDateTime)
+            
+        Case "wsdFAC_Sommaire_Taux" '2025-11-14 @ 17:18
+            Set lo = ws.ListObjects("l_tbl_FAC_Sommaire_Taux")
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fFacSTInvNo).DataBodyRange, _
+                lo.ListColumns(fFacSTSéquence).DataBodyRange, _
+                lo.ListColumns(fFacSTProf).DataBodyRange, _
+                lo.ListColumns(fFacSTTimeStamp).DataBodyRange _
+                )
+            Call modFormats.SetAlignCenter(rngUnion)
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fFacSTHeures).DataBodyRange, _
+                lo.ListColumns(fFacSTTaux).DataBodyRange _
+                )
+            Call modFormats.SetAlignRight(rngUnion)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fFacSTHeures).DataBodyRange, modFormats.fmtMntCurrency)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fFacSTTaux).DataBodyRange, modFormats.fmtMntCurrDollars)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fFacSTTimeStamp).DataBodyRange, modFormats.fmtDateTime)
+        
+        Case "wsdGL_EJ_Recurrente" '2025-11-14 @ 17:23
+            Set lo = ws.ListObjects("l_tbl_GL_EJ_Auto")
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fGlEjRDescription).DataBodyRange, _
+                lo.ListColumns(fGlEjRCompte).DataBodyRange, _
+                lo.ListColumns(fGlEjRAutreRemarque).DataBodyRange _
+                )
+            Call modFormats.SetAlignLeft(rngUnion)
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fGlEjRNoEjR).DataBodyRange, _
+                lo.ListColumns(fGlEjRNoCompte).DataBodyRange, _
+                lo.ListColumns(fGlEjRTimeStamp).DataBodyRange _
+                )
+            Call modFormats.SetAlignCenter(rngUnion)
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fGlEjRDébit).DataBodyRange, _
+                lo.ListColumns(fGlEjRCrédit).DataBodyRange _
+                )
+            Call modFormats.SetAlignRight(rngUnion)
+            Call modFormats.SetNumberFormat(rngUnion, modFormats.fmtMntCurrDollars)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fGlEjRTimeStamp).DataBodyRange, modFormats.fmtDateTime)
+
+        Case "wsdGL_Trans" '2025-11-14 @ 17:27
+            Set lo = ws.ListObjects("l_tbl_GL_Trans")
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fGlTDescription).DataBodyRange, _
+                lo.ListColumns(fGlTSource).DataBodyRange, _
+                lo.ListColumns(fGlTCompte).DataBodyRange, _
+                lo.ListColumns(fGlTAutreRemarque).DataBodyRange _
+                )
+            Call modFormats.SetAlignLeft(rngUnion)
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fGlTNoEntrée).DataBodyRange, _
+                lo.ListColumns(fGlTDate).DataBodyRange, _
+                lo.ListColumns(fGlTNoCompte).DataBodyRange, _
+                lo.ListColumns(fGlTTimeStamp).DataBodyRange _
+                )
+            Call modFormats.SetAlignCenter(rngUnion)
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fGlTDébit).DataBodyRange, _
+                lo.ListColumns(fGlTCrédit).DataBodyRange _
+                )
+            Call modFormats.SetAlignRight(rngUnion)
+            Call modFormats.SetNumberFormat(rngUnion, modFormats.fmtMntCurrDollars)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fGlTNoEntrée).DataBodyRange, modFormats.fmtEntier)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fGlTDate).DataBodyRange, modFormats.fmtDate)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fGlTTimeStamp).DataBodyRange, modFormats.fmtDateTime)
+        
+        Case "wsdTEC_Local" '2025-11-14 @ 17:36
+            Set lo = ws.ListObjects("l_tbl_TEC_Local")
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fTECClientNom).DataBodyRange, _
+                lo.ListColumns(fTECDescription).DataBodyRange, _
+                lo.ListColumns(fTECCommentaireNote).DataBodyRange, _
+                lo.ListColumns(fTECVersionApp).DataBodyRange _
+                )
+            Call modFormats.SetAlignLeft(rngUnion)
+            Set rngUnion = Application.Union( _
+                lo.ListColumns(fTECTECID).DataBodyRange, _
+                lo.ListColumns(fTECProfID).DataBodyRange, _
+                lo.ListColumns(fTECProf).DataBodyRange, _
+                lo.ListColumns(fTECClientID).DataBodyRange, _
+                lo.ListColumns(fTECEstFacturable).DataBodyRange, _
+                lo.ListColumns(fTECDateSaisie).DataBodyRange, _
+                lo.ListColumns(fTECEstFacturee).DataBodyRange, _
+                lo.ListColumns(fTECDateFacturee).DataBodyRange, _
+                lo.ListColumns(fTECEstDetruit).DataBodyRange, _
+                lo.ListColumns(fTECNoFacture).DataBodyRange _
+                )
+            Call modFormats.SetAlignCenter(rngUnion)
+            Call modFormats.SetAlignRight(lo.ListColumns(fTECHeures).DataBodyRange)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fTECHeures).DataBodyRange, modFormats.fmtMntCurrency)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fTECDate).DataBodyRange, modFormats.fmtDate)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fTECDateFacturee).DataBodyRange, modFormats.fmtDate)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fTECDateSaisie).DataBodyRange, modFormats.fmtDateTime)
+
+    End Select
+
+    'Post-traitements communs (AutoFit + RowHeight)
+    If Not lo Is Nothing Then
+        Call modFormats.AppliquerCommonPost(ws, lo)
+    End If
+
+    'Ajustements de largeurs de colonnes spécifiques
+    Select Case rng.Worksheet.CodeName
+        Case "wsdFAC_Entete" '2025-11-14 @ 17:51
+            Call modFormats.SetColWidth(ws, lo.ListColumns(fFacENomClient).Range.Column, 50)
+        Case "wsdTEC_Local"
+            Call modFormats.SetColWidth(ws, lo.ListColumns(fTECClientNom).Range.Column, 45)
+            Call modFormats.SetColWidth(ws, lo.ListColumns(fTECDescription).Range.Column, 60)
+            Call modFormats.SetColWidth(ws, lo.ListColumns(fTECCommentaireNote).Range.Column, 30)
+    End Select
     
     'Libérer la mémoire
-    On Error Resume Next
     Set rngUnion = Nothing
-    Set usedRange = Nothing
-    On Error GoTo 0
+    Set lo = Nothing
     
     Call modDev_Utils.EnregistrerLogApplication("modAppli_Utils:AppliquerFormatColonnesParTable", vbNullString, startTime)
 

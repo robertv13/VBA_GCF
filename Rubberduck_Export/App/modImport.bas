@@ -6,7 +6,7 @@ Sub ImporterMASTERGenerique(sourceWb As String, ws As Worksheet, onglet As Strin
     Dim startTime As Double: startTime = Timer
     Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterMASTERGenerique:" & onglet, vbNullString, 0)
     
-'    On Error GoTo ERREUR_IMPORT 2025-11-14 @ 06:15
+'    On Error GoTo ERREUR_IMPORT
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False

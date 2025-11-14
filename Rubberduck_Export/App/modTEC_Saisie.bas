@@ -590,7 +590,7 @@ Sub RafraichirListBoxEtAddtionnerHeures() 'Load the listBox with the appropriate
     Dim totalHresFact As Currency: totalHresFact = 0
     Dim totalHresNonFact As Currency: totalHresNonFact = 0
     Dim rngResult As Range
-    Dim i As Long, ColIndex As Long
+    Dim i As Long, colIndex As Long
     
     'Remplissage du listBox '2025-07-03 @ 08:37
     Dim hresFormat As String
@@ -609,15 +609,15 @@ Sub RafraichirListBoxEtAddtionnerHeures() 'Load the listBox with the appropriate
             With ufSaisieHeures.lstHresJour
                 .AddItem data(i, 1)
                 Dim idx As Long: idx = .ListCount - 1
-                For ColIndex = 2 To 9
-                    If ColIndex <> 6 Then
-                        .List(idx, ColIndex - 1) = data(i, ColIndex)
+                For colIndex = 2 To 9
+                    If colIndex <> 6 Then
+                        .List(idx, colIndex - 1) = data(i, colIndex)
                     Else
-                        hresFormat = Format$(data(i, ColIndex), "#0.00")
+                        hresFormat = Format$(data(i, colIndex), "#0.00")
                         hresFormat = Space(5 - Len(hresFormat)) & hresFormat
-                        .List(idx, ColIndex - 1) = hresFormat
+                        .List(idx, colIndex - 1) = hresFormat
                     End If
-                Next ColIndex
+                Next colIndex
             End With
         Next i
         Set totaux = CalculerTotaux(data)
