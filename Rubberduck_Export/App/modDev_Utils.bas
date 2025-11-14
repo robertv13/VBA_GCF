@@ -120,7 +120,7 @@ Sub zz_ListerToutesLesFeuillesClasseurFerme()
         r = r + 1
         arr(r, 1) = ws.Name
         arr(r, 2) = ws.CodeName
-        timeStamp = Format$(Now(), "dd-mm-yyyy hh:mm:ss")
+        timeStamp = Format$(Now(), "dd-mm-yyyy hh:nn:ss")
         arr(r, 3) = timeStamp
     Next ws
     
@@ -460,7 +460,7 @@ Sub zz_ListerTousLesDynamicNamedRange()
         If nr.Visible = False Then
             arr(i, 8) = nr.Visible
         End If
-        timeStamp = Format$(Now(), "dd-mm-yyyy hh:mm:ss")
+        timeStamp = Format$(Now(), "dd-mm-yyyy hh:nn:ss")
         arr(i, 9) = timeStamp
     Next nr
     
@@ -624,7 +624,7 @@ Sub RechercherToutesLesLignesDeCode(arr As Variant, lignesLues As Long, search1 
                 arrResult(xr, 4) = arr(X, 3) 'LineNum
                 arrResult(xr, 5) = procedureName
                 arrResult(xr, 6) = "'" & saveLineOfCode
-                timeStamp = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+                timeStamp = Format$(Now(), "yyyy-mm-dd hh:nn:ss")
                 arrResult(xr, 7) = timeStamp
                 arrResult(xr, 1) = UCase$(arr(X, 1)) & Chr$(0) & UCase$(arr(X, 2)) & Chr$(0) & Format$(arr(X, 3), "0000") & Chr$(0) & procedureName 'Future sort key
             End If
@@ -1063,7 +1063,7 @@ Sub zz_ListerToutesLesFeuillesClasseurCourant()
         i = i + 1
         arr(i, 1) = ws.Name
         arr(i, 2) = ws.CodeName
-        timeStamp = Format$(Now(), "dd-mm-yyyy hh:mm:ss")
+        timeStamp = Format$(Now(), "dd-mm-yyyy hh:nn:ss")
         arr(i, 3) = timeStamp
     Next ws
     
@@ -1130,7 +1130,7 @@ Sub DeterminerOrdreDeTabulation(ws As Worksheet)
     'Sort to ensure cells are sorted left-to-right, top-to-bottom
     If Not unprotectedCells Is Nothing Then
         Dim sortedCells As Range: Set sortedCells = unprotectedCells
-        Debug.Print "(" & ws.Name & ") - DeterminerOrdreDeTabulation - Unprotected cells are '" & sortedCells.Address & "' - " & sortedCells.count & " cellule(s) - " & Format$(Now(), "dd/mm/yyyy hh:mm:ss")
+        Debug.Print "(" & ws.Name & ") - DeterminerOrdreDeTabulation - Unprotected cells are '" & sortedCells.Address & "' - " & sortedCells.count & " cellule(s) - " & Format$(Now(), "dd/mm/yyyy hh:nn:ss")
 
         'Enable TAB through unprotected cells
         Application.EnableEvents = False
@@ -1160,7 +1160,7 @@ Sub EnregistrerLogApplication(ByVal procedureName As String, ByVal param As Stri
     
     'TimeStamp avec centièmes de seconde
     Dim timeStamp As String
-    timeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & Right$(Format$(Timer, "0.00"), 2)
+    timeStamp = Format$(Now, "yyyy-mm-dd hh:nn:ss") & "." & Right$(Format$(Timer, "0.00"), 2)
     
     If Trim(param) <> vbNullString Then
         param = " | " & param
@@ -1249,7 +1249,7 @@ Sub EnregistrerLogSaisieHeures(oper As String, txt As String, Optional blankline
     'TimeStamp avec les centièmes de secondes
     Dim ms As String
     Dim timeStamp As String
-    timeStamp = Format$(Now, "yyyy-mm-dd hh:mm:ss") & "." & Right$(Format$(Timer, "0.00"), 2)
+    timeStamp = Format$(Now, "yyyy-mm-dd hh:nn:ss") & "." & Right$(Format$(Timer, "0.00"), 2)
     
     'Path complet du fichier LogSaisieHeures.txt
     Dim logSaisieHeuresFile As String
@@ -1326,7 +1326,7 @@ Sub zz_AnalyserLogApplication() '2025-01-10 @ 17:10
     fileNum = FreeFile
     
     Dim currentTime As String
-    currentTime = Format$(Now, "yyyy-mm-dd hh:mm:ss")
+    currentTime = Format$(Now, "yyyy-mm-dd hh:nn:ss")
     
     Open logFile For Input As #fileNum
 

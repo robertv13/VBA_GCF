@@ -136,7 +136,7 @@ Private Sub MettreAJourDerniereConnexion(utilisateurID As Long)
     cn.Open "Provider=Microsoft.ACE.OLEDB.12.0;Data Source=" & cheminMASTER & ";Extended Properties='Excel 12.0 Xml;HDR=YES';"
 
     Dim sql As String
-    sql = "UPDATE [Utilisateurs$] SET DateDernLogin = #" & Format(Now, "yyyy-mm-dd hh:nn:ss") & "# WHERE UtilisateurID = " & utilisateurID
+    sql = "UPDATE [Utilisateurs$] SET DateDernLogin = #" & Format$(Now, "yyyy-mm-dd hh:nn:ss") & "# WHERE UtilisateurID = " & utilisateurID
     cn.Execute sql
 
     cn.Close

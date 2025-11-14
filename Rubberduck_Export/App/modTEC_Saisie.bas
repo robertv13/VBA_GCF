@@ -216,7 +216,7 @@ Sub ObtenirTousLesTECDateAvecAF()
     
     'Effacer les données de la dernière utilisation
     ws.Range("S6:S10").ClearContents
-    ws.Range("S6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("S6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:nn:ss")
     
     'Définir le range pour la source des données en utilisant un tableau
     Dim rngData As Range
@@ -438,7 +438,7 @@ Public Function SupprimerTECdansBDMaster(tecID As Long) As Boolean '2025-10-31 @
     End If
 
     With recSet
-        .Fields(fTECDateSaisie - 1).Value = Format$(Now, "yyyy-mm-dd hh:mm:ss")
+        .Fields(fTECDateSaisie - 1).Value = Format$(Now, "yyyy-mm-dd hh:nn:ss")
         .Fields(fTECEstDetruit - 1).Value = Fn_Convert_Value_Boolean_To_Text(True)
         .Fields(fTECVersionApp - 1).Value = ThisWorkbook.Name
         .Update
@@ -496,7 +496,7 @@ Sub AjouterOuModifierTECdansBDLocale(tecID As Long)
             .Range("H" & nextRowNumber).Value = hoursValue
             .Range("I" & nextRowNumber).Value = ufSaisieHeures.txtCommNote.Value
             .Range("J" & nextRowNumber).Value = Fn_Convert_Value_Boolean_To_Text(ufSaisieHeures.chkFacturable.Value)
-            .Range("K" & nextRowNumber).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+            .Range("K" & nextRowNumber).Value = Format$(timeStamp, "yyyy-mm-dd hh:nn:ss")
             .Range("L" & nextRowNumber).Value = Fn_Convert_Value_Boolean_To_Text(False)
             .Range("M" & nextRowNumber).Value = vbNullString
             .Range("N" & nextRowNumber).Value = Fn_Convert_Value_Boolean_To_Text(False)
@@ -524,7 +524,7 @@ Sub AjouterOuModifierTECdansBDLocale(tecID As Long)
                 .Range("H" & rowToBeUpdated).Value = hoursValue
                 .Range("I" & rowToBeUpdated).Value = ufSaisieHeures.txtCommNote.Value
                 .Range("J" & rowToBeUpdated).Value = Fn_Convert_Value_Boolean_To_Text(ufSaisieHeures.chkFacturable.Value)
-                .Range("K" & rowToBeUpdated).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+                .Range("K" & rowToBeUpdated).Value = Format$(timeStamp, "yyyy-mm-dd hh:nn:ss")
                 .Range("L" & rowToBeUpdated).Value = Fn_Convert_Value_Boolean_To_Text(False)
                 .Range("M" & rowToBeUpdated).Value = vbNullString
                 .Range("N" & rowToBeUpdated).Value = Fn_Convert_Value_Boolean_To_Text(False)
@@ -533,7 +533,7 @@ Sub AjouterOuModifierTECdansBDLocale(tecID As Long)
             End With
         Else 'Soft delete the record
             With wsdTEC_Local
-                .Range("K" & rowToBeUpdated).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+                .Range("K" & rowToBeUpdated).Value = Format$(timeStamp, "yyyy-mm-dd hh:nn:ss")
                 .Range("N" & rowToBeUpdated).Value = Fn_Convert_Value_Boolean_To_Text(True)
                 .Range("O" & rowToBeUpdated).Value = ThisWorkbook.Name
             End With
@@ -742,17 +742,6 @@ Sub RafraichirTableauxCroisesTEC()
     
 End Sub
 
-'Sub ActiverButtonsVraiOuFaux(a As Boolean, u As Boolean, d As Boolean, c As Boolean)
-'
-'    With ufSaisieHeures
-'        .shpAdd.Enabled = a
-'        .shpUpdate.Enabled = u
-'        .shpDelete.Enabled = d
-'        .shpClear.Enabled = c
-'    End With
-'
-'End Sub
-'
 Sub MettreAJourPivotTables() '2025-11-12 @ 08:33
 
     Dim ws As Worksheet: Set ws = wshStatsHeuresPivotTables
@@ -780,7 +769,7 @@ Public Sub RemplirChampsRecordset(ByRef rs As Object, ByVal tecID As Long, ByVal
         .Fields(fTECHeures - 1).Value = Format$(ufSaisieHeures.txtHeures.Value, "#0.00")
         .Fields(fTECCommentaireNote - 1).Value = ufSaisieHeures.txtCommNote.Value
         .Fields(fTECEstFacturable - 1).Value = Fn_Convert_Value_Boolean_To_Text(ufSaisieHeures.chkFacturable.Value)
-        .Fields(fTECDateSaisie - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+        .Fields(fTECDateSaisie - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:nn:ss")
         .Fields(fTECEstFacturee - 1).Value = Fn_Convert_Value_Boolean_To_Text(False)
         .Fields(fTECDateFacturee - 1).Value = Null
         .Fields(fTECEstDetruit - 1).Value = Fn_Convert_Value_Boolean_To_Text(False)

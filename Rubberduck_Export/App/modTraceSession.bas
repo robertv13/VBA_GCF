@@ -13,7 +13,7 @@ Public Sub CreerTraceOuverture()
         Dim f As Integer: f = FreeFile
         Open chemin & Application.PathSeparator & gDATA_PATH & Application.PathSeparator & _
                 Fn_NomFichierControleSession(NOM_FICHIER_OUVERTURE_NORMALE) For Output As #f
-        Print #f, "Ouverture normale à " & Format(Now, "yyyy-mm-dd hh:nn:ss") & " par " & _
+        Print #f, "Ouverture normale à " & Format$(Now, "yyyy-mm-dd hh:nn:ss") & " par " & _
                                                                                     Fn_UtilisateurWindows
         Close #f
     On Error GoTo 0
@@ -61,7 +61,7 @@ Private Sub AppelLogSessionAnormale(msg As String)
         Dim f As Integer: f = FreeFile
         Open chemin & Application.PathSeparator & gDATA_PATH & Application.PathSeparator & _
                                 Fn_NomFichierControleSession(NOM_FICHIER_SESSION_ACTIVE) For Append As #f
-        Print #f, Format(Now, "yyyy-mm-dd hh:nn:ss") & " | " & gUtilisateurWindows & " | " & msg
+        Print #f, Format$(Now, "yyyy-mm-dd hh:nn:ss") & " | " & gUtilisateurWindows & " | " & msg
         Close #f
     On Error GoTo 0
     

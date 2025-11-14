@@ -93,7 +93,7 @@ Sub ObtenirFacturesClientAvecAF(codeClient As String)
     With ws
         'Effacer les données de la dernière utilisation
         .Range("Y6:Y10").ClearContents
-        .Range("Y6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+        .Range("Y6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:nn:ss")
     
         'Définir le range pour la source des données en utilisant un tableau
         Dim rngData As Range
@@ -1010,7 +1010,7 @@ Sub ImprimerInfosTECetHonoraires(ByVal plage As Range)
         .FitToPagesTall = False
         .CenterHorizontally = True
         .CenterVertically = True
-        .LeftFooter = Format$(Now, "yyyy-mm-dd hh:mm:ss")
+        .LeftFooter = Format$(Now, "yyyy-mm-dd hh:nn:ss")
         .LeftMargin = Application.InchesToPoints(0.25)
         .RightMargin = Application.InchesToPoints(0.25)
         .TopMargin = Application.InchesToPoints(0.25)
@@ -1032,7 +1032,7 @@ Sub ImprimerTransCC(ByVal plage As Range)
         .FitToPagesTall = False
         .CenterHorizontally = True
         .CenterVertically = True
-        .LeftFooter = Format$(Now, "yyyy-mm-dd hh:mm:ss")
+        .LeftFooter = Format$(Now, "yyyy-mm-dd hh:nn:ss")
         .LeftMargin = Application.InchesToPoints(0.25)
         .RightMargin = Application.InchesToPoints(0.25)
         .TopMargin = Application.InchesToPoints(0.25)
@@ -1146,7 +1146,7 @@ Sub ObtenirListeTECFacturesAF(noFact As String)
     
     'Effacer les données de la dernière utilisation
     ws.Range("BH6:BH10").ClearContents
-    ws.Range("BH6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("BH6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:nn:ss")
     
     'Définir le range pour la source des données en utilisant un tableau
     Dim rngData As Range

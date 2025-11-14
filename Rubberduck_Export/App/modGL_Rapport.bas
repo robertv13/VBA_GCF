@@ -91,9 +91,7 @@ Public Sub GenererRapportGLParCompte(wsRapport As Worksheet, dateDebut As Date, 
                 wsRapport.Range("D" & rowRapport).Value = arrTrans(i, 4)
                 wsRapport.Range("E" & rowRapport).Value = arrTrans(i, 1)
                 wsRapport.Range("F" & rowRapport).Value = arrTrans(i, 7)
-'                wsRapport.Range("F" & rowRapport).NumberFormat = "###,###,##0.00"
                 wsRapport.Range("G" & rowRapport).Value = arrTrans(i, 8)
-'                wsRapport.Range("G" & rowRapport).NumberFormat = "###,###,##0.00"
                 
                 solde = solde + CCur(arrTrans(i, 7)) - CCur(arrTrans(i, 8))
                 wsRapport.Range("H" & rowRapport).Value = solde

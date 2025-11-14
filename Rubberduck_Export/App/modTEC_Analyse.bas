@@ -535,7 +535,7 @@ Sub AjouterProjetsDetailsBDMaster(clientID As String, fr As Long, lr As Long, By
             recSet.Fields(fFacPDProf - 1).Value = wshTEC_Analyse.Range("F" & l).Value
             recSet.Fields(fFacPDestDetruite - 1) = 0 'Faux
             recSet.Fields(fFacPDHeures - 1).Value = CDbl(wshTEC_Analyse.Range("H" & l).Value)
-            recSet.Fields(fFacPDTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+            recSet.Fields(fFacPDTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:nn:ss")
         recSet.Update
     Next l
     
@@ -587,7 +587,7 @@ Sub AjouterProjetsDetailsBDLocale(clientID As String, fr As Long, lr As Long, pr
         wsdFAC_Projets_Details.Range("G" & rn).Value = wshTEC_Analyse.Range("F" & i).Value
         wsdFAC_Projets_Details.Range("H" & rn).Value = wshTEC_Analyse.Range("H" & i).Value
         wsdFAC_Projets_Details.Range("I" & rn).Value = "FAUX"
-        wsdFAC_Projets_Details.Range("J" & rn).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+        wsdFAC_Projets_Details.Range("J" & rn).Value = Format$(timeStamp, "yyyy-mm-dd hh:nn:ss")
         rn = rn + 1
     Next i
     
@@ -698,7 +698,7 @@ Sub AjouterProjetsEnteteBDMaster(projetID As Long, _
         End If
         
         recSet.Fields(fFacPEestDetruite - 1).Value = 0 'Faux
-        recSet.Fields(fFacPETimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+        recSet.Fields(fFacPETimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:nn:ss")
     recSet.Update
     
     'Close recordset and connection
@@ -750,7 +750,7 @@ Sub AjouterProjetsEnteteBDLocale(projetID As Long, nomClient As String, clientID
         Next j
     Next i
     wsdFAC_Projets_Entete.Range("Z" & rn).Value = "FAUX"
-    wsdFAC_Projets_Entete.Range("AA" & rn).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+    wsdFAC_Projets_Entete.Range("AA" & rn).Value = Format$(timeStamp, "yyyy-mm-dd hh:nn:ss")
     
     Application.ScreenUpdating = True
 

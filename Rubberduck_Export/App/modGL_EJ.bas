@@ -847,7 +847,7 @@ Sub AjouterEJRecurrenteBDMaster(r As Long) 'Write/Update a record to external .x
                 recSet.Fields(fGlEjRCrédit - 1).Value = CDbl(Replace(wshGL_EJ.Range("I" & l).Value, ".", ","))
             End If
             recSet.Fields(fGlEjRAutreRemarque - 1).Value = wshGL_EJ.Range("J" & l).Value
-            recSet.Fields(fGlEjRTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+            recSet.Fields(fGlEjRTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:nn:ss")
         recSet.Update
     Next l
     
@@ -899,7 +899,7 @@ Sub AjouterEJRecurrenteBDLocale(r As Long) 'Write records to local file
             wsdGL_EJ_Recurrente.Range("F" & rowToBeUsed).Value = wshGL_EJ.Range("I" & i).Value
         End If
         wsdGL_EJ_Recurrente.Range("G" & rowToBeUsed).Value = wshGL_EJ.Range("J" & i).Value
-        wsdGL_EJ_Recurrente.Range("H" & rowToBeUsed).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+        wsdGL_EJ_Recurrente.Range("H" & rowToBeUsed).Value = Format$(timeStamp, "yyyy-mm-dd hh:nn:ss")
         
         rowToBeUsed = rowToBeUsed + 1
     Next i
@@ -1015,7 +1015,7 @@ Sub PreparerAfficherListeEcriture()
                 resultats(compteur, 2) = Format$(arrData(i, fGlTDate), wsdADMIN.Range("B1").Value)
                 resultats(compteur, 3) = arrData(i, fGlTDescription)
                 resultats(compteur, 4) = source
-                resultats(compteur, 5) = Format$(arrData(i, fGlTTimeStamp), wsdADMIN.Range("B1").Value & " hh:mm:ss")
+                resultats(compteur, 5) = Format$(arrData(i, fGlTTimeStamp), wsdADMIN.Range("B1").Value & " hh:nn:ss")
                 strDejaVu = strDejaVu & CStr(arrData(i, fGlTNoEntrée)) & ".|."
             End If
         End If

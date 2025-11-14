@@ -13,7 +13,9 @@ Sub LancerSurveillance() '2025-11-06 @ 15:57
 
     gHeureProchaineVerification = Now + TimeSerial(0, gFREQUENCE_VERIFICATION_INACTIVITE, 0)
     Application.OnTime gHeureProchaineVerification, "modSurveillance.VerifierActivite" 'Aux 5 minutes
-    Debug.Print Now() & " La prochaine vérification se fera à " & gHeureProchaineVerification
+    Debug.Print Now() & " [LancerSurveillance] - La prochaine vérification se fera dans " & _
+                        gFREQUENCE_VERIFICATION_INACTIVITE & " minutes, donc la prochaine se fera à " & _
+                        Format$(gHeureProchaineVerification, "hh:nn:ss")
     
 End Sub
 

@@ -519,7 +519,7 @@ Function Fn_TECTotalOuHeuresPourFactureAvecAF(invNo As String, t As String) As C
     
     'Effacer les données de la dernière utilisation
     ws.Range("I6:I10").ClearContents
-    ws.Range("I6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("I6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:nn:ss")
     
     'Définir le range pour la source des données en utilisant un tableau
     Dim rngData As Range
@@ -604,7 +604,7 @@ Function Fn_PaiementsTotalPourFactureAvecAF(invNo As String)
     
     'Effacer les données de la dernière utilisation
     ws.Range("H6:H10").ClearContents
-    ws.Range("H6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("H6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:nn:ss")
     
     'Définir le range pour la source des données en utilisant un tableau
     Dim rngData As Range
@@ -657,7 +657,7 @@ Function Fn_RegularisationsTotalPourFactureAvecAF(invNo As String)
     
     'Effacer les données de la dernière utilisation
     ws.Range("M6:M10").ClearContents
-    ws.Range("M6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("M6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:nn:ss")
     
     'Définir le range pour la source des données en utilisant un tableau
     Dim rngData As Range

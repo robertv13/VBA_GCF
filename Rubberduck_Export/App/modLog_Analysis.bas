@@ -118,7 +118,7 @@ Sub LireLogClientsApp(filePath As String)
                 output(ligne, 6) = Trim$(Left$(output(ligne, 6), InStr(output(ligne, 6), " = ") - 1)) & " (S)"
             End If
             output(ligne, 8) = lineNo
-            output(ligne, 9) = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+            output(ligne, 9) = Format$(Now(), "yyyy-mm-dd hh:nn:ss")
         End If
     Loop
 
@@ -199,7 +199,7 @@ Sub LireLogMainApp(filePath As String)
                         output(ligne, 6) = Fields(3) & " (S)"
                     End If
                     output(ligne, 9) = lineNo
-                    output(ligne, 10) = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+                    output(ligne, 10) = Format$(Now(), "yyyy-mm-dd hh:nn:ss")
                 End If
                 If UBound(Fields) <= 4 Then
                     output(ligne, 1) = env
@@ -223,7 +223,7 @@ Sub LireLogMainApp(filePath As String)
                         End If
                     End If
                     output(ligne, 9) = lineNo
-                    output(ligne, 10) = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+                    output(ligne, 10) = Format$(Now(), "yyyy-mm-dd hh:nn:ss")
                 End If
             End If
         End If
@@ -312,7 +312,7 @@ Sub LireLogSaisieHeures(filePath As String)
             output(ligne, 13) = Round(hres, 2)
             output(ligne, 14) = Fields(10)
             output(ligne, 15) = lineNo
-            output(ligne, 16) = Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+            output(ligne, 16) = Format$(Now(), "yyyy-mm-dd hh:nn:ss")
         End If
     Loop
 
@@ -326,7 +326,6 @@ Sub LireLogSaisieHeures(filePath As String)
     Call AjouterTableauClasseurFerme(output, wsdADMIN.Range("PATH_DATA_FILES") & Application.PathSeparator & gDATA_PATH & Application.PathSeparator & "GCF_Logs_Data.xlsb", "Log_Heures")
     
     'S'il s'agit du fichier DEV, on l'efface (on garde les fichiers logs de la PROD)
-    Debug.Print env, filePath
     If env = "DEV" Then
         Kill filePath
     End If

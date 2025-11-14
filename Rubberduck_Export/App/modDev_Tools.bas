@@ -704,7 +704,7 @@ Sub CreerRepertoireEtImporterFichiers() '2025-07-02 @ 13:57
         Dim fluxLock As Object
         Set fluxLock = fso.CreateTextFile(fichierLock, True)
         fluxLock.WriteLine "Fichier verrouillé par : Robert"
-        fluxLock.WriteLine "Date : " & Format(Now, "yyyy-mm-dd hh:nn:ss")
+        fluxLock.WriteLine "Date : " & Format$(Now, "yyyy-mm-dd hh:nn:ss")
         fluxLock.WriteLine "Machine : " & Environ("COMPUTERNAME")
         fluxLock.Close
     End If
@@ -1550,7 +1550,7 @@ Sub zz_ObtenirListeAppelSubsSansCall() '2025-08-05 @ 13:44
                     If InStr(" " & ligne & " ", " " & nomProc & " ") > 0 And _
                         InStr(LCase(ligne), "call " & LCase(nomProc)) = 0 And _
                         InStr(LCase(ligne), "set " & LCase(nomProc)) = 0 Then
-                        Debug.Print Fn_PadDroite(nomModule, 25) & " # " & Format(i + 1, "###0") & "   " & ligne
+                        Debug.Print Fn_PadDroite(nomModule, 25) & " # " & Format$(i + 1, "###0") & "   " & ligne
                         cas = cas + 1
                     End If
                     
@@ -1772,7 +1772,7 @@ Sub zz_InventaireProceduresEtFonctions() '2025-08-11 @ 10:54
         .FitToPagesTall = False
         .Zoom = False
         .PrintTitleRows = "$1:$1"
-        .LeftFooter = Format(Now, "yyyy-mm-dd à HH:mm:ss")
+        .LeftFooter = Format$(Now, "yyyy-mm-dd à hh:nn:ss")
         .RightFooter = "Page &P sur &N"
     End With
 
@@ -2305,7 +2305,7 @@ Function Fn_ObtenirPortFonctionnelAdobePDF() As String
     Dim i As Integer
     For i = 0 To 10
         On Error Resume Next
-        Application.ActivePrinter = "Adobe PDF sur Ne" & Format(i, "00") & ":"
+        Application.ActivePrinter = "Adobe PDF sur Ne" & Format$(i, "00") & ":"
         If Err.Number = 0 Then
             Fn_ObtenirPortFonctionnelAdobePDF = Application.ActivePrinter
             Exit Function

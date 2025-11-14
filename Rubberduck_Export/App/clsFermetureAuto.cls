@@ -29,7 +29,7 @@ Public Sub Initialiser(Optional minutes As Double = 0)
         .show vbModeless
     End With
 
-    Debug.Print Now() & " [clsFermetureAuto] Fermeture prévue à : " & Format(heureLimite, "hh:mm:ss")
+    Debug.Print Now() & " [clsFermetureAuto] Fermeture prévue à : " & Format$(heureLimite, "hh:nn:ss")
     gProchainTick = Now + TimeSerial(0, 0, 1)
     Application.OnTime gProchainTick, "modSurveillance.SurveillerFermetureAuto"
     
@@ -76,7 +76,7 @@ Public Sub FermetureDansXSecondes(delaiSecondes As Long)
         .show vbModeless
     End With
 
-    Debug.Print Now() & " [SimulerFermeture] Fermeture simulée à : " & Format(heureLimite, "hh:mm:ss")
+    Debug.Print Now() & " [SimulerFermeture] Fermeture simulée à : " & Format$(heureLimite, "hh:nn:ss")
     gProchainTick = Now + TimeSerial(0, 0, 1)
     Application.OnTime gProchainTick, "modSurveillance.SurveillerFermetureAuto"
     
@@ -96,7 +96,7 @@ Public Sub SimulerFermetureDansXSecondes(delaiSecondes As Long)
         .show vbModeless
     End With
 
-    Debug.Print Now() & " [SimulerFermeture] Fermeture simulée à : " & Format(heureLimite, "hh:mm:ss")
+    Debug.Print Now() & " [SimulerFermeture] Fermeture simulée à : " & Format$(heureLimite, "hh:nn:ss")
     gProchainTick = Now + TimeSerial(0, 0, 1)
     Application.OnTime gProchainTick, "modSurveillance.SurveillerFermetureAuto"
     

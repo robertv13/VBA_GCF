@@ -35,7 +35,7 @@ End Sub
 
 Private Sub btnFermerMaintenant_Click() '2025-11-08 @ 06:11
 
-    Debug.Print Now() & " [btnFermerMaintenant_Click] Utilisateur a cliqué sur 'Fermer maintenant' à : " & Format(Now, "hh:mm:ss")
+    Debug.Print Now() & " [btnFermerMaintenant_Click] Utilisateur a cliqué sur 'Fermer maintenant' à : " & Format$(Now, "hh:nn:ss")
     
     fermetureAuto.Annuler
     
@@ -48,7 +48,7 @@ End Sub
 
 Private Sub btnGarderOuverte_Click() '2025-11-08 @ 06:16
     
-    Debug.Print Now() & " [btnGarderOuverte_Click] Utilisateur a cliqué sur 'Garder l'application ouverte' à : " & Format(Now, "hh:mm:ss")
+    Debug.Print Now() & " [btnGarderOuverte_Click] Utilisateur a cliqué sur 'Garder l'application ouverte' à : " & Format$(Now, "hh:nn:ss")
     
     fermetureAuto.Annuler
     

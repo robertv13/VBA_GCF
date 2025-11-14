@@ -273,7 +273,6 @@ Sub CreerFeuillesEtFormat() '2025-10-28 @ 10:33
     'Liste des feuilles à créer
     Dim nomsFeuilles As Variant
     nomsFeuilles = Split(NOM_FEUILLES_EF, ", ")
-'    nomsFeuilles = Array("Page titre.tmp", "Table des Matières.tmp", "État des Résultats.tmp", "BNR.tmp", "Bilan.tmp", "A.tmp", "A2.tmp", "A3.tmp")
 
     Application.ScreenUpdating = False
     
@@ -2290,8 +2289,8 @@ Sub CalculerSoldesCourantEtComparatif(noCompteGL As String, moisCloture As Long,
         Next k
     End If
 
-    Debug.Print "# G/L : " & noCompteGL & " " & Right(Space(15) & Format(soldeComparatif, "#,##0.00"), 15) & " " & _
-                            Right(Space(15) & Format(soldeCourant, "#,##0.00"), 15)
+    Debug.Print "# G/L : " & noCompteGL & " " & Right(Space(15) & Format$(soldeComparatif, "#,##0.00"), 15) & " " & _
+                            Right(Space(15) & Format$(soldeCourant, "#,##0.00"), 15)
     
 End Sub
 
@@ -2333,7 +2332,7 @@ Private Sub SauvegarderFeuillesEFenPDF() '2025-10-28 @ 06:58
     Dim i As Long
     Dim ws As Worksheet
 
-    chemin = ThisWorkbook.path & "\ÉtatsFinanciers_" & Format(Now, "yyyymmdd_hhmmss") & ".pdf"
+    chemin = ThisWorkbook.path & "\ÉtatsFinanciers_" & Format$(Now, "yyyymmdd_hhmmss") & ".pdf"
 
     Set feuilles = New Collection
 

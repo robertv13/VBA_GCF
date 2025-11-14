@@ -6,7 +6,7 @@ Sub ImporterMASTERGenerique(sourceWb As String, ws As Worksheet, onglet As Strin
     Dim startTime As Double: startTime = Timer
     Call modDev_Utils.EnregistrerLogApplication("modImport:ImporterMASTERGenerique:" & onglet, vbNullString, 0)
     
-    On Error GoTo ERREUR_IMPORT
+'    On Error GoTo ERREUR_IMPORT 2025-11-14 @ 06:15
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -38,7 +38,7 @@ Sub ImporterMASTERGenerique(sourceWb As String, ws As Worksheet, onglet As Strin
     Dim sourceTab As String: sourceTab = "[" & onglet & "$]"
     recSet.Open "SELECT * FROM " & sourceTab, conn, adOpenStatic, adLockReadOnly
 
-    Debug.Print vbNewLine
+    Debug.Print vbNullString
     Debug.Print Now() & " Importation générique pour " & sourceTab & " - recSet.State       = " & recSet.state
     Debug.Print Now() & " Importation générique pour " & sourceTab & " - recSet.EOF         = " & recSet.EOF
     Debug.Print Now() & " Importation générique pour " & sourceTab & " - recSet.RecordCount = " & recSet.RecordCount
@@ -627,12 +627,15 @@ Sub ViderTableau(nomFeuille As String, nomTableau As String) '2025-05-07 @ 10:13
     Dim tbl As ListObject
     Set tbl = ws.ListObjects(nomTableau)
 
-'    Debug.Print tbl.DataBodyRange.Address, tbl.DataBodyRange.Cells.count
     On Error Resume Next '2025-08-11 @ 08:49
     If Not tbl.DataBodyRange Is Nothing Then
         tbl.DataBodyRange.Delete
     End If
     On Error GoTo 0
+    
+    'Libérer la mémoire
+    Set tbl = Nothing
+    Set ws = Nothing
 
 End Sub
 

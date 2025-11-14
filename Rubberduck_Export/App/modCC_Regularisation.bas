@@ -139,7 +139,7 @@ Sub AjouterRegularisationBDMaster() 'Write to MASTER.xlsx
         recSet.Fields(fREGULTPS - 1).Value = CCur(ufEncRégularisation.txtTPS)
         recSet.Fields(fREGULTVQ - 1).Value = CCur(ufEncRégularisation.txtTVQ)
         recSet.Fields(fREGULDescription - 1).Value = wshENC_Saisie.Range("F9").Value
-        recSet.Fields(fREGULTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+        recSet.Fields(fREGULTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:nn:ss")
     'Update the recordset (create the record)
     recSet.Update
     
@@ -185,7 +185,7 @@ Sub AjouterRegularisationBDLocale()
     ws.Range("H" & rowToBeUsed).Value = CCur(ufEncRégularisation.txtTPS)
     ws.Range("I" & rowToBeUsed).Value = CCur(ufEncRégularisation.txtTVQ)
     ws.Range("J" & rowToBeUsed).Value = wshENC_Saisie.Range("F9").Value
-    ws.Range("K" & rowToBeUsed).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+    ws.Range("K" & rowToBeUsed).Value = Format$(timeStamp, "yyyy-mm-dd hh:nn:ss")
     
     Application.ScreenUpdating = True
 

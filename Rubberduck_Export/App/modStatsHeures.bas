@@ -34,7 +34,7 @@ Sub ExecuterAdvancedFilter(ws As Worksheet, criteriaRange As String, resultStart
     
     'Journaliser le temps de traitement
     ws.Range(logRange).ClearContents
-    ws.Range(logRange).Cells(1, 1).Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range(logRange).Cells(1, 1).Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:nn:ss")
     
     'Définir le range source des données
     Set rngData = ws.Range("l_tbl_TEC_TDB_data[#All]")

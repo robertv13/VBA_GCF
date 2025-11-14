@@ -675,7 +675,7 @@ Sub ObtenirTECduClientAvecAF(clientID As String, _
         
         'Effacer les données de la dernière utilisation
         ws.Range("AM6:AM10").ClearContents
-        ws.Range("AM6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+        ws.Range("AM6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:nn:ss")
         
         'Définir le range pour la source des données en utilisant un tableau
         Dim rngData As Range
@@ -806,11 +806,11 @@ Sub CopierTECFiltresVersFACBrouillon(cutOffDateProjet As Date)
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.listBox1.Clear
+        ufFraisDivers.ListBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.listBox1.AddItem item
+            ufFraisDivers.ListBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless

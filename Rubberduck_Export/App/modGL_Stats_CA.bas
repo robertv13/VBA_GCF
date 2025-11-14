@@ -105,7 +105,6 @@ Sub ActualiserStatsChiffreAffaires()
         'Heures pour chacun des professionnels
         If gDictHours(prof)(0) <> 0 Then
             tauxHoraire = Fn_Get_Hourly_Rate(profID, Date)
-'            Debug.Print prof, gDictHours(prof)(0), tauxHoraire, gDictHours(prof)(0) * tauxHoraire
             tecValeur = tecValeur + gDictHours(prof)(0) * tauxHoraire
         End If
     Next prof

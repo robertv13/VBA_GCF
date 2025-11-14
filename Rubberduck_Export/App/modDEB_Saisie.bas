@@ -239,7 +239,7 @@ Sub AjouterDebBDMaster(r As Long) 'Write/Update a record to external .xlsx file
                                                   - .Range("L" & l).Value _
                                                   - .Range("M" & l).Value)
                 recSet.Fields(fDebTAutreRemarque - 1).Value = vbNullString
-                recSet.Fields(fDebTTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+                recSet.Fields(fDebTTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:nn:ss")
             End With
         recSet.Update
     Next l
@@ -306,7 +306,7 @@ Sub AjouterDebBDLocale(r As Long) 'Write records locally
                                                           - .Range("L" & i).Value _
                                                           - .Range("M" & i).Value
             ws.Cells(rowToBeUsed, fDebTAutreRemarque).Value = vbNullString
-            ws.Cells(rowToBeUsed, fDebTTimeStamp).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+            ws.Cells(rowToBeUsed, fDebTTimeStamp).Value = Format$(timeStamp, "yyyy-mm-dd hh:nn:ss")
         End With
         rowToBeUsed = rowToBeUsed + 1
         Call modDev_Utils.EnregistrerLogApplication("    modDEB_Saisie:AjouterDebBDLocale", "", -1)
@@ -726,7 +726,7 @@ Sub AjouterDEBRecurrentBDMaster(r As Long) 'Write/Update a record to external .x
                 recSet.Fields(fDebRTVQ - 1).Value = .Range("K" & l).Value
                 recSet.Fields(fDebRCréditTPS - 1).Value = .Range("L" & l).Value
                 recSet.Fields(fDebRCréditTVQ - 1).Value = .Range("M" & l).Value
-                recSet.Fields(fDebRTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+                recSet.Fields(fDebRTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:nn:ss")
             End With
         recSet.Update
     Next l
@@ -783,7 +783,7 @@ Sub AjouterDEBRecurrentBDLocale(r As Long) 'Write records to local file
             wsdDEB_Recurrent.Range("K" & rowToBeUsed).Value = .Range("K" & i).Value
             wsdDEB_Recurrent.Range("L" & rowToBeUsed).Value = .Range("L" & i).Value
             wsdDEB_Recurrent.Range("M" & rowToBeUsed).Value = .Range("M" & i).Value
-            wsdDEB_Recurrent.Range("N" & rowToBeUsed).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+            wsdDEB_Recurrent.Range("N" & rowToBeUsed).Value = Format$(timeStamp, "yyyy-mm-dd hh:nn:ss")
         End With
         rowToBeUsed = rowToBeUsed + 1
     Next i

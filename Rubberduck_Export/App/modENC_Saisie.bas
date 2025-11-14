@@ -68,7 +68,7 @@ Sub ObtenirFacturesEnSuspensAvecAF(cc As String)
     
     'Effacer les données de la dernière utilisation
     ws.Range("O6:O10").ClearContents
-    ws.Range("O6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("O6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:nn:ss")
 
     'Définir le range pour la source des données en utilisant un tableau
     Dim rngData As Range
@@ -298,7 +298,7 @@ Sub AjouterEncEnteteDansBDMaster() 'Write to MASTER.xlsx
         recSet.Fields(fEncEPayType - 1).Value = wshENC_Saisie.Range("F7").Value
         recSet.Fields(fEncEAmount - 1).Value = CDbl(Format$(wshENC_Saisie.Range("K7").Value, "#,##0.00 $"))
         recSet.Fields(fEncENotes - 1).Value = wshENC_Saisie.Range("F9").Value
-        recSet.Fields(fEncETimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+        recSet.Fields(fEncETimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:nn:ss")
     'Update the recordset (create the record)
     recSet.Update
     
@@ -340,7 +340,7 @@ Sub AjouterEncEnteteDansBDLocale()
     wsdENC_Entete.Cells(rowToBeUsed, fEncEPayType).Value = wshENC_Saisie.Range("F7").Value
     wsdENC_Entete.Cells(rowToBeUsed, fEncEAmount).Value = CDbl(Format$(wshENC_Saisie.Range("K7").Value, "#,##0.00"))
     wsdENC_Entete.Cells(rowToBeUsed, fEncENotes).Value = wshENC_Saisie.Range("F9").Value
-    wsdENC_Entete.Cells(rowToBeUsed, fEncETimeStamp).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+    wsdENC_Entete.Cells(rowToBeUsed, fEncETimeStamp).Value = Format$(timeStamp, "yyyy-mm-dd hh:nn:ss")
     
     Application.ScreenUpdating = True
 
@@ -382,7 +382,7 @@ Sub AjouterEncDetailDansBDMaster(pmtNo As Long, firstRow As Integer, lastApplied
                 recSet.Fields(fEncDCustomer - 1).Value = wshENC_Saisie.Range("F5").Value
                 recSet.Fields(fEncDPayDate - 1).Value = wshENC_Saisie.Range("K5").Value
                 recSet.Fields(fEncDPayAmount - 1).Value = CDbl(Format$(wshENC_Saisie.Range("K" & r).Value, "#,##0.00 $"))
-                recSet.Fields(fEncDTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+                recSet.Fields(fEncDTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:nn:ss")
             'Update the recordset (create the record)
             recSet.Update
         End If
@@ -424,7 +424,7 @@ Sub AjouterEncDetailDansBDLocale(pmtNo As Long, firstRow As Integer, lastApplied
             wsdENC_Details.Range("C" & rowToBeUsed).Value = wshENC_Saisie.Range("F5").Value
             wsdENC_Details.Range("D" & rowToBeUsed).Value = CDate(wshENC_Saisie.Range("K5").Value)
             wsdENC_Details.Range("E" & rowToBeUsed).Value = CDbl(Format$(wshENC_Saisie.Range("K" & r).Value, "#,##0.00"))
-            wsdENC_Details.Range("F" & rowToBeUsed).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+            wsdENC_Details.Range("F" & rowToBeUsed).Value = Format$(timeStamp, "yyyy-mm-dd hh:nn:ss")
             rowToBeUsed = rowToBeUsed + 1
         End If
     Next r

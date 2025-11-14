@@ -175,7 +175,7 @@ Sub AjouterFACEnteteBDMaster()
         recSet.Fields(fFacEARTotal - 1).Value = Format$(.Range("E77").Value, "0.00")
         
         recSet.Fields(fFacEDépôt - 1).Value = Format$(.Range("E79").Value, "0.00")
-        recSet.Fields(fFacETimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss") '2025-01-25 @ 15:01
+        recSet.Fields(fFacETimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:nn:ss") '2025-01-25 @ 15:01
     End With
     'Update the recordset (create the record)
     recSet.Update
@@ -239,7 +239,7 @@ Sub AjouterFACEnteteBDLocale()
         .Range("U" & firstFreeRow).Value = wshFAC_Finale.Range("E77").Value
         
         .Range("V" & firstFreeRow).Value = wshFAC_Finale.Range("E79").Value
-        .Range("W" & firstFreeRow).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss") '2025-01-25 @ 15:01
+        .Range("W" & firstFreeRow).Value = Format$(timeStamp, "yyyy-mm-dd hh:nn:ss") '2025-01-25 @ 15:01
     End With
     
     Application.EnableEvents = False
@@ -298,7 +298,7 @@ Sub AjouterFACDetailsBDMaster()
                     recSet.Fields(fFacDHonoraires - 1).Value = Format$(.Range("E" & r).Value, "0.00")
             End If
             recSet.Fields(fFacDInvRow - 1).Value = wshFAC_Brouillon.Range("B11").Value
-            recSet.Fields(fFacDTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+            recSet.Fields(fFacDTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:nn:ss")
             
         End With
     'Update the recordset (create the record)
@@ -319,7 +319,7 @@ Sub AjouterFACDetailsBDMaster()
                     recSet.Fields(fFacDTaux - 1).Value = CDbl(Format$(.Range("T" & i).Value, "0.00"))
                     recSet.Fields(fFacDHonoraires - 1).Value = CDbl(Format$(.Range("S" & i).Value * .Range("T" & i).Value, "0.00"))
                     recSet.Fields(fFacDInvRow - 1).Value = vbNullString
-                    recSet.Fields(fFacDTimeStamp - 1).Value = Format$(Now, "yyyy-mm-dd hh:mm:ss")
+                    recSet.Fields(fFacDTimeStamp - 1).Value = Format$(Now, "yyyy-mm-dd hh:nn:ss")
                 End With
                 recSet.Update
         End If
@@ -375,7 +375,7 @@ Sub AjouterFACDetailsBDLocale()
             .Range("D" & firstFreeRow).Value = Format$(wshFAC_Finale.Range("D" & i).Value, "0.00")
             .Range("E" & firstFreeRow).Value = Format$(wshFAC_Finale.Range("E" & i).Value, "0.00")
             .Range("F" & firstFreeRow).Value = vbNullString
-            .Range("G" & firstFreeRow).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+            .Range("G" & firstFreeRow).Value = Format$(timeStamp, "yyyy-mm-dd hh:nn:ss")
         End With
         firstFreeRow = firstFreeRow + 1
     Next i
@@ -392,7 +392,7 @@ Sub AjouterFACDetailsBDLocale()
                     ws.Range("D" & firstFreeRow).Value = Format$(.Range("T" & i).Value, "0.00")
                     ws.Range("E" & firstFreeRow).Value = Format$(.Range("S" & i).Value * .Range("T" & i).Value, "0.00")
                     ws.Range("F" & firstFreeRow).Value = vbNullString
-                    ws.Range("G" & firstFreeRow).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+                    ws.Range("G" & firstFreeRow).Value = Format$(timeStamp, "yyyy-mm-dd hh:nn:ss")
                 End With
             firstFreeRow = firstFreeRow + 1
         End If
@@ -449,7 +449,7 @@ Sub AjouterSommTauxBDMaster()
                 recSet.Fields(fFacSTProf - 1).Value = wshFAC_Brouillon.Range("R" & r).Value
                 recSet.Fields(fFacSTHeures - 1).Value = wshFAC_Brouillon.Range("S" & r).Value
                 recSet.Fields(fFacSTTaux - 1).Value = wshFAC_Brouillon.Range("T" & r).Value
-                recSet.Fields(fFacSTTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+                recSet.Fields(fFacSTTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:nn:ss")
                 seq = seq + 1
             End With
             'Update the recordset (create the record)
@@ -563,7 +563,7 @@ Sub AjouterTransComptesClientsBDMaster()
         recSet.Fields(fFacCCTotalRegul - 1).Value = 0
         recSet.Fields(fFacCCBalance - 1).Value = .Range("E77").Value
         recSet.Fields(fFacCCDaysOverdue - 1).Value = 0
-        recSet.Fields(fFacCCTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+        recSet.Fields(fFacCCTimeStamp - 1).Value = Format$(timeStamp, "yyyy-mm-dd hh:nn:ss")
     End With
     
     'Update the recordset (create the record)
@@ -613,7 +613,7 @@ Sub AjouterTransComptesClientsBDLocale()
         .Cells(firstFreeRow, fFacCCTotalRegul).Value = 0
         .Cells(firstFreeRow, fFacCCBalance).Value = wshFAC_Finale.Range("E81").Value
         .Cells(firstFreeRow, fFacCCDaysOverdue).Value = 0
-        .Cells(firstFreeRow, fFacCCTimeStamp).Value = Format$(timeStamp, "yyyy-mm-dd hh:mm:ss")
+        .Cells(firstFreeRow, fFacCCTimeStamp).Value = Format$(timeStamp, "yyyy-mm-dd hh:nn:ss")
     End With
 
 nothing_to_update:
@@ -961,7 +961,6 @@ Sub PrevisualiserFacturePDF()
         imprimanteActuelle = Application.ActivePrinter
     End If
     On Error GoTo 0
-    Debug.Print "#083 - Imprimante actuelle : " & imprimanteActuelle
     
     'Imprimante PDF à utiliser
     Dim imprimantePDF As String

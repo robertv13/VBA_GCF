@@ -27,7 +27,7 @@ Public Sub ObtenirSoldeCompteEntreDebutEtFin(glNo As String, dateDeb As Date, da
 
     'Effacer les données de la dernière utilisation
     ws.Range("M6:M10").ClearContents
-    ws.Range("M6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("M6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:nn:ss")
     
     'Définir le range pour la source des données en utilisant un tableau
     Dim rngData As Range
@@ -103,7 +103,7 @@ Sub ObtenirEcritureAvecAF(noEJ As Long)
 
     'Effacer les données de la dernière utilisation
     ws.Range("AA6:AA10").ClearContents
-    ws.Range("AA6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("AA6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:nn:ss")
     
     'Définir le range pour la source des données en utilisant un tableau
     Dim rngData As Range
@@ -296,9 +296,9 @@ Function Fn_SoldesParCompteAvecADO(noCompteGLMin As String, noCompteGLMax As Str
     strSQL = "SELECT NoCompte, SUM(IIF(Débit IS NULL, 0, Débit)) - SUM(IIF(Crédit IS NULL, 0, Crédit)) AS Solde " & _
              "FROM [" & nomFeuille & "$] " & _
              "WHERE NoCompte >= '" & noCompteGLMin & "' AND NoCompte <= '" & noCompteGLMax & _
-             "' AND Date <= #" & Format(dateLimite, "yyyy-mm-dd") & "#"
+             "' AND Date <= #" & Format$(dateLimite, "yyyy-mm-dd") & "#"
     If Not inclureEcrCloture Then
-        strSQL = strSQL & " AND (Source IS NULL OR NOT (Date = #" & Format(dateLimite, "yyyy-mm-dd") & "# AND Source = 'Clôture annuelle'))"
+        strSQL = strSQL & " AND (Source IS NULL OR NOT (Date = #" & Format$(dateLimite, "yyyy-mm-dd") & "# AND Source = 'Clôture annuelle'))"
     End If
     
     strSQL = strSQL & " GROUP BY NoCompte"
@@ -397,7 +397,7 @@ Public Sub AjouterEcritureGLADOPlusLocale(entry As clsGL_Entry, Optional affiche
     Set recSet = Nothing
 
     'Timestamp unique pour l'écriture
-    ts = Format(Now, "yyyy-mm-dd hh:mm:ss")
+    ts = Format$(Now, "yyyy-mm-dd hh:nn:ss")
 
     'Ajoute chaque ligne d'écriture dans le classeur MASTER.xlsx
     For i = 1 To entry.lignes.count
@@ -406,7 +406,7 @@ Public Sub AjouterEcritureGLADOPlusLocale(entry As clsGL_Entry, Optional affiche
               "([NoEntrée],[Date],[Description],[Source],[NoCompte],[Compte],[Débit],[Crédit],[AutreRemarque],[TimeStamp]) " & _
               "VALUES (" & _
               entry.NoEcriture & "," & _
-              "'" & Format(entry.DateEcriture, "yyyy-mm-dd") & "'," & _
+              "'" & Format$(entry.DateEcriture, "yyyy-mm-dd") & "'," & _
               "'" & Replace(entry.description, "'", "''") & "'," & _
               "'" & Replace(entry.source, "'", "''") & "'," & _
               "'" & l.noCompte & "'," & _
@@ -515,7 +515,7 @@ Function Fn_Tableau24MoisSommeTransGL(dateLimite As Date, inclureEcrCloture As B
              "WHERE [Date] >= #" & Format$(dateDebutOperations, "yyyy-mm-dd") & "# " & _
              "AND [Date] <= #" & Format$(dateLimite, "yyyy-mm-dd") & "#"
     If Not inclureEcrCloture Then
-        strSQL = strSQL & " AND ([Source] IS NULL OR NOT ([Date] = #" & Format(dateLimite, "yyyy-mm-dd") & "# AND [Source] = 'Clôture annuelle'))"
+        strSQL = strSQL & " AND ([Source] IS NULL OR NOT ([Date] = #" & Format$(dateLimite, "yyyy-mm-dd") & "# AND [Source] = 'Clôture annuelle'))"
     End If
     
     strSQL = strSQL & "GROUP BY [NoCompte], Year([Date]), Month([Date]) " & _

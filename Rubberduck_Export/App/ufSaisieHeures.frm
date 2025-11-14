@@ -225,7 +225,7 @@ Private Sub cmbProfessionnel_AfterUpdate() '2025-05-31 @ 16:11
     
     'Lorsqu'on change de professionnel, on force l'importation des TEC - 2025-06-13 @ 08:46
     Call ImporterTEC
-    Me.txtLastImport.Value = "Les TEC ont été importés à " & Format$(Now, "hh:mm:ss")
+    Me.txtLastImport.Value = "Les TEC ont été importés à " & Format$(Now, "hh:nn:ss")
     
     Call modDev_Utils.EnregistrerLogApplication("ufSaisieHeures:cmbProfessionnel_AfterUpdate", vbNullString, startTime)
 
@@ -251,7 +251,7 @@ Private Sub txtDate_BeforeUpdate(ByVal Cancel As MSForms.ReturnBoolean)
         MsgBox "La date saisie est invalide. Veuillez corriger la saisie.", vbExclamation
         Cancel = True
     Else
-        Me.txtDate.Value = Format(valeur, wsdADMIN.Range("B1").Value)
+        Me.txtDate.Value = Format$(valeur, wsdADMIN.Range("B1").Value)
     End If
     
     Dim fullDate As Variant
@@ -571,9 +571,8 @@ Sub imgLogoGCF_Click()
         
             Call modTEC_TDB.ActualiserTECTableauDeBord
             
+            'Mettre à jour les donnmées & 4 pivot tables
             Call ExecuterAdvancedFilterSurTECTDBData
-            
-            'Mettre à jour les 4 tableaux croisés dynamiques (Semaine, Mois, Trimestre & Année Financière)
             Call modTEC_Saisie.MettreAJourPivotTables
             
             Application.EnableEvents = True
@@ -592,6 +591,10 @@ Sub imgStats_Click()
     Application.EnableEvents = False
     
     ufSaisieHeures.Hide
+    
+    'Mettre à jour les donnmées & 4 pivot tables - 2025-11-14 @ 06:10
+    Call ExecuterAdvancedFilterSurTECTDBData
+    Call modTEC_Saisie.MettreAJourPivotTables
     
     Application.EnableEvents = True
     

@@ -92,7 +92,7 @@ Public Sub VerifierIntegriteTablesLocales()
     Dim r As Long: r = 2
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "Version du programme")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, ThisWorkbook.Name)
-    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:nn:ss"))
     r = r + 1
 
     'Répertoire de données
@@ -121,7 +121,7 @@ Public Sub VerifierIntegriteTablesLocales()
     
     'Un peu de couleur
     Dim rng As Range: Set rng = wsOutput.Range("B" & r)
-    rng.Value = Format$(ddm, wsdADMIN.Range("B1").Value & " hh:mm:ss") & _
+    rng.Value = Format$(ddm, wsdADMIN.Range("B1").Value & " hh:nn:ss") & _
             " soit " & j & " jours, " & h & " heures, " & m & " minutes et " & s & " secondes"
     rng.Characters(1, 19).Font.Color = vbRed
     rng.Characters(1, 19).Font.Bold = True
@@ -135,7 +135,7 @@ Public Sub VerifierIntegriteTablesLocales()
     'dnrPlanComptable ----------------------------------------------------- Plan Comptable
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "Plan Comptable")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "Les informations ont été importées de la feuille 'Admin'")
-    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:nn:ss"))
     r = r + 1
     
     Call VerifierPlanComptable(wsOutput, r, readRows)
@@ -143,7 +143,7 @@ Public Sub VerifierIntegriteTablesLocales()
     'wsdBD_Clients --------------------------------------------------------------- Clients
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "BD_Clients")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "La feuille a été importée du fichier BD_Entrée.xlsx")
-    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:nn:ss"))
     r = r + 1
     
     Call VerifierClients(wsOutput, r, readRows)
@@ -151,7 +151,7 @@ Public Sub VerifierIntegriteTablesLocales()
     'wsdBD_Fournisseurs ----------------------------------------------------- Fournisseurs
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "BD_Fournisseurs")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "La feuille a été importée du fichier BD_Entrée.xlsx")
-    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:nn:ss"))
     r = r + 1
     
     Call VerifierFournisseurs(wsOutput, r, readRows)
@@ -159,7 +159,7 @@ Public Sub VerifierIntegriteTablesLocales()
     'wsdDEB_Recurrent ------------------------------------------------------ DEB_Recurrent
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "DEB_Recurrent")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "DEB_Recurrent a été importée du fichier GCF_BD_MASTER.xlsx")
-    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:nn:ss"))
     r = r + 1
     
     Call VerifierDEBRecurrent(wsOutput, r, readRows)
@@ -167,7 +167,7 @@ Public Sub VerifierIntegriteTablesLocales()
     'wsdDEB_Trans -------------------------------------------------------------- DEB_Trans
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "DEB_Trans")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "DEB_Trans a été importée du fichier GCF_BD_MASTER.xlsx")
-    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:nn:ss"))
     r = r + 1
     
     Call VerifierDEBTrans(wsOutput, r, readRows)
@@ -175,7 +175,7 @@ Public Sub VerifierIntegriteTablesLocales()
     'wsdFAC_Entete ------------------------------------------------------------ FAC_Entete
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "FAC_Entete")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "FAC_Entete a été importée du fichier GCF_BD_MASTER.xlsx")
-    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:nn:ss"))
     r = r + 1
     
     Call VerifierFACEntete(wsOutput, r, readRows)
@@ -183,7 +183,7 @@ Public Sub VerifierIntegriteTablesLocales()
     'wsdFAC_Details ---------------------------------------------------------- FAC_Details
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "FAC_Details")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "FAC_Details a été importée du fichier GCF_BD_MASTER.xlsx")
-    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:nn:ss"))
     r = r + 1
     
     Call VerifierFACDetails(wsOutput, r, readRows)
@@ -191,7 +191,7 @@ Public Sub VerifierIntegriteTablesLocales()
     'wsdFAC_Comptes_Clients ------------------------------------------ FAC_Comptes_Clients
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "FAC_Comptes_Clients")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "FAC_Comptes_Clients a été importée du fichier GCF_BD_MASTER.xlsx")
-    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:nn:ss"))
     r = r + 1
     
     Call VerifierFACComptesClients(wsOutput, r, readRows)
@@ -199,7 +199,7 @@ Public Sub VerifierIntegriteTablesLocales()
     'wsdFAC_Sommaire_Taux ---------------------------------------------- FAC_Sommaire_Taux
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "FAC_Sommaire_Taux")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "FAC_Sommaire_Taux a été importée du fichier GCF_BD_MASTER.xlsx")
-    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:nn:ss"))
     r = r + 1
     
     Call VerifierFACSommaireTaux(wsOutput, r, readRows)
@@ -207,7 +207,7 @@ Public Sub VerifierIntegriteTablesLocales()
     'wsdENC_Entete ------------------------------------------------------------ ENC_Entete
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "ENC_Entete")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "ENC_Entete a été importée du fichier GCF_BD_MASTER.xlsx")
-    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:nn:ss"))
     r = r + 1
     
     Call VerifierENCEntete(wsOutput, r, readRows)
@@ -215,7 +215,7 @@ Public Sub VerifierIntegriteTablesLocales()
     'wsdENC_Details ---------------------------------------------------------- ENC_Details
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "ENC_Details")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "ENC_Details a été importée du fichier GCF_BD_MASTER.xlsx")
-    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:nn:ss"))
     r = r + 1
     
     Call VerifierENCDetails(wsOutput, r, readRows)
@@ -223,7 +223,7 @@ Public Sub VerifierIntegriteTablesLocales()
     'wsdCC_Regularisations ---------------------------------------------------------- CC_Regularisations
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "CC_Regularisations")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "CC_Regularisations a été importée du fichier GCF_BD_MASTER.xlsx")
-    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:nn:ss"))
     r = r + 1
     
     Call VerifierCCRegularisations(wsOutput, r, readRows)
@@ -231,7 +231,7 @@ Public Sub VerifierIntegriteTablesLocales()
     'wsdFAC_Projets_Entete -------------------------------------------- FAC_Projets_Entete
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "FAC_Projets_Entete")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "FAC_Projets_Entete a été importée du fichier GCF_BD_MASTER.xlsx")
-    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:nn:ss"))
     r = r + 1
     
     Call VerifierFACProjetsEntete(wsOutput, r, readRows)
@@ -239,7 +239,7 @@ Public Sub VerifierIntegriteTablesLocales()
     'wsdFAC_Projets_Details ------------------------------------------ FAC_Projets_Details
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "FAC_Projets_Details")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "FAC_Projets_Details a été importée du fichier GCF_BD_MASTER.xlsx")
-    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:nn:ss"))
     r = r + 1
     
     Call VerifierFACProjetsDetails(wsOutput, r, readRows)
@@ -247,7 +247,7 @@ Public Sub VerifierIntegriteTablesLocales()
     'wsdGL_Trans ---------------------------------------------------------------- GL_Trans
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "GL_Trans")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "GL_Trans a été importée du fichier GCF_BD_MASTER.xlsx")
-    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:nn:ss"))
     r = r + 1
     
     Call VerifierGLTrans(wsOutput, r, readRows)
@@ -255,7 +255,7 @@ Public Sub VerifierIntegriteTablesLocales()
     'wsdGL_EJ_Recurrente ------------------------------------------------ GL_EJ_Recurrente
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "GL_EJ_Recurrente")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "GL_EJ_Recurrente a été importée du fichier GCF_BD_MASTER.xlsx")
-    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:nn:ss"))
     r = r + 1
     
     Call VerifierGLEJRecurrente(wsOutput, r, readRows)
@@ -263,7 +263,7 @@ Public Sub VerifierIntegriteTablesLocales()
     'wshTEC_TdB_Data -------------------------------------------------------- TEC_TdB_Data
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "TEC_TdB_Data")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "TEC_TdB_Data a été importée du fichier GCF_BD_MASTER.xlsx")
-    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:nn:ss"))
     r = r + 1
     
     Call VerifierTECTdBData(wsOutput, r, readRows)
@@ -271,14 +271,14 @@ Public Sub VerifierIntegriteTablesLocales()
     'wsdTEC_Local -------------------------------------------------------------- TEC_Local
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "TEC_Local")
     Call AjouterMessageAuxResultats(wsOutput, r, 2, "TEC_Local a été importée du fichier GCF_BD_MASTER.xlsx")
-    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:nn:ss"))
     r = r + 1
     
     Call VerifierTEC(wsOutput, r, readRows)
     
     'Dernière section de vérification
     Call AjouterMessageAuxResultats(wsOutput, r, 1, "Dernières vérifications")
-    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:mm:ss"))
+    Call AjouterMessageAuxResultats(wsOutput, r, 3, Format$(Now(), "yyyy-mm-dd hh:nn:ss"))
     
     'Comparaison des valeurs - Total des factures (confirmées)
     If gValeursAComparer(1, 2) <> gValeursAComparer(1, 3) Then
@@ -408,7 +408,7 @@ Public Sub VerifierIntegriteTablesLocales()
     Set rng = wsOutput.Range("A" & r)
     rng.Value = "**** " & Format$(readRows, "###,##0") & _
                     " lignes analysées dans l'ensemble des tables - " & _
-                    Format$(Now(), wsdADMIN.Range("B1").Value & " hh:mm:ss") & " ***"
+                    Format$(Now(), wsdADMIN.Range("B1").Value & " hh:nn:ss") & " ***"
     rng.Characters(6, 6).Font.Color = vbRed
     rng.Characters(6, 6).Font.Bold = True
     
@@ -3463,7 +3463,7 @@ Private Sub VerifierTEC(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef read
     Dim ws As Worksheet: Set ws = wsdTEC_Local
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 9708 'What is the last TECID analyzed ?
+    lastTECIDReported = 9730 'What is the last TECID analyzed ?
     
     'Réference au UserDefined structure 'StatistiquesTEC'
     Dim stats As StatistiquesTEC
@@ -4498,7 +4498,7 @@ Sub NoterNombreLignesParFeuille() '2025-01-22 @ 16:19
     'Ajouter l'horodatage à la première col
     Dim dateHeure As String
     dateHeure = Now
-    wsUsage.Cells(LigneDisponible, 1).Value = Format$(dateHeure, "yyyy-mm-dd hh:mm:ss")
+    wsUsage.Cells(LigneDisponible, 1).Value = Format$(dateHeure, "yyyy-mm-dd hh:nn:ss")
     
     'Parcourir les cols de la première ligne pour les noms de feuilles
     Dim feuilleNom As String

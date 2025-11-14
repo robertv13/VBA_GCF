@@ -139,7 +139,7 @@ Sub CreerFichierUtilisateurActif(ByVal userName As String)
     On Error GoTo 0
     
     Print #FileNumber, "Utilisateur " & userName & " a ouvert l'application à " & _
-                                Format$(Now(), "yyyy-mm-dd hh:mm:ss") & " - Version " & ThisWorkbook.Name
+                                Format$(Now(), "yyyy-mm-dd hh:nn:ss") & " - Version " & ThisWorkbook.Name
     Close FileNumber
     
     Call modDev_Utils.EnregistrerLogApplication("modAppli:CreerFichierUtilisateurActif", _
@@ -239,7 +239,7 @@ Sub EcrireInformationsConfigAuMenu()
     environnement = wsdADMIN.Range("PATH_DATA_FILES").Value
 
     valeurs = Array( _
-        "Heure - " & Format$(Now(), formatDate & " hh:mm:ss"), _
+        "Heure - " & Format$(Now(), formatDate & " hh:nn:ss"), _
         "Version - " & ThisWorkbook.Name, _
         "Utilisateur - " & UtilisateurActif("Prenom"), _
         "Environnement - " & environnement, _
@@ -308,14 +308,14 @@ Public Sub EnregistrerLogPerformance(nomProcedure As String, duree As Double) '2
 
     'Horodatage complet
     Dim horodatage As String
-    horodatage = Format(Now, "yyyy-mm-dd hh:nn:ss")
+    horodatage = Format$(Now, "yyyy-mm-dd hh:nn:ss")
 
     'Construire la ligne de log
     Dim ligneLog As String
     Select Case duree
         Case Is > 0
             ligneLog = horodatage & " | " & utilisateur & " | " & ThisWorkbook.Name & " | " & _
-                                            nomProcedure & " | " & Format(duree, "0.0000") & " sec"
+                                            nomProcedure & " | " & Format$(duree, "0.0000") & " sec"
         Case Is = 0
             ligneLog = horodatage & " | " & utilisateur & " | " & ThisWorkbook.Name & " | " & _
                                             nomProcedure
@@ -345,7 +345,7 @@ Public Sub EnregistrerErreurs(moduleAppelant As String, _
                                 Optional numeroErreur As Variant = 0, _
                                 Optional niveauGravite As String = "ERREUR") '2025-11-05 @ 07:16
                        
-    Dim horodatage As String: horodatage = Format(Now, "yyyy-mm-dd hh:nn:ss")
+    Dim horodatage As String: horodatage = Format$(Now, "yyyy-mm-dd hh:nn:ss")
     
     Dim description As String
     If IsNumeric(numeroErreur) And numeroErreur <> 0 Then

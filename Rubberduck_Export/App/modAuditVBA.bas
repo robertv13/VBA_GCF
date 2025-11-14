@@ -353,7 +353,7 @@ Sub ExporterResultatsFeuille(tableProc() As Variant, indexMax As Long) '2025-07-
         .Cells(1, 1).HorizontalAlignment = xlCenter
         .Cells(1, 1).VerticalAlignment = xlCenter
         .Cells(1, 1).WrapText = True
-        .Cells(1, 10).Value = Format$(Now, "yyyy-mm-dd hh:mm:ss")
+        .Cells(1, 10).Value = Format$(Now, "yyyy-mm-dd hh:nn:ss")
         .Cells(1, 10).Font.Name = "Aptos Narrow"
         .Cells(1, 10).Font.size = 10
         .Cells(1, 10).Font.Bold = True
@@ -464,7 +464,7 @@ Sub ExporterResultatsFeuille(tableProc() As Variant, indexMax As Long) '2025-07-
         .FitToPagesWide = 1
         .FitToPagesTall = False
     
-        .LeftFooter = Format(Now, "yyyy-mm-dd") & " " & Format(Now, "hh:mm:ss")
+        .LeftFooter = Format$(Now, "yyyy-mm-dd") & " " & Format$(Now, "hh:nn:ss")
         
         .CenterFooter = ws.Name
     
@@ -956,7 +956,7 @@ Sub zz_AuditDataValidationsInCells() '2025-08-06 @ 08:59
                 arr(X, 7) = "'" & cell.Validation.Operator
                 On Error GoTo 0
                 
-                timeStamp = Format$(Now(), "dd/mm/yyyy hh:mm:ss")
+                timeStamp = Format$(Now(), "dd/mm/yyyy hh:nn:ss")
                 arr(X, 8) = timeStamp
 
                 'Increment the output row counter

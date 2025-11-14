@@ -62,7 +62,7 @@ Sub ObtenirFactureAConfirmer(AC_OR_C As String) '2025-03-12 @ 12:40
     
     'Effacer les données de la dernière utilisation
     ws.Range("AX6:AX10").ClearContents
-    ws.Range("AX6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:mm:ss")
+    ws.Range("AX6").Value = "Dernière utilisation: " & Format$(Now(), "yyyy-mm-dd hh:nn:ss")
     
     'Définir le range pour la source des données en utilisant un tableau
     Dim rngData As Range

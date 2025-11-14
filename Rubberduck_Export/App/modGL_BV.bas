@@ -120,7 +120,7 @@ Sub AfficherSoldesBV(soldes As Dictionary, Optional ligneDépart As Long = 4) '2
 
     If globalDebit <> globalCredit Then
         MsgBox "Il y a une différence entre le total des débits et des crédits : " & _
-               Format(globalDebit - globalCredit, "0.00"), vbExclamation
+               Format$(globalDebit - globalCredit, "0.00"), vbExclamation
     End If
 
     Application.EnableEvents = True
@@ -187,7 +187,7 @@ Sub AfficherTransactionsPourUnCompteDeGL(compte As String, description As String
     Application.EnableEvents = False
     With wsResult
         .Range("L4").Value = compte & IIf(description <> vbNullString, " - " & description, vbNullString)
-        .Range("P4").Value = "Solde d'ouverture au " & Format(dateMin, wsdADMIN.Range("B1"))
+        .Range("P4").Value = "Solde d'ouverture au " & Format$(dateMin, wsdADMIN.Range("B1"))
         .Range("S4").Value = soldeInitial
         With .Range("P4:S4")
             .Font.Name = "Aptos Narrow"
@@ -203,8 +203,8 @@ Sub AfficherTransactionsPourUnCompteDeGL(compte As String, description As String
     'Requête SQL complète (toutes les dates) pour le compte
     strSQL = "SELECT Date, NoEntrée, Description, Source, Débit, Crédit, AutreRemarque FROM [GL_Trans$] " & _
              "WHERE NoCompte = '" & Replace(compte, "'", "''") & "'" & _
-             "AND Date >= #" & Format(dateMin, "yyyy-mm-dd") & "# " & _
-             "AND Date <= #" & Format(dateMax, "yyyy-mm-dd") & "# " & _
+             "AND Date >= #" & Format$(dateMin, "yyyy-mm-dd") & "# " & _
+             "AND Date <= #" & Format$(dateMax, "yyyy-mm-dd") & "# " & _
              "ORDER BY Date, NoEntrée"
     Debug.Print "#777 - strSQL2 (Transactions pour la période) = " & strSQL
     
