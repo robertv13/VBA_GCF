@@ -3463,7 +3463,7 @@ Private Sub VerifierTEC(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef read
     Dim ws As Worksheet: Set ws = wsdTEC_Local
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 9730 'What is the last TECID analyzed ?
+    lastTECIDReported = 9754 'What is the last TECID analyzed ?
     
     'Réference au UserDefined structure 'StatistiquesTEC'
     Dim stats As StatistiquesTEC
@@ -3986,15 +3986,15 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                 lo.ListColumns(fREGULTVQ).DataBodyRange _
                 )
             Call modFormats.SetAlignRight(rngUnion)
-            Call modFormats.SetNumberFormat(rngUnion, modFormats.fmtMntCurrDollars)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fREGULInvNo).DataBodyRange, modFormats.fmtDate)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fREGULTimeStamp).DataBodyRange, modFormats.fmtDateTime)
+            Call modFormats.SetNumberFormat(rngUnion, modFormats.FMT_MNT_CURR_DOLLARS)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fREGULInvNo).DataBodyRange, modFormats.FMT_DATE)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fREGULTimeStamp).DataBodyRange, modFormats.FMT_DATE_HEURE)
 
         Case "wsdDEB_Recurrent"  '2025-11-14 @ 09:53
             Set lo = ws.ListObjects("l_tbl_DEB_Recurrent")
             Call modFormats.SetAlignCenter(lo.ListColumns(fDebRNoDebRec).DataBodyRange)
             Call modFormats.SetAlignCenter(lo.ListColumns(fDebRTimeStamp).DataBodyRange)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fDebRDate).DataBodyRange, modFormats.fmtDate)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fDebRDate).DataBodyRange, modFormats.FMT_DATE)
             Set rngUnion = Application.Union( _
                 lo.ListColumns(fDebRType).DataBodyRange, _
                 lo.ListColumns(fDebRReference).DataBodyRange, _
@@ -4009,14 +4009,14 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                 lo.ListColumns(fDebRCréditTVQ).DataBodyRange _
                 )
             Call modFormats.SetAlignRight(rngUnion)
-            Call modFormats.SetNumberFormat(rngUnion, modFormats.fmtMntCurrDollars)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fDebRTimeStamp).DataBodyRange, modFormats.fmtDateTime)
+            Call modFormats.SetNumberFormat(rngUnion, modFormats.FMT_MNT_CURR_DOLLARS)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fDebRTimeStamp).DataBodyRange, modFormats.FMT_DATE_HEURE)
 
             'Hors tableau structuré (Sommaire)
-            ws.Columns("P").NumberFormat = modFormats.fmtEntier
+            ws.Columns("P").NumberFormat = modFormats.FMT_ENTIER
             ws.Columns("R").HorizontalAlignment = xlRight
-            ws.Columns("R").NumberFormat = modFormats.fmtMntCurrDollars
-            ws.Columns("S").NumberFormat = modFormats.fmtDateTime
+            ws.Columns("R").NumberFormat = modFormats.FMT_MNT_CURR_DOLLARS
+            ws.Columns("S").NumberFormat = modFormats.FMT_DATE_HEURE
     
         Case "wsdDEB_Trans" '2025-11-14 @ 09:53
             Set lo = ws.ListObjects("l_tbl_DEB_Trans")
@@ -4038,7 +4038,7 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                 lo.ListColumns(fDebTTimeStamp).DataBodyRange _
                 )
             Call modFormats.SetAlignCenter(rngUnion)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fDebTDate).DataBodyRange, modFormats.fmtDate)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fDebTDate).DataBodyRange, modFormats.FMT_DATE)
             Set rngUnion = Application.Union( _
                 lo.ListColumns(fDebTTotal).DataBodyRange, _
                 lo.ListColumns(fDebTTPS).DataBodyRange, _
@@ -4048,9 +4048,9 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                 lo.ListColumns(fDebTDépense).DataBodyRange _
                 )
             Call modFormats.SetAlignRight(rngUnion)
-            Call modFormats.SetNumberFormat(rngUnion, modFormats.fmtMntCurrDollars)
+            Call modFormats.SetNumberFormat(rngUnion, modFormats.FMT_MNT_CURR_DOLLARS)
             
-            Call modFormats.SetNumberFormat(lo.ListColumns(fDebTTimeStamp).DataBodyRange, modFormats.fmtDateTime)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fDebTTimeStamp).DataBodyRange, modFormats.FMT_DATE_HEURE)
 
         Case "wsdENC_Details" '2025-11-14 @ 16:43
             Set lo = ws.ListObjects("l_tbl_ENC_Details")
@@ -4063,9 +4063,9 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                 )
             Call modFormats.SetAlignCenter(rngUnion)
             Call modFormats.SetAlignRight(lo.ListColumns(fEncDPayAmount).DataBodyRange)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fEncDPayAmount).DataBodyRange, modFormats.fmtMntCurrency)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fEncDPayDate).DataBodyRange, modFormats.fmtDate)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fEncDTimeStamp).DataBodyRange, modFormats.fmtDateTime)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fEncDPayAmount).DataBodyRange, modFormats.FMT_MNT_CURRENCY)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fEncDPayDate).DataBodyRange, modFormats.FMT_DATE)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fEncDTimeStamp).DataBodyRange, modFormats.FMT_DATE_HEURE)
 
         Case "wsdENC_Entete" '2025-11-14 @ 16:50
             Set lo = ws.ListObjects("l_tbl_ENC_Entete")
@@ -4082,11 +4082,11 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                 lo.ListColumns(fEncETimeStamp).DataBodyRange _
                 )
             Call modFormats.SetAlignCenter(rngUnion)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fEncEPayID).DataBodyRange, modFormats.fmtEntier)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fEncEPayDate).DataBodyRange, modFormats.fmtDate)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fEncEPayID).DataBodyRange, modFormats.FMT_ENTIER)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fEncEPayDate).DataBodyRange, modFormats.FMT_DATE)
             Call modFormats.SetAlignRight(lo.ListColumns(fEncEAmount).DataBodyRange)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fEncEAmount).DataBodyRange, modFormats.fmtMntCurrDollars)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fEncETimeStamp).DataBodyRange, modFormats.fmtDateTime)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fEncEAmount).DataBodyRange, modFormats.FMT_MNT_CURR_DOLLARS)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fEncETimeStamp).DataBodyRange, modFormats.FMT_DATE_HEURE)
 
         Case "wsdFAC_Comptes_Clients" '2025-11-14 @ 16:56
             Set lo = ws.ListObjects("l_tbl_FAC_Comptes_Clients")
@@ -4108,14 +4108,14 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                 lo.ListColumns(fFacCCBalance).DataBodyRange _
                 )
             Call modFormats.SetAlignRight(rngUnion)
-            Call modFormats.SetNumberFormat(rngUnion, modFormats.fmtMntCurrDollars)
+            Call modFormats.SetNumberFormat(rngUnion, modFormats.FMT_MNT_CURR_DOLLARS)
             Set rngUnion = Application.Union( _
                 lo.ListColumns(fFacCCInvoiceDate).DataBodyRange, _
                 lo.ListColumns(fFacCCDueDate).DataBodyRange _
                 )
-            Call modFormats.SetNumberFormat(rngUnion, modFormats.fmtDate)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fFacCCDaysOverdue).DataBodyRange, modFormats.fmtEntier)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fFacCCTimeStamp).DataBodyRange, modFormats.fmtDateTime)
+            Call modFormats.SetNumberFormat(rngUnion, modFormats.FMT_DATE)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fFacCCDaysOverdue).DataBodyRange, modFormats.FMT_ENTIER)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fFacCCTimeStamp).DataBodyRange, modFormats.FMT_DATE_HEURE)
 
         Case "wsdFAC_Details" '2025-11-14 @ 10:13
             Set lo = ws.ListObjects("l_tbl_FAC_Details")
@@ -4126,15 +4126,15 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                 )
             Call modFormats.SetAlignCenter(rngUnion)
             Call modFormats.SetAlignLeft(lo.ListColumns(fFacDDescription).DataBodyRange)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fFacDHeures).DataBodyRange, modFormats.fmtMntCurrency)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fFacDHeures).DataBodyRange, modFormats.FMT_MNT_CURRENCY)
             Call modFormats.SetAlignRight(lo.ListColumns(fFacDHeures).DataBodyRange)
             Set rngUnion = Application.Union( _
                 lo.ListColumns(fFacDTaux).DataBodyRange, _
                 lo.ListColumns(fFacDHonoraires).DataBodyRange _
                 )
             Call modFormats.SetAlignRight(rngUnion)
-            Call modFormats.SetNumberFormat(rngUnion, modFormats.fmtMntCurrDollars)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fFacDTimeStamp).DataBodyRange, modFormats.fmtDateTime)
+            Call modFormats.SetNumberFormat(rngUnion, modFormats.FMT_MNT_CURR_DOLLARS)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fFacDTimeStamp).DataBodyRange, modFormats.FMT_DATE_HEURE)
         
         Case "wsdFAC_Entete" '2025-11-14 @ 09:54
             Set lo = ws.ListObjects("l_tbl_FAC_Entete")
@@ -4172,15 +4172,15 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                 lo.ListColumns(fFacEDépôt).DataBodyRange _
                 )
             Call modFormats.SetAlignRight(rngUnion)
-            Call modFormats.SetNumberFormat(rngUnion, modFormats.fmtMntCurrDollars)
+            Call modFormats.SetNumberFormat(rngUnion, modFormats.FMT_MNT_CURR_DOLLARS)
             
-            Call modFormats.SetNumberFormat(lo.ListColumns(fFacEDateFacture).DataBodyRange, modFormats.fmtDate)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fFacEDateFacture).DataBodyRange, modFormats.FMT_DATE)
             Set rngUnion = Application.Union( _
                 lo.ListColumns(fFacETauxTPS).DataBodyRange, _
                 lo.ListColumns(fFacETauxTVQ).DataBodyRange _
                 )
-            Call modFormats.SetNumberFormat(rngUnion, modFormats.fmtTaux3Pct)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fFacETimeStamp).DataBodyRange, modFormats.fmtDateTime)
+            Call modFormats.SetNumberFormat(rngUnion, modFormats.FMT_TAUX_PCT_3)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fFacETimeStamp).DataBodyRange, modFormats.FMT_DATE_HEURE)
 
         Case "wsdFAC_Projets_Details" '2025-11-14 @ 16:58
             Set lo = ws.ListObjects("l_tbl_FAC_Projets_Details")
@@ -4197,9 +4197,9 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                 )
             Call modFormats.SetAlignCenter(rngUnion)
             Call modFormats.SetAlignRight(lo.ListColumns(fFacPDHeures).DataBodyRange)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fFacPDDate).DataBodyRange, modFormats.fmtDate)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fFacPDHeures).DataBodyRange, modFormats.fmtMntCurrency)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fFacPDTimeStamp).DataBodyRange, modFormats.fmtDateTime)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fFacPDDate).DataBodyRange, modFormats.FMT_DATE)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fFacPDHeures).DataBodyRange, modFormats.FMT_MNT_CURRENCY)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fFacPDTimeStamp).DataBodyRange, modFormats.FMT_DATE_HEURE)
 
         Case "wsdFAC_Projets_Entete" '2025-11-14 @ 17:10
             Set lo = ws.ListObjects("l_tbl_FAC_Projets_Entete")
@@ -4236,7 +4236,7 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                 lo.ListColumns(fFacPEHono5).DataBodyRange _
                 )
             Call modFormats.SetAlignRight(rngUnion)
-            Call modFormats.SetNumberFormat(rngUnion, modFormats.fmtMntCurrDollars)
+            Call modFormats.SetNumberFormat(rngUnion, modFormats.FMT_MNT_CURR_DOLLARS)
             Set rngUnion = Application.Union( _
                 lo.ListColumns(fFacPETauxH1).DataBodyRange, _
                 lo.ListColumns(fFacPETauxH2).DataBodyRange, _
@@ -4244,9 +4244,9 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                 lo.ListColumns(fFacPETauxH4).DataBodyRange, _
                 lo.ListColumns(fFacPETauxH5).DataBodyRange _
                 )
-            Call modFormats.SetNumberFormat(rngUnion, modFormats.fmtMntCurrency)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fFacPEDate).DataBodyRange, modFormats.fmtDate)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fFacPETimeStamp).DataBodyRange, modFormats.fmtDateTime)
+            Call modFormats.SetNumberFormat(rngUnion, modFormats.FMT_MNT_CURRENCY)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fFacPEDate).DataBodyRange, modFormats.FMT_DATE)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fFacPETimeStamp).DataBodyRange, modFormats.FMT_DATE_HEURE)
             
         Case "wsdFAC_Sommaire_Taux" '2025-11-14 @ 17:18
             Set lo = ws.ListObjects("l_tbl_FAC_Sommaire_Taux")
@@ -4262,9 +4262,9 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                 lo.ListColumns(fFacSTTaux).DataBodyRange _
                 )
             Call modFormats.SetAlignRight(rngUnion)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fFacSTHeures).DataBodyRange, modFormats.fmtMntCurrency)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fFacSTTaux).DataBodyRange, modFormats.fmtMntCurrDollars)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fFacSTTimeStamp).DataBodyRange, modFormats.fmtDateTime)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fFacSTHeures).DataBodyRange, modFormats.FMT_MNT_CURRENCY)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fFacSTTaux).DataBodyRange, modFormats.FMT_MNT_CURR_DOLLARS)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fFacSTTimeStamp).DataBodyRange, modFormats.FMT_DATE_HEURE)
         
         Case "wsdGL_EJ_Recurrente" '2025-11-14 @ 17:23
             Set lo = ws.ListObjects("l_tbl_GL_EJ_Auto")
@@ -4285,8 +4285,8 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                 lo.ListColumns(fGlEjRCrédit).DataBodyRange _
                 )
             Call modFormats.SetAlignRight(rngUnion)
-            Call modFormats.SetNumberFormat(rngUnion, modFormats.fmtMntCurrDollars)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fGlEjRTimeStamp).DataBodyRange, modFormats.fmtDateTime)
+            Call modFormats.SetNumberFormat(rngUnion, modFormats.FMT_MNT_CURR_DOLLARS)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fGlEjRTimeStamp).DataBodyRange, modFormats.FMT_DATE_HEURE)
 
         Case "wsdGL_Trans" '2025-11-14 @ 17:27
             Set lo = ws.ListObjects("l_tbl_GL_Trans")
@@ -4309,10 +4309,10 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                 lo.ListColumns(fGlTCrédit).DataBodyRange _
                 )
             Call modFormats.SetAlignRight(rngUnion)
-            Call modFormats.SetNumberFormat(rngUnion, modFormats.fmtMntCurrDollars)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fGlTNoEntrée).DataBodyRange, modFormats.fmtEntier)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fGlTDate).DataBodyRange, modFormats.fmtDate)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fGlTTimeStamp).DataBodyRange, modFormats.fmtDateTime)
+            Call modFormats.SetNumberFormat(rngUnion, modFormats.FMT_MNT_CURR_DOLLARS)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fGlTNoEntrée).DataBodyRange, modFormats.FMT_ENTIER)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fGlTDate).DataBodyRange, modFormats.FMT_DATE)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fGlTTimeStamp).DataBodyRange, modFormats.FMT_DATE_HEURE)
         
         Case "wsdTEC_Local" '2025-11-14 @ 17:36
             Set lo = ws.ListObjects("l_tbl_TEC_Local")
@@ -4337,10 +4337,10 @@ Sub AppliquerFormatColonnesParTable(ws As Worksheet, rng As Range, HeaderRow As 
                 )
             Call modFormats.SetAlignCenter(rngUnion)
             Call modFormats.SetAlignRight(lo.ListColumns(fTECHeures).DataBodyRange)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fTECHeures).DataBodyRange, modFormats.fmtMntCurrency)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fTECDate).DataBodyRange, modFormats.fmtDate)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fTECDateFacturee).DataBodyRange, modFormats.fmtDate)
-            Call modFormats.SetNumberFormat(lo.ListColumns(fTECDateSaisie).DataBodyRange, modFormats.fmtDateTime)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fTECHeures).DataBodyRange, modFormats.FMT_MNT_CURRENCY)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fTECDate).DataBodyRange, modFormats.FMT_DATE)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fTECDateFacturee).DataBodyRange, modFormats.FMT_DATE)
+            Call modFormats.SetNumberFormat(lo.ListColumns(fTECDateSaisie).DataBodyRange, modFormats.FMT_DATE_HEURE)
 
     End Select
 

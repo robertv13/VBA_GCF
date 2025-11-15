@@ -85,10 +85,17 @@ Private Sub lstNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
         For i = 0 To .ListCount - 1
             If .Selected(i) Then
                 Me.txtClient.Value = .List(i, 0)
-                Me.txtClientID.Value = Fn_CellSpecifiqueDeBDClient(Me.txtClient.Value, _
-                                                    fClntFMNomClientPlusNomClientSystème, fClntFMClientID)
-                Me.txtClientReel.Value = Fn_CellSpecifiqueDeBDClient(Me.txtClientID.Value, _
-                                                                       fClntFMClientID, fClntFMClientNom)
+                Dim r As Range
+                Set r = fn_GetRowFromValue(wsdBD_Clients, fClntFMNomClientPlusNomClientSystème, _
+                                                                                    Me.txtClient.Value)
+                If Not r Is Nothing Then
+                    Application.EnableEvents = False
+                    Me.txtClientID.Value = r.Cells(1, fClntFMClientID)
+                    Me.txtClientReel.Value = r.Cells(1, fClntFMClientNom)
+                    Application.EnableEvents = True
+                Else
+                    Exit Sub
+                End If
                 Exit For
             End If
         Next i

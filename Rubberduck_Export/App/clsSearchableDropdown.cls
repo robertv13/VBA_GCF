@@ -110,8 +110,16 @@ Private Sub myListBox_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     
     'If the user doubleclicks or presses enter, place the selected value in the textbox
     If m_UpdateControl = False Then
+        Dim r As Range
         Dim pureClientName As String
-        pureClientName = Fn_CellSpecifiqueDeBDClient(MyListBox.Value, 17, 1)
+        Set r = fn_GetRowFromValue(wsdBD_Clients, fClntFMNomClientPlusNomClientSystème, MyListBox.Value)
+        If Not r Is Nothing Then
+            Application.EnableEvents = False
+            pureClientName = r.Cells(1, fClntFMClientNom)
+            Application.EnableEvents = True
+        Else
+            Exit Sub
+        End If
         Call SetTextboxValue(pureClientName)
         MyListBox.Visible = False
         
@@ -131,8 +139,17 @@ Private Sub myListBox_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shif
         'Swallow the enter keycode as it passes on to the ok button
         KeyCode = 0
         If MyListBox.Value <> 0 Then
+            Dim r As Range
             Dim pureClientName As String
-            pureClientName = Fn_CellSpecifiqueDeBDClient(MyListBox.Value, 17, 1)
+            Set r = fn_GetRowFromValue(wsdBD_Clients, fClntFMNomClientPlusNomClientSystème, _
+                                                                                    MyListBox.Value)
+            If Not r Is Nothing Then
+                Application.EnableEvents = False
+                pureClientName = r.Cells(1, fClntFMClientNom)
+                Application.EnableEvents = True
+            Else
+                Exit Sub
+            End If
             Call SetTextboxValue(pureClientName)
         End If
         Call AfficherListBox(False)
@@ -252,8 +269,6 @@ Private Sub PositionnerListBox()
     With MyListBox
         .Left = myTextBox.Left
         .Top = myTextBox.Top + (myTextBox.Height)
-'        .Width = 625
-'        .Width = myTextBox.Width
         Call AfficherListBox(True)
     End With
     
@@ -299,8 +314,16 @@ Private Sub myTextBox_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shif
         'Swallow the enter keycode as it passes on to the ok button
         KeyCode = 0
         If IsNull(MyListBox.Value) = False And m_textboxStartingState = False Then
+            Dim r As Range
             Dim pureClientName As String
-            pureClientName = Fn_CellSpecifiqueDeBDClient(MyListBox.Value, 17, 1)
+            Set r = fn_GetRowFromValue(wsdBD_Clients, fClntFMNomClientPlusNomClientSystème, MyListBox.Value)
+            If Not r Is Nothing Then
+                Application.EnableEvents = False
+                pureClientName = r.Cells(1, fClntFMClientNom)
+                Application.EnableEvents = True
+            Else
+                Exit Sub
+            End If
             Call SetTextboxValue(pureClientName)
         End If
         Call AfficherListBox(False)

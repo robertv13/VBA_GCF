@@ -1,12 +1,12 @@
 Attribute VB_Name = "modFormats"
 Option Explicit
 
-Public Const fmtDate As String = "yyyy-mm-dd"
-Public Const fmtDateTime As String = "yyyy-mm-dd hh:mm:ss"
-Public Const fmtMntCurrency As String = "#,##0.00"
-Public Const fmtMntCurrDollars As String = "#,##0.00 $"
-Public Const fmtTaux3Pct As String = "#0.000 %"
-Public Const fmtEntier As String = "0"
+Public Const FMT_DATE As String = "yyyy-mm-dd"
+Public Const FMT_DATE_HEURE As String = "yyyy-mm-dd hh:mm:ss"
+Public Const FMT_MNT_CURRENCY As String = "#,##0.00"
+Public Const FMT_MNT_CURR_DOLLARS As String = "#,##0.00 $"
+Public Const FMT_TAUX_PCT_3 As String = "#0.000 %"
+Public Const FMT_ENTIER As String = "0"
 
 'Alignements
 Public Sub SetAlignLeft(r As Range)

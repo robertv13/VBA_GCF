@@ -17,7 +17,8 @@ End Sub
 
 Sub CreerListeAgeeCC() '2025-10-21 @ 09:36
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modCAR_Liste_Agee:CreerListeAgeeCC", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modCAR_Liste_Agee:CreerListeAgeeCC", vbNullString, 0)
    
     Application.ScreenUpdating = False
     

@@ -322,7 +322,7 @@ Function Fn_SoldesParCompteAvecADO(noCompteGLMin As String, noCompteGLMax As Str
     
     Set Fn_SoldesParCompteAvecADO = dictSoldes
     
-    GoTo Exit_Function
+    GoTo EXIT_FUNCTION
 
 ErrHandler:
     MsgBox "Erreur dans Fn_SoldesParCompteAvecADO : " & Err.description, vbCritical
@@ -331,7 +331,7 @@ ErrHandler:
     If Not conn Is Nothing Then If conn.state = 1 Then conn.Close
     Set Fn_SoldesParCompteAvecADO = Nothing
     
-Exit_Function:
+EXIT_FUNCTION:
     Call modDev_Utils.EnregistrerLogApplication("modGL_BV:Fn_SoldesParCompteAvecADO", vbNullString, startTime)
 
 End Function

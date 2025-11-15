@@ -14,8 +14,15 @@ Sub AjouterLigneTEC()
 
     Dim timerPerformance As Double: timerPerformance = Timer
     
-    ufSaisieHeures.txtClientID.Value = Fn_CellSpecifiqueDeBDClient(ufSaisieHeures.txtClient.Value, _
-                                        fClntFMClientNom, fClntFMClientID)
+    Dim r As Range
+    Set r = fn_GetRowFromValue(wsdBD_Clients, fClntFMClientNom, ufSaisieHeures.txtClient.Value)
+    If Not r Is Nothing Then
+        Application.EnableEvents = False
+        ufSaisieHeures.txtClientID.Value = r.Cells(1, fClntFMClientID)
+        Application.EnableEvents = True
+    Else
+        Exit Sub
+    End If
     
     If Fn_TEC_Is_Data_Valid() = True Then
         Dim Y As Integer, m As Integer, d As Integer
@@ -73,11 +80,18 @@ Sub ModifierLigneTEC() '2023-12-23 @ 07:04
 
     If Fn_TEC_Is_Data_Valid() = False Then Exit Sub
 
-    ufSaisieHeures.txtClientID.Value = Fn_CellSpecifiqueDeBDClient(ufSaisieHeures.txtClient.Value, _
-                                                                        fClntFMClientNom, fClntFMClientID)
-    
     Dim timerPerformance As Double: timerPerformance = Timer
         
+    Dim r As Range
+    Set r = fn_GetRowFromValue(wsdBD_Clients, fClntFMClientNom, ufSaisieHeures.txtClient.Value)
+    If Not r Is Nothing Then
+        Application.EnableEvents = False
+        ufSaisieHeures.txtClientID.Value = r.Cells(1, fClntFMClientID)
+        Application.EnableEvents = True
+    Else
+        Exit Sub
+    End If
+
     If Fn_Is_Client_Facturable(ufSaisieHeures.txtClientID) = False Then '2025-10-31 @ 08:30
         ufSaisieHeures.chkFacturable = False
     End If

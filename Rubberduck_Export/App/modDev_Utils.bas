@@ -1448,3 +1448,17 @@ Public Sub Arreter(sec As Long) '2025-11-10 @ 10:06
     
 End Sub
 
+Sub TestRechercheLigne() '2025-11-15 @ 07:32
+
+    Dim r As Range
+    
+    'Exemple : Rechercher un client ET retourner la ligne complète
+    Set r = fn_GetRowFromValue(wsdBD_Clients, fClntFMClientID, "193r")
+        
+    If Not r Is Nothing Then
+        MsgBox "Adresse de la ligne trouvée est " & r.Address & vbCrLf & vbCrLf & _
+                "Nom du client = " & r.Cells(1, fClntFMClientNom)
+    End If
+
+End Sub
+

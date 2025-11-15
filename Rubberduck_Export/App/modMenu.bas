@@ -273,26 +273,17 @@ Sub ViderTableauxStructures() '2025-07-01 @ 10:38
     Dim lo As ListObject
 
     'Feuilles & noms de tableaux à vider
-    feuilles = Array("BD_Clients", "BD_Fournisseurs", _
-                     "CC_Regularisations", _
-                     "DEB_Trans", _
-                     "ENC_Details", "ENC_Entete", _
-                     "FAC_Comptes_Clients", "FAC_Details", "FAC_Entete", _
-                     "FAC_Projets_Details", "FAC_Projets_Entete", _
-                     "FAC_Sommaire_Taux", _
-                     "GL_Trans", _
+    feuilles = Array("BD_Clients", "BD_Fournisseurs", "CC_Regularisations", "DEB_Recurrent", "DEB_Trans", _
+                     "ENC_Details", "ENC_Entete", "FAC_Comptes_Clients", "FAC_Details", "FAC_Entete", _
+                     "FAC_Projets_Details", "FAC_Projets_Entete", "FAC_Sommaire_Taux", "GL_Trans", _
                      "TEC_Local")
-    tableaux = Array("l_tbl_BD_Clients", "l_tbl_Fournisseur_FM", _
-                     "l_tbl_CC_Regularisations", _
-                     "l_tbl_DEB_Trans", _
-                     "l_tbl_ENC_Details", "l_tbl_ENC_Entete", _
+    tableaux = Array("l_tbl_BD_Clients", "l_tbl_Fournisseur_FM", "l_tbl_CC_Regularisations", _
+                     "l_tbl_DEB_Recurrent", "l_tbl_DEB_Trans", "l_tbl_ENC_Details", "l_tbl_ENC_Entete", _
                      "l_tbl_FAC_Comptes_Clients", "l_tbl_FAC_Details", "l_tbl_FAC_Entete", _
-                     "l_tbl_FAC_Projets_Details", "l_tbl_FAC_Projets_Entete", _
-                     "l_tbl_FAC_Sommaire_Taux", _
-                     "l_tbl_GL_Trans", _
-                     "l_tbl_TEC_Local")
+                     "l_tbl_FAC_Projets_Details", "l_tbl_FAC_Projets_Entete", "l_tbl_FAC_Sommaire_Taux", _
+                     "l_tbl_GL_Trans", "l_tbl_TEC_Local")
 
-    On Error Resume Next
+'    On Error Resume Next '2025-11-14 @ 18:29
 
     Dim i As Long
     For i = LBound(feuilles) To UBound(feuilles)

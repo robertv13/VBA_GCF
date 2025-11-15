@@ -103,66 +103,6 @@ Function Fn_ClientIDAPartirDuNomDeClient(nomClient As String)
 
 End Function
 
-Function Fn_CellSpecifiqueDeBDClient(nomClient As String, colNumberSearch As Integer, _
-                                            colNumberData As Integer) As String '2025-10-31 @ 05:37
-
-'    Dim startTime As Double: startTime = Timer
-'    Call modDev_Utils.EnregistrerLogApplication("modFunctions:Fn_CellSpecifiqueDeBDClient", nomClient, 0)
-    
-    Debug.Print "AfterUpdate déclenché à " & Now & " - Valeur = " & ufSaisieHeures.txtClient.Value
-    
-    nomClient = Trim(nomClient)
-    
-    Dim ws As Worksheet: Set ws = wsdBD_Clients
-    If ws Is Nothing Then
-        Call EnregistrerErreurs("modFunctions", "Fn_CellSpecifiqueDeBDClient", _
-                                        "wsdBD_Clients introuvable!", Err.Number, "ERREUR")
-        MsgBox "La feuille 'Clients' est introuvable !", _
-        vbCritical, _
-        "Contactez le développeur"
-        Exit Function
-    End If
-    
-    Dim dynamicRange As Range
-    On Error Resume Next
-    Set dynamicRange = ws.Range("dnrClients_All")
-    On Error GoTo 0
-    
-    If dynamicRange Is Nothing Then
-        Call EnregistrerErreurs("modFunctions", "Fn_CellSpecifiqueDeBDClient", "dnrClients_All", _
-                                                                             Err.Number, "ERREUR")
-        MsgBox "Le DynamicRange 'dnrClients_All' n'a pas été trouvé!", _
-            vbCritical, _
-            "Problème important avec l'application"
-        Exit Function
-    End If
-    
-    'Using XLOOKUP to find the result directly, requires EXACT match (5th parameter = 0 ) - 2025-01-12 @ 14:49
-    If colNumberSearch < 1 Or colNumberSearch > dynamicRange.Columns.count Then Exit Function
-    If colNumberData < 1 Or colNumberData > dynamicRange.Columns.count Then Exit Function
-    Dim result As Variant
-    result = Application.XLookup(nomClient, _
-                dynamicRange.Columns(colNumberSearch), _
-                dynamicRange.Columns(colNumberData), _
-                "Not Found", 0, 1)
-    If Not result = "Not Found" Then
-        Fn_CellSpecifiqueDeBDClient = result
-    Else
-        MsgBox _
-            Prompt:="Impossible de retrouver ce nom du client dans BD_Clients" & vbNewLine & vbNewLine & _
-                    "VOUS DEVEZ SAISIR À NOUVEAU LE NOM DU CLIENT", _
-            Title:="Erreur grave - Impossible de retrouver le nom du client - ", _
-            Buttons:=vbCritical
-            Exit Function
-    End If
-    
-    Set dynamicRange = Nothing
-    Set ws = Nothing
-    
-'    Call modDev_Utils.EnregistrerLogApplication("modFunctions:Fn_CellSpecifiqueDeBDClient", vbNullString, startTime)
-'
-End Function
-
 Function Fn_ClientIDAPartirDuNomDeFournisseur(nomFournisseur As String)
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFunctions:Fn_ClientIDAPartirDuNomDeFournisseur", nomFournisseur, 0)
@@ -434,10 +374,11 @@ Function Fn_TypeDonneeColonne(col As Range) As String
     
 End Function
 
-Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 2024-01-09 @ 09:19
+Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFunctions:Fn_GetGL_Code_From_GL_Description", glDescr, 0)
-    
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modFunctions:Fn_GetGL_Code_From_GL_Description", _
+                                                                                            glDescr, 0)
     Dim ws As Worksheet: Set ws = wsdADMIN
     
     On Error Resume Next
@@ -445,8 +386,7 @@ Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 
     On Error GoTo 0
     
     If ws Is Nothing Or dynamicRange Is Nothing Then
-        MsgBox "La feuille 'Admin' ou le DynamicRange n'a pas été trouvé!", _
-            vbExclamation
+        MsgBox "La feuille 'Admin' ou le DynamicRange n'a pas été trouvé!", vbExclamation
         Exit Function
     End If
     
@@ -456,7 +396,8 @@ Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 
         dynamicRange.Columns(1), dynamicRange.Columns(2), _
         "Not Found", 0, 1)
     
-    Call modDev_Utils.EnregistrerLogApplication("     modFunctions:Fn_GetGL_Code_From_GL_Description - " & result, "", -1)
+    Call modDev_Utils.EnregistrerLogApplication("modFunctions:Fn_GetGL_Code_From_GL_Description - " & _
+                                                                                        result, "", -1)
     
     If result <> "Not Found" Then
         Fn_GetGL_Code_From_GL_Description = result
@@ -468,7 +409,8 @@ Public Function Fn_GetGL_Code_From_GL_Description(glDescr As String) 'XLOOKUP - 
     Set dynamicRange = Nothing
     Set ws = Nothing
 
-    Call modDev_Utils.EnregistrerLogApplication("modFunctions:Fn_GetGL_Code_From_GL_Description", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFunctions:Fn_GetGL_Code_From_GL_Description", _
+                                                                                vbNullString, startTime)
 
 End Function
 
@@ -1047,8 +989,6 @@ End Function
 Public Function Fn_TEC_Is_Data_Valid() As Boolean
 
     Fn_TEC_Is_Data_Valid = False
-    
-    'Validations first (one field at a time)
     
     'Professionnel ?
     If ufSaisieHeures.cmbProfessionnel.Value = vbNullString Then
@@ -2263,4 +2203,72 @@ Function Fn_NomFichierControleSession(baseNom As String) As String
     Fn_NomFichierControleSession = baseNom & "_" & gUtilisateurWindows & ".txt"
     
 End Function
+
+Public Function fn_GetRowFromValue(ws As Worksheet, _
+                                   colIndex As Long, _
+                                   searchValue As Variant) As Range
+                                   
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modFunctions:fn_GetRowFromValue", vbNullString, 0)
+    
+    Dim lo As ListObject
+    
+'    On Error GoTo ErrHandler
+    
+    'Vérifier qu'il existe au moins un tableau structuré
+    If ws.ListObjects.count = 0 Then
+        MsgBox "Erreur - Aucun tableau structuré sur la feuille" & vbCrLf & vbCrLf & _
+                    "'" & ws.CodeName & "'", vbExclamation, _
+                    "fn_GetRowFromValue - Contactez le développeur"
+        GoTo EXIT_FUNCTION
+    End If
+    
+    Set lo = ws.ListObjects(1)
+    
+    'Vérifier la colonne
+    If colIndex < 1 Or colIndex > lo.ListColumns.count Then
+        MsgBox "Erreur - La colonne '" & colIndex & "' est invalide pour le " & vbCrLf & vbCrLf & _
+                                        "tableau structuré '" & lo.Name & "'", vbExclamation, _
+                                        "fn_GetRowFromValue - Contactez le développeur"
+        GoTo EXIT_FUNCTION
+    End If
+    
+    'Cas particulier pour tableau structuré vide !
+    If lo.DataBodyRange Is Nothing Then
+        MsgBox "Erreur - Le tableau structuré '" & lo.Name & "' est VIDE", _
+                                        vbExclamation, _
+                                        "fn_GetRowFromValue - Contactez le développeur"
+        Set fn_GetRowFromValue = Nothing
+        GoTo EXIT_FUNCTION
+    End If
+    
+    'Recherche avec MATCH (rapide)
+    Dim pos As Variant
+    pos = Application.Match(searchValue, lo.ListColumns(colIndex).DataBodyRange, 0)
+    
+    If Not IsError(pos) Then
+        Set fn_GetRowFromValue = lo.ListRows(pos).Range
+    Else
+        MsgBox "La valeur '" & searchValue & "' n'existe pas dans la colonne " & colIndex & _
+                vbCrLf & vbCrLf & "du tableau '" & lo.Name & "'", vbInformation, _
+                "Veuillez réessayer la saisie"
+        Set fn_GetRowFromValue = Nothing
+    End If
+    
+    GoTo EXIT_FUNCTION
+    
+ErrHandler:
+    MsgBox "Erreur inattendue dans fn_GetRowFromValue" & vbCrLf & vbCrLf & _
+                Err.description, vbCritical, "Veuillez contacter le développeur"
+    Set fn_GetRowFromValue = Nothing
+    
+EXIT_FUNCTION:
+
+    'Libérer la mémoire
+    Set lo = Nothing
+    
+    Call modDev_Utils.EnregistrerLogApplication("modFunctions:fn_GetRowFromValue", vbNullString, startTime)
+
+End Function
+
 

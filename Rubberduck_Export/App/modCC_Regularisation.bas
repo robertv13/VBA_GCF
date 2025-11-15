@@ -221,10 +221,10 @@ Sub MettreAJourRegulComptesClientsBDMaster() 'Write to MASTER.xlsx
     recSet.Open strSQL, conn, 2, 3
     If Not (recSet.BOF Or recSet.EOF) Then
         Dim mntRegulTotal As Double
-        mntRegulTotal = CDbl(ufEncRégularisation.txtHonoraires.Value) + _
-                        CDbl(ufEncRégularisation.txtFraisDivers.Value) + _
-                        CDbl(ufEncRégularisation.txtTPS.Value) + _
-                        CDbl(ufEncRégularisation.txtTVQ.Value)
+        mntRegulTotal = CCur(ufEncRégularisation.txtHonoraires.Value) + _
+                        CCur(ufEncRégularisation.txtFraisDivers.Value) + _
+                        CCur(ufEncRégularisation.txtTPS.Value) + _
+                        CCur(ufEncRégularisation.txtTVQ.Value)
 
         'Mettre à jour Régularisation totale
         recSet.Fields(fFacCCTotalRegul - 1).Value = recSet.Fields(fFacCCTotalRegul - 1).Value + mntRegulTotal
