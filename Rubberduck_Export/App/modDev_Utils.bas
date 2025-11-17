@@ -1425,7 +1425,7 @@ Sub zz_ObtenirLigneAPartirCelluleRecherche() '2025-01-13 @ 08:49
     colRecherche = 17
     
     'Appeler la fonction de recherche
-    resultat = Fn_ObtenirLigneDeFeuille(feuille, valeurRecherche, fClntFMNomClientPlusNomClientSystème)
+    resultat = modFunctions.Fn_ObtenirLigneDeFeuille(feuille, valeurRecherche, fClntFMNomClientPlusNomClientSystème)
     
     'Vérifier le résultat
     If IsArray(resultat) Then

@@ -207,23 +207,21 @@ Sub ChangerNomDuClient(clientName As String)
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Brouillon:ChangerNomDuClient", clientName, 0)
     
     'Aller chercher le vrai nom de client de 2 sources selon le mode de facturation
-    Dim allCols As Variant
+    Dim r As Range
     If wshFAC_Brouillon.Range("B52").Value = vbNullString Then
-        allCols = Fn_ObtenirLigneDeFeuille("BD_Clients", clientName, fClntFMNomClientPlusNomClientSystème)
+        Set r = modFunctions.fn_GetRowFromValue(wsdBD_Clients, fClntFMNomClientPlusNomClientSystème, clientName)
     Else
-        allCols = Fn_ObtenirLigneDeFeuille("BD_Clients", clientName, fClntFMClientNom)
+        Set r = modFunctions.fn_GetRowFromValue(wsdBD_Clients, fClntFMClientNom, clientName)
     End If
-    
-    'Vérifier le résultat retourné
-    If IsArray(allCols) Then
+    If Not r Is Nothing Then
         Application.EnableEvents = False
-        clientName = allCols(1)
+        clientName = r.Cells(1, fClntFMClientNom)
         wshFAC_Brouillon.Range("E3").Value = clientName
         Application.EnableEvents = True
     Else
         wshFAC_Brouillon.Range("E3").Value = vbNullString
-        MsgBox "Valeur non trouvée !!!", vbCritical
         wshFAC_Brouillon.Range("E3").Select
+        Exit Sub
     End If
     
     Dim clientNamePurged As String
@@ -233,23 +231,23 @@ Sub ChangerNomDuClient(clientName As String)
     Loop
         
     Application.EnableEvents = False
-    wshFAC_Brouillon.Range("B18").Value = allCols(fClntFMClientID)
+    wshFAC_Brouillon.Range("B18").Value = r.Cells(1, fClntFMClientID)
     Application.EnableEvents = True
     
     With wshFAC_Brouillon
         Application.EnableEvents = False
-        .Range("K3").Value = allCols(fClntFMContactFacturation)
+        .Range("K3").Value = r.Cells(1, fClntFMContactFacturation)
         .Range("K4").Value = clientNamePurged
-        .Range("K5").Value = allCols(fClntFMAdresse1) 'Adresse1
-        If allCols(fClntFMAdresse2) <> vbNullString Then
-            .Range("K6").Value = allCols(fClntFMAdresse2) 'Adresse2
-            .Range("K7").Value = allCols(fClntFMVille) & ", " & _
-                                 allCols(fClntFMProvince) & ", " & _
-                                 allCols(fClntFMCodePostal) 'Ville, Province & Code postal
+        .Range("K5").Value = r.Cells(1, fClntFMAdresse1) 'Adresse1
+        If r.Cells(1, fClntFMAdresse2) <> vbNullString Then
+            .Range("K6").Value = r.Cells(1, fClntFMAdresse2) 'Adresse2
+            .Range("K7").Value = r.Cells(1, fClntFMVille) & ", " & _
+                                 r.Cells(1, fClntFMProvince) & ", " & _
+                                 r.Cells(1, fClntFMCodePostal) 'Ville, Province & Code postal
         Else
-            .Range("K6").Value = allCols(fClntFMVille) & ", " & _
-                                 allCols(fClntFMProvince) & ", " & _
-                                 allCols(fClntFMCodePostal) 'Ville, Province & Code postal
+            .Range("K6").Value = r.Cells(1, fClntFMVille) & ", " & _
+                                 r.Cells(1, fClntFMProvince) & ", " & _
+                                 r.Cells(1, fClntFMCodePostal) 'Ville, Province & Code postal
             .Range("K7").Value = vbNullString
         End If
         Application.EnableEvents = True
@@ -257,21 +255,21 @@ Sub ChangerNomDuClient(clientName As String)
     
     With wshFAC_Finale
         Application.EnableEvents = False
-        .Range("B23").Value = allCols(fClntFMContactFacturation)
+        .Range("B23").Value = r.Cells(1, fClntFMContactFacturation)
         .Range("B24").Value = clientNamePurged
         If Trim(.Range("B23").Value) = Trim(.Range("B24").Value) Then 'Contact = Nom du client 2025-11-01 @ 05:36
             .Range("B23").Value = ""
         End If
-        .Range("B25").Value = allCols(fClntFMAdresse1) 'Adresse1
-        If Trim$(allCols(fClntFMAdresse2)) <> vbNullString Then
-            .Range("B26").Value = allCols(fClntFMAdresse2) 'Adresse2
-            .Range("B27").Value = allCols(fClntFMVille) & ", " & _
-                                  allCols(fClntFMProvince) & ", " & _
-                                  allCols(fClntFMCodePostal) 'Ville, Province & Code postal
+        .Range("B25").Value = r.Cells(1, fClntFMAdresse1) 'Adresse1
+        If Trim$(r.Cells(1, fClntFMAdresse2)) <> vbNullString Then
+            .Range("B26").Value = r.Cells(1, fClntFMAdresse2) 'Adresse2
+            .Range("B27").Value = r.Cells(1, fClntFMVille) & ", " & _
+                                  r.Cells(1, fClntFMProvince) & ", " & _
+                                  r.Cells(1, fClntFMCodePostal) 'Ville, Province & Code postal
         Else
-            .Range("B26").Value = allCols(fClntFMVille) & ", " & _
-                                  allCols(fClntFMProvince) & ", " & _
-                                  allCols(fClntFMCodePostal) 'Ville, Province & Code postal
+            .Range("B26").Value = r.Cells(1, fClntFMVille) & ", " & _
+                                  r.Cells(1, fClntFMProvince) & ", " & _
+                                  r.Cells(1, fClntFMCodePostal) 'Ville, Province & Code postal
             .Range("B27").Value = vbNullString
         End If
         If Trim$(.Range("B26").Value) = ", ," Then

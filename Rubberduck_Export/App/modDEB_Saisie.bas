@@ -40,8 +40,16 @@ Sub MettreAJourDebours()
     If Fn_SaisieDEBEstElleValide(rowDebSaisie) = False Then Exit Sub
     
     'Get the FournID
-    wshDEB_Saisie.Range("B5").Value = Fn_ClientIDAPartirDuNomDeFournisseur(wshDEB_Saisie.Range("J4").Value)
-
+    Dim r As Range
+    Set r = fn_GetRowFromValue(wsdBD_Fournisseurs, fFourFMNomFournisseur, wshDEB_Saisie.Range("J4").Value)
+    If Not r Is Nothing Then
+        Application.EnableEvents = False
+        wshDEB_Saisie.Range("B5").Value = r.Cells(1, fFourFMFournID)
+        Application.EnableEvents = True
+    Else
+        Exit Sub
+    End If
+    
     'Transfert des données vers DEB_Trans
     Call AjouterDebBDMaster(rowDebSaisie)
     Call AjouterDebBDLocale(rowDebSaisie)
@@ -91,7 +99,15 @@ Sub MettreAJourDEBRenversement()
     End If
     
     'Get the FournID
-    ws.Range("B5").Value = Fn_ClientIDAPartirDuNomDeFournisseur(wshDEB_Saisie.Range("J4").Value)
+    Dim r As Range
+    Set r = fn_GetRowFromValue(wsdBD_Fournisseurs, fFourFMNomFournisseur, wshDEB_Saisie.Range("J4").Value)
+    If Not r Is Nothing Then
+        Application.EnableEvents = False
+        ws.Range("B5").Value = r.Cells(1, fFourFMFournID)
+        Application.EnableEvents = True
+    Else
+        Exit Sub
+    End If
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False

@@ -4,9 +4,134 @@ Option Explicit
 Public lastRow As Long
 Private gNumeroEcritureARenverser As Long
 
+Public Sub InitialiserFeuille() '2026-11-16 @ 16:22
+
+    Dim ws As Worksheet: Set ws = wshENC_Saisie
+    
+    'Zoom par défaut
+    ActiveWindow.Zoom = 100
+    
+    'Masquer colonnes sensibles
+    On Error Resume Next
+    ws.Columns("A:B").Hidden = True
+    
+    ws.Range("B12:B36").Locked = True
+    ws.Range("E12:E36").Locked = True
+    ws.Range("K12:K36").Locked = True
+    On Error GoTo 0
+    
+    'Couleurs de base
+    Dim cellsToColor As Range
+    Set cellsToColor = Union(ws.Range("E5"), ws.Range("I5"), ws.Range("F6"), ws.Range("H6"), _
+                                                                        ws.Range("I6"), ws.Range("G7"))
+    Call modAppli_Utils.RemplirPlageAvecCouleur(cellsToColor, gCOULEUR_BASE_COMPTABILITE)
+    
+    'Protection
+    ws.Protect UserInterfaceOnly:=True
+    ws.EnableSelection = xlUnlockedCells
+    
+    'Déterminer l’ordre de tabulation
+    Call modDev_Utils.DeterminerOrdreDeTabulation(ws)
+    
+    'Effacer cases à cocher
+    Call EffacerCasesACocherENC
+    
+    'Date par défaut
+'    ws.Range("K5").Value = Format$(Date, wsdADMIN.Range("B1").Value)
+    
+    'Libérer mémoire
+    Set ws = Nothing
+    
+End Sub
+
+Public Sub ImporterDonnees()
+
+    Call modImport.ImporterClients
+    Call modImport.ImporterFacComptesClients
+    Call modImport.ImporterFacDetails
+    Call modImport.ImporterFacEntete
+    Call modImport.ImporterEncDetails
+    Call modImport.ImporterEncEntete
+    Call modImport.ImporterGLTransactions
+    
+End Sub
+
+Public Sub ConfigurerInterface()
+
+    'Ajuster libellé par défaut
+    Call AjusterLibelleDansEncaissement("Banque")
+    
+End Sub
+
+Public Sub NettoyerBordereau()
+
+    Dim ws As Worksheet: Set ws = wshENC_Saisie
+    Dim lastUsedBordereau As Long
+    
+    lastUsedBordereau = ws.Cells(ws.Rows.count, "O").End(xlUp).Row
+    If lastUsedBordereau < 6 Then lastUsedBordereau = 6
+    
+    ws.Range("O6:Q" & lastUsedBordereau + 2).Clear
+    
+    Set ws = Nothing
+    
+End Sub
+
+Public Sub HandleClientChange(ws As Worksheet, ByVal Target As Range) '2025-11-16 @ 08:44
+
+    'Vérifier que la saisie est valide (nouveau paiement)
+    If ws.Range("F5").Value <> vbNullString Then
+        'Aller chercher le vrai nom du client
+        Dim r As Range
+        Set r = fn_GetRowFromValue(wsdBD_Clients, fClntFMNomClientPlusNomClientSystème, ws.Range("F5").Value)
+        If Not r Is Nothing Then
+            Target.Value = r.Cells(1, fClntFMClientNom)
+            wshENC_Saisie.clientCode = r.Cells(1, fClntFMClientID)
+        Else
+            Exit Sub
+        End If
+        'Réinitialiser et charger les factures
+        Call EffacerCasesACocherENC
+        Call ObtenirFacturesEnSuspens(wshENC_Saisie.clientCode)
+        Call AppliquerFormatFactures(ws)
+    End If
+    
+End Sub
+
+Public Sub HandleDateChange(ws As Worksheet, ByVal Target As Range)
+    Dim fullDate As Variant
+    
+    fullDate = Fn_CompleteLaDate(Target.Value, 30, 0)
+    
+    If fullDate <> "Invalid Date" Then
+        Target.Value = Format$(fullDate, wsdADMIN.Range("B1").Value)
+    Else
+        Call modDataValidation.AfficherMessageDateInvalide("wshENC_Saisie_115")
+        Target.ClearContents
+        Application.Goto Target
+    End If
+    
+    Target.Interior.Color = xlNone
+End Sub
+
+Public Sub HandleTypeChange(ws As Worksheet, ByVal Target As Range)
+
+    Call AjusterLibelleDansEncaissement(Target.Value)
+    
+End Sub
+
+Public Sub ResetPreviousCellColor()
+    If gPreviousCellAddress <> vbNullString Then
+        On Error Resume Next
+        wshENC_Saisie.Range(gPreviousCellAddress).Interior.Color = xlNone
+        On Error GoTo 0
+    End If
+End Sub
+
 Sub ObtenirFacturesEnSuspens(cc As String)
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ObtenirFacturesEnSuspens", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ObtenirFacturesEnSuspens", vbNullString, 0)
     
     Dim ws As Worksheet: Set ws = wshENC_Saisie
     
@@ -27,6 +152,7 @@ Sub ObtenirFacturesEnSuspens(cc As String)
             .Unprotect
             .Range("B12:B" & 11 + lastResultRow - 2).Locked = False
             .Range("E12:E" & 11 + lastResultRow - 2).Locked = False
+            .Range("K12:K" & 11 + lastResultRow - 2).Locked = False
             .Protect UserInterfaceOnly:=True
             .EnableSelection = xlUnlockedCells
         End If
@@ -36,7 +162,7 @@ Sub ObtenirFacturesEnSuspens(cc As String)
     Dim rr As Integer: rr = 12
     With wsdFAC_Comptes_Clients
         For i = 3 To lastResultRow
-'        For i = 3 To WorksheetFunction.Min(27, lastResultRow) 'No space for more O/S invoices
+'       For i = 3 To WorksheetFunction.Min(27, lastResultRow) 'No space for more O/S invoices
             If .Range("X" & i).Value <> 0 And _
                             Fn_FactureConfirmee(.Range("S" & i).Value) = True Then
                 Application.EnableEvents = False
@@ -62,7 +188,9 @@ End Sub
 
 Sub ObtenirFacturesEnSuspensAvecAF(cc As String)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ObtenirFacturesEnSuspensAvecAF", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:ObtenirFacturesEnSuspensAvecAF", _
+                                                                                        vbNullString, 0)
     
     Dim ws As Worksheet: Set ws = wsdFAC_Comptes_Clients
     
@@ -95,7 +223,7 @@ Sub ObtenirFacturesEnSuspensAvecAF(cc As String)
                 Unique:=False
                                         
     'Est-ce que nous avons des résultats ?
-'    lastResultRow = ws.Cells(ws.Rows.count, "P").End(xlUp).Row
+'   lastResultRow = ws.Cells(ws.Rows.count, "P").End(xlUp).Row
     Dim lastResultRow As Long
     lastResultRow = ws.Cells(ws.Rows.count, "R").End(xlUp).Row
     ws.Range("O10").Value = lastResultRow - 2 & " lignes"
@@ -113,7 +241,7 @@ Sub ObtenirFacturesEnSuspensAvecAF(cc As String)
          End With
     End If
     
-    'PLUG - Recalculate Column 'W' - Balance after AdvancedFilter
+    'PLUG - Recalculate Column 'W'- Balance after AdvancedFilter
     Dim r As Integer
     For r = 3 To lastResultRow
         ws.Range("X" & r).Value = ws.Range("U" & r).Value - ws.Range("V" & r).Value + ws.Range("W" & r).Value
@@ -216,7 +344,7 @@ Sub MettreAJourEncaissement()
         
         Call ComptabiliserEncaissement(noEnc, dateEnc, nomClient, typeEnc, montantEnc, descEnc) '2025-07-24 @ 12:22
 
-        MsgBox "L'encaissement '" & wshENC_Saisie.pmtNo & "' a été enregistré avec succès", vbOKOnly + vbInformation
+        MsgBox "L'encaissement '" & wshENC_Saisie.pmtNo & "'a été enregistré avec succès", vbOKOnly + vbInformation
         
         Call CreerNouvelEncaissement 'Reset the form
         
@@ -482,7 +610,7 @@ Sub MettreAJourEncComptesClientsDansBDMaster(firstRow As Integer, lastRow As Int
                 recSet.Update
             Else
                 'Handle the case where the specified ID is not found
-                MsgBox "L'enregistrement avec la facture '" & Inv_No & "' ne peut être retrouvé!", _
+                MsgBox "L'enregistrement avec la facture '" & Inv_No & "'ne peut être retrouvé!", _
                     vbExclamation
                 GoTo Clean_Exit
             End If
@@ -538,7 +666,7 @@ Sub MettreAJourEncComptesClientsDansBDLocale(firstRow As Integer, lastRow As Int
                 ws.Cells(rowToBeUpdated, fFacCCStatus) = "Unpaid"
             End If
         Else
-            MsgBox "La facture '" & Inv_No & "' n'existe pas dans FAC_Comptes_Clients.", vbCritical
+            MsgBox "La facture '" & Inv_No & "'n'existe pas dans FAC_Comptes_Clients.", vbCritical
         End If
     Next r
     
@@ -607,7 +735,9 @@ End Sub
 
 Sub AjouterCheckBoxesEncaissement(row As Long)
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:AjouterCheckBoxesEncaissement", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:AjouterCheckBoxesEncaissement", _
+                                                                                        vbNullString, 0)
     
     Application.EnableEvents = False
     
@@ -650,13 +780,15 @@ Sub AjouterCheckBoxesEncaissement(row As Long)
     Set chkBoxRange = Nothing
     Set ws = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:AjouterCheckBoxesEncaissement", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:AjouterCheckBoxesEncaissement", _
+                                                                                vbNullString, startTime)
 
 End Sub
 
-Sub EffacerCasesACocherENC(row As Long)
+Sub EffacerCasesACocherENC()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:EffacerCasesACocherENC", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:EffacerCasesACocherENC", vbNullString, 0)
     
     Application.ScreenUpdating = False
     Application.EnableEvents = False
@@ -675,13 +807,16 @@ Sub EffacerCasesACocherENC(row As Long)
     'Libérer la mémoire
     Set cbx = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:EffacerCasesACocherENC", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:EffacerCasesACocherENC", _
+                                                                              vbNullString, startTime)
 
 End Sub
 
 Sub NettoyerFeuilleEncaissement()
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:NettoyerFeuilleEncaissement", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modENC_Saisie:NettoyerFeuilleEncaissement", _
+                                                                                        vbNullString, 0)
     
     If wshENC_Saisie.ProtectContents Then
         wshENC_Saisie.Unprotect
@@ -699,14 +834,7 @@ Sub NettoyerFeuilleEncaissement()
     End With
     
     'Note the lastUsedRow for checkBox deletion
-    Dim lastUsedRow As Long
-    lastUsedRow = wshENC_Saisie.Cells(wshENC_Saisie.Rows.count, "F").End(xlUp).Row
-    If lastUsedRow > 36 Then
-        lastUsedRow = 36
-    End If
-    If lastUsedRow > 11 Then
-        Call EffacerCasesACocherENC(lastUsedRow)
-    End If
+    Call EffacerCasesACocherENC
         
     With wshENC_Saisie.Range("F5:H5, K5, F7, K7, F9:I9").Interior
             .Pattern = xlNone
@@ -716,6 +844,8 @@ Sub NettoyerFeuilleEncaissement()
     
     wshENC_Saisie.Shapes("shpMettreAJour").Visible = False
     wshENC_Saisie.Shapes("shpAnnulerSaisie").Visible = False
+    
+    Call HighlightCell(wshENC_Saisie.Range("F5"))
     
     Application.EnableEvents = True
     
@@ -846,4 +976,53 @@ Sub ValiderEtLancerufEncRegularisation()
     
 End Sub
 
+Public Sub ProtegerFeuilleEncaissement(ws As Worksheet) '2025-11-16 @ 16:16
+
+'   On Error GoTo CleanFail
+    
+    Application.EnableEvents = False
+    
+    ws.Unprotect
+    'Verrouiller TOUT pas défaut
+    ws.Cells.Locked = True
+    'Deverrouiller les cellules pour la saisie
+    ws.Range("F5:H5").Locked = False   'Client
+    ws.Range("K5").Locked = False      'Date
+    ws.Range("F7").Locked = False      'Type
+    ws.Range("K7").Locked = False      'Autre champ
+    ws.Range("F9:I9").Locked = False      'Commentaire
+    ws.Range("E12:E36").Cells.Locked = False 'Cases à cocher
+    ws.Range("K12:K36").Cells.Locked = False 'Montant à appliquer
+    
+    ws.Protect UserInterfaceOnly:=True
+    ws.EnableSelection = xlUnlockedCells
+
+CleanExit:
+    Application.EnableEvents = True
+    Exit Sub
+
+CleanFail:
+    MsgBox "Erreur dans ProtegerFeuilleEncaissement : " & Err.description
+    Resume CleanExit
+    
+End Sub
+
+Public Sub AppliquerFormatFactures(ws As Worksheet) '2025-11-16 @ 17:26
+
+    With ws.Range("E12:K36")
+        .Font.Name = "Aptos Narrow"
+        .Font.size = 11
+        .HorizontalAlignment = xlCenter
+    End With
+    
+    'Format numérique
+    With ws.Range("H12:K36")
+        .NumberFormat = "#,##0.00 $"
+        .HorizontalAlignment = xlRight
+    End With
+    
+    'Format date
+    ws.Range("G12:G36").NumberFormat = wsdADMIN.Range("B1").Value
+    
+End Sub
 

@@ -195,7 +195,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
         If wshGL_EJ.Range("F4").Value = "Dépôt de client" Then
             Application.EnableEvents = False
             Dim allCols As Variant
-            allCols = Fn_ObtenirLigneDeFeuille("BD_Clients", Target.Value, fClntFMNomClientPlusNomClientSystème)
+            allCols = modFunctions.Fn_ObtenirLigneDeFeuille("BD_Clients", Target.Value, fClntFMNomClientPlusNomClientSystème)
             'Vérifier les résultats
             If IsArray(allCols) Then
                 Application.EnableEvents = False

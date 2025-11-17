@@ -1928,7 +1928,7 @@ Sub zz_VerifierCombinaisonClientIDClientNomDansTEC()
         clientName = m(i, fTECClientNom)
         
         'Obtenir le nom du client associé à clientID
-        allCols = Fn_ObtenirLigneDeFeuille("BD_Clients", clientID, fClntFMClientID)
+        allCols = modFunctions.Fn_ObtenirLigneDeFeuille("BD_Clients", clientID, fClntFMClientID)
         'Vérifier le résultat retourné
         If IsArray(allCols) Then
             clientNameFromMF = allCols(1)

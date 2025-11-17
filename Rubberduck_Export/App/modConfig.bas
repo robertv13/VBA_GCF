@@ -15,6 +15,9 @@ Public Const gCOULEUR_BASE_COMPTABILITE As Long = 14277081
 'Variable qui contient le code d'utilisateur Windows
 Public gUtilisateurWindows As String
 
+'Variable qui détermine si le changement est dû à l'application ou à la saisie
+Public gIsUpdating As Boolean
+
 'Variable qui contient l'addresse de la dernière cellule sélectionnée
 Public gPreviousCellAddress As String
 

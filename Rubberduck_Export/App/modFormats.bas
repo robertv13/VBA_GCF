@@ -50,3 +50,29 @@ Public Sub AppliquerCommonPost(ws As Worksheet, lo As ListObject)
     On Error GoTo 0
     
 End Sub
+
+Public Sub HighlightCell(ByVal rng As Range) '2025-11-16 @ 17:54
+
+'   On Error Resume Next
+    
+    'Nettoyer la cellule précédente si elle existe
+    If gPreviousCellAddress <> vbNullString Then
+        Dim prev As Range
+        Set prev = rng.Worksheet.Range(gPreviousCellAddress)
+        With prev
+            .Interior.ColorIndex = xlNone
+            .Borders.LineStyle = xlNone
+        End With
+    End If
+    
+    'Appliquer le style sur la cellule active
+    With rng
+        .Interior.Color = RGB(198, 239, 206) 'Vert pâle
+'        .BorderAround ColorIndex:=vbRed, Weight:=xlMedium
+    End With
+    
+    'Mémoriser la nouvelle cellule active
+    gPreviousCellAddress = rng.Address
+    
+End Sub
+

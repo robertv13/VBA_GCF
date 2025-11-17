@@ -4585,6 +4585,7 @@ Sub RemplirPlageAvecCouleur(ByVal plage As Range, ByVal couleurRVB As Long)
         'Parcourt toutes les cellules de la plage (contiguës ou non)
         For Each cellule In plage
             On Error Resume Next
+            Debug.Print "RemplirPlageAvecCouleur pour " & cellule.Address
             cellule.Interior.Color = couleurRVB
             On Error GoTo 0
         Next cellule

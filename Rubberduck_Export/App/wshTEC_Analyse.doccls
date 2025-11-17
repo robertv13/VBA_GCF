@@ -223,7 +223,15 @@ Sub CheckBox1_Click()
                 Dim nomClient As String
                 Dim clientID As String
                 nomClient = ws.Range("C" & firstRow).Value
-                clientID = Fn_ClientIDAPartirDuNomDeClient(nomClient)
+                Dim rng As Range
+                Set rng = fn_GetRowFromValue(wsdBD_Clients, fClntFMClientNom, nomClient)
+                If Not rng Is Nothing Then
+                    Application.EnableEvents = False
+                    clientID = rng.Cells(1, fClntFMClientID)
+                    Application.EnableEvents = True
+                Else
+                    Exit Sub
+                End If
                 
                 Dim projetID As Long 'ProjetID is establised by the next procedure
                 Call AjouterProjetsDetailsBDMaster(clientID, firstRow, lastRow, projetID)

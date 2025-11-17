@@ -8,65 +8,40 @@ Attribute Macro1.VB_ProcData.VB_Invoke_Func = " \n14"
 '
 
 '
-    Range("B8:E8").Select
-    With Selection
-        .HorizontalAlignment = xlCenter
-        .VerticalAlignment = xlCenter
-        .WrapText = True
-        .Orientation = 0
-        .AddIndent = False
-        .IndentLevel = 0
-        .ShrinkToFit = False
-        .ReadingOrder = xlContext
-        .MergeCells = False
+    Range("K7").Select
+    With Selection.Interior
+        .Pattern = xlSolid
+        .PatternColorIndex = xlAutomatic
+        .ThemeColor = xlThemeColorAccent6
+        .TintAndShade = 0.599993896298105
+        .PatternTintAndShade = 0
     End With
-    Selection.Merge
-    With Selection
-        .HorizontalAlignment = xlLeft
-        .VerticalAlignment = xlCenter
-        .WrapText = True
-        .Orientation = 0
-        .AddIndent = False
-        .IndentLevel = 0
-        .ShrinkToFit = False
-        .ReadingOrder = xlContext
-        .MergeCells = True
-    End With
-    With Selection
-        .HorizontalAlignment = xlGeneral
-        .VerticalAlignment = xlCenter
-        .WrapText = True
-        .Orientation = 0
-        .AddIndent = False
-        .IndentLevel = 0
-        .ShrinkToFit = False
-        .ReadingOrder = xlContext
-        .MergeCells = True
-    End With
-End Sub
-Sub Macro2()
-Attribute Macro2.VB_ProcData.VB_Invoke_Func = " \n14"
-'
-' Macro2 Macro
-'
-
-'
     Selection.Borders(xlDiagonalDown).LineStyle = xlNone
     Selection.Borders(xlDiagonalUp).LineStyle = xlNone
-    Selection.Borders(xlEdgeLeft).LineStyle = xlNone
+    With Selection.Borders(xlEdgeLeft)
+        .LineStyle = xlContinuous
+        .Color = -16776961
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
     With Selection.Borders(xlEdgeTop)
         .LineStyle = xlContinuous
-        .ColorIndex = xlAutomatic
+        .Color = -16776961
         .TintAndShade = 0
-        .Weight = xlThin
+        .Weight = xlMedium
     End With
     With Selection.Borders(xlEdgeBottom)
-        .LineStyle = xlDouble
-        .ColorIndex = xlAutomatic
+        .LineStyle = xlContinuous
+        .Color = -16776961
         .TintAndShade = 0
-        .Weight = xlThick
+        .Weight = xlMedium
     End With
-    Selection.Borders(xlEdgeRight).LineStyle = xlNone
+    With Selection.Borders(xlEdgeRight)
+        .LineStyle = xlContinuous
+        .Color = -16776961
+        .TintAndShade = 0
+        .Weight = xlMedium
+    End With
     Selection.Borders(xlInsideVertical).LineStyle = xlNone
     Selection.Borders(xlInsideHorizontal).LineStyle = xlNone
 End Sub

@@ -6,174 +6,136 @@ Public clientCode As String
 Public pmtNo As Long
 Public GLEntryNo As Long
 
-Private Sub Worksheet_Activate()
+Private Sub Worksheet_Activate() '2025-11-16 @ 15:20
 
-    If gFromMenu = False Then
-        Exit Sub
-    End If
-    
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("wshENC_Saisie:Worksheet_Activate", vbNullString, 0)
-    
-    Dim ws As Worksheet: Set ws = wshENC_Saisie
-    
+'   On Error GoTo CleanFail
+
     Application.ScreenUpdating = False
     Application.EnableEvents = False
-    Me.Application.Calculation = xlCalculationAutomatic
+    Application.Calculation = xlCalculationAutomatic
     
-    'Import transactions from MASTER file
-    Call modImport.ImporterClients
-    Call modImport.ImporterFacComptesClients
-    Call modImport.ImporterFacDetails
-    Call modImport.ImporterFacEntete
-    Call modImport.ImporterEncDetails
-    Call modImport.ImporterEncEntete
-    Call modImport.ImporterGLTransactions
+    If gFromMenu = False Then GoTo CleanExit
     
-    'Set the zoom factor to 100% when this worksheet is activated
-    ActiveWindow.Zoom = 100
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("wshENC_Saisie:Worksheet_Activate", vbNullString, 0)
     
-    'S'assurer que les colonnes A & B sont masquées
-    On Error Resume Next
-    Me.Columns("A:B").Hidden = True
-    On Error GoTo 0
+    'Étapes principales
+    Call InitialiserFeuille
+    Call ImporterDonnees
+    Call ConfigurerInterface
+    Call NettoyerBordereau
+    Call ProtegerFeuilleEncaissement(Me)
+    Call CreerNouvelEncaissement
     
-    'S'assurer que les cellules qui auraient été déverouillées le soient pour commencer
-    On Error Resume Next
-    ws.Range("B12:B36").Locked = True
-    ws.Range("E12:E36").Locked = True
-    On Error GoTo 0
+    'Positionner le curseur sur le premier champ
+    Me.Range("F5").Select
+    Call HighlightCell(Me.Range("F5"))
     
-    'Certaines cellules perdent la couleur du background
-    Dim cellsToColor As Range
-    Set cellsToColor = Union(ws.Range("E5"), ws.Range("I5"), ws.Range("F6"), ws.Range("G7"))
-    Call modAppli_Utils.RemplirPlageAvecCouleur(cellsToColor, gCOULEUR_BASE_COMPTABILITE)
-    
-    'Protect the Worksheet
-    With ws
-        .Protect UserInterfaceOnly:=True
-        .EnableSelection = xlUnlockedCells
-    End With
-    
-    Call modDev_Utils.DeterminerOrdreDeTabulation(ws)
-    
-    Call EffacerCasesACocherENC(36)
-    
-    'Efface les données du bordereau total
-    Dim lastUsedBordereau As Long
-    lastUsedBordereau = ws.Cells(ws.Rows.count, "O").End(xlUp).Row
-    If lastUsedBordereau < 6 Then
-        lastUsedBordereau = 6
-    End If
-    ws.Range("O6:Q" & lastUsedBordereau + 2).Clear
-    
-    Call AjusterLibelleDansEncaissement("Banque")
-    
-    ws.Range("K5").Value = Format$(Date, wsdADMIN.Range("B1").Value)
-
+CleanExit:
     Application.ScreenUpdating = True
     Application.EnableEvents = True
-    
-    wshENC_Saisie.Range("F5").Select
-    
-    'Libérer la mémoire
-    Set ws = Nothing
-    
     Call modDev_Utils.EnregistrerLogApplication("wshENC_Saisie:Worksheet_Activate", vbNullString, startTime)
+    Exit Sub
+    
+CleanFail:
+    MsgBox "Erreur inattendue dans Worksheet_Activate : " & Err.description, vbCritical
+    Resume CleanExit
 
 End Sub
 
-Private Sub Worksheet_SelectionChange(ByVal Target As Range)
-    
-    If gPreviousCellAddress <> vbNullString Then
-        Range(gPreviousCellAddress).Interior.Color = xlNone
-    End If
-    
-    'Client has been selected
-    If Not Intersect(Target, Me.Range("F5")) Is Nothing Then
-        Target.Interior.Color = gCOULEUR_SAISIE
-    End If
-    
-    'Date has been selected
-    If Not Intersect(Target, Me.Range("K5")) Is Nothing Then
-        Target.Interior.Color = gCOULEUR_SAISIE
-    End If
-    
-    'Payment Type has been selected
-    If Not Intersect(Target, Me.Range("F7")) Is Nothing Then
-        Target.Interior.Color = gCOULEUR_SAISIE
-    End If
-    
-    'Total deposit has been selected
-    If Not Intersect(Target, Me.Range("K7")) Is Nothing Then
-        Target.Interior.Color = gCOULEUR_SAISIE
-    End If
+Private Sub Worksheet_SelectionChange(ByVal Target As Range) '2025-11-16 @ 15:20
 
-    'Comments has been selected
-    If Not Intersect(Target, Me.Range("F9")) Is Nothing Then
-        Target.Interior.Color = gCOULEUR_SAISIE
-    End If
+'   On Error GoTo CleanFail
     
-    'Première case à cocher a été sélectionnée
-    If Not Intersect(Target, Me.Range("E12")) Is Nothing Then
-        Call ValiderEtLancerufEncRegularisation
-    End If
-    
-    If Not Intersect(Target, Me.Range("G7")) Is Nothing Then
-        Target.Interior.Color = gCOULEUR_BASE_COMPTABILITE
-        Me.Range("K7").Select
+    If Target.Address = "$F$6" Then
+        Me.Range("K5").Select
         Exit Sub
     End If
     
-    gPreviousCellAddress = Target.Address
+    Call HighlightCell(Target)
+    
+    'Gestion des sélections principales
+    If Not Intersect(Target, Me.Range("F5,K5,F7,K7,F9")) Is Nothing Then
+        Call HandleMainFieldSelection(Target)
+    End If
+    
+    'Première case à cocher
+    If Not Intersect(Target, Me.Range("E12")) Is Nothing Then
+        HandleFirstCheckboxSelection
+    End If
+    
+    'Cas particulier : G7 ? rediriger vers K7
+    If Not Intersect(Target, Me.Range("G7")) Is Nothing Then
+        Call HandleSpecialCaseG7(Target)
+        Exit Sub
+    End If
+    
+    Exit Sub
+    
+CleanFail:
+    MsgBox "Erreur inattendue dans Worksheet_SelectionChange :" & vbCrLf & vbCrLf & _
+           Err.description, vbCritical, "Veuillez contacter le développeur"
+           
+End Sub
+
+Private Sub Worksheet_Change(ByVal Target As Range) '2025-11-16 @ 15:40
+
+    On Error GoTo CleanFail
+    
+    'Si le code est en train de modifier la feuille, ignorer l'événement
+    If gIsUpdating Then Exit Sub
+    
+    'Désactiver les événements pour éviter la boucle
+    Application.EnableEvents = False
+    
+    'Gestion des changements selon la cellule
+    If Not Intersect(Target, Me.Range("F5")) Is Nothing Then
+        gIsUpdating = True
+        Call modENC_Saisie.HandleClientChange(Me, Target)
+        gIsUpdating = False
+        'Force le focus sur la prochaine cellule
+        Me.Range("K5").Select
+        
+    ElseIf Not Intersect(Target, Me.Range("K5")) Is Nothing Then
+        gIsUpdating = True
+        Call modENC_Saisie.HandleDateChange(Me, Target)
+        gIsUpdating = False
+        
+    ElseIf Not Intersect(Target, Me.Range("F7")) Is Nothing Then
+        gIsUpdating = True
+        Call modENC_Saisie.HandleTypeChange(Me, Target)
+        gIsUpdating = False
+    End If
+    
+CleanExit:
+    Application.EnableEvents = True
+    Exit Sub
+
+CleanFail:
+    MsgBox "Erreur inattendue dans Worksheet_Change :" & vbCrLf & vbCrLf & _
+           Err.description, vbCritical, "Veuillez contacter le développeur"
+    gIsUpdating = False
+    Resume CleanExit
     
 End Sub
 
-Private Sub Worksheet_Change(ByVal Target As Range)
+Private Sub HandleMainFieldSelection(ByVal Target As Range)
+
+    Target.Interior.Color = gCOULEUR_SAISIE
     
-    Dim fullDate As Variant
+End Sub
+
+Private Sub HandleFirstCheckboxSelection()
+
+    Call ValiderEtLancerufEncRegularisation
     
-    'On Customer Change and only on new payments
-    If Not Intersect(Target, Me.Range("F5")) Is Nothing And _
-        Me.Range("F5").Value <> Empty And _
-        Me.Range("B6").Value = vbNullString Then
-        'Aller chercher le vrai nom du client
-        Dim allCols As Variant
-        allCols = modFunctions.Fn_ObtenirLigneDeFeuille("BD_Clients", Target.Value, fClntFMNomClientPlusNomClientSystème)
-        'Vérifier les résultats
-        If IsArray(allCols) Then
-            Application.EnableEvents = False
-            Target.Value = allCols(1)
-            Application.EnableEvents = True
-        Else
-            MsgBox "Valeur non trouvée !!!", vbCritical
-        End If
-        Application.EnableEvents = False
-        clientCode = allCols(fClntFMClientID)
-        Call EffacerCasesACocherENC(36)
-        Call ObtenirFacturesEnSuspens(clientCode)
-        Application.EnableEvents = True
-    End If
-    
-    'Date has changed
-    If Not Intersect(Target, Me.Range("K5")) Is Nothing Then
-        Application.EnableEvents = False
-        fullDate = Fn_CompleteLaDate(Target.text, 30, 0)
-        If fullDate <> "Invalid Date" Then
-            Target.Value = Format$(fullDate, wsdADMIN.Range("B1").Value)
-        Else
-            Call modDataValidation.AfficherMessageDateInvalide("wshENC_Saisie_115")
-            Target.ClearContents
-            Application.EnableEvents = True
-            Application.Goto Range(Target.Address)
-        End If
-        Target.Interior.Color = xlNone
-        Application.EnableEvents = True
-    End If
-    
-    'Type a changé
-    If Not Intersect(Target, Me.Range("F7")) Is Nothing Then
-        Call AjusterLibelleDansEncaissement(Target.Value)
-    End If
+End Sub
+
+Private Sub HandleSpecialCaseG7(ByVal Target As Range)
+
+    'G7 est réservé : si sélectionné, on force le focus vers K7
+    Target.Interior.Color = gCOULEUR_BASE_COMPTABILITE
+    Me.Range("K7").Select
     
 End Sub
 

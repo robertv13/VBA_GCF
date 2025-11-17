@@ -115,7 +115,7 @@ Private Sub Worksheet_Change(ByVal Target As Range)
      If Not Intersect(Target, Range("D4")) Is Nothing Then
         'Aller chercher le vrai nom du client
         Dim allCols As Variant
-        allCols = Fn_ObtenirLigneDeFeuille("BD_Clients", Target.Value, fClntFMNomClientPlusNomClientSystème)
+        allCols = modFunctions.Fn_ObtenirLigneDeFeuille("BD_Clients", Target.Value, fClntFMNomClientPlusNomClientSystème)
         'Vérifier les résultats
         If IsArray(allCols) Then
             Application.EnableEvents = False
