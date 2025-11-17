@@ -352,7 +352,11 @@ Public Sub VerifierIntegriteTablesLocales()
     Set folderDialog = Application.fileDialog(msoFileDialogFolderPicker)
     With folderDialog
         .Title = "Choisir le répertoire des fichiers log"
-        If .show <> -1 Then GoTo SkipLogs
+        If .show <> -1 Then
+            Call AjouterMessageAuxResultats(wsOutput, r, 2, "Aucun fichier log de sélectionné")
+            r = r + 2
+            GoTo SkipLogs
+        End If
         logFolder = .SelectedItems(1)
     End With
 
@@ -2961,7 +2965,6 @@ Private Sub VerifierTECTdBData(ByVal wsOutput As Worksheet, ByRef r As Long, ByR
     Application.ScreenUpdating = False
     
     Call modImport.ImporterTEC
-    Call modTEC_TDB.ActualiserTECTableauDeBord
     
     'wshTEC_TdB_Data
     Dim ws As Worksheet: Set ws = wshTEC_TDB_Data

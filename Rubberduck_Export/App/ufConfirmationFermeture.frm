@@ -75,7 +75,7 @@ Public Sub AfficherMessageFermetureAPP(Optional minutesInactives As Double = 0) 
     Me.StartUpPosition = 1
     Me.show vbModeless
 
-    Call DémarrerTimerVisuel
+    Call DemarrerTimerVisuel
 
 End Sub
 
@@ -106,7 +106,7 @@ Public Function ProchainTick() As Date '2025-07-02 @ 08:19
     
 End Function
 
-Public Sub DémarrerTimerVisuel() '2025-11-08 @ 06:26
+Public Sub DemarrerTimerVisuel() '2025-11-08 @ 06:26
 
     gTimerFermetureActif = True
     Call RafraichirTimer

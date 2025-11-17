@@ -56,17 +56,17 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range) '2025-11-16 @ 15:20
     
     'Gestion des sélections principales
     If Not Intersect(Target, Me.Range("F5,K5,F7,K7,F9")) Is Nothing Then
-        Call HandleMainFieldSelection(Target)
+        Call GererSelectionChampsPrincipaux(Target)
     End If
     
     'Première case à cocher
     If Not Intersect(Target, Me.Range("E12")) Is Nothing Then
-        HandleFirstCheckboxSelection
+        GererSelectionPremiereCaseACocher
     End If
     
     'Cas particulier : G7 ? rediriger vers K7
     If Not Intersect(Target, Me.Range("G7")) Is Nothing Then
-        Call HandleSpecialCaseG7(Target)
+        Call GererCasSpecialG7(Target)
         Exit Sub
     End If
     
@@ -91,19 +91,19 @@ Private Sub Worksheet_Change(ByVal Target As Range) '2025-11-16 @ 15:40
     'Gestion des changements selon la cellule
     If Not Intersect(Target, Me.Range("F5")) Is Nothing Then
         gIsUpdating = True
-        Call modENC_Saisie.HandleClientChange(Me, Target)
+        Call modENC_Saisie.GererChangementClient(Me, Target)
         gIsUpdating = False
         'Force le focus sur la prochaine cellule
         Me.Range("K5").Select
         
     ElseIf Not Intersect(Target, Me.Range("K5")) Is Nothing Then
         gIsUpdating = True
-        Call modENC_Saisie.HandleDateChange(Me, Target)
+        Call modENC_Saisie.GererChangementDate(Me, Target)
         gIsUpdating = False
         
     ElseIf Not Intersect(Target, Me.Range("F7")) Is Nothing Then
         gIsUpdating = True
-        Call modENC_Saisie.HandleTypeChange(Me, Target)
+        Call modENC_Saisie.GererChangementTypeEnc(Me, Target)
         gIsUpdating = False
     End If
     
@@ -119,19 +119,19 @@ CleanFail:
     
 End Sub
 
-Private Sub HandleMainFieldSelection(ByVal Target As Range)
+Private Sub GererSelectionChampsPrincipaux(ByVal Target As Range)
 
     Target.Interior.Color = gCOULEUR_SAISIE
     
 End Sub
 
-Private Sub HandleFirstCheckboxSelection()
+Private Sub GererSelectionPremiereCaseACocher()
 
     Call ValiderEtLancerufEncRegularisation
     
 End Sub
 
-Private Sub HandleSpecialCaseG7(ByVal Target As Range)
+Private Sub GererCasSpecialG7(ByVal Target As Range)
 
     'G7 est réservé : si sélectionné, on force le focus vers K7
     Target.Interior.Color = gCOULEUR_BASE_COMPTABILITE

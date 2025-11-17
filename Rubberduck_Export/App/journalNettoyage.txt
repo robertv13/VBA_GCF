@@ -1,4 +1,4 @@
-﻿📘 Journal typographique — 11/17/2025 07:40:44
+﻿📘 Journal typographique — 11/17/2025 15:29:34
 
 🔧 Fichier : clsControlWrapper.cls
 
@@ -25,6 +25,8 @@
 🔧 Fichier : clsWrapperOptionButton.cls
 
 🔧 Fichier : clsWrapperTextBox.cls
+
+🔧 Fichier : Feuil1.doccls
 
 🔧 Fichier : Feuil13.doccls
 
@@ -75,6 +77,11 @@
    ✅ Remplacé : .row ➜ .Row
    ✅ Remplacé : .value ➜ .Value
    ✅ Remplacé : .range ➜ .Range
+
+🔧 Fichier : modCleanUp_20251117.bas
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
+   ✅ Remplacé : .font ➜ .Font
 
 🔧 Fichier : modConfig.bas
 
@@ -300,9 +307,6 @@
    ✅ Remplacé : .row ➜ .Row
 
 🔧 Fichier : modTemp.bas
-   ✅ Remplacé : .value ➜ .Value
-   ✅ Remplacé : .range ➜ .Range
-   ✅ Remplacé : .font ➜ .Font
 
 🔧 Fichier : modTraceSession.bas
 

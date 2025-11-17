@@ -77,7 +77,7 @@ Public Sub NettoyerBordereau()
     
 End Sub
 
-Public Sub HandleClientChange(ws As Worksheet, ByVal Target As Range) '2025-11-16 @ 08:44
+Public Sub GererChangementClient(ws As Worksheet, ByVal Target As Range) '2025-11-16 @ 08:44
 
     'Vérifier que la saisie est valide (nouveau paiement)
     If ws.Range("F5").Value <> vbNullString Then
@@ -98,7 +98,7 @@ Public Sub HandleClientChange(ws As Worksheet, ByVal Target As Range) '2025-11-1
     
 End Sub
 
-Public Sub HandleDateChange(ws As Worksheet, ByVal Target As Range)
+Public Sub GererChangementDate(ws As Worksheet, ByVal Target As Range)
     Dim fullDate As Variant
     
     fullDate = Fn_CompleteLaDate(Target.Value, 30, 0)
@@ -114,7 +114,7 @@ Public Sub HandleDateChange(ws As Worksheet, ByVal Target As Range)
     Target.Interior.Color = xlNone
 End Sub
 
-Public Sub HandleTypeChange(ws As Worksheet, ByVal Target As Range)
+Public Sub GererChangementTypeEnc(ws As Worksheet, ByVal Target As Range)
 
     Call AjusterLibelleDansEncaissement(Target.Value)
     

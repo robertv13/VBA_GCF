@@ -939,175 +939,6 @@ Sub AjusterEpurerTablesDeMaster()
     
 End Sub
 
-Sub zz_CreerFileLayouts()
-
-    'Feuille pour la sortie
-    Dim outputName As String
-    outputName = "Doc_File_Layouts"
-    Call CreerOuRemplacerFeuille(outputName)
-    
-    Dim wsOut As Worksheet
-    Set wsOut = ThisWorkbook.Worksheets(outputName)
-    
-    'Tableau pour travailler en mémoire les résultats
-    Dim outputArr() As String
-    ReDim outputArr(1 To 500, 1 To 8)
-    
-    Dim outputRow As Long
-    outputRow = 1
-    
-    Application.ScreenUpdating = False
-    
-    Call ListerEnumsGenerique("BD_Clients", 1, outputArr, outputRow)
-    Call ListerEnumsGenerique("BD_Fournisseurs", 1, outputArr, outputRow)
-    
-    Call ListerEnumsGenerique("CC_Regularisations", 1, outputArr, outputRow)
-    
-    Call ListerEnumsGenerique("DEB_Recurrent", 1, outputArr, outputRow)
-    Call ListerEnumsGenerique("DEB_Trans", 1, outputArr, outputRow)
-    
-    Call ListerEnumsGenerique("ENC_Details", 1, outputArr, outputRow)
-    Call ListerEnumsGenerique("ENC_Entete", 1, outputArr, outputRow)
-    
-    Call ListerEnumsGenerique("FAC_Comptes_Clients", 2, outputArr, outputRow)
-    Call ListerEnumsGenerique("FAC_Details", 2, outputArr, outputRow)
-    Call ListerEnumsGenerique("FAC_Entete", 2, outputArr, outputRow)
-    Call ListerEnumsGenerique("FAC_Projets_Details", 1, outputArr, outputRow)
-    Call ListerEnumsGenerique("FAC_Projets_Entete", 1, outputArr, outputRow)
-    Call ListerEnumsGenerique("FAC_Sommaire_Taux", 1, outputArr, outputRow)
-    
-    Call ListerEnumsGenerique("GL_EJ_Recurrente", 1, outputArr, outputRow)
-    Call ListerEnumsGenerique("GL_Trans", 1, outputArr, outputRow)
-    
-    Call ListerEnumsGenerique("TEC_Local", 2, outputArr, outputRow)
-    Call ListerEnumsGenerique("TEC_TDB_Data", 1, outputArr, outputRow)
-    
-    Application.ScreenUpdating = True
-    
-    'Écriture des résultats (tableau) dans la feuille
-    With wsOut
-        .Cells.Clear 'Efface tout le contenu de la feuille
-        .Range("A1").Resize(outputRow, UBound(outputArr, 2)).Value = outputArr
-    End With
-    
-End Sub
-
-Sub ListerEnumsGenerique(ByRef tableName As String, ByVal HeaderRow As Integer, ByRef arrArg() As String, ByRef outputRow As Long)
-
-    'Obtenir la feuille de calcul
-    Dim ws As Worksheet
-    Set ws = ThisWorkbook.Worksheets(tableName)
-    Dim saveTableName As String
-    saveTableName = tableName
-    
-    Dim wb As Workbook
-    If tableName = "BD_Clients" Or tableName = "BD_Fournisseurs" Then
-        Set wb = Workbooks.Open(wsdADMIN.Range("PATH_DATA_FILES") & Application.PathSeparator & gDATA_PATH & Application.PathSeparator & "GCF_BD_Entrée.xlsx")
-        tableName = Replace(tableName, "BD_", vbNullString)
-    Else
-        Set wb = Workbooks.Open(wsdADMIN.Range("PATH_DATA_FILES") & Application.PathSeparator & gDATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx")
-    End If
-    Dim wsMaster As Worksheet
-    If tableName <> "TEC_TDB_Data" Then
-        Set wsMaster = wb.Sheets(tableName)
-    End If
-    tableName = saveTableName
-    
-    'Nom de la table
-    arrArg(outputRow, 1) = tableName
-    outputRow = outputRow + 1
-    
-    'Extraire la définition des Enum de la table à partir du code
-    Dim arr() As Variant
-    Call ExtraireEnumDefinition(tableName, arr)
-    
-    'Boucle sur les colonnes
-    Dim col As Long
-    For col = LBound(arr, 1) To UBound(arr, 1)
-        arrArg(outputRow, 1) = arr(col, 1)
-        arrArg(outputRow, 2) = Fn_ChiffreEnLettres(col)
-        arrArg(outputRow, 3) = arr(col, 2)
-        'Nom de la colonne dans la table
-        arrArg(outputRow, 4) = ws.Cells(HeaderRow, col).Value
-        If InStr(arr(col, 2), ws.Cells(HeaderRow, col).Value) = 0 Then
-            arrArg(outputRow, 5) = "*"
-        End If
-        If Not wsMaster Is Nothing Then
-            arrArg(outputRow, 6) = wsMaster.Cells(1, col).Value
-            If InStr(arr(col, 2), wsMaster.Cells(1, col).Value) = 0 Then
-                arrArg(outputRow, 7) = "*"
-            End If
-        End If
-        'Valeurs des colonnes sur la première ligne de data
-        arrArg(outputRow, 8) = ws.Cells(HeaderRow + 1, col).Value
-        outputRow = outputRow + 1
-    Next col
-    
-    'Ligne pour séparer les tables
-    outputRow = outputRow + 1
-    
-    'Fermer sans sauvegarder
-    wb.Close SaveChanges:=False
-    
-End Sub
-
-Sub ExtraireEnumDefinition(tableName As String, ByRef arr() As Variant)
-
-    Dim LineNum As Long
-    Dim TotalLines As Long
-    Dim codeLine As String
-    Dim InEnumBlock As Boolean
-    Dim filePath As String
-    
-    'Variable de travail
-    Dim EnumDefinition As String
-    EnumDefinition = vbNullString
-    
-    'Redimensionner le tableau
-    ReDim arr(1 To 50, 1 To 2)
-    Dim e As Long
-    
-    'Accéder au projet VBA actif
-    Dim VBProj As VBIDE.VBProject
-    Set VBProj = ThisWorkbook.VBProject
-
-    'Parcourir tous les composants VBA
-    Dim vbComp As VBIDE.VBComponent
-    Dim codeMod As VBIDE.codeModule
-    For Each vbComp In VBProj.VBComponents
-        Set codeMod = vbComp.codeModule
-        'Parcourir chaque ligne de code
-        For LineNum = 1 To codeMod.CountOfLines
-            codeLine = Trim$(codeMod.Lines(LineNum, 1))
-            'Détection du début d'un Enum
-            If InStr(1, codeLine, "Enum " & tableName, vbTextCompare) > 0 Then
-                InEnumBlock = True
-            ElseIf InEnumBlock Then
-                'Détection de la fin de l'Enum
-                If InStr(1, codeLine, "End Enum", vbTextCompare) > 0 Then
-                    InEnumBlock = False
-                    Exit For 'Terminer après l'extraction
-                Else
-                    'Ajouter les lignes à l'intérieur du Enum
-                    If Left$(codeLine, 1) <> "[" Then
-                        If Right$(codeLine, 11) = " = [_First]" Then
-                            codeLine = Left$(codeLine, Len(codeLine) - 11)
-                        End If
-                        e = e + 1
-                        arr(e, 1) = e
-                        arr(e, 2) = codeLine
-                        EnumDefinition = EnumDefinition & codeLine & "|"
-                    End If
-                End If
-            End If
-        Next LineNum
-    Next vbComp
-
-    'Redimension au minimum le tableau
-    Call RedimensionnerTableau2D(arr, e, 2)
-    
-End Sub
-
 Function Fn_CouleurEnRGBTableau(ByVal couleur As Long) As Variant
 
     Dim rgbArray(1 To 3) As Integer
@@ -1138,39 +969,6 @@ Function Fn_ConvertirCouleurRGB2Hex(ByVal couleur As Long) As String
     
 End Function
 
-Sub zz_AfficheCouleurEnRGB()
-
-    Dim couleur As Long
-    Dim rgbArray As Variant
-    
-    wshMenuFAC.Activate
-    wshMenuFAC.Range("A3").Select
-    
-    couleur = gCOULEUR_BASE_FACTURATION
-    
-    rgbArray = Fn_CouleurEnRGBTableau(couleur)
-    
-    'Afficher les composantes RGB
-    MsgBox "Rouge: " & rgbArray(1) & ", Vert: " & rgbArray(2) & ", Bleu: " & rgbArray(3)
-    
-End Sub
-
-Sub zz_ConvertirCouleurEnHEX()
-
-    Dim couleur As Long
-    Dim CouleurHex As String
-    
-    'Obtenir la couleur de remplissage de la cellule
-    couleur = 11854022
-    
-    'Convertir en HEX
-    CouleurHex = Fn_ConvertirCouleurRGB2Hex(couleur)
-    
-    'Afficher le résultat
-    MsgBox "La couleur HEX de la couleur " & couleur & " est " & CouleurHex
-    
-End Sub
-
 Function Fn_ConvertiCouleurEnOLE(ByVal couleur As Long) As String
 
     Dim rouge As Integer, vert As Integer, bleu As Integer
@@ -1186,22 +984,6 @@ Function Fn_ConvertiCouleurEnOLE(ByVal couleur As Long) As String
                                         Right$("00" & Hex$(rouge), 2) & "&"
                                         
 End Function
-
-Sub zz_ConvertirCouleurOLE()
-
-    Dim couleur As Long
-    Dim couleurOLE As String
-    
-    'Exemple : couleur de la cellule A1
-    couleur = gCOULEUR_BASE_FACTURATION
-    
-    'Convertir en format OLE
-    couleurOLE = Fn_ConvertiCouleurEnOLE(couleur)
-    
-    'Afficher la couleur en format OLE
-    MsgBox "La couleur OLE est : " & couleurOLE
-    
-End Sub
 
 Function Fn_ChiffreEnLettres(ByVal num As Long) As String
 
@@ -1219,66 +1001,6 @@ Function Fn_ChiffreEnLettres(ByVal num As Long) As String
     Loop While num > 0
     
 End Function
-
-Sub zz_ListerValidations()
-
-    Dim ws As Worksheet
-    Dim cell As Range
-    Dim rngDV As Range
-    Dim wsReport As Worksheet
-    Dim lastRow As Long
-    Dim rowIndex As Long
-    
-    'Vérifie s'il existe déjà une feuille de rapport, sinon la crée
-    On Error Resume Next
-    Set wsReport = ThisWorkbook.Sheets("DocListeValidations")
-    On Error GoTo 0
-    
-    If wsReport Is Nothing Then
-        Set wsReport = ThisWorkbook.Sheets.Add
-        wsReport.Name = "DocListeValidations"
-    Else
-        'Efface l'ancien contenu si la feuille existe déjà
-        wsReport.Cells.Clear
-    End If
-    
-    'En-têtes de colonnes
-    wsReport.Cells(1, 1).Value = "Feuille"
-    wsReport.Cells(1, 2).Value = "Cellule"
-    wsReport.Cells(1, 3).Value = "Type de Validation"
-    wsReport.Cells(1, 4).Value = "Formule / Liste"
-    
-    rowIndex = 2
-
-    'Parcourt de toutes les feuilles
-    For Each ws In ThisWorkbook.Sheets
-        On Error Resume Next
-        ws.Unprotect
-        Set rngDV = ws.Cells.SpecialCells(xlCellTypeAllValidation)
-        On Error GoTo 0
-        
-        If Not rngDV Is Nothing Then
-            For Each cell In rngDV
-                With cell.Validation
-                    wsReport.Cells(rowIndex, 1).Value = ws.Name
-                    wsReport.Cells(rowIndex, 2).Value = cell.Address(False, False)
-                    wsReport.Cells(rowIndex, 3).Value = .Type
-                    If .Type = xlValidateList Then
-                        wsReport.Cells(rowIndex, 4).Value = .Formula1 'Affiche la liste ou la formule utilisée
-                    Else
-                        wsReport.Cells(rowIndex, 4).Value = "Autre type"
-                    End If
-                    rowIndex = rowIndex + 1
-                End With
-            Next cell
-        End If
-        
-        Set rngDV = Nothing
-    Next ws
-    
-    MsgBox "Liste des validations générée dans la feuille 'DocListeValidations'.", vbInformation
-    
-End Sub
 
 Sub AppliquerGrille(ws As Worksheet, plages As Variant)
 
@@ -1550,7 +1272,7 @@ Sub zz_ObtenirListeAppelSubsSansCall() '2025-08-05 @ 13:44
                     If InStr(" " & ligne & " ", " " & nomProc & " ") > 0 And _
                         InStr(LCase(ligne), "call " & LCase(nomProc)) = 0 And _
                         InStr(LCase(ligne), "set " & LCase(nomProc)) = 0 Then
-                        Debug.Print Fn_PadDroite(nomModule, 25) & " # " & Format$(i + 1, "###0") & "   " & ligne
+                        Debug.Print Left$(nomModule & Space(25), 25) & " # " & Format$(i + 1, "###0") & "   " & ligne
                         cas = cas + 1
                     End If
                     
@@ -1602,12 +1324,6 @@ NextLigne:
     Next comp
 
     Set Fn_BatirDictionnaireProcedures = dict
-    
-End Function
-
-Function Fn_PadDroite(text As String, longueur As Integer) As String '2025-07-03 @ 17:54
-
-    Fn_PadDroite = Left(text & Space(longueur), longueur)
     
 End Function
 
@@ -1958,46 +1674,6 @@ Sub zz_VerifierCombinaisonClientIDClientNomDansTEC()
     
 End Sub
 
-Sub zz_FixEstFacturable() '2025-07-23 @ 08:26
-
-    Dim cheminFichier As String
-    Dim wb As Workbook
-    Dim ws As Worksheet
-    Dim i As Long
-    Dim valeurActuelle As Variant
-    
-    'Chemin d’accès au classeur cible
-    cheminFichier = wsdADMIN.Range("PATH_DATA_FILES") & Application.PathSeparator & gDATA_PATH & Application.PathSeparator & "GCF_BD_MASTER.xlsx"
-
-    Application.ScreenUpdating = False
-    Application.DisplayAlerts = False
-
-    'Ouvrir le classeur
-    Set wb = Workbooks.Open(fileName:=cheminFichier, ReadOnly:=False)
-    Set ws = wb.Sheets("TEC_Local")
-
-    'Parcourir les lignes
-    For i = 2 To ws.Cells(ws.Rows.count, "A").End(xlUp).Row
-        If Len(Trim(ws.Cells(i, fTECClientID).Value)) < 2 And _
-               ws.Cells(i, fTECEstFacturable).Value = "VRAI" Then
-            valeurActuelle = ws.Cells(i, fTECEstFacturable).Value
-            ws.Cells(i, fTECEstFacturable) = "FAUX"
-        End If
-    Next i
-
-    'Sauvegarder les modifications et fermer le classeur
-    wb.Save
-    wb.Close SaveChanges:=True
-
-    Application.DisplayAlerts = True
-    Application.ScreenUpdating = True
-
-    MsgBox "Le traitement est complété" & vbNewLine & vbNewLine & _
-            "La colonne 'estFacturable' est en ligne avec le client", _
-            vbInformation
-
-End Sub
-
 Public Function ListerPDFs(dossier As String) As Object '2025-07-23 @ 12:40
 
     Dim dictPDFs As Object
@@ -2269,7 +1945,9 @@ Sub zz_DetecterErreurCodeClientInTEC()  '2025-03-11 @ 08:29
     
 End Sub
 
+'Utilitaire pour récupérer les formes de wshFAC_Finale_Intact
 Sub ReplacerFormesDepuisIntact()
+
     Dim wsSource As Worksheet, wsDest As Worksheet
     Dim shpSrc As Shape, shpDest As Shape
     
@@ -2291,12 +1969,6 @@ Sub ReplacerFormesDepuisIntact()
     On Error GoTo 0
     
     MsgBox "Formes replacées selon FAC_Finale_Intact.", vbInformation
-End Sub
-
-Sub AfficherNomImprimanteActive() '2025-10-15 @ 10:04
-
-'    MsgBox Application.ActivePrinter
-    Debug.Print Fn_ObtenirPortFonctionnelAdobePDF
     
 End Sub
 

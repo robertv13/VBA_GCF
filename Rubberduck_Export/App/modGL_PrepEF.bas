@@ -2234,16 +2234,6 @@ Sub ImprimerLigneEF(ws As Worksheet, ByRef currRow As Integer, LigneEF As String
     
 End Sub
 
-Sub AppliquerMiseEnPageEF(ws As Worksheet, taillePolice As Integer) '2025-08-14 @ 09:12
-
-    With ws.Cells
-        .Font.Name = "Verdana"
-        .Font.size = taillePolice
-        .Font.Color = RGB(140, 131, 117)
-    End With
-
-End Sub
-
 Function Fn_TitreSelonNombreDeMois(dateAC As Date) As String '2025-08-14 @ 19:42
 
     Dim dateFinAnneeFinanciere As Date

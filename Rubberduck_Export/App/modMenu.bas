@@ -204,49 +204,6 @@ Sub CacherToutesFeuillesSaufMenu()
     
 End Sub
 
-Sub CacherFormesEnFonctionUtilisateur(ByVal userName As String) '2025-06-06 @ 11:17
-    
-    Dim startTime As Double: startTime = Timer
-    Call modDev_Utils.EnregistrerLogApplication("modMENU:CacherFormesEnFonctionUtilisateur", vbNullString, 0)
-    
-    Dim ws As Worksheet: Set ws = wshMenu
-    Dim devShapes As Variant
-    devShapes = Array( _
-        "shpImporterCorrigerMASTER", _
-        "shpVérificationIntégrité", _
-        "shpTraitementFichiersLog", _
-        "shpSynchronisationDEVversPROD", _
-        "shpAuditVBAProcedures", _
-        "shpCompterLignesCode", _
-        "shpRechercherCode", _
-        "shpCorrigerNomClientTEC", _
-        "shpCorrigerNomClientCAR", _
-        "shpChercherRéférencesCirculaires", _
-        "shpChangerReferenceSystem", _
-        "shpListerModulesEtRoutines", _
-        "shpVérificationMacrosContrôles" _
-    )
-
-    Dim isDevUser As Boolean
-    isDevUser = (userName = "RobertMV" Or userName = "robertmv")
-    Dim visibleState As MsoTriState
-    visibleState = IIf(isDevUser, msoTrue, msoFalse)
-
-    Dim i As Long
-    For i = LBound(devShapes) To UBound(devShapes)
-        On Error Resume Next 'Ignore erreur si Shape absent
-        ws.Shapes(devShapes(i)).Visible = visibleState
-        If Err.Number <> 0 Then
-            Debug.Print "Forme introuvable: " & devShapes(i)
-            Err.Clear
-        End If
-        On Error GoTo 0
-    Next i
-
-    Call modDev_Utils.EnregistrerLogApplication("modMENU:CacherFormesEnFonctionUtilisateur", vbNullString, startTime)
-
-End Sub
-
 Sub EffacerFichierUtilisateurActif(ByVal userName As String)
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU:EffacerFichierUtilisateurActif", vbNullString, 0)
@@ -276,14 +233,14 @@ Sub ViderTableauxStructures() '2025-07-01 @ 10:38
     feuilles = Array("BD_Clients", "BD_Fournisseurs", "CC_Regularisations", "DEB_Recurrent", "DEB_Trans", _
                      "ENC_Details", "ENC_Entete", "FAC_Comptes_Clients", "FAC_Details", "FAC_Entete", _
                      "FAC_Projets_Details", "FAC_Projets_Entete", "FAC_Sommaire_Taux", "GL_Trans", _
-                     "TEC_Local")
+                     "TEC_Local", "TEC_TDB_Data")
     tableaux = Array("l_tbl_BD_Clients", "l_tbl_Fournisseur_FM", "l_tbl_CC_Regularisations", _
                      "l_tbl_DEB_Recurrent", "l_tbl_DEB_Trans", "l_tbl_ENC_Details", "l_tbl_ENC_Entete", _
                      "l_tbl_FAC_Comptes_Clients", "l_tbl_FAC_Details", "l_tbl_FAC_Entete", _
                      "l_tbl_FAC_Projets_Details", "l_tbl_FAC_Projets_Entete", "l_tbl_FAC_Sommaire_Taux", _
-                     "l_tbl_GL_Trans", "l_tbl_TEC_Local")
+                     "l_tbl_GL_Trans", "l_tbl_TEC_Local", "l_tbl_TEC_TDB_Data")
 
-'    On Error Resume Next '2025-11-14 @ 18:29
+    On Error Resume Next '2025-11-14 @ 18:29
 
     Dim i As Long
     For i = LBound(feuilles) To UBound(feuilles)

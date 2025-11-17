@@ -1888,7 +1888,7 @@ Public Sub ReinitialiserFormesFACFinale(wsSource As Worksheet, wsCible As Worksh
         If Not Fn_ExisteForme(wsCible, nom) Then
             doitCopier = True
         Else
-            If FormeEstDifférente(shp, wsCible.Shapes(nom)) Then
+            If VerifierSiFormEstDifferente(shp, wsCible.Shapes(nom)) Then
                 doitCopier = True
                 On Error Resume Next
                 wsCible.Shapes(nom).Delete
@@ -2126,18 +2126,18 @@ Sub PauseActive(seconde As Double)
     
 End Sub
 
-Public Function FormeEstDifférente(shpSource As Shape, shpCible As Shape) As Boolean '2025-11-01 @ 23:14
+Public Function VerifierSiFormEstDifferente(shpSource As Shape, shpCible As Shape) As Boolean '2025-11-01 @ 23:14
 
     If Abs(shpSource.Top - shpCible.Top) > 0.1 _
     Or Abs(shpSource.Left - shpCible.Left) > 0.1 _
     Or Abs(shpSource.Width - shpCible.Width) > 0.1 _
     Or Abs(shpSource.Height - shpCible.Height) > 0.1 _
     Or shpSource.OnAction <> shpCible.OnAction Then
-        FormeEstDifférente = True
+        VerifierSiFormEstDifferente = True
     ElseIf shpSource.Type = msoTextBox And shpCible.Type = msoTextBox Then
-        FormeEstDifférente = (shpSource.TextFrame.Characters.text <> shpCible.TextFrame.Characters.text)
+        VerifierSiFormEstDifferente = (shpSource.TextFrame.Characters.text <> shpCible.TextFrame.Characters.text)
     Else
-        FormeEstDifférente = False
+        VerifierSiFormEstDifferente = False
     End If
     
 End Function
@@ -2174,31 +2174,5 @@ Public Sub ReinitialiserFormesManuellement() '2025-11-02 @ 09:26
     Application.ScreenUpdating = True
 
     MsgBox "Les formes ont été restaurées avec succès.", vbInformation, "Réinitialisation terminée"
-
-End Sub
-
-Sub testErreurLog()
-
-    On Error Resume Next
-    Dim a As Long
-    a = "a"
-    Call EnregistrerErreurs("modFAC_Finale", "testErreurLog", "2189", Err.Number)
-    On Error GoTo 0
-    
-    On Error Resume Next
-    Debug.Print 1 / 0
-    Call EnregistrerErreurs("modFAC_Finale", "testErreurLog", "2194", Err.Number)
-    On Error GoTo 0
-    
-    On Error Resume Next
-    Dim s As String
-    s = CDate(s)
-    Call EnregistrerErreurs("modFAC_Finale", "testErreurLog", "2200", Err.Number)
-    On Error GoTo 0
-    
-    Call EnregistrerErreurs("modFAC_Finale", "testErreurLog", "Test de la routine", 0, "CRITICAL")
-    
-    Call modAppli.AfficherErreurCritique("modFAC_Finale", "testErreurLog", _
-                "Il y a eu quelques erreurs dans la procédure")
 
 End Sub

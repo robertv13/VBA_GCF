@@ -1,7 +1,7 @@
 Attribute VB_Name = "modAuditVBA"
 Option Explicit
 
-Sub shpAuditVBAProcedures()
+Sub shpAuditVBAProcedures_Click()
 
     Call AnalyserTousLesNomsDeProcedures
 
@@ -9,7 +9,7 @@ End Sub
 
 Sub AnalyserTousLesNomsDeProcedures() '2025-08-05 @ 13:52
 
-    Dim tableProc(1 To 750, 1 To 9) As Variant '[Nom, TypeProc, Module, TypeMod, Direct, Préfixé, Indirect, Object, NonConformite]
+    Dim tableProc(1 To 1000, 1 To 9) As Variant '[Nom, TypeProc, Module, TypeMod, Direct, Préfixé, Indirect, Object, NonConformite]
     Dim indexMax As Long
     Dim dictIndex As Object
 
@@ -60,9 +60,12 @@ Sub BatirTableProceduresEtFonctions(ByRef dictIndex As Object, ByRef tableProc()
             Case Else: typeModule = "z_Autre"
         End Select
 
+        Dim nbLigne As Long
         For i = 1 To codeMod.CountOfLines
             ligne = Trim(codeMod.Lines(i, 1))
-            If Not ligne Like "Sub *" And Not ligne Like "Function *" Then GoTo NextLigne
+            nbLigne = nbLigne + 1
+            
+            If Not ligne Like "*Sub *" And Not ligne Like "*Function *" Then GoTo NextLigne
 
             nomSub = codeMod.ProcOfLine(i, vbext_pk_Proc)
 
@@ -76,14 +79,14 @@ Sub BatirTableProceduresEtFonctions(ByRef dictIndex As Object, ByRef tableProc()
                 tableProc(index, 6) = 0
                 tableProc(index, 7) = 0
                 dictIndex.Add nomSub, index
-                If nomSub = "Fn_AccesServeur" Then
-                    Debug.Print nomSub, index
-                End If
             End If
 
 NextLigne:
         Next i
     Next comp
+    
+    Debug.Print Space(10) & "J'ai trouvé " & index & " procédures / fonctions pour un total de " & _
+                                Format$(nbLigne, "# ##0") & " lignes de code"
     
 End Sub
 
@@ -490,8 +493,8 @@ Sub DiagnostiquerConformite(ws As Worksheet, tableProc() As Variant) '2025-07-07
     Dim totalAppels As Long
     Dim suffixesEvenements As Variant
     suffixesEvenements = Array("_Activate", "_AfterUpdate", "_BeforeClose", "_BeforeDoubleClick", _
-        "_BeforeRightClick", "_BeforeUpdate", "_Change", "_Click", "_DblClick", "_Enter", "_Exit", _
-        "_GotFocus", "_Initialize", "_ItemCheck", "_ItemClick", "_KeyDown", "_KeyUp", "_MouseDown", _
+        "_BeforeRightClick", "_BeforeUpdate", "_Change", "_Click", "_Deactivate", "_DblClick", "_Enter", "_Exit", _
+        "_GotFocus", "_Initialize", "_ItemCheck", "_ItemClick", "_KeyDown", "_KeyUp", "_MouseDown", "MoveDown", _
         "_Open", "_QueryClose", "_SelectionChange", "_SheetActivate", "_SheetDeactivate", "_Terminate")
     Dim suffixe As Variant
     Dim estEvenement As Boolean
@@ -582,8 +585,9 @@ Function Fn_EstSuffixeEvenement(nom As String) As Boolean '2025-07-07 @ 09:27
 
     Dim suffixes As Variant
     suffixes = Array("_Activate", "_AfterUpdate", "_BeforeClose", "_BeforeDoubleClick", _
-                     "_BeforeRightClick", "_BeforeUpdate", "_Change", "_Click", "_DblClick", _
-                     "_Enter", "_Exit", "_Initialize", "_KeyDown", "_KeyUp", "_QueryClose", "_SelectionChange", _
+                     "_BeforeRightClick", "_BeforeUpdate", "_Change", "_Click", "_Deactivate", _
+                     "_DblClick", "_Enter", "_Exit", "_Initialize", "_ItemCheck", "_ItemClick", _
+                     "_KeyDown", "_KeyUp", "_MoveDown", "_Open", "_QueryClose", "_SelectionChange", _
                      "_SheetActivate", "_SheetChange", "_SheetDeactivate", "_SheetFollowHyperlink", _
                      "_SheetSelectionChange", "_Terminate")
                      
@@ -1305,7 +1309,8 @@ Private Sub TriRapide(arr() As String, ByVal bas As Long, ByVal haut As Long)
     If i < haut Then Call TriRapide(arr, i, haut)
 End Sub
 
-Sub ListerNomsExternes() '2025-11-12 @ 09:35
+'Utilitaire pour identifier les appels à des nom externes (hors classeur)
+Sub ListerNomsExternes() '2025-11-17 @ 15:23
 
     Dim nm As Name
     Dim formule As String

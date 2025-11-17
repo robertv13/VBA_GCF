@@ -609,6 +609,8 @@ Sub ImporterTEC()
 
     Call ImporterMASTERGenerique(sourceWb, ws, onglet, table)
     
+    Call modTEC_TDB.ActualiserTECTableauDeBord
+    
     Application.Calculation = xlCalculationAutomatic
     Application.ScreenUpdating = True
     Application.StatusBar = False

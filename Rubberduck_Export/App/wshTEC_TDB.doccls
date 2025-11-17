@@ -6,6 +6,8 @@ Private Sub Worksheet_Activate()
    
     Application.ScreenUpdating = False
     
+    Call modImport.ImporterTEC
+    
     Call modTEC_TDB.ActualiserTECTableauDeBord
     
     Call AjusterBordurePivotTable

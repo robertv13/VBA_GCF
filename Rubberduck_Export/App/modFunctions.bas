@@ -1569,15 +1569,6 @@ Function Fn_AppMsgBox(message As String _
                  
 End Function
 
-Sub zz_TesterAppMsgBox() '@TODO
-
-    Dim r As VbMsgBoxResult
-    r = Fn_AppMsgBox("Voulez-vous continuer ?", vbYesNo + vbQuestion + vbDefaultButton1, "Confirmation avant de continuer")
-
-    Debug.Print "#090 - " & r
-    
-End Sub
-
 Function Fn_ExtraireNomFichier(path As String) As String
 
     Dim parts() As String
