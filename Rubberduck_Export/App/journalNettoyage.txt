@@ -1,4 +1,4 @@
-﻿📘 Journal typographique — 11/16/2025 18:50:34
+﻿📘 Journal typographique — 11/17/2025 07:40:44
 
 🔧 Fichier : clsControlWrapper.cls
 
@@ -26,6 +26,8 @@
 
 🔧 Fichier : clsWrapperTextBox.cls
 
+🔧 Fichier : Feuil13.doccls
+
 🔧 Fichier : Feuil2.doccls
 
 🔧 Fichier : Feuil3.doccls
@@ -44,7 +46,6 @@
 🔧 Fichier : modAppli_Utils.bas
    ✅ Remplacé : .column ➜ .Column
    ✅ Remplacé : .interior ➜ .Interior
-   ✅ Remplacé : .cells ➜ .Cells
    ✅ Remplacé : .offset ➜ .Offset
    ✅ Remplacé : .row ➜ .Row
    ✅ Remplacé : .value ➜ .Value
@@ -306,6 +307,13 @@
 🔧 Fichier : modTraceSession.bas
 
 🔧 Fichier : Module1.bas
+
+🔧 Fichier : modVerifications.bas
+   ✅ Remplacé : .cells ➜ .Cells
+   ✅ Remplacé : .row ➜ .Row
+   ✅ Remplacé : .value ➜ .Value
+   ✅ Remplacé : .range ➜ .Range
+   ✅ Remplacé : .font ➜ .Font
 
 🔧 Fichier : modzDataConversion.bas
    ✅ Remplacé : .column ➜ .Column

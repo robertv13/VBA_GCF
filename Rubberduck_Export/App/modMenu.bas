@@ -356,7 +356,7 @@ End Sub
 
 Sub shpVerificationIntegrite_Click()
 
-    Call modAppli_Utils.VerifierIntegriteTablesLocales
+    Call modVerifications.VerifierIntegriteTablesLocales
 
 End Sub
 
