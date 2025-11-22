@@ -1255,28 +1255,28 @@ Function Fn_PlanComptableTableau2D(nbCol As Long) As Variant
     
 End Function
 
-Function Fn_NomClientFeuilleBDCients(cc As String) As String
-
-    Dim ws As Worksheet
-    Dim foundCell As Range
-    
-    Set ws = wsdBD_Clients
-    
-    'Recherche le code de client dans la colonne B
-    Set foundCell = ws.Columns("B").Find(What:=cc, LookIn:=xlValues, LookAt:=xlWhole)
-    If Not foundCell Is Nothing Then
-        'Si trouvé, retourner le nom du client correspondant, 1 colonne à gauche
-        Fn_NomClientFeuilleBDCients = foundCell.offset(0, -1).Value
-    Else
-        Fn_NomClientFeuilleBDCients = "Client non trouvé (invalide)"
-    End If
-    
-    'Libérer la mémoire
-    Set foundCell = Nothing
-    Set ws = Nothing
-    
-End Function
-
+'Function Fn_NomClientFeuilleBDCients(cc As String) As String
+'
+'    Dim ws As Worksheet
+'    Dim foundCell As Range
+'
+'    Set ws = wsdBD_Clients
+'
+'    'Recherche le code de client dans la colonne B
+'    Set foundCell = ws.Columns("B").Find(What:=cc, LookIn:=xlValues, LookAt:=xlWhole)
+'    If Not foundCell Is Nothing Then
+'        'Si trouvé, retourner le nom du client correspondant, 1 colonne à gauche
+'        Fn_NomClientFeuilleBDCients = foundCell.offset(0, -1).Value
+'    Else
+'        Fn_NomClientFeuilleBDCients = "Client non trouvé (invalide)"
+'    End If
+'
+'    'Libérer la mémoire
+'    Set foundCell = Nothing
+'    Set ws = Nothing
+'
+'End Function
+'
 Function Fn_LigneClientAPartirDuClientID(codeClient As String, ws As Worksheet) As Variant
 
     'Recherche de l'ID du client dans la colonne B
@@ -1328,22 +1328,22 @@ Function Fn_ChaineSansAccents(ByVal text As String) As String
     
 End Function
 
-Public Function Fn_Get_Current_Region(ByVal dataRange As Range, Optional HeaderSize As Long = 1) As Range
-
-    Set Fn_Get_Current_Region = dataRange.CurrentRegion
-    If HeaderSize > 0 Then
-        With Fn_Get_Current_Region
-            'Remove the header
-            Set Fn_Get_Current_Region = .Offset(HeaderSize).Resize(.Rows.count - HeaderSize)
-            Debug.Print "#060 - " & Fn_Get_Current_Region.Address
-        End With
-    End If
-    
-    'Libérer la mémoire
-    Set Fn_Get_Current_Region = Nothing
-    
-End Function
-
+'Public Function Fn_Get_Current_Region(ByVal dataRange As Range, Optional HeaderSize As Long = 1) As Range
+'
+'    Set Fn_Get_Current_Region = dataRange.CurrentRegion
+'    If HeaderSize > 0 Then
+'        With Fn_Get_Current_Region
+'            'Remove the header
+'            Set Fn_Get_Current_Region = .Offset(HeaderSize).Resize(.Rows.count - HeaderSize)
+'            Debug.Print "#060 - " & Fn_Get_Current_Region.Address
+'        End With
+'    End If
+'
+'    'Libérer la mémoire
+'    Set Fn_Get_Current_Region = Nothing
+'
+'End Function
+'
 Public Function Fn_Convert_Value_Boolean_To_Text(val As Boolean) As String
 
     Select Case val
@@ -1442,15 +1442,15 @@ Function Fn_ChaineNettoyeeCaracteresSpeciaux(s As String)
 
 End Function
 
-'Fonction pour vérifier si un fichier ou un dossier existe
-Private Function Fn_Chemin_Existe(ByVal chemin As String) As Boolean
-
-    On Error Resume Next
-    Fn_Chemin_Existe = (Dir(chemin) <> vbNullString)
-    On Error GoTo 0
-    
-End Function
-
+''Fonction pour vérifier si un fichier ou un dossier existe
+'Private Function Fn_Chemin_Existe(ByVal chemin As String) As Boolean
+'
+'    On Error Resume Next
+'    Fn_Chemin_Existe = (Dir(chemin) <> vbNullString)
+'    On Error GoTo 0
+'
+'End Function
+'
 Function Fn_NoCompteAPartirIndicateurCompte(ByVal indic As Variant) As String
 
     'Plage où sont situés les liens (indicateur/no de GL)
@@ -1560,15 +1560,15 @@ Function Fn_ExtraireSecondesChaineLog(chaine As String) As Double
     
 End Function
 
-'Fonction pour centraliser tous les messages de l'application - 2024-12-29 @ 07:37
-Function Fn_AppMsgBox(message As String _
-                 , Optional boutons As VbMsgBoxStyle = vbOKOnly _
-                 , Optional titre As String = vbNullString) As VbMsgBoxResult
-                 
-    Fn_AppMsgBox = MsgBox(message, boutons, titre)
-                 
-End Function
-
+''Fonction pour centraliser tous les messages de l'application - 2024-12-29 @ 07:37
+'Function Fn_AppMsgBox(message As String _
+'                 , Optional boutons As VbMsgBoxStyle = vbOKOnly _
+'                 , Optional titre As String = vbNullString) As VbMsgBoxResult
+'
+'    Fn_AppMsgBox = MsgBox(message, boutons, titre)
+'
+'End Function
+'
 Function Fn_ExtraireNomFichier(path As String) As String
 
     Dim parts() As String
@@ -1918,9 +1918,9 @@ erreur:
     
 End Function
 
-Public Function EstChampModifie(champ As String, valeurOrigine As String) As Boolean '2025-07-03 @ 07:15
+Public Function Fn_EstChampModifie(champ As String, valeurOrigine As String) As Boolean '2025-07-03 @ 07:15
 
-    EstChampModifie = (Trim(champ & vbNullString) <> Trim(valeurOrigine & vbNullString))
+    Fn_EstChampModifie = (Trim(champ & vbNullString) <> Trim(valeurOrigine & vbNullString))
     
 End Function
 
@@ -2032,12 +2032,7 @@ Function Fn_ObtenirOuCreerFeuille(ByVal nomFeuille As String) As Worksheet '2025
     'Si elle n'existe pas, on la crée
     If Not FeuilleExiste Then
         Set ws = ThisWorkbook.Worksheets.Add(After:=ThisWorkbook.Worksheets(ThisWorkbook.Worksheets.count))
-        On Error Resume Next
         ws.Name = nomFeuille
-        If Err.Number <> 0 Then
-            MsgBox "Impossible de nommer la feuille '" & nomFeuille & "'.", vbExclamation
-            Err.Clear
-        End If
         On Error GoTo 0
     End If
 
@@ -2046,59 +2041,59 @@ Function Fn_ObtenirOuCreerFeuille(ByVal nomFeuille As String) As Worksheet '2025
     
 End Function
 
-Function Fn_ContexteActifComplet() As String '2025-10-30 @ 06:20
-
-    Dim nomFeuille As String: nomFeuille = ""
-    Dim nomFormulaire As String: nomFormulaire = ""
-    Dim nomControle As String: nomControle = ""
-
-    'Feuille active (sécurisée)
-    On Error Resume Next
-    If Not Application.ActiveSheet Is Nothing Then
-        nomFeuille = Application.ActiveSheet.Name
-    End If
-    On Error GoTo 0
-
-    'Formulaire actif + contrôle actif
-    Dim uf As Object
-    For Each uf In VBA.UserForms
-        If uf.Visible Then
-            nomFormulaire = uf.Name
-            On Error Resume Next
-            If Not uf.ActiveControl Is Nothing Then
-                nomControle = uf.ActiveControl.Name
-            End If
-            On Error GoTo 0
-            Exit For
-        End If
-    Next uf
-
-    'Construction du message
-    Dim message As String
-    If nomFeuille <> vbNullString Then
-        message = message & "Feuille: " & nomFeuille & " / "
-    End If
-    If nomFormulaire <> vbNullString Then
-        message = message & "Formulaire: " & nomFormulaire & " / "
-    End If
-    If nomControle <> vbNullString Then
-        message = message & "Contrôle: " & nomControle
-    End If
-    If Right(message, 3) = " / " Then
-        message = Left(message, Len(message) - 3)
-    End If
-    Fn_ContexteActifComplet = message
-    
-End Function
-
-Function AdressePlageNommee(nom As String) As String
-
-    On Error Resume Next
-    AdressePlageNommee = Evaluate(nom).Address
-    On Error GoTo 0
-    
-End Function
-
+'Function Fn_ContexteActifComplet() As String '2025-10-30 @ 06:20
+'
+'    Dim nomFeuille As String: nomFeuille = ""
+'    Dim nomFormulaire As String: nomFormulaire = ""
+'    Dim nomControle As String: nomControle = ""
+'
+'    'Feuille active (sécurisée)
+'    On Error Resume Next
+'    If Not Application.ActiveSheet Is Nothing Then
+'        nomFeuille = Application.ActiveSheet.Name
+'    End If
+'    On Error GoTo 0
+'
+'    'Formulaire actif + contrôle actif
+'    Dim uf As Object
+'    For Each uf In VBA.UserForms
+'        If uf.Visible Then
+'            nomFormulaire = uf.Name
+'            On Error Resume Next
+'            If Not uf.ActiveControl Is Nothing Then
+'                nomControle = uf.ActiveControl.Name
+'            End If
+'            On Error GoTo 0
+'            Exit For
+'        End If
+'    Next uf
+'
+'    'Construction du message
+'    Dim message As String
+'    If nomFeuille <> vbNullString Then
+'        message = message & "Feuille: " & nomFeuille & " / "
+'    End If
+'    If nomFormulaire <> vbNullString Then
+'        message = message & "Formulaire: " & nomFormulaire & " / "
+'    End If
+'    If nomControle <> vbNullString Then
+'        message = message & "Contrôle: " & nomControle
+'    End If
+'    If Right(message, 3) = " / " Then
+'        message = Left(message, Len(message) - 3)
+'    End If
+'    Fn_ContexteActifComplet = message
+'
+'End Function
+'
+'Function AdressePlageNommee(nom As String) As String
+'
+'    On Error Resume Next
+'    AdressePlageNommee = Evaluate(nom).Address
+'    On Error GoTo 0
+'
+'End Function
+'
 Function Fn_PlageNommeeEstVide(nomPlage As String) As Boolean
 
     On Error Resume Next
@@ -2115,12 +2110,12 @@ Function Fn_NomFichierControleSession(baseNom As String) As String
     
 End Function
 
-Public Function fn_GetRowFromValue(ws As Worksheet, _
+Public Function Fn_GetRowFromValue(ws As Worksheet, _
                                    colIndex As Long, _
                                    searchValue As Variant) As Range
                                    
     Dim startTime As Double: startTime = Timer
-    Call modDev_Utils.EnregistrerLogApplication("modFunctions:fn_GetRowFromValue", vbNullString, 0)
+    Call modDev_Utils.EnregistrerLogApplication("modFunctions:Fn_GetRowFromValue", vbNullString, 0)
     
     Dim lo As ListObject
     
@@ -2130,7 +2125,7 @@ Public Function fn_GetRowFromValue(ws As Worksheet, _
     If ws.ListObjects.count = 0 Then
         MsgBox "Erreur - Aucun tableau structuré sur la feuille" & vbCrLf & vbCrLf & _
                     "'" & ws.CodeName & "'", vbExclamation, _
-                    "fn_GetRowFromValue - Contactez le développeur"
+                    "Fn_GetRowFromValue - Contactez le développeur"
         GoTo EXIT_FUNCTION
     End If
     
@@ -2140,7 +2135,7 @@ Public Function fn_GetRowFromValue(ws As Worksheet, _
     If colIndex < 1 Or colIndex > lo.ListColumns.count Then
         MsgBox "Erreur - La colonne '" & colIndex & "' est invalide pour le " & vbCrLf & vbCrLf & _
                                         "tableau structuré '" & lo.Name & "'", vbExclamation, _
-                                        "fn_GetRowFromValue - Contactez le développeur"
+                                        "Fn_GetRowFromValue - Contactez le développeur"
         GoTo EXIT_FUNCTION
     End If
     
@@ -2148,8 +2143,8 @@ Public Function fn_GetRowFromValue(ws As Worksheet, _
     If lo.DataBodyRange Is Nothing Then
         MsgBox "Erreur - Le tableau structuré '" & lo.Name & "' est VIDE", _
                                         vbExclamation, _
-                                        "fn_GetRowFromValue - Contactez le développeur"
-        Set fn_GetRowFromValue = Nothing
+                                        "Fn_GetRowFromValue - Contactez le développeur"
+        Set Fn_GetRowFromValue = Nothing
         GoTo EXIT_FUNCTION
     End If
     
@@ -2158,28 +2153,42 @@ Public Function fn_GetRowFromValue(ws As Worksheet, _
     pos = Application.Match(searchValue, lo.ListColumns(colIndex).DataBodyRange, 0)
     
     If Not IsError(pos) Then
-        Set fn_GetRowFromValue = lo.ListRows(pos).Range
+        Set Fn_GetRowFromValue = lo.ListRows(pos).Range
     Else
         MsgBox "La valeur '" & searchValue & "' n'existe pas dans la colonne " & colIndex & _
                 vbCrLf & vbCrLf & "du tableau '" & lo.Name & "'", vbInformation, _
                 "Veuillez réessayer la saisie"
-        Set fn_GetRowFromValue = Nothing
+        Set Fn_GetRowFromValue = Nothing
     End If
     
     GoTo EXIT_FUNCTION
     
 ErrHandler:
-    MsgBox "Erreur inattendue dans fn_GetRowFromValue" & vbCrLf & vbCrLf & _
+    MsgBox "Erreur inattendue dans Fn_GetRowFromValue" & vbCrLf & vbCrLf & _
                 Err.description, vbCritical, "Veuillez contacter le développeur"
-    Set fn_GetRowFromValue = Nothing
+    Set Fn_GetRowFromValue = Nothing
     
 EXIT_FUNCTION:
 
     'Libérer la mémoire
     Set lo = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modFunctions:fn_GetRowFromValue", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modFunctions:Fn_GetRowFromValue", vbNullString, startTime)
 
 End Function
+
+Sub TU_FnCompleteLaDate()
+
+    Debug.Print Space(3) & Format$(Now(), "hh:nn:ss") & " - Tests unitaires 'Fn_CompleteLaDate'"
+    
+    Debug.Assert Fn_CompleteLaDate("1", 31, 0) = "01/11/2025"
+    Debug.Assert Fn_CompleteLaDate("12", 30, 0) = "12/11/2025"
+    Debug.Assert Fn_CompleteLaDate("1/1", 365, 0) = "01/01/2025"
+    Debug.Assert Fn_CompleteLaDate("1/10", 60, 60) = "01/10/2025"
+    Debug.Assert Fn_CompleteLaDate("1/10", 0, 0) = "Invalid Date"
+   
+    Debug.Print Space(3) & Format$(Now(), "hh:nn:ss") & " - Tous les tests unitaires 'Fn_CompleteLaDate' passés."
+    
+End Sub
 
 

@@ -1,6 +1,4 @@
-﻿📘 Journal typographique — 11/17/2025 15:29:34
-
-🔧 Fichier : clsControlWrapper.cls
+﻿📘 Journal typographique — 11/22/2025 10:58:01
 
 🔧 Fichier : clsFermetureAuto.cls
 
@@ -10,35 +8,15 @@
 
 🔧 Fichier : clsSearchableDropdown.cls
 
-🔧 Fichier : clsSurveillanceActivite.cls
-
 🔧 Fichier : clsWrapperCheckBox.cls
 
 🔧 Fichier : clsWrapperComboBox.cls
 
 🔧 Fichier : clsWrapperCommandButton.cls
 
-🔧 Fichier : clsWrapperControl.cls
-
-🔧 Fichier : clsWrapperListBox.cls
-
 🔧 Fichier : clsWrapperOptionButton.cls
 
 🔧 Fichier : clsWrapperTextBox.cls
-
-🔧 Fichier : Feuil1.doccls
-
-🔧 Fichier : Feuil13.doccls
-
-🔧 Fichier : Feuil2.doccls
-
-🔧 Fichier : Feuil3.doccls
-
-🔧 Fichier : Feuil5.doccls
-
-🔧 Fichier : Feuil8.doccls
-
-🔧 Fichier : modADO.bas
 
 🔧 Fichier : modAPIWindows.bas
 
@@ -264,8 +242,6 @@
 
 🔧 Fichier : modSurveillance.bas
 
-🔧 Fichier : modTBD.bas
-
 🔧 Fichier : modTEC_Analyse.bas
    ✅ Remplacé : .borders ➜ .Borders
    ✅ Remplacé : .count ➜ .Count
@@ -308,9 +284,9 @@
 
 🔧 Fichier : modTemp.bas
 
-🔧 Fichier : modTraceSession.bas
+🔧 Fichier : modTests.bas
 
-🔧 Fichier : Module1.bas
+🔧 Fichier : modTraceSession.bas
 
 🔧 Fichier : modVerifications.bas
    ✅ Remplacé : .cells ➜ .Cells
@@ -318,11 +294,6 @@
    ✅ Remplacé : .value ➜ .Value
    ✅ Remplacé : .range ➜ .Range
    ✅ Remplacé : .font ➜ .Font
-
-🔧 Fichier : modzDataConversion.bas
-   ✅ Remplacé : .column ➜ .Column
-   ✅ Remplacé : .row ➜ .Row
-   ✅ Remplacé : .value ➜ .Value
 
 🔧 Fichier : ThisWorkbook.doccls
 

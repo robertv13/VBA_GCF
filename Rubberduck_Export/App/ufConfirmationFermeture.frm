@@ -37,7 +37,7 @@ Private Sub btnFermerMaintenant_Click() '2025-11-08 @ 06:11
 
     Debug.Print Now() & " [btnFermerMaintenant_Click] Utilisateur a cliqué sur 'Fermer maintenant' à : " & Format$(Now, "hh:nn:ss")
     
-    fermetureAuto.Annuler
+    Call fermetureAuto.Annuler
     
     Unload Me
     Call modMenu.FermerApplication("Application inactive - Fermeture confirmée par utilisateur", False)
@@ -50,33 +50,13 @@ Private Sub btnGarderOuverte_Click() '2025-11-08 @ 06:16
     
     Debug.Print Now() & " [btnGarderOuverte_Click] Utilisateur a cliqué sur 'Garder l'application ouverte' à : " & Format$(Now, "hh:nn:ss")
     
-    fermetureAuto.Annuler
+    Call fermetureAuto.Annuler
     
     Unload Me
     Call modSurveillance.LancerSurveillance
     gTimerFermetureActif = False
     Application.StatusBar = False
     
-End Sub
-
-Public Sub AfficherMessageFermetureAPP(Optional minutesInactives As Double = 0) '2025-11-08 @ 05:58
-
-    Dim msg As String
-    msg = "Aucune activité de détectée depuis " & Format$(minutesInactives, "0") & " minutes..." & vbCrLf & vbCrLf
-    msg = msg & "Souhaitez-vous garder l’application ouverte quand même ?"
-
-    lblMessage.Caption = msg
-    
-    gHeurePrevueFermetureAutomatique = Now + TimeSerial(0, 0, gDELAI_GRACE_SECONDES)
-    lblTimer.Caption = vbNullString
-    
-    Call ufConfirmationFermeture.RafraichirTimer
-
-    Me.StartUpPosition = 1
-    Me.show vbModeless
-
-    Call DemarrerTimerVisuel
-
 End Sub
 
 Public Sub RafraichirTimer() '2025-07-02 @ 06:56
@@ -87,12 +67,12 @@ Public Sub RafraichirTimer() '2025-07-02 @ 06:56
     secondesRestantes = DateDiff("s", Now, gHeurePrevueFermetureAutomatique)
 
     If secondesRestantes <= 0 Then
-        lblTimer.Caption = "Fermeture imminente..."
+        lblTimer.caption = "Fermeture imminente..."
         gTimerFermetureActif = False
         Unload Me
         Call modMenu.FermerApplication("Fermeture forcée après TimeOut", False)
     Else
-        lblTimer.Caption = "Fermeture dans " & Format$(secondesRestantes \ 60, "00") & ":" & _
+        lblTimer.caption = "Fermeture dans " & Format$(secondesRestantes \ 60, "00") & ":" & _
                                                     Format$(secondesRestantes Mod 60, "00") & "..."
         gProchainRafraichir = Now + TimeSerial(0, 0, 1)
         Application.OnTime gProchainRafraichir, "ufConfirmationFermeture.RafraichirTimer"
@@ -100,16 +80,16 @@ Public Sub RafraichirTimer() '2025-07-02 @ 06:56
     
 End Sub
 
-Public Function ProchainTick() As Date '2025-07-02 @ 08:19
-
-    ProchainTick = gProchainTick
-    
-End Function
-
-Public Sub DemarrerTimerVisuel() '2025-11-08 @ 06:26
-
-    gTimerFermetureActif = True
-    Call RafraichirTimer
-    
-End Sub
-
+'Public Function ProchainTick() As Date '2025-07-02 @ 08:19
+'
+'    ProchainTick = gProchainTick
+'
+'End Function
+'
+'Public Sub DemarrerTimerVisuel() '2025-11-08 @ 06:26
+'
+'    gTimerFermetureActif = True
+'    Call RafraichirTimer
+'
+'End Sub
+'

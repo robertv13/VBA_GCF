@@ -11,7 +11,7 @@ Sub shpMettreAJourFAC_Click() '2025-06-21 @ 08:20
 
     Call SauvegarderFacture
     
-    Call PreparerFAC_Brouillon '2025-10-15 @ 23:03
+    Call PreparerFACBrouillon '2025-10-15 @ 23:03
 
 End Sub
 
@@ -76,8 +76,8 @@ Sub SauvegarderFacture()
     End If
         
     'Rétablir FAC_Finale à partir de FAC_Finale_Intact et vérifier - 2025-10-23 @ 12:19
-    Call ReinitialiserFAC_Finale
-    Call VerifierIntegriteFAC_Finale
+    Call ReinitialiserFACFinale
+    Call VerifierIntegriteFACFinale
         
     'Save Invoice total amount
     Dim invoice_Total As Currency
@@ -96,7 +96,7 @@ Fast_Exit_Sub:
     
 End Sub
 
-Sub PreparerFAC_Brouillon() '2025-10-15 @ 23:01
+Sub PreparerFACBrouillon() '2025-10-15 @ 23:01
 
     wshFAC_Brouillon.Range("FactureStatut").Value = "" '2025-07-19 @ 19:02
     
@@ -1378,10 +1378,10 @@ Sub CopierFormeEnteteEnTouteSecurite(wsSource As Worksheet, wsCible As Worksheet
         
         forme.Copy
         DoEvents
-        Call PauseActive(1)
+        Call Dormir(1)
         
         'Coller en tant qu'image (Enhanced Metafile pour plus de compatibilité)
-        Call CollerFormeInvisibleEtRedimensionner(wsCible, topPos, leftPos, heightVal, widthVal)
+        Call AjusterFormeInvisibleEtRedimensionner(wsCible, topPos, leftPos, heightVal, widthVal)
         Application.CutCopyMode = False
     Else
         Debug.Print Now() & " [CopierFormeEnteteEnTouteSecurite] : Forme 'shpGCFLogo' introuvable sur la feuille source."
@@ -1391,7 +1391,7 @@ Sub CopierFormeEnteteEnTouteSecurite(wsSource As Worksheet, wsCible As Worksheet
     
 End Sub
 
-Public Sub CollerFormeInvisibleEtRedimensionner(wsCible As Worksheet, _
+Public Sub AjusterFormeInvisibleEtRedimensionner(wsCible As Worksheet, _
                                                 topPos As Double, leftPos As Double, _
                                                 heightVal As Double, widthVal As Double)
 
@@ -1688,7 +1688,7 @@ Sub CacherBoutonSauvegarder()
     
 End Sub
 
-Sub VerifierIntegriteFAC_Finale(Optional ws As Worksheet)
+Sub VerifierIntegriteFACFinale(Optional ws As Worksheet)
 
     'Si aucun paramètre, on prend FAC_Finale
     If ws Is Nothing Then
@@ -1696,14 +1696,14 @@ Sub VerifierIntegriteFAC_Finale(Optional ws As Worksheet)
         Set ws = ThisWorkbook.Worksheets("FAC_Finale")
         On Error GoTo 0
         If ws Is Nothing Then
-            Debug.Print Now() & " [VerifierIntegriteFAC_Finale] : Feuille FAC_Finale introuvable."
-            Call EnregistrerErreurs("modFAC_Finale", "VerifierIntegriteFAC_Finale", _
+            Debug.Print Now() & " [VerifierIntegriteFACFinale] : Feuille FAC_Finale introuvable."
+            Call EnregistrerErreurs("modFAC_Finale", "VerifierIntegriteFACFinale", _
                                         "Feuille FAC_Finale introuvable", 0, "CRITICAL")
             Exit Sub
         End If
     End If
 
-    Debug.Print Now() & " [VerifierIntegriteFAC_Finale] : Vérification de FAC_Finale"
+    Debug.Print Now() & " [VerifierIntegriteFACFinale] : Vérification de FAC_Finale"
 
     'Vérifier quelques formes clés
     Dim forme As Shape
@@ -1720,24 +1720,24 @@ Sub VerifierIntegriteFAC_Finale(Optional ws As Worksheet)
         On Error Resume Next
         Set forme = ws.Shapes(nom)
         If forme Is Nothing Then
-            Debug.Print Now() & " [VerifierIntegriteFAC_Finale] : Forme manquante '" & nom & "'"
-            Call EnregistrerErreurs("ModFAC_Finale", "VerifierIntegriteFAC_Finale", _
+            Debug.Print Now() & " [VerifierIntegriteFACFinale] : Forme manquante '" & nom & "'"
+            Call EnregistrerErreurs("ModFAC_Finale", "VerifierIntegriteFACFinale", _
                                                     "Forme manquante : " & nom, 0, "CRITICAL")
         Else
             formeOK = formeOK + 1
         End If
         On Error GoTo 0
     Next nom
-    Debug.Print Now() & " [VerifierIntegriteFAC_Finale] : " & formeOK & " de " & nbForme & " formes sont présentes dans FAC_Finale"
+    Debug.Print Now() & " [VerifierIntegriteFACFinale] : " & formeOK & " de " & nbForme & " formes sont présentes dans FAC_Finale"
 
     'Vérifier la présence du code Worksheet_Activate
     Dim codeModule As String
     On Error Resume Next
     codeModule = ws.CodeName
     If Err.Number <> 0 Then
-        Debug.Print Now() & " [VerifierIntegriteFAC_Finale] : Code événementiel inaccessible."
+        Debug.Print Now() & " [VerifierIntegriteFACFinale] : Code événementiel inaccessible."
     Else
-        Debug.Print Now() & " [VerifierIntegriteFAC_Finale] : Le code est accessible"
+        Debug.Print Now() & " [VerifierIntegriteFACFinale] : Le code est accessible"
     End If
     On Error GoTo 0
 
@@ -1753,17 +1753,17 @@ Sub VerifierIntegriteFAC_Finale(Optional ws As Worksheet)
             End If
         Next nomPlage
         If nomTrouve Then
-            Debug.Print Now() & " [VerifierIntegriteFAC_Finale] : Plage nommée locale '" & nom & "'"
+            Debug.Print Now() & " [VerifierIntegriteFACFinale] : Plage nommée locale '" & nom & "'"
         Else
-            Debug.Print Now() & " [VerifierIntegriteFAC_Finale] : PLAGE NOMMÉE ABSENTE '" & nom & "'"
+            Debug.Print Now() & " [VerifierIntegriteFACFinale] : PLAGE NOMMÉE ABSENTE '" & nom & "'"
         End If
     Next nom
 
-    Debug.Print Now() & " [VerifierIntegriteFAC_Finale] : Vérification terminée." & vbNewLine
+    Debug.Print Now() & " [VerifierIntegriteFACFinale] : Vérification terminée." & vbNewLine
 
 End Sub
 
-Sub ReinitialiserFAC_Finale() '2025-10-23 @ 12:50
+Sub ReinitialiserFACFinale() '2025-10-23 @ 12:50
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:Reinitialiser_FAC_Finale", vbNullString, 0)
     
@@ -1813,7 +1813,7 @@ Sub ReinitialiserFAC_Finale() '2025-10-23 @ 12:50
     Application.EnableEvents = True
     
     DoEvents
-    Call PauseActive(1)
+    Call Dormir(1)
     DoEvents
     
     Call modDev_Utils.EnregistrerLogApplication("modFAC_Finale:Reinitialiser_FAC_Finale", vbNullString, startTime)
@@ -1888,7 +1888,7 @@ Public Sub ReinitialiserFormesFACFinale(wsSource As Worksheet, wsCible As Worksh
         If Not Fn_ExisteForme(wsCible, nom) Then
             doitCopier = True
         Else
-            If VerifierSiFormEstDifferente(shp, wsCible.Shapes(nom)) Then
+            If Fn_VerifierSiFormEstDifferente(shp, wsCible.Shapes(nom)) Then
                 doitCopier = True
                 On Error Resume Next
                 wsCible.Shapes(nom).Delete
@@ -2117,7 +2117,7 @@ Public Sub CorrigerHyperliens(wsCible As Worksheet, nomFeuilleSource As String, 
 
 End Sub
 
-Sub PauseActive(seconde As Double)
+Sub Dormir(seconde As Double)
 
     Dim t0 As Double: t0 = Timer
     Do While Timer < t0 + seconde
@@ -2126,18 +2126,18 @@ Sub PauseActive(seconde As Double)
     
 End Sub
 
-Public Function VerifierSiFormEstDifferente(shpSource As Shape, shpCible As Shape) As Boolean '2025-11-01 @ 23:14
+Public Function Fn_VerifierSiFormEstDifferente(shpSource As Shape, shpCible As Shape) As Boolean '2025-11-01 @ 23:14
 
     If Abs(shpSource.Top - shpCible.Top) > 0.1 _
     Or Abs(shpSource.Left - shpCible.Left) > 0.1 _
     Or Abs(shpSource.Width - shpCible.Width) > 0.1 _
     Or Abs(shpSource.Height - shpCible.Height) > 0.1 _
     Or shpSource.OnAction <> shpCible.OnAction Then
-        VerifierSiFormEstDifferente = True
+        Fn_VerifierSiFormEstDifferente = True
     ElseIf shpSource.Type = msoTextBox And shpCible.Type = msoTextBox Then
-        VerifierSiFormEstDifferente = (shpSource.TextFrame.Characters.text <> shpCible.TextFrame.Characters.text)
+        Fn_VerifierSiFormEstDifferente = (shpSource.TextFrame.Characters.text <> shpCible.TextFrame.Characters.text)
     Else
-        VerifierSiFormEstDifferente = False
+        Fn_VerifierSiFormEstDifferente = False
     End If
     
 End Function

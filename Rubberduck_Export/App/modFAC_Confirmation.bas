@@ -134,9 +134,9 @@ Sub CocherToutesLesCases(listView As listView) '2025-03-12 @ 12:40
     Next i
     
     If ufConfirmation.txtNbFacturesSélectionnées.Value = 1 Then
-        ufConfirmation.shpConfirmation.Caption = "Confirmer cette facture"
+        ufConfirmation.shpConfirmation.caption = "Confirmer cette facture"
     Else
-        ufConfirmation.shpConfirmation.Caption = "Confirmer les (" & _
+        ufConfirmation.shpConfirmation.caption = "Confirmer les (" & _
          ufConfirmation.txtNbFacturesSélectionnées.Value & ") factures sélectionnées"
     End If
     ufConfirmation.shpConfirmation.Visible = True

@@ -83,7 +83,7 @@ Public Sub GererChangementClient(ws As Worksheet, ByVal Target As Range) '2025-1
     If ws.Range("F5").Value <> vbNullString Then
         'Aller chercher le vrai nom du client
         Dim r As Range
-        Set r = fn_GetRowFromValue(wsdBD_Clients, fClntFMNomClientPlusNomClientSystème, ws.Range("F5").Value)
+        Set r = Fn_GetRowFromValue(wsdBD_Clients, fClntFMNomClientPlusNomClientSystème, ws.Range("F5").Value)
         If Not r Is Nothing Then
             Target.Value = r.Cells(1, fClntFMClientNom)
             wshENC_Saisie.clientCode = r.Cells(1, fClntFMClientID)
@@ -120,14 +120,16 @@ Public Sub GererChangementTypeEnc(ws As Worksheet, ByVal Target As Range)
     
 End Sub
 
-Public Sub ResetPreviousCellColor()
-    If gPreviousCellAddress <> vbNullString Then
-        On Error Resume Next
-        wshENC_Saisie.Range(gPreviousCellAddress).Interior.Color = xlNone
-        On Error GoTo 0
-    End If
-End Sub
-
+'Public Sub ResetPreviousCellColor()
+'
+'    If gPreviousCellAddress <> vbNullString Then
+'        On Error Resume Next
+'        wshENC_Saisie.Range(gPreviousCellAddress).Interior.Color = xlNone
+'        On Error GoTo 0
+'    End If
+'
+'End Sub
+'
 Sub ObtenirFacturesEnSuspens(cc As String)
     
     Dim startTime As Double: startTime = Timer
@@ -756,7 +758,7 @@ Sub AjouterCheckBoxesEncaissement(row As Long)
             Set cbx = wshENC_Saisie.CheckBoxes.Add(cell.Left + 30, cell.Top, cell.Width, cell.Height)
             With cbx
                 .Name = "chkBox - " & cell.row
-                .Caption = vbNullString
+                .caption = vbNullString
                 .Value = False
                 .linkedCell = "B" & cell.row
                 .Display3DShading = True
@@ -845,7 +847,7 @@ Sub NettoyerFeuilleEncaissement()
     wshENC_Saisie.Shapes("shpMettreAJour").Visible = False
     wshENC_Saisie.Shapes("shpAnnulerSaisie").Visible = False
     
-    Call HighlightCell(wshENC_Saisie.Range("F5"))
+    Call AppliquerRemplissage(wshENC_Saisie.Range("F5"))
     
     Application.EnableEvents = True
     

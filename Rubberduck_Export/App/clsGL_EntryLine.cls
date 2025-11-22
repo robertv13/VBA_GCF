@@ -19,40 +19,53 @@ Private pAutreRemarque As String
 
 'Propriétés publiques pour accéder aux variables privées - Get & Let pour chaque variable
 
-'NoCompte
 Public Property Get noCompte() As String
+
     noCompte = pNoCompte
+    
 End Property
 
 Public Property Let noCompte(val As String)
+
     pNoCompte = val
+    
 End Property
 
-'Description
 Public Property Get description() As String
+
     description = pDescription
+    
 End Property
 
 Public Property Let description(val As String)
+
     pDescription = val
+    
 End Property
 
-'Montant (+ ou -)
 Public Property Get montant() As Double
+
     montant = pMontant
+    
 End Property
 
 Public Property Let montant(val As Double)
+
     pMontant = val
+    
 End Property
 
 'Autre remarque
 Public Property Get autreRemarque() As String
+
     autreRemarque = pAutreRemarque
+    
 End Property
 
 Public Property Let autreRemarque(val As String)
+
     pAutreRemarque = val
+    
 End Property
 
 

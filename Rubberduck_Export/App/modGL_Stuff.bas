@@ -308,7 +308,7 @@ Function Fn_SoldesParCompteAvecADO(noCompteGLMin As String, noCompteGLMax As Str
     Do While Not recSet.EOF
         cle = CStr(recSet.Fields("NoCompte").Value)
 '        Debug.Print "Construction du dictionary (dictSoldes): " & cle & " = " & Format$(recSet.Fields("Solde").Value, "#,##0.00")
-        montant = Nz(recSet.Fields("Solde").Value)
+        montant = Fn_Nz(recSet.Fields("Solde").Value)
         If Not dictSoldes.Exists(cle) Then
             dictSoldes.Add cle, montant
         Else
@@ -336,12 +336,12 @@ EXIT_FUNCTION:
 
 End Function
 
-Public Function Nz(val As Variant) As Currency '2025-07-17 @ 09:57
+Public Function Fn_Nz(val As Variant) As Currency '2025-07-17 @ 09:57
 
     If IsNull(val) Or IsEmpty(val) Then
-        Nz = 0
+        Fn_Nz = 0
     Else
-        Nz = val
+        Fn_Nz = val
     End If
     
 End Function

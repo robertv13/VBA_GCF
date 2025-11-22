@@ -38,7 +38,7 @@ Private Sub lstDatesSemaines_Click()
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:lstDatesSemaines_Click", lstDatesSemaines.Value, 0)
     
-    Call lstDatesSemaines_Click_or_DblClick(lstDatesSemaines.Value)
+    Call SelectionnerSemaineDansListeSemaines(lstDatesSemaines.Value)
     
     Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:lstDatesSemaines_Click", vbNullString, startTime)
 
@@ -48,15 +48,15 @@ Private Sub lstDatesSemaines_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:lstDatesSemaines_DblClick", lstDatesSemaines.Value, 0)
     
-    Call lstDatesSemaines_Click_or_DblClick(lstDatesSemaines.Value)
+    Call SelectionnerSemaineDansListeSemaines(lstDatesSemaines.Value)
 
     Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:lstDatesSemaines_DblClick", vbNullString, startTime)
 
 End Sub
 
-Private Sub lstDatesSemaines_Click_or_DblClick(ByVal valeur As Variant)
+Private Sub SelectionnerSemaineDansListeSemaines(ByVal valeur As Variant)
     
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:lstDatesSemaines_Click_or_DblClick", lstDatesSemaines.Value, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:SelectionnerSemaineDansListeSemaines", lstDatesSemaines.Value, 0)
     
     Dim selectedWeek As String
     
@@ -126,7 +126,7 @@ Private Sub lstDatesSemaines_Click_or_DblClick(ByVal valeur As Variant)
     Set rngCriteriaDate1 = Nothing
     Set rngCriteriaDate2 = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:lstDatesSemaines_Click_or_DblClick", vbNullString, startTime)
+    Call modDev_Utils.EnregistrerLogApplication("ufStatsHeures:SelectionnerSemaineDansListeSemaines", vbNullString, startTime)
 
 End Sub
 

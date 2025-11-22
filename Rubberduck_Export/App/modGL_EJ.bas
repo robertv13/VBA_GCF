@@ -687,10 +687,10 @@ Sub ComptabiliserEntreeJournal(r As Long) '2025-06-08 @ 08:37
             glNo = wshGL_EJ.Range("L" & l).Value
             
             If wshGL_EJ.Range("H" & l).Value <> "" Then
-                ecr.AjouterLigne glNo, Fn_DescriptionAPartirNoCompte(glNo), Nz(wshGL_EJ.Range("H" & l).Value), autreRemarque
+                ecr.AjouterLigne glNo, Fn_DescriptionAPartirNoCompte(glNo), Fn_Nz(wshGL_EJ.Range("H" & l).Value), autreRemarque
             End If
             If wshGL_EJ.Range("I" & l).Value <> "" Then
-                ecr.AjouterLigne glNo, Fn_DescriptionAPartirNoCompte(glNo), -Nz(wshGL_EJ.Range("I" & l).Value), autreRemarque
+                ecr.AjouterLigne glNo, Fn_DescriptionAPartirNoCompte(glNo), -Fn_Nz(wshGL_EJ.Range("I" & l).Value), autreRemarque
             End If
     Next l
     

@@ -323,22 +323,22 @@ Sub AfficherMenuContextuelFACInterrogation(ByVal Target As Range) '2025-01-28 @ 
 
     'Ajout de l'option 1 au menu contextuel
     Set menuItem = menu.Controls.Add(Type:=msoControlButton)
-        menuItem.Caption = "Visualiser la facture (format PDF)"
+        menuItem.caption = "Visualiser la facture (format PDF)"
         menuItem.OnAction = "'VisualiserFacturePDF """ & numeroFacture & """'"
 
     'Ajout de l'option 2 au menu contextuel
     Set menuItem = menu.Controls.Add(Type:=msoControlButton)
-        menuItem.Caption = "TEC + Honoraires de la facture"
+        menuItem.caption = "TEC + Honoraires de la facture"
         menuItem.OnAction = "'AfficherHonorairesEtTECPourUneFacture """ & Target.Address & """'"
 
     'Ajout de l'option 3 au menu contextuel
     Set menuItem = menu.Controls.Add(Type:=msoControlButton)
-        menuItem.Caption = "TEC détaillé pour la facture"
+        menuItem.caption = "TEC détaillé pour la facture"
         menuItem.OnAction = "'ObtenirListeTECFactures """ & Target.Address & """'"
 
     'Ajout de l'option 4 au menu contextuel
     Set menuItem = menu.Controls.Add(Type:=msoControlButton)
-        menuItem.Caption = "Transactions des Comptes-Clients"
+        menuItem.caption = "Transactions des Comptes-Clients"
         menuItem.OnAction = "'AfficherTransactionComptesClients """ & Target.Address & """'"
 
     'Afficher le menu contextuel

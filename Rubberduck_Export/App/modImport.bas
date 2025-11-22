@@ -13,7 +13,7 @@ Sub ImporterMASTERGenerique(sourceWb As String, ws As Worksheet, onglet As Strin
     Application.Calculation = xlCalculationManual
     
     '1. Vider la table locale
-    Call ViderTableau(onglet, table)
+    Call ViderTableauStructure(onglet, table)
     
     '2. Construire le chemin complet
     Dim fullPathSourceWb As String
@@ -103,7 +103,7 @@ Sub ImporterClients() 'Using ADODB - 2024-02-25 @ 10:23
     '1. Vider la table locale
     Dim strFeuille As String: strFeuille = "BD_Clients"
     Dim strTable As String: strTable = "l_tbl_BD_Clients"
-    Call ViderTableau(strFeuille, strTable)
+    Call ViderTableauStructure(strFeuille, strTable)
     
     '2. Importer les enregistrements de GCF_MASTER.xlsx
     Dim ws As Worksheet: Set ws = wsdBD_Clients
@@ -621,7 +621,7 @@ Sub ImporterTEC()
 
 End Sub
 
-Sub ViderTableau(nomFeuille As String, nomTableau As String) '2025-05-07 @ 10:13
+Sub ViderTableauStructure(nomFeuille As String, nomTableau As String) '2025-05-07 @ 10:13
     
     Dim ws As Worksheet
     Set ws = ThisWorkbook.Sheets(nomFeuille)

@@ -577,12 +577,12 @@ Sub AfficherMenuContextuel(ByVal Target As Range) '2025-02-21 @ 19:10
 
     'Option # 1 - Visualiser la facture
     Set menuItem = menu.Controls.Add(Type:=msoControlButton)
-        menuItem.Caption = "Visualiser la facture (format PDF)"
+        menuItem.caption = "Visualiser la facture (format PDF)"
         menuItem.OnAction = "'modFAC_Interrogation.VisualiserFacturePDF """ & numeroFacture & """'"
 
     'Option # 2 - Visualiser la facture
     Set menuItem = menu.Controls.Add(Type:=msoControlButton)
-        menuItem.Caption = "Envoi d'un rappel par courriel"
+        menuItem.caption = "Envoi d'un rappel par courriel"
         menuItem.OnAction = "'EnvoyerRappelParCourriel """ & numeroFacture & """'"
 
     'Afficher le menu contextuel

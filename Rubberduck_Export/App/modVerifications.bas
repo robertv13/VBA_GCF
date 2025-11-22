@@ -368,7 +368,7 @@ Public Sub VerifierIntegriteTablesLocales()
                 r = r + 1
                 
                 'Audit du fichier log
-                Call AuditerSessionsAvecContexteEtReapparition(wsOutput, r, f.path)
+                Call VerifierValiditeSessions(wsOutput, r, f.path)
             End If
         Next f
     End If
@@ -1673,9 +1673,9 @@ Private Sub VerifierFACEntete(ByVal wsOutput As Worksheet, ByRef r As Long, ByRe
     'Creer une liste des factures en format PDF (PROD)
     Dim dictFacturesPDF As Object
     If modFunctions.Fn_UtilisateurWindows() = "RobertMV" Or modFunctions.Fn_UtilisateurWindows() = "robertmv" Then
-        Set dictFacturesPDF = modDev_Tools.ListerPDFs("C:\VBA\GC_FISCALITÉ\Factures_PDF")
+        Set dictFacturesPDF = modDev_Tools.Fn_ListerPDFs("C:\VBA\GC_FISCALITÉ\Factures_PDF")
     Else
-        Set dictFacturesPDF = modDev_Tools.ListerPDFs("P:\Administration\APP\GCF\Factures_PDF")
+        Set dictFacturesPDF = modDev_Tools.Fn_ListerPDFs("P:\Administration\APP\GCF\Factures_PDF")
     End If
 
     'wsdFAC_Entete
@@ -3278,7 +3278,7 @@ Private Sub VerifierTEC(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef read
     Dim ws As Worksheet: Set ws = wsdTEC_Local
     
     Dim lastTECIDReported As Long
-    lastTECIDReported = 9760 'What is the last TECID analyzed ?
+    lastTECIDReported = 9892 'What is the last TECID analyzed ?
     
     'Réference au UserDefined structure 'StatistiquesTEC'
     Dim stats As StatistiquesTEC
@@ -3351,7 +3351,7 @@ Private Sub VerifierTEC(ByVal wsOutput As Worksheet, ByRef r As Long, ByRef read
     For i = LBound(arrTEC_Local_Data, 1) To UBound(arrTEC_Local_Data, 1)
     
         isTECvalid = True
-        If Not AnalyserLigneTEC(arrTEC_Local_Data, i, wsOutput, r, _
+        If Not Fn_AnalyserLigneTEC(arrTEC_Local_Data, i, wsOutput, r, _
                                 minDate, maxDate, _
                                 dictClient, dictFacture, dictHresFactureesTEC, _
                                 dictDateCharge, dictTimeStamp, dictDict, dictProf, _
@@ -3715,7 +3715,7 @@ Sub ImprimerEcartsVerificationIntegrite(ws As Worksheet, r As Long, t As String,
 
 End Sub
 
-Private Function AnalyserLigneTEC(data As Variant, i As Long, ByVal wsOutput As Worksheet, ByRef r As Long, _
+Private Function Fn_AnalyserLigneTEC(data As Variant, i As Long, ByVal wsOutput As Worksheet, ByRef r As Long, _
                                   ByRef minDate As Date, ByRef maxDate As Date, _
                                   ByRef dictClient As Object, ByRef dictFacture As Object, _
                                   ByRef dictHresFactureesTEC As Object, ByRef dictDateCharge As Object, _
@@ -3949,7 +3949,7 @@ Private Function AnalyserLigneTEC(data As Variant, i As Long, ByVal wsOutput As 
     End If
     
     'À la fin, retourner le résultat global pour cette ligne
-    AnalyserLigneTEC = isValid
+    Fn_AnalyserLigneTEC = isValid
     
 End Function
 

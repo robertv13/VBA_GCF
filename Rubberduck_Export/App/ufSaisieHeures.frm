@@ -86,7 +86,7 @@ Private Sub lstNomClient_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
             If .Selected(i) Then
                 Me.txtClient.Value = .List(i, 0)
                 Dim r As Range
-                Set r = fn_GetRowFromValue(wsdBD_Clients, fClntFMNomClientPlusNomClientSystème, _
+                Set r = Fn_GetRowFromValue(wsdBD_Clients, fClntFMNomClientPlusNomClientSystème, _
                                                                                     Me.txtClient.Value)
                 If Not r Is Nothing Then
                     Application.EnableEvents = False
@@ -203,7 +203,7 @@ Private Sub cmbProfessionnel_AfterUpdate() '2025-05-31 @ 16:11
 
     Dim initProfAutorises As String
     
-    initProfAutorises = GetInitialesObligatoiresFromADMIN(modFunctions.Fn_UtilisateurWindows())
+    initProfAutorises = Fn_ObtenirInitialesObligatoiresFromADMIN(modFunctions.Fn_UtilisateurWindows())
 
     Select Case initProfAutorises
         Case "INVALID"
@@ -637,11 +637,11 @@ Public Sub MettreAJourEtatBoutons() '2025-07-03 @ 07:09
     'Comparaison avec valeurs originales (stockées à la lecture en BD)
     estModifie = False
     estModifie = _
-        EstChampModifie(Me.txtClient.Value, valeurSauveeClient) Or _
-        EstChampModifie(Me.txtActivite.Value, valeurSauveeActivite) Or _
+        Fn_EstChampModifie(Me.txtClient.Value, valeurSauveeClient) Or _
+        Fn_EstChampModifie(Me.txtActivite.Value, valeurSauveeActivite) Or _
         (Me.txtHeures.Value <> valeurSauveeHeures) Or _
         (Me.chkFacturable.Value <> valeurSauveeEstFacturable) Or _
-        EstChampModifie(Me.txtCommNote.Value, valeurSauveeCommNote)
+        Fn_EstChampModifie(Me.txtCommNote.Value, valeurSauveeCommNote)
 
     'Bouton estModifier
     Me.shpUpdate.Enabled = enModification And estModifie

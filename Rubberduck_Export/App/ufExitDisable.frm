@@ -25,7 +25,7 @@ End Sub
 
 Private Sub UserForm_Initialize()
 
-    Me.Label1.Caption = "Pour quitter cette application, vous devez OBLIGATOIREMENT" & vbCrLf & vbCrLf & _
+    Me.Label1.caption = "Pour quitter cette application, vous devez OBLIGATOIREMENT" & vbCrLf & vbCrLf & _
                      "utiliser l'option prévue à cet effet (en bas à gauche, du menu principal)"
 
     Call InitialiserSurveillanceForm(Me, wrappers)

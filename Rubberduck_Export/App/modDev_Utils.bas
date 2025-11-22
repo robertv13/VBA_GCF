@@ -1343,13 +1343,42 @@ Sub zz_ObtenirLigneAPartirCelluleRecherche() '2025-01-13 @ 08:49
     
 End Sub
 
-Public Sub Arreter(sec As Long) '2025-11-10 @ 10:06
+'Public Sub Arreter(sec As Long) '2025-11-10 @ 10:06
+'
+'    Debug.Print "Arrêt volontaire de '" & CStr(sec) & "' seconde(s)"
+'
+'    Dim t0 As Double: t0 = Timer
+'    Do While Timer < t0 + sec
+'        DoEvents 'Laisse respirer l'interface
+'    Loop
+'
+'End Sub
+'
 
-    Debug.Print "Arrêt volontaire de '" & CStr(sec) & "' seconde(s)"
+Public Sub AfficherFeuilleResultats(nomFeuille As String) '2025-11-18 @ 08:59
     
-    Dim t0 As Double: t0 = Timer
-    Do While Timer < t0 + sec
-        DoEvents 'Laisse respirer l'interface
-    Loop
+    Dim wsRes As Worksheet: Set wsRes = ThisWorkbook.Worksheets(nomFeuille)
+    wsRes.Visible = xlSheetVisible
+    wsRes.Activate
+    
+    'Détection du contexte
+    If Application.VBE.MainWindow.Visible = True Then
+        'Lancement depuis l’IDE : prévenir l’utilisateur
+        MsgBox "Résultats générés dans la feuille '" & nomFeuille & "'" & vbCrLf & vbCrLf & _
+               "Basculez vers Excel pour les consulter.", vbInformation
+    Else
+        'Lancement depuis Excel : Excel garde le focus
+        Application.Visible = True
+        Application.WindowState = xlNormal
+    End If
+    
+End Sub
+
+Sub EffacerFenetreImmediate()
+
+    Dim i As Long
+    For i = 1 To 200
+        Debug.Print ""
+    Next i
     
 End Sub

@@ -9,33 +9,33 @@ Public Const FMT_TAUX_PCT_3 As String = "#0.000 %"
 Public Const FMT_ENTIER As String = "0"
 
 'Alignements
-Public Sub SetAlignLeft(r As Range)
+Public Sub AppliquerAlignementGauche(r As Range)
 
     If Not r Is Nothing Then r.HorizontalAlignment = xlLeft
     
 End Sub
 
-Public Sub SetAlignCenter(r As Range)
+Public Sub AppliquerAlignementCentre(r As Range)
 
     If Not r Is Nothing Then r.HorizontalAlignment = xlCenter
     
 End Sub
 
-Public Sub SetAlignRight(r As Range)
+Public Sub AppliquerAlignementDroit(r As Range)
 
     If Not r Is Nothing Then r.HorizontalAlignment = xlRight
     
 End Sub
 
 'Formats
-Public Sub SetNumberFormat(r As Range, ByVal nf As String)
+Public Sub AppliquerNumberFormat(r As Range, ByVal nf As String)
 
     If Not r Is Nothing Then r.NumberFormat = nf
     
 End Sub
 
 'Colonnes
-Public Sub SetColWidth(ws As Worksheet, ByVal colIndex As Long, ByVal widthChars As Double)
+Public Sub AppliquerLargeurColonne(ws As Worksheet, ByVal colIndex As Long, ByVal widthChars As Double)
 
     ws.Columns(colIndex).ColumnWidth = widthChars
     
@@ -51,7 +51,7 @@ Public Sub AppliquerCommonPost(ws As Worksheet, lo As ListObject)
     
 End Sub
 
-Public Sub HighlightCell(ByVal rng As Range) '2025-11-16 @ 17:54
+Public Sub AppliquerRemplissage(ByVal rng As Range) '2025-11-16 @ 17:54
 
 '   On Error Resume Next
     

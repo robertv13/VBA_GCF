@@ -76,7 +76,7 @@ ProchaineLigne:
         .List = arr
     End With
     
-    Me.Caption = Me.Caption & " - Un total de " & CStr(nbRows) & " projet(s)" '2025-11-01 @ 12:25
+    Me.caption = Me.caption & " - Un total de " & CStr(nbRows) & " projet(s)" '2025-11-01 @ 12:25
 
     'Approximation : centré dans la fenêtre Excel
     Me.StartUpPosition = 0

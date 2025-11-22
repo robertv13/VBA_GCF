@@ -7,7 +7,7 @@ Public Sub VerrouillerSiSessionInvalide(Optional contexte As String = "Interacti
     Call modDev_Utils.EnregistrerLogApplication("modSessionVerrou:VerrouillerSiSessionInvalide", _
                                                                                         vbNullString, 0)
 
-    If Not SessionEstValideComplet() Then
+    If Not Fn_ValiderSessionEstValide() Then
         Call EnregistrerErreurs("modSessionVerrou", "VerrouillerSiSessionInvalide", _
                                                 "OuvertureNormale_<User>.txt manquant -ET/OU- _ " & _
                                                 "SessionActive_<User>.txt manquant", Err.Number, "ERREUR")
@@ -25,7 +25,7 @@ Public Sub VerrouillerSiSessionInvalide(Optional contexte As String = "Interacti
 
 End Sub
 
-Public Function SessionEstValideComplet() As Boolean '2025-11-11 @ 07:35
+Public Function Fn_ValiderSessionEstValide() As Boolean '2025-11-11 @ 07:35
 
     Dim basePath As String: basePath = Fn_RepertoireBaseApplication(Fn_UtilisateurWindows)
     
@@ -39,9 +39,9 @@ Public Function SessionEstValideComplet() As Boolean '2025-11-11 @ 07:35
     
     If gUtilisateurWindows = "RobertMV" And gSessionInitialisee = False Then gSessionInitialisee = True '2025-11-12 @ 18:54
     
-    SessionEstValideComplet = gSessionInitialisee And traceOK And actifOK
+    Fn_ValiderSessionEstValide = gSessionInitialisee And traceOK And actifOK
     
-    If SessionEstValideComplet = False Then
+    If Fn_ValiderSessionEstValide = False Then
         Debug.Print "gSessionInitialisee = " & gSessionInitialisee & "    traceOK = " & traceOK & _
                                                     "     actifOK = " & actifOK & "     ALORS = " & _
                                                     (gSessionInitialisee And traceOK And actifOK)

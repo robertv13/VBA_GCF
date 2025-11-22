@@ -15,7 +15,7 @@ Sub AjouterLigneTEC()
     Dim timerPerformance As Double: timerPerformance = Timer
     
     Dim r As Range
-    Set r = fn_GetRowFromValue(wsdBD_Clients, fClntFMClientNom, ufSaisieHeures.txtClient.Value)
+    Set r = Fn_GetRowFromValue(wsdBD_Clients, fClntFMClientNom, ufSaisieHeures.txtClient.Value)
     If Not r Is Nothing Then
         Application.EnableEvents = False
         ufSaisieHeures.txtClientID.Value = r.Cells(1, fClntFMClientID)
@@ -83,7 +83,7 @@ Sub ModifierLigneTEC() '2023-12-23 @ 07:04
     Dim timerPerformance As Double: timerPerformance = Timer
         
     Dim r As Range
-    Set r = fn_GetRowFromValue(wsdBD_Clients, fClntFMClientNom, ufSaisieHeures.txtClient.Value)
+    Set r = Fn_GetRowFromValue(wsdBD_Clients, fClntFMClientNom, ufSaisieHeures.txtClient.Value)
     If Not r Is Nothing Then
         Application.EnableEvents = False
         ufSaisieHeures.txtClientID.Value = r.Cells(1, fClntFMClientID)
@@ -96,7 +96,7 @@ Sub ModifierLigneTEC() '2023-12-23 @ 07:04
         ufSaisieHeures.chkFacturable = False
     End If
     
-    Call ModifierTECdansBDMaster(ufSaisieHeures.txtTECID.Value) '2025-10-31 @ 06:43
+    Call Fn_ModifierTECdansBDMaster(ufSaisieHeures.txtTECID.Value) '2025-10-31 @ 06:43
     Call AjouterOuModifierTECdansBDLocale(ufSaisieHeures.txtTECID.Value)
  
     Dim saveTECID As String '2025-11-05 @ 08:41
@@ -164,7 +164,7 @@ Sub DetruireLigneTEC() '2023-12-23 @ 07:05
         ufSaisieHeures.chkFacturable = False
     End If
     
-    Call SupprimerTECdansBDMaster(tecID) '2025-10-31@ 06:44
+    Call Fn_SupprimerTECdansBDMaster(tecID) '2025-10-31@ 06:44
     Call AjouterOuModifierTECdansBDLocale(tecID)
     
     'Empty the dynamic fields after deleting
@@ -329,10 +329,9 @@ Sub EffacerFormulaireTEC() '2025-07-03 @ 07:31
 
 End Sub
 
-Public Function AjouterTECdansBDMaster() As Boolean '2025-10-31 @ 06:03
+Public Sub AjouterTECdansBDMaster() '2025-10-31 @ 06:03
 
     On Error GoTo GestionErreur
-    AjouterTECdansBDMaster = False
     
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:AjouterTECdansBDMaster", vbNullString, 0)
 
@@ -362,8 +361,7 @@ Public Function AjouterTECdansBDMaster() As Boolean '2025-10-31 @ 06:03
     Call RemplirChampsRecordset(recSet, nextID, ufSaisieHeures.txtDate.Value, Now, False)
     recSet.Update
 
-    Call EnregistrerLogSaisieHeures("ADD    " & nextID, ConstruireLigneLog())
-    AjouterTECdansBDMaster = True
+    Call EnregistrerLogSaisieHeures("ADD    " & nextID, Fn_ConstruireLigneLog())
 
 Nettoyage:
     On Error Resume Next
@@ -373,21 +371,21 @@ Nettoyage:
     
     Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:AjouterTECdansBDMaster", CStr(nextID), startTime)
     
-    Exit Function
+    Exit Sub
 
 GestionErreur:
     MsgBox "Erreur lors de l'ajout du TEC : " & Err.description, _
             vbCritical
     Resume Nettoyage
     
-End Function
+End Sub
 
-Public Function ModifierTECdansBDMaster(tecID As Long) As Boolean '2025-10-31 @06:05
+Public Function Fn_ModifierTECdansBDMaster(tecID As Long) As Boolean '2025-10-31 @06:05
 
     On Error GoTo GestionErreur
-    ModifierTECdansBDMaster = False
+    Fn_ModifierTECdansBDMaster = False
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:ModifierTECdansBDMaster", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:Fn_ModifierTECdansBDMaster", vbNullString, 0)
     
     Dim conn As Object, recSet As Object
     Set conn = CreateObject("ADODB.Connection")
@@ -409,15 +407,15 @@ Public Function ModifierTECdansBDMaster(tecID As Long) As Boolean '2025-10-31 @0
     Call RemplirChampsRecordset(recSet, tecID, ufSaisieHeures.txtDate.Value, Now, True)
     recSet.Update
 
-    Call EnregistrerLogSaisieHeures("UPDATE " & tecID, ConstruireLigneLog())
-    ModifierTECdansBDMaster = True
+    Call EnregistrerLogSaisieHeures("UPDATE " & tecID, Fn_ConstruireLigneLog())
+    Fn_ModifierTECdansBDMaster = True
 
 Nettoyage:
     On Error Resume Next
     recSet.Close: conn.Close
     Set recSet = Nothing: Set conn = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:ModifierTECdansBDMaster", CStr(tecID), startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:Fn_ModifierTECdansBDMaster", CStr(tecID), startTime)
     
     Exit Function
 
@@ -427,12 +425,12 @@ GestionErreur:
     
 End Function
 
-Public Function SupprimerTECdansBDMaster(tecID As Long) As Boolean '2025-10-31 @ 06:06
+Public Function Fn_SupprimerTECdansBDMaster(tecID As Long) As Boolean '2025-10-31 @ 06:06
 
     On Error GoTo GestionErreur
-    SupprimerTECdansBDMaster = False
+    Fn_SupprimerTECdansBDMaster = False
 
-    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:SupprimerTECdansBDMaster", vbNullString, 0)
+    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:Fn_SupprimerTECdansBDMaster", vbNullString, 0)
     
     Dim conn As Object, recSet As Object
     Set conn = CreateObject("ADODB.Connection")
@@ -458,15 +456,15 @@ Public Function SupprimerTECdansBDMaster(tecID As Long) As Boolean '2025-10-31 @
         .Update
     End With
 
-    Call EnregistrerLogSaisieHeures("DELETE " & Abs(tecID), ConstruireLigneLog())
-    SupprimerTECdansBDMaster = True
+    Call EnregistrerLogSaisieHeures("DELETE " & Abs(tecID), Fn_ConstruireLigneLog())
+    Fn_SupprimerTECdansBDMaster = True
 
 Nettoyage:
     On Error Resume Next
     recSet.Close: conn.Close
     Set recSet = Nothing: Set conn = Nothing
     
-    Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:SupprimerTECdansBDMaster", CStr(Abs(tecID)), startTime)
+    Call modDev_Utils.EnregistrerLogApplication("modTEC_Saisie:Fn_SupprimerTECdansBDMaster", CStr(Abs(tecID)), startTime)
     
     Exit Function
 
@@ -634,7 +632,7 @@ Sub RafraichirListBoxEtAddtionnerHeures() 'Load the listBox with the appropriate
                 Next colIndex
             End With
         Next i
-        Set totaux = CalculerTotaux(data)
+        Set totaux = Fn_CalculerTotaux(data)
     End If
     
     'Mise à jour des totaux
@@ -793,9 +791,9 @@ Public Sub RemplirChampsRecordset(ByRef rs As Object, ByVal tecID As Long, ByVal
     
 End Sub
 
-Public Function ConstruireLigneLog() As String '2025-10-31 @ 06:07
+Public Function Fn_ConstruireLigneLog() As String '2025-10-31 @ 06:07
 
-    ConstruireLigneLog = Left(ufSaisieHeures.cmbProfessionnel.Value & Space(4), 4) & " | " & _
+    Fn_ConstruireLigneLog = Left(ufSaisieHeures.cmbProfessionnel.Value & Space(4), 4) & " | " & _
                          Format$(ufSaisieHeures.txtDate.Value, "YYYY-MM-DD") & " | " & _
                          Left(CStr(ufSaisieHeures.txtClientID.Value) & Space(5), 5) & " | " & _
                          Left(ufSaisieHeures.txtClient.Value & Space(35), 35) & " | " & _
@@ -806,11 +804,11 @@ Public Function ConstruireLigneLog() As String '2025-10-31 @ 06:07
                          
 End Function
 
-Function CalculerTotaux(data As Variant) As Collection '2025-11-02 @ 09:58
+Function Fn_CalculerTotaux(data As Variant) As Collection '2025-11-02 @ 09:58
 
     'Au cas où il n'y a rien...
     If IsEmpty(data) Or UBound(data, 1) = 0 Then
-        Set CalculerTotaux = Nothing
+        Set Fn_CalculerTotaux = Nothing
         Exit Function
     End If
     
@@ -828,6 +826,6 @@ Function CalculerTotaux(data As Variant) As Collection '2025-11-02 @ 09:58
     result.Add total
     result.Add fact
     result.Add nonFact
-    Set CalculerTotaux = result
+    Set Fn_CalculerTotaux = result
     
 End Function

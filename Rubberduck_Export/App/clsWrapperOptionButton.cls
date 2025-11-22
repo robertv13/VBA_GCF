@@ -14,7 +14,7 @@ Attribute opt.VB_VarHelpID = -1
 
 Private Sub opt_Click()
 
-    modSurveillance.EnregistrerActivite "OptionButton: " & opt.Name
+    Call modSurveillance.EnregistrerActivite("OptionButton: " & opt.Name)
     
 End Sub
 

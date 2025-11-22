@@ -228,9 +228,9 @@ Sub AssemblerEtatsFinanciers() '2025-08-14 @ 08:05
     Call AssemblerER0Main(dateAC, dateAP)
     Call AssemblerBNR0Main(dateAC, dateAP)
     Call AssemblerBilan0Main(dateAC, dateAP)
-    Call AssemblerNEFA_0Main(dateAC, dateAP)
-    Call AssemblerNEFA2_0Main(dateAC, dateAP)
-    Call AssemblerNEFA3_0Main(dateAC, dateAP)
+    Call AssemblerNEFA0Main(dateAC, dateAP)
+    Call AssemblerNEFA20Main(dateAC, dateAP)
+    Call AssemblerNEFA30Main(dateAC, dateAP)
     
     Dim nomsFeuilles As Variant
     nomsFeuilles = Split(NOM_FEUILLES_EF, ", ")
@@ -992,9 +992,9 @@ Sub AssemblerBNR2Lignes(ws As Worksheet)
 
 End Sub
 
-Sub AssemblerNEFA_0Main(dateAC As Date, dateAP As Date)
+Sub AssemblerNEFA0Main(dateAC As Date, dateAP As Date)
 
-''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA_0Main", vbNullString, 0)
+''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA0Main", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -1036,8 +1036,8 @@ Sub AssemblerNEFA_0Main(dateAC As Date, dateAP As Date)
     'Police
     ws.Range("A12:F33").Font.size = 10
     
-    Call AssemblerNEFA_1ArrierePlanEtEntete(ws, dateAC, dateAP)
-    Call AssemblerNEFA_2Lignes(ws)
+    Call AssemblerNEFA1ArrierePlanEtEntete(ws, dateAC, dateAP)
+    Call AssemblerNEFA2Lignes(ws)
     
     With ws
         .Activate
@@ -1050,13 +1050,13 @@ Sub AssemblerNEFA_0Main(dateAC As Date, dateAP As Date)
     
     Application.ScreenUpdating = True
     
-''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA_0Main", vbNullString, startTime)
+''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA0Main", vbNullString, startTime)
     
 End Sub
 
-Sub AssemblerNEFA_1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As Date)
+Sub AssemblerNEFA1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA_1ArrierePlanEtEntete", vbNullString, 0)
+''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA1ArrierePlanEtEntete", vbNullString, 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -1282,25 +1282,25 @@ Sub AssemblerNEFA_1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP A
         .formula = "=SUM(E28:E30)"
     End With
     
-''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA_1ArrierePlanEtEntete", vbNullString, startTime)
+''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA1ArrierePlanEtEntete", vbNullString, startTime)
 
 End Sub
 
-Sub AssemblerNEFA_2Lignes(ws As Worksheet)
+Sub AssemblerNEFA2Lignes(ws As Worksheet)
 
-''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA_2Lignes", vbNullString, 0)
+''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA2Lignes", vbNullString, 0)
     
     'Fixer le printArea selon le nombre de lignes ET colonnes
     ws.PageSetup.PrintArea = "$A$1:$F$33"
     Debug.Print "A.tmp : " & ws.Name & " - " & ws.PageSetup.PrintArea
     
-''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA_2Lignes", vbNullString, startTime)
+''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA2Lignes", vbNullString, startTime)
 
 End Sub
 
-Sub AssemblerNEFA2_0Main(dateAC As Date, dateAP As Date)
+Sub AssemblerNEFA20Main(dateAC As Date, dateAP As Date)
 
-''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA2_0Main", vbNullString, 0)
+''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA20Main", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -1344,8 +1344,8 @@ Sub AssemblerNEFA2_0Main(dateAC As Date, dateAP As Date)
     'Police
     ws.Range("A12:J24").Font.size = 10
     
-    Call AssemblerNEFA2_1ArrierePlanEtEntete(ws, dateAC, dateAP)
-    Call AssemblerNEFA2_2Lignes(ws)
+    Call AssemblerNEFA21ArrierePlanEtEntete(ws, dateAC, dateAP)
+    Call AssemblerNEFA22Lignes(ws)
     
     With ws
         .Activate
@@ -1358,13 +1358,13 @@ Sub AssemblerNEFA2_0Main(dateAC As Date, dateAP As Date)
     
     Application.ScreenUpdating = True
     
-''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA2_0Main", vbNullString, startTime)
+''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA20Main", vbNullString, startTime)
     
 End Sub
 
-Sub AssemblerNEFA2_1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As Date)
+Sub AssemblerNEFA21ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA2_1ArrierePlanEtEntete", vbNullString, 0)
+''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA21ArrierePlanEtEntete", vbNullString, 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -1556,25 +1556,25 @@ Sub AssemblerNEFA2_1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP 
     ws.Columns("I").ColumnWidth = 15
     ws.Columns("J").ColumnWidth = 13
     
-''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA2_1ArrierePlanEtEntete", vbNullString, startTime)
+''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA21ArrierePlanEtEntete", vbNullString, startTime)
 
 End Sub
 
-Sub AssemblerNEFA2_2Lignes(ws As Worksheet)
+Sub AssemblerNEFA22Lignes(ws As Worksheet)
 
-''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA2_2Lignes", vbNullString, 0)
+''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA22Lignes", vbNullString, 0)
     
     'Fixer le printArea selon le nombre de lignes ET colonnes
     ws.PageSetup.PrintArea = "$A$1:$H$19"
     Debug.Print "A2.tmp : " & ws.Name & " - " & ws.PageSetup.PrintArea; ""
     
-''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA2_2Lignes", vbNullString, startTime)
+''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA22Lignes", vbNullString, startTime)
 
 End Sub
 
-Sub AssemblerNEFA3_0Main(dateAC As Date, dateAP As Date)
+Sub AssemblerNEFA30Main(dateAC As Date, dateAP As Date)
 
-''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA3_0Main", vbNullString, 0)
+''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA30Main", vbNullString, 0)
     
     Application.ScreenUpdating = False
     
@@ -1583,8 +1583,8 @@ Sub AssemblerNEFA3_0Main(dateAC As Date, dateAP As Date)
     
     Application.StatusBar = "Construction de la note 5"
     
-    Call AssemblerNEFA3_1ArrierePlanEtEntete(ws, dateAC, dateAP)
-    Call AssemblerNEFA3_2Lignes(ws)
+    Call AssemblerNEFA31ArrierePlanEtEntete(ws, dateAC, dateAP)
+    Call AssemblerNEFA32Lignes(ws)
     
     With ws
         .Activate
@@ -1597,13 +1597,13 @@ Sub AssemblerNEFA3_0Main(dateAC As Date, dateAP As Date)
     
     Application.ScreenUpdating = True
     
-''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA3_0Main", vbNullString, startTime)
+''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA30Main", vbNullString, startTime)
     
 End Sub
 
-Sub AssemblerNEFA3_1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As Date)
+Sub AssemblerNEFA31ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP As Date)
 
-''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA3_1ArrierePlanEtEntete", vbNullString, 0)
+''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA31ArrierePlanEtEntete", vbNullString, 0)
     
     'Effacer le contenu existant
     ws.Cells.Clear
@@ -2010,19 +2010,19 @@ Sub AssemblerNEFA3_1ArrierePlanEtEntete(ws As Worksheet, dateAC As Date, dateAP 
     ws.Columns("N").ColumnWidth = 15.43
     ws.Columns("O").ColumnWidth = 16.57
     
-''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA3_1ArrierePlanEtEntete", vbNullString, startTime)
+''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA31ArrierePlanEtEntete", vbNullString, startTime)
 
 End Sub
 
-Sub AssemblerNEFA3_2Lignes(ws As Worksheet)
+Sub AssemblerNEFA32Lignes(ws As Worksheet)
 
-''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA3_2Lignes", vbNullString, 0)
+''    Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA32Lignes", vbNullString, 0)
     
     'Fixer le printArea selon le nombre de lignes ET colonnes
     ws.PageSetup.PrintArea = "$A$1:$G$50"
     Debug.Print "A3.tmp : " & ws.Name & " - " & ws.PageSetup.PrintArea
     
-''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA3_2Lignes", vbNullString, startTime)
+''    Call modDev_Utils.EnregistrerLogApplication("modGL_PrepEF:AssemblerNEFA32Lignes", vbNullString, startTime)
 
 End Sub
 
@@ -2294,8 +2294,8 @@ Public Sub ProposerExportEF() '2025-10-28 @ 06:24
 
     Select Case choix
     
-        Case vbYes: ImprimerFeuillesEF
-        Case vbNo: SauvegarderFeuillesEFenPDF
+        Case vbYes: Call ImprimerFeuillesEF
+        Case vbNo: Call SauvegarderFeuillesEFenPDF
         Case vbCancel: MsgBox "L'export est annulé.", vbInformation
         
     End Select
@@ -2328,7 +2328,7 @@ Private Sub SauvegarderFeuillesEFenPDF() '2025-10-28 @ 06:58
 
     ' Vérifier et collecter les feuilles existantes
     For i = LBound(noms) To UBound(noms)
-        If FeuilleExiste(Trim(noms(i))) Then
+        If Fn_FeuilleExiste(Trim(noms(i))) Then
             feuilles.Add ThisWorkbook.Worksheets(Trim(noms(i)))
         Else
             MsgBox "La feuille '" & noms(i) & "' est introuvable.", vbCritical
@@ -2355,12 +2355,12 @@ Private Sub SauvegarderFeuillesEFenPDF() '2025-10-28 @ 06:58
 
 End Sub
 
-Private Function FeuilleExiste(nomFeuille As String) As Boolean
-
-    On Error Resume Next
-    FeuilleExiste = Not ThisWorkbook.Worksheets(nomFeuille) Is Nothing
-    On Error GoTo 0
-    
-End Function
-
-
+'Private Function FeuilleExiste(nomFeuille As String) As Boolean
+'
+'    On Error Resume Next
+'    FeuilleExiste = Not ThisWorkbook.Worksheets(nomFeuille) Is Nothing
+'    On Error GoTo 0
+'
+'End Function
+'
+'

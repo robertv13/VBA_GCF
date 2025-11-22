@@ -14,7 +14,7 @@ Attribute btn.VB_VarHelpID = -1
 
 Private Sub btn_Click()
 
-    modSurveillance.EnregistrerActivite "CommandButton: " & btn.Name
+    modSurveillance.EnregistrerActivite "Bouton de commande : " & btn.Name
     
 End Sub
 

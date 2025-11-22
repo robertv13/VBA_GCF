@@ -9,12 +9,12 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
 
-Public WithEvents tb As MSForms.TextBox
-Attribute tb.VB_VarHelpID = -1
+Public WithEvents txt As MSForms.TextBox
+Attribute txt.VB_VarHelpID = -1
 
-Private Sub tb_Change()
+Private Sub txt_Change()
 
-    modSurveillance.EnregistrerActivite "TextBox: " & tb.Name
+    Call modSurveillance.EnregistrerActivite("TextBox: " & txt.Name)
     
 End Sub
 

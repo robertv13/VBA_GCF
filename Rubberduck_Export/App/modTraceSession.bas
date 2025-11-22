@@ -44,7 +44,7 @@ Public Sub VerifierOuvertureSilencieuse()
                                     Application.PathSeparator & _
                                     Fn_NomFichierControleSession(NOM_FICHIER_OUVERTURE_NORMALE)) > 5 Then
                 'Le fichier existe mais Workbook_Open n’a pas été exécuté
-                Call AppelLogSessionAnormale("Ouverture silencieuse détectée — Workbook_Open non exécuté")
+                Call EnregistrerOuvertureSilencieuse("Ouverture silencieuse détectée — Workbook_Open non exécuté")
             End If
         End If
 '    On Error GoTo 0
@@ -54,7 +54,7 @@ Public Sub VerifierOuvertureSilencieuse()
 
 End Sub
 
-Private Sub AppelLogSessionAnormale(msg As String)
+Private Sub EnregistrerOuvertureSilencieuse(msg As String)
 
     On Error Resume Next
         Dim chemin As String: chemin = Fn_RepertoireBaseApplication(gUtilisateurWindows)

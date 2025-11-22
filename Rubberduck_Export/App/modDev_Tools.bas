@@ -939,69 +939,69 @@ Sub AjusterEpurerTablesDeMaster()
     
 End Sub
 
-Function Fn_CouleurEnRGBTableau(ByVal couleur As Long) As Variant
-
-    Dim rgbArray(1 To 3) As Integer
-    
-    'Décomposer la couleur en composantes RGB
-    rgbArray(1) = couleur Mod 256       ' Rouge
-    rgbArray(2) = (couleur \ 256) Mod 256 ' Vert
-    rgbArray(3) = (couleur \ 65536) Mod 256 ' Bleu
-    
-    'Retourner le tableau
-    Fn_CouleurEnRGBTableau = rgbArray
-    
-End Function
-
-Function Fn_ConvertirCouleurRGB2Hex(ByVal couleur As Long) As String
-
-    Dim rouge As Integer, vert As Integer, bleu As Integer
-    
-    ' Décomposer la couleur en composantes RGB
-    rouge = couleur Mod 256
-    vert = (couleur \ 256) Mod 256
-    bleu = (couleur \ 65536) Mod 256
-    
-    'Construire la valeur HEX (en format #RRGGBB)
-    Fn_ConvertirCouleurRGB2Hex = "#" & Right$("00" & Hex$(rouge), 2) & _
-                                        Right$("00" & Hex$(vert), 2) & _
-                                        Right$("00" & Hex$(bleu), 2)
-    
-End Function
-
-Function Fn_ConvertiCouleurEnOLE(ByVal couleur As Long) As String
-
-    Dim rouge As Integer, vert As Integer, bleu As Integer
-    
-    'Décomposer la couleur en composantes RGB
-    rouge = couleur Mod 256
-    vert = (couleur \ 256) Mod 256
-    bleu = (couleur \ 65536) Mod 256
-    
-    ' Construire le code OLE en inversant les composantes RGB en BGR
-    Fn_ConvertiCouleurEnOLE = "&H00" & Right$("00" & Hex$(bleu), 2) & _
-                                        Right$("00" & Hex$(vert), 2) & _
-                                        Right$("00" & Hex$(rouge), 2) & "&"
-                                        
-End Function
-
-Function Fn_ChiffreEnLettres(ByVal num As Long) As String
-
-    'Assurer que le nombre soit positif et supérieur à zéro
-    If num <= 0 Then
-        Fn_ChiffreEnLettres = vbNullString
-        Exit Function
-    End If
-    
-    'Construire la chaîne de caractères à partir du numéro
-    Do
-        num = num - 1
-        Fn_ChiffreEnLettres = Chr$(65 + (num Mod 26)) & Fn_ChiffreEnLettres
-        num = num \ 26
-    Loop While num > 0
-    
-End Function
-
+'Function Fn_CouleurEnRGBTableau(ByVal couleur As Long) As Variant
+'
+'    Dim rgbArray(1 To 3) As Integer
+'
+'    'Décomposer la couleur en composantes RGB
+'    rgbArray(1) = couleur Mod 256       ' Rouge
+'    rgbArray(2) = (couleur \ 256) Mod 256 ' Vert
+'    rgbArray(3) = (couleur \ 65536) Mod 256 ' Bleu
+'
+'    'Retourner le tableau
+'    Fn_CouleurEnRGBTableau = rgbArray
+'
+'End Function
+'
+'Function Fn_ConvertirCouleurRGB2Hex(ByVal couleur As Long) As String
+'
+'    Dim rouge As Integer, vert As Integer, bleu As Integer
+'
+'    ' Décomposer la couleur en composantes RGB
+'    rouge = couleur Mod 256
+'    vert = (couleur \ 256) Mod 256
+'    bleu = (couleur \ 65536) Mod 256
+'
+'    'Construire la valeur HEX (en format #RRGGBB)
+'    Fn_ConvertirCouleurRGB2Hex = "#" & Right$("00" & Hex$(rouge), 2) & _
+'                                        Right$("00" & Hex$(vert), 2) & _
+'                                        Right$("00" & Hex$(bleu), 2)
+'
+'End Function
+'
+'Function Fn_ConvertiCouleurEnOLE(ByVal couleur As Long) As String
+'
+'    Dim rouge As Integer, vert As Integer, bleu As Integer
+'
+'    'Décomposer la couleur en composantes RGB
+'    rouge = couleur Mod 256
+'    vert = (couleur \ 256) Mod 256
+'    bleu = (couleur \ 65536) Mod 256
+'
+'    ' Construire le code OLE en inversant les composantes RGB en BGR
+'    Fn_ConvertiCouleurEnOLE = "&H00" & Right$("00" & Hex$(bleu), 2) & _
+'                                        Right$("00" & Hex$(vert), 2) & _
+'                                        Right$("00" & Hex$(rouge), 2) & "&"
+'
+'End Function
+'
+'Function Fn_ChiffreEnLettres(ByVal num As Long) As String
+'
+'    'Assurer que le nombre soit positif et supérieur à zéro
+'    If num <= 0 Then
+'        Fn_ChiffreEnLettres = vbNullString
+'        Exit Function
+'    End If
+'
+'    'Construire la chaîne de caractères à partir du numéro
+'    Do
+'        num = num - 1
+'        Fn_ChiffreEnLettres = Chr$(65 + (num Mod 26)) & Fn_ChiffreEnLettres
+'        num = num \ 26
+'    Loop While num > 0
+'
+'End Function
+'
 Sub AppliquerGrille(ws As Worksheet, plages As Variant)
 
     'Appliquer le grillage à chaque plage spécifiée
@@ -1674,7 +1674,7 @@ Sub zz_VerifierCombinaisonClientIDClientNomDansTEC()
     
 End Sub
 
-Public Function ListerPDFs(dossier As String) As Object '2025-07-23 @ 12:40
+Public Function Fn_ListerPDFs(dossier As String) As Object '2025-07-23 @ 12:40
 
     Dim dictPDFs As Object
     Set dictPDFs = CreateObject("Scripting.Dictionary")
@@ -1702,7 +1702,7 @@ Public Function ListerPDFs(dossier As String) As Object '2025-07-23 @ 12:40
         End If
     Next fichier
 
-    Set ListerPDFs = dictPDFs
+    Set Fn_ListerPDFs = dictPDFs
     
     'Libérer la mémoire
     Set dictPDFs = Nothing
@@ -1946,7 +1946,7 @@ Sub zz_DetecterErreurCodeClientInTEC()  '2025-03-11 @ 08:29
 End Sub
 
 'Utilitaire pour récupérer les formes de wshFAC_Finale_Intact
-Sub ReplacerFormesDepuisIntact()
+Sub zz_ReplacerFormesDepuisIntact()
 
     Dim wsSource As Worksheet, wsDest As Worksheet
     Dim shpSrc As Shape, shpDest As Shape

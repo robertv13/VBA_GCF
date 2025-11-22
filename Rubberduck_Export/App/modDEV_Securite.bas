@@ -1,7 +1,7 @@
 Attribute VB_Name = "modDEV_Securite"
 Option Explicit
 
-Public Function GetInitialesObligatoiresFromADMIN(ByVal utilisateurWindows As String) As String '2025-05-31 @ 16:08
+Public Function Fn_ObtenirInitialesObligatoiresFromADMIN(ByVal utilisateurWindows As String) As String '2025-05-31 @ 16:08
 
     Dim initialesPermises As String
 
@@ -21,20 +21,20 @@ Public Function GetInitialesObligatoiresFromADMIN(ByVal utilisateurWindows As St
         If nomWindows = vbNullString Then Exit For 'Arrêter à la première ligne vide
         If nomWindows = utilisateurWindows Then
             If initialesPermises = vbNullString Then
-                GetInitialesObligatoiresFromADMIN = vbNullString 'Aucune restriction
+                Fn_ObtenirInitialesObligatoiresFromADMIN = vbNullString 'Aucune restriction
             Else
-                GetInitialesObligatoiresFromADMIN = initialesPermises
+                Fn_ObtenirInitialesObligatoiresFromADMIN = initialesPermises
             End If
             Exit Function
         End If
     Next i
 
-    GetInitialesObligatoiresFromADMIN = "INVALID"
+    Fn_ObtenirInitialesObligatoiresFromADMIN = "INVALID"
     
     Exit Function
 
 ErrHandler:
-    GetInitialesObligatoiresFromADMIN = "INVALID"
+    Fn_ObtenirInitialesObligatoiresFromADMIN = "INVALID"
     
 End Function
 

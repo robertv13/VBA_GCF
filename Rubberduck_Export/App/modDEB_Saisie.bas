@@ -29,8 +29,7 @@ Sub MettreAJourDebours()
     End If
     
     'Date is not valid OR the transaction does not balance
-    If Fn_DateEstElleValide(wshDEB_Saisie.Range("O4").Value) = False Or _
-        Fn_SaisieDEBBalance = False Then
+    If Fn_DateEstElleValide(wshDEB_Saisie.Range("O4").Value) = False Or Fn_SaisieDEBBalance = False Then
         Exit Sub
     End If
     
@@ -41,7 +40,7 @@ Sub MettreAJourDebours()
     
     'Get the FournID
     Dim r As Range
-    Set r = fn_GetRowFromValue(wsdBD_Fournisseurs, fFourFMNomFournisseur, wshDEB_Saisie.Range("J4").Value)
+    Set r = Fn_GetRowFromValue(wsdBD_Fournisseurs, fFourFMNomFournisseur, wshDEB_Saisie.Range("J4").Value)
     If Not r Is Nothing Then
         Application.EnableEvents = False
         wshDEB_Saisie.Range("B5").Value = r.Cells(1, fFourFMFournID)
@@ -100,7 +99,7 @@ Sub MettreAJourDEBRenversement()
     
     'Get the FournID
     Dim r As Range
-    Set r = fn_GetRowFromValue(wsdBD_Fournisseurs, fFourFMNomFournisseur, wshDEB_Saisie.Range("J4").Value)
+    Set r = Fn_GetRowFromValue(wsdBD_Fournisseurs, fFourFMNomFournisseur, wshDEB_Saisie.Range("J4").Value)
     If Not r Is Nothing Then
         Application.EnableEvents = False
         ws.Range("B5").Value = r.Cells(1, fFourFMFournID)

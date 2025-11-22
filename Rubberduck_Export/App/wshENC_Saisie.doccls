@@ -29,7 +29,7 @@ Private Sub Worksheet_Activate() '2025-11-16 @ 15:20
     
     'Positionner le curseur sur le premier champ
     Me.Range("F5").Select
-    Call HighlightCell(Me.Range("F5"))
+    Call AppliquerRemplissage(Me.Range("F5"))
     
 CleanExit:
     Application.ScreenUpdating = True
@@ -52,7 +52,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range) '2025-11-16 @ 15:20
         Exit Sub
     End If
     
-    Call HighlightCell(Target)
+    Call AppliquerRemplissage(Target)
     
     'Gestion des sélections principales
     If Not Intersect(Target, Me.Range("F5,K5,F7,K7,F9")) Is Nothing Then
@@ -61,7 +61,7 @@ Private Sub Worksheet_SelectionChange(ByVal Target As Range) '2025-11-16 @ 15:20
     
     'Première case à cocher
     If Not Intersect(Target, Me.Range("E12")) Is Nothing Then
-        GererSelectionPremiereCaseACocher
+        Call GererSelectionPremiereCaseACocher
     End If
     
     'Cas particulier : G7 ? rediriger vers K7

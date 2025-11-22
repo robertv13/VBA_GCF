@@ -204,6 +204,49 @@ Sub CacherToutesFeuillesSaufMenu()
     
 End Sub
 
+Sub CacherFormesEnFonctionUtilisateur(ByVal userName As String) '2025-06-06 @ 11:17
+    
+    Dim startTime As Double: startTime = Timer
+    Call modDev_Utils.EnregistrerLogApplication("modMENU:CacherFormesEnFonctionUtilisateur", vbNullString, 0)
+    
+    Dim ws As Worksheet: Set ws = wshMenu
+    Dim devShapes As Variant
+    devShapes = Array( _
+        "shpImporterCorrigerMASTER", _
+        "shpVérificationIntégrité", _
+        "shpTraitementFichiersLog", _
+        "shpSynchronisationDEVversPROD", _
+        "shpAuditVBAProcedures", _
+        "shpCompterLignesCode", _
+        "shpRechercherCode", _
+        "shpCorrigerNomClientTEC", _
+        "shpCorrigerNomClientCAR", _
+        "shpChercherRéférencesCirculaires", _
+        "shpChangerReferenceSystem", _
+        "shpListerModulesEtRoutines", _
+        "shpVérificationMacrosContrôles" _
+    )
+
+    Dim isDevUser As Boolean
+    isDevUser = (userName = "RobertMV" Or userName = "robertmv")
+    Dim visibleState As MsoTriState
+    visibleState = IIf(isDevUser, msoTrue, msoFalse)
+
+    Dim i As Long
+    For i = LBound(devShapes) To UBound(devShapes)
+        On Error Resume Next 'Ignore erreur si Shape absent
+        ws.Shapes(devShapes(i)).Visible = visibleState
+        If Err.Number <> 0 Then
+            Debug.Print "Forme introuvable: " & devShapes(i)
+            Err.Clear
+        End If
+        On Error GoTo 0
+    Next i
+
+    Call modDev_Utils.EnregistrerLogApplication("modMENU:CacherFormesEnFonctionUtilisateur", vbNullString, startTime)
+
+End Sub
+
 Sub EffacerFichierUtilisateurActif(ByVal userName As String)
 
     Dim startTime As Double: startTime = Timer: Call modDev_Utils.EnregistrerLogApplication("modMENU:EffacerFichierUtilisateurActif", vbNullString, 0)

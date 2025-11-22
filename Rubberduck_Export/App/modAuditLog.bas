@@ -1,7 +1,7 @@
 Attribute VB_Name = "modAuditLog"
 Option Explicit
 
-Public Sub AuditerSessionsAvecContexteEtReapparition(wsOutput As Worksheet, _
+Public Sub VerifierValiditeSessions(wsOutput As Worksheet, _
                                                                     ByRef r As Long, logPath As String)
 
     Dim fso As Object: Set fso = CreateObject("Scripting.FileSystemObject")

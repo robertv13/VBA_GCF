@@ -70,7 +70,7 @@ End Property
 Public Property Let StartText(ByVal text As String)
     
     m_startText = text
-    Call SetTextboxValue(m_startText)
+    Call ActualiserTextBoxValue(m_startText)
 
 End Property
 
@@ -112,7 +112,7 @@ Private Sub myListBox_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
     If m_UpdateControl = False Then
         Dim r As Range
         Dim pureClientName As String
-        Set r = fn_GetRowFromValue(wsdBD_Clients, fClntFMNomClientPlusNomClientSystème, MyListBox.Value)
+        Set r = Fn_GetRowFromValue(wsdBD_Clients, fClntFMNomClientPlusNomClientSystème, MyListBox.Value)
         If Not r Is Nothing Then
             Application.EnableEvents = False
             pureClientName = r.Cells(1, fClntFMClientNom)
@@ -120,7 +120,7 @@ Private Sub myListBox_DblClick(ByVal Cancel As MSForms.ReturnBoolean)
         Else
             Exit Sub
         End If
-        Call SetTextboxValue(pureClientName)
+        Call ActualiserTextBoxValue(pureClientName)
         MyListBox.Visible = False
         
     End If
@@ -141,7 +141,7 @@ Private Sub myListBox_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shif
         If MyListBox.Value <> 0 Then
             Dim r As Range
             Dim pureClientName As String
-            Set r = fn_GetRowFromValue(wsdBD_Clients, fClntFMNomClientPlusNomClientSystème, _
+            Set r = Fn_GetRowFromValue(wsdBD_Clients, fClntFMNomClientPlusNomClientSystème, _
                                                                                     MyListBox.Value)
             If Not r Is Nothing Then
                 Application.EnableEvents = False
@@ -150,7 +150,7 @@ Private Sub myListBox_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shif
             Else
                 Exit Sub
             End If
-            Call SetTextboxValue(pureClientName)
+            Call ActualiserTextBoxValue(pureClientName)
         End If
         Call AfficherListBox(False)
 '        SendKeys "{TAB}"
@@ -177,7 +177,6 @@ Private Sub List_MoveDown()
     m_UpdateControl = True
     If m_textboxStartingState = False Then
         With MyListBox
-'            .SetFocus '2025-11-13 @ 08:09
             If .ListIndex < .ListCount - 1 Then
                 Application.EnableEvents = False '2025-11-13 @ 08:11
                 .ListIndex = .ListIndex + 1
@@ -213,7 +212,7 @@ Private Sub MettreAJourListBox(items As Variant)
         If m_showAllMatches = True Then
             Call SelectionnerItemDansListBox
         Else
-            .Height = ResizeListbox(MyListBox, 11)
+            .Height = Fn_RedimensionnerListBox(MyListBox, 11)
         End If
     
     End With
@@ -225,7 +224,7 @@ Private Sub SelectionnerItemDansListBox()
     With MyListBox
         'To get the scrollbar working correctly it is necessary to turn IntegralHeight off and on
         .IntegralHeight = False
-        .Height = ResizeListbox(MyListBox, myTextBox.Font.size)
+        .Height = Fn_RedimensionnerListBox(MyListBox, myTextBox.Font.size)
         .IntegralHeight = True
 
         'List index will not highlight to first unless the second one is highlighted first.
@@ -274,7 +273,7 @@ Private Sub PositionnerListBox()
     
 End Sub
 
-Private Function ResizeListbox(MyListBox As MSForms.ListBox, fontSize As Double) As Double
+Private Function Fn_RedimensionnerListBox(MyListBox As MSForms.ListBox, fontSize As Double) As Double
 
     'Set listbox font to the same size as the textbox
     MyListBox.Font.size = fontSize
@@ -286,7 +285,7 @@ Private Function ResizeListbox(MyListBox As MSForms.ListBox, fontSize As Double)
     'the font size is itself plus a quarter for the space between rows
     itemSize = MyListBox.Font.size + (MyListBox.Font.size / 4)
     
-    ResizeListbox = (itemSize * ItemCount) + 5
+    Fn_RedimensionnerListBox = (itemSize * ItemCount) + 5
     
 End Function
 
@@ -316,7 +315,7 @@ Private Sub myTextBox_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shif
         If IsNull(MyListBox.Value) = False And m_textboxStartingState = False Then
             Dim r As Range
             Dim pureClientName As String
-            Set r = fn_GetRowFromValue(wsdBD_Clients, fClntFMNomClientPlusNomClientSystème, MyListBox.Value)
+            Set r = Fn_GetRowFromValue(wsdBD_Clients, fClntFMNomClientPlusNomClientSystème, MyListBox.Value)
             If Not r Is Nothing Then
                 Application.EnableEvents = False
                 pureClientName = r.Cells(1, fClntFMClientNom)
@@ -324,7 +323,7 @@ Private Sub myTextBox_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shif
             Else
                 Exit Sub
             End If
-            Call SetTextboxValue(pureClientName)
+            Call ActualiserTextBoxValue(pureClientName)
         End If
         Call AfficherListBox(False)
     ElseIf KeyCode = vbKeyEscape Then
@@ -335,7 +334,7 @@ Private Sub myTextBox_KeyDown(ByVal KeyCode As MSForms.ReturnInteger, ByVal Shif
 
 End Sub
 
-Private Sub SetTextboxValue(ByVal text As String)
+Private Sub ActualiserTextBoxValue(ByVal text As String)
 
     If m_UpdateControl = False Then
         With MyListBox
@@ -358,7 +357,7 @@ Private Sub InitialiserTextBox()
     m_textboxStartingState = True
     
     If m_UpdateControl = True Then
-        Call SetTextboxValue(m_startText)
+        Call ActualiserTextBoxValue(m_startText)
     End If
     myTextBox.SelStart = 0
 '    myTextBox.ForeColor = rgbBlue
@@ -384,7 +383,7 @@ Public Sub FiltrerListBox() 'Filters the Listbox
     m_UpdateControl = True
 
     Dim items As Variant
-    items = FilterData
+    items = Fn_FiltrerDonnees
       
     Call MettreAJourListBox(items)
       
@@ -392,7 +391,7 @@ Public Sub FiltrerListBox() 'Filters the Listbox
     
 End Sub
 
-Private Function FilterData() As Variant
+Private Function Fn_FiltrerDonnees() As Variant
    
     Dim textPattern As String
     textPattern = myTextBox.Value
@@ -432,7 +431,7 @@ Private Function FilterData() As Variant
         Next i
     End If
     
-    FilterData = finalItems
+    Fn_FiltrerDonnees = finalItems
 
 End Function
 

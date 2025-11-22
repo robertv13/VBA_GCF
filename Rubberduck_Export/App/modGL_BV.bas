@@ -178,7 +178,7 @@ Sub AfficherTransactionsPourUnCompteDeGL(compte As String, description As String
     
     rsInit.Open strSQL, conn, 1, 1
     If Not rsInit.EOF Then
-        soldeInitial = modGL_Stuff.Nz(rsInit.Fields("TotalDebit").Value) - modGL_Stuff.Nz(rsInit.Fields("TotalCredit").Value)
+        soldeInitial = modGL_Stuff.Fn_Nz(rsInit.Fields("TotalDebit").Value) - modGL_Stuff.Fn_Nz(rsInit.Fields("TotalCredit").Value)
     End If
     Debug.Print "Solde d'ouverture pour '" & compte & "' est de " & Format$(soldeInitial, "#,##0.00 $")
     rsInit.Close: Set rsInit = Nothing
@@ -224,8 +224,8 @@ Sub AfficherTransactionsPourUnCompteDeGL(compte As String, description As String
         ReDim tableau(1 To nbLignes, 1 To 8) 'Colonnes M à S
 
         Do While Not recSet.EOF
-            debit = Nz(recSet.Fields("Débit").Value)
-            credit = Nz(recSet.Fields("Crédit").Value)
+            debit = Fn_Nz(recSet.Fields("Débit").Value)
+            credit = Fn_Nz(recSet.Fields("Crédit").Value)
             solde = solde + debit - credit
 
             tableau(ligne, 1) = recSet.Fields("Date").Value

@@ -76,8 +76,8 @@ Private Sub cmbNoFacture_AfterUpdate()
         'Si la valeur est trouvée, récupérer d'autres colonnes
         soldeFacture = CCur(rngTrouve.offset(0, 10).Value)
         dateFacture = Format$(rngTrouve.offset(0, 1).Value, wsdADMIN.Range("USER_DATE_FORMAT").Value)
-        ufEncRégularisation.lblDateFactureData.Caption = dateFacture
-        ufEncRégularisation.lblTotalFactureValue.Caption = FormatCurrency(soldeFacture, 2)
+        ufEncRégularisation.lblDateFactureData.caption = dateFacture
+        ufEncRégularisation.lblTotalFactureValue.caption = FormatCurrency(soldeFacture, 2)
         
         ufEncRégularisation.txtTotalFacture.Value = vbNullString
         ufEncRégularisation.txtHonoraires.Value = vbNullString
@@ -85,7 +85,7 @@ Private Sub cmbNoFacture_AfterUpdate()
         ufEncRégularisation.txtTPS.Value = vbNullString
         ufEncRégularisation.txtTVQ.Value = vbNullString
         
-        ufEncRégularisation.lblTotalFactureAjuste.Caption = Format$(soldeFacture, "###,##0.00 $")
+        ufEncRégularisation.lblTotalFactureAjuste.caption = Format$(soldeFacture, "###,##0.00 $")
     Else
         'Si la valeur n'est pas trouvée
         MsgBox "La facture " & invNo & " n'a pas été trouvée.", vbExclamation
@@ -124,7 +124,7 @@ Private Sub txtTotalFacture_Exit(ByVal Cancel As MSForms.ReturnBoolean)
         End If
         
         ufEncRégularisation.txtTotalFacture.Value = Format$(totalFacture, "###,##0.00 $")
-        ufEncRégularisation.lblTotalFactureAjuste.Caption = Format$(lblTotalFactureValue + totalFacture, "###,##0.00 $")
+        ufEncRégularisation.lblTotalFactureAjuste.caption = Format$(lblTotalFactureValue + totalFacture, "###,##0.00 $")
         ufEncRégularisation.txtHonoraires.Value = Format$(honoraires, "###,##0.00 $")
         ufEncRégularisation.txtFraisDivers.Value = Format$(fraisDivers, "###,##0.00 $")
         ufEncRégularisation.txtTPS.Value = Format$(tps, "###,##0.00 $")

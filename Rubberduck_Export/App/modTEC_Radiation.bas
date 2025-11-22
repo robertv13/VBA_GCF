@@ -132,7 +132,7 @@ Sub AjouterCheckBoxesAvecControleGlobal(lastUsedRow As Long)
                                          Height:=ws.Cells(5, 4).Height)
     With headerChkBox
         .Name = "chk_header"
-        .Caption = vbNullString
+        .caption = vbNullString
         .OnAction = "CocherOuDecocherToutesCases" 'Associe la macro de contrôle global
     End With
 
@@ -144,9 +144,9 @@ Sub AjouterCheckBoxesAvecControleGlobal(lastUsedRow As Long)
                                        Height:=ws.Cells(i, 4).Height)
         With chkBox
             .Name = "chk_" & i
-            .Caption = vbNullString
+            .caption = vbNullString
             .linkedCell = ws.Cells(i, 2).Address
-            .OnAction = "CalculerTotaux"
+            .OnAction = "Fn_CalculerTotaux"
         End With
     Next i
 
@@ -201,7 +201,7 @@ Sub CocherOuDecocherToutesCases()
         If chkBox.Name <> "chk_header" Then
             chkBox.Value = IIf(newState, xlOn, xlOff)
             chkBox.Characters.text = vbNullString
-            chkBox.Characters.Caption = vbNullString
+            chkBox.Characters.caption = vbNullString
         End If
     Next chkBox
 
@@ -215,11 +215,11 @@ Sub CocherOuDecocherToutesCases()
                 AllowDeletingRows:=True, AllowSorting:=True, AllowFiltering:=True, _
                 AllowUsingPivotTables:=True
                 
-    Call CalculerTotaux
+    Call Fn_CalculerTotaux
     
 End Sub
 
-Sub CalculerTotaux()
+Sub Fn_CalculerTotaux()
 
     Dim ws As Worksheet
     Set ws = wshTEC_Radiation

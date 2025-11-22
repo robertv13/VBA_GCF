@@ -9,12 +9,12 @@ Attribute VB_PredeclaredId = False
 Attribute VB_Exposed = False
 Option Explicit
 
-Public WithEvents cb As MSForms.ComboBox
-Attribute cb.VB_VarHelpID = -1
+Public WithEvents cmb As MSForms.ComboBox
+Attribute cmb.VB_VarHelpID = -1
 
-Private Sub cb_Change()
+Private Sub cmb_Change()
 
-    modSurveillance.EnregistrerActivite "ComboBox: " & cb.Name
+    modSurveillance.EnregistrerActivite "ComboBox: " & cmb.Name
     
 End Sub
 

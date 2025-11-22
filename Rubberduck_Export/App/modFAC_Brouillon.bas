@@ -209,9 +209,9 @@ Sub ChangerNomDuClient(clientName As String)
     'Aller chercher le vrai nom de client de 2 sources selon le mode de facturation
     Dim r As Range
     If wshFAC_Brouillon.Range("B52").Value = vbNullString Then
-        Set r = modFunctions.fn_GetRowFromValue(wsdBD_Clients, fClntFMNomClientPlusNomClientSystème, clientName)
+        Set r = modFunctions.Fn_GetRowFromValue(wsdBD_Clients, fClntFMNomClientPlusNomClientSystème, clientName)
     Else
-        Set r = modFunctions.fn_GetRowFromValue(wsdBD_Clients, fClntFMClientNom, clientName)
+        Set r = modFunctions.Fn_GetRowFromValue(wsdBD_Clients, fClntFMClientNom, clientName)
     End If
     If Not r Is Nothing Then
         Application.EnableEvents = False
@@ -804,11 +804,11 @@ Sub CopierTECFiltresVersFACBrouillon(cutOffDateProjet As Date)
     If collFraisDivers.count > 0 Then
         Set ufFraisDivers = UserForms.Add("ufFraisDivers")
         'Nettoyer le userForm avant d'ajouter des éléments
-        ufFraisDivers.listBox1.Clear
+        ufFraisDivers.ListBox1.Clear
         'Ajouter les éléments dans le listBox
         Dim item As Variant
         For Each item In collFraisDivers
-            ufFraisDivers.listBox1.AddItem item
+            ufFraisDivers.ListBox1.AddItem item
         Next item
         'Afficher le userForm de façon non modale
         ufFraisDivers.show vbModeless
@@ -1308,21 +1308,22 @@ Sub ChargerGabaritDescriptionFacture(t As String)
     
 End Sub
 
-Public Sub test()
-
-    Dim testPath As String
-    testPath = "C:\VBA\GC_FISCALITÉ\Factures_Excel"
-    
-    If Len(Dir(testPath, vbDirectory)) > 0 Then
-        MsgBox "Le dossier existe bien."
-    Else
-        MsgBox "Le dossier est introuvable."
-    End If
-    
-    If GetAttr(testPath) And vbDirectory Then
-    MsgBox "C'est bien un dossier."
-    
-End If
-
-    
-End Sub
+'Public Sub test()
+'
+'    Dim testPath As String
+'    testPath = "C:\VBA\GC_FISCALITÉ\Factures_Excel"
+'
+'    If Len(Dir(testPath, vbDirectory)) > 0 Then
+'        MsgBox "Le dossier existe bien."
+'    Else
+'        MsgBox "Le dossier est introuvable."
+'    End If
+'
+'    If GetAttr(testPath) And vbDirectory Then
+'    MsgBox "C'est bien un dossier."
+'
+'End If
+'
+'
+'End Sub
+'

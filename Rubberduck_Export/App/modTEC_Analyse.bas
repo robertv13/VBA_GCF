@@ -803,7 +803,7 @@ Sub AjouterCaseACocherOnFacture(StartRow As Long, lastRow As Long)
         
         'Modify checkbox properties
         With checkBox.Object
-            .Caption = "On facture"
+            .caption = "On facture"
             .Font.size = 11  'Set font size
             .Font.Bold = True  'Set font bold
             .ForeColor = RGB(0, 0, 255)  'Set font color (Blue)

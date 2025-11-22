@@ -163,10 +163,6 @@ Private Sub Worksheet_Change(ByVal Target As Range)
     Dim fullDate As Variant
     Dim plageClients As Range
     
-    'Si la cellule de la SOURCE change, alors on vérifie si l'on essaie...
-    '   E/J récurrente
-    '   Renverser une écriture
-    '   Dépôt de client
     If Not Intersect(Target, Range("F4")) Is Nothing Then
         If Target.CountLarge > 1 Then Exit Sub
         Application.EnableEvents = False

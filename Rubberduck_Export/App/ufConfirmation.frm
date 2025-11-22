@@ -112,9 +112,9 @@ Private Sub ListView1_ItemCheck(ByVal item As MSComctlLib.listItem)
         If ufConfirmation.txtNbFacturesSélectionnées.Value > 0 Then
             ufConfirmation.shpConfirmation.Visible = True
             If ufConfirmation.txtNbFacturesSélectionnées.Value = 1 Then
-                ufConfirmation.shpConfirmation.Caption = "Confirmer cette facture"
+                ufConfirmation.shpConfirmation.caption = "Confirmer cette facture"
             Else
-                ufConfirmation.shpConfirmation.Caption = "Confirmer les (" & _
+                ufConfirmation.shpConfirmation.caption = "Confirmer les (" & _
                  ufConfirmation.txtNbFacturesSélectionnées.Value & ") factures sélectionnées"
             End If
         End If
@@ -128,9 +128,9 @@ Private Sub ListView1_ItemCheck(ByVal item As MSComctlLib.listItem)
             ufConfirmation.shpConfirmation.Visible = False
         Else
             If ufConfirmation.txtNbFacturesSélectionnées.Value = 1 Then
-                ufConfirmation.shpConfirmation.Caption = "Confirmer cette facture"
+                ufConfirmation.shpConfirmation.caption = "Confirmer cette facture"
             Else
-                ufConfirmation.shpConfirmation.Caption = "Confirmer les (" & _
+                ufConfirmation.shpConfirmation.caption = "Confirmer les (" & _
                  ufConfirmation.txtNbFacturesSélectionnées.Value & ") factures sélectionnées"
             End If
         End If

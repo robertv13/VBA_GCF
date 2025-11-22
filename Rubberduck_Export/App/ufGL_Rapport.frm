@@ -551,15 +551,14 @@ Private Sub chkToutesEcritures_Click() '2025-03-03 @ 08:36
     
 End Sub
 
-Private Sub CheckBox_Click() '2025-03-03 @ 08:37
-
-    'Empêcher de décocher une case si "Toutes les écritures" est cochée
-    If Me.chkToutesEcritures.Value = True Then
-        Application.EnableEvents = False
-        Me.chkToutesEcritures.Value = False
-        Application.EnableEvents = True
-    End If
-    
-End Sub
-
-
+'Private Sub CheckBox_Click() '2025-03-03 @ 08:37
+'
+'    'Empêcher de décocher une case si "Toutes les écritures" est cochée
+'    If Me.chkToutesEcritures.Value = True Then
+'        Application.EnableEvents = False
+'        Me.chkToutesEcritures.Value = False
+'        Application.EnableEvents = True
+'    End If
+'
+'End Sub
+'

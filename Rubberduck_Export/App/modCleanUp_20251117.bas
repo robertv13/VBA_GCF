@@ -1,5 +1,5 @@
 Attribute VB_Name = "modCleanUp_20251117"
-'Option Explicit
+Option Explicit
 '
 'Sub AuditerPlageVersSpecsLanceur()
 '

@@ -4,8 +4,7 @@ Private Sub Worksheet_BeforeDoubleClick(ByVal Target As Range, Cancel As Boolean
 
     Dim nomProc As String, nomModule As String
     
-    If Target.row < 3 Then Exit Sub
-    If Target.Column <> 1 Then Exit Sub
+    If Target.row < 3 Or Target.Column <> 1 Then Exit Sub
 
     nomProc = Trim(Target.Value)
     nomModule = Trim(Cells(Target.row, 3).Value)
